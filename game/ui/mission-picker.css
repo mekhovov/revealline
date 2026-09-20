@@ -221,6 +221,26 @@
   }
 }
 
+/* Keep chapter discovery in the measured sticky heading while the selected
+   chapter retains focus in the scrolling content. */
+.field-kit #shell-missions .shell-mission-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+.field-kit #shell-missions .shell-mission-actions .button {
+  min-width: 44px;
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#shell-missions[data-view='brief'] #shell-worlds {
+  display: none;
+}
+
 /* Short landscape gives the reading pane space before reducing any text. */
 @media (max-height: 500px) and (orientation: landscape) {
   .field-kit.game-shell #shell-missions:not([data-view='brief']) {
@@ -274,12 +294,16 @@
     padding: 8px 12px;
   }
   .field-kit.game-shell #shell-missions:not([data-view='brief']) > .shell-dialog-heading {
+    grid-template-columns: minmax(0, 1fr);
     padding-block: 4px;
     row-gap: 4px;
     margin-bottom: 8px;
   }
   .field-kit.game-shell #shell-missions:not([data-view='brief']) > .shell-dialog-heading > div {
     min-width: 0;
+  }
+  .field-kit #shell-missions:not([data-view='brief']) .shell-mission-actions {
+    justify-content: space-between;
   }
   .field-kit.game-shell #shell-missions:not([data-view='brief']) #shell-missions-context {
     margin: 0 0 4px;

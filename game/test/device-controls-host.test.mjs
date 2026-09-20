@@ -47,10 +47,16 @@ function imageBoundary(t) {
       return [data, [bytes.readUInt32BE(16), bytes.readUInt32BE(20)]];
     }),
   );
+  let decoded = 0;
   globalThis.Image = class {
+    async decode() {
+      assert.ok(this.width > 0 && this.height > 0);
+      decoded++;
+    }
     set src(data) {
       const size = images.get(data);
       assert.ok(size, 'Only exact original First Light image headers are accepted.');
+      [this.width, this.height] = size;
       [this.naturalWidth, this.naturalHeight] = size;
       queueMicrotask(() => this.onload());
     }
@@ -58,6 +64,7 @@ function imageBoundary(t) {
   t.after(() => {
     if (original === undefined) delete globalThis.Image;
     else globalThis.Image = original;
+    assert.ok(decoded > 0, 'The selected authored original must complete decoding.');
   });
 }
 

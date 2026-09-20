@@ -78,9 +78,13 @@ function originalImageBoundary(t) {
   );
   const previous = globalThis.Image;
   globalThis.Image = class {
+    async decode() {
+      assert.ok(this.width > 0 && this.height > 0);
+    }
     set src(url) {
       const size = sizes.get(url);
       assert.ok(size, 'Only the exact existing First Light originals may decode');
+      [this.width, this.height] = size;
       [this.naturalWidth, this.naturalHeight] = size;
       queueMicrotask(() => this.onload());
     }

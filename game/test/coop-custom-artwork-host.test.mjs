@@ -213,7 +213,7 @@ test('local multi-core victory → distinct coverage artwork → Retry retains t
     resources = io(f);
   playImportedRoute(f, importedCoverageRoute);
   assert.equal(f.$('coop-next').hidden, true);
-  assert.match(f.$('coop-overlay-copy').textContent, /Final arena in this pack/);
+  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/);
   const firstResult = hud(f);
   f.$('coop-level').value = fixture.pack.levels[0].id;
   f.$('coop-difficulty').value = 'expert';
@@ -671,4 +671,77 @@ test('terminal departure during qualification releases the late decoder and the 
   assert.equal(f.artwork.calls.releases.length, 2);
   assert.equal(new Set(f.artwork.calls.releases).size, 2);
   assert.deepEqual(new Set(f.artwork.calls.releases), new Set(f.artwork.calls.urls));
+});
+
+function browseTeam(f) {
+  const opener = f.$(f.$('coop-menu').hidden ? 'coop-discovery-paused' : 'coop-discovery-open');
+  opener.focus();
+  f.tap('Enter');
+  assert.equal(f.$('coop-discovery-dialog').open, true);
+}
+async function playTeamCard(f, title, { replace = false } = {}) {
+  const button = [...f.$('coop-discovery-list').querySelectorAll('button')].find(
+    (node) => node.textContent === `Play ${title}`,
+  );
+  assert.ok(button, `The current Team catalogue contains ${title}.`);
+  button.focus();
+  f.tap('Enter');
+  if (replace) {
+    await waitFor(() => f.$('coop-discard-dialog').open);
+    f.$('coop-discard-confirm').focus();
+    f.tap('Enter');
+  }
+  await waitFor(
+    () => !f.$('coop-discovery-dialog').open && f.$('coop-overlay').hidden,
+    () => f.$('coop-discovery-status').textContent,
+  );
+  assert.equal(f.$('coop-stage').textContent, title.toUpperCase());
+  assert.equal(f.doc.activeElement.id, 'coop-canvas');
+}
+
+test('Team discovery retains an opened artwork owner across starter play and exact local return', async (t) => {
+  const fixture = bundle();
+  const f = await page(t, options);
+  await selectNative(f, fixture.file);
+  browseTeam(f);
+  await playTeamCard(f, 'First Connection');
+  f.tap('Escape');
+  browseTeam(f);
+  await playTeamCard(f, fixture.pack.levels[1].name, { replace: true });
+  assert.equal(image(f).sha256, fixture.secondHash);
+  assert.match(status(f), /Local artwork/);
+  assert.equal(f.$('coop-level').value, fixture.pack.levels[1].id);
+  assert.equal(f.artwork.calls.closes, 0);
+});
+
+test('discovery-started local artwork keeps its earned result, ordered Next and exact Retry image', async (t) => {
+  const fixture = bundle();
+  const f = await page(t, options);
+  await selectNative(f, fixture.file);
+  f.$('coop-difficulty').value = 'gentle';
+  f.$('coop-experiment').value = 'full';
+  browseTeam(f);
+  await playTeamCard(f, fixture.pack.levels[0].name);
+  assert.equal(image(f).sha256, fixture.firstHash);
+  playImportedRoute(f);
+  const earned = image(f);
+  const result = hud(f);
+  browseTeam(f);
+  f.$('coop-discovery-back').focus();
+  f.tap('Enter');
+  assert.equal(image(f), earned);
+  assert.deepEqual(hud(f), result);
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
+  await next(f);
+  assert.equal(image(f).sha256, fixture.secondHash);
+  const original = image(f);
+  f.tap('Escape');
+  f.$('coop-retry').focus();
+  f.tap('Enter');
+  assert.equal(f.$('coop-discard-dialog').open, true);
+  f.$('coop-discard-confirm').focus();
+  f.tap('Enter');
+  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.equal(image(f), original);
+  assert.equal(f.$('coop-clock').textContent, '0:00');
 });
