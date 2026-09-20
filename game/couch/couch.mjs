@@ -17,7 +17,14 @@ import { dataIdentity } from '../data-json.mjs';
 import { downloadJSON } from '../content.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { onNativeInactive } from '../platform.mjs';
-import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
+import {
+  createDuel,
+  stepDuel,
+  pauseDuel,
+  resumeDuel,
+  DUEL_PROTOCOL,
+  UNTIMED_DUEL_PROTOCOL,
+} from '../multiplayer.mjs';
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
@@ -633,7 +640,7 @@ try {
       classId,
       seed: candidateJourney ? 1 : 2026,
       turnPolicy: $('race-turn').value,
-      seconds: Number($('race-time').value),
+      seconds: candidateJourney ? 0 : Number($('race-time').value),
       format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
     };
     $('race-format').value = roundRecipe.format;
@@ -656,7 +663,10 @@ try {
         classId: recipe.classId,
         classRecipes: recipe.entry.classes,
       },
-      { seconds: recipe.seconds },
+      {
+        seconds: recipe.seconds,
+        protocol: candidateJourney?.owns(recipe.entry) ? UNTIMED_DUEL_PROTOCOL : DUEL_PROTOCOL,
+      },
     );
   }
   function paintRound(recipe) {
@@ -1716,8 +1726,9 @@ try {
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
-      summary: `${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${roundRecipe.turnPolicy === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${roundRecipe.seconds} seconds`,
+      summary: `${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${roundRecipe.turnPolicy === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${roundRecipe.seconds === 0 ? 'No race countdown' : `${roundRecipe.seconds} seconds`}`,
     });
+    $('race-time-field').hidden = !!candidateJourney;
     // Reconcile deliberate layout transitions immediately, including browsers
     // without ResizeObserver. Ordinary frames only compare cheap state values.
     refreshBoardLayout();
@@ -2063,8 +2074,14 @@ try {
       });
     }
     $('series-score').textContent = `${won[0]} : ${won[1]}`;
-    const left = Math.max(0, Math.ceil((match.limitTicks - match.tick) / 120));
-    $('race-clock').textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+    const left =
+      match.limitTicks === null
+        ? null
+        : Math.max(0, Math.ceil((match.limitTicks - match.tick) / 120));
+    $('race-clock').textContent =
+      left === null
+        ? 'No countdown'
+        : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i];
       $(`racer-stats-${i}`).textContent =

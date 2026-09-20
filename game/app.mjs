@@ -4566,7 +4566,12 @@ try {
     if (sessionBusy) throw new Error('A flight is already being verified.');
     if (signal?.aborted) throw new DOMException('Title launch cancelled.', 'AbortError');
     const entry = findCampaignEntry(candidate?.campaignKey);
-    if (!entry) throw new Error('Install the matching campaign pack before loading this flight.');
+    if (!entry)
+      throw new Error(
+        candidateHost
+          ? 'This authored flight needs its original test edition. Its saved bytes are unchanged. Export the saved attempt from Library & saves before choosing a current mission.'
+          : 'Install the matching campaign pack before loading this flight.',
+      );
     if (candidateHost && !candidateHost.owns(entry))
       throw new Error(
         'Open this Legacy flight in the ordinary game. This route restores only exact opening editions.',
