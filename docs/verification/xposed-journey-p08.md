@@ -60,3 +60,36 @@ validation was loosened. The actor/classic/renderer presentation cohort60/60PASS
 Node20; combined10-file framework/greybox/presentation cohort104/104PASS on both
 Node20.19.5 and22.22.2. Scoped ESLint and git diff checks also pass.
 Native screenshot/interaction, full-source CI and independent visual review remain.
+
+## Full clear and scoped native evidence
+
+All42 mission/preset/steering combinations now have complete, legal, no-life-loss
+Solo routes with exact simulation identity/checkpoint and exported public replay
+verification. The same inputs finish42 independent equal-board untimed races.
+Five explicit seeds replay every route,210 full runs without life loss. Fixed
+authored placements make these seed-stability checks, not210 different layouts.
+All clears need multiple closures; no objective remains after coverage. Optional
+mastery and delayed-start routes are separate open gates. The bounded development
+search has omniscient state access; only fresh legal-input replays count as evidence.
+Optimized clears are about19–56seconds, not human90–150second pacing validation.
+
+Exact35327b62 served read-only from Git on localhost8792, tab34. Native Studio
+inspection compiled seven candidates without applying; explicit Apply created the
+local draft. Emitter selection showed cadence/axis and no movement heading. A
+horizontal→vertical change applied with all-mode/preset validation; Undo restored
+horizontal, saved checkpoint3. No published content or repository map was edited.
+
+Practice loaded the original ready card and fresh Down closed its first cut:
+1.2% displayed,270score,3lives. Paused at13seconds, resumed without fresh direction,
+and later paused at50 and61seconds with the same score/coverage/lives. This verifies
+one native return and scoped stop-on-capture, not a full native clear. Details
+reported the real horizontal warning with1.1seconds left, stationary field anchor,
+trail danger and enclosure not disabling it; Back preserved Pause. A native51second
+screenshot showed the actual dashed lane, shared twin-post emitter, craft locator
+and reclaimed connector. The earlier P07 background-only capture issue did not
+recur in this new tab; no forced visibility or viewport override was used.
+
+Preview closed normally and focus returned to Play. Remaining six native layouts,
+active-solid/muted/reduced/compact visual matrix, optional mastery, timing variety,
+art, Team, whole-source and release/human gates remain. None of these observations
+is an independently approved production-recipe review.
