@@ -21,8 +21,8 @@ export function attachProfileTransferPanel({
   const summary = node('summary', 'Bring progress from an earlier release');
   const explanation = node(
     'p',
-    'Copy a collection saved by an earlier release in this browser on this site. This replaces this release’s pictures, scores, preferences, installed packs and saved flight together. Export your current game-data backup first to keep both. The earlier release stays unchanged.',
-    { class: 'micro-note' },
+    'Copy a collection saved by an earlier release in this browser on this site. The newest 32 earlier collections appear here; use a complete backup from the older release if it is not listed. This replaces this release’s pictures, scores, preferences, installed packs and saved flight together. Export your current game-data backup first to keep both. The earlier release stays unchanged.',
+    { id: 'transfer-explanation', class: 'micro-note' },
   );
   const source = node('select', null, { id: 'transfer-source', 'aria-label': 'Earlier release' });
   const review = node('button', 'Review saved progress', {

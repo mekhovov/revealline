@@ -1,6 +1,8 @@
 import { nativePlatform } from './platform.mjs';
+import { CONTENT_PROJECT_ITEM_LIMITS } from './content-design/limits.mjs';
 /** Explicit preparation of a generated distribution's declared core cache. */
 const MARKER = 'meta[name="revealline-offline"]';
+const OPTIONAL_ARTWORK_NAMES = new Set(['Opening Journey artwork', 'Journey candidate artwork']);
 function optionalNote(config) {
   const packs = config.optionalPacks;
   const packNote =
@@ -8,7 +10,7 @@ function optionalNote(config) {
       ? ''
       : ` ${packs.map((pack) => pack.name).join(', ')} ${packs.length === 1 ? 'is' : 'are'} optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup.`;
   const artNote = config.optionalArtwork
-    ? ' Opening Journey artwork is not included in offline preparation. Its web preview needs an online connection; a full downloaded distribution includes the original pictures.'
+    ? ` ${config.optionalArtwork.name} is not included in offline preparation. Its web preview needs an online connection; a full downloaded distribution includes the original pictures.`
     : '';
   return packNote + artNote;
 }
@@ -38,11 +40,11 @@ function configFromPage(documentRef = globalThis.document, locationRef = globalT
   if (
     config.optionalArtwork !== undefined &&
     (!config.optionalArtwork ||
-      config.optionalArtwork.name !== 'Opening Journey artwork' ||
+      !OPTIONAL_ARTWORK_NAMES.has(config.optionalArtwork.name) ||
       config.optionalArtwork.availability !== 'online-only' ||
       !Number.isSafeInteger(config.optionalArtwork.count) ||
       config.optionalArtwork.count < 1 ||
-      config.optionalArtwork.count > 32 ||
+      config.optionalArtwork.count > CONTENT_PROJECT_ITEM_LIMITS.assets ||
       !Number.isSafeInteger(config.optionalArtwork.bytes) ||
       config.optionalArtwork.bytes < 1 ||
       config.optionalArtwork.bytes > 128 * 1024 * 1024)
