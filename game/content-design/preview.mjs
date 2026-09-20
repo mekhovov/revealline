@@ -67,7 +67,7 @@ export function prepareContentPreview(
     actors: run.enemies.map(({ id, type, x, y }) => ({ id, type, x, y })),
     objectives: (run.objectives ?? []).map(({ id, x, y }) => ({ id, x, y })),
     ...(mode === 'team' ? { spawns: run.players.map(({ id, x, y }) => ({ id, x, y })) } : {}),
-    ...(run.relay ? { gates: relayView(run).gates } : {}),
+    ...(run.relay ? { gates: relayView(run).gates, relayTriggers: relayView(run).triggers } : {}),
   };
   const authoredTerrain = structuredClone(
     manifest.level.classic?.terrain ?? manifest.level.terrain ?? [],

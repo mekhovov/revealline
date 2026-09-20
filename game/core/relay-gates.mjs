@@ -13,9 +13,11 @@ export function relayGeometryDefinition(level) {
   return definition.gates.map((gate) => {
     exactKeys(gate, ['id', 'x', 'y', 'w', 'h', 'objectiveId'], 'relay gate');
     required(stableId(gate.objectiveId), 'Gate needs a capture objective ID.');
+    const objective = level.objectives?.find((objective) => objective.id === gate.objectiveId);
+    required(objective, 'Gate capture objective is missing.');
     required(
-      level.objectives?.some((objective) => objective.id === gate.objectiveId),
-      'Gate capture objective is missing.',
+      !(objective.required && objective.hidden),
+      'A required relay capture objective must be visible.',
     );
     const { objectiveId: _objectiveId, ...rectangle } = gate;
     return rectangle;

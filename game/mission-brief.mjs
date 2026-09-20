@@ -48,7 +48,7 @@ export function missionBriefing(
   const classicHint = ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6'].includes(level.version)
     ? [
         level.relayGates?.gates?.length
-          ? 'Capture linked relays to open permanent return routes. Closed gates block cuts.'
+          ? 'Capture matching-number relays to open permanent return routes. Closed gates block cuts.'
           : '',
         foundations && level.enemies?.some((enemy) => enemy.type === 'lane-boss')
           ? 'Lanes lock, warn, then fire. Leave the lane and secure exposed trail.'

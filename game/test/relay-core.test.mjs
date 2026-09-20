@@ -169,6 +169,9 @@ test('invalid trigger identities and occupants fail before a run exists', () => 
       s.relayGates.gates[0].opens = 'all';
     },
     (s) => {
+      s.objectives[0].hidden = true;
+    },
+    (s) => {
       s.objectives[0].x = 35.5;
     },
     (s) => {

@@ -13,7 +13,7 @@ import {
   drawEnemyPressure,
 } from './classic-view.mjs';
 import { foundationCompatibleView as classicView } from './foundation-view.mjs';
-import { drawRelayGates, relayView } from './relay-view.mjs';
+import { drawRelayGates, drawRelayTriggers, relayView } from './relay-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { playerBodyOffset } from './player-body-layout.mjs';
@@ -680,6 +680,7 @@ export class BoardPainter {
           ctx.globalAlpha = 1;
         }
       }
+      drawRelayTriggers(ctx, relayView(state), CELL);
       for (const f of state.ability.fields || []) {
         ctx.fillStyle = p.safe;
         ctx.globalAlpha = 0.12;
