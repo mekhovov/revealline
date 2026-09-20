@@ -1,0 +1,80 @@
+{
+  "format": "revealline-current-chapter-evidence.v1",
+  "parentSource": "276cbba302b4638b60bcc9aec7ac7f7eb5b61ca1",
+  "candidateVersion": "0.68.2",
+  "status": "FOCUSED_HOST_PASS_NOT_RELEASE_ACCEPTANCE",
+  "sourcePins": [
+    {
+      "path": "game/app.mjs",
+      "sha256": "95af12e1beef9067b7a7e5be7a82d2de7a46d5a0e85732c5b8e5457cbf156ef5"
+    },
+    {
+      "path": "game/test/optional-world-play-host.test.mjs",
+      "sha256": "07279e6f9600d5146c2ad847e539e1d93a7cbc29d4ba0c3cff965a93197752ea"
+    }
+  ],
+  "tests": [
+    {
+      "runtime": "20.19.5",
+      "tests": 16,
+      "files": 1,
+      "failures": 0
+    },
+    {
+      "runtime": "22.22.2",
+      "tests": 16,
+      "files": 1,
+      "failures": 0
+    }
+  ],
+  "originalFailure": "Originalapp fails exact saved-session preservation because it starts unnecessary checked replacement. Final assertion order also checks dialog absence before checkpoint/save equality.",
+  "sparseFailure": "First run missing exact audio fixture; retained separately. Fixture rehydration did not change runtime.",
+  "files": [
+    {
+      "path": "host-node20-r1.log.gz",
+      "storedBytes": 572,
+      "storedSha256": "19b5d320f464c1e7fbdb681d01b972dda33508930626b77316559ddd808466e2",
+      "originalBytes": 1560,
+      "originalSha256": "d1353c109f43cec5eefbfdaa5d6c69ecd4c1911c7dc4804014819368cd4c9ec6"
+    },
+    {
+      "path": "regression-original-node20.log.gz",
+      "storedBytes": 3565,
+      "storedSha256": "7c59002f8f9f78eeda3d863f9676dc857d9a2c74b0d9e15e99e4c12d81bbabb9",
+      "originalBytes": 24271,
+      "originalSha256": "9f79040a1678592fe93a1e830f7acb0392f8811464ff54367290f22fa61b6140"
+    },
+    {
+      "path": "regression-original-result.json",
+      "storedBytes": 364,
+      "storedSha256": "56e8b90d096b3ef0357b7978862e1793e67293bb926b935e4e510b289e265e58",
+      "originalBytes": 364,
+      "originalSha256": "56e8b90d096b3ef0357b7978862e1793e67293bb926b935e4e510b289e265e58"
+    },
+    {
+      "path": "host-node20-final.log.gz",
+      "storedBytes": 1031,
+      "storedSha256": "8b7d6632f75b1b8c07b9e090504843a52737a910da17c6117f1e18d3c08c9f31",
+      "originalBytes": 3984,
+      "originalSha256": "cf3c0d25c34b067776f1782ca3a517a96ebf6e749fab70415f110482e3abc8aa"
+    },
+    {
+      "path": "host-node22-final.log.gz",
+      "storedBytes": 1053,
+      "storedSha256": "f5d031a4df290aac25679fc94d25c9a6f9851e46a0a146580e9c135d02d0c3f2",
+      "originalBytes": 4219,
+      "originalSha256": "5004965dcf2c8a3c49f0c14b17b9d4a33e3cd53c697c9da39445906017310238"
+    },
+    {
+      "path": "public-finding.json",
+      "storedBytes": 1238,
+      "storedSha256": "6a4be406398b1b6d5c56dfdfad62130b33ea9e4895fa4df4e8b5b80fb3e86e72"
+    }
+  ],
+  "remaining": [
+    "Exact-source fullqualification/build/freeze",
+    "Native corrected source-pair and ordinary installed chapter flow",
+    "Public deployment and byte audit",
+    "Physicalinput/offline are outside this patch"
+  ]
+}
