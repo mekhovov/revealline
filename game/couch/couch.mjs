@@ -1374,6 +1374,7 @@ try {
     /* The fixed Solo title route remains available. */
   }
   shell = createCouchShell({
+    authoredRoute: authoredRoute?.id,
     coarse: matchMedia('(pointer: coarse)').matches,
     getDepartureState: () => ({ match, generation }),
     onLeaveRequest: pause,

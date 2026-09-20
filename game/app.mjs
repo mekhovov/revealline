@@ -64,6 +64,7 @@ import { attachInput } from './ui/input.mjs';
 import { resolveTouchControls } from './touch-controls.mjs';
 import { attachFullscreen } from './ui/fullscreen.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
+import { authoredModeDestinations } from './ui/authored-mode-routes.mjs';
 import {
   mountWorkshopLinks,
   readWorkshopReturn,
@@ -2371,12 +2372,22 @@ try {
       $('first-flight-help-enter').focus({ preventScroll: true });
     }
   }
-  const modeDestinations = Object.freeze({
-    team: 'couch/relay-rescue.html?return=solo',
-    versus: 'couch/?return=solo',
-  });
+  const modeDestinations =
+    authoredModeDestinations('solo', authoredRoute?.id) ??
+    Object.freeze({
+      team: 'couch/relay-rescue.html?return=solo',
+      versus: 'couch/?return=solo',
+    });
+  if (authoredRoute) {
+    for (const kind of ['versus', 'team'])
+      for (const id of [`shell-title-${kind}`, `shell-${kind}`])
+        $(id)?.setAttribute('href', modeDestinations[kind]);
+    $('shell-team').textContent = 'Separate Team arenas · 2 players';
+  }
   const modeLabel = (kind) => (kind === 'versus' ? 'Versus' : 'Team');
   function prepareModeHint(ticket) {
+    if (authoredRoute)
+      return { href: new URL(modeDestinations[ticket.kind], location.href).href, token: null };
     return ticket.kind === 'versus'
       ? modeReturnV2.prepare({
           origin: 'solo-missions',
@@ -2437,11 +2448,13 @@ try {
         ? 'Your paused flight was saved and verified. Continue can restore it after returning.'
         : 'This current flight is session-only: it remains paused in this tab. Leaving may lose this attempt. This flight was not verified as safely saved.';
     $('mode-leave-status').textContent = `${flight} ${
-      ticket.origin === 'solo-title'
-        ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
-        : ticket.fallback
-          ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
-          : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
+      authoredRoute
+        ? `This opens ${ticket.kind === 'team' ? 'the separate Team arenas' : 'Versus with its own Journey progress'}. Returning opens this Solo Journey title; Continue stays explicit.`
+        : ticket.origin === 'solo-title'
+          ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
+          : ticket.fallback
+            ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
+            : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
     }`;
   }
   function unfinishedFlight() {
@@ -2508,12 +2521,6 @@ try {
       return;
     event.preventDefault();
     if (!Object.hasOwn(modeDestinations, kind)) return;
-    if (candidateHost) {
-      warning(
-        'This flight stays in Solo. Open the separate authored Versus test route for paired-board play; Team uses its separate test imports.',
-      );
-      return;
-    }
     if (
       !['solo-title', 'solo-missions'].includes(origin) ||
       (origin === 'solo-title' && (typeof isCurrent !== 'function' || !isCurrent()))
@@ -8151,7 +8158,7 @@ try {
     canContinue: () =>
       (started && !['won', 'lost'].includes(run?.status)) ||
       !$('continue-saved').hidden ||
-      !!journeyDestination(),
+      !!journeyCatalog.find(journeyProfile?.snapshot().cursors.solo),
     initial: !practice && !courseSession && !packLaunchRequest,
     initialFocus: false, // The boot guard still hides the title until ready().
     titleDestination: () =>
@@ -8180,6 +8187,7 @@ try {
     },
     onTitleCancel: cancelTitleFlight,
     onModeDeparture: requestModeDeparture,
+    separateTeam: !!authoredRoute,
     onWorlds: () => optionalWorlds.open(),
     onMissions: journeyEnabled ? (opener) => journeyChooser.open(opener) : undefined,
   });

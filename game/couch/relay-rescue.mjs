@@ -2,6 +2,7 @@ import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { mountModeChoices } from '../ui/mode-choice.mjs';
+import { authoredTeamReturn } from '../ui/authored-mode-routes.mjs';
 import {
   createCoop,
   startCoop,
@@ -103,10 +104,17 @@ export function bootCoop() {
   } catch {
     /* Fixed title fallback remains available. */
   }
-  const returnHref = () => teamReturnHref({ href: location.href, storage: returnStorage });
+  const authoredReturn = authoredTeamReturn(location.href);
+  const homeHref = authoredReturn?.solo ?? '../';
+  const versusHref = authoredReturn?.versus ?? './';
+  const returnHref = () =>
+    authoredReturn?.[authoredReturn.origin] ??
+    teamReturnHref({ href: location.href, storage: returnStorage });
+  $('coop-home').setAttribute('href', homeHref);
+  $('coop-versus').setAttribute('href', versusHref);
   $('coop-race').setAttribute('href', returnHref());
   $('coop-race').textContent = fromSolo ? 'Back to Solo' : 'Race mode ↗';
-  $('coop-solo').setAttribute('href', fromSolo ? returnHref() : '../');
+  $('coop-solo').setAttribute('href', fromSolo ? returnHref() : homeHref);
   const arenaPreference = createTeamArenaPreference({
     pack: COOP_STARTER_PACK,
     getStorage: () => localStorage,
@@ -2527,9 +2535,9 @@ export function bootCoop() {
         ticket.kind === 'return'
           ? new URL(returnHref(), location.href).href
           : ticket.kind === 'home'
-            ? new URL('../', location.href).href
+            ? new URL(homeHref, location.href).href
             : ticket.kind === 'versus'
-              ? new URL('./', location.href).href
+              ? new URL(versusHref, location.href).href
               : null;
       closeDeparture(ticket, { restore: false });
       if (ticket.kind === 'setup') lobby();
@@ -2574,7 +2582,7 @@ export function bootCoop() {
       cancelNext();
       $(id).setAttribute(
         'href',
-        kind === 'return' ? returnHref() : kind === 'versus' ? './' : '../',
+        kind === 'return' ? returnHref() : kind === 'versus' ? versusHref : homeHref,
       );
       if (departure || pictureOperation) {
         event.preventDefault();
