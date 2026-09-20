@@ -1,5 +1,6 @@
 import { createStarterProject } from './starter.mjs';
 import { freezeDesign } from './catalogs.mjs';
+import { NEON_ART_CANDIDATES } from './neon-art.mjs';
 
 // Original spatial hypotheses, not released missions. No new mandatory rule or
 // actor speed tier: this campaign develops already-taught frontier decisions.
@@ -274,11 +275,12 @@ export const NEON_REFERENCE_ADAPTATIONS = freezeDesign(
 export const NEON_FIRST_RETURNS = freezeDesign(
   Object.fromEntries(rows.map((row) => [row.id, row.departure])),
 );
-export function createNeonCandidates() {
+export function createNeonCandidates({ artwork = false } = {}) {
   const project = createStarterProject('neon-greybox-candidates');
   project.name = 'Neon Contours · greybox candidates';
   project.revision = 'greybox-1';
   project.maps = [];
+  project.assets = artwork ? structuredClone(NEON_ART_CANDIDATES) : [];
   project.missions = rows.map((row, index) => {
     const template = createStarterProject().missions[0];
     const map = {
@@ -303,7 +305,10 @@ export function createNeonCandidates() {
       actors: structuredClone(row.actors),
       bonuses: [],
       coverage: row.coverage,
-      presentation: { themeId: 'horizon', backgroundAssetId: null },
+      presentation: {
+        themeId: 'horizon',
+        backgroundAssetId: artwork ? `neon-pixel-${row.id}` : null,
+      },
       design: {
         ...template.design,
         routeDecision: row.decision,

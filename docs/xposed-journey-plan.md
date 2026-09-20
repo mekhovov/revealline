@@ -267,6 +267,16 @@ keyboard/touch/controller, muted/reduced-effects/contrast and small screens.
 
 ## P00 implementation notes
 
+September20 continuation: frozen P04 source6b5d8528 passed7,320/7,320 hosted
+tests on Node20.19.6 (run35514969394, freeze=false). This is not release or human
+acceptance. Its Signal artwork was adopted into the unfrozen P05 successor.
+Seven original Neon picture candidates now have immutable revisions and an
+explicit Studio inspect/apply path, with historical greybox defaults preserved.
+The shared registry has35originals and packaging uses the existing512-asset
+content-library ceiling without raising image, offline or Pages byte budgets.
+Native readability and campaign presentation remain open; see
+`verification/xposed-neon-art.md` for the exact evidence and limits.
+
 P01 packaging follow-up: opening originals are explicit optional artwork in web
 offline preparation, with exact authored pins and unchanged full-distribution
 bytes. The title and offline status explain the online requirement. Bounded

@@ -525,7 +525,7 @@ $('signal').onclick = guarded(() => {
 });
 $('neon').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createNeonCandidates(), null, 2);
+  $('source').value = JSON.stringify(createNeonCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });
