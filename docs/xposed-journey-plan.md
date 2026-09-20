@@ -188,15 +188,19 @@ Expert first-closure observation, not a complete native playthrough.
 P02's manual image workflow accepts bounded static local reference pictures,
 crop/overlay, queued manual rectangles, shared validation, exact Solo Practice and
 explicit copy-on-write Apply. It never infers collision or publishes artwork.
-Unapplied tracing/reference state is honestly session-only; durable tracing recovery,
+Unapplied tracing/reference state now has separate local recovery and portable backups;
 assisted tracing and full native upload qualification remain open. The expanded
 content/foundation/opening/Border cohort passes 135/135. The P02 branch must integrate
 the eventual accepted P01 baseline before promotion; no phase ordering is bypassed.
 Its preparation now includes candidate P01 through3556e257, preserving the shared
 Team authoring and real Solo/Versus hosts. Native image upload/crop/manual geometry,
 inspection, explicit Apply and Undo have been exercised. Two reproduced stale
-inspection/status issues are fixed with regression coverage; durable tracing and
-full accepted-source qualification are still required.
+inspection/status issues are fixed with regression coverage. Local tracing persists
+original bytes, accepted crops and queued rectangles per mission, with explicit restore,
+exact map identity, compare-and-swap conflict checks, retry and separate export/import.
+Restore never grants geometry Apply permission or publishes artwork. Native reload,
+restore, inspection and Apply have been verified; full accepted-source qualification,
+browser/device matrix and review remain required.
 
 P01 follow-up adds optional Journey backup inspection and non-destructive restore:
 missing records merge, current receipts/cursors win, and the v1 persisted schema

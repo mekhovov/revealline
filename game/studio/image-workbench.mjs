@@ -5,8 +5,15 @@ import {
 } from '../content-design/image-authoring.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
+import {
+  readImageTrace,
+  imageTraceOwner,
+  assertImageTraceOwner,
+  decodeImageTraceReference,
+} from '../content-design/image-trace.mjs';
 
 /** The image and uncommitted tracing queue never enter project storage or runtime.
+ * Independent tracing recovery is local-only and never grants Apply authority.
  * Only an explicitly inspected geometry candidate may cross the Apply boundary. */
 export function createImageWorkbench({
   document,
@@ -17,6 +24,8 @@ export function createImageWorkbench({
   apply,
   play,
   loadReference = loadMapReference,
+  decodeReference = decodeImageTraceReference,
+  onChange = () => {},
 }) {
   const $ = (id) => document.getElementById(id);
   let reference = null,
@@ -28,6 +37,10 @@ export function createImageWorkbench({
     observedDraft = null;
   const draftIdentity = () => JSON.stringify([getSource(), getMission()?.id, getDifficulty()]);
   const identity = () => JSON.stringify([draftIdentity(), rows, crop]);
+  const changed = () => {
+    loading++;
+    onChange();
+  };
   const message = (text) => {
     $('reference-status').textContent = text;
   };
@@ -56,7 +69,7 @@ export function createImageWorkbench({
     $('reference-tools').disabled = true;
     list();
     invalidate(
-      'Reference pictures and queued geometry are session-only. Applied maps are saved with your project.',
+      'No reference loaded. Tracing recovery is separate from project checkpoints and published maps.',
     );
   }
   const guard = (action) => async (event) => {
@@ -105,6 +118,7 @@ export function createImageWorkbench({
       `${file.name}: ${next.width} × ${next.height}. Local reference only; the crop stretches to the 2:1 board. No geometry has been inferred.`,
     );
     redraw();
+    changed();
   });
   $('reference-crop').onclick = guard(() => {
     if (!reference) throw new Error('Upload a reference picture first.');
@@ -116,14 +130,21 @@ export function createImageWorkbench({
     crop = next;
     invalidate('Crop updated. Reinspect before applying geometry. A 2:1 crop avoids stretching.');
     redraw();
+    changed();
   });
   for (const key of ['x', 'y', 'w', 'h'])
-    $(`crop-${key}`).oninput = () =>
+    $(`crop-${key}`).oninput = () => {
+      loading++;
       invalidate('Crop fields changed. Use Preview crop, then inspect the geometry again.');
-  $('reference-show').onchange = () => redraw();
+    };
+  $('reference-show').onchange = () => {
+    redraw();
+    changed();
+  };
   $('reference-clear').onclick = () => {
     dispose();
     redraw();
+    changed();
   };
   $('reference-queue-add').onclick = guard(() => {
     if (!reference || !getMission())
@@ -148,11 +169,13 @@ export function createImageWorkbench({
     rows.push({ surface, x, y, w, h });
     invalidate();
     list();
+    changed();
   });
   $('reference-queue-undo').onclick = () => {
     rows.pop();
     invalidate();
     list();
+    changed();
   };
   $('reference-inspect').onclick = guard(() => {
     invalidate();
@@ -199,11 +222,46 @@ export function createImageWorkbench({
     rows = [];
     list();
     invalidate(
-      'Applied as a private map revision. Undo restores the original. Reference pixels were not stored or published.',
+      'Applied as a private map revision. Undo restores the original. Reference pixels remain separate from maps and are never published.',
     );
+    changed();
   });
   dispose();
   return {
+    snapshot() {
+      if (!reference) return null;
+      return readImageTrace({
+        format: 'ContentImageTraceV1',
+        ...imageTraceOwner(getSource(), getMission()?.id),
+        reference: reference.source,
+        crop,
+        rectangles: rows,
+        visible: $('reference-show').checked,
+      });
+    },
+    async restore(source) {
+      const trace = readImageTrace(source);
+      assertImageTraceOwner(trace, getSource(), getMission()?.id);
+      const ticket = ++loading,
+        initialDraft = draftIdentity();
+      const next = await decodeReference(trace);
+      if (ticket !== loading || initialDraft !== draftIdentity()) {
+        next.dispose();
+        throw new Error(
+          'The draft or reference changed during restore. Your newer work is intact.',
+        );
+      }
+      reference?.dispose();
+      reference = next;
+      crop = trace.crop;
+      rows = trace.rectangles;
+      for (const key of ['x', 'y', 'w', 'h']) $(`crop-${key}`).value = crop[key];
+      $('reference-tools').disabled = false;
+      $('reference-show').checked = trace.visible;
+      list();
+      invalidate('Tracing restored. Inspect the proposed geometry again before Play or Apply.');
+      redraw();
+    },
     underlay: () => (reference && crop && $('reference-show').checked ? underlay : null),
     sync() {
       const nextOwner = JSON.stringify([getSource().id, getMission()?.id]);
@@ -215,7 +273,7 @@ export function createImageWorkbench({
         invalidate(
           rows.length
             ? 'Draft or difficulty changed. Reinspect the queued geometry before applying.'
-            : 'Draft or difficulty changed. No geometry is queued; the reference remains session-only.',
+            : 'Draft or difficulty changed. No geometry is queued; tracing recovery is separate from project checkpoints.',
         );
       observedDraft = nextDraft;
       $('reference-file').disabled = !getMission();

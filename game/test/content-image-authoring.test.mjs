@@ -10,6 +10,7 @@ import { createStarterProject } from '../content-design/starter.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createDraftHistory } from '../content-design/drafts.mjs';
 import { createImageWorkbench } from '../studio/image-workbench.mjs';
+import { decodeImageTraceReference } from '../content-design/image-trace.mjs';
 
 const png = await readFile(
   new URL('../content-design/assets/horizon-r1/first-return.png', import.meta.url),
@@ -149,6 +150,7 @@ test('invalid queued geometry cannot partially apply or bypass the compiler', ()
 
 function workbenchFixture(
   loadReference = (file) => loadMapReference(file, { createImage: () => imageFactory() }),
+  options = {},
 ) {
   let source = createStarterProject(),
     applied = 0,
@@ -180,6 +182,9 @@ function workbenchFixture(
     return elements.get(id);
   };
   const api = createImageWorkbench({
+    decodeReference: (trace) =>
+      decodeImageTraceReference(trace, { createImage: () => imageFactory() }),
+    ...options,
     loadReference,
     document: { getElementById: $ },
     getSource: () => source,
@@ -344,5 +349,72 @@ test('changing difficulty retires the frozen inspected preview but preserves the
   await $('reference-play').onclick();
   assert.equal(fixture.played().difficulty, 'gentle');
   assert.equal(fixture.applied(), 0);
+  api.dispose();
+});
+
+test('trace snapshot and restore retain original bytes and accepted crop but never restore Apply authority', async () => {
+  let changes = 0;
+  const fixture = workbenchFixture(undefined, { onChange: () => changes++ }),
+    { $, api } = fixture;
+  const original = structuredClone(fixture.getSource());
+  $('reference-file').files = [file()];
+  await $('reference-file').onchange();
+  for (const [key, value] of Object.entries({ x: 200, y: 100, w: 1200, h: 600 }))
+    $(`crop-${key}`).value = value;
+  await $('reference-crop').onclick();
+  $('surface').value = 'foundations';
+  for (const [key, value] of Object.entries({ x: 40, y: 20, w: 5, h: 4 })) $(key).value = value;
+  await $('reference-queue-add').onclick();
+  await $('reference-inspect').onclick();
+  const backup = api.snapshot();
+  assert.equal(backup.rectangles.length, 1);
+  assert.equal(backup.reference.dataUrl, `data:image/png;base64,${png.toString('base64')}`);
+  $('crop-x').value = 201;
+  $('crop-x').oninput();
+  assert.equal(api.snapshot().crop.x, 200, 'Unpreviewed crop fields are not accepted state.');
+  const beforeDispose = changes;
+  api.dispose();
+  assert.equal(changes, beforeDispose, 'Leaving a mission never writes a clear tombstone.');
+  assert.equal(api.snapshot(), null);
+  await api.restore(backup);
+  assert.deepEqual(api.snapshot(), backup);
+  assert.equal($('reference-apply').disabled, true);
+  assert.equal($('reference-play').disabled, true);
+  assert.equal($('reference-preview').hidden, true);
+  assert.deepEqual(fixture.getSource(), original);
+  await $('reference-apply').onclick();
+  assert.equal(fixture.applied(), 0);
+  await $('reference-inspect').onclick();
+  await $('reference-apply').onclick();
+  assert.equal(fixture.applied(), 1);
+  assert.equal(api.snapshot().rectangles.length, 0);
+  assert.notEqual(api.snapshot().mapIdentity, backup.mapIdentity);
+  await assert.rejects(api.restore(backup), /different map revision/);
+  api.dispose();
+});
+
+test('late tracing decode cannot replace newer queued geometry or a different mission', async () => {
+  const pending = [];
+  const fixture = workbenchFixture(undefined, {
+      decodeReference: () => new Promise((resolve) => pending.push(resolve)),
+    }),
+    { $, api } = fixture;
+  $('reference-file').files = [file()];
+  await $('reference-file').onchange();
+  const backup = api.snapshot();
+  const late = api.restore(backup);
+  $('surface').value = 'foundations';
+  for (const [key, value] of Object.entries({ x: 40, y: 20, w: 5, h: 4 })) $(key).value = value;
+  await $('reference-queue-add').onclick();
+  let disposed = 0;
+  pending.shift()({ dispose: () => disposed++ });
+  await assert.rejects(late, /newer work is intact/);
+  assert.equal(api.snapshot().rectangles.length, 1);
+  const otherLate = api.restore(backup);
+  fixture.replace({ ...fixture.getSource(), id: 'another-project' });
+  pending.shift()({ dispose: () => disposed++ });
+  await assert.rejects(otherLate, /newer work is intact/);
+  assert.equal(disposed, 2);
+  assert.equal(api.snapshot(), null);
   api.dispose();
 });

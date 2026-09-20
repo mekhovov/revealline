@@ -3,7 +3,7 @@ import { inspectImageDataUrl } from '../content.mjs';
 import { compileContentProject, resolveMission } from './project.mjs';
 import { forkMissionMap } from './drafts.mjs';
 
-/** Reference pictures are local, transient aids, not assets or collision data.
+/** Reference pictures are local authoring aids, not runtime assets or collision data.
  * Check original bytes and headers before asking a browser to allocate pixels. */
 export async function loadMapReference(
   file,
@@ -64,7 +64,19 @@ export async function loadMapReference(
         });
         image.onload = null;
         image.onerror = null;
-        return { image, width: header.width, height: header.height, dispose };
+        return {
+          image,
+          width: header.width,
+          height: header.height,
+          source: Object.freeze({
+            name:
+              typeof file.name === 'string' && file.name.trim()
+                ? file.name.slice(0, 160)
+                : 'Reference picture',
+            dataUrl,
+          }),
+          dispose,
+        };
       })(),
       new Promise((_, reject) => {
         timer = setTimeout(

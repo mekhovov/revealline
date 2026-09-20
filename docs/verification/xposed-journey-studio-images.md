@@ -26,11 +26,9 @@ then makes a copy-on-write map revision. Other consumers and historical maps are
 preserved. Existing undo, checkpoint autosave, conflict checks and project export
 cover the applied map. Failed inspections cannot partially change it.
 
-The reference picture, crop and **unapplied** queue are session-only, clearly
-labelled and cleared on mission changes. Pending rectangles trigger the browser's
-leave warning. They are not included in project backups or crash recovery; keep
-the original reference separately. Durable tracing sessions and assisted tracing
-remain follow-up work, not claimed as implemented.
+The original session-only implementation is superseded by the durable tracing
+follow-up below. Tracing remains separate from project backups and runtime maps.
+Assisted tracing remains follow-up work, not claimed as implemented.
 
 ## Verification
 
@@ -83,5 +81,51 @@ Apply→Undo35→55→35cells; it is not an exact integrated-source runtime clai
 
 Source worktrees remain isolated; the P01 server and user/paused tabs are unchanged.
 Historical evidence is sparse locally to preserve disk capacity, so full historical
-admission/build checks must use a complete hosted checkout. Durable tracing sessions,
-assisted tracing, public deployment and human/device qualification remain open.
+admission/build checks must use a complete hosted checkout. Assisted tracing,
+public deployment and human/device qualification remain open.
+
+## Durable tracing follow-up
+
+`ContentImageTraceV1` retains the original bounded embedded reference bytes,
+accepted crop, visibility and up to128 manually queued rectangles. It carries
+project/mission/exact map identity but no preview, Apply or publication authority.
+Malformed fields, remote/executable URLs, oversized files and decode mismatches
+fail closed. Portable reads and image decode have bounded timeouts.
+
+A separate local IndexedDB database saves per-mission tracing revisions. Autosave
+coalesces edits during a write. Revision compare-and-swap rejects stale tabs;
+explicit clears retain revision tombstones. Failed/uncertain writes retain the
+session and require rereading the head before explicit replacement. Changing
+missions never clears the previous stored trace, and late reads cannot update the
+wrong mission's recovery controls. Pending work remains exportable, including an
+unsaved prior mission's in-memory draft after returning to that mission.
+
+Saved tracing is offered, not silently restored over current work. Backup import
+inspects before explicit Restore. Restore decodes through the same bounded loader,
+requires the exact matching map, rejects late results after edits/mission changes,
+and always disables Play/Apply until a fresh geometry inspection. Pre-Apply traces
+cannot be replayed onto a post-Apply map after a crash between independent saves.
+For a mismatched trace, restore its matching project checkpoint first.
+
+Native current-source check on port8779, project `trace-recovery-native-check`:
+uploaded original first-return.png; accepted crop(200,100,1200,600); queued
+foundation(40,20,5,4); observed tracing revision3 while project checkpoint1 stayed
+at25foundation cells. Reload retained revision3 but did not automatically load
+the picture or change the map. Explicit Restore recovered crop and queue with
+Play/Apply disabled. Inspect showed45foundation/2335earnable cells; explicit Apply
+saved project checkpoint2 with45cells and tracing revision4 with zero queued
+rectangles. A second reload/Restore retained45cells and an empty queue, proving
+the applied rectangle was not repeated. No console errors were reported.
+
+This checks the actual local browser persistence and manual Apply path, not native
+file-dialog export/import, physical devices, full phase acceptance or public Pages.
+
+The integrated image/recovery/Studio/structure/Team/Border cohort passes **82/82**
+(16.0 seconds), including all84 complete Solo routes/replays and84 paired-board
+repetitions plus the six Team route variants. New regressions cover storage
+transactions, conflicting writers, clear tombstones, coalesced saves, failed save
+retry, late mission reads/decodes/imports, separate portable export, fresh Apply
+authority and exact-map crash protection. Full source lint and changed-file
+format/whitespace checks pass. Local full source validation is not claimed: the
+capacity-preserving sparse checkout omits required historical build assets;
+complete-checkout hosted qualification remains the exact-source gate.

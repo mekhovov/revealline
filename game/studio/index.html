@@ -222,9 +222,10 @@
             <p class="note">
               Upload → crop → queue manual rectangles → inspect → play → apply. Your picture stays
               on this device and is never converted automatically into collision or published as
-              artwork. Reference pictures and the tracing queue are session-only; changing missions
-              clears them. Applied geometry is saved, undoable and included in your project backup.
-              Keep the original picture separately.
+              artwork. References, accepted crops and queues save locally in separate tracing
+              drafts. Restore tracing when returning to a mission. Applied geometry is saved,
+              undoable and included in your project backup. Export a tracing backup too to keep the
+              original picture.
             </p>
             <label
               >Local reference picture
@@ -275,6 +276,33 @@
               </div>
             </fieldset>
             <p id="reference-status" class="note" role="status"></p>
+            <fieldset>
+              <legend>Local tracing recovery · never published</legend>
+              <p id="trace-status" class="note" role="status"></p>
+              <div class="pair">
+                <button id="trace-read" type="button">Read saved tracing / retry</button>
+                <button id="trace-restore" type="button" disabled>Restore saved tracing</button>
+                <button id="trace-session-restore" type="button" disabled>
+                  Restore unsaved session tracing
+                </button>
+                <button id="trace-replace" type="button" disabled>
+                  Replace saved with current
+                </button>
+              </div>
+              <div class="pair">
+                <button id="trace-export" type="button">Export current tracing backup</button>
+                <button id="trace-export-saved" type="button" disabled>
+                  Export saved tracing backup
+                </button>
+              </div>
+              <label
+                >Inspect tracing backup
+                <input id="trace-import" type="file" accept="application/json,.json" />
+              </label>
+              <button id="trace-import-restore" type="button" disabled>
+                Restore backup tracing
+              </button>
+            </fieldset>
           </details>
           <details>
             <summary>Frozen capture inspection</summary>
