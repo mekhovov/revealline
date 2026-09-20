@@ -45,7 +45,7 @@ function anchorPath(state, start) {
   parent[start] = -1;
   for (let head = 0; head < queue.length; head++) {
     const index = queue[head];
-    if (border(index, state)) {
+    if (border(index, state) || state.foundation?.permanent[index]) {
       const path = [];
       for (let i = index; i !== -1; i = parent[i]) path.push(i);
       return path.reverse();
@@ -109,6 +109,7 @@ export function classicErosionReason(state, index, protectedCells = classicProte
   if (!Number.isInteger(index) || index < 0 || index >= state.cells.length || border(index, state))
     return 'border';
   if (state.cells[index] === CELL.WALL) return 'wall';
+  if (state.foundation?.permanent[index]) return 'foundation';
   if (state.cells[index] !== CELL.SAFE) return 'not-safe';
   if (protectedCells.has(index)) return 'protected';
   return null;

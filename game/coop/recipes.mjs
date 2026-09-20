@@ -1,4 +1,9 @@
 import { COOP_LEVEL_VERSION, COOP_RULESET, validateCoopLevel } from './core.mjs';
+import {
+  COOP_FOUNDATION_LEVEL_VERSION,
+  COOP_FOUNDATION_RULESET,
+  COOP_FOUNDATION_PACK_VERSION,
+} from './foundations.mjs';
 
 export const COOP_RECIPE_VERSION = 'revealline-coop-level-recipe.v1';
 export const COOP_PACK_RECIPE_VERSION = 'revealline-coop-pack-recipe.v1';
@@ -301,22 +306,44 @@ export function validateCoopPack(pack) {
   if (!keys(pack, ['version', 'ruleset', 'id', 'revision', 'name', 'levels']))
     return result(['A co-op pack must be a plain data object with supported fields.']);
   const errors = [];
-  if (pack.version !== COOP_PACK_VERSION)
+  const foundations = pack.version === COOP_FOUNDATION_PACK_VERSION;
+  if (pack.version !== COOP_PACK_VERSION && !foundations)
     errors.push('Unsupported co-op pack version; solo packs are a different format.');
-  if (pack.ruleset !== COOP_RULESET) errors.push('This co-op pack requires a different ruleset.');
-  if (!identifier(pack.id) || !name(pack.name) || !revision(pack.revision))
-    errors.push('A co-op pack needs a local ID, a name, and a positive integer revision.');
+  if (pack.ruleset !== (foundations ? COOP_FOUNDATION_RULESET : COOP_RULESET))
+    errors.push('This co-op pack requires a different ruleset.');
+  const validRevision = foundations
+    ? typeof pack.revision === 'string' && pack.revision.length > 0 && pack.revision.length <= 80
+    : revision(pack.revision);
+  if (!identifier(pack.id) || !name(pack.name) || !validRevision)
+    errors.push(
+      foundations
+        ? 'A Team foundation pack needs a local ID, a name, and a pinned revision string.'
+        : 'A co-op pack needs a local ID, a name, and a positive integer revision.',
+    );
   if (!array(pack.levels, COOP_PACK_MAX_LEVELS) || pack.levels.length === 0)
     return result([...errors, `A co-op pack needs 1–${COOP_PACK_MAX_LEVELS} levels.`]);
   const ids = new Set();
   for (const [i, level] of pack.levels.entries()) {
     const validation = inspectLevel(level);
     errors.push(...validation.errors.map((error) => `Level ${i + 1}: ${error}`));
+    if (
+      validation.valid &&
+      level.version !== (foundations ? COOP_FOUNDATION_LEVEL_VERSION : COOP_LEVEL_VERSION)
+    )
+      errors.push(
+        `Level ${i + 1}: ${foundations ? 'This foundation pack requires a matching Team runtime edition.' : 'This historical pack cannot contain a newer Team runtime edition.'}`,
+      );
     if (validation.valid) {
       if (ids.has(level.id)) errors.push(`Duplicate co-op level ID: ${level.id}.`);
       ids.add(level.id);
     }
   }
+  if (
+    foundations &&
+    !errors.length &&
+    new Set(pack.levels.map((level) => level.journeyDifficulty)).size !== 1
+  )
+    errors.push('A Team foundation pack must pin one consistent difficulty.');
   if (!errors.length && new TextEncoder().encode(JSON.stringify(pack)).length > COOP_PACK_MAX_BYTES)
     errors.push('The co-op pack exceeds its 1 MiB data budget.');
   return result(errors);

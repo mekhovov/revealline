@@ -1,0 +1,887 @@
+{
+  "format": "OpeningPresetFeasibilityRoutesV1",
+  "scope": "Offline search-derived legal clear routes, not human pacing, balance or input-device evidence. Seed 1, Scout. Standard/immediate routes remain in horizon-greybox-routes.json. No state edits, bonuses or abilities.",
+  "sets": [
+    {
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "rows": [
+        [
+          "first-return",
+          "5065543439bb892b",
+          "2d56a4f44d55bd95",
+          [
+            ["right", 432],
+            ["down", 414]
+          ]
+        ],
+        [
+          "choose-your-share",
+          "7f167165b4634a6e",
+          "d08827a94027533f",
+          [
+            ["left", 432],
+            ["down", 414]
+          ]
+        ],
+        [
+          "two-keepers",
+          "70074b2c2d8244e0",
+          "da627a9aef301dc4",
+          [
+            ["right", 432],
+            ["down", 168],
+            ["left", 846],
+            ["right", 846],
+            ["down", 168],
+            ["left", 846]
+          ]
+        ],
+        [
+          "nearby-shore",
+          "1764f8f3e4c8f28d",
+          "3afd8f2e117f12d5",
+          [
+            ["left", 384],
+            ["down", 60],
+            ["right", 852],
+            ["down", 264],
+            ["left", 846],
+            ["right", 162],
+            ["up", 258],
+            ["down", 54],
+            ["right", 678]
+          ]
+        ],
+        [
+          "island-outpost",
+          "b3acdea61d3e2211",
+          "3d16be7acff84d3c",
+          [
+            ["left", 222],
+            ["right", 6],
+            ["left", 12],
+            ["down", 216],
+            ["right", 600],
+            ["up", 414]
+          ]
+        ],
+        [
+          "stepping-stones",
+          "03df96e5786802d6",
+          "e6fc3e8d9c6c162e",
+          [
+            ["right", 120],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["right", 348],
+            ["up", 414],
+            ["down", 198],
+            ["left", 342]
+          ]
+        ],
+        [
+          "two-bays",
+          "016bd1fc9ed71b47",
+          "05800ea885da4af2",
+          [
+            ["up", 12],
+            ["left", 414],
+            ["right", 402],
+            ["up", 192],
+            ["right", 444],
+            ["down", 84],
+            ["left", 414]
+          ]
+        ],
+        [
+          "courtyard-return",
+          "4ca4bdf5a485384a",
+          "effea13ca5a4f08c",
+          [
+            ["up", 72],
+            ["right", 180],
+            ["down", 150],
+            ["up", 30],
+            ["right", 72],
+            ["down", 12],
+            ["right", 300],
+            ["left", 300],
+            ["up", 144],
+            ["left", 60],
+            ["up", 114]
+          ]
+        ],
+        [
+          "long-way-home",
+          "49887a8aab121d26",
+          "9161e780ac369096",
+          [
+            ["right", 516],
+            ["up", 36],
+            ["left", 486],
+            ["right", 6],
+            ["left", 12],
+            ["down", 72],
+            ["right", 492],
+            ["up", 72],
+            ["left", 228],
+            ["down", 36],
+            ["left", 60],
+            ["up", 30],
+            ["down", 66],
+            ["left", 48],
+            ["down", 174],
+            ["up", 6],
+            ["down", 12],
+            ["right", 336],
+            ["up", 174]
+          ]
+        ],
+        [
+          "horizon-remix",
+          "ad262fa023e8b65e",
+          "774fb00c15782c38",
+          [
+            ["up", 36],
+            ["right", 432],
+            ["left", 180],
+            ["up", 162],
+            ["down", 162],
+            ["left", 36],
+            ["down", 246],
+            ["up", 6],
+            ["down", 12],
+            ["left", 480],
+            ["up", 414],
+            ["down", 6],
+            ["up", 12],
+            ["right", 516],
+            ["down", 240],
+            ["left", 210],
+            ["right", 6],
+            ["up", 72],
+            ["right", 108],
+            ["up", 162],
+            ["down", 6],
+            ["right", 60],
+            ["down", 312],
+            ["left", 474],
+            ["right", 42],
+            ["up", 318],
+            ["down", 6],
+            ["up", 12],
+            ["right", 24],
+            ["down", 324],
+            ["right", 48],
+            ["up", 318],
+            ["down", 6],
+            ["up", 12],
+            ["right", 48],
+            ["down", 318]
+          ]
+        ]
+      ]
+    },
+    {
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "rows": [
+        [
+          "first-return",
+          "5065543439bb892b",
+          "7f5ffeeb81152035",
+          [
+            ["right", 432],
+            ["down", 414]
+          ]
+        ],
+        [
+          "choose-your-share",
+          "7f167165b4634a6e",
+          "f340d2ca82e9c2e9",
+          [
+            ["left", 432],
+            ["down", 414]
+          ]
+        ],
+        [
+          "two-keepers",
+          "70074b2c2d8244e0",
+          "2f3839057a63d303",
+          [
+            ["right", 432],
+            ["down", 168],
+            ["left", 846],
+            ["right", 858],
+            ["down", 168],
+            ["left", 846]
+          ]
+        ],
+        [
+          "nearby-shore",
+          "1764f8f3e4c8f28d",
+          "390e722b21cb65ce",
+          [
+            ["left", 384],
+            ["down", 60],
+            ["right", 846],
+            ["left", 18],
+            ["right", 12],
+            ["down", 228],
+            ["left", 846],
+            ["right", 858],
+            ["up", 144],
+            ["left", 846]
+          ]
+        ],
+        [
+          "island-outpost",
+          "b3acdea61d3e2211",
+          "79179592cbac662e",
+          [
+            ["left", 222],
+            ["right", 18],
+            ["left", 12],
+            ["down", 216],
+            ["right", 600],
+            ["up", 414]
+          ]
+        ],
+        [
+          "stepping-stones",
+          "03df96e5786802d6",
+          "51b559986c7ed9fd",
+          [
+            ["right", 120],
+            ["down", 414],
+            ["up", 18],
+            ["down", 12],
+            ["right", 348],
+            ["up", 414],
+            ["down", 210],
+            ["left", 342]
+          ]
+        ],
+        [
+          "two-bays",
+          "016bd1fc9ed71b47",
+          "9d90885092cfc8d0",
+          [
+            ["up", 12],
+            ["left", 414],
+            ["right", 414],
+            ["up", 192],
+            ["right", 444],
+            ["down", 84],
+            ["left", 414]
+          ]
+        ],
+        [
+          "courtyard-return",
+          "4ca4bdf5a485384a",
+          "8746b3be676b3c0d",
+          [
+            ["up", 72],
+            ["right", 180],
+            ["down", 150],
+            ["up", 42],
+            ["right", 72],
+            ["down", 12],
+            ["right", 294],
+            ["left", 306],
+            ["up", 144],
+            ["left", 96],
+            ["up", 114]
+          ]
+        ],
+        [
+          "long-way-home",
+          "49887a8aab121d26",
+          "2409fced9effccde",
+          [
+            ["right", 516],
+            ["up", 36],
+            ["left", 486],
+            ["right", 18],
+            ["left", 12],
+            ["down", 72],
+            ["right", 492],
+            ["up", 72],
+            ["left", 228],
+            ["down", 30],
+            ["up", 18],
+            ["down", 12],
+            ["left", 72],
+            ["up", 30],
+            ["down", 18],
+            ["up", 12],
+            ["left", 36],
+            ["up", 162],
+            ["down", 174],
+            ["right", 300],
+            ["down", 246],
+            ["up", 18],
+            ["down", 12],
+            ["left", 288],
+            ["up", 174]
+          ]
+        ],
+        [
+          "horizon-remix",
+          "ad262fa023e8b65e",
+          "fc449b1437569dfb",
+          [
+            ["up", 36],
+            ["right", 426],
+            ["left", 114],
+            ["down", 246],
+            ["up", 18],
+            ["down", 12],
+            ["left", 516],
+            ["up", 414],
+            ["down", 318],
+            ["right", 516],
+            ["left", 156],
+            ["up", 138],
+            ["down", 18],
+            ["up", 12],
+            ["right", 132],
+            ["up", 162],
+            ["down", 18],
+            ["up", 12],
+            ["left", 120],
+            ["down", 168],
+            ["left", 60],
+            ["down", 138],
+            ["up", 78],
+            ["left", 78],
+            ["right", 90],
+            ["down", 72],
+            ["left", 276],
+            ["up", 306],
+            ["down", 18],
+            ["up", 12],
+            ["right", 60],
+            ["down", 306]
+          ]
+        ]
+      ]
+    },
+    {
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "rows": [
+        [
+          "first-return",
+          "1658509ac0dc79cf",
+          "06cdda75595bd842",
+          [
+            ["right", 432],
+            ["down", 414]
+          ]
+        ],
+        [
+          "choose-your-share",
+          "a4dc267645d31f76",
+          "e2cec02658b79532",
+          [
+            ["left", 432],
+            ["down", 414]
+          ]
+        ],
+        [
+          "two-keepers",
+          "2decf43308dedafa",
+          "7f74ba7d5b3af218",
+          [
+            ["right", 432],
+            ["down", 168],
+            ["left", 846],
+            ["right", 162],
+            ["down", 246],
+            ["up", 78],
+            ["right", 690]
+          ]
+        ],
+        [
+          "nearby-shore",
+          "110c8257abbc4627",
+          "2c792ae091c885c4",
+          [
+            ["left", 384],
+            ["down", 60],
+            ["right", 846],
+            ["left", 18],
+            ["right", 12],
+            ["down", 360],
+            ["left", 240],
+            ["up", 354],
+            ["down", 18],
+            ["up", 12],
+            ["left", 324],
+            ["down", 354]
+          ]
+        ],
+        [
+          "island-outpost",
+          "1e76665278aabd6b",
+          "5b0183e52638913a",
+          [
+            ["right", 24],
+            ["down", 12],
+            ["right", 594],
+            ["left", 402],
+            ["up", 210]
+          ]
+        ],
+        [
+          "stepping-stones",
+          "477b5c513af7317c",
+          "885176eb7064c245",
+          [
+            ["right", 120],
+            ["down", 414],
+            ["up", 18],
+            ["down", 12],
+            ["right", 312],
+            ["up", 414],
+            ["down", 318],
+            ["left", 306]
+          ]
+        ],
+        [
+          "two-bays",
+          "b8a21a15c7135c01",
+          "dcf0c20f252358a4",
+          [
+            ["up", 12],
+            ["left", 414],
+            ["right", 438],
+            ["down", 228],
+            ["right", 48],
+            ["up", 414]
+          ]
+        ],
+        [
+          "courtyard-return",
+          "1094624fe2b36c68",
+          "44da0f1d10c24eac",
+          [
+            ["up", 72],
+            ["right", 180],
+            ["down", 150],
+            ["up", 42],
+            ["right", 72],
+            ["down", 12],
+            ["right", 294],
+            ["left", 306],
+            ["up", 96],
+            ["right", 294]
+          ]
+        ],
+        [
+          "long-way-home",
+          "aaee48de040e76bc",
+          "c87ea44ed054b71b",
+          [
+            ["right", 516],
+            ["left", 12],
+            ["down", 210],
+            ["up", 18],
+            ["down", 12],
+            ["right", 204],
+            ["up", 420],
+            ["left", 576],
+            ["down", 198],
+            ["up", 210],
+            ["left", 168],
+            ["down", 414],
+            ["up", 18],
+            ["down", 12],
+            ["right", 192],
+            ["up", 210],
+            ["down", 18],
+            ["up", 12],
+            ["right", 192],
+            ["down", 210]
+          ]
+        ],
+        [
+          "horizon-remix",
+          "545b4a87691c0aea",
+          "04e8a69677d3501f",
+          [
+            ["up", 36],
+            ["right", 426],
+            ["left", 18],
+            ["right", 12],
+            ["down", 252],
+            ["left", 264],
+            ["up", 246],
+            ["down", 18],
+            ["up", 12],
+            ["left", 24],
+            ["up", 162],
+            ["down", 18],
+            ["up", 12],
+            ["left", 564],
+            ["down", 288],
+            ["right", 588],
+            ["left", 360],
+            ["up", 282],
+            ["down", 18],
+            ["up", 12],
+            ["right", 336],
+            ["down", 168],
+            ["left", 36],
+            ["down", 114],
+            ["up", 66],
+            ["left", 66]
+          ]
+        ]
+      ]
+    },
+    {
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "rows": [
+        [
+          "first-return",
+          "937ba67360aa3b69",
+          "278623332224a711",
+          [
+            ["right", 516],
+            ["down", 414]
+          ]
+        ],
+        [
+          "choose-your-share",
+          "47429dd0af4b3ff8",
+          "0e7b05fcc474794b",
+          [
+            ["left", 432],
+            ["down", 414]
+          ]
+        ],
+        [
+          "two-keepers",
+          "574f4cc2c9a3fab0",
+          "a63da8d346eb95fa",
+          [
+            ["right", 432],
+            ["down", 144],
+            ["left", 846],
+            ["right", 6],
+            ["left", 12],
+            ["down", 156],
+            ["right", 846]
+          ]
+        ],
+        [
+          "nearby-shore",
+          "ca4f20ceb43e9027",
+          "1fcff9dcaa68d4f9",
+          [
+            ["right", 468],
+            ["down", 144],
+            ["left", 846],
+            ["right", 6],
+            ["left", 12],
+            ["down", 276],
+            ["right", 180],
+            ["up", 270],
+            ["down", 102],
+            ["right", 666]
+          ]
+        ],
+        [
+          "island-outpost",
+          "76542cddb62aa6af",
+          "99a871bd13d000b2",
+          [
+            ["right", 24],
+            ["down", 24],
+            ["right", 600],
+            ["up", 228],
+            ["left", 504],
+            ["down", 222]
+          ]
+        ],
+        [
+          "stepping-stones",
+          "eb9b92d7859d34aa",
+          "2531b864557d2797",
+          [
+            ["right", 120],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["right", 312],
+            ["up", 414],
+            ["down", 306],
+            ["left", 306]
+          ]
+        ],
+        [
+          "two-bays",
+          "dfb7bf3320c6adbf",
+          "6287c1ee60816b83",
+          [
+            ["left", 414],
+            ["right", 426],
+            ["down", 216],
+            ["right", 60],
+            ["up", 414]
+          ]
+        ],
+        [
+          "courtyard-return",
+          "072adb71ad01cc14",
+          "283c4da71fa4816f",
+          [
+            ["up", 72],
+            ["right", 180],
+            ["down", 150],
+            ["up", 30],
+            ["right", 72],
+            ["down", 12],
+            ["right", 300],
+            ["left", 300],
+            ["up", 144],
+            ["left", 60],
+            ["up", 114]
+          ]
+        ],
+        [
+          "long-way-home",
+          "56d94c7c2eb5e03c",
+          "580ff3e9f23eff5b",
+          [
+            ["right", 516],
+            ["left", 12],
+            ["down", 210],
+            ["up", 6],
+            ["down", 12],
+            ["right", 204],
+            ["up", 420],
+            ["left", 516],
+            ["down", 204],
+            ["right", 240],
+            ["down", 216],
+            ["left", 72],
+            ["up", 210],
+            ["down", 210],
+            ["left", 396],
+            ["up", 414],
+            ["down", 42],
+            ["right", 222]
+          ]
+        ],
+        [
+          "horizon-remix",
+          "a22066e32470978c",
+          "364e63ded5a1a03d",
+          [
+            ["up", 36],
+            ["right", 432],
+            ["down", 252],
+            ["left", 228],
+            ["up", 246],
+            ["down", 6],
+            ["up", 12],
+            ["left", 36],
+            ["up", 162],
+            ["down", 6],
+            ["up", 12],
+            ["left", 588],
+            ["down", 288],
+            ["right", 624],
+            ["left", 108],
+            ["up", 114],
+            ["down", 18],
+            ["left", 54],
+            ["right", 6],
+            ["up", 24],
+            ["right", 120],
+            ["up", 132],
+            ["left", 582],
+            ["right", 186],
+            ["down", 246]
+          ]
+        ]
+      ]
+    },
+    {
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "rows": [
+        [
+          "first-return",
+          "937ba67360aa3b69",
+          "a67d46ba9359a2ca",
+          [
+            ["right", 516],
+            ["down", 414]
+          ]
+        ],
+        [
+          "choose-your-share",
+          "47429dd0af4b3ff8",
+          "0153b79b6ef4e0fc",
+          [
+            ["left", 432],
+            ["down", 414]
+          ]
+        ],
+        [
+          "two-keepers",
+          "574f4cc2c9a3fab0",
+          "78e1ddd31c355c0b",
+          [
+            ["right", 432],
+            ["down", 144],
+            ["left", 846],
+            ["right", 18],
+            ["left", 12],
+            ["down", 156],
+            ["right", 846]
+          ]
+        ],
+        [
+          "nearby-shore",
+          "ca4f20ceb43e9027",
+          "4cf8ec9654735a90",
+          [
+            ["right", 468],
+            ["down", 144],
+            ["left", 846],
+            ["right", 114],
+            ["down", 270],
+            ["up", 162],
+            ["right", 738]
+          ]
+        ],
+        [
+          "island-outpost",
+          "76542cddb62aa6af",
+          "d98262a861308232",
+          [
+            ["right", 24],
+            ["down", 24],
+            ["right", 594],
+            ["left", 390],
+            ["up", 222]
+          ]
+        ],
+        [
+          "stepping-stones",
+          "eb9b92d7859d34aa",
+          "5aa8037ccc298749",
+          [
+            ["right", 120],
+            ["down", 414],
+            ["up", 18],
+            ["down", 12],
+            ["right", 312],
+            ["up", 414],
+            ["down", 318],
+            ["left", 306]
+          ]
+        ],
+        [
+          "two-bays",
+          "dfb7bf3320c6adbf",
+          "3451f2bdf16b1adc",
+          [
+            ["left", 414],
+            ["right", 438],
+            ["down", 216],
+            ["right", 60],
+            ["up", 414]
+          ]
+        ],
+        [
+          "courtyard-return",
+          "072adb71ad01cc14",
+          "5080286c5770684c",
+          [
+            ["up", 72],
+            ["right", 180],
+            ["down", 150],
+            ["up", 42],
+            ["right", 72],
+            ["down", 12],
+            ["right", 294],
+            ["left", 306],
+            ["up", 96],
+            ["right", 294]
+          ]
+        ],
+        [
+          "long-way-home",
+          "56d94c7c2eb5e03c",
+          "95198cd3a670d723",
+          [
+            ["right", 516],
+            ["left", 12],
+            ["down", 210],
+            ["up", 18],
+            ["down", 12],
+            ["right", 204],
+            ["up", 420],
+            ["left", 516],
+            ["down", 198],
+            ["up", 18],
+            ["right", 204],
+            ["down", 222],
+            ["up", 18],
+            ["down", 12],
+            ["left", 540],
+            ["up", 120],
+            ["right", 540],
+            ["left", 540],
+            ["up", 216],
+            ["right", 330]
+          ]
+        ],
+        [
+          "horizon-remix",
+          "a22066e32470978c",
+          "85850dce2be3cc46",
+          [
+            ["up", 36],
+            ["right", 426],
+            ["left", 18],
+            ["right", 12],
+            ["down", 252],
+            ["left", 264],
+            ["up", 246],
+            ["down", 18],
+            ["up", 12],
+            ["left", 12],
+            ["up", 162],
+            ["down", 18],
+            ["up", 12],
+            ["left", 576],
+            ["down", 288],
+            ["right", 588],
+            ["up", 60],
+            ["left", 126],
+            ["right", 18],
+            ["up", 60],
+            ["right", 108],
+            ["up", 168],
+            ["left", 432],
+            ["down", 282],
+            ["up", 18],
+            ["down", 12],
+            ["right", 96],
+            ["up", 282]
+          ]
+        ]
+      ]
+    }
+  ]
+}

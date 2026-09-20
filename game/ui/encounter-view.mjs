@@ -2,9 +2,10 @@ import { geometryForRun } from '../core/geometry.mjs';
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { encounterCutCells } from '../core/encounter.mjs';
 import { classicEffectActive } from '../core/classic-state.mjs';
+import { isClassicRuleset } from '../core/versions.mjs';
 
 const frozenActors = (state) =>
-  state.ruleset === 'xonix-core.v5' && classicEffectActive(state, 'enemy-freeze');
+  isClassicRuleset(state.ruleset) && classicEffectActive(state, 'enemy-freeze');
 
 /** Read-only cues shared by live play and replay rendering. No presentation clock owns a phase. */
 export function encounterView(state) {
@@ -15,7 +16,7 @@ export function encounterView(state) {
   const remaining = state.cells.reduce((sum, cell) => sum + Number(cell === CELL.FIELD), 0);
   const cutCells = encounterCutCells(state);
   const ended = state.status === 'lost';
-  const clock = state.ruleset === 'xonix-core.v5' ? state.classic.actorTick : state.tick;
+  const clock = isClassicRuleset(state.ruleset) ? state.classic.actorTick : state.tick;
   const seconds = ended ? 0 : Math.max(0, ((e.phaseEndTick ?? clock) - clock) * FIXED_DT);
   const enemy = state.enemies.find((item) => item.id === recipe.enemyId);
   const frozen = frozenActors(state);
@@ -126,7 +127,7 @@ export function drawEncounterCore(ctx, state, enemy, palette, reduced) {
   if (!e || enemy.id !== state.level.encounter.enemyId || e.defeated) return;
   const open = e.phase === 'open';
   const spread = open ? 24 : e.stage === 'transition' ? 21 : 18;
-  const time = state.ruleset === 'xonix-core.v5' ? state.classic.actorTime : state.time;
+  const time = isClassicRuleset(state.ruleset) ? state.classic.actorTime : state.time;
   const offset = spread + (open && !reduced ? Math.round(Math.sin(time * 3) * 2) : 0);
   const x = enemy.x * 16,
     y = enemy.y * 16;

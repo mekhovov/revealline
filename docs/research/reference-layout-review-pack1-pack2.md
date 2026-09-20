@@ -66,3 +66,18 @@ domain, damage, capture response or timing. No coordinates or artwork are copied
 
 The [pack 3–4 companion](reference-layout-review-pack3-pack4.md) records their
 subsequent direct review. Original UI/manual evidence remains separate.
+
+## P01 greybox crosswalk
+
+The [opening crosswalk](horizon-reference-crosswalk.json) links frames 1/1–1/4 to
+nine original adaptations plus the separately identified original Courtyard return.
+It pins source hashes and the ten Standard simulation identities; regression checks
+bind every mission to its six preset/control complete-route fixtures. The combined
+crosswalk and executable route cohort passes 7/7 checks with no skips or failures.
+
+This is a feasibility checkpoint, not a final reference disposition. Frame 1/4's
+early platform geometry does not qualify its separately proposed Border Bloom
+patrol encounter. Keep, merge or reject that later proposal after comparing its
+actual route decision. Multiple adaptations of one motif likewise need human
+comparison, not a shipped-count quota. Optional mastery feasibility, meaningful
+alternate routes, pacing, artwork, Team and public release acceptance remain pending.

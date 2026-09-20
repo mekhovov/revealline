@@ -1,0 +1,177 @@
+{
+  "format": "revealline-public-acceptance.v1",
+  "scope": "same-current-chapter paused-flight correction; P03/P06 partial",
+  "source": "aadd855eb707c7d115bcbd29177eadb630a114d0",
+  "sourcePR": 179,
+  "controller": "67b86e00d2e6ac803316e4875afcef371e69058f",
+  "publisherPR": 183,
+  "pagesRun": 35501817965,
+  "deployment": 6551163081,
+  "version": "v0.68.2",
+  "http": {
+    "files": 3660,
+    "bytes": 645883268,
+    "failures": 0,
+    "retries": 0
+  },
+  "evidenceArchive": {
+    "file": "originals.zip",
+    "bytes": 1436918,
+    "sha256": "6810ab3043c6d305cb10ad6f5fe7e5b4339e7989c70b16b05274d0182e7d633d",
+    "members": [
+      {
+        "path": "http/attempts.jsonl",
+        "bytes": 2366375,
+        "sha256": "7555dc4e73f4fcc7e65f64ad9c1f3e2bfc6086cd89117642cb9379d46e652760"
+      },
+      {
+        "path": "http/inventory.json",
+        "bytes": 917187,
+        "sha256": "b61a043896f02fde6c46944e23b013d05d9091ba1d25c61a4a84581e6f52bcc6"
+      },
+      {
+        "path": "http/report.json",
+        "bytes": 6687,
+        "sha256": "47293a29d6a9d20d63686bb15ee90be67b24b89f221bfd2f4ed6f86eba12967c"
+      },
+      {
+        "path": "http/results.jsonl",
+        "bytes": 2366375,
+        "sha256": "7555dc4e73f4fcc7e65f64ad9c1f3e2bfc6086cd89117642cb9379d46e652760"
+      },
+      {
+        "path": "authority/artifacts.json",
+        "bytes": 1401,
+        "sha256": "93a8b9e6dd93da1d1dbaf547496c8106df70e1d7ec7f49ad9cf58d3a14bf4678"
+      },
+      {
+        "path": "authority/binding.json",
+        "bytes": 2042,
+        "sha256": "4590f49102da9ad364bdb679db2f2f6273a610b42073477767f91ba46bda9156"
+      },
+      {
+        "path": "authority/catalog.json",
+        "bytes": 48164,
+        "sha256": "22a90e986eee128649ddf00a53c201edab2f9d6b7162694656817b9482403277"
+      },
+      {
+        "path": "authority/configuration.json",
+        "bytes": 208147,
+        "sha256": "908f2dc2ebb4733da0c5372b85f5ea800d7fa067bd2a66717fbbce2ba1853f91"
+      },
+      {
+        "path": "authority/controller.json",
+        "bytes": 2668,
+        "sha256": "2454a2d141e2478409140b3034d050d89550ecd312811d47ad083d255d5f343a"
+      },
+      {
+        "path": "authority/deployment.json",
+        "bytes": 3823,
+        "sha256": "25e0002f87adf4c5eb7c6a8ad6fcba0e9a4592ce815b3a35963b3807a5c3b3e9"
+      },
+      {
+        "path": "authority/deployments.json",
+        "bytes": 3825,
+        "sha256": "c2e2913e5466d474c0bd3ab0df6cc602bc026fb43fcec60d670ac834c42368f7"
+      },
+      {
+        "path": "authority/main.json",
+        "bytes": 336,
+        "sha256": "fae5b4a14d2e40e0a5b1360cd7f464134933a5652e830f471268b9bdadbf7fa2"
+      },
+      {
+        "path": "authority/manifest.json",
+        "bytes": 132593,
+        "sha256": "dbe6728cb7042a7ccbdc047a7004c1d6906dccd66f15755e67b5d8c4204f8d52"
+      },
+      {
+        "path": "authority/members.json",
+        "bytes": 291,
+        "sha256": "137789a6d0116837f5fa24e915a9b32f89581b5acf03968463adeb880307f3ca"
+      },
+      {
+        "path": "authority/original-artifact-receipt.json",
+        "bytes": 695489,
+        "sha256": "c0e8722a895eed40ca43a91fdbb45289f6f3e73c27a20825d264ad5db94cce77"
+      },
+      {
+        "path": "authority/original-receipts.zip",
+        "bytes": 170266,
+        "sha256": "4870038111242b8c70f38089a83f09144009b7ccbc1f37f7ed2e3aed175d6727"
+      },
+      {
+        "path": "authority/original-zip-receipt.json",
+        "bytes": 407,
+        "sha256": "1299d945d0f823b984dd2350a7997c29c0195a503333bb2d36cbad7fc52e9dd7"
+      },
+      {
+        "path": "authority/qualification.json",
+        "bytes": 107658,
+        "sha256": "0903d8ffbad42c5210e4a90af4c8037eb8f215d926fe7a3409d83a9982f0fe5e"
+      },
+      {
+        "path": "authority/receipt.json",
+        "bytes": 695489,
+        "sha256": "c0e8722a895eed40ca43a91fdbb45289f6f3e73c27a20825d264ad5db94cce77"
+      },
+      {
+        "path": "authority/record.json",
+        "bytes": 465,
+        "sha256": "8ce738a05247624621f5e9b523afe3427621cdbf81222f2d97a0f30a303765c5"
+      },
+      {
+        "path": "authority/run.json",
+        "bytes": 12168,
+        "sha256": "c17458216e54ce8d077d082562eecb987a892438e7f554c490d6f4f02ef5c3b6"
+      },
+      {
+        "path": "authority/statuses.json",
+        "bytes": 6586,
+        "sha256": "36a96d6bff4b5ab6fd17ee547fa1b5e65012367a8ee36e3499b39a351e72fd5d"
+      },
+      {
+        "path": "auditor/audit-main.mjs",
+        "bytes": 27524,
+        "sha256": "164bed930230b33d020d30d8a10b4048a7dbf2c8e0cd0a66fa43635cef942dca"
+      },
+      {
+        "path": "auditor/http-engine.mjs",
+        "bytes": 3851,
+        "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+      },
+      {
+        "path": "auditor/catalog-cohorts.mjs",
+        "bytes": 1183,
+        "sha256": "f9982cb6c453f2a916ef0f177357312bfe27adb9ecf9a07ce81772f370abec39"
+      },
+      {
+        "path": "auditor/retained-catalog.json",
+        "bytes": 47719,
+        "sha256": "54c41904eb1127dfc0eb38bed49d6fdb3539116cce1278aa74a0743b0fbb392d"
+      }
+    ]
+  },
+  "native": {
+    "browser": "Codex in-app browser",
+    "viewport": [
+      1280,
+      720
+    ],
+    "input": "keyboard; Tab/Escape/Return and focused semantic keyboard activation",
+    "screenshots": "observed inline only, not exported",
+    "physicalHardware": false,
+    "observations": [
+      "Public title explicitly v0.68.2; Start First Signal, pause, Missions and More chapters reachable by keyboard.",
+      "Pressure Pictures external install refused a retained picture binding conflict; flight and existing media remained. No overwrite attempted.",
+      "Illustrated Pressure installed; verified different-chapter Replace dialog then deliberate Replace & play launched Orchard Crossing.",
+      "Down then Escape retained live unfinished line, 0%/0 score/3 lives/1:59. Selecting its own More worlds Play returned already-active status, no replacement dialog. Title Continue still Orchard Crossing, exact visible values and live line returned.",
+      "After explicit Continue several real seconds advanced and a line hit lost one life; this is subsequent active gameplay, not a preservation failure. Paused at2 lives/1:52.",
+      "Woven Lines installed; different-chapter dialog named Orchard Crossing \u2192 Woven Lines, Stay kept current paused flight and focused Woven Play. Escape \u2192 Continue Orchard Crossing \u2192 immediate Pause preserved0%/0score/2lives/1:52."
+    ]
+  },
+  "remaining": [
+    "External Pressure Pictures retained-binding conflict needs P06 diagnosis and recoverable resolution; no silent replacement.",
+    "Actual disconnected operation and browser saved-byte introspection were not performed in this scoped native check.",
+    "Physical controller/touch, all viewports, listening and broad phase qualification remain open."
+  ]
+}
