@@ -636,6 +636,11 @@ test('packaged offline builds generate scoped metadata, original icons, complete
     new URL('../game/offline.mjs', import.meta.url),
     path.join(root, 'game/offline.mjs'),
   );
+  await fs.mkdir(path.join(root, 'game/content-design'));
+  await fs.copyFile(
+    new URL('../game/content-design/limits.mjs', import.meta.url),
+    path.join(root, 'game/content-design/limits.mjs'),
+  );
   await fs.copyFile(
     new URL('../game/platform.mjs', import.meta.url),
     path.join(root, 'game/platform.mjs'),
