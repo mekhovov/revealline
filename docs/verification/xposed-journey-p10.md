@@ -76,7 +76,37 @@ both. The first authoring run exposed an omitted `speedZones` map-edit allowlist
 entry. It was corrected, and the original failed run is retained locally rather
 than counted as a pass. Scoped lint, formatting and whitespace checks pass.
 
-Native interaction, full Crosswind greyboxes, reference adaptations, original
+## Native authoring and lifecycle follow-up
+
+Native inspection used a separate local tab and a read-only exact-commit server
+at `94d1738a56fcf00ffb04002f131a31ab65eb08c8`, not the user's game tab or a
+published build. In a new starter draft, explicit opt-in retained the historical
+map revision. Adding a three-cell-wide downward field from `(31,3)` through row12
+created another revision; an attempted extension into the foundation was rejected
+without changing the saved geometry. Undo/Redo and reload retained the correct
+draft at checkpoint5. Closing Practice returned focus to its launch control.
+
+The actual Practice iframe loaded its directional briefing, started through the
+normal button and accepted a native downward input. The cut reached the island,
+stopped, retained all three lives and displayed 0.6% / 140 points. Before/after
+screens showed three columns of arrows becoming two: only the reclaimed center
+column lost its glyphs, and the stopped craft remained readable on the island.
+This is one keyboard observation at the existing viewport, not a full clear,
+speed benchmark, physical-controller check, phone check or enjoyment evidence.
+The follow-up adds the missing arrow vocabulary to Studio's static legend.
+
+A four-file directional/relay lifecycle cohort passes31/31 on Node20.19.5 and
+22.22.2. New coverage includes true sub-tick timeout/closure ties, accelerated
+enemy contact with no capture reward, deterministic failure replays, equal paired
+boards, revision-checked suspended flights before/after capture, life recovery,
+wall stopping without closure, and fresh-attempt reset. A due-request fixture
+uses the real erosion commit to verify that speed and arrows return together;
+it is not a complete eroder AI playthrough. Initial test assumptions used a tick
+endpoint instead of the closure event time and omitted the rules-owned body
+radius; the fixtures were corrected without changing engine semantics. Failed
+local output is not counted as passing evidence.
+
+Full Crosswind greyboxes, reference adaptations, original
 assets, preset/route/mastery/seed/delay matrices, Team and human acceptance remain
 open. Team rejects successor editions rather than silently dropping their rules.
 No public Journey selects this work; hosted qualification and release remain open.
