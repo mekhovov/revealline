@@ -1015,3 +1015,13 @@ For every registered standalone Workshop tool, keep the static same-edition game
 ### Complete visual-theme identity boundary
 
 Use `game/presentation/visual-theme-catalogue.mjs` only for declared compatibility and exact compiler/theme/collection identities. Supply accepted authored owners and canonical level hashes before difficulty transforms; keep numeric and legacy string revisions exact. A compatible declaration is not art approval or byte validation. Compare loader-verified declarations against authoritative required slots, preserve historical catalogue entries, and keep unsupported content distinct from unavailable revisions. Do not expose Settings choices or change retained picture/story pins until the complete two-collection benchmark and staged-host integration pass. Follow the prompt in `docs/visual-theme-catalogue.md`.
+
+### Team responsive controls
+
+Follow [Team compact-screen controls](../../../docs/team-responsive-controls.md)
+when changing Relay Rescue layout. Reserve space for actual HUD/status content,
+keep every target at least 44 CSS pixels and test pointer hit locations as well
+as visible rectangles. Preserve input nodes, bindings, pause ownership and
+2:1 arena geometry. Qualify 568×320 and 1280×800 separately: short-phone overlap
+and handheld overflow are different failures. Record native, modeled and
+physical-device evidence separately; do not hide warnings or shrink Large text.
