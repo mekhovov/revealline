@@ -147,7 +147,8 @@ record Journey progress, never Legacy collection/mastery awards. Candidate saves
 use a separate revision-pinned slot; ordinary gameplay and `journey=1` are intact.
 Studio now uses the actual authored Horizon theme, fixing its previous silent
 Retro substitution. See `docs/verification/xposed-journey-attempt-boundary.md`.
-Broader host/preset/controller qualification, preference recovery controls,
+Difficulty save failures now expose retry/export controls; cross-tab next-attempt
+intent refreshes without changing the current flight. Broader host/controller qualification,
 Versus/Team adoption, human validation and release gates remain. None of that branch's
 implementation is implied to ship in the P00 technical preview.
 

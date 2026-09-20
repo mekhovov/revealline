@@ -69,7 +69,7 @@ Local mutable source at port 8778, owned tab 7; keyboard only, desktop viewport.
 
 Whole-set native artwork/contrast, all-input play, browser/hardware performance,
 all-preset native clears, player comprehension/enjoyment, cross-release public
-restore/rollback, preference failure retry/export UI, and paired-board/Team
+restore/rollback, native preference-recovery validation, and paired-board/Team
 host adoption remain unverified or unfinished. Core opening contains nine
 missions, so ten consecutive core missions requires later campaign integration.
 No human evidence is inferred from automated or agent-operated clears.
@@ -88,3 +88,17 @@ or claim this local host work passed a hosted build or Pages deployment.
 
 The source repair is implemented in the optional-artwork follow-up; see
 `xposed-journey-optional-artwork.md`. Full-source hosted verification remains due.
+
+## Difficulty recovery follow-up
+
+Failed next-attempt preference writes now expose Retry difficulty save and Export
+difficulty choice in the existing difficulty controls. Export reports a requested
+download, never claims durable saving, and leaves the recovery warning present.
+Failed export preserves session intent; successful Retry hides the warning.
+Cross-tab updates refresh the selected next preset and cancel stale preparation,
+without replacing the current run or its picture. No Legacy storage schema changes.
+
+Actual authored-host plus preference-store cohort: 19/19 passed, including all
+nine core route/checkpoint/receipt checks, failure/export/retry and cross-tab
+control refresh. Native failure/recovery and downloaded-file observations remain
+pending; simulated browser tests are not those observations.
