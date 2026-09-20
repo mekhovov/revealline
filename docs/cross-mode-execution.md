@@ -1,5 +1,18 @@
 # Reveal Line cross-mode execution register
 
+## Current delivery — v0.69.0 qualified and published; Pages verification pending
+
+**Accepted public baseline remains [v0.68.2](https://mekhovov.github.io/revealline/releases/v0.68.2/site/game/) until the v0.69.0 selector deployment and public journeys pass.** The Journey foundation is source-qualified at `5178c434` / tree `8e1becb4`, source PR184 merged as `01c1fbb5` with the exact qualified tree. Both complete hosted families passed **6,983 tests across 560 files on Node 20.19.6**. Frozen original source/distribution and offline bindings passed inspection; release392405261 has nine verified assets and the GitHub Latest pointer. These are source/release gates, not full-phase or physical-device acceptance.
+
+Journey adds versioned direction-only Arcade, authored candidates and Studio exports, untimed Versus and Team foundations while retaining legacy identities. The scoped local keyboard continuation/capture-stop/Pause observations remain distinct from the pending public acceptance. Stable programme phase IDs below remain unchanged; the Journey P01 foundation workstream does not close every programme P01/P03/P06 requirement.
+
+**Archive36 is verified:** original v0.68.2, archive PR1 / `a0f67a3f`, deployment6552182155; all **729 files / 313,829,048 bytes** matched with zero failures. This is a new archive with zero prior accepted paths. Native keyboard entry, saved Continue and explicit Pause passed. The existing retained-picture conflict remains an explicit limitation. [Evidence](../publishing/pages-controller/evidence/archive-36/README.md).
+
+**Next, in order:** finish actual v0.69.0 Pages verification; qualify the separate retained-picture recovery correction (PR188, candidate0.69.1) and responsive focus correction; finish shared custom music qualification; continue native navigation, actor/picture parity, feedback, fair challenge, rewards and creation tools before bulk campaigns. The recovery candidate passed 84 focused tests and an actual Cancel → retry → keep pictures keyboard journey, but is not included in v0.69.0. Music and new Team terrain remain independently tested candidates. Full browser/device, listening, production-content and human-playtest gates remain open.
+
+<details>
+<summary>Previous v0.68.2 acceptance cutoff — retained history</summary>
+
 ## Current delivery — v0.68.2 scoped public verification complete
 
 **Public default: [v0.68.2](https://mekhovov.github.io/revealline/releases/v0.68.2/site/game/).**
@@ -25,6 +38,8 @@ the integrated commit requires its own complete qualification.
 [Final-runtime native continuation observation](verification/journey-current-integration-native.json)
 retains the actual observed source separately from this documentation merge. Continue actor/presentation parity, action feedback, fair challenge, rewards
 and authoring according to the stable phase tables below.
+
+</details>
 
 <details>
 <summary>Previous v0.68.2 publication cutoff — retained history</summary>
