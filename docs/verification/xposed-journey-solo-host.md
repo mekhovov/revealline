@@ -85,3 +85,6 @@ offline inventory. Required follow-up: explicitly bounded optional-artwork
 delivery with tests and truthful offline capability, preserving original bytes,
 full-distribution availability, and the 64 MiB guard. Do not increase the limit
 or claim this local host work passed a hosted build or Pages deployment.
+
+The source repair is implemented in the optional-artwork follow-up; see
+`xposed-journey-optional-artwork.md`. Full-source hosted verification remains due.

@@ -189,6 +189,12 @@ keyboard/touch/controller, muted/reduced-effects/contrast and small screens.
 
 ## P00 implementation notes
 
+P01 packaging follow-up: opening originals are explicit optional artwork in web
+offline preparation, with exact authored pins and unchanged full-distribution
+bytes. The title and offline status explain the online requirement. Bounded
+packaging/offline tests pass; the existing 64 MiB guard remains and hosted full
+qualification is still required. See `verification/xposed-journey-optional-artwork.md`.
+
 The initial technical preview is `game/?journey=1`. The normal entry and frozen
 editions retain their navigation until the replacement curriculum is ready. This
 is a rollout safeguard, not final acceptance of the old maps as Journey content.

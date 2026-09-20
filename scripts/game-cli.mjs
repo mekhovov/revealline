@@ -131,6 +131,7 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
         'optionalOffline',
         'optionalChapters',
         'externalChapters',
+        'optionalArtwork',
       ].includes(k),
   );
   if (unknown.length) fail(`Unknown build-config fields: ${unknown.join(', ')}`);
@@ -182,6 +183,10 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
   if (config.externalChapters !== undefined) {
     const { validateExternalDistributionConfig } = await import('./external-distribution.mjs');
     validateExternalDistributionConfig(config.externalChapters);
+  }
+  if (config.optionalArtwork !== undefined) {
+    const { validateOptionalArtworkConfig } = await import('./optional-artwork.mjs');
+    validateOptionalArtworkConfig(config.optionalArtwork);
   }
   return config;
 }
@@ -546,8 +551,13 @@ async function addOfflineEntries(
   buildConfig,
   optionalDownloads = [],
   excludedBodyPaths = [],
+  optionalArtwork = null,
 ) {
   if (!entries.some((e) => e.name === 'game/offline.mjs')) return;
+  if (optionalArtwork) {
+    const { verifyOptionalArtworkEntries } = await import('./optional-artwork.mjs');
+    verifyOptionalArtworkEntries(optionalArtwork, entries);
+  }
   const template = await fs.readFile(
     path.join(root, 'game/offline/service-worker.template.js'),
     'utf8',
@@ -598,6 +608,7 @@ async function addOfflineEntries(
       scope: `${relativeRoot}/`,
       worker: `${relativeRoot}/service-worker.js`,
       ...(optionalPacks.length ? { optionalPacks } : {}),
+      ...(optionalArtwork ? { optionalArtwork } : {}),
     };
     const source = entry.bytes.toString();
     const appMode = source.includes('name="apple-mobile-web-app-capable"')
@@ -624,7 +635,11 @@ async function addOfflineEntries(
   );
   for (const entry of injected)
     entry.bytes = Buffer.from(entry.bytes.toString().replace(placeholder, buildId));
-  const excluded = new Set([...optional, ...excludedBodyPaths]);
+  const excluded = new Set([
+    ...optional,
+    ...excludedBodyPaths,
+    ...(optionalArtwork?.files.map((file) => file.path) ?? []),
+  ]);
   const files = [...entries]
     .filter((entry) => entry.name !== '_headers' && !excluded.has(entry.name))
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
@@ -637,6 +652,7 @@ async function addOfflineEntries(
     buildId,
     files,
     ...(optionalPacks.length ? { optionalPacks } : {}),
+    ...(optionalArtwork ? { optionalArtwork } : {}),
   };
   entries.push({ name: 'offline-cache.json', bytes: Buffer.from(json(config)) });
   entries.push({
@@ -658,6 +674,12 @@ export async function buildProject({
   if (sourceRevision !== null && !/^[0-9a-f]{40,64}$/.test(sourceRevision))
     fail('Source revision must be a full commit hash or null');
   const files = await collectBuildFiles(root, config);
+  const optionalArtwork =
+    config.optionalArtwork === undefined
+      ? null
+      : await (
+          await import('./optional-artwork.mjs')
+        ).readOptionalArtwork(root, config.optionalArtwork, files);
   await assertOutput(root, out, config.include);
   await validateBuildReferences(root, files);
   if (files.includes('game/coop/library.mjs')) await validateCoopContent(root);
@@ -718,6 +740,7 @@ export async function buildProject({
       config,
       optionalEntries.map((entry) => entry.name),
       externalEntries.map((entry) => entry.name),
+      optionalArtwork,
     );
     entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
     const manifest = {
