@@ -8,6 +8,7 @@ import { createFractureCandidates } from '../content-design/fracture-candidates.
 import { createPhaseCandidates } from '../content-design/phase-candidates.mjs';
 import { createLivewireCandidates } from '../content-design/livewire-candidates.mjs';
 import { createRelayCandidates } from '../content-design/relay-candidates.mjs';
+import { createCrosswindCandidates } from '../content-design/crosswind-candidates.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
@@ -605,6 +606,12 @@ $('relay').onclick = guarded(() => {
 $('team-signal').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createTeamSignalCandidates({ campaignTheme: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('crosswind').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createCrosswindCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
