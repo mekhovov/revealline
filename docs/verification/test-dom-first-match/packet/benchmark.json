@@ -1,0 +1,28 @@
+{
+  "base": "b25cc3f13337b446c58262a73706677d50cb6580",
+  "node": "v20.19.5",
+  "parity": "PASS including move/remove/renamed/duplicate IDs",
+  "queriesPerSample": 900,
+  "samples": {
+    "original": [
+      803.015708,
+      533.222084,
+      1524.8198340000001,
+      1894.0225410000003,
+      1067.5418340000006
+    ],
+    "candidate": [
+      63.792708000000175,
+      51.3723329999998,
+      116.59670800000004,
+      92.23924999999963,
+      34.89666699999998
+    ]
+  },
+  "medians": {
+    "original": 1067.5418340000006,
+    "candidate": 63.792708000000175
+  },
+  "sink": 50000,
+  "scope": "Synthetic test-DOM lookup only, not game/browser performance or full-suite qualification"
+}

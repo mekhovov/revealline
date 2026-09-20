@@ -258,7 +258,15 @@ export class Element extends Events {
     ]);
   }
   querySelector(selector) {
-    return this.querySelectorAll(selector)[0] ?? null;
+    // Some boundary fixtures intentionally replace the query engine.
+    if (this.querySelectorAll !== Element.prototype.querySelectorAll)
+      return this.querySelectorAll(selector)[0] ?? null;
+    for (const child of this.children) {
+      if (child.matches(selector)) return child;
+      const found = Element.prototype.querySelector.call(child, selector);
+      if (found) return found;
+    }
+    return null;
   }
   getBoundingClientRect() {
     const r = this._rect;
@@ -360,7 +368,9 @@ export class Document extends Events {
     return this.documentElement.querySelectorAll(selector);
   }
   querySelector(selector) {
-    return this.querySelectorAll(selector)[0] ?? null;
+    if (this.querySelectorAll !== Document.prototype.querySelectorAll)
+      return this.querySelectorAll(selector)[0] ?? null;
+    return Element.prototype.querySelector.call(this.documentElement, selector);
   }
   getElementById(id) {
     return this.querySelector(`#${id}`);

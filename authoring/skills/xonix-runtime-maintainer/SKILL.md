@@ -1009,3 +1009,13 @@ For Journey Continue captions, use the same retained-cursor/successor resolver a
 When an optional chapter Play operation adopts its prepared flight, replace the completed selection status with the accepted mission name. Update only after adoption; failed/cancelled preparation must retain the previous flight and its status. A correct mission card does not make a stale polite live-region message harmless. Check `#content-select-status` independently from the campaign header and deploy bar.
 
 Prompt: “Download and play an optional chapter after selecting another mission, reopen Missions and compare the completed-operation message, selected card, deploy bar and actual paused run. Repeat installed Play without a download, cancelled/failed preparation and same-chapter Play. Preserve exact checkpoints, artwork, score authority and explicit Resume. Record actual public observation separately from modeled host tests.”
+
+
+### Host-test DOM lookup
+
+Optimize first-match traversal without changing the supported selector grammar,
+querySelectorAll overrides or unchanged player-journey assertions. Cover nested
+overrides, tree mutation, duplicate IDs and child querySelector isolation. Use
+`docs/test-dom-first-match.md` for the maintenance prompt and required cohorts.
+Report synthetic, host-test and native-browser performance separately; a faster
+fixture is not a faster game or a completed release gate.

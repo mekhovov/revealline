@@ -1,0 +1,29 @@
+{
+  "status": "matching-observed-run-and-packaged-source",
+  "files": {
+    "game/test/helpers/couch-dom.mjs": {
+      "bytes": 12095,
+      "sha256": "74df1dfe5afdb295a168e8bc2ff9369aa547ebee06bb6ed92f243a1ef8770998"
+    },
+    "game/test/journey-host.test.mjs": {
+      "bytes": 13806,
+      "sha256": "4b1e22412dd07bb0ef8dee976b3b6420b77143a6183ecb92adba73835d556585"
+    },
+    "game/app.mjs": {
+      "bytes": 330773,
+      "sha256": "950f03de3bd9baf7539c9a7034afb27ef06199820d354f0b72c104cf161077a6"
+    },
+    "game/index.html": {
+      "bytes": 75461,
+      "sha256": "0e0b7f2ed8c0c5c576b14431f7fde7910dd020b4c119e2ba80367b866549d8a9"
+    },
+    "game/ui/game-shell.mjs": {
+      "bytes": 27788,
+      "sha256": "f98e9cad79aec5d3233548d18e251d336e58697f1c0ccf58fd9fdc032befc7bf"
+    },
+    "game/ui/journey-chooser.mjs": {
+      "bytes": 7131,
+      "sha256": "71471e3b4477f122f297e7a0b32263db8034ef671e1fe41306ff3fc9aa256c03"
+    }
+  }
+}

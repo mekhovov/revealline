@@ -1,0 +1,7 @@
+{
+  "base": "878788af891ac6c197623a6d5621e6b27f749860",
+  "packet": ".cache/p18-dom-lookup-b25-r3",
+  "patchSha256": "a3aa90a28a72e1002c12c71dccb51dcea9ae7ce5b577ae6fc95b2d9bcffb8320",
+  "scope": "Test infrastructure only. v0.70 candidate unchanged. Prior all runtime/doc/skill material preserved; independent new skill section appended.",
+  "tests": "pending root composed-source cohort"
+}

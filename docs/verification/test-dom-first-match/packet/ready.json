@@ -1,0 +1,124 @@
+{
+  "status": "ready-for-release-owner-review-not-integrated-or-public-acceptance",
+  "base": "b25cc3f13337b446c58262a73706677d50cb6580",
+  "patchSHA256": "a3aa90a28a72e1002c12c71dccb51dcea9ae7ce5b577ae6fc95b2d9bcffb8320",
+  "files": 4,
+  "scope": "Stop test-DOM first-match traversal early; preserve supported selector behavior and intentional fixture overrides; no shipped runtime changes.",
+  "verification": {
+    "semanticCases": "6/6 Node20.19.5 and6/6 Node22.22.2",
+    "existingAffected": "114/114 in one complete run each on Node20.19.5 andNode22.22.2",
+    "reconstructedNode20": "6/6; all4 exact postimages and applicable syntax PASS",
+    "actualContinuation": "Unchanged ten-win/Next scenario PASS,1selected/10filtered, exact Missions-r3 runtime plus final helper",
+    "lintFormat": "PASS for affected code/doc; historical skill text preserved",
+    "gitApply": "isolated nonrepository check/application PASS with4postimages matching",
+    "candidateCompatibility": "helper baseline unchanged in41d0b908; no composed-source fullgate claim"
+  },
+  "retainedCorrections": [
+    "First virtual Node20 cohort had23 URL-loader setup failures with91passes; loader corrected before114/114 rerun",
+    "Draft patch new-file metadata corrected before isolated git apply; actual file contents unchanged"
+  ],
+  "limits": [
+    "Separate later proposal; not part of v070 cutoff",
+    "No full integrated source gates, public acceptance, physical-device or game/browser performance claim",
+    "Synthetic timing is isolated fixture evidence; long host runs had different concurrent load",
+    "Continuation reproduction requires separately sealed Missions-r3 dependency pinned in README"
+  ],
+  "receipts": {
+    "README.md": {
+      "bytes": 2197,
+      "sha256": "b2464d102b713d7261757048347b1377f23d9e317c0f9b8e449e3a84dbb030ee"
+    },
+    "benchmark.json": {
+      "bytes": 690,
+      "sha256": "78f58a1fe30ce5a563f36c668da565c69c7bc25df4ff303ee27d44da1e13be02"
+    },
+    "continuation-fixture-fs-sync.mjs": {
+      "bytes": 721,
+      "sha256": "38e2e9e8f13ae6021375cb24fae34e7ff276fef12cc9a20345f6bfbde06e0bb0"
+    },
+    "continuation-fixture-fs.mjs": {
+      "bytes": 742,
+      "sha256": "097a904e37dd7960aa360e059ff61b6ca5210a92c23a33e329a00a9457b91550"
+    },
+    "continuation-loader.mjs": {
+      "bytes": 1131,
+      "sha256": "85ca7dab6abd8f293687029a4ee6f35785751815eff9e5dd8f676b33b493e161"
+    },
+    "continuation-node20.log": {
+      "bytes": 3544,
+      "sha256": "8b71d64dbf5ced35adcd0280cc54ce0c9455a3e1bbeee8bfdd3ba0ff8805bc08"
+    },
+    "continuation-reproduction.json": {
+      "bytes": 947,
+      "sha256": "2356b783fcef24eb5bcc461bb4640acd100683332e1fd0b89ff353108bdef6bb"
+    },
+    "continuation-source.mjs": {
+      "bytes": 262,
+      "sha256": "7f4ba02a0bf4577a11f8875f12b89da296ac1aa42bb355716cfe447a7026441e"
+    },
+    "continuation.test.mjs": {
+      "bytes": 54,
+      "sha256": "466486b5ac6dd1160571da11b3a2a3f06f9a9291bcc7aedd28f2ca683deb1f94"
+    },
+    "existing.test.mjs": {
+      "bytes": 292,
+      "sha256": "22a7703031e53d869e143ffc19ea11a3bab782f398215faafe4c4f2e55c5266a"
+    },
+    "fixture-fs-sync.mjs": {
+      "bytes": 714,
+      "sha256": "239a58cb11c10305389f12e1ce6e58bc3c6cd7ed6e606c4ec6884c4294375d91"
+    },
+    "fixture-fs.mjs": {
+      "bytes": 735,
+      "sha256": "fc0aaceb48e230c1f072f6fb04a91057b1cd2a3730b390e79c4e8b4106af4daa"
+    },
+    "git-apply-check.log": {
+      "bytes": 1112,
+      "sha256": "06982bc15cc5365b21b70af55cb56f9902df9e3994d691584ff4b72a0a0b747e"
+    },
+    "host-comparison.json": {
+      "bytes": 1051,
+      "sha256": "c838c125821a25e404f452dad404b556d750d8521cb7d040b7c15afe3a6deb04"
+    },
+    "integration-preflight.json": {
+      "bytes": 289,
+      "sha256": "ddacf0b3a5a2dd571ef7f89eeff8ea5d16730b6bba4ca9a3f866d0853050b419"
+    },
+    "loader.mjs": {
+      "bytes": 1098,
+      "sha256": "b7bf6134c4418ea4b609a5183421b8aba8e510ffe4a9903429f9482da1d14168"
+    },
+    "patch-source.mjs": {
+      "bytes": 2284,
+      "sha256": "09ac530f430e8657b7c2feaf5ff897b1a722234a1c741c0120bdcb3869ea042d"
+    },
+    "qualification-logs.json.xz": {
+      "bytes": 8796,
+      "sha256": "2aaad86e87c3afda77ae0816f99a3e248dd9d06657791d83d4212e07162fe77b"
+    },
+    "reconstructed-node20.log": {
+      "bytes": 1825,
+      "sha256": "9bb9e6bd25f2c1d94d1ec81603a1c02f32b4232d9ed87158e279552fe3b0591b"
+    },
+    "reconstruction.log": {
+      "bytes": 374,
+      "sha256": "5c2c45cf8df42b8cfa8748463bafa5a31d16a9f5e44ab9cb51d3c5825ad5df10"
+    },
+    "source-manifest.json": {
+      "bytes": 1162,
+      "sha256": "a273c8a4f05d6fade3acea4ecae84c34c05c6e8ec76395561f769b1525e0f416"
+    },
+    "source.patch.gz": {
+      "bytes": 2763,
+      "sha256": "964e36382d922729f18dbdec1d85341c95d45a52ac5f13051d7859dc41778bc2"
+    },
+    "suite.test.mjs": {
+      "bytes": 60,
+      "sha256": "885b0ec3cc22450303c160c5b5d04981862b0ab42c4adf60e2a8068569d5cb08"
+    },
+    "verify-source.mjs": {
+      "bytes": 999,
+      "sha256": "347a76e4ea04e5420f23079e2d8aeefd512db58fdc0735451d8f901c9ef0430f"
+    }
+  }
+}

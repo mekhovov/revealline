@@ -1,0 +1,7 @@
+{
+  "revision": "41d0b908e4c7c5f1cfbbd24994f2e96381332b28",
+  "file": "game/test/helpers/couch-dom.mjs",
+  "sha256": "878852600b15a1551ba136fd506f88c890349472c6fc340225ab423a299159f8",
+  "matchesBase": true,
+  "scope": "Read-only helper compatibility; not composed-source qualification"
+}

@@ -1,0 +1,28 @@
+{
+  "kind": "scoped-observations-not-controlled-host-speedup",
+  "originalUnchangedHost": {
+    "source": ".cache/p03-journey-menu-return-b25-r3/qualification-logs.json.xz",
+    "note": "Original source run of ten consecutive wins/Next before helper optimization",
+    "scenarioDurationMs": 651886
+  },
+  "unguardedPrototype": {
+    "source": ".cache/p18-dom-lookup-b25-r1/real-continuation-node20.log",
+    "note": "One selected scenario passed; not integration candidate because it lacks override guards",
+    "scenarioDurationMs": 491245.208542,
+    "processDurationMs": 507542.07275
+  },
+  "guardedFinal": {
+    "status": "PASS",
+    "scenarioDurationMs": 457013.219708,
+    "processDurationMs": 475890.041792,
+    "source": "continuation-node20.log",
+    "passed": 1,
+    "failed": 0,
+    "filtered": 10
+  },
+  "limits": [
+    "Different concurrent workloads; no controlled whole-host speedup claim",
+    "Synthetic benchmark isolates test DOM only, not game/browser performance",
+    "Full source gates and public release remain separate"
+  ]
+}
