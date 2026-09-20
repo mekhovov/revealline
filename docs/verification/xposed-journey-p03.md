@@ -474,7 +474,30 @@ sparse first-return original; exact2,366,738-byte tracked blob
 94d94509e0bd3fca988e15fc000bc53af091a543 was restored without changing any media
 assertion. Changed-source lint/format/whitespace checks pass.
 
-Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
+### Cross-preset optional-goal coverage
+
+The read-only `scripts/audit-signal-mastery.mjs` checks the existing mastery,
+clear and delayed route inputs against each mission's stated optional goal across
+three presets and both steering policies. It authenticates the three input files
+by SHA-256, retains failed/no-clear/ordinary-clear-only counts, and emits the exact
+successful input prefix ending at the first terminal tick. All authored bonuses
+remain present. It changes no geometry, actor, quota, fixture or player award.
+
+The finite search establishes25 of42 combinations, including the original seven
+Standard/immediate routes. The other17 remain unproven by these inputs, not
+impossible. Soft crossing and Neutral ground need additional routes outside the
+original Standard/immediate setting; Garden refuges needs Grid + Buffer routes;
+Cool the crossing needs Expert routes; the Remix needs Gentle/Standard Grid +
+Buffer routes. Ordinary-clear feasibility does not satisfy these optional goals.
+
+The complete original-mastery/pacing/new-audit cohort passes3/3, zero skips,
+13.532seconds on Node20.19.5. Every emitted successful prefix is independently
+replayed from fresh state with no lost lives, exact simulation/checkpoint identity,
+and exported replay verification. Original seven mastery checkpoints stay exact.
+These are omniscient sampled-route predicates, not automatic awards, arbitrary
+timing tolerance, native-controller evidence or human enjoyment validation.
+
+Meaningful alternative-route quality and remaining mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
 presentation; real-image assisted-trace qualification if exposed; native/device/accessibility and
