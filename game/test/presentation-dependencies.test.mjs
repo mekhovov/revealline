@@ -248,6 +248,33 @@ test('pure procedural presentations require no resource reads and confer no deco
   assert.equal(result.mediaDecoded, false);
 });
 
+test('procedural-only verification rejects cancellation between inspection and verification', async (t) => {
+  const compiled = await compilePresentation(createDefaultThemeBundle());
+  const controller = new AbortController();
+  const digest = crypto.subtle.digest.bind(crypto.subtle);
+  t.mock.method(crypto.subtle, 'digest', (...args) =>
+    digest(...args).then((hash) => {
+      // Complete the real hash, then abort after inspection resolves but before
+      // its caller continues. An empty inventory must not skip that boundary.
+      queueMicrotask(() => queueMicrotask(() => queueMicrotask(() => controller.abort())));
+      return hash;
+    }),
+  );
+  let reads = 0;
+  await assert.rejects(
+    verifyPresentationDependencies(compiled.files.get('runtime.json'), {
+      signal: controller.signal,
+      read: () => {
+        reads++;
+        throw new Error('A procedural presentation has no resource files.');
+      },
+    }),
+    { name: 'AbortError' },
+  );
+  assert.equal(controller.signal.aborted, true);
+  assert.equal(reads, 0);
+});
+
 test('retained manifest pins are checked before any dependency read with no latest fallback', async () => {
   const f = await fixture();
   let reads = 0;
