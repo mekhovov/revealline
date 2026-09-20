@@ -219,6 +219,15 @@ Modeled real-host tests clear all 15 consecutively in each mode, and native
 cross-pack Skip is verified. Human/full-device/timing and public acceptance remain
 open, as do Team Journey navigation and inter-mode departure integration.
 
+Further P02 evidence samples 420 complete no-life-loss runs across five seeds and
+35 replay-verified delayed-start routes (Standard/immediate/seed 1 only). These
+are omniscient feasibility checks, not human timing or mastery acceptance. Native
+Solo First return clear → Next → Choose your share with fresh movement is verified;
+one local click-to-observed-running sample is 548 ms, not a device benchmark.
+Studio's actual tracing export/file-chooser import/explicit Restore loop preserves
+original picture bytes and crop without changing the map or granting Apply authority.
+See the P02 and Studio-image evidence files for exact bounds and remaining gates.
+
 P01 follow-up adds optional Journey backup inspection and non-destructive restore:
 missing records merge, current receipts/cursors win, and the v1 persisted schema
 stays readable by previous releases. It does not replace a running attempt or award
