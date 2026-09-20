@@ -140,6 +140,23 @@ and a documented limitation, not completed general image-to-map recognition.
 
 ## Remaining gates
 
+### Reactive terrain captions
+
+The Solo host now appends accepted slow/lethal cell counts to its existing capture
+caption, retaining occupied-region teaching and the fresh-direction instruction.
+Erosion captions identify reactivated material and its effect. The read-only helper
+counts only event-listed cells in their current reclaimed/unclaimed state; it does
+not predict moving captures, promise enemy-free ground, mutate the simulation, add
+a dialog or change controls. Historical simulation/replay identities stay intact.
+The four-file host/source/terrain cohort passes **34/34**, zero skips, in39.7seconds
+onNode20.19.5; changed-source lint, formatting and whitespace checks pass.
+An actual-host legal line-only closure confirms two slow cells neutralized while
+the occupied lethal region is not described as captured. Existing warning ownership,
+save/resume, terminal-message priority and BFCache tests also pass. This is modeled
+host evidence, not native-device or Team/Versus terrain-caption qualification.
+The first wider run failed to load two omitted sparse fixtures (classic-lab and
+sentinel-relay); restoring their exact tracked copies allowed the complete rerun.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
