@@ -1,0 +1,305 @@
+{
+  "format": "revealline-scoped-verification.v1",
+  "observedAt": "2026-09-20T21:32:36.914208+00:00",
+  "status": "isolated correction prepared for integration; not publicly released",
+  "baseCommit": "77711734ad7e86d7036a6fb25dc4389695b5d8b6",
+  "override": {
+    "path": "game/app.mjs",
+    "sha256": "a71df91a577441891116882ed87312dd96d7898cfe232ced161cab086fc1dd1b"
+  },
+  "sourcePolicy": "Preview serves base Git blobs without lazy fetch; only app.mjs is overridden with an exact SHA256 pin. No release/source-owner files changed.",
+  "automation": {
+    "node20.19.5": {
+      "pass": 29,
+      "fail": 0,
+      "skip": 0
+    },
+    "node22.22.2": {
+      "pass": 29,
+      "fail": 0,
+      "skip": 0
+    },
+    "negativeControl": "Both new ready-selection cases fail against original app source because Settings remains open."
+  },
+  "native": {
+    "browser": "Codex in-app browser",
+    "url": "http://127.0.0.1:18808/game/",
+    "input": "keyboard only",
+    "journey": [
+      "Title: Down three times to Settings; Return",
+      "Tab to selected category; Right to Game data",
+      "Tab to Installed chapters; Return",
+      "Escape returns to Settings with Installed chapters focus",
+      "Reopen Library; Tab to Install night shift; Return",
+      "Tab to Play Night Shift; Return",
+      "Both menus disappear; Midnight Channel briefing visible; Start mission focused",
+      "Time remains2:30 in a subsequent observation,0.0% coverage,3lives,0score before explicit Start",
+      "Return explicitly enters gameplay and focuses canvas",
+      "Escape pauses; Resume focused"
+    ],
+    "consoleErrorsOrWarnings": [],
+    "httpResponses": 341,
+    "distinctPaths": 340,
+    "appResponses": [
+      {
+        "path": "game/app.mjs",
+        "bytes": 331959,
+        "sha256": "a71df91a577441891116882ed87312dd96d7898cfe232ced161cab086fc1dd1b",
+        "override": true
+      }
+    ]
+  },
+  "limitations": [
+    "Native checks cover installed/challenge selection, Stay, passive Back, suspended restoration, actual Immediate live-cut import and an actual off-center queued Grid turn on secured ground. Grid live-cut combinations and stale-callback breadth remain modeled evidence.",
+    "No physical controller, touch hardware, screen-reader or public release qualification.",
+    "No whole navigation phase completion claim."
+  ],
+  "files": [
+    {
+      "path": "node20.tap",
+      "bytes": 7662,
+      "sha256": "b8cc9dc119a16253666fa613783284679c24d7ead4c78fc7f313ee1fa9a63101"
+    },
+    {
+      "path": "node22.tap",
+      "bytes": 8094,
+      "sha256": "a0b29563313eea2139a739c88ccae6316b4bb0f0855ad808eeaa4f0522226955"
+    },
+    {
+      "path": "original-source-failures.tap",
+      "bytes": 10074,
+      "sha256": "235540c731cc140849c90ec201adb74ae9316f4b7dbed942be592866ce75bb4d",
+      "originalLogSha256": "020733816e4637d199470a44857b3acc97a9fdc9a10046e514f5c43b8435cbab",
+      "normalization": "Trailing whitespace removed only; original log retained locally."
+    },
+    {
+      "path": "before-import-flight.json",
+      "bytes": 4814,
+      "sha256": "4169b56bd9ff2133fc409d7d8ac17053dac2192f127bb6cb8e3b05f7de32cebc"
+    },
+    {
+      "path": "after-import-flight.json",
+      "bytes": 4814,
+      "sha256": "b10bae4ad828c35e4d072c563536edc1b815379285c92ea8e48dc530c669f3c3"
+    },
+    {
+      "path": "save-roundtrip.json",
+      "bytes": 1954,
+      "sha256": "465566e53e04f57dd4e645e0a5d69e7497d5abc36843cf5251be3f4a807d6399"
+    },
+    {
+      "path": "grid-before.json",
+      "bytes": 5344,
+      "sha256": "a5132106c3ad9d660337618ab8edbb8a0c4d02e9403fed9a75c8a9041d6f2190"
+    },
+    {
+      "path": "grid-after.json",
+      "bytes": 5344,
+      "sha256": "1ad1877c2ed4522250623aae627bb2010be932b165bf0d8cdfa40308c7ebe88f"
+    },
+    {
+      "path": "grid-resumed.json",
+      "bytes": 5344,
+      "sha256": "a0a9ff3f801e9a06c48d4a2359b908e2ada2af3152b10148bde124107318f5ae"
+    },
+    {
+      "path": "grid-reconstructed.json",
+      "bytes": 1160,
+      "sha256": "a6167975e9b3cd280b6f0cd7eb13acc3666a8758a99d32c085508cebec634cf5"
+    }
+  ],
+  "nativeFollowUp": {
+    "observedAt": "2026-09-20T21:38:47.079471+00:00",
+    "browser": "Codex in-app browser",
+    "url": "http://127.0.0.1:18808/game/",
+    "input": "keyboard only",
+    "journeys": [
+      "Title Continue showed retained Night Shift / Midnight Channel.",
+      "Settings \u2192 Game data \u2192 Saves & recovery \u2192 Load suspended attempt closed both menus and focused Resume.",
+      "Paused HUD remained2:26,0.0%,3lives,0score; no explicit Resume was activated.",
+      "Settings \u2192 Saves & recovery \u2192 Challenges \u2192 Play showed explicit unfinished-flight replacement dialog.",
+      "Stay restored launch-challenge focus; DOM showed settings-dialog and library-dialog both open; paused time remained2:26.",
+      "Reopen Play \u2192 explicit Replace closed both menus and focused Start for Daily route2026-09-20. HUD0:00,0.0%,3lives,0score; challenge not started.",
+      "Settings \u2192 Saves & recovery still listed Midnight Channel; Load suspended attempt again closed both menus and focused Resume with original visible HUD2:26."
+    ],
+    "consoleErrorsOrWarnings": [],
+    "evidenceBoundary": "Native UI state and menu/focus behavior. Exact saved-cut checkpoint comparisons and imported JSON restoration remain modeled-test evidence.",
+    "httpResponses": 333,
+    "distinctPaths": 331,
+    "appResponses": [
+      {
+        "path": "game/app.mjs",
+        "bytes": 331959,
+        "sha256": "a71df91a577441891116882ed87312dd96d7898cfe232ced161cab086fc1dd1b",
+        "override": true
+      }
+    ]
+  },
+  "nativeImportedPackWin": {
+    "observedAt": "2026-09-20T22:00:43.666121+00:00",
+    "browser": "Codex in-app browser",
+    "url": "http://127.0.0.1:18809/game/",
+    "input": "Native file chooser for generated pack; keyboard for navigation, flight and Collection.",
+    "pack": {
+      "path": "authoring-workflow-r1/foundation-example.json",
+      "bytes": 5270,
+      "sha256": "81232e84fee5389f4566dffc489b498e1e3ea82de21f458f3ac85cc0a4c06611"
+    },
+    "journey": [
+      "Settings \u2192 Game data \u2192 Installed chapters \u2192 Install a pack file accepted the generated JSON.",
+      "Keyboard Play Island connections closed Library and Settings, showed First bridge, and focused Start mission.",
+      "Explicit Start, Left connected the island to the border: 1.2% coverage and 290 points. Craft stopped after closure.",
+      "Right then Down drew a second route through normal directional controls. No runtime or storage injection.",
+      "Win showed 32.2% coverage, 7590 points, 3 lives, 0:39 and GOLD. Collection detail showed 39.55s.",
+      "Keyboard View picture, Collection and First bridge opened the earned procedural picture.",
+      "Play celebration remained in the viewer with visible best score unchanged at 7590.",
+      "After reload, title retained First bridge and Collection retained one First bridge card with 7590 points and GOLD."
+    ],
+    "consoleErrorsOrWarnings": [],
+    "httpResponses": 673,
+    "distinctPaths": 357,
+    "appResponses": [
+      {
+        "path": "game/app.mjs",
+        "bytes": 331959,
+        "sha256": "a71df91a577441891116882ed87312dd96d7898cfe232ced161cab086fc1dd1b",
+        "override": true
+      },
+      {
+        "path": "game/app.mjs",
+        "bytes": 331959,
+        "sha256": "a71df91a577441891116882ed87312dd96d7898cfe232ced161cab086fc1dd1b",
+        "override": true
+      }
+    ],
+    "limitations": [
+      "Data-only procedural teaching pack; not custom image/video/audio authoring qualification.",
+      "One native Immediate-mode win; both turning modes have separate fixed-tick CLI evidence.",
+      "Not a difficulty benchmark, physical-device certification, exact native save-byte comparison or integrated/public release acceptance."
+    ]
+  },
+  "nativeImportedFlight": {
+    "observedAt": "2026-09-20T22:06:17.811491+00:00",
+    "url": "http://127.0.0.1:18809/game/",
+    "input": "Keyboard navigation and normal direction taps; native file chooser for actual exported JSON.",
+    "journey": [
+      "Start First bridge; tap Left; pause while LIVE LINE / EXPOSED.",
+      "Settings \u2192 Game data \u2192 Saves & recovery \u2192 Export current attempt produced actual 4814-byte download.",
+      "Select Daily route through Challenges and explicit Replace; leave the challenge ready, without starting it.",
+      "Settings \u2192 Saves & recovery \u2192 Load a saved JSON file imports actual downloaded attempt.",
+      "Settings and Library close; paused First bridge shows Resume focused,0:09,0%,3lives,0score.",
+      "Re-export without Resume; compare actual downloaded before/after files.",
+      "Back from Library and Settings; explicitly Resume with Return only. Saved leftward cut closes at border:1.2%,290points,3lives; craft waits for fresh direction."
+    ],
+    "comparison": {
+      "beforeSha256": "4169b56bd9ff2133fc409d7d8ac17053dac2192f127bb6cb8e3b05f7de32cebc",
+      "afterSha256": "b10bae4ad828c35e4d072c563536edc1b815379285c92ea8e48dc530c669f3c3",
+      "beforeBytes": 4814,
+      "afterBytes": 4814,
+      "changedTopLevelFields": [
+        "savedAt"
+      ],
+      "replayIdentical": true,
+      "continuationIdentical": true,
+      "runIdIdentical": true,
+      "ticks": 1106,
+      "continuation": {
+        "direction": "left"
+      },
+      "summary": {
+        "ruleset": "xonix-core.v6",
+        "levelId": "workshop-first-bridge",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 1106,
+        "time": 9.216666666666784,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2355,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v6",
+        "hash": "33c95cb606aebb9d",
+        "sections": {
+          "identity": "36348fce394fc247",
+          "configuration": "b99a12333ba33f05",
+          "board": "4a71985322dd7982",
+          "player": "94c03d22ff2e975c",
+          "trail": "533a7a4acc5efad9",
+          "enemies": "d88e125f26dd3d06",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "2012a4e588426fa4",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "0216cf4f1eb35140",
+          "foundations": "d34f482448b23af0"
+        }
+      }
+    },
+    "consoleErrorsOrWarnings": [],
+    "limits": [
+      "One real Immediate-mode imported live cut. Off-center queued Grid turn and stale-callback checks remain modeled evidence.",
+      "No claim of physical-controller/touch, integrated build or public-release acceptance."
+    ]
+  },
+  "nativeGridFollowUp": {
+    "observedAt": "2026-09-20T22:47:15.366502+00:00",
+    "url": "http://127.0.0.1:18809/game/",
+    "source": "77711734ad7e86d7036a6fb25dc4389695b5d8b6 + pinned app.mjs override",
+    "input": "Keyboard navigation and direction taps; native file chooser imports actual exported bytes",
+    "turnPolicy": "grid-center",
+    "before": {
+      "tick": 1677,
+      "checkpoint": "0539571e4f07eee2",
+      "direction": "up",
+      "queuedDirection": "down",
+      "position": [
+        0.5000000000001819,
+        16.583333333333346
+      ],
+      "cutting": false
+    },
+    "roundtrip": "Only savedAt differs. Replay, checkpoint, runId, presentationPins and continuation are exact. Both Library and Settings close; Resume is focused and gameplay stays paused.",
+    "explicitResume": {
+      "directionCommands": 0,
+      "ticksAdvanced": 4,
+      "tick": 1681,
+      "direction": "down",
+      "queuedDirection": null,
+      "checkpoint": "059ca5721b86add7",
+      "replayMatches": true
+    },
+    "consoleErrorsOrWarnings": [],
+    "limitations": "This native sample exercises an off-center queued Grid turn on secured ground, not an off-center queued live cut. Immediate live-cut restoration has separate native evidence. Physical devices and public integration remain unqualified."
+  }
+}
