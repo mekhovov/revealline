@@ -786,14 +786,17 @@ async function launchPreview(source, missionId, difficulty) {
   $('preview-status').textContent = 'Preparing the exact candidate…';
   let result;
   try {
-    const manifest = prepareContentPreview(source, missionId, { difficulty }).manifest;
+    // Own one immutable edition across asynchronous media loading and reuse its
+    // validated projections; never compile the whole library twice per launch.
+    const project = compileContentProject(source);
+    const manifest = prepareContentPreview(project, missionId, { difficulty }).manifest;
     const pin = manifest.background;
     const [theme, artwork] = await Promise.all([
       loadPreviewTheme({ themeId: manifest.presentation.themeId, signal: controller.signal }),
       pin ? loadPreviewArtwork(pin, { signal: controller.signal }) : null,
     ]);
     if (ticket !== previewRevision) return;
-    result = prepareContentPreview(source, missionId, { difficulty, theme, artwork });
+    result = prepareContentPreview(project, missionId, { difficulty, theme, artwork });
     sessionStorage.setItem('revealline.playground.current', JSON.stringify(result.scenario));
   } catch (error) {
     if (ticket === previewRevision && error.name !== 'AbortError')

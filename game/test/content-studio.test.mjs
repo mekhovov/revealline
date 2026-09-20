@@ -11,6 +11,32 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { validateTheme } from '../content.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 
+test('Studio launch keeps one compiled edition across the media wait and scenario construction', async () => {
+  const source = createStarterProject(),
+    project = compileContentProject(source);
+  const initial = prepareContentPreview(project, 'nearby-shore');
+  const { themes } = JSON.parse(
+    await readFile(new URL('../content-design/themes.json', import.meta.url)),
+  );
+  source.missions[0].coverage = 0.91;
+  source.maps[0].foundations = [];
+  const ready = prepareContentPreview(project, 'nearby-shore', {
+    theme: themes.find((t) => t.id === 'horizon'),
+  });
+  assert.equal(ready.manifest, initial.manifest);
+  assert.deepEqual(ready.scenario.level, initial.manifest.level);
+  assert.equal(ready.manifest.level.goal.coverage, 0.6);
+  assert.equal(ready.geometry.foundationCount, 25);
+  const studio = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
+  const launch = studio.slice(
+    studio.indexOf('async function launchPreview('),
+    studio.indexOf("$('close-preview').onclick"),
+  );
+  assert.equal((launch.match(/compileContentProject\(source\)/g) ?? []).length, 1);
+  assert.equal((launch.match(/prepareContentPreview\(project,/g) ?? []).length, 2);
+  assert.doesNotMatch(launch, /prepareContentPreview\(source,/);
+});
+
 test('Horizon has an explicit valid presentation and mismatched preview themes fail closed', async () => {
   const { themes } = JSON.parse(
     await readFile(new URL('../content-design/themes.json', import.meta.url)),
