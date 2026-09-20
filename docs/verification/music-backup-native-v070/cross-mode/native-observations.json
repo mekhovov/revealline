@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-20T19:33:10.594513+00:00",
+  "source": "508a638f556b80817f4c872b9950d7de7b207b17",
+  "origin": "http://localhost:18803",
+  "routes": [
+    "game/?journey=authored",
+    "game/couch/?journey=authored&return=solo",
+    "game/couch/relay-rescue.html?return=versus&journey-return=authored",
+    "game/?journey=authored"
+  ],
+  "input": "Keyboard-only navigation/transport/export after direct navigation to the documented authored route. No controller or physical touch.",
+  "initial": "Existing native-imported saved generation1, two MP3s, mixed playlist falling/rising/SignalAfterglow/falling; master muted.",
+  "steps": [
+    "Solo: Down3\u2192Settings\u2192Tab/LeftAudio\u2192Tab6Musiclibrary. Same saved selection and2tracks/1playlist.",
+    "Solo: master0.80\u21920.78 using two Left keys; Play displays falling-chime playing; after ordered transport progresses to synth, Pause displays Signal Afterglow paused. Escape restores Music library then Settings.",
+    "ShiftTab5 reaches Versus; Return navigates to the exact authored Versus route. No race starts.",
+    "Versus: Tab2Settings\u2192LeftAudio\u2192Tab8Musiclibrary. Master0.78, shared generation1 and selection; playlist editor reached withTab14/End displays falling/rising/SignalAfterglow/falling.",
+    "Versus: ShiftTab10 reachesPlay; Return thenTab/Return confirms playing thenpaused. Next3 advances rising\u2192synth\u2192duplicatefalling, all paused.",
+    "Escape restores race-music-library then race-options. ShiftTab3/Return follows Separate Team arenas with authored return hint.",
+    "Team: Tab4Settings\u2192LeftAudio\u2192Tab8Musiclibrary. Shared0.78, generation1 andselected mixed playlist. Tab4Play/Return\u2192TabPause/Return confirms playing thenpaused.",
+    "Team: Tab17 fromPause reachesPrepare backup; Return focusesDownload; Return requests real download. Actual file compared byte-for-byte to original.",
+    "ShiftTab21 reachesmaster;Right2 restores0.80. Escape\u2192coop-music-library;Escape\u2192coop-settings-open. ShiftTab9/Return returns to authoredSolo.",
+    "Solo remainsStart/Firstreturn without automatic flight. ExplicitStart entersfield; Escape pauses at0%/3lives/0score/0:05. Mainmenu viaTab4/Return; SettingsAudio showsfalling-chime paused andmaster0.80.",
+    "CloseSettings returns shell-options without resuming. Test tabclosed."
+  ],
+  "backup": {
+    "download": "/Users/oleksandr.mekhovov/Downloads/RevealLine-soundtrack (16).rlsound",
+    "bytes": 66840,
+    "sha256": "8f8a4d17171344024744cc8f0016f98c9e3281353cae5996bf8da415f1281637",
+    "sameAsOriginalSavedBundle": true
+  },
+  "limits": [
+    "Actual UI labels/transport and downloaded bytes, not audible output proof. Master stayedmuted.",
+    "No requirement of sample-accurate continuous transport across document reloads was tested; each mode openedpaused at firstplaylistentry.",
+    "Only explicit SoloStart/Pause, no retry/result/nextlevel or in-flightCouch transfer qualification.",
+    "No fresh autoplay-denial, background lifecycle, offline, hardware, public or newer-source acceptance.",
+    "Observations summarize actual tool output; not raw screenshots/DOMtranscript.",
+    "Initial source root openedLegacyStart; explicitly navigated to documented authored route before the testedjourney."
+  ],
+  "research": {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Autoplay",
+    "applied": "Separate explicit Play from stored selection and muted transport evidence; audible autoplay and gesture-denial recovery need their own verification."
+  },
+  "cleanup": {
+    "tab109": "closed",
+    "server6869": "terminatedexit130",
+    "masterVolume": "restored originalSolo0.80; testoriginonly",
+    "flight": "One localFirstreturn attempt started and leftpaused; no publicsave changes"
+  }
+}
