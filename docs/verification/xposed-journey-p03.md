@@ -408,6 +408,13 @@ response703118bytes/SHA-256
 read and hashed; its complete bytes remain on GitHub, not retained locally.
 The run remains failed evidence regardless of later focused success.
 
+Its final result is FAILURE:7263tests,7262pass,1fail,0cancel/skip. Shards1/2/3
+pass1738/1871/1968 respectively; shard4 passes1685 with the single observer
+fixture failure. Freeze was skipped. New runtime-source run35509283083 pins
+48e20aae52dfac2beb008f515387cc9df9f20be6, freeze disabled; it started after the
+older run completed and is not yet accepted. Subsequent audit/fixture commits
+are not included in that exact-source gate.
+
 The test now identifies exactly one live observer by ownership of both board
 arenas before pagehide clears targets, checks a different replacement after
 pageshow, and retains its stale-callback, unchanged-attempt and zero-frame checks.
@@ -497,7 +504,30 @@ and exported replay verification. Original seven mastery checkpoints stay exact.
 These are omniscient sampled-route predicates, not automatic awards, arbitrary
 timing tolerance, native-controller evidence or human enjoyment validation.
 
-Meaningful alternative-route quality and remaining mastery across other presets; anti-cleanup/
+Seventeen supplemental routes in `signal-mastery-extension-routes.json` then
+close those sampled gaps. The combined read-only audit now establishes42/42
+mission/preset/steering combinations. Each emitted route is freshly replayed,
+checked for no lost lives, and export-verified; the17 new exact fixture routes
+also undergo the independent original mastery predicates. The original seven
+Standard/immediate checkpoints and all ordinary-clear inputs remain unchanged.
+
+Exploratory searches that only rewarded material neutralization produced Garden
+refuges clears without linking both refuges; the strict fixture test rejected
+them. The development search was corrected to require the actual connection
+goal, not by weakening the predicate. Its successful replacements take the
+opposite early approach toward the far refuge. Several Gentle Neutral ground
+searches stalled just below quota with material remaining; sampled one-second
+initial observation and a downward departure supplied legal no-loss mastery
+routes for both steering settings. These are chosen routes, not mandatory waits.
+The Remix routes connect all three foundations without collecting their bonus;
+they need not neutralize every material cell, which is not their stated goal.
+
+The full three-file mastery/pacing/audit cohort passes3/3 in16.426seconds with
+zero skips/failures on Node20.19.5. This broader feasibility still does not prove
+reaction tolerance, meaningful human choice, pacing, mastery awards or enjoyment.
+No runtime, geometry, enemy, speed, coverage or difficulty value was changed.
+
+Meaningful alternative-route quality, anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
 presentation; real-image assisted-trace qualification if exposed; native/device/accessibility and
