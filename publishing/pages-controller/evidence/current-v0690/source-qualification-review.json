@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "source": "5178c434e9dbbbd8287530c92daa64978e886e76",
+  "families": [
+    "pr-reviewed.json",
+    "manual-reviewed.json"
+  ],
+  "testsPerFamily": 6983,
+  "filesPerFamily": 560,
+  "actualRuntime": "Node20.19.6",
+  "inspectionRun": 35506582561,
+  "scope": "Complete source gates, ordinary hosted build and frozen original-byte checks; not public/device qualification."
+}
