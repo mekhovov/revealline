@@ -6139,6 +6139,14 @@ try {
   }
   function eventFeedback(events) {
     const ticket = flightInformation.begin(run, events);
+    // capture.stopped follows cells.claimed in the same accepted closure. Keep
+    // the rule explanation when adding the fresh-steering cue; do not replace it.
+    const teachingCapture = journeyEnabled && !practice && levelIndex < 2;
+    const captureTeaching = () => {
+      const occupied = inspectCaptureSnapshot(run).components.filter((region) => region.retained);
+      const anchors = occupied.flatMap((region) => region.enemyIds);
+      return `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`;
+    };
     try {
       for (const [index, event] of events.entries()) {
         flightInformation.observeEvent(ticket, index, () => {
@@ -6151,16 +6159,8 @@ try {
           if (event.type === 'class.rejected')
             warning(`Cannot switch craft: ${event.reason}. Return to safe hangar ground.`);
           if (event.type === 'cells.claimed') {
-            if (journeyEnabled && !practice && levelIndex < 2) {
-              const occupied = inspectCaptureSnapshot(run).components.filter(
-                (region) => region.retained,
-              );
-              const anchors = occupied.flatMap((region) => region.enemyIds);
-              warning(
-                `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`,
-                'secured',
-              );
-            } else
+            if (teachingCapture) warning(captureTeaching(), 'secured');
+            else
               warning(
                 `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
                 'secured',
@@ -6212,7 +6212,7 @@ try {
             warning('Supplies ready. Choose your next opportunity.');
           if (event.type === 'capture.stopped')
             warning(
-              `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed. Tap a direction to fly again.`,
+              `${teachingCapture ? captureTeaching() : `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed.`} Tap a direction to fly again.`,
               'secured-stopped',
             );
           if (event.type === 'powerup.collected')
