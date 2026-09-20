@@ -1,5 +1,25 @@
 # Journey P02 — Border Bloom greybox preparation
 
+## Shared Couch music composition
+
+Merge `5aaab46d` integrates the publication owner's exact composition
+`014449ed4f9fe98fd7303ee793083edd191790fb`, including final P01 corrections and
+shared Couch music. The merge was automatic, without conflict resolutions or
+physics/route edits. Authored music context uses the stable base campaign identity;
+untimed races, pinned pictures/presets and all P02 authoring changes remain intact.
+
+The actual candidate Versus/Team hosts, Couch audio/context/library/session,
+Journey music context, soundtrack panel and published-audio cohort passes
+**167/167** in 76.3 seconds on this P02 composition. It includes fifteen consecutive
+authored races and failed-picture retention; expected failure-injection warnings
+do not represent failed tests. This does not substitute for native combined-host,
+whole-source, listening, physical-controller or public acceptance.
+
+Earlier source `0bacd309` completed full hosted qualification/freeze run35501037421:
+artifact10603425276, 1,645,762,414 bytes, SHA-256
+`776aa6684df09e41d0bef5e2ee2f42f5b6a32894aaf8d0004c509cf5e79e2906`.
+That success does not qualify this later integrated source.
+
 ## Terrain readability and shared-contract continuation
 
 Studio and player thumbnails now distinguish slow-field paired dashes from lethal
