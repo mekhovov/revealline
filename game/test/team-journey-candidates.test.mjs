@@ -9,6 +9,7 @@ import {
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamMaterialPracticeCandidates } from '../content-design/team-material-candidates.mjs';
+import { createTeamRoamerCandidates } from '../content-design/team-roamer-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { resolveContentJourney } from '../content-design/journey.mjs';
 import { createContentExecutionCatalog } from '../content-design/execution.mjs';
@@ -22,9 +23,9 @@ const source = createTeamJourneyCandidates();
 const project = compileContentProject(source);
 
 test('Team review remains a separate independent candidate sequence, not a Solo conversion', () => {
-  assert.equal(source.missions.length, 8);
-  assert.equal(source.maps.length, 8);
-  assert.equal(source.packs.length, 4);
+  assert.equal(source.missions.length, 12);
+  assert.equal(source.maps.length, 12);
+  assert.equal(source.packs.length, 5);
   assert.equal(source.assets.length, 0);
   assert.deepEqual(
     source.missions.map((m) => m.id),
@@ -37,6 +38,10 @@ test('Team review remains a separate independent candidate sequence, not a Solo 
       'crossed-gardens',
       'split-orchards',
       'weaver-crossing',
+      'shared-lookout',
+      'twin-depots',
+      'changing-courtyard',
+      'last-rendezvous',
     ],
   );
   const draft = createTeamJourneyCandidates();
@@ -47,7 +52,7 @@ test('Team review remains a separate independent candidate sequence, not a Solo 
     assert.throws(() => resolveContentJourney(project, { mode }), /no missions/);
   assert(Object.isFrozen(TEAM_FOUNDATION_CANDIDATES[0].foundations[0]));
   const report = inspectContentPacing(project, { mode: 'team' });
-  assert.equal(report.rows.length, 8);
+  assert.equal(report.rows.length, 12);
   assert.equal(report.timedFraction, 0);
   assert(
     !report.diagnostics.some((d) =>
@@ -63,6 +68,7 @@ test('composing Team chapters preserves every existing preset manifest and execu
     createTeamFoundationPracticeCandidates,
     createTeamSignalCandidates,
     createTeamMaterialPracticeCandidates,
+    createTeamRoamerCandidates,
   ]) {
     const standalone = compileContentProject(create());
     const original = createContentExecutionCatalog(standalone, { mode: 'team' });

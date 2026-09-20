@@ -12,6 +12,9 @@ const routes = JSON.parse(
 const materialRoutes = JSON.parse(
   await readFile(new URL('./fixtures/team-material-routes.json', import.meta.url)),
 ).routes;
+const roamerRoutes = JSON.parse(
+  await readFile(new URL('./fixtures/team-roamer-routes.json', import.meta.url)),
+).routes;
 const keys = [
   { up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' },
   { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' },
@@ -20,9 +23,10 @@ const keys = [
 for (const [campaignId, recorded] of [
   ['shared-returns', routes],
   ['shared-material-routes', materialRoutes],
+  ['changing-common-ground', roamerRoutes],
 ])
   for (const difficulty of ['gentle', 'standard', 'expert'])
-    test(`authored ${campaignId}/${difficulty} Team campaign earns three real-host clears with one Next and no lobby between`, async (t) => {
+    test(`authored ${campaignId}/${difficulty} Team campaign earns consecutive real-host clears with one Next and no lobby between`, async (t) => {
       const pack = createTeamCampaignTestPack(
         createTeamJourneyCandidates(),
         campaignId,
@@ -39,6 +43,11 @@ for (const [campaignId, recorded] of [
         assert.equal(f.$('coop-menu').hidden, true);
         assert.equal(f.$('coop-overlay').hidden, true);
         assert.equal(f.$('coop-coverage').textContent, '0.0%');
+        if (level.enemies.some((enemy) => enemy.type === 'claimed-rover')) {
+          assert.equal(f.$('coop-state-0').textContent, 'On reclaimed ground');
+          assert.equal(f.$('coop-state-1').textContent, 'On reclaimed ground');
+          assert.match(f.$('coop-threat-help').textContent, /not universally safe/);
+        }
         const route = recorded.find((r) => r.missionId === level.id && r.difficulty === difficulty);
         f.tick(2);
         for (const segment of route.log) {

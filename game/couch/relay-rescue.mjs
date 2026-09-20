@@ -943,6 +943,7 @@ export function bootCoop() {
       : strongholds.length
         ? 'Strongholds secured together'
         : coopGoalText(run.level);
+    const reclaimedThreats = run.enemies.some((enemy) => enemy.type === 'claimed-rover');
     for (const player of run.players) {
       $('coop-state-' + player.id).textContent =
         player.status === 'downed'
@@ -952,8 +953,12 @@ export function bootCoop() {
           : player.cutting
             ? 'Line exposed'
             : player.graceUntil > run.time
-              ? 'Recovery shield · safe ground only'
-              : 'On safe ground';
+              ? reclaimedThreats
+                ? 'Recovery shield · reclaimed ground only'
+                : 'Recovery shield · safe ground only'
+              : reclaimedThreats
+                ? 'On reclaimed ground'
+                : 'On safe ground';
       const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
       $('coop-charge-' + player.id).textContent =
         player.status === 'downed'
