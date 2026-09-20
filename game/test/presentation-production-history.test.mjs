@@ -410,7 +410,7 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
-test('Livewire feedback dependencies reopen review without borrowing the v0.54 approval', async () => {
+test('Livewire feedback dependencies bind only the reviewed v0.76 effects inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   for (const slotId of [
@@ -426,7 +426,7 @@ test('Livewire feedback dependencies reopen review without borrowing the v0.54 a
     'effect.pressure',
   ]) {
     const asset = resolved.assets[slotId];
-    assert.equal(asset.quality.stage, 'source', slotId);
+    assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(
       asset.provenance.source.endsWith(
         'sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13',
@@ -435,13 +435,13 @@ test('Livewire feedback dependencies reopen review without borrowing the v0.54 a
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
     assert.match(asset.provenance.source, /game\/content-design\/actor-marker\.mjs/);
     assert.equal(
-      asset.quality.evidence.some((entry) => entry.includes('Scoped v0.54 source review')),
-      false,
+      asset.quality.evidence.some((entry) => entry.includes('Scoped v0.76 effects source review')),
+      true,
     );
   }
 });
 
-test('DOM ownership reopens UI review while unchanged Journey P02 audio keeps its approval', async () => {
+test('DOM ownership and Journey P02 audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
@@ -449,7 +449,7 @@ test('DOM ownership reopens UI review while unchanged Journey P02 audio keeps it
   for (const slot of reviewed) {
     const asset = resolved.assets[slot.id];
     if (slot.group === 'ui') {
-      assert.equal(asset.quality.stage, 'source', slot.id);
+      assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
         asset.provenance.source.endsWith(
           'sha256:fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6',
@@ -460,8 +460,8 @@ test('DOM ownership reopens UI review while unchanged Journey P02 audio keeps it
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
       assert.match(asset.provenance.source, /game\/presentation\/dom-ownership\.mjs/);
       assert.equal(
-        asset.quality.evidence.some((entry) => entry.includes('Scoped P05 source review')),
-        false,
+        asset.quality.evidence.some((entry) => entry.includes('Scoped v0.76 UI source review')),
+        true,
       );
     } else {
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
