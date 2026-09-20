@@ -241,7 +241,8 @@
               New missions start as an untested band-1 island template. Duplicate shares an
               immutable map; editing its geometry creates a private revision. Add to parent keeps
               existing memberships. Remove from parent detaches only that membership. Delete refuses
-              referenced or nonempty items and never removes shared maps or assets.
+              referenced or nonempty items and never removes shared maps or assets. Archived items
+              stay editable here but are omitted from candidate Journey lists.
             </p>
             <form id="structure-form">
               <label
@@ -261,6 +262,8 @@
                   <option value="earlier">Move earlier in parent</option>
                   <option value="later">Move later in parent</option>
                   <option value="delete">Delete unreferenced item</option>
+                  <option value="archive">Archive item</option>
+                  <option value="restore">Restore archived item</option>
                 </select></label
               >
               <label id="item-target-row">Existing item<select id="item-target"></select></label>

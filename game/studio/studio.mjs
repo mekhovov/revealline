@@ -188,7 +188,7 @@ function render(selected = $('mission').value) {
     ...project.missions.map((m) => {
       const option = document.createElement('option');
       option.value = m.id;
-      option.textContent = m.name;
+      option.textContent = `${m.name}${m.archived ? ' · Archived' : ''}`;
       return option;
     }),
   );
@@ -219,7 +219,7 @@ function syncStructure() {
       ...[...(blank ? [{ id: '', name: blank }] : []), ...rows].map((row) => {
         const option = document.createElement('option');
         option.value = row.id;
-        option.textContent = `${row.name}${row.id ? ` · ${row.id}` : ''}`;
+        option.textContent = `${row.name}${row.id ? ` · ${row.id}` : ''}${row.archived ? ' · Archived' : ''}`;
         return option;
       }),
     );
@@ -236,7 +236,10 @@ function syncStructure() {
     ['item-id-row', creating],
     ['item-name-row', creating || action === 'rename'],
     ['item-band-row', kind === 'campaign' && action === 'create'],
-    ['item-parent-row', kind !== 'pack' && !['rename', 'delete'].includes(action)],
+    [
+      'item-parent-row',
+      kind !== 'pack' && !['rename', 'delete', 'archive', 'restore'].includes(action),
+    ],
     ['item-confirm-row', action === 'delete'],
   ])
     $(id).hidden = !visible;
@@ -260,11 +263,18 @@ function syncStructure() {
   $('structure-order').textContent = project.packs
     .map(
       (pack, index) =>
-        `${index + 1}. ${pack.name}: ${
+        `${index + 1}. ${pack.name}${pack.archived ? ' [Archived]' : ''}: ${
           pack.campaignIds
             .map((id) => {
               const campaign = project.campaigns.find((entry) => entry.id === id);
-              return `${campaign.name} [${campaign.missionIds.map((missionId) => project.missions.find((entry) => entry.id === missionId).name).join(' → ') || 'empty'}]`;
+              return `${campaign.name}${campaign.archived ? ' [Archived]' : ''} [${
+                campaign.missionIds
+                  .map((missionId) => {
+                    const mission = project.missions.find((entry) => entry.id === missionId);
+                    return `${mission.name}${mission.archived ? ' [Archived]' : ''}`;
+                  })
+                  .join(' → ') || 'empty'
+              }]`;
             })
             .join(' / ') || 'empty'
         }`,
@@ -300,7 +310,9 @@ $('structure-form').onsubmit = guarded((event) => {
     ...(creating || action === 'rename' ? { name: $('item-name').value.trim() } : {}),
     ...(action === 'duplicate' ? { sourceId: $('item-target').value } : {}),
     ...(kind === 'campaign' && action === 'create' ? { band: Number($('item-band').value) } : {}),
-    ...(kind !== 'pack' && !['rename', 'delete'].includes(action) && $('item-parent').value
+    ...(kind !== 'pack' &&
+    !['rename', 'delete', 'archive', 'restore'].includes(action) &&
+    $('item-parent').value
       ? { parentId: $('item-parent').value }
       : {}),
     ...(['earlier', 'later'].includes(action) ? { offset: action === 'earlier' ? -1 : 1 } : {}),
