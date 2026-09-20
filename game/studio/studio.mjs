@@ -17,6 +17,7 @@ import { exportJSONFile } from '../platform.mjs';
 import { setBoardAvailability } from './board-state.mjs';
 import { tuneContentMission } from '../content-design/tuning.mjs';
 import { journeyPreset } from '../content-design/catalogs.mjs';
+import { createTeamTestPack } from '../content-design/team-export.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
@@ -114,6 +115,8 @@ function inspectBoard(trailCells = []) {
   const mission = currentMission();
   setBoardAvailability(document, !!mission);
   if (!mission) {
+    $('export-team').hidden = true;
+    $('team-test-help').hidden = true;
     inspectedTrail = [];
     tuningRevision = null;
     return;
@@ -175,6 +178,8 @@ function inspectBoard(trailCells = []) {
     }),
   );
   $('play').disabled = !mission.modes.includes('solo');
+  $('export-team').hidden = !mission.modes.includes('team');
+  $('team-test-help').hidden = !mission.modes.includes('team');
   $('play').title = mission.modes.includes('solo')
     ? ''
     : 'This candidate has no Solo adapter. Team and paired-race gameplay remain separate.';
@@ -421,6 +426,18 @@ $('import').onchange = guarded(async () => {
 $('export').onclick = guarded(async () => {
   const result = await exportJSONFile(session.current(), `${session.current().id}-backup.json`);
   status(result.message);
+});
+$('export-team').onclick = guarded(async () => {
+  if (sourceChanged)
+    throw new Error('Inspect and apply source edits before exporting the selected mission.');
+  const mission = currentMission();
+  if (!mission) throw new Error('Choose a Team mission.');
+  const difficulty = $('difficulty').value;
+  const pack = createTeamTestPack(session.current(), mission.id, difficulty);
+  const result = await exportJSONFile(pack, `${mission.id}-${difficulty}-team-test.json`);
+  status(
+    `${result.message} Geometry/rules only; Team preview scenery is not authored mission artwork. Your draft is unchanged.`,
+  );
 });
 $('save').onclick = guarded(() => session.save());
 for (const action of ['undo', 'redo'])

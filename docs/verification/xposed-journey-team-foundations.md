@@ -79,3 +79,30 @@ Journey Continue/Next/Skip/chooser and profile adapter, automatic fresh-attempt
 restart, global buffered steering qualification, broader actor/terrain bindings,
 physical controllers/touch/accessibility, human complementary-role and pacing
 testing, exact-source full hosted qualification and reviewed Pages promotion.
+
+## Studio-to-Team export follow-up
+
+Studio now exports one selected mission/preset as a valid immutable Team test
+pack using the same compiler. It rejects known impossible topology quotas and
+unapplied source edits. The download/import path contains geometry and rules,
+not reference pictures, final art, publication authority or Journey awards.
+Both Studio and the Team lobby explicitly distinguish preview scenery from
+authored mission artwork. The lobby pins the exported preset.
+
+Native local check: exported `native-twin-landings-expert-team-test.json` (738
+bytes), verified pack v2/ruleset v4/Expert, both exact edited spawns and 60% goal,
+then imported that downloaded file through the actual Team file chooser. Start
+used Expert with one reserve; W and Down steered both craft onto exposed trails.
+Both closed on reclaimed ground and paused at 1.2% shared coverage with the reserve
+intact. This is a native opening route, not a complete playthrough or human test.
+
+That test exposed a misleading generic Hunter start message on a keeper-only
+mission. Guidance now checks the actual actor roster; native reload/import/start
+confirmed field-keeper teaching and truthful geometry-test scenery text. The
+corrected attempt is paused at 0:00/0% in the owned Team tab.
+
+Export/model/actual-Team-host/Legacy-lobby-preview regression: **101/101 passed**
+in 32 seconds; the earlier export/empty-Studio/three-preset cohort passed 7/7.
+Full lint/format/source validation (718 files)/whitespace checks rerun separately.
+This closes the manual Studio→real Team test import path, not the player-facing
+authored Team Journey navigation, final presentation or release acceptance.
