@@ -1,0 +1,60 @@
+{
+  "format": "revealline-final-main-public-binding.v1",
+  "reviewed": true,
+  "base": "https://mekhovov.github.io/revealline/",
+  "currentVersion": "v0.66.0",
+  "gameSourceRevision": "dae39ba7d4f1a64e309566f9cacca826958e7de2",
+  "qualifiedSourceTree": "e003212f771c9c8b71e87c9b913c62f107486e7d",
+  "controllerCommit": "7b898a7ba4a5007397d02d8911e0577668d3bc99",
+  "controllerTree": "2688ea503c55efcbe40d4d16a650db6196d6ec96",
+  "deploymentId": 6547558688,
+  "runId": 35480159218,
+  "inventorySha256": "c305c4f604ae4cf5ebc5b7ca736d0eff941c39a23e1f6bf7f9d43196821774d4",
+  "pins": {
+    "receipt": {
+      "path": "receipt.json",
+      "bytes": 672086,
+      "sha256": "4b932d3e0fef4fb33de1163bb664e38d7b171c6349612ec4079f46e3f4a364cd"
+    },
+    "deployment": {
+      "path": "deployment.json",
+      "bytes": 3823,
+      "sha256": "ce780506fd234587a7df87b2bda98c453199eab74c0fe420fff0b3884d1ae136"
+    },
+    "statuses": {
+      "path": "statuses.json",
+      "bytes": 6586,
+      "sha256": "023dbd79f6035467d09286c43aed819e93731a5ec2b59c17fc46937223ccbbdc"
+    },
+    "run": {
+      "path": "run.json",
+      "bytes": 12224,
+      "sha256": "cda8cb8ce02439320f729f9cb9982c460bab727f4cf381a21df57e52a1cb40e7"
+    },
+    "manifest": {
+      "path": "manifest.json",
+      "bytes": 130439,
+      "sha256": "5e2cff491e09c068bcd925f718964a160badcdf2df763de6c3c188a7b624a0ab"
+    },
+    "record": {
+      "path": "record.json",
+      "bytes": 465,
+      "sha256": "f8c445ac2e99de9fbec85d7a47f887e4b88d99b85ecbab42763e2a5bcb0e17ad"
+    },
+    "qualification": {
+      "path": "qualification.json",
+      "bytes": 76621,
+      "sha256": "4863e4bab8350db300439ca3f092b4bf9eccb5f6d051bd5b47467375b03610c9"
+    },
+    "catalog": {
+      "path": "catalog.json",
+      "bytes": 46384,
+      "sha256": "0852ac4320a6c6d44043ee8fe2929ea124925449890138184b8e91cb3f0c2b3f"
+    },
+    "configuration": {
+      "path": "configuration.json",
+      "bytes": 198951,
+      "sha256": "0d34e51260a21fddd1e66694f7f54a9bfb82f449d4144c26cbfeec6d976c5120"
+    }
+  }
+}
