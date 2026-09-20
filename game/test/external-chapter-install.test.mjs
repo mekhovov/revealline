@@ -499,6 +499,7 @@ async function pictureConflict(h) {
   }
   assert.equal(isRetainedPictureReview(refusal), true);
   assert.equal(refusal.conflicts.length, 1);
+  assert.equal(refusal.conflicts[0].levelName, 'Orchard Crossing');
   assert.equal(refusal.conflicts[0].original.revision, 1);
   assert.equal(refusal.conflicts[0].retained.revision, 2);
   return refusal;

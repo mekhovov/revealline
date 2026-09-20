@@ -84,3 +84,21 @@ from product results.
 The inline review uses a visible Cancel action, restores focus to its opener on
 cancellation and to Play/Choose after success, and does not steal focus after newer
 navigation. These decisions follow the [W3C dialog focus guidance](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
+
+
+## Native cancellation regression found before release
+
+The first exact-source browser pass (`6dfb13a8`, isolated owned-data origin) proved
+Cancel focus return, explicit install-only confirmation, preserved paused counters
+and retained selected poster/original records. It also **failed** the truthful
+status gate: Cancel used `status.textContent`, detaching the live status component.
+The subsequent successful installation therefore still displayed “Installation
+cancelled.” [Original observation](verification/external-picture-recovery/native-first-observation.json)
+is retained as failed acceptance. This was a missing Cancel→retry→confirm test
+sequence, not a DOM-fixture limitation.
+
+The correction uses the status owner's begin/finish API, and its new regression
+first reproduced the detached label before passing with the fix. Review labels now
+use the authored map name rather than exposing internal identifiers. The final affected four-file cohort passed 84/84 on Node 22.22.2
+(233,967.993959 ms, no failures or skips). A fresh browser cancellation/retry
+check remains required before closing this correction.

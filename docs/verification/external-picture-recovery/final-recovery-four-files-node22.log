@@ -1,0 +1,517 @@
+TAP version 13
+# Subtest: fresh native source installation assigns release pictures after durable install and retains every authored original
+ok 1 - fresh native source installation assigns release pictures after durable install and retains every authored original
+  ---
+  duration_ms: 14731.679
+  type: 'test'
+  ...
+# Subtest: source registry is exact compiled authority; public catalog remains five unchanged embedded entries
+ok 2 - source registry is exact compiled authority; public catalog remains five unchanged embedded entries
+  ---
+  duration_ms: 0.521333
+  type: 'test'
+  ...
+# Subtest: native pair install preserves an unfinished unrelated flight, then explicit Play and legal route earn the exact original once
+ok 3 - native pair install preserves an unfinished unrelated flight, then explicit Play and legal route earn the exact original once
+  ---
+  duration_ms: 26204.710291
+  type: 'test'
+  ...
+# Subtest: stored external run reloads with exact saved pin and remains paused until explicit Resume
+    # Subtest: native install, play and pause
+    ok 1 - native install, play and pause
+      ---
+      duration_ms: 14723.825167
+      type: 'test'
+      ...
+    # Subtest: fresh app import restores the saved flight
+    ok 2 - fresh app import restores the saved flight
+      ---
+      duration_ms: 3735.580667
+      type: 'test'
+      ...
+    1..2
+ok 4 - stored external run reloads with exact saved pin and remains paused until explicit Resume
+  ---
+  duration_ms: 18459.846459
+  type: 'test'
+  ...
+# Subtest: startup preserves and refuses external-chapter-journal.v1 before any backup recovery
+ok 5 - startup preserves and refuses external-chapter-journal.v1 before any backup recovery
+  ---
+  duration_ms: 351.48575
+  type: 'test'
+  ...
+# Subtest: startup preserves and refuses external-chapter-journal.v1 + backup-journal before any backup recovery
+ok 6 - startup preserves and refuses external-chapter-journal.v1 + backup-journal before any backup recovery
+  ---
+  duration_ms: 350.343125
+  type: 'test'
+  ...
+# Subtest: cleared assignment still selects descriptor original; missing original refuses both new flight and Original artwork without generic fallback
+ok 7 - cleared assignment still selects descriptor original; missing original refuses both new flight and Original artwork without generic fallback
+  ---
+  duration_ms: 18135.668916
+  type: 'test'
+  ...
+# Subtest: ordinary native removal and pack-only export refuse indexed content without dropping pointer or index
+ok 8 - ordinary native removal and pack-only export refuse indexed content without dropping pointer or index
+  ---
+  duration_ms: 7977.571708
+  type: 'test'
+  ...
+# Subtest: Workshop authenticates the same pointer/index and holds both locks; stale index and pending journal cannot publish assignments
+ok 9 - Workshop authenticates the same pointer/index and holds both locks; stale index and pending journal cannot publish assignments
+  ---
+  duration_ms: 3610.835375
+  type: 'test'
+  ...
+# Subtest: guarded metadata work uses one backup lock, refuses a stale branded snapshot and remains lazy for ordinary packs
+ok 10 - guarded metadata work uses one backup lock, refuses a stale branded snapshot and remains lazy for ordinary packs
+  ---
+  duration_ms: 0.4785
+  type: 'test'
+  ...
+# Subtest: source install and unrelated chapter win preserve an earlier exact first-earned story A after binding B
+ok 11 - source install and unrelated chapter win preserve an earlier exact first-earned story A after binding B
+  ---
+  duration_ms: 32159.049458
+  type: 'test'
+  ...
+# Subtest: Back during exact media hashing cancels native pair install and late digest cannot publish or change the flight
+ok 12 - Back during exact media hashing cancels native pair install and late digest cannot publish or change the flight
+  ---
+  duration_ms: 394.169833
+  type: 'test'
+  ...
+# Subtest: native exact-pair recovery completes a retained published journal once; reload is required before adopting its preserved profile
+    # Subtest: explicit native recovery leaves existing generation and asks for reload
+    ok 1 - explicit native recovery leaves existing generation and asks for reload
+      ---
+      duration_ms: 4999.384125
+      type: 'test'
+      ...
+    # Subtest: new host coherently adopts recovered index and permits explicit Play
+    ok 2 - new host coherently adopts recovered index and permits explicit Play
+      ---
+      duration_ms: 8956.792125
+      type: 'test'
+      ...
+    1..2
+ok 13 - native exact-pair recovery completes a retained published journal once; reload is required before adopting its preserved profile
+  ---
+  duration_ms: 16619.498375
+  type: 'test'
+  ...
+# Subtest: published external pictures survive saved Continue and confirmed Restart with overlapping preparation
+    # Subtest: install, play, pause and retain new release original
+    ok 1 - install, play, pause and retain new release original
+      ---
+      duration_ms: 14334.976167
+      type: 'test'
+      ...
+    # Subtest: restored attempt resumes and the confirmed replacement attempt becomes ready
+    ok 2 - restored attempt resumes and the confirmed replacement attempt becomes ready
+      ---
+      duration_ms: 5477.958458
+      type: 'test'
+      ...
+    1..2
+ok 14 - published external pictures survive saved Continue and confirmed Restart with overlapping preparation
+  ---
+  duration_ms: 19813.397709
+  type: 'test'
+  ...
+# Subtest: explicit retained-picture review installs originals without fresh defaults or changing the paused flight
+ok 15 - explicit retained-picture review installs originals without fresh defaults or changing the paused flight
+  ---
+  duration_ms: 16885.993208
+  type: 'test'
+  ...
+# Subtest: ordinary empty/read/write path stays lazy and native CAS preserves old embedded contract
+ok 16 - ordinary empty/read/write path stays lazy and native CAS preserves old embedded contract
+  ---
+  duration_ms: 28.54875
+  type: 'test'
+  ...
+# Subtest: shared DB4 install, exact authored defaults, Gentle mapping and separate readiness preserve audio and story domain
+ok 17 - shared DB4 install, exact authored defaults, Gentle mapping and separate readiness preserve audio and story domain
+  ---
+  duration_ms: 13214.146625
+  type: 'test'
+  ...
+# Subtest: cleared assignment and valid newer B do not erase the exact authored A; saved pin shapes are not requests
+ok 18 - cleared assignment and valid newer B do not erase the exact authored A; saved pin shapes are not requests
+  ---
+  duration_ms: 13279.22825
+  type: 'test'
+  ...
+# Subtest: known compact pack alone is refused without opening shared media; no ID-suffix heuristics
+ok 19 - known compact pack alone is refused without opening shared media; no ID-suffix heuristics
+  ---
+  duration_ms: 31.941917
+  type: 'test'
+  ...
+# Subtest: coherent pending journal snapshot reports backup-recovery and preserves rows
+ok 20 - coherent pending journal snapshot reports backup-recovery and preserves rows
+  ---
+  duration_ms: 0.709083
+  type: 'test'
+  ...
+# Subtest: coherent pending journal snapshot reports external-recovery and preserves rows
+ok 21 - coherent pending journal snapshot reports external-recovery and preserves rows
+  ---
+  duration_ms: 1.171167
+  type: 'test'
+  ...
+# Subtest: coherent pending journal snapshot reports mixed-journals and preserves rows
+ok 22 - coherent pending journal snapshot reports mixed-journals and preserves rows
+  ---
+  duration_ms: 0.642667
+  type: 'test'
+  ...
+# Subtest: interrupted native publication is withheld across restart and explicit recovery avoids nested-lock deadlock
+ok 23 - interrupted native publication is withheld across restart and explicit recovery avoids nested-lock deadlock
+  ---
+  duration_ms: 5434.4825
+  type: 'test'
+  ...
+# Subtest: ordinary mutation preserves external index; external removal and changed same-ID gameplay refuse before writes
+ok 24 - ordinary mutation preserves external index; external removal and changed same-ID gameplay refuse before writes
+  ---
+  duration_ms: 5507.865291
+  type: 'test'
+  ...
+# Subtest: changed pointer, index or backup marker invalidates single-use reviewed write; fake reviews refuse
+ok 25 - changed pointer, index or backup marker invalidates single-use reviewed write; fake reviews refuse
+  ---
+  duration_ms: 20.609042
+  type: 'test'
+  ...
+# Subtest: actual selected Blob corruption refuses readiness even with intact validated metadata
+ok 26 - actual selected Blob corruption refuses readiness even with intact validated metadata
+  ---
+  duration_ms: 5422.799042
+  type: 'test'
+  ...
+# Subtest: lost writer/occupied backup lock/closed host refuse mutations without affecting borrowed manager
+ok 27 - lost writer/occupied backup lock/closed host refuse mutations without affecting borrowed manager
+  ---
+  duration_ms: 1.728375
+  type: 'test'
+  ...
+# Subtest: abort during lazy manager return allocates no borrowed store or late snapshot
+ok 28 - abort during lazy manager return allocates no borrowed store or late snapshot
+  ---
+  duration_ms: 5142.15725
+  type: 'test'
+  ...
+# Subtest: mutating caller next pack during preparation cannot change reviewed native publication
+ok 29 - mutating caller next pack during preparation cannot change reviewed native publication
+  ---
+  duration_ms: 18.236417
+  type: 'test'
+  ...
+# Subtest: manager timeout and close reject deferred acquisition without closing the borrowed owner
+ok 30 - manager timeout and close reject deferred acquisition without closing the borrowed owner
+  ---
+  duration_ms: 5235.491666
+  type: 'test'
+  ...
+# Subtest: failed native ordinary CAS is atomic and consumed review cannot be retried blindly
+ok 31 - failed native ordinary CAS is atomic and consumed review cannot be retried blindly
+  ---
+  duration_ms: 5400.100291
+  type: 'test'
+  ...
+# Subtest: missing native Blob retains exact authored metadata but refuses both readiness and authored selection
+ok 32 - missing native Blob retains exact authored metadata but refuses both readiness and authored selection
+  ---
+  duration_ms: 5413.668667
+  type: 'test'
+  ...
+# Subtest: quota refusal leaves a recoverable journal and no published gameplay or evicted originals
+ok 33 - quota refusal leaves a recoverable journal and no published gameplay or evicted originals
+  ---
+  duration_ms: 7145.889917
+  type: 'test'
+  ...
+# Subtest: trusted descriptor inputs are snapshotted and conflicting index cannot masquerade as that edition
+ok 34 - trusted descriptor inputs are snapshotted and conflicting index cannot masquerade as that edition
+  ---
+  duration_ms: 5047.964
+  type: 'test'
+  ...
+# Subtest: an unregistered prepared descriptor cannot opt itself into the host
+ok 35 - an unregistered prepared descriptor cannot opt itself into the host
+  ---
+  duration_ms: 0.976083
+  type: 'test'
+  ...
+# Subtest: pack changes while actual selected-original decoding is deferred cannot publish stale readiness
+ok 36 - pack changes while actual selected-original decoding is deferred cannot publish stale readiness
+  ---
+  duration_ms: 6644.743333
+  type: 'test'
+  ...
+# Subtest: registered owner inputs are owned before later mutation without opening media
+ok 37 - registered owner inputs are owned before later mutation without opening media
+  ---
+  duration_ms: 7.090708
+  type: 'test'
+  ...
+# Subtest: native absent index is uncharged; a persisted index contributes its exact bytes
+ok 38 - native absent index is uncharged; a persisted index contributes its exact bytes
+  ---
+  duration_ms: 32.194542
+  type: 'test'
+  ...
+# Subtest: explicit retained-picture review crosses temporary installer ownership and keeps authored defaults separate
+ok 39 - explicit retained-picture review crosses temporary installer ownership and keeps authored defaults separate
+  ---
+  duration_ms: 18595.624708
+  type: 'test'
+  ...
+# Subtest: real two-store install commits originals before one atomic pointer publication, with exact bytes and no profile/session writes
+ok 40 - real two-store install commits originals before one atomic pointer publication, with exact bytes and no profile/session writes
+  ---
+  duration_ms: 8746.5725
+  type: 'test'
+  ...
+# Subtest: crash after prepared preserves recovery and completes without recommitting originals
+ok 41 - crash after prepared preserves recovery and completes without recommitting originals
+  ---
+  duration_ms: 7772.574959
+  type: 'test'
+  ...
+# Subtest: crash before media-committed preserves recovery and completes without recommitting originals
+ok 42 - crash before media-committed preserves recovery and completes without recommitting originals
+  ---
+  duration_ms: 7727.028875
+  type: 'test'
+  ...
+# Subtest: crash before published preserves recovery and completes without recommitting originals
+ok 43 - crash before published preserves recovery and completes without recommitting originals
+  ---
+  duration_ms: 8740.704458
+  type: 'test'
+  ...
+# Subtest: crash after published preserves recovery and completes without recommitting originals
+ok 44 - crash after published preserves recovery and completes without recommitting originals
+  ---
+  duration_ms: 5762.03625
+  type: 'test'
+  ...
+# Subtest: crash before final journal clear preserves recovery and completes without recommitting originals
+ok 45 - crash before final journal clear preserves recovery and completes without recommitting originals
+  ---
+  duration_ms: 6740.852708
+  type: 'test'
+  ...
+# Subtest: failed pointer second put rolls back publication and journal phase together
+ok 46 - failed pointer second put rolls back publication and journal phase together
+  ---
+  duration_ms: 8353.540667
+  type: 'test'
+  ...
+# Subtest: abort after originals commit and before pointer publication leaves old pointer and recoverable originals
+ok 47 - abort after originals commit and before pointer publication leaves old pointer and recoverable originals
+  ---
+  duration_ms: 8492.090417
+  type: 'test'
+  ...
+# Subtest: reported quota refusal leaves media and pointer unchanged; same journal can resume after space is available
+ok 48 - reported quota refusal leaves media and pointer unchanged; same journal can resume after space is available
+  ---
+  duration_ms: 7707.0145
+  type: 'test'
+  ...
+# Subtest: foreign pack pointer, foreign generation and post-publication media change never clear the journal or roll back originals
+ok 49 - foreign pack pointer, foreign generation and post-publication media change never clear the journal or roll back originals
+  ---
+  duration_ms: 22040.810625
+  type: 'test'
+  ...
+# Subtest: pre-existing historical binding cannot be silently replaced even when its pack is absent
+ok 50 - pre-existing historical binding cannot be silently replaced even when its pack is absent
+  ---
+  duration_ms: 6029.051833
+  type: 'test'
+  ...
+# Subtest: writer, lock, backup marker, cancellation and forged prepared capability refuse before any journal write
+ok 51 - writer, lock, backup marker, cancellation and forged prepared capability refuse before any journal write
+  ---
+  duration_ms: 7.715667
+  type: 'test'
+  ...
+# Subtest: side-by-side pilot retains the exact embedded edition and actual old suspended attempt; it does not perform migration
+ok 52 - side-by-side pilot retains the exact embedded edition and actual old suspended attempt; it does not perform migration
+  ---
+  duration_ms: 11015.819208
+  type: 'test'
+  ...
+# Subtest: corrupt committed original blocks recovery without changing pointer, index, metadata or deleting history
+ok 53 - corrupt committed original blocks recovery without changing pointer, index, metadata or deleting history
+  ---
+  duration_ms: 3155.341209
+  type: 'test'
+  ...
+# Subtest: native pointer guard rejects old backup journal, mismatched channel, cancelled write and foreign index CAS
+ok 54 - native pointer guard rejects old backup journal, mismatched channel, cancelled write and foreign index CAS
+  ---
+  duration_ms: 1.527333
+  type: 'test'
+  ...
+# Subtest: pointer channels preserve the existing bounded release-v spelling and refuse mismatched variants
+ok 55 - pointer channels preserve the existing bounded release-v spelling and refuse mismatched variants
+  ---
+  duration_ms: 0.703334
+  type: 'test'
+  ...
+# Subtest: explicit fresh picture review installs exact originals without replacing retained assignments
+ok 56 - explicit fresh picture review installs exact originals without replacing retained assignments
+  ---
+  duration_ms: 13997.229083
+  type: 'test'
+  ...
+# Subtest: picture confirmation refuses forged, foreign and changed-generation reviews without writes
+ok 57 - picture confirmation refuses forged, foreign and changed-generation reviews without writes
+  ---
+  duration_ms: 21348.284834
+  type: 'test'
+  ...
+# Subtest: confirmed retained-picture install recovers crash after prepared without replacing assignments
+ok 58 - confirmed retained-picture install recovers crash after prepared without replacing assignments
+  ---
+  duration_ms: 17847.090042
+  type: 'test'
+  ...
+# Subtest: confirmed retained-picture install recovers crash after media-committed without replacing assignments
+ok 59 - confirmed retained-picture install recovers crash after media-committed without replacing assignments
+  ---
+  duration_ms: 15069.575958
+  type: 'test'
+  ...
+# Subtest: confirmed retained-picture install recovers crash after published without replacing assignments
+ok 60 - confirmed retained-picture install recovers crash after published without replacing assignments
+  ---
+  duration_ms: 13095.115833
+  type: 'test'
+  ...
+# Subtest: confirmed retained-picture install recovers crash after journal clear without replacing assignments
+ok 61 - confirmed retained-picture install recovers crash after journal clear without replacing assignments
+  ---
+  duration_ms: 13036.4245
+  type: 'test'
+  ...
+# Subtest: retained-picture journal rejects unsupported-policy without committing media
+ok 62 - retained-picture journal rejects unsupported-policy without committing media
+  ---
+  duration_ms: 10268.217041
+  type: 'test'
+  ...
+# Subtest: retained-picture journal rejects legacy-with-extra-policy without committing media
+ok 63 - retained-picture journal rejects legacy-with-extra-policy without committing media
+  ---
+  duration_ms: 10167.75775
+  type: 'test'
+  ...
+# Subtest: only the chosen card supplies native files and shared busy blocks every other card until explicit Choose
+ok 64 - only the chosen card supplies native files and shared busy blocks every other card until explicit Choose
+  ---
+  duration_ms: 5.164667
+  type: 'test'
+  ...
+# Subtest: Back cancels old download; reopening then completing another card never publishes stale first-card readiness
+ok 65 - Back cancels old download; reopening then completing another card never publishes stale first-card readiness
+  ---
+  duration_ms: 1.648917
+  type: 'test'
+  ...
+# Subtest: late inspection from an old multi-card open cannot clear the new card readiness or busy owner
+ok 66 - late inspection from an old multi-card open cannot clear the new card readiness or busy owner
+  ---
+  duration_ms: 15.155334
+  type: 'test'
+  ...
+# Subtest: sixteen real choices stay reachable offline and an active Countercurrent owner survives filtering and retry
+ok 67 - sixteen real choices stay reachable offline and an active Countercurrent owner survives filtering and retry
+  ---
+  duration_ms: 12.998958
+  type: 'test'
+  ...
+# Subtest: picture conflict download-play requires explicit review and never auto-launches
+ok 68 - picture conflict download-play requires explicit review and never auto-launches
+  ---
+  duration_ms: 1.567416
+  type: 'test'
+  ...
+# Subtest: picture conflict download-install requires explicit review and never auto-launches
+ok 69 - picture conflict download-install requires explicit review and never auto-launches
+  ---
+  duration_ms: 0.623083
+  type: 'test'
+  ...
+# Subtest: picture conflict upload requires explicit review and never auto-launches
+ok 70 - picture conflict upload requires explicit review and never auto-launches
+  ---
+  duration_ms: 1.561583
+  type: 'test'
+  ...
+# Subtest: picture review discarded after cancel; hidden confirm cannot install
+ok 71 - picture review discarded after cancel; hidden confirm cannot install
+  ---
+  duration_ms: 1.247125
+  type: 'test'
+  ...
+# Subtest: picture review discarded after close; hidden confirm cannot install
+ok 72 - picture review discarded after close; hidden confirm cannot install
+  ---
+  duration_ms: 0.690542
+  type: 'test'
+  ...
+# Subtest: picture review discarded after files; hidden confirm cannot install
+ok 73 - picture review discarded after files; hidden confirm cannot install
+  ---
+  duration_ms: 0.521625
+  type: 'test'
+  ...
+# Subtest: picture review discarded after refresh; hidden confirm cannot install
+ok 74 - picture review discarded after refresh; hidden confirm cannot install
+  ---
+  duration_ms: 0.3865
+  type: 'test'
+  ...
+# Subtest: late conflict after Back never reopens review or steals focus
+ok 75 - late conflict after Back never reopens review or steals focus
+  ---
+  duration_ms: 0.305917
+  type: 'test'
+  ...
+# Subtest: confirmed installation reports committed originals when later inspection fails
+ok 76 - confirmed installation reports committed originals when later inspection fails
+  ---
+  duration_ms: 0.347875
+  type: 'test'
+  ...
+# Subtest: late inspection after confirmed install and Back cannot overwrite new readiness
+ok 77 - late inspection after confirmed install and Back cannot overwrite new readiness
+  ---
+  duration_ms: 6.584625
+  type: 'test'
+  ...
+# Subtest: Cancel then retry and confirm keeps visible status messages attached
+ok 78 - Cancel then retry and confirm keeps visible status messages attached
+  ---
+  duration_ms: 1.22425
+  type: 'test'
+  ...
+1..78
+# tests 84
+# suites 0
+# pass 84
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 233967.993959
