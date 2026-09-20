@@ -86,6 +86,55 @@ function decodeOwned(decode, source, signal) {
   });
 }
 
+/** Shared browser decoder for already-verified originals. This is not asset
+ * verification: callers still own byte/digest/dimension and identity checks.
+ * The deadline also bounds injected decoders; late results are released. */
+export async function decodeOwnedPicture(
+  source,
+  { signal, decodeImage, ImageClass = globalThis.Image, timeoutMs = 15000 } = {},
+) {
+  check(signal);
+  required(
+    typeof source === 'string' && source.length > 0,
+    'A verified picture source is required.',
+  );
+  required(
+    Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 15000,
+    'Invalid picture decode timeout.',
+  );
+  const decode = decodeImage ?? ((src, options) => browserDecode(src, { ...options, ImageClass }));
+  required(typeof decode === 'function', 'A picture decoder is required.');
+  const controller = new AbortController();
+  let timer,
+    abort,
+    succeeded = false;
+  const stopped = new Promise((_, reject) => {
+    abort = () => {
+      reject(cancelled());
+      controller.abort();
+    };
+    signal?.addEventListener('abort', abort, { once: true });
+    timer = setTimeout(() => {
+      reject(new Error('Saved picture decode timed out.'));
+      controller.abort();
+    }, timeoutMs);
+  });
+  let image = null;
+  try {
+    image = await Promise.race([stopped, decodeOwned(decode, source, controller.signal)]);
+    check(signal);
+    succeeded = true;
+    return image;
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener('abort', abort);
+    if (!succeeded) {
+      controller.abort();
+      disposeImage(image);
+    }
+  }
+}
+
 /** Acquire one historical choice, never today's replacement assignment.
  * The host validates execution→authored ownership through pins/receipts first.
  * metadata is the exact branded snapshot from this store's readMetadata().
@@ -125,8 +174,10 @@ export async function acquirePresentationImage(
       typeof URLImpl?.revokeObjectURL === 'function',
     'Local picture object URLs are unavailable.',
   );
-  const decode = decodeImage ?? ((src, options) => browserDecode(src, { ...options, ImageClass }));
-  required(typeof decode === 'function', 'A picture decoder is required.');
+  required(
+    decodeImage === undefined || typeof decodeImage === 'function',
+    'A picture decoder is required.',
+  );
   let url = null,
     image = null;
   const release = () => {
@@ -147,7 +198,7 @@ export async function acquirePresentationImage(
         check(signal);
         url = URLImpl.createObjectURL(blob);
         check(signal);
-        image = await decodeOwned(decode, url, signal);
+        image = await decodeOwnedPicture(url, { signal, decodeImage, ImageClass });
         check(signal);
         required(
           image &&
@@ -175,7 +226,7 @@ export async function acquirePresentationImage(
   }
 }
 
-function ownContext(source) {
+export function pictureDisplayContext(source) {
   const value = boundedJSON(source, { maxBytes: 4096, maxString: 512, maxNodes: 16 });
   exactKeys(
     value,
@@ -215,7 +266,7 @@ export function createPresentationImageSlot({ acquire = acquirePresentationImage
   };
   function setContext(source) {
     required(!disposed, 'Picture slot is disposed.');
-    const next = ownContext(source);
+    const next = pictureDisplayContext(source);
     if (context && canonicalJSON(next) === canonicalJSON(context)) return false;
     invalidate();
     const prior = binding;
@@ -227,7 +278,7 @@ export function createPresentationImageSlot({ acquire = acquirePresentationImage
   async function load(request, { context: expectedContext, signal, ...options } = {}) {
     required(!disposed && context, 'Set the picture display context before loading.');
     required(
-      canonicalJSON(ownContext(expectedContext)) === canonicalJSON(context),
+      canonicalJSON(pictureDisplayContext(expectedContext)) === canonicalJSON(context),
       'Picture request belongs to an earlier display context.',
     );
     const pin = snapshotPictureChoice(request.pin);

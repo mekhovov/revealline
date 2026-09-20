@@ -1,6 +1,7 @@
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { compileContentProject } from './project.mjs';
 import { createStarterProject } from './starter.mjs';
+import { createTeamOpeningCandidates } from './team-candidates.mjs';
 
 const kinds = Object.freeze({ mission: 'missions', campaign: 'campaigns', pack: 'packs' });
 const named = (name) => typeof name === 'string' && name.trim() && name.length <= 160;
@@ -54,12 +55,23 @@ export function editContentStructure(source, input) {
   const command = boundedJSON(input, { maxBytes: 4096, maxNodes: 32, maxDepth: 2 });
   exactKeys(
     command,
-    ['action', 'kind', 'id', 'name', 'sourceId', 'parentId', 'band', 'offset', 'confirmationId'],
+    [
+      'action',
+      'kind',
+      'id',
+      'name',
+      'sourceId',
+      'parentId',
+      'band',
+      'offset',
+      'confirmationId',
+      'template',
+    ],
     'structure command',
   );
   const { action, kind, id, name } = command;
   const actionKeys = {
-    create: ['name', 'parentId', 'band'],
+    create: ['name', 'parentId', 'band', 'template'],
     duplicate: ['name', 'sourceId', 'parentId'],
     rename: ['name'],
     place: ['parentId'],
@@ -72,6 +84,11 @@ export function editContentStructure(source, input) {
   required(Object.hasOwn(actionKeys, action), 'Unsupported structure action.');
   exactKeys(command, ['action', 'kind', 'id', ...actionKeys[action]], 'structure action');
   required(command.band === undefined || kind === 'campaign', 'Only campaigns have a band.');
+  required(
+    command.template === undefined ||
+      (kind === 'mission' && ['solo-island', 'team-islands'].includes(command.template)),
+    'Choose a supported mission template.',
+  );
   required(command.parentId === undefined || kind !== 'pack', 'Packs belong to the project.');
   required(Object.hasOwn(kinds, kind), 'Choose mission, campaign or pack.');
   required(
@@ -112,7 +129,10 @@ export function editContentStructure(source, input) {
       delete copy.archived;
       entries.push(copy);
     } else if (kind === 'mission') {
-      const starter = createStarterProject(),
+      const starter =
+          command.template === 'team-islands'
+            ? createTeamOpeningCandidates()
+            : createStarterProject(),
         mission = starter.missions[0],
         map = starter.maps[0];
       required(

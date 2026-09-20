@@ -8,12 +8,42 @@ import { prepareContentPreview } from '../content-design/preview.mjs';
 import { createContentDraftSession } from '../content-design/session.mjs';
 import { createContentDraftBackend } from '../content-design/drafts.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { validateTheme } from '../content.mjs';
+import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
+
+test('Horizon has an explicit valid presentation and mismatched preview themes fail closed', async () => {
+  const { themes } = JSON.parse(
+    await readFile(new URL('../content-design/themes.json', import.meta.url)),
+  );
+  const source = createOpeningCandidates();
+  const presets = JSON.parse(
+    await readFile(new URL('../../authoring/motion-lab/presets.json', import.meta.url)),
+  );
+  for (const theme of themes) {
+    assert.deepEqual(validateTheme(theme).errors, []);
+    assert(presets.characters[theme.player]);
+    for (const body of Object.values(theme.classBodies)) assert(presets.characters[body]);
+  }
+  const legacy = JSON.parse(
+    await readFile(new URL('../content/themes.json', import.meta.url)),
+  ).themes;
+  assert(!legacy.some((theme) => theme.id === 'horizon'), 'Candidate themes do not alter Legacy.');
+  for (const mission of source.missions) {
+    const theme = themes.find((candidate) => candidate.id === mission.presentation.themeId);
+    assert(theme, mission.id);
+    assert.equal(prepareContentPreview(source, mission.id, { theme }).scenario.theme.id, 'horizon');
+    assert.throws(
+      () => prepareContentPreview(source, mission.id, { theme: legacy[2] }),
+      /must match/,
+    );
+  }
+});
 
 test('Studio and CLI resolve exactly the same candidate across all three difficulty presets', async () => {
   const source = createStarterProject();
   const theme = JSON.parse(
-    await readFile(new URL('../content/themes.json', import.meta.url)),
-  ).themes.find((t) => t.id === 'retro');
+    await readFile(new URL('../content-design/themes.json', import.meta.url)),
+  ).themes.find((t) => t.id === 'horizon');
   for (const difficulty of ['gentle', 'standard', 'expert']) {
     const preview = prepareContentPreview(source, 'nearby-shore', { difficulty, theme });
     const direct = resolveMission(compileContentProject(source), 'nearby-shore', { difficulty });

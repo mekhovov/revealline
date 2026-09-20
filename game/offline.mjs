@@ -3,8 +3,14 @@ import { nativePlatform } from './platform.mjs';
 const MARKER = 'meta[name="revealline-offline"]';
 function optionalNote(config) {
   const packs = config.optionalPacks;
-  if (!Array.isArray(packs) || !packs.length) return '';
-  return ` ${packs.map((pack) => pack.name).join(', ')} ${packs.length === 1 ? 'is' : 'are'} optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup.`;
+  const packNote =
+    !Array.isArray(packs) || !packs.length
+      ? ''
+      : ` ${packs.map((pack) => pack.name).join(', ')} ${packs.length === 1 ? 'is' : 'are'} optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup.`;
+  const artNote = config.optionalArtwork
+    ? ' Opening Journey artwork is not included in offline preparation. Its web preview needs an online connection; a full downloaded distribution includes the original pictures.'
+    : '';
+  return packNote + artNote;
 }
 function withOptionalNote(config, summary) {
   return { summary, message: summary + optionalNote(config) };
@@ -27,6 +33,19 @@ function configFromPage(documentRef = globalThis.document, locationRef = globalT
       config.optionalPacks.some(
         (p) => !p || typeof p.name !== 'string' || !p.name.length || p.name.length > 120,
       ))
+  )
+    return null;
+  if (
+    config.optionalArtwork !== undefined &&
+    (!config.optionalArtwork ||
+      config.optionalArtwork.name !== 'Opening Journey artwork' ||
+      config.optionalArtwork.availability !== 'online-only' ||
+      !Number.isSafeInteger(config.optionalArtwork.count) ||
+      config.optionalArtwork.count < 1 ||
+      config.optionalArtwork.count > 32 ||
+      !Number.isSafeInteger(config.optionalArtwork.bytes) ||
+      config.optionalArtwork.bytes < 1 ||
+      config.optionalArtwork.bytes > 128 * 1024 * 1024)
   )
     return null;
   const page = new URL(locationRef.href),
@@ -72,7 +91,7 @@ export function offlineAvailability({
     version: config.version,
     buildId: config.buildId,
     scope: config.scope,
-    ...(config.optionalPacks?.length ? { note: optionalNote(config).trim() } : {}),
+    ...(optionalNote(config) ? { note: optionalNote(config).trim() } : {}),
   };
 }
 const PROTOCOL = 'revealline.offline-progress.v1';

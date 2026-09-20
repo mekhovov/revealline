@@ -101,9 +101,9 @@ original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 
 | Phase | Version | Scope | State |
 |---|---|---|---|
-| P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | In progress |
-| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | In progress on PR172; not published |
-| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Pending |
+| P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | Scoped technical preview published and verified; remaining phase acceptance open |
+| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | PR172: actual Solo and paired-board opening hosts, Studio and original art; qualification incomplete, not published |
+| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Draft PR175: seven candidates, complete-route fixtures and manual image workflow; not published |
 | P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Pending |
 | P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
 | P13 | 0.81.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Pending |
@@ -131,10 +131,73 @@ foundation compiler/runtime, minimal map-first Studio with recoverable checkpoin
 capture overlays and topology diagnostics. Sixty mission/preset/steering combinations
 have deterministic Solo and paired-board clear-route fixtures; these are feasibility
 evidence, not pacing or human enjoyment. Direct structure controls create, duplicate,
-rename and organize candidates without JSON editing. Archive/removal and image
-authoring remain pending. One original reveal background is pinned; nine backgrounds,
-Team qualification, Journey adoption and release gates remain. None of that branch's
+rename and organize candidates without JSON editing. Dependency-aware removal and
+archive/restore are implemented. All ten opening missions now have distinct
+original raster reveal candidates, pinned to exact bytes, hashes and dimensions.
+Whole-set native partial-reveal/contrast and human qualification remain open.
+The three-preset next-attempt preference store is now wired into the opt-in Solo
+opening host; Legacy and v1 Journey progress schemas stay unchanged.
+The shared candidate attempt preparer now exercises all sixty opening full-clear
+routes with exact compiler, preset, roster and replay identities, cancellation and
+verified artwork. The opt-in `game/?journey=opening` now adopts these exact
+attempts into the real Solo host after run/focus/save/preset ownership checks,
+with original decoded pictures, cross-campaign Next, two-action Skip, a flat
+ten-mission chooser and an optional (not auto-assigned) Remix. Candidate clears
+record Journey progress, never Legacy collection/mastery awards. Candidate saves
+use a separate revision-pinned slot; ordinary gameplay and `journey=1` are intact.
+Studio now uses the actual authored Horizon theme, fixing its previous silent
+Retro substitution. See `docs/verification/xposed-journey-attempt-boundary.md`.
+Difficulty save failures now expose retry/export controls; cross-tab next-attempt
+intent refreshes without changing the current flight. The opt-in paired-board
+`game/couch/?journey=opening` now uses the same compiler, originals and presets
+with real races, cross-campaign Next, two-action Skip, flat chooser, independent
+Versus receipts and failed-preparation retention. Timed race decisions alone do
+not grant mission clears. See `docs/verification/xposed-journey-versus-host.md`.
+Both authored hosts share engine-derived starting-map cards, challenge bands,
+next-preset labels, route decisions and optional practice challenges in the flat
+chooser. No live capture prediction or mastery award is implied. See
+`docs/verification/xposed-journey-mission-cards.md` for native layout limitations.
+Broader host/controller qualification, Team adoption, human validation and release
+gates remain. None of that branch's
 implementation is implied to ship in the P00 technical preview.
+
+The Team foundation increment now uses the same map compiler and explicit
+two-seat authoring, with separately versioned runtime/pack editions and pinned
+presets in actual Team imports. Studio can create Team island templates and edit
+either starting position. The purpose-built Twin landings greybox has six complete
+deterministic two-seat routes; it has no final artwork or human qualification.
+This does not complete authored Team Journey navigation or P14. See
+`docs/verification/xposed-journey-team-foundations.md` for exact limits.
+Studio now exports exact selected Team test missions for the real Team host;
+native export/import verified pinned Expert rules and both-seat movement. New
+Journey Team editions automatically reset failed attempts with fresh controls,
+while focus/settings/disconnection/faults cancel pending recovery. These close
+the manual authoring-test path and scoped recovery gap, not the Team Journey
+chooser/profile, final artwork, human balance or release gates.
+
+P02 preparation is isolated on `codex/xposed-journey-p02`, draft PR175 stacked on
+P01 `e7aa131f`. Six Border Bloom core candidates and one optional Remix progress
+from outer-perimeter timing to changing-frontier shaping, with optional contact
+bonuses. Source `2e6b21b8` now has 84 complete no-life-loss Solo routes covering
+all presets/steering policies with authored bonuses and with every bonus removed;
+exported replays verify and 84 paired-board repetitions finish equally. The second
+frontier lesson now practices before combining patrol domains. These are omniscient
+seed-1 feasibility checks, not human pacing or enjoyment. Native Practice has one
+Expert first-closure observation, not a complete native playthrough.
+
+P02's manual image workflow accepts bounded static local reference pictures,
+crop/overlay, queued manual rectangles, shared validation, exact Solo Practice and
+explicit copy-on-write Apply. It never infers collision or publishes artwork.
+Unapplied tracing/reference state is honestly session-only; durable tracing recovery,
+assisted tracing and full native upload qualification remain open. The expanded
+content/foundation/opening/Border cohort passes 135/135. The P02 branch must integrate
+the eventual accepted P01 baseline before promotion; no phase ordering is bypassed.
+
+P01 follow-up adds optional Journey backup inspection and non-destructive restore:
+missing records merge, current receipts/cursors win, and the v1 persisted schema
+stays readable by previous releases. It does not replace a running attempt or award
+scores. Its actual-host and persistence evidence is recorded separately in
+`docs/verification/xposed-journey-backup-restore.md`; this is not a v0.67 feature.
 
 Each phase: reviewed PR, version bump, automated gates, immutable release and Pages
 test deployment; continue automatically after green gates, repair red gates before
@@ -150,6 +213,12 @@ keyboard/touch/controller, muted/reduced-effects/contrast and small screens.
 
 ## P00 implementation notes
 
+P01 packaging follow-up: opening originals are explicit optional artwork in web
+offline preparation, with exact authored pins and unchanged full-distribution
+bytes. The title and offline status explain the online requirement. Bounded
+packaging/offline tests pass; the existing 64 MiB guard remains and hosted full
+qualification is still required. See `verification/xposed-journey-optional-artwork.md`.
+
 The initial technical preview is `game/?journey=1`. The normal entry and frozen
 editions retain their navigation until the replacement curriculum is ready. This
 is a rollout safeguard, not final acceptance of the old maps as Journey content.
@@ -164,7 +233,8 @@ The audit still covers all 110 missions, including those editions.
   preserved; this local identity check is not authentication or anti-cheat.
 - `game/journey/profile.mjs`: version-independent, transactional IndexedDB event
   merging, session-only fallback, retry and progress export. Frozen save formats
-  are not migrated or overwritten. Full backup restoration remains to be integrated.
+  are not migrated or overwritten. Non-destructive backup restoration is implemented
+  in the P01 candidate, not retroactively inserted into frozen P00.
 - `game/core/capture-regions.mjs`: engine-owned retention calculation and a
   read-only, frozen-time component inspector for Studio and capture explanations.
 - `docs/research/xposed-journey-ledger.json`: all 64 inherited observations and
@@ -182,8 +252,16 @@ Verification so far: focused catalog/profile/capture tests, ten-mission Solo hos
 flow, Skip/return, automatic Solo reset, and failed cross-pack download/retry.
 Existing Solo continuation, paired-race equality and Team core fixtures were run.
 Native browser checks are scoped to local preview, not published acceptance.
-Remaining P00 gates include complete source qualification, expanded lifecycle and
-mode-flow checks, immutable release and actual Pages verification. Human enjoyment,
+P00 source `6a42faca` passed exact-source qualification and is released as v0.67.0.
+Publisher `555f0979`, Pages run 35487668271 / deployment 6548787815, verified all
+3,573 public files (645,190,134 bytes, zero failures/retries), plus scoped native
+keyboard Continue/Next/Skip/search/reload. The publication owner's receipt
+`.cache/v0670-public-acceptance-r1/root-acceptance.json` is SHA-256
+`37b5e83d29e6f9b81a8151351de7cad6cb789a3756d20904856340f965d2c1de`.
+This is [the frozen opt-in technical preview](https://mekhovov.github.io/revealline/releases/v0.67.0/site/game/?journey=1),
+not complete P00 or a replacement for the ordinary legacy entry.
+Remaining P00 gates include expanded lifecycle/mode flow, offline/rollback and
+performance acceptance. Human enjoyment,
 physical controllers, phone hardware and all P01–P15 content remain unvalidated.
 
 The September 20 primary-source recheck confirmed the previously recorded Switched

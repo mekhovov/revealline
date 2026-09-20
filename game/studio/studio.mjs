@@ -18,6 +18,8 @@ import { exportJSONFile } from '../platform.mjs';
 import { setBoardAvailability } from './board-state.mjs';
 import { tuneContentMission } from '../content-design/tuning.mjs';
 import { createImageWorkbench } from './image-workbench.mjs';
+import { journeyPreset } from '../content-design/catalogs.mjs';
+import { createTeamTestPack } from '../content-design/team-export.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
@@ -132,6 +134,8 @@ function inspectBoard(trailCells = []) {
   imageWorkbench.sync();
   setBoardAvailability(document, !!mission);
   if (!mission) {
+    $('export-team').hidden = true;
+    $('team-test-help').hidden = true;
     inspectedTrail = [];
     tuningRevision = null;
     return;
@@ -156,9 +160,9 @@ function inspectBoard(trailCells = []) {
   $('map-name').textContent = mission.name;
   $('lesson').textContent = mission.design.routeDecision;
   $('rules').textContent =
-    `${manifest.level.rules.lives} lives · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'}`;
+    `${manifest.level.rules.lives ?? journeyPreset(manifest.difficulty).lives} ${manifest.mode === 'team' ? 'shared team lives' : 'lives'} · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'}`;
   $('geometry').textContent =
-    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. Spawn (${manifest.level.spawn.x}, ${manifest.level.spawn.y}). ${preview.markers.actors.map((actor) => `${actor.id}: ${actor.type} at (${actor.x}, ${actor.y})`).join('; ')}`;
+    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${actor.type} at (${actor.x}, ${actor.y})`).join('; ')}`;
   $('effective').textContent = JSON.stringify(
     {
       policy: manifest.policyId,
@@ -193,9 +197,11 @@ function inspectBoard(trailCells = []) {
     }),
   );
   $('play').disabled = !mission.modes.includes('solo');
+  $('export-team').hidden = !mission.modes.includes('team');
+  $('team-test-help').hidden = !mission.modes.includes('team');
   $('play').title = mission.modes.includes('solo')
     ? ''
-    : 'This candidate has no Solo adapter. Paired-race preview remains separate.';
+    : 'This candidate has no Solo adapter. Team and paired-race gameplay remain separate.';
 }
 function render(selected = $('mission').value) {
   inspections.invalidate();
@@ -254,6 +260,7 @@ function syncStructure() {
     ['item-target-row', action !== 'create'],
     ['item-id-row', creating],
     ['item-name-row', creating || action === 'rename'],
+    ['item-template-row', kind === 'mission' && action === 'create'],
     ['item-band-row', kind === 'campaign' && action === 'create'],
     [
       'item-parent-row',
@@ -328,6 +335,7 @@ $('structure-form').onsubmit = guarded((event) => {
     id: creating ? $('item-id').value.trim() : $('item-target').value,
     ...(creating || action === 'rename' ? { name: $('item-name').value.trim() } : {}),
     ...(action === 'duplicate' ? { sourceId: $('item-target').value } : {}),
+    ...(kind === 'mission' && action === 'create' ? { template: $('item-template').value } : {}),
     ...(kind === 'campaign' && action === 'create' ? { band: Number($('item-band').value) } : {}),
     ...(kind !== 'pack' &&
     !['rename', 'delete', 'archive', 'restore'].includes(action) &&
@@ -444,6 +452,18 @@ $('export').onclick = guarded(async () => {
   const result = await exportJSONFile(session.current(), `${session.current().id}-backup.json`);
   status(result.message);
 });
+$('export-team').onclick = guarded(async () => {
+  if (sourceChanged)
+    throw new Error('Inspect and apply source edits before exporting the selected mission.');
+  const mission = currentMission();
+  if (!mission) throw new Error('Choose a Team mission.');
+  const difficulty = $('difficulty').value;
+  const pack = createTeamTestPack(session.current(), mission.id, difficulty);
+  const result = await exportJSONFile(pack, `${mission.id}-${difficulty}-team-test.json`);
+  status(
+    `${result.message} Geometry/rules only; Team preview scenery is not authored mission artwork. Your draft is unchanged.`,
+  );
+});
 $('save').onclick = guarded(() => session.save());
 for (const action of ['undo', 'redo'])
   $('' + action).onclick = guarded(() => {
@@ -487,13 +507,13 @@ $('geometry-form').onsubmit = guarded((event) => {
     surface = $('surface').value;
   if (![x, y, w, h].every(Number.isInteger)) throw new Error('Geometry uses whole cells.');
   let changes;
-  if (surface === 'spawn')
+  if (surface === 'spawn' || surface === 'spawn-team-two') {
+    const spawnId = surface === 'spawn-team-two' ? mission.team?.spawnIds[1] : mission.spawnId;
+    if (!spawnId) throw new Error('Choose a Team mission to move its second starting position.');
     changes = {
-      spawns: map.spawns.map((s) =>
-        s.id === mission.spawnId ? { ...s, x: x + 0.5, y: y + 0.5 } : s,
-      ),
+      spawns: map.spawns.map((s) => (s.id === spawnId ? { ...s, x: x + 0.5, y: y + 0.5 } : s)),
     };
-  else if (surface === 'slow' || surface === 'lethal')
+  } else if (surface === 'slow' || surface === 'lethal')
     changes = {
       terrain: [
         ...map.terrain,
@@ -546,9 +566,10 @@ async function launchPreview(source, missionId, difficulty) {
   $('preview-status').textContent = 'Preparing the exact candidate…';
   let result;
   try {
-    const pin = prepareContentPreview(source, missionId, { difficulty }).manifest.background;
+    const manifest = prepareContentPreview(source, missionId, { difficulty }).manifest;
+    const pin = manifest.background;
     const [theme, artwork] = await Promise.all([
-      loadPreviewTheme({ signal: controller.signal }),
+      loadPreviewTheme({ themeId: manifest.presentation.themeId, signal: controller.signal }),
       pin ? loadPreviewArtwork(pin, { signal: controller.signal }) : null,
     ]);
     if (ticket !== previewRevision) return;

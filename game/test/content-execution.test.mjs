@@ -83,3 +83,61 @@ test('execution catalogs own source and reject caller-supplied policy or privile
   assert.throws(() => catalog.select('journey-opening', 'prologue', 'automatic'));
   assert.throws(() => catalog.journey('automatic'));
 });
+
+test('saved candidate execution identity pins artwork and presentation without changing physics or Journey progress IDs', () => {
+  const source = createOpeningCandidates({ artwork: true });
+  const original = createContentExecutionCatalog(source);
+  const first = original.select('journey-opening', 'prologue');
+  const other = original.select('journey-opening', 'horizon-school');
+  for (const edit of [
+    (value) => {
+      value.assets[0].sha256 = '0'.repeat(64);
+    },
+    (value) => {
+      value.assets[0].revision = 'r2';
+    },
+    (value) => {
+      value.missions[0].presentation.backgroundAssetId = null;
+    },
+    (value) => {
+      value.missions[0].presentation.themeId = 'another-theme';
+    },
+    (value) => {
+      value.missions[0].revision = 'new-edition';
+    },
+    (value) => {
+      value.missions[0].name = 'A newly named first mission';
+    },
+  ]) {
+    const changed = structuredClone(source);
+    edit(changed);
+    const catalog = createContentExecutionCatalog(changed);
+    for (const difficulty of ['gentle', 'standard', 'expert']) {
+      const before = original.select('journey-opening', 'prologue', difficulty);
+      const after = catalog.select('journey-opening', 'prologue', difficulty);
+      assert.notEqual(after.executionKey, before.executionKey);
+      assert.equal(
+        catalog.find('journey-opening', 'prologue', before.executionKey),
+        null,
+        'A changed edition cannot silently restore against the old campaign key.',
+      );
+      assert.deepEqual(
+        after.manifests.map((m) => m.simulationIdentity),
+        before.manifests.map((m) => m.simulationIdentity),
+      );
+      assert.deepEqual(
+        catalog.journey(difficulty).missions.map((m) => m.id),
+        original.journey(difficulty).missions.map((m) => m.id),
+      );
+    }
+    assert.notEqual(
+      catalog.select('journey-opening', 'prologue').baseCampaignKey,
+      first.baseCampaignKey,
+    );
+    assert.equal(
+      catalog.select('journey-opening', 'horizon-school').executionKey,
+      other.executionKey,
+      'An unrelated campaign keeps its exact edition.',
+    );
+  }
+});

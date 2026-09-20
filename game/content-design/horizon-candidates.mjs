@@ -274,8 +274,7 @@ export function createOpeningCandidates({ artwork = false } = {}) {
       coverage: candidate.coverage,
       presentation: {
         ...template.presentation,
-        backgroundAssetId:
-          artwork && candidate.id === 'first-return' ? 'horizon-first-return' : null,
+        backgroundAssetId: artwork ? `horizon-${candidate.id}` : null,
       },
       design: {
         ...template.design,

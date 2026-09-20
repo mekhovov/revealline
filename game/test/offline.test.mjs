@@ -959,6 +959,56 @@ test('optional pack preparation and verification explicitly distinguish core cac
   assert.equal(offlineAvailability(env).available, false);
 });
 
+test('optional Journey artwork never receives a core-offline readiness claim', async () => {
+  const optionalArtwork = {
+    name: 'Opening Journey artwork',
+    availability: 'online-only',
+    count: 10,
+    bytes: 25862573,
+  };
+  const artworkMarker = { ...marker, optionalArtwork };
+  const worker = {
+    state: 'activated',
+    postMessage(_message, ports) {
+      ports[0].postMessage({ status: 'ready', buildId: marker.buildId, verified: 3, bytes: 123 });
+      ports[0].close();
+    },
+  };
+  const registration = { scope, active: worker, waiting: null, installing: null };
+  const env = {
+    documentRef: { querySelector: () => ({ content: JSON.stringify(artworkMarker) }) },
+    locationRef,
+    secure: true,
+    navigatorRef: {
+      serviceWorker: {
+        register: async () => registration,
+        getRegistration: async () => registration,
+      },
+    },
+    MessageChannelImpl: MessageChannel,
+  };
+  assert.match(offlineAvailability(env).note, /artwork is not included in offline preparation/);
+  const reports = [];
+  for (const operation of [prepareOffline, checkOffline]) {
+    const result = await operation({ ...env, onStatus: (report) => reports.push(report) });
+    assert.equal(result.status, 'ready');
+    assert.match(result.message, /web preview needs an online connection/);
+    assert.match(result.message, /full downloaded distribution includes the original pictures/);
+  }
+  for (const report of reports.filter((report) => report.status === 'ready'))
+    assert.match(report.message, /not included in offline preparation/);
+  for (const bad of [
+    null,
+    {},
+    { ...optionalArtwork, count: 33 },
+    { ...optionalArtwork, bytes: 0 },
+    { ...optionalArtwork, availability: 'ready' },
+  ]) {
+    artworkMarker.optionalArtwork = bad;
+    assert.equal(offlineAvailability(env).available, false);
+  }
+});
+
 const PROTOCOL = 'revealline.offline-progress.v1';
 function deferred() {
   let resolve;

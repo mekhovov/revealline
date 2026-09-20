@@ -2,6 +2,8 @@ import { boundedJSON, exactKeys, required, dataIdentity } from '../data-json.mjs
 import { createJourneyCatalog } from '../journey/catalog.mjs';
 import { compileContentProject, resolveMission } from './project.mjs';
 import { freezeDesign, journeyPreset } from './catalogs.mjs';
+import { COOP_FOUNDATION_PACK_VERSION, COOP_FOUNDATION_RULESET } from '../coop/foundations.mjs';
+import { validateCoopPack } from '../coop/recipes.mjs';
 
 /** Candidate navigation and execution share the authored order and resolver.
  * This is not a publishing boundary: no imported project can award official
@@ -10,7 +12,7 @@ export function resolveContentJourney(source, options = {}) {
   const selected = boundedJSON(options, { maxBytes: 8192, maxNodes: 100, maxDepth: 3 });
   exactKeys(selected, ['packIds', 'mode', 'difficulty'], 'Journey selection');
   const { mode = 'solo', difficulty = 'standard' } = selected;
-  required(['solo', 'versus'].includes(mode), 'This candidate adapter does not support Team.');
+  required(['solo', 'versus', 'team'].includes(mode), 'Unsupported candidate mode.');
   journeyPreset(difficulty);
   const project = compileContentProject(source);
   const packIds = selected.packIds ?? project.packs.map((pack) => pack.id);
@@ -41,16 +43,26 @@ export function resolveContentJourney(source, options = {}) {
       campaigns.push({
         packId: pack.id,
         campaignId: design.id,
-        // A preset changes runtime identity, never the navigation/progress key.
+        // Execution recovery pins authored presentation as well as physics.
+        // A changed original must not impersonate a saved edition. Navigation
+        // and Journey progress IDs remain independent of these revisions.
         runtime: {
-          version: 'xonix-campaign.v1',
+          version: mode === 'team' ? COOP_FOUNDATION_PACK_VERSION : 'xonix-campaign.v1',
+          ...(mode === 'team' ? { ruleset: COOP_FOUNDATION_RULESET } : {}),
           id: design.id,
           revision: `candidate-${dataIdentity({
             campaign: design,
             difficulty,
             simulations: manifests.map((manifest) => manifest.simulationIdentity),
+            presentation: manifests.map((manifest) => ({
+              levelId: manifest.level.id,
+              levelRevision: manifest.level.revision,
+              name: manifest.level.name,
+              presentation: manifest.presentation,
+              background: manifest.background,
+            })),
           })}`,
-          title: design.name,
+          ...(mode === 'team' ? { name: design.name } : { title: design.name }),
           levels: manifests.map((manifest) => manifest.level),
         },
         manifests,
@@ -58,12 +70,17 @@ export function resolveContentJourney(source, options = {}) {
     }
   }
   required(campaigns.length > 0, 'Selected packs have no missions for this mode.');
+  if (mode === 'team')
+    for (const { runtime } of campaigns) {
+      const result = validateCoopPack(runtime);
+      required(result.valid, result.errors.join(' '));
+    }
   const catalog = createJourneyCatalog(
     campaigns.map(({ packId, runtime, manifests }) => ({
       source: 'candidate',
       packId,
       id: runtime.id,
-      title: runtime.title,
+      title: runtime.title ?? runtime.name,
       modes: [mode],
       levels: runtime.levels.map((level, index) => ({
         id: level.id,
