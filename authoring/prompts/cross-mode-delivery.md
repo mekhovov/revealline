@@ -1,5 +1,10 @@
 # Cross-mode delivery prompts
 
+For new campaign production, use the approved [Xposed-led Journey plan](../../docs/xposed-journey-plan.md).
+The legacy campaign allocations and phase examples below are historical context.
+Retain their compatibility and evidence practices, but do not treat embedded prompts
+as authority to replace the user's current P00–P15 redesign sequence.
+
 Narrow Solo Pause: “Pause a real flight at 280×800 with Large/Plain text. Require readable Resume, Restart, Mission brief and Main menu labels, complete icons and focus paint, and at least 44-pixel targets. Preserve the existing single-column portrait and two-column short-landscape layout; keep the wide Resume/Main menu rows in landscape. Rotate without changing the paused checkpoint or resuming. Check keyboard, modeled controller and touch separately, plus actual 200% zoom and unchanged Ready/Lost/Won layouts. Preserve the original public failure and distinguish source cascade evidence from native/public qualification. See [the qualification matrix](../../docs/solo-pause-responsive-layout.md).”
 
 Settings restoration: “Keep a real paused Solo, Versus or Team attempt and an unchanged saved preference record. Model history restoring stale palette, ornaments, text style/size, Reduced effects and volume both before and after pageshow. Require immediate and deferred repaint from the current authority, no storage writes, no playback or Resume, and unchanged focus/checkpoints. Make a newer explicit edit before the deferred callback; that edit and any failed-save warning must survive. Leave the page and deliver a captured old callback; it must do nothing. Record the failing baseline and preserve native BFCache qualification as separate evidence.”

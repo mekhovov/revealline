@@ -1,0 +1,45 @@
+{
+  "format": "revealline-journey-campaign-pins.v1",
+  "campaigns": [
+    {
+      "packId": "fpv-arcade-r5",
+      "campaignId": "fpv-pressure-lines",
+      "gameplayKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8"
+    },
+    {
+      "packId": "fpv-pressure-frontier",
+      "campaignId": "fpv-pressure-frontier",
+      "gameplayKey": "fpv-pressure-frontier/1/b9387b2be34f51ff"
+    },
+    {
+      "packId": "night-shift",
+      "campaignId": "night-shift",
+      "gameplayKey": "night-shift/1/7b8ffcade23e3175"
+    },
+    {
+      "packId": "living-threads",
+      "campaignId": "living-threads",
+      "gameplayKey": "living-threads/1/e3287c370bec5e41"
+    },
+    {
+      "packId": "fieldcraft",
+      "campaignId": "fieldcraft",
+      "gameplayKey": "fieldcraft/1/96ae746769a8b440"
+    },
+    {
+      "packId": "homeward-skies",
+      "campaignId": "homeward-skies",
+      "gameplayKey": "homeward-skies/1/0d01f5687b3c38ff"
+    },
+    {
+      "packId": "equipment-workshop",
+      "campaignId": "equipment-workshop",
+      "gameplayKey": "equipment-workshop/1/3fc2cf073da368b4"
+    },
+    {
+      "packId": "sentinel-relay",
+      "campaignId": "sentinel-relay",
+      "gameplayKey": "sentinel-relay/1/838c4e06647f7fd0"
+    }
+  ]
+}

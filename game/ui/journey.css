@@ -1,0 +1,115 @@
+.journey-chooser {
+  width: min(68rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: clamp(1rem, 3vw, 2rem);
+  overflow: auto;
+  color: var(--ink, #e5eddd);
+  background: var(--panel, #15251f);
+}
+.journey-chooser::backdrop {
+  background: #09140de6;
+}
+.journey-chooser[open] {
+  display: grid;
+  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
+  height: min(56rem, calc(100dvh - 2rem));
+}
+.journey-chooser h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+.journey-filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.journey-filters label {
+  display: grid;
+  gap: 0.4rem;
+  flex: 1 1 16rem;
+}
+.journey-filters input,
+.journey-filters select {
+  width: 100%;
+  min-height: 44px;
+}
+.journey-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
+  align-content: start;
+  overflow: auto;
+  padding: 4px;
+}
+#journey-chooser .journey-card {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 0.35rem 0.75rem;
+  min-height: 8rem;
+  min-block-size: 8rem;
+  padding: 1rem;
+  text-align: left;
+  border: 1px solid #799786;
+  border-radius: 0.35rem;
+  background: #182d23;
+  color: #f0f5e9;
+}
+@media (max-height: 480px) {
+  #journey-chooser {
+    padding: 0.5rem 1rem;
+  }
+  #journey-chooser > p {
+    margin: 0.25rem 0;
+    font-size: 0.85rem;
+  }
+  #journey-chooser h2 {
+    font-size: 1.35rem;
+    line-height: 1.1;
+  }
+  #journey-chooser .journey-filters {
+    flex-wrap: nowrap;
+  }
+  #journey-chooser .journey-filters label {
+    min-width: 0;
+  }
+  #journey-chooser #journey-back {
+    margin-top: 0.35rem;
+  }
+}
+.journey-card-number {
+  grid-row: span 3;
+  font-size: 2rem;
+  color: #c7e78e;
+}
+.journey-card strong {
+  font-size: 1.1rem;
+}
+.journey-card-progress {
+  color: #c7e78e;
+  font-size: 0.85rem;
+}
+.journey-card:focus-visible,
+.journey-card:hover {
+  outline: 3px solid #d7f891;
+  outline-offset: 1px;
+}
+#journey-back {
+  margin-top: 1rem;
+  min-height: 44px;
+}
+.journey-status {
+  margin: 0.5rem 0;
+  padding: 0.65rem;
+  border: 1px solid currentColor;
+}
+.journey-status button {
+  min-height: 44px;
+}
+body.journey-preview.game-shell .shell-bar #shell-packs {
+  display: inline-flex;
+  align-items: center;
+}
+body.journey-preview.game-shell .shell-bar #journey-skip {
+  max-width: 8rem;
+  white-space: normal;
+}

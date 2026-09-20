@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 
 const pack = JSON.parse(
@@ -10,10 +11,14 @@ const pack = JSON.parse(
 const frames = (page, count) => {
   for (let i = 0; i < count; i++) page.frame();
 };
-async function setup(t, index, { stopOnCapture } = {}) {
-  const page = await soloPage(t),
+async function setup(t, index, { stopOnCapture, journey = false, level } = {}) {
+  const page = await soloPage(t, {
+      search: journey ? '?journey=1' : '',
+      titleScreen: journey,
+      journeyIndexedDB: managedIndexedDB().indexedDB,
+    }),
     candidate = structuredClone(pack);
-  candidate.campaigns[0].levels = [candidate.campaigns[0].levels[index]];
+  candidate.campaigns[0].levels = [level ?? candidate.campaigns[0].levels[index]];
   if (stopOnCapture !== undefined)
     candidate.campaigns[0].levels[0].rules.stopOnCapture = stopOnCapture;
   page.$('library-button').click();
@@ -39,6 +44,47 @@ async function setup(t, index, { stopOnCapture } = {}) {
   assert.equal(page.rendered.run.ruleset, 'xonix-core.v5');
   return page;
 }
+
+test('Journey capture stop preserves occupied-region teaching and fresh-direction guidance', async (t) => {
+  const level = {
+    ...structuredClone(pack.campaigns[0].levels[0]),
+    spawn: { x: 35.5, y: 0.5 },
+    goal: { coverage: 0.6 },
+    classic: { version: 'classic.v1', terrain: [], powerups: [] },
+    enemies: [
+      { id: 'west', type: 'bouncer', x: 15.5, y: 23.5, vx: -1.7, vy: 1.7 },
+      { id: 'east', type: 'bouncer', x: 58.5, y: 12.5, vx: 1.7, vy: 1.7 },
+    ],
+  };
+  const page = await setup(t, 0, { stopOnCapture: true, journey: true, level });
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  page.key('ArrowDown', false);
+  for (let frame = 0; frame < 900 && page.rendered.run.claimedCount === 0; frame++) page.frame();
+  assert.equal(page.rendered.run.status, 'running');
+  assert.equal(page.rendered.run.player.speed, 0);
+  assert(
+    page.rendered.run.claimedCount > 0,
+    JSON.stringify({
+      level: page.rendered.run.levelId,
+      player: page.rendered.run.player,
+      tick: page.rendered.run.tick,
+      message: page.$('run-message').textContent,
+      lives: page.rendered.run.lives,
+    }),
+  );
+  assert.match(page.$('run-message').textContent, /2 occupied regions remain/);
+  assert.match(page.$('run-message').textContent, /west.*east|east.*west/);
+  assert.match(
+    page.$('run-message').textContent,
+    /Empty regions fill; field enemies retain their regions/,
+  );
+  assert.match(page.$('run-message').textContent, /Tap a direction to fly again/);
+  page.frame(0);
+  assert.match(page.$('run-message').textContent, /2 occupied regions remain/);
+  assert.deepEqual(page.errors, []);
+});
 
 for (const turnPolicy of ['immediate', 'grid-center'])
   test(`${turnPolicy}: capture stops the actual host before another substep and saved Resume stays stopped`, async (t) => {
