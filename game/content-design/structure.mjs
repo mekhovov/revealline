@@ -74,6 +74,7 @@ export function editContentStructure(source, input) {
     create: ['name', 'parentId', 'band', 'template'],
     duplicate: ['name', 'sourceId', 'parentId'],
     rename: ['name'],
+    'set-band': ['band'],
     place: ['parentId'],
     reorder: ['parentId', 'offset'],
     detach: ['parentId'],
@@ -119,15 +120,39 @@ export function editContentStructure(source, input) {
     required(!existing, 'That ID already exists; choose a new one.');
     required(named(name), 'Give the item a name (1–160 characters).');
     if (action === 'duplicate') {
-      required(
-        kind === 'mission',
-        'Duplicate a mission; campaign and pack membership is managed explicitly.',
-      );
       const original = entries.find((entry) => entry.id === command.sourceId);
-      required(original, 'Choose an existing mission to duplicate.');
-      const copy = { ...structuredClone(original), id, name, revision: 'draft-1' };
-      delete copy.archived;
-      entries.push(copy);
+      required(original, 'Choose an existing item to duplicate.');
+      const copies = new Map();
+      const copyItem = (itemKind, sourceId, root = false) => {
+        const key = `${itemKind}/${sourceId}`;
+        if (copies.has(key)) return copies.get(key);
+        const list = project[kinds[itemKind]],
+          item = list.find((entry) => entry.id === sourceId);
+        // Bounded deterministic IDs keep shared children shared INSIDE the new
+        // subtree, never with its source. Reject collisions; do not overwrite.
+        const copyId = root
+          ? id
+          : `${id.slice(0, 58)}-${itemKind[0]}-${dataIdentity({ root: id, kind: itemKind, sourceId })}`;
+        required(
+          !list.some((entry) => entry.id === copyId),
+          'Generated duplicate ID already exists; choose another new stable ID.',
+        );
+        const copy = { ...structuredClone(item), id: copyId, revision: 'draft-1' };
+        if (root) {
+          copy.name = name;
+          delete copy.archived;
+        }
+        copies.set(key, copyId);
+        if (itemKind === 'pack')
+          copy.campaignIds = item.campaignIds.map((child) => copyItem('campaign', child));
+        if (itemKind === 'campaign')
+          copy.missionIds = item.missionIds.map((child) => copyItem('mission', child));
+        // Maps/assets remain immutable shared pins. forkMissionMap already
+        // isolates any subsequent geometry edit to the selected mission copy.
+        list.push(copy);
+        return copyId;
+      };
+      copyItem(kind, command.sourceId, true);
     } else if (kind === 'mission') {
       const starter =
           command.template === 'team-islands'
@@ -161,6 +186,10 @@ export function editContentStructure(source, input) {
       required(named(name), 'Give the item a name (1–160 characters).');
       existing.name = name;
       existing.revision = `draft-${dataIdentity({ id, name, previous: existing.revision })}`;
+    } else if (action === 'set-band') {
+      required(kind === 'campaign', 'Only campaigns have a challenge band.');
+      existing.band = command.band;
+      existing.revision = `draft-${dataIdentity(existing)}`;
     } else if (action === 'place') {
       required(kind !== 'pack', 'Packs already belong to this project.');
       required(command.parentId !== undefined, 'Choose the destination parent.');

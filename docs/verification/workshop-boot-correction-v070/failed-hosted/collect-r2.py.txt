@@ -1,0 +1,28 @@
+from pathlib import Path
+import subprocess,json,gzip,hashlib,shutil,datetime
+P=Path(__file__).resolve().parent
+for label,run in [('manual',35525568313),('pr-source',35525562872)]:
+ D=P/label;D.mkdir(exist_ok=True)
+ def get(endpoint,name,compress=False):
+  f=D/name
+  if f.exists():return gzip.decompress(f.read_bytes()) if compress else f.read_bytes()
+  reused=False
+  for donor in [Path('.cache/v070-final-source-qualification-r1')/label,Path('.cache/v070-failed-shard1-r1'),Path('.cache/v070-failed-shard3-r1')]:
+   if (donor/name).exists():
+    b=(donor/name).read_bytes();raw=gzip.decompress(b) if compress else b;reused=True;break
+  else:
+   r=subprocess.run(['gh','api','repos/mekhovov/revealline/'+endpoint],capture_output=True,timeout=60)
+   assert r.returncode==0 and len(r.stdout)<20000000
+   raw=r.stdout;b=gzip.compress(raw,mtime=0) if compress else raw
+  assert sum(x.stat().st_size for x in P.rglob('*') if x.is_file())+len(b)<8*1024**2
+  assert shutil.disk_usage(P).free>256*1024**2
+  with f.open('xb') as out:out.write(b)
+  if compress:f.with_suffix(f.suffix+'.receipt.json').write_text(json.dumps({'endpoint':endpoint,'rawBytes':len(raw),'rawSha256':hashlib.sha256(raw).hexdigest(),'storedSha256':hashlib.sha256(b).hexdigest(),'reusedRetainedOriginal':reused,'observedAt':datetime.datetime.now(datetime.timezone.utc).isoformat()},indent=2)+'\n')
+  return raw
+ r=json.loads(get(f'actions/runs/{run}','run.json'));assert r['head_sha']=='4bb553d06d62f7a8cce301c77b245573838bfdcb' and r['status']=='completed' and r['conclusion']=='failure'
+ j=json.loads(get(f'actions/runs/{run}/jobs?per_page=100','jobs.json'));assert j['total_count']==len(j['jobs'])==(8 if label=='manual' else 7)
+ for row in j['jobs']:
+  jid=row['id'];m=json.loads(get(f'actions/jobs/{jid}',f'job-{jid}.json'));assert m['status']=='completed' and m['run_id']==run
+  if m['conclusion']!='skipped':get(f'actions/jobs/{jid}/logs',f'job-{jid}.log.gz',True)
+  print(json.dumps({'family':label,'job':jid,'name':m['name'],'conclusion':m['conclusion']}),flush=True)
+print('Diagnostic retention only. Failed families do not qualify any release.',flush=True)

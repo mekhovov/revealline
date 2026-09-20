@@ -1,0 +1,2 @@
+import './candidate/game/test/couch-markup.test.mjs';
+import './candidate/game/test/field-kit-flow.test.mjs';

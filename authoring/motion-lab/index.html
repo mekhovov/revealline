@@ -14,8 +14,14 @@
     <link rel="stylesheet" href="../../game/ui/field-kit-surfaces.css" />
     <script type="module" src="../../game/ui/field-kit-surfaces.mjs"></script>
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
+    <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
+    <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
   </head>
-  <body class="field-kit field-kit-support" data-field-kit-page="motion-lab">
+  <body
+    data-workshop-tool="motion-lab"
+    class="field-kit field-kit-support"
+    data-field-kit-page="motion-lab"
+  >
     <main class="workspace">
       <header class="page-header">
         <div>
@@ -44,7 +50,7 @@
         ><span class="operation-status-label" role="status">Loading the motion study…</span>
       </p>
       <div id="load-error" class="load-error" hidden role="alert"></div>
-      <a id="motion-retry" href="./" hidden>Retry loading study</a>
+      <a data-workshop-tool="motion-lab" id="motion-retry" href="./" hidden>Retry loading study</a>
 
       <fieldset
         id="motion-study"
@@ -428,7 +434,15 @@
       <footer class="page-footer">
         <span>Motion & ability study · independent preview</span
         ><span
-          ><a href="../../game/">Return to game</a> · <a href="../design-atlas/">Design atlas</a> ·
+          ><a
+            href="../../game/?workshop=motion-lab"
+            data-workshop-return="workshop"
+            inert
+            aria-disabled="true"
+            >Return to Workshop</a
+          >
+          <a data-workshop-return="game" href="../../game/">Return to game</a>
+          · <a href="../design-atlas/" data-workshop-tool="design-atlas">Design atlas</a> ·
           <a href="presets.json">Visual presets</a> ·
           <a href="ability-presets.json">Ability presets</a></span
         >

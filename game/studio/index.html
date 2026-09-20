@@ -6,12 +6,16 @@
     <title>Content Studio · Reveal Line</title>
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="studio.css" />
+    <script type="module" src="../ui/content-studio-navigation-entry.mjs"></script>
     <script type="module" src="studio.mjs"></script>
   </head>
   <body>
     <header>
-      <a href="../">◩ REVEAL / LINE</a><span>CONTENT STUDIO / LOCAL DRAFTS</span
-      ><a href="../playground/">Legacy Playground ↗</a>
+      <a href="../" data-content-studio-route="game" inert aria-disabled="true">◩ REVEAL / LINE</a
+      ><span>CONTENT STUDIO / LOCAL DRAFTS</span
+      ><a href="../playground/" data-content-studio-route="playground" inert aria-disabled="true"
+        >Back to Playground ↗</a
+      >
     </header>
     <main>
       <div class="title-row">
@@ -22,12 +26,19 @@
         <p class="edition">FOUNDATIONS PREVIEW<br />Not a publishing tool</p>
       </div>
       <p id="status" role="status">Opening your local workbench…</p>
+      <p class="note">
+        Test the bundled Horizon → Border Journey:
+        <a href="../?journey=authored" target="_blank" rel="noopener">Solo ↗</a> ·
+        <a href="../couch/?journey=authored" target="_blank" rel="noopener">Versus ↗</a>. These
+        unvalidated test builds do not include your unpublished edits.
+      </p>
       <noscript>This editor needs JavaScript. No project has been changed.</noscript>
       <div class="toolbar" aria-label="Draft actions">
         <button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button
         ><button id="save">Save checkpoint / retry</button
         ><button id="export">Export backup</button>
         <button id="opening">Inspect opening candidates</button>
+        <button id="border">Inspect Border Bloom candidates</button>
         <label class="file-button"
           >Inspect import<input id="import" type="file" accept="application/json,.json"
         /></label>
@@ -181,6 +192,10 @@
           <p id="board-legend" class="legend">
             <span>■ Reclaimed foundation</span><span>▧ Wall</span><span>● Field keeper</span
             ><span>◇ Perimeter patrol</span><span>▲ Frontier patrol</span><span>✚ Spawn</span>
+            <span>Framed pickups: + Life · &gt; Speed · v Slow · * Freeze</span>
+            <span>Capture markers: ! Required · o Optional · ? Hidden</span>
+            <span>Slow field: paired dashes · Lethal field: framed ×</span>
+            <span>Capturing field neutralizes its terrain; walls never close cuts.</span>
           </p>
           <p id="geometry" class="note"></p>
           <label class="toggle"
@@ -216,6 +231,257 @@
               <button type="submit">Validate & apply geometry</button>
             </fieldset>
           </form>
+          <details id="geometry-edit-panel">
+            <summary>Reshape existing geometry</summary>
+            <form id="geometry-edit-form">
+              <fieldset id="geometry-edit-tools">
+                <legend>Copy-on-write rectangle edit</legend>
+                <label>Existing rectangle<select id="geometry-edit-select"></select></label>
+                <div class="coordinates">
+                  <label
+                    >X<input id="geometry-edit-x" type="number" min="1" max="70" required
+                  /></label>
+                  <label
+                    >Y<input id="geometry-edit-y" type="number" min="1" max="34" required
+                  /></label>
+                  <label
+                    >Width<input id="geometry-edit-w" type="number" min="1" max="70" required
+                  /></label>
+                  <label
+                    >Height<input id="geometry-edit-h" type="number" min="1" max="34" required
+                  /></label>
+                </div>
+                <label id="geometry-edit-kind-row"
+                  >Terrain material<select id="geometry-edit-kind">
+                    <option value="slow">Slow field</option>
+                    <option value="lethal">Lethal field</option>
+                  </select></label
+                >
+                <button id="geometry-edit-submit" type="submit">
+                  Validate & replace rectangle
+                </button>
+                <button id="geometry-edit-remove" type="button">Remove selected rectangle</button>
+                <p id="geometry-edit-result" class="note" role="status"></p>
+              </fieldset>
+            </form>
+          </details>
+          <details id="actor-panel">
+            <summary>Place enemies</summary>
+            <p class="note">
+              Shared catalog roles and speed tiers keep rules consistent. Positions are checked in
+              every supported mode and preset before applying.
+            </p>
+            <form id="actor-form">
+              <fieldset id="actor-tools">
+                <legend>Mission actors</legend>
+                <label>Actor<select id="actor-select"></select></label>
+                <label>Stable actor ID<input id="actor-id" maxlength="80" required /></label>
+                <label>Role<select id="actor-role"></select></label>
+                <label>Speed tier · selected difficulty<select id="actor-tier"></select></label>
+                <p id="actor-description" class="note"></p>
+                <div class="pair">
+                  <label
+                    >X<input id="actor-x" type="number" min="0" max="71.5" step="0.5" required
+                  /></label>
+                  <label
+                    >Y<input id="actor-y" type="number" min="0" max="35.5" step="0.5" required
+                  /></label>
+                </div>
+                <p id="actor-position-help" class="note"></p>
+                <label id="actor-heading-row"
+                  >Starting direction<select id="actor-heading">
+                    <option value="0,-1">Up</option>
+                    <option value="1,-1">Up-right</option>
+                    <option value="1,0">Right</option>
+                    <option value="1,1">Down-right</option>
+                    <option value="0,1">Down</option>
+                    <option value="-1,1">Down-left</option>
+                    <option value="-1,0">Left</option>
+                    <option value="-1,-1">Up-left</option>
+                  </select></label
+                >
+                <label id="actor-edge-row"
+                  >Side facing reclaimed ground<select id="actor-edge">
+                    <option value="north">North</option>
+                    <option value="east">East</option>
+                    <option value="south">South</option>
+                    <option value="west">West</option>
+                  </select></label
+                >
+                <label id="actor-clockwise-row"
+                  ><input id="actor-clockwise" type="checkbox" checked /> Clockwise patrol</label
+                >
+                <button id="actor-submit" type="submit">Validate & add actor</button>
+                <button id="actor-remove" type="button" disabled>Remove selected actor</button>
+                <p id="actor-result" class="note" role="status"></p>
+              </fieldset>
+            </form>
+          </details>
+          <details id="bonus-panel">
+            <summary>Place optional bonuses</summary>
+            <p id="bonus-qualification" class="note"></p>
+            <form id="bonus-form">
+              <fieldset id="bonus-tools">
+                <legend>Contact pickups · shared effects</legend>
+                <label>Bonus<select id="bonus-select"></select></label>
+                <label>Stable bonus ID<input id="bonus-id" maxlength="80" required /></label>
+                <label>Effect<select id="bonus-kind"></select></label>
+                <div class="pair">
+                  <label
+                    >X · cell centre<input
+                      id="bonus-x"
+                      type="number"
+                      min="0.5"
+                      max="71.5"
+                      step="1"
+                      required
+                  /></label>
+                  <label
+                    >Y · cell centre<input
+                      id="bonus-y"
+                      type="number"
+                      min="0.5"
+                      max="35.5"
+                      step="1"
+                      required
+                  /></label>
+                </div>
+                <button id="bonus-submit" type="submit">Validate & add bonus</button>
+                <button id="bonus-remove" type="button" disabled>Remove selected bonus</button>
+                <p id="bonus-result" class="note" role="status"></p>
+              </fieldset>
+            </form>
+          </details>
+          <details id="objective-panel">
+            <summary>Place capture objectives</summary>
+            <p id="objective-qualification" class="note"></p>
+            <form id="objective-form">
+              <fieldset id="objective-tools">
+                <legend>Capture markers · optional or required</legend>
+                <label>Objective<select id="objective-select"></select></label>
+                <label
+                  >Stable objective ID<input id="objective-id" maxlength="80" required
+                /></label>
+                <label
+                  >X · cell centre<input
+                    id="objective-x"
+                    type="number"
+                    min="1.5"
+                    max="70.5"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Y · cell centre<input
+                    id="objective-y"
+                    type="number"
+                    min="1.5"
+                    max="34.5"
+                    step="1"
+                    required
+                /></label>
+                <label><input id="objective-required" type="checkbox" />Required to clear</label>
+                <label><input id="objective-hidden" type="checkbox" />Hidden until revealed</label>
+                <p class="note">
+                  Studio shows all markers: ! required, o optional, ? initially hidden. Hidden
+                  requirements need deliberate teaching. Capturing a marker does not open a gate
+                  unless a future, explicit mechanic defines that link.
+                </p>
+                <button id="objective-submit" type="submit">Validate & add objective</button>
+                <button id="objective-remove" type="button" disabled>
+                  Remove selected objective
+                </button>
+                <p id="objective-result" class="note" role="status"></p>
+              </fieldset>
+            </form>
+          </details>
+          <details id="image-authoring">
+            <summary>Build from a reference picture</summary>
+            <p class="note">
+              Upload → crop → queue manual rectangles → inspect → play → apply. Your picture stays
+              on this device and is never converted automatically into collision or published as
+              artwork. References, accepted crops and queues save locally in separate tracing
+              drafts. Restore tracing when returning to a mission. Applied geometry is saved,
+              undoable and included in your project backup. Export a tracing backup too to keep the
+              original picture.
+            </p>
+            <label
+              >Local reference picture
+              <input id="reference-file" type="file" accept="image/png,image/jpeg,image/webp" />
+            </label>
+            <fieldset id="reference-tools" disabled>
+              <legend>Crop & manual trace · original image pixels</legend>
+              <div class="coordinates">
+                <label>Crop X<input id="crop-x" type="number" min="0" step="1" value="0" /></label>
+                <label>Crop Y<input id="crop-y" type="number" min="0" step="1" value="0" /></label>
+                <label>Width<input id="crop-w" type="number" min="1" step="1" value="1" /></label>
+                <label>Height<input id="crop-h" type="number" min="1" step="1" value="1" /></label>
+              </div>
+              <div class="pair">
+                <button id="reference-crop" type="button">Preview crop</button>
+                <button id="reference-clear" type="button">Clear reference & queue</button>
+              </div>
+              <label class="toggle"
+                ><input id="reference-show" type="checkbox" />Show reference under map</label
+              >
+              <p class="note">
+                Click the board to choose a cell, then set Surface, X, Y, Width and Height above.
+                Queue rectangles here instead of applying them directly. Gameplay symbols stay above
+                the reference.
+              </p>
+              <div class="pair">
+                <button id="reference-queue-add" type="button">Queue selected rectangle</button>
+                <button id="reference-queue-undo" type="button">Undo last queued rectangle</button>
+              </div>
+              <pre id="reference-queue" aria-label="Queued manual geometry"></pre>
+              <button id="reference-inspect" type="button">Inspect proposed map</button>
+              <canvas
+                id="reference-preview"
+                width="1008"
+                height="504"
+                role="img"
+                aria-label="Inspected candidate map, not yet applied"
+                aria-describedby="reference-status reference-queue"
+                hidden
+              ></canvas>
+              <div class="pair">
+                <button id="reference-play" type="button" disabled>
+                  Play inspected Solo map ↗
+                </button>
+                <button id="reference-apply" type="button" disabled>
+                  Apply inspected geometry
+                </button>
+              </div>
+            </fieldset>
+            <p id="reference-status" class="note" role="status"></p>
+            <fieldset>
+              <legend>Local tracing recovery · never published</legend>
+              <p id="trace-status" class="note" role="status"></p>
+              <div class="pair">
+                <button id="trace-read" type="button">Read saved tracing / retry</button>
+                <button id="trace-restore" type="button" disabled>Restore saved tracing</button>
+                <button id="trace-session-restore" type="button" disabled>
+                  Restore unsaved session tracing
+                </button>
+                <button id="trace-replace" type="button" disabled>
+                  Replace saved with current
+                </button>
+              </div>
+              <div class="pair">
+                <button id="trace-export" type="button">Export current tracing backup</button>
+                <button id="trace-export-saved" type="button" disabled>
+                  Export saved tracing backup
+                </button>
+              </div>
+              <label
+                >Inspect tracing backup
+                <input id="trace-import" type="file" accept="application/json,.json" />
+              </label>
+              <button id="trace-import-restore" type="button" disabled>
+                Restore backup tracing
+              </button>
+            </fieldset>
+          </details>
           <details>
             <summary>Frozen capture inspection</summary>
             <p class="note">
@@ -248,10 +514,14 @@
             <summary>Organize missions, campaigns & packs</summary>
             <p class="note">
               Choose an untested Solo / Versus island or a two-seat Team island template. Duplicate
-              shares an immutable map; editing its geometry creates a private revision. Add to
-              parent keeps existing memberships. Remove from parent detaches only that membership.
-              Delete refuses referenced or nonempty items and never removes shared maps or assets.
-              Archived items stay editable here but are omitted from candidate Journey lists.
+              copies missions and whole campaign/pack contents with independent IDs; maps and
+              artwork remain shared immutable pins. Editing geometry creates a private revision.
+              Shared child membership is preserved within a copied pack. Archived children remain
+              archived. Add to parent keeps existing memberships. Remove from parent detaches only
+              that membership. Delete refuses referenced or nonempty items and never removes shared
+              maps or assets. Archived items stay editable here but are omitted from candidate
+              Journey lists. Changing a campaign band never retunes its missions: every member must
+              already fit that band or the next (capped at 12), or the edit is rejected.
             </p>
             <form id="structure-form">
               <label
@@ -264,8 +534,9 @@
               <label
                 >Action<select id="item-action">
                   <option value="create">Create</option>
-                  <option value="duplicate">Duplicate mission</option>
+                  <option value="duplicate">Duplicate item & contents</option>
                   <option value="rename">Rename</option>
+                  <option value="set-band">Change campaign band</option>
                   <option value="place">Add to parent</option>
                   <option value="detach">Remove from parent</option>
                   <option value="earlier">Move earlier in parent</option>
@@ -334,7 +605,17 @@
           <button id="close-preview">Close preview</button>
         </div>
         <p id="preview-status" role="status"></p>
-        <iframe id="preview" title="Exact candidate Solo practice preview" allow="gamepad"></iframe>
+        <iframe
+          id="preview"
+          name="revealline-content-studio-preview"
+          title="Exact candidate Solo practice preview"
+          allow="gamepad"
+        ></iframe>
+        <button id="preview-return">Return to draft</button>
+        <p class="note">
+          Tab past either end of the preview controls to return here. Re-entering a paused preview
+          never resumes it automatically.
+        </p>
       </section>
       <footer>
         Local-first drafts · immutable checkpoints · shared compiler · human playtesting still

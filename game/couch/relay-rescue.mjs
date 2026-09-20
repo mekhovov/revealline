@@ -1,4 +1,8 @@
+import { attachCouchMusicHost } from './couch-music-host.mjs';
+import { prepareTeamMusicContext } from './couch-music-context.mjs';
+import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { mountModeChoices } from '../ui/mode-choice.mjs';
+import { authoredTeamReturn } from '../ui/authored-mode-routes.mjs';
 import {
   createCoop,
   startCoop,
@@ -31,6 +35,7 @@ import { coopFailureFeedback, coopRetryFeedback } from './coop-feedback.mjs';
 import { coopArenaGuidance } from './coop-briefing.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
 import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
 import { nextInputModality } from '../input-presentation.mjs';
@@ -99,10 +104,17 @@ export function bootCoop() {
   } catch {
     /* Fixed title fallback remains available. */
   }
-  const returnHref = () => teamReturnHref({ href: location.href, storage: returnStorage });
+  const authoredReturn = authoredTeamReturn(location.href);
+  const homeHref = authoredReturn?.solo ?? '../';
+  const versusHref = authoredReturn?.versus ?? './';
+  const returnHref = () =>
+    authoredReturn?.[authoredReturn.origin] ??
+    teamReturnHref({ href: location.href, storage: returnStorage });
+  $('coop-home').setAttribute('href', homeHref);
+  $('coop-versus').setAttribute('href', versusHref);
   $('coop-race').setAttribute('href', returnHref());
   $('coop-race').textContent = fromSolo ? 'Back to Solo' : 'Race mode ↗';
-  $('coop-solo').setAttribute('href', fromSolo ? returnHref() : '../');
+  $('coop-solo').setAttribute('href', fromSolo ? returnHref() : homeHref);
   const arenaPreference = createTeamArenaPreference({
     pack: COOP_STARTER_PACK,
     getStorage: () => localStorage,
@@ -139,6 +151,8 @@ export function bootCoop() {
   $('coop-master-volume').onchange = () =>
     audioPreferences.setVolume(Number($('coop-master-volume').value));
   const closeAudio = () => {
+    musicPublished?.close();
+    music?.dispose();
     $('coop-audio').onclick = null;
     $('coop-quick-sound').onclick = null;
     $('coop-master-volume').onchange = null;
@@ -218,6 +232,9 @@ export function bootCoop() {
   const earnedDialog = $('coop-earned-picture');
   const earnedCanvas = $('coop-earned-picture-canvas');
   let earnedOwner = null;
+  let music = null,
+    musicPublished = null,
+    musicSelection = null;
   let settingsOwner = null,
     settingsVisit = 0,
     settingsPanels = null;
@@ -368,6 +385,10 @@ export function bootCoop() {
     showTouch();
   }
   function back() {
+    if (music?.root()) {
+      music.back();
+      return;
+    }
     if (settingsDialog.open) {
       closeSettings();
       return;
@@ -407,45 +428,49 @@ export function bootCoop() {
   }
   const running = () => run?.status === 'running';
   const scope = () =>
-    settingsDialog.open
-      ? `coop-settings:${settingsPanels?.selected() || 'display'}`
-      : earnedDialog.open
-        ? 'coop-earned-picture'
-        : departure
-          ? 'coop-discard'
-          : discovery?.isOpen()
-            ? 'coop-discovery'
-            : running()
-              ? 'flight'
-              : run
-                ? `coop-${run.status}`
-                : 'coop-lobby';
+    music?.root()
+      ? 'coop-music-library'
+      : settingsDialog.open
+        ? `coop-settings:${settingsPanels?.selected() || 'display'}`
+        : earnedDialog.open
+          ? 'coop-earned-picture'
+          : departure
+            ? 'coop-discard'
+            : discovery?.isOpen()
+              ? 'coop-discovery'
+              : running()
+                ? 'flight'
+                : run
+                  ? `coop-${run.status}`
+                  : 'coop-lobby';
   const primary = () =>
-    settingsDialog.open
-      ? settingsPanels?.primary() || $('coop-settings-close')
-      : earnedDialog.open
-        ? $('coop-picture-return')
-        : departure
-          ? $('coop-discard-stay')
-          : discovery?.isOpen()
-            ? discovery.primary()
-            : nextOperation
-              ? $('coop-next-cancel')
-              : importOperation
-                ? $('coop-pack-cancel')
-                : pictureOperation
-                  ? $('coop-picture-cancel')
-                  : !run && pictureSelection?.state !== 'ready'
-                    ? $('coop-picture-retry')
-                    : !run
-                      ? $('coop-start')
-                      : run.status === 'paused' && !loopStopped
-                        ? $('coop-resume')
-                        : run.status === 'won' && !loopStopped
-                          ? teamDestination()?.next
-                            ? $('coop-next')
-                            : $('coop-discovery-paused')
-                          : $('coop-retry');
+    music?.root()
+      ? music.primary()
+      : settingsDialog.open
+        ? settingsPanels?.primary() || $('coop-settings-close')
+        : earnedDialog.open
+          ? $('coop-picture-return')
+          : departure
+            ? $('coop-discard-stay')
+            : discovery?.isOpen()
+              ? discovery.primary()
+              : nextOperation
+                ? $('coop-next-cancel')
+                : importOperation
+                  ? $('coop-pack-cancel')
+                  : pictureOperation
+                    ? $('coop-picture-cancel')
+                    : !run && pictureSelection?.state !== 'ready'
+                      ? $('coop-picture-retry')
+                      : !run
+                        ? $('coop-start')
+                        : run.status === 'paused' && !loopStopped
+                          ? $('coop-resume')
+                          : run.status === 'won' && !loopStopped
+                            ? teamDestination()?.next
+                              ? $('coop-next')
+                              : $('coop-discovery-paused')
+                            : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -511,9 +536,11 @@ export function bootCoop() {
   });
   const router = createControllerRouter({ readPads: () => framePads });
   const navigation = attachControllerNavigation({
+    onTabBoundary: () => playgroundTabBoundary({ window, suspend: () => suspend() }),
     getScope: scope,
     getRoot: () =>
-      settingsDialog.open
+      music?.root() ||
+      (settingsDialog.open
         ? settingsDialog
         : earnedDialog.open
           ? earnedDialog
@@ -523,17 +550,18 @@ export function bootCoop() {
               ? $('coop-discovery-dialog')
               : run
                 ? $('coop-overlay')
-                : $('coop-app'),
+                : $('coop-app')),
     accept: (element) => !element.closest('.race-pad'),
     getDefaultFocus: primary,
     keyboard: true,
-    ownsKeyboardEvent: (event) => settingsTabOwnsKey(event, settingsDialog),
+    ownsKeyboardEvent: (event) => !music?.root() && settingsTabOwnsKey(event, settingsDialog),
     nativeReadingScroll: true,
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: back,
     onMenu: () => {
       if (
+        music?.root() ||
         settingsDialog.open ||
         earnedDialog.open ||
         departure ||
@@ -646,6 +674,50 @@ export function bootCoop() {
     run === owner.run &&
     generation === owner.generation &&
     foreground();
+  music = attachCouchMusicHost({
+    document,
+    root: $('coop-settings-panel-audio'),
+    prefix: 'coop',
+    audioMaster,
+    audioPreferences,
+    canOpen: () => !!settingsOwner && settingsDialog.open && settingsCurrent(settingsOwner),
+    getOwner: () => settingsOwner,
+    onOpen: () => clear(),
+    onClose: () => clear(),
+  });
+  if (music) {
+    musicPublished = attachPublishedAudio({
+      sound: music.sound,
+      ready: presentationPage.ready,
+      getHost: () => presentationPage,
+      cues: false,
+      allowMusic: () =>
+        !acceptedPicture?.artworkSource && (acceptedPicture?.request.themeId ?? 'fpv') === 'fpv',
+    });
+    musicPublished.setPlayer(music.player);
+  }
+  function acceptMusic(selection, { play = false } = {}) {
+    if (!music || !selection || acceptedPicture !== selection || !run || loopStopped || disposed)
+      return;
+    if (musicSelection !== selection) {
+      musicSelection = selection;
+      if (selection.musicContext) music.setContext(selection.musicContext);
+      else {
+        music.contextPending(selection.request.themeId, selection.musicError || undefined);
+        void selection.musicReady?.then((context) => {
+          if (disposed || musicSelection !== selection || acceptedPicture !== selection) return;
+          if (context) music.setContext(context);
+          else
+            music.contextPending(
+              selection.request.themeId,
+              selection.musicError ||
+                'Exact mission music assignments are unavailable. Global and theme playlists remain available.',
+            );
+        });
+      }
+    }
+    if (play) void music.start();
+  }
   function openSettings() {
     cancelNext();
     const opener = $('coop-settings-open');
@@ -1127,7 +1199,7 @@ export function bootCoop() {
     focus?.finish($('coop-picture-retry'));
   }
   function newPictureSelection(recipe, sourcePack, pinnedPack = sourcePack, artworkSource = null) {
-    return {
+    const selection = {
       sourcePack,
       artworkSource,
       pack: structuredClone(pinnedPack),
@@ -1149,6 +1221,28 @@ export function bootCoop() {
       binding: null,
       state: 'new',
     };
+    if (music) {
+      const level = structuredClone(recipe.level);
+      selection.musicReady = Promise.resolve()
+        .then(() =>
+          prepareTeamMusicContext({
+            pack: selection.pack,
+            level,
+            themeId: selection.request.themeId,
+          }),
+        )
+        .then(
+          (context) => {
+            selection.musicContext = context;
+            return context;
+          },
+          (error) => {
+            selection.musicError = `Exact mission music assignments: ${error.message}. Global and theme playlists remain available.`;
+            return null;
+          },
+        );
+    }
+    return selection;
   }
   function preparePicture({
     retry = false,
@@ -2119,7 +2213,11 @@ export function bootCoop() {
     if (pictureSelection && pictureSelection !== selection) retirePicture();
     pictureSelection = selection;
     if (previousPicture && previousPicture !== selection) previousPicture.lease?.dispose();
-    pictureUI();
+    pictureUI(
+      binding
+        ? 'Team picture is ready for this attempt.'
+        : 'Procedural Team arena is ready for this attempt.',
+    );
     generation++;
     startCoop(run);
     document.body.classList.add('playing');
@@ -2139,6 +2237,8 @@ export function bootCoop() {
     }
     if (rememberVisibleArena && !disposed && run === next && running() && foreground())
       arenaPreference.choose(startingLevel.id);
+    if (!disposed && run === next && running() && foreground())
+      acceptMusic(selection, { play: true });
     input.focus();
     if (loopStopped) {
       loopStopped = false;
@@ -2167,6 +2267,7 @@ export function bootCoop() {
     // Never repaint while handling a painter failure. Any destructive decision
     // is cancelled before showing the stopped attempt's recovery actions.
     loopStopped = true;
+    music?.suspend();
     closeEarnedPicture({ restore: false });
     cancelPicture({ restore: false });
     if (running()) pauseCoop(run);
@@ -2198,6 +2299,7 @@ export function bootCoop() {
     cancelPicture({ restore: false });
     clear();
     resumeCoop(run);
+    if (music) void music.start();
     last = null;
     overlay();
     input.focus();
@@ -2433,9 +2535,9 @@ export function bootCoop() {
         ticket.kind === 'return'
           ? new URL(returnHref(), location.href).href
           : ticket.kind === 'home'
-            ? new URL('../', location.href).href
+            ? new URL(homeHref, location.href).href
             : ticket.kind === 'versus'
-              ? new URL('./', location.href).href
+              ? new URL(versusHref, location.href).href
               : null;
       closeDeparture(ticket, { restore: false });
       if (ticket.kind === 'setup') lobby();
@@ -2480,7 +2582,7 @@ export function bootCoop() {
       cancelNext();
       $(id).setAttribute(
         'href',
-        kind === 'return' ? returnHref() : kind === 'versus' ? './' : '../',
+        kind === 'return' ? returnHref() : kind === 'versus' ? versusHref : homeHref,
       );
       if (departure || pictureOperation) {
         event.preventDefault();
@@ -2502,6 +2604,7 @@ export function bootCoop() {
   document.addEventListener('focusin', retryFocusChanged);
   const suspend = () => {
     if (disposed) return;
+    music?.suspend();
     discovery?.cancel();
     cancelDiscoveryPreparation();
     cancelAutomaticRetry();
@@ -2520,6 +2623,7 @@ export function bootCoop() {
     if (disposed || !foreground()) return;
     inactive = false;
     last = null;
+    if (music && !loopStopped) void music.resume();
     discoveryControls();
   };
   const hidden = () => {
@@ -2587,6 +2691,9 @@ export function bootCoop() {
       return;
     }
     try {
+      acceptMusic(acceptedPicture);
+      if (!loopStopped)
+        music?.update(running(), { family: acceptedPicture?.request.themeId ?? 'fpv' });
       try {
         framePads = [...(navigator.getGamepads?.() || [])];
       } catch {

@@ -1,0 +1,38 @@
+{
+  "source": "4bb553d06d62f7a8cce301c77b245573838bfdcb",
+  "overrides": {
+    "authoring/asset-studio/index.html": {
+      "bytes": 34914,
+      "sha256": "82aeb58e90caaa4cedea63c4fa44f67ba1a5d06f17188d8a6f6a4bf7d9eac19f"
+    },
+    "game/playground/index.html": {
+      "bytes": 28569,
+      "sha256": "021f56fc9b86bc4af3b9698ef2c99c45e90439b18354d5eea28197ddab827624"
+    },
+    "authoring/enemy-catalog/index.html": {
+      "bytes": 2914,
+      "sha256": "dde7dda89032dfa33866c62257a4a57f9449f982695438d9b135a9b6adc9ff97"
+    },
+    "authoring/motion-lab/index.html": {
+      "bytes": 21984,
+      "sha256": "74c156aa09ac268dc4d3b3e0abe14c521ec9c9cec6f6a60f4218ae75f82cf9ff"
+    },
+    "authoring/still-media/index.html": {
+      "bytes": 5863,
+      "sha256": "4681b5adc3943cd0f91b1ddfffc30bd53c609ff94a02eb2374e6b7386fbb3405"
+    },
+    "authoring/video-poster/index.html": {
+      "bytes": 4977,
+      "sha256": "511c68bb6f06bf25e959dd7c045fc0728f5f03937b87b43aaa64b45bf74c46df"
+    },
+    "authoring/design-atlas/index.html": {
+      "bytes": 25415,
+      "sha256": "e49a41a3ceae49628279c10bb6ef9180243faa9f5bd6bba12be535e950531b79"
+    },
+    "game/controller-lab/index.html": {
+      "bytes": 13188,
+      "sha256": "1bfe8691797e25c28340fdd6091b05949e0912148dfad81eeeb18b0a4595bb1a"
+    }
+  },
+  "failureFixture": "all five Motion HTML-selected scripts return HTTP503; document/CSS/art and game application remain exact"
+}

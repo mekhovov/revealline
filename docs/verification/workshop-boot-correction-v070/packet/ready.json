@@ -1,0 +1,28 @@
+{
+  "status": "ready-for-coordinator-composition-not-released",
+  "base": "4bb553d06d62f7a8cce301c77b245573838bfdcb",
+  "patchSHA256": "58ec9e1b2615f68a05c0526efdba11d4346467ab9d8fba5bbdfbba06372ec5be",
+  "createdAt": "2026-09-20T18:03:59.603514+00:00",
+  "receipts": {
+    "README.md": "58139f5e9d54b737e820ea55e07814d89a7f1bb8df0a5091f6f9365b3d58a149",
+    "fixture-fs-sync.mjs": "239a58cb11c10305389f12e1ce6e58bc3c6cd7ed6e606c4ec6884c4294375d91",
+    "fixture-fs.mjs": "fc0aaceb48e230c1f072f6fb04a91057b1cd2a3730b390e79c4e8b4106af4daa",
+    "git-apply-check.log": "6094e7662b2c4462c2d2b2c0e90f24aec369146ee0b04e1ed37ad304f68e228c",
+    "loader.mjs": "b7bf6134c4418ea4b609a5183421b8aba8e510ffe4a9903429f9482da1d14168",
+    "native-evidence.json": "609c9432c125aac62b1bdaea7b4942728fc1d1c03434a986010bb6805c66b284",
+    "native-pins.json": "f584e9f3e3ab17d3a94eb7d10fd82b7a4ecc756e2e51121e90937ba378de35d9",
+    "native-served.jsonl.xz": "a7b3baf8abbc2a173163c32b1679397dd60d98d3fc6a75ee8f7d7c1d2ec4c137",
+    "native-server-blocked.json": "4973f31b4565f2ad044382a32d2dc6c402ff9ffec95369ec623535ad0bd7261f",
+    "native-server.json": "798a66d3ee290eee68abd8cb72af3a51ce8acaab35e2c605abb2f79053458c8a",
+    "patch-source.mjs": "09ac530f430e8657b7c2feaf5ff897b1a722234a1c741c0120bdcb3869ea042d",
+    "qualification-logs.json.xz": "16ede93305a273b317c993bb5cdc7e03aee53cdedcaa13e153c7e04a7276555e",
+    "reconstructed-node20.log": "faf790001cb6c0c726227f435df4be2070565bee06462e3de395e9475cce995b",
+    "reconstruction.log": "bda9512761152fb6bf65bcbe3901e158c00ccbb555b9bbeaebc6d16622568224",
+    "related.test.mjs": "47c32013a8da4d02bf278d25794edd8b6342edade6ac20e9a8dde04f44cc093b",
+    "serve.py": "8c9d56746f43184eb93d9f20cf4289e4e1ae2dadd0121265ce319c4741f2d581",
+    "source-manifest.json": "7d08cc3555f44a567c5b0a3bc1737a22440585e9a301e4e0080b232782f8dc1b",
+    "source.patch.gz": "1b7f5d4917da8d8b2fd1173a5959d7225379d5ee6fa45afe9064c91f1116bfb9",
+    "suite.test.mjs": "3c8f930c015e648bd1aa090c809460df180bc2b66bb74e633b08160658eae71b",
+    "verify-source.mjs": "ddc77a0190b116b99c600b3b548562debbf640d7e32e399081db3268a31a4075"
+  }
+}

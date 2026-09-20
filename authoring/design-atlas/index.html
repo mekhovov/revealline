@@ -11,19 +11,33 @@
     />
     <link rel="stylesheet" href="./atlas.css" />
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
+    <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
+    <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
   </head>
-  <body>
+  <body data-workshop-tool="design-atlas">
     <a class="skip-link" href="#main">Skip to design atlas</a>
     <p id="font-status" class="operation-status" data-state="busy">
       <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
       ><span class="operation-status-label" role="status">Checking local font availability…</span>
     </p>
     <header class="atlas-header">
-      <a class="atlas-brand" href="../../game/" aria-label="Open the current RevealLine game">
+      <a
+        class="atlas-brand"
+        href="../../game/"
+        aria-label="Open the current RevealLine game"
+        data-workshop-return="game"
+      >
         <span class="brand-mark" aria-hidden="true">↗</span> REVEAL<span>LINE</span>
       </a>
+      <a
+        data-workshop-return="workshop"
+        inert
+        aria-disabled="true"
+        href="../../game/?workshop=design-atlas"
+        >Return to Workshop</a
+      >
       <span class="edition">DESIGN ATLAS / FIELD KIT 01</span>
-      <a href="../asset-studio/">Open Asset Studio ↗</a>
+      <a href="../asset-studio/" data-workshop-tool="asset-studio">Open Asset Studio ↗</a>
       <a href="../../docs/fpv-redesign-design.md">Design specification ↗</a>
     </header>
 

@@ -1,13 +1,20 @@
 import { CELL } from '../core/registry.mjs';
 import { captureOverlay } from './capture-overlay.mjs';
+import { paintMaterialMarker } from './material-markers.mjs';
 
 /** Map-first Studio renderer. Only the engine inspection supplies capture facts.
  * Shapes/patterns duplicate colors so the view does not require color distinction. */
-export function paintContentMap(ctx, preview, { width = 1008, showCapture = true } = {}) {
+export function paintContentMap(
+  ctx,
+  preview,
+  { width = 1008, showCapture = true, underlay = null } = {},
+) {
   const { geometry, manifest } = preview;
   const overlay = captureOverlay(preview);
   const size = width / geometry.width;
   ctx.save();
+  ctx.clearRect(0, 0, width, geometry.height * size);
+  if (underlay) underlay(ctx, width, geometry.height * size);
   ctx.lineWidth = Math.max(1, size / 10);
   for (let i = 0; i < geometry.cells.length; i++) {
     const x = (i % geometry.width) * size,
@@ -22,7 +29,14 @@ export function paintContentMap(ctx, preview, { width = 1008, showCapture = true
             : geometry.terrain[i] === 1
               ? '#665333'
               : '#102720';
+    ctx.globalAlpha = underlay && geometry.cells[i] === CELL.FIELD ? 0.58 : 1;
     ctx.fillRect(x, y, size - 1, size - 1);
+    ctx.globalAlpha = 1;
+    if (geometry.cells[i] === CELL.FIELD) paintMaterialMarker(ctx, geometry.terrain[i], x, y, size);
+    else if (geometry.cells[i] === CELL.WALL) {
+      ctx.strokeStyle = '#ced3bc';
+      ctx.strokeRect(x + size * 0.25, y + size * 0.25, size * 0.5, size * 0.5);
+    }
     if (!showCapture) continue;
     const state = overlay.cells[i];
     if (state === 'retained') {
@@ -38,6 +52,27 @@ export function paintContentMap(ctx, preview, { width = 1008, showCapture = true
       ctx.strokeStyle = '#fff0ad';
       ctx.strokeRect(x + 2, y + 2, size - 5, size - 5);
     }
+  }
+  // Framed glyphs distinguish pickup effects without relying on color. These
+  // are placement markers, never a claim that enclosing them collects them.
+  const bonusGlyphs = {
+    'extra-life': '+',
+    'player-speed': '>',
+    'enemy-slow': 'v',
+    'enemy-freeze': '*',
+  };
+  for (const bonus of manifest.level.classic?.powerups ?? []) {
+    const x = bonus.x * size,
+      y = bonus.y * size;
+    ctx.fillStyle = '#102720';
+    ctx.fillRect(x - size * 0.6, y - size * 0.6, size * 1.2, size * 1.2);
+    ctx.strokeStyle = '#d8ef92';
+    ctx.strokeRect(x - size * 0.6, y - size * 0.6, size * 1.2, size * 1.2);
+    ctx.fillStyle = '#f5ffba';
+    ctx.font = `bold ${Math.max(10, size)}px monospace`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(bonusGlyphs[bonus.kind], x, y);
   }
   for (const actor of overlay.actors) {
     const x = actor.x * size,
@@ -75,6 +110,20 @@ export function paintContentMap(ctx, preview, { width = 1008, showCapture = true
       ctx.fillStyle = '#d8ef92';
       ctx.fillRect(x - size * 0.2, y - size * 0.2, size * 0.4, size * 0.4);
     }
+  }
+  // Author view exposes even hidden markers; it never claims gameplay visibility.
+  for (const objective of manifest.level.objectives ?? []) {
+    const x = objective.x * size,
+      y = objective.y * size;
+    ctx.fillStyle = '#102720';
+    ctx.fillRect(x - size * 0.6, y - size * 0.6, size * 1.2, size * 1.2);
+    ctx.strokeStyle = '#fff0ad';
+    ctx.strokeRect(x - size * 0.6, y - size * 0.6, size * 1.2, size * 1.2);
+    ctx.fillStyle = '#fff0ad';
+    ctx.font = `bold ${Math.max(10, size)}px monospace`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(objective.hidden ? '?' : objective.required ? '!' : 'o', x, y);
   }
   ctx.fillStyle = '#f5ffba';
   for (const [seat, { x, y }] of (preview.markers.spawns ?? [manifest.level.spawn]).entries()) {

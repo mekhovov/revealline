@@ -23,8 +23,14 @@
         }
       }
     </style>
+    <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
+    <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
   </head>
-  <body class="field-kit field-kit-support" style="padding: 20px">
+  <body
+    data-workshop-tool="enemy-catalog"
+    class="field-kit field-kit-support"
+    style="padding: 20px"
+  >
     <h1 class="field-kit-display">Enemy workshop</h1>
     <p>
       Preview every registered role, prepare future generator choices and try a separate practice
@@ -34,15 +40,20 @@
     <a
       href="../../game/playground/"
       style="display: inline-flex; align-items: center; min-height: 44px"
+      data-workshop-tool="playground"
       >Level playground</a
     >
     <a
       id="return-game"
       class="button"
-      href="../../game/"
+      href="../../game/?workshop=enemy-catalog"
       style="display: inline-flex; align-items: center; min-height: 44px"
-      >Return to game</a
+      data-workshop-return="workshop"
+      inert
+      aria-disabled="true"
+      >Return to Workshop</a
     >
+    <a data-workshop-return="game" href="../../game/">Return to game</a>
     <p id="catalog-host-status" class="operation-status" data-state="busy">
       <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
       ><span class="operation-status-label" role="status">Loading registered themes…</span>

@@ -1,0 +1,40 @@
+{
+  "version": "v0.69.3",
+  "source": "406637f36c039f991e83d241cb49d4568a871109",
+  "publisher": "efa5fe91efd28f9a28955c8a03fbb2de560b65b5",
+  "deployment": 6555180412,
+  "input": "CUA keyboard plus native file chooser and select/click for story review",
+  "observed": [
+    "Public title version v0.69.3; keyboard Enter starts First Signal",
+    "Escape pauses at 0:05,0%,3 lives,00000; keyboard Main menu returns focused Continue",
+    "Collection to Flight records to Saves; nested Escape restores Flight records then Collection opener",
+    "Workshop keyboard opens Pictures and Stories",
+    "Owned picture restored with keep-current policy; reload shows12records and DawnSignal selected",
+    "Initial Tab/Down sequence prepared story backup instead of reviewing; no file downloaded; corrected via explicit visible policy selection and Review button",
+    "Review completed, incoming bindings selected, Restore focused; Enter began restore",
+    "After story restore focus=still-media-story-review, Review enabled, consumed Restore disabled; selected Dawn Signal revision1; screenshot inspected inline",
+    "Escape from story workshop restores Open local media; Shift+Tab/Enter returns exactv693game",
+    "Saved Continue explicitly restores First Signal at0:05/0%/3lives/00000; laterpause0:13 reflects real elapsedplay",
+    "More worlds downloaded and verified Illustrated Pressure10.2MiB; confirmation focusedStay",
+    "Explicit Replace&play starts Orchard Crossing; post-action capture was alreadycloseddialog/game-canvas, so pending-focus timing not observed",
+    "Paused Orchard Crossing2:38/0%/3lives/00000; selectBase\u2192Stay restores exactBasechapteropener;Escape returns unchanged pausedHUD2:38"
+  ],
+  "pending": [],
+  "publicAcceptance": true,
+  "status": "PASS_SCOPED_PUBLIC_JOURNEYS",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "limitations": [
+    "Keyboard plus pointer/select and native chooser: not entire journey keyboard-only",
+    "No physical controller/touch/screenreader/listening/offline/performance acceptance",
+    "Pending Replace focus was too brief to observe publicly; retained delayed local native/regression evidence remains separate",
+    "No reward-video playback or win observed in this scoped patch check",
+    "Screenshots inspected inline; none exported or hashed"
+  ],
+  "followupFindings": [
+    "Mission picker caption still says First Signal after selecting Illustrated Pressure/Orchard Crossing; header,deploybar,and actualflight agree onOrchard. Existing broad navigation remainspartial."
+  ],
+  "parentPhaseComplete": false
+}

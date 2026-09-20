@@ -54,7 +54,7 @@ test('appending parsed text preserves nested boot and game controls', () => {
 for (const [route, boot, back] of [
   ['../couch/index.html', 'boot-status', 'boot-return'],
   ['../couch/relay-rescue.html', 'coop-boot', 'coop-race'],
-  ['../replay-theater/index.html', 'boot-status', 'return-game'],
+  ['../replay-theater/index.html', 'boot-status', 'replay-game-home'],
 ]) {
   test(`${route} has a visible static loading signal and a reachable exit before modules load`, async () => {
     const doc = new Document();
@@ -66,5 +66,22 @@ for (const [route, boot, back] of [
     assert.equal(status.closest('[hidden]'), null);
     assert.equal(doc.getElementById(back).closest('[inert]'), null);
     assert.equal(doc.getElementById(back).closest('[hidden]'), null);
+    if (route === '../replay-theater/index.html') {
+      const home = doc.getElementById(back);
+      assert.equal(home.getAttribute('href'), '../');
+      assert.equal(home.textContent, 'Game home');
+      assert.equal(home.getAttribute('aria-disabled'), null);
+      assert.ok(doc.getElementById('return-game').hasAttribute('inert'));
+      for (const prefix of [
+        'http://localhost/',
+        'https://example.test/releases/v0.70.0/site/',
+        'https://example.test/archive/releases/v0.68.2/site/',
+      ])
+        assert.equal(
+          new URL(home.getAttribute('href'), `${prefix}game/replay-theater/`).href,
+          `${prefix}game/`,
+          'The static exit stays inside its own build without adopting launch hints.',
+        );
+    }
   });
 }

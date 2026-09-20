@@ -104,6 +104,7 @@ export function attachPublishedAudio({
   ready,
   getHost,
   allowMusic = () => true,
+  cues = true,
   document: doc = globalThis.document,
 }) {
   let closed = false,
@@ -130,7 +131,7 @@ export function attachPublishedAudio({
     .then((value) => {
       if (closed) return;
       snapshot = value;
-      if (snapshot) sound.setPublishedAudio(readAudio);
+      if (snapshot && cues) sound.setPublishedAudio(readAudio);
       syncPlayer();
     })
     .catch(() => {});
@@ -146,8 +147,10 @@ export function attachPublishedAudio({
     );
     sound.publishedCue(cancel ? 'cancel' : 'confirm');
   };
-  doc?.addEventListener?.('focusin', onFocus);
-  doc?.addEventListener?.('click', onClick);
+  if (cues) {
+    doc?.addEventListener?.('focusin', onFocus);
+    doc?.addEventListener?.('click', onClick);
+  }
   return Object.freeze({
     ready: loaded,
     setPlayer(value) {
@@ -158,7 +161,7 @@ export function attachPublishedAudio({
       if (closed) return;
       closed = true;
       syncPlayer();
-      sound.setPublishedAudio(null);
+      if (cues) sound.setPublishedAudio(null);
       doc?.removeEventListener?.('focusin', onFocus);
       doc?.removeEventListener?.('click', onClick);
     },

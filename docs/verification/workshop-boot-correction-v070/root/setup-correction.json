@@ -1,0 +1,1 @@
+{"failure":"Initial isolated source adapter tested instanceof the replaced global URL, missing original NativeURL fixtures; stat adapter also omitted size required by bounded pack validation.","correction":"Use imported Node URL for fixture identification and exact Git blob byte length for regular-file size. No production source or assertions changed.","retained":"node20.log"}

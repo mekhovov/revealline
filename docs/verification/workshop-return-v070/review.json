@@ -1,0 +1,56 @@
+{
+  "base": "8a9f37f3635f972d3482823aff22536b3e4e1d39",
+  "patchSha256": "de21a3c19d98b1ef87e1a08cb1eaa14bc9d5dcbdd1e09c9e2de15b4386e6703d",
+  "reviewedPaths": [
+    "authoring/asset-studio/index.html",
+    "authoring/design-atlas/index.html",
+    "authoring/enemy-catalog/index.html",
+    "authoring/motion-lab/index.html",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "authoring/still-media/index.html",
+    "authoring/video-poster/index.html",
+    "docs/asset-studio.md",
+    "docs/field-kit-surfaces.md",
+    "game/app.mjs",
+    "game/controller-lab/index.html",
+    "game/couch/couch.mjs",
+    "game/couch/relay-rescue.mjs",
+    "game/index.html",
+    "game/playground/index.html",
+    "game/replay-theater/index.html",
+    "game/replay-theater/navigation.mjs",
+    "game/test/asset-studio-return.test.mjs",
+    "game/test/controller-navigation.test.mjs",
+    "game/test/enemy-workshop-host.test.mjs",
+    "game/test/playground-tab-boundary.test.mjs",
+    "game/test/replay-theater-navigation.test.mjs",
+    "game/test/video-poster-workshop.test.mjs",
+    "game/test/workshop-return.test.mjs",
+    "game/ui/asset-studio-return.mjs",
+    "game/ui/controller-navigation.mjs",
+    "game/ui/game-shell.mjs",
+    "game/ui/playground-tab-boundary.mjs",
+    "game/ui/workshop-return-entry.mjs",
+    "game/ui/workshop-return.css",
+    "game/ui/workshop-return.mjs"
+  ],
+  "findings": [],
+  "focus": "Finite same-release tool map, no arbitrary return URL; Journey single bounded hint only; exact opener; boot route excludes competing launch owners; nested Escape scoped to Workshop; named same-origin current Playground frame alone allows native traversal after suspension; retirement consumes key. Existing Controller/Enemy protocols unchanged.",
+  "independentTests": {
+    "node": "20.19.5",
+    "pass": 82,
+    "fail": 0,
+    "seconds": 229.3196687909949,
+    "originalTimeoutPreserved": true
+  },
+  "recommendation": "Ready for integration with the next native-navigation delivery. Final merged source/full gates/native/public needed. Separate Content Studio gap remains with owner.",
+  "research": [
+    "https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html",
+    "https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html"
+  ],
+  "limitations": [
+    "No physical controller/touch verification",
+    "No public acceptance",
+    "No full offline/performance gate"
+  ]
+}

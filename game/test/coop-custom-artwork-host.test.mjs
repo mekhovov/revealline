@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { deflateSync } from 'node:zlib';
 import { canonicalJSON } from '../data-json.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
+import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import {
@@ -77,7 +78,11 @@ function bundle({ pack = importedRoute.authoredPack, corrupt = false } = {}) {
     presentation: {
       id: 'local.host-test',
       revision: 1,
-      theme: { id: 'fpv', revision: 32, collection: null },
+      theme: {
+        id: COOP_PICTURE_BINDINGS[0].themeId,
+        revision: COOP_PICTURE_BINDINGS[0].themeRevision,
+        collection: null,
+      },
       levels: pack.levels.map((level, index) => ({
         levelId: level.id,
         levelRevision: level.revision,

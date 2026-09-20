@@ -5,7 +5,7 @@ const MODES = Object.freeze([
 ]);
 
 /** Shared presentation only. Existing anchors keep their hrefs and listeners. */
-export function mountModeChoices({ root, current, actions }) {
+export function mountModeChoices({ root, current, actions, separateTeam = false }) {
   if (!root || !MODES.some(([id]) => id === current))
     throw new Error('A game mode and its visible navigation container are required.');
   const document = root.ownerDocument;
@@ -20,7 +20,7 @@ export function mountModeChoices({ root, current, actions }) {
     label.textContent = title;
     const description = document.createElement('span');
     description.className = 'game-mode-description';
-    description.textContent = detail;
+    description.textContent = separateTeam && id === 'team' ? 'Separate Team arenas' : detail;
     element.replaceChildren(label, description);
     element.dataset.gameMode = id;
     if (selected) element.setAttribute('aria-current', 'page');

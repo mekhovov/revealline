@@ -3,7 +3,7 @@ import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs'
 import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
-import { createOpeningCandidates } from './content-design/horizon-candidates.mjs';
+import { createAuthoredJourneyRoute } from './content-design/route.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
 import { DIFFICULTY_CATALOG, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
@@ -64,6 +64,12 @@ import { attachInput } from './ui/input.mjs';
 import { resolveTouchControls } from './touch-controls.mjs';
 import { attachFullscreen } from './ui/fullscreen.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
+import { authoredModeDestinations } from './ui/authored-mode-routes.mjs';
+import {
+  mountWorkshopLinks,
+  readWorkshopReturn,
+  clearWorkshopReturn,
+} from './ui/workshop-return.mjs';
 import { attachFocusClearance } from './ui/focus-clearance.mjs';
 import { createOperationStatus } from './ui/operation-status.mjs';
 import { attachMissionPicker } from './ui/mission-picker.mjs';
@@ -84,6 +90,7 @@ import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { requestControllerPracticeExit } from './ui/controller-practice-exit.mjs';
+import { playgroundTabBoundary } from './ui/playground-tab-boundary.mjs';
 import { attachEnemyWorkshopReturn } from './ui/enemy-workshop-return.mjs';
 import { attachEnemyGuide } from './ui/enemy-guide.mjs';
 import { attachControllerSettings } from './ui/controller-settings.mjs';
@@ -314,11 +321,13 @@ try {
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
   // P00 technical preview. Historical editions keep their original navigation.
-  const authoredJourney = params.get('journey') === 'opening' && !practiceSession;
+  const authoredRoute = !practiceSession && createAuthoredJourneyRoute(params.get('journey'));
+  const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
-    ? createCandidateSoloHost(createOpeningCandidates({ artwork: true }), {
+    ? createCandidateSoloHost(authoredRoute.source, {
         themes: (await getJSON('content-design/themes.json')).themes,
         buildVersion,
+        corePackIds: authoredRoute.corePackIds,
       })
     : null;
   const journeyPreferences = authoredJourney ? createJourneyPreferences({ window }) : null;
@@ -387,7 +396,7 @@ try {
   const packsKey = `revealline.packs.${channel}.v1`;
   // Candidate saves are revision-pinned and independent of Legacy/release slots.
   const sessionKey = authoredJourney
-    ? 'revealline.suspended.journey-opening.v1'
+    ? authoredRoute.sessionKey
     : `revealline.suspended.${channel}.v1`;
   const packCommits = createPackCommitCoordinator({
     read: () => checkedChapters(),
@@ -481,7 +490,7 @@ try {
   async function assertExternalBackupSupported(options) {
     if (candidateHost)
       throw new Error(
-        'Use the ordinary game for Legacy game-data backups. Opening test progress and attempts have separate exports.',
+        'Use the ordinary game for Legacy game-data backups. Authored test progress and attempts have separate exports.',
       );
     if (externalBackup) return externalBackup.assertSupported(options);
     const snapshot = await checkedChapters();
@@ -1851,7 +1860,10 @@ try {
       );
     },
     onTabBoundary: ({ backward }) => {
-      if (!controllerPreview || window.name !== 'revealline-controller-practice') return false;
+      if (!controllerPreview || window.name !== 'revealline-controller-practice')
+        return !controllerPreviewRequested
+          ? playgroundTabBoundary({ window, suspend: suspendInteraction })
+          : false;
       requestControllerPracticeExit({
         window,
         session: params.get('controller-session'),
@@ -2360,12 +2372,22 @@ try {
       $('first-flight-help-enter').focus({ preventScroll: true });
     }
   }
-  const modeDestinations = Object.freeze({
-    team: 'couch/relay-rescue.html?return=solo',
-    versus: 'couch/?return=solo',
-  });
+  const modeDestinations =
+    authoredModeDestinations('solo', authoredRoute?.id) ??
+    Object.freeze({
+      team: 'couch/relay-rescue.html?return=solo',
+      versus: 'couch/?return=solo',
+    });
+  if (authoredRoute) {
+    for (const kind of ['versus', 'team'])
+      for (const id of [`shell-title-${kind}`, `shell-${kind}`])
+        $(id)?.setAttribute('href', modeDestinations[kind]);
+    $('shell-team').textContent = 'Separate Team arenas · 2 players';
+  }
   const modeLabel = (kind) => (kind === 'versus' ? 'Versus' : 'Team');
   function prepareModeHint(ticket) {
+    if (authoredRoute)
+      return { href: new URL(modeDestinations[ticket.kind], location.href).href, token: null };
     return ticket.kind === 'versus'
       ? modeReturnV2.prepare({
           origin: 'solo-missions',
@@ -2426,11 +2448,13 @@ try {
         ? 'Your paused flight was saved and verified. Continue can restore it after returning.'
         : 'This current flight is session-only: it remains paused in this tab. Leaving may lose this attempt. This flight was not verified as safely saved.';
     $('mode-leave-status').textContent = `${flight} ${
-      ticket.origin === 'solo-title'
-        ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
-        : ticket.fallback
-          ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
-          : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
+      authoredRoute
+        ? `This opens ${ticket.kind === 'team' ? 'the separate Team arenas' : 'Versus with its own Journey progress'}. Returning opens this Solo Journey title; Continue stays explicit.`
+        : ticket.origin === 'solo-title'
+          ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
+          : ticket.fallback
+            ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
+            : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
     }`;
   }
   function unfinishedFlight() {
@@ -2497,12 +2521,6 @@ try {
       return;
     event.preventDefault();
     if (!Object.hasOwn(modeDestinations, kind)) return;
-    if (candidateHost) {
-      warning(
-        'This opening test route currently qualifies Solo only. Open the ordinary game for couch modes; this flight stays here.',
-      );
-      return;
-    }
     if (
       !['solo-title', 'solo-missions'].includes(origin) ||
       (origin === 'solo-title' && (typeof isCurrent !== 'function' || !isCurrent()))
@@ -3306,7 +3324,7 @@ try {
   async function requestMissionReplacement(request, opener, launch = null) {
     if (candidateHost && request.kind !== 'steering') {
       contentStatus(
-        'Use Find missions for the opening test route. Its authored Scout and theme stay consistent; Legacy content remains in the ordinary game.',
+        'Use Find missions for this authored test route. Its Scout and mission theme stay consistent; Legacy content remains in the ordinary game.',
         true,
       );
       refreshContentSelectors();
@@ -4504,7 +4522,7 @@ try {
   function currentBackupSession(savedAt) {
     if (candidateHost)
       throw new Error(
-        'Opening test flights use separate storage. Export this attempt or Journey progress; Legacy game-data backups do not include candidate flights.',
+        'Authored test flights use separate storage. Export this attempt or Journey progress; Legacy game-data backups do not include candidate flights.',
       );
     return started && recorder && !practice && !['won', 'lost'].includes(run.status)
       ? snapshotAttempt(savedAt)
@@ -4588,7 +4606,7 @@ try {
       );
     if (candidateHost && !candidateHost.owns(entry))
       throw new Error(
-        'Open this Legacy flight in the ordinary game. This route restores only exact opening editions.',
+        'Open this Legacy flight in the ordinary game. This route restores only its exact authored editions.',
       );
     invalidateContentSwitch();
     sessionBusy = true;
@@ -5881,7 +5899,7 @@ try {
     if (kind === 'won') {
       $('overlay-title').textContent = 'A little more light.';
       $('overlay-copy').textContent =
-        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? 'Opening test clear recorded in Journey progress. No Legacy collection awards.' : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : 'Picture collected for this session. Export your library to keep it.')}`;
+        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? 'Authored test clear recorded in Journey progress. No Legacy collection awards.' : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : 'Picture collected for this session. Export your library to keep it.')}`;
       $('result-medals').textContent = '★'.repeat(
         run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
       );
@@ -7900,12 +7918,17 @@ try {
     document.body.classList.add('journey-preview');
     show('journey-artwork-availability', !!candidateHost);
     $('shell-title-edition').textContent = candidateHost
-      ? 'OPENING JOURNEY / UNVALIDATED TEST BUILD'
+      ? `${authoredRoute.label.toUpperCase()} / UNVALIDATED TEST BUILD`
       : 'JOURNEY / TECHNICAL TEST PREVIEW';
     journeyChooser = attachJourneyChooser({
       catalog: journeyCatalog,
       profile: journeyProfile,
-      onChoose: (mission) => launchJourneyMission(mission),
+      onChoose: (mission) => {
+        // Browsing retains Home for Back. Only deliberate mission selection
+        // leaves it before the staged preparation owns the next attempt.
+        if ($('shell-home').open) $('shell-home').close();
+        return launchJourneyMission(mission);
+      },
       getCard: candidateHost
         ? (mission) => candidateHost.card(mission, journeyPreferences.snapshot().difficulty)
         : undefined,
@@ -8140,11 +8163,13 @@ try {
     canContinue: () =>
       (started && !['won', 'lost'].includes(run?.status)) ||
       !$('continue-saved').hidden ||
-      !!journeyDestination(),
+      !!journeyCatalog.find(journeyProfile?.snapshot().cursors.solo),
     initial: !practice && !courseSession && !packLaunchRequest,
     initialFocus: false, // The boot guard still hides the title until ready().
     titleDestination: () =>
       `Start · ${journeyDestination()?.name || campaign.levels[levelIndex].name}`,
+    titleContinueDestination: () =>
+      !started || ['won', 'lost'].includes(run?.status) ? journeyDestination()?.name : undefined,
     onTitleStart: (options) => {
       const destination = journeyDestination();
       if (destination && !started && $('continue-saved').hidden) {
@@ -8169,9 +8194,16 @@ try {
     },
     onTitleCancel: cancelTitleFlight,
     onModeDeparture: requestModeDeparture,
+    separateTeam: !!authoredRoute,
     onWorlds: () => optionalWorlds.open(),
-    onMissions: journeyEnabled ? (opener) => journeyChooser.open(opener) : undefined,
+    onMissions: journeyEnabled
+      ? (opener) =>
+          journeyChooser.open(opener, {
+            returnLabel: $('shell-home').open ? 'Back to menu' : 'Back to game',
+          })
+      : undefined,
   });
+  mountWorkshopLinks({ document, href: location.href });
   attachFullscreen($('shell-fullscreen'));
   void initializeSoundtrack();
   if (autoplayPackLaunch)
@@ -8215,6 +8247,19 @@ try {
     const returnFocus = $(returnContext.focus === 'versus' ? 'shell-versus' : 'shell-team');
     if (availableFocusTarget(returnFocus)) returnFocus.focus({ preventScroll: true });
   }
+  const workshopReturn = readWorkshopReturn(location.search);
+  if (
+    !practice &&
+    !courseSession &&
+    !packLaunchRequest &&
+    !exactReturn &&
+    workshopReturn &&
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    (document.activeElement === document.body || !availableFocusTarget(document.activeElement)) &&
+    gameShell?.openWorkshop({ tool: workshopReturn.id })
+  )
+    clearWorkshopReturn(window);
   controllerReading?.refresh();
   // Boot removes the visibility guard synchronously. Do not refocus a hidden
   // placeholder or replace a deliberate choice made during that handoff.

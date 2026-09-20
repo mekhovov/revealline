@@ -3,10 +3,14 @@ import { createJourneyCatalog } from '../journey/catalog.mjs';
 import { createContentAttemptPreparer } from './attempt.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { createMissionCard } from './mission-card.mjs';
+import { createCandidateSequence } from './route.mjs';
 
 /** Explicit candidate rollout adapter. Identity membership, not imported flags,
  * controls this host path. Legacy catalogs and published media stay separate. */
-export function createCandidateSoloHost(source, { themes, buildVersion } = {}) {
+export function createCandidateSoloHost(
+  source,
+  { themes, buildVersion, corePackIds = ['journey-opening'] } = {},
+) {
   const preparer = createContentAttemptPreparer(source, { themes, buildVersion });
   const entries = preparer.catalog.entries.map((entry) =>
     freezeDesign({
@@ -37,6 +41,7 @@ export function createCandidateSoloHost(source, { themes, buildVersion } = {}) {
       })),
     })),
   );
+  const sequence = createCandidateSequence(catalog, corePackIds);
   return Object.freeze({
     entries: Object.freeze(entries),
     catalog,
@@ -74,12 +79,6 @@ export function createCandidateSoloHost(source, { themes, buildVersion } = {}) {
         ) ?? null
       );
     },
-    next(id) {
-      const mission = catalog.find(id);
-      // A Remix is a deliberate optional choice, never a compulsory next task.
-      if (!mission || mission.packId !== 'journey-opening') return null;
-      const next = catalog.next(id);
-      return next?.packId === 'journey-opening' ? next : null;
-    },
+    ...sequence,
   });
 }

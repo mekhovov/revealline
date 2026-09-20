@@ -407,7 +407,7 @@ For optional Plain text, read [text presentation](../../../docs/text-presentatio
 
 The artwork-led result canvas uses only the completed attempt's already loaded picture and fit. Preserve explicit legacy originals; a missing managed still pin must not fall back to today's default. Clear the canvas outside victory, retain the existing award/save order, and return focus from View picture to its opener. Check score, medals and every action on desktop, portrait and short landscape with Large text; very short zoomed layouts may scroll their reading/actions independently while retaining 44 px controls. Keep failed and final measurements distinct.
 
-When reviewing the whole production collection, bind every decision to the selected revision and file or recipe-source hash, then append immutable reviewed successors. Reproduce the ledger and verify a further whole-collection replacement/import/export with all older records retained. The 2,048-record authoring cap does not expand the existing 4 MiB manifest, 32 MiB transfer, player-storage or Pages budgets. Asset readiness, exact-source gates, public bytes/play/offline and physical devices are separate acceptance scopes.
+When reviewing the whole production collection, bind every decision to the selected revision and file or recipe-source hash, then append immutable reviewed successors. Reproduce the ledger and verify a further whole-collection replacement/import/export with all older records retained. Current Journey P02 metadata is explicitly bounded to 5 MiB after the measured fpv34 full replacement exceeded 4 MiB by 9,346 bytes; see docs/verification/journey-p02-music-recipe.md. The 2,048-record, 32 MiB transfer, 4 MiB asset, player-storage and Pages limits are unchanged. Older editions keep their original limits. Never infer authority to raise other budgets. Asset readiness, exact-source gates, public bytes/play/offline and physical devices are separate acceptance scopes.
 
 Before freezing a new production release, run `node scripts/check-field-kit-readiness.mjs` after committing and reproducing the collection. It requires reviewed declarations with nonblank evidence for all selected required slots and binds the result to the committed ledger/source identities. Optional historical sources may remain. An older reviewed revision cannot qualify a newly selected unreviewed successor. This mechanical check does not replace native visual review.
 
@@ -957,3 +957,57 @@ Example: “Verify Replace & play with a bounded local download delay. Keep Stay
 ### Compact Pause acceptance
 
 Verify focused Pause actions at568×320,844×390 and390×844 with Plain/Large text. Record actual viewport and document dimensions after resizing settles; an immediate scaled screenshot alone is not layout evidence. Tab through visible actions and verify the complete focus outline after internal scroll. Reset viewport overrides afterward. Keep keyboard, mouse inspection, screen-reader listening and physical device results distinct. A mounted empty polite status is not proof that a missing-picture announcement was heard. Preserve the original public receipt and scope when updating the execution register.
+
+For Asset Studio navigation, preserve the fixed same-edition Workshop return and
+bounded Journey route in `game/ui/asset-studio-return.mjs`. The UI hint opens a
+menu only; do not broaden historical mode-return readers or turn it into save or
+selection adoption. Restore after boot only while the existing host owns focus,
+and keep pause callbacks from covering newer dialogs/focus. Return to game remains
+separate. Follow the native and modeled maintenance prompt in
+[Studio return navigation](../../../docs/asset-studio.md#returning-to-workshop),
+including unchanged checkpoints/save bytes and explicit Back to the Workshop
+opener. This Solo tool route does not certify Couch departure or restore behavior.
+
+For the shared standalone Workshop return, use the finite tool map in
+`game/ui/workshop-return.mjs` and the maintenance journey in
+[Standalone Workshop navigation](../../../docs/field-kit-surfaces.md#standalone-workshop-return-navigation).
+Keep the existing practice token/session protocols, Replay explicit departure and
+Video Poster cancel-first Back unchanged. No route hint may adopt saves or implicit
+mission selection. Include early loading, all exact tool openers and native nested
+Escape in the next release's evidence; partial Studio coverage is not nine-tool acceptance.
+
+For Playground keyboard exits, use the named same-origin frame's nonmodal native
+Tab boundary and the current host's input suspension. Do not repurpose controller
+session or enemy draft-return transport. Test exit/re-entry in both directions,
+explicit Resume, frame retirement, modal containment and in-frame mode links;
+see `docs/field-kit-surfaces.md` for the maintenance prompt and evidence limits.
+
+
+### Content Studio preview and return
+
+Content Studio is a descendant of Playground, not a second registry entry for its
+Workshop opener. Use the fixed same-edition descendant links and bounded Journey
+hint; never forward draft IDs, practice tokens or caller return URLs. Initialize
+the destination before enabling the link. Add embedded keyboard exits only through
+the finite named same-origin frame owners. Test both Tab boundaries, paused re-entry,
+Return to draft focus and early Close without losing the draft. A slow boot warning
+must keep observing the owned exact preview URL; close, replacement and pagehide
+retire the observer so late readiness cannot reclaim focus. When integrating an
+independent fix, preserve the receiving branch's campaign/editor content and test
+the actual composed source. Owner-branch evidence alone does not qualify it.
+
+For explicit authored Solo/Versus entry, follow [Authored Journey mode entry](../../../docs/authored-mode-entry.md). Preserve the finite opening/authored library route and receiving mode’s independent cursor, not a converted run or transferred award. Use checked Solo retention in its exact authored save slot, the existing Versus/Team Stay-discard decisions, and explicit Continue/Resume. Do not send authored selections through Legacy mode-return tokens. Label Team as separate arenas; its bounded journey-return hint changes only fixed navigation. Keep the small classic loading-state Back initializer consistent with ready-host destinations, including labels; never let a delayed mode import silently return to Legacy. Prompt: “Verify ready and unfinished mode entry, held/failed save cancellation, exact picture/checkpoint restoration, unchanged Legacy bytes, both Team origins and ambiguous hints; report modeled, native and public evidence separately.”
+
+For Journey title entry, separate the first-mission launch fallback from proof of prior Solo progress. Fresh opening/authored libraries offer Start; only a running flight, accepted saved flight or known Solo cursor offers Continue. Preserve unknown stored identities and independent Versus progress. See [Journey primary entry](../../../docs/journey-primary-entry.md). Maintenance prompt: "Test visible Start and Continue controls for fresh, selected, completed, unknown-cursor and denied-storage profiles; activate the displayed control, check its named destination and confirm no progress is granted merely by rendering the title. Preserve saved-flight and memory-flight behavior."
+
+For the host-provided Journey chooser, retain Home as the parent while browsing; only explicit mission selection closes it before staged preparation. Back returns to the original Missions control, with a truthful menu/game label and explicit Resume. Follow [Journey menu returns](../../../docs/journey-menu-return.md). Maintenance prompt: "Exercise Home and paused-field Missions, native cancel and button Back, modeled controller Back, nested progress backup, retained search, and mission selection. Assert exact paused checkpoint and independent progress; do not replace native search Escape-clearing semantics or infer physical-device acceptance from modeled input."
+
+For Journey Continue captions, use the same retained-cursor/successor resolver as the actual title action. Saved-flight titles retain priority; unfinished in-memory flights retain their own mission name. See [Journey continuation captions](../../../docs/journey-continue-caption.md). Maintenance prompt: "Seed selected and completed Journey cursors, assert the visible Continue destination, activate Continue and verify that exact mission starts. Include a campaign boundary and paused/saved-flight precedence. Do not change progression or award behavior to make a caption test pass."
+
+### Workshop recovery before modules are available
+
+A standalone read-only tool must expose a static, same-build Game home exit even if every script fails to load. Keep contextual Workshop returns gated until their validated route is installed; the independent entry can upgrade the static Game home href with a validated Journey hint without activating it. Do not hide or replace the focused static exit on readiness. In navigation host tests with nested dialogs, model native `beforetoggle` and initial autofocus so the real modal owner receives opening order; do not relax production focus ownership to compensate for a missing DOM boundary.
+
+Verification prompt: “Serve Replay Theater with scripts deliberately unavailable. Use only Tab and Enter to reach its same-build Game home. Restore normal modules and verify both contextual Workshop and Game home URLs retain the validated Journey hint. Separately run Home → Workshop → Back → Missions → Flight setup → Back with native opening events modeled, asserting exact checkpoint and saved bytes. Distinguish native keyboard recovery from modeled controller and physical-device acceptance.”
+
+For every registered standalone Workshop tool, keep the static same-edition game exit available before any JavaScript runs. The contextual Workshop return can stay gated until its independent route module validates hints. Never gate both exits on that module or weaken focus assertions to hide the gap. Include actual markup checks for all registered tools and a failed-script native keyboard journey. Miniature build fixtures must copy newly HTML-selected entry modules and styles plus their exact transitive imports; keep production reference validation strict. Requalify the final source after correcting full-shard failures, and preserve each original failed family separately from passing focused cohorts.
