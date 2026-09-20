@@ -17,6 +17,9 @@ import {
 } from './catalogs.mjs';
 
 const compiledProjects = new WeakSet();
+// Only fully owned, frozen project revisions can reuse resolved manifests.
+// Weak ownership lets retired drafts and their projections be collected together.
+const resolvedMissions = new WeakMap();
 const text = (value, max = 512) =>
   typeof value === 'string' && value.trim().length > 0 && value.length <= max;
 const integer = (value, min, max) => Number.isInteger(value) && value >= min && value <= max;
@@ -282,6 +285,7 @@ export function compileContentProject(source) {
     assets,
   });
   compiledProjects.add(resolved);
+  resolvedMissions.set(resolved, new Map());
   try {
     for (const mission of project.missions)
       for (const difficulty of Object.keys(DIFFICULTY_CATALOG.presets))
@@ -289,6 +293,7 @@ export function compileContentProject(source) {
           resolveMission(resolved, mission.id, { difficulty, mode });
   } catch (error) {
     compiledProjects.delete(resolved);
+    resolvedMissions.delete(resolved);
     throw error;
   }
   return resolved;
@@ -299,12 +304,19 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const mission = project.missions.find((candidate) => candidate.id === id);
   required(mission && mission.modes.includes(mode), 'Mission does not support this mode.');
   const preset = journeyPreset(difficulty);
+  const cache = resolvedMissions.get(project);
+  const key = JSON.stringify([id, mode, difficulty]);
+  if (cache.has(key)) return cache.get(key);
   const policy = project.policy;
   const map = project.maps.find(
     (candidate) =>
       candidate.source.id === mission.map.id && candidate.source.revision === mission.map.revision,
   );
-  if (mode === 'team') return resolveTeamMission(project, mission, map, difficulty);
+  if (mode === 'team') {
+    const manifest = resolveTeamMission(project, mission, map, difficulty);
+    cache.set(key, manifest);
+    return manifest;
+  }
   const spawn = map.geometry.spawns.find((candidate) => candidate.id === mission.spawnId);
   required(spawn, 'Mission spawn is missing from its map revision.');
   const carriers = mission.actors.filter((actor) => actor.role === 'impact-carrier');
@@ -375,7 +387,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     rosterHash: rosterHash(CLASSES),
     level: simulation,
   });
-  return freezeDesign({
+  const manifest = freezeDesign({
     format: sentinel
       ? 'ResolvedMissionV4'
       : directional
@@ -404,4 +416,6 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
         : [{ severity: 'warning', code: 'candidate-art-not-visually-qualified' }]),
     ],
   });
+  cache.set(key, manifest);
+  return manifest;
 }

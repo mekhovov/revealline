@@ -203,3 +203,36 @@ test('immutable map revisions resolve exactly and Versus-only candidates compile
   );
   assert.equal(compiled.maps[0].geometry.foundationCount, 25);
 });
+
+test('resolved manifests are reused only within an owned immutable project, preset and mode', () => {
+  const source = projectFixture();
+  const compiled = compileContentProject(source);
+  const standard = resolveMission(compiled, 'nearby-shore');
+  assert.equal(resolveMission(compiled, 'nearby-shore'), standard);
+  assert(Object.isFrozen(standard.level.rules));
+  assert.throws(() => {
+    standard.level.rules.moveSpeed = 999;
+  }, TypeError);
+  assert.throws(() => resolveMission({ ...compiled }, 'nearby-shore'), /Compile the source/);
+  assert.throws(() => resolveMission(compiled, 'missing'), /does not support/);
+  assert.throws(
+    () => resolveMission(compiled, 'nearby-shore', { mode: 'unknown' }),
+    /does not support/,
+  );
+  assert.throws(() => resolveMission(compiled, 'nearby-shore', { difficulty: 'unknown' }));
+  const gentle = resolveMission(compiled, 'nearby-shore', { difficulty: 'gentle' });
+  const versus = resolveMission(compiled, 'nearby-shore', { mode: 'versus' });
+  assert.notEqual(gentle, standard);
+  assert.notEqual(versus, standard);
+  assert.equal(gentle.level.rules.lives, 5);
+  assert.equal(standard.level.rules.lives, 3);
+  assert.equal(versus.mode, 'versus');
+  const separate = resolveMission(compileContentProject(source), 'nearby-shore');
+  assert.notEqual(separate, standard);
+  assert.deepEqual(separate, standard);
+  source.missions[0].coverage = 0.91;
+  assert.equal(resolveMission(compiled, 'nearby-shore'), standard);
+  const edited = resolveMission(compileContentProject(source), 'nearby-shore');
+  assert.notEqual(edited.simulationIdentity, standard.simulationIdentity);
+  assert.equal(edited.level.goal.coverage, 0.91);
+});
