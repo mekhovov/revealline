@@ -1,5 +1,27 @@
 # Journey P02 — Border Bloom greybox preparation
 
+## Repaired production gate and final source composition
+
+Full hosted run35503593811 failed on exact9fe6276 because the shared-music
+adapter changed a fingerprinted production recipe. Preserved that failure and
+appended immutable fpv33 source-stage then fpv34 scoped-reviewed successors;
+all127 original payloads remain unchanged. Current Team picture bindings are
+explicitly pinned34 with unchanged picture hashes, not relaxed to any theme.
+[Detailed failure, review and capacity evidence](journey-p02-music-recipe.md)
+records202/202 passing focused tests, reproduced ledger and readiness declarations.
+
+The complete administrator replacement exposed the prior4MiB metadata ceiling.
+Separate commit3c0ceb23 bounds metadata at5MiB, preserves all other file/transfer/
+structural limits and tests exact-boundary admission plus oversized/malformed/deep
+refusal. No history is discarded and older releases keep their own limits.
+
+Automatic merges54810794 and17af3fcf incorporate root native composition evidence
+b935459c and accepted publication cutoff5178c434. The root observations remain
+scoped to their recorded014449 source, not claimed as a new native fpv34 review.
+Both exact production reproduction and committed readiness pass after composition.
+Latest integrated hosted qualification and deployment remain pending; this does
+not inherit the earlier0bac full-pass result or claim P02 completion.
+
 ## Shared Couch music composition
 
 Merge `5aaab46d` integrates the publication owner's exact composition
