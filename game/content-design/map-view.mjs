@@ -87,6 +87,11 @@ export function paintContentMap(
       ctx.lineTo(x, y + radius);
       ctx.lineTo(x - radius, y);
       ctx.closePath();
+    } else if (actor.type === 'claimed-rover') {
+      // A tracked square cannot be confused with either patrol silhouette.
+      ctx.rect(x - radius * 0.7, y - radius * 0.65, radius * 1.4, radius * 1.3);
+      ctx.rect(x - radius, y - radius, radius * 0.3, radius * 2);
+      ctx.rect(x + radius * 0.7, y - radius, radius * 0.3, radius * 2);
     } else {
       ctx.moveTo(x, y - radius);
       ctx.lineTo(x + radius, y + radius);
