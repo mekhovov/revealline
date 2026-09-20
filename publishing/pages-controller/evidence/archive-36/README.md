@@ -1,0 +1,1 @@
+Archive36 preserves the original v0.68.2 payload. All729public files/313829048bytes match, with zero failures. Prioracceptedpaths:0. Nativekeyboardnavigation isscopedasrecorded; the retained-pictureinstallationconflict remains open. Originalreceipts andfirststale-fixturefailure arepreserved. No phasecompletion orphysicaldeviceacceptance isclaimed.

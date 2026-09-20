@@ -1,0 +1,11 @@
+{
+  "firstRun": {
+    "tests": 20,
+    "failures": 1,
+    "failure": "CommittedMetadataTests.test_exact_original_metadata_and_source_qualification retained donorv0680tagliteral",
+    "originalOutput": "Tool invocation chunk6a5ca4; retained inline, not an inventedraw logfile"
+  },
+  "change": "Only newcohort exacttag/source/tree/qualification andderivedbytes fixture assertions",
+  "productionHelpersUnchanged": true,
+  "derivation": "Pinned originalv0682metadata/sourcequalification"
+}
