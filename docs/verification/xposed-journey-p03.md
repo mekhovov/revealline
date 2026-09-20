@@ -397,6 +397,32 @@ quota, collision or map parameter was relaxed. The long wait is a human pacing
 review item, not a recommendation that every player should follow this script;
 the original no-wait route remains available.
 
+### Broad hosted gate: observer-fixture correction
+
+Run35507637304 targets cb7a14b58e9f3b4a19fc64e3cd045f04df6632e1,
+not later commits; freeze is disabled. Shard4 job106070262224 failed one of1686
+tests: the actual Versus board-disposal test selected the last-created resize
+observer, which now belongs to the optional-worlds focus heading. Original log
+response703118bytes/SHA-256
+`cc4d795840bd8105f76b15ac7a114b597108bc81fd7688754450c9e81a2de95b` was
+read and hashed; its complete bytes remain on GitHub, not retained locally.
+The run remains failed evidence regardless of later focused success.
+
+The test now identifies exactly one live observer by ownership of both board
+arenas before pagehide clears targets, checks a different replacement after
+pageshow, and retains its stale-callback, unchanged-attempt and zero-frame checks.
+It additionally requires terminal departure to disconnect every observer,
+including modal focus ownership. The world-browser test also queues focus reflow
+while hidden, verifies no scroll/focus/action change, then verifies foreground
+resize behavior. Existing runtime disposal/hidden guards are correct; no runtime
+change was made to satisfy the test.
+
+All four complete affected files pass38/38, zero skips/failures,8.990seconds on
+Node20.19.5; lint/format pass. The first local full-file run had two separate wide
+fixture failures from omitted sparse `fpv-arcade-r5.json`; restoring the exact
+11,708,176-byte tracked blob37108db6fc98f1c4e3eeed4381b1b5d19e24ef16 resolved
+those without assertion changes. Release owner notified for independent review.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
