@@ -1,5 +1,6 @@
 import { journeyActors, journeyPreset } from '../content-design/catalogs.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
+import { teamRoleQualified } from '../content-design/team-qualification.mjs';
 import { missionEditContext } from './edit-context.mjs';
 
 const names = {
@@ -116,7 +117,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
         ([role]) =>
           Object.hasOwn(catalog().roles, role) &&
           (role !== 'relay-sentinel' || !!mission?.encounter) &&
-          (!mission?.modes.includes('team') || role === 'field-keeper'),
+          (!mission?.modes.includes('team') || teamRoleQualified(mission.team?.format, role)),
       ),
     );
     const selected = $('select').value;
