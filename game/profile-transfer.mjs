@@ -21,6 +21,8 @@ export const TRANSFER_LIMITS = Object.freeze({
 const prefix = 'revealline.library.';
 const discoveryPrefixes = [prefix, 'revealline.suspended.'];
 const suffix = '.v1';
+const compareSources = (a, b) =>
+  compare(versionParts(b.version), versionParts(a.version)) || a.id.localeCompare(b.id);
 async function sha256(bytes) {
   required(
     globalThis.crypto?.subtle,
@@ -74,17 +76,12 @@ export function discoverProfileTransfers({ storage, currentVersion } = {}) {
     const source = sourceFor(key.slice(namespace.length, -suffix.length), current);
     if (!source) continue;
     sources.set(source.id, source);
-    required(
-      sources.size <= TRANSFER_LIMITS.candidates,
-      'Too many earlier collections were found; use a complete backup file instead.',
-    );
+    if (sources.size > TRANSFER_LIMITS.candidates) {
+      const oldest = [...sources.values()].sort(compareSources).at(-1);
+      sources.delete(oldest.id);
+    }
   }
-  return Object.freeze(
-    [...sources.values()].sort(
-      (a, b) =>
-        compare(versionParts(b.version), versionParts(a.version)) || a.id.localeCompare(b.id),
-    ),
-  );
+  return Object.freeze([...sources.values()].sort(compareSources));
 }
 
 function operation(signal, timeoutMs) {

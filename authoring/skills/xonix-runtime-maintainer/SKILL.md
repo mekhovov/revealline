@@ -141,7 +141,7 @@ For [supporting-screen readability](../../../docs/supporting-screen-readability.
 
 ## Choose the real contract
 
-The separate [read-only profile reader](../../../docs/profile-recovery.md) at `game/profile-recovery.html` discovers exact channels and prepares stored-data diagnostics; it does not override ordinary app keys; the later same-host Settings entry composes its reusable view without importing the standalone bootstrap. Keep `release-v…` and `release-…` separate, preserve the existing transfer's 32-candidate policy, and hold the selected writer/backup locks through stable reads and export revalidation. Open the existing assets DB without a requested version; refuse creation, distinguish absent/null/unsupported values, and never open shared media or execute a pending journal. Preserve raw strings and first-receipt text; invalid components remain explicitly unverified. Prepare asynchronously, then retain a native download link for explicit activation. Cancellation must settle promptly while late native callbacks release their leases without reading. The [native check](../../../docs/verification/round-47/profile-reader-native.md) covers one current-version profile and return to its own game's paused flight; it does not qualify historical replay, original-media backup, migration or offload.
+The separate [read-only profile reader](../../../docs/profile-recovery.md) at `game/profile-recovery.html` discovers exact channels and prepares stored-data diagnostics; it does not override ordinary app keys; the later same-host Settings entry composes its reusable view without importing the standalone bootstrap. Keep `release-v…` and `release-…` separate, preserve the transfer's deterministic newest-32-candidate policy without reading values during discovery, and hold the selected writer/backup locks through stable reads and export revalidation. Open the existing assets DB without a requested version; refuse creation, distinguish absent/null/unsupported values, and never open shared media or execute a pending journal. Preserve raw strings and first-receipt text; invalid components remain explicitly unverified. Prepare asynchronously, then retain a native download link for explicit activation. Cancellation must settle promptly while late native callbacks release their leases without reading. The [native check](../../../docs/verification/round-47/profile-reader-native.md) covers one current-version profile and return to its own game's paused flight; it does not qualify historical replay, original-media backup, migration or offload.
 
 The separate source-only shared recovery snapshot API requires an explicit exact-channel historical campaign/descriptor registry and keeps the raw diagnostic independent. Open only understood existing media DB2/3/4 schemas without a requested version, abort creation, and use readonly transactions. Preserve present/absent/unsupported distinctions, pending journals and reservations; never run their cleanup. Hold the same channel leases through raw fingerprint and shared ledger/generation revalidation, retain immutable Blob handles, and label bodies unverified until a later verifier hashes them. The extracted pure external catalog retains normalized pack/descriptor/original metadata closure; stored picture owners never become playable registry entries. This source boundary adds no app controls, backup components, paused restore, migration or physical removal.
 
@@ -953,7 +953,6 @@ When a confirmation disables its focused button while awaiting a picture or chap
 
 Example: “Verify Replace & play with a bounded local download delay. Keep Stay focused during preparation, retain the current flight on cancellation, and prove background/hidden or moved-focus cases do not reclaim focus. Preserve failed observations and distinguish local preview from deployed acceptance.”
 
-
 ### Compact Pause acceptance
 
 Verify focused Pause actions at568×320,844×390 and390×844 with Plain/Large text. Record actual viewport and document dimensions after resizing settles; an immediate scaled screenshot alone is not layout evidence. Tab through visible actions and verify the complete focus outline after internal scroll. Reset viewport overrides afterward. Keep keyboard, mouse inspection, screen-reader listening and physical device results distinct. A mounted empty polite status is not proof that a missing-picture announcement was heard. Preserve the original public receipt and scope when updating the execution register.
@@ -981,7 +980,6 @@ Tab boundary and the current host's input suspension. Do not repurpose controlle
 session or enemy draft-return transport. Test exit/re-entry in both directions,
 explicit Resume, frame retirement, modal containment and in-frame mode links;
 see `docs/field-kit-surfaces.md` for the maintenance prompt and evidence limits.
-
 
 ### Content Studio preview and return
 

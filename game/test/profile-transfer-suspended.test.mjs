@@ -164,7 +164,38 @@ test('candidate bound counts distinct editions across both namespaces', () => {
       f.local.set(keys(`release-v0.28.${i}`)[key], 'x');
   assert.equal(discoverProfileTransfers(f.options).length, 32);
   f.local.set(keys('release-v0.29.0').sessionKey, 'x');
-  assert.throws(() => discoverProfileTransfers(f.options), /Too many earlier/);
+  const bounded = discoverProfileTransfers(f.options);
+  assert.equal(bounded.length, 32);
+  assert.equal(bounded[0].id, 'release-v0.29.0');
+  assert.ok(!bounded.some((source) => source.id === 'release-v0.28.0'));
+});
+
+test('picker keeps a recent saved flight visible after many releases and explains its bound', (t) => {
+  const f = source();
+  f.local.clear();
+  for (let patch = 1; patch <= 62; patch++)
+    f.local.set(keys(`release-v0.2.${patch}`).sessionKey, 'unverified');
+  for (const key of ['profileKey', 'sessionKey'])
+    f.local.set(keys('release-v0.69.3')[key], 'unverified');
+  const doc = new Document(),
+    prior = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  Object.defineProperty(globalThis, 'document', { value: doc, configurable: true });
+  t.after(() =>
+    prior ? Object.defineProperty(globalThis, 'document', prior) : delete globalThis.document,
+  );
+  attachProfileTransferPanel({
+    api: { profileTransfer: { ...f.options, currentVersion: 'v0.76.0' } },
+    container: doc.body,
+    backupOptions: () => assert.fail('Static picker setup must not review source values.'),
+    task: () => assert.fail('Static picker setup must not begin an operation.'),
+    applyPrepared: () => assert.fail('Static picker setup must not copy a collection.'),
+  });
+  const sourcePicker = doc.getElementById('transfer-source');
+  assert.equal(sourcePicker.children.length, TRANSFER_LIMITS.candidates);
+  assert.ok(sourcePicker.children.some((option) => option.value === 'release-v0.69.3'));
+  assert.match(doc.getElementById('transfer-explanation').textContent, /newest 32/);
+  assert.match(doc.getElementById('transfer-explanation').textContent, /complete backup/);
+  assert.equal(f.reads.length, 0);
 });
 
 for (const turnPolicy of ['immediate', 'grid-center']) {
