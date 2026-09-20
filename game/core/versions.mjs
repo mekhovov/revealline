@@ -32,8 +32,16 @@ export const FOUNDATION_VERSIONS = Object.freeze({
   replayVersion: 'xonix-replay.v7',
   checkpointAlgorithm: 'fnv1a64-state-v6',
 });
+export const RELAY_VERSIONS = Object.freeze({
+  levelVersion: 'xonix-level.v6',
+  ruleset: 'xonix-core.v7',
+  replayVersion: 'xonix-replay.v8',
+  checkpointAlgorithm: 'fnv1a64-state-v7',
+});
 export const isClassicRuleset = (ruleset) =>
-  [CLASSIC_VERSIONS.ruleset, FOUNDATION_VERSIONS.ruleset].includes(ruleset);
+  [CLASSIC_VERSIONS.ruleset, FOUNDATION_VERSIONS.ruleset, RELAY_VERSIONS.ruleset].includes(ruleset);
+export const isFoundationRuleset = (ruleset) =>
+  [FOUNDATION_VERSIONS.ruleset, RELAY_VERSIONS.ruleset].includes(ruleset);
 
 /** An omitted pair remains legacy. Explicit fields must select exactly one supported pair. */
 export function resolveVersions(value = {}) {
@@ -49,6 +57,7 @@ export function resolveVersions(value = {}) {
     WIDE_VERSIONS,
     CLASSIC_VERSIONS,
     FOUNDATION_VERSIONS,
+    RELAY_VERSIONS,
   ].find((pair) => keys.every((key) => request[key] === pair[key]));
   if (!match) throw new TypeError('unsupported or mismatched simulation versions');
   return { ...match };

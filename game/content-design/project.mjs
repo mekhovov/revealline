@@ -150,7 +150,8 @@ export function compileContentProject(source) {
   const assets = (project.assets ?? []).map(compileAssetRevision);
   const maps = project.maps.map(compileMapDesign);
   for (const mission of project.missions) {
-    identity(mission, 'MissionDesignV1', [
+    const relays = mission.format === 'MissionDesignV2';
+    identity(mission, relays ? 'MissionDesignV2' : 'MissionDesignV1', [
       'map',
       'spawnId',
       'modes',
@@ -163,12 +164,20 @@ export function compileContentProject(source) {
       'presentation',
       'archived',
       'team',
+      ...(relays ? ['relayLinks'] : []),
     ]);
     archiveFlag(mission);
     exactKeys(mission.map, ['id', 'revision'], 'mission map');
     required(
       mapIds.has(JSON.stringify([mission.map.id, mission.map.revision])),
       'Mission map revision is missing.',
+    );
+    const map = maps.find(
+      (map) => map.source.id === mission.map.id && map.source.revision === mission.map.revision,
+    );
+    required(
+      map.source.format === (relays ? 'MapDesignV2' : 'MapDesignV1'),
+      'Mission and map geometry editions must match.',
     );
     required(stableId(mission.spawnId), 'Mission needs a named spawn.');
     required(
@@ -185,6 +194,30 @@ export function compileContentProject(source) {
     unique(mission.actors, 'actors', 24);
     unique(mission.objectives, 'objectives', 40);
     unique(mission.bonuses, 'bonuses', 64);
+    if (relays) {
+      required(!mission.modes.includes('team'), 'Relay missions are not qualified for Team.');
+      required(
+        Array.isArray(mission.relayLinks) &&
+          mission.relayLinks.length === map.geometry.gates.length,
+        'Every gate needs exactly one objective link.',
+      );
+      const linked = new Set();
+      for (const link of mission.relayLinks) {
+        exactKeys(link, ['gateId', 'objectiveId'], 'relay link');
+        required(
+          stableId(link.gateId) &&
+            map.geometry.gates.some((gate) => gate.id === link.gateId) &&
+            !linked.has(link.gateId),
+          'Relay links need unique existing gate IDs.',
+        );
+        required(
+          stableId(link.objectiveId) &&
+            mission.objectives.some((objective) => objective.id === link.objectiveId),
+          'Relay link objective is missing.',
+        );
+        linked.add(link.gateId);
+      }
+    }
     required(finite(mission.coverage, 0.01, 1), 'Mission coverage must be 0.01..1.');
     required(
       integer(mission.timeLimitSeconds, 0, 600),
@@ -256,8 +289,9 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const spawn = map.geometry.spawns.find((candidate) => candidate.id === mission.spawnId);
   required(spawn, 'Mission spawn is missing from its map revision.');
   const carriers = mission.actors.filter((actor) => actor.role === 'impact-carrier');
+  const relays = mission.format === 'MissionDesignV2';
   const level = normalizedLevel({
-    version: 'xonix-level.v5',
+    version: relays ? 'xonix-level.v6' : 'xonix-level.v5',
     id: mission.id,
     revision: mission.revision,
     name: mission.name,
@@ -266,6 +300,17 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     spawn: { x: spawn.x, y: spawn.y },
     walls: map.source.walls ?? [],
     foundations: map.source.foundations ?? [],
+    ...(relays
+      ? {
+          relayGates: {
+            version: 'relay-gates.v1',
+            gates: map.source.gates.map((gate) => ({
+              ...gate,
+              objectiveId: mission.relayLinks.find((link) => link.gateId === gate.id).objectiveId,
+            })),
+          },
+        }
+      : {}),
     goal: { coverage: mission.coverage },
     encounter: null,
     classic: {
@@ -301,7 +346,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     level: simulation,
   });
   return freezeDesign({
-    format: 'ResolvedMissionV1',
+    format: relays ? 'ResolvedMissionV2' : 'ResolvedMissionV1',
     missionId: mission.id,
     mode,
     difficulty,

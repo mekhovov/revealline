@@ -5,6 +5,8 @@ import {
   WIDE_VERSIONS,
   CLASSIC_VERSIONS,
   FOUNDATION_VERSIONS,
+  RELAY_VERSIONS,
+  isFoundationRuleset,
   isClassicRuleset,
   resolveVersions,
   versionsForLevel,
@@ -47,13 +49,15 @@ const SECTIONS = [
 ];
 const encoder = new TextEncoder();
 const sectionNames = (versions) =>
-  versions.ruleset === FOUNDATION_VERSIONS.ruleset
-    ? [...SECTIONS, 'encounter', 'classic', 'foundations']
-    : versions.ruleset === CLASSIC_VERSIONS.ruleset
-      ? [...SECTIONS, 'encounter', 'classic']
-      : versions.ruleset !== LEGACY_VERSIONS.ruleset
-        ? [...SECTIONS, 'encounter']
-        : SECTIONS;
+  versions.ruleset === RELAY_VERSIONS.ruleset
+    ? [...SECTIONS, 'encounter', 'classic', 'foundations', 'relays']
+    : versions.ruleset === FOUNDATION_VERSIONS.ruleset
+      ? [...SECTIONS, 'encounter', 'classic', 'foundations']
+      : versions.ruleset === CLASSIC_VERSIONS.ruleset
+        ? [...SECTIONS, 'encounter', 'classic']
+        : versions.ruleset !== LEGACY_VERSIONS.ruleset
+          ? [...SECTIONS, 'encounter']
+          : SECTIONS;
 function replayVersions(value) {
   try {
     return resolveVersions({
@@ -340,12 +344,20 @@ function authoritativeSections(state, versions) {
     result: state.result,
     ...(versions.ruleset !== LEGACY_VERSIONS.ruleset ? { encounter: state.encounter } : {}),
     ...(isClassicRuleset(versions.ruleset) ? { classic: projectClassicState(state) } : {}),
-    ...(versions.ruleset === FOUNDATION_VERSIONS.ruleset
+    ...(isFoundationRuleset(versions.ruleset)
       ? {
           foundations: {
             definition: structuredClone(state.level.foundations),
             version: state.foundation.version,
             permanent: Array.from(state.foundation.permanent),
+          },
+        }
+      : {}),
+    ...(versions.ruleset === RELAY_VERSIONS.ruleset
+      ? {
+          relays: {
+            definition: structuredClone(state.level.relayGates),
+            state: structuredClone(state.relay),
           },
         }
       : {}),
