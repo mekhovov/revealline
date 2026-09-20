@@ -68,6 +68,7 @@ test('empty board clears stale mission facts and canvas, then re-enables authori
     'mission',
     'difficulty',
     'geometry-tools',
+    'tuning-tools',
     'show-capture',
     'trail',
     'inspect',
@@ -85,6 +86,17 @@ test('empty board clears stale mission facts and canvas, then re-enables authori
     'diagnostics',
     'capture-legend',
     'play',
+    'target-coverage',
+    'countdown-seconds',
+    ...[
+      'band',
+      'planning',
+      'execution',
+      'threatDensity',
+      'timePressure',
+      'mechanicLoad',
+      'coordination',
+    ].map((facet) => `rating-${facet}`),
   ];
   const nodes = Object.fromEntries(
     ids.map((id) => [
@@ -117,6 +129,9 @@ test('empty board clears stale mission facts and canvas, then re-enables authori
   assert.equal(nodes.board.hidden, true);
   assert.equal(nodes['empty-board'].hidden, false);
   assert.equal(nodes['geometry-tools'].disabled, true);
+  assert.equal(nodes['tuning-tools'].disabled, true);
+  assert.equal(nodes['target-coverage'].value, '');
+  assert.equal(nodes['rating-band'].value, '');
   assert.equal(nodes.play.disabled, true);
   assert.equal(nodes.trail.value, '');
   for (const id of ['lesson', 'rules', 'effective', 'capture', 'capture-summary'])
@@ -130,6 +145,7 @@ test('empty board clears stale mission facts and canvas, then re-enables authori
     'mission',
     'difficulty',
     'geometry-tools',
+    'tuning-tools',
     'show-capture',
     'trail',
     'inspect',

@@ -15,6 +15,7 @@ import {
 } from '../content-design/recovery.mjs';
 import { exportJSONFile } from '../platform.mjs';
 import { setBoardAvailability } from './board-state.mjs';
+import { tuneContentMission } from '../content-design/tuning.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
@@ -24,6 +25,7 @@ let session,
   saveTimer,
   previewTimer,
   inspectedTrail = [],
+  tuningRevision = null,
   previewRevision = 0,
   previewController = null;
 const inspections = createInspectionRequests(() =>
@@ -112,6 +114,7 @@ function inspectBoard(trailCells = []) {
   setBoardAvailability(document, !!mission);
   if (!mission) {
     inspectedTrail = [];
+    tuningRevision = null;
     return;
   }
   const preview = prepareContentPreview(session.current(), mission.id, {
@@ -123,6 +126,14 @@ function inspectBoard(trailCells = []) {
   $('trail').value = inspectedTrail.join(', ');
   draw(preview);
   const { geometry, manifest, capture } = preview;
+  const tuningKey = JSON.stringify([mission.id, mission.revision]);
+  if (tuningRevision !== tuningKey) {
+    $('target-coverage').value = Number((mission.coverage * 100).toFixed(8));
+    $('countdown-seconds').value = mission.timeLimitSeconds;
+    for (const [facet, rating] of Object.entries(mission.design.difficulty))
+      $(`rating-${facet}`).value = rating;
+    tuningRevision = tuningKey;
+  }
   $('map-name').textContent = mission.name;
   $('lesson').textContent = mission.design.routeDecision;
   $('rules').textContent =
@@ -169,6 +180,7 @@ function inspectBoard(trailCells = []) {
 }
 function render(selected = $('mission').value) {
   inspections.invalidate();
+  tuningRevision = null;
   const project = session.current();
   $('project-id').value = project.id;
   $('project-name').textContent = project.name;
@@ -385,6 +397,25 @@ for (const action of ['undo', 'redo'])
 for (const id of ['mission', 'difficulty']) $(id).onchange = guarded(() => inspectBoard());
 $('show-capture').onchange = guarded(() => inspectBoard(inspectedTrail));
 $('clear-inspection').onclick = guarded(() => inspectBoard());
+$('tuning-form').onsubmit = guarded((event) => {
+  event.preventDefault();
+  if (!discardSource()) return;
+  const mission = currentMission();
+  if (!mission) throw new Error('Choose a mission.');
+  const candidate = tuneContentMission(session.current(), mission.id, {
+    coverage: Number($('target-coverage').value) / 100,
+    timeLimitSeconds: Number($('countdown-seconds').value),
+    difficulty: Object.fromEntries(
+      Object.keys(mission.design.difficulty).map((facet) => [
+        facet,
+        Number($(`rating-${facet}`).value),
+      ]),
+    ),
+  });
+  session.replace(candidate);
+  render();
+  queueSave();
+});
 $('geometry-form').onsubmit = guarded((event) => {
   event.preventDefault();
   if (!discardSource()) return;
