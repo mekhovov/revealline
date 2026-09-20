@@ -97,9 +97,49 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     );
     page.$('pause-button').click();
     assert.equal(verifyReplay(JSON.parse(storage.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      page.$('run-message').textContent,
+      'Flight paused. Your unfinished line is kept. Press Resume to continue.',
+    );
+    const pausedCheckpoint = authoritativeCheckpoint(page.rendered.run);
+    page.$('shell-settings').click();
+    page.frame(0);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), pausedCheckpoint);
+    assert.equal(page.rendered.paused, true);
+    assert.doesNotMatch(page.$('run-message').textContent, /Flight resumed/);
     assert.deepEqual(page.errors, []);
   });
 }
+
+test('restored ground flight captions follow pause/resume without suppressing an interruption warning', async (t) => {
+  const page = await soloPage(t, { campaign });
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  ticks(page, 8);
+  page.$('pause-button').click();
+  page.$('continue-saved').click();
+  await settle(() => !page.$('continue-saved').disabled);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('run-message').textContent, 'Flight resumed.');
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  page.$('pause-button').click();
+  assert.equal(page.$('run-message').textContent, 'Flight paused. Press Resume to continue.');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  page.$('start-button').click();
+  assert.equal(page.$('run-message').textContent, 'Flight resumed.');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  page.frame(300);
+  const important = 'Paused after a long frame interruption. Resume to continue safely.';
+  assert.equal(page.$('run-message').textContent, important);
+  page.$('shell-settings').click();
+  page.frame(0);
+  assert.equal(page.$('run-message').textContent, important);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
+  assert.deepEqual(page.errors, []);
+});
 
 test('fresh direction before the next tick survives pause and does not rewrite the checkpoint', async (t) => {
   const page = await soloPage(t, { campaign });

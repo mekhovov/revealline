@@ -46,6 +46,79 @@ function surface() {
   return { doc, dialogs, opener, open, close, add };
 }
 
+for (const hidden of ['display', 'visibility', 'disabled', 'detached'])
+  test(`modal restoration uses an explicit visible fallback when its opener becomes ${hidden}`, async () => {
+    const h = surface(),
+      dialog = h.dialogs[0],
+      fallback = h.add('button', 'fallback');
+    const stack = attachModalNavigation({
+      document: h.doc,
+      getFallbackFocus: ({ origin, top }) => {
+        assert.equal(origin, h.opener);
+        assert.equal(top, null);
+        return fallback;
+      },
+    });
+    h.open(dialog);
+    if (hidden === 'display') h.opener.style.display = 'none';
+    if (hidden === 'visibility') h.opener.style.visibility = 'hidden';
+    if (hidden === 'disabled') h.opener.disabled = true;
+    if (hidden === 'detached') h.opener.remove();
+    h.close(dialog);
+    await Promise.resolve();
+    assert.equal(h.doc.activeElement, fallback);
+    stack.destroy();
+  });
+
+test('modal fallback cannot steal deliberate replacement focus or escape a remaining dialog', async () => {
+  const h = surface(),
+    [earlier, later] = h.dialogs,
+    fallback = h.add('button', 'fallback');
+  const stack = attachModalNavigation({ document: h.doc, getFallbackFocus: () => fallback });
+  h.open(earlier);
+  h.open(later);
+  earlier.children[0].style.display = 'none';
+  h.close(later);
+  await Promise.resolve();
+  assert.equal(
+    h.doc.activeElement,
+    h.doc.body,
+    'Outside fallback cannot escape remaining top layer.',
+  );
+  h.opener.style.display = 'none';
+  h.close(earlier);
+  const deliberate = h.add('button', 'deliberate');
+  deliberate.focus();
+  await Promise.resolve();
+  assert.equal(h.doc.activeElement, deliberate);
+  stack.destroy();
+});
+
+test('fallback failure, hidden targets and reentrant modal opening never steal focus', async () => {
+  for (const mode of ['throw', 'hidden', 'new-modal', 'new-focus']) {
+    const h = surface(),
+      [earlier, later] = h.dialogs,
+      fallback = h.add('button', 'fallback');
+    const stack = attachModalNavigation({
+      document: h.doc,
+      getFallbackFocus: () => {
+        if (mode === 'throw') throw new Error('No fallback.');
+        if (mode === 'hidden') fallback.style.display = 'none';
+        if (mode === 'new-modal') h.open(later);
+        if (mode === 'new-focus') h.add('button', 'new-focus').focus();
+        return fallback;
+      },
+    });
+    h.open(earlier);
+    h.opener.style.display = 'none';
+    h.close(earlier);
+    await Promise.resolve();
+    if (mode === 'new-focus') assert.equal(h.doc.activeElement.id, 'new-focus');
+    else assert.equal(h.doc.activeElement, mode === 'new-modal' ? later.children[0] : h.doc.body);
+    stack.destroy();
+  }
+});
+
 test('opening order owns controller scope across reversed DOM order, Back and fresh reopen', async () => {
   const h = surface(),
     [earlier, later] = h.dialogs;
@@ -475,6 +548,21 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   assert.equal(h.$('shell-home').open, true);
   assert.equal(h.doc.activeElement.id, 'shell-options');
   assert.equal(h.rendered.run.tick, 0);
+  assert.deepEqual(h.errors, []);
+});
+
+test('actual Solo Settings restores Game menu when responsive layout hides its toolbar opener', async (t) => {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: false });
+  h.$('settings-button').focus();
+  h.$('settings-button').click();
+  const checkpoint = authoritativeCheckpoint(h.rendered.run);
+  h.$('settings-button').style.display = 'none';
+  h.$('settings-dialog').close();
+  await settle(() => h.doc.activeElement === h.$('shell-menu'));
+  assert.equal(h.doc.activeElement, h.$('shell-menu'));
+  assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+  assert.equal(h.rendered.paused, true);
   assert.deepEqual(h.errors, []);
 });
 
