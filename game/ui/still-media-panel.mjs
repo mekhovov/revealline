@@ -214,12 +214,16 @@ export function attachStillMediaPanel({
         doc,
         store,
         storyStore,
-        work: (text, action) =>
-          work(text, async (signal, check) => {
-            await action(signal, check);
-            check();
-            setStatus(story.statusText());
-          }),
+        work: (text, action, focusOptions) =>
+          work(
+            text,
+            async (signal, check) => {
+              await action(signal, check);
+              check();
+              setStatus(story.statusText());
+            },
+            focusOptions,
+          ),
         cancelWork,
         getSelection: storySelection,
         catalog,
@@ -433,11 +437,11 @@ export function attachStillMediaPanel({
     draft = null;
     sync();
   };
-  async function work(text, action, { opener } = {}) {
+  async function work(text, action, { opener, restoreTo = opener } = {}) {
     if (disposed || task) return false;
     const own = new AbortController(),
       id = ++serial,
-      focus = opener ? captureOperationFocus(opener, { document: doc }) : null;
+      focus = opener ? captureOperationFocus(opener, { document: doc, restoreTo }) : null;
     if (focus) own.signal.addEventListener('abort', focus.cancel, { once: true });
     task = own;
     const lease = feedback.begin({ message: text, isCurrent: () => !disposed && id === serial });

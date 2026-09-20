@@ -70,6 +70,7 @@ async function setup(t, options = {}) {
     onStorySaved: async () => {
       ++notifications;
       if (options.notificationFailure) throw new Error('Observer refused');
+      await options.afterNotification?.();
     },
     ...options.panel,
   });
@@ -299,6 +300,58 @@ test('native prepared download transfers exact v2 bytes; keep-current preserves 
   assert.deepEqual(restored.document, inspected.document);
   assert.deepEqual(Buffer.from(await restored.assets[0].blob.arrayBuffer()), videoBytes);
 });
+
+// Model the native disabled-button blur that exposed this regression; the shared
+// minimal DOM intentionally does not pretend to implement browser focus rules.
+for (const outcome of ['success', 'observer-failure', 'moved-focus', 'cancelled']) {
+  test(`story restore ${outcome} retains only the initiating operation's focus ownership`, async (t) => {
+    const gate = deferred();
+    let waiting = false;
+    const h = await setup(t, {
+      afterNotification: async () => {
+        if (!waiting) return;
+        await gate.promise;
+        if (outcome === 'observer-failure') throw new Error('Observer refused');
+      },
+    });
+    await h.poster();
+    await h.story();
+    await h.s('prepare-download').onclick();
+    const bundle = h.native.urls.get(h.s('download').href);
+    h.s('bundle-file').files = [bundle];
+    h.s('bundle-file').onchange();
+    await h.s('review').onclick();
+    const opener = h.s('restore');
+    let disabled = opener.disabled;
+    Object.defineProperty(opener, 'disabled', {
+      configurable: true,
+      get: () => disabled,
+      set(value) {
+        disabled = value;
+        if (value && h.doc.activeElement === opener) opener.blur();
+      },
+    });
+    opener.focus();
+    waiting = true;
+    const before = h.notifications;
+    const pending = opener.onclick();
+    await waitFor(() => h.notifications > before);
+    assert.equal(h.doc.activeElement, h.doc.body, 'Native disabling lost focus');
+    assert.equal(opener.disabled, true);
+    if (outcome === 'moved-focus') {
+      h.$('close').focus();
+      h.$('close').blur();
+    }
+    if (outcome === 'cancelled') h.panel.back();
+    gate.resolve();
+    assert.equal(await pending, outcome !== 'cancelled');
+    assert.equal(h.s('restore').disabled, true, 'Consumed review cannot be reused');
+    if (outcome === 'success' || outcome === 'observer-failure') {
+      assert.equal(h.doc.activeElement, h.s('review'));
+      assert.equal(h.s('review').disabled, false);
+    } else assert.notEqual(h.doc.activeElement, h.s('review'));
+  });
+}
 
 test('fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video', async (t) => {
   const source = await setup(t);
