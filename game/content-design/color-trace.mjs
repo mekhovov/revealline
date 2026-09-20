@@ -11,8 +11,12 @@ const offsetOf = Object.getOwnPropertyDescriptor(nativeArray, 'byteOffset').get;
 const lengthOf = Object.getOwnPropertyDescriptor(nativeArray, 'length').get;
 
 export function proposeColorTrace(source, options) {
-  const config = boundedJSON(options, { maxBytes: 1024, maxNodes: 16, maxArray: 3, maxDepth: 2 });
-  exactKeys(config, ['surface', 'color', 'tolerance', 'minMatches'], 'color trace options');
+  const config = boundedJSON(options, { maxBytes: 1024, maxNodes: 24, maxArray: 3, maxDepth: 2 });
+  exactKeys(
+    config,
+    ['surface', 'color', 'backgroundColor', 'tolerance', 'minMatches'],
+    'color trace options',
+  );
   required(surfaces.includes(config.surface), 'Choose the proposed surface explicitly.');
   required(
     Array.isArray(config.color) &&
@@ -20,6 +24,19 @@ export function proposeColorTrace(source, options) {
       config.color.every((n) => Number.isInteger(n) && n >= 0 && n <= 255),
     'Choose an RGB sample color.',
   );
+  const background = config.backgroundColor;
+  if (background !== undefined) {
+    required(
+      Array.isArray(background) &&
+        background.length === 3 &&
+        background.every((n) => Number.isInteger(n) && n >= 0 && n <= 255),
+      'Choose an RGB background sample color.',
+    );
+    required(
+      Math.max(...background.map((channel, i) => Math.abs(channel - config.color[i]))) >= 8,
+      'Target and background samples are too similar; use manual geometry or distinct samples.',
+    );
+  }
   const tolerance = config.tolerance ?? 24,
     minMatches = config.minMatches ?? 7;
   required(
@@ -64,19 +81,30 @@ export function proposeColorTrace(source, options) {
     uncertain = [];
   for (let y = 1; y < 35; y++)
     for (let x = 1; x < 71; x++) {
-      let matches = 0;
+      let matches = 0,
+        ambiguous = 0;
       for (let sy = 0; sy < 3; sy++)
         for (let sx = 0; sx < 3; sx++) {
           const at = ((y * 3 + sy) * width + x * 3 + sx) * 4;
-          if (
-            pixels[at + 3] >= 240 &&
-            config.color.every((channel, i) => Math.abs(channel - pixels[at + i]) <= tolerance)
-          )
-            matches++;
+          if (pixels[at + 3] < 240) continue;
+          const distance = Math.max(
+            ...config.color.map((channel, i) => Math.abs(channel - pixels[at + i])),
+          );
+          if (distance > tolerance) continue;
+          if (background === undefined) matches++;
+          else {
+            const backgroundDistance = Math.max(
+              ...background.map((channel, i) => Math.abs(channel - pixels[at + i])),
+            );
+            // Explicit negative sample, never inferred from image borders. An
+            // eight-unit distance margin abstains around the shared color boundary.
+            if (backgroundDistance - distance >= 8) matches++;
+            else if (backgroundDistance + 8 > distance) ambiguous++;
+          }
         }
       const cell = y * 72 + x;
       if (matches >= minMatches) selected.add(cell);
-      else if (matches > 0) uncertain.push(cell);
+      else if (matches > 0 || ambiguous > 0) uncertain.push(cell);
     }
   // Merge only exactly identical horizontal spans on adjacent rows. Never fill
   // holes, infer diagonal connections or silently truncate a fragmented proposal.

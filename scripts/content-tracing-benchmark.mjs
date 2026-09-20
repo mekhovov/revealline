@@ -52,13 +52,23 @@ export function colorTraceBenchmarkFixtures() {
 export function benchmarkColorTracing({ repeats = 7 } = {}) {
   if (!Number.isInteger(repeats) || repeats < 1 || repeats > 25)
     throw new Error('Benchmark repeats must be1–25.');
-  const rows = colorTraceBenchmarkFixtures().map(({ name, source, truth }) => {
+  const fixtures = colorTraceBenchmarkFixtures();
+  fixtures.push({
+    ...fixtures.find((fixture) => fixture.name === 'ambiguous-background'),
+    name: 'explicit-background-sample',
+    backgroundColor: TRACE_SAMPLE_COLOR.map((channel) => channel + 10),
+  });
+  const rows = fixtures.map(({ name, source, truth, backgroundColor }) => {
     const expected = new Set(truth),
       durations = [];
     let result;
     for (let repeat = 0; repeat < repeats; repeat++) {
       const start = performance.now();
-      result = proposeColorTrace(source, { surface: 'foundations', color: TRACE_SAMPLE_COLOR });
+      result = proposeColorTrace(source, {
+        surface: 'foundations',
+        color: TRACE_SAMPLE_COLOR,
+        ...(backgroundColor ? { backgroundColor } : {}),
+      });
       durations.push(performance.now() - start);
     }
     durations.sort((a, b) => a - b);
@@ -67,6 +77,7 @@ export function benchmarkColorTracing({ repeats = 7 } = {}) {
     const union = new Set([...actual, ...expected]).size;
     return {
       name,
+      explicitBackgroundSample: !!backgroundColor,
       truthCells: truth.length,
       selectedCells: actual.size,
       truePositive: intersection,
