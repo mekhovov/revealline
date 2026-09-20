@@ -277,6 +277,13 @@ content-library ceiling without raising image, offline or Pages byte budgets.
 Native readability and campaign presentation remain open; see
 `verification/xposed-neon-art.md` for the exact evidence and limits.
 
+Rover Yard also now has seven original repair-yard picture candidates, attached
+only through explicit artwork opt-in and Studio inspection. Historical greybox
+defaults and all42 clear-route checkpoints remain unchanged. The shared registry
+now contains42originals totaling107,594,416bytes; no offline or Pages byte guard
+is raised. See `verification/xposed-rover-art.md`. These assets do not complete
+Rover's campaign theme, Team mission, native contrast or human acceptance gates.
+
 P01 packaging follow-up: opening originals are explicit optional artwork in web
 offline preparation, with exact authored pins and unchanged full-distribution
 bytes. The title and offline status explain the online requirement. Bounded

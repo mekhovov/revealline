@@ -2,6 +2,7 @@ import { freezeDesign } from './catalogs.mjs';
 import { HORIZON_ART_CANDIDATES } from './horizon-art.mjs';
 import { BORDER_ART_CANDIDATES } from './border-art.mjs';
 import { NEON_ART_CANDIDATES } from './neon-art.mjs';
+import { ROVER_ART_CANDIDATES } from './rover-art.mjs';
 import {
   SIGNAL_ILLUSTRATED_ART_CANDIDATES,
   SIGNAL_PIXEL_ART_CANDIDATES,
@@ -17,4 +18,5 @@ export const JOURNEY_ART_CANDIDATES = freezeDesign([
   ...SIGNAL_PIXEL_ART_CANDIDATES,
   ...SIGNAL_TEAM_ART_CANDIDATES,
   ...NEON_ART_CANDIDATES,
+  ...ROVER_ART_CANDIDATES,
 ]);

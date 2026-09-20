@@ -2,42 +2,29 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
-import { createBorderCandidates } from '../content-design/border-candidates.mjs';
-import { BORDER_ART_CANDIDATES } from '../content-design/border-art.mjs';
-import { NEON_ART_CANDIDATES } from '../content-design/neon-art.mjs';
+import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
 import { ROVER_ART_CANDIDATES } from '../content-design/rover-art.mjs';
 import { JOURNEY_ART_CANDIDATES } from '../content-design/journey-art.mjs';
-import {
-  SIGNAL_ILLUSTRATED_ART_CANDIDATES,
-  SIGNAL_PIXEL_ART_CANDIDATES,
-  SIGNAL_TEAM_ART_CANDIDATES,
-} from '../content-design/signal-art.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
-import { validateTheme } from '../content.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
-test('all seven Border compositions are unique original pinned bytes, paired with exact candidate previews', async () => {
-  const source = createBorderCandidates({ artwork: true });
-  const project = compileContentProject(source),
-    grey = compileContentProject(createBorderCandidates());
+test('seven unique Rover originals have exact pins, one consumer each and verified candidate previews', async () => {
+  const source = createRoverCandidates({ artwork: true });
+  const project = compileContentProject(source);
+  const grey = compileContentProject(createRoverCandidates());
   const theme = JSON.parse(
     await readFile(new URL('../content-design/themes.json', import.meta.url)),
-  ).themes.find((row) => row.id === 'border-bloom');
-  assert.deepEqual(validateTheme(theme).errors, []);
-  assert.equal(BORDER_ART_CANDIDATES.length, 7);
-  const expectedCount =
-    17 +
-    SIGNAL_ILLUSTRATED_ART_CANDIDATES.length +
-    SIGNAL_PIXEL_ART_CANDIDATES.length +
-    SIGNAL_TEAM_ART_CANDIDATES.length +
-    NEON_ART_CANDIDATES.length +
-    ROVER_ART_CANDIDATES.length;
-  assert.equal(JOURNEY_ART_CANDIDATES.length, expectedCount);
-  assert.equal(new Set(JOURNEY_ART_CANDIDATES.map((row) => row.sha256)).size, expectedCount);
-  for (const asset of BORDER_ART_CANDIDATES) {
+  ).themes.find((row) => row.id === 'horizon');
+  assert.equal(ROVER_ART_CANDIDATES.length, 7);
+  assert.equal(
+    new Set(JOURNEY_ART_CANDIDATES.map((row) => row.sha256)).size,
+    JOURNEY_ART_CANDIDATES.length,
+  );
+  for (const asset of ROVER_ART_CANDIDATES) {
+    assert(JOURNEY_ART_CANDIDATES.includes(asset));
     const bytes = await readFile(new URL(`../${asset.path}`, import.meta.url));
     assert.equal(bytes.length, asset.bytes);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), asset.sha256);
@@ -54,7 +41,6 @@ test('all seven Border compositions are unique original pinned bytes, paired wit
       digest: (value) => webcrypto.subtle.digest('SHA-256', value),
     });
     const preview = prepareContentPreview(source, id, { theme, artwork: media });
-    assert.equal(preview.scenario.theme.id, 'border-bloom');
     assert.equal(preview.scenario.visualOverrides.background.dataUrl, media.dataUrl);
     assert(
       preview.manifest.diagnostics.some(
@@ -64,34 +50,39 @@ test('all seven Border compositions are unique original pinned bytes, paired wit
     assert.throws(() => prepareContentPreview(source, id, { theme }), /verify/);
     for (const difficulty of ['gentle', 'standard', 'expert'])
       for (const mode of ['solo', 'versus']) {
+        const manifest = resolveMission(project, id, { difficulty, mode });
         assert.equal(
-          resolveMission(project, id, { difficulty, mode }).simulationIdentity,
+          manifest.simulationIdentity,
           resolveMission(grey, id, { difficulty, mode }).simulationIdentity,
         );
+        assert.equal(manifest.officialProgressEligible, false);
       }
   }
+  assert.equal(grey.assets.length, 0);
+  for (const mission of grey.missions) assert.equal(mission.presentation.backgroundAssetId, null);
 });
 
-test('all84 complete Border routes retain exact physics checkpoints with their original artwork attached', async () => {
+test('all42 Rover clear-route checkpoints remain unchanged with original pictures attached', async () => {
   const fixture = JSON.parse(
-    await readFile(new URL('./fixtures/border-clear-routes.json', import.meta.url)),
+    await readFile(new URL('./fixtures/rover-clear-routes.json', import.meta.url)),
   );
-  const projects = new Map(
-    [true, false].map((bonuses) => {
-      const source = createBorderCandidates({ artwork: true });
-      if (!bonuses) for (const mission of source.missions) mission.bonuses = [];
-      return [bonuses, compileContentProject(source)];
-    }),
-  );
-  for (const { bonuses, difficulty, turnPolicy, rows } of fixture.sets)
+  const project = compileContentProject(createRoverCandidates({ artwork: true }));
+  let checked = 0;
+  for (const { difficulty, turnPolicy, rows } of fixture.sets)
     for (const [id, identity, checkpoint, segments] of rows) {
-      const manifest = resolveMission(projects.get(bonuses), id, { difficulty });
+      const manifest = resolveMission(project, id, { difficulty });
       assert.equal(manifest.simulationIdentity, identity, id);
       const run = createRun(manifest.level, { seed: 1, classId: 'scout', turnPolicy });
       for (const [direction, ticks] of segments)
-        for (let n = 0; n < ticks; n++) stepRun(run, { direction }, FIXED_DT);
+        for (let tick = 0; tick < ticks; tick++) {
+          assert.equal(run.status, 'running', id);
+          stepRun(run, { direction }, FIXED_DT);
+          assert.equal(run.classic.livesLost, 0, id);
+        }
       assert.equal(run.status, 'won', id);
       assert.equal(run.lives, manifest.level.rules.lives, id);
       assert.equal(authoritativeCheckpoint(run).hash, checkpoint, id);
+      checked++;
     }
+  assert.equal(checked, 42);
 });
