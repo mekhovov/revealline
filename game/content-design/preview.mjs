@@ -63,11 +63,12 @@ export function prepareContentPreview(
   // Actor recipes such as contour patrols contain route edges, not positions.
   // Use the engine's resolved initial state for the authoring view, never invent
   // an alternate placement or expose the mutable run to Studio.
+  const relays = run.relay ? relayView(run) : null;
   const markers = {
     actors: run.enemies.map(({ id, type, x, y }) => ({ id, type, x, y })),
     objectives: (run.objectives ?? []).map(({ id, x, y }) => ({ id, x, y })),
     ...(mode === 'team' ? { spawns: run.players.map(({ id, x, y }) => ({ id, x, y })) } : {}),
-    ...(run.relay ? { gates: relayView(run).gates, relayTriggers: relayView(run).triggers } : {}),
+    ...(relays ? { gates: relays.gates, relayTriggers: relays.triggers } : {}),
   };
   const authoredTerrain = structuredClone(
     manifest.level.classic?.terrain ?? manifest.level.terrain ?? [],

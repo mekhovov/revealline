@@ -8,6 +8,8 @@ import { editContentObjective } from '../content-design/objectives.mjs';
 import { createDraftHistory } from '../content-design/drafts.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createRelayEditor } from '../studio/relay-editor.mjs';
+import { inspectManualImageMap } from '../content-design/image-authoring.mjs';
+import { editContentStructure } from '../content-design/structure.mjs';
 
 const missionId = 'nearby-shore';
 const mapFor = (p) =>
@@ -35,6 +37,66 @@ const add = (p) =>
     missionId,
     command(p, 'add', { id: 'shortcut', gate: { x: 40, y: 10, w: 2, h: 3, objectiveId: 'relay' } }),
   );
+
+test('manual image geometry preserves relay editions and links; overlapping trace cannot replace a gate', () => {
+  const source = add(enable()),
+    before = structuredClone(source);
+  const { candidate } = inspectManualImageMap(source, missionId, [
+    { surface: 'slow', x: 45, y: 22, w: 3, h: 3 },
+  ]);
+  assert.equal(mapFor(candidate).format, 'MapDesignV2');
+  assert.deepEqual(mapFor(candidate).gates, mapFor(before).gates);
+  assert.deepEqual(candidate.missions[0].relayLinks, before.missions[0].relayLinks);
+  assert.notEqual(candidate.missions[0].map.revision, before.missions[0].map.revision);
+  for (const surface of ['foundations', 'walls', 'slow', 'lethal'])
+    assert.throws(
+      () => inspectManualImageMap(source, missionId, [{ surface, x: 40, y: 10, w: 2, h: 3 }]),
+      /overlap/,
+    );
+  assert.deepEqual(source, before);
+  assert.equal(JSON.stringify(candidate).includes('data:image'), false);
+});
+
+test('duplicating a relay campaign keeps local objective links while later edits fork only the copy', () => {
+  const source = add(enable());
+  const next = editContentStructure(source, {
+    action: 'duplicate',
+    kind: 'campaign',
+    sourceId: 'horizon-school',
+    id: 'relay-copy',
+    name: 'Relay copy',
+  });
+  const campaign = next.campaigns.find((c) => c.id === 'relay-copy'),
+    copy = next.missions.find((m) => m.id === campaign.missionIds[0]);
+  assert.notEqual(copy.id, missionId);
+  assert.deepEqual(copy.map, source.missions[0].map);
+  assert.deepEqual(copy.relayLinks, source.missions[0].relayLinks);
+  const modified = editContentRelay(next, copy.id, {
+    action: 'replace',
+    id: 'shortcut',
+    expectedMap: dataIdentity(mapFor(next)),
+    expectedMission: dataIdentity(copy),
+    gate: { x: 42, y: 10, w: 2, h: 3, objectiveId: 'alternate' },
+  });
+  const compiled = compileContentProject(modified);
+  assert.deepEqual(
+    resolveMission(compiled, missionId).level.relayGates,
+    resolveMission(compileContentProject(source), missionId).level.relayGates,
+  );
+  assert.equal(
+    resolveMission(compiled, copy.id).level.relayGates.gates[0].objectiveId,
+    'alternate',
+  );
+  assert.throws(
+    () =>
+      editContentObjective(source, missionId, {
+        action: 'replace',
+        id: 'relay',
+        objective: { ...source.missions[0].objectives[0], hidden: true },
+      }),
+    /must be visible/,
+  );
+});
 
 test('relay opt-in forks one mission/map, preserves historical consumers and supports Undo/Redo', () => {
   const source = starter();

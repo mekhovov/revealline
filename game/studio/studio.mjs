@@ -259,7 +259,7 @@ function inspectBoard(trailCells = []) {
     ` Capture objectives: ${mission.objectives.map((objective) => `${objective.id}: ${objective.required ? 'required' : 'optional'}, ${objective.hidden ? 'hidden initially' : 'visible'}, at (${objective.x}, ${objective.y})`).join('; ') || 'none'}.`;
   if (mission.relayLinks)
     $('geometry').textContent +=
-      ` Relay gates: ${mission.relayLinks.map((link) => `${link.gateId} opens permanently after capturing ${link.objectiveId}`).join('; ') || 'none'}. Closed gates block movement; opened connectors do not earn coverage.`;
+      ` Relay gates: ${preview.markers.gates.map((gate) => `${gate.label}: ${gate.id} opens permanently after capturing ${gate.objectiveId}`).join('; ') || 'none'}. Matching numbers show links, not a required order. Closed gates block movement; opened connectors do not earn coverage.`;
   $('geometry').textContent +=
     ` Authored terrain: ${authoredTerrain.map((area) => `${area.kind} at (${area.x}, ${area.y}), ${area.w} × ${area.h}`).join('; ') || 'none'}. Terrain is active only on unclaimed field.`;
   $('effective').textContent = JSON.stringify(

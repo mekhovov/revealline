@@ -533,7 +533,8 @@ export class BoardPainter {
           ctx.globalAlpha = 1;
         }
       }
-    if (!fullReveal) drawRelayGates(ctx, relayView(state), p, CELL);
+    const relays = fullReveal ? null : relayView(state);
+    drawRelayGates(ctx, relays, p, CELL);
     if (this.style === 'props' && !fullReveal && !images.wall)
       for (const w of state.level.walls || []) {
         const x = w.x * CELL,
@@ -680,7 +681,7 @@ export class BoardPainter {
           ctx.globalAlpha = 1;
         }
       }
-      drawRelayTriggers(ctx, relayView(state), CELL);
+      drawRelayTriggers(ctx, relays, CELL);
       for (const f of state.ability.fields || []) {
         ctx.fillStyle = p.safe;
         ctx.globalAlpha = 0.12;
