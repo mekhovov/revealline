@@ -1,0 +1,187 @@
+TAP version 13
+# Subtest: ready installed selection leaves Settings and Library without starting flight
+not ok 1 - ready installed selection leaves Settings and Library without starting flight
+  ---
+  duration_ms: 425.700958
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/mission-caption-followup/game/test/library-launch-host.test.mjs:228:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    true !== false
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/mission-caption-followup/game/test/library-launch-host.test.mjs:236:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: ready challenge selection leaves Settings and Library without starting flight
+not ok 2 - ready challenge selection leaves Settings and Library without starting flight
+  ---
+  duration_ms: 159.3785
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/mission-caption-followup/game/test/library-launch-host.test.mjs:228:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    true !== false
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/mission-caption-followup/game/test/library-launch-host.test.mjs:236:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: passive Library Back returns to Settings and preserves the paused cut
+ok 3 - passive Library Back returns to Settings and preserves the paused cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.164875
+  ...
+# Subtest: actual installed launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+ok 4 - actual installed launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.047541
+  ...
+# Subtest: actual challenge launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+ok 5 - actual challenge launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025458
+  ...
+# Subtest: actual picture launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+ok 6 - actual picture launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01975
+  ...
+# Subtest: actual installed launch from settings: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+ok 7 - actual installed launch from settings: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024917
+  ...
+# Subtest: actual challenge launch from settings: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+ok 8 - actual challenge launch from settings: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036667
+  ...
+# Subtest: installed same selection is inert while unfinished and while ready
+ok 9 - installed same selection is inert while unfinished and while ready # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.06
+  ...
+# Subtest: challenge same selection is inert while unfinished and while ready
+ok 10 - challenge same selection is inert while unfinished and while ready # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031125
+  ...
+# Subtest: challenge closed/reopened origin during retained-save waiting cannot adopt or close its successor
+ok 11 - challenge closed/reopened origin during retained-save waiting cannot adopt or close its successor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019959
+  ...
+# Subtest: picture closed/reopened origin during retained-save waiting cannot adopt or close its successor
+ok 12 - picture closed/reopened origin during retained-save waiting cannot adopt or close its successor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.066042
+  ...
+# Subtest: changed saved slot after verification requires another deliberate Replace and preserves the newer bytes
+ok 13 - changed saved slot after verification requires another deliberate Replace and preserves the newer bytes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021167
+  ...
+# Subtest: unavailable saving gives truthful loss decision; Stay retains current checkpoint
+ok 14 - unavailable saving gives truthful loss decision; Stay retains current checkpoint # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018042
+  ...
+# Subtest: button Stay cancels retained-save waiting; late work and other launch/setup owners stay inert
+ok 15 - button Stay cancels retained-save waiting; late work and other launch/setup owners stay inert # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017917
+  ...
+# Subtest: controller Stay cancels retained-save waiting; late work and other launch/setup owners stay inert
+ok 16 - controller Stay cancels retained-save waiting; late work and other launch/setup owners stay inert # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.100334
+  ...
+# Subtest: picture Replay is explicitly fresh even for the same earned selection and keeps seed/difficulty
+ok 17 - picture Replay is explicitly fresh even for the same earned selection and keeps seed/difficulty # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029958
+  ...
+# Subtest: practice challenge departure is session-only and never writes profile or suspended bytes
+ok 18 - practice challenge departure is session-only and never writes profile or suspended bytes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01925
+  ...
+# Subtest: a failure after approved selection does not claim rollback and cannot retry the partially adopted selection
+ok 19 - a failure after approved selection does not claim rollback and cannot retry the partially adopted selection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017416
+  ...
+# Subtest: unchanged player export and resume-save from workshop restore the saved cut after explicit Library selection
+ok 20 - unchanged player export and resume-save from workshop restore the saved cut after explicit Library selection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017292
+  ...
+# Subtest: unchanged player export and import-save from workshop restore the saved cut after explicit Library selection
+ok 21 - unchanged player export and import-save from workshop restore the saved cut after explicit Library selection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014791
+  ...
+# Subtest: unchanged player export and resume-save from settings restore the saved cut after explicit Library selection
+ok 22 - unchanged player export and resume-save from settings restore the saved cut after explicit Library selection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013459
+  ...
+# Subtest: unchanged player export and import-save from settings restore the saved cut after explicit Library selection
+ok 23 - unchanged player export and import-save from settings restore the saved cut after explicit Library selection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016084
+  ...
+# Subtest: challenge: blur retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 24 - challenge: blur retires a waiting launch without adoption or focus; a fresh foreground request works # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016375
+  ...
+# Subtest: challenge: hidden retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 25 - challenge: hidden retires a waiting launch without adoption or focus; a fresh foreground request works # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014542
+  ...
+# Subtest: challenge: pagehide retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 26 - challenge: pagehide retires a waiting launch without adoption or focus; a fresh foreground request works # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014208
+  ...
+# Subtest: picture: blur retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 27 - picture: blur retires a waiting launch without adoption or focus; a fresh foreground request works # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013542
+  ...
+# Subtest: picture: hidden retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 28 - picture: hidden retires a waiting launch without adoption or focus; a fresh foreground request works # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013458
+  ...
+# Subtest: picture: pagehide retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 29 - picture: pagehide retires a waiting launch without adoption or focus; a fresh foreground request works # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012875
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 27
+# todo 0
+# duration_ms 650.863042

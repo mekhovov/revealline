@@ -1,0 +1,59 @@
+[
+  {
+    "name": "before",
+    "match": true,
+    "ticks": 1677,
+    "checkpoint": "0539571e4f07eee2",
+    "continuation": {
+      "direction": "down"
+    },
+    "player": {
+      "x": 0.5000000000001819,
+      "y": 16.583333333333346,
+      "direction": "up",
+      "queuedDirection": "down",
+      "speed": 10,
+      "cutting": false,
+      "graceUntil": 0
+    },
+    "trail": []
+  },
+  {
+    "name": "after",
+    "match": true,
+    "ticks": 1677,
+    "checkpoint": "0539571e4f07eee2",
+    "continuation": {
+      "direction": "down"
+    },
+    "player": {
+      "x": 0.5000000000001819,
+      "y": 16.583333333333346,
+      "direction": "up",
+      "queuedDirection": "down",
+      "speed": 10,
+      "cutting": false,
+      "graceUntil": 0
+    },
+    "trail": []
+  },
+  {
+    "name": "resumed",
+    "match": true,
+    "ticks": 1681,
+    "checkpoint": "059ca5721b86add7",
+    "continuation": {
+      "direction": "down"
+    },
+    "player": {
+      "x": 0.5000000000001819,
+      "y": 16.75000000000001,
+      "direction": "down",
+      "queuedDirection": null,
+      "speed": 10,
+      "cutting": false,
+      "graceUntil": 0
+    },
+    "trail": []
+  }
+]

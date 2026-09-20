@@ -172,7 +172,17 @@ function workshop(h, panel) {
   h.doc.querySelector(`[data-library-panel="${panel}"]`).click();
   assert.equal(h.$('library-dialog').open, true);
 }
-async function opener(h, kind) {
+function settingsLibrary(h, panel) {
+  h.$('settings-button').click();
+  h.$('settings-tab-data').click();
+  const trigger = h.$(panel === 'saves' ? 'settings-saves' : 'settings-packs');
+  trigger.focus();
+  trigger.click();
+  h.doc.querySelector(`[data-library-panel="${panel}"]`).click();
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.$('library-dialog').open, true);
+}
+async function opener(h, kind, parent = 'workshop') {
   if (kind === 'picture') {
     h.$('overlay-menu').click();
     h.$('shell-collection').click();
@@ -188,7 +198,10 @@ async function opener(h, kind) {
     h.$('gallery-replay').focus();
     return h.$('gallery-replay');
   }
-  workshop(h, kind === 'installed' ? 'packs' : 'challenges');
+  (parent === 'settings' ? settingsLibrary : workshop)(
+    h,
+    kind === 'installed' ? 'packs' : 'challenges',
+  );
   if (kind === 'installed') {
     const play = h
       .$('installed-packs')
@@ -211,12 +224,48 @@ function preserved(h, run, before, saved) {
   assert.equal(h.storage.getItem(slot), saved);
   assert.deepEqual(h.errors, []);
 }
-for (const kind of ['installed', 'challenge', 'picture'])
-  test(`actual ${kind} launch: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume`, async (t) => {
+for (const kind of ['installed', 'challenge'])
+  test(`ready ${kind} selection leaves Settings and Library without starting flight`, async (t) => {
+    const h = await setup(t);
+    if (kind === 'installed') await install(h);
+    const trigger = await opener(h, kind, 'settings');
+    await action(trigger);
+    await settle(() => h.doc.body.dataset.pictureState === 'ready');
+    h.frame(0);
+    assert.equal(h.$('library-dialog').open, false);
+    assert.equal(h.$('settings-dialog').open, false);
+    assert.equal(h.doc.activeElement.id, 'start-button');
+    assert.equal(h.rendered.paused, true);
+    assert.equal(h.rendered.run.tick, 0);
+    assert.deepEqual(h.errors, []);
+  });
+test('passive Library Back returns to Settings and preserves the paused cut', async (t) => {
+  const h = await setup(t);
+  await flight(h);
+  const run = h.rendered.run,
+    before = checkpoint(h);
+  settingsLibrary(h, 'packs');
+  // Opening Settings may refresh the paused save; passive Back must not rewrite it.
+  const saved = h.storage.getItem(slot);
+  press(h, 'Escape');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.$('library-dialog').open, false);
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.doc.activeElement.id, 'settings-packs');
+  preserved(h, run, before, saved);
+});
+for (const [kind, parent] of [
+  ['installed', 'workshop'],
+  ['challenge', 'workshop'],
+  ['picture', 'workshop'],
+  ['installed', 'settings'],
+  ['challenge', 'settings'],
+])
+  test(`actual ${kind} launch from ${parent}: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume`, async (t) => {
     const h = await setup(t);
     if (kind === 'installed') await install(h);
     await flight(h);
-    const trigger = await opener(h, kind),
+    const trigger = await opener(h, kind, parent),
       run = h.rendered.run,
       before = checkpoint(h);
     await action(trigger);
@@ -227,6 +276,7 @@ for (const kind of ['installed', 'challenge', 'picture'])
     preserved(h, run, before, saved);
     press(h, 'Escape');
     assert.equal(h.doc.activeElement, trigger);
+    if (parent === 'settings') assert.equal(h.$('settings-dialog').open, true);
     preserved(h, run, before, saved);
     await action(trigger);
     const selectedSave = h.storage.getItem(slot);
@@ -244,6 +294,7 @@ for (const kind of ['installed', 'challenge', 'picture'])
       'gallery-view-dialog',
       'shell-workshop-dialog',
       'shell-home',
+      'settings-dialog',
     ])
       assert.equal(h.$(id).open, false, id);
     assert.equal(h.doc.activeElement.id, 'start-button');
@@ -492,8 +543,13 @@ test('a failure after approved selection does not claim rollback and cannot retr
   assert.equal(h.doc.activeElement, trigger);
 });
 
-for (const restore of ['resume-save', 'import-save'])
-  test(`unchanged player export and ${restore} restore the saved cut after explicit Library selection`, async (t) => {
+for (const [restore, parent] of [
+  ['resume-save', 'workshop'],
+  ['import-save', 'workshop'],
+  ['resume-save', 'settings'],
+  ['import-save', 'settings'],
+])
+  test(`unchanged player export and ${restore} from ${parent} restore the saved cut after explicit Library selection`, async (t) => {
     const h = await setup(t);
     await flight(h);
     const trigger = await opener(h, 'challenge');
@@ -502,7 +558,7 @@ for (const restore of ['resume-save', 'import-save'])
     const saved = h.storage.getItem(slot);
     await action(h.$('mission-replace-confirm'));
     await settle(() => h.doc.body.dataset.pictureState === 'ready');
-    workshop(h, 'saves');
+    (parent === 'settings' ? settingsLibrary : workshop)(h, 'saves');
     const prior = loadLibrary(h.storage, profile).library;
     await action(h.$('export-library'));
     const exported = JSON.parse(h.$('save-json').value);
@@ -516,6 +572,7 @@ for (const restore of ['resume-save', 'import-save'])
     assert.equal(h.rendered.paused, true);
     assert.equal(h.$('library-dialog').open, false);
     assert.equal(h.$('shell-workshop-dialog').open, false);
+    assert.equal(h.$('settings-dialog').open, false);
     assert.equal(h.doc.activeElement.id, 'start-button');
     assert.deepEqual(h.errors, []);
   });

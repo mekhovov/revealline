@@ -17,7 +17,7 @@ The verifier uses normal fixed-tick direction inputs. From the island, travel le
 
 1. Serve the game over HTTP using the repository’s usual development workflow.
 2. Open **Settings → Game data → Installed chapters → Install a pack file** and choose the generated JSON.
-3. Choose **Play Island connections**. If Settings remains open, press Back/Escape to reach **First bridge**, then **Start mission**.
+3. Choose **Play Island connections**. Library and Settings close, **First bridge** appears, and **Start mission** receives focus. Start explicitly; selecting the chapter must not begin flight. The navigation correction is locally verified and awaits integration/public release.
 4. Tap Left. Releasing the key continues the cut; reaching the border closes it and stops the craft. Continue with fresh direction taps.
 5. Open Installed chapters and choose **Export installed packs**. Retain the actual downloaded file, not only a success notification.
 6. On a fresh local origin/profile, import that downloaded library through the same file picker. Verify Island connections 1.0.0 appears and First bridge opens with a 20% target and three lives.
@@ -35,3 +35,14 @@ This transfers pack content. Player achievements and unfinished flights have sep
 Example prompts: “Create a second starting island with two viable connections, retaining capture-stop”; “Author a slow-field detour with a visible escape route”; “Reskin this teaching map for Ukrainian embroidery while preserving collision geometry.” Registered data fields can compose existing behaviors; a prompt or JSON label cannot add a new simulation primitive.
 
 [Retained verification](../../docs/verification/foundation-authoring-v076/README.md) identifies the tested source and explicitly separates source routes, browser capture, transfer and unverified release/device gates.
+
+## Native win follow-up
+
+The isolated navigation follow-up imported this exact generated JSON through the
+file chooser, completed First bridge with ordinary direction taps, opened its picture
+from Collection and retained the earned picture after reload: 32.2% captured, 7,590
+points, three lives and GOLD. This actual route differs from the fixed-tick CLI route;
+both are legal wins. The native pass used Immediate turning and procedural artwork.
+See [scoped evidence](../../docs/verification/library-launch-navigation/result.json)
+for exact source and pack hashes, navigation steps and remaining limits. It does not
+qualify production difficulty, custom media, physical controllers or public deployment.
