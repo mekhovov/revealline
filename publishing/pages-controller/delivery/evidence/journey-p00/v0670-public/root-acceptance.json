@@ -1,0 +1,54 @@
+{
+  "status": "ACCEPTED_SCOPED_TECHNICAL_PREVIEW_PUBLICATION",
+  "version": "v0.67.0",
+  "source": "6a42facaa321b3851745d752fceeb140a967e6e7",
+  "sourceTree": "ca86b28804f5b5996e8ea9742e09db715cac7e8a",
+  "sourcePR": 169,
+  "publisherPR": 174,
+  "publisher": "555f09797d8397259145a9648810a3c8169ea5a1",
+  "publisherTree": "f0c22bb22ba7ebdad7d6884d40f4c9d651c6576d",
+  "run": 35487668271,
+  "deployment": 6548787815,
+  "release": 392287575,
+  "publicFiles": 3573,
+  "verifiedBytes": 645190134,
+  "failedFiles": 0,
+  "retries": 0,
+  "retainedCatalogAuthorities": 104,
+  "catalogAuthorities": 105,
+  "admittedArchives": 34,
+  "journeyURL": "https://mekhovov.github.io/revealline/releases/v0.67.0/site/game/?journey=1",
+  "defaultURL": "https://mekhovov.github.io/revealline/game/",
+  "rollbackURL": "https://mekhovov.github.io/revealline-archive-34/releases/v0.66.0/site/game/",
+  "evidence": [
+    {
+      "path": ".cache/v0670-public-audit-preparation-r1/runs/public-full-r1/report.json",
+      "bytes": 6572,
+      "sha256": "9853cbf55e9133e9895bb1c00dc97fc819dc8317d410653b83a46c5234284226"
+    },
+    {
+      "path": ".cache/v0670-public-audit-preparation-r1/runs/public-full-r1/inventory.json",
+      "bytes": 896333,
+      "sha256": "a213ee30f156535b7b1b6cc3bd373be0ca31aae146ef7ddf4d3c49a96c5cbe77"
+    },
+    {
+      "path": ".cache/v0670-public-audit-preparation-r1/inputs/555f09797d8397259145a9648810a3c8169ea5a1/binding.json",
+      "bytes": 2042,
+      "sha256": "4f8b2b2d747b072b4045aaefa6629b8ee74ff785751a75fc00b926682e9468e9"
+    },
+    {
+      "path": ".cache/v0670-public-acceptance-r1/native-observation.json",
+      "bytes": 2625,
+      "sha256": "fa4de36165a92da64fe3fda7c97f06d170d662e2d0131ab58a753dffb725723c"
+    }
+  ],
+  "scope": "Frozen release publication, complete deployed byte inventory, scoped actual public keyboard Journey and retained version navigation. Parent Journey P00 and overall plan remain incomplete.",
+  "remaining": [
+    "Screenshots available inline only; no exported screenshot files or image hashes.",
+    "No physical controller/touch, actual audio listening, offline network interruption,200%zoom,performance or human-enjoyment acceptance.",
+    "This verifies opt-in Journey; the ordinary entry remains legacy.",
+    "Complete lifecycle/mode-flow, offline/rollback, human playtest and campaign replacement gates remain open.",
+    "v0.68 source qualified candidate remains separate and unmerged/unpublished."
+  ],
+  "date": "2026-09-20T03:59:58.988350+00:00"
+}
