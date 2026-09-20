@@ -238,3 +238,23 @@ objectives are errors in candidate diagnostics, not silent geometry corrections.
 All ten opening candidates avoid these known topology errors and unintended
 initial empty regions. Diagnostics + Studio/CLI + full-route cohort: **15/15**
 passed with no skips/failures after the resolver addition.
+
+## Foundation paired-board qualification
+
+The actual paired-board engine now runs all 60 opening mission/preset/steering
+routes. Identical inputs finish both independently allocated boards on the same
+tick with identical authoritative checkpoints and a draw, inside the ordinary
+90-second race limit. The island fixture also awards either seat when only that
+seat follows its complete route; the idle seat earns no territory and retains
+its original foundations. Pause freezes both boards and neutral Resume does not
+reuse steering.
+
+Two actual Couch host fixtures (Immediate and Grid + Buffer) load the compiled
+interior-spawn candidate through the real campaign reader, Start both boards and
+close legal island departures via both keyboard input routes. Both stop with
+three lives and equal checkpoints; foundations stay excluded from coverage.
+The complete new file passes **10/10**, no skips/failures, in 6.73 seconds. This
+finite host model does not establish native rendering, physical two-controller
+play, completed race navigation, human fairness or Team compatibility. No Solo
+clear is substituted for paired-board evidence, and Team remains unsupported by
+the project adapter until its distinct recovery/topology contract is implemented.
