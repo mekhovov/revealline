@@ -130,3 +130,21 @@ This verifies one real first-return path and its accessible explanation, not a
 human perception study, whole-campaign native clear, final art, physical-device
 test, low-latency benchmark or release acceptance. Other six native layouts,
 delayed-start alternatives and mastery routes remain open.
+
+## Full-clear feasibility, all presets and steering policies
+
+The pinned `phase-clear-routes.json` supplies 42 fresh legal-input Solo clears:
+all seven candidates × Gentle/Standard/Expert × immediate/Grid + Buffer. Each
+retains every starting life, preserves the coverage denominator, closes at least
+two cuts, matches its authoritative checkpoint and passes public replay. The
+introductory mission actually seeds an impact front in every combination. All
+42 equal-input paired-board races also finish equally, with independent board
+and permanent-foundation storage and the untimed first-clear protocol.
+
+The 13-test route cohort passes on Node20.19.5 and22.22.2. These are feasibility
+routes, not human duration or difficulty evidence. Their optimized clear times
+do not establish the authored90–150-second intent. Optional mastery remains
+separate: ordinary clears must not receive unearned mastery, and supplemental
+routes are being checked against actual capture/impact/roamer history. None of
+this exposes unfinished candidates in the released Journey or qualifies P07
+for publication.
