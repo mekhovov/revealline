@@ -712,14 +712,16 @@ async function launchPreview(source, missionId, difficulty) {
     },
   });
 }
-$('close-preview').onclick = () => {
+function closePreview() {
   previewRevision++;
   previewController?.abort();
   stopPreviewReadiness();
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = true;
   $('play').focus();
-};
+}
+$('close-preview').onclick = closePreview;
+$('preview-return').onclick = closePreview;
 window.addEventListener('beforeunload', (event) => {
   if (sourceChanged || session?.status().dirty || traceRecovery.hasUnsaved()) {
     event.preventDefault();

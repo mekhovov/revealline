@@ -6,12 +6,16 @@
     <title>Content Studio · Reveal Line</title>
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="studio.css" />
+    <script type="module" src="../ui/content-studio-navigation-entry.mjs"></script>
     <script type="module" src="studio.mjs"></script>
   </head>
   <body>
     <header>
-      <a href="../">◩ REVEAL / LINE</a><span>CONTENT STUDIO / LOCAL DRAFTS</span
-      ><a href="../playground/">Legacy Playground ↗</a>
+      <a href="../" data-content-studio-route="game" inert aria-disabled="true">◩ REVEAL / LINE</a
+      ><span>CONTENT STUDIO / LOCAL DRAFTS</span
+      ><a href="../playground/" data-content-studio-route="playground" inert aria-disabled="true"
+        >Back to Playground ↗</a
+      >
     </header>
     <main>
       <div class="title-row">
@@ -637,7 +641,17 @@
           <button id="close-preview">Close preview</button>
         </div>
         <p id="preview-status" role="status"></p>
-        <iframe id="preview" title="Exact candidate Solo practice preview" allow="gamepad"></iframe>
+        <iframe
+          id="preview"
+          name="revealline-content-studio-preview"
+          title="Exact candidate Solo practice preview"
+          allow="gamepad"
+        ></iframe>
+        <button id="preview-return">Return to draft</button>
+        <p class="note">
+          Tab past either end of the preview controls to return here. Re-entering a paused preview
+          never resumes it automatically.
+        </p>
       </section>
       <footer>
         Local-first drafts · immutable checkpoints · shared compiler · human playtesting still

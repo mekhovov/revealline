@@ -1,17 +1,30 @@
-/** UI-only escape for the named, same-origin Playground preview; no input transport. */
+const owners = Object.freeze([
+  {
+    name: 'revealline-playground-preview',
+    id: 'preview-frame',
+    path: /\/game\/playground\/(?:index\.html)?$/,
+  },
+  {
+    name: 'revealline-content-studio-preview',
+    id: 'preview',
+    path: /\/game\/studio\/(?:index\.html)?$/,
+  },
+]);
+
+/** UI-only escape for finite named same-origin authoring previews; no input transport. */
 export function playgroundTabBoundary({ window: child = globalThis.window, suspend } = {}) {
   const current = () => {
     const frame = child?.frameElement,
-      parent = child?.parent;
-    if (!frame || !parent || parent === child || child.name !== 'revealline-playground-preview')
-      return false;
+      parent = child?.parent,
+      owner = owners.find((candidate) => candidate.name === child?.name);
+    if (!frame || !parent || parent === child || !owner) return false;
     const document = frame.ownerDocument;
     const parentURL = new URL(parent.location.href);
     return (
       child.location.origin !== 'null' &&
       parentURL.origin === child.location.origin &&
-      /\/game\/playground\/(?:index\.html)?$/.test(parentURL.pathname) &&
-      frame.id === 'preview-frame' &&
+      owner.path.test(parentURL.pathname) &&
+      frame.id === owner.id &&
       frame.name === child.name &&
       frame.contentWindow === child &&
       document.defaultView === parent &&
