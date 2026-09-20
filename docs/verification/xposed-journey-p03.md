@@ -204,6 +204,20 @@ confirmation; performing that actual UI confirmation fixed the test, with no
 runtime bypass. This is finite-DOM and deterministic evidence, not a native
 complete route, physical-controller test, human balance or a shipped Team mission.
 
+Native Studio created an isolated `team-material-native` draft through the new
+template, then authored5×5 slow/lethal rectangles at(24,15)/(43,15) using ordinary
+geometry controls. This exposed a real accessibility/effective-rules omission:
+those text surfaces read only Solo's classic terrain field. The shared preview now
+returns the exact authored terrain for either adapter; Studio consumes that one
+projection. All27 Studio/terrain/material regressions pass, zero skips,3.055seconds.
+The old127.0.0.1development origin retained older module responses during reload;
+fresh localhost8780 loaded current modules and showed both exact materials in the
+summary. The same saved draft was inspected and explicitly applied there, not
+silently migrated. Screenshot inspection confirms paired dashes and framed crosses
+without the capture overlay. Expert export retains pack.v3/ruleset.v5/level.v3,
+two foundations, both materials and its exact preset; geometry-only/placeholder-art
+labels remain explicit. This is not a qualified campaign map or contrast benchmark.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive

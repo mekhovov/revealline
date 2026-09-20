@@ -60,5 +60,8 @@ export function prepareContentPreview(
     objectives: (run.objectives ?? []).map(({ id, x, y }) => ({ id, x, y })),
     ...(mode === 'team' ? { spawns: run.players.map(({ id, x, y }) => ({ id, x, y })) } : {}),
   };
-  return { manifest, geometry: map.geometry, capture, markers, scenario };
+  const authoredTerrain = structuredClone(
+    manifest.level.classic?.terrain ?? manifest.level.terrain ?? [],
+  );
+  return { manifest, geometry: map.geometry, capture, markers, scenario, authoredTerrain };
 }
