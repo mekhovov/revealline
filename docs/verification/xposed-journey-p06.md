@@ -58,3 +58,22 @@ with at least two exposures before advanced combinations. Mandatory objectives
 must not leave quota cleanup; first returns must not trivially clear a mission.
 Final dispositions, all-preset routes, optional goals, variable seeds/delays,
 purpose-built Team content, original pictures and native/human review remain open.
+
+## Seven initial authored greyboxes
+
+Six core candidates plus an optional Remix now compile through the same Studio,
+CLI and gameplay adapters. They cover one reliable landing, separated islands,
+two occupied districts, broken row connections, cross-shaped landings and
+staggered protected routes. All42 preset/steering first returns retain every life;
+each also permits five seconds of initial decision time. No first return clears
+the mission, no initial empty chamber auto-fills, no new per-level physics are
+introduced and no countdown is required. The inherited Horizon palette is an
+explicit greybox placeholder, not completed Fractured Grid presentation.
+
+The first Standard/immediate search found legal full clears for all seven,
+but Five landings reached its coverage goal with neither required anchor captured.
+The retained negative fixture reproduces that route and its two cleanup captures.
+Revision2 moves the two anchors onto the upper/lower expansion routes. A new
+legal route captures them before its final coverage closure; both originals and
+the correction remain evidence, not a claim of human pacing. Full all-preset
+clear/replay/race and optional-goal qualification continues before final artwork.

@@ -4,6 +4,7 @@ import { createBorderCandidates } from '../content-design/border-candidates.mjs'
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
 import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
 import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
+import { createFractureCandidates } from '../content-design/fracture-candidates.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
@@ -533,6 +534,12 @@ $('neon').onclick = guarded(() => {
 $('rover').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createRoverCandidates({ artwork: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('fracture').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createFractureCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
