@@ -1,0 +1,7 @@
+# Durable original v0.65.0 public evidence
+
+This additive archive preserves the original hosted audit receipt, complete 3,500-row public-byte audit, final live authorities, scoped keyboard/native journey and owned two-arena fixture. The existing small root-acceptance, authority-record, http-review and native-observation files are unchanged. The exact accepted publisher is e6e269ea58aef2336c54f9497289a31c22ce9bb7; source57fd/treeb71a, Pages35474519516/deployment6546633515. All 3,500 files / 644,685,649 bytes passed with zero failures and retries.
+
+`originals-index.json` maps each original local provenance path to its exact ZIP member, byte count and SHA-256. The hosted 39-member artifact is retained byte-for-byte as a nested ZIP; every member passed CRC and privacy inspection. Its existing audit.stderr contains only 771 bytes of body-completion progress counters. Empty private stderr files outside that unchanged hosted artifact are omitted and explicitly listed. No credential or signed-download URL is included. No network request or new browser run was performed during packaging.
+
+Chronology is preserved: original audit/native records may say a subsequent check was pending. The exact root-acceptance.json at the latest cutoff is authoritative. Its named P07-TEAM-IMPORTED-CONTINUATION scope is complete; P03/P07/P08/P18, physical input, live rescue/balance, responsive Team and audible/offline qualification remain open. This evidence archive does not turn fixture observations into broader hardware, encounter or whole-phase acceptance.

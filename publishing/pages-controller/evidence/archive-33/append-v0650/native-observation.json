@@ -1,0 +1,62 @@
+{
+  "status": "SCOPED_ARCHIVE_KEYBOARD_JOURNEY_PASS",
+  "at": "2026-09-19T23:52:58.390163+00:00",
+  "archiveId": "archive-33",
+  "archiveCommit": "8e9e15eb55ba98b821e70861a20dc76bb7a761ce",
+  "archiveTree": "be3cf8f64dc6a435044a7b909091c666a024e668",
+  "pagesRun": 35476969070,
+  "deploymentId": 6547026356,
+  "viewport": [
+    1280,
+    720
+  ],
+  "fixture": {
+    "path": ".cache/p08-imported-team-native-next-r1/native-next.pack.json",
+    "bytes": 1698,
+    "sha256": "60f4a194a2a56540047389d4337211c957a1ae32ab71d20eceba3629dd49fd50"
+  },
+  "journey": [
+    {
+      "action": "Archive index Tab twice, Enter; title ShiftTab Enter to Team",
+      "observed": "Both archived links present; v0.65.0 visible on title; ordinary Team entry ready."
+    },
+    {
+      "action": "Keyboard disclosure and file chooser import, explicit Start, brief d/Left directions",
+      "observed": "Owned Native Next two-arena pack remains lobby until Start. First picture wins100% in0:04, oneJointCut, three reserves."
+    },
+    {
+      "action": "Tab Enter View picture, Escape",
+      "observed": "Full earned FPV orchard visually inspected; complete image and Back visible; Escape returns exact View picture focus."
+    },
+    {
+      "action": "ShiftTab Enter Next; fresh d/Left",
+      "observed": "Second picture starts0%,0:00,three reserves with fresh direction request. Wins100% in0:08, finalarena text and noNext."
+    },
+    {
+      "action": "ShiftTab Enter Retry, Escape, Enter Resume",
+      "observed": "Same Second picture restarts0%,0:00,three reserves; explicit Pause/Resume; both Supports remain ready."
+    },
+    {
+      "action": "Pause then browserBack twice to archive; keyboardfirstlink",
+      "observed": "Preserved v0.64.3 title loads and identifies its version."
+    },
+    {
+      "action": "Enter Start, Down, Escape, TabEnter Fielddetails, Escape, ShiftTabEnter Resume",
+      "observed": "Older Solo flight starts; details explains paused state. Escape returns exact Fielddetails focus and leaves0:10paused; explicitResume continues selecteddirection with exposedline."
+    },
+    {
+      "action": "Pause, browserBack, Tabthree times Enter releaseexplorer",
+      "observed": "Returns to main https://mekhovov.github.io/revealline/releases/ showing currentv0.65.0."
+    }
+  ],
+  "observedLimitations": [
+    "The older Solo entry reported another game tab owns saving; this scoped entry was session-only. No saved-data restore/owner-recovery acceptance inferred. Browser history may retain priorpages; cause not diagnosed here.",
+    "Known Hunter advice appears in the enemy-free owned Team fixture; level-aware guidance correction remains queued.",
+    "Keyboard plus ordinary file chooser; no physical controllers/touch, audible listening, offline or broad responsive matrix.",
+    "No live encounter balance, actual Support rescue or full Workshop ownership/reload qualification."
+  ],
+  "hiddenMutation": false,
+  "screenshots": "Earnedpicture visually inspected inline; no screenshot file or hash claimed.",
+  "publicByteAuditPending": true,
+  "parentPhaseComplete": false
+}
