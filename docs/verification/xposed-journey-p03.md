@@ -93,6 +93,23 @@ starts. These five samples do not establish arbitrary-delay safety, other delaye
 preset/steering combinations, human reaction tolerance or optional mastery.
 Genuinely different strategic route choices remain a separate acceptance gate.
 
+`signal-mastery-routes.json` additionally pins seven Standard/immediate/seed1
+optional-goal routes, each from legal input with no life loss and a verified replay.
+Independent predicates observe all material cells, entry order, foundation visits
+and four-connected reclaimed paths. Soft crossing's mastery route actually uses
+the252-tick slow opening and neutralizes its entire bed; Neutral ground neutralizes
+both beds. Wide approach links both landings; Remix links all three without freeze.
+Dry spine captures one bed before entering the other; Cool the crossing neutralizes
+its bed while the far landing remains unvisited. Garden's wording is clarified to
+require both row neutralization and connection, without an ambiguous strict order
+inside one atomic capture. These wording edits do not change execution identities.
+
+The first greedy Soft crossing mastery search stalled at67.998% with110 marked
+cells left, not a proof of impossibility. A legal search constrained to the taught
+opening found a complete27.85-second route; Neutral ground's is31.55seconds.
+The mastery/crosswalk cohort passes3/3 in1.9seconds. This establishes feasibility
+for the sampled preset, not automatic awards, all-preset mastery or human enjoyment.
+
 Omniscient active-play durations are18.65–21.95s(Soft crossing),20.45–28.95s(Dry
 spine),27.85–28.05s(Wide approach),18.85–30.25s(Cool the crossing),45.05–57.65s
 (Garden refuges),26.65–27.95s(Neutral ground),33.75–63.45s(Remix). These are not
@@ -112,8 +129,8 @@ This is an agent opening observation, not a complete native route or human test.
 
 ## Remaining gates
 
-Meaningful alternative routes and mastery feasibility; anti-cleanup/pacing review;
-multi-seed and delayed decisions; whole-Journey host continuation; purpose-built
+Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
+pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
 presentation; local assisted-tracing benchmark; native/device/accessibility and
 human comprehension/enjoyment; reviewed final-source PR, immutable release,
