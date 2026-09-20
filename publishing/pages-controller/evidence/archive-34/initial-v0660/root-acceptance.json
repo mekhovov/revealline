@@ -1,0 +1,34 @@
+{
+  "status": "ACCEPTED_SCOPED_ARCHIVE_PRESERVATION",
+  "accepted": true,
+  "reviewed": true,
+  "version": "v0.66.0",
+  "archiveId": "archive-34",
+  "repository": "mekhovov/revealline-archive-34",
+  "archiveCommit": "68d29403b1932bf86db538a8c81e0273ebb99f40",
+  "archiveTree": "062a007daf6fc3746dbf3790f1139e4483f85b41",
+  "pagesRun": 35485374945,
+  "deploymentId": 6548389224,
+  "gameSource": "dae39ba7d4f1a64e309566f9cacca826958e7de2",
+  "releaseId": 392248530,
+  "publicAudit": {
+    "status": "PASS",
+    "base": "https://mekhovov.github.io/revealline-archive-34/",
+    "files": 716,
+    "failedFiles": 0,
+    "expectedBytes": 313634855,
+    "verifiedBytes": 313634855,
+    "skipped": [],
+    "expectedInventorySha256": "4cac56f0e9d6c16f6f734013a1d43b781dcd9a7632a375d1bc24cedb6261367f",
+    "attempts": 716,
+    "failedAttempts": 0,
+    "observer": "root local streaming HTTP verifier",
+    "originalReportSha256": "86a5856a7cbbd241a894c8482b74eea9c465d2f8eff9c7c013d80f9ee536a293",
+    "timingClarification": "The original startedAt field was written at completion; elapsedSeconds is monotonic run duration. No start-time precision claim."
+  },
+  "native": {
+    "path": ".cache/archive34-v0660-r1/public-audit/native-observation.json",
+    "sha256": "acc419745a03dad5de7c4c43e17e4432d8fcdee64d28cd77c9fa09b16ed67080"
+  },
+  "scope": "Complete original public-byte preservation and keyboard Solo first win/Next/Pause/saved mode leave/Team start/pause. Parent feature and hardware qualification remain unchanged."
+}

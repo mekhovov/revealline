@@ -287,3 +287,10 @@ Reproduce delayed Ready → Start confirmation through the real installed-pictur
 ## Qualify narrow Solo active-flight counters
 
 “Use the exact current source and the selected text preferences. At 600×400, compare the actual running score and its icon with fullscreen/Pause; record the original overlap before changing the layout. Keep all four stats, the coverage target, owned captions, authored actions and the complete board. For 521–680px short landscape, budget two telemetry rows from the existing text tokens rather than shrinking text or letting event updates resize the arena. Preserve tutorial, portrait and Couch rules. Inspect Large/Plain with controls hidden and a shown D-pad, Standard/Theme with the existing floating stick, both boundary widths and 390×844 rotation. Start/play through ordinary UI; do not inject a score or win. Measure full rectangles and at least 44px action targets, then check Pause → Field details → Back and explicit Resume. Report the smaller arena as a play-comfort tradeoff. Retain exact source/CSS pins and original observations; separate a zero-score candidate check from a nonzero public baseline. Do not present modeled rectangles, formatting checks or the Large preference as native, physical-device or 200% zoom acceptance. Finish final integrated-source and affected public gates before closing the feature.” See [the scoped device-layout contract](../../docs/device-controls.md#narrow-solo-flight-counters--p05-hud-correction).
+
+
+Release packaging example: “Validate the complete evidence ZIP with the exact
+source uploader, including the root evidence-manifest.json. Preserve a rejected
+draft package and its failed run. Reconcile the corrected draft descriptors before
+one explicit upload; keep published payloads immutable and verify public play
+separately from hosted upload success.”
