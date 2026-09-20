@@ -10,11 +10,17 @@ export function drawLaneAttack(
   if (enemy.type !== 'lane-boss' || !['warning', 'active'].includes(enemy.bossPhase)) return false;
   const scale = Math.max(0.2, Math.min(1, screenScale));
   const horizontal = enemy.axis === 'horizontal';
-  const center = (enemy.lane ?? (horizontal ? enemy.y : enemy.x)) * 16;
-  const breadth = (enemy.laneWidth ?? 1.2) * 16;
+  const center = enemy.lane ?? (horizontal ? enemy.y : enemy.x);
+  const half = (enemy.laneWidth ?? 1.2) / 2;
+  // Trail damage uses inclusive whole-cell overlap, not just the cell centre.
+  // At an integer boundary the adjacent touching cell is also threatened.
+  const start = Math.max(1, Math.ceil(center - half) - 1) * 16;
+  const end =
+    Math.min((horizontal ? boardHeight : boardWidth) / 16 - 1, Math.floor(center + half) + 1) * 16;
+  const breadth = Math.max(0, end - start);
   const box = horizontal
-    ? [16, center - breadth / 2, boardWidth - 32, breadth]
-    : [center - breadth / 2, 16, breadth, boardHeight - 32];
+    ? [16, start, boardWidth - 32, breadth]
+    : [start, 16, breadth, boardHeight - 32];
   ctx.save();
   ctx.fillStyle = frozen ? palette.muted : palette.danger;
   ctx.globalAlpha = frozen ? 0.12 : enemy.bossPhase === 'active' ? 0.35 : 0.1;
