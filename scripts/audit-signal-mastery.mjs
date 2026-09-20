@@ -11,7 +11,7 @@ const source = createSignalCandidates();
 const project = compileContentProject(source);
 const inputs = [];
 const candidates = [];
-for (const kind of ['mastery', 'clear', 'timing']) {
+for (const kind of ['mastery', 'clear', 'timing', 'mastery-extension']) {
   const path = `game/test/fixtures/signal-${kind}-routes.json`;
   const bytes = await readFile(new URL(`../${path}`, import.meta.url));
   const fixture = JSON.parse(bytes);

@@ -15,7 +15,7 @@ import {
   verifyReplay,
 } from '../game/replay.mjs';
 
-test('mastery audit preserves gaps and emits replay-verifiable prefixes of identified source routes', async () => {
+test('mastery audit preserves rejected trials and emits replay-verifiable prefixes of identified source routes', async () => {
   const root = new URL('../', import.meta.url);
   const report = JSON.parse(
     execFileSync(process.execPath, ['scripts/audit-signal-mastery.mjs'], {
@@ -84,8 +84,10 @@ test('mastery audit preserves gaps and emits replay-verifiable prefixes of ident
     }
     verified++;
   }
-  assert.equal(verified, 25);
-  assert.equal(report.rows.filter((row) => !row.evidence).length, 17);
+  assert.equal(verified, 42);
+  assert.equal(report.rows.filter((row) => !row.evidence).length, 0);
+  assert(report.rows.some((row) => row.outcomes['ordinary-clear-only'] > 0));
+  assert(report.rows.some((row) => row.outcomes['life-lost'] > 0));
   assert(report.limitations.some((line) => line.includes('not an impossibility proof')));
   assert(report.limitations.some((line) => line.includes('No level, speed, quota')));
 });
