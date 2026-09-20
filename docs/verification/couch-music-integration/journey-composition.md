@@ -60,3 +60,11 @@ option changes that fingerprint even though the other three audio inputs remain
 unchanged. Preserve the failed run and source-stage successor before a scoped
 reviewed successor; never silently carry an older approval onto changed source.
 P02 owns that correction. Draft composition PR187 retains this baseline.
+
+Team's First Connection also passed keyboard Settings/library/Escape opener
+restoration. Explicit music Pause selected before first Start survived Start and
+a deliberately confirmed Retry. Each immediate gameplay Pause showed fresh
+0.0%, three reserves and 0:00; no movement, Support/rescue or Team win was claimed.
+The shared master remained muted throughout, so this verifies transport intent
+and navigation, not audible output. The exact observations extend the same JSON
+record without rewriting the original Versus evidence.
