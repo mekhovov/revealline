@@ -4,7 +4,8 @@ __pycache__/
 .env
 .env.*
 !.env.example
-node_modules/
+# Generated dependencies may be a directory or a link to a verified shared tree.
+node_modules
 dist/
 releases/
 .cache/

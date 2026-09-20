@@ -101,7 +101,7 @@ test('classic dispatch is a fourth exact pair; old defaults, partial selectors a
       () => resolveVersions({ ...CLASSIC_VERSIONS, ruleset: pair.ruleset }),
       /mismatched/,
     );
-  assert.throws(() => resolveVersions({ replayVersion: 'xonix-replay.v7' }), /unsupported/);
+  assert.throws(() => resolveVersions({ replayVersion: 'xonix-replay.v8' }), /unsupported/);
   const first = map();
   assert.deepEqual(
     versionsForCampaign({ levels: [first, { ...map(), id: 'second' }] }),

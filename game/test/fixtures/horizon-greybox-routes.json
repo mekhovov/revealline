@@ -1,0 +1,157 @@
+{
+  "format": "OpeningFeasibilityRoutesV1",
+  "scope": "Offline search-derived legal clear routes, not human pacing or difficulty evidence. Standard, seed 1, immediate turns, Scout. No state edits, bonuses or abilities.",
+  "rows": [
+    ["first-return", "0822484529141ac9", "9897c923de50df0f", [["down", 414]]],
+    [
+      "choose-your-share",
+      "4b0224f30679eff6",
+      "16182b69fb6fcd6f",
+      [
+        ["left", 432],
+        ["down", 414]
+      ]
+    ],
+    [
+      "two-keepers",
+      "618489f3ba42c64a",
+      "f7be844453a66a72",
+      [
+        ["right", 432],
+        ["down", 168],
+        ["left", 846],
+        ["right", 150],
+        ["down", 246],
+        ["up", 66],
+        ["right", 690]
+      ]
+    ],
+    [
+      "nearby-shore",
+      "2deef5afc9bfca49",
+      "8146429a2b4e2d1c",
+      [
+        ["left", 384],
+        ["down", 60],
+        ["right", 852],
+        ["down", 360],
+        ["left", 252],
+        ["up", 354],
+        ["down", 6],
+        ["up", 12],
+        ["left", 360],
+        ["down", 354]
+      ]
+    ],
+    [
+      "island-outpost",
+      "8d34d10388fd2f21",
+      "66cd22310665df6a",
+      [
+        ["right", 24],
+        ["down", 12],
+        ["right", 600],
+        ["left", 384],
+        ["up", 210]
+      ]
+    ],
+    [
+      "stepping-stones",
+      "a1ad76873abfbc40",
+      "0c1e0aa6337d159b",
+      [
+        ["right", 120],
+        ["down", 414],
+        ["up", 6],
+        ["down", 12],
+        ["right", 312],
+        ["up", 414],
+        ["down", 306],
+        ["left", 306]
+      ]
+    ],
+    [
+      "two-bays",
+      "902bc114c996e2ff",
+      "f956521ad87b465d",
+      [
+        ["up", 12],
+        ["left", 414],
+        ["right", 426],
+        ["down", 228],
+        ["right", 48],
+        ["up", 414]
+      ]
+    ],
+    [
+      "courtyard-return",
+      "859345af89d9c84c",
+      "19f07d97a8ed7c13",
+      [
+        ["up", 72],
+        ["right", 180],
+        ["down", 150],
+        ["up", 18],
+        ["right", 72],
+        ["down", 24],
+        ["right", 300],
+        ["left", 300],
+        ["up", 168],
+        ["left", 132],
+        ["up", 114]
+      ]
+    ],
+    [
+      "long-way-home",
+      "89fa32aa3f74ad08",
+      "fa880a486b815698",
+      [
+        ["right", 516],
+        ["left", 12],
+        ["down", 210],
+        ["up", 6],
+        ["down", 12],
+        ["right", 204],
+        ["up", 420],
+        ["left", 576],
+        ["down", 204],
+        ["up", 204],
+        ["left", 168],
+        ["down", 420],
+        ["right", 360],
+        ["up", 210]
+      ]
+    ],
+    [
+      "horizon-remix",
+      "ab7d565c0970943a",
+      "70064f4f5bbe71d5",
+      [
+        ["up", 36],
+        ["right", 432],
+        ["down", 252],
+        ["left", 228],
+        ["up", 246],
+        ["down", 6],
+        ["up", 12],
+        ["left", 72],
+        ["up", 162],
+        ["down", 6],
+        ["up", 12],
+        ["left", 552],
+        ["down", 84],
+        ["right", 552],
+        ["left", 552],
+        ["down", 216],
+        ["right", 624],
+        ["left", 444],
+        ["up", 210],
+        ["down", 6],
+        ["up", 12],
+        ["right", 384],
+        ["down", 210]
+      ]
+    ]
+  ],
+  "policyId": "journey-arcade-v2"
+}
