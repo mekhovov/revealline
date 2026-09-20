@@ -53,11 +53,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130',
+    sha256: 'b07a0865c1ff94faf7d1b45ccd7db1a9c0f4b417e366da9ddb1a5e7849beecba',
     evidence: [
-      'Scoped P02-A source review (functional): docs/verification/cross-mode/p02-a/recipe-review.md; audio recipe inputs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130. Shared master mute/volume applies once while local buses, media envelopes, independent transport intent and historical cue/composition recipes remain separate. The four exact reviewed inputs remain unchanged after integrating P01 candidate cc9f8ff.',
-      'Focused core, persistence, native-media binding and actual-host tests retain delayed-play/context ownership, mute/zero enforcement, observer reentrancy, shared 1-percent control precision and disposal coverage in docs/verification/cross-mode/p02-a/. These scoped observations do not replace final integrated-source qualification.',
-      'Native owned MP3 and silent-video observations preserve independent transport under master changes. The reproducible output-probe measures actual Soundscape PCM: silent mute/zero windows, quarter-volume RMS ratio0.250056547, restored ratio0.999610075 and owned-context cleanup. This functional recipe approval is not album listening, physical-speaker, native MP3/video gain, device or public-release certification.',
+      'Scoped Journey P02 music source review (functional): docs/verification/journey-p02-music-recipe.md. Inputs sha256:b07a0865c1ff94faf7d1b45ccd7db1a9c0f4b417e366da9ddb1a5e7849beecba. Only published-audio adds default-compatible cues opt-out for Team; other inputs and recipes unchanged.',
+      'Seven published-audio tests cover lazy/verified music, default cues, mute, cancellation, music-only ownership and late readiness/disposal. Preserve fpv33 and all127 original payloads; exact Team picture pins are verified separately.',
+      'Adapter review only, not Team cue parity, listening, physical-device, whole-phase or public acceptance. Prior measurements remain historical; final integrated qualification is required.',
     ],
   },
   motion: {

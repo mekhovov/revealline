@@ -236,3 +236,14 @@ A PR's cached `base.sha` can name an earlier main commit even when GitHub has al
 ## Single-cohort archive fixtures
 
 When preparing a new archive from an append template, update only the explicit release-specific fixture expectations and derive the qualification path from the selected release record. Preserve generic corruption, source-identity and missing-gate tests. Include the canonical base in the expected inventory and re-pin its exact bytes before staging. Keep a stale-fixture first failure beside the corrected complete cohort; unchanged production helpers and passing fixtures still require hosted extraction, public-byte and scoped native checks.
+
+### Retained-media conflicts during public installation checks
+
+If an optional external chapter refuses a retained picture-binding conflict, keep
+that failed observation and the original media/flight unchanged. Verify a different
+known compatible chapter independently; do not turn its success into catalog-wide
+acceptance. Record the conflicting chapter as an open P06 recovery item. Same-chapter
+Play preservation, different-chapter Stay and deliberate Replace are separate checks.
+Capture visible before/after mission, score, lives and timer; distinguish elapsed
+active play after explicit Continue from mutation while paused. No local preview or
+HTTP byte audit substitutes for the deployed player journey.

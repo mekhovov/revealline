@@ -295,6 +295,46 @@ test('current P03 reproduction retains its measured source stage before any revi
   assert.deepEqual(repeated, exported, 'second export identical');
 });
 
+test('Journey music review retains fpv33 source evidence and every earlier immutable record', async () => {
+  const oracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-journey-p02-source-fpv33.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const currentRaw = await fs.readFile(
+    new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+  );
+  const current = await importThemeBundle(new Blob([currentRaw]), { decodeImage: null });
+  const stage = await reconstructPinnedProduction(oracle, current);
+  const before = resolvePresentation(stage.document),
+    after = resolvePresentation(current.document);
+  assert.equal(stage.document.revision, 33);
+  assert.equal(current.document.revision, 34);
+  for (const [slot, asset] of Object.entries(before.assets)) {
+    if (!slot.startsWith('audio.')) {
+      assert.deepEqual(after.assets[slot], asset, `Unchanged non-audio binding ${slot}`);
+      continue;
+    }
+    assert.equal(asset.quality.stage, 'source');
+    assert.equal(asset.revision, 8);
+    assert.equal(after.assets[slot].quality.stage, 'reviewed');
+    assert.equal(after.assets[slot].revision, 9);
+    assert.deepEqual(after.assets[slot].provenance.parent, { id: asset.id, revision: 8 });
+    assert.equal(after.assets[slot].provenance.source, asset.provenance.source);
+    assert.deepEqual(after.assets[slot].recipe, asset.recipe);
+    assert.equal(after.assets[slot].file, null);
+  }
+  assert.equal(current.document.assets.length, stage.document.assets.length + 8);
+  assert.equal(current.document.themes.length, stage.document.themes.length + 1);
+  assert.equal(current.assets.size, stage.assets.size);
+  const reproduced = retainProductionHistory(
+    (await createFieldKitProduction()).document,
+    current.document,
+  );
+  assert.equal(canonicalJSON(reproduced), canonicalJSON(current.document));
+});
+
 function desired(
   description = 'First production recipe',
   quality = { stage: 'source', evidence: [] },
@@ -384,7 +424,7 @@ test('the unchanged source-pinned feedback recipe reviews remain selected', asyn
   }
 });
 
-test('P05 UI and P02-A audio reviews cover exact current inputs', async () => {
+test('P05 UI and Journey P02 audio reviews cover exact current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
@@ -392,7 +432,8 @@ test('P05 UI and P02-A audio reviews cover exact current inputs', async () => {
   for (const slot of reviewed) {
     const asset = resolved.assets[slot.id];
     assert.equal(asset.quality.stage, 'reviewed', slot.id);
-    const review = slot.group === 'ui' ? 'Scoped P05 source review' : 'Scoped P02-A source review';
+    const review =
+      slot.group === 'ui' ? 'Scoped P05 source review' : 'Scoped Journey P02 music source review';
     assert.ok(
       asset.quality.evidence.some((entry) => entry.includes(review)),
       slot.id,

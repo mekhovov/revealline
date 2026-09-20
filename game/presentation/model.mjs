@@ -11,12 +11,14 @@ export const FORMATS = Object.freeze({
 export const LIMITS = Object.freeze({
   // A complete produced collection and its immutable review successors must fit
   // together. This is separate from the existing player-media metadata quota.
-  manifestBytes: 4 * 1024 * 1024,
+  // fpv34 plus full-set review/replacement is 4,203,650 encoded bytes including
+  // the portable asset table. Keep history instead of pruning accepted revisions.
+  manifestBytes: 5 * 1024 * 1024,
   bundleBytes: 32 * 1024 * 1024,
   assetBytes: 4 * 1024 * 1024,
   slots: 512,
   // Retained production + reviews + one complete replacement must coexist.
-  // The 4 MiB manifest and 32 MiB transfer ceilings remain authoritative.
+  // The 5 MiB metadata and unchanged 32 MiB transfer ceilings remain authoritative.
   assets: 2048,
   themes: 1024,
   collections: 128,
