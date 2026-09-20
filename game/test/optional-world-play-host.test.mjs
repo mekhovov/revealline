@@ -299,6 +299,10 @@ test('one Download & play authenticates the exact installed pack, stages its pic
   await pending;
   await running(p);
   assert.equal(p.$('pack-select').value, chapter.id);
+  assert.equal(
+    p.$('content-select-status').querySelector('.operation-status-label').textContent,
+    `${destination.campaign.levels[0].name} selected and ready.`,
+  );
   assert.equal(p.rendered.backdrop.pin.identity.baseCampaignKey, campaignKey(destination.campaign));
   assert.equal(p.rendered.backdrop.pin.assetId, 'world-play-picture');
   assert.equal(p.rendered.run.tick, 0);
@@ -319,6 +323,10 @@ test('installed Play starts directly without downloading the already authenticat
   await running(p);
   assert.equal(h.requests.filter((url) => url.endsWith(chapter.path)).length, 0);
   assert.equal(p.$('pack-select').value, chapter.id);
+  assert.equal(
+    p.$('content-select-status').querySelector('.operation-status-label').textContent,
+    `${destination.campaign.levels[0].name} selected and ready.`,
+  );
   assert.deepEqual(p.errors, []);
 });
 

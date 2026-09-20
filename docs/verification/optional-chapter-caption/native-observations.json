@@ -1,0 +1,50 @@
+{
+  "sourceBase": "4bb553d06d62f7a8cce301c77b245573838bfdcb",
+  "appOverride": {
+    "bytes": 331645,
+    "sha256": "a9b517167bd4d00e6c3a3bdc42de82c5a24d21946f29a396a7d8445642041548"
+  },
+  "observer": "Codex CUA keyboard and AX state",
+  "input": "keyboard only",
+  "viewport": "1280x720 desktop in-app browser",
+  "url": "http://127.0.0.1:18800/game/",
+  "publicBefore": {
+    "status": "public issue reproduced, not a v070 correction",
+    "publicVersion": "v0.69.3",
+    "publicSource": "406637f36c039f991e83d241cb49d4568a871109",
+    "url": "https://mekhovov.github.io/revealline/releases/v0.69.3/site/game/",
+    "observer": "Codex CUA AX and read-only DOM",
+    "viewport": "1280x720",
+    "input": "keyboard Return on focused Missions, Escape back",
+    "selectedChapter": "FPV Front \u00b7 Illustrated Pressure",
+    "selectedMission": "Orchard Crossing",
+    "correctSurfaces": [
+      "Selected mission checkbox Orchard Crossing",
+      "Deploy bar Orchard Crossing",
+      "Paused real flight retains0percent/3lives/2:38/00000 before and after"
+    ],
+    "staleElement": "#content-select-status .operation-status-label",
+    "staleText": "First Signal \u00b7 First Signal selected. Continue a saved flight separately.",
+    "actualMarkup": "<span class=\"operation-status-label\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\">First Signal \u00b7 First Signal selected. Continue a saved flight separately.</span>",
+    "interpretation": "Stale completed selection-operation status after successful chapter change; not wrong actual mission. Source-level cause still requires inspection.",
+    "limitations": "No new runtime change, test, screenshot file, phase completion or physical input claim."
+  },
+  "after": [
+    "Title Start\u2192Missions\u2192More chapters\u2192Download & play10.2MiB Illustrated Pressure.",
+    "Pending operation focused visible Cancel; authenticated chapter opened its actual game canvas.",
+    "Escape paused Orchard Crossing at0percent/3lives/2:41/00000.",
+    "Keyboard ShiftTab\u2192Missions showed Orchard Crossing selected and ready, selected card Orchard Crossing and matching deploy bar.",
+    "Escape returned to exact Missions opener, still0percent/3lives/2:41/00000."
+  ],
+  "servedResponses": 360,
+  "uniqueResponsesVerified": 359,
+  "overriddenPaths": [
+    "game/app.mjs"
+  ],
+  "logReview": "Initial one-JSON-per-line parser refused concatenated complete objects at line19. Original log preserved; successive raw_decode reads all complete records before matching every response to exact Git/app bytes. No row discarded.",
+  "limits": [
+    "Local base plus one exact app override, not immutable release or public correction.",
+    "Public before separately observed on immutablev0.69.3.",
+    "No exported screenshots, real touch, physical controllers, offline or whole-phase acceptance."
+  ]
+}

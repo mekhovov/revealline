@@ -1,0 +1,10 @@
+{
+  "source": "4bb553d06d62f7a8cce301c77b245573838bfdcb",
+  "overrides": {
+    "game/app.mjs": {
+      "bytes": 331645,
+      "sha256": "a9b517167bd4d00e6c3a3bdc42de82c5a24d21946f29a396a7d8445642041548"
+    }
+  },
+  "scope": "Separate working proposal, not immutable release"
+}

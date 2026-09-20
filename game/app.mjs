@@ -6495,6 +6495,8 @@ try {
     updateLoadout();
     refreshMissionBrief();
     paintMissions();
+    if (preparedAttempt?.kind === 'world-play')
+      contentStatus(`${campaign.levels[levelIndex].name} selected and ready.`);
     overlay(campaignOverview && !practice ? 'campaign-complete' : 'ready', {
       preserveFocus: !!preparedAttempt,
     });
