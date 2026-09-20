@@ -1,0 +1,1629 @@
+{
+  "format": "BorderFeasibilityRoutesV1",
+  "evidence": "Omniscient development route search, seed 1. Replayed fresh and checkpoint-pinned. Feasibility only: not human difficulty, duration, enjoyment, mastery, Team or native-host acceptance.",
+  "sets": [
+    {
+      "bonuses": true,
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "49ec95e528f24408",
+          "fe3d4ca7aca1174c",
+          [
+            ["left", 84],
+            ["down", 414],
+            ["up", 258],
+            ["right", 720],
+            ["down", 120],
+            ["left", 714]
+          ]
+        ],
+        [
+          "second-landing",
+          "fb8c6ec51e1360ea",
+          "19867d707073bc0c",
+          [
+            ["left", 180],
+            ["down", 228],
+            ["right", 852],
+            ["left", 372],
+            ["down", 186]
+          ]
+        ],
+        [
+          "long-rail",
+          "0829d76e1b671479",
+          "8136811787e349e2",
+          [
+            ["right", 265],
+            ["down", 337],
+            ["left", 665],
+            ["up", 312],
+            ["right", 702]
+          ]
+        ],
+        [
+          "new-frontier",
+          "4fba7ecc8a545df9",
+          "8385e5bdb521fc10",
+          [
+            ["left", 252],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["right", 708],
+            ["up", 312],
+            ["left", 702]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "c2ddeccc465dd4d6",
+          "73640ce8cff51430",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 600],
+            ["left", 600],
+            ["down", 120],
+            ["left", 246],
+            ["right", 150],
+            ["down", 114],
+            ["up", 6],
+            ["down", 12],
+            ["right", 696],
+            ["up", 156],
+            ["left", 594]
+          ]
+        ],
+        [
+          "return-pocket",
+          "5cc6861ba089c144",
+          "25a780d3ae4595d6",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 42],
+            ["right", 396],
+            ["left", 240],
+            ["down", 174],
+            ["up", 6],
+            ["down", 12],
+            ["left", 336],
+            ["up", 414],
+            ["down", 330],
+            ["right", 336],
+            ["up", 96],
+            ["right", 72],
+            ["up", 234]
+          ]
+        ],
+        [
+          "border-remix",
+          "966d81574624f85a",
+          "c007889251ffef30",
+          [
+            ["down", 270],
+            ["up", 6],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 414],
+            ["right", 84],
+            ["up", 96],
+            ["right", 624],
+            ["left", 72],
+            ["up", 318],
+            ["down", 6],
+            ["up", 12],
+            ["left", 636],
+            ["down", 84],
+            ["right", 636],
+            ["left", 156],
+            ["down", 240],
+            ["left", 348],
+            ["up", 234],
+            ["down", 6],
+            ["up", 12],
+            ["right", 312],
+            ["down", 174]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": true,
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "49ec95e528f24408",
+          "488941d39e979efe",
+          [
+            ["left", 84],
+            ["down", 414],
+            ["up", 270],
+            ["right", 714],
+            ["left", 18],
+            ["right", 12],
+            ["down", 108],
+            ["left", 714]
+          ]
+        ],
+        [
+          "second-landing",
+          "fb8c6ec51e1360ea",
+          "0b6993b3350efd0c",
+          [
+            ["left", 180],
+            ["down", 228],
+            ["right", 846],
+            ["left", 354],
+            ["down", 186]
+          ]
+        ],
+        [
+          "long-rail",
+          "0829d76e1b671479",
+          "eeff34f63868240b",
+          [
+            ["right", 265],
+            ["down", 337],
+            ["left", 665],
+            ["up", 312],
+            ["right", 703]
+          ]
+        ],
+        [
+          "new-frontier",
+          "4fba7ecc8a545df9",
+          "67a269b94b231c64",
+          [
+            ["left", 252],
+            ["down", 414],
+            ["up", 18],
+            ["down", 12],
+            ["right", 708],
+            ["up", 312],
+            ["left", 702]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "c2ddeccc465dd4d6",
+          "6be5e44e47431d31",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 594],
+            ["left", 606],
+            ["down", 120],
+            ["left", 246],
+            ["right", 162],
+            ["down", 114],
+            ["up", 18],
+            ["down", 12],
+            ["right", 696],
+            ["up", 156],
+            ["left", 594]
+          ]
+        ],
+        [
+          "return-pocket",
+          "5cc6861ba089c144",
+          "79469cc689c47881",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 54],
+            ["right", 390],
+            ["left", 234],
+            ["up", 234],
+            ["down", 126],
+            ["left", 66],
+            ["right", 42],
+            ["down", 294],
+            ["up", 18],
+            ["down", 12],
+            ["left", 324],
+            ["up", 414]
+          ]
+        ],
+        [
+          "border-remix",
+          "966d81574624f85a",
+          "c2a232882b79638b",
+          [
+            ["down", 270],
+            ["up", 18],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 426],
+            ["right", 84],
+            ["up", 96],
+            ["right", 618],
+            ["left", 78],
+            ["up", 318],
+            ["down", 18],
+            ["up", 12],
+            ["left", 636],
+            ["down", 84],
+            ["right", 630],
+            ["left", 162],
+            ["down", 174],
+            ["up", 186],
+            ["left", 348],
+            ["down", 234],
+            ["up", 18],
+            ["down", 12],
+            ["right", 276],
+            ["up", 60],
+            ["right", 12],
+            ["up", 174]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": true,
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "83d1701b3ea6521e",
+          "a81899c5f8c37536",
+          [
+            ["left", 84],
+            ["down", 414],
+            ["up", 258],
+            ["right", 720],
+            ["left", 720],
+            ["down", 132],
+            ["right", 714]
+          ]
+        ],
+        [
+          "second-landing",
+          "ac509f2ec0a09192",
+          "3f3a12883856b326",
+          [
+            ["left", 180],
+            ["down", 252],
+            ["right", 852],
+            ["left", 432],
+            ["down", 162]
+          ]
+        ],
+        [
+          "long-rail",
+          "ddefeda676714027",
+          "27f9267c77b355bb",
+          [
+            ["right", 265],
+            ["down", 337],
+            ["left", 106],
+            ["up", 398],
+            ["down", 78],
+            ["left", 570]
+          ]
+        ],
+        [
+          "new-frontier",
+          "351281f622360469",
+          "2c09abed32fc1db9",
+          [
+            ["left", 252],
+            ["down", 414],
+            ["up", 102],
+            ["right", 702],
+            ["left", 150],
+            ["up", 306],
+            ["down", 6],
+            ["up", 12],
+            ["left", 456],
+            ["down", 312],
+            ["right", 456],
+            ["up", 240],
+            ["left", 450]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "839bad5c03e725e4",
+          "bddc3e9e70ea53af",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 594],
+            ["left", 594],
+            ["down", 120],
+            ["left", 246],
+            ["right", 6],
+            ["up", 12],
+            ["right", 834]
+          ]
+        ],
+        [
+          "return-pocket",
+          "307faf09224a5486",
+          "8277be13bc5fcbaa",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 42],
+            ["right", 390],
+            ["left", 222],
+            ["up", 234],
+            ["down", 114],
+            ["left", 66],
+            ["right", 30],
+            ["down", 294],
+            ["up", 6],
+            ["down", 12],
+            ["left", 324],
+            ["up", 414]
+          ]
+        ],
+        [
+          "border-remix",
+          "10c7fdfd7b84d09e",
+          "b49d8eccc69843ec",
+          [
+            ["down", 270],
+            ["up", 6],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 414],
+            ["right", 84],
+            ["up", 96],
+            ["right", 618],
+            ["left", 6],
+            ["right", 12],
+            ["up", 60],
+            ["left", 198],
+            ["right", 198],
+            ["up", 240],
+            ["left", 702],
+            ["right", 498],
+            ["down", 240],
+            ["up", 204],
+            ["left", 498],
+            ["right", 18],
+            ["down", 360],
+            ["up", 336],
+            ["right", 480],
+            ["left", 48],
+            ["down", 174]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": true,
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "83d1701b3ea6521e",
+          "2214d50bd981f8fa",
+          [
+            ["left", 84],
+            ["down", 414],
+            ["up", 270],
+            ["right", 714],
+            ["left", 726],
+            ["down", 132],
+            ["right", 714]
+          ]
+        ],
+        [
+          "second-landing",
+          "ac509f2ec0a09192",
+          "d642cb7ce9a94d82",
+          [
+            ["left", 180],
+            ["down", 252],
+            ["right", 846],
+            ["left", 402],
+            ["down", 162]
+          ]
+        ],
+        [
+          "long-rail",
+          "ddefeda676714027",
+          "826cfb2c286aed3d",
+          [
+            ["right", 265],
+            ["down", 337],
+            ["left", 106],
+            ["up", 410],
+            ["down", 90],
+            ["left", 558]
+          ]
+        ],
+        [
+          "new-frontier",
+          "351281f622360469",
+          "c0ec5318105f2713",
+          [
+            ["left", 252],
+            ["down", 414],
+            ["up", 114],
+            ["right", 702],
+            ["left", 162],
+            ["up", 306],
+            ["down", 18],
+            ["up", 12],
+            ["left", 468],
+            ["down", 306],
+            ["up", 18],
+            ["down", 12],
+            ["right", 468],
+            ["up", 240],
+            ["left", 462]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "839bad5c03e725e4",
+          "569e401656ed63a1",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 594],
+            ["left", 606],
+            ["down", 120],
+            ["left", 246],
+            ["right", 18],
+            ["up", 12],
+            ["right", 834]
+          ]
+        ],
+        [
+          "return-pocket",
+          "307faf09224a5486",
+          "ecd0d4ee6ff5caaf",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 78],
+            ["right", 390],
+            ["left", 282],
+            ["down", 198],
+            ["up", 210],
+            ["left", 12],
+            ["up", 210],
+            ["down", 18],
+            ["right", 12],
+            ["down", 408],
+            ["left", 348],
+            ["up", 414]
+          ]
+        ],
+        [
+          "border-remix",
+          "10c7fdfd7b84d09e",
+          "4b398a2b68ea6029",
+          [
+            ["down", 270],
+            ["up", 18],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 18],
+            ["up", 12],
+            ["right", 612],
+            ["down", 414],
+            ["up", 318],
+            ["left", 606],
+            ["right", 270],
+            ["down", 96],
+            ["right", 342]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": true,
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "526231519182a54d",
+          "931e219905119ef0",
+          [
+            ["left", 72],
+            ["down", 414],
+            ["up", 126],
+            ["right", 708],
+            ["left", 144],
+            ["up", 282],
+            ["down", 6],
+            ["up", 12],
+            ["left", 564],
+            ["down", 108],
+            ["right", 558]
+          ]
+        ],
+        [
+          "second-landing",
+          "43000a96bf04f5c5",
+          "544c0ddac2ef63ad",
+          [
+            ["left", 180],
+            ["down", 252],
+            ["right", 852],
+            ["left", 396],
+            ["down", 162]
+          ]
+        ],
+        [
+          "long-rail",
+          "ee87959ffca9a668",
+          "3f795942fd403162",
+          [
+            ["right", 265],
+            ["down", 337],
+            ["up", 281],
+            ["left", 702]
+          ]
+        ],
+        [
+          "new-frontier",
+          "11dd246785a37092",
+          "d5dd89697a757f03",
+          [
+            ["right", 456],
+            ["down", 252],
+            ["left", 846],
+            ["right", 282],
+            ["up", 246],
+            ["down", 6],
+            ["up", 12],
+            ["right", 564],
+            ["down", 72],
+            ["left", 558]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "c38dc5dbbaac5761",
+          "f620ab5deebfbd97",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 600],
+            ["left", 600],
+            ["down", 120],
+            ["left", 246],
+            ["right", 246],
+            ["down", 36],
+            ["right", 594]
+          ]
+        ],
+        [
+          "return-pocket",
+          "e8b7d103431dbfd2",
+          "78d8b61084988233",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 66],
+            ["right", 396],
+            ["up", 216],
+            ["left", 300],
+            ["down", 120],
+            ["right", 300],
+            ["down", 300],
+            ["left", 564],
+            ["up", 414],
+            ["down", 114],
+            ["right", 228],
+            ["down", 162]
+          ]
+        ],
+        [
+          "border-remix",
+          "82d8bd72f77582d8",
+          "d8b9d4d0099f2be0",
+          [
+            ["down", 270],
+            ["up", 6],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 6],
+            ["up", 12],
+            ["right", 708],
+            ["down", 348],
+            ["left", 618],
+            ["right", 474],
+            ["up", 342],
+            ["down", 78],
+            ["left", 558],
+            ["right", 30],
+            ["down", 336],
+            ["right", 48],
+            ["up", 72],
+            ["right", 264],
+            ["up", 258]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": true,
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "526231519182a54d",
+          "58c6b1acfa619fff",
+          [
+            ["left", 72],
+            ["down", 414],
+            ["up", 138],
+            ["right", 702],
+            ["left", 162],
+            ["up", 282],
+            ["down", 18],
+            ["up", 12],
+            ["left", 552],
+            ["down", 108],
+            ["right", 546]
+          ]
+        ],
+        [
+          "second-landing",
+          "43000a96bf04f5c5",
+          "5698bcf2748cfd7f",
+          [
+            ["left", 180],
+            ["down", 252],
+            ["right", 846],
+            ["left", 402],
+            ["down", 162]
+          ]
+        ],
+        [
+          "long-rail",
+          "ee87959ffca9a668",
+          "430df6f39402a0e1",
+          [
+            ["right", 265],
+            ["down", 337],
+            ["up", 281],
+            ["left", 703]
+          ]
+        ],
+        [
+          "new-frontier",
+          "11dd246785a37092",
+          "4327a083807d28ad",
+          [
+            ["right", 456],
+            ["down", 252],
+            ["left", 846],
+            ["right", 294],
+            ["up", 246],
+            ["down", 18],
+            ["up", 12],
+            ["right", 564],
+            ["down", 72],
+            ["left", 558]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "c38dc5dbbaac5761",
+          "8a0b0e3311df5eb2",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 594],
+            ["left", 606],
+            ["down", 120],
+            ["left", 246],
+            ["right", 258],
+            ["down", 36],
+            ["right", 594]
+          ]
+        ],
+        [
+          "return-pocket",
+          "e8b7d103431dbfd2",
+          "c8406f63536b9df7",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 78],
+            ["right", 390],
+            ["left", 282],
+            ["down", 198],
+            ["up", 18],
+            ["down", 12],
+            ["left", 348],
+            ["up", 414],
+            ["down", 18],
+            ["up", 12],
+            ["right", 432],
+            ["down", 210],
+            ["up", 18],
+            ["down", 12],
+            ["left", 204],
+            ["up", 96],
+            ["right", 72],
+            ["up", 114]
+          ]
+        ],
+        [
+          "border-remix",
+          "82d8bd72f77582d8",
+          "c30f8f2156696c78",
+          [
+            ["down", 270],
+            ["up", 18],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 18],
+            ["up", 12],
+            ["right", 708],
+            ["down", 348],
+            ["left", 618],
+            ["right", 486],
+            ["up", 342],
+            ["down", 90],
+            ["left", 558],
+            ["right", 18],
+            ["left", 12],
+            ["down", 24],
+            ["right", 564],
+            ["left", 204],
+            ["down", 234]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": false,
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "49ec95e528f24408",
+          "fe3d4ca7aca1174c",
+          [
+            ["left", 84],
+            ["down", 414],
+            ["up", 258],
+            ["right", 720],
+            ["down", 120],
+            ["left", 714]
+          ]
+        ],
+        [
+          "second-landing",
+          "a025c23a130e89b5",
+          "69a046a229bb694f",
+          [
+            ["left", 180],
+            ["down", 228],
+            ["right", 852],
+            ["left", 372],
+            ["down", 186]
+          ]
+        ],
+        [
+          "long-rail",
+          "97fa23b8e752ed08",
+          "0215181e7675df46",
+          [
+            ["right", 288],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["left", 708],
+            ["up", 312],
+            ["right", 702]
+          ]
+        ],
+        [
+          "new-frontier",
+          "4fba7ecc8a545df9",
+          "8385e5bdb521fc10",
+          [
+            ["left", 252],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["right", 708],
+            ["up", 312],
+            ["left", 702]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "5540f98e02c272a7",
+          "865bee4002231d66",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 600],
+            ["left", 600],
+            ["down", 120],
+            ["left", 246],
+            ["right", 150],
+            ["down", 114],
+            ["up", 6],
+            ["down", 12],
+            ["right", 696],
+            ["up", 156],
+            ["left", 594]
+          ]
+        ],
+        [
+          "return-pocket",
+          "c8380fd4cd89ee3f",
+          "1f836a2a45b4c8b0",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 66],
+            ["right", 396],
+            ["up", 216],
+            ["left", 300],
+            ["down", 120],
+            ["right", 300],
+            ["down", 300],
+            ["left", 564],
+            ["up", 414],
+            ["down", 114],
+            ["right", 228],
+            ["down", 162]
+          ]
+        ],
+        [
+          "border-remix",
+          "cb5f3740cc4d36c2",
+          "8ab911fa0b70a94b",
+          [
+            ["down", 270],
+            ["up", 6],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 414],
+            ["right", 84],
+            ["up", 96],
+            ["right", 624],
+            ["left", 72],
+            ["up", 318],
+            ["down", 6],
+            ["up", 12],
+            ["left", 636],
+            ["down", 84],
+            ["right", 636],
+            ["left", 156],
+            ["down", 240],
+            ["left", 348],
+            ["up", 234],
+            ["down", 6],
+            ["up", 12],
+            ["right", 312],
+            ["down", 174]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": false,
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "49ec95e528f24408",
+          "488941d39e979efe",
+          [
+            ["left", 84],
+            ["down", 414],
+            ["up", 270],
+            ["right", 714],
+            ["left", 18],
+            ["right", 12],
+            ["down", 108],
+            ["left", 714]
+          ]
+        ],
+        [
+          "second-landing",
+          "a025c23a130e89b5",
+          "673a5eb110d2f0e4",
+          [
+            ["left", 180],
+            ["down", 228],
+            ["right", 846],
+            ["left", 354],
+            ["down", 186]
+          ]
+        ],
+        [
+          "long-rail",
+          "97fa23b8e752ed08",
+          "67bdf417fea3b81a",
+          [
+            ["right", 288],
+            ["down", 414],
+            ["up", 18],
+            ["down", 12],
+            ["left", 708],
+            ["up", 312],
+            ["right", 702]
+          ]
+        ],
+        [
+          "new-frontier",
+          "4fba7ecc8a545df9",
+          "67a269b94b231c64",
+          [
+            ["left", 252],
+            ["down", 414],
+            ["up", 18],
+            ["down", 12],
+            ["right", 708],
+            ["up", 312],
+            ["left", 702]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "5540f98e02c272a7",
+          "eccd6b5d893fb379",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 594],
+            ["left", 606],
+            ["down", 120],
+            ["left", 246],
+            ["right", 162],
+            ["down", 114],
+            ["up", 18],
+            ["down", 12],
+            ["right", 696],
+            ["up", 156],
+            ["left", 594]
+          ]
+        ],
+        [
+          "return-pocket",
+          "c8380fd4cd89ee3f",
+          "eb08349d5324b655",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 78],
+            ["right", 390],
+            ["left", 282],
+            ["down", 198],
+            ["up", 210],
+            ["left", 12],
+            ["up", 210],
+            ["down", 18],
+            ["right", 12],
+            ["down", 408],
+            ["left", 348],
+            ["up", 414]
+          ]
+        ],
+        [
+          "border-remix",
+          "cb5f3740cc4d36c2",
+          "b74b96675d1aa206",
+          [
+            ["down", 270],
+            ["up", 18],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 426],
+            ["right", 84],
+            ["up", 96],
+            ["right", 618],
+            ["left", 78],
+            ["up", 318],
+            ["down", 18],
+            ["up", 12],
+            ["left", 636],
+            ["down", 84],
+            ["right", 630],
+            ["left", 162],
+            ["down", 174],
+            ["up", 186],
+            ["left", 348],
+            ["down", 234],
+            ["up", 18],
+            ["down", 12],
+            ["right", 276],
+            ["up", 60],
+            ["right", 12],
+            ["up", 174]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": false,
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "83d1701b3ea6521e",
+          "a81899c5f8c37536",
+          [
+            ["left", 84],
+            ["down", 414],
+            ["up", 258],
+            ["right", 720],
+            ["left", 720],
+            ["down", 132],
+            ["right", 714]
+          ]
+        ],
+        [
+          "second-landing",
+          "95ff4e8465da1cb7",
+          "e928047aa625747e",
+          [
+            ["left", 180],
+            ["down", 252],
+            ["right", 852],
+            ["left", 432],
+            ["down", 162]
+          ]
+        ],
+        [
+          "long-rail",
+          "dc5db83a8fd95080",
+          "8d43ac1e50363cfe",
+          [
+            ["right", 288],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["left", 180],
+            ["up", 414],
+            ["down", 90],
+            ["left", 522]
+          ]
+        ],
+        [
+          "new-frontier",
+          "351281f622360469",
+          "2c09abed32fc1db9",
+          [
+            ["left", 252],
+            ["down", 414],
+            ["up", 102],
+            ["right", 702],
+            ["left", 150],
+            ["up", 306],
+            ["down", 6],
+            ["up", 12],
+            ["left", 456],
+            ["down", 312],
+            ["right", 456],
+            ["up", 240],
+            ["left", 450]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "2620e797441adb57",
+          "844096511112f25e",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 594],
+            ["left", 594],
+            ["down", 120],
+            ["left", 246],
+            ["right", 6],
+            ["up", 12],
+            ["right", 834]
+          ]
+        ],
+        [
+          "return-pocket",
+          "72d2348f85dabcc9",
+          "a111a1402e349c59",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 66],
+            ["right", 390],
+            ["left", 270],
+            ["down", 198],
+            ["up", 198],
+            ["left", 12],
+            ["up", 210],
+            ["down", 6],
+            ["right", 12],
+            ["down", 408],
+            ["left", 348],
+            ["up", 414]
+          ]
+        ],
+        [
+          "border-remix",
+          "7160d2fcae38fac6",
+          "49033c98c08c0885",
+          [
+            ["down", 270],
+            ["up", 6],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 414],
+            ["right", 84],
+            ["up", 96],
+            ["right", 618],
+            ["left", 6],
+            ["right", 12],
+            ["up", 60],
+            ["left", 198],
+            ["right", 198],
+            ["up", 240],
+            ["left", 702],
+            ["right", 498],
+            ["down", 240],
+            ["up", 204],
+            ["left", 498],
+            ["right", 18],
+            ["down", 360],
+            ["up", 336],
+            ["right", 480],
+            ["left", 48],
+            ["down", 174]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": false,
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "83d1701b3ea6521e",
+          "2214d50bd981f8fa",
+          [
+            ["left", 84],
+            ["down", 414],
+            ["up", 270],
+            ["right", 714],
+            ["left", 726],
+            ["down", 132],
+            ["right", 714]
+          ]
+        ],
+        [
+          "second-landing",
+          "95ff4e8465da1cb7",
+          "cfc17576b99f555d",
+          [
+            ["left", 180],
+            ["down", 252],
+            ["right", 846],
+            ["left", 402],
+            ["down", 162]
+          ]
+        ],
+        [
+          "long-rail",
+          "dc5db83a8fd95080",
+          "701bbceff6df0a56",
+          [
+            ["right", 288],
+            ["down", 414],
+            ["up", 18],
+            ["down", 12],
+            ["left", 180],
+            ["up", 414],
+            ["down", 102],
+            ["left", 522]
+          ]
+        ],
+        [
+          "new-frontier",
+          "351281f622360469",
+          "c0ec5318105f2713",
+          [
+            ["left", 252],
+            ["down", 414],
+            ["up", 114],
+            ["right", 702],
+            ["left", 162],
+            ["up", 306],
+            ["down", 18],
+            ["up", 12],
+            ["left", 468],
+            ["down", 306],
+            ["up", 18],
+            ["down", 12],
+            ["right", 468],
+            ["up", 240],
+            ["left", 462]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "2620e797441adb57",
+          "eddbfca5405009e7",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 594],
+            ["left", 606],
+            ["down", 120],
+            ["left", 246],
+            ["right", 18],
+            ["up", 12],
+            ["right", 834]
+          ]
+        ],
+        [
+          "return-pocket",
+          "72d2348f85dabcc9",
+          "7ec2c76d1a8e6404",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 78],
+            ["right", 390],
+            ["left", 282],
+            ["down", 198],
+            ["up", 210],
+            ["left", 12],
+            ["up", 210],
+            ["down", 18],
+            ["right", 12],
+            ["down", 408],
+            ["left", 348],
+            ["up", 414]
+          ]
+        ],
+        [
+          "border-remix",
+          "7160d2fcae38fac6",
+          "58270931205c8f66",
+          [
+            ["down", 270],
+            ["up", 18],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 18],
+            ["up", 12],
+            ["right", 612],
+            ["down", 414],
+            ["up", 318],
+            ["left", 606],
+            ["right", 270],
+            ["down", 96],
+            ["right", 342]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": false,
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "526231519182a54d",
+          "931e219905119ef0",
+          [
+            ["left", 72],
+            ["down", 414],
+            ["up", 126],
+            ["right", 708],
+            ["left", 144],
+            ["up", 282],
+            ["down", 6],
+            ["up", 12],
+            ["left", 564],
+            ["down", 108],
+            ["right", 558]
+          ]
+        ],
+        [
+          "second-landing",
+          "dea3c634dc1ae634",
+          "e672e4fe2ccba6ba",
+          [
+            ["left", 180],
+            ["down", 252],
+            ["right", 852],
+            ["left", 396],
+            ["down", 162]
+          ]
+        ],
+        [
+          "long-rail",
+          "55d24ed50117b041",
+          "52155b20a3f7d92f",
+          [
+            ["right", 288],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["left", 204],
+            ["up", 414],
+            ["down", 90],
+            ["left", 498]
+          ]
+        ],
+        [
+          "new-frontier",
+          "11dd246785a37092",
+          "d5dd89697a757f03",
+          [
+            ["right", 456],
+            ["down", 252],
+            ["left", 846],
+            ["right", 282],
+            ["up", 246],
+            ["down", 6],
+            ["up", 12],
+            ["right", 564],
+            ["down", 72],
+            ["left", 558]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "8a981aded6e68fc6",
+          "17c1b35034ee2391",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 600],
+            ["left", 600],
+            ["down", 120],
+            ["left", 246],
+            ["right", 246],
+            ["down", 36],
+            ["right", 594]
+          ]
+        ],
+        [
+          "return-pocket",
+          "454adaa2c567989b",
+          "506fde7f3d101938",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 66],
+            ["right", 396],
+            ["up", 216],
+            ["left", 300],
+            ["down", 120],
+            ["right", 300],
+            ["down", 300],
+            ["left", 564],
+            ["up", 414],
+            ["down", 114],
+            ["right", 228],
+            ["down", 162]
+          ]
+        ],
+        [
+          "border-remix",
+          "f6e0228d4bf40054",
+          "c21d92fb72b6e5f3",
+          [
+            ["down", 270],
+            ["up", 6],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 6],
+            ["up", 12],
+            ["right", 708],
+            ["down", 348],
+            ["left", 618],
+            ["right", 474],
+            ["up", 342],
+            ["down", 78],
+            ["left", 558],
+            ["right", 30],
+            ["down", 336],
+            ["right", 48],
+            ["up", 72],
+            ["right", 264],
+            ["up", 258]
+          ]
+        ]
+      ]
+    },
+    {
+      "bonuses": false,
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "rows": [
+        [
+          "behind-the-patrol",
+          "526231519182a54d",
+          "58c6b1acfa619fff",
+          [
+            ["left", 72],
+            ["down", 414],
+            ["up", 138],
+            ["right", 702],
+            ["left", 162],
+            ["up", 282],
+            ["down", 18],
+            ["up", 12],
+            ["left", 552],
+            ["down", 108],
+            ["right", 546]
+          ]
+        ],
+        [
+          "second-landing",
+          "dea3c634dc1ae634",
+          "87c5e2fca85f7e00",
+          [
+            ["left", 180],
+            ["down", 252],
+            ["right", 846],
+            ["left", 402],
+            ["down", 162]
+          ]
+        ],
+        [
+          "long-rail",
+          "55d24ed50117b041",
+          "7ddbb1fa4317b994",
+          [
+            ["right", 288],
+            ["down", 414],
+            ["up", 18],
+            ["down", 12],
+            ["left", 204],
+            ["up", 414],
+            ["down", 102],
+            ["left", 498]
+          ]
+        ],
+        [
+          "new-frontier",
+          "11dd246785a37092",
+          "4327a083807d28ad",
+          [
+            ["right", 456],
+            ["down", 252],
+            ["left", 846],
+            ["right", 294],
+            ["up", 246],
+            ["down", 18],
+            ["up", 12],
+            ["right", 564],
+            ["down", 72],
+            ["left", 558]
+          ]
+        ],
+        [
+          "turn-the-corner",
+          "8a981aded6e68fc6",
+          "73410ff819a45572",
+          [
+            ["down", 12],
+            ["left", 108],
+            ["down", 12],
+            ["right", 594],
+            ["left", 606],
+            ["down", 120],
+            ["left", 246],
+            ["right", 258],
+            ["down", 36],
+            ["right", 594]
+          ]
+        ],
+        [
+          "return-pocket",
+          "454adaa2c567989b",
+          "32b437d5e9fc87e1",
+          [
+            ["up", 60],
+            ["right", 144],
+            ["down", 138],
+            ["up", 78],
+            ["right", 390],
+            ["left", 282],
+            ["down", 198],
+            ["up", 18],
+            ["down", 12],
+            ["left", 348],
+            ["up", 414],
+            ["down", 18],
+            ["up", 12],
+            ["right", 432],
+            ["down", 210],
+            ["up", 18],
+            ["down", 12],
+            ["left", 204],
+            ["up", 96],
+            ["right", 72],
+            ["up", 114]
+          ]
+        ],
+        [
+          "border-remix",
+          "f6e0228d4bf40054",
+          "d65f24ac807214a0",
+          [
+            ["down", 270],
+            ["up", 18],
+            ["down", 12],
+            ["left", 84],
+            ["up", 414],
+            ["down", 18],
+            ["up", 12],
+            ["right", 708],
+            ["down", 348],
+            ["left", 618],
+            ["right", 486],
+            ["up", 342],
+            ["down", 90],
+            ["left", 558],
+            ["right", 18],
+            ["left", 12],
+            ["down", 24],
+            ["right", 564],
+            ["left", 204],
+            ["down", 234]
+          ]
+        ]
+      ]
+    }
+  ]
+}

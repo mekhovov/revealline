@@ -30,6 +30,25 @@ test('Border greyboxes extend the opening band through two one-rule arcs and an 
     );
   }
   assert.deepEqual(project.missions.at(-1).design.introduces, []);
+  for (const id of ['new-frontier', 'turn-the-corner']) {
+    const mission = project.missions.find((row) => row.id === id);
+    assert(mission.actors.some((actor) => actor.role === 'frontier-patrol'));
+    assert(
+      !mission.actors.some((actor) => actor.role === 'perimeter-patrol'),
+      `${id}: practice frontier twice before combining patrol domains`,
+    );
+    assert(!mission.design.combines.includes('perimeter-patrol'));
+  }
+  assert(
+    project.missions
+      .find((row) => row.id === 'turn-the-corner')
+      .design.practices.includes('frontier-patrol'),
+  );
+  assert(
+    project.missions
+      .find((row) => row.id === 'return-pocket')
+      .design.combines.includes('frontier-patrol'),
+  );
   assert.equal(resolveContentJourney(source, { packIds: ['journey-border'] }).missions.length, 6);
   assert.equal(resolveContentJourney(source, { packIds: ['border-remixes'] }).missions.length, 1);
   assert.deepEqual(

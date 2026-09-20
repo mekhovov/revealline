@@ -143,23 +143,18 @@ const candidates = [
       { x: 18, y: 12, w: 25, h: 3 },
       { x: 18, y: 15, w: 4, h: 14 },
     ],
-    actors: [
-      keeper('west', 9.5, 24.5, [-1, -1]),
-      keeper('east', 60.5, 20.5),
-      outer(71.5, 9.5),
-      frontier(17, 20),
-    ],
+    actors: [keeper('west', 9.5, 24.5, [-1, -1]), keeper('east', 60.5, 20.5), frontier(17, 20)],
     bonuses: [bonus('enemy-slow', 60.5, 10.5)],
     departure: 'left',
     introduces: [],
     decision:
       'Extend the short arm to redirect contour pressure, or reach around the long arm for more ground?',
-    lesson: 'Outer and frontier patrols retain distinct routes after the same closure.',
+    lesson: 'Practice changing a frontier route before combining it with an outer patrol.',
     counterplay:
       'Use the broad L-shaped foundation to change approach; the optional slow pickup is not required.',
     consequence:
-      'The chosen enclosure lengthens one contour without changing the outer patrol route.',
-    moment: 'One capture visibly separates the two patrol movement domains.',
+      'The chosen enclosure changes the contour around one arm and the next useful return.',
+    moment: 'A new return draws the frontier patrol around a different side of the L.',
     mastery: 'Close from both arms without losing a life.',
     duration: [75, 150],
   },
@@ -185,7 +180,8 @@ const candidates = [
     introduces: [],
     decision:
       'Close the pocket mouth first or cross outward while the frontier patrol works around the other side?',
-    lesson: 'An optional freeze window pauses threats, not the need for a legal return.',
+    lesson:
+      'Combine distinct outer and frontier patrol routes; the optional freeze never replaces a legal return.',
     counterplay:
       'The mouth stays broad enough for a direct route without collecting the freeze pickup.',
     consequence:
@@ -235,6 +231,7 @@ export const BORDER_FIRST_RETURNS = freezeDesign(
 export function createBorderCandidates() {
   const project = createStarterProject('border-greybox-candidates');
   project.name = 'Border Bloom · greybox candidates';
+  project.revision = 'greybox-2';
   project.maps = [];
   project.missions = candidates.map((candidate, index) => {
     const template = createStarterProject().missions[0];
@@ -255,7 +252,7 @@ export function createBorderCandidates() {
       ...template,
       id: candidate.id,
       name: candidate.name,
-      revision: 'greybox-1',
+      revision: index >= 3 ? 'greybox-2' : 'greybox-1',
       map: { id: map.id, revision: map.revision },
       actors: structuredClone(candidate.actors),
       bonuses: structuredClone(candidate.bonuses),
@@ -269,9 +266,16 @@ export function createBorderCandidates() {
         memorableMoment: candidate.moment,
         mastery: candidate.mastery,
         introduces: [...candidate.introduces],
-        practices: ['enemy-seeded-closure', 'foundations', ...(index ? ['perimeter-patrol'] : [])],
+        practices: [
+          'enemy-seeded-closure',
+          'foundations',
+          ...(index > 0 && candidate.actors.some((actor) => actor.role === 'perimeter-patrol')
+            ? ['perimeter-patrol']
+            : []),
+          ...(index > 3 ? ['frontier-patrol'] : []),
+        ],
         combines:
-          index >= 4
+          index >= 5
             ? ['perimeter-patrol', 'frontier-patrol', 'enemy-seeded-closure']
             : ['foundations', 'enemy-seeded-closure'],
         durationSeconds: [...candidate.duration],
