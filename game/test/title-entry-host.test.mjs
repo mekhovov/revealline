@@ -235,7 +235,7 @@ for (const action of [
     if (action === 'cancel') assert.equal(h.doc.activeElement.id, 'shell-featured');
     assert.deepEqual(h.errors, []);
   });
-for (const action of ['complete', 'cancel', 'new-save', 'missions', 'blur'])
+for (const action of ['complete', 'cancel', 'escape', 'new-save', 'missions', 'blur'])
   test(`saved original restore: ${action} is checked before adopting a new run`, async (t) => {
     const f = await media(t),
       storage = memoryStorage();
@@ -275,7 +275,27 @@ for (const action of ['complete', 'cancel', 'new-save', 'missions', 'blur'])
       assert.equal(h.$('shell-flight-cancel').hidden, false);
       assert.equal(h.doc.activeElement.id, 'shell-flight-cancel');
       assert.equal(h.$('shell-home').open, true);
-      if (action === 'cancel') h.$('shell-flight-cancel').click();
+      if (action === 'cancel') {
+        h.$('shell-flight-cancel').click();
+        assert.equal(
+          h.$('flight-preparation-cancel').hidden,
+          true,
+          'Title cancellation settles field status before a held decoder finishes',
+        );
+        assert.match(h.$('flight-preparation-status').textContent, /Preparation cancelled/);
+      }
+      if (action === 'escape') {
+        const event = new Event('cancel', { cancelable: true });
+        h.$('shell-home').dispatchEvent(event);
+        assert.equal(
+          event.defaultPrevented,
+          true,
+          'Back cancels preparation without closing title',
+        );
+        assert.equal(h.$('shell-home').open, true);
+        assert.equal(h.doc.activeElement.id, 'shell-continue');
+        assert.equal(h.$('flight-preparation-cancel').hidden, true);
+      }
       if (action === 'new-save') storage.setItem(slot, 'newer-saved-flight');
       if (action === 'missions') {
         h.$('shell-play').click();
@@ -299,6 +319,16 @@ for (const action of ['complete', 'cancel', 'new-save', 'missions', 'blur'])
       assert.equal(
         storage.getItem(slot),
         action === 'new-save' ? 'newer-saved-flight' : capturedRaw,
+      );
+      assert.equal(
+        h.$('flight-preparation-cancel').hidden,
+        true,
+        'Settled title restore cannot leave a stale preparation action behind',
+      );
+      assert.doesNotMatch(
+        h.$('flight-preparation-status').textContent,
+        /Verifying your saved flight|Preparing the chosen picture/,
+        'Both title and field status must settle after completion or cancellation',
       );
       assert.deepEqual(h.errors, []);
     });

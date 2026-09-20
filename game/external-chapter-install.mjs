@@ -20,6 +20,9 @@ import {
 } from './external-chapter.mjs';
 
 export const EXTERNAL_INSTALL_JOURNAL_FORMAT = 'revealline-external-chapter-install.v1';
+export const RETAINED_PICTURE_JOURNAL_FORMAT = 'revealline-external-chapter-install.v2';
+const pictureReviews = new WeakMap();
+export const isRetainedPictureReview = (value) => pictureReviews.has(value);
 const hash = (v) => typeof v === 'string' && /^[a-f0-9]{64}$/.test(v);
 const digest = (v) => externalChapterHash(canonicalJSON(v));
 const exact = (v, keys, label) => {
@@ -51,11 +54,14 @@ function journal(candidate, keys) {
       'beforeIndex',
       'afterIndex',
       'media',
+      ...(j.format === RETAINED_PICTURE_JOURNAL_FORMAT ? ['assignmentPolicy'] : []),
     ],
     'Chapter install journal',
   );
   required(
-    j.format === EXTERNAL_INSTALL_JOURNAL_FORMAT &&
+    (j.format === EXTERNAL_INSTALL_JOURNAL_FORMAT ||
+      (j.format === RETAINED_PICTURE_JOURNAL_FORMAT &&
+        j.assignmentPolicy === 'preserve-retained')) &&
       typeof j.token === 'string' &&
       /^[a-f0-9-]{36}$/.test(j.token) &&
       j.profileKey === keys.profileKey &&
@@ -196,7 +202,8 @@ export function createExternalChapterInstaller({
     );
     return next;
   }
-  function matchesRequired(document, item) {
+  function matchesRequired(document, item, preserveAssignments = false) {
+    const conflicts = [];
     for (const p of item.imported.document.library.presentations) {
       const actual = document.library.presentations.find(
         (x) => x.id === p.id && x.revision === p.revision,
@@ -205,14 +212,35 @@ export function createExternalChapterInstaller({
         (x) => canonicalJSON(x.identity) === canonicalJSON(p.identity),
       );
       required(
-        canonicalJSON(actual) === canonicalJSON(p) &&
-          assignment?.presentationId === p.id &&
-          assignment?.revision === p.revision,
+        canonicalJSON(actual) === canonicalJSON(p),
+        'A retained picture revision conflicts with the external chapter.',
+      );
+      if (assignment?.presentationId !== p.id || assignment?.revision !== p.revision)
+        conflicts.push(
+          Object.freeze({
+            identity: p.identity,
+            levelName:
+              item.pack.campaigns
+                .flatMap((campaign) => campaign.levels)
+                .find((level) => level.id === p.identity.levelId)?.name ?? p.identity.levelId,
+            original: Object.freeze({ presentationId: p.id, revision: p.revision }),
+            retained: assignment
+              ? Object.freeze({
+                  presentationId: assignment.presentationId,
+                  revision: assignment.revision,
+                })
+              : null,
+          }),
+        );
+    }
+    if (!preserveAssignments)
+      required(
+        !conflicts.length,
         'A retained picture binding conflicts with the external chapter.',
       );
-    }
+    return Object.freeze(conflicts);
   }
-  async function mediaReview(item, signal) {
+  async function mediaReview(item, signal, { pictureReview, preserveAssignments = false } = {}) {
     const review = await prepareMediaBundleRestore(item.imported, {
       store,
       assignmentMode: 'preserve',
@@ -220,13 +248,43 @@ export function createExternalChapterInstaller({
       decodeImage,
     });
     guard(signal);
-    matchesRequired(review.document, item);
+    // Required immutable originals must always match, regardless of assignment policy.
+    const conflicts = matchesRequired(review.document, item, true);
     const before = await store.read({ signal });
     guard(signal);
     required(
       before.generation === review.expectedGeneration,
       'Media changed during chapter preparation.',
     );
+    if (pictureReview !== undefined) {
+      const saved = pictureReviews.get(pictureReview);
+      pictureReviews.delete(pictureReview);
+      required(
+        saved &&
+          saved.manager === managedStore &&
+          saved.profileKey === keys.profileKey &&
+          saved.packsKey === keys.packsKey &&
+          saved.descriptor === canonicalJSON(item.descriptor) &&
+          saved.generation === before.generation &&
+          saved.beforeSha256 === (await digest(before.document)),
+        'Picture review expired or changed. Review this chapter again before installing.',
+      );
+      preserveAssignments = true;
+    }
+    if (conflicts.length && !preserveAssignments) {
+      const conflict = new Error('A retained picture binding conflicts with the external chapter.');
+      conflict.name = 'RetainedPictureAssignmentConflict';
+      conflict.conflicts = conflicts;
+      pictureReviews.set(conflict, {
+        manager: managedStore,
+        profileKey: keys.profileKey,
+        packsKey: keys.packsKey,
+        descriptor: canonicalJSON(item.descriptor),
+        generation: before.generation,
+        beforeSha256: await digest(before.document),
+      });
+      throw Object.freeze(conflict);
+    }
     const assets = new Map(before.assets.map((a) => [a.sha256, a]));
     for (const a of item.imported.assets) if (!assets.has(a.sha256)) assets.set(a.sha256, a);
     const prepared = await store.prepare(review.document.library, [...assets.values()], {
@@ -235,7 +293,7 @@ export function createExternalChapterInstaller({
       signal,
     });
     guard(signal);
-    return { before, prepared };
+    return { before, prepared, preserveAssignments };
   }
   async function verifyMedia(j, item, signal) {
     const actual = await store.read({ signal });
@@ -246,7 +304,7 @@ export function createExternalChapterInstaller({
       'Media changed after chapter staging; retain the journal and review recovery.',
     );
     guard(signal);
-    matchesRequired(actual.document, item);
+    matchesRequired(actual.document, item, j.format === RETAINED_PICTURE_JOURNAL_FORMAT);
   }
   async function write(snapshot, next, signal) {
     return pointerStore.compareAndSwap(snapshot, next, { signal, guard: () => guard(signal) });
@@ -279,7 +337,11 @@ export function createExternalChapterInstaller({
         (await digest(actual.document)) === j.media.beforeSha256
       ) {
         required(j.phase === 'prepared', 'Journal phase conflicts with media state.');
-        const candidate = staged ?? (await mediaReview(item, signal));
+        const candidate =
+          staged ??
+          (await mediaReview(item, signal, {
+            preserveAssignments: j.format === RETAINED_PICTURE_JOURNAL_FORMAT,
+          }));
         required(
           candidate.before.generation === j.media.generation &&
             (await digest(candidate.before.document)) === j.media.beforeSha256 &&
@@ -348,15 +410,18 @@ export function createExternalChapterInstaller({
     });
   }
   return Object.freeze({
-    async install(item, { signal } = {}) {
+    async install(item, { signal, pictureReview } = {}) {
       required(isPreparedExternalChapter(item), 'Prepare exact external chapter payloads first.');
       return locked(signal, async () => {
         const before = await pointerStore.snapshot({ signal, guard: () => guard(signal) });
         required(before.journal === null, 'Recover the pending chapter installation first.');
         const after = await nextLibrary(before.packs, item, signal),
-          candidate = await mediaReview(item, signal);
+          candidate = await mediaReview(item, signal, { pictureReview });
         const j = {
-          format: EXTERNAL_INSTALL_JOURNAL_FORMAT,
+          format: candidate.preserveAssignments
+            ? RETAINED_PICTURE_JOURNAL_FORMAT
+            : EXTERNAL_INSTALL_JOURNAL_FORMAT,
+          ...(candidate.preserveAssignments ? { assignmentPolicy: 'preserve-retained' } : {}),
           token: crypto.randomUUID(),
           profileKey: keys.profileKey,
           packsKey: keys.packsKey,

@@ -1,0 +1,342 @@
+TAP version 13
+# Subtest: Large portrait selector is fully below the measured expanded heading
+ok 1 - Large portrait selector is fully below the measured expanded heading
+  ---
+  duration_ms: 1.458958
+  ...
+# Subtest: Large landscape selector clears the measured bottom action bar
+ok 2 - Large landscape selector clears the measured bottom action bar
+  ---
+  duration_ms: 0.144541
+  ...
+# Subtest: queued reflow reads current focus and leaves the heading action alone
+ok 3 - queued reflow reads current focus and leaves the heading action alone
+  ---
+  duration_ms: 0.139666
+  ...
+# Subtest: large reading region retains its beginning and manual scrolling is not undone
+ok 4 - large reading region retains its beginning and manual scrolling is not undone
+  ---
+  duration_ms: 0.0835
+  ...
+# Subtest: queued layout cannot alter a closed owner's scroll or focus
+ok 5 - queued layout cannot alter a closed owner's scroll or focus
+  ---
+  duration_ms: 0.072666
+  ...
+# Subtest: queued layout cannot alter a hidden owner's scroll or focus
+ok 6 - queued layout cannot alter a hidden owner's scroll or focus
+  ---
+  duration_ms: 0.089584
+  ...
+# Subtest: queued layout cannot alter a blurred owner's scroll or focus
+ok 7 - queued layout cannot alter a blurred owner's scroll or focus
+  ---
+  duration_ms: 0.160292
+  ...
+# Subtest: queued layout cannot alter a outside owner's scroll or focus
+ok 8 - queued layout cannot alter a outside owner's scroll or focus
+  ---
+  duration_ms: 0.138125
+  ...
+# Subtest: queued layout cannot alter a disposed owner's scroll or focus
+ok 9 - queued layout cannot alter a disposed owner's scroll or focus
+  ---
+  duration_ms: 0.219708
+  ...
+# Subtest: opt-in label clearance keeps the field purpose visible with its focused control
+ok 10 - opt-in label clearance keeps the field purpose visible with its focused control
+  ---
+  duration_ms: 1.088125
+  ...
+# Subtest: other dialogs retain control-only clearance unless they opt into labels
+ok 11 - other dialogs retain control-only clearance unless they opt into labels
+  ---
+  duration_ms: 0.40175
+  ...
+# Subtest: label clearance cannot target a label outside the current dialog
+ok 12 - label clearance cannot target a label outside the current dialog
+  ---
+  duration_ms: 0.373834
+  ...
+# Subtest: short landscape keeps the focused control visible when its Large label cannot fit
+ok 13 - short landscape keeps the focused control visible when its Large label cannot fit
+  ---
+  duration_ms: 0.224333
+  ...
+# Subtest: recorded Large portrait return keeps the entire picker outline inside a bordered scrollport
+ok 14 - recorded Large portrait return keeps the entire picker outline inside a bordered scrollport
+  ---
+  duration_ms: 0.226916
+  ...
+# Subtest: bordered scrollport clearance also protects the top edge when no sticky heading covers it
+ok 15 - bordered scrollport clearance also protects the top edge when no sticky heading covers it
+  ---
+  duration_ms: 0.12
+  ...
+# Subtest: a legitimate zero-height client scrollport cannot scroll a focused form control
+ok 16 - a legitimate zero-height client scrollport cannot scroll a focused form control
+  ---
+  duration_ms: 0.11225
+  ...
+# Subtest: replacement Stay focus is revealed inside a short dialog without changing the unfinished flight
+ok 17 - replacement Stay focus is revealed inside a short dialog without changing the unfinished flight
+  ---
+  duration_ms: 2126.678167
+  ...
+# Subtest: actual level selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+ok 18 - actual level selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+  ---
+  duration_ms: 2223.811041
+  ...
+# Subtest: actual card selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+ok 19 - actual card selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+  ---
+  duration_ms: 2184.001125
+  ...
+# Subtest: actual campaign selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+not ok 20 - actual campaign selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+  ---
+  duration_ms: 1987.97225
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:128:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'value')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:163:77)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: actual pack selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+not ok 21 - actual pack selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+  ---
+  duration_ms: 2104.2925
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:128:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:191:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: same mission card/level/campaign/base pack preserves a running attempt without pause, write or restart
+ok 22 - same mission card/level/campaign/base pack preserves a running attempt without pause, write or restart
+  ---
+  duration_ms: 1485.671416
+  ...
+# Subtest: button Stay cancels a pending check and restores the exact opener without late save or Resume
+ok 23 - button Stay cancels a pending check and restores the exact opener without late save or Resume
+  ---
+  duration_ms: 1980.166833
+  ...
+# Subtest: Escape Stay cancels a pending check and restores the exact opener without late save or Resume
+ok 24 - Escape Stay cancels a pending check and restores the exact opener without late save or Resume
+  ---
+  duration_ms: 1859.949416
+  ...
+# Subtest: controller Stay cancels a pending check and restores the exact opener without late save or Resume
+ok 25 - controller Stay cancels a pending check and restores the exact opener without late save or Resume
+  ---
+  duration_ms: 1946.969375
+  ...
+# Subtest: quota keeps truthful loss warning and the old attempt until explicit Replace
+ok 26 - quota keeps truthful loss warning and the old attempt until explicit Replace
+  ---
+  duration_ms: 1923.305917
+  ...
+# Subtest: readback keeps truthful loss warning and the old attempt until explicit Replace
+ok 27 - readback keeps truthful loss warning and the old attempt until explicit Replace
+  ---
+  duration_ms: 1943.616417
+  ...
+# Subtest: newer-before keeps truthful loss warning and the old attempt until explicit Replace
+ok 28 - newer-before keeps truthful loss warning and the old attempt until explicit Replace
+  ---
+  duration_ms: 1936.182083
+  ...
+# Subtest: new saved slot after verification requires a second deliberate Replace and is never overwritten
+ok 29 - new saved slot after verification requires a second deliberate Replace and is never overwritten
+  ---
+  duration_ms: 1918.479333
+  ...
+# Subtest: different pack download leaves an installed live run/recorder intact through pagehide
+not ok 30 - different pack download leaves an installed live run/recorder intact through pagehide
+  ---
+  duration_ms: 1343.238792
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:336:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + ''
+    - 'night-shift'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'night-shift'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:381:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: different pack save leaves an installed live run/recorder intact through pagehide
+not ok 31 - different pack save leaves an installed live run/recorder intact through pagehide
+  ---
+  duration_ms: 1435.423417
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:336:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /storage failed/. Input:
+    
+    'The download for Living Threads could not be read. Reload the game while online, then choose this chapter again. Your current flight and installed chapters are kept.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'The download for Living Threads could not be read. Reload the game while online, then choose this chapter again. Your current flight and installed chapters are kept.'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:380:34)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: different pack cancel-download leaves an installed live run/recorder intact through pagehide
+not ok 32 - different pack cancel-download leaves an installed live run/recorder intact through pagehide
+  ---
+  duration_ms: 1360.992333
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:336:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + ''
+    - 'night-shift'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'night-shift'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:381:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: successful different-pack install adopts a fresh paused run and leaves the previous run unchanged
+not ok 33 - successful different-pack install adopts a fresh paused run and leaves the previous run unchanged
+  ---
+  duration_ms: 999.394291
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:389:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/mission-replacement-host.test.mjs:408:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: chapter card uses the existing pack change adapter but Stay returns to that visible card
+ok 34 - chapter card uses the existing pack change adapter but Stay returns to that visible card
+  ---
+  duration_ms: 1789.194458
+  ...
+# Subtest: restored paused unfinished flight is guarded and Stay preserves its exact saved continuation
+    # Subtest: create a real saved queued turn
+    ok 1 - create a real saved queued turn
+      ---
+      duration_ms: 1531.275167
+      ...
+    # Subtest: reload, explicitly Continue, Pause, then choose another mission
+    ok 2 - reload, explicitly Continue, Pause, then choose another mission
+      ---
+      duration_ms: 1298.694792
+      ...
+    1..2
+ok 35 - restored paused unfinished flight is guarded and Stay preserves its exact saved continuation
+  ---
+  duration_ms: 2832.162208
+  ...
+# Subtest: unavailable IDs and locked missions do not create prompts or adopt an arbitrary target
+ok 36 - unavailable IDs and locked missions do not create prompts or adopt an arbitrary target
+  ---
+  duration_ms: 2423.863083
+  ...
+# Subtest: all 36 choices traverse exactly once in deterministic 4/2 card pages and every theme/mode intersection
+ok 37 - all 36 choices traverse exactly once in deterministic 4/2 card pages and every theme/mode intersection
+  ---
+  duration_ms: 2.319334
+  ...
+# Subtest: world action stays inside a resized scrollport without changing focus or activating a choice
+ok 38 - world action stays inside a resized scrollport without changing focus or activating a choice
+  ---
+  duration_ms: 11.931333
+  ...
+# Subtest: actual panel traverses every card, filters without work and resizes with reachable focus
+ok 39 - actual panel traverses every card, filters without work and resizes with reachable focus
+  ---
+  duration_ms: 20.878792
+  ...
+# Subtest: filter and paging preserve exact pending work; failure remains on its visible card and retry acts once
+ok 40 - filter and paging preserve exact pending work; failure remains on its visible card and retry acts once
+  ---
+  duration_ms: 6.288708
+  ...
+# Subtest: remote failure still inspects exact source cards and exposes remaining installed choices without installation
+ok 41 - remote failure still inspects exact source cards and exposes remaining installed choices without installation
+  ---
+  duration_ms: 8.941708
+  ...
+# Subtest: native controller select preview and Back keep filters unchanged; Confirm commits without selecting a chapter
+ok 42 - native controller select preview and Back keep filters unchanged; Confirm commits without selecting a chapter
+  ---
+  duration_ms: 75.255083
+  ...
+# Subtest: installed mode follows actual authored policies and a multi-theme pack is one reachable choice
+ok 43 - installed mode follows actual authored policies and a multi-theme pack is one reachable choice
+  ---
+  duration_ms: 0.239084
+  ...
+# Subtest: cancelling an unavailable online list leaves inspected installed originals usable and late metadata cannot reopen the dialog
+ok 44 - cancelling an unavailable online list leaves inspected installed originals usable and late metadata cannot reopen the dialog
+  ---
+  duration_ms: 9.693625
+  ...
+# Subtest: widening and releasing a retained card never leave focus on disabled page controls
+ok 45 - widening and releasing a retained card never leave focus on disabled page controls
+  ---
+  duration_ms: 7.376375
+  ...
+# Subtest: file picker cancellation retains More Worlds recovery files and pending work; dialog Escape still closes
+ok 46 - file picker cancellation retains More Worlds recovery files and pending work; dialog Escape still closes
+  ---
+  duration_ms: 7.000375
+  ...
+1..46
+# tests 48
+# suites 0
+# pass 42
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37905.013166

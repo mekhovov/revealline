@@ -1,0 +1,45 @@
+{
+  "date": "2026-09-20",
+  "observer": "Codex native CUA keyboard and inline screenshots",
+  "url": "https://mekhovov.github.io/revealline/releases/v0.69.0/site/game/?journey=opening",
+  "gameSource": "5178c434e9dbbbd8287530c92daa64978e886e76",
+  "controller": "cb55248a2fd01b2bfccc5ebbce48a524f30ec382",
+  "publicBytes": {
+    "status": "PASS",
+    "files": 3789,
+    "bytes": 698351359,
+    "failures": 0,
+    "retries": 0,
+    "report": ".cache/v0690-public-audit-preparation-r1/runs/public-cb55248-r1/report.json"
+  },
+  "passed": [
+    "Keyboard Continue \u2192 First return; brief Down continues after release. Win34.3% earned of30%target,3lives,8160score,0:12; full image visible.",
+    "Keyboard results \u2192 View picture \u2192 Results restores View picture focus; Next mission enters Choose your share.",
+    "Pause captures Choose your share0%/3lives/0score3:43. Reload title identifies same saved mission.",
+    "After cancelled title Continue, explicit Cancel preparation then Load saved flight restores same0%/3lives/0score3:43 paused, Resume focused.",
+    "Portrait390x844 Resume visible; keyboard Main menu works; viewport reset."
+  ],
+  "failures": [
+    {
+      "id": "title-restore-stale-status",
+      "trigger": "Reload paused second mission; title Continue immediately followed by Escape",
+      "actual": "Ready first-mission overlay retains Verifying your saved flight and Cancel preparation even though Load is enabled; body focus.",
+      "recovery": "Keyboard Cancel clears status; explicit Load restores exact saved second mission.",
+      "consoleErrors": []
+    },
+    {
+      "id": "pause-main-menu-clearance",
+      "trigger": "Large/Plain preference; paused844x390; Tab to Main menu",
+      "actual": "Main menu lower edge/focus border slightly clipped; activation works.",
+      "status": "P03/P05 follow-up"
+    }
+  ],
+  "acceptance": "Published and full-byte verified; scoped play passes with open native defects. Not complete phase or whole browser acceptance.",
+  "limits": [
+    "Inline screenshots only; no exported image or invented hashes",
+    "No physical controller/touch device verification",
+    "No actual audio listening or offline journey",
+    "First straight cut meets boundary; does not independently prove interior capture-stop",
+    "Opening build explicitly remains unvalidated candidate-content journey; no human enjoyment acceptance"
+  ]
+}
