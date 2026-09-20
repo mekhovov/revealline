@@ -189,6 +189,7 @@
             <span>■ Reclaimed foundation</span><span>▧ Wall</span><span>● Field keeper</span
             ><span>◇ Perimeter patrol</span><span>▲ Frontier patrol</span><span>✚ Spawn</span>
             <span>Framed pickups: + Life · &gt; Speed · v Slow · * Freeze</span>
+            <span>Capture markers: ! Required · o Optional · ? Hidden</span>
           </p>
           <p id="geometry" class="note"></p>
           <label class="toggle"
@@ -342,6 +343,49 @@
                 <button id="bonus-submit" type="submit">Validate & add bonus</button>
                 <button id="bonus-remove" type="button" disabled>Remove selected bonus</button>
                 <p id="bonus-result" class="note" role="status"></p>
+              </fieldset>
+            </form>
+          </details>
+          <details id="objective-panel">
+            <summary>Place capture objectives</summary>
+            <p id="objective-qualification" class="note"></p>
+            <form id="objective-form">
+              <fieldset id="objective-tools">
+                <legend>Capture markers · optional or required</legend>
+                <label>Objective<select id="objective-select"></select></label>
+                <label
+                  >Stable objective ID<input id="objective-id" maxlength="80" required
+                /></label>
+                <label
+                  >X · cell centre<input
+                    id="objective-x"
+                    type="number"
+                    min="1.5"
+                    max="70.5"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Y · cell centre<input
+                    id="objective-y"
+                    type="number"
+                    min="1.5"
+                    max="34.5"
+                    step="1"
+                    required
+                /></label>
+                <label><input id="objective-required" type="checkbox" />Required to clear</label>
+                <label><input id="objective-hidden" type="checkbox" />Hidden until revealed</label>
+                <p class="note">
+                  Studio shows all markers: ! required, o optional, ? initially hidden. Hidden
+                  requirements need deliberate teaching. Capturing a marker does not open a gate
+                  unless a future, explicit mechanic defines that link.
+                </p>
+                <button id="objective-submit" type="submit">Validate & add objective</button>
+                <button id="objective-remove" type="button" disabled>
+                  Remove selected objective
+                </button>
+                <p id="objective-result" class="note" role="status"></p>
               </fieldset>
             </form>
           </details>

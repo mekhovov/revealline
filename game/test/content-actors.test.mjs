@@ -191,6 +191,18 @@ function editorFixture() {
   };
 }
 const submit = (f) => f.node('form').onsubmit({ preventDefault() {} });
+test('a same-revision map replacement rejects stale actor coordinates', () => {
+  const f = editorFixture();
+  f.node('select').value = 'keeper';
+  f.node('select').onchange();
+  const next = structuredClone(f.source());
+  next.maps[0].foundations[0].w = 6;
+  f.update(next, false);
+  f.node('x').value = '50.5';
+  submit(f);
+  assert.match(f.node('result').textContent, /context changed/);
+  assert.equal(f.source().missions[0].actors[0].x, 60.5);
+});
 
 test('actor controls add, replace and confirm removal; invalid fields retain the applied draft', () => {
   const f = editorFixture();

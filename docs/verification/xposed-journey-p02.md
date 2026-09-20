@@ -444,3 +444,34 @@ the actual untimed protocol and pass with unchanged authoritative outcomes.
 The corrected combined core/host/shell/layout cohort passes66/66; full lint,
 changed-source formatting and diff checks pass. A new exact-source hosted gate
 must finish before promotion. Human pacing and final phase acceptance remain pending.
+
+## Capture objective authoring
+
+Studio now adds, replaces and removes capture markers using the same validated
+mission compiler as runtime. Authors explicitly choose required/optional and
+visible/hidden flags and cell-centre positions. Required markers and earned quota
+both gate completion; guidance calls out cleanup risk and deliberate teaching for
+hidden requirements. No marker silently becomes a relay gate or boss trigger.
+Authored Team controls remain unavailable until their mechanics are qualified.
+
+The map and text expose all authoring markers with distinct ! / o / ? symbols,
+including hidden markers, without claiming those are visible during gameplay.
+Stable IDs, collision/claimable-field checks, duplicate positions, bounded commands,
+all-preset/mode compilation, two-action removal, Undo and checkpoints are enforced.
+One shared edit-context guard now binds actor, bonus, geometry and objective fields
+to actual map contents and rule catalogs as well as mission/project identity; a
+same-revision imported map cannot inherit stale coordinates or removal intent.
+
+The combined objective/actor/bonus/geometry/structure/capture-overlay/Team cohort
+passes48/48, including an actual engine comparison where the same first-return
+capture clears an optional-marker mission but cannot clear its required-marker
+counterpart. Full lint and changed-source formatting pass. An initial cohort
+command referenced a nonexistent overlay test filename and ran no tests; the
+correct named test file was used for the passing cohorts.
+
+Native Studio modified only the existing copied Behind the patrol mission:
+`native-capture` at(50.5,10.5), required/visible → optional/hidden → Undo to
+required/visible. Text and map marker agreed; no console errors. Checkpoint19 and
+reload retained the marker on the copy and left the original with no objectives.
+Native Remove was not invoked; modeled controls cover confirmation/cancellation.
+This is draft-editor evidence, not whole-level completion or human pacing acceptance.

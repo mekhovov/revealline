@@ -1,10 +1,11 @@
 import { BONUS_CHOICES, editContentBonus } from '../content-design/bonuses.mjs';
+import { missionEditContext } from './edit-context.mjs';
 
 export function createBonusEditor({ document, getSource, getMission, apply }) {
   const $ = (id) => document.getElementById(`bonus-${id}`);
   let key = null,
     armed = false;
-  const context = () => JSON.stringify([getSource().id, getSource().revision, getMission()]);
+  const context = () => missionEditContext(getSource(), getMission());
   function options(node, rows) {
     node.replaceChildren(
       ...rows.map(([value, text]) => {
