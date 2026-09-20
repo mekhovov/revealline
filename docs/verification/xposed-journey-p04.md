@@ -37,7 +37,26 @@ opening actually leaves reclaimed ground. A first test used the wrong diagnostic
 property for geometry identity; it was corrected to the compiler's existing
 `geometryIdentity`, with an explicit hash assertion. No geometry identity was invented.
 
-Next gates: complete ordinary and alternative routes; equal paired races; optional
+## Complete-route feasibility, first candidate revision
+
+Forty-two seed1 legal input routes now cover all seven missions, three presets and
+both steering policies. Every route completes without a life lost, preserves the
+coverage denominator, matches its pinned simulation identity/checkpoint and verifies
+through public replay export. All42 equal-input paired races finish as no-loss ties
+with separate board/foundation storage. Two complete test files pass17/17, zero
+failures/skips,9.228seconds on Node20.19.5. No runtime rules or speeds were changed
+to obtain these routes. These are omniscient feasible routes, not human qualification.
+
+Retained pacing finding: first-revision Inside out clears in just1290/1302ticks
+(10.75/10.85seconds) and two closures across every preset. The ring connection
+captures only its line; the next cut leaves both keepers above it and fills most of
+the lower field. That bypasses the intended inner-versus-outer route pressure.
+Other perfect routes take approximately17–31seconds, below authored human-duration
+hypotheses; no human-duration success is inferred. Inside out requires spatial
+revision before advancing; preserve this original evidence instead of calling it
+balanced or increasing shared movement speed to manufacture difficulty.
+
+Next gates: revise the fast two-cut bypass; meaningful alternative routes; optional
 goal predicates and pacing/cleanup; native frontier reshaping; separate authored Team
 content; original campaign assets; full final-source CI/review/release/Pages; genuine
 human difficulty/comprehension/enjoyment. Source-only preparation uses a16MiB sparse
