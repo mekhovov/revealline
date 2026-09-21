@@ -78,8 +78,8 @@ were corrected; neither asset-loader guarantees nor gameplay assertions were rel
 
 ## Acceptance still required
 
-- Exact-source Studio import, verified artwork loading and representative native
-  partial-reveal observations; full-picture/win and contrast matrix.
+- Whole-set broad-area/full-picture/win contrast matrix beyond the two scoped
+  partial-reveal observations below.
 - Touch/controller/small screens, reduced effects and human visual/cultural review.
 - Human route choice and balance, especially the previously flagged Dnipro/motor
   shortcuts. Artwork does not settle those spatial concerns.
@@ -87,3 +87,35 @@ were corrected; neither asset-loader guarantees nor gameplay assertions were rel
 - Release-owner reviewed integration, aggregate/offline/Pages budget and versioned
   deployment. No shared host, Studio button, global asset registry or public pin
   changed; the existing Studio import → Inspect → explicit Apply flow is retained.
+
+## Exact-source native follow-up
+
+Source `3c040da15822ad16504e7c5d4a8dfb7b7c9096b3`, read-only commit server at
+port8824. Served bytes matched the worktree for Studio JS/HTML, Solo app, renderer,
+compiler, both new art modules and all eight PNGs (15 files). No source overrides,
+public pin changes or synthetic game-state injection were used.
+
+Imported the spatial-revision2 pictured source through the normal JSON file chooser.
+Inspect left Nearby shore active until explicit Apply. Apply created the separate
+`cultural-workshop-spatial-review-spatial-v2-art-r1` slot with eight missions, two
+campaigns, pressure-v2 and candidate-picture diagnostics; checkpoint1 saved locally.
+
+- Cross-stitch Standard: Start → Down closed on the inner landing at0.6%; a fresh
+  Left then closed to the outer edge at5.3%, score1170, three lives retained. The
+  newly generated embroidery/window picture was visible under reclaimed regions.
+  Pause/resume retained this partial picture. Patterned grey walls remained distinct
+  from pictured return ground, with the craft's locator brackets visible.
+- Circuit lanes Standard: Start → Down closed at0.5%; fresh Left produced6.8%,
+  score1380, three lives retained. The component-tray picture and copper traces on
+  a permanent central foundation were visible. Copper decoration did not become
+  collision; grey patterned walls and return-ground outlines remained distinct.
+
+These were ordinary keyboard actions in the real embedded Solo preview, not exact
+fixture timing or human playtests. Tool interaction/observation delays make the
+displayed elapsed time unusable as a pacing measure. Fine linen detail, dark-device
+contrast and wide-area trace/trail distinction remain broader review items.
+
+Both previews closed cleanly back to the draft; captured warning/error console
+entries were empty. A labelled-Mission automation lookup missed after closing the
+first preview; inspecting current UI and selecting the visible mission control by
+its observed ID succeeded. No source/UI workaround was applied.

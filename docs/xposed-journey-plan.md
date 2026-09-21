@@ -16,8 +16,9 @@ all83 missions cover all six ordinary seed1 configurations. Next
 review the ordinary pacing and bent-cut discoverability of the [Two Districts spatial study](verification/journey-fracture-spatial.md), whose six preset/control
 mastery routes now pass separately from the18 ordinary samples; the [Return in
 Reserve two-bay study](verification/journey-reserve-spatial.md) now has18 ordinary
-and six impact-mastery routes, but short clears/readability and native verification
-remain open. Review late roamer activation,
+and six impact-mastery routes. Native Studio history and Standard first-return
+checks are complete; short clears/readability and whole-play qualification remain
+open. Review late roamer activation,
 connector bypasses, short-clear spatial choices, optional goals and objective tails.
 These are technical candidate
 checks, not human balance or public-deployment acceptance.
@@ -37,6 +38,20 @@ scoped native static review. Actual host integration/player toggle/audio,
 native play/human qualification, Team semantics and deployment remain unfinished.
 Enabled gameplay preview stays blocked until the
 new attacks are visible; automated feasibility does not establish balanced pacing.
+
+[Timed bonus taking routes](verification/journey-timed-bonuses.md) now cover54
+ordinary cases in each of the original and pressure-v2 editions, plus four
+far-anchor/expiry-relocation probes and six post-contact restores. All112 played
+routes replay and finish as equal paired races;348 tests pass on each Node.
+Short optimized clears and idle waiting remain pacing concerns, with Team, broader
+seed/device/human qualification and release adoption still open.
+
+[Eight ornament/workshop original pictures](verification/journey-cultural-workshop-art.md)
+now form explicit candidate art editions of the original and spatial-revision2
+studies. All60 relevant input routes preserve gameplay outcomes;74 tests pass on
+each Node. Exact-source Studio import/Apply and two native partial-reveal checks
+are complete. Whole-set visual/cultural/human qualification, Team and public
+integration remain separate gates; no old art or public map is overwritten.
 
 Approved by the user on 20 September 2026. This supersedes the campaign allocations
 in earlier research plans, not their observations or provenance. References and
