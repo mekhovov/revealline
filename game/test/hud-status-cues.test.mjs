@@ -222,3 +222,106 @@ for (const stopOnCapture of [false, true])
       assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
       assert.deepEqual(page.errors, []);
     });
+
+test('direct enemy contact uses the contact caption without inventing an exposed line', async (t) => {
+  const page = await fixture(t, 'enemy-player');
+  assert.equal(page.rendered.run.player.cutting, false);
+  page.key('ArrowRight');
+  until(page, () => page.rendered.run.status === 'respawning');
+  page.key('ArrowRight', false);
+  assert.equal(page.rendered.run.failureCause, 'enemy-player');
+  assert.equal(page.rendered.run.lives, 2);
+  assert.equal(page.rendered.run.claimedCount, 0);
+  assert.match(page.$('run-message').textContent, /^An enemy hit your craft\./);
+  assert.doesNotMatch(page.$('run-message').textContent, /line was caught|rover/);
+  page.$('pause-button').click();
+  assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
+  assert.deepEqual(page.errors, []);
+});
+
+test('a legal closed cut followed by rover contact explains reclaimed-ground danger', async (t) => {
+  t.mock.method(SoloElement.prototype, 'getContext', () => null);
+  const candidate = JSON.parse(
+    readFileSync(new URL('../content/packs/classic-lab.json', import.meta.url)),
+  );
+  // A finite authored fixture follows the existing classic-core rover route.
+  // Every state below is earned through the actual mounted host's input/clock.
+  candidate.campaigns[0].levels = [
+    {
+      version: 'xonix-level.v4',
+      id: 'hud-rover-contact',
+      revision: '1',
+      name: 'Rover contact caption',
+      width: 72,
+      height: 36,
+      spawn: { x: 36.5, y: 0.5 },
+      goal: { coverage: 0.99 },
+      encounter: null,
+      classic: { version: 'classic.v1', terrain: [], powerups: [] },
+      enemies: [
+        { id: 'remote', type: 'bouncer', x: 60.5, y: 18.5, vx: 0, vy: 0 },
+        { id: 'return-threat', type: 'claimed-rover', x: 10.5, y: 10.5, vx: 0, vy: 0 },
+      ],
+      rules: { moveSpeed: 10, lives: 3, graceSeconds: 0, respawnSeconds: 0.1, stopOnCapture: true },
+    },
+  ];
+  const page = await soloPage(t);
+  page.$('library-button').click();
+  page.doc.querySelector('[data-library-panel="packs"]').click();
+  page.$('pack-json').value = JSON.stringify(candidate);
+  await page.$('install-pack').onclick();
+  assert.match(page.$('pack-status').textContent, /Validated and installed/);
+  const play = page
+    .$('installed-packs')
+    .querySelectorAll('button')
+    .find((button) => button.textContent === `Play ${candidate.campaigns[0].title}`);
+  assert.ok(play);
+  await play.onclick();
+  await settle(
+    () =>
+      page.$('pack-select').value === candidate.id &&
+      page.doc.body.dataset.pictureState === 'ready',
+  );
+  page.frame(0);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  until(page, () => page.rendered.run.claimedCount > 0, 500);
+  page.key('ArrowDown', false);
+  const run = page.rendered.run;
+  assert.equal(run.player.cutting, false);
+  assert.equal(run.player.speed, 0);
+  assert.equal(run.lives, 3);
+  assert.match(page.$('run-message').textContent, /^Claimed-ground rover waking/);
+  const captured = { cells: run.cells.slice(), count: run.claimedCount, coverage: run.coverage };
+  const rover = run.enemies.find((enemy) => enemy.id === 'return-threat');
+  assert.equal(rover.classic.mode, 'warning');
+  until(page, () => rover.classic.mode === 'active');
+  page.key('ArrowLeft');
+  until(page, () => run.player.x <= rover.x, 500);
+  page.key('ArrowLeft', false);
+  assert.equal(run.player.cutting, false);
+  assert.equal(run.lives, 3);
+  page.key('ArrowUp');
+  until(page, () => run.status === 'respawning', 500);
+  page.key('ArrowUp', false);
+  assert.equal(run.failureCause, 'enemy-player');
+  assert.equal(run.lives, 2);
+  assert.equal(run.player.cutting, false);
+  assert.equal(run.trail.length, 0);
+  assert.deepEqual(run.cells, captured.cells);
+  assert.equal(run.claimedCount, captured.count);
+  assert.equal(run.coverage, captured.coverage);
+  const caption = page.$('run-message').textContent;
+  assert.equal(
+    caption,
+    'A rover hit your craft on reclaimed ground. Your revealed territory is kept.',
+  );
+  assert.doesNotMatch(caption, /line was caught/);
+  until(page, () => run.status === 'running');
+  assert.equal(page.$('run-message').textContent, caption, 'Keep the reason through recovery.');
+  page.$('pause-button').click();
+  const saved = JSON.parse(page.storage.getItem(sessionKey));
+  assert.equal(verifyReplay(saved.replay).match, true);
+  assert.deepEqual(page.errors, []);
+});

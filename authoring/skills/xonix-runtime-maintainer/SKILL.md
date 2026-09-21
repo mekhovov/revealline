@@ -5,6 +5,14 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For direct-contact loss feedback, follow `docs/retry-feedback.md`. Select wording
+from the actual failure cause and actor ID, never the craft's post-recovery cutting
+state. A claimed-ground rover collision must explain danger on reclaimed ground;
+generic direct contact and a caught unfinished line remain distinct. Preserve
+captured territory and replay bytes. Demonstrate capture, warning, activation and
+collision through normal host input, then verify the saved replay and recovery
+caption. Inspect small-screen text separately from modeled event tests.
+
 When changing Studio guides, run `game/test/asset-studio-help-links.test.mjs`.
 Follow relative Markdown destinations through the real build allowlist and
 collected files; a guide existing in Git does not mean it ships with the app.
