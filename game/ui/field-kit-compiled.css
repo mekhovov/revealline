@@ -586,6 +586,32 @@
   .field-kit.game-shell[data-flight-state='running'] {
     --fk-flight-header: 112px;
     --fk-flight-bottom: 4px;
+    --fk-flight-music: 0px;
+  }
+  .field-kit.game-shell[data-flight-state='running']:has(#game-now-playing:not([hidden])) {
+    --fk-flight-music: 44px;
+  }
+  .field-kit.game-shell[data-flight-state='running'] #game-now-playing {
+    position: fixed;
+    z-index: 6;
+    top: calc(var(--safe-top) + var(--fk-flight-header));
+    left: max(12px, var(--safe-left));
+    right: max(12px, var(--safe-right));
+    height: var(--fk-flight-music);
+    margin: 0;
+    flex-wrap: nowrap;
+    justify-content: center;
+    background: var(--fk-bg);
+    font-size: var(--fk-text-secondary);
+  }
+  .field-kit.game-shell[data-flight-state='running'] #game-now-playing-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .field-kit.game-shell[data-flight-state='running'] #game-now-playing-source {
+    flex-shrink: 0;
   }
   .field-kit.game-shell[data-flight-state='running'][data-text-size='large'] {
     --fk-flight-header: 128px;
@@ -632,10 +658,10 @@
     .arena-panel:has(> .encounter-status:not([hidden]))
     > .arena-shell {
     top: calc(
-      var(--safe-top) + var(--fk-flight-header) +
+      var(--safe-top) + var(--fk-flight-header) + var(--fk-flight-music) +
         (
-          100% - var(--fk-flight-header) - var(--fk-flight-bottom) - var(--safe-top) -
-            var(--safe-bottom)
+          100% - var(--fk-flight-header) - var(--fk-flight-music) - var(--fk-flight-bottom) -
+            var(--safe-top) - var(--safe-bottom)
         ) /
         2
     );
@@ -643,8 +669,8 @@
       calc(100% - var(--safe-left) - var(--safe-right)),
       calc(
         (
-            100dvh - var(--fk-flight-header) - var(--fk-flight-bottom) - var(--safe-top) -
-              var(--safe-bottom)
+            100dvh - var(--fk-flight-header) - var(--fk-flight-music) - var(--fk-flight-bottom) -
+              var(--safe-top) - var(--safe-bottom)
           ) *
           var(--board-aspect, 1.333333)
       )
