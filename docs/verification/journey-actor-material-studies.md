@@ -72,6 +72,40 @@ portrait, soundtrack or final aesthetic acceptance is claimed.
 
 ## Earlier standalone study checkpoint
 
+### Additive Team successor preparation
+
+Source `d533415e` adds `createTeamActorCandidates`: the twelve purpose-built Team
+missions use explicit Horizon, Signal and Rover material treatments by their three
+learning arcs, not a positional assignment to the twelve Solo campaigns. Maps,
+original pictures, historical Team formats and all36 resolved preset simulation
+identities remain unchanged. Project/mission/campaign/pack revisions are successors.
+
+`candidateTeamActorMaterial` grants a body selection only through the existing
+live verified picture owner, matching level/snapshot and captured FPV theme and
+collection identity. Serialized copies, stale/disposed owners, changed theme
+identity and historical editions return no material. It never prepares, adopts or
+releases a look. `teamJourneyActorFrame` defaults to no replacement; callers must
+explicitly establish no body override. Any `team.*` state slot suppresses the
+material even with that explicit flag. Pilots, hunters, strongholds and unknown
+roles are untouched. Actual drifter and reclaimed-rover frames retain their types,
+roles, real radii and state fields; only the cosmetic material field is added.
+
+45 checks pass on each Node20/22 across new Team adapter/source, verified pictures,
+existing Team painter, shared materials and Solo/Versus edition regression suites.
+After exact-identity hardening, the12 adapter/picture checks pass again on each.
+An initial new test incorrectly supplied dt as the command argument to stepCoop;
+it was corrected to the required two explicit neutral seat commands before the
+reported passing runs. No simulation API or validation was loosened.
+
+This is an isolated source/adapter increment, **not live Team enrollment**. The
+newer release lane has prepared Team state slots, cues/effects and an outstanding
+transaction-owned look-readiness integration. Do not copy this branch's older
+Team host/painter over that work. Bind the adapter through the exact ready look
+and authenticated picture transaction, preserve uploaded/state-specific artwork,
+then qualify actual Team host/Next/native play. Do not infer override absence from
+a theme name, start with a late-loading body, or claim these adapter tests validate
+the newer full Team painter. The release owner has the bounded additive packet.
+
 The12 existing Journey campaign palettes still resolve the same retro body family.
 Source `35419a1d4a6081f56b7815646820658e0acf6159`, corrected by
 `b539592c98de670548f1878a376727b9ec2af12c`, adds twelve original code-native
