@@ -1,0 +1,21 @@
+{
+  "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "observedAt": "2026-09-21T09:14:08.351007+00:00",
+  "originalRunStillActive": true,
+  "observedLogPrefixBytes": 821043,
+  "observedLogPrefixSha256": "6e0dad822b69c14f6881ff9e7ee4bc6596320f64c90e7f5c02937dd09f3048f9",
+  "selectedFailureCount": 58,
+  "counts": {
+    "game/test/coop-actor-presentation.test.mjs": 10,
+    "game/test/helpers/coop-presentation-fixture.mjs": 5,
+    "game/test/coop-historical-import-picture.test.mjs": 2,
+    "game/test/coop-lobby-preview.test.mjs": 3,
+    "game/test/coop-picture-recovery-focus.test.mjs": 2,
+    "game/test/coop-presentation-bootstrap-retry.test.mjs": 1,
+    "game/test/coop-terrain-trail.test.mjs": 28,
+    "game/test/coop-victory-picture.test.mjs": 5,
+    "game/test/coop-won-terminal-host.test.mjs": 1,
+    "game/test/couch-audio-master.test.mjs": 1
+  },
+  "note": "Verbatim failure blocks from the still-running unchanged baseline. This is not its final suite result."
+}
