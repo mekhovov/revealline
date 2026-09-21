@@ -1,0 +1,194 @@
+TAP version 13
+# Subtest: Journey restore merges missing progress for every mode while current receipts and cursors win
+ok 1 - Journey restore merges missing progress for every mode while current receipts and cursors win
+  ---
+  duration_ms: 1.572167
+  ...
+# Subtest: malformed, oversized, prototype and invented receipt backups cannot modify state
+ok 2 - malformed, oversized, prototype and invented receipt backups cannot modify state
+  ---
+  duration_ms: 0.97825
+  ...
+# Subtest: restoration and live progress merge atomically across tabs in either transaction order
+ok 3 - restoration and live progress merge atomically across tabs in either transaction order
+  ---
+  duration_ms: 4.987042
+  ...
+# Subtest: failed restore stays exportable in-session, retries and survives recreation without replacing saved history
+ok 4 - failed restore stays exportable in-session, retries and survives recreation without replacing saved history
+  ---
+  duration_ms: 1.860625
+  ...
+# Subtest: corrupt durable data is not replaced by a valid imported backup
+ok 5 - corrupt durable data is not replaced by a valid imported backup
+  ---
+  duration_ms: 0.758166
+  ...
+# Subtest: backup dialog inspects without mutation, restores only on Apply, and exports the resulting profile
+ok 6 - backup dialog inspects without mutation, restores only on Apply, and exports the resulting profile
+  ---
+  duration_ms: 2.063583
+  ...
+# Subtest: closed dialogs and later file choices invalidate in-flight inspection; failed imports leave no Apply
+ok 7 - closed dialogs and later file choices invalidate in-flight inspection; failed imports leave no Apply
+  ---
+  duration_ms: 0.607542
+  ...
+# Subtest: Journey navigation crosses campaigns, excludes incompatible modes and ends without wrapping
+ok 8 - Journey navigation crosses campaigns, excludes incompatible modes and ends without wrapping
+  ---
+  duration_ms: 1.762084
+  ...
+# Subtest: catalog owns its data and stable IDs survive renaming or reordering
+ok 9 - catalog owns its data and stable IDs survive renaming or reordering
+  ---
+  duration_ms: 0.415292
+  ...
+# Subtest: skipping never grants a clear; exact legal completion removes skip and is idempotent
+ok 10 - skipping never grants a clear; exact legal completion removes skip and is idempotent
+  ---
+  duration_ms: 1.16525
+  ...
+# Subtest: IndexedDB progress survives store recreation and merges concurrent tab writes atomically
+ok 11 - IndexedDB progress survives store recreation and merges concurrent tab writes atomically
+  ---
+  duration_ms: 1.797958
+  ...
+# Subtest: unavailable storage stays session-only, exports progress and retries without losing events
+ok 12 - unavailable storage stays session-only, exports progress and retries without losing events
+  ---
+  duration_ms: 0.876625
+  ...
+# Subtest: a slow initial read cannot overwrite a clear recorded during loading
+ok 13 - a slow initial read cannot overwrite a clear recorded during loading
+  ---
+  duration_ms: 0.317167
+  ...
+# Subtest: unresponsive storage has a bounded wait and late reads cannot erase session progress
+ok 14 - unresponsive storage has a bounded wait and late reads cannot erase session progress
+  ---
+  duration_ms: 12.115334
+  ...
+# Subtest: corrupt durable data is never overwritten by a session event
+ok 15 - corrupt durable data is never overwritten by a session event
+  ---
+  duration_ms: 0.2155
+  ...
+# Subtest: closed connection refuses the affected read once and a deliberate retry opens a fresh connection
+not ok 16 - closed connection refuses the affected read once and a deliberate retry opens a fresh connection
+  ---
+  duration_ms: 1.327709
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:31:1'
+  failureType: 'testCodeFailure'
+  error: 'Connection closed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: unexpected close invalidates the cache and a late retired close cannot invalidate its replacement
+not ok 17 - unexpected close invalidates the cache and a late retired close cannot invalidate its replacement
+  ---
+  duration_ms: 0.139875
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:42:1'
+  failureType: 'testCodeFailure'
+  error: 'Connection closed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: failed persistence retains a pending clear and explicit flush commits it once after reopening
+not ok 18 - failed persistence retains a pending clear and explicit flush commits it once after reopening
+  ---
+  duration_ms: 1.586333
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:64:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    false !== true
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:76:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: a synchronous open refusal is not cached forever and a deliberate read may retry
+not ok 19 - a synchronous open refusal is not cached forever and a deliberate read may retry
+  ---
+  duration_ms: 0.110375
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:84:1'
+  failureType: 'testCodeFailure'
+  error: 'Storage temporarily unavailable'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: quota refusal retains the healthy connection and the pending event until an explicit retry
+ok 20 - quota refusal retains the healthy connection and the pending event until an explicit retry
+  ---
+  duration_ms: 1.408667
+  ...
+# Subtest: a stale version-change callback closes only its original connection
+not ok 21 - a stale version-change callback closes only its original connection
+  ---
+  duration_ms: 0.272125
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:116:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    3 !== 2
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 3
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:125:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: concurrent reads share one reopened connection without writing progress
+not ok 22 - concurrent reads share one reopened connection without writing progress
+  ---
+  duration_ms: 0.100667
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:129:1'
+  failureType: 'testCodeFailure'
+  error: 'old.onclose is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:134:7)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: a blocked request and its late failure cannot poison the successful retry
+not ok 23 - a blocked request and its late failure cannot poison the successful retry
+  ---
+  duration_ms: 0.241458
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:142:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    A late retired error cannot clear the current owner.
+
+    3 !== 2
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 3
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/journey-backend-recovery.test.mjs:153:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 16
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 609.649625

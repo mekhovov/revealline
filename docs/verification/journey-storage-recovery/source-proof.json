@@ -1,0 +1,40 @@
+{
+  "source": "7058a84d80d3cee465e00962871f2017afcb4ddb",
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "boundary": "Actual Journey backend/store with finite serialized IndexedDB transactions; no native interruption or public-release qualification.",
+  "runs": [
+    {
+      "name": "comparable-baseline",
+      "tests": 23,
+      "pass": 16,
+      "fail": 7,
+      "skip": 0,
+      "originalLogSha256": "117abcbfc40ec392bb9a5cbbfd38ebcf21a1187ab7fbddab74295142700e1269",
+      "retainedTranscriptSha256": "99c4962b0152d25ce1b3d53e78d890cf5001a199c1fff5f10285396b70736560",
+      "normalization": "Trailing whitespace only; raw original retained in source worktree .cache/journey-backend-recovery.",
+      "verifiedTrackedModules": 95
+    },
+    {
+      "name": "final20",
+      "tests": 23,
+      "pass": 23,
+      "fail": 0,
+      "skip": 0,
+      "originalLogSha256": "7ac49b6f7de43c87101df11f39efafbd1d9bdb41983adca0ec1aebcd5930fa4c",
+      "retainedTranscriptSha256": "7ac49b6f7de43c87101df11f39efafbd1d9bdb41983adca0ec1aebcd5930fa4c",
+      "normalization": "Trailing whitespace only; raw original retained in source worktree .cache/journey-backend-recovery.",
+      "verifiedTrackedModules": 95
+    },
+    {
+      "name": "final22",
+      "tests": 23,
+      "pass": 23,
+      "fail": 0,
+      "skip": 0,
+      "originalLogSha256": "731412dbfb3a77f890ac3b06d95f72745883923990f6f0e0e4f5a16074d63353",
+      "retainedTranscriptSha256": "731412dbfb3a77f890ac3b06d95f72745883923990f6f0e0e4f5a16074d63353",
+      "normalization": "Trailing whitespace only; raw original retained in source worktree .cache/journey-backend-recovery.",
+      "verifiedTrackedModules": 95
+    }
+  ]
+}
