@@ -194,7 +194,9 @@ export function emptySoundtrackLibrary({ catalogue = false, version = 3 } = {}) 
           installedTrackIds: [],
           tags: {},
           listening: {
-            mode: 'auto',
+            // New players land on the hosted retro collection immediately. Older
+            // saved libraries keep their explicit choice during upgrade.
+            mode: version === 2 ? 'auto' : 'synth90s',
             genres: [...(version === 2 ? LEGACY_SOUNDTRACK_GENRES : SOUNDTRACK_GENRES)],
             installedOnly: false,
             ...(version === 2 ? {} : { recordingMode: false }),
