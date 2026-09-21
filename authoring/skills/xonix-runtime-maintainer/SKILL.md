@@ -5,6 +5,16 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For authored Journey selected-look preparation, follow
+`docs/required-look-readiness.md`. Keep the previous result, run and decoded
+original until the exact selected craft and overrides are ready. Reuse ready
+source pixels; do not block compiled FPV on an unused source image. Qualify both
+viewport variants and explicit override priority. Preserve the historical
+cosmetic fallback API and keep enemy/cross-mode readiness claims separate.
+Prompt: “Delay the required craft before Start, cancel and retry, then legally
+win and press Next once. Prove that no running frame loses the selected craft,
+that failure keeps the old owner, and that ready compiled FPV remains playable.”
+
 For completed Legacy campaigns, keep the earned final result as the parent of
 Browse campaigns. Resolve current mission ownership before choosing the Legacy
 picker: a Journey-enabled page may still contain a restored or installed Legacy
