@@ -1,4 +1,4 @@
-import { readFile, lstat, mkdir, writeFile } from 'node:fs/promises';
+import { readFile, lstat, mkdir, writeFile, statfs } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -49,10 +49,10 @@ async function original(pin) {
 /** Explicit source compiler. No network, decoding to PCM, encoding or storage access. */
 export async function buildSoundtrackAlbums() {
   const source = boundedJSON(await readFile(await ordinary('sources.json'), 'utf8'), {
-    maxBytes: 128 * 1024,
+    maxBytes: 512 * 1024,
     maxDepth: 12,
-    maxNodes: 10000,
-    maxArray: 128,
+    maxNodes: 30000,
+    maxArray: 256,
     maxString: 1024,
   });
   const derivativeEvidence = boundedJSON(
@@ -61,10 +61,27 @@ export async function buildSoundtrackAlbums() {
   const additionalDerivatives = boundedJSON(
     await readFile(await ordinary('provenance/additional-derivatives.json'), 'utf8'),
   );
+  let expansionDerivatives;
+  try {
+    expansionDerivatives = boundedJSON(
+      await readFile(await ordinary('provenance/expansion-derivatives.json'), 'utf8'),
+    );
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  if (expansionDerivatives)
+    required(
+      canonicalJSON(expansionDerivatives.encoder) === canonicalJSON(additionalDerivatives.encoder),
+      'Expansion encoder provenance differs from its retained settings.',
+    );
   const licenseEvidence = boundedJSON(
     await readFile(await ordinary('provenance/license-revalidation.json'), 'utf8'),
   );
-  const declaredDerivatives = [...derivativeEvidence.tracks, ...additionalDerivatives.tracks];
+  const declaredDerivatives = [
+    ...derivativeEvidence.tracks,
+    ...additionalDerivatives.tracks,
+    ...(expansionDerivatives?.tracks ?? []),
+  ];
   required(
     canonicalJSON(source.encoder) === canonicalJSON(derivativeEvidence.encoder),
     'Encoder provenance differs from its retained receipt.',
@@ -72,7 +89,7 @@ export async function buildSoundtrackAlbums() {
   required(
     source.format === 'revealline-licensed-audio-source.v1' &&
       source.tracks.length > 0 &&
-      source.tracks.length <= 128 &&
+      source.tracks.length <= 256 &&
       new Set(source.tracks.map((t) => t.id)).size === source.tracks.length &&
       source.tracks.every((t) => stableId(t.id) && !t.id.startsWith('builtin.')) &&
       source.albums.length > 0 &&
@@ -89,7 +106,9 @@ export async function buildSoundtrackAlbums() {
         ? 'https://creativecommons.org/publicdomain/zero/1.0/'
         : track.license === 'CC BY 3.0 Unported'
           ? 'https://creativecommons.org/licenses/by/3.0/'
-          : null;
+          : track.license === 'CC BY 4.0 International'
+            ? 'https://creativecommons.org/licenses/by/4.0/'
+            : null;
     required(
       licenseURL &&
         licenseEvidence.sources.some(
@@ -142,6 +161,7 @@ export async function buildSoundtrackAlbums() {
         license: track.license,
         source: track.source,
       },
+      ...(track.fileName ? { fileName: track.fileName } : {}),
     });
     bodies.set(track.id, { sha256: asset.sha256, blob });
   }
@@ -162,14 +182,19 @@ export async function buildSoundtrackAlbums() {
     );
     album.trackIds.forEach((id) => assigned.add(id));
     const library = {
-      ...emptySoundtrackLibrary(),
+      ...emptySoundtrackLibrary({ catalogue: true }),
       tracks: album.trackIds.map((id) => verified.get(id)),
+      tags: Object.fromEntries(
+        source.tracks
+          .filter((track) => album.trackIds.includes(track.id) && track.tags)
+          .map((track) => [track.id, track.tags]),
+      ),
       playlists: [
         {
           id: album.id,
           title: album.title,
           trackIds: album.trackIds,
-          order: 'ordered',
+          order: 'shuffle',
           repeat: 'all',
         },
       ],
@@ -217,16 +242,26 @@ export async function writeSoundtrackAlbums(output) {
   }
   required(!existing, 'Album output already exists; choose a fresh directory.');
   const result = await buildSoundtrackAlbums();
+  const catalogBytes = Buffer.from(JSON.stringify(result.catalog, null, 2) + '\n');
+  let remaining =
+    catalogBytes.length + result.bundles.reduce((sum, entry) => sum + entry.bytes.length, 0);
+  const checkReserve = async () => {
+    const disk = await statfs(path.dirname(target));
+    required(
+      disk.bavail * disk.bsize >= 1024 ** 3 + remaining + 1024 ** 2,
+      'Album export must leave at least 1 GiB of free disk space.',
+    );
+  };
+  await checkReserve();
   await mkdir(target);
-  await writeFile(
-    path.join(target, 'catalog.json'),
-    JSON.stringify(result.catalog, null, 2) + '\n',
-    { flag: 'wx' },
-  );
+  await writeFile(path.join(target, 'catalog.json'), catalogBytes, { flag: 'wx' });
+  remaining -= catalogBytes.length;
   for (const entry of result.bundles) {
+    await checkReserve();
     const file = path.join(target, entry.name);
     await mkdir(path.dirname(file), { recursive: true });
     await writeFile(file, entry.bytes, { flag: 'wx' });
+    remaining -= entry.bytes.length;
   }
   return result;
 }

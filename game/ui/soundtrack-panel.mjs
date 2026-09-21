@@ -4,6 +4,7 @@ import {
   BUILTIN_SOUNDTRACK_PLAYLISTS,
   BUILTIN_SOUNDTRACK_TRACKS,
   SOUNDTRACK_LIMITS,
+  SOUNDTRACK_GENRE_LABELS,
   emptySoundtrackLibrary,
   resolveSoundtrackLibrary,
   upgradeSoundtrackLibrary,
@@ -263,11 +264,7 @@ export function attachSoundtrackPanel({
       setStatus(committed.warning || 'Playlist selected. Choose Play music if it is paused.');
     });
   });
-  const genreNames = [
-    ['synth90s', '90s Synth'],
-    ['metal', 'Metal'],
-    ['ukrainian', 'Ukrainian'],
-  ];
+  const genreNames = Object.entries(SOUNDTRACK_GENRE_LABELS);
   const listeningMode = input('listening-mode', 'Music selection', { tag: 'select' });
   options(listeningMode.element, [
     ['auto', 'Automatic — match this world'],
@@ -970,7 +967,7 @@ export function attachSoundtrackPanel({
       'original-status',
       catalogue?.tracks.length
         ? `${catalogue.tracks.length} published recordings. Listen online or download a volume for offline play.`
-        : '36 original compositions are in production. Recordings will appear after production and listening review. Community albums and your MP3 uploads are available below.',
+        : 'No online recordings are published in this edition. Import MP3s or an album file to build your playlist.',
       { class: 'micro-note' },
     ),
     originalAlbums,

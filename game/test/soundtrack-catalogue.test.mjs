@@ -4,6 +4,7 @@ import {
   SOUNDTRACK_FORMAT_V2,
   SOUNDTRACK_FORMAT_V3,
   SOUNDTRACK_LIMITS,
+  SOUNDTRACK_GENRES,
   BUILTIN_SOUNDTRACK_TRACKS,
   emptySoundtrackLibrary,
   resolveSoundtrackLibrary,
@@ -39,12 +40,67 @@ const catalogueTrack = resolveCatalogueTrack({
 const asV2 = (value) => {
   const { referenceOnlyTrackIds: _refs, listening, ...library } = value;
   const { recordingMode: _recording, ...oldListening } = listening;
-  return { ...library, format: SOUNDTRACK_FORMAT_V2, listening: oldListening };
+  // Construct an actual historical v2 fixture, whose genre vocabulary had three values.
+  return resolveSoundtrackLibrary({
+    ...library,
+    format: SOUNDTRACK_FORMAT_V2,
+    listening: { ...oldListening, genres: ['synth90s', 'metal', 'ukrainian'] },
+  });
 };
 const withCatalogue = () =>
   setCatalogueTracks(upgradeSoundtrackLibrary(upload.library), [catalogueTrack]);
 const prepare = (library, assets) =>
   prepareSoundtrackLibrary(library, assets, { probeMedia: structuralProbe });
+
+test('additional styles have distinct queues and mixes preserve explicit former genre choices', () => {
+  const recordings = SOUNDTRACK_GENRES.map((genre) => ({
+    ...catalogueTrack,
+    id: `builtin.catalog.style.${genre}`,
+    tags: { genres: [genre], role: 'any', energy: 3, themes: [] },
+  }));
+  const library = setCatalogueTracks(emptySoundtrackLibrary({ catalogue: true }), recordings);
+  for (const track of recordings) {
+    const genre = track.tags.genres[0];
+    const selected = resolveSoundtrackSelection({
+      ...library,
+      listening: { ...library.listening, mode: genre },
+    });
+    assert.deepEqual(selected.playlist.trackIds, [track.id]);
+    const builtIn = soundtrackPlaylists(library).find((p) => p.id === `builtin.playlist.${genre}`);
+    assert(builtIn.trackIds.includes(track.id));
+    assert(!builtIn.trackIds.some((id) => id.startsWith('builtin.catalog.') && id !== track.id));
+  }
+  const previousChoices = ['synth90s', 'metal', 'ukrainian'];
+  const explicit = resolveSoundtrackLibrary({
+    ...library,
+    listening: { ...library.listening, mode: 'mix', genres: previousChoices },
+  });
+  assert.deepEqual(explicit.listening.genres, previousChoices);
+  assert.deepEqual(
+    resolveSoundtrackSelection(explicit).playlist.trackIds,
+    recordings.slice(0, 3).map((t) => t.id),
+  );
+  assert.deepEqual(
+    resolveSoundtrackSelection({ ...library, listening: { ...library.listening, mode: 'mix' } })
+      .playlist.trackIds,
+    recordings.map((t) => t.id),
+  );
+});
+
+test('historical procedural identities retain their real rock, chiptune and ambient categories', () => {
+  const library = emptySoundtrackLibrary({ catalogue: true });
+  for (const genre of ['rock', 'chiptune', 'ambient']) {
+    const list = soundtrackPlaylists(library).find((p) => p.id === `builtin.playlist.${genre}`);
+    assert.deepEqual(
+      list.trackIds,
+      BUILTIN_SOUNDTRACK_TRACKS.filter((t) => t.recipe.genre === genre).map((t) => t.id),
+    );
+  }
+  assert.deepEqual(
+    soundtrackPlaylists(library).find((p) => p.id === 'builtin.playlist.metal').trackIds,
+    BUILTIN_SOUNDTRACK_TRACKS.filter((t) => t.recipe.genre === 'metal').map((t) => t.id),
+  );
+});
 
 test('UA-FPV remains a dedicated selectable collection and participates in Ukrainian and mixed queues', () => {
   const track = { ...catalogueTrack, id: 'builtin.catalog.ua-fpv.verified' };

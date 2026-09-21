@@ -11,7 +11,19 @@ export const SOUNDTRACK_FORMAT_V2 = 'revealline-soundtrack.v2';
 export const SOUNDTRACK_FORMAT_V3 = 'revealline-soundtrack.v3';
 export const SOUNDTRACK_CATALOGUE_FORMAT = 'revealline-soundtrack-catalogue.v1';
 export const SOUNDTRACK_CATALOGUE_FORMAT_V2 = 'revealline-soundtrack-catalogue.v2';
-export const SOUNDTRACK_GENRES = Object.freeze(['synth90s', 'metal', 'ukrainian']);
+const LEGACY_SOUNDTRACK_GENRES = Object.freeze(['synth90s', 'metal', 'ukrainian']);
+export const SOUNDTRACK_GENRE_LABELS = Object.freeze({
+  synth90s: '90s Synth',
+  metal: 'Metal',
+  ukrainian: 'Ukrainian',
+  chiptune: 'Chiptune',
+  electronic: 'Electronic & dance',
+  rock: 'Rock',
+  ambient: 'Ambient & chill',
+  cinematic: 'Cinematic',
+  acoustic: 'Acoustic & folk',
+});
+export const SOUNDTRACK_GENRES = Object.freeze(Object.keys(SOUNDTRACK_GENRE_LABELS));
 export const SOUNDTRACK_MODES = Object.freeze(['auto', ...SOUNDTRACK_GENRES, 'fusion', 'mix']);
 export const AUDIO_TRACK_FORMAT = 'revealline-audio-track.v1';
 export const SOUNDTRACK_LIMITS = Object.freeze({
@@ -182,7 +194,7 @@ export function emptySoundtrackLibrary({ catalogue = false, version = 3 } = {}) 
           tags: {},
           listening: {
             mode: 'auto',
-            genres: [...SOUNDTRACK_GENRES],
+            genres: [...(version === 2 ? LEGACY_SOUNDTRACK_GENRES : SOUNDTRACK_GENRES)],
             installedOnly: false,
             ...(version === 2 ? {} : { recordingMode: false }),
           },
@@ -296,6 +308,16 @@ export function resolveSoundtrackLibrary(value) {
       'Invalid listening settings.',
     );
     validGenres(library.listening.genres, false);
+    required(
+      modern ||
+        (['auto', ...LEGACY_SOUNDTRACK_GENRES, 'fusion', 'mix'].includes(library.listening.mode) &&
+          [
+            library.listening.genres,
+            ...Object.values(library.tags).map((tags) => tags.genres),
+            ...library.catalogTracks.map((track) => track.tags.genres),
+          ].every((genres) => genres.every((genre) => LEGACY_SOUNDTRACK_GENRES.includes(genre)))),
+      'Expanded music styles require library v3.',
+    );
   }
   const trackIds = new Set(BUILTIN_SOUNDTRACK_TRACKS.map((t) => t.id)),
     assets = new Map();
@@ -701,9 +723,7 @@ export function soundtrackTracks(value) {
   return Object.freeze([...BUILTIN_SOUNDTRACK_TRACKS, ...soundtrackReferencedTracks(value)]);
 }
 const genreLabels = {
-  synth90s: '90s synth',
-  metal: 'Metal',
-  ukrainian: 'Ukrainian',
+  ...SOUNDTRACK_GENRE_LABELS,
   fusion: 'Fusion',
   mix: 'Mix all styles',
   auto: 'Automatic',
@@ -713,9 +733,7 @@ function trackTags(library, track) {
   if (library.tags?.[track.id]) return library.tags[track.id];
   if (track.kind === 'synth')
     return {
-      genres: [
-        track.recipe.genre === 'metal' || track.recipe.genre === 'rock' ? 'metal' : 'synth90s',
-      ],
+      genres: [SOUNDTRACK_GENRES.includes(track.recipe.genre) ? track.recipe.genre : 'synth90s'],
       role: track.recipe.genre === 'ambient' ? 'menu' : 'any',
       energy: 3,
       themes: [],
@@ -730,7 +748,9 @@ function matchesMode(tags, mode, genres) {
 function cataloguePlaylists(library) {
   if (library.format === SOUNDTRACK_FORMAT) return [];
   const tracks = [...BUILTIN_SOUNDTRACK_TRACKS, ...library.catalogTracks, ...library.tracks];
-  const playlists = ['synth90s', 'metal', 'ukrainian', 'fusion', 'mix'].map((mode) => ({
+  const genres =
+    library.format === SOUNDTRACK_FORMAT_V2 ? LEGACY_SOUNDTRACK_GENRES : SOUNDTRACK_GENRES;
+  const playlists = [...genres, 'fusion', 'mix'].map((mode) => ({
     id: `builtin.playlist.${mode}`,
     title: genreLabels[mode],
     trackIds: tracks

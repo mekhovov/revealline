@@ -1,3 +1,5 @@
+> **21 September 2026: production paused by user feedback.** Both A and B sketches were rejected because the melody and instrument rhythms do not feel synchronized. Preserve these recordings and their original receipts; do not generate or publish more AI originals. Prioritize verified licensed creator recordings and the local UA-FPV import packs. See [the current decision](../../../../docs/music-production-pause.md). Historical descriptions below remain evidence of the attempts, not current approval.
+
 # Local original recording candidates
 
 ## Short direction review

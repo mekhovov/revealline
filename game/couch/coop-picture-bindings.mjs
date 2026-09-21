@@ -4,7 +4,7 @@ import { freezePresentation } from '../presentation/model.mjs';
  * The injected lease verifies these identities before reading or decoding; other
  * imports/themes have no implicit procedural or wider FPV-picture fallback.
  * Lease output retains the complete frame with contain fit and nearest sampling.
- * fpv43 is an exact reviewed metadata successor: all 127 original payloads, including
+ * fpv48 is an exact reviewed metadata successor: all 127 original payloads, including
  * these two derivatives, remain byte-identical. No other revision is admitted.
  */
 export const COOP_PICTURE_BINDINGS = freezePresentation([
@@ -16,7 +16,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     levelRevision: 2,
     levelSha256: '31041ad693f59418fb34e91f6f7bdae4d46fb6294b5e4ba49f8035aab4e79246',
     themeId: 'fpv',
-    themeRevision: 43,
+    themeRevision: 48,
     collection: null,
     picture: {
       slot: 'scene.reveal.wide',
@@ -37,7 +37,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     levelRevision: 2,
     levelSha256: 'fcb1014f8b2c60047a2d10e4c0558b9ca03dcfe50c23ad48a5d2dabf9852c2a7',
     themeId: 'fpv',
-    themeRevision: 43,
+    themeRevision: 48,
     collection: null,
     picture: {
       slot: 'picture.fpv.adf5c9eea274ba7f',
@@ -59,7 +59,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
 export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
   version: 'revealline-team-historical-import-picture.v1',
   themeId: 'fpv',
-  themeRevision: 43,
+  themeRevision: 48,
   collection: null,
   picture: {
     slot: 'scene.reveal.wide',

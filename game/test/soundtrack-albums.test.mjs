@@ -1,7 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { emptySoundtrackLibrary } from '../soundtrack.mjs';
-import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
+import { createHash } from 'node:crypto';
+import {
+  emptySoundtrackLibrary,
+  resolveSoundtrackSelection,
+  upgradeSoundtrackLibrary,
+} from '../soundtrack.mjs';
+import { prepareSoundtrackLibrary, exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
 import { mergeSoundtrackAlbum, resolveSoundtrackAlbumCatalog } from '../soundtrack-albums.mjs';
 import {
   fetchSoundtrackAlbum,
@@ -13,6 +18,156 @@ import { createManagedMediaStore, MANAGED_MEDIA_LIMITS } from '../managed-media-
 import { albumFixture, albumCatalog, responseFor } from './helpers/soundtrack-albums.mjs';
 
 const baseURL = 'https://example.test/release-39/';
+async function modernAlbumFixture(id) {
+  const prior = await albumFixture(id);
+  const library = structuredClone(upgradeSoundtrackLibrary(prior.album.library));
+  library.tracks[0].fileName = `${id}.mp3`;
+  library.tags[prior.track.id] = {
+    genres: ['acoustic', 'ukrainian'],
+    role: 'menu',
+    energy: 2,
+    themes: ['ukraine'],
+  };
+  library.playlists[0].order = 'shuffle';
+  const prepared = await prepareSoundtrackLibrary(library, prior.prepared.assets, {
+    probeMedia: structuralProbe,
+  });
+  const blob = await exportSoundtrackBundle(library, prepared.assets);
+  const bytes = Buffer.from(await blob.arrayBuffer());
+  return {
+    ...prior,
+    prepared,
+    blob,
+    bytes,
+    album: {
+      ...prior.album,
+      genre: 'Acoustic / folk',
+      library,
+      bytes: bytes.length,
+      sha256: createHash('sha256').update(bytes).digest('hex'),
+    },
+  };
+}
+
+test('v3 album addition preserves declared genres, role, energy and themes while retaining user tags', async () => {
+  const current = await albumFixture('qa.user-tags');
+  const incoming = await modernAlbumFixture('qa.declared-tags');
+  const userTags = { genres: ['metal'], role: 'gameplay', energy: 5, themes: ['fpv'] };
+  const before = {
+    ...upgradeSoundtrackLibrary(current.album.library),
+    tags: { [current.track.id]: userTags },
+  };
+  const merged = mergeSoundtrackAlbum(
+    before,
+    current.prepared.assets,
+    incoming.prepared,
+    incoming.album,
+  );
+  assert.deepEqual(merged.library.tags[current.track.id], userTags);
+  assert.deepEqual(
+    merged.library.tags[incoming.track.id],
+    incoming.album.library.tags[incoming.track.id],
+  );
+  assert.equal(
+    merged.library.tracks.find((t) => t.id === incoming.track.id).fileName,
+    `${incoming.album.id}.mp3`,
+  );
+  assert.deepEqual(merged.library.selection, before.selection);
+  const menu = resolveSoundtrackSelection(
+    {
+      ...merged.library,
+      selection: { playlistId: null },
+      listening: { ...merged.library.listening, mode: 'acoustic' },
+    },
+    { scene: 'menu', themeId: 'ukraine', energy: 2 },
+  );
+  assert.deepEqual(menu.playlist.trackIds, [incoming.track.id]);
+  const overridden = {
+    ...merged.library,
+    tags: { ...merged.library.tags, [incoming.track.id]: userTags },
+  };
+  const repeated = mergeSoundtrackAlbum(
+    overridden,
+    merged.assets,
+    incoming.prepared,
+    incoming.album,
+  );
+  assert.deepEqual(
+    repeated.library.tags[incoming.track.id],
+    userTags,
+    're-import cannot overwrite listener tags',
+  );
+  assert.equal(repeated.assets.length, 2);
+  for (const original of [...current.prepared.assets, ...incoming.prepared.assets]) {
+    const retained = repeated.assets.find((asset) => asset.sha256 === original.sha256);
+    assert.deepEqual(await retained.blob.arrayBuffer(), await original.blob.arrayBuffer());
+  }
+});
+
+test('a first filename-bearing v3 album upgrades an empty v1 library and retains its original audio', async () => {
+  const incoming = await modernAlbumFixture('qa.first-modern');
+  const before = emptySoundtrackLibrary();
+  const merged = mergeSoundtrackAlbum(before, [], incoming.prepared, incoming.album);
+  assert.equal(before.format, 'revealline-soundtrack.v1');
+  assert.equal(merged.library.format, 'revealline-soundtrack.v3');
+  assert.deepEqual(merged.library.selection, before.selection);
+  assert.deepEqual(merged.library.tracks, incoming.prepared.library.tracks);
+  assert.deepEqual(merged.library.tags, incoming.prepared.library.tags);
+  assert.deepEqual(merged.library.playlists, incoming.prepared.library.playlists);
+  const checked = await prepareSoundtrackLibrary(merged.library, merged.assets, {
+    probeMedia: structuralProbe,
+  });
+  assert.deepEqual(
+    await checked.assets[0].blob.arrayBuffer(),
+    await incoming.prepared.assets[0].blob.arrayBuffer(),
+  );
+});
+
+test('modern album upgrade preserves populated legacy assignments, selection and explicit v2 listening settings', async () => {
+  const current = await albumFixture('qa.legacy-kept');
+  const incoming = await modernAlbumFixture('qa.modern-added');
+  const assignment = { scope: 'global', key: null, playlistId: current.album.id };
+  for (const version of [1, 2]) {
+    const before = {
+      ...(version === 1
+        ? current.album.library
+        : {
+            ...emptySoundtrackLibrary({ catalogue: true, version: 2 }),
+            ...current.album.library,
+            format: 'revealline-soundtrack.v2',
+          }),
+      assignments: [assignment],
+    };
+    if (version === 2)
+      before.listening = {
+        mode: 'mix',
+        genres: ['synth90s', 'metal', 'ukrainian'],
+        installedOnly: true,
+      };
+    const merged = mergeSoundtrackAlbum(
+      before,
+      current.prepared.assets,
+      incoming.prepared,
+      incoming.album,
+    );
+    assert.equal(merged.library.format, 'revealline-soundtrack.v3');
+    assert.deepEqual(merged.library.assignments, before.assignments);
+    assert.deepEqual(merged.library.selection, before.selection);
+    assert.deepEqual(merged.library.tracks[0], before.tracks[0]);
+    assert.deepEqual(merged.library.playlists[0], before.playlists[0]);
+    if (version === 2)
+      assert.deepEqual(merged.library.listening, { ...before.listening, recordingMode: false });
+    assert.equal(
+      (
+        await prepareSoundtrackLibrary(merged.library, merged.assets, {
+          probeMedia: structuralProbe,
+        })
+      ).assets.length,
+      2,
+    );
+  }
+});
+
 test('album union shares the actual picture/story staging budget and preserves all domains on refusal', async () => {
   const a = await albumFixture('qa.shared-a'),
     b = await albumFixture('qa.shared-b');

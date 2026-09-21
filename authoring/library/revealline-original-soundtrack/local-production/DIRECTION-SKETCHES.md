@@ -1,3 +1,5 @@
+> **21 September 2026: production paused by user feedback.** Both A and B sketches were rejected because the melody and instrument rhythms do not feel synchronized. Preserve these recordings and their original receipts; do not generate or publish more AI originals. Prioritize verified licensed creator recordings and the local UA-FPV import packs. See [the current decision](../../../../docs/music-production-pause.md). Historical descriptions below remain evidence of the attempts, not current approval.
+
 # Two short palette and groove directions
 
 Both full Idle Frequency versions were rejected. The second feedback asks for more rhythmic force and a different instrument/melody palette. These new **38.7-second and 42.4-second sketches** test two alternatives before another complete arrangement is attempted. They contribute **zero** to the planned composition count and are not eligible for runtime publication.
