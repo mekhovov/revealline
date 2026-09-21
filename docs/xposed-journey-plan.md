@@ -11,7 +11,7 @@ configurations without changing those levels. Combined unchanged-pressure route
 coverage is416/498 after [Crosswind/Apex](verification/journey-late-pressure.md)
 and [Relay/Fracture refinement](verification/journey-relay-fracture-pressure.md);
 82 cases remain, with55/83 missions covered in all six configurations. Next
-implement the Two Districts spatial study, investigate earlier-chapter paths,
+finish optional-mastery qualification of the [Two Districts spatial study](verification/journey-fracture-spatial.md), investigate earlier-chapter paths,
 connector bypasses, short-clear spatial choices and objective tails.
 These are technical candidate
 checks, not human balance or public-deployment acceptance.

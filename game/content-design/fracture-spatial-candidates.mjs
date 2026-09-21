@@ -37,6 +37,8 @@ export function createFractureSpatialCandidates() {
     'Connecting an island shortens later returns without clearing its occupied district. The permanent center lane never erodes; earned approaches can.';
   mission.design.memorableMoment =
     'A modest island connection becomes a new departure around a baffle while the far pocket remains visibly occupied.';
+  mission.design.combines = [...new Set([...mission.design.combines, 'field-keeper'])];
+  mission.design.difficulty.threatDensity = 5;
   for (const item of [...project.packs, ...project.campaigns]) item.revision = 'district-spatial-1';
   return structuredClone(compileContentProject(project).source);
 }

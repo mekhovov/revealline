@@ -49,6 +49,8 @@ test('one isolated district successor preserves every other Fracture level and a
         assert.deepEqual(mission.objectives, []);
         assert.equal(mission.actors.length, 5);
         assert.equal(new Set(mission.actors.map((a) => a.role)).size, 3);
+        assert(mission.design.combines.includes('field-keeper'));
+        assert.equal(mission.design.difficulty.threatDensity, 5);
         assert(mission.actors.every((a) => a.tier === 'measured'));
       }
     }
