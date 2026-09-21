@@ -1,265 +1,103 @@
-# Journey completion audit — 2026-09-21
+# Journey redesign: completion and remaining work
 
-This is the original Xposed-led Journey P00–P15 programme, not the differently
-numbered Crossmode programme. **No claim of whole-plan completion.** Source,
-automated fixtures, native observations, human acceptance and deployment are
-separate gates. Older phase notes are provenance, not current release claims.
+Updated 2026-09-21 after routing commit `fee44637`. This is the original Xposed-led P00–P15 programme, not the
+separately numbered Crossmode releases. **The plan is not complete.** Code,
+deterministic feasibility, native observations, human acceptance and deployment
+are separate gates; percentages would conceal those distinctions.
 
-Current pressure checkpoint: **498/498 ordinary preset/control cases verified**.
-All six configurations are covered for83/83 Solo candidates. The phase table below
-lists implemented work and remaining acceptance separately. Stronger-pressure
-balance, optional combat, final cultural/workshop art, Team/device/human validation
-and reviewed public promotion are not complete.
+## Source and deployment boundary
 
-## Public versus local
+- Accepted baseline: `595fdadddf3cf5c4240c430b78d27772915df83d`, following PR209
+  and PR213. Last verified public v0.78.0 uses source `e9434d03`; final Pages run
+  `35603591639` passed. Release-owner public audit records 4,206 files /
+  866,183,041 bytes. The prior v0.76.1 audit is superseded, not a current claim.
+- The separate v0.79 device candidate is release-owner work; no newer successful public promotion is asserted here. No C2 version,
+  publisher, accepted music revision 50, or release assets are changed here.
+- The broad content/evidence lane at `7d1f99dda110090de447d37e7bd5560137ad7c58`
+  contains 83 Solo candidates (71 core, 12 Remixes), 12 Team candidates and
+  additional cultural/workshop and spatial studies. These are **not all enrolled
+  or human-qualified public missions**. Their evidence below belongs to that lane;
+  neither C2 nor the routing intake silently publishes the complete catalogue.
+- Separate successor `f2bef7fd743b44b474a38dac074201175b0b50fa` integrates optional
+  robot gameplay into actual Solo/Versus and Studio. Its C2 technical review and
+  native checks pass; this content lane does not duplicate the host integration.
+  Integrated release and human/device gates remain open. Three existing Rover originals are reused and labelled test
+  scenery; final bespoke pictures are still required for released new missions.
+- Original AI soundtrack generation remains paused as requested.
 
-The dated incremental counts below describe the evidence trail. Earlier312/498,
-347/498 and similar milestones are superseded by the current498/498 feasibility
-result, not outstanding route failures. Acceptance gaps remain in the phase table.
+## Each planned item
 
-- Release-owner report: public **v0.76.1**, source `17bd1965`, publisher `3e1c4ec8`,
-  PR208/210, Pages run `35551436420`, 864,317,088 bytes /4,130 files.
-- Device candidate v0.77.0 `432110b51c570b838cdae390790b67dfa76f0785`, PR211,
-  is separate release work, not evidence that this new balance/content work ships.
-- Public source contains candidate modules. Presence does not prove enrollment:
-  `journey-campaign-pins.json` lists eight installed campaigns, not the entire
-  redesigned 12-chapter Journey.
-- This isolated lane contains **83 Solo candidates (71 core,12 Remixes)** and
-  **12 purpose-built Team candidates**, with original picture compositions for
-  all95 and versioned presentation successors. They are not95 human-balanced
-  published missions.
-- Original AI soundtrack generation remains explicitly paused. Music direction
-  metadata and licensed previews are not a finished original soundtrack.
-- Eight additional Ukrainian-culture/workshop greyboxes now have48 no-loss Solo
-  replay routes and48 equal paired-board races across three presets/two steering
-  modes. These are separate optional studies, not extra published or human-balanced
-  content. [Detailed evidence and pacing risks](journey-cultural-workshop.md).
-- Spatial revision2 separately reworks Dnipro and the two motor encounters, with
-  all18 preset/steering clear routes plus three delayed-start samples. Earlier
-  editions remain unchanged. [Comparative evidence](journey-spatial-balance.md)
-  still flags Dnipro pacing and preset inversions; this is not final balance.
-- All83 core/Remix candidates now have an explicit498-case pressure route audit:
-  312 no-loss clear/replay/equal-race cases,303 without collecting pickups;27
-  missions cover all six configurations.186 cases remain unresolved, with concrete
-  capstone/window/cleanup review priorities. [Per-mission results](journey-pressure-route-assessment.md).
-- Two Sentinel receiver-layout successors now reproduce all12 preset/steering
-  no-loss clears/replays/equal races while defeating the recorded old shortcuts.
-  Shared encounter timings/rules remain unchanged; optimized21–38second Twin
-  routes remain a human pacing concern. Exact-source Studio and Expert first
-  returns checked on both boards. [Successor evidence](journey-sentinel-spatial.md).
-- A fresh-route Livewire follow-up now clears all42 configurations on the
-  unchanged stronger-pressure editions, with42 replays/equal races and no pickups.
-  Combined audit coverage is347/498,151 unresolved,34/83 complete six-case sets.
-  Short17–35second routes still need pacing review. [Livewire evidence](journey-livewire-pressure.md).
-- Crosswind/Apex now cover all72 pressure configurations:36 fresh clears plus36
-  preserved historical successes. Combined coverage is383/498,115 unresolved,
-  45/83 complete six-case sets; every mission has at least one passing case.
-  Short late clears and28 missing optional-goal cases remain explicit risks.
-  [Late-Journey evidence](journey-late-pressure.md).
-- Studio now offers an explicit pressure-v2 inspection of the current draft;
-  Apply/Undo/Redo and a pictured native first return are verified. It does not
-  auto-enroll or publish content. [Studio evidence](studio-pressure-inspection.md).
-- Relay/Fracture now cover all84 pressure configurations:33 new paths and51
-  preserved historical successes. Combined coverage is416/498,82 unresolved,
-  55/83 complete six-case sets. Opening probes expose Two Districts Expert's
-  failing old departure and Keep the Network's idle-roamer pressure; short clears
-  and connector bypasses remain redesign targets. [Evidence](journey-relay-fracture-pressure.md).
-- Two Districts now has a separate asymmetric spatial study with18 clear/replay/
-  race samples and a native Expert first return. Its old fast paths no longer
-  clear. The18 ordinary paths leave the lethal field; six additional bent-cut
-  paths now meet optional mastery in all configurations, with replay/equal-race
-  verification. Human/native-full-play/pacing/release qualification remains open.
-  [Study evidence](journey-fracture-spatial.md).
-- Native checking exposed and fixed stale closed-database retries in Studio;
-20/20 storage/recovery tests pass on both Node versions, with normal saved-slot
-  restoration checked natively. [Storage evidence](studio-closed-storage-retry.md).
-- Horizon/Border now cover all102 pressure configurations:30 fresh routes plus72
-  preserved historical successes, with replay/equal races. Combined coverage is
-  **446/498,52 unresolved,65/83 complete six-case sets**. All six failed old first
-  departures have short no-wait alternatives; fast clears and unused landings
-  remain design-review flags. [Opening evidence](journey-opening-pressure.md).
-- Signal/Neon/Rover/Phaseworks/original Sentinel now cover all198 configurations:
-  52 new paths plus146 historical successes. Combined ordinary seed1 coverage is
-  **498/498,83/83 complete six-case sets**, with no remaining ordinary route gap.
-  Of the52 new paths,32 meet existing optional goals and20 do not. Reserve's
-  10.55–12.35second clears bypass impact teaching; all six failed old Phase
-  openings have short no-wait alternatives, not unavoidable damage. [Evidence and
-  design priorities](journey-middle-pressure.md). This closes a feasibility gap,
-  not the stronger-pressure balance, multi-seed, Team or delivery gates.
-- Return in Reserve now has an explicit two-bay greybox successor:18 ordinary
-  seed/delay samples and six separate impact-mastery clear/replay/race routes;
-  133 tests on each Node. Native Inspect/Apply/saved-slot restoration were observed,
-  and subsequent exact-source checks closed edit/Undo/Redo and Standard first-return
-  verification. Short22–32second optimized paths and brief impact visibility remain
-  open concerns. [Study evidence](journey-reserve-spatial.md).
-- Team stronger-pressure feasibility now has an explicit36-set audit. Initial
-  unchanged-route reuse passed13 sets;23 fresh routes now close every remaining
-  ordinary gap:36/36 sets,144/144 joint-setting and seat-label configurations.
-  Additional timing probes pass76/92 configurations;16 later-start failures stay
-  explicit. Only19 selected base routes meet optional mastery. Short clears and mostly alternating-seat continuations remain
-  cooperative-design concerns, not completed human balance. Team seeds do not
-  vary enemy movement; timing probes are distinguished from seed metadata checks.
-  [Evidence and remaining balance gates](journey-team-pressure.md).
+| Phase | Implemented and technically evidenced                                                                                                                                        | Remaining                                                                                                                                              |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| P00   | Canonical plan; 110 old Solo missions, 64 files and 48 numbered references audited; direct-flow/progress/capture teaching fixtures                                           | Whole public flow audit; human capture understanding; final audit dispositions                                                                         |
+| P01   | Foundations, interior launches, topology checks, shared compiler/minimal Studio; 10 opening candidates including Remix; 60 pressure preset/steering cases                    | Fast clears and island bypasses; whole-set native/device/human balance; successor release                                                              |
+| P02   | Seven Border candidates; contact bonuses, frontier teaching; Studio CRUD/manual image workflow; timed bonus runtime/editor and collection/expiry studies                     | Timed bonus Team/controller qualification, route temptation/pacing, broader Studio usability/conflicts, release                                        |
+| P03   | Seven Signal candidates; terrain contracts, actor catalogues, tracing benchmark, captions; 42 pressure cases                                                                 | Neutralization/optional-goal pacing, whole-set native/human/audio qualification, release                                                               |
+| P04   | Seven Neon candidates with Remix and 42 pressure cases                                                                                                                       | Frontier/mouth route usefulness, short paths, human pacing, release                                                                                    |
+| P05   | Seven Rover candidates with Remix and 42 pressure cases                                                                                                                      | Late activations, short routes, escape teaching, human balance, release                                                                                |
+| P06   | Seven Fractured Grid candidates, erosion/anchors and 42 pressure cases; separate Two Districts geometry/mastery study                                                        | Repair priorities, hazard-enclosure discoverability, optimized pacing, human review, release                                                           |
+| P07   | Seven Phaseworks candidates and 42 pressure cases; safe first returns; two-bay Reserve successor and mastery routes                                                          | Impact readability and explanations, short optimized routes, human balance, release                                                                    |
+| P08   | Seven Livewire candidates and 42 pressure cases, 32 optional-goal successes; Afterglow and routing successors: 25 no-loss clear/replay/race samples, 20 optional-goal passes | Original ten optional-goal cases; delayed-start mastery, optimized/short routes, warning overlap/order, human review, release                          |
+| P09   | Seven Relay candidates, permanent connectors/Studio links and 42 pressure cases                                                                                              | Shortcut bypasses and post-objective cleanup, human usefulness, release                                                                                |
+| P10   | Seven Crosswind candidates, directional fields without drift and 42 pressure cases                                                                                           | Precision/readability, optional goals, short-clear geometry, human review, release                                                                     |
+| P11   | Five Sentinel candidates and 30 pressure cases; two receiver-layout successors and native first returns                                                                      | Fast Twin routes, shield mastery, full successor adoption/art/native/human balance, release                                                            |
+| P12   | Five Apex candidates and 30 pressure cases                                                                                                                                   | Short finale redesign, optional mastery, human capstone testing, release                                                                               |
+| P13   | 83-candidate library, 12 Remixes, flat chooser, boundaries and save isolation; all 498 ordinary Solo/Versus preset/control cases pass                                        | Spatial/teaching/cleanup fixes, multi-seed/mastery/human balance, final cuts, full host enrollment and Pages                                           |
+| P14   | 12 Team candidates; joint cuts/seat swaps, flow/Skip/chooser; all 36 mission/preset sets × four seat/control configurations pass; two roamer spatial successors tested       | 17 base optional-mastery misses, genuine complementary cooperation/pacing, new mechanics, live controllers/two-player tests, host enrollment and Pages |
+| P15   | Compatibility/persistence groundwork, immutable records, validation tools                                                                                                    | Human sessions, complete accessibility/device/performance qualification, Legacy transition, public rollback proof and final deployment                 |
 
-Read-only inspection of all23 missions in the eight public pins at `17bd1965`
-also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
-cells/s. This is evidence of inconsistent authored physics, not proof every slow
-actor is wrong: a near-stationary retaining anchor may serve a distinct spatial
-purpose and needs an explicit role. Pressure Lines has6–11.4018 cells/s enemies
-and a15 cells/s craft; Frontier Lines7.5–12.0416/15; Night Shift2.8844–3.3302/10;
-Living Threads2.5–4.1231/10; Fieldcraft, Homeward Skies and Equipment Workshop
-each0.2–4/8. Sentinel Relay is stationary; movement speed is not its pressure
-measure. These public recipes must be reviewed/migrated separately from the
-candidate catalogue. A global multiplier must not be applied to all blindly.
+No phase is labelled fully accepted while its required human or public gate is open.
+Ordinary route completion proves feasibility, not enjoyment or sufficient difficulty.
 
-## Each original phase
+## Latest completed spatial unit
 
-No phase below is being called fully accepted merely because code or candidate
-content exists. The last column is work still required for that phase's current
-successor, including relevant public/human gates.
+[Afterglow](journey-livewire-spatial.md) redirects its keeper with two walls;
+[Switchyard and Split Junction](journey-livewire-routing.md) now offer distinct
+return approaches without the observed connector windfalls. Their explicit
+successors retain original actors, physics, attack warnings, quotas and assets.
+The routing unit at `fee44637` passes 113 tests on each Node version, including
+14 full legal clear/replay/equal-race cases; real Studio import and first returns
+are checked. A separate four-route mastery follow-up raises the cohort to 118
+passing tests on each Node version. All six Split preset/control combinations
+now have mastery evidence. Five earlier Split recordings remain ordinary clears,
+not mastery passes; delayed-start mastery remains open.
+Default Afterglow and all historical editions remain unchanged. These commits
+have been handed to the release owner but are not claimed publicly deployed.
 
-| Item | Implemented / evidence available | Remaining acceptance |
-|---|---|---|
-| P00 — plan/audit/flow/progress/teaching | Canonical plan;110 old Solo /64 files /48 numbered references audited; direct flow, stable receipts and teaching fixtures; scoped integration accepted | Exact public whole-flow audit; human capture understanding; latest release reconciliation |
-| P01 — foundations/Prologue/Horizon/Studio minimum | Foundation topology/runtime; ten opening candidates including Remix; original art; shared compiler/Studio; all60 stronger-pressure clear/replay/race cases and startup observations | Fast courtyard/outpost clears, island-bypass/Remix review; whole-set native/device/human balance; successor integration/Pages |
-| P02 — Border/bonuses/frontier/Studio CRUD/image | Seven candidates/art; contact bonuses; outer/frontier teaching; CRUD/manual image workflow; timed-schedule engine/editor and three-mission study; all42 ordinary stronger-pressure cases;54 timed-taking clear/replay/race cases per difficulty edition, exact post-contact saves | Short/unused-landing routes and Expert departure teaching; timed controller/Team/human/release qualification; broader Studio usability/conflict tests; promotion gates |
-| P03 — Signal/terrain/catalogues/presentation/trace | Seven candidates/art; terrain contracts; actor catalogues; bounded trace benchmark; reactive captions; all42 pressure clear/replay/race cases | Short routes/neutralization/link mastery; whole-set native/human; final audio; public integration |
-| P04 — Neon | Seven candidates/art; frontier-shaping routes; Remix; replay/race/mastery/seed checks; all42 pressure clear/replay/race cases | Short paths and mouth/frontier goal review, human pacing, public integration |
-| P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; all42 pressure clear/replay/race cases | Sorting Yard/Split Berths short routes and late activation; presentation, human balance, public integration |
-| P06 — Fractured Grid | Seven candidates/art; erosion/anchors/repair; Remix; all42 pressure clear/replay/race cases; opening observations; Two Districts spatial study,18 ordinary samples and6 separate mastery routes |35–40second optimized ordinary pacing; discoverability of bent hazard enclosures; repair/roamer teaching, human pacing, public integration |
-| P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; all42 pressure clear/replay/race cases; six safe alternative first returns; separate two-bay Reserve study with18 ordinary +6 mastery samples; native Studio history and Standard first return checked | Reserve pacing/impact readability, whole-set native hit explanations, human difficulty, public integration |
-| P08 — Livewire | Seven candidates/art; telegraphed lanes; Remix; all42 stronger-pressure clear/replay/race cases;32 optional goals | Short-clear spatial review;10 optional-goal cases; human warning overlap/ordering, public integration |
-| P09 — Relay | Seven candidates/art; permanent connectors; Studio links; Remix; all42 pressure clear/replay/race cases; opening observations | Connector bypass/long post-objective intervals, human shortcut usefulness, public integration |
-| P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; all42 pressure clear/replay/race cases | Short-clear/connector/optional-goal review; human precision/readability, public integration |
-| P11 — Sentinel | Four core + Remix/art; multi-relay encounter; all30 original pressure clear/replay/race cases; two explicit receiver-layout successors with12 clear/replay/race cases and native first returns | Optimized21–38second Twin clears remain pacing risks; Crown separate-shield mastery; successor full native/art/host adoption, human boss balance, public integration |
-| P12 — Apex | Four core + Remix/art; capstone combinations; all30 pressure clear/replay/race cases | Short optimized finales need rework; optional-goal routes, human mastery, public integration |
-| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22; all498 ordinary pressure clear/replay/race cases | Flagged spatial/teaching/cleanup issues; optional mastery, multi-seed and human balance; final cuts/reference dispositions; integrated Pages |
-| P14 —12 Team missions | Three four-mission arcs; original art; joint cuts/seat swaps; Team flow/Skip/chooser/presets; all36 stronger-pressure mission/preset sets with144 ordinary configurations;76/92 delayed configurations; native Expert import/first returns |17 optional-mastery misses, timing-sensitive/short/alternating-seat routes; live two-player balance/controllers; material successor host adoption; new mechanic qualification; Pages |
-| P15 — final validation/Legacy/rollback | Immutable evidence records; compiler/CLI/Studio inspection; persistence/compatibility groundwork | Human sessions; full device/accessibility/performance; Legacy transition; public rollback proof; deployment |
+## Latest requested additions
 
-## Cross-cutting checklist
+| Addition                             | Current result                                                                                                                                                                                                                   | Remaining                                                                                                                             |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Difficulty beyond lives              | Explicit pressure-v2 enemy movement factors 1.0 / 1.4 / 1.75 and attack-rest factors 1.25 / 0.85 / 0.65; fixed player handling and warning windows; 498 Solo/Versus and 144 Team ordinary cases                                  | Final human tuning, spatial shortcut fixes, legacy migration and release; these are candidates, not universal final multipliers       |
+| Timed relocating bonuses             | Deterministic announcements, availability/expiry/relocation, shared schedules and visual countdowns; 54 collection/clear/replay/race cases in each tested edition, plus saves                                                    | Broader opportunity sampling, avoid idle waiting, Team/device/human checks and release                                                |
+| Ukrainian/cultural/FPV workshop maps | Eight original greyboxes and eight pinned original pictures; 48 ordinary preset/control routes/races and geometry successors; native partial reveals                                                                             | Whole-set cultural/picture/playability review, pacing, mode qualification and enrollment                                              |
+| More enemy roles                     | Pursuer/interceptor catalogue with six variants and 36 route/race cases; scouts/sentries add removable, non-retaining actors                                                                                                     | Whole-Journey distribution and pacing, Team/human checks and release                                                                  |
+| Optional running/shooting characters | Non-graphic pixel robots; deterministic scout/sentry runtime, warning/locked shot/counterplay, ram/capture removal and cosmetic scrap; C2 Solo/Versus/Studio/replay integration technically reviewed, 296 tests per runtime pass | Integrated release, device matrix, Team semantics, human balance and publication. No nationality caricatures or graphic dismemberment |
+| Less menu friction                   | Continue/Next/Skip/chooser host work and library tests; C2 keeps saved editions and applies changes only to fresh attempts                                                                                                       | Ten-mission public/device flow, final UX timing and human confirmation                                                                |
 
-### Latest requested improvements
+## Research interpretation
 
-| Request | Completed locally | Still required |
-|---|---|---|
-| Difficulty beyond lives | Explicit v2 speed factors Gentle1.0 / Standard1.4 / Expert1.75 and attack-rest factors1.25 /0.85 /0.65 where actors have an attack cycle; fixed player handling and warning windows;498 Solo/Versus ordinary cases and144 Team ordinary configurations pass | Human balance, spatial shortcut/cleanup fixes, optional mastery, live Team/controllers and legacy-public migration; no claim these multipliers are final or deployed |
-| Appearing/expiring/relocating bonuses | Versioned engine, shared Studio schedules, visual announcement/countdown; desktop native observation;54 bonus-taking clear/replay/race cases in each of original and pressure-v2 editions, plus expiry/relocation probes and post-contact saves | Broader seed/opportunity sampling, tempting-route/short-clear balance, Team/device/human checks and publication |
-| Ukrainian ornament/culture and FPV workshop maps | Eight distinct greyboxes, two arcs, cultural attribution;48 preset/control clear/replays and equal races; two successor geometry studies; eight original pinned picture candidates and74 art/geometry regression tests per Node; native import/Apply and two partial reveals | Remaining short routes, whole-set picture/cultural/playability review, final asset acceptance, mode qualification and enrollment |
-| Additional enemy behavior | Pursuer/interceptor catalogue and authoring, six variants,36 clear/replays and equal races; existing terrain/rover/erosion/relay/contour roles retained | Whole-Journey distribution/pacing, native/human/Team and public integration |
-| Optional running/shooting characters | D2a deterministic non-retaining scouts/sentries; D2b shared authoring/on-off editions and three greyboxes,42 on/off clear/replays and42 races; D2c/C1 pixel robots, attack cues and scrap components,315 tests per Node and static native inspection | C2 real-host drawing, audio, persistent player setting and native play; D2d Team; human/release gates. No graphic dismemberment or nationality-based caricatures |
-| More varied decisions without menu friction |83 Solo candidates including12 Remixes,12 Team candidates; shared framework and direct-flow host checks | Final cuts, human pacing/mastery, controller/device validation and accepted-release deployment |
+[Xposed Reloaded](https://store.playstation.com/en-us/concept/10002881/) supports
+compact controls and picture-reveal challenges, but does not establish numeric
+enemy speed or pickup expiry rules. [AirXonix's developer rules](https://www.axysoft.com/airxonix/)
+distinguish field enemies from filled-ground mines and describe bonuses. The
+design application is varied movement domains and optional risky collection
+windows—not copying undocumented timings or simply speeding up everything.
 
-The latest D2b code is `a22bbb16`. D2c/C1 pixel presentation components and a
-static review sheet are now implemented/reviewed:315 tests per Node,95,718
-projected route frames, native16/24/32px and narrow-layout observations. This is
-not live gameplay integration: C2 host/preferences/audio, Team, human balance and
-public deployment remain pending. [C1 evidence](journey-optional-combat-presentation.md).
+New C2 studies preserve the enemy-seeded fill rule: removable scouts and sentries
+never retain territory; ordinary keepers do. Sentries communicate a fixed aim,
+then fire a craft-only shot. They do not silently home or change collision rules.
+These choices require human readability/retry testing; automatic restart and
+successful scripted routes are not evidence of fun or “addictiveness.”
 
-The release owner currently reserves the v0.78 candidate `e9434d03`/PR209 and
-has not supplied an accepted main baseline for this lane's C2 adoption. A held,
-additive BoardPainter patch may be prepared against that exact renderer;
-app/Versus preferences/receipts, Team host and preview enablement remain held.
-This coordination status is not a new public release claim.
+## Next implementation order
 
-The held additive renderer patch is now implemented and independently reviewed;
-389 tests pass on each supported Node version, including ten executable patched
-BoardPainter tests. The actual shared renderer/hosts and preview guard are not
-changed. [Exact patch/source evidence and remaining C2 work](journey-combat-board-adapter.md).
-
-Timed-bonus taking feasibility is now separate from the earlier all-missed tests:
-each edition has54 ordinary no-loss collection/clear/replay/equal-race cases. Only
-14 of the54 old paths transfer unchanged to higher pressure; newly verified paths
-close the remaining40. Short optimized clears and idle bonus waiting remain balance
-concerns, not completed acceptance. [Taking-route evidence and limits](journey-timed-bonuses.md).
-
-The eight cultural/workshop studies now also have distinct original picture
-candidates (16,011,991bytes total), as explicit art-only editions of original and
-spatial-revision2 maps. All60 relevant input routes preserve gameplay outcomes;
-new revision metadata has its own verified replay checksum. This closes missing
-picture creation; two exact-source native partial reveals are also checked. It is
-not whole-set visual/human/Pages acceptance. [Art evidence](journey-cultural-workshop-art.md).
-
-### Research-to-implementation check
-
-Primary sources rechecked2026-09-21: [Xposed Reloaded's official listing](https://store.playstation.com/en-us/concept/10002881/)
-supports picture revelation, compact controls and demanding content, but publishes
-no numeric enemy-speed or bonus-expiry rules. [AirXonix's developer rules](https://www.axysoft.com/airxonix/)
-distinguish field balls from filled-territory mines and describe collectible bonuses.
-[Mike Stout's attack-design article](https://www.gamedeveloper.com/design/enemy-attacks-and-telegraphing)
-emphasizes readable pre-attack communication. Our design inference is to raise
-movement/cadence pressure while preserving warning windows, and to use different
-movement domains and optional bonus opportunities for variety. The current speed
-factors and relocating-bonus timings remain our test hypotheses, not copied
-Reloaded rules or proven engagement targets. No source establishes addictiveness
-or substitutes for the remaining per-map human balance checks.
-
-### Original shared requirements
-
-- [x] One enemy-seeded four-connected capture contract; intentional line-only
-      capture with retaining enemies on both sides.
-- [x] Shared foundations and permanent non-scoring relay connectors; terrain
-      domains, erosion protection, interior spawns and diagnostics.
-- [x] Versioned compiler/registry/maps/campaigns/packs/actors/manifests shared by
-      Studio, CLI, previews and candidate hosts.
-- [x] Direct Continue/Next/Skip/flat chooser and stable progress in scoped hosts;
-      no automatic assignment of post-Journey work.
-- [x] Reference audit and source hashes/evidence limits preserved.
-- [ ] Final disposition for each of48 numbered references:66 candidate links are
-      proposals, not48 final human-approved dispositions.
-- [ ] New all-level difficulty pass, including public legacy content and Team;
-      explicit successors, never silent old-edition edits.
-- [x] Timed relocating bonus schema/engine/visualization/Studio/replay/save,
-      eligibility and bounded collection in explicit local Solo/Versus candidates.
-- [ ] Timed bonus native/human/release qualification and Team semantics. See
-      [slice B evidence](journey-timed-bonuses.md); local implementation is not deployment.
-- [ ] Ukrainian/FPV arcs with distinct route decisions, original assets, cultural
-      attribution, playtests and enrollment.
-      Eight shared-framework greyboxes and cultural attribution are implemented;
-      desktop Studio/Expert launch checked; eight original pinned picture candidates
-      and two native partial reveals are available. Final asset acceptance, broader
-      timing/device/human qualification and enrollment remain.
-- [ ] Authored pressure roles and optional non-retaining combat actors, settings,
-      pixel effects, bounded decals and cross-mode fairness.
-      Trail-pursuer/heading-interceptor authoring and six encounter variants are now
-      implemented with36 clear/replays and36 equal races; native/human/release gates
-      remain. Optional combat D2a engine/transport is now implemented: separate seeded
-      scouts/sentries, readable attack deadlines, contact/capture removal, bounded
-      projectiles and strict replay/save authority;45 new tests and700 historical
-      regression cases verified on both Node versions. D2b catalogue/Studio authoring,
-      explicit editions, pressure/capture inspection and three original greyboxes are
-      now implemented and reviewed:219 tests per Node,42 on/off clear/replays and42
-      paired races. C1 pixel bodies, aim/projectile cues and scrap components now pass
-      315 tests per Node and scoped static native checks; live host integration/player
-      toggle/audio, Team semantics, native play/human and release gates remain.
-      Enabled live preview is intentionally
-      blocked until readable presentation exists. [D1 evidence](journey-pursuit-interception.md),
-      [D2a evidence](journey-optional-combat-runtime.md),
-      [D2b evidence and pacing limits](journey-optional-combat-authoring.md).
-- [ ] Full Studio recoverability/conflict/large-library usability acceptance with
-      real users, not inferred from automated checks.
-- [ ] Every released map readable picture/actors/audio in all display modes.
-- [ ] Measured45–150-second ordinary pacing, <15% timed content, no tedious quota
-      cleanup, nontrivial campaign transitions and complementary Team play.
-- [ ] Physical keyboard/touch/controller/reconnect, reduced effects, muted audio,
-      captions/contrast/small-screen and performance-target evidence.
-- [ ] Reviewed integrations, immutable releases and Pages test builds; retained
-      prior playable build and950 MiB guard.
-- [ ] Human understanding/enjoyment/retry and final cuts. No fabricated signoff,
-      remote telemetry or manipulative retention systems.
-
-## Revised execution order
-
-P14 follow-up: [two changing-return successor maps](journey-team-roamer-spatial.md)
-now have24 no-down optional-mastery routes,24 inward-first openings and preserved
-old-route/timing failures. Shared native import/partial play also recorded a real
-reserve loss; it is not a no-loss playthrough. Western-only inner openings,
-limited partner-ground reuse, short clears and human/device/Pages gates remain.
-The original seventeen optional-mastery misses are not relabelled solved by these
-two separate candidates.
-
-See [pressure/variety specification](../superpowers/specs/2026-09-21-journey-pressure-and-variety.md).
-Catalogue/audit first; timed bonus integration second; spatial arcs/qualified roles
-third; optional combat fourth; whole-library and delivery gates throughout.
-Continue without routine confirmation. Human acceptance and paused music remain
-explicit outstanding evidence/authority, not reasons to declare completion.
+1. Integrate the technically reviewed C2 Solo/Versus/Studio/replay successor with
+   the release owner's newer host work; rerun integrated checks and publish a
+   clearly labelled test build. Complete the remaining native/device matrix.
+2. Resolve flagged spatial pacing/mastery/cooperation issues and qualify timed
+   bonuses/new roles across the intended modes; keep old immutable editions.
+3. Enroll accepted content through the common registry, complete asset/cultural,
+   device/accessibility and human qualification; publish labelled test builds
+   through coordinated PR/version/Pages gates.
+4. Complete whole-Journey acceptance, Legacy migration and public rollback proof.
