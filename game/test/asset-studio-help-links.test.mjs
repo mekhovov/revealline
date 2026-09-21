@@ -5,10 +5,16 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collectBuildFiles } from '../../scripts/game-cli.mjs';
 
-test('Studio production guides and their local Markdown destinations ship together', async () => {
+test('Studio and atlas guides keep local destinations in the release', async () => {
   const root = fileURLToPath(new URL('../../', import.meta.url));
   const config = JSON.parse(await fs.readFile(path.join(root, 'game/build-config.json'), 'utf8'));
-  const pending = ['docs/presentation-system.md', 'docs/field-kit-production.md'];
+  const pending = [
+    'docs/presentation-system.md',
+    'docs/field-kit-production.md',
+    'docs/fpv-redesign-design.md',
+    'docs/fpv-typography.md',
+    'docs/fpv-reveal-art-audit.md',
+  ];
   const seen = new Set();
   while (pending.length) {
     const name = pending.pop();

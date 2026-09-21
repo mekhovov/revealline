@@ -25,6 +25,11 @@ caption. Inspect small-screen text separately from modeled event tests.
 When changing Studio guides, run `game/test/asset-studio-help-links.test.mjs`.
 Follow relative Markdown destinations through the real build allowlist and
 collected files; a guide existing in Git does not mean it ships with the app.
+Include Design Atlas guide roots in that check. Large research originals that
+are deliberately excluded from runtime downloads need explicitly labelled online
+references pinned to a verified source commit. Compare exact referenced blobs;
+do not imply those references work offline or duplicate originals into releases
+merely to satisfy a help-link test.
 
 For production Team artwork, use `scripts/field-kit-team-assets.mjs` and the real
 Field Kit producer. Preserve both anchor and all four feedback roles as complete
