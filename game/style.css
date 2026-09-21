@@ -2301,3 +2301,20 @@ dialog input[type='search'] {
     grid-area: asset;
   }
 }
+
+.game-now-playing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 12px;
+  overflow-wrap: anywhere;
+  margin: 4px 0;
+}
+.game-now-playing[hidden] {
+  display: none;
+}
+.game-now-playing a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

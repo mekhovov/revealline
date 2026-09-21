@@ -1,6 +1,7 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from './data-json.mjs';
 import {
   SOUNDTRACK_LIMITS,
+  SOUNDTRACK_FORMAT,
   emptySoundtrackLibrary,
   resolveSoundtrackLibrary,
 } from './soundtrack.mjs';
@@ -23,6 +24,10 @@ function metadata(value) {
   required(
     integer(copy.generation) && copy.generation < Number.MAX_SAFE_INTEGER,
     'Invalid soundtrack generation.',
+  );
+  required(
+    copy.library?.format === SOUNDTRACK_FORMAT,
+    'Legacy audio storage cannot read catalogue libraries.',
   );
   return { generation: copy.generation, library: resolveSoundtrackLibrary(copy.library) };
 }
@@ -163,6 +168,10 @@ export function createSoundtrackStore({
         integer(otherManagedBytes) &&
         otherManagedBytes <= SOUNDTRACK_LIMITS.managedBytes,
       'Invalid soundtrack generation or managed usage.',
+    );
+    required(
+      prepared.library.format === SOUNDTRACK_FORMAT,
+      'Catalogue audio requires the explicit DB5 capability.',
     );
     // Prepared metadata is frozen; Blob wrappers can still have shadow properties.
     // Re-own native payloads before any await or size accounting.

@@ -60,7 +60,11 @@ const ticks = (p, n) => {
 };
 async function setup(t) {
   const memory = memoryIndexedDB(),
-    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true });
+    manager = createManagedMediaStore({
+      indexedDB: memory.indexedDB,
+      storyMedia: true,
+      soundtrackCatalogue: true,
+    });
   const store = createStillMediaStore({
     managedStore: manager,
     decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),
@@ -493,7 +497,7 @@ test('a missing saved original cannot adopt a different picture or overwrite the
   assert.equal(image.pin.assetId, 'picture-b');
   // Model lost/corrupt user storage through the actual IDB transaction boundary.
   const db = await new Promise((resolve, reject) => {
-    const r = f.memory.indexedDB.open('revealline-soundtrack-v1', 4);
+    const r = f.memory.indexedDB.open('revealline-soundtrack-v1', 5);
     r.onsuccess = () => resolve(r.result);
     r.onerror = () => reject(r.error);
   });
