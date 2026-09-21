@@ -114,9 +114,10 @@ That release includes P03–P08 **Studio candidates**, not their public Journey
 enrollment or full phase acceptance. Signal/Neon/Rover have art candidates;
 Fracture/Phase/Livewire art and broader human/device qualification remain pending.
 P09–P15 remain isolated local successors. No v0.77.0 allocation is confirmed.
-The active release owner is qualifying PR208/v0.76.1 and prioritizing the user's
-shared touch, compact mobile HUD and Steam Deck launch corrections. Reconcile
-against the resulting accepted main and agreed phase order before opening a new
+PR208/v0.76.1 merged at `d70f3a586f3692a9bef58a87d8181714b62798f5`; this read-only
+PR check is not release/Pages verification. The active release owner is prioritizing
+the user's shared touch, compact mobile HUD and Steam Deck launch corrections.
+Reconcile against the owner's accepted-source handoff and agreed phase order before opening a new
 phase PR; preserve accepted UX, Studio and controller changes. Do not race a
 live release or duplicate its builds. Independent bounded local work continues.
 
@@ -133,7 +134,8 @@ verification record and `docs/research/fracture-original-art-prompts.json`.
 Phaseworks also has its first local original (A return in reserve), wired as an
 opt-in immutable Studio candidate; six compositions remain absent. The28-test
 art/catalogue/candidate/library cohort passes on Node20/22 with unchanged42 clear
-checkpoints. Native visual qualification and publication are still pending. See
+checkpoints. Native first-return fragments at0.6%/2.0% are checked; broad-area
+visual qualification and publication are still pending. See
 the P07 verification record and `docs/research/phase-original-art-prompts.json`.
 
 ### Historical phase snapshots
