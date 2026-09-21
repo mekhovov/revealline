@@ -416,3 +416,27 @@ cover36 exact preset cards, both numbered craft, progress distinctions, same-ID
 imports, later-campaign direct launch, real Skip labels, legacy gallery lifecycle
 and failure recovery. Native diagram inspection and flat search/filter are still
 pending; this does not qualify artwork, visual accessibility or human enjoyment.
+
+Native exact `90dd8e43` on local port8809 exposes all twelve candidate diagrams
+with distinct topology, numbered craft, band/preset, no-clear state, route and
+optional-goal copy. The normal-viewport screenshot shows the first four maps;
+no candidate has an artwork-preview button, while both legacy cards still do.
+This verifies native rendering at that viewport, not small-screen/contrast or
+physical-input qualification. Long optional-goal copy remains a density concern.
+
+### Flat Team search and campaign filters
+
+Search and campaign/pack filtering now live in the same optional chooser. Search
+matches normalized multiword titles, IDs and card route text across the complete
+available library; a campaign selector narrows that result without opening another
+page. Grouping uses actual source-pack identity, not potentially colliding import
+IDs. All matches retain direct Play. No result or hidden stale Play can launch an
+arena. Search Enter is not Play. Back preserves the current setup/attempt.
+
+Filters retain focus, report result counts and explain how to recover from an
+empty result. They stay fixed during staged Play; cancellation returns to the
+filtered mission and rejects a late decoder. Reopening starts with the full library.
+Legacy picture detail hides filter chrome and keeps its existing Back behavior.
+The combined89-case discovery/preview/input/difficulty/full-Journey cohort passes
+on both Node20 and22, including12 consecutive legal clears and reversible Skip.
+Scoped formatting/lint/diff checks pass. Native search remains a separate next check.

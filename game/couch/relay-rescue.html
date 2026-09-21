@@ -282,9 +282,21 @@
           <button id="coop-discovery-back" type="button">Back</button>
         </header>
         <p id="coop-discovery-description">
-          Included arenas and Team packs you open appear here. Play uses your current challenge and
-          teamwork settings.
+          Find a mission and Play directly. Your current attempt stays available until you choose
+          another. Created packs keep their authored rules.
         </p>
+        <div class="team-discovery-filters">
+          <label
+            >Search all Team missions
+            <input id="coop-discovery-search" type="search" maxlength="160" autocomplete="off" />
+          </label>
+          <label
+            >Campaign or pack
+            <select id="coop-discovery-campaign">
+              <option value="">All campaigns and packs</option>
+            </select>
+          </label>
+        </div>
         <div id="coop-discovery-list" class="team-discovery-list" aria-busy="false"></div>
         <section id="coop-discovery-preview" aria-labelledby="coop-discovery-preview-title" hidden>
           <h3 id="coop-discovery-preview-title">Locked picture preview</h3>

@@ -2278,6 +2278,8 @@ export function bootCoop({
     status: $('coop-discovery-status'),
     back: $('coop-discovery-back'),
     cancel: $('coop-discovery-cancel'),
+    search: $('coop-discovery-search'),
+    campaign: $('coop-discovery-campaign'),
     getEntries: currentDiscoveryRows,
     presentCard: candidateCardPresenter,
     canOpen: canOpenDiscovery,
