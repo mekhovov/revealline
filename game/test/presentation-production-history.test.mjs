@@ -479,7 +479,7 @@ test('soundtrack UI and audio bind only their reviewed current inputs', async ()
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:11e785a62e5246014c77ccdf6e0c72d5133d8c62aed40da3a3ca551132ad4653',
+          'sha256:1128ede72e1d687690a3832d84b240bd8013be643bb9a21b430fe6875adcac94',
         ),
         slot.id,
       );
