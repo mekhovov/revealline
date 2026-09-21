@@ -1,0 +1,475 @@
+TAP version 13
+# Subtest: race: first trusted menu gesture plays remembered unmuted music without rewriting master or storage
+ok 1 - race: first trusted menu gesture plays remembered unmuted music without rewriting master or storage
+  ---
+  duration_ms: 32.167709
+  ...
+# Subtest: coop: first trusted menu gesture plays remembered unmuted music without rewriting master or storage
+ok 2 - coop: first trusted menu gesture plays remembered unmuted music without rewriting master or storage
+  ---
+  duration_ms: 18.579958
+  ...
+# Subtest: menu activation respects mute, zero volume, hidden pages, music controls and intentional Pause
+ok 3 - menu activation respects mute, zero volume, hidden pages, music controls and intentional Pause
+  ---
+  duration_ms: 24.423958
+  ...
+# Subtest: denied menu permission retries only on another trusted gesture and cannot change master intent
+ok 4 - denied menu permission retries only on another trusted gesture and cannot change master intent
+  ---
+  duration_ms: 22.9265
+  ...
+# Subtest: gesture during library loading schedules no late autoplay; disposal removes menu activation
+ok 5 - gesture during library loading schedules no late autoplay; disposal removes menu activation
+  ---
+  duration_ms: 13.467458
+  ...
+# Subtest: temporary leases attenuate synth without restarting or changing saved controls
+ok 6 - temporary leases attenuate synth without restarting or changing saved controls
+  ---
+  duration_ms: 4.905834
+  ...
+# Subtest: temporary leases attenuate MP3 without restarting or changing saved controls
+ok 7 - temporary leases attenuate MP3 without restarting or changing saved controls
+  ---
+  duration_ms: 4.247667
+  ...
+# Subtest: volume edits, zero volume and paused listening intent survive lease release
+ok 8 - volume edits, zero volume and paused listening intent survive lease release
+  ---
+  duration_ms: 3.871625
+  ...
+# Subtest: an idle lease neither enables audio nor changes explicit mute/master state
+ok 9 - an idle lease neither enables audio nor changes explicit mute/master state
+  ---
+  duration_ms: 0.467625
+  ...
+# Subtest: lease changes during asynchronous original acquisition use the latest mix once playback begins
+ok 10 - lease changes during asynchronous original acquisition use the latest mix once playback begins
+  ---
+  duration_ms: 2.104
+  ...
+# Subtest: lease release composes with an in-flight fade and stays correct on the next track
+ok 11 - lease release composes with an in-flight fade and stays correct on the next track
+  ---
+  duration_ms: 44.69375
+  ...
+# Subtest: suspension and lease cleanup never resume playback or lose the surviving owner
+ok 12 - suspension and lease cleanup never resume playback or lose the surviving owner
+  ---
+  duration_ms: 2.230625
+  ...
+# Subtest: player disposal clears only this player’s leases and late releases are terminal no-ops
+ok 13 - player disposal clears only this player’s leases and late releases are terminal no-ops
+  ---
+  duration_ms: 1.940583
+  ...
+# Subtest: invalid factors and failed mixer acquisition do not leave hidden attenuation
+ok 14 - invalid factors and failed mixer acquisition do not leave hidden attenuation
+  ---
+  duration_ms: 0.607625
+  ...
+# Subtest: reentrant disposal during mixer allocation cannot publish a surviving lease
+ok 15 - reentrant disposal during mixer allocation cannot publish a surviving lease
+  ---
+  duration_ms: 0.477333
+  ...
+# Subtest: MP3 master gain composes once with independent music leases without transport or library changes
+ok 16 - MP3 master gain composes once with independent music leases without transport or library changes
+  ---
+  duration_ms: 6.941791
+  ...
+# Subtest: master changes during original acquisition govern eventual playback without overriding desired
+ok 17 - master changes during original acquisition govern eventual playback without overriding desired
+  ---
+  duration_ms: 2.074042
+  ...
+# Subtest: deferred native Play after mute stays silent and cannot restart explicitly paused music
+ok 18 - deferred native Play after mute stays silent and cannot restart explicitly paused music
+  ---
+  duration_ms: 3.012292
+  ...
+# Subtest: master unmute and lease cleanup cannot clear lifecycle suspension or disposed media ownership
+ok 19 - master unmute and lease cleanup cannot clear lifecycle suspension or disposed media ownership
+  ---
+  duration_ms: 3.939917
+  ...
+# Subtest: transport settling refuses a predicate that never becomes ready
+ok 20 - transport settling refuses a predicate that never becomes ready
+  ---
+  duration_ms: 21.417208
+  ...
+# Subtest: transport construction/settings/selection stay silent until explicit Play
+ok 21 - transport construction/settings/selection stay silent until explicit Play
+  ---
+  duration_ms: 4.035167
+  ...
+# Subtest: preparing a local MP3 keeps playback silent, then a gesture wake starts it before context resume settles
+ok 22 - preparing a local MP3 keeps playback silent, then a gesture wake starts it before context resume settles
+  ---
+  duration_ms: 3.516291
+  ...
+# Subtest: synth song boundary signals once at actual audio deadline and does not schedule the next song early
+ok 23 - synth song boundary signals once at actual audio deadline and does not schedule the next song early
+  ---
+  duration_ms: 0.860459
+  ...
+# Subtest: music-only pause freezes position while gameplay SFX remain available; full lifecycle suspends both
+ok 24 - music-only pause freezes position while gameplay SFX remain available; full lifecycle suspends both
+  ---
+  duration_ms: 1.973208
+  ...
+# Subtest: ordered mixed queue advances synth→MP3→end without another element or album decode
+ok 25 - ordered mixed queue advances synth→MP3→end without another element or album decode
+  ---
+  duration_ms: 4.794125
+  ...
+# Subtest: repeat-one repeats only on natural end, while Next explicitly advances
+ok 26 - repeat-one repeats only on natural end, while Next explicitly advances
+  ---
+  duration_ms: 3.004541
+  ...
+# Subtest: authored game music is the automatic fallback and changes only at a song boundary
+ok 27 - authored game music is the automatic fallback and changes only at a song boundary
+  ---
+  duration_ms: 2.43125
+  ...
+# Subtest: scope assignments beat authored fallback and context updates wait for current song
+ok 28 - scope assignments beat authored fallback and context updates wait for current song
+  ---
+  duration_ms: 2.404125
+  ...
+# Subtest: library metadata edits preserve current owned MP3 and object URL until natural boundary
+ok 29 - library metadata edits preserve current owned MP3 and object URL until natural boundary
+  ---
+  duration_ms: 2.485708
+  ...
+# Subtest: paused MP3 resumes the same URL/position and its ended handler remains active
+ok 30 - paused MP3 resumes the same URL/position and its ended handler remains active
+  ---
+  duration_ms: 1.7995
+  ...
+# Subtest: one broken original is skipped once and a finite builtin fallback remains observable
+ok 31 - one broken original is skipped once and a finite builtin fallback remains observable
+  ---
+  duration_ms: 1.309083
+  ...
+# Subtest: autoplay denial is observable, preserves current track, and requires another explicit Play
+ok 32 - autoplay denial is observable, preserves current track, and requires another explicit Play
+  ---
+  duration_ms: 2.740917
+  ...
+# Subtest: a stale pending asset load cannot publish audio after explicit selection or disposal
+ok 33 - a stale pending asset load cannot publish audio after explicit selection or disposal
+  ---
+  duration_ms: 1.381542
+  ...
+# Subtest: volume owns the music fader only, combines with master for MP3, and preserves SFX volume
+ok 34 - volume owns the music fader only, combines with master for MP3, and preserves SFX volume
+  ---
+  duration_ms: 0.307625
+  ...
+# Subtest: seeking a paused synth before creating audio is retained for its first permitted playback
+ok 35 - seeking a paused synth before creating audio is retained for its first permitted playback
+  ---
+  duration_ms: 0.505208
+  ...
+# Subtest: a complete synth rendition advances through real scheduler steps on a controlled audio clock
+ok 36 - a complete synth rendition advances through real scheduler steps on a controlled audio clock
+  ---
+  duration_ms: 13.666458
+  ...
+# Subtest: repeat-all wraps and shuffled sessions preserve the exact authored entry multiset
+ok 37 - repeat-all wraps and shuffled sessions preserve the exact authored entry multiset
+  ---
+  duration_ms: 1.813291
+  ...
+# Subtest: explicit switch fades only music and a pause during its fade cannot publish late playback
+ok 38 - explicit switch fades only music and a pause during its fade cannot publish late playback
+  ---
+  duration_ms: 1.674875
+  ...
+# Subtest: lifecycle suspension of MP3 preserves listening intent and resumes the SFX context too
+ok 39 - lifecycle suspension of MP3 preserves listening intent and resumes the SFX context too
+  ---
+  duration_ms: 2.843875
+  ...
+# Subtest: unsupported or corrupt originals never reach an object URL and fallback attempts stay finite
+ok 40 - unsupported or corrupt originals never reach an object URL and fallback attempts stay finite
+  ---
+  duration_ms: 3.317917
+  ...
+# Subtest: a changed stored selection is adopted on the next boundary while unrelated metadata edits preserve a session choice
+ok 41 - a changed stored selection is adopted on the next boundary while unrelated metadata edits preserve a session choice
+  ---
+  duration_ms: 2.656792
+  ...
+# Subtest: disposal aborts a pending storage load and its late original cannot allocate a URL
+ok 42 - disposal aborts a pending storage load and its late original cannot allocate a URL
+  ---
+  duration_ms: 0.605833
+  ...
+# Subtest: a delayed media play promise cannot restore playing status after transport pause
+ok 43 - a delayed media play promise cannot restore playing status after transport pause
+  ---
+  duration_ms: 27.809583
+  ...
+# Subtest: returning explicitly to automatic selection restores the authored map recipe immediately
+ok 44 - returning explicitly to automatic selection restores the authored map recipe immediately
+  ---
+  duration_ms: 0.489458
+  ...
+# Subtest: a delayed synth enable denial cannot overwrite pause, suspend or dispose state
+ok 45 - a delayed synth enable denial cannot overwrite pause, suspend or dispose state
+  ---
+  duration_ms: 0.810875
+  ...
+# Subtest: restoring inactive listening intent after an audition never starts audio until host resume
+ok 46 - restoring inactive listening intent after an audition never starts audio until host resume
+  ---
+  duration_ms: 1.562416
+  ...
+# Subtest: silent audio preparation reports a delayed read and stale completion cannot reclaim its status
+ok 47 - silent audio preparation reports a delayed read and stale completion cannot reclaim its status
+  ---
+  duration_ms: 0.713792
+  ...
+# Subtest: earlier cached play settlement cannot clear a newer play preparation observer
+ok 48 - earlier cached play settlement cannot clear a newer play preparation observer
+  ---
+  duration_ms: 1.14675
+  ...
+# Subtest: two streaming decks preload only the next track and genuinely overlap the audible boundary
+ok 49 - two streaming decks preload only the next track and genuinely overlap the audible boundary
+  ---
+  duration_ms: 66.597208
+  ...
+# Subtest: pause during a crossfade cancels the outgoing deck and preserves the incoming position
+ok 50 - pause during a crossfade cancels the outgoing deck and preserves the incoming position
+  ---
+  duration_ms: 7.196334
+  ...
+# Subtest: seek cancels next-track acquisition and late bytes cannot allocate a deck
+ok 51 - seek cancels next-track acquisition and late bytes cannot allocate a deck
+  ---
+  duration_ms: 12.723167
+  ...
+# Subtest: library cancels next-track acquisition and late bytes cannot allocate a deck
+ok 52 - library cancels next-track acquisition and late bytes cannot allocate a deck
+  ---
+  duration_ms: 12.560375
+  ...
+# Subtest: context cancels next-track acquisition and late bytes cannot allocate a deck
+ok 53 - context cancels next-track acquisition and late bytes cannot allocate a deck
+  ---
+  duration_ms: 13.750833
+  ...
+# Subtest: suspend cancels next-track acquisition and late bytes cannot allocate a deck
+ok 54 - suspend cancels next-track acquisition and late bytes cannot allocate a deck
+  ---
+  duration_ms: 13.387542
+  ...
+# Subtest: dispose cancels next-track acquisition and late bytes cannot allocate a deck
+ok 55 - dispose cancels next-track acquisition and late bytes cannot allocate a deck
+  ---
+  duration_ms: 13.588917
+  ...
+# Subtest: a browser denying the second element reuses the permitted first deck for the entire queue
+ok 56 - a browser denying the second element reuses the permitted first deck for the entire queue
+  ---
+  duration_ms: 29.545125
+  ...
+# Subtest: scene selection switches menu/gameplay music without changing paused listening intent
+ok 57 - scene selection switches menu/gameplay music without changing paused listening intent
+  ---
+  duration_ms: 10.471583
+  ...
+# Subtest: empty Ukrainian/fusion selections stay silent with an explanation instead of unrelated fallback
+ok 58 - empty Ukrainian/fusion selections stay silent with an explanation instead of unrelated fallback
+  ---
+  duration_ms: 3.200084
+  ...
+# Subtest: an offline Ukrainian queue tries each original once and stops without mislabelled fallback
+ok 59 - an offline Ukrainian queue tries each original once and stops without mislabelled fallback
+  ---
+  duration_ms: 2.172917
+  ...
+# Subtest: failed restricted mixes and explicit v2 playlists preserve the selected music families
+ok 60 - failed restricted mixes and explicit v2 playlists preserve the selected music families
+  ---
+  duration_ms: 6.193458
+  ...
+# Subtest: an explicit catalogue playlist with no installed recordings stays empty offline
+ok 61 - an explicit catalogue playlist with no installed recordings stays empty offline
+  ---
+  duration_ms: 6.631375
+  ...
+# Subtest: offloaded bonus tracks are skipped without fetching and an empty explicit album asks for Download again
+ok 62 - offloaded bonus tracks are skipped without fetching and an empty explicit album asks for Download again
+  ---
+  duration_ms: 5.714667
+  ...
+# Subtest: catalogue metadata drives playback and same-ID theme selection changes the next rendition
+ok 63 - catalogue metadata drives playback and same-ID theme selection changes the next rendition
+  ---
+  duration_ms: 12.645
+  ...
+# Subtest: short clips preserve their opening before entering the default crossfade window
+ok 64 - short clips preserve their opening before entering the default crossfade window
+  ---
+  duration_ms: 3.6225
+  ...
+# Subtest: choosing an available genre clears the previous unavailable selection notice
+ok 65 - choosing an available genre clears the previous unavailable selection notice
+  ---
+  duration_ms: 5.259292
+  ...
+# Subtest: import and offline preparation reject a falsely omitted permitted catalogue original
+ok 66 - import and offline preparation reject a falsely omitted permitted catalogue original
+  ---
+  duration_ms: 7.765291
+  ...
+# Subtest: import and offline preparation reject a falsely omitted permitted upload alias
+ok 67 - import and offline preparation reject a falsely omitted permitted upload alias
+  ---
+  duration_ms: 2.472292
+  ...
+# Subtest: a reference imported without authority cannot bypass trusted validation through share merge or replace stored originals
+ok 68 - a reference imported without authority cannot bypass trusted validation through share merge or replace stored originals
+  ---
+  duration_ms: 13.536959
+  ...
+# Subtest: unknown restricted upload references survive export/import without acquiring byte or network authority
+ok 69 - unknown restricted upload references survive export/import without acquiring byte or network authority
+  ---
+  duration_ms: 15.293334
+  ...
+# Subtest: trusted matching hash authority can require bytes for a previously unknown reference
+ok 70 - trusted matching hash authority can require bytes for a previously unknown reference
+  ---
+  duration_ms: 2.801584
+  ...
+# Subtest: Installed only excludes restored aliases without bytes and recognizes the same original owned under another ID
+ok 71 - Installed only excludes restored aliases without bytes and recognizes the same original owned under another ID
+  ---
+  duration_ms: 5.514584
+  ...
+# Subtest: catalogue v2 binds all policy fields to exact identity/hash and rejects unsafe metadata
+ok 72 - catalogue v2 binds all policy fields to exact identity/hash and rejects unsafe metadata
+  ---
+  duration_ms: 1.914459
+  ...
+# Subtest: pins cannot grant permissions; trusted hash restrictions follow renamed personal uploads
+ok 73 - pins cannot grant permissions; trusted hash restrictions follow renamed personal uploads
+  ---
+  duration_ms: 0.260041
+  ...
+# Subtest: v3 mixed recovery includes all permitted originals and explicit restricted references with exact playlist order
+ok 74 - v3 mixed recovery includes all permitted originals and explicit restricted references with exact playlist order
+  ---
+  duration_ms: 17.29975
+  ...
+# Subtest: restricted upload aliases cannot leak the same bytes through recovery or selected shares
+ok 75 - restricted upload aliases cannot leak the same bytes through recovery or selected shares
+  ---
+  duration_ms: 11.340916
+  ...
+# Subtest: source denies restricted export and unknown offline permission before reading bytes or making network requests
+ok 76 - source denies restricted export and unknown offline permission before reading bytes or making network requests
+  ---
+  duration_ms: 11.157917
+  ...
+# Subtest: Recording mode requires verified gameplay-video rights and unregistered Content ID; ordinary listening remains independent
+ok 77 - Recording mode requires verified gameplay-video rights and unregistered Content ID; ordinary listening remains independent
+  ---
+  duration_ms: 2.720459
+  ...
+# Subtest: automatic selection applies explicit energy preference after scene and theme; authored playlist order survives
+ok 78 - automatic selection applies explicit energy preference after scene and theme; authored playlist order survives
+  ---
+  duration_ms: 3.391167
+  ...
+# Subtest: DB5 keeps v3 references atomic and rejects downgrade or stale writers
+ok 79 - DB5 keeps v3 references atomic and rejects downgrade or stale writers
+  ---
+  duration_ms: 28.965083
+  ...
+# Subtest: full 256 catalogue + 123 uploads + 26 playlists stays within bounded metadata and 512-asset envelope
+ok 80 - full 256 catalogue + 123 uploads + 26 playlists stays within bounded metadata and 512-asset envelope
+  ---
+  duration_ms: 592.646042
+  ...
+# Subtest: v3 preserves an uploaded original filename through title edits and bundle/share recovery
+ok 81 - v3 preserves an uploaded original filename through title edits and bundle/share recovery
+  ---
+  duration_ms: 3.900166
+  ...
+# Subtest: catalogue streaming trusts only shipped hashes and checks the entire original without saving it
+ok 82 - catalogue streaming trusts only shipped hashes and checks the entire original without saving it
+  ---
+  duration_ms: 12.39075
+  ...
+# Subtest: offline listening does not fetch; an explicit download can fetch; stored originals work offline
+ok 83 - offline listening does not fetch; an explicit download can fetch; stored originals work offline
+  ---
+  duration_ms: 1.633208
+  ...
+# Subtest: streaming rejects corrupt/truncated media and cancellation before a request
+ok 84 - streaming rejects corrupt/truncated media and cancellation before a request
+  ---
+  duration_ms: 0.811459
+  ...
+# Subtest: the catalogue loader validates bounded version-local metadata and rejects foreign redirects
+ok 85 - the catalogue loader validates bounded version-local metadata and rejects foreign redirects
+  ---
+  duration_ms: 0.671209
+  ...
+# Subtest: frozen DB5/v2 readers reject a v3 row without touching shared metadata or audio
+ok 86 - frozen DB5/v2 readers reject a v3 row without touching shared metadata or audio
+  ---
+  duration_ms: 12.657041
+  ...
+# Subtest: an already-open frozen v2 audio writer cannot mutate any domain after concurrent v3 adoption
+ok 87 - an already-open frozen v2 audio writer cannot mutate any domain after concurrent v3 adoption
+  ---
+  duration_ms: 6.570917
+  ...
+# Subtest: an already-open frozen v2 media writer cannot mutate any domain after concurrent v3 adoption
+ok 88 - an already-open frozen v2 media writer cannot mutate any domain after concurrent v3 adoption
+  ---
+  duration_ms: 5.902083
+  ...
+# Subtest: an already-open frozen v2 story writer cannot mutate any domain after concurrent v3 adoption
+ok 89 - an already-open frozen v2 story writer cannot mutate any domain after concurrent v3 adoption
+  ---
+  duration_ms: 6.391166
+  ...
+# Subtest: v3 automatic published music failure falls back once to available synthesized music
+ok 90 - v3 automatic published music failure falls back once to available synthesized music
+  ---
+  duration_ms: 6.930625
+  ...
+# Subtest: explicit successful selection clears the previous failed recording notice
+ok 91 - explicit successful selection clears the previous failed recording notice
+  ---
+  duration_ms: 8.829459
+  ...
+# Subtest: Recording mode excludes published music without video and Content ID authority
+ok 92 - Recording mode excludes published music without video and Content ID authority
+  ---
+  duration_ms: 2.474833
+  ...
+# Subtest: enabling Recording mode retires current published audio and preserves paused intent
+ok 93 - enabling Recording mode retires current published audio and preserves paused intent
+  ---
+  duration_ms: 6.440625
+  ...
+1..93
+# tests 93
+# suites 0
+# pass 93
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1064.511416

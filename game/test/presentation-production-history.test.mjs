@@ -441,7 +441,7 @@ test('Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
   }
 });
 
-test('DOM ownership and Journey P02 audio bind only their reviewed current inputs', async () => {
+test('soundtrack UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
@@ -452,7 +452,7 @@ test('DOM ownership and Journey P02 audio bind only their reviewed current input
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6',
+          'sha256:28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e',
         ),
         slot.id,
       );
@@ -460,14 +460,22 @@ test('DOM ownership and Journey P02 audio bind only their reviewed current input
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
       assert.match(asset.provenance.source, /game\/presentation\/dom-ownership\.mjs/);
       assert.equal(
-        asset.quality.evidence.some((entry) => entry.includes('Scoped v0.76 UI source review')),
+        asset.quality.evidence.some((entry) =>
+          entry.includes('Scoped soundtrack UI source review'),
+        ),
         true,
       );
     } else {
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
         asset.quality.evidence.some((entry) =>
-          entry.includes('Scoped Journey P02 music source review'),
+          entry.includes('Scoped soundtrack audio source review'),
+        ),
+        slot.id,
+      );
+      assert.ok(
+        asset.provenance.source.endsWith(
+          'sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98',
         ),
         slot.id,
       );
@@ -476,11 +484,11 @@ test('DOM ownership and Journey P02 audio bind only their reviewed current input
   }
 });
 
-test('P03 screen and P08-A motion reviews bind only the inspected current inputs', async () => {
+test('soundtrack screen and P08-A motion reviews bind only the inspected current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const fingerprints = {
-    screens: '18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7',
+    screens: '1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845',
     motion: 'b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4',
   };
   const reviewed = production.document.slots.filter(
@@ -494,7 +502,9 @@ test('P03 screen and P08-A motion reviews bind only the inspected current inputs
     assert.ok(
       asset.quality.evidence.some((entry) =>
         entry.includes(
-          slot.group === 'motion' ? 'Scoped P08-A source review' : 'Scoped P03 Pause source review',
+          slot.group === 'motion'
+            ? 'Scoped P08-A source review'
+            : 'Scoped soundtrack screen source review',
         ),
       ),
       slot.id,
