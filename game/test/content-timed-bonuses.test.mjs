@@ -13,6 +13,8 @@ import { foundationCompatibleView as classicView } from '../ui/foundation-view.m
 import { readFileSync } from 'node:fs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { missionBriefing } from '../mission-brief.mjs';
+import { flightEventKind, flightInformationSnapshot } from '../ui/flight-information-source.mjs';
+import { flightDetailsModel } from '../ui/flight-information-details.mjs';
 
 const schedule = {
   id: 'detour-window',
@@ -147,6 +149,32 @@ test('bounded view distinguishes hollow announcement and available countdown, in
   assert.equal(classicView(run).timedBonuses.length, 0);
   assert.equal(classicView(run).powerups.length, 0);
 });
+test('paused field details explain upcoming/available pickups and do not classify known schedule events as unknown', () => {
+  const run = createRun(resolve(add()).level);
+  const describe = () =>
+    flightDetailsModel(
+      {
+        snapshot: flightInformationSnapshot(run, { started: true, paused: true }),
+        recentBatches: [],
+        recentNotices: [],
+      },
+      {
+        mission: 'Window',
+        goal: 'Capture',
+        steering: 'Steer',
+        objectiveLabel: 'Objectives',
+        actions: [],
+      },
+    );
+  stepRun(run, { direction: null }, FIXED_DT);
+  assert.match(JSON.stringify(describe()), /Hollow symbols cannot be collected/);
+  for (let n = 0; n < 120; n++) stepRun(run, { direction: null }, FIXED_DT);
+  assert.match(JSON.stringify(describe()), /touch before the ring expires/);
+  for (const event of ['bonus.announced', 'bonus.appeared', 'bonus.expired', 'bonus.cancelled'])
+    assert.equal(flightEventKind(event), 'ordinary', event);
+  assert.equal(flightEventKind('bonus.unregistered'), 'unknown');
+});
+
 test('malformed timed view fails closed without executing a getter or mutating the run', () => {
   const run = createRun(resolve(add()).level);
   stepRun(run, { direction: null }, FIXED_DT);
