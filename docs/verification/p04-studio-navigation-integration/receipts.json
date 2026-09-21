@@ -1,0 +1,54 @@
+{
+  "sourceBase": "9076ada123551c2b65ae05638e19ebe828aedb68",
+  "status": "held integration candidate; not released",
+  "sourcePins": {
+    "authoring/asset-studio/studio.mjs": "ef3fce54ce2b65006aba461c399836947146ede4a9a752c7db039e4fb387d99f",
+    "authoring/asset-studio/operation.mjs": "498e16c4b1e059887ad9b315f4a5195bcce9e17c119b01d06205a427f4c345b5",
+    "authoring/asset-studio/operation-focus.mjs": "3615fe3f86230889c407a0eedb941cc95e0aec9fb3bd039a98e3c07fa95ae280",
+    "authoring/asset-studio/inventory-history.mjs": "303ed4584fb7bf5a50a15884f8453d0d31c450db5fd4c33a20052226fbd9d15c"
+  },
+  "tests": {
+    "node20.19.5": {
+      "initialPassed": 40,
+      "initialFailed": 1,
+      "affectedRerunPassed": 1,
+      "uniquePassedAcrossRuns": 41
+    },
+    "node22.22.2": {
+      "initialPassed": 40,
+      "initialFailed": 1,
+      "affectedRerunPassed": 1,
+      "uniquePassedAcrossRuns": 41
+    },
+    "failure": "Sparse checkout omitted exact tracked compiled raster 827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91.png. Restored tracked compiled/assets; no runtime or test change. Original failures retained."
+  },
+  "checks": ["ESLint changed runtime/tests", "Prettier changed runtime/tests", "git diff --check"],
+  "logs": [
+    {
+      "file": "node20.tap.gz",
+      "rawSha256": "b92b3bb9442df140c4987f943d968cd60012097e2e4d4db09400d153c58c2bd4",
+      "gzipSha256": "f926b7aac9eb33982164a7a154cc1739eef6ad5d6a6d5f8354b1cd3c28843d60"
+    },
+    {
+      "file": "node22.tap.gz",
+      "rawSha256": "8efbcc438ebe00bca63dd1e7a147efdf6c2edfa9563021a15f5f34f997f44b9f",
+      "gzipSha256": "93688339651373093bd54a648af0378cd7c7a69cca5adc529e52cd051a7108e6"
+    },
+    {
+      "file": "team-node20.tap.gz",
+      "rawSha256": "7699e1d1d9079b64e2eac0ea052cee5c6c9222a9a77760bd62ac6c4853e7788a",
+      "gzipSha256": "38afa0d3d2f31742edfbcfe71e5a046bc7c1d86a2ca5eb1cc05bd5c480822049"
+    },
+    {
+      "file": "team-node22.tap.gz",
+      "rawSha256": "2eefd1c71a252ea9e7c0a591d0e9c06e36f2aae8570116c7b98c41d3664c582c",
+      "gzipSha256": "73f2a5ec41c1547847a59810565694256097e503531f685bce7ff945d5b609e4"
+    },
+    {
+      "file": "native-served.log.gz",
+      "rawSha256": "453441aacafb2b8061fba54b27a9bb8f7bdb600e4d5a33725d31278562f8b246",
+      "gzipSha256": "076183f4c3e736a02a741e58f4a268fef527b65daeeb3a421a401c82e00d7449"
+    }
+  ],
+  "native": "native-observations.json"
+}
