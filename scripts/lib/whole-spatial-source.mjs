@@ -9,6 +9,8 @@ import { createPhaseSpatialCandidates } from '../../game/content-design/phase-sp
 import { createLivewireSpatialCandidates } from '../../game/content-design/livewire-spatial-candidates.mjs';
 import { createSentinelSpatialCandidates } from '../../game/content-design/sentinel-spatial-candidates.mjs';
 import { createApexFieldCandidates } from '../../game/content-design/apex-field-candidates.mjs';
+import { createTimedBorderCandidates } from '../../game/content-design/timed-border-candidates.mjs';
+import { TIMED_BONUS_TRAIL_VERSION } from '../../game/core/timed-bonuses.mjs';
 
 const studies = [
   {
@@ -39,7 +41,11 @@ export const WHOLE_SPATIAL_SELECTIONS = freezeDesign(
 /** Canonical build-time composition for Studio, Solo, Versus and qualification. Preserve the
  * reviewed study gameplay verbatim while retaining the common campaign pictures
  * and actor materials. Do not rewrite historical whole-Journey factories. */
-export function composeWholeSpatialCandidates({ artwork = false, fieldFinale = false } = {}) {
+export function composeWholeSpatialCandidates({
+  artwork = false,
+  fieldFinale = false,
+  timedBorder = false,
+} = {}) {
   const source = withPressureDifficulty(
     createWholeJourneyCandidates({ artwork, roverTeaching: true, campaignActors: true }),
   );
@@ -47,12 +53,20 @@ export function composeWholeSpatialCandidates({ artwork = false, fieldFinale = f
   const maps = new Map(source.maps.map((map) => [mapKey(map), map]));
   const retiredMapKeys = new Set();
   const selected = new Set();
-  const selections = fieldFinale
-    ? [
-        ...studies,
-        { id: 'apex-field', missionIds: ['home-signal'], create: createApexFieldCandidates },
-      ]
-    : studies;
+  const selections =
+    fieldFinale || timedBorder
+      ? [
+          ...studies,
+          { id: 'apex-field', missionIds: ['home-signal'], create: createApexFieldCandidates },
+        ]
+      : studies;
+  if (timedBorder)
+    selections.push({
+      id: 'border-timed',
+      missionIds: ['behind-the-patrol', 'second-landing', 'long-rail'],
+      create: () =>
+        withPressureDifficulty(createTimedBorderCandidates({ version: TIMED_BONUS_TRAIL_VERSION })),
+    });
   for (const study of selections) {
     const candidate = study.create();
     if (candidate.difficultyCatalogId !== source.difficultyCatalogId)
@@ -90,6 +104,11 @@ export function composeWholeSpatialCandidates({ artwork = false, fieldFinale = f
     source.id = artwork ? 'whole-field-original-review' : 'whole-field-greybox-review';
     source.revision = 'field-finale-review-1';
     source.name = 'Whole Journey · unvalidated field-finale review';
+  }
+  if (timedBorder) {
+    source.id = artwork ? 'whole-timed-original-review' : 'whole-timed-greybox-review';
+    source.revision = 'timed-border-review-1';
+    source.name = 'Whole Journey · unvalidated timed-bonus review';
   }
   for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
   return structuredClone(compileContentProject(source).source);

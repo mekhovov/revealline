@@ -27,6 +27,7 @@ import { createWholeJourneyCandidates } from '../content-design/whole-journey-ca
 import {
   createWholeSpatialCandidates,
   createWholeFieldCandidates,
+  createWholeTimedCandidates,
 } from '../content-design/whole-spatial-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
@@ -905,6 +906,12 @@ $('whole-spatial').onclick = guarded(() => {
 $('whole-field').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createWholeFieldCandidates({ artwork: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('whole-timed').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createWholeTimedCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

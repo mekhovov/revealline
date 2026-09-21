@@ -13,6 +13,7 @@ import {
 import {
   createWholeSpatialCandidates,
   createWholeFieldCandidates,
+  createWholeTimedCandidates,
   WHOLE_SPATIAL_SELECTIONS,
 } from '../game/content-design/whole-spatial-candidates.mjs';
 import { compileContentProject } from '../game/content-design/project.mjs';
@@ -62,10 +63,10 @@ test('browser snapshot dependency contains authored JSON strings only, never bui
   );
   const generated = await fs.readFile(path.join(root, WHOLE_SPATIAL_DATA_FILE), 'utf8');
   const lines = generated.split('\n').filter((line) => line && !line.startsWith('//'));
-  assert.equal(lines.length, 4);
+  assert.equal(lines.length, 5);
   for (const line of lines) {
     const match = line.match(
-      /^export const WHOLE_SPATIAL_(?:SELECTIONS|GREYBOX|ORIGINAL|FIELD_FINALE)_JSON = (.*);$/,
+      /^export const WHOLE_SPATIAL_(?:SELECTIONS|GREYBOX|ORIGINAL|FIELD_FINALE|TIMED_BORDER)_JSON = (.*);$/,
     );
     assert(match);
     const value = JSON.parse(match[1]);
@@ -82,6 +83,17 @@ test('field-finale delta exactly matches canonical full composition in both artw
     actual.maps.at(-1).foundations[0].x = 1;
     actual.missions.at(-1).name = 'caller mutation';
     assert.deepEqual(createWholeFieldCandidates({ artwork }), expected);
+  }
+});
+
+test('timed delta exactly matches canonical full composition without changing maps or prior snapshots', () => {
+  for (const artwork of [false, true]) {
+    const expected = composeWholeSpatialCandidates({ artwork, timedBorder: true });
+    const actual = createWholeTimedCandidates({ artwork });
+    assert.deepEqual(actual, expected);
+    assert.deepEqual(actual.maps, createWholeFieldCandidates({ artwork }).maps);
+    actual.missions.find((item) => item.timedBonuses).timedBonuses.schedules[0].anchors[0].x++;
+    assert.deepEqual(createWholeTimedCandidates({ artwork }), expected);
   }
 });
 
