@@ -35,6 +35,7 @@ import {
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
+import { createTeamPressureOriginalCandidates } from '../content-design/team-pressure-originals.mjs';
 import { createTeamTimedCandidates } from '../content-design/team-timed-candidates.mjs';
 import { createTeamTimedOriginalCandidates } from '../content-design/team-timed-originals.mjs';
 import { createTeamWindowSpatialCandidates } from '../content-design/team-window-spatial-candidates.mjs';
@@ -829,7 +830,13 @@ $('team-signal').onclick = guarded(() => {
 });
 $('team-journey').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createTeamJourneyCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    $('team-journey-edition').value === 'pressure-originals-1'
+      ? createTeamPressureOriginalCandidates()
+      : createTeamJourneyCandidates({ artwork: true }),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });

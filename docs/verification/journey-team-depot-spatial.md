@@ -116,7 +116,8 @@ only59.5351% earned, leaving substantial play after collection.
 | Expert   | 4668ticks /88.6622% | 1→2            | 6ticks             |
 
 All twelve seat/joint-cut combinations clear without knockdowns; three actual
-keyboard-host routes match their exact clear tick, percentage and grant timing.
+keyboard-host routes match their exact clear tick, displayed coverage and
+reserve-grant HUD timing.
 Each pilot contributes at least five returns. This demonstrates complementary
 work at contact, not mandatory cooperation, Support or joint-closure mastery.
 Only the east rover activates. Both-rover pressure and human desirability remain

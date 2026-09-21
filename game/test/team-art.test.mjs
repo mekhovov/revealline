@@ -145,6 +145,6 @@ test('Studio artwork opt-in still requires Apply and does not silently change Te
     new URL('../content-design/team-entry.mjs', import.meta.url),
     'utf8',
   );
-  assert.match(entry, /createTeamJourneyCandidates\(\)/);
-  assert.match(entry, /createTeamGreyboxEntry\(\{ artwork = false \}/);
+  assert.match(entry, /createTeamJourneyCandidates\(\{ artwork \}\)/);
+  assert.match(entry, /createTeamGreyboxEntry\(\{ artwork = false, pressure = false \}/);
 });
