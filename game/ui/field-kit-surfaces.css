@@ -1,7 +1,14 @@
 /* Collection, settings and supporting screens share the same Field Kit surfaces.
    Canvas sizing, native modal state, input controls and save handlers stay owned
    by their existing hosts. */
-.field-kit.game-shell :is(#settings-dialog, #collection-dialog, #library-dialog, #help-dialog) {
+.field-kit.game-shell
+  :is(
+    #settings-dialog,
+    #collection-dialog,
+    #library-dialog,
+    #help-dialog,
+    #ios-home-screen-dialog
+  ) {
   width: min(1040px, calc(100vw - 32px));
   max-width: none;
   padding: clamp(20px, 4vw, 40px);
