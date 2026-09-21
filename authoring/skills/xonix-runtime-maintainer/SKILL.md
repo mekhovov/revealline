@@ -15,6 +15,9 @@ keeps quality at produced; attach scoped visual evidence to a new reviewed revis
 Review adoption uses `scripts/reviewed-team-art.mjs`: bind each role to its exact
 PNG and all inspected source/contract/producer hashes. Drift must revoke approval
 without mutating the original produced manifests; test swapped role images too.
+UI recipe inputs include retained-manifest and all Team slot-registry helpers.
+New host imports must enter the dependency fingerprint before scoped review;
+exercise each helper change and preserve unaffected recipe identities.
 Neither provisional revision39 fixture is a reusable production identity. Follow
 `docs/team-production-integration.md` before compiled adoption or a release.
 

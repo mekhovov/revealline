@@ -6,7 +6,10 @@ import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { createFieldKitTeamAssets } from '../../scripts/field-kit-team-assets.mjs';
-import { createFieldKitProduction } from '../../scripts/produce-field-kit-theme.mjs';
+import {
+  createFieldKitProduction,
+  fieldKitRecipeSources,
+} from '../../scripts/produce-field-kit-theme.mjs';
 import { applyReviewedTeamArt } from '../../scripts/reviewed-team-art.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { FORMATS, resolvePresentation } from '../presentation/model.mjs';
@@ -171,4 +174,25 @@ test('review approval is bound to each role, not merely any previously inspected
     swapped,
   );
   assert.ok(swapped.every((asset) => asset.values.quality.stage === 'produced'));
+});
+
+test('Team loading helpers reopen only the UI recipe fingerprint when their source changes', async () => {
+  const read = (name) => fs.readFile(path.join(root, name));
+  const original = await fieldKitRecipeSources(read);
+  for (const changed of [
+    'manifest-path',
+    'team-actor-slots',
+    'team-anchor-slots',
+    'team-effect-slots',
+    'team-threat-slots',
+    'team-event-slots',
+  ]) {
+    const target = `game/presentation/${changed}.mjs`;
+    const updated = await fieldKitRecipeSources(async (name) =>
+      name === target ? Buffer.concat([await read(name), Buffer.from('\n// changed')]) : read(name),
+    );
+    assert.notEqual(updated.ui, original.ui, target);
+    for (const group of Object.keys(original).filter((name) => name !== 'ui'))
+      assert.equal(updated[group], original[group]);
+  }
 });
