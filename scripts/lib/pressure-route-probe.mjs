@@ -11,7 +11,10 @@ import {
 } from '../../game/replay.mjs';
 import { createWholeJourneyCandidates } from '../../game/content-design/whole-journey-candidates.mjs';
 import { withPressureDifficulty } from '../../game/content-design/pressure-candidates.mjs';
-export function probePressureRoute(FIRST_RETURNS) {
+export function probePressureRoute(
+  FIRST_RETURNS,
+  createProject = () => withPressureDifficulty(createWholeJourneyCandidates()),
+) {
   const difficulty = process.argv[3] ?? 'standard',
     turnPolicy = process.argv[4] ?? 'immediate';
   const delaySeconds = Number(process.argv.find((a) => a.startsWith('--delay='))?.slice(8) ?? 0);
@@ -31,7 +34,7 @@ export function probePressureRoute(FIRST_RETURNS) {
     throw Error('Budget must be1000..180000ms');
   if (!Number.isFinite(delaySeconds) || delaySeconds < 0 || delaySeconds > 10)
     throw Error('Delay must be0..10seconds');
-  const project = compileContentProject(withPressureDifficulty(createWholeJourneyCandidates()));
+  const project = compileContentProject(createProject());
   function step(run, direction, log) {
     stepRun(run, { direction }, FIXED_DT);
     const last = log.at(-1);

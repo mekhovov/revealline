@@ -1,6 +1,7 @@
 # Two Districts: pressure-aware spatial successor
 
-Status: scoped design for independent review. No human balance or release approval.
+Status: independent skill-required spec review approved2026-09-21; no serious
+completeness, consistency or scope gaps found. No human balance or release approval.
 User-authorized automatic continuation replaces routine approval pauses. Existing
 isolated worktree, compiler, pressure catalogue and release-owner boundaries remain.
 
