@@ -3,7 +3,10 @@ import { freezeDesign } from './catalogs.mjs';
 import { createOpeningCandidates } from './horizon-candidates.mjs';
 import { createBorderCandidates } from './border-candidates.mjs';
 import { isAuthoredJourneyRouteId } from './mode-href.mjs';
-import { createWholeSpatialCandidates } from './whole-spatial-candidates.mjs';
+import {
+  createWholeSpatialCandidates,
+  createWholeFieldCandidates,
+} from './whole-spatial-candidates.mjs';
 import {
   createWholeJourneyCandidates,
   WHOLE_JOURNEY_CORE_PACK_IDS,
@@ -14,6 +17,15 @@ import {
  * The frozen opening URL retains its previous library and suspended-flight slot. */
 export function createAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v2')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey field-finale review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v2',
+      profileKey: 'journey-whole-spatial-v2',
+      source: createWholeFieldCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+    });
   if (id === 'whole-spatial-v1')
     return freezeDesign({
       id,

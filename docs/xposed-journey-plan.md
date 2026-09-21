@@ -10,6 +10,12 @@ An [adapted-start follow-up](verification/journey-apex-adapted-routes.md) adds s
 further preset/control samples without added waiting and makes Studio's applied
 enemy-speed factors visible in its difficulty selector. Historical failed routes,
 remaining balance concerns and human/release gates stay explicit.
+The [combined field-finale integration](verification/journey-whole-field-review.md)
+now exposes that exact alternative through the full `whole-spatial-v2` Solo/Versus
+test route and Studio, preserving the other82 encounters and old save/profile
+namespaces. The133-test cohort passes on both Node versions; native first-return,
+Studio Apply and reload/Continue observations remain bounded. P12/P13 balance,
+human/device qualification and coordinated publication are still open.
 The user's difficulty/bonus/Ukrainian-and-FPV/enemy-variety extension is specified in
 [the pressure and variety successor](superpowers/specs/2026-09-21-journey-pressure-and-variety.md).
 

@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after the Home Signal adapted-start and Studio difficulty follow-up. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after the combined field-finale integration. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -189,6 +189,17 @@ difficulty with the applied catalogue's enemy-speed factors and shared Team live
 with native v1/v2/Team and explicit-Apply checks. Independent review passes, and
 all 176 combined tests pass on both Node versions. Neither change closes human
 or release gates.
+
+The [combined field-finale successor](journey-whole-field-review.md) now places
+that exact Home Signal study inside the full 71-core/12-Remix Solo/Versus route
+at `?journey=whole-spatial-v2`, with the same source available in Studio. Other
+82 missions and all picture bindings are unchanged; historical routes and
+progress remain separate. All 133 integration/persistence/build tests pass on
+both Node versions. Actual host finale clears retain the original checkpoint
+when raw input logs are translated into required fresh key presses after capture.
+Native Studio Apply, Solo/Versus first returns and Solo reload/Continue are
+checked. This closes an isolated-study integration gap, not finale balance,
+full content enrollment, human/device acceptance or Pages deployment.
 
 The [combined spatial + pressure review](journey-whole-spatial-review.md) now
 offers nine reviewed spatial successors within one explicit 83-candidate

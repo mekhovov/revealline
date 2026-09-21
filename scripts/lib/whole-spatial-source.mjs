@@ -8,6 +8,7 @@ import { createFractureSpatialCandidates } from '../../game/content-design/fract
 import { createPhaseSpatialCandidates } from '../../game/content-design/phase-spatial-candidates.mjs';
 import { createLivewireSpatialCandidates } from '../../game/content-design/livewire-spatial-candidates.mjs';
 import { createSentinelSpatialCandidates } from '../../game/content-design/sentinel-spatial-candidates.mjs';
+import { createApexFieldCandidates } from '../../game/content-design/apex-field-candidates.mjs';
 
 const studies = [
   {
@@ -38,7 +39,7 @@ export const WHOLE_SPATIAL_SELECTIONS = freezeDesign(
 /** Canonical build-time composition for Studio, Solo, Versus and qualification. Preserve the
  * reviewed study gameplay verbatim while retaining the common campaign pictures
  * and actor materials. Do not rewrite historical whole-Journey factories. */
-export function composeWholeSpatialCandidates({ artwork = false } = {}) {
+export function composeWholeSpatialCandidates({ artwork = false, fieldFinale = false } = {}) {
   const source = withPressureDifficulty(
     createWholeJourneyCandidates({ artwork, roverTeaching: true, campaignActors: true }),
   );
@@ -46,7 +47,13 @@ export function composeWholeSpatialCandidates({ artwork = false } = {}) {
   const maps = new Map(source.maps.map((map) => [mapKey(map), map]));
   const retiredMapKeys = new Set();
   const selected = new Set();
-  for (const study of studies) {
+  const selections = fieldFinale
+    ? [
+        ...studies,
+        { id: 'apex-field', missionIds: ['home-signal'], create: createApexFieldCandidates },
+      ]
+    : studies;
+  for (const study of selections) {
     const candidate = study.create();
     if (candidate.difficultyCatalogId !== source.difficultyCatalogId)
       throw new Error('Spatial studies must use the shared pressure policy.');
@@ -79,6 +86,11 @@ export function composeWholeSpatialCandidates({ artwork = false } = {}) {
   source.id = artwork ? 'whole-spatial-original-review' : 'whole-spatial-greybox-review';
   source.revision = 'spatial-review-1';
   source.name = 'Whole Journey · unvalidated spatial and pressure review';
+  if (fieldFinale) {
+    source.id = artwork ? 'whole-field-original-review' : 'whole-field-greybox-review';
+    source.revision = 'field-finale-review-1';
+    source.name = 'Whole Journey · unvalidated field-finale review';
+  }
   for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
   return structuredClone(compileContentProject(source).source);
 }
