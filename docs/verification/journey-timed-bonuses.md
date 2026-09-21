@@ -67,3 +67,20 @@ qualification across seeds; timed Team ownership/schema design; integrated
 pressure-catalogue balance; reviewed release-owner PR/version/Pages deployment.
 No claim of Reloaded's exact timings, final accessibility approval, whole-plan
 completion or proof that these mechanics improve enjoyment.
+
+## Native observation and follow-up
+
+Exact source `ffb198fc`, read-only local server port8815, native in-app browser:
+loaded the explicit Border study, applied it to an isolated local draft, changed
+availability10s→8s through the schedule form, and restored10s with Undo. Exact
+Solo preview loaded the original picture and timed descriptor. Observed a hollow
+`+1s` announcement followed by a solid icon, shrinking ring and `4s` label, with
+no opening dialog or forced movement. This is desktop observation, not a physical
+device/accessibility or human enjoyment signoff.
+
+The paused information panel exposed a real integration omission: known schedule
+events were classified as unknown field effects. The follow-up registers the four
+events as ordinary and adds a regression for upcoming/available descriptions and
+unknown-event fallback. The resulting **150-test cohort passes on Node20 and22**.
+No core timing or candidate placement changed in that follow-up. Final native
+follow-up, Team and release gates remain pending.
