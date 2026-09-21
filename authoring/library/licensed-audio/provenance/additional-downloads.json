@@ -1,0 +1,151 @@
+{
+  "format": "revealline-audio-download-receipt.v1",
+  "newOriginalBytes": 20286781,
+  "maxNewBytes": 104857600,
+  "tracks": [
+    {
+      "id": "congusbongus.raspberry-jam",
+      "title": "Raspberry Jam",
+      "artist": "congusbongus",
+      "albumId": "retro90s.tracker-fm",
+      "source": "https://opengameart.org/content/raspberry-jam",
+      "credit": "congusbongus — Raspberry Jam",
+      "license": "CC0 1.0 Universal",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original": {
+        "path": "originals/additions/raspberry_jam.ogg",
+        "bytes": 2921627,
+        "sha256": "99d2ff8088f26abaf5bd0b492e870e46ab798eed4eb71bcad6eb310af1049c12"
+      },
+      "download": {
+        "requestedURL": "https://opengameart.org/sites/default/files/raspberry_jam.ogg",
+        "finalURL": "https://opengameart.org/sites/default/files/raspberry_jam.ogg",
+        "retrievedAt": "2026-09-21T00:08:35.463612+00:00",
+        "contentType": "audio/ogg",
+        "httpCode": 200,
+        "tlsVerified": true,
+        "transform": "none: exact response bytes retained"
+      }
+    },
+    {
+      "id": "congusbongus.escalate",
+      "title": "Escalate",
+      "artist": "congusbongus",
+      "albumId": "retro90s.tracker-fm",
+      "source": "https://opengameart.org/content/escalate",
+      "credit": "congusbongus — Escalate",
+      "license": "CC BY 3.0 Unported",
+      "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+      "original": {
+        "path": "originals/additions/escalate_0.ogg",
+        "bytes": 7325760,
+        "sha256": "1f8bb1b11448fd84be6f791ca868f39dcd0c6bb848322ae343f0d5bf1468efb7"
+      },
+      "download": {
+        "requestedURL": "https://opengameart.org/sites/default/files/escalate_0.ogg",
+        "finalURL": "https://opengameart.org/sites/default/files/escalate_0.ogg",
+        "retrievedAt": "2026-09-21T00:08:37.713885+00:00",
+        "contentType": "audio/ogg",
+        "httpCode": 200,
+        "tlsVerified": true,
+        "transform": "none: exact response bytes retained"
+      }
+    },
+    {
+      "id": "ragnar-random.castle-nosferatu-fm",
+      "title": "Castle Nosferatu (Sega-style FM synth remix)",
+      "artist": "Ragnar Random",
+      "albumId": "retro90s.tracker-fm",
+      "source": "https://opengameart.org/node/133854",
+      "credit": "Ragnar Random — Castle Nosferatu (Sega-style FM synth remix)",
+      "license": "CC0 1.0 Universal",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original": {
+        "path": "originals/additions/04_-_castle_nosferatu_sega-style_fm_synth_remix.ogg",
+        "bytes": 1079781,
+        "sha256": "a0adeea9e320f42d2e351721e290e91cf9a11a8fab32bbd85c210a1c65c0f22d"
+      },
+      "download": {
+        "requestedURL": "https://opengameart.org/sites/default/files/04_-_castle_nosferatu_sega-style_fm_synth_remix.ogg",
+        "finalURL": "https://opengameart.org/sites/default/files/04_-_castle_nosferatu_sega-style_fm_synth_remix.ogg",
+        "retrievedAt": "2026-09-21T00:08:40.544791+00:00",
+        "contentType": "audio/ogg",
+        "httpCode": 200,
+        "tlsVerified": true,
+        "transform": "none: exact response bytes retained"
+      }
+    },
+    {
+      "id": "ragnar-random.tower-of-the-vampire-fm",
+      "title": "Tower of the Vampire (Sega-style FM synth remix)",
+      "artist": "Ragnar Random",
+      "albumId": "retro90s.tracker-fm",
+      "source": "https://opengameart.org/node/133854",
+      "credit": "Ragnar Random — Tower of the Vampire (Sega-style FM synth remix)",
+      "license": "CC0 1.0 Universal",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original": {
+        "path": "originals/additions/17_-_tower_of_the_vampire_sega-style_fm-synth_remix.ogg",
+        "bytes": 1815149,
+        "sha256": "8e2b9266a8a703d1643c526950212f0b1bbfbe1fbd07b394f4b30935906646aa"
+      },
+      "download": {
+        "requestedURL": "https://opengameart.org/sites/default/files/17_-_tower_of_the_vampire_sega-style_fm-synth_remix.ogg",
+        "finalURL": "https://opengameart.org/sites/default/files/17_-_tower_of_the_vampire_sega-style_fm-synth_remix.ogg",
+        "retrievedAt": "2026-09-21T00:08:42.230569+00:00",
+        "contentType": "audio/ogg",
+        "httpCode": 200,
+        "tlsVerified": true,
+        "transform": "none: exact response bytes retained"
+      }
+    },
+    {
+      "id": "mintodog.heavy-battle-2",
+      "title": "Heavy Battle 2",
+      "artist": "MintoDog",
+      "albumId": "metal.extra-battles",
+      "source": "https://opengameart.org/content/heavy-battle-2",
+      "credit": "MintoDog — Heavy Battle 2",
+      "license": "CC0 1.0 Universal",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original": {
+        "path": "originals/additions/heavy_battle_2_bpm185.mp3",
+        "bytes": 3323941,
+        "sha256": "3dd1b959c4734a7463998e07f9b95a810d277c3b8946630988651ff2ef3fc222"
+      },
+      "download": {
+        "requestedURL": "https://opengameart.org/sites/default/files/heavy_battle_2_bpm185.mp3",
+        "finalURL": "https://opengameart.org/sites/default/files/heavy_battle_2_bpm185.mp3",
+        "retrievedAt": "2026-09-21T00:08:44.061953+00:00",
+        "contentType": "audio/mpeg",
+        "httpCode": 200,
+        "tlsVerified": true,
+        "transform": "none: exact response bytes retained"
+      }
+    },
+    {
+      "id": "kistol.untitled-metal-track",
+      "title": "Untitled Metal Track",
+      "artist": "Kistol",
+      "albumId": "metal.extra-battles",
+      "source": "https://opengameart.org/content/untitled-metal-track",
+      "credit": "Kistol — Untitled Metal Track",
+      "license": "CC0 1.0 Universal",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original": {
+        "path": "originals/additions/untitled_metal_track.mp3",
+        "bytes": 3820523,
+        "sha256": "4616ba62005e668bd5d1d6ba7327ec280876f076b7195e2eed923b6d52e8dcd3"
+      },
+      "download": {
+        "requestedURL": "https://opengameart.org/sites/default/files/untitled_metal_track.mp3",
+        "finalURL": "https://opengameart.org/sites/default/files/untitled_metal_track.mp3",
+        "retrievedAt": "2026-09-21T00:08:46.773580+00:00",
+        "contentType": "audio/mpeg",
+        "httpCode": 200,
+        "tlsVerified": true,
+        "transform": "none: exact response bytes retained"
+      }
+    }
+  ]
+}
