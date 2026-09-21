@@ -1,0 +1,44 @@
+[
+  {
+    "runtime": "22.22.2",
+    "exitCode": 0,
+    "counts": {
+      "tests": 29,
+      "pass": 29,
+      "fail": 0,
+      "skipped": 0
+    },
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "--experimental-loader",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/loader.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/candidate/game/test/library-row-focus-host.test.mjs",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/candidate/game/test/pack-change-active-flight-host.test.mjs"
+    ],
+    "log": "node22.tap",
+    "sha256": "302736814a3f06dfa1777b40778459809e509b0c508ea33119a0edc2647ea70f"
+  },
+  {
+    "runtime": "20.19.5",
+    "exitCode": 0,
+    "counts": {
+      "tests": 29,
+      "pass": 29,
+      "fail": 0,
+      "skipped": 0
+    },
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "--experimental-loader",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/loader.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/candidate/game/test/library-row-focus-host.test.mjs",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/candidate/game/test/pack-change-active-flight-host.test.mjs"
+    ],
+    "log": "node20.tap",
+    "sha256": "9cc7a40e6a5bbcf9ed25b94c32d96be3425ccdc8fb840efc090ad4ee529f1456"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "run": {
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "--experimental-loader",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/baseline/loader.mjs",
+      "--test",
+      "--test-name-pattern=full Solo: removing an unrelated pack preserves",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/baseline/candidate/game/test/library-row-focus-host.test.mjs"
+    ],
+    "exitCode": 1
+  },
+  "bytes": 1839,
+  "sha256": "ab8f99ec4275fbfb2ce081d6438c01e9742b7dda7c2b84ef22f4fe4af30a72a4",
+  "stdout": "TAP version 13\n# (node:88003) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:\n# --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/baseline/loader.mjs\", pathToFileURL(\"./\"));'\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: full Solo: removing an unrelated pack preserves the paused installed flight and its stored checkpoint\nnot ok 1 - full Solo: removing an unrelated pack preserves the paused installed flight and its stored checkpoint\n  ---\n  duration_ms: 4612.09375\n  type: 'test'\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/baseline/candidate/game/test/library-row-focus-host.test.mjs:470:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Removing an unrelated pack cannot replace the active run\n    \n    false !== true\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/baseline/candidate/game/test/library-row-focus-host.test.mjs:537:10)\n    async Test.run (node:internal/test_runner/test:1054:7)\n    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)\n  ...\n# {\"sameRun\":false,\"sameCheckpoint\":false,\"sameProfileBytes\":true,\"sameSessionBytes\":false,\"before\":{\"tick\":30,\"cutting\":true,\"levelId\":\"row-a-level\"},\"after\":{\"tick\":0,\"cutting\":false,\"levelId\":\"row-a-level\"}}\n1..1\n# tests 1\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 6943.37575\n"
+}

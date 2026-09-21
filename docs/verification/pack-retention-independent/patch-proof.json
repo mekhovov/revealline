@@ -1,0 +1,37 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "patchSHA256": "ce08ebd1209320e32312b6716c1058e88079a56fe51d4ea509efe3ef0ac9d18f",
+  "forwardAndReverseCheck": true,
+  "postimages": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 343030,
+      "sha256": "3643f4172c4d701216b337d26165f871f39faaa67b6179d239a4faa359076997"
+    },
+    {
+      "path": "game/test/library-row-focus-host.test.mjs",
+      "bytes": 19647,
+      "sha256": "0f5134a400e8467cb052b49e90ca80251f5992f3f28b27307c9ac52f456ddc50"
+    },
+    {
+      "path": "game/test/pack-change-active-flight-host.test.mjs",
+      "bytes": 8963,
+      "sha256": "2ead9fb05fea6d1c50d8ee927c0650985fa76a8af6c48dd7fce6062b91a7e056"
+    },
+    {
+      "path": "docs/library-and-packs.md",
+      "bytes": 27235,
+      "sha256": "086827626dc4429de6ea3d8351a5130c898481ab19a7129219888f7e3815df01"
+    },
+    {
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "bytes": 72622,
+      "sha256": "c03956dd6ccf7624021214ff31b5989c90c0996a475866f8e194f54788c33863"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 325168,
+      "sha256": "5129ce0efb2e1f15a33b0ae1a30428a3ad3ecb746b37005acad0ababf606c6d1"
+    }
+  ]
+}
