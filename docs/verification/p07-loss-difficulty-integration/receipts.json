@@ -1,0 +1,46 @@
+{
+  "base": "76586bd1",
+  "status": "held integration candidate; not released",
+  "sourcePatchSha256": "ada073fa89062777965c75095f47b7ee7985a9d781d45be4131ed67ce9933d45",
+  "sourcePins": {
+    "game/app.mjs": "f1ff9b4cee23f9c59c8974ad0c543739e50fa69257b69c6d602b171e376efb7d",
+    "game/index.html": "d180b4e73e8ed3f227c5a24d98875df1826dd3f33590a329d42b469b72692294",
+    "game/ui/field-kit-surfaces.css": "a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d",
+    "game/test/loss-difficulty-host.test.mjs": "2a62d1bcb94df7719826d925af9247d2f3f1b6a2d8122d4dce8d8b5713417a13"
+  },
+  "tests": {
+    "node20": "62/62 passed in corrected five-file cohort. Initial invocation aborted before execution due nonexistent campaign-difficulty-host.test.mjs argument; retained log. Correct file is difficulty-host.test.mjs.",
+    "node22": "52/52 passed in four-file cohort;10/10 difficulty-host passed separately. Node22 ignored nonexistent file argument.62 unique cases total.",
+    "lintFormat": "ESLint and Prettier passed for changed runtime/test/HTML/CSS.",
+    "scope": "Loss selector, campaign transforms, preparation persistence, result cancellation/reentrancy, terminal keyboard and modeled controller navigation. Not full source qualification."
+  },
+  "native": "native-observations.json",
+  "nativeSha256": "b1e62bbcf2e73e84571062d20eccf653ab973b2e9fc099a907349a33953f5d5e",
+  "logs": [
+    {
+      "file": "node20.tap.gz",
+      "rawSha256": "5442136ac99190aac6967bf8fed8140bdbbc6ff3b6eab3e3bfa04ba96ac20092",
+      "gzipSha256": "f55942274e8a1be3e905db372d22d917653962c6c558c10b7e7506cbebfb2307"
+    },
+    {
+      "file": "node20-final.tap.gz",
+      "rawSha256": "802e9547ea817556bb6b69a1d05a3c885d9e06b046e8c363cc86a6ded12bac51",
+      "gzipSha256": "9e752f541d1e30d18c9c78ed740350c0fde8180c97bec3693a7f307be40f2ac8"
+    },
+    {
+      "file": "node22.tap.gz",
+      "rawSha256": "16e165ead82c2ed6904649c045ec976e992d010d19ed3bc364ce9962a01bbee3",
+      "gzipSha256": "69fa732ca3a1ade3539d667127e0f124694c2a36e43c13d75f9e1917c3c02290"
+    },
+    {
+      "file": "difficulty-node22.tap.gz",
+      "rawSha256": "ce63ea4dbed267e9cab310f67a71e6b16595ab631a77150ce36821d1d88c4a83",
+      "gzipSha256": "79d9dce335251e217018a3a1356034a406db037e7ab3bfc8565c204e5cf0b0af"
+    },
+    {
+      "file": "native-served.log.gz",
+      "rawSha256": "a3cc8fc059e041d19050c41dff071ce6713a703508a2f82fd06ab8b6615e38ab",
+      "gzipSha256": "eed93c03b30740e4ad6efdb957bfa3c009510d06ed2f1b9b57cbd0a575e420d3"
+    }
+  ]
+}
