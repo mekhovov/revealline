@@ -631,7 +631,7 @@ $('rover').onclick = guarded(() => {
 });
 $('fracture').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createFractureCandidates(), null, 2);
+  $('source').value = JSON.stringify(createFractureCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

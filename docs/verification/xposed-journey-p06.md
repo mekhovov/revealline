@@ -136,3 +136,30 @@ rule, actor speed or damage immunity was changed to make the fixtures pass.
 
 Node20.19.5 and22.22.2 timing2/2 tests pass, with scoped lint. These samples demonstrate available alternatives,
 not a promise that one route is universally safe or that every timing is solved.
+
+## Original reveal artwork — first bounded candidate
+
+The isolated post-v0.76 continuation adds an original2:1 composition for First
+fracture: an intact coastal landing, broken embankment, station and repair crane.
+The built-in image tool generated it, then removed an unwanted emblem in a
+targeted edit. Both prompts and inspection limitations are recorded in
+`docs/research/fracture-original-art-prompts.json`. Original PNG bytes are kept
+unaltered at `game/content-design/assets/fracture-coastal-r1/first-fracture.png`:
+1774×887,2,369,540bytes,SHA256
+`5dbd2da2a014f43842a7e04c4652d158a3a7aa254129bf49ec3991cdca7478e6`.
+
+This is one of seven compositions, not complete campaign art. The opt-in pictured
+factory and shared immutable asset registry bind only that mission; six missing
+pictures stay null and the default greybox factory remains unchanged. The existing
+Studio Inspect → Apply → Play path uses the pictured draft without publishing it.
+Artwork remains `review: candidate`; preview still requires verified exact bytes.
+No collision, rules, objectives, earned percentage, historical receipts or public
+Journey enrollment are changed. No distribution/archive/build was produced.
+
+The19-test art/candidate/CLI/Studio-preview/whole-library/Border regression cohort
+passes on Node20.19.5 and22.22.2 (split into bounded runs). Exact asset bytes,
+dimensions, uniqueness and consumer checks pass; all42 Fracture clear-route
+checkpoints and all498 composed Solo/Versus manifests remain unchanged. Scoped
+lint, formatting and diff checks pass. Generated-image inspection is not a native
+overlay or human playtest. Partial reveal, small screens, other compositions,
+final theme identity, human qualification and accepted release integration remain.
