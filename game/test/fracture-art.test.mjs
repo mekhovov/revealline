@@ -18,7 +18,7 @@ test('Fracture originals have exact pins and verified opt-in previews without su
   const theme = JSON.parse(
     await readFile(new URL('../content-design/themes.json', import.meta.url)),
   ).themes.find((row) => row.id === 'horizon');
-  assert.equal(FRACTURE_ART_CANDIDATES.length, 1, 'only First fracture has original artwork yet');
+  assert.equal(FRACTURE_ART_CANDIDATES.length, 7);
   assert.equal(
     new Set(JOURNEY_ART_CANDIDATES.map((asset) => asset.sha256)).size,
     JOURNEY_ART_CANDIDATES.length,
@@ -47,7 +47,7 @@ test('Fracture originals have exact pins and verified opt-in previews without su
     );
     assert.throws(() => prepareContentPreview(source, consumers[0].id, { theme }), /verify/);
   }
-  assert.equal(source.missions.filter((m) => m.presentation.backgroundAssetId === null).length, 6);
+  assert.equal(source.missions.filter((m) => m.presentation.backgroundAssetId === null).length, 0);
   assert.equal(grey.assets.length, 0);
   for (const mission of grey.missions) {
     assert.equal(mission.presentation.backgroundAssetId, null);
@@ -64,6 +64,28 @@ test('Fracture originals have exact pins and verified opt-in previews without su
   const second = createFractureCandidates({ artwork: true });
   second.assets[0].alt = 'Edited local draft';
   assert.notEqual(second.assets[0].alt, FRACTURE_ART_CANDIDATES[0].alt);
+});
+
+test('all seven Fracture prompts and review limitations correspond to exact original assets', async () => {
+  const record = JSON.parse(
+    await readFile(
+      new URL('../../docs/research/fracture-original-art-prompts.json', import.meta.url),
+    ),
+  );
+  assert.equal(record.tool, 'built-in-imagegen');
+  assert.equal(record.assets.length, 7);
+  assert.equal(new Set(record.assets.map((entry) => entry.missionId)).size, 7);
+  for (const entry of record.assets) {
+    const asset = FRACTURE_ART_CANDIDATES.find((row) => `game/${row.path}` === entry.path);
+    assert(asset, entry.missionId);
+    for (const key of ['sha256', 'bytes', 'width', 'height'])
+      assert.equal(entry[key], asset[key], `${entry.missionId}/${key}`);
+    assert.equal(typeof entry.prompt, 'string');
+    assert(entry.prompt.length > 500);
+    assert.equal(entry.review.kind, 'assistant-image-inspection-not-human-playtest');
+    assert(entry.review.pending.includes('Human visual and gameplay qualification'));
+    assert.equal(asset.review, 'candidate');
+  }
 });
 
 test('Fracture pictured routes preserve all42 exact historical clear checkpoints', async () => {

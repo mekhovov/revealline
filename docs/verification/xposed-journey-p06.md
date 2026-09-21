@@ -176,3 +176,29 @@ This is an early partial-reveal check, not broad-area contrast, full victory,
 Versus/device or human qualification. Two embedded-frame locator attempts timed
 out; fresh native accessibility inspection found the controls and actual0.5%
 state, without restarting or modifying the simulation. No timing claim is made.
+
+## Seven-composition local set
+
+The same continuation subsequently generated and inspected the remaining six
+originals one at a time. Island reserve has a pump-house island and separated
+landings; Two districts contrasts a settling basin and sea lock; Bank the crossing
+looks under a repaired bridge; Five landings foregrounds a bronze capstan;
+Staggered reserve follows terraced reservoirs; Keep the network reveals a connected
+waterworks at blue hour. These are distinct compositions, not recolors or crops.
+All prompts, exact pins and assistant-only review limits are in the same prompt
+record. All seven original1774×887 PNGs total18,019,065bytes; no resizing, recompression,
+collision tracing, copies of reference-game artwork or publishing occurred.
+
+The pictured factory now binds exactly one unique original to each mission,
+including the optional Remix. The default greybox factory and all runtime values
+remain unchanged. Shared registry, compiler, verified preview and packaging metadata
+use the same seven immutable revisions. The20-test art/candidate/CLI/Studio-preview/
+whole-library/Border cohort passes on both Node20.19.5 and22.22.2, including prompt
+record pin parity, all42 Fracture clear checkpoints and all498 composed manifests.
+Logs: `.cache/journey-fracture-art-full-node{20,22}-r1.tap`. Scoped lint, formatting
+and diff checks pass. The native232bd92c observation above covers only First
+fracture; the other six have image inspection and technical preview checks, not
+native gameplay qualification. Broad-area reveal contrast, campaign-specific actor
+presentation/audio, all-device and human review, aggregate offline budget, accepted
+integration and release/Pages are still open. This completes original-composition
+candidate production for P06, not P06 phase acceptance.

@@ -120,6 +120,14 @@ against the resulting accepted main and agreed phase order before opening a new
 phase PR; preserve accepted UX, Studio and controller changes. Do not race a
 live release or duplicate its builds. Independent bounded local work continues.
 
+Local content continuation: all seven Fractured Grid reveal originals are now
+produced as immutable candidates (18,019,065bytes total), with explicit opt-in
+Studio binding and unchanged physics/receipts. First fracture has a scoped native
+partial-reveal check; the full set has exact-byte/preview/route regression checks
+on Node20/22. These local additions are not in the accepted v0.76 release and do
+not complete visual, human, device or whole-phase qualification. See the P06
+verification record and `docs/research/fracture-original-art-prompts.json`.
+
 ### Historical phase snapshots
 
 The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0
