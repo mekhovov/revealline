@@ -1,0 +1,187 @@
+{
+  "base": "5c73f36fed64ea31c705e41ce4cfa786684314a4",
+  "cssSha256": "62a224a01f9741c4f4f16cca32e832c7528d956879122b2a0d8242858ed46f66",
+  "browser": "Desktop Chromium viewport overrides, Large/Plain, Always steering, Large D-pad preference; no fullscreen",
+  "source": "Exact base Git objects plus this stylesheet only; no runtime/fixture mutation",
+  "before": {
+    "viewport": [568, 320],
+    "arena": [158.66796875, 56.00390625, 250.6640625, 187.9921875],
+    "notice": [136.3125, 221.8046875, 295.375, 18.1953125],
+    "text": "Your line crossed itself. Choose a new route.",
+    "cue": "failure",
+    "intersectsArena": true,
+    "textSetting": "Standard"
+  },
+  "developmentCorrection": "Initial new card-bottom selector lost specificity to the earlier card rule; native check caught it. Adding authored-encounter ownership to the selector corrected placement. Landscape control offset also corrected Up overlapping the top HUD. These failed attempts were not accepted.",
+  "journey": "Actual Sentinel Relay selection and explicit Deploy/Continue/Restart. Right, Down, Up produced real self-cross losses; lives decreased. Pause before rotation; explicit Restart confirmed. No simulated browser events or hidden-state injection.",
+  "samples": [
+    {
+      "viewport": [568, 320],
+      "arena": [202, 56, 164, 123],
+      "lossCard": [12, 181.0078125, 544, 80.1953125],
+      "recoveredCard": [12, 204.40625, 544, 56.796875],
+      "notice": [12, 292.6015625, 544, 23.3984375],
+      "controls": [
+        ["Scan", 24, 135, 78, 52],
+        ["Boost", 106, 135, 78, 52],
+        ["Up", 456, 55, 44, 44],
+        ["Left", 412, 99, 44, 44],
+        ["Right", 500, 99, 44, 44],
+        ["Down", 456, 143, 44, 44]
+      ],
+      "lossText": "Your line crossed itself. Choose a new route.",
+      "recoveryInstruction": "Recovering at home. The encounter clock continues; wait for control to return.",
+      "duplicatePhaseNoticeDisplay": "none",
+      "horizontalOverflow": false,
+      "checks": {
+        "noticeIntersectsArena": false,
+        "noticeIntersectsLossCard": false,
+        "lossCardIntersectsArena": false,
+        "recoveredCardIntersectsControls": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        },
+        "noticePositionIntersectsRecoveredControls": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        },
+        "existingControlIntersectsArena": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        }
+      }
+    },
+    {
+      "viewport": [844, 390],
+      "arena": [293.3359375, 56.00390625, 257.328125, 192.9921875],
+      "lossCard": [12, 274.40625, 820, 56.796875],
+      "recoveredCard": [12, 274.40625, 820, 56.796875],
+      "notice": [12, 362.6015625, 820, 23.3984375],
+      "controls": [
+        ["Scan", 24, 149, 160, 52],
+        ["Boost", 24, 205, 160, 52],
+        ["Up", 692, 65, 64, 64],
+        ["Left", 628, 129, 64, 64],
+        ["Right", 756, 129, 64, 64],
+        ["Down", 692, 193, 64, 64]
+      ],
+      "lossText": "Your line crossed itself. Choose a new route.",
+      "recoveryInstruction": "Recovering at home. The encounter clock continues; wait for control to return.",
+      "duplicatePhaseNoticeDisplay": "none",
+      "horizontalOverflow": false,
+      "checks": {
+        "noticeIntersectsArena": false,
+        "noticeIntersectsLossCard": false,
+        "lossCardIntersectsArena": false,
+        "recoveredCardIntersectsControls": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        },
+        "noticePositionIntersectsRecoveredControls": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        },
+        "existingControlIntersectsArena": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        }
+      }
+    },
+    {
+      "viewport": [320, 480],
+      "arena": [18.13671875, 56.00390625, 283.7265625, 212.7890625],
+      "lossCard": [12, 294.2109375, 296, 103.59375],
+      "recoveredCard": [12, 317.609375, 296, 80.1953125],
+      "notice": [12, 429.203125, 296, 46.796875],
+      "controls": [
+        ["Scan", 24, 208.8046875, 60, 52],
+        ["Boost", 88, 208.8046875, 60, 52],
+        ["Up", 208, 128.8046875, 44, 44],
+        ["Left", 164, 172.8046875, 44, 44],
+        ["Right", 252, 172.8046875, 44, 44],
+        ["Down", 208, 216.8046875, 44, 44]
+      ],
+      "lossText": "Your line crossed itself. Choose a new route.",
+      "recoveryInstruction": "Recovering at home. The encounter clock continues; wait for control to return.",
+      "duplicatePhaseNoticeDisplay": "none",
+      "horizontalOverflow": false,
+      "checks": {
+        "noticeIntersectsArena": false,
+        "noticeIntersectsLossCard": false,
+        "lossCardIntersectsArena": false,
+        "recoveredCardIntersectsControls": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        },
+        "noticePositionIntersectsRecoveredControls": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        },
+        "existingControlIntersectsArena": {
+          "Scan": true,
+          "Boost": true,
+          "Up": true,
+          "Left": true,
+          "Right": true,
+          "Down": true
+        }
+      }
+    }
+  ],
+  "tests": [
+    {
+      "file": "node20.tap.gz",
+      "passed": 6,
+      "failed": 0,
+      "rawSha256": "d62ce6a92c728b64a121afb24c7d98307fea073271365dea8346a0e6a18e1a35",
+      "gzipSha256": "3f410d635e91f488e0a767ade1d4d153934c1ee45c556de2196d5393c9ea3453"
+    },
+    {
+      "file": "node22.tap.gz",
+      "passed": 6,
+      "failed": 0,
+      "rawSha256": "055c504fd89eb70b47df03fb8ff2acfa83d4c14777efcb27aa817a0c7759991d",
+      "gzipSha256": "2d190d3351217610820ca10c32a2368fcfe306ce0bfb55a05762ee2eca6809b4"
+    }
+  ],
+  "consoleErrors": [],
+  "limits": [
+    "Recovery hides controls; separate post-recovery samples retain identical arena geometry and demonstrate duplicate phase hiding. Notice-position clearance against returned controls is a geometric comparison, not a simultaneous loss/controls screenshot.",
+    "Portrait retains the pre-existing translucent control overlay on the arena. No new caption/control/card intersections; no claim that portrait controls themselves never overlay play.",
+    "Full content, maximum counters, all language/zoom combinations and physical iPhone/Steam Deck remain separate qualification.",
+    "No frozen release or public deployment acceptance."
+  ],
+  "cleanup": "Owned tab closed; viewport reset; server stopped."
+}

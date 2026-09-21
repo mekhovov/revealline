@@ -424,10 +424,14 @@ test('native checkboxes and both held touch pads stay independent after leaving 
   f.pulse(0, 0);
   f.frame();
   const pads = f.doc.querySelectorAll('.race-pad');
-  const right = pads[0].querySelector('[data-direction="right"]');
-  const left = pads[1].querySelector('[data-direction="left"]');
-  right.emit('pointerdown', { pointerId: 41, button: 0 });
-  left.emit('pointerdown', { pointerId: 42, button: 0 });
+  const right = pads[0].querySelector('.touch-surface');
+  const left = pads[1].querySelector('.touch-surface');
+  for (const surface of [right, left])
+    surface.getBoundingClientRect = () => ({ left: 0, top: 0, width: 156, height: 156 });
+  right.emit('pointerdown', { pointerId: 41, button: 0, clientX: 78, clientY: 78 });
+  left.emit('pointerdown', { pointerId: 42, button: 0, clientX: 78, clientY: 78 });
+  right.emit('pointermove', { pointerId: 41, clientX: 120, clientY: 78 });
+  left.emit('pointermove', { pointerId: 42, clientX: 30, clientY: 78 });
   f.frames(20);
   assert.ok(f.renders[0].player.x > f.renders[0].level.spawn.x);
   assert.ok(f.renders[1].player.x < f.renders[1].level.spawn.x);

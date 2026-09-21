@@ -386,6 +386,10 @@ export function attachInput({
       getSettings: getTouchSettings,
       active: () => active() && touchEnabled(),
       onDirection: (direction, id) => startDirection(direction, id, null, true),
+      onCancel: () => {
+        lifecycleClear();
+        onPause(true);
+      },
       onRelease: (id) => {
         buttons.delete(id);
         syncPressed();

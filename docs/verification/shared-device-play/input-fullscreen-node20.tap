@@ -1,0 +1,255 @@
+TAP version 13
+# Subtest: joining needs an observed neutral then a deliberate button; join never activates UI or flight
+ok 1 - joining needs an observed neutral then a deliberate button; join never activates UI or flight
+  ---
+  duration_ms: 1.669292
+  ...
+# Subtest: one sample reads hardware once, uses the latest object, and never retains mutable snapshots
+ok 2 - one sample reads hardware once, uses the latest object, and never retains mutable snapshots
+  ---
+  duration_ms: 0.218
+  ...
+# Subtest: only exact flight scope emits held gameplay actions; other scopes emit UI edges
+ok 3 - only exact flight scope emits held gameplay actions; other scopes emit UI edges
+  ---
+  duration_ms: 1.415542
+  ...
+# Subtest: scope changes and clear suppress held directions/buttons until a neutral sample
+ok 4 - scope changes and clear suppress held directions/buttons until a neutral sample
+  ---
+  duration_ms: 0.646583
+  ...
+# Subtest: special flight buttons are single actions with priority and cannot leak held equipment
+ok 5 - special flight buttons are single actions with priority and cannot leak held equipment
+  ---
+  duration_ms: 1.009917
+  ...
+# Subtest: UI activation/back/menu never repeat and suppress same-sample direction changes
+ok 6 - UI activation/back/menu never repeat and suppress same-sample direction changes
+  ---
+  duration_ms: 0.718084
+  ...
+# Subtest: UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst
+ok 7 - UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst
+  ---
+  duration_ms: 0.627791
+  ...
+# Subtest: direction repeat remains bounded at slow and fast sampling rates
+ok 8 - direction repeat remains bounded at slow and fast sampling rates
+  ---
+  duration_ms: 2.90875
+  ...
+# Subtest: finite axes, threshold and digital priority yield reliable cardinal input
+ok 9 - finite axes, threshold and digital priority yield reliable cardinal input
+  ---
+  duration_ms: 0.25825
+  ...
+# Subtest: assignment follows the deliberate joining pad and ignores later lower-index arrivals
+ok 10 - assignment follows the deliberate joining pad and ignores later lower-index arrivals
+  ---
+  duration_ms: 0.18825
+  ...
+# Subtest: selected pad loss pauses ownership even while another pad remains; rejoin is explicit
+ok 11 - selected pad loss pauses ownership even while another pad remains; rejoin is explicit
+  ---
+  duration_ms: 0.159167
+  ...
+# Subtest: descriptor replacement and same-model explicit disconnect invalidate a reused slot
+ok 12 - descriptor replacement and same-model explicit disconnect invalidate a reused slot
+  ---
+  duration_ms: 0.143
+  ...
+# Subtest: disconnecting an unassigned second pad never disrupts the assigned controller
+ok 13 - disconnecting an unassigned second pad never disrupts the assigned controller
+  ---
+  duration_ms: 0.08325
+  ...
+# Subtest: API denial clears assignment once and distinguishes unsupported from absent controllers
+ok 14 - API denial clears assignment once and distinguishes unsupported from absent controllers
+  ---
+  duration_ms: 0.519375
+  ...
+# Subtest: invalidate requires rejoin; destroyed router removes its listener and performs no more reads
+ok 15 - invalidate requires rejoin; destroyed router removes its listener and performs no more reads
+  ---
+  duration_ms: 0.113459
+  ...
+# Subtest: invalid configuration rejects and malformed clocks never cause repeating activations
+ok 16 - invalid configuration rejects and malformed clocks never cause repeating activations
+  ---
+  duration_ms: 0.2505
+  ...
+# Subtest: solo auto-join accepts the first action after neutral without consuming a join press
+ok 17 - solo auto-join accepts the first action after neutral without consuming a join press
+  ---
+  duration_ms: 0.711042
+  ...
+# Subtest: solo cannot start from held discovery input, scope changes, or a reconnected controller
+ok 18 - solo cannot start from held discovery input, scope changes, or a reconnected controller
+  ---
+  duration_ms: 0.413375
+  ...
+# Subtest: Xbox Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 19 - Xbox Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.998541
+  ...
+# Subtest: DualSense Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 20 - DualSense Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.857584
+  ...
+# Subtest: DualShock 4: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 21 - DualShock 4: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.271541
+  ...
+# Subtest: Steam Deck (standard gamepad): both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 22 - Steam Deck (standard gamepad): both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.626
+  ...
+# Subtest: Generic USB Gamepad: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 23 - Generic USB Gamepad: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.17775
+  ...
+# Subtest: menu face aliases and shoulders/triggers work with edge detection and repeat
+ok 24 - menu face aliases and shoulders/triggers work with edge detection and repeat
+  ---
+  duration_ms: 0.218083
+  ...
+# Subtest: saved defaults and label/dead-zone choices keep both sticks; explicit remaps take priority
+ok 25 - saved defaults and label/dead-zone choices keep both sticks; explicit remaps take priority
+  ---
+  duration_ms: 0.736167
+  ...
+# Subtest: stick: both seats steer independently, release persists, recovery clears stale fingers
+ok 26 - stick: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 3.9385
+  ...
+# Subtest: swipe: both seats steer independently, release persists, recovery clears stale fingers
+ok 27 - swipe: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 1.224625
+  ...
+# Subtest: dpad: both seats steer independently, release persists, recovery clears stale fingers
+ok 28 - dpad: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 0.738125
+  ...
+# Subtest: fullscreen control follows the browser state and exits through the same explicit control
+ok 29 - fullscreen control follows the browser state and exits through the same explicit control
+  ---
+  duration_ms: 1.201667
+  ...
+# Subtest: installed standalone PWAs report their display state without browser fullscreen
+ok 30 - installed standalone PWAs report their display state without browser fullscreen
+  ---
+  duration_ms: 0.162709
+  ...
+# Subtest: iOS Home Screen games report standalone display state
+ok 31 - iOS Home Screen games report standalone display state
+  ---
+  duration_ms: 0.673708
+  ...
+# Subtest: display-mode changes update state and detach releases the listener
+ok 32 - display-mode changes update state and detach releases the listener
+  ---
+  duration_ms: 0.186375
+  ...
+# Subtest: unsupported browsers retain their responsive game layout without an inoperable control
+ok 33 - unsupported browsers retain their responsive game layout without an inoperable control
+  ---
+  duration_ms: 0.071666
+  ...
+# Subtest: Solo choices are read unchanged by each new mode; no profile is written
+ok 34 - Solo choices are read unchanged by each new mode; no profile is written
+  ---
+  duration_ms: 1.602
+  ...
+# Subtest: invalid storage is preserved; valid legacy touch settings are used until explicit change
+ok 35 - invalid storage is preserved; valid legacy touch settings are used until explicit change
+  ---
+  duration_ms: 0.423708
+  ...
+# Subtest: denied writes retain session choice and expose truthful feedback
+ok 36 - denied writes retain session choice and expose truthful feedback
+  ---
+  duration_ms: 0.548584
+  ...
+# Subtest: external explicit choices notify once and terminal disposal stops observation
+ok 37 - external explicit choices notify once and terminal disposal stops observation
+  ---
+  duration_ms: 0.153958
+  ...
+# Subtest: cardinal touch directions reject jitter and retain heading at diagonal boundaries
+ok 38 - cardinal touch directions reject jitter and retain heading at diagonal boundaries
+  ---
+  duration_ms: 0.525709
+  ...
+# Subtest: floating stick starts where the finger lands, turns through four directions, releases capture
+ok 39 - floating stick starts where the finger lands, turns through four directions, releases capture
+  ---
+  duration_ms: 0.87875
+  ...
+# Subtest: floating stick follows a drifting thumb and can reverse without returning to original contact
+ok 40 - floating stick follows a drifting thumb and can reverse without returning to original contact
+  ---
+  duration_ms: 0.353542
+  ...
+# Subtest: swipe uses recent travel so a short reverse flick turns immediately
+ok 41 - swipe uses recent travel so a short reverse flick turns immediately
+  ---
+  duration_ms: 0.199625
+  ...
+# Subtest: sliding D-pad fills gaps and accepts direction changes without lifting
+ok 42 - sliding D-pad fills gaps and accepts direction changes without lifting
+  ---
+  duration_ms: 0.243333
+  ...
+# Subtest: D-pad mode does not intercept board touches or scrolling
+ok 43 - D-pad mode does not intercept board touches or scrolling
+  ---
+  duration_ms: 0.115708
+  ...
+# Subtest: one steering finger cannot be stolen by a second finger
+ok 44 - one steering finger cannot be stolen by a second finger
+  ---
+  duration_ms: 0.126458
+  ...
+# Subtest: pointercancel ends steering; stale moves cannot turn the craft
+ok 45 - pointercancel ends steering; stale moves cannot turn the craft
+  ---
+  duration_ms: 0.276584
+  ...
+# Subtest: lostpointercapture ends steering; stale moves cannot turn the craft
+ok 46 - lostpointercapture ends steering; stale moves cannot turn the craft
+  ---
+  duration_ms: 0.148209
+  ...
+# Subtest: pause and modality reset require a new gesture
+ok 47 - pause and modality reset require a new gesture
+  ---
+  duration_ms: 0.253375
+  ...
+# Subtest: mouse can use the visible stick but does not capture ordinary board clicks
+ok 48 - mouse can use the visible stick but does not capture ordinary board clicks
+  ---
+  duration_ms: 0.166958
+  ...
+# Subtest: touch preferences survive export/import; old libraries migrate without losing other preferences
+ok 49 - touch preferences survive export/import; old libraries migrate without losing other preferences
+  ---
+  duration_ms: 2.132084
+  ...
+1..49
+# tests 49
+# suites 0
+# pass 49
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 81.707833

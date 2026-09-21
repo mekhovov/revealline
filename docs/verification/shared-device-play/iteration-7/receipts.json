@@ -1,0 +1,62 @@
+[
+  {
+    "path": "node20-accepted.tap.gz",
+    "originalBytes": 6986,
+    "originalSha256": "46855d14290c5d63bac2fcb0026a47cd16d399529cc08454ae94532a4d08fa56",
+    "compressedSha256": "90fb0e58d0c8eae2da95364d84cf6348c71ecc5ace57d429bdbdc6f544e9e56c"
+  },
+  {
+    "path": "node20-caption-build.tap.gz",
+    "originalBytes": 1581,
+    "originalSha256": "ff40e314fadb9c070de5784af3ac7f2e0b9ac7fb19191fe665199fec44488eab",
+    "compressedSha256": "572d5e9e89f9b4c4c26ba0576e346efdc1ae409c87f06bcd654e97b30775fbcf"
+  },
+  {
+    "path": "node20-final-captions.tap.gz",
+    "originalBytes": 4961,
+    "originalSha256": "02a28094b1cca15cc674e22c9df8973fbde009b2670192d2ec99711ae9d17314",
+    "compressedSha256": "0acf8847374b48ba7d83aff3a7fd8c7851afdcddc38e443fcc53f0909593a3f7"
+  },
+  {
+    "path": "node20-final.tap.gz",
+    "originalBytes": 4363,
+    "originalSha256": "b8739ca186d502d94fcc1ed1e2bd437fce2a81ec6ac270c1c32d31fc578b0b46",
+    "compressedSha256": "14c8b00aafde4d66f788840b4bdaf6ff054d8e3919f584b6b4c3b0f0c1cd945a"
+  },
+  {
+    "path": "node20-hybrid.tap.gz",
+    "originalBytes": 2896,
+    "originalSha256": "178a0c82a3aedd77df8676d532b345150df0b9639f1bd796951ab0c40737d420",
+    "compressedSha256": "ab6b2d1dc568d15010a99d239b9c71155a86e81bd66c67f55bfa8118359dcc74"
+  },
+  {
+    "path": "node22-accepted.tap.gz",
+    "originalBytes": 7423,
+    "originalSha256": "ec9aa0656d73bb9a463fe17b7fcbdf2fb791913996b229c52b467466b34b42b5",
+    "compressedSha256": "e8ccdd23558ee2be2d4676ca564fec4891f5b7f49eb2a6a55bfe7677d29f9b59"
+  },
+  {
+    "path": "node22-caption-build.tap.gz",
+    "originalBytes": 1668,
+    "originalSha256": "bfc4e72ddf07faf538bb1571514b0ee96ec9fa5e496e6d0309745e8c74419cdb",
+    "compressedSha256": "f90cbe23dda7f4d0b6bf95e8ee79daaaa66132281a95c604582153956f4f9eec"
+  },
+  {
+    "path": "node22-final-captions.tap.gz",
+    "originalBytes": 5186,
+    "originalSha256": "c4333f1e2917cf1c37031ea9a3d1955c04ab5330d187451f0cad5795133eac24",
+    "compressedSha256": "dbc1375a6f9ade00162a37e068eb73e48e8ef5a5cd644529b1462ae139ab7954"
+  },
+  {
+    "path": "node22-final.tap.gz",
+    "originalBytes": 4632,
+    "originalSha256": "81c05533cec6edcd7c967e5fe9fd31cfec5c275b3210f13d7f26a04c4c6bc80d",
+    "compressedSha256": "3bb708c5511450721efdc574545f2e61350cddd7e9fedf5d6fe03deacdfb2c42"
+  },
+  {
+    "path": "node22-hybrid-first.tap.gz",
+    "originalBytes": 3073,
+    "originalSha256": "af0205afbe6cab8ff2001001e9a4e1b2cf6476843ccf7109f03389fb4206b5c9",
+    "compressedSha256": "be90aeed2bed752b33ceb3d212449953751519d9beaf2966a31db80a8129b870"
+  }
+]

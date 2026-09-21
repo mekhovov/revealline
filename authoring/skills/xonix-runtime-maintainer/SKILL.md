@@ -5,6 +5,115 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For staged handheld missions, reserve separate stable bands for the live encounter
+instruction and independent event notice. Suppress only duplicate phase cues.
+Verify a real loss and recovery at 568×320, 844×390 and 320×480 with Large text;
+measure the full card, notice, drawable arena, HUD and returned touch controls.
+Check selector specificity: setting a new bottom offset is ineffective if an
+older card selector still wins. Keep 44px direction targets clear of the HUD.
+Record that recovery hides controls and that portrait retains its existing
+translucent arena overlay; do not claim simultaneous states from separate samples.
+
+For the shared handheld-control candidate, follow `docs/shared-device-play.md`.
+Classic-field live notices may use the already-reserved warning band only while
+the static classic summary is hidden. Keep full activation/loss text visible and
+wrapped outside the arena; inspect both ellipsis and inherited display:none rules.
+Do not move it into an occupied staged encounter card. Verify Large text, actual
+text-line rectangles, shown/hidden touch controls and complete arena geometry in
+portrait and short landscape. A byte-identical CSS check in a composed preview
+does not establish frozen-source, public or physical-device acceptance.
+Capture loss may arrive after deliberate input cleanup. Require a live gesture
+and its matching pointer ID before treating a capture-loss/cancel event as a
+gameplay interruption. Retire the gesture before releasing capture; its cleanup
+must not pause a newer controller owner. Test numeric native-shaped pointer IDs
+and missing-ID synthetic events separately, plus genuine active cancellation.
+Do not hide this ownership error with a null controller-frame fallback or reuse
+of a stale sample. Keep the original failed CI and red/green evidence.
+Solo and couch seats must use `attachTouchSteering`; preserve independent fingers,
+capture-stop fresh input, held rescue, neutral controller gates and explicit Resume.
+Use the shared validated touch preference record without writing another mode's
+campaign save. Do not claim Steam Deck hardware acceptance from injected standard
+Gamepad samples. Compact HUD work must retain required objectives and complete
+arena geometry, selected Large text, safe-area targets and context-owned status.
+Test actual viewport dimensions after changing tabs; browser overrides can target
+the selected tab rather than the tab being inspected. Prompt: “Exercise two touch
+seats in stick/swipe/D-pad, release and interrupt each finger, rotate while paused,
+then navigate Start/Settings/Back/Resume using A/B alone. Record source identity,
+actual CSS viewport, complete arena bounds, failures and real-device limitations.”
+
+For warning-capable layouts, reserve a stable instruction band from authored
+capability before fitting the board. Do not subtract the complete touch-pad height
+again when controls already overlay field edges. Check actual text line bounds,
+not only card bounds or accessibility text. `open` is also a staged core phase;
+only an idle classic card may be hidden by that name. Suppress duplicate encounter
+phase notices only through their explicit cue and a present live card; damage,
+pickup and failure notices remain independent. Exercise held-controller → new
+touch → finger release → fresh-controller handoff in stick/swipe/D-pad modes and
+verify interruption plus explicit Resume against the saved replay. Never convert
+modeled handoff tests into hardware certification.
+
+Verify warning-capable portrait maps separately from compact Arcade. Long captions
+plus a reserved full-height touch pad can collapse the arena even when each control
+fits. Test real stage transitions at320×480/390×844, including a nonzero percentage
+and wrapped core instruction. Keep current and target percent units explicit,
+and expose reveal progress with a labelled range/current value and complete
+current/target percent text. Bound short-screen pads without rewriting the chosen
+preference; retain44px targets. A layout probe that changes spawn or speed must
+record those changes and cannot qualify the original campaign's difficulty or win.
+
+For Team layouts, test control rectangles against the actual drawable board, not
+just the viewport. Landscape reserves each visible seat's bounded pad width plus
+clearance; a hidden seat must release its gutter. Short portrait may cap the chosen
+pad size to132px and omit duplicate action icons while preserving44px named targets,
+Large text and required objectives. Exercise both First Connection and Relay Yard,
+320×480/390×844/568×320/844×390, regular/Large and all three steering modes. Prompt:
+“Measure every visible control/board intersection, then earn a real Solo win using
+only controller edges, Retry, win again and Next; verify no held Confirm leaks into
+movement.” Actual native layout, modeled controller and physical device evidence
+must remain separately labelled.
+
+For shared touch changes, preserve the session-only practice option and legacy
+profile fallback until a shared choice exists. Mirror the complete shared choice
+on explicit Solo edits, report failed shared writes, and resample a persisted
+page return without writing or resuming. Include `device-controls-host.test.mjs`
+with the shared-input cohort: a gesture-only pass misses backup/Undo regressions.
+Small-screen Versus arenas need explicit grid rows after hiding headings; remove
+obsolete seat-specific side columns in the same layout. Test actual authored
+Journey flight as well as legacy maps: its Missions/Skip header can override
+compact shell styles. Keep the coverage target and critical Team rescue/Support
+state visible. Large text may require a taller strip; never shrink it or hide
+warnings to claim a single-row HUD. Match Solo's touch target sizes and indicator
+geometry; visual preview sizes do not change simulation hitboxes.
+
+For handheld training and short Versus, test real First Flight and authored Journey
+routes, not only the ordinary Solo map. A hidden field-condition node can retain
+an old high-specificity arena width rule. Inspect complete canvas bounds and the
+underlying document. Keep the current lesson instruction visible; lesson selection
+and Journey navigation may return on Pause. Large touch pads must fit their own
+seat without covering the shared Pause control; preserve their preferred setting.
+Test the visible steering surface rather than dispatching input to a hidden D-pad.
+Use the actual authored Journey host for untimed-clock checks; Legacy races require
+a valid duration. Missing sparse image dependencies must be restored from exact
+source blobs before evaluating picture-host failures.
+
+For Team caption clearance, measure the message, both complete touch groups,
+Support labels, Pause and authored stronghold objective together. A caption in
+normal document flow may still be covered by fixed thumb controls. Bound preferred
+sizes without changing stored preferences, and retain 44px direction targets in
+the declared minimum viewport. Very short strongholds may omit decorative action
+icons while retaining readable Boost/Support labels. Title mode cards must be
+checked at Large text in short landscape, including focus reveal for lower menu
+actions. New Solo stylesheets use `data-boot-href`, never an early direct `href`;
+include actual bytes in `boot-build.test.mjs` reproducibility/offline checks.
+
+For phone title entry, keep Play and mode selection before informational download
+copy in the document, while retaining operation status/Cancel ownership. Check the
+first viewport at 320×480 and 568×320 with Large text, then Tab to lower actions and
+verify focus reveals them. Do not mistake the decorative logo size for chosen
+control text size. Test actual opening/authored Journey controller entry as well
+as Legacy: discovery-held A must remain neutral, fresh A launches the named map,
+then Pause/Resume must retain the same run without leaking Confirm into movement.
+
 For Library selection and saved-flight restoration, use the Solo host's `focusMission` return path only after the owned operation succeeds. Dismiss retained Settings as well as Workshop/Home before focusing the paused mission. Passive Back, Stay, cancellation, failures and stale callbacks retain their existing parent/focus behavior; never replace operation ownership with a global close-all-dialogs shortcut. Cover ready and active-cut selection, suspended/imported restore, unchanged checkpoints and explicit Start/Resume. See [Library launch navigation](../../../docs/library-launch-navigation.md) for the maintenance prompt and the separate modeled/native verification gates. For native saved-flight checks, export a real paused cut, select another mission without starting it, import the downloaded file, and export again before Resume. Compare replay, checkpoint, run identity, presentation pins and continuation exactly; only a refreshed savedAt timestamp may differ. Resume must require an explicit action and use the retained direction. For Grid + buffer, also export an off-center queued turn and prove the queue survives import before explicit Resume consumes it. Record whether the sample was on secured ground or a live cut; one does not establish both. Keep physical-device acceptance separate.
 
 For Team lobby changes, keep the mode/arena choices, preview, objective and Start together, and keep authored threat/Support/stronghold guidance inside the existing Help reading region so it remains available during Pause. Preserve IDs and reading/controller ownership. Large text may scroll vertically; do not shrink it to conceal layout overflow. Resize may reveal only the current foreground lobby/paused action, with ownership rechecked after layout reads; never refocus or resume. See [compact Team lobby](../../../docs/team-lobby-layout.md) for the native and modeled checks and authoring prompt. When restructuring lobby markup, include `coop-lobby-preview.test.mjs` with the navigation/resize cohort. Check common lobby ownership and preview-before-launch reading order through the new grouping while preserving exact image reuse, mystery masking, retry, earned-victory and no-automatic-Start assertions. Do not treat the old immediate-parent shape as player behavior.
@@ -1019,3 +1128,12 @@ For every registered standalone Workshop tool, keep the static same-edition game
 ### Complete visual-theme identity boundary
 
 Use `game/presentation/visual-theme-catalogue.mjs` only for declared compatibility and exact compiler/theme/collection identities. Supply accepted authored owners and canonical level hashes before difficulty transforms; keep numeric and legacy string revisions exact. A compatible declaration is not art approval or byte validation. Compare loader-verified declarations against authoritative required slots, preserve historical catalogue entries, and keep unsupported content distinct from unavailable revisions. Do not expose Settings choices or change retained picture/story pins until the complete two-collection benchmark and staged-host integration pass. Follow the prompt in `docs/visual-theme-catalogue.md`.
+
+For two-seat narrow portrait layouts, fit preferred touch sizes to each seat's
+usable width instead of stacking both pads over the board. Verify at least 44px
+actual D-pad targets, preserve stored size and independent pointers, and keep
+Solo/couch gesture vocabulary identical. Catalogue-bound arrows must not render
+their text fallback twice. Inspect long captions between Large landscape pads;
+a fitting canvas alone does not establish unobscured action feedback. Extend
+controller checks through Missions/Deploy/Pause/Resume without pointer clicks,
+while keeping modeled and physical Steam Deck evidence separate.

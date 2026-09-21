@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
+import { soloPage, settle, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
 import { verifyReplay } from '../replay.mjs';
+import { TOUCH_PREFERENCES_KEY } from '../touch-preferences.mjs';
 
 const classic = JSON.parse(
   readFileSync(new URL('../content/packs/classic-lab.json', import.meta.url)),
@@ -67,7 +68,7 @@ async function setup(t) {
   };
   async function start() {
     release();
-    page.$('start-button').click();
+    press(0);
     await settle(() => page.doc.body.dataset.flightState === 'running', 'Flight starts');
     release();
   }
@@ -161,3 +162,197 @@ for (const mode of ['stick', 'swipe', 'dpad']) {
     assert.deepEqual(page.errors, []);
   });
 }
+
+test('cold Steam Deck-style discovery: fresh A starts the selected flight after neutral input', async (t) => {
+  t.mock.method(SoloElement.prototype, 'getContext', () => null);
+  const pad = controller();
+  pad.id = 'Steam Deck Controller';
+  let connected = false;
+  const page = await soloPage(t, { titleScreen: true, readPads: () => (connected ? [pad] : []) });
+  const release = () => {
+    pad.buttons.forEach((b) => {
+      b.pressed = false;
+      b.value = 0;
+    });
+    pad.axes.fill(0);
+    page.frame();
+    page.frame();
+  };
+  const press = (index) => {
+    release();
+    pad.buttons[index].pressed = true;
+    pad.buttons[index].value = 1;
+    page.frame();
+  };
+  assert.equal(page.$('shell-home').open, true);
+  connected = true;
+  pad.buttons[0].pressed = true;
+  page.frame();
+  assert.equal(page.$('shell-home').open, true, 'Discovery press cannot accidentally launch');
+  release();
+  press(0);
+  await settle(() => {
+    page.frame(0);
+    return page.doc.body.dataset.flightState === 'running';
+  });
+  assert.equal(page.$('shell-home').open, false);
+  assert.equal(page.rendered.run.player.speed, 0, 'The title Confirm is not a flight command');
+  release();
+  assert.deepEqual(page.errors, []);
+});
+
+test('Solo adopts the shared couch choice and editing opacity preserves its other fields', async (t) => {
+  const shared = { mode: 'swipe', side: 'left', size: 'large', opacity: 0.7 };
+  const storage = memoryStorage({ [TOUCH_PREFERENCES_KEY]: JSON.stringify(shared) });
+  const page = await soloPage(t, { titleScreen: true, storage });
+  page.$('shell-options').click();
+  page.$('settings-tab-controls').click();
+  assert.equal(page.$('touch-mode').value, 'swipe');
+  assert.equal(page.$('touch-side').value, 'left');
+  assert.equal(page.$('touch-size').value, 'large');
+  page.change('touch-opacity', '0.8');
+  assert.deepEqual(JSON.parse(storage.getItem(TOUCH_PREFERENCES_KEY)), { ...shared, opacity: 0.8 });
+  assert.equal(page.$('touch-mode').value, 'swipe');
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
+
+test('Solo reports a denied shared save while retaining the current touch choice', async (t) => {
+  const storage = memoryStorage(),
+    setItem = storage.setItem.bind(storage);
+  storage.setItem = (key, value) => {
+    if (key === TOUCH_PREFERENCES_KEY) throw new DOMException('Full', 'QuotaExceededError');
+    setItem(key, value);
+  };
+  const page = await soloPage(t, { titleScreen: true, storage });
+  page.$('shell-options').click();
+  page.$('settings-tab-controls').click();
+  page.change('touch-mode', 'swipe');
+  assert.equal(page.$('touch-mode').value, 'swipe');
+  assert.equal(page.$('screen-steering-status').hidden, false);
+  assert.match(page.$('screen-steering-status').textContent, /for this visit/);
+  assert.equal(storage.getItem(TOUCH_PREFERENCES_KEY), null);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
+
+test('modeled controller: Missions selection, Deploy, Pause and explicit Resume need no pointer click', async (t) => {
+  t.mock.method(SoloElement.prototype, 'getContext', () => null);
+  const pad = controller();
+  const page = await soloPage(t, { titleScreen: true, readPads: () => [pad] });
+  const release = () => {
+    pad.buttons.forEach((b) => {
+      b.pressed = false;
+      b.value = 0;
+    });
+    pad.axes.fill(0);
+    page.frame();
+    page.frame();
+  };
+  const press = (index) => {
+    release();
+    pad.buttons[index].pressed = true;
+    pad.buttons[index].value = 1;
+    page.frame();
+  };
+  const navigate = (id) => {
+    const visited = [];
+    for (let count = 0; count < 40 && page.doc.activeElement?.id !== id; count++) {
+      visited.push(page.doc.activeElement?.id || page.doc.activeElement?.className);
+      press(13);
+    }
+    assert.equal(page.doc.activeElement?.id, id, `Controller focus path: ${visited.join(' → ')}`);
+  };
+  release();
+  navigate('shell-play');
+  press(0);
+  assert.equal(page.$('shell-missions').open, true);
+  navigate('shell-deploy');
+  assert.equal(page.$('shell-deploy').disabled, false);
+  press(0);
+  await settle(() => {
+    page.frame(0);
+    return page.doc.body.dataset.flightState === 'running';
+  });
+  release();
+  assert.equal(page.$('shell-missions').open, false);
+  assert.equal(page.rendered.run.player.speed, 0);
+  press(9);
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  const checkpoint = page.rendered.run.tick;
+  release();
+  page.frame();
+  assert.equal(page.rendered.run.tick, checkpoint);
+  press(0);
+  await settle(() => {
+    page.frame(0);
+    return page.doc.body.dataset.flightState === 'running';
+  });
+  assert.deepEqual(page.errors, []);
+});
+
+for (const mode of ['stick', 'swipe', 'dpad'])
+  test(`actual host: ${mode} hands steering to and from a held controller without stealing direction`, async (t) => {
+    const { page, pad, press, release, start } = await setup(t);
+    page.change('touch-mode', mode);
+    page.change('screen-controls', 'always');
+    await start();
+    const surface =
+      mode === 'dpad' ? page.doc.querySelector('.direction-controls') : page.$('touch-surface');
+    surface._rect = { x: 0, y: 0, width: 156, height: 156 };
+    const pointer = (type, x, y = 78) =>
+      surface.emit(type, {
+        pointerId: 71,
+        pointerType: 'touch',
+        button: 0,
+        clientX: x,
+        clientY: y,
+      });
+    pad.axes[0] = 1;
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.equal(page.rendered.run.player.direction, 'right');
+    const beforeTouch = page.rendered.run.player.x;
+    pointer('pointerdown', mode === 'dpad' ? 8 : 78);
+    if (mode !== 'dpad') pointer('pointermove', 40);
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.equal(page.rendered.run.player.direction, 'left');
+    assert.ok(page.rendered.run.player.x < beforeTouch, 'New touch input beats the old held stick');
+    pointer('pointerup', 40);
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.equal(
+      page.rendered.run.player.direction,
+      'left',
+      'Releasing touch does not hand back to stale stick',
+    );
+    release();
+    pad.axes[0] = 1;
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.equal(
+      page.rendered.run.player.direction,
+      'right',
+      'Fresh controller movement can reclaim steering',
+    );
+    pointer('pointerdown', mode === 'dpad' ? 8 : 78);
+    if (mode !== 'dpad') pointer('pointermove', 40);
+    page.frame();
+    pointer('pointercancel', 40);
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    const pausedTick = page.rendered.run.tick;
+    pointer('pointermove', 145);
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.equal(
+      page.rendered.run.tick,
+      pausedTick,
+      'Interrupted finger and held stick cannot resume',
+    );
+    press(0);
+    await settle(() => {
+      page.frame(0);
+      return page.doc.body.dataset.flightState === 'running';
+    });
+    release();
+    press(9);
+    const saved = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
+    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.deepEqual(page.errors, []);
+  });

@@ -415,6 +415,7 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
     'revealline.display.v1',
     'revealline.menu-style.v1',
     'revealline.team-arena.v1',
+    'revealline.touch.v1',
   ]);
   assert.deepEqual([...new Set(writes)].sort(), [
     'revealline.display.v1',

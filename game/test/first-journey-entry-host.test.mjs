@@ -25,7 +25,7 @@ const known = journeyMissionId({
   campaignId: 'prologue',
   levelId: 'first-return',
 });
-async function setup(t, { route = 'opening', events = [], denied = false } = {}) {
+async function setup(t, { route = 'opening', events = [], denied = false, readPads } = {}) {
   const memory = managedIndexedDB(),
     backend = createJourneyBackend(memory);
   if (events.length) await backend.commit(events);
@@ -33,6 +33,7 @@ async function setup(t, { route = 'opening', events = [], denied = false } = {})
   const p = await soloPage(t, {
     search: `?journey=${route}`,
     titleScreen: true,
+    ...(readPads ? { readPads } : {}),
     storage: memoryStorage(),
     journeyIndexedDB: denied
       ? {
@@ -113,4 +114,164 @@ test('denied Journey storage still offers truthful one-action Start', async (t) 
   assert.equal(p.$('shell-continue').hidden, true);
   assert.equal(p.$('journey-save-status').hidden, false);
   await activate(p, 'shell-featured', 'first-return');
+});
+
+for (const route of ['opening', 'authored'])
+  test(`${route}: cold controller discovery and fresh A launch the actual Journey entry`, async (t) => {
+    const pad = {
+      index: 0,
+      id: 'Steam Deck Controller',
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+    };
+    let connected = false;
+    const { p, backend, before } = await setup(t, {
+      route,
+      readPads: () => (connected ? [pad] : []),
+    });
+    const release = () => {
+      for (const b of pad.buttons) {
+        b.pressed = false;
+        b.value = 0;
+      }
+      p.frame();
+      p.frame();
+    };
+    const press = (index) => {
+      release();
+      pad.buttons[index].pressed = true;
+      pad.buttons[index].value = 1;
+      p.frame();
+    };
+    connected = true;
+    pad.buttons[0].pressed = true;
+    pad.buttons[0].value = 1;
+    p.frame();
+    assert.equal(p.$('shell-home').open, true, 'A held during discovery cannot launch');
+    assert.deepEqual(await backend.read(), before, 'Discovery cannot grant progress');
+    press(0);
+    await settle(() => {
+      p.frame(0);
+      return p.doc.body.dataset.flightState === 'running';
+    });
+    assert.equal(p.$('shell-home').open, false);
+    assert.equal(p.rendered.run.levelId, 'first-return');
+    assert.equal(p.rendered.run.player.speed, 0, 'Confirm does not become a flight command');
+    press(9);
+    assert.equal(p.doc.body.dataset.flightState, 'paused');
+    const tick = p.rendered.run.tick;
+    release();
+    p.frame();
+    assert.equal(p.rendered.run.tick, tick);
+    press(0);
+    await settle(() => {
+      p.frame(0);
+      return p.doc.body.dataset.flightState === 'running';
+    });
+    assert.equal(p.rendered.run.levelId, 'first-return');
+    assert.deepEqual(p.errors, []);
+  });
+
+test('reveal progress retains explicit percent units and updates after a real capture', async (t) => {
+  const { p } = await setup(t);
+  await activate(p, 'shell-featured', 'first-return');
+  const meter = p.$('coverage');
+  assert.equal(meter.getAttribute('role'), 'progressbar');
+  assert.equal(meter.getAttribute('aria-label'), 'Picture revealed');
+  assert.equal(meter.getAttribute('aria-valuemin'), '0');
+  assert.equal(meter.getAttribute('aria-valuemax'), '100');
+  assert.equal(Number(meter.getAttribute('aria-valuenow')), 0);
+  assert.match(meter.getAttribute('aria-valuetext'), /0\.0 percent revealed; target \d+ percent/);
+  p.key('ArrowDown');
+  p.key('ArrowDown', false);
+  for (let frame = 0; frame < 600 && p.rendered.run.coverage === 0; frame++) p.frame();
+  assert.ok(p.rendered.run.coverage > 0, 'The real command closes a cut');
+  const revealed = (p.rendered.run.coverage * 100).toFixed(1);
+  assert.equal(meter.getAttribute('aria-valuenow'), revealed);
+  assert.ok(meter.getAttribute('aria-valuetext').startsWith(`${revealed} percent revealed;`));
+  assert.equal(meter.textContent, `${revealed}%`);
+  assert.deepEqual(p.errors, []);
+});
+
+// Drive actual captures and results using only fresh modeled controller edges.
+test('controller-only authored win, Retry, second win and Next retain one deliberate activation per scope', async (t) => {
+  const pad = {
+    index: 0,
+    id: 'Steam Deck Controller',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  const { p, backend } = await setup(t, { readPads: () => [pad] });
+  const release = () => {
+    pad.axes.fill(0);
+    for (const b of pad.buttons) {
+      b.pressed = false;
+      b.value = 0;
+    }
+    p.frame();
+    p.frame();
+  };
+  const press = (i) => {
+    release();
+    pad.buttons[i].pressed = true;
+    pad.buttons[i].value = 1;
+    p.frame();
+  };
+  const advance = async () => {
+    await settle(() => {
+      p.frame(0);
+      return p.doc.body.dataset.flightState === 'running';
+    });
+  };
+  const win = async () => {
+    press(13);
+    release();
+    for (let i = 0; i < 600 && p.rendered.run.status !== 'won'; i++) p.frame();
+    assert.equal(
+      p.rendered.run.status,
+      'won',
+      'A single direction command completes the real opening capture',
+    );
+    for (
+      let i = 0;
+      i < 3 && (p.$('game-overlay').hidden || p.$('game-overlay').dataset.kind !== 'won');
+      i++
+    ) {
+      press(0);
+      release();
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    await settle(() => {
+      p.frame(0);
+      return !p.$('game-overlay').hidden && p.$('game-overlay').dataset.kind === 'won';
+    });
+    release();
+  };
+  press(0);
+  await advance();
+  release();
+  assert.equal(p.rendered.run.levelId, 'first-return');
+  await win();
+  for (let i = 0; i < 10 && p.doc.activeElement !== p.$('retry-button'); i++) press(13);
+  assert.equal(p.doc.activeElement, p.$('retry-button'), 'D-pad reaches Retry');
+  press(0);
+  await advance();
+  assert.equal(p.rendered.run.levelId, 'first-return');
+  assert.equal(p.rendered.run.coverage, 0);
+  assert.equal(p.rendered.run.player.speed, 0, 'Held Confirm never becomes flight movement');
+  release();
+  await win();
+  for (let i = 0; i < 10 && p.doc.activeElement !== p.$('next-button'); i++) press(12);
+  assert.equal(p.doc.activeElement, p.$('next-button'), 'D-pad reaches Next');
+  press(0);
+  await advance();
+  assert.equal(p.rendered.run.levelId, 'choose-your-share');
+  assert.equal(p.rendered.run.coverage, 0);
+  assert.equal(p.rendered.run.player.speed, 0);
+  assert.ok((await backend.read()).clears.solo[known]);
+  assert.deepEqual(p.errors, []);
 });

@@ -1,0 +1,28 @@
+{
+  "cohort": [
+    "boot-build",
+    "compact-arena-layout",
+    "first-journey-entry-host",
+    "coop-paused-resize",
+    "coop-shared-settings"
+  ],
+  "results": [
+    {
+      "runtime": "20",
+      "tests": 40,
+      "passed": 40,
+      "rawSha256": "a6f2a4fd3d1a93a4c2cd9ef7a02bf9fdd766f69d63ca707bf215570c8338963c",
+      "compressedSha256": "0310a7098a557b081352c5af05a84a30a9ef517216707b3ad28bc0d9a5af2804",
+      "file": "node20.tap.gz"
+    },
+    {
+      "runtime": "22",
+      "tests": 40,
+      "passed": 40,
+      "rawSha256": "8020a9dc0a45dc20245e1f0161e8e5082e6e2a4d20c0280f65a32910954a5e16",
+      "compressedSha256": "bb71374dbf55a3f106fe4c3ac37061b93c29e3f2693db3a1fbce523a80db6250",
+      "file": "node22.tap.gz"
+    }
+  ],
+  "scope": "Modeled host and source/build contracts; native geometry observations separate; no physical-device qualification."
+}

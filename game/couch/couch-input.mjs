@@ -1,3 +1,4 @@
+import { attachTouchSteering } from '../ui/touch-steering.mjs';
 import { gamepadCommand } from '../ui/input.mjs';
 import { neutralCommand } from '../multiplayer.mjs';
 
@@ -33,6 +34,7 @@ export function attachCouchInput({
   arena = doc.getElementById('race-canvas-0'),
   active = () => true,
   tapMode = () => false,
+  getTouchSettings = null,
   continuousSteering = () => false,
   heldActions = [],
   steeringEdges = false,
@@ -64,7 +66,8 @@ export function attachCouchInput({
     physicalKeys = new Set(),
     physicalPointers = new Set(),
     freshGestures = new WeakSet(),
-    listeners = [];
+    listeners = [],
+    touchInputs = [];
   const players = Array.from({ length: 2 }, () => ({
     direction: null,
     boost: false,
@@ -174,6 +177,7 @@ export function attachCouchInput({
   };
   function resetPlayer(player, preserveDirection = false) {
     const state = players[player];
+    touchInputs[player]?.clear();
     for (const [key, value] of held) if (value.player === player) held.delete(key);
     for (const code of keyDown) if (bindings[code]?.[0] === player) keyDown.delete(code);
     if (!preserveDirection) state.direction = null;
@@ -319,6 +323,7 @@ export function attachCouchInput({
   for (const button of buttons) {
     const { element, player, kind } = button;
     listen(element, 'pointerdown', (e) => {
+      if (getTouchSettings && directions.includes(kind)) return;
       if (destroyed || !active() || (e.button !== undefined && e.button !== 0)) return;
       if (continuous() && !freshGestures.has(e)) return;
       e.preventDefault();
@@ -371,6 +376,26 @@ export function attachCouchInput({
       // legacy tap steering and Boost retain their separate toggle behavior.
       begin(player, kind, 'assist', { toggle: true, element, source: 'pointer' });
     });
+  }
+  if (getTouchSettings) {
+    for (const pad of doc.querySelectorAll('.race-pad')) {
+      const player = Number(pad.dataset.player);
+      touchInputs[player] = attachTouchSteering({
+        pad: pad.querySelector('.race-cross'),
+        surface: pad.querySelector('.touch-surface'),
+        indicator: pad.querySelector('.touch-indicator'),
+        getSettings: () => getTouchSettings(player),
+        active: () => !destroyed && active() && !pad.hidden,
+        onDirection: (direction, id) =>
+          begin(player, direction, `touch:${player}:${id}`, { source: 'touch' }),
+        onCancel: pause,
+        onRelease: (id) => {
+          held.delete(`touch:${player}:${id}`);
+          sync();
+        },
+      });
+    }
+    listen(win, 'resize', () => touchInputs.forEach((touch) => touch.clear()));
   }
   function poll() {
     if (destroyed) return players.map(neutralCommand);
@@ -478,6 +503,7 @@ export function attachCouchInput({
     if (destroyed) return;
     clear();
     destroyed = true;
+    touchInputs.forEach((touch) => touch.destroy());
     for (const remove of listeners) remove();
     for (const button of buttons) {
       clearTimeout(button.keyTimer);

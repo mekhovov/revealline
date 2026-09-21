@@ -1,0 +1,135 @@
+{
+  "deviceBase": "73f0f4832c90199fbf3394a75e199be2b8b23118",
+  "previewBase": "e36b09f3",
+  "cssSha256": "25fa3e995cefc9cba494f0b5cfe4e9c2f67be695d91c79e99870587ea1aef59c",
+  "previewAppSha256": "57eb08593eb99a080e198881fbdef9030a1413490306e4af48678f244f75ca47",
+  "tests": [
+    {
+      "file": "node20.tap.gz",
+      "passed": 6,
+      "failed": 0,
+      "rawSha256": "687120472ae2ee788cc9bbde8c00c5d971ee997dbcf086bf3d5899eba0d70224",
+      "gzipSha256": "ed15d5b36dc027a7e9c893ff133622a06f4d50a60760164101ee948aaa8f7963"
+    },
+    {
+      "file": "node22.tap.gz",
+      "passed": 6,
+      "failed": 0,
+      "rawSha256": "209edd53fd744075a5292cc6820a0c83fff5fa92d64fefbfb3c2abd76c2b4d15",
+      "gzipSha256": "39a8cf4940a15673d3676985de7818250f193d09337ef99fe5d43b7c37ba30b9"
+    }
+  ],
+  "browser": "Desktop Chromium viewport overrides; Large/Plain; no fullscreen",
+  "before": {
+    "568x320": "295.375x23.3984 notice clipped with nowrap/ellipsis over344x172arena",
+    "844x390": "notice inherited display:none"
+  },
+  "after": [
+    {
+      "viewport": [568, 320],
+      "canvas": [112, 56, 344, 172],
+      "notice": [12, 269.203125, 544, 46.796875],
+      "text": "Both real activation and direct-contact collision; fulltwo lines; noarenaoverlap"
+    },
+    {
+      "viewport": [320, 480],
+      "canvas": [12, 137.1953125, 296, 148],
+      "notice": [12, 405.8046875, 296, 70.1953125],
+      "text": "Fullcollisioncaption inthree lines afterrotationandexplicitResume"
+    },
+    {
+      "viewport": [844, 390],
+      "canvas": [180, 56, 484, 242],
+      "notice": [12, 362.6015625, 820, 23.3984375],
+      "text": "Fullcollisioncaption; checkedwithhiddenandLargeD-padcontrols"
+    }
+  ],
+  "stagedComparison": [
+    {
+      "viewport": [844, 390],
+      "canvas": [260.66796875, 56.00390625, 322.6640625, 241.9921875],
+      "card": [12, 329.203125, 820, 56.796875]
+    },
+    {
+      "viewport": [568, 320],
+      "canvas": [169.3359375, 56.00390625, 229.328125, 171.9921875],
+      "card": [12, 259.203125, 544, 56.796875]
+    }
+  ],
+  "limitations": [
+    "Composed Team source uses newcollisionwording, notdeviceapp; CSSexactmatch",
+    "Stagedlane warningandduplicatehidingchecked; stagedindependentlossnotice notqualified",
+    "No physicaliPhone/SteamDeck,frozenartifact,public,completecampaign orhumanacceptance"
+  ],
+  "cleanup": "Ownedpreviewtabclosed;viewportreset;previewserverstopped",
+  "consoleErrors": [],
+  "touchClearance": {
+    "source": "a5f5943d9dff69db2c36dce1f0f7ebdd607514cd, same device stylesheet",
+    "workflow": "New owned preview; existing imported probe; Deploy; Down51.4%capture; Upcollision2lives; Pause/rotate/explicitResume. Large/Plain, Always steering, Large D-pad preference.",
+    "samples": [
+      {
+        "viewport": [568, 320],
+        "canvas": [112, 56, 344, 172],
+        "notice": [12, 269.203125, 544, 46.796875],
+        "controls": [
+          ["Scan", 24, 168, 78, 52],
+          ["Boost", 106, 168, 78, 52],
+          ["Up", 456, 88, 44, 44],
+          ["Left", 412, 132, 44, 44],
+          ["Right", 500, 132, 44, 44],
+          ["Down", 456, 176, 44, 44]
+        ],
+        "noticeIntersectsArena": false,
+        "noticeIntersectsControls": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        },
+        "existingControlIntersectsArena": {
+          "Scan": false,
+          "Boost": true,
+          "Up": false,
+          "Left": true,
+          "Right": false,
+          "Down": false
+        }
+      },
+      {
+        "viewport": [844, 390],
+        "canvas": [180, 56, 484, 242],
+        "notice": [12, 362.6015625, 820, 23.3984375],
+        "controls": [
+          ["Scan", 24, 182, 160, 52],
+          ["Boost", 24, 238, 160, 52],
+          ["Up", 692, 98, 64, 64],
+          ["Left", 628, 162, 64, 64],
+          ["Right", 756, 162, 64, 64],
+          ["Down", 692, 226, 64, 64]
+        ],
+        "noticeIntersectsArena": false,
+        "noticeIntersectsControls": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        },
+        "existingControlIntersectsArena": {
+          "Scan": true,
+          "Boost": true,
+          "Up": false,
+          "Left": true,
+          "Right": false,
+          "Down": false
+        }
+      }
+    ],
+    "scope": "The notice intersects neither arena nor controls. Existing translucent Solo controls overlap portions of the arena; this correction does not claim zero control/arena overlap.",
+    "consoleErrors": [],
+    "cleanup": "Owned tab closed, viewport reset, server stopped."
+  }
+}
