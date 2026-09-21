@@ -673,7 +673,7 @@ $('crosswind').onclick = guarded(() => {
 });
 $('sentinel').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createSentinelCandidates(), null, 2);
+  $('source').value = JSON.stringify(createSentinelCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

@@ -179,6 +179,13 @@ explicit integration gate; do not delete originals or raise the guard.
 
 ### Historical phase snapshots
 
+Sentinel Crown now has five local original citadel compositions (12,975,848bytes),
+immutable pins and explicit Studio opt-in. Its35-test art/core/project/candidate/
+registry/library cohort passes Node20/22 with30 unchanged historical clears.
+Native full encounter-state presentation, device/human and release qualification
+remain open. These five assets are additional to the capacity forecast above;
+see P11 and `docs/research/sentinel-original-art-prompts.json`.
+
 The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0
 publisher 7b898a7b through integration b5193ca1; the public Team/Studio acceptance
 is scoped, not whole-phase or physical-device validation. Preserve the user's dirty

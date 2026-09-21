@@ -1,4 +1,5 @@
 import { createStarterProject } from './starter.mjs';
+import { SENTINEL_ART_CANDIDATES } from './sentinel-art.mjs';
 import { freezeDesign, SENTINEL_ACTOR_CATALOG, SENTINEL_RECIPE } from './catalogs.mjs';
 
 // Original greyboxes, not copied artwork or inferred Reloaded physics.
@@ -213,11 +214,11 @@ export const SENTINEL_REFERENCE_ADAPTATIONS = freezeDesign(
     })),
 );
 
-export function createSentinelCandidates() {
+export function createSentinelCandidates({ artwork = false } = {}) {
   const project = createStarterProject('sentinel-greybox-candidates');
   project.name = 'Sentinel Crown · greybox candidates';
   project.actorCatalogId = SENTINEL_ACTOR_CATALOG.id;
-  project.assets = [];
+  project.assets = artwork ? structuredClone(SENTINEL_ART_CANDIDATES) : [];
   project.maps = rows.map((row) => ({
     format: 'MapDesignV3',
     id: row.id + '-map',
@@ -254,7 +255,10 @@ export function createSentinelCandidates() {
       shieldObjectiveIds: row.shields.map((shield) => shield.id),
       coreObjectiveId: 'core',
     },
-    presentation: { themeId: 'horizon', backgroundAssetId: null },
+    presentation: {
+      themeId: 'horizon',
+      backgroundAssetId: artwork ? 'sentinel-citadel-' + row.id : null,
+    },
     design: {
       routeDecision: row.decision,
       lesson: row.lesson,
