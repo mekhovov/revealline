@@ -24,6 +24,10 @@ separate gates. Older phase notes are provenance, not current release claims.
   replay routes and48 equal paired-board races across three presets/two steering
   modes. These are separate optional studies, not extra published or human-balanced
   content. [Detailed evidence and pacing risks](journey-cultural-workshop.md).
+- Spatial revision2 separately reworks Dnipro and the two motor encounters, with
+  all18 preset/steering clear routes plus three delayed-start samples. Earlier
+  editions remain unchanged. [Comparative evidence](journey-spatial-balance.md)
+  still flags Dnipro pacing and preset inversions; this is not final balance.
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416

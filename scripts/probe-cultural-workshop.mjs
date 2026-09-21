@@ -2,6 +2,7 @@
 // human timing or an automatic reason to publish a map. Never writes fixtures.
 import { createCulturalWorkshopCandidates } from '../game/content-design/cultural-workshop-candidates.mjs';
 import { createPursuitInterceptCandidates } from '../game/content-design/pursuit-intercept-candidates.mjs';
+import { createSpatialBalanceCandidates } from '../game/content-design/spatial-balance-candidates.mjs';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import { createRun, stepRun, FIXED_DT, CELL, DIRECTIONS } from '../game/core/index.mjs';
 import {
@@ -13,13 +14,28 @@ import {
 } from '../game/replay.mjs';
 
 const project = compileContentProject(
-  process.argv[5] === 'pressure'
-    ? createPursuitInterceptCandidates()
-    : createCulturalWorkshopCandidates(),
+  process.argv[5] === 'spatial'
+    ? createSpatialBalanceCandidates()
+    : process.argv[5] === 'spatial-pressure'
+      ? createSpatialBalanceCandidates({ pressure: true })
+      : process.argv[5] === 'pressure'
+        ? createPursuitInterceptCandidates()
+        : createCulturalWorkshopCandidates(),
 );
 const id = process.argv[2] ?? 'all',
   difficulty = process.argv[3] ?? 'standard',
   turnPolicy = process.argv[4] ?? 'immediate';
+const seed = Number(process.argv[6] ?? 1),
+  initialDelayTicks = Number(process.argv[7] ?? 0);
+if (
+  !Number.isSafeInteger(seed) ||
+  seed < 1 ||
+  seed > 2147483647 ||
+  !Number.isSafeInteger(initialDelayTicks) ||
+  initialDelayTicks < 0 ||
+  initialDelayTicks > 1200
+)
+  throw new Error('Use seed1..2147483647 and initial delay0..1200ticks.');
 const maxMs = 20000;
 function step(run, direction, segments) {
   stepRun(run, { direction }, FIXED_DT);
@@ -87,10 +103,12 @@ function choices(run) {
 }
 for (const mission of project.missions.filter((m) => id === 'all' || m.id === id)) {
   const manifest = resolveMission(project, mission.id, { difficulty });
-  const options = { seed: 1, classId: 'scout', turnPolicy };
+  const options = { seed, classId: 'scout', turnPolicy };
   let run = createRun(manifest.level, options),
     segments = [],
     cuts = 0;
+  for (let n = 0; n < initialDelayTicks && run.status === 'running' && !run.classic.livesLost; n++)
+    step(run, null, segments);
   const start = Date.now();
   while (
     run.status === 'running' &&
@@ -176,6 +194,8 @@ for (const mission of project.missions.filter((m) => id === 'all' || m.id === id
       mission: mission.id,
       difficulty,
       turnPolicy,
+      seed,
+      initialDelayTicks,
       status: 'won',
       seconds: fresh.time,
       cuts,
