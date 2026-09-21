@@ -3,7 +3,7 @@ import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs'
 import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
-import { createAuthoredJourneyRoute } from './content-design/route.mjs';
+import { loadAuthoredJourneyRoute } from './content-design/route-loader.mjs';
 import {
   authoredJourneyModeHref,
   authoredJourneyUsesActorMaterials,
@@ -322,7 +322,7 @@ try {
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
   // P00 technical preview. Historical editions keep their original navigation.
-  const authoredRoute = !practiceSession && createAuthoredJourneyRoute(params.get('journey'));
+  const authoredRoute = !practiceSession && (await loadAuthoredJourneyRoute(params.get('journey')));
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? createCandidateSoloHost(authoredRoute.source, {

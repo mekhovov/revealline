@@ -10,7 +10,7 @@ import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
-import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { authoredJourneyUsesActorMaterials } from '../content-design/mode-href.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from '../content-design/catalogs.mjs';
@@ -233,7 +233,7 @@ try {
     music: [],
     sourcePackId: null,
   };
-  const authoredRoute = createAuthoredJourneyRoute(
+  const authoredRoute = await loadAuthoredJourneyRoute(
     new URL(location.href).searchParams.get('journey'),
   );
   const authoredJourney = !!authoredRoute;

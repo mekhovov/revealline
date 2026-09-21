@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after optional ornament/workshop integration and native transition measurements. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after optional ornament/workshop integration, native transition measurements and selective source loading. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -68,8 +68,16 @@ latency, medians, public CDN results or completed P15. Initial menu readiness wa
 2.31 s Solo/2.12 s Versus; observed module payloads exceed the local generic budgets.
 Thirteen measurement-boundary tests and independent review pass on both Node
 versions. No production game or release version is changed by this evidence unit.
-Next: controlled startup baseline and module-graph reduction, then repeat public,
-Team and device measurements. Ten-consecutive-mission timing, automatic recovery,
+The [selective-loading successor](journey-selective-loading.md) now removes
+unselected candidate families from Solo/Versus startup and shared Team navigation.
+All ten historical route outputs keep exact pre-change content/save identities;
+the 18 focused checks pass independently on both Node versions. Native forced
+module-failure recovery, clear and one-action Next pass in Solo/Versus. The
+spatial entry graph has 26 fewer modules and approximately 220 kB less source;
+that is not a measured network or browser-speed improvement. Full integrated
+regression results are recorded in the linked evidence before promotion.
+Next: controlled repeated startup measurements, then public, Team and device
+qualification. Ten-consecutive-mission timing, automatic recovery,
 win-to-Next availability and the remaining human gates stay open.
 
 ## Latest timed-bonus correction
