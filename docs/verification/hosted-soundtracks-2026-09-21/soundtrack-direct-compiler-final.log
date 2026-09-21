@@ -1,0 +1,210 @@
+TAP version 13
+# Subtest: functional helper changes invalidate only their explicit recipe group
+ok 1 - functional helper changes invalidate only their explicit recipe group
+  ---
+  duration_ms: 3.348125
+  ...
+# Subtest: missing helper bytes cannot produce a supposedly valid fingerprint
+ok 2 - missing helper bytes cannot produce a supposedly valid fingerprint
+  ---
+  duration_ms: 0.386291
+  ...
+# Subtest: 70 exact hosted recordings and15 albums compile reproducibly without local MP3s
+ok 3 - 70 exact hosted recordings and15 albums compile reproducibly without local MP3s
+  ---
+  duration_ms: 123.381709
+  ...
+# Subtest: hosted admission rejects invented listening approval
+ok 4 - hosted admission rejects invented listening approval
+  ---
+  duration_ms: 17.904834
+  ...
+# Subtest: hosted admission rejects changed hash
+ok 5 - hosted admission rejects changed hash
+  ---
+  duration_ms: 31.152
+  ...
+# Subtest: hosted admission rejects forged policy
+ok 6 - hosted admission rejects forged policy
+  ---
+  duration_ms: 27.534916
+  ...
+# Subtest: hosted admission rejects removed attribution
+ok 7 - hosted admission rejects removed attribution
+  ---
+  duration_ms: 34.683709
+  ...
+# Subtest: hosted admission rejects foreign URL
+ok 8 - hosted admission rejects foreign URL
+  ---
+  duration_ms: 33.848291
+  ...
+# Subtest: hosted admission rejects missing source evidence
+ok 9 - hosted admission rejects missing source evidence
+  ---
+  duration_ms: 11.882042
+  ...
+# Subtest: hosted admission rejects stale inventory
+ok 10 - hosted admission rejects stale inventory
+  ---
+  duration_ms: 29.92875
+  ...
+# Subtest: hosted admission rejects duplicate album membership
+ok 11 - hosted admission rejects duplicate album membership
+  ---
+  duration_ms: 34.850084
+  ...
+# Subtest: hosted admission rejects unapproved extra recording
+ok 12 - hosted admission rejects unapproved extra recording
+  ---
+  duration_ms: 28.550875
+  ...
+# Subtest: changed evidence bytes fail the pinned source check
+ok 13 - changed evidence bytes fail the pinned source check
+  ---
+  duration_ms: 16.383167
+  ...
+# Subtest: runtime includes hosted metadata while source production never fabricates absent audio
+ok 14 - runtime includes hosted metadata while source production never fabricates absent audio
+  ---
+  duration_ms: 58.170875
+  ...
+# Subtest: admitted exact hosted recordings are mapped to streaming objects and leave game payload
+ok 15 - admitted exact hosted recordings are mapped to streaming objects and leave game payload
+  ---
+  duration_ms: 24.667292
+  ...
+# Subtest: empty or absent admissions keep reviewed local delivery unchanged
+ok 16 - empty or absent admissions keep reviewed local delivery unchanged
+  ---
+  duration_ms: 13.390958
+  ...
+# Subtest: archive admission rejects wrong hosted hash
+ok 17 - archive admission rejects wrong hosted hash
+  ---
+  duration_ms: 13.774958
+  ...
+# Subtest: archive admission rejects unverified objects
+ok 18 - archive admission rejects unverified objects
+  ---
+  duration_ms: 11.628291
+  ...
+# Subtest: archive admission rejects unpublished identity
+ok 19 - archive admission rejects unpublished identity
+  ---
+  duration_ms: 10.008167
+  ...
+# Subtest: archive admission rejects restricted rights
+ok 20 - archive admission rejects restricted rights
+  ---
+  duration_ms: 7.264084
+  ...
+# Subtest: archive admission rejects changed inventory bytes
+ok 21 - archive admission rejects changed inventory bytes
+  ---
+  duration_ms: 6.858208
+  ...
+# Subtest: archive admission rejects remote host
+ok 22 - archive admission rejects remote host
+  ---
+  duration_ms: 6.826167
+  ...
+# Subtest: archive admission rejects repeated track identity
+ok 23 - archive admission rejects repeated track identity
+  ---
+  duration_ms: 8.139625
+  ...
+# Subtest: archive admission rejects evidence traversal
+ok 24 - archive admission rejects evidence traversal
+  ---
+  duration_ms: 10.647
+  ...
+# Subtest: archive admission rejects extra objects even if inventory and verification agree
+ok 25 - archive admission rejects extra objects even if inventory and verification agree
+  ---
+  duration_ms: 8.234625
+  ...
+# Subtest: archive evidence cannot resolve through a symlink
+ok 26 - archive evidence cannot resolve through a symlink
+  ---
+  duration_ms: 9.105083
+  ...
+# Subtest: distinct archive IDs cannot remove local audio behind conflicting inventory pins at the same hosted URL
+ok 27 - distinct archive IDs cannot remove local audio behind conflicting inventory pins at the same hosted URL
+  ---
+  duration_ms: 9.346083
+  ...
+# Subtest: an allowed alias cannot bypass another trusted same-hash redistribute restriction
+ok 28 - an allowed alias cannot bypass another trusted same-hash redistribute restriction
+  ---
+  duration_ms: 7.9905
+  ...
+# Subtest: an allowed alias cannot bypass another trusted same-hash webPlayback restriction
+ok 29 - an allowed alias cannot bypass another trusted same-hash webPlayback restriction
+  ---
+  duration_ms: 8.013959
+  ...
+# Subtest: mapping one alias keeps shared local delivery needed by an unmapped alias
+ok 30 - mapping one alias keeps shared local delivery needed by an unmapped alias
+  ---
+  duration_ms: 10.675875
+  ...
+# Subtest: publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+ok 31 - publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+  ---
+  duration_ms: 84.451375
+  ...
+# Subtest: real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies
+ok 32 - real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies
+  ---
+  duration_ms: 371.835416
+  ...
+# Subtest: absent album opt-in preserves output bytes and does not read the audio producer
+ok 33 - absent album opt-in preserves output bytes and does not read the audio producer
+  ---
+  duration_ms: 100.561875
+  ...
+# Subtest: opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+ok 34 - opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+  ---
+  duration_ms: 63.309875
+  ...
+# Subtest: incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+ok 35 - incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+  ---
+  duration_ms: 66.000584
+  ...
+# Subtest: all 70 hosted registrations retain provenance without inventing listening approval
+ok 36 - all 70 hosted registrations retain provenance without inventing listening approval
+  ---
+  duration_ms: 4.598334
+  ...
+# Subtest: real candidate producer compiles every tiny fixture, verifies import bytes and preserves output boundaries
+ok 37 - real candidate producer compiles every tiny fixture, verifies import bytes and preserves output boundaries
+  ---
+  duration_ms: 54.378458
+  ...
+# Subtest: real candidate producer refuses a changed final source body, false runtime hash and unassigned recording
+ok 38 - real candidate producer refuses a changed final source body, false runtime hash and unassigned recording
+  ---
+  duration_ms: 27.201084
+  ...
+# Subtest: real candidate producer refuses altered derivative provenance and changed runtime bytes
+ok 39 - real candidate producer refuses altered derivative provenance and changed runtime bytes
+  ---
+  duration_ms: 23.238458
+  ...
+# Subtest: approved original recordings are optional binaries while their catalogue remains offline metadata
+ok 40 - approved original recordings are optional binaries while their catalogue remains offline metadata
+  ---
+  duration_ms: 60.988916
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 932.661125

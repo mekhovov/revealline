@@ -1,0 +1,82 @@
+{
+  "format": "revealline-team-picture-metadata-successor-review.v1",
+  "baselineSource": "9c2920b91d533fa5693d2fed8930840cef85eeff",
+  "fromRevision": 52,
+  "toRevision": 54,
+  "scope": "Seven exact current revision values plus the fpv52\u2192fpv54 comment across four files. Historical fixtures, lease behavior, matching and all positive/refusal assertions remain unchanged.",
+  "files": [
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "bytes": 2643,
+      "sha256": "f5874fc572f8fcffa58aa9156243b443099e4df563effb2f11431e1cc45a57f4"
+    },
+    {
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "bytes": 8897,
+      "sha256": "d1be7b47231563a2f8e072d0bfc326dacbc1cff92a881987b90bed432aebcefa"
+    },
+    {
+      "path": "game/test/coop-historical-import-picture.test.mjs",
+      "bytes": 16371,
+      "sha256": "848c4ec6ee8bb79e371c4b3a5fb029e72a525d3ae95f70d478afad39800acbfa"
+    },
+    {
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "bytes": 25402,
+      "sha256": "a52b0ae6f1875e1d1e7ff3ba3a9e090ba8e8a76baf24143480ba258d895afd1f"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "game/test/presentation-production-history.test.mjs",
+      "bytes": 30943,
+      "sha256": "5dd8e8f1977622bd92b9ee7bd203ff5472d412d1ea665ed451819a04188a8cd8"
+    },
+    {
+      "path": "game/test/coop-presentation.test.mjs",
+      "bytes": 21663,
+      "sha256": "d50bd82a03ac92abe6c4a661e72fd21dc016a59f539be8cf4d076d7432c08064"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 978694,
+      "sha256": "91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace"
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 7641863,
+      "sha256": "1c39ddf9efd06a0e279270dff0baa5c33fdeac578a4ef56f3f4b3e4f3af23940"
+    }
+  ],
+  "independentLedgerProof": {
+    "path": "/tmp/soundtrack-reviewed54-independent-review.json",
+    "bytes": 8976,
+    "sha256": "c1e6e8613165d5a267962467152f8a602babf0a3e8101ecebc8082decab4b9d8"
+  },
+  "sourceComparison": "Each working file is byte-identical to HEAD after only the predetermined revision substitutions. Both complete picture descriptors/geometry plus five complete actor descriptors equal HEAD52; all seven actual PNG bodies match declared SHA256 and length. Independent referenced ledger proof additionally verifies all127 original payloads and52\u219253\u219254 immutable history.",
+  "tests": {
+    "command": "node --test game/test/presentation-production-history.test.mjs game/test/coop-picture-bindings.test.mjs game/test/coop-historical-import-picture.test.mjs game/test/coop-actor-presentation.test.mjs game/test/coop-presentation.test.mjs",
+    "exitCode": 0,
+    "counts": {
+      "tests": 94,
+      "suites": 0,
+      "pass": 94,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "durationMs": 45594.487042,
+    "log": {
+      "path": ".cache/v080-qualification/repair-9c2920b9/team54-history-tests.log",
+      "bytes": 21677,
+      "sha256": "17d915f7619668335829ea04c768d2a205ad26edc80ef089b4ee58e9a31574db"
+    }
+  },
+  "authorship": "The three pins/comment and four expectations were updated by soundtrack_references after independent ledger proof from audio_architecture; the complete five-file test command was run by soundtrack_references. Parent separately owns lint/format/producer/readiness gates.",
+  "limitations": [
+    "No native image decode, browser/physical-device, frozen artifact or offline proof.",
+    "No new art, music/listening, regional authenticity, Content ID or public release approval.",
+    "Source working-tree qualification only; no commit or publication performed."
+  ]
+}

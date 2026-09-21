@@ -1,4 +1,5 @@
 import { fieldKitCopy } from './field-kit-copy.mjs';
+import { captureOperationFocus } from './operation-focus.mjs';
 
 /** Artwork-first presentation of the host's existing mission buttons and locks. */
 export function attachMissionGallery({ document: doc = globalThis.document, missions } = {}) {
@@ -23,6 +24,7 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
   const tiles = new Map();
   let page = 0,
     selectedKey = '',
+    selectionFocus = null,
     destroyed = false;
   function sync() {
     if (destroyed) return;
@@ -106,15 +108,38 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
   previous.onclick = () => move(-1);
   next.onclick = () => move(1);
   const chosen = (event) => {
-    if (!event.target?.closest?.('button') || event.target.closest('button').disabled) return;
+    const button = event.target?.closest?.('button');
+    if (!button || button.disabled || !missions.contains(button)) return;
+    selectionFocus?.lease.cancel();
+    // Capture before the host's handler rebuilds cards and detaches the clicked
+    // artwork/status subtree. A later focus choice or dialog still wins.
+    selectionFocus = {
+      event,
+      lease: captureOperationFocus(button, {
+        document: doc,
+        resolveTarget: () => {
+          const selected = missions.querySelector('.selected');
+          return selected?.dataset.level === button.dataset.level ? selected : null;
+        },
+      }),
+    };
+  };
+  const finishChosen = (event) => {
+    const owner = selectionFocus;
+    if (!owner || owner.event !== event) return;
+    // Native dispatch may checkpoint microtasks between listener callbacks.
+    // Queue only after the target handler, using the captured event/opener
+    // rather than looking up an artwork node that is now detached.
     queueMicrotask(() => {
-      if (destroyed) return;
+      if (destroyed || selectionFocus !== owner) return;
       sync();
-      const selected = missions.querySelector('.selected');
-      selected?.focus({ preventScroll: true });
+      if (destroyed || selectionFocus !== owner) return;
+      selectionFocus = null;
+      owner.lease.restore();
     });
   };
-  missions.addEventListener('click', chosen);
+  missions.addEventListener('click', chosen, true);
+  missions.addEventListener('click', finishChosen);
   const Observer = doc.defaultView?.MutationObserver ?? globalThis.MutationObserver;
   const observer = typeof Observer === 'function' ? new Observer(sync) : null;
   // Watch replacement of host-owned controls, never our tile or hidden attributes.
@@ -124,8 +149,11 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
     sync,
     destroy() {
       destroyed = true;
+      selectionFocus?.lease.cancel();
+      selectionFocus = null;
       observer?.disconnect();
-      missions.removeEventListener('click', chosen);
+      missions.removeEventListener('click', chosen, true);
+      missions.removeEventListener('click', finishChosen);
       for (const [button, { tile }] of tiles) {
         button.hidden = false;
         tile.remove();

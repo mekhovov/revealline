@@ -83,6 +83,12 @@ async function fixture(t, { approved = true } = {}) {
     'game/ui/music.mjs',
   ])
     await put(name, await fs.readFile(path.join(projectRoot, name)));
+  // The copied model imports generated collections; this isolated source has no
+  // shipped catalogue or archive authority beyond its explicit fixture records.
+  await put(
+    'game/content/soundtrack-catalogue.mjs',
+    `export const SOUNDTRACK_CATALOGUE = {format: 'revealline-soundtrack-catalogue.v2', edition: 'archive-test', tracks: []}; export const SOUNDTRACK_ARCHIVES = []; export const SOUNDTRACK_COLLECTIONS = [];`,
+  );
   await put(
     'authoring/library/licensed-audio/production-register.json',
     JSON.stringify({ tracks: [source] }),

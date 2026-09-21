@@ -7,6 +7,8 @@ import {
   emptySoundtrackLibrary,
   upgradeSoundtrackLibrary,
   setCatalogueTracks,
+  resolveSoundtrackCatalogue,
+  SOUNDTRACK_CATALOGUE_FORMAT_V2,
 } from '../soundtrack.mjs';
 import { fixture } from './helpers/soundtrack-fixtures.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
@@ -998,4 +1000,198 @@ test('choosing an available genre clears the previous unavailable selection noti
   assert.equal(h.player.snapshot().track.id, track.id);
   assert.equal(h.player.snapshot().notice, null);
   assert.equal(h.player.snapshot().error, null);
+});
+
+function permissionCatalogue(recordings) {
+  return {
+    format: SOUNDTRACK_CATALOGUE_FORMAT_V2,
+    edition: 'selection-test',
+    tracks: recordings.map((recording, index) => {
+      const id = `builtin.catalog.selection-${index}`;
+      return {
+        ...recording.track,
+        id,
+        edition: 'selection-test',
+        path: `game/content/music/selection-${index}.mp3`,
+        tags: { genres: ['metal'], role: 'any', energy: 3, themes: [`theme-${index}`] },
+        policy: {
+          id,
+          sha256: recording.track.asset.sha256,
+          webPlayback: 'allowed',
+          offlineCache: 'allowed',
+          redistribute: 'allowed',
+          modify: 'allowed',
+          gameplayVideo: index === 0 ? 'allowed' : 'unknown',
+          contentId: index === 0 ? 'not-registered' : 'unknown',
+        },
+      };
+    }),
+  };
+}
+
+test('invalid catalogue construction leaves media and master ownership available for a valid retry', (t) => {
+  const h = audioHarness();
+  let subscriptions = 0;
+  const audioMaster = {
+    snapshot: () => ({ muted: false, volume: 1 }),
+    subscribe: () => {
+      subscriptions++;
+      return () => subscriptions--;
+    },
+  };
+  const options = {
+    soundscape: h.soundscape,
+    audioElement: h.media,
+    secondAudioElement: null,
+    readAsset: async () => original.blob,
+    audioMaster,
+    URLImpl: h.URLImpl,
+  };
+  assert.throws(() => createSoundtrackPlayer({ ...options, catalogue: { invalid: true } }));
+  assert.equal(subscriptions, 0);
+  assert.equal(h.media.volume, 1);
+  const player = createSoundtrackPlayer(options);
+  t.after(() => player.dispose());
+  assert.equal(subscriptions, 2);
+  player.dispose();
+  assert.equal(subscriptions, 0);
+});
+
+test('selection reuse follows owned library, context and override changes and rejects invalid setters atomically', async (t) => {
+  const other = await fixture('selection-other');
+  const catalogue = resolveSoundtrackCatalogue(permissionCatalogue([original, other]));
+  const [first, second] = catalogue.tracks;
+  const base = setCatalogueTracks(emptySoundtrackLibrary(), catalogue.tracks);
+  const library = {
+    ...base,
+    playlists: [
+      { id: 'test.first', title: 'First', trackIds: [first.id], order: 'ordered', repeat: 'all' },
+    ],
+  };
+  const h = setup({
+    library,
+    catalogue,
+    readAsset: async (hash) => (hash === first.asset.sha256 ? original.blob : other.blob),
+  });
+  t.after(() => h.player.dispose());
+  h.player.setContext({ scene: 'gameplay', themeId: 'theme-0' });
+  await h.player.prepare();
+  assert.deepEqual(h.player.snapshot().queue, [first.id]);
+  const prior = h.player.snapshot();
+  assert.throws(() => h.player.setContext({ scene: 'invalid' }), /scene/);
+  assert.throws(
+    () => h.player.setLibrary({ ...library, selection: { playlistId: 'missing' } }),
+    /Selected playlist/,
+  );
+  await assert.rejects(h.player.selectPlaylist('missing'), /Selected playlist/);
+  assert.deepEqual(h.player.snapshot(), prior);
+
+  h.player.setContext({ scene: 'gameplay', themeId: 'theme-1' });
+  assert.equal(h.player.snapshot().pendingPlaylistId, prior.playlistId);
+  await h.player.next();
+  assert.deepEqual(h.player.snapshot().queue, [second.id]);
+  await h.player.selectPlaylist('test.first');
+  assert.deepEqual(h.player.snapshot().queue, [first.id]);
+  await h.player.selectPlaylist(null);
+  assert.deepEqual(h.player.snapshot().queue, [second.id]);
+
+  h.player.setLibrary({ ...library, catalogTracks: [first], selection: { playlistId: null } });
+  await h.player.next();
+  assert.deepEqual(h.player.snapshot().queue, [first.id]);
+  assert.equal(h.player.snapshot().desired, false);
+});
+
+test('selection reuse invalidates installed IDs and listening permissions while snapshots retain live position', async (t) => {
+  const other = await fixture('selection-installed');
+  const catalogue = resolveSoundtrackCatalogue(permissionCatalogue([original, other]));
+  const [first, second] = catalogue.tracks;
+  const base = setCatalogueTracks(emptySoundtrackLibrary(), catalogue.tracks);
+  const h = setup({
+    library: { ...base, listening: { ...base.listening, mode: 'metal', installedOnly: true } },
+    catalogue,
+    readAsset: async (hash) => (hash === first.asset.sha256 ? original.blob : other.blob),
+  });
+  t.after(() => h.player.dispose());
+  h.player.setContext({ installedTrackIds: [first.id] });
+  await h.player.prepare();
+  assert.deepEqual(h.player.snapshot().queue, [first.id]);
+  h.media.currentTime = first.asset.durationSeconds / 2;
+  assert.equal(h.player.snapshot().positionSeconds, first.asset.durationSeconds / 2);
+  h.media.currentTime = 0;
+  assert.equal(h.player.snapshot().positionSeconds, 0);
+
+  h.player.setContext({ installedTrackIds: [second.id] });
+  await h.player.next();
+  assert.deepEqual(h.player.snapshot().queue, [second.id]);
+  await h.player.selectListening({ ...base.listening, mode: 'metal', recordingMode: true });
+  assert.deepEqual(h.player.snapshot().queue, [first.id]);
+  assert.match(h.player.snapshot().notice, /Recording mode/);
+  await h.player.selectListening({ ...base.listening, mode: 'ukrainian' });
+  assert.deepEqual(h.player.snapshot().queue, []);
+  assert.equal(h.player.snapshot().track, null);
+});
+
+test('raw mutable catalogue policy revocation remains live for same-hash uploaded aliases', async (t) => {
+  const catalogue = permissionCatalogue([original]);
+  const base = upgradeSoundtrackLibrary(original.library);
+  const h = setup({
+    catalogue,
+    library: {
+      ...base,
+      selection: { playlistId: null },
+      tags: { [original.track.id]: { genres: ['ukrainian'], role: 'any', energy: 3, themes: [] } },
+      listening: { ...base.listening, mode: 'ukrainian' },
+    },
+  });
+  t.after(() => h.player.dispose());
+  await h.player.prepare();
+  assert.equal(h.player.snapshot().source, 'catalogue');
+  assert.deepEqual(h.player.snapshot().queue, [original.track.id]);
+  catalogue.tracks[0].policy.webPlayback = 'denied';
+  assert.equal(h.player.snapshot().source, 'unavailable');
+  await h.player.selectPlaylist(null);
+  assert.equal(h.player.snapshot().track, null);
+  assert.deepEqual(h.player.snapshot().queue, []);
+  catalogue.tracks[0].policy.webPlayback = 'allowed';
+  await h.player.selectPlaylist(null);
+  assert.deepEqual(h.player.snapshot().queue, [original.track.id]);
+  assert.equal(h.media.plays, 0);
+});
+
+test('base selection reuse never caches dynamic published permissions, authored replacement or failed adapters', async (t) => {
+  let allowed = true,
+    unavailable = false,
+    reads = 0;
+  const h = setup({ library: emptySoundtrackLibrary() });
+  t.after(() => h.player.dispose());
+  const published = {
+    id: `published.${'f'.repeat(64)}`,
+    title: 'Dynamic published recording',
+    allowed: () => allowed,
+    readBlob: async () => {
+      reads++;
+      if (unavailable) throw new Error('Published recording unavailable');
+      return new Blob(['Modeled published audio'], { type: 'audio/wav' });
+    },
+  };
+  h.player.setPublishedTrack(published);
+  await h.player.prepare();
+  assert.equal(h.player.snapshot().source, 'published');
+  allowed = false;
+  assert.equal(h.player.snapshot().source, 'default');
+  h.player.setAuthoredTrack(BUILTIN_SOUNDTRACK_TRACKS[0].recipe);
+  await h.player.prepare();
+  assert.equal(h.player.snapshot().source, 'authored');
+  h.player.setAuthoredTrack(null);
+  await h.player.prepare();
+  assert.equal(h.player.snapshot().source, 'default');
+  allowed = true;
+  unavailable = true;
+  h.player.setPublishedTrack(published);
+  assert.equal(h.player.snapshot().source, 'published');
+  await h.player.selectPlaylist(null);
+  assert.equal(reads, 2);
+  assert.equal(h.player.snapshot().track.kind, 'synth');
+  assert.equal(h.player.snapshot().source, 'default');
+  assert.match(h.player.snapshot().notice, /Published recording unavailable/);
 });

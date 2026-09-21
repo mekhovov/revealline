@@ -690,8 +690,8 @@ try {
     }
     boardFootprints.refresh();
     sound.reset();
-    sound.setTrack(entry.track || DEFAULT_TRACKS[0], { atBoundary: true });
-    publishedPlayer?.setAuthoredTrack(entry.track || DEFAULT_TRACKS[0]);
+    if (publishedPlayer) publishedPlayer.setAuthoredTrack(entry.track || DEFAULT_TRACKS[0]);
+    else sound.setTrack(entry.track || DEFAULT_TRACKS[0], { atBoundary: true });
     if (music) {
       const key =
         entry.musicCampaignKey ||
