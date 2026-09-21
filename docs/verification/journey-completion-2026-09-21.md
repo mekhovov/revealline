@@ -106,6 +106,10 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 
 ## Each original phase
 
+No phase below is being called fully accepted merely because code or candidate
+content exists. The last column is work still required for that phase's current
+successor, including relevant public/human gates.
+
 | Item | Implemented / evidence available | Remaining acceptance |
 |---|---|---|
 | P00 — plan/audit/flow/progress/teaching | Canonical plan;110 old Solo /64 files /48 numbered references audited; direct flow, stable receipts and teaching fixtures; scoped integration accepted | Exact public whole-flow audit; human capture understanding; latest release reconciliation |
@@ -126,6 +130,22 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | P15 — final validation/Legacy/rollback | Immutable evidence records; compiler/CLI/Studio inspection; persistence/compatibility groundwork | Human sessions; full device/accessibility/performance; Legacy transition; public rollback proof; deployment |
 
 ## Cross-cutting checklist
+
+### Latest requested improvements
+
+| Request | Completed locally | Still required |
+|---|---|---|
+| Difficulty beyond lives | Explicit v2 speed factors Gentle1.0 / Standard1.4 / Expert1.75 and attack-rest factors1.25 /0.85 /0.65; fixed player handling and warning windows;498 ordinary candidate cases pass | Human balance, spatial shortcut/cleanup fixes, legacy-public migration and Team; no claim these multipliers are final or deployed |
+| Appearing/expiring/relocating bonuses | Versioned engine, shared Studio schedules, visual announcement/countdown, replay/save and three Border studies; desktop native observation | Bonus-taking multi-seed routes, stronger-pressure combination, Team/device/human checks and publication |
+| Ukrainian ornament/culture and FPV workshop maps | Eight distinct greyboxes, two arcs, cultural attribution;48 preset/control clear/replays and equal races; two successor geometry studies | Remaining short routes, original final pictures, cultural/playability review, mode qualification and enrollment |
+| Additional enemy behavior | Pursuer/interceptor catalogue and authoring, six variants,36 clear/replays and equal races; existing terrain/rover/erosion/relay/contour roles retained | Whole-Journey distribution/pacing, native/human/Team and public integration |
+| Optional running/shooting characters | D2a deterministic non-retaining scouts/sentries; D2b shared authoring/on-off editions and three greyboxes,42 on/off clear/replays and42 races | D2c pixel robots/attack cues/scrap/audio/player setting and native checks; D2d Team; human/release gates. No graphic dismemberment or nationality-based caricatures |
+| More varied decisions without menu friction |83 Solo candidates including12 Remixes,12 Team candidates; shared framework and direct-flow host checks | Final cuts, human pacing/mastery, controller/device validation and accepted-release deployment |
+
+The latest D2b code is `a22bbb16`. D2c presentation specification is now being
+reviewed; a specification is not completed rendering or gameplay integration.
+
+### Original shared requirements
 
 - [x] One enemy-seeded four-connected capture contract; intentional line-only
   capture with retaining enemies on both sides.
