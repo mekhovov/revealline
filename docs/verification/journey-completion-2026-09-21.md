@@ -119,7 +119,7 @@ successor, including relevant public/human gates.
 | P04 — Neon | Seven candidates/art; frontier-shaping routes; Remix; replay/race/mastery/seed checks; all42 pressure clear/replay/race cases | Short paths and mouth/frontier goal review, human pacing, public integration |
 | P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; all42 pressure clear/replay/race cases | Sorting Yard/Split Berths short routes and late activation; presentation, human balance, public integration |
 | P06 — Fractured Grid | Seven candidates/art; erosion/anchors/repair; Remix; all42 pressure clear/replay/race cases; opening observations; Two Districts spatial study,18 ordinary samples and6 separate mastery routes |35–40second optimized ordinary pacing; discoverability of bent hazard enclosures; repair/roamer teaching, human pacing, public integration |
-| P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; all42 pressure clear/replay/race cases; six safe alternative first returns; separate two-bay Reserve study with18 ordinary +6 mastery samples | Reserve pacing/impact readability and unfinished native check; whole-set hit explanations, human difficulty, public integration |
+| P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; all42 pressure clear/replay/race cases; six safe alternative first returns; separate two-bay Reserve study with18 ordinary +6 mastery samples; native Studio history and Standard first return checked | Reserve pacing/impact readability, whole-set native hit explanations, human difficulty, public integration |
 | P08 — Livewire | Seven candidates/art; telegraphed lanes; Remix; all42 stronger-pressure clear/replay/race cases;32 optional goals | Short-clear spatial review;10 optional-goal cases; human warning overlap/ordering, public integration |
 | P09 — Relay | Seven candidates/art; permanent connectors; Studio links; Remix; all42 pressure clear/replay/race cases; opening observations | Connector bypass/long post-objective intervals, human shortcut usefulness, public integration |
 | P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; all42 pressure clear/replay/race cases | Short-clear/connector/optional-goal review; human precision/readability, public integration |
@@ -153,6 +153,11 @@ has not supplied an accepted main baseline for this lane's C2 adoption. A held,
 additive BoardPainter patch may be prepared against that exact renderer;
 app/Versus preferences/receipts, Team host and preview enablement remain held.
 This coordination status is not a new public release claim.
+
+The held additive renderer patch is now implemented and independently reviewed;
+389 tests pass on each supported Node version, including ten executable patched
+BoardPainter tests. The actual shared renderer/hosts and preview guard are not
+changed. [Exact patch/source evidence and remaining C2 work](journey-combat-board-adapter.md).
 
 ### Research-to-implementation check
 

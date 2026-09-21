@@ -42,8 +42,9 @@ unchanged. Paused/frozen visuals use simulation ticks, not painter elapsed time.
 
 1. Commit this spec, obtain independent review, then create the patch using
    apply_patch. No actual shared renderer file is edited.
-2. Tests read the pinned renderer via Git, verify its blob, apply the patch in an
-   isolated temporary directory and execute the resulting real module with imports
+2. Tests read a byte-exact pinned renderer fixture and verify its canonical Git
+   blob hash, so fresh/shallow CI never needs to fetch an unrelated candidate.
+   Apply the patch in an isolated temporary directory and execute the resulting real module with imports
    resolved to this lane's versioned dependencies. No fake wins or replaced engine.
 3. Exercise actual public-step warning/shot/removal states, pause/reduced/small
    viewport, cache reset, scrap toggle, full-picture terminal rendering, malformed
