@@ -1,0 +1,53 @@
+{
+  "status": "native integrated candidate check, not release qualification",
+  "base": "76586bd1",
+  "runtimeOverrides": {
+    "game/app.mjs": "f1ff9b4cee23f9c59c8974ad0c543739e50fa69257b69c6d602b171e376efb7d",
+    "game/index.html": "d180b4e73e8ed3f227c5a24d98875df1826dd3f33590a329d42b469b72692294",
+    "game/ui/field-kit-surfaces.css": "a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d"
+  },
+  "fixtureSha256": "023a10a3b8f295f4fc35625e6be042d3cf00ae612d69dfb73e6b47820304d54f",
+  "method": "Owned pack installed through file chooser; actual movement and keyboard UI in the in-app browser. Exact base Git source except listed working overrides; no game-state injection.",
+  "viewport": {
+    "width": 568,
+    "height": 320,
+    "text": "Large/Plain",
+    "fullscreen": false
+  },
+  "observed": [
+    "Legal line self-cross lost the single-life attempt. An earlier cut captured13%; later fresh retry self-cross produced0% result.",
+    "Defeat animation precedes the ordinary loss result; waiting for automatic transition avoids accidentally activating Retry.",
+    "Loss result gives self-contact explanation, Try again, Change difficulty and Main menu.",
+    "Keyboard Tab from Try again reaches selector; Down opens, Down/Enter selects Gentle. Result still says Standard current flight; next Retry Gentle.",
+    "Shift+Tab and Enter on Try again starts fresh running attempt,0:00,0%coverage,five lives; Escape shows explicit Pause menu with Resume/Sound.",
+    "Console warnings/errors empty."
+  ],
+  "measurements": {
+    "reading": {
+      "x": 32.0390625,
+      "y": 84.0390625,
+      "width": 245.9609375,
+      "height": 125.625,
+      "scrollHeight": 441
+    },
+    "difficultySelect": {
+      "x": 294,
+      "y": 175.0390625,
+      "width": 237.9609375,
+      "height": 45.5
+    },
+    "retry": {
+      "x": 294,
+      "y": 88.0390625,
+      "width": 237.9609375,
+      "height": 47
+    }
+  },
+  "limitations": [
+    "Small landscape uses independently scrolling details and actions; all text is not visible simultaneously.",
+    "Selector is partly below initial action scrollport; keyboard focus scrolls it into view.",
+    "Native run does not assert exact saved bytes or checkpoint identity; regression tests cover those.",
+    "Owned fixture is navigation evidence, not balance, final art or original campaign acceptance.",
+    "No physical iPhone/Safari, Steam Deck/controller, real touch, offline or public-release qualification."
+  ]
+}
