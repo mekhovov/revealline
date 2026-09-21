@@ -1,0 +1,129 @@
+TAP version 13
+# Subtest: Relay Yard preview and arena borrow one exact prepared image without preview reads or automatic Start
+ok 1 - Relay Yard preview and arena borrow one exact prepared image without preview reads or automatic Start
+  ---
+  duration_ms: 187.867041
+  ...
+# Subtest: First Connection preview and arena borrow one exact prepared image without preview reads or automatic Start
+ok 2 - First Connection preview and arena borrow one exact prepared image without preview reads or automatic Start
+  ---
+  duration_ms: 75.575208
+  ...
+# Subtest: relay-yard ready lobby hides the picture centre until an earned win
+ok 3 - relay-yard ready lobby hides the picture centre until an earned win
+  ---
+  duration_ms: 91.185958
+  ...
+# Subtest: first-connection ready lobby hides the picture centre until an earned win
+ok 4 - first-connection ready lobby hides the picture centre until an earned win
+  ---
+  duration_ms: 79.911542
+  ...
+# Subtest: selecting another arena immediately hides and clears old lobby art until its owned read finishes
+ok 5 - selecting another arena immediately hides and clears old lobby art until its owned read finishes
+  ---
+  duration_ms: 53.994666
+  ...
+# Subtest: held artwork completes behind Settings without reclaiming its selector or starting an arena
+ok 6 - held artwork completes behind Settings without reclaiming its selector or starting an arena
+  ---
+  duration_ms: 57.20625
+  ...
+# Subtest: late superseded read cannot draw or clear the newer arena preview or reclaim focus
+ok 7 - late superseded read cannot draw or clear the newer arena preview or reclaim focus
+  ---
+  duration_ms: 44.757541
+  ...
+# Subtest: cancelled decode clears preview; late completion cannot change a successful explicit Retry
+ok 8 - cancelled decode clears preview; late completion cannot change a successful explicit Retry
+  ---
+  duration_ms: 71.707917
+  ...
+# Team picture preparation failed. Error: Controlled required picture refusal
+#     at decode (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0761-lobby-oracle-r1/after/game/test/coop-lobby-preview.test.mjs:319:27)
+#     at PictureImage.decode (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0761-lobby-oracle-r1/after/game/test/helpers/coop-presentation-fixture.mjs:86:21)
+#     at async image.onload (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0761-lobby-oracle-r1/after/game/couch/coop-picture-image.mjs:42:11)
+# Subtest: required original decode failure shows no lobby art and Retry prepares the same exact slot
+ok 9 - required original decode failure shows no lobby art and Retry prepares the same exact slot
+  ---
+  duration_ms: 48.814459
+  ...
+# Subtest: Pause and confirmed Change setup leave preview in the lobby and reuse the accepted image without another read
+ok 10 - Pause and confirmed Change setup leave preview in the lobby and reuse the accepted image without another read
+  ---
+  duration_ms: 67.306084
+  ...
+# Subtest: historical import prepares shared artwork, loss keeps preview outside Results, and reset restores exact starter art
+ok 11 - historical import prepares shared artwork, loss keeps preview outside Results, and reset restores exact starter art
+  ---
+  duration_ms: 760.246458
+  ...
+# Subtest: persisted pagehide retains accepted preview; terminal cleanup clears it and late lifecycle events cannot redraw
+ok 12 - persisted pagehide retains accepted preview; terminal cleanup clears it and late lifecycle events cannot redraw
+  ---
+  duration_ms: 33.752291
+  ...
+# Subtest: lobby-only paint failure keeps Start ready and Retry preview repaints the same image without network, decode or focus theft
+ok 13 - lobby-only paint failure keeps Start ready and Retry preview repaints the same image without network, decode or focus theft
+  ---
+  duration_ms: 67.060333
+  ...
+# Subtest: missing preview Canvas context never blocks a fully prepared playable arena
+ok 14 - missing preview Canvas context never blocks a fully prepared playable arena
+  ---
+  duration_ms: 58.996625
+  ...
+# Subtest: fresh pointer intent during loading permits preview publication without adding a focus handoff
+ok 15 - fresh pointer intent during loading permits preview publication without adding a focus handoff
+  ---
+  duration_ms: 33.329542
+  ...
+# Subtest: earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease
+ok 16 - earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease
+  ---
+  duration_ms: 4429.01275
+  ...
+# Subtest: preview-only failure does not move Retry into play or Pause, and focused keyboard Retry returns to enabled Start
+ok 17 - preview-only failure does not move Retry into play or Pause, and focused keyboard Retry returns to enabled Start
+  ---
+  duration_ms: 101.684
+  ...
+# Subtest: required read failure clears preview while a rejected starter import preserves the accepted arena
+ok 18 - required read failure clears preview while a rejected starter import preserves the accepted arena
+  ---
+  duration_ms: 69.470583
+  ...
+# Subtest: preview reset failure cannot block a newly prepared arena or interrupt terminal image disposal
+ok 19 - preview reset failure cannot block a newly prepared arena or interrupt terminal image disposal
+  ---
+  duration_ms: 79.943875
+  ...
+# Subtest: rotation reveals the focused Team lobby control without starting or refocusing
+ok 20 - rotation reveals the focused Team lobby control without starting or refocusing
+  ---
+  duration_ms: 114.54625
+  ...
+# Subtest: rotation leaves a fully visible Team lobby control alone
+ok 21 - rotation leaves a fully visible Team lobby control alone
+  ---
+  duration_ms: 49.373959
+  ...
+# Subtest: background rotation cannot scroll the Team lobby
+ok 22 - background rotation cannot scroll the Team lobby
+  ---
+  duration_ms: 45.528166
+  ...
+# Subtest: a newer focus during lobby measurement vetoes the old resize reveal
+ok 23 - a newer focus during lobby measurement vetoes the old resize reveal
+  ---
+  duration_ms: 44.000584
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6945.642917

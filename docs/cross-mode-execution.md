@@ -23,10 +23,15 @@ are still pending. The running side-HUD/touch-rail prototype remains excluded.
 | 1 | Release the scoped navigation/layout corrections | Integrated candidate; six source gates, production checks, build and public journeys pending. |
 | 2 | Finish native navigation, shared readability and actor parity | Partial; all modes, complete input journeys, actual playing scale and responsive layouts remain. |
 | 3 | Action feedback, fair challenge and rewards | Partial; readable warnings/counters, loss causes, Retry/Next/stories and human playtests remain. |
-| 4 | Music, creation, discovery and campaign production | Partial; auditioned media, complete asset coverage, real installation/transfer/recovery and 132-mission programme remain. |
+| 4 | Music, creation, discovery and campaign production | Partial; auditioned media, complete asset coverage, real installation/transfer/recovery and the revised XPOSED Journey programme remain. |
 | 5 | Supporting workflows and reproducible authoring | Partial; full fresh-workspace examples, current skills and data-recovery acceptance remain. |
 | 6 | Full browser qualification | Partial; physical touch/controllers, listening, offline/lifecycle, ordinary-device performance and human assessment remain. |
 | Later | Native stores and network multiplayer | Separate deferred gates. |
+
+The approved [XPOSED Journey plan](xposed-journey-plan.md) supersedes the earlier
+132-mission allocation: 242 Solo candidates, 12 finale Remixes and 12 purpose-built
+Team missions are an authoring backlog, not delivered content or a minimum release
+count. Each mission still needs its own playability and quality acceptance.
 
 No complete programme phase is closed by these bounded corrections. Older reports
 below retain their observation time and are not the current public acceptance record.
