@@ -7,6 +7,7 @@ import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
 import { createFractureCandidates } from '../content-design/fracture-candidates.mjs';
 import { createPhaseCandidates } from '../content-design/phase-candidates.mjs';
 import { createLivewireCandidates } from '../content-design/livewire-candidates.mjs';
+import { createCombatCandidates } from '../content-design/combat-candidates.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
@@ -30,6 +31,7 @@ import { createTraceRecovery } from './trace-recovery.mjs';
 import { journeyPreset } from '../content-design/catalogs.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { createActorEditor } from './actor-editor.mjs';
+import { createCombatEditor } from './combat-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
 import { createObjectiveEditor } from './objective-editor.mjs';
@@ -83,6 +85,18 @@ const actorEditor = createActorEditor({
   getSource: () => session.current(),
   getMission: currentMission,
   getDifficulty: () => $('difficulty').value,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const combatEditor = createCombatEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
   apply: (candidate) => {
     if (!discardSource()) return false;
     session.replace(candidate);
@@ -203,6 +217,7 @@ function draw(preview) {
 }
 function inspectBoard(trailCells = []) {
   const mission = currentMission();
+  combatEditor.sync();
   actorEditor.sync();
   geometryEditor.sync();
   bonusEditor.sync();
@@ -211,6 +226,7 @@ function inspectBoard(trailCells = []) {
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);
   if (!mission) {
+    $('combat-preview-help').hidden = true;
     $('export-team').hidden = true;
     $('team-test-help').hidden = true;
     inspectedTrail = [];
@@ -250,6 +266,9 @@ function inspectBoard(trailCells = []) {
       simulationIdentity: manifest.simulationIdentity,
       rules: manifest.level.rules,
       actors: manifest.level.enemies,
+      ...(manifest.level.classic?.combatPatrols
+        ? { combatPatrols: manifest.level.classic.combatPatrols }
+        : {}),
       objectives: mission.objectives,
       terrain: authoredTerrain,
     },
@@ -280,6 +299,7 @@ function inspectBoard(trailCells = []) {
     }),
   );
   $('play').disabled = !mission.modes.includes('solo');
+  $('combat-preview-help').hidden = !mission.combat;
   $('export-team').hidden = !mission.modes.includes('team');
   $('team-test-help').hidden = !mission.modes.includes('team');
   $('play').title = mission.modes.includes('solo')
@@ -555,6 +575,12 @@ $('phase').onclick = guarded(() => {
 $('livewire').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createLivewireCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('combat-study').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createCombatCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });

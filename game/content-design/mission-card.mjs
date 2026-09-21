@@ -1,7 +1,11 @@
 import { createRun, CELL } from '../core/index.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
-import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
+import {
+  traceContentActor,
+  contentActorMarkerType,
+  contentCombatMarkers,
+} from './actor-marker.mjs';
 const cards = new WeakMap();
 
 /** Read-only initial-state diagram. Uses the engine's actual topology and actor
@@ -9,21 +13,30 @@ const cards = new WeakMap();
 export function createMissionCard(manifest) {
   if (cards.has(manifest)) return cards.get(manifest);
   const run = createRun(manifest.level, { seed: 1, classId: 'scout' });
+  const combat = manifest.level.classic?.combatPatrols;
+  const robotsOff = combat?.enabled === false && combat.actors.length > 0;
   const card = freezeDesign({
     preset: manifest.difficulty,
     band: manifest.design.difficulty.band,
-    route: manifest.design.routeDecision,
-    mastery: manifest.design.mastery,
+    route: robotsOff
+      ? `${manifest.design.routeDecision} Optional robots are off; robot-specific route advice does not apply.`
+      : manifest.design.routeDecision,
+    mastery: robotsOff
+      ? `${manifest.design.mastery} Robot-dependent goals are unavailable while robots are off.`
+      : manifest.design.mastery,
     width: run.width,
     height: run.height,
     cells: [...run.cells],
     terrain: [...run.classic.terrain],
     spawn: { x: run.player.x, y: run.player.y },
-    actors: run.enemies.map((actor) => ({
-      type: contentActorMarkerType(manifest.level, actor),
-      x: actor.x,
-      y: actor.y,
-    })),
+    actors: [
+      ...run.enemies.map((actor) => ({
+        type: contentActorMarkerType(manifest.level, actor),
+        x: actor.x,
+        y: actor.y,
+      })),
+      ...contentCombatMarkers(manifest.level),
+    ],
     objectives: run.objectives
       .filter((objective) => objective.revealed)
       .map(({ x, y }) => ({ x, y })),
@@ -66,6 +79,13 @@ export function paintMissionThumbnail(ctx, card, width = 288) {
     ctx.beginPath();
     traceContentActor(ctx, actor.type, x, y, r);
     ctx.fill();
+    if (actor.inactive) {
+      ctx.strokeStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(x - r, y + r);
+      ctx.lineTo(x + r, y - r);
+      ctx.stroke();
+    }
   }
   ctx.strokeStyle = '#fff0ad';
   ctx.lineWidth = 1.5;

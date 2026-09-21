@@ -168,6 +168,46 @@ test('classic contact and erosion cues are distinct and respect gameplay pause i
   sound.dispose();
 });
 
+test('combat cues are distinct, voice bounded, deduplicated and supplementary to mute and pause', async () => {
+  const { context, sound } = await setup({ persistentMusic: true });
+  sound.update(true, { id: 'fpv' }, { status: 'running' });
+  const signatures = [];
+  for (const event of [
+    { type: 'combat.locked' },
+    { type: 'combat.fired' },
+    { type: 'combat.impact' },
+    { type: 'combat.eliminated', cause: 'capture' },
+    { type: 'combat.cancelled', reason: 'capture' },
+  ]) {
+    context.advance(1);
+    const before = context.sources.length;
+    sound.event(event);
+    const sources = context.sources.slice(before);
+    assert(sources.length >= 1 && sources.length <= 2);
+    signatures.push(sources.map((source) => source.frequency.value));
+  }
+  assert.equal(new Set(signatures.map(JSON.stringify)).size, signatures.length);
+
+  context.advance(1);
+  const beforeDuplicate = context.sources.length;
+  sound.event({ type: 'combat.locked', id: 'one' });
+  const afterFirst = context.sources.length;
+  sound.event({ type: 'combat.locked', id: 'two' });
+  assert.equal(afterFirst - beforeDuplicate, 2);
+  assert.equal(context.sources.length, afterFirst);
+
+  context.advance(1);
+  sound.configure({ sfx: 0 });
+  const muted = context.sources.length;
+  sound.event({ type: 'combat.fired' });
+  assert.equal(context.sources.length, muted);
+  sound.configure({ sfx: 0.7 });
+  sound.pause();
+  sound.event({ type: 'combat.impact' });
+  assert.equal(context.sources.length, muted);
+  await sound.dispose();
+});
+
 test('no context or sound is created before an explicit user audio action', async () => {
   let calls = 0;
   const sound = new Soundscape({

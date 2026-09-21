@@ -32,8 +32,45 @@ export const FOUNDATION_VERSIONS = Object.freeze({
   replayVersion: 'xonix-replay.v7',
   checkpointAlgorithm: 'fnv1a64-state-v6',
 });
+export const RELAY_VERSIONS = Object.freeze({
+  levelVersion: 'xonix-level.v6',
+  ruleset: 'xonix-core.v7',
+  replayVersion: 'xonix-replay.v8',
+  checkpointAlgorithm: 'fnv1a64-state-v7',
+});
+export const DIRECTIONAL_VERSIONS = Object.freeze({
+  levelVersion: 'xonix-level.v7',
+  ruleset: 'xonix-core.v8',
+  replayVersion: 'xonix-replay.v9',
+  checkpointAlgorithm: 'fnv1a64-state-v8',
+});
+export const SENTINEL_VERSIONS = Object.freeze({
+  levelVersion: 'xonix-level.v8',
+  ruleset: 'xonix-core.v9',
+  replayVersion: 'xonix-replay.v10',
+  checkpointAlgorithm: 'fnv1a64-state-v9',
+});
 export const isClassicRuleset = (ruleset) =>
-  [CLASSIC_VERSIONS.ruleset, FOUNDATION_VERSIONS.ruleset].includes(ruleset);
+  [
+    CLASSIC_VERSIONS.ruleset,
+    FOUNDATION_VERSIONS.ruleset,
+    RELAY_VERSIONS.ruleset,
+    DIRECTIONAL_VERSIONS.ruleset,
+    SENTINEL_VERSIONS.ruleset,
+  ].includes(ruleset);
+export const isFoundationRuleset = (ruleset) =>
+  [
+    FOUNDATION_VERSIONS.ruleset,
+    RELAY_VERSIONS.ruleset,
+    DIRECTIONAL_VERSIONS.ruleset,
+    SENTINEL_VERSIONS.ruleset,
+  ].includes(ruleset);
+export const isRelayRuleset = (ruleset) =>
+  [RELAY_VERSIONS.ruleset, DIRECTIONAL_VERSIONS.ruleset, SENTINEL_VERSIONS.ruleset].includes(
+    ruleset,
+  );
+export const isDirectionalRuleset = (ruleset) =>
+  [DIRECTIONAL_VERSIONS.ruleset, SENTINEL_VERSIONS.ruleset].includes(ruleset);
 
 /** An omitted pair remains legacy. Explicit fields must select exactly one supported pair. */
 export function resolveVersions(value = {}) {
@@ -49,6 +86,9 @@ export function resolveVersions(value = {}) {
     WIDE_VERSIONS,
     CLASSIC_VERSIONS,
     FOUNDATION_VERSIONS,
+    RELAY_VERSIONS,
+    DIRECTIONAL_VERSIONS,
+    SENTINEL_VERSIONS,
   ].find((pair) => keys.every((key) => request[key] === pair[key]));
   if (!match) throw new TypeError('unsupported or mismatched simulation versions');
   return { ...match };

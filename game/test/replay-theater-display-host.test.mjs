@@ -7,6 +7,7 @@ import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } fr
 import { BoardPainter } from '../ui/render.mjs';
 import { attachFieldKitSurfaces } from '../ui/field-kit-surfaces.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { COMBAT_PREFERENCES_KEY } from '../combat-preferences.mjs';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
@@ -259,7 +260,11 @@ function raw(page) {
   return JSON.parse(page.data.get(DISPLAY_PREFERENCES_KEY));
 }
 function noPlayerAccess(page) {
-  assert.ok(page.reads.every((key) => key === DISPLAY_PREFERENCES_KEY));
+  // The theater reads robot scrap appearance but never rewrites the recording
+  // or player intent. Only its existing display controls may write preferences.
+  assert.ok(
+    page.reads.every((key) => [DISPLAY_PREFERENCES_KEY, COMBAT_PREFERENCES_KEY].includes(key)),
+  );
   assert.ok(page.writes.every(({ key }) => key === DISPLAY_PREFERENCES_KEY));
   assert.equal(page.data.get('revealline.library.dev.v1'), 'untouched player profile');
   assert.equal(page.data.get('revealline.suspended.dev.v1'), 'untouched saved flight');
