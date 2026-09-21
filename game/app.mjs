@@ -5,6 +5,7 @@ import { createJourneyProfileStore } from './journey/profile.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
 import { createAuthoredJourneyRoute } from './content-design/route.mjs';
 import { authoredJourneyModeHref } from './content-design/mode-href.mjs';
+import { attachJourneyReactions } from './ui/journey-reactions.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
 import { DIFFICULTY_CATALOG, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
@@ -742,6 +743,7 @@ try {
     backupBusy = false,
     flightDetails = null;
   const worldPlayIntents = new WeakMap();
+  const journeyReactions = attachJourneyReactions();
   const flightInformation = attachFlightInformation({
     element: $('run-message'),
     getState: () => ({ started, paused }),
@@ -2021,6 +2023,7 @@ try {
     if (!event.persisted) {
       flightDetails.dispose();
       flightInformation.dispose();
+      journeyReactions.dispose();
       soundtrackDisposed = true;
       soundtrackLoad.abort();
       enemyGuide.dispose();
@@ -6710,6 +6713,15 @@ try {
   function refreshHUD() {
     profileRecovery?.refresh();
     refreshJourneySkip();
+    const reactionMission = journeySkipMission();
+    journeyReactions.present({
+      owned: !!reactionMission,
+      mode: 'solo',
+      outcome: run?.status,
+      missionId: reactionMission?.id,
+      encounter: !!run?.level.encounter,
+      relays: !!run?.level.relayGates?.gates?.length,
+    });
     show(
       'pause-button',
       started &&

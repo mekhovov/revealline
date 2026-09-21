@@ -1,3 +1,4 @@
+import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
@@ -248,6 +249,7 @@ export function bootCoop({
     startPermitted = true;
   let automaticRetry = null;
   let journeySkip = null;
+  const journeyReactions = attachJourneyReactions({ prefix: 'coop-' });
   let candidatePresetIntent = 0;
   let candidatePreferenceRestoration = null;
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
@@ -928,6 +930,13 @@ export function bootCoop({
     if ($('coop-message').textContent !== text) $('coop-message').textContent = text;
   }
   function overlay({ focus = true } = {}) {
+    const reactionRow = acceptedPicture?.journeyRow;
+    journeyReactions.present({
+      owned: !!candidateJourney?.owns(reactionRow),
+      mode: 'team',
+      outcome: run?.status,
+      missionId: reactionRow?.mission?.id,
+    });
     const show = run && !running();
     $('coop-overlay').hidden = !show;
     placeTools(Boolean(show));
@@ -3511,6 +3520,7 @@ export function bootCoop({
     presentationPage.close();
     closeAudio();
     closeDisplay();
+    journeyReactions.dispose();
     arenaPreference.dispose();
     candidateProgress?.dispose();
     candidatePreferences?.dispose();
