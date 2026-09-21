@@ -235,7 +235,11 @@ export async function prepareMP3Import(
     maxDepth: 3,
     maxString: 1024,
   });
-  exactKeys(fields, ['id', 'title', 'artist', 'rights'], 'MP3 metadata');
+  exactKeys(
+    fields,
+    ['id', 'title', 'artist', 'rights', ...(Object.hasOwn(fields, 'fileName') ? ['fileName'] : [])],
+    'MP3 metadata',
+  );
   const blob = ownSoundtrackBlob(source),
     asset = await inspectMP3(blob, { signal });
   const track = resolveAudioTrack({ format: AUDIO_TRACK_FORMAT, kind: 'mp3', ...fields, asset });

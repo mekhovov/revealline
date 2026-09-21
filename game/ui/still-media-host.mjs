@@ -59,7 +59,7 @@ async function readSource({ signal } = {}) {
   };
 }
 
-/** Source-only, explicit real-origin v4 entry. No manager opens on page load. */
+/** Source-only, explicit real-origin v5 entry. No manager opens on page load. */
 export function attachStillMediaHost({
   document: doc = document,
   window: win = window,
@@ -195,7 +195,8 @@ export function attachStillMediaHost({
           indexedDB,
         });
         sourceChannel = catalog.channel;
-        manager = createManager({ storyMedia: true });
+        // Current authoring must read the same shared audio/catalogue version as the game.
+        manager = createManager({ storyMedia: true, soundtrackCatalogue: true });
         stills = createStills({ managedStore: manager, decodeImage });
         audio = createAudio({ managedStore: manager });
         stories = createStories({ managedStore: manager, decodeImage });

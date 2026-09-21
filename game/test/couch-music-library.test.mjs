@@ -3,7 +3,14 @@ import test from 'node:test';
 import { createCouchMusicLibrary } from '../couch/couch-music-library.mjs';
 import { createManagedMediaStore, MANAGED_MEDIA_DATABASE } from '../managed-media-store.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
-import { emptySoundtrackLibrary } from '../soundtrack.mjs';
+import {
+  emptySoundtrackLibrary,
+  resolveSoundtrackCatalogue,
+  setCatalogueTracks,
+  resolveSoundtrackLibrary,
+  SOUNDTRACK_FORMAT,
+  SOUNDTRACK_FORMAT_V3,
+} from '../soundtrack.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { fixture, structuralProbe, memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
@@ -28,6 +35,7 @@ const deferred = () => {
 function fakeManager(readDomain = async () => saved()) {
   return {
     storyMedia: true,
+    soundtrackCatalogue: true,
     readDomain,
     commitDomain: async (_, prepared, { expectedGeneration }) => ({
       generation: expectedGeneration + 1,
@@ -326,9 +334,13 @@ test('an obsolete failed read cannot replace a newer ready state', async () => {
   }
 });
 
-test('owned storage interoperates with Solo v4 and does not close another owner or alter other domains', async () => {
+test('owned storage interoperates with Solo DB5 and does not close another owner or alter other domains', async () => {
   const memory = memoryIndexedDB();
-  const solo = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true });
+  const solo = createManagedMediaStore({
+    indexedDB: memory.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   await solo.commitDomain('audio', audio.prepared, { expectedGeneration: 0 });
   const before = await solo.readPresentationMetadata();
   memory.allPuts.length = 0;
@@ -345,12 +357,12 @@ test('owned storage interoperates with Solo v4 and does not close another owner 
     assert.equal((await solo.readDomain('audio')).generation, 2);
     owner.close();
     assert.equal((await solo.readDomain('audio')).generation, 2);
-    const request = memory.indexedDB.open(MANAGED_MEDIA_DATABASE, 4);
+    const request = memory.indexedDB.open(MANAGED_MEDIA_DATABASE, 5);
     const db = await new Promise((resolve, reject) => {
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error);
     });
-    assert.equal(db.version, 4);
+    assert.equal(db.version, 5);
     db.close();
   } finally {
     owner.close();
@@ -362,10 +374,10 @@ test('a borrowed pre-story manager is rejected instead of silently using an olde
   assert.throws(
     () =>
       createCouchMusicLibrary({
-        managedStore: { ...fakeManager(), storyMedia: false },
+        managedStore: { ...fakeManager(), storyMedia: false, soundtrackCatalogue: false },
         player: { setLibrary() {} },
       }),
-    /story|v4/i,
+    /catalogue|DB5/i,
   );
 });
 
@@ -425,7 +437,11 @@ test('the real player can prepare and explicitly play an adopted MP3 through sha
 
 test('real store conflict preserves the active library and external writer instead of retrying', async () => {
   const memory = memoryIndexedDB();
-  const manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true });
+  const manager = createManagedMediaStore({
+    indexedDB: memory.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const h = setup(manager);
   try {
     await manager.commitDomain('audio', audio.prepared, { expectedGeneration: 0 });
@@ -536,5 +552,109 @@ test('panel snapshot cannot cross an in-flight owner save or a closed owner', as
     assert.throws(() => h.owner.adoptVerifiedSnapshot(saved(3)), /closed/i);
   } finally {
     h.close();
+  }
+});
+
+test('Couch adopts v3 catalogue view without rewriting saved v1 metadata or resetting equal-generation intent', async () => {
+  const catalogue = resolveSoundtrackCatalogue({
+    format: 'revealline-soundtrack-catalogue.v2',
+    edition: 'couch-1',
+    tracks: [],
+  });
+  let installed,
+    installs = 0,
+    writes = 0;
+  const manager = fakeManager();
+  manager.commitDomain = async () => {
+    writes++;
+    throw new Error('Unexpected write');
+  };
+  const owner = createCouchMusicLibrary({
+    managedStore: manager,
+    catalogue,
+    player: {
+      setLibrary(value) {
+        installed = value;
+        installs++;
+      },
+    },
+  });
+  try {
+    await owner.load();
+    assert.equal(installed.format, SOUNDTRACK_FORMAT_V3);
+    assert.equal(owner.snapshot().library.format, SOUNDTRACK_FORMAT);
+    assert.equal(owner.snapshot().generation, 1);
+    assert.equal((await owner.load()).adopted, false);
+    assert.equal(installs, 1);
+    assert.equal(writes, 0);
+  } finally {
+    owner.close();
+  }
+});
+
+test('Couch allows absent optional and reference-only recordings but requires every installed original', async () => {
+  const pin = {
+    ...audio.track,
+    id: 'builtin.catalog.couch',
+    edition: 'couch-1',
+    path: 'optional/soundtracks/couch.mp3',
+    tags: { genres: ['synth90s'], role: 'any', energy: 3, themes: [] },
+    policy: {
+      id: 'builtin.catalog.couch',
+      sha256: audio.track.asset.sha256,
+      webPlayback: 'allowed',
+      offlineCache: 'allowed',
+      redistribute: 'denied',
+      modify: 'unknown',
+      gameplayVideo: 'unknown',
+      contentId: 'unknown',
+    },
+  };
+  const catalogue = resolveSoundtrackCatalogue({
+    format: 'revealline-soundtrack-catalogue.v2',
+    edition: 'couch-1',
+    tracks: [pin],
+  });
+  const base = setCatalogueTracks(emptySoundtrackLibrary(), catalogue.tracks);
+  let value = { generation: 1, library: base, assets: [] },
+    installed;
+  const owner = createCouchMusicLibrary({
+    catalogue,
+    managedStore: fakeManager(async () => value),
+    player: {
+      setLibrary(next) {
+        installed = next;
+      },
+    },
+  });
+  try {
+    await owner.load();
+    assert.equal(installed.catalogTracks[0].id, pin.id);
+    assert.equal(owner.readAsset(pin.asset.sha256, { allowMissing: true }), null);
+    assert.throws(() => owner.readAsset(pin.asset.sha256), /unavailable/);
+    value = {
+      generation: 2,
+      assets: [],
+      library: resolveSoundtrackLibrary({ ...base, referenceOnlyTrackIds: [pin.id] }),
+    };
+    await owner.load();
+    assert.deepEqual(installed.referenceOnlyTrackIds, [pin.id]);
+    value = {
+      generation: 3,
+      assets: [],
+      library: resolveSoundtrackLibrary({ ...base, installedTrackIds: [pin.id] }),
+    };
+    await assert.rejects(owner.load(), /originals are missing/);
+    assert.equal(owner.snapshot().generation, 2);
+    value.assets = audio.assets;
+    await owner.load();
+    assert.equal(owner.readAsset(pin.asset.sha256).size, audio.blob.size);
+    const controller = new AbortController();
+    controller.abort();
+    assert.throws(() => owner.readAsset(pin.asset.sha256, { signal: controller.signal }), {
+      name: 'AbortError',
+    });
+  } finally {
+    owner.close();
   }
 });
