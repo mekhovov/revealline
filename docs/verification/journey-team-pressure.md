@@ -11,6 +11,12 @@ configurations**. Later sections preserve each earlier bounded-search checkpoint
 their unresolved counts are historical, not remaining ordinary route failures.
 There are still major pacing, optional mastery, live two-player and delivery gaps.
 
+The subsequent [changing-return spatial study](journey-team-roamer-spatial.md)
+redesigns Shared Lookout and Twin Depots as explicit successors, not edits to the
+audited recipes. It adds24 no-down mastery clears and24 inward-first openings;
+old-route collisions and the new Expert timing failure remain recorded. This is
+an initial geometry/teaching improvement, not closure of whole-library balance.
+
 ## What is stronger
 
 | Preset   | Keeper cells/s | Reclaimed roamer cells/s | Shared reserves |

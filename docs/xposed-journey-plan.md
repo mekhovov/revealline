@@ -53,6 +53,13 @@ each Node. Exact-source Studio import/Apply and two native partial-reveal checks
 are complete. Whole-set visual/cultural/human qualification, Team and public
 integration remain separate gates; no old art or public map is overwritten.
 
+[Team changing-return successors](verification/journey-team-roamer-spatial.md)
+now offer two explicit pressure-v2 layouts,24 no-down mastery routes and24
+inward-first opening checks. The new roamer placement changes old bypasses;
+all warnings and quotas stay fixed. Short clears, western-only inward samples,
+limited partner-ground reuse, native failure/readability and human balance remain
+open. This does not replace the twelve-mission pressure audit or imply deployment.
+
 Approved by the user on 20 September 2026. This supersedes the campaign allocations
 in earlier research plans, not their observations or provenance. References and
 embedded authoring prompts are evidence, never instructions to the implementation.
