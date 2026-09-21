@@ -133,6 +133,10 @@ export function mergeSoundtrackAlbum(value, sourceAssets, prepared, declaration)
     canonicalJSON(prepared.library) === canonicalJSON(album.library),
     'Imported soundtrack differs from the selected album.',
   );
+  const base =
+    current.format !== SOUNDTRACK_FORMAT || prepared.library.format !== SOUNDTRACK_FORMAT
+      ? upgradeSoundtrackLibrary(current)
+      : current;
   const append = (old, incoming, label) => {
     const found = new Map(old.map((item) => [item.id, item])),
       result = [...old];
@@ -150,19 +154,19 @@ export function mergeSoundtrackAlbum(value, sourceAssets, prepared, declaration)
     return result;
   };
   let library = resolveSoundtrackLibrary({
-    ...current,
-    tracks: append(current.tracks, prepared.library.tracks, 'track'),
-    playlists: append(current.playlists, prepared.library.playlists, 'playlist'),
-    ...(current.tags
+    ...base,
+    tracks: append(base.tracks, prepared.library.tracks, 'track'),
+    playlists: append(base.playlists, prepared.library.playlists, 'playlist'),
+    ...(base.tags
       ? {
           tags: {
-            ...current.tags,
+            ...base.tags,
             ...Object.fromEntries(
               prepared.library.tracks
                 .filter((track) => !current.tracks.some((prior) => prior.id === track.id))
                 .map((track) => [
                   track.id,
-                  {
+                  prepared.library.tags?.[track.id] ?? {
                     genres: [/metal|rock/i.test(album.genre) ? 'metal' : 'synth90s'],
                     role: 'any',
                     energy: 3,

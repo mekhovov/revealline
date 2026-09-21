@@ -7,6 +7,7 @@ import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import {
   emptySoundtrackLibrary,
+  SOUNDTRACK_GENRES,
   BUILTIN_SOUNDTRACK_TRACKS,
   resolveCatalogueTrack,
   upgradeSoundtrackLibrary,
@@ -2241,9 +2242,8 @@ test('genre controls persist the actual checkbox selection without resuming inte
   app.state.playing = false;
   app.state.desired = false;
   app.node('listening-mode').value = 'mix';
-  app.node('mix-synth90s').checked = false;
-  app.node('mix-metal').checked = true;
-  app.node('mix-ukrainian').checked = true;
+  for (const genre of SOUNDTRACK_GENRES)
+    app.node(`mix-${genre}`).checked = ['metal', 'ukrainian'].includes(genre);
   app.node('installed-only').checked = true;
   await app.click('apply-listening');
   const saved = await app.store.read();
@@ -2258,7 +2258,26 @@ test('genre controls persist the actual checkbox selection without resuming inte
     app.calls.some(([name]) => name === 'play'),
     false,
   );
-  assert.match(app.node('original-status').textContent, /in production/);
+  assert.match(app.node('original-status').textContent, /No online recordings/);
+});
+
+test('additional genre choices save a specific style or selected cross-style mix without autoplay', async (t) => {
+  const app = await setup(t, { callbacks: { catalogue: emptyCatalogue } });
+  app.state.playing = false;
+  app.state.desired = false;
+  app.node('listening-mode').value = 'chiptune';
+  await app.click('apply-listening');
+  assert.equal((await app.store.read()).library.listening.mode, 'chiptune');
+  app.node('listening-mode').value = 'mix';
+  for (const genre of SOUNDTRACK_GENRES)
+    app.node(`mix-${genre}`).checked = ['chiptune', 'electronic', 'ambient'].includes(genre);
+  await app.click('apply-listening');
+  assert.deepEqual((await app.store.read()).library.listening.genres, [
+    'chiptune',
+    'electronic',
+    'ambient',
+  ]);
+  assert(!app.calls.some(([name]) => name === 'play'));
 });
 
 test('catalogue volume download and removal preserve playlists and original upload bytes', async (t) => {

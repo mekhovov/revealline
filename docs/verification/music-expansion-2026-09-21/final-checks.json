@@ -1,0 +1,108 @@
+{
+  "format": "revealline-music-expansion-checks.v1",
+  "sourceBase": "0fd35c8099c6f06a5c013935451d2f10a0d06a05",
+  "scope": "Uncommitted music expansion after source base; exact source pins in independent review and ledger receipts. No musical, rights, frozen-build or release acceptance.",
+  "passed": [
+    "validation",
+    "lint",
+    "game/site/scripts formatting",
+    "native formatting",
+    "production reproducibility revision48",
+    "18 production source/history tests",
+    "22 album compiler, distribution and private-pack tests",
+    "117 focused genre/compatibility tests",
+    "203 independent soundtrack tests (overlapping)",
+    "28 independent album/compatibility tests (overlapping)",
+    "69 complete presentation-history and Team tests"
+  ],
+  "audioCohort": {
+    "initial": "338 passed; two complete test files failed to import a tracked module omitted by sparse checkout. Initial failure log retained.",
+    "repair": "Hydrated exact HEAD small source files without overwriting existing files; no synthesis or recording changes.",
+    "recheck": "Both affected complete test files pass: 10 tests. This is a focused recheck, not a second full-cohort run."
+  },
+  "nativeDecode": {
+    "licensedRecordings": 70,
+    "uaFpvUniqueRecordings": 77,
+    "uaFpvFilenameEntries": 80,
+    "listeningApproval": false
+  },
+  "records": [
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/final-validate.log",
+      "bytes": 510,
+      "sha256": "852fe469dfddcd64bae57b8761bd4a5ae4416fa2c53022b3412c67e61e5e8891"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/final-lint.log",
+      "bytes": 148,
+      "sha256": "cc3d59080e1db6786884574f494b72a6d2a96b9eea000a9dc2ad8194ff06574e"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/final-format.log",
+      "bytes": 195,
+      "sha256": "d41dac14f2bf8a390b6a11750f4f9a5bf922230f5bfaf2029078713a6d0bb5a5"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/final-native-format.log",
+      "bytes": 254,
+      "sha256": "beb0a7ff278d8d68bab88fc40e222a8cce5927cec0732af4509b3cb7b225ef78"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/final-production.log",
+      "bytes": 245,
+      "sha256": "60104f02e003323b24633f2c6df6a4a4f274a09fa74dd1e8b81fd850bd9d2d05"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/final-sources.log",
+      "bytes": 4474,
+      "sha256": "52139e41088a1ed1e3e1872f747f426a1ad51bf13476cd036704a3e680615f71"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/build-tests.log",
+      "bytes": 5422,
+      "sha256": "92930ef1ea84e85ca3f7852a2664b19518d876058fe2ba90f29d9aa488648eaf"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/final-audio.log",
+      "bytes": 82229,
+      "sha256": "e30909c98c9fadd0cfc8f65a2476e5b567389d7fdc0017ab397eded48c8ac7ca"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/original-regression.log",
+      "bytes": 2286,
+      "sha256": "57cbd95f73a84019615ca33e4135268bce8a07293b943248efbd4b98716296e8"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/compatibility-final.log",
+      "bytes": 27270,
+      "sha256": "0fc89ed9e97d23b623fb237e6e260316c85edbb31aafac80ec0df92683f35e89"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/licensed-preview-albums-2026-09-21.json",
+      "bytes": 2276,
+      "sha256": "87037e30ec0e3390c4f6d4405b3d63b7fc45f92a242faecf434497ec3212158f"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/licensed-preview-albums-structural-import.json",
+      "bytes": 8053,
+      "sha256": "d01e6fedc9f71973bff92f9d5104a0087ecf4991433d077dd1a22b24c6b8fff7"
+    },
+    {
+      "path": "docs/verification/music-expansion-2026-09-21/licensed-preview-albums-structural-import.log",
+      "bytes": 1778,
+      "sha256": "f7286dcd3c6ea90a42346ae00a32e0f44ae8bc07d760264f035c42cd5c66da44"
+    },
+    {
+      "path": ".cache/ua-fpv-local-packs-2026-09-21/ua-fpv-local-index.json",
+      "bytes": 52507,
+      "sha256": "853cf0c24e5c27235194ea93f0c7f1a522fb8c06f852775122db6bfbfe75cf37",
+      "localOnly": true
+    },
+    {
+      "path": ".cache/ua-fpv-local-packs-2026-09-21/decode-check.json",
+      "bytes": 100009,
+      "sha256": "07e71b7dcd4d139f75dd83a73dc9ccc80764198eb1e97757c069601ea5b69e93",
+      "localOnly": true
+    }
+  ]
+}

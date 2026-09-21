@@ -6,6 +6,7 @@ import {
   soundtrackStoredTracks,
   soundtrackRecoveryPlan,
   SOUNDTRACK_FORMAT,
+  SOUNDTRACK_GENRES,
 } from './soundtrack.mjs';
 import { isPreparedSoundtrackLibrary, ownSoundtrackAssets } from './soundtrack-bundle.mjs';
 
@@ -115,7 +116,7 @@ export function soundtrackPlaylistShare(value, playlist, { catalogue } = {}) {
   library.selection = { playlistId: null };
   library.listening = {
     mode: 'auto',
-    genres: ['synth90s', 'metal', 'ukrainian'],
+    genres: [...SOUNDTRACK_GENRES],
     installedOnly: false,
     recordingMode: false,
   };
