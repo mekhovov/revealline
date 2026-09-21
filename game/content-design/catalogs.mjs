@@ -300,6 +300,56 @@ export const SENTINEL_ACTOR_CATALOG = freezeDesign({
   },
 });
 
+// Add existing, telegraphed engine behaviours without changing earlier catalogues.
+const pressureRole = (mode) => ({
+  type: 'bouncer',
+  domain: 'unclaimed-field',
+  damageTarget: 'body-and-trail',
+  retainsField: true,
+  captureResponse: 'remains-in-retained-region; closure-cancels-commit',
+  warning: 'locked-target-and-120-actor-tick-warning',
+  action: mode === 'trail-pursuit' ? 'commit-to-observed-trail' : 'commit-to-observed-heading',
+  recovery: 'registered-cooldown; topology-change-or-return-cancels-attack',
+  counterplay:
+    mode === 'trail-pursuit'
+      ? 'Close before the committed approach reaches your trail. The marked target locks before the attack; walls and reclaimed ground block sensing.'
+      : 'Turn after the heading target locks and take another return. It predicts only your observed direction, not your next turn; close to cancel the attack.',
+  speeds: { measured: 2.4, standard: 3.2, brisk: 4 },
+  pressureRecipe: {
+    mode,
+    senseRadius: 18,
+    scanTicks: 24,
+    warningTicks: 120,
+    commitTicks: 180,
+    cooldownTicks: 360,
+    leadTicks: mode === 'head-intercept' ? 36 : 0,
+  },
+});
+export const PRESSURE_ACTOR_CATALOG = freezeDesign({
+  format: 'ActorCatalogV1',
+  id: 'journey-actors-v7',
+  roles: {
+    ...SENTINEL_ACTOR_CATALOG.roles,
+    'trail-pursuer': pressureRole('trail-pursuit'),
+    'heading-interceptor': pressureRole('head-intercept'),
+  },
+});
+
+export function journeyPressureTiming(
+  roleId,
+  difficulty = 'standard',
+  catalogId = PRESSURE_ACTOR_CATALOG.id,
+  difficultyCatalogId = DIFFICULTY_CATALOG.id,
+) {
+  const recipe = journeyActors(catalogId).roles[roleId]?.pressureRecipe;
+  required(recipe, 'Pressure timing needs a registered pressure actor role.');
+  const preset = journeyPreset(difficulty, difficultyCatalogId);
+  return {
+    ...recipe,
+    cooldownTicks: Math.round(recipe.cooldownTicks * (preset.attackRestFactor ?? 1)),
+  };
+}
+
 export function compileJourneyEncounter(
   source,
   catalogId,
@@ -334,6 +384,7 @@ export function journeyActors(id = ACTOR_CATALOG.id) {
     [PHASE_ACTOR_CATALOG.id]: PHASE_ACTOR_CATALOG,
     [LIVEWIRE_ACTOR_CATALOG.id]: LIVEWIRE_ACTOR_CATALOG,
     [SENTINEL_ACTOR_CATALOG.id]: SENTINEL_ACTOR_CATALOG,
+    [PRESSURE_ACTOR_CATALOG.id]: PRESSURE_ACTOR_CATALOG,
   };
   required(Object.hasOwn(catalogs, id), 'Project must pin a registered actor catalog.');
   return catalogs[id];

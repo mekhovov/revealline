@@ -306,7 +306,7 @@ test('real optional pressure warning, commit and cooldown render distinct cues f
     drawEnemyPressure(s.ctx, view, theme.palette, { screenScale: 294 / 1152 });
     assert.deepEqual(
       s.calls.filter((c) => c.op === 'fillText').map((c) => c.args[0]),
-      [label],
+      [`${label} TRAIL`],
     );
     if (phase === 'warning') {
       const target = run.enemies[0].classic.pressure.target;
@@ -331,7 +331,34 @@ test('actual classic freeze retains the locked warning target and actor-clock co
   assert.deepEqual(classicView(run).enemies[0].pressure, before);
   const s = surface();
   drawEnemyPressure(s.ctx, classicView(run), theme.palette);
-  assert.ok(s.calls.some((c) => c.op === 'fillText' && c.args[0] === 'AIM'));
+  assert.ok(s.calls.some((c) => c.op === 'fillText' && c.args[0] === 'AIM TRAIL'));
+});
+test('pursuit and interception stay text-distinct even in patrol, without changing authority', () => {
+  for (const [mode, tag] of [
+    ['trail-pursuit', 'TRAIL'],
+    ['head-intercept', 'HEAD'],
+  ]) {
+    const level = pressureLevel();
+    Object.assign(level.classic.enemyPressure.actors[0], {
+      mode,
+      leadTicks: mode === 'head-intercept' ? 24 : 0,
+    });
+    const run = createRun(level);
+    const before = authoritativeCheckpoint(run),
+      s = surface();
+    const view = classicView(run);
+    assert.equal(view.enemies[0].pressure.mode, mode);
+    drawEnemyPressure(s.ctx, view, theme.palette, { screenScale: 240 / 1152 });
+    assert.deepEqual(
+      s.calls.filter((c) => c.op === 'fillText').map((c) => c.args[0]),
+      [tag],
+    );
+    assert.deepEqual(authoritativeCheckpoint(run), before);
+    advanceUntil(run, () => classicView(run).enemies[0].pressure.phase === 'warning');
+    const warned = surface();
+    drawEnemyPressure(warned.ctx, classicView(run), theme.palette);
+    assert(warned.calls.some((c) => c.op === 'fillText' && c.args[0] === `AIM ${tag}`));
+  }
 });
 test('legacy actors acquire no pressure display and malformed getters are not executed', () => {
   const level = pressureLevel();

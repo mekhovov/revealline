@@ -3,6 +3,7 @@ import {
   journeyPreset,
   journeyLaneTiming,
   journeySentinelTiming,
+  journeyPressureTiming,
 } from '../content-design/catalogs.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
 import { teamRoleQualified } from '../content-design/team-qualification.mjs';
@@ -17,6 +18,8 @@ const names = {
   'impact-carrier': 'Trail-impact carrier',
   'lane-emitter': 'Lane emitter',
   'relay-sentinel': 'Shield-relay Sentinel',
+  'trail-pursuer': 'Trail pursuer',
+  'heading-interceptor': 'Heading interceptor',
 };
 
 /** Catalog-only controls. Unsaved fields are local; only an explicit validated
@@ -28,7 +31,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
   const context = () => missionEditContext(getSource(), getMission(), getDifficulty());
   const catalog = () => journeyActors(getSource().actorCatalogId);
   const hasHeading = (role) =>
-    ['field-keeper', 'reclaimed-roamer', 'territory-eroder', 'impact-carrier'].includes(role);
+    ['bouncer', 'claimed-rover', 'eroder'].includes(catalog().roles[role]?.type);
   const options = (element, rows) =>
     element.replaceChildren(
       ...rows.map(([value, label]) => {
@@ -95,6 +98,16 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     for (const axis of ['x', 'y']) $(axis).step = frontier ? '1' : '0.5';
     $('description').textContent =
       `${role.domain} · hits ${role.damageTarget} · ${role.retainsField ? 'Retains its field region.' : 'Does not retain field regions.'} ${role.counterplay}`;
+    if (role.pressureRecipe) {
+      const timing = journeyPressureTiming(
+        $('role').value,
+        getDifficulty(),
+        catalog().id,
+        difficultyCatalogId,
+      );
+      $('position-help').textContent =
+        `Start in unclaimed field. Locked target: ${timing.warningTicks / 120}s warning / ${timing.commitTicks / 120}s commitment / ${timing.cooldownTicks / 120}s recovery. Sense radius ${timing.senseRadius} cells; no tracking after target lock. Closure cancels the attack. Body and trail contact remain dangerous.`;
+    }
   }
   function select() {
     cancelRemoval();

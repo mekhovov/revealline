@@ -200,6 +200,37 @@ function editorFixture({ deferredSource = false } = {}) {
   };
 }
 const submit = (f) => f.node('form').onsubmit({ preventDefault() {} });
+test('Studio authors registered pursuit roles, shows exact cooldown and retains undo-safe commands', () => {
+  const f = editorFixture();
+  const next = structuredClone(f.source());
+  next.actorCatalogId = 'journey-actors-v7';
+  next.difficultyCatalogId = 'journey-difficulty-v2';
+  f.update(next);
+  for (const role of ['trail-pursuer', 'heading-interceptor']) {
+    f.node('role').value = role;
+    f.node('role').onchange();
+    assert.equal(f.node('heading-row').hidden, false);
+    assert.equal(f.node('clockwise-row').hidden, true);
+    assert.match(
+      f.node('position-help').textContent,
+      /1s warning \/ 1.5s commitment \/ 2.55s recovery/,
+    );
+    assert.match(f.node('description').textContent, /Retains its field region/);
+  }
+  const history = createDraftHistory(f.source()),
+    original = structuredClone(f.source());
+  f.node('id').value = 'intercept';
+  f.node('x').value = '45.5';
+  f.node('y').value = '15.5';
+  f.node('heading').value = '1,1';
+  submit(f);
+  assert.equal(f.source().missions[0].actors.at(-1).role, 'heading-interceptor');
+  history.replace(f.source());
+  assert.deepEqual(history.undo(), original);
+  f.preset('expert');
+  assert.match(f.node('position-help').textContent, /1.95s recovery/);
+  assert.match(f.node('tier').children[0].textContent, /4.2 cells\/s/);
+});
 test('Studio reads the pinned difficulty catalog for effective movement and attack rests', () => {
   const f = editorFixture();
   const next = structuredClone(f.source());

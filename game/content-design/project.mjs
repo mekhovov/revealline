@@ -13,6 +13,7 @@ import {
   compileActor,
   compileJourneyEncounter,
   journeyPreset,
+  journeyPressureTiming,
   freezeDesign,
 } from './catalogs.mjs';
 
@@ -322,6 +323,9 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const spawn = map.geometry.spawns.find((candidate) => candidate.id === mission.spawnId);
   required(spawn, 'Mission spawn is missing from its map revision.');
   const carriers = mission.actors.filter((actor) => actor.role === 'impact-carrier');
+  const pressureActors = mission.actors
+    .filter((actor) => project.actors.roles[actor.role]?.pressureRecipe)
+    .sort((a, b) => (a.id < b.id ? -1 : 1));
   const sentinel = mission.format === 'MissionDesignV4';
   const directional = mission.format === 'MissionDesignV3' || sentinel;
   const relays = mission.format === 'MissionDesignV2' || directional;
@@ -368,6 +372,22 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
       version: 'classic.v1',
       terrain: map.source.terrain ?? [],
       powerups: mission.bonuses,
+      ...(pressureActors.length
+        ? {
+            enemyPressure: {
+              version: 'enemy-pressure.v1',
+              actors: pressureActors.map((actor) => ({
+                id: actor.id,
+                ...journeyPressureTiming(
+                  actor.role,
+                  difficulty,
+                  project.actors.id,
+                  project.difficulty.id,
+                ),
+              })),
+            },
+          }
+        : {}),
       ...(Object.hasOwn(mission, 'timedBonuses') ? { timedBonuses: mission.timedBonuses } : {}),
       ...(policy.arcadeActions ? { arcadeActions: policy.arcadeActions } : {}),
       ...(carriers.length
