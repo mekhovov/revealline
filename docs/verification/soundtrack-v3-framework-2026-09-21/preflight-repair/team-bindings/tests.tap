@@ -1,0 +1,1185 @@
+TAP version 13
+# Subtest: five approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+ok 1 - five approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+  ---
+  duration_ms: 6.200584
+  ...
+# Subtest: explicit Team roles reuse prepared slots without changing actual types or run state
+ok 2 - explicit Team roles reuse prepared slots without changing actual types or run state
+  ---
+  duration_ms: 3.749667
+  ...
+# Subtest: Team 240px hybrid source detail and CSS body size stay separate from contact radii
+ok 3 - Team 240px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.303959
+  ...
+# Subtest: Team 200px props source detail and CSS body size stay separate from contact radii
+ok 4 - Team 200px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.197625
+  ...
+# Subtest: Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+ok 5 - Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.092083
+  ...
+# Subtest: Team 479px hybrid source detail and CSS body size stay separate from contact radii
+ok 6 - Team 479px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.648292
+  ...
+# Subtest: Team 1152px microtile source detail and CSS body size stay separate from contact radii
+ok 7 - Team 1152px microtile source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.988083
+  ...
+# Subtest: Team 640px props source detail and CSS body size stay separate from contact radii
+ok 8 - Team 640px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.966125
+  ...
+# Subtest: real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+ok 9 - real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+  ---
+  duration_ms: 4.600375
+  ...
+# Subtest: heading follows observed movement even when stale enemy velocity points elsewhere
+ok 10 - heading follows observed movement even when stale enemy velocity points elsewhere
+  ---
+  duration_ms: 1.957792
+  ...
+# Subtest: reduced motion and zero motion scale keep poses static while real movement still advances
+ok 11 - reduced motion and zero motion scale keep poses static while real movement still advances
+  ---
+  duration_ms: 4.231041
+  ...
+# Subtest: downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+ok 12 - downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+  ---
+  duration_ms: 1.16875
+  ...
+# Subtest: prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+ok 13 - prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+  ---
+  duration_ms: 1.860792
+  ...
+# Subtest: absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+ok 14 - absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+  ---
+  duration_ms: 1.65
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues
+ok 15 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues
+  ---
+  duration_ms: 18.815375
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope
+ok 16 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope
+  ---
+  duration_ms: 2.00525
+  ...
+# Subtest: bright required picture stays exact beneath actors while painting and body detail never change gameplay
+ok 17 - bright required picture stays exact beneath actors while painting and body detail never change gameplay
+  ---
+  duration_ms: 28.292833
+  ...
+# Subtest: overlapping actor images cannot cover the final real enemy contact rings
+ok 18 - overlapping actor images cannot cover the final real enemy contact rings
+  ---
+  duration_ms: 2.51375
+  ...
+# Subtest: charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+ok 19 - charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+  ---
+  duration_ms: 1.356333
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art
+ok 20 - exposed and secured strongholds retain functional labels and anchors over stationary body art
+  ---
+  duration_ms: 4.579209
+  ...
+# Subtest: minimum authored Team radius stays exact in the sampled frame and final footprint
+ok 21 - minimum authored Team radius stays exact in the sampled frame and final footprint
+  ---
+  duration_ms: 2.23375
+  ...
+# Subtest: actual rescue of player 1 has a legible static role cue without a second progress gauge
+ok 22 - actual rescue of player 1 has a legible static role cue without a second progress gauge
+  ---
+  duration_ms: 76.192583
+  ...
+# Subtest: actual rescue of player 2 has a legible static role cue without a second progress gauge
+ok 23 - actual rescue of player 2 has a legible static role cue without a second progress gauge
+  ---
+  duration_ms: 53.880166
+  ...
+# Subtest: the versioned historical policy names only the exact reviewed FPV wide scene
+ok 24 - the versioned historical policy names only the exact reviewed FPV wide scene
+  ---
+  duration_ms: 0.91275
+  ...
+# Subtest: valid coverage and multi-core imports bind their complete content to the approved scene without changing it
+ok 25 - valid coverage and multi-core imports bind their complete content to the approved scene without changing it
+  ---
+  duration_ms: 32.832042
+  ...
+# Subtest: historical revision values retain their original type and full pack ownership
+ok 26 - historical revision values retain their original type and full pack ownership
+  ---
+  duration_ms: 73.802125
+  ...
+# Subtest: an exact binding table preserves historical string and integer level revisions without the generic policy
+ok 27 - an exact binding table preserves historical string and integer level revisions without the generic policy
+  ---
+  duration_ms: 23.315875
+  ...
+# Subtest: the policy remains opt-in and malformed policy or historical input cannot introduce an image path
+ok 28 - the policy remains opt-in and malformed policy or historical input cannot introduce an image path
+  ---
+  duration_ms: 12.388625
+  ...
+# Subtest: the starter namespace stays strict even with no exact rows; known custom namespaces cannot borrow generic approval
+ok 29 - the starter namespace stays strict even with no exact rows; known custom namespaces cannot borrow generic approval
+  ---
+  duration_ms: 27.844875
+  ...
+# Subtest: missing, substituted, source-quality or cropped required scenery refuses before any original read
+ok 30 - missing, substituted, source-quality or cropped required scenery refuses before any original read
+  ---
+  duration_ms: 32.133375
+  ...
+# Subtest: generic read, original hash and decode errors never become procedural and explicit Retry retains its captured row
+ok 31 - generic read, original hash and decode errors never become procedural and explicit Retry retains its captured row
+  ---
+  duration_ms: 55.789959
+  ...
+# Subtest: a historical policy and authored pack are copied before callbacks can change their association
+ok 32 - a historical policy and authored pack are copied before callbacks can change their association
+  ---
+  duration_ms: 11.575
+  ...
+# Subtest: generic Cancel and Retry release a late decoded image once without changing the newer accepted image
+ok 33 - generic Cancel and Retry release a late decoded image once without changing the newer accepted image
+  ---
+  duration_ms: 17.418209
+  ...
+# Subtest: failed generic replacement and snapshot drift preserve the old image and require a deliberate new attempt
+ok 34 - failed generic replacement and snapshot drift preserve the old image and require a deliberate new attempt
+  ---
+  duration_ms: 18.058792
+  ...
+# Subtest: the production host lazily supplies exact generic Team originals and Retry performs no second read
+ok 35 - the production host lazily supplies exact generic Team originals and Retry performs no second read
+  ---
+  duration_ms: 268.802167
+  ...
+# Subtest: production corrupt response rejects required art and explicit Retry recovers
+ok 36 - production corrupt response rejects required art and explicit Retry recovers
+  ---
+  duration_ms: 99.02225
+  ...
+# Subtest: production truncated response rejects required art and explicit Retry recovers
+ok 37 - production truncated response rejects required art and explicit Retry recovers
+  ---
+  duration_ms: 86.641584
+  ...
+# Subtest: production redirected response rejects required art and explicit Retry recovers
+ok 38 - production redirected response rejects required art and explicit Retry recovers
+  ---
+  duration_ms: 74.467542
+  ...
+# Subtest: cancelling a held production fetch retires late bytes and a new deliberate Retry owns its image
+ok 39 - cancelling a held production fetch retires late bytes and a new deliberate Retry owns its image
+  ---
+  duration_ms: 76.496958
+  ...
+# Subtest: a real host snapshot replacement rejects its old pending picture instead of adopting stale release bytes
+ok 40 - a real host snapshot replacement rejects its old pending picture instead of adopting stale release bytes
+  ---
+  duration_ms: 141.473083
+  ...
+# Subtest: the production reader refuses unsupported slots without issuing a picture request
+ok 41 - the production reader refuses unsupported slots without issuing a picture request
+  ---
+  duration_ms: 63.266167
+  ...
+# Subtest: registered starter: retained local artwork uses its own pixels with the existing shared snapshot
+ok 42 - registered starter: retained local artwork uses its own pixels with the existing shared snapshot
+  ---
+  duration_ms: 29.510875
+  ...
+# Subtest: historical import: retained local artwork uses its own pixels with the existing shared snapshot
+ok 43 - historical import: retained local artwork uses its own pixels with the existing shared snapshot
+  ---
+  duration_ms: 12.330542
+  ...
+# Subtest: the next retained level resolves its own picture with the same source receipt
+ok 44 - the next retained level resolves its own picture with the same source receipt
+  ---
+  duration_ms: 16.209667
+  ...
+# Subtest: same gameplay and presentation IDs cannot replace accepted pixels on Retry
+ok 45 - same gameplay and presentation IDs cannot replace accepted pixels on Retry
+  ---
+  duration_ms: 23.830916
+  ...
+# Subtest: same gameplay and presentation IDs cannot replace accepted metadata on Retry
+ok 46 - same gameplay and presentation IDs cannot replace accepted metadata on Retry
+  ---
+  duration_ms: 14.186375
+  ...
+# Subtest: an explicit new attempt can use changed local pixels without changing gameplay identity
+ok 47 - an explicit new attempt can use changed local pixels without changing gameplay identity
+  ---
+  duration_ms: 24.726291
+  ...
+# Subtest: request gameplay must be exactly the opaque owner pack, including other levels
+ok 48 - request gameplay must be exactly the opaque owner pack, including other levels
+  ---
+  duration_ms: 5.745417
+  ...
+# Subtest: reserved starter namespace rejects changed selected level rather than falling through to generic art
+ok 49 - reserved starter namespace rejects changed selected level rather than falling through to generic art
+  ---
+  duration_ms: 5.508875
+  ...
+# Subtest: reserved starter namespace rejects changed other level rather than falling through to generic art
+ok 50 - reserved starter namespace rejects changed other level rather than falling through to generic art
+  ---
+  duration_ms: 5.488417
+  ...
+# Subtest: reserved starter namespace rejects changed pack revision rather than falling through to generic art
+ok 51 - reserved starter namespace rejects changed pack revision rather than falling through to generic art
+  ---
+  duration_ms: 5.738042
+  ...
+# Subtest: an additional registered namespace uses its code-owned full-pack identity
+ok 52 - an additional registered namespace uses its code-owned full-pack identity
+  ---
+  duration_ms: 10.919083
+  ...
+# Subtest: nonregistered imports require an explicit compatible generic policy
+ok 53 - nonregistered imports require an explicit compatible generic policy
+  ---
+  duration_ms: 6.127792
+  ...
+# Subtest: registered exact content can use local art without requiring the generic policy
+ok 54 - registered exact content can use local art without requiring the generic policy
+  ---
+  duration_ms: 6.910208
+  ...
+# Subtest: local receipt must match the prepared theme ID
+ok 55 - local receipt must match the prepared theme ID
+  ---
+  duration_ms: 4.6485
+  ...
+# Subtest: local receipt must match the prepared theme revision
+ok 56 - local receipt must match the prepared theme revision
+  ---
+  duration_ms: 5.50475
+  ...
+# Subtest: local receipt must match the prepared collection
+ok 57 - local receipt must match the prepared collection
+  ---
+  duration_ms: 9.31625
+  ...
+# Subtest: matching local and page metadata do not qualify an unregistered collection
+ok 58 - matching local and page metadata do not qualify an unregistered collection
+  ---
+  duration_ms: 5.84225
+  ...
+# Subtest: an exact registered theme/collection association permits the corresponding local receipt
+ok 59 - an exact registered theme/collection association permits the corresponding local receipt
+  ---
+  duration_ms: 6.478125
+  ...
+# Subtest: matching old fpv32 owner and page still cannot bypass the current exact picture authority
+ok 60 - matching old fpv32 owner and page still cannot bypass the current exact picture authority
+  ---
+  duration_ms: 9.003709
+  ...
+# Subtest: typed legacy revisions and 100-character level IDs remain exact local picture identities
+ok 61 - typed legacy revisions and 100-character level IDs remain exact local picture identities
+  ---
+  duration_ms: 8.049833
+  ...
+# Subtest: copied owner cannot supply local source authority
+ok 62 - copied owner cannot supply local source authority
+  ---
+  duration_ms: 3.641625
+  ...
+# Subtest: copied receipt cannot supply local source authority
+ok 63 - copied receipt cannot supply local source authority
+  ---
+  duration_ms: 4.195625
+  ...
+# Subtest: disposed owner cannot supply local source authority
+ok 64 - disposed owner cannot supply local source authority
+  ---
+  duration_ms: 3.345833
+  ...
+# Subtest: retiring the source invalidates future confirmation but leaves decoder cleanup with its lease
+ok 65 - retiring the source invalidates future confirmation but leaves decoder cleanup with its lease
+  ---
+  duration_ms: 8.259042
+  ...
+# Subtest: shared snapshot changes cannot silently re-theme a retained local attempt
+ok 66 - shared snapshot changes cannot silently re-theme a retained local attempt
+  ---
+  duration_ms: 9.009042
+  ...
+# Subtest: late cancelled decode releases only its candidate after an explicit Retry has succeeded
+ok 67 - late cancelled decode releases only its candidate after an explicit Retry has succeeded
+  ---
+  duration_ms: 9.919542
+  ...
+# Subtest: source retirement during decode rejects late adoption and releases the decoded candidate
+ok 68 - source retirement during decode rejects late adoption and releases the decoded candidate
+  ---
+  duration_ms: 6.092541
+  ...
+# Subtest: candidate decode failure preserves the separately accepted result and permits explicit retry
+ok 69 - candidate decode failure preserves the separately accepted result and permits explicit retry
+  ---
+  duration_ms: 15.100667
+  ...
+# Subtest: ready callback cancellation releases local pixels instead of publishing a binding
+ok 70 - ready callback cancellation releases local pixels instead of publishing a binding
+  ---
+  duration_ms: 5.769542
+  ...
+# Subtest: a request without a local owner retains the exact compiled reader and reviewed-asset path
+ok 71 - a request without a local owner retains the exact compiled reader and reviewed-asset path
+  ---
+  duration_ms: 8.663708
+  ...
+# Subtest: equal receipt bytes do not let a second opaque owner replace the retained attempt owner
+ok 72 - equal receipt bytes do not let a second opaque owner replace the retained attempt owner
+  ---
+  duration_ms: 17.016125
+  ...
+# Subtest: the closed two-row authority is immutable and matches the complete authored starter pack
+ok 73 - the closed two-row authority is immutable and matches the complete authored starter pack
+  ---
+  duration_ms: 3.371083
+  ...
+# Subtest: First Connection verifies its real approved PNG and returns a full-frame contain/nearest lease
+ok 74 - First Connection verifies its real approved PNG and returns a full-frame contain/nearest lease
+  ---
+  duration_ms: 20.583917
+  ...
+# Subtest: Relay Yard verifies its real approved PNG and returns a full-frame contain/nearest lease
+ok 75 - Relay Yard verifies its real approved PNG and returns a full-frame contain/nearest lease
+  ---
+  duration_ms: 11.538417
+  ...
+# Subtest: same-ID pack rename has no picture authority before any reader or decoder
+ok 76 - same-ID pack rename has no picture authority before any reader or decoder
+  ---
+  duration_ms: 5.620292
+  ...
+# Subtest: same-ID selected level changed has no picture authority before any reader or decoder
+ok 77 - same-ID selected level changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 4.999083
+  ...
+# Subtest: same-ID other level changed has no picture authority before any reader or decoder
+ok 78 - same-ID other level changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 4.444333
+  ...
+# Subtest: pack revision changed has no picture authority before any reader or decoder
+ok 79 - pack revision changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 5.405333
+  ...
+# Subtest: level revision changed has no picture authority before any reader or decoder
+ok 80 - level revision changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 3.831791
+  ...
+# Subtest: unknown pack ID has no picture authority before any reader or decoder
+ok 81 - unknown pack ID has no picture authority before any reader or decoder
+  ---
+  duration_ms: 5.934083
+  ...
+# Subtest: theme revision cannot substitute a broader FPV asset or procedural fallback
+ok 82 - theme revision cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.029833
+  ...
+# Subtest: older theme revision cannot substitute a broader FPV asset or procedural fallback
+ok 83 - older theme revision cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.971541
+  ...
+# Subtest: different collection cannot substitute a broader FPV asset or procedural fallback
+ok 84 - different collection cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 4.343209
+  ...
+# Subtest: different theme cannot substitute a broader FPV asset or procedural fallback
+ok 85 - different theme cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.593708
+  ...
+# Subtest: asset ID cannot substitute a broader FPV asset or procedural fallback
+ok 86 - asset ID cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.9725
+  ...
+# Subtest: asset revision cannot substitute a broader FPV asset or procedural fallback
+ok 87 - asset revision cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 4.361041
+  ...
+# Subtest: asset hash cannot substitute a broader FPV asset or procedural fallback
+ok 88 - asset hash cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.774917
+  ...
+# Subtest: asset bytes cannot substitute a broader FPV asset or procedural fallback
+ok 89 - asset bytes cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.447958
+  ...
+# Subtest: asset MIME cannot substitute a broader FPV asset or procedural fallback
+ok 90 - asset MIME cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 5.372458
+  ...
+# Subtest: asset dimensions cannot substitute a broader FPV asset or procedural fallback
+ok 91 - asset dimensions cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.860917
+  ...
+# Subtest: unreviewed asset cannot substitute a broader FPV asset or procedural fallback
+ok 92 - unreviewed asset cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 7.24725
+  ...
+# Subtest: cropped frame cannot substitute a broader FPV asset or procedural fallback
+ok 93 - cropped frame cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.497042
+  ...
+# Subtest: missing allowed slot cannot substitute a broader FPV asset or procedural fallback
+ok 94 - missing allowed slot cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.422125
+  ...
+# Subtest: a same-length changed original is rejected before decode and never becomes procedural
+ok 95 - a same-length changed original is rejected before decode and never becomes procedural
+  ---
+  duration_ms: 4.381208
+  ...
+# Subtest: initial exact Relay Yard preparation exposes Cancel, then Ready and only explicit Start draws the accepted original
+ok 96 - initial exact Relay Yard preparation exposes Cancel, then Ready and only explicit Start draws the accepted original
+  ---
+  duration_ms: 144.298708
+  ...
+# Subtest: actual arena selection prepares Relay Yard independently and releases the unadopted First Connection picture once
+ok 97 - actual arena selection prepares Relay Yard independently and releases the unadopted First Connection picture once
+  ---
+  duration_ms: 89.184667
+  ...
+# Subtest: Back cancels the initial actual picture read; late bytes cannot ready the arena and explicit Retry retains the exact identity
+ok 98 - Back cancels the initial actual picture read; late bytes cannot ready the arena and explicit Retry retains the exact identity
+  ---
+  duration_ms: 79.406209
+  ...
+# Subtest: Cancel during decode releases only that image; its late decode cannot replace or release a newer Retry
+ok 99 - Cancel during decode releases only that image; its late decode cannot replace or release a newer Retry
+  ---
+  duration_ms: 79.956875
+  ...
+# Subtest: a new actual arena choice supersedes a held old read without adopting or focusing from its late completion
+ok 100 - a new actual arena choice supersedes a held old read without adopting or focusing from its late completion
+  ---
+  duration_ms: 75.562666
+  ...
+# Subtest: blur retires preparation and cannot revive Start or focus after returning
+ok 101 - blur retires preparation and cannot revive Start or focus after returning
+  ---
+  duration_ms: 91.043291
+  ...
+# Subtest: hidden retires preparation and cannot revive Start or focus after returning
+ok 102 - hidden retires preparation and cannot revive Start or focus after returning
+  ---
+  duration_ms: 104.101708
+  ...
+# Subtest: pagehide retires preparation and cannot revive Start or focus after returning
+ok 103 - pagehide retires preparation and cannot revive Start or focus after returning
+  ---
+  duration_ms: 97.549084
+  ...
+# Subtest: deliberate keyboard traversal away from pending Cancel keeps its chosen mode link when Ready
+ok 104 - deliberate keyboard traversal away from pending Cancel keeps its chosen mode link when Ready
+  ---
+  duration_ms: 44.703167
+  ...
+# Subtest: fresh pointer intent without a focus change vetoes the pending Ready focus handoff
+ok 105 - fresh pointer intent without a focus change vetoes the pending Ready focus handoff
+  ---
+  duration_ms: 34.855833
+  ...
+# Subtest: fresh keyboard intent without a focus change vetoes the pending Ready focus handoff
+ok 106 - fresh keyboard intent without a focus change vetoes the pending Ready focus handoff
+  ---
+  duration_ms: 34.304167
+  ...
+# Subtest: required decode failure exposes Retry with no procedural fallback or automatic start
+ok 107 - required decode failure exposes Retry with no procedural fallback or automatic start
+  ---
+  duration_ms: 72.877292
+  ...
+# Subtest: confirmed Retry retains the immutable authored arena and exact accepted picture after live enemy mutation
+ok 108 - confirmed Retry retains the immutable authored arena and exact accepted picture after live enemy mutation
+  ---
+  duration_ms: 760.187291
+  ...
+# Subtest: changed accepted asset authority refuses Retry before replacing the paused run or image
+ok 109 - changed accepted asset authority refuses Retry before replacing the paused run or image
+  ---
+  duration_ms: 1099.887708
+  ...
+# Subtest: changed starter imports leave the ready arena intact; renamed historical imports receive the approved generic picture
+ok 110 - changed starter imports leave the ready arena intact; renamed historical imports receive the approved generic picture
+  ---
+  duration_ms: 78.677875
+  ...
+# Subtest: BFCache suspension keeps accepted artwork and shared preferences; terminal cleanup releases it exactly once
+ok 111 - BFCache suspension keeps accepted artwork and shared preferences; terminal cleanup releases it exactly once
+  ---
+  duration_ms: 1115.722209
+  ...
+# Subtest: paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes
+ok 112 - paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes
+  ---
+  duration_ms: 719.925
+  ...
+# Subtest: picture waiting and checked mode departure have separate owners with reachable Cancel and fixed links
+ok 113 - picture waiting and checked mode departure have separate owners with reachable Cancel and fixed links
+  ---
+  duration_ms: 27.300917
+  ...
+# Subtest: terminal pagehide during decode releases candidate resources and never focuses or adopts late completion
+ok 114 - terminal pagehide during decode releases candidate resources and never focuses or adopts late completion
+  ---
+  duration_ms: 30.676208
+  ...
+# Subtest: failed picture → Retry → pending Cancel is visible at 844×390 without starting a flight
+ok 115 - failed picture → Retry → pending Cancel is visible at 844×390 without starting a flight
+  ---
+  duration_ms: 120.375333
+  ...
+# Subtest: failed picture → Retry → pending Cancel is visible at 390×844 without starting a flight
+ok 116 - failed picture → Retry → pending Cancel is visible at 390×844 without starting a flight
+  ---
+  duration_ms: 66.672125
+  ...
+# Subtest: visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry
+ok 117 - visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry
+  ---
+  duration_ms: 36.238708
+  ...
+# Subtest: a failed picture can be replaced by a different arena through the real selector
+ok 118 - a failed picture can be replaced by a different arena through the real selector
+  ---
+  duration_ms: 70.376833
+  ...
+# Subtest: held artwork settling to ready behind Settings cannot focus or scroll recovery actions
+ok 119 - held artwork settling to ready behind Settings cannot focus or scroll recovery actions
+  ---
+  duration_ms: 44.361083
+  ...
+# Subtest: held artwork settling to error behind Settings cannot focus or scroll recovery actions
+ok 120 - held artwork settling to error behind Settings cannot focus or scroll recovery actions
+  ---
+  duration_ms: 38.557208
+  ...
+# Subtest: direct Retry reveal respects newer focus-then-body inside its focus callback
+ok 121 - direct Retry reveal respects newer focus-then-body inside its focus callback
+  ---
+  duration_ms: 36.312667
+  ...
+# Subtest: direct Retry reveal respects newer settings inside its focus callback
+ok 122 - direct Retry reveal respects newer settings inside its focus callback
+  ---
+  duration_ms: 35.852792
+  ...
+# Subtest: direct Retry reveal respects newer blur-return inside its focus callback
+ok 123 - direct Retry reveal respects newer blur-return inside its focus callback
+  ---
+  duration_ms: 40.152459
+  ...
+# Subtest: direct Retry reveal respects newer hidden-return inside its focus callback
+ok 124 - direct Retry reveal respects newer hidden-return inside its focus callback
+  ---
+  duration_ms: 36.719
+  ...
+# Subtest: direct Retry reveal respects newer pagehide inside its focus callback
+ok 125 - direct Retry reveal respects newer pagehide inside its focus callback
+  ---
+  duration_ms: 37.22775
+  ...
+# Subtest: direct Retry reveal respects newer pointer-intent inside its focus callback
+ok 126 - direct Retry reveal respects newer pointer-intent inside its focus callback
+  ---
+  duration_ms: 46.193208
+  ...
+# Subtest: direct Retry reveal respects newer key-intent inside its focus callback
+ok 127 - direct Retry reveal respects newer key-intent inside its focus callback
+  ---
+  duration_ms: 40.560208
+  ...
+# Subtest: same-scope arena replacement during Retry geometry retires the old direct handoff
+ok 128 - same-scope arena replacement during Retry geometry retires the old direct handoff
+  ---
+  duration_ms: 57.511666
+  ...
+# Subtest: a pending reveal exception cannot prevent the real picture read or later recovery
+ok 129 - a pending reveal exception cannot prevent the real picture read or later recovery
+  ---
+  duration_ms: 50.340209
+  ...
+# Subtest: a completion reveal exception leaves explicit Retry usable
+ok 130 - a completion reveal exception leaves explicit Retry usable
+  ---
+  duration_ms: 51.998458
+  ...
+# Subtest: newer focus during pending Cancel remains authoritative even after returning to BODY
+ok 131 - newer focus during pending Cancel remains authoritative even after returning to BODY
+  ---
+  duration_ms: 37.813833
+  ...
+# Subtest: a fresh Retry retires all temporary focus observers after either terminal outcome
+ok 132 - a fresh Retry retires all temporary focus observers after either terminal outcome
+  ---
+  duration_ms: 63.914792
+  ...
+# Subtest: first-connection: explicit Retry recovers a failed release presentation without replacing selection or automatically starting
+ok 133 - first-connection: explicit Retry recovers a failed release presentation without replacing selection or automatically starting
+  ---
+  duration_ms: 168.1625
+  ...
+# Subtest: relay-yard: explicit Retry recovers a failed release presentation without replacing selection or automatically starting
+ok 134 - relay-yard: explicit Retry recovers a failed release presentation without replacing selection or automatically starting
+  ---
+  duration_ms: 99.811833
+  ...
+# Subtest: cancelling a held presentation Retry fences late readiness; a fresh Retry prepares the same arena without automatic Start
+ok 135 - cancelling a held presentation Retry fences late readiness; a fresh Retry prepares the same arena without automatic Start
+  ---
+  duration_ms: 77.7515
+  ...
+# Subtest: another failed bootstrap Retry remains actionable and a later explicit Retry recovers without a background retry loop
+ok 136 - another failed bootstrap Retry remains actionable and a later explicit Retry recovers without a background retry loop
+  ---
+  duration_ms: 79.9275
+  ...
+# Subtest: recovered presentation updates automatic menu appearance while unsupported Team artwork stays blocked
+ok 137 - recovered presentation updates automatic menu appearance while unsupported Team artwork stays blocked
+  ---
+  duration_ms: 50.937666
+  ...
+# Subtest: format limits match the bounded transfer contract
+ok 138 - format limits match the bounded transfer contract
+  ---
+  duration_ms: 0.761958
+  ...
+# Subtest: two-level import validates every picture sequentially, exposes frozen identity, and exports original bytes
+ok 139 - two-level import validates every picture sequentially, exposes frozen identity, and exports original bytes
+  ---
+  duration_ms: 16.903459
+  ...
+# Subtest: one source picture may be shared by two levels without duplicate decoding or payload
+ok 140 - one source picture may be shared by two levels without duplicate decoding or payload
+  ---
+  duration_ms: 3.221167
+  ...
+# Subtest: historical level IDs and revision types survive the presentation wrapper unchanged
+ok 141 - historical level IDs and revision types survive the presentation wrapper unchanged
+  ---
+  duration_ms: 5.291042
+  ...
+# Subtest: rejects unknown envelope format without retaining a decoded image
+ok 142 - rejects unknown envelope format without retaining a decoded image
+  ---
+  duration_ms: 0.587333
+  ...
+# Subtest: rejects unknown top-level field without retaining a decoded image
+ok 143 - rejects unknown top-level field without retaining a decoded image
+  ---
+  duration_ms: 0.455584
+  ...
+# Subtest: rejects extra gameplay art field without retaining a decoded image
+ok 144 - rejects extra gameplay art field without retaining a decoded image
+  ---
+  duration_ms: 1.102209
+  ...
+# Subtest: rejects wrong canonical pack hash without retaining a decoded image
+ok 145 - rejects wrong canonical pack hash without retaining a decoded image
+  ---
+  duration_ms: 3.005875
+  ...
+# Subtest: rejects wrong canonical level hash without retaining a decoded image
+ok 146 - rejects wrong canonical level hash without retaining a decoded image
+  ---
+  duration_ms: 2.610209
+  ...
+# Subtest: rejects string/numeric mapping revision alias without retaining a decoded image
+ok 147 - rejects string/numeric mapping revision alias without retaining a decoded image
+  ---
+  duration_ms: 1.525292
+  ...
+# Subtest: rejects missing level mapping without retaining a decoded image
+ok 148 - rejects missing level mapping without retaining a decoded image
+  ---
+  duration_ms: 1.514542
+  ...
+# Subtest: rejects duplicate level mapping without retaining a decoded image
+ok 149 - rejects duplicate level mapping without retaining a decoded image
+  ---
+  duration_ms: 2.115
+  ...
+# Subtest: rejects orphan level mapping without retaining a decoded image
+ok 150 - rejects orphan level mapping without retaining a decoded image
+  ---
+  duration_ms: 2.086583
+  ...
+# Subtest: rejects dangling picture mapping without retaining a decoded image
+ok 151 - rejects dangling picture mapping without retaining a decoded image
+  ---
+  duration_ms: 1.408334
+  ...
+# Subtest: rejects missing referenced asset without retaining a decoded image
+ok 152 - rejects missing referenced asset without retaining a decoded image
+  ---
+  duration_ms: 1.578875
+  ...
+# Subtest: rejects duplicate asset declaration without retaining a decoded image
+ok 153 - rejects duplicate asset declaration without retaining a decoded image
+  ---
+  duration_ms: 1.600541
+  ...
+# Subtest: rejects unsorted asset declarations without retaining a decoded image
+ok 154 - rejects unsorted asset declarations without retaining a decoded image
+  ---
+  duration_ms: 2.150041
+  ...
+# Subtest: rejects uploaded approval claim without retaining a decoded image
+ok 155 - rejects uploaded approval claim without retaining a decoded image
+  ---
+  duration_ms: 1.796834
+  ...
+# Subtest: rejects unsupported provenance kind without retaining a decoded image
+ok 156 - rejects unsupported provenance kind without retaining a decoded image
+  ---
+  duration_ms: 1.677292
+  ...
+# Subtest: rejects empty attribution without retaining a decoded image
+ok 157 - rejects empty attribution without retaining a decoded image
+  ---
+  duration_ms: 1.522542
+  ...
+# Subtest: rejects overlong attribution without retaining a decoded image
+ok 158 - rejects overlong attribution without retaining a decoded image
+  ---
+  duration_ms: 1.716542
+  ...
+# Subtest: rejects overlong provenance source without retaining a decoded image
+ok 159 - rejects overlong provenance source without retaining a decoded image
+  ---
+  duration_ms: 2.1285
+  ...
+# Subtest: rejects invalid presentation identifier without retaining a decoded image
+ok 160 - rejects invalid presentation identifier without retaining a decoded image
+  ---
+  duration_ms: 1.460292
+  ...
+# Subtest: rejects out-of-range presentation revision without retaining a decoded image
+ok 161 - rejects out-of-range presentation revision without retaining a decoded image
+  ---
+  duration_ms: 1.589875
+  ...
+# Subtest: rejects unsafe theme revision without retaining a decoded image
+ok 162 - rejects unsafe theme revision without retaining a decoded image
+  ---
+  duration_ms: 1.541166
+  ...
+# Subtest: rejects unknown theme field without retaining a decoded image
+ok 163 - rejects unknown theme field without retaining a decoded image
+  ---
+  duration_ms: 1.949208
+  ...
+# Subtest: rejects invalid collection reference without retaining a decoded image
+ok 164 - rejects invalid collection reference without retaining a decoded image
+  ---
+  duration_ms: 1.647583
+  ...
+# Subtest: rejects non-production dimensions without retaining a decoded image
+ok 165 - rejects non-production dimensions without retaining a decoded image
+  ---
+  duration_ms: 1.690042
+  ...
+# Subtest: rejects unsupported image MIME without retaining a decoded image
+ok 166 - rejects unsupported image MIME without retaining a decoded image
+  ---
+  duration_ms: 1.291125
+  ...
+# Subtest: rejects over-budget image size without retaining a decoded image
+ok 167 - rejects over-budget image size without retaining a decoded image
+  ---
+  duration_ms: 1.427209
+  ...
+# Subtest: unused but otherwise valid picture assets are refused
+ok 168 - unused but otherwise valid picture assets are refused
+  ---
+  duration_ms: 6.01
+  ...
+# Subtest: changing only custom pixels changes the source receipt while preserving gameplay identity
+ok 169 - changing only custom pixels changes the source receipt while preserving gameplay identity
+  ---
+  duration_ms: 16.539875
+  ...
+# Subtest: rejects truncated header
+ok 170 - rejects truncated header
+  ---
+  duration_ms: 0.37975
+  ...
+# Subtest: rejects unknown magic
+ok 171 - rejects unknown magic
+  ---
+  duration_ms: 0.172959
+  ...
+# Subtest: rejects truncated body
+ok 172 - rejects truncated body
+  ---
+  duration_ms: 1.469958
+  ...
+# Subtest: rejects reordered bodies
+ok 173 - rejects reordered bodies
+  ---
+  duration_ms: 2.017292
+  ...
+# Subtest: rejects duplicated body
+ok 174 - rejects duplicated body
+  ---
+  duration_ms: 1.577416
+  ...
+# Subtest: rejects trailing payload
+ok 175 - rejects trailing payload
+  ---
+  duration_ms: 1.538375
+  ...
+# Subtest: rejects malformed UTF-8 manifest
+ok 176 - rejects malformed UTF-8 manifest
+  ---
+  duration_ms: 0.256625
+  ...
+# Subtest: rejects corrupted image body
+ok 177 - rejects corrupted image body
+  ---
+  duration_ms: 1.729
+  ...
+# Subtest: declared manifest budget is checked before a missing oversized manifest can be read
+ok 178 - declared manifest budget is checked before a missing oversized manifest can be read
+  ---
+  duration_ms: 0.136959
+  ...
+# Subtest: outer container budget rejects an oversized native Blob without decoding
+ok 179 - outer container budget rejects an oversized native Blob without decoding
+  ---
+  duration_ms: 5.55225
+  ...
+# Subtest: aggregate picture-body budget is independent of the per-image and outer limits
+ok 180 - aggregate picture-body budget is independent of the per-image and outer limits
+  ---
+  duration_ms: 33.55775
+  ...
+# Subtest: header dimensions cannot be authenticated by a matching hash alone
+ok 181 - header dimensions cannot be authenticated by a matching hash alone
+  ---
+  duration_ms: 7.517958
+  ...
+# Subtest: a decoder dimension mismatch releases its returned lease exactly once
+ok 182 - a decoder dimension mismatch releases its returned lease exactly once
+  ---
+  duration_ms: 2.481375
+  ...
+# Subtest: a later decode failure retains no earlier qualification image
+ok 183 - a later decode failure retains no earlier qualification image
+  ---
+  duration_ms: 2.209583
+  ...
+# Subtest: missing decoder or missing decoder ownership handle cannot qualify custom artwork
+ok 184 - missing decoder or missing decoder ownership handle cannot qualify custom artwork
+  ---
+  duration_ms: 3.002292
+  ...
+# Subtest: already cancelled import performs no qualification decode
+ok 185 - already cancelled import performs no qualification decode
+  ---
+  duration_ms: 0.370167
+  ...
+# Subtest: cancellation during a native-like pending decode waits for settlement then releases once
+ok 186 - cancellation during a native-like pending decode waits for settlement then releases once
+  ---
+  duration_ms: 2.553292
+  ...
+# Subtest: cancellation reentry from manifest progress cannot publish an owner
+ok 187 - cancellation reentry from manifest progress cannot publish an owner
+  ---
+  duration_ms: 0.317458
+  ...
+# Subtest: cancellation reentry from checking-picture progress cannot publish an owner
+ok 188 - cancellation reentry from checking-picture progress cannot publish an owner
+  ---
+  duration_ms: 1.541583
+  ...
+# Subtest: cancellation reentry from ready progress cannot publish an owner
+ok 189 - cancellation reentry from ready progress cannot publish an owner
+  ---
+  duration_ms: 2.771334
+  ...
+# Subtest: native Blob methods are used without trusting instance overrides
+ok 190 - native Blob methods are used without trusting instance overrides
+  ---
+  duration_ms: 2.718584
+  ...
+# Subtest: a Blob-shaped object, fabricated owner and copied receipt cannot impersonate native ownership
+ok 191 - a Blob-shaped object, fabricated owner and copied receipt cannot impersonate native ownership
+  ---
+  duration_ms: 2.541959
+  ...
+# Subtest: disposal is idempotent and ends byte/export access without changing immutable metadata
+ok 192 - disposal is idempotent and ends byte/export access without changing immutable metadata
+  ---
+  duration_ms: 2.809125
+  ...
+# Subtest: cancellation reentry from releasing a qualification image prevents later decode and adoption
+ok 193 - cancellation reentry from releasing a qualification image prevents later decode and adoption
+  ---
+  duration_ms: 2.654042
+  ...
+# Subtest: failed decoder cleanup cannot publish an owner or advance to another image
+ok 194 - failed decoder cleanup cannot publish an owner or advance to another image
+  ---
+  duration_ms: 2.130291
+  ...
+# Subtest: primary qualification failure is preserved when decoder release also throws
+ok 195 - primary qualification failure is preserved when decoder release also throws
+  ---
+  duration_ms: 4.302708
+  ...
+# Subtest: exact injected pack/theme/asset and original bytes prepare once; Retry and confirm preserve the same decoded image
+ok 196 - exact injected pack/theme/asset and original bytes prepare once; Retry and confirm preserve the same decoded image
+  ---
+  duration_ms: 14.855375
+  ...
+# Subtest: explicit procedural registration has no picture IO; absent required binding never silently falls back
+ok 197 - explicit procedural registration has no picture IO; absent required binding never silently falls back
+  ---
+  duration_ms: 4.730375
+  ...
+# Subtest: same IDs and revisions do not let changed level or other pack content borrow built-in picture approval
+ok 198 - same IDs and revisions do not let changed level or other pack content borrow built-in picture approval
+  ---
+  duration_ms: 6.188667
+  ...
+# Subtest: old strict game format rejects added image fields; binding tables reject URLs, duplicates and unbounded images
+ok 199 - old strict game format rejects added image fields; binding tables reject URLs, duplicates and unbounded images
+  ---
+  duration_ms: 1.599917
+  ...
+# Subtest: snapshot theme and collection revisions are exact and no unavailable snapshot is silently adopted
+ok 200 - snapshot theme and collection revisions are exact and no unavailable snapshot is silently adopted
+  ---
+  duration_ms: 6.33725
+  ...
+# Subtest: wrong selected asset revision, source-only quality or crop refuses before a reader is called
+ok 201 - wrong selected asset revision, source-only quality or crop refuses before a reader is called
+  ---
+  duration_ms: 5.205417
+  ...
+# Subtest: wrong returned asset, corrupted original or decode failure visibly fails without accepting or falling back
+ok 202 - wrong returned asset, corrupted original or decode failure visibly fails without accepting or falling back
+  ---
+  duration_ms: 7.337959
+  ...
+# Subtest: decoded dimensions must agree and a failed decode result releases its owned image
+ok 203 - decoded dimensions must agree and a failed decode result releases its owned image
+  ---
+  duration_ms: 3.051834
+  ...
+# Subtest: pack and binding metadata are captured before an injected status callback can mutate them
+ok 204 - pack and binding metadata are captured before an injected status callback can mutate them
+  ---
+  duration_ms: 4.5765
+  ...
+# Subtest: Retry cannot switch identity after failed acquisition; a new attempt may select the new snapshot
+ok 205 - Retry cannot switch identity after failed acquisition; a new attempt may select the new snapshot
+  ---
+  duration_ms: 5.880584
+  ...
+# Subtest: Cancel then Retry owns a new pending decode; a late old result only releases its own image
+ok 206 - Cancel then Retry owns a new pending decode; a late old result only releases its own image
+  ---
+  duration_ms: 4.819208
+  ...
+# Subtest: new attempt replacement is atomic and failed replacement preserves the previous decoded lease
+ok 207 - new attempt replacement is atomic and failed replacement preserves the previous decoded lease
+  ---
+  duration_ms: 6.965459
+  ...
+# Subtest: dispose while decoding rejects late completion and releases it exactly once
+ok 208 - dispose while decoding rejects late completion and releases it exactly once
+  ---
+  duration_ms: 4.281167
+  ...
+# Subtest: reentrant status selection cannot let the previous operation adopt or leak a picture
+ok 209 - reentrant status selection cannot let the previous operation adopt or leak a picture
+  ---
+  duration_ms: 5.256416
+  ...
+# Subtest: confirm rejects an interrupted gesture and mutable snapshot drift without reselecting or reading
+ok 210 - confirm rejects an interrupted gesture and mutable snapshot drift without reselecting or reading
+  ---
+  duration_ms: 4.263375
+  ...
+# Subtest: a ready-status cancellation preserves the prior working lease and releases only the new candidate
+ok 211 - a ready-status cancellation preserves the prior working lease and releases only the new candidate
+  ---
+  duration_ms: 4.897208
+  ...
+# Subtest: ready-status selection cannot release the prior picture before the newest candidate validates
+ok 212 - ready-status selection cannot release the prior picture before the newest candidate validates
+  ---
+  duration_ms: 6.841709
+  ...
+# Subtest: a ready-time snapshot reader cannot cancel and then let the candidate adopt
+ok 213 - a ready-time snapshot reader cannot cancel and then let the candidate adopt
+  ---
+  duration_ms: 5.595042
+  ...
+# Subtest: a ready-time snapshot reader cannot dispose and then let the candidate adopt
+ok 214 - a ready-time snapshot reader cannot dispose and then let the candidate adopt
+  ---
+  duration_ms: 7.314125
+  ...
+# Subtest: an initial snapshot callback cannot cancel the request before pending ownership exists and still start reading
+ok 215 - an initial snapshot callback cannot cancel the request before pending ownership exists and still start reading
+  ---
+  duration_ms: 1.742125
+  ...
+# Subtest: confirm rechecks gesture cancellation after its injected snapshot reader returns
+ok 216 - confirm rechecks gesture cancellation after its injected snapshot reader returns
+  ---
+  duration_ms: 6.370583
+  ...
+# Subtest: previous-image cleanup can dispose the resolver without returning a released candidate
+ok 217 - previous-image cleanup can dispose the resolver without returning a released candidate
+  ---
+  duration_ms: 5.096458
+  ...
+# Subtest: a throwing previous-image cleanup does not undo a successfully adopted picture
+ok 218 - a throwing previous-image cleanup does not undo a successfully adopted picture
+  ---
+  duration_ms: 5.040083
+  ...
+# Subtest: matching metadata hashes still require the actual PNG header dimensions
+ok 219 - matching metadata hashes still require the actual PNG header dimensions
+  ---
+  duration_ms: 6.667334
+  ...
+# Subtest: pre-aborted requests and invalid native blob type do not acquire decoded resources
+ok 220 - pre-aborted requests and invalid native blob type do not acquire decoded resources
+  ---
+  duration_ms: 3.42425
+  ...
+# Subtest: First Connection: a real authored win shows the exact full picture without overwriting captured state
+ok 221 - First Connection: a real authored win shows the exact full picture without overwriting captured state
+  ---
+  duration_ms: 76.711084
+  ...
+# Subtest: Relay Yard: a real authored win shows the exact full picture without overwriting captured state
+ok 222 - Relay Yard: a real authored win shows the exact full picture without overwriting captured state
+  ---
+  duration_ms: 35.257
+  ...
+# Subtest: running, paused and lost pictures retain opaque concealment, walls and gameplay cues
+ok 223 - running, paused and lost pictures retain opaque concealment, walls and gameplay cues
+  ---
+  duration_ms: 16.547
+  ...
+# Subtest: won runs without an approved image keep the existing procedural arena
+ok 224 - won runs without an approved image keep the existing procedural arena
+  ---
+  duration_ms: 25.441042
+  ...
+# Subtest: winning cannot bypass lease validation and failed drawing restores borrowed state
+ok 225 - winning cannot bypass lease validation and failed drawing restores borrowed state
+  ---
+  duration_ms: 25.477334
+  ...
+# Subtest: legacy callers retain procedural painting and restoring the page snapshot restores that look
+ok 226 - legacy callers retain procedural painting and restoring the page snapshot restores that look
+  ---
+  duration_ms: 16.444333
+  ...
+# Subtest: the prepared original is drawn once with nearest sampling and only claimed land exposes it
+ok 227 - the prepared original is drawn once with nearest sampling and only claimed land exposes it
+  ---
+  duration_ms: 4.671333
+  ...
+# Subtest: an explicit procedural binding uses the selected palette without pretending an image exists
+ok 228 - an explicit procedural binding uses the selected palette without pretending an image exists
+  ---
+  duration_ms: 1.699959
+  ...
+# Subtest: Team terrain uses shared non-color symbols only on unclaimed ground, including reduced effects
+ok 229 - Team terrain uses shared non-color symbols only on unclaimed ground, including reduced effects
+  ---
+  duration_ms: 26.066291
+  ...
+# Subtest: wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing
+ok 230 - wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing
+  ---
+  duration_ms: 0.77625
+  ...
+# Subtest: snapshot validation is atomic and plain text keeps its existing system-font roles
+ok 231 - snapshot validation is atomic and plain text keeps its existing system-font roles
+  ---
+  duration_ms: 1.63875
+  ...
+# Subtest: existing Team non-trail cues and geometry remain above the picture in reduced paused paint
+ok 232 - existing Team non-trail cues and geometry remain above the picture in reduced paused paint
+  ---
+  duration_ms: 4.3515
+  ...
+# Subtest: motion scale affects only optional pulse while paused repetition and real simulation remain identical
+ok 233 - motion scale affects only optional pulse while paused repetition and real simulation remain identical
+  ---
+  duration_ms: 31.286459
+  ...
+# Subtest: drawing errors restore the borrowed canvas state without closing the supplied image
+ok 234 - drawing errors restore the borrowed canvas state without closing the supplied image
+  ---
+  duration_ms: 2.003083
+  ...
+# Subtest: the existing page lease applies/restores the Team snapshot without overriding a newer owner
+ok 235 - the existing page lease applies/restores the Team snapshot without overriding a newer owner
+  ---
+  duration_ms: 0.611042
+  ...
+1..235
+# tests 235
+# suites 0
+# pass 235
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6441.804333

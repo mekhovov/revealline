@@ -154,6 +154,7 @@ export function createSoundtrackPlayer({
     if (
       context.scene !== 'menu' &&
       defaultChoice &&
+      !library.listening?.recordingMode &&
       published?.allowed() &&
       !failed.has(published.id)
     )

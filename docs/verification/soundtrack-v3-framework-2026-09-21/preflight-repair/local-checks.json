@@ -1,0 +1,206 @@
+{
+  "format": "revealline-pr209-local-checks.v1",
+  "observedHead": "283685e050219af03ed221d8cce3c8e2c46a8077",
+  "node": "v20.19.5",
+  "source": "HEAD plus recorded final working-tree source pins; not immutable hosted qualification",
+  "checks": [
+    {
+      "command": "npm run validate",
+      "exitCode": 0,
+      "path": "local-checks/final-validate.log",
+      "bytes": 510,
+      "sha256": "e1454adb10e2f702a59fc3287c8adcd43527e2c4f06ac236f5d0194946cb9707"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "path": "local-checks/final-lint.log",
+      "bytes": 148,
+      "sha256": "1afb7fb72aac2d56b307891343a19af33cd3de6e4cf99ba40f644cc281ad0e12"
+    },
+    {
+      "command": "npm run format:check",
+      "exitCode": 0,
+      "path": "local-checks/final-format.log",
+      "bytes": 195,
+      "sha256": "bca7ae9db2906b3a73575a66d63d15b12ef782ea685aa5513c50f18b80563fd8"
+    },
+    {
+      "command": "npm run format:native:check",
+      "exitCode": 0,
+      "path": "local-checks/final-format-native.log",
+      "bytes": 254,
+      "sha256": "47de37a8af55c4e805992c3d913b718028fc2a0062d27b54266fdc562e50cac1"
+    },
+    {
+      "command": "node --test scripts/test-soundtrack-distribution.mjs",
+      "exitCode": 0,
+      "path": "local-checks/generator-final.log",
+      "bytes": 1602,
+      "sha256": "e8cbf203ffb333f605bd63dec955ec8e2c681b630f1e00349c565279c398b2d1",
+      "tap": {
+        "tests": 6,
+        "pass": 6,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 1016.628583
+      }
+    },
+    {
+      "command": "node scripts/produce-field-kit-theme.mjs --check",
+      "exitCode": 0,
+      "path": "local-checks/ledger-check.log",
+      "bytes": 245,
+      "sha256": "e205f9547b6da795db31ef02e529c3a633d0ab9c9b22c8d66e46eca2346dd7a9"
+    },
+    {
+      "command": "node --test game/test/presentation-production-history.test.mjs",
+      "exitCode": 0,
+      "path": "local-checks/production-history.log",
+      "bytes": 2679,
+      "sha256": "25db680b5b8765f7390efe6009e9cd29bf5300cab37934d69de26a1885d72fd5",
+      "tap": {
+        "tests": 12,
+        "pass": 12,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 38188.000125
+      }
+    },
+    {
+      "command": "node --test scripts/test-production-*.mjs",
+      "exitCode": 1,
+      "path": "local-checks/production-sources.log",
+      "bytes": 55644,
+      "sha256": "482a76f3be88ca22c5114184bb972b371b2e23b81bf81f71870b20a2948f641d",
+      "tap": {
+        "tests": 70,
+        "pass": 36,
+        "fail": 34,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 2921.823333
+      }
+    },
+    {
+      "command": "node --test scripts/test-production-*.mjs",
+      "exitCode": 1,
+      "path": "local-checks/production-sources-retest.log",
+      "bytes": 55615,
+      "sha256": "a64d7c23b8d1aaa97f6a05c0737e6c6d5a6afd02965f05d92f933bed64c72ac1",
+      "tap": {
+        "tests": 70,
+        "pass": 36,
+        "fail": 34,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 1069.305958
+      }
+    },
+    {
+      "command": "node --test scripts/test-production-*.mjs",
+      "exitCode": 0,
+      "path": "local-checks/production-sources-complete.log",
+      "bytes": 16700,
+      "sha256": "5baa16552d25920e8db99407392419ddde66dc2fe8c219d2d0a23e8891972d5d",
+      "tap": {
+        "tests": 70,
+        "pass": 70,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 1468.272042
+      }
+    }
+  ],
+  "additionalChecks": [
+    {
+      "command": "node --check authoring/motion-lab/app.js",
+      "exitCode": 0
+    },
+    {
+      "check": "writePublishedSoundtrackMetadata(process.cwd())",
+      "outcome": "all3 generated publication files byte-identical;0 approved tracks,albums,archives,publicfiles"
+    }
+  ],
+  "sourcePins": [
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 7405139,
+      "sha256": "860e6e5e2e522e3bb99e3714ebf379d771a9be7b3ac38c6de899cff5d892053a"
+    },
+    {
+      "path": "docs/team-import-artwork.md",
+      "bytes": 8119,
+      "sha256": "3398c0bca19c1796e533e963f4f188215a1d394a36e7c936d57f74478c9e7029"
+    },
+    {
+      "path": "docs/team-picture-bindings.md",
+      "bytes": 5810,
+      "sha256": "fda62b05d7cfbfbbefea5b5a8de76d9b38e2c4c20a60f0ee5ceb099149ac4fce"
+    },
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "bytes": 2643,
+      "sha256": "be6b6eb3ba6e67a197353c0febd1207589f1510a1c15cc0aea5837bedaee4c3d"
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "bytes": 27214,
+      "sha256": "8f0046d3c1190fa21f120a74ab3e95839ece7fed2f628a68d392ec2bf6f12a5d"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 974886,
+      "sha256": "d1e6c09b2d8c43838e5fbe5bd9c2d1bf4aa8698f8f42b3a41c7ed467c3163c47"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "bytes": 3875680,
+      "sha256": "c96589d032fd707e94fe3d2550268a61897a81e69c00275a357a4e3a2aea3fdc"
+    },
+    {
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "bytes": 25402,
+      "sha256": "d498741069e4da4e76383cf36a14ad242f6f725d212ffc1bc6a76663c482698d"
+    },
+    {
+      "path": "game/test/coop-historical-import-picture.test.mjs",
+      "bytes": 16371,
+      "sha256": "42f2fe2b616485346089afb8c4deedc3a0099b486ae58663939b328cd83ecae2"
+    },
+    {
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "bytes": 8897,
+      "sha256": "19c5bfa5ab8904e09a06bf76f03522ee02cbac6757b23e9bb8a7807d64aa911a"
+    },
+    {
+      "path": "game/test/practice-media-v3-host.test.mjs",
+      "bytes": 6724,
+      "sha256": "e05ef397231b1024c5c27accd4e79484d6d399ddb8887490d6cfea8f89f704bc"
+    },
+    {
+      "path": "game/test/presentation-production-history.test.mjs",
+      "bytes": 29227,
+      "sha256": "e07138ad548e1d0b7debf22c311539970918aac3f84b4eab410486158af4a36e"
+    },
+    {
+      "path": "game/test/soundtrack-v3-playback-recovery.test.mjs",
+      "bytes": 5063,
+      "sha256": "c66c0617bfdf6eb826770cba8acb67083150d3c98a2ca2409322f48e1e892951"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 34053,
+      "sha256": "91c268ded6fd212a6ab285a8d7f9443f8a4af582824339031469f4238436e244"
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "bytes": 21933,
+      "sha256": "49de04cfc119339c64b1b413f4bff2b59bf2ecd5b616be2ee7ac1b5d71cc3031"
+    }
+  ],
+  "scope": "Complete requested local checks; sparse fixture failures retained. Hosted exact-commit gates, latest UI integration, version allocation and frozen/offline qualification remain separate."
+}
