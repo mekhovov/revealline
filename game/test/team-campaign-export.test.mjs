@@ -68,7 +68,7 @@ test('campaign export does not upgrade old editions, resurrect archives or grant
 test('Studio requires explicit draft Apply and an explicit campaign choice for Team sequence export', async () => {
   const studio = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
-  assert.match(html, /id="team-journey">Inspect Team Journey greyboxes/);
+  assert.match(html, /id="team-journey">Inspect Team Journey picture candidates/);
   assert.match(html, /id="team-test-campaign"/);
   const inspect = studio.match(
     /\$\('team-journey'\)\.onclick = guarded\(\(\) => \{([\s\S]*?)\n\}\);/,
