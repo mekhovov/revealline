@@ -65,6 +65,7 @@ test('timed schedule CRUD compiles all modes/presets, preserves maps and fixed b
   for (const difficulty of ['gentle', 'standard', 'expert']) {
     const solo = resolve(next, { difficulty });
     assert.deepEqual(solo.level.classic.timedBonuses.schedules, [schedule]);
+    assert.equal(solo.level.classic.timedBonuses.version, 'timed-bonuses.v2');
     assert.deepEqual(resolve(next, { difficulty, mode: 'versus' }).level, solo.level);
     assert.notEqual(resolve(old, { difficulty }).simulationIdentity, solo.simulationIdentity);
     assert.equal(solo.officialProgressEligible, false);

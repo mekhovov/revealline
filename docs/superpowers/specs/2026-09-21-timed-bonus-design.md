@@ -15,6 +15,13 @@ Absence produces exactly the old runtime/state/replay. Older strict readers reje
 the new descriptor rather than reinterpret it. The descriptor itself versions the
 new semantics, as existing optional enemy-pressure and line-impact descriptors do.
 
+Trail-aware successor: new Studio edits use `timed-bonuses.v2`, correcting live
+trail exclusion for actual `{x,y,index}` trail records. The original v1 comparison
+is retained only for exact historical reconstruction. Applying an edit upgrades
+all schedules of that mission's new revision, not a live attempt. Historical
+factory output defaults to v1 until explicit successor selection. See
+[verification](../../verification/journey-timed-trail-v2.md).
+
 Each schedule has required keys: id, kind, anchors[{x,y}], initialDelayTicks,
 announcementTicks, availableTicks, cooldownTicks, maxAppearances, maxCollections.
 Kinds are the four existing contact bonuses. Bounds:1–8 schedules;2–16 distinct

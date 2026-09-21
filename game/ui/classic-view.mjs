@@ -1,4 +1,5 @@
 import { CELL, FIXED_DT } from '../core/registry.mjs';
+import { TIMED_BONUS_VERSIONS } from '../core/timed-bonuses.mjs';
 import { drawPresentedActor, PRESENTATION_INK, PRESENTATION_PLATE } from './actor-presentation.mjs';
 import { drawPresentationImage } from './presentation-draw-image.mjs';
 import { traceContentActor } from '../content-design/actor-marker.mjs';
@@ -156,7 +157,7 @@ export function classicView(run) {
       const clock = own(timedState, 'clock');
       check(integer(clock) && clock <= tick);
       const timedDefinition = own(definition, 'timedBonuses');
-      check(own(timedDefinition, 'version') === 'timed-bonuses.v1');
+      check(TIMED_BONUS_VERSIONS.includes(own(timedDefinition, 'version')));
       const definitions = dense(own(timedDefinition, 'schedules'), 8);
       const schedules = dense(own(timedState, 'schedules'), 8);
       check(definitions.length > 0 && definitions.length === schedules.length);

@@ -1,10 +1,20 @@
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { compileContentProject } from './project.mjs';
-import { TIMED_BONUS_VERSION } from '../core/timed-bonuses.mjs';
+import {
+  TIMED_BONUS_VERSION,
+  TIMED_BONUS_TRAIL_VERSION,
+  TIMED_BONUS_VERSIONS,
+} from '../core/timed-bonuses.mjs';
 
 /** A schedule edit is a candidate revision, never a publication or a live-attempt
  * mutation. The shared compiler validates bounds, anchors and every mode/preset. */
-export function editTimedBonus(source, missionId, input) {
+export function editTimedBonus(
+  source,
+  missionId,
+  input,
+  { version = TIMED_BONUS_TRAIL_VERSION } = {},
+) {
+  required(TIMED_BONUS_VERSIONS.includes(version), 'Unsupported timed bonus edit version.');
   const project = structuredClone(compileContentProject(source).source);
   const command = boundedJSON(input, { maxBytes: 8192, maxNodes: 128, maxDepth: 5 });
   required(
@@ -31,9 +41,13 @@ export function editTimedBonus(source, missionId, input) {
   if (command.action === 'add') schedules.push(command.schedule);
   else if (command.action === 'replace') schedules[index] = command.schedule;
   else schedules.splice(index, 1);
-  if (schedules.length) mission.timedBonuses = { version: TIMED_BONUS_VERSION, schedules };
+  if (schedules.length) mission.timedBonuses = { version, schedules };
   else delete mission.timedBonuses;
-  mission.revision = `timed-${dataIdentity({ previous: mission.revision, command })}`;
+  mission.revision = `timed-${dataIdentity({
+    previous: mission.revision,
+    command,
+    ...(version === TIMED_BONUS_VERSION ? {} : { version }),
+  })}`;
   project.revision = `timed-${dataIdentity(project)}`;
   return structuredClone(compileContentProject(project).source);
 }

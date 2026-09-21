@@ -11,6 +11,7 @@ import {
 import { suspendSession, restoreSession } from '../sessions.mjs';
 import { campaignKey } from '../library.mjs';
 import { CLASSIC_EFFECTS, classicEffectActive } from '../core/classic-state.mjs';
+import { TIMED_BONUS_TRAIL_VERSION } from '../core/timed-bonuses.mjs';
 
 export function timedBonusLevel() {
   return {
@@ -202,14 +203,13 @@ test('expiry wins exact tick; capture alone does not collect an already availabl
   assert.equal(other.lives, 3);
 });
 
-test('occupied, reclaimed, live-trail and unreachable anchors never materialize', () => {
-  for (const arrangement of ['occupied', 'claimed', 'trail', 'sealed']) {
+test('occupied, reclaimed and unreachable anchors never materialize', () => {
+  for (const arrangement of ['occupied', 'claimed', 'sealed']) {
     const level = timedBonusLevel(),
       run = createRun(level);
     for (const anchor of def(level).anchors) {
       const cell = Math.floor(anchor.y) * 72 + Math.floor(anchor.x);
       if (arrangement === 'claimed') run.cells[cell] = CELL.SAFE;
-      if (arrangement === 'trail') run.trail.push(cell);
       if (arrangement === 'occupied')
         run.enemies.push({ ...run.enemies[0], id: String(cell), ...anchor, vx: 0, vy: 0 });
       if (arrangement === 'sealed')
@@ -220,6 +220,144 @@ test('occupied, reclaimed, live-trail and unreachable anchors never materialize'
     assert.equal(schedule(run).appearances, 0, arrangement);
   }
 });
+
+for (const turnPolicy of ['immediate', 'grid-center'])
+  for (const initialDelayTicks of [60, 240])
+    test(`trail-aware edition rejects actual live trail at announce/materialization: ${turnPolicy}/${initialDelayTicks}`, () => {
+      for (const version of ['timed-bonuses.v1', TIMED_BONUS_TRAIL_VERSION]) {
+        const level = timedBonusLevel();
+        level.classic.timedBonuses.version = version;
+        def(level).initialDelayTicks = initialDelayTicks;
+        // Keep the anchors within the geometric travel budget at the later check.
+        def(level).availableTicks = 1200;
+        const options = { seed: 1, classId: 'scout', turnPolicy };
+        const run = createRun(level, options);
+        const recorder = createRecorder(level, options);
+        const events = ticks(run, initialDelayTicks + 120, 'right', recorder);
+        assert.equal(run.classic.livesLost, 0);
+        assert.equal(run.player.cutting, true);
+        assert(run.trail.some((cell) => cell.index === 18 * 72 + 8));
+        if (version === TIMED_BONUS_TRAIL_VERSION) {
+          assert.equal(run.classic.powerups.length, 0);
+          assert.equal(schedule(run).appearances, 0);
+          assert.equal(schedule(run).collections, 0);
+          assert.equal(schedule(run).phase, 'cooldown');
+          assert.equal(
+            events.some((e) => e.type === 'bonus.appeared'),
+            false,
+          );
+          assert.equal(
+            events.some((e) => e.type === 'bonus.announced'),
+            initialDelayTicks === 60,
+          );
+          assert.equal(
+            events.some((e) => e.type === 'bonus.cancelled'),
+            initialDelayTicks === 60,
+          );
+        } else {
+          assert.equal(run.classic.powerups.length, 1);
+          assert.equal(schedule(run).phase, 'available');
+          assert.equal(schedule(run).appearances, 1);
+          const item = run.classic.powerups[0];
+          assert(
+            run.trail.some((cell) => cell.index === Math.floor(item.y) * 72 + Math.floor(item.x)),
+          );
+        }
+        assert.equal(verifyReplay(exportReplay(recorder, run)).match, true);
+      }
+    });
+
+test('trail-aware schedule suspension retains its edition and next cancellation', async () => {
+  const level = timedBonusLevel();
+  level.classic.timedBonuses.version = TIMED_BONUS_TRAIL_VERSION;
+  def(level).initialDelayTicks = 60;
+  const options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
+  const run = createRun(level, options),
+    recorder = createRecorder(level, options);
+  ticks(run, 140, 'right', recorder);
+  assert.equal(schedule(run).phase, 'announce');
+  const campaign = {
+    version: 'xonix-campaign.v1',
+    id: 'trail-aware-save',
+    revision: '1',
+    levels: [level],
+    classRecipes: CLASSES,
+  };
+  const key = campaignKey(campaign);
+  const saved = suspendSession({
+    run,
+    recorder,
+    campaignKey: key,
+    themeId: 'fpv',
+    bodyId: 'quad',
+    runId: 'trail-aware-save',
+    continuation: { direction: 'right' },
+  });
+  const restored = await restoreSession(saved, { campaign, campaignKey: key });
+  ticks(run, 40, 'right', recorder);
+  ticks(restored.run, 40, 'right', restored.recorder);
+  assert.equal(schedule(restored.run).phase, 'cooldown');
+  assert.equal(restored.run.level.classic.timedBonuses.version, TIMED_BONUS_TRAIL_VERSION);
+  assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(restored.run));
+  const old = structuredClone(campaign);
+  old.levels[0].classic.timedBonuses.version = 'timed-bonuses.v1';
+  await assert.rejects(restoreSession(saved, { campaign: old, campaignKey: key }));
+});
+
+for (const [turnPolicy, hashes] of [
+  ['immediate', ['a21d3ce613af0e50', 'ad96072688a96402', 'dce6724944d3e21f']],
+  ['grid-center', ['97396cc047e11be6', '99cbfaeeaef96bc4', '600936e84c7a13c0']],
+])
+  for (const [caseIndex, delay, segments] of [
+    [0, 60, [['right', 180]]],
+    [1, 180, [['right', 180]]],
+    [
+      2,
+      420,
+      [
+        ['right', 150],
+        ['up', 90],
+        ['left', 90],
+        ['down', 60],
+        ['left', 30],
+      ],
+    ],
+  ])
+    test(`historical live-trail checkpoint preserved; v2 rejects opportunity: ${turnPolicy}/${caseIndex}`, () => {
+      for (const version of ['timed-bonuses.v1', TIMED_BONUS_TRAIL_VERSION]) {
+        const level = timedBonusLevel();
+        level.classic.timedBonuses.version = version;
+        def(level).initialDelayTicks = delay;
+        if (caseIndex === 2) {
+          level.rules.moveSpeed = 8;
+          def(level).anchors = [
+            { x: 7.5, y: 13.5 },
+            { x: 7.5, y: 14.5 },
+          ];
+        }
+        const options = { seed: 1, classId: 'scout', turnPolicy };
+        const run = createRun(level, options),
+          recorder = createRecorder(level, options);
+        for (const [direction, count] of segments) ticks(run, count, direction, recorder);
+        assert.equal(run.classic.livesLost, 0);
+        assert.equal(run.player.cutting, true);
+        if (caseIndex === 2)
+          assert(
+            def(level).anchors.every(
+              (a) => !run.trail.some((c) => c.index === Math.floor(a.y) * 72 + Math.floor(a.x)),
+            ),
+          );
+        if (version === 'timed-bonuses.v1') {
+          assert.equal(authoritativeCheckpoint(run).hash, hashes[caseIndex]);
+          assert.equal(schedule(run).phase, caseIndex === 0 ? 'available' : 'announce');
+        } else {
+          assert.equal(schedule(run).phase, 'cooldown');
+          assert.equal(schedule(run).appearances, 0);
+          assert.equal(run.classic.powerups.length, 0);
+        }
+        assert.equal(verifyReplay(exportReplay(recorder, run)).match, true);
+      }
+    });
 
 test('announcement rechecks eligibility without consuming appearances; previous anchor is never reused', () => {
   const run = createRun(timedBonusLevel());

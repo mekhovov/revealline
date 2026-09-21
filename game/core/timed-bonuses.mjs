@@ -2,6 +2,8 @@ import { exactKeys, required, stableId } from '../data-json.mjs';
 import { CELL, FIXED_DT } from './registry.mjs';
 
 export const TIMED_BONUS_VERSION = 'timed-bonuses.v1';
+export const TIMED_BONUS_TRAIL_VERSION = 'timed-bonuses.v2';
+export const TIMED_BONUS_VERSIONS = Object.freeze([TIMED_BONUS_VERSION, TIMED_BONUS_TRAIL_VERSION]);
 export const TIMED_BONUS_KINDS = Object.freeze([
   'extra-life',
   'player-speed',
@@ -27,7 +29,7 @@ export function validateTimedBonuses(level, { identity, walls, terrain, powerupC
   if (!Object.hasOwn(level.classic, 'timedBonuses')) return;
   const definition = level.classic.timedBonuses;
   exactKeys(definition, ['version', 'schedules'], 'timed bonuses');
-  required(definition.version === TIMED_BONUS_VERSION, 'Unsupported timed bonus version.');
+  required(TIMED_BONUS_VERSIONS.includes(definition.version), 'Unsupported timed bonus version.');
   required(
     Array.isArray(definition.schedules) &&
       definition.schedules.length >= 1 &&
@@ -116,7 +118,13 @@ function offset(seed, id, length) {
 /** Geometry-only opportunity check, never a prediction of moving enemy safety. */
 function eligible(state, definition, anchor) {
   const index = indexOf(anchor, state.width);
-  const trail = new Set(state.trail);
+  // V1 retains its historical comparison for exact old replay reconstruction.
+  // Actual Solo trail entries are {x,y,index}, not numeric cell indices.
+  const trail = new Set(
+    state.level.classic.timedBonuses.version === TIMED_BONUS_TRAIL_VERSION
+      ? state.trail.map((cell) => cell.index)
+      : state.trail,
+  );
   if (state.cells[index] !== CELL.FIELD || state.classic.terrain[index] === 2 || trail.has(index))
     return false;
   if (
