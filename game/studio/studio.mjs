@@ -643,7 +643,7 @@ $('phase').onclick = guarded(() => {
 });
 $('livewire').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createLivewireCandidates(), null, 2);
+  $('source').value = JSON.stringify(createLivewireCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

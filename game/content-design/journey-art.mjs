@@ -5,6 +5,7 @@ import { NEON_ART_CANDIDATES } from './neon-art.mjs';
 import { ROVER_ART_CANDIDATES } from './rover-art.mjs';
 import { FRACTURE_ART_CANDIDATES } from './fracture-art.mjs';
 import { PHASE_ART_CANDIDATES } from './phase-art.mjs';
+import { LIVEWIRE_ART_CANDIDATES } from './livewire-art.mjs';
 import {
   SIGNAL_ILLUSTRATED_ART_CANDIDATES,
   SIGNAL_PIXEL_ART_CANDIDATES,
@@ -23,4 +24,5 @@ export const JOURNEY_ART_CANDIDATES = freezeDesign([
   ...ROVER_ART_CANDIDATES,
   ...FRACTURE_ART_CANDIDATES,
   ...PHASE_ART_CANDIDATES,
+  ...LIVEWIRE_ART_CANDIDATES,
 ]);
