@@ -1299,3 +1299,8 @@ When focused Cancel load is hidden, restore an enabled transport action only whi
 ### Studio revision transfer
 
 Preserve historical slot bindings as well as original media bytes during import. Keep complete theme and collection families, collision-safe IDs, contiguous mapped revision batches, and one distinguishable menu choice per family. Never rewrite local history or silently drop revisions at capacity. Follow the transfer prompt in `docs/asset-studio.md`; verify two independent replacements through actual import, earlier binding, Save, Reload and exported bytes. Separate inherited production-reproduction failures from transfer regressions with pinned baseline comparison; do not weaken production gates. See `docs/verification/p04-studio-transfer-integration/README.md`.
+
+
+### Scoped production review successors
+
+When recipe inputs drift, generate and pin the actual source-stage ledger before adopting a new reviewed revision. Review the changed sources against retained native/test evidence; never transfer a prior approval by replacing its hash alone. Preserve every historical record and original payload, rebind Team's current exact theme identity to the generated successor, and keep earlier import policy separate. Verify pinned source-stage reconstruction, exact producer reproduction and affected real host/Studio tests. See `docs/verification/presentation-followup-review/README.md`; whole-source, final native and public gates remain mandatory.

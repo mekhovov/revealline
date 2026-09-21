@@ -74,3 +74,6 @@ Supporting help correction: include the music-recipe review linked by the Studio
 production guide in the runtime build. The recursive local-link packaging test
 passes on Node20/22; lint and format pass. This is a packaged documentation fix,
 not acceptance of the complete P16 workflow phase.
+
+
+Follow-up adoption: the measured fpv39 described above is preserved. The new scoped screens/effects review appends source-stage40 and reviewed41; current Team bindings now name exact41, with unchanged approved pictures and retained38 policy. See `verification/presentation-followup-review/README.md` for full ledger/runtime hashes, original-byte proof and passing production/host cohorts. No public-release acceptance is implied.

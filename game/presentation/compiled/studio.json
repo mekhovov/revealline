@@ -33101,6 +33101,788 @@
       },
       "recipe": null,
       "revision": 1
+    },
+    {
+      "description": "missions backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.missions.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.missions.background.field-kit", "revision": 17 },
+        "prompt": "Create one original FPV Field Kit missions backdrop for slot screen.missions.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 18
+    },
+    {
+      "description": "hangar backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.hangar.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.hangar.background.field-kit", "revision": 17 },
+        "prompt": "Create one original FPV Field Kit hangar backdrop for slot screen.hangar.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 18
+    },
+    {
+      "description": "results backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.results.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.results.background.field-kit", "revision": 17 },
+        "prompt": "Create one original FPV Field Kit results backdrop for slot screen.results.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 18
+    },
+    {
+      "description": "collection backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.collection.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.collection.background.field-kit", "revision": 17 },
+        "prompt": "Create one original FPV Field Kit collection backdrop for slot screen.collection.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 18
+    },
+    {
+      "description": "settings backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.settings.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.settings.background.field-kit", "revision": 17 },
+        "prompt": "Create one original FPV Field Kit settings backdrop for slot screen.settings.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 18
+    },
+    {
+      "description": "couch backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.couch.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.couch.background.field-kit", "revision": 17 },
+        "prompt": "Create one original FPV Field Kit couch backdrop for slot screen.couch.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 18
+    },
+    {
+      "description": "studio backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.studio.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.studio.background.field-kit", "revision": 17 },
+        "prompt": "Create one original FPV Field Kit studio backdrop for slot screen.studio.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 18
+    },
+    {
+      "description": "active trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.active.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.active.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit active trail for slot trail.active. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 9
+    },
+    {
+      "description": "secured trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.secured.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.secured.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit secured trail for slot trail.secured. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 9
+    },
+    {
+      "description": "head trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.head.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.head.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit head trail for slot trail.head. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 9
+    },
+    {
+      "description": "Capture pulse: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.capture.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.capture.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit capture pulse for slot effect.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.capture.v1" },
+      "revision": 9
+    },
+    {
+      "description": "failure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.failure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.failure.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit failure feedback for slot effect.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "victory feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.victory.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.victory.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit victory feedback for slot effect.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "pickup feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pickup.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pickup.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit pickup feedback for slot effect.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "shield feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.shield.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.shield.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit shield feedback for slot effect.shield. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "respawn feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.respawn.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.respawn.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit respawn feedback for slot effect.respawn. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "pressure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pressure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pressure.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit pressure feedback for slot effect.pressure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "missions backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.missions.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.missions.background.field-kit", "revision": 18 },
+        "prompt": "Create one original FPV Field Kit missions backdrop for slot screen.missions.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
+          "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
+          "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 19
+    },
+    {
+      "description": "hangar backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.hangar.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.hangar.background.field-kit", "revision": 18 },
+        "prompt": "Create one original FPV Field Kit hangar backdrop for slot screen.hangar.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
+          "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
+          "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 19
+    },
+    {
+      "description": "results backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.results.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.results.background.field-kit", "revision": 18 },
+        "prompt": "Create one original FPV Field Kit results backdrop for slot screen.results.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
+          "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
+          "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 19
+    },
+    {
+      "description": "collection backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.collection.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.collection.background.field-kit", "revision": 18 },
+        "prompt": "Create one original FPV Field Kit collection backdrop for slot screen.collection.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
+          "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
+          "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 19
+    },
+    {
+      "description": "settings backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.settings.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.settings.background.field-kit", "revision": 18 },
+        "prompt": "Create one original FPV Field Kit settings backdrop for slot screen.settings.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
+          "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
+          "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 19
+    },
+    {
+      "description": "couch backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.couch.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.couch.background.field-kit", "revision": 18 },
+        "prompt": "Create one original FPV Field Kit couch backdrop for slot screen.couch.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
+          "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
+          "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 19
+    },
+    {
+      "description": "studio backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.studio.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "screen.studio.background.field-kit", "revision": 18 },
+        "prompt": "Create one original FPV Field Kit studio backdrop for slot screen.studio.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
+          "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
+          "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "scene.menu.v1" },
+      "revision": 19
+    },
+    {
+      "description": "active trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.active.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.active.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit active trail for slot trail.active. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
+          "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
+          "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 10
+    },
+    {
+      "description": "secured trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.secured.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.secured.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit secured trail for slot trail.secured. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
+          "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
+          "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 10
+    },
+    {
+      "description": "head trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.head.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.head.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit head trail for slot trail.head. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
+          "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
+          "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 10
+    },
+    {
+      "description": "Capture pulse: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.capture.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.capture.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit capture pulse for slot effect.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
+          "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
+          "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.capture.v1" },
+      "revision": 10
+    },
+    {
+      "description": "failure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.failure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.failure.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit failure feedback for slot effect.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
+          "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
+          "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "victory feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.victory.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.victory.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit victory feedback for slot effect.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
+          "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
+          "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "pickup feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pickup.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pickup.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit pickup feedback for slot effect.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
+          "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
+          "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "shield feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.shield.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.shield.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit shield feedback for slot effect.shield. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
+          "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
+          "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "respawn feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.respawn.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.respawn.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit respawn feedback for slot effect.respawn. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
+          "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
+          "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "pressure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pressure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pressure.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit pressure feedback for slot effect.pressure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
+          "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
+          "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
     }
   ],
   "collections": [
@@ -34076,11 +34858,11 @@
   ],
   "format": "revealline-theme-bundle.v1",
   "id": "field-kit",
-  "revision": 39,
+  "revision": 41,
   "selection": {
     "base": { "id": "base", "revision": 1 },
     "collection": null,
-    "theme": { "id": "fpv", "revision": 39 }
+    "theme": { "id": "fpv", "revision": 41 }
   },
   "slots": [
     {
@@ -51759,6 +52541,84 @@
       "name": "FPV Field Kit",
       "parent": { "id": "fpv", "revision": 38 },
       "revision": 39,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "effect.capture": { "id": "effect.capture.field-kit", "revision": 9 },
+        "effect.failure": { "id": "effect.failure.field-kit", "revision": 9 },
+        "effect.pickup": { "id": "effect.pickup.field-kit", "revision": 9 },
+        "effect.pressure": { "id": "effect.pressure.field-kit", "revision": 9 },
+        "effect.respawn": { "id": "effect.respawn.field-kit", "revision": 9 },
+        "effect.shield": { "id": "effect.shield.field-kit", "revision": 9 },
+        "effect.victory": { "id": "effect.victory.field-kit", "revision": 9 },
+        "screen.collection.background": {
+          "id": "screen.collection.background.field-kit",
+          "revision": 18
+        },
+        "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 18 },
+        "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 18 },
+        "screen.missions.background": {
+          "id": "screen.missions.background.field-kit",
+          "revision": 18
+        },
+        "screen.results.background": {
+          "id": "screen.results.background.field-kit",
+          "revision": 18
+        },
+        "screen.settings.background": {
+          "id": "screen.settings.background.field-kit",
+          "revision": 18
+        },
+        "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 18 },
+        "trail.active": { "id": "trail.active.field-kit", "revision": 9 },
+        "trail.head": { "id": "trail.head.field-kit", "revision": 9 },
+        "trail.secured": { "id": "trail.secured.field-kit", "revision": 9 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 39 },
+      "revision": 40,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "effect.capture": { "id": "effect.capture.field-kit", "revision": 10 },
+        "effect.failure": { "id": "effect.failure.field-kit", "revision": 10 },
+        "effect.pickup": { "id": "effect.pickup.field-kit", "revision": 10 },
+        "effect.pressure": { "id": "effect.pressure.field-kit", "revision": 10 },
+        "effect.respawn": { "id": "effect.respawn.field-kit", "revision": 10 },
+        "effect.shield": { "id": "effect.shield.field-kit", "revision": 10 },
+        "effect.victory": { "id": "effect.victory.field-kit", "revision": 10 },
+        "screen.collection.background": {
+          "id": "screen.collection.background.field-kit",
+          "revision": 19
+        },
+        "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 19 },
+        "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 19 },
+        "screen.missions.background": {
+          "id": "screen.missions.background.field-kit",
+          "revision": 19
+        },
+        "screen.results.background": {
+          "id": "screen.results.background.field-kit",
+          "revision": 19
+        },
+        "screen.settings.background": {
+          "id": "screen.settings.background.field-kit",
+          "revision": 19
+        },
+        "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 19 },
+        "trail.active": { "id": "trail.active.field-kit", "revision": 10 },
+        "trail.head": { "id": "trail.head.field-kit", "revision": 10 },
+        "trail.secured": { "id": "trail.secured.field-kit", "revision": 10 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 40 },
+      "revision": 41,
       "tokens": {}
     }
   ]

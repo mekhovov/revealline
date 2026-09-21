@@ -588,20 +588,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "effect.capture.field-kit", "revision": 9 },
+          "parent": { "id": "effect.capture.field-kit", "revision": 7 },
           "prompt": "Create one original FPV Field Kit capture pulse for slot effect.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13"
         },
         "quality": {
           "evidence": [
-            "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
-            "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
-            "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+            "Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.",
+            "Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.",
+            "Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "effect.capture.v1" },
-        "revision": 10
+        "revision": 8
       },
       "effect.failure": {
         "description": "failure feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -613,20 +613,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "effect.failure.field-kit", "revision": 9 },
+          "parent": { "id": "effect.failure.field-kit", "revision": 7 },
           "prompt": "Create one original FPV Field Kit failure feedback for slot effect.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13"
         },
         "quality": {
           "evidence": [
-            "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
-            "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
-            "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+            "Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.",
+            "Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.",
+            "Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "effect.feedback.v1" },
-        "revision": 10
+        "revision": 8
       },
       "effect.pickup": {
         "description": "pickup feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -638,20 +638,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "effect.pickup.field-kit", "revision": 9 },
+          "parent": { "id": "effect.pickup.field-kit", "revision": 7 },
           "prompt": "Create one original FPV Field Kit pickup feedback for slot effect.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13"
         },
         "quality": {
           "evidence": [
-            "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
-            "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
-            "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+            "Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.",
+            "Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.",
+            "Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "effect.feedback.v1" },
-        "revision": 10
+        "revision": 8
       },
       "effect.pressure": {
         "description": "pressure feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -663,20 +663,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "effect.pressure.field-kit", "revision": 9 },
+          "parent": { "id": "effect.pressure.field-kit", "revision": 7 },
           "prompt": "Create one original FPV Field Kit pressure feedback for slot effect.pressure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13"
         },
         "quality": {
           "evidence": [
-            "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
-            "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
-            "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+            "Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.",
+            "Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.",
+            "Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "effect.feedback.v1" },
-        "revision": 10
+        "revision": 8
       },
       "effect.respawn": {
         "description": "respawn feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -688,20 +688,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "effect.respawn.field-kit", "revision": 9 },
+          "parent": { "id": "effect.respawn.field-kit", "revision": 7 },
           "prompt": "Create one original FPV Field Kit respawn feedback for slot effect.respawn. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13"
         },
         "quality": {
           "evidence": [
-            "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
-            "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
-            "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+            "Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.",
+            "Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.",
+            "Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "effect.feedback.v1" },
-        "revision": 10
+        "revision": 8
       },
       "effect.shield": {
         "description": "shield feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -713,20 +713,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "effect.shield.field-kit", "revision": 9 },
+          "parent": { "id": "effect.shield.field-kit", "revision": 7 },
           "prompt": "Create one original FPV Field Kit shield feedback for slot effect.shield. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13"
         },
         "quality": {
           "evidence": [
-            "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
-            "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
-            "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+            "Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.",
+            "Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.",
+            "Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "effect.feedback.v1" },
-        "revision": 10
+        "revision": 8
       },
       "effect.victory": {
         "description": "victory feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -738,20 +738,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "effect.victory.field-kit", "revision": 9 },
+          "parent": { "id": "effect.victory.field-kit", "revision": 7 },
           "prompt": "Create one original FPV Field Kit victory feedback for slot effect.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13"
         },
         "quality": {
           "evidence": [
-            "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
-            "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
-            "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+            "Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.",
+            "Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.",
+            "Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "effect.feedback.v1" },
-        "revision": 10
+        "revision": 8
       },
       "enemy.border-patrol": {
         "description": "Coral patrol quad with broad angular center armor and four static motor hubs. The engine draws its movement and threat cues separately.",
@@ -8101,20 +8101,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.collection.background.field-kit", "revision": 18 },
+          "parent": { "id": "screen.collection.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit collection backdrop for slot screen.collection.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
-            "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
-            "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 19
+        "revision": 17
       },
       "screen.couch.background": {
         "description": "couch backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8126,20 +8126,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.couch.background.field-kit", "revision": 18 },
+          "parent": { "id": "screen.couch.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit couch backdrop for slot screen.couch.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
-            "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
-            "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 19
+        "revision": 17
       },
       "screen.hangar.background": {
         "description": "hangar backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8151,20 +8151,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.hangar.background.field-kit", "revision": 18 },
+          "parent": { "id": "screen.hangar.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit hangar backdrop for slot screen.hangar.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
-            "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
-            "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 19
+        "revision": 17
       },
       "screen.missions.background": {
         "description": "missions backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8176,20 +8176,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.missions.background.field-kit", "revision": 18 },
+          "parent": { "id": "screen.missions.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit missions backdrop for slot screen.missions.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
-            "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
-            "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 19
+        "revision": 17
       },
       "screen.results.background": {
         "description": "results backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8201,20 +8201,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.results.background.field-kit", "revision": 18 },
+          "parent": { "id": "screen.results.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit results backdrop for slot screen.results.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
-            "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
-            "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 19
+        "revision": 17
       },
       "screen.settings.background": {
         "description": "settings backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8226,20 +8226,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.settings.background.field-kit", "revision": 18 },
+          "parent": { "id": "screen.settings.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit settings backdrop for slot screen.settings.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
-            "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
-            "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 19
+        "revision": 17
       },
       "screen.studio.background": {
         "description": "studio backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8251,20 +8251,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.studio.background.field-kit", "revision": 18 },
+          "parent": { "id": "screen.studio.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit studio backdrop for slot screen.studio.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.",
-            "Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.",
-            "Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 19
+        "revision": 17
       },
       "screen.title.background": {
         "description": "title backdrop",
@@ -8720,20 +8720,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "trail.active.field-kit", "revision": 9 },
+          "parent": { "id": "trail.active.field-kit", "revision": 7 },
           "prompt": "Create one original FPV Field Kit active trail for slot trail.active. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13"
         },
         "quality": {
           "evidence": [
-            "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
-            "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
-            "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+            "Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.",
+            "Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.",
+            "Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "trail.signal.v1" },
-        "revision": 10
+        "revision": 8
       },
       "trail.head": {
         "description": "head trail: existing bounded component with Field Kit tokens and state styling.",
@@ -8745,20 +8745,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "trail.head.field-kit", "revision": 9 },
+          "parent": { "id": "trail.head.field-kit", "revision": 7 },
           "prompt": "Create one original FPV Field Kit head trail for slot trail.head. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13"
         },
         "quality": {
           "evidence": [
-            "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
-            "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
-            "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+            "Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.",
+            "Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.",
+            "Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "trail.signal.v1" },
-        "revision": 10
+        "revision": 8
       },
       "trail.secured": {
         "description": "secured trail: existing bounded component with Field Kit tokens and state styling.",
@@ -8770,20 +8770,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "trail.secured.field-kit", "revision": 9 },
+          "parent": { "id": "trail.secured.field-kit", "revision": 7 },
           "prompt": "Create one original FPV Field Kit secured trail for slot trail.secured. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13"
         },
         "quality": {
           "evidence": [
-            "Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.",
-            "The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.",
-            "Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance."
+            "Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.",
+            "Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.",
+            "Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "trail.signal.v1" },
-        "revision": 10
+        "revision": 8
       },
       "ui.button.chip": {
         "description": "chip button: existing bounded component with Field Kit tokens and state styling.",
@@ -9403,13 +9403,13 @@
       "control.left": { "id": "control.left.field-kit", "revision": 2 },
       "control.right": { "id": "control.right.field-kit", "revision": 2 },
       "control.up": { "id": "control.up.field-kit", "revision": 2 },
-      "effect.capture": { "id": "effect.capture.field-kit", "revision": 10 },
-      "effect.failure": { "id": "effect.failure.field-kit", "revision": 10 },
-      "effect.pickup": { "id": "effect.pickup.field-kit", "revision": 10 },
-      "effect.pressure": { "id": "effect.pressure.field-kit", "revision": 10 },
-      "effect.respawn": { "id": "effect.respawn.field-kit", "revision": 10 },
-      "effect.shield": { "id": "effect.shield.field-kit", "revision": 10 },
-      "effect.victory": { "id": "effect.victory.field-kit", "revision": 10 },
+      "effect.capture": { "id": "effect.capture.field-kit", "revision": 8 },
+      "effect.failure": { "id": "effect.failure.field-kit", "revision": 8 },
+      "effect.pickup": { "id": "effect.pickup.field-kit", "revision": 8 },
+      "effect.pressure": { "id": "effect.pressure.field-kit", "revision": 8 },
+      "effect.respawn": { "id": "effect.respawn.field-kit", "revision": 8 },
+      "effect.shield": { "id": "effect.shield.field-kit", "revision": 8 },
+      "effect.victory": { "id": "effect.victory.field-kit", "revision": 8 },
       "enemy.border-patrol": { "id": "enemy.border-patrol.field-kit", "revision": 2 },
       "enemy.bouncer": { "id": "enemy.bouncer.field-kit", "revision": 2 },
       "enemy.claimed-rover": { "id": "enemy.claimed-rover.field-kit", "revision": 2 },
@@ -10111,20 +10111,20 @@
       "scene.reveal.wide": { "id": "scene.reveal.wide.field-kit", "revision": 2 },
       "screen.collection.background": {
         "id": "screen.collection.background.field-kit",
-        "revision": 19
+        "revision": 17
       },
-      "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 19 },
-      "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 19 },
+      "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 17 },
+      "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 17 },
       "screen.missions.background": {
         "id": "screen.missions.background.field-kit",
-        "revision": 19
+        "revision": 17
       },
-      "screen.results.background": { "id": "screen.results.background.field-kit", "revision": 19 },
+      "screen.results.background": { "id": "screen.results.background.field-kit", "revision": 17 },
       "screen.settings.background": {
         "id": "screen.settings.background.field-kit",
-        "revision": 19
+        "revision": 17
       },
-      "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 19 },
+      "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 17 },
       "screen.title.background": { "id": "screen.title.background.field-kit-scene", "revision": 3 },
       "screen.title.portrait": { "id": "screen.title.portrait.field-kit-scene", "revision": 3 },
       "team.anchor.available": { "id": "team.anchor.available.field-kit", "revision": 1 },
@@ -10136,9 +10136,9 @@
       "terrain.lethal": { "id": "terrain.lethal.field-kit", "revision": 2 },
       "terrain.slow": { "id": "terrain.slow.field-kit", "revision": 2 },
       "terrain.wall": { "id": "terrain.wall.field-kit", "revision": 2 },
-      "trail.active": { "id": "trail.active.field-kit", "revision": 10 },
-      "trail.head": { "id": "trail.head.field-kit", "revision": 10 },
-      "trail.secured": { "id": "trail.secured.field-kit", "revision": 10 },
+      "trail.active": { "id": "trail.active.field-kit", "revision": 8 },
+      "trail.head": { "id": "trail.head.field-kit", "revision": 8 },
+      "trail.secured": { "id": "trail.secured.field-kit", "revision": 8 },
       "ui.button.chip": { "id": "ui.button.chip.field-kit", "revision": 14 },
       "ui.button.danger": { "id": "ui.button.danger.field-kit", "revision": 14 },
       "ui.button.icon": { "id": "ui.button.icon.field-kit", "revision": 14 },
@@ -10165,7 +10165,7 @@
       "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 14 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 41 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 39 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -10193,7 +10193,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 41 },
+  "source": { "id": "field-kit", "revision": 39 },
   "urls": {
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
     "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65": "./assets/0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65.png",
