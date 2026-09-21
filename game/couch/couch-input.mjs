@@ -342,7 +342,11 @@ export function attachCouchInput({
       releaseCapture(e.pointerId);
       sync();
     });
-    listen(element, 'pointercancel', pause);
+    listen(element, 'pointercancel', (e) => {
+      // Shared steering owns its finger at the pad, not at a child button.
+      // An ignored extra finger must not interrupt either couch seat.
+      if (captures.get(e.pointerId)?.element === element) pause();
+    });
     listen(element, 'lostpointercapture', (e) => {
       if (captures.has(e.pointerId)) pause();
     });
@@ -395,7 +399,7 @@ export function attachCouchInput({
         },
       });
     }
-    listen(win, 'resize', () => touchInputs.forEach((touch) => touch.clear()));
+    listen(win, 'resize', () => touchInputs.forEach((touch) => touch.cancel()));
   }
   function poll() {
     if (destroyed) return players.map(neutralCommand);

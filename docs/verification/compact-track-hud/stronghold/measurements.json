@@ -1,0 +1,1194 @@
+[
+  {
+    "stage": "855-only",
+    "buttons": [
+      {
+        "name": "Player 1 up",
+        "rect": {
+          "bottom": 119,
+          "height": 44,
+          "left": 56,
+          "right": 100,
+          "top": 75,
+          "width": 44,
+          "x": 56,
+          "y": 75
+        }
+      },
+      {
+        "name": "Player 1 left",
+        "rect": {
+          "bottom": 163,
+          "height": 44,
+          "left": 12,
+          "right": 56,
+          "top": 119,
+          "width": 44,
+          "x": 12,
+          "y": 119
+        }
+      },
+      {
+        "name": "Player 1 right",
+        "rect": {
+          "bottom": 163,
+          "height": 44,
+          "left": 100,
+          "right": 144,
+          "top": 119,
+          "width": 44,
+          "x": 100,
+          "y": 119
+        }
+      },
+      {
+        "name": "Player 1 down",
+        "rect": {
+          "bottom": 207,
+          "height": 44,
+          "left": 56,
+          "right": 100,
+          "top": 163,
+          "width": 44,
+          "x": 56,
+          "y": 163
+        }
+      },
+      {
+        "name": "Player 1 Boost",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 12,
+          "right": 70,
+          "top": 211,
+          "width": 58,
+          "x": 12,
+          "y": 211
+        }
+      },
+      {
+        "name": "Player 1 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 74,
+          "right": 144,
+          "top": 211,
+          "width": 70,
+          "x": 74,
+          "y": 211
+        }
+      },
+      {
+        "name": "Player 2 up",
+        "rect": {
+          "bottom": 119,
+          "height": 44,
+          "left": 468,
+          "right": 512,
+          "top": 75,
+          "width": 44,
+          "x": 468,
+          "y": 75
+        }
+      },
+      {
+        "name": "Player 2 left",
+        "rect": {
+          "bottom": 163,
+          "height": 44,
+          "left": 424,
+          "right": 468,
+          "top": 119,
+          "width": 44,
+          "x": 424,
+          "y": 119
+        }
+      },
+      {
+        "name": "Player 2 right",
+        "rect": {
+          "bottom": 163,
+          "height": 44,
+          "left": 512,
+          "right": 556,
+          "top": 119,
+          "width": 44,
+          "x": 512,
+          "y": 119
+        }
+      },
+      {
+        "name": "Player 2 down",
+        "rect": {
+          "bottom": 207,
+          "height": 44,
+          "left": 468,
+          "right": 512,
+          "top": 163,
+          "width": 44,
+          "x": 468,
+          "y": 163
+        }
+      },
+      {
+        "name": "Player 2 Boost",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 424,
+          "right": 482,
+          "top": 211,
+          "width": 58,
+          "x": 424,
+          "y": 211
+        }
+      },
+      {
+        "name": "Player 2 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 486,
+          "right": 556,
+          "top": 211,
+          "width": 70,
+          "x": 486,
+          "y": 211
+        }
+      }
+    ],
+    "canvas": {
+      "bottom": 234.1953125,
+      "height": 132,
+      "left": 152,
+      "right": 416,
+      "top": 102.1953125,
+      "width": 264,
+      "x": 152,
+      "y": 102.1953125
+    },
+    "h": 320,
+    "hud": {
+      "bottom": 44,
+      "height": 44,
+      "left": 12,
+      "right": 460,
+      "top": 0,
+      "width": 448,
+      "x": 12,
+      "y": 0
+    },
+    "objective": {
+      "bottom": 71.3984375,
+      "height": 23.3984375,
+      "left": 12,
+      "right": 556,
+      "top": 48,
+      "width": 544,
+      "x": 12,
+      "y": 48
+    },
+    "overflow": 0,
+    "pads": [
+      {
+        "bottom": 255,
+        "height": 180,
+        "left": 12,
+        "right": 144,
+        "top": 75,
+        "width": 132,
+        "x": 12,
+        "y": 75
+      },
+      {
+        "bottom": 255,
+        "height": 180,
+        "left": 424,
+        "right": 556,
+        "top": 75,
+        "width": 132,
+        "x": 424,
+        "y": 75
+      }
+    ],
+    "w": 568
+  },
+  {
+    "stage": "composition",
+    "buttons": [
+      {
+        "name": "Player 1 up",
+        "rect": {
+          "bottom": 119,
+          "height": 44,
+          "left": 56,
+          "right": 100,
+          "top": 75,
+          "width": 44,
+          "x": 56,
+          "y": 75
+        }
+      },
+      {
+        "name": "Player 1 left",
+        "rect": {
+          "bottom": 163,
+          "height": 44,
+          "left": 12,
+          "right": 56,
+          "top": 119,
+          "width": 44,
+          "x": 12,
+          "y": 119
+        }
+      },
+      {
+        "name": "Player 1 right",
+        "rect": {
+          "bottom": 163,
+          "height": 44,
+          "left": 100,
+          "right": 144,
+          "top": 119,
+          "width": 44,
+          "x": 100,
+          "y": 119
+        }
+      },
+      {
+        "name": "Player 1 down",
+        "rect": {
+          "bottom": 207,
+          "height": 44,
+          "left": 56,
+          "right": 100,
+          "top": 163,
+          "width": 44,
+          "x": 56,
+          "y": 163
+        }
+      },
+      {
+        "name": "Player 1 Boost",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 12,
+          "right": 70,
+          "top": 211,
+          "width": 58,
+          "x": 12,
+          "y": 211
+        }
+      },
+      {
+        "name": "Player 1 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 74,
+          "right": 144,
+          "top": 211,
+          "width": 70,
+          "x": 74,
+          "y": 211
+        }
+      },
+      {
+        "name": "Player 2 up",
+        "rect": {
+          "bottom": 119,
+          "height": 44,
+          "left": 468,
+          "right": 512,
+          "top": 75,
+          "width": 44,
+          "x": 468,
+          "y": 75
+        }
+      },
+      {
+        "name": "Player 2 left",
+        "rect": {
+          "bottom": 163,
+          "height": 44,
+          "left": 424,
+          "right": 468,
+          "top": 119,
+          "width": 44,
+          "x": 424,
+          "y": 119
+        }
+      },
+      {
+        "name": "Player 2 right",
+        "rect": {
+          "bottom": 163,
+          "height": 44,
+          "left": 512,
+          "right": 556,
+          "top": 119,
+          "width": 44,
+          "x": 512,
+          "y": 119
+        }
+      },
+      {
+        "name": "Player 2 down",
+        "rect": {
+          "bottom": 207,
+          "height": 44,
+          "left": 468,
+          "right": 512,
+          "top": 163,
+          "width": 44,
+          "x": 468,
+          "y": 163
+        }
+      },
+      {
+        "name": "Player 2 Boost",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 424,
+          "right": 482,
+          "top": 211,
+          "width": 58,
+          "x": 424,
+          "y": 211
+        }
+      },
+      {
+        "name": "Player 2 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 486,
+          "right": 556,
+          "top": 211,
+          "width": 70,
+          "x": 486,
+          "y": 211
+        }
+      }
+    ],
+    "canvas": {
+      "bottom": 259,
+      "height": 181.6015625,
+      "left": 102.3984375,
+      "right": 465.6015625,
+      "top": 77.3984375,
+      "width": 363.203125,
+      "x": 102.3984375,
+      "y": 77.3984375
+    },
+    "h": 320,
+    "hud": {
+      "bottom": 44,
+      "height": 44,
+      "left": 12,
+      "right": 460,
+      "top": 0,
+      "width": 448,
+      "x": 12,
+      "y": 0
+    },
+    "objective": {
+      "bottom": 71.3984375,
+      "height": 23.3984375,
+      "left": 12,
+      "right": 556,
+      "top": 48,
+      "width": 544,
+      "x": 12,
+      "y": 48
+    },
+    "overflow": 0,
+    "pads": [
+      {
+        "bottom": 255,
+        "height": 180,
+        "left": 12,
+        "right": 144,
+        "top": 75,
+        "width": 132,
+        "x": 12,
+        "y": 75
+      },
+      {
+        "bottom": 255,
+        "height": 180,
+        "left": 424,
+        "right": 556,
+        "top": 75,
+        "width": 132,
+        "x": 424,
+        "y": 75
+      }
+    ],
+    "w": 568
+  },
+  {
+    "stage": "composition",
+    "buttons": [
+      {
+        "name": "Player 1 up",
+        "rect": {
+          "bottom": 161.203125,
+          "height": 52,
+          "left": 64,
+          "right": 116,
+          "top": 109.203125,
+          "width": 52,
+          "x": 64,
+          "y": 109.203125
+        }
+      },
+      {
+        "name": "Player 1 left",
+        "rect": {
+          "bottom": 213.203125,
+          "height": 52,
+          "left": 12,
+          "right": 64,
+          "top": 161.203125,
+          "width": 52,
+          "x": 12,
+          "y": 161.203125
+        }
+      },
+      {
+        "name": "Player 1 right",
+        "rect": {
+          "bottom": 213.203125,
+          "height": 52,
+          "left": 116,
+          "right": 168,
+          "top": 161.203125,
+          "width": 52,
+          "x": 116,
+          "y": 161.203125
+        }
+      },
+      {
+        "name": "Player 1 down",
+        "rect": {
+          "bottom": 265.203125,
+          "height": 52,
+          "left": 64,
+          "right": 116,
+          "top": 213.203125,
+          "width": 52,
+          "x": 64,
+          "y": 213.203125
+        }
+      },
+      {
+        "name": "Player 1 Boost",
+        "rect": {
+          "bottom": 325,
+          "height": 55.796875,
+          "left": 12,
+          "right": 88,
+          "top": 269.203125,
+          "width": 76,
+          "x": 12,
+          "y": 269.203125
+        }
+      },
+      {
+        "name": "Player 1 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 325,
+          "height": 55.796875,
+          "left": 92,
+          "right": 168,
+          "top": 269.203125,
+          "width": 76,
+          "x": 92,
+          "y": 269.203125
+        }
+      },
+      {
+        "name": "Player 2 up",
+        "rect": {
+          "bottom": 161.203125,
+          "height": 52,
+          "left": 728,
+          "right": 780,
+          "top": 109.203125,
+          "width": 52,
+          "x": 728,
+          "y": 109.203125
+        }
+      },
+      {
+        "name": "Player 2 left",
+        "rect": {
+          "bottom": 213.203125,
+          "height": 52,
+          "left": 676,
+          "right": 728,
+          "top": 161.203125,
+          "width": 52,
+          "x": 676,
+          "y": 161.203125
+        }
+      },
+      {
+        "name": "Player 2 right",
+        "rect": {
+          "bottom": 213.203125,
+          "height": 52,
+          "left": 780,
+          "right": 832,
+          "top": 161.203125,
+          "width": 52,
+          "x": 780,
+          "y": 161.203125
+        }
+      },
+      {
+        "name": "Player 2 down",
+        "rect": {
+          "bottom": 265.203125,
+          "height": 52,
+          "left": 728,
+          "right": 780,
+          "top": 213.203125,
+          "width": 52,
+          "x": 728,
+          "y": 213.203125
+        }
+      },
+      {
+        "name": "Player 2 Boost",
+        "rect": {
+          "bottom": 325,
+          "height": 55.796875,
+          "left": 676,
+          "right": 752,
+          "top": 269.203125,
+          "width": 76,
+          "x": 676,
+          "y": 269.203125
+        }
+      },
+      {
+        "name": "Player 2 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 325,
+          "height": 55.796875,
+          "left": 756,
+          "right": 832,
+          "top": 269.203125,
+          "width": 76,
+          "x": 756,
+          "y": 269.203125
+        }
+      }
+    ],
+    "canvas": {
+      "bottom": 329,
+      "height": 251.6015625,
+      "left": 170.3984375,
+      "right": 673.6015625,
+      "top": 77.3984375,
+      "width": 503.203125,
+      "x": 170.3984375,
+      "y": 77.3984375
+    },
+    "h": 390,
+    "hud": {
+      "bottom": 44,
+      "height": 44,
+      "left": 12,
+      "right": 736,
+      "top": 0,
+      "width": 724,
+      "x": 12,
+      "y": 0
+    },
+    "objective": {
+      "bottom": 71.3984375,
+      "height": 23.3984375,
+      "left": 12,
+      "right": 832,
+      "top": 48,
+      "width": 820,
+      "x": 12,
+      "y": 48
+    },
+    "overflow": 0,
+    "pads": [
+      {
+        "bottom": 325,
+        "height": 215.796875,
+        "left": 12,
+        "right": 168,
+        "top": 109.203125,
+        "width": 156,
+        "x": 12,
+        "y": 109.203125
+      },
+      {
+        "bottom": 325,
+        "height": 215.796875,
+        "left": 676,
+        "right": 832,
+        "top": 109.203125,
+        "width": 156,
+        "x": 676,
+        "y": 109.203125
+      }
+    ],
+    "w": 844
+  },
+  {
+    "stage": "composition",
+    "buttons": [
+      {
+        "name": "Player 1 up",
+        "rect": {
+          "bottom": 311.203125,
+          "height": 52,
+          "left": 64,
+          "right": 116,
+          "top": 259.203125,
+          "width": 52,
+          "x": 64,
+          "y": 259.203125
+        }
+      },
+      {
+        "name": "Player 1 left",
+        "rect": {
+          "bottom": 363.203125,
+          "height": 52,
+          "left": 12,
+          "right": 64,
+          "top": 311.203125,
+          "width": 52,
+          "x": 12,
+          "y": 311.203125
+        }
+      },
+      {
+        "name": "Player 1 right",
+        "rect": {
+          "bottom": 363.203125,
+          "height": 52,
+          "left": 116,
+          "right": 168,
+          "top": 311.203125,
+          "width": 52,
+          "x": 116,
+          "y": 311.203125
+        }
+      },
+      {
+        "name": "Player 1 down",
+        "rect": {
+          "bottom": 415.203125,
+          "height": 52,
+          "left": 64,
+          "right": 116,
+          "top": 363.203125,
+          "width": 52,
+          "x": 64,
+          "y": 363.203125
+        }
+      },
+      {
+        "name": "Player 1 Boost",
+        "rect": {
+          "bottom": 475,
+          "height": 55.796875,
+          "left": 12,
+          "right": 88,
+          "top": 419.203125,
+          "width": 76,
+          "x": 12,
+          "y": 419.203125
+        }
+      },
+      {
+        "name": "Player 1 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 475,
+          "height": 55.796875,
+          "left": 92,
+          "right": 168,
+          "top": 419.203125,
+          "width": 76,
+          "x": 92,
+          "y": 419.203125
+        }
+      },
+      {
+        "name": "Player 2 up",
+        "rect": {
+          "bottom": 311.203125,
+          "height": 52,
+          "left": 844,
+          "right": 896,
+          "top": 259.203125,
+          "width": 52,
+          "x": 844,
+          "y": 259.203125
+        }
+      },
+      {
+        "name": "Player 2 left",
+        "rect": {
+          "bottom": 363.203125,
+          "height": 52,
+          "left": 792,
+          "right": 844,
+          "top": 311.203125,
+          "width": 52,
+          "x": 792,
+          "y": 311.203125
+        }
+      },
+      {
+        "name": "Player 2 right",
+        "rect": {
+          "bottom": 363.203125,
+          "height": 52,
+          "left": 896,
+          "right": 948,
+          "top": 311.203125,
+          "width": 52,
+          "x": 896,
+          "y": 311.203125
+        }
+      },
+      {
+        "name": "Player 2 down",
+        "rect": {
+          "bottom": 415.203125,
+          "height": 52,
+          "left": 844,
+          "right": 896,
+          "top": 363.203125,
+          "width": 52,
+          "x": 844,
+          "y": 363.203125
+        }
+      },
+      {
+        "name": "Player 2 Boost",
+        "rect": {
+          "bottom": 475,
+          "height": 55.796875,
+          "left": 792,
+          "right": 868,
+          "top": 419.203125,
+          "width": 76,
+          "x": 792,
+          "y": 419.203125
+        }
+      },
+      {
+        "name": "Player 2 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 475,
+          "height": 55.796875,
+          "left": 872,
+          "right": 948,
+          "top": 419.203125,
+          "width": 76,
+          "x": 872,
+          "y": 419.203125
+        }
+      }
+    ],
+    "canvas": {
+      "bottom": 479,
+      "height": 403.6015625,
+      "left": 76.3984375,
+      "right": 883.6015625,
+      "top": 75.3984375,
+      "width": 807.203125,
+      "x": 76.3984375,
+      "y": 75.3984375
+    },
+    "h": 540,
+    "hud": {
+      "bottom": 44,
+      "height": 44,
+      "left": 12,
+      "right": 852,
+      "top": 0,
+      "width": 840,
+      "x": 12,
+      "y": 0
+    },
+    "objective": {
+      "bottom": 71.3984375,
+      "height": 23.3984375,
+      "left": 12,
+      "right": 948,
+      "top": 48,
+      "width": 936,
+      "x": 12,
+      "y": 48
+    },
+    "overflow": 0,
+    "pads": [
+      {
+        "bottom": 475,
+        "height": 215.796875,
+        "left": 12,
+        "right": 168,
+        "top": 259.203125,
+        "width": 156,
+        "x": 12,
+        "y": 259.203125
+      },
+      {
+        "bottom": 475,
+        "height": 215.796875,
+        "left": 792,
+        "right": 948,
+        "top": 259.203125,
+        "width": 156,
+        "x": 792,
+        "y": 259.203125
+      }
+    ],
+    "w": 960
+  },
+  {
+    "stage": "composition",
+    "buttons": [
+      {
+        "name": "Player 1 up",
+        "rect": {
+          "bottom": 484.5,
+          "height": 52,
+          "left": 72.5,
+          "right": 124.5,
+          "top": 432.5,
+          "width": 52,
+          "x": 72.5,
+          "y": 432.5
+        }
+      },
+      {
+        "name": "Player 1 left",
+        "rect": {
+          "bottom": 536.5,
+          "height": 52,
+          "left": 20.5,
+          "right": 72.5,
+          "top": 484.5,
+          "width": 52,
+          "x": 20.5,
+          "y": 484.5
+        }
+      },
+      {
+        "name": "Player 1 right",
+        "rect": {
+          "bottom": 536.5,
+          "height": 52,
+          "left": 124.5,
+          "right": 176.5,
+          "top": 484.5,
+          "width": 52,
+          "x": 124.5,
+          "y": 484.5
+        }
+      },
+      {
+        "name": "Player 1 down",
+        "rect": {
+          "bottom": 588.5,
+          "height": 52,
+          "left": 72.5,
+          "right": 124.5,
+          "top": 536.5,
+          "width": 52,
+          "x": 72.5,
+          "y": 536.5
+        }
+      },
+      {
+        "name": "Player 1 Boost",
+        "rect": {
+          "bottom": 654.53125,
+          "height": 62.03125,
+          "left": 20.5,
+          "right": 96.5,
+          "top": 592.5,
+          "width": 76,
+          "x": 20.5,
+          "y": 592.5
+        }
+      },
+      {
+        "name": "Player 1 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 654.53125,
+          "height": 62.03125,
+          "left": 100.5,
+          "right": 176.5,
+          "top": 592.5,
+          "width": 76,
+          "x": 100.5,
+          "y": 592.5
+        }
+      },
+      {
+        "name": "Player 2 up",
+        "rect": {
+          "bottom": 484.5,
+          "height": 52,
+          "left": 265.5,
+          "right": 317.5,
+          "top": 432.5,
+          "width": 52,
+          "x": 265.5,
+          "y": 432.5
+        }
+      },
+      {
+        "name": "Player 2 left",
+        "rect": {
+          "bottom": 536.5,
+          "height": 52,
+          "left": 213.5,
+          "right": 265.5,
+          "top": 484.5,
+          "width": 52,
+          "x": 213.5,
+          "y": 484.5
+        }
+      },
+      {
+        "name": "Player 2 right",
+        "rect": {
+          "bottom": 536.5,
+          "height": 52,
+          "left": 317.5,
+          "right": 369.5,
+          "top": 484.5,
+          "width": 52,
+          "x": 317.5,
+          "y": 484.5
+        }
+      },
+      {
+        "name": "Player 2 down",
+        "rect": {
+          "bottom": 588.5,
+          "height": 52,
+          "left": 265.5,
+          "right": 317.5,
+          "top": 536.5,
+          "width": 52,
+          "x": 265.5,
+          "y": 536.5
+        }
+      },
+      {
+        "name": "Player 2 Boost",
+        "rect": {
+          "bottom": 654.53125,
+          "height": 62.03125,
+          "left": 213.5,
+          "right": 289.5,
+          "top": 592.5,
+          "width": 76,
+          "x": 213.5,
+          "y": 592.5
+        }
+      },
+      {
+        "name": "Player 2 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 654.53125,
+          "height": 62.03125,
+          "left": 293.5,
+          "right": 369.5,
+          "top": 592.5,
+          "width": 76,
+          "x": 293.5,
+          "y": 592.5
+        }
+      }
+    ],
+    "canvas": {
+      "bottom": 343,
+      "height": 185,
+      "left": 10,
+      "right": 380,
+      "top": 158,
+      "width": 370,
+      "x": 10,
+      "y": 158
+    },
+    "h": 844,
+    "hud": {
+      "bottom": 74,
+      "height": 74,
+      "left": 4,
+      "right": 294,
+      "top": 0,
+      "width": 290,
+      "x": 4,
+      "y": 0
+    },
+    "objective": {
+      "bottom": 144,
+      "height": 66,
+      "left": 4,
+      "right": 386,
+      "top": 78,
+      "width": 382,
+      "x": 4,
+      "y": 78
+    },
+    "overflow": 0,
+    "pads": [
+      {
+        "bottom": 654.53125,
+        "height": 222.03125,
+        "left": 20.5,
+        "right": 176.5,
+        "top": 432.5,
+        "width": 156,
+        "x": 20.5,
+        "y": 432.5
+      },
+      {
+        "bottom": 654.53125,
+        "height": 222.03125,
+        "left": 213.5,
+        "right": 369.5,
+        "top": 432.5,
+        "width": 156,
+        "x": 213.5,
+        "y": 432.5
+      }
+    ],
+    "w": 390
+  },
+  {
+    "stage": "composition-large-stick",
+    "buttons": [
+      {
+        "name": "Player 1 Boost",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 12,
+          "right": 70,
+          "top": 211,
+          "width": 58,
+          "x": 12,
+          "y": 211
+        }
+      },
+      {
+        "name": "Player 1 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 74,
+          "right": 144,
+          "top": 211,
+          "width": 70,
+          "x": 74,
+          "y": 211
+        }
+      },
+      {
+        "name": "Player 2 Boost",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 424,
+          "right": 482,
+          "top": 211,
+          "width": 58,
+          "x": 424,
+          "y": 211
+        }
+      },
+      {
+        "name": "Player 2 Support; hold beside a downed partner to rescue",
+        "rect": {
+          "bottom": 255,
+          "height": 44,
+          "left": 486,
+          "right": 556,
+          "top": 211,
+          "width": 70,
+          "x": 486,
+          "y": 211
+        }
+      }
+    ],
+    "canvas": {
+      "bottom": 259,
+      "height": 181.6015625,
+      "left": 102.3984375,
+      "right": 465.6015625,
+      "top": 77.3984375,
+      "width": 363.203125,
+      "x": 102.3984375,
+      "y": 77.3984375
+    },
+    "h": 320,
+    "hud": {
+      "bottom": 44,
+      "height": 44,
+      "left": 12,
+      "right": 460,
+      "top": 0,
+      "width": 448,
+      "x": 12,
+      "y": 0
+    },
+    "objective": {
+      "bottom": 71.3984375,
+      "height": 23.3984375,
+      "left": 12,
+      "right": 556,
+      "top": 48,
+      "width": 544,
+      "x": 12,
+      "y": 48
+    },
+    "overflow": 0,
+    "pads": [
+      {
+        "bottom": 255,
+        "height": 180,
+        "left": 12,
+        "right": 144,
+        "top": 75,
+        "width": 132,
+        "x": 12,
+        "y": 75
+      },
+      {
+        "bottom": 255,
+        "height": 180,
+        "left": 424,
+        "right": 556,
+        "top": 75,
+        "width": 132,
+        "x": 424,
+        "y": 75
+      }
+    ],
+    "w": 568
+  }
+]

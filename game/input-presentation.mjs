@@ -38,13 +38,21 @@ export function showScreenControls({ preference = 'auto', modality, scope, runni
 }
 
 /** Validated authored level only: current phase or surviving actors cannot resize the board. */
-export function hasCompactArcadeArena(level) {
-  return (
-    !arcadeActionCapabilities(level).manualAbility &&
-    level?.encounter === null &&
+export function hasFieldWarningBand(level) {
+  return !(
+    (level?.encounter === null ||
+      (level?.version === 'xonix-level.v1' && level.encounter === undefined)) &&
     Array.isArray(level.enemies) &&
     level.enemies.every((enemy) =>
       ['bouncer', 'border-patrol', 'contour-patrol'].includes(enemy.type),
     )
+  );
+}
+
+export function hasCompactArcadeArena(level) {
+  return (
+    !arcadeActionCapabilities(level).manualAbility &&
+    level?.encounter === null &&
+    !hasFieldWarningBand(level)
   );
 }

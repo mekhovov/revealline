@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { soloPage, settle, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
-import { verifyReplay } from '../replay.mjs';
+import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { TOUCH_PREFERENCES_KEY } from '../touch-preferences.mjs';
 
 const classic = JSON.parse(
@@ -57,7 +57,10 @@ async function setup(t) {
   const page = await classicPage(t, { readPads: () => [pad] });
   const release = () => {
     pad.axes.fill(0);
-    pad.buttons.forEach((b) => (b.pressed = false));
+    pad.buttons.forEach((b) => {
+      b.pressed = false;
+      b.value = 0;
+    });
     page.frame();
     page.frame();
   };
@@ -354,5 +357,142 @@ for (const mode of ['stick', 'swipe', 'dpad'])
     press(9);
     const saved = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
     assert.equal(verifyReplay(saved.replay).match, true);
+    assert.deepEqual(page.errors, []);
+  });
+
+for (const turnPolicy of ['immediate', 'grid-center'])
+  test(`actual host: ${turnPolicy} reconnect requires neutral then fresh Resume without losing the cut`, async (t) => {
+    const { page, pad, press, release, start } = await setup(t);
+    page.change('turn-select', turnPolicy);
+    await settle(
+      () => !page.$('start-button').disabled && page.$('turn-select').value === turnPolicy,
+    );
+    await start();
+    assert.equal(page.rendered.run.turnPolicy, turnPolicy);
+    pad.axes[0] = 1;
+    for (let i = 0; i < 25; i++) page.frame();
+    release();
+    pad.axes[0] = 0;
+    pad.axes[1] = 1;
+    for (let i = 0; i < 20; i++) page.frame();
+    assert.ok(page.rendered.run.trail.length > 0, 'Disconnect occurs during an unfinished cut.');
+    pad.connected = false;
+    page.frame();
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    const checkpoint = authoritativeCheckpoint(page.rendered.run);
+    const suspended = page.storage.getItem('revealline.suspended.dev.v1');
+    assert.equal(verifyReplay(JSON.parse(suspended).replay).match, true);
+    pad.buttons[0].pressed = true;
+    pad.buttons[0].value = 1;
+    pad.connected = true;
+    for (let i = 0; i < 20; i++) page.frame();
+    assert.equal(page.doc.body.dataset.flightState, 'paused', 'Held reconnect is not Resume.');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.equal(page.storage.getItem('revealline.suspended.dev.v1'), suspended);
+    release();
+    assert.equal(page.doc.body.dataset.flightState, 'paused', 'Neutral alone does not resume.');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    pad.buttons[0].pressed = true;
+    pad.buttons[0].value = 1;
+    page.frame(0);
+    await settle(() => {
+      page.frame(0);
+      return page.doc.body.dataset.flightState === 'running';
+    }, 'Fresh A explicitly resumes the retained flight');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    release();
+    press(9);
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.equal(
+      verifyReplay(JSON.parse(page.storage.getItem('revealline.suspended.dev.v1')).replay).match,
+      true,
+    );
+    assert.deepEqual(page.errors, []);
+  });
+
+test('actual host: ignored extra D-pad finger cannot release the active steering finger', async (t) => {
+  const page = await classicPage(t);
+  page.change('touch-mode', 'dpad');
+  page.change('screen-controls', 'always');
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  const surface = page.doc.querySelector('.direction-controls');
+  surface._rect = { x: 0, y: 0, width: 156, height: 156 };
+  surface.emit('pointerdown', {
+    pointerId: 11,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 145,
+    clientY: 78,
+  });
+  page.frame();
+  assert.equal(page.rendered.run.player.direction, 'right');
+  const extra = surface.querySelector('[data-move="left"]');
+  extra.emit('pointerdown', {
+    pointerId: 99,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 5,
+    clientY: 78,
+  });
+  extra.emit('pointercancel', { pointerId: 99, pointerType: 'touch' });
+  assert.equal(
+    surface.hasPointerCapture(11),
+    true,
+    'An ignored finger cannot release the active gesture.',
+  );
+  assert.equal(page.doc.body.dataset.flightState, 'running');
+  surface.emit('pointermove', { pointerId: 11, pointerType: 'touch', clientX: 78, clientY: 145 });
+  page.frame();
+  assert.equal(
+    page.rendered.run.player.direction,
+    'down',
+    'The same active finger can still turn.',
+  );
+  surface.emit('pointercancel', { pointerId: 11, pointerType: 'touch' });
+  assert.equal(
+    page.doc.body.dataset.flightState,
+    'paused',
+    'Real steering interruption still pauses.',
+  );
+  assert.deepEqual(page.errors, []);
+});
+
+for (const mode of ['stick', 'swipe', 'dpad'])
+  test(`actual host: ${mode} resize interruption pauses until explicit Resume and a fresh gesture`, async (t) => {
+    const page = await classicPage(t);
+    page.change('touch-mode', mode);
+    page.change('screen-controls', 'always');
+    page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
+    page.win.emit('resize');
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    const surface =
+      mode === 'dpad' ? page.doc.querySelector('.direction-controls') : page.$('touch-surface');
+    surface._rect = { x: 0, y: 0, width: 156, height: 156 };
+    const pointer = (type, x, y, pointerId = 11) =>
+      surface.emit(type, { pointerId, pointerType: 'touch', button: 0, clientX: x, clientY: y });
+    pointer('pointerdown', mode === 'dpad' ? 145 : 78, 78);
+    if (mode !== 'dpad') pointer('pointermove', 115, 78);
+    page.frame();
+    assert.equal(page.rendered.run.player.direction, 'right');
+    page.win.emit('resize');
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.equal(surface.hasPointerCapture(11), false);
+    const paused = authoritativeCheckpoint(page.rendered.run);
+    page.win.emit('resize');
+    page.win.emit('focus');
+    pointer('pointermove', 5, 78);
+    pointer('lostpointercapture', 5, 78);
+    page.frame();
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), paused);
+    page.$('start-button').click();
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    pointer('pointerdown', 78, mode === 'dpad' ? 145 : 78, 33);
+    if (mode !== 'dpad') pointer('pointermove', 78, 115, 33);
+    page.frame();
+    assert.equal(page.rendered.run.player.direction, 'down');
     assert.deepEqual(page.errors, []);
   });

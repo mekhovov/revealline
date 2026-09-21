@@ -603,3 +603,20 @@ for (const [intent, initiallyEnabled] of [
     assert.equal(media.src, url);
     assert.deepEqual(page.errors, []);
   });
+
+test('Solo Audio exposes full current credits while compact Pause remains an ordinary Pause owner', async (t) => {
+  const { page, original } = await setup(t);
+  await openStudio(page);
+  await playStudio(page);
+  leaveStudio(page);
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  const details = page.$('solo-music-details');
+  assert.match(details.textContent, /RevealLine tests/);
+  assert.match(details.textContent, /File:/);
+  assert.ok(
+    page.$('pause-button').getAttribute('data-track-caption').includes(original.track.title),
+  );
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
