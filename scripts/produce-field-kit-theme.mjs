@@ -29,7 +29,7 @@ const sources = {
   effects:
     'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs',
   audio:
-    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs',
+    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs',
 };
 
 // A recipe stays unreviewed whenever one of its source inputs changes. These
@@ -54,11 +54,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98',
+    sha256: 'c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998',
     evidence: [
-      'Scoped soundtrack audio source review (functional): docs/verification/soundtrack-v3-framework-2026-09-21/audio-review/review.json sha256:2f0a1fddc7a902d6f2a721415cd1333c18389e31eacc739ab4a7f47eb9906917; independent supplement docs/verification/soundtrack-v3-framework-2026-09-21/audio-independent-review/review.json sha256:0bb1a5f5ec6ebefa55da58358bd1f49fc99a81279df1b0fdb6b7f20703246125. Audio recipe inputs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98.',
-      'Final core tests pass263/263; the independent cohort passes93/93 and complete practice preservation passes5/5. Counts overlap. The review corrected Recording mode fallback to published audio with unknown video rights and the stale DB4 practice observer. Current/next deck ownership, cancellation, menu gestures, explicit pause, trusted rights and recovery are scoped source checks; authorship limits are disclosed.',
-      'The failed mixed host cohort remains retained; its exact Team picture binding successor needs a separate complete host retest. This declaration approves only bounded functional audio source. It approves zero compositions or recordings and does not establish listening, Ukrainian musical review, physical-device, final native lifecycle, frozen offline or public acceptance. Earlier ledger revisions and all127 original payloads remain unchanged.',
+      'Scoped soundtrack audio source review (functional recovery permissions): docs/verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/review.json sha256:553f11bdc57b5406d5d343fc45ef493d09456b271e2447339192ebd413bfcb7c. The ten ordered audio inputs now include rights, recovery, source and Music panel helpers; audio recipe inputs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998.',
+      'The independent recovery, rights, source, share and panel cohort passes 117/117. Recovery bytes require both redistribution and offline storage approval; denied or unknown storage permission keeps exact identities as references without audio. Standalone MP3 export retains its separate redistribution permission. The six original failing regressions and source-stage fpv42 are preserved beside the corrected evidence. Unchanged transport inputs retain the earlier scoped reviews in immutable history.',
+      'This is bounded functional source approval, including backup notice text. It approves zero compositions or recordings and does not establish the full host/store graph, listening, Ukrainian musical review, physical devices, final native lifecycle, frozen offline or public acceptance. All earlier ledger records and 127 original payloads remain unchanged. Complete production-history and exact-source release qualification remain separate gates.',
     ],
   },
   motion: {

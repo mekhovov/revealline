@@ -12,20 +12,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.cancel.field-kit", "revision": 11 },
+          "parent": { "id": "audio.cancel.field-kit", "revision": 13 },
           "prompt": "Create one original FPV Field Kit cancel audio cue for slot audio.cancel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998"
         },
         "quality": {
           "evidence": [
-            "Scoped soundtrack audio source review (functional): docs/verification/soundtrack-v3-framework-2026-09-21/audio-review/review.json sha256:2f0a1fddc7a902d6f2a721415cd1333c18389e31eacc739ab4a7f47eb9906917; independent supplement docs/verification/soundtrack-v3-framework-2026-09-21/audio-independent-review/review.json sha256:0bb1a5f5ec6ebefa55da58358bd1f49fc99a81279df1b0fdb6b7f20703246125. Audio recipe inputs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98.",
-            "Final core tests pass263/263; the independent cohort passes93/93 and complete practice preservation passes5/5. Counts overlap. The review corrected Recording mode fallback to published audio with unknown video rights and the stale DB4 practice observer. Current/next deck ownership, cancellation, menu gestures, explicit pause, trusted rights and recovery are scoped source checks; authorship limits are disclosed.",
-            "The failed mixed host cohort remains retained; its exact Team picture binding successor needs a separate complete host retest. This declaration approves only bounded functional audio source. It approves zero compositions or recordings and does not establish listening, Ukrainian musical review, physical-device, final native lifecycle, frozen offline or public acceptance. Earlier ledger revisions and all127 original payloads remain unchanged."
+            "Scoped soundtrack audio source review (functional recovery permissions): docs/verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/review.json sha256:553f11bdc57b5406d5d343fc45ef493d09456b271e2447339192ebd413bfcb7c. The ten ordered audio inputs now include rights, recovery, source and Music panel helpers; audio recipe inputs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998.",
+            "The independent recovery, rights, source, share and panel cohort passes 117/117. Recovery bytes require both redistribution and offline storage approval; denied or unknown storage permission keeps exact identities as references without audio. Standalone MP3 export retains its separate redistribution permission. The six original failing regressions and source-stage fpv42 are preserved beside the corrected evidence. Unchanged transport inputs retain the earlier scoped reviews in immutable history.",
+            "This is bounded functional source approval, including backup notice text. It approves zero compositions or recordings and does not establish the full host/store graph, listening, Ukrainian musical review, physical devices, final native lifecycle, frozen offline or public acceptance. All earlier ledger records and 127 original payloads remain unchanged. Complete production-history and exact-source release qualification remain separate gates."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 12
+        "revision": 14
       },
       "audio.capture": {
         "description": "capture audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -37,20 +37,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.capture.field-kit", "revision": 11 },
+          "parent": { "id": "audio.capture.field-kit", "revision": 13 },
           "prompt": "Create one original FPV Field Kit capture audio cue for slot audio.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998"
         },
         "quality": {
           "evidence": [
-            "Scoped soundtrack audio source review (functional): docs/verification/soundtrack-v3-framework-2026-09-21/audio-review/review.json sha256:2f0a1fddc7a902d6f2a721415cd1333c18389e31eacc739ab4a7f47eb9906917; independent supplement docs/verification/soundtrack-v3-framework-2026-09-21/audio-independent-review/review.json sha256:0bb1a5f5ec6ebefa55da58358bd1f49fc99a81279df1b0fdb6b7f20703246125. Audio recipe inputs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98.",
-            "Final core tests pass263/263; the independent cohort passes93/93 and complete practice preservation passes5/5. Counts overlap. The review corrected Recording mode fallback to published audio with unknown video rights and the stale DB4 practice observer. Current/next deck ownership, cancellation, menu gestures, explicit pause, trusted rights and recovery are scoped source checks; authorship limits are disclosed.",
-            "The failed mixed host cohort remains retained; its exact Team picture binding successor needs a separate complete host retest. This declaration approves only bounded functional audio source. It approves zero compositions or recordings and does not establish listening, Ukrainian musical review, physical-device, final native lifecycle, frozen offline or public acceptance. Earlier ledger revisions and all127 original payloads remain unchanged."
+            "Scoped soundtrack audio source review (functional recovery permissions): docs/verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/review.json sha256:553f11bdc57b5406d5d343fc45ef493d09456b271e2447339192ebd413bfcb7c. The ten ordered audio inputs now include rights, recovery, source and Music panel helpers; audio recipe inputs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998.",
+            "The independent recovery, rights, source, share and panel cohort passes 117/117. Recovery bytes require both redistribution and offline storage approval; denied or unknown storage permission keeps exact identities as references without audio. Standalone MP3 export retains its separate redistribution permission. The six original failing regressions and source-stage fpv42 are preserved beside the corrected evidence. Unchanged transport inputs retain the earlier scoped reviews in immutable history.",
+            "This is bounded functional source approval, including backup notice text. It approves zero compositions or recordings and does not establish the full host/store graph, listening, Ukrainian musical review, physical devices, final native lifecycle, frozen offline or public acceptance. All earlier ledger records and 127 original payloads remain unchanged. Complete production-history and exact-source release qualification remain separate gates."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 12
+        "revision": 14
       },
       "audio.confirm": {
         "description": "confirm audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -62,20 +62,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.confirm.field-kit", "revision": 11 },
+          "parent": { "id": "audio.confirm.field-kit", "revision": 13 },
           "prompt": "Create one original FPV Field Kit confirm audio cue for slot audio.confirm. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998"
         },
         "quality": {
           "evidence": [
-            "Scoped soundtrack audio source review (functional): docs/verification/soundtrack-v3-framework-2026-09-21/audio-review/review.json sha256:2f0a1fddc7a902d6f2a721415cd1333c18389e31eacc739ab4a7f47eb9906917; independent supplement docs/verification/soundtrack-v3-framework-2026-09-21/audio-independent-review/review.json sha256:0bb1a5f5ec6ebefa55da58358bd1f49fc99a81279df1b0fdb6b7f20703246125. Audio recipe inputs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98.",
-            "Final core tests pass263/263; the independent cohort passes93/93 and complete practice preservation passes5/5. Counts overlap. The review corrected Recording mode fallback to published audio with unknown video rights and the stale DB4 practice observer. Current/next deck ownership, cancellation, menu gestures, explicit pause, trusted rights and recovery are scoped source checks; authorship limits are disclosed.",
-            "The failed mixed host cohort remains retained; its exact Team picture binding successor needs a separate complete host retest. This declaration approves only bounded functional audio source. It approves zero compositions or recordings and does not establish listening, Ukrainian musical review, physical-device, final native lifecycle, frozen offline or public acceptance. Earlier ledger revisions and all127 original payloads remain unchanged."
+            "Scoped soundtrack audio source review (functional recovery permissions): docs/verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/review.json sha256:553f11bdc57b5406d5d343fc45ef493d09456b271e2447339192ebd413bfcb7c. The ten ordered audio inputs now include rights, recovery, source and Music panel helpers; audio recipe inputs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998.",
+            "The independent recovery, rights, source, share and panel cohort passes 117/117. Recovery bytes require both redistribution and offline storage approval; denied or unknown storage permission keeps exact identities as references without audio. Standalone MP3 export retains its separate redistribution permission. The six original failing regressions and source-stage fpv42 are preserved beside the corrected evidence. Unchanged transport inputs retain the earlier scoped reviews in immutable history.",
+            "This is bounded functional source approval, including backup notice text. It approves zero compositions or recordings and does not establish the full host/store graph, listening, Ukrainian musical review, physical devices, final native lifecycle, frozen offline or public acceptance. All earlier ledger records and 127 original payloads remain unchanged. Complete production-history and exact-source release qualification remain separate gates."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 12
+        "revision": 14
       },
       "audio.failure": {
         "description": "failure audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -87,20 +87,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.failure.field-kit", "revision": 11 },
+          "parent": { "id": "audio.failure.field-kit", "revision": 13 },
           "prompt": "Create one original FPV Field Kit failure audio cue for slot audio.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998"
         },
         "quality": {
           "evidence": [
-            "Scoped soundtrack audio source review (functional): docs/verification/soundtrack-v3-framework-2026-09-21/audio-review/review.json sha256:2f0a1fddc7a902d6f2a721415cd1333c18389e31eacc739ab4a7f47eb9906917; independent supplement docs/verification/soundtrack-v3-framework-2026-09-21/audio-independent-review/review.json sha256:0bb1a5f5ec6ebefa55da58358bd1f49fc99a81279df1b0fdb6b7f20703246125. Audio recipe inputs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98.",
-            "Final core tests pass263/263; the independent cohort passes93/93 and complete practice preservation passes5/5. Counts overlap. The review corrected Recording mode fallback to published audio with unknown video rights and the stale DB4 practice observer. Current/next deck ownership, cancellation, menu gestures, explicit pause, trusted rights and recovery are scoped source checks; authorship limits are disclosed.",
-            "The failed mixed host cohort remains retained; its exact Team picture binding successor needs a separate complete host retest. This declaration approves only bounded functional audio source. It approves zero compositions or recordings and does not establish listening, Ukrainian musical review, physical-device, final native lifecycle, frozen offline or public acceptance. Earlier ledger revisions and all127 original payloads remain unchanged."
+            "Scoped soundtrack audio source review (functional recovery permissions): docs/verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/review.json sha256:553f11bdc57b5406d5d343fc45ef493d09456b271e2447339192ebd413bfcb7c. The ten ordered audio inputs now include rights, recovery, source and Music panel helpers; audio recipe inputs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998.",
+            "The independent recovery, rights, source, share and panel cohort passes 117/117. Recovery bytes require both redistribution and offline storage approval; denied or unknown storage permission keeps exact identities as references without audio. Standalone MP3 export retains its separate redistribution permission. The six original failing regressions and source-stage fpv42 are preserved beside the corrected evidence. Unchanged transport inputs retain the earlier scoped reviews in immutable history.",
+            "This is bounded functional source approval, including backup notice text. It approves zero compositions or recordings and does not establish the full host/store graph, listening, Ukrainian musical review, physical devices, final native lifecycle, frozen offline or public acceptance. All earlier ledger records and 127 original payloads remain unchanged. Complete production-history and exact-source release qualification remain separate gates."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 12
+        "revision": 14
       },
       "audio.focus": {
         "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -112,20 +112,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.focus.field-kit", "revision": 11 },
+          "parent": { "id": "audio.focus.field-kit", "revision": 13 },
           "prompt": "Create one original FPV Field Kit focus audio cue for slot audio.focus. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998"
         },
         "quality": {
           "evidence": [
-            "Scoped soundtrack audio source review (functional): docs/verification/soundtrack-v3-framework-2026-09-21/audio-review/review.json sha256:2f0a1fddc7a902d6f2a721415cd1333c18389e31eacc739ab4a7f47eb9906917; independent supplement docs/verification/soundtrack-v3-framework-2026-09-21/audio-independent-review/review.json sha256:0bb1a5f5ec6ebefa55da58358bd1f49fc99a81279df1b0fdb6b7f20703246125. Audio recipe inputs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98.",
-            "Final core tests pass263/263; the independent cohort passes93/93 and complete practice preservation passes5/5. Counts overlap. The review corrected Recording mode fallback to published audio with unknown video rights and the stale DB4 practice observer. Current/next deck ownership, cancellation, menu gestures, explicit pause, trusted rights and recovery are scoped source checks; authorship limits are disclosed.",
-            "The failed mixed host cohort remains retained; its exact Team picture binding successor needs a separate complete host retest. This declaration approves only bounded functional audio source. It approves zero compositions or recordings and does not establish listening, Ukrainian musical review, physical-device, final native lifecycle, frozen offline or public acceptance. Earlier ledger revisions and all127 original payloads remain unchanged."
+            "Scoped soundtrack audio source review (functional recovery permissions): docs/verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/review.json sha256:553f11bdc57b5406d5d343fc45ef493d09456b271e2447339192ebd413bfcb7c. The ten ordered audio inputs now include rights, recovery, source and Music panel helpers; audio recipe inputs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998.",
+            "The independent recovery, rights, source, share and panel cohort passes 117/117. Recovery bytes require both redistribution and offline storage approval; denied or unknown storage permission keeps exact identities as references without audio. Standalone MP3 export retains its separate redistribution permission. The six original failing regressions and source-stage fpv42 are preserved beside the corrected evidence. Unchanged transport inputs retain the earlier scoped reviews in immutable history.",
+            "This is bounded functional source approval, including backup notice text. It approves zero compositions or recordings and does not establish the full host/store graph, listening, Ukrainian musical review, physical devices, final native lifecycle, frozen offline or public acceptance. All earlier ledger records and 127 original payloads remain unchanged. Complete production-history and exact-source release qualification remain separate gates."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 12
+        "revision": 14
       },
       "audio.music": {
         "description": "Theme music: existing bounded component with Field Kit tokens and state styling.",
@@ -137,20 +137,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.music.field-kit", "revision": 11 },
+          "parent": { "id": "audio.music.field-kit", "revision": 13 },
           "prompt": "Create one original FPV Field Kit theme music for slot audio.music. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998"
         },
         "quality": {
           "evidence": [
-            "Scoped soundtrack audio source review (functional): docs/verification/soundtrack-v3-framework-2026-09-21/audio-review/review.json sha256:2f0a1fddc7a902d6f2a721415cd1333c18389e31eacc739ab4a7f47eb9906917; independent supplement docs/verification/soundtrack-v3-framework-2026-09-21/audio-independent-review/review.json sha256:0bb1a5f5ec6ebefa55da58358bd1f49fc99a81279df1b0fdb6b7f20703246125. Audio recipe inputs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98.",
-            "Final core tests pass263/263; the independent cohort passes93/93 and complete practice preservation passes5/5. Counts overlap. The review corrected Recording mode fallback to published audio with unknown video rights and the stale DB4 practice observer. Current/next deck ownership, cancellation, menu gestures, explicit pause, trusted rights and recovery are scoped source checks; authorship limits are disclosed.",
-            "The failed mixed host cohort remains retained; its exact Team picture binding successor needs a separate complete host retest. This declaration approves only bounded functional audio source. It approves zero compositions or recordings and does not establish listening, Ukrainian musical review, physical-device, final native lifecycle, frozen offline or public acceptance. Earlier ledger revisions and all127 original payloads remain unchanged."
+            "Scoped soundtrack audio source review (functional recovery permissions): docs/verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/review.json sha256:553f11bdc57b5406d5d343fc45ef493d09456b271e2447339192ebd413bfcb7c. The ten ordered audio inputs now include rights, recovery, source and Music panel helpers; audio recipe inputs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998.",
+            "The independent recovery, rights, source, share and panel cohort passes 117/117. Recovery bytes require both redistribution and offline storage approval; denied or unknown storage permission keeps exact identities as references without audio. Standalone MP3 export retains its separate redistribution permission. The six original failing regressions and source-stage fpv42 are preserved beside the corrected evidence. Unchanged transport inputs retain the earlier scoped reviews in immutable history.",
+            "This is bounded functional source approval, including backup notice text. It approves zero compositions or recordings and does not establish the full host/store graph, listening, Ukrainian musical review, physical devices, final native lifecycle, frozen offline or public acceptance. All earlier ledger records and 127 original payloads remain unchanged. Complete production-history and exact-source release qualification remain separate gates."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.music.v1" },
-        "revision": 12
+        "revision": 14
       },
       "audio.pickup": {
         "description": "pickup audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -162,20 +162,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.pickup.field-kit", "revision": 11 },
+          "parent": { "id": "audio.pickup.field-kit", "revision": 13 },
           "prompt": "Create one original FPV Field Kit pickup audio cue for slot audio.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998"
         },
         "quality": {
           "evidence": [
-            "Scoped soundtrack audio source review (functional): docs/verification/soundtrack-v3-framework-2026-09-21/audio-review/review.json sha256:2f0a1fddc7a902d6f2a721415cd1333c18389e31eacc739ab4a7f47eb9906917; independent supplement docs/verification/soundtrack-v3-framework-2026-09-21/audio-independent-review/review.json sha256:0bb1a5f5ec6ebefa55da58358bd1f49fc99a81279df1b0fdb6b7f20703246125. Audio recipe inputs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98.",
-            "Final core tests pass263/263; the independent cohort passes93/93 and complete practice preservation passes5/5. Counts overlap. The review corrected Recording mode fallback to published audio with unknown video rights and the stale DB4 practice observer. Current/next deck ownership, cancellation, menu gestures, explicit pause, trusted rights and recovery are scoped source checks; authorship limits are disclosed.",
-            "The failed mixed host cohort remains retained; its exact Team picture binding successor needs a separate complete host retest. This declaration approves only bounded functional audio source. It approves zero compositions or recordings and does not establish listening, Ukrainian musical review, physical-device, final native lifecycle, frozen offline or public acceptance. Earlier ledger revisions and all127 original payloads remain unchanged."
+            "Scoped soundtrack audio source review (functional recovery permissions): docs/verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/review.json sha256:553f11bdc57b5406d5d343fc45ef493d09456b271e2447339192ebd413bfcb7c. The ten ordered audio inputs now include rights, recovery, source and Music panel helpers; audio recipe inputs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998.",
+            "The independent recovery, rights, source, share and panel cohort passes 117/117. Recovery bytes require both redistribution and offline storage approval; denied or unknown storage permission keeps exact identities as references without audio. Standalone MP3 export retains its separate redistribution permission. The six original failing regressions and source-stage fpv42 are preserved beside the corrected evidence. Unchanged transport inputs retain the earlier scoped reviews in immutable history.",
+            "This is bounded functional source approval, including backup notice text. It approves zero compositions or recordings and does not establish the full host/store graph, listening, Ukrainian musical review, physical devices, final native lifecycle, frozen offline or public acceptance. All earlier ledger records and 127 original payloads remain unchanged. Complete production-history and exact-source release qualification remain separate gates."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 12
+        "revision": 14
       },
       "audio.victory": {
         "description": "victory audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -187,20 +187,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.victory.field-kit", "revision": 11 },
+          "parent": { "id": "audio.victory.field-kit", "revision": 13 },
           "prompt": "Create one original FPV Field Kit victory audio cue for slot audio.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998"
         },
         "quality": {
           "evidence": [
-            "Scoped soundtrack audio source review (functional): docs/verification/soundtrack-v3-framework-2026-09-21/audio-review/review.json sha256:2f0a1fddc7a902d6f2a721415cd1333c18389e31eacc739ab4a7f47eb9906917; independent supplement docs/verification/soundtrack-v3-framework-2026-09-21/audio-independent-review/review.json sha256:0bb1a5f5ec6ebefa55da58358bd1f49fc99a81279df1b0fdb6b7f20703246125. Audio recipe inputs sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98.",
-            "Final core tests pass263/263; the independent cohort passes93/93 and complete practice preservation passes5/5. Counts overlap. The review corrected Recording mode fallback to published audio with unknown video rights and the stale DB4 practice observer. Current/next deck ownership, cancellation, menu gestures, explicit pause, trusted rights and recovery are scoped source checks; authorship limits are disclosed.",
-            "The failed mixed host cohort remains retained; its exact Team picture binding successor needs a separate complete host retest. This declaration approves only bounded functional audio source. It approves zero compositions or recordings and does not establish listening, Ukrainian musical review, physical-device, final native lifecycle, frozen offline or public acceptance. Earlier ledger revisions and all127 original payloads remain unchanged."
+            "Scoped soundtrack audio source review (functional recovery permissions): docs/verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/review.json sha256:553f11bdc57b5406d5d343fc45ef493d09456b271e2447339192ebd413bfcb7c. The ten ordered audio inputs now include rights, recovery, source and Music panel helpers; audio recipe inputs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998.",
+            "The independent recovery, rights, source, share and panel cohort passes 117/117. Recovery bytes require both redistribution and offline storage approval; denied or unknown storage permission keeps exact identities as references without audio. Standalone MP3 export retains its separate redistribution permission. The six original failing regressions and source-stage fpv42 are preserved beside the corrected evidence. Unchanged transport inputs retain the earlier scoped reviews in immutable history.",
+            "This is bounded functional source approval, including backup notice text. It approves zero compositions or recordings and does not establish the full host/store graph, listening, Ukrainian musical review, physical devices, final native lifecycle, frozen offline or public acceptance. All earlier ledger records and 127 original payloads remain unchanged. Complete production-history and exact-source release qualification remain separate gates."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 12
+        "revision": 14
       },
       "control.ability": {
         "description": "Brackets around an active diamond: class ability binding.",
@@ -9149,14 +9149,14 @@
       }
     },
     "bindings": {
-      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 12 },
-      "audio.capture": { "id": "audio.capture.field-kit", "revision": 12 },
-      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 12 },
-      "audio.failure": { "id": "audio.failure.field-kit", "revision": 12 },
-      "audio.focus": { "id": "audio.focus.field-kit", "revision": 12 },
-      "audio.music": { "id": "audio.music.field-kit", "revision": 12 },
-      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 12 },
-      "audio.victory": { "id": "audio.victory.field-kit", "revision": 12 },
+      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 14 },
+      "audio.capture": { "id": "audio.capture.field-kit", "revision": 14 },
+      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 14 },
+      "audio.failure": { "id": "audio.failure.field-kit", "revision": 14 },
+      "audio.focus": { "id": "audio.focus.field-kit", "revision": 14 },
+      "audio.music": { "id": "audio.music.field-kit", "revision": 14 },
+      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 14 },
+      "audio.victory": { "id": "audio.victory.field-kit", "revision": 14 },
       "control.ability": { "id": "control.ability.field-kit", "revision": 2 },
       "control.boost": { "id": "control.boost.field-kit", "revision": 2 },
       "control.cancel": { "id": "control.cancel.field-kit", "revision": 2 },
@@ -9921,7 +9921,7 @@
       "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 15 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 41 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 43 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -9949,7 +9949,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 41 },
+  "source": { "id": "field-kit", "revision": 43 },
   "urls": {
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
     "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65": "./assets/0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65.png",

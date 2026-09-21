@@ -1,0 +1,2253 @@
+{
+  "format": "revealline-test-source-hydration.v1",
+  "recordedUTC": "2026-09-21T02:21:23.641223+00:00",
+  "head": "2248f7f35ac5ad75b8bdff5aaa66ca45417180be",
+  "selection": "All exact pin paths in the four production registers, history index bodies, explicit round-06 metadata/workflow/skills, and the complete seven-test local executable import closure. No existing files overwritten.",
+  "tests": [
+    "scripts/test-production-countercurrent.mjs",
+    "scripts/test-production-fracture-themes.mjs",
+    "scripts/test-production-metadata-history.mjs",
+    "scripts/test-production-panel.mjs",
+    "scripts/test-production-register.mjs",
+    "scripts/test-production-sentinel-themes.mjs",
+    "scripts/test-production-source-history.mjs"
+  ],
+  "selectedFiles": 172,
+  "hydratedFiles": 115,
+  "hydratedBytes": 167091083,
+  "capBytes": 268435456,
+  "minimumFreeBytes": 1073741824,
+  "freeBeforeBytes": 9543647232,
+  "freeAfterBytes": 9375154176,
+  "files": [
+    {
+      "path": "authoring/library/1994-forever-art/originals/last-train-cassette.png",
+      "gitBlob": "9c75e301856efa39602ad009d1869159ba0b3962",
+      "headBytes": 2429841,
+      "actualBytes": 2429841,
+      "sha256": "cac113104f328a57eb7e5f857c5e381aae8d3d1aa0541ba426fdb1f87506d63c",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/1994-forever-art/originals/midnight-arcade.png",
+      "gitBlob": "fb6aeb4371ff57ea032c58ad5defa23baf7ad303",
+      "headBytes": 2522301,
+      "actualBytes": 2522301,
+      "sha256": "8782b71fffc1f84b7c802d1740cec684bbcf1738beb4528106135311afdc72f0",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/1994-forever-art/originals/rainy-video-rental.png",
+      "gitBlob": "cca07244532a7ae0a40931c40dda430c7383d57a",
+      "headBytes": 2779895,
+      "actualBytes": 2779895,
+      "sha256": "03288b467e66b56ad6068142f26db2cd597e4cfc9547bf679af4d043aba1a1f9",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/1994-forever-art/provenance.json",
+      "gitBlob": "ec58d509a356f556ec03d9469564e941c50baade",
+      "headBytes": 6650,
+      "actualBytes": 6650,
+      "sha256": "337a8f5ab80e7f843e41d99fb13d64d9486632c5ab87f34f3a15c3050c2cfd5c",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/challenge-chapter-art/originals/crosswind-depot.png",
+      "gitBlob": "9e38797a96ba41a8eb466283c66b5384428038a1",
+      "headBytes": 3136739,
+      "actualBytes": 3136739,
+      "sha256": "c7cd2e7d98ecea4b02a63a46da583e2cdd3bcfe627fb929c06235e39fca2ee04",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/challenge-chapter-art/originals/signal-switchback.png",
+      "gitBlob": "edf8d203055fbaeb6e352535ab583b451cbbbf9f",
+      "headBytes": 3047928,
+      "actualBytes": 3047928,
+      "sha256": "2f454f321578454b79d6f01205b1e25ab2364d1d1cbb58fb98b9a8197f6ae345",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/challenge-chapter-art/originals/split-signal-foundry.png",
+      "gitBlob": "35ec3d754394ab8421f5767e59e654f9816a4723",
+      "headBytes": 2765609,
+      "actualBytes": 2765609,
+      "sha256": "dfc6398db48c897df00254f4516704b44b134a9bfbb4bd993d659996077f0749",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/challenge-chapter-art/provenance.json",
+      "gitBlob": "66a395451492ecdd6a40ab4cd25504de7b664788",
+      "headBytes": 3861,
+      "actualBytes": 3861,
+      "sha256": "4bea88060c4d5b8b6e484e6ba85afebe4b22ff315ab03c327b8916321caa9d18",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/manifest.json",
+      "gitBlob": "75cb7c15c3adf86a89f77452267c9e658c85f995",
+      "headBytes": 9279,
+      "actualBytes": 9279,
+      "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-coupa.png",
+      "gitBlob": "5a27c5be5bc6686ed65a2e08703ad91f437ad129",
+      "headBytes": 2897299,
+      "actualBytes": 2897299,
+      "sha256": "1615b543d0fd311343d586fb70c877b22f9399c12dae7342101a491f6ae6f5e5",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-fpv.png",
+      "gitBlob": "0a21c5ae0ba7e4971295eaa7a562b84859b9c0f3",
+      "headBytes": 1953105,
+      "actualBytes": 1953105,
+      "sha256": "6a191c14e5de093a69e5845af2e39c3246feac3f9eae1ed8e19341214a7a2811",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-retro.png",
+      "gitBlob": "1d929f1e1c197354360289b980a0bf48cc45fb33",
+      "headBytes": 2426061,
+      "actualBytes": 2426061,
+      "sha256": "498dca62d17a4e59c486bbea7a023b9e8aa11cf69cba169092a4671d0fde8e99",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-ukraine.png",
+      "gitBlob": "c343ae53bfa0720cb51d2b603bf4e76c9305ca8f",
+      "headBytes": 2447624,
+      "actualBytes": 2447624,
+      "sha256": "2ac1edcab88ec92348e7c3118503b109724bb551f7a2a290532f2a0355ae29d4",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-coupa.png",
+      "gitBlob": "68af138eecd9fab195a5a509142abdb8b64f7e58",
+      "headBytes": 2735312,
+      "actualBytes": 2735312,
+      "sha256": "87b28d2fec477a7572f10c83e9ec6e2ed7ef3386818f21d651e1d1897df30997",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-fpv.png",
+      "gitBlob": "a9e1747ba8fcf3acff9200c8c684909c4ce5d30c",
+      "headBytes": 2571756,
+      "actualBytes": 2571756,
+      "sha256": "93a52b10713a088729964e86c14c2999325885f28825455f335ea1e6edff7842",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-retro.png",
+      "gitBlob": "3c03b8cd3678ca68d3b3d82593a6217ff4841e1b",
+      "headBytes": 2698820,
+      "actualBytes": 2698820,
+      "sha256": "26fa92a40658fe2499655e7c4aa9ea29cd03060c9967d93945960d8f1c12c16e",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-ukraine.png",
+      "gitBlob": "17b14d9b723ff20da47731332d4ae72adad5030b",
+      "headBytes": 3047188,
+      "actualBytes": 3047188,
+      "sha256": "697a6980465d20d93c6b5e51a38eb05855910d019b6d4a1ab8ce88081b5ba195",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-coupa.png",
+      "gitBlob": "21661cc316260c655fe0100f780b6c25a3b73859",
+      "headBytes": 2884014,
+      "actualBytes": 2884014,
+      "sha256": "ea643aa1735edba5f5ba8c6ca0cb3ee3d671cb37534a06966e505f42d938fe14",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-fpv.png",
+      "gitBlob": "43482aa5e4dbfefca39848f9355b99c6ae4f1a70",
+      "headBytes": 2534483,
+      "actualBytes": 2534483,
+      "sha256": "71c6ec5acd362215811107b783ea1e8942c8c45bee20f43002b00dfb3ed2e5b0",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-retro.png",
+      "gitBlob": "6bc5ffeb57c4a037abbc1ae28e7b505dc80f4ac6",
+      "headBytes": 2489771,
+      "actualBytes": 2489771,
+      "sha256": "1ebdd0087fa096feff52c568587c55a1c8a41aca95b7b3ccfa143d1aa7d1e3bf",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-ukraine.png",
+      "gitBlob": "2c543078e0292dbfb95a7c92e740d083ccc62920",
+      "headBytes": 3007068,
+      "actualBytes": 3007068,
+      "sha256": "6ffd72d30d946af28111434e666a86cf5977d81de2beb33d8d0c547a33c02a24",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-art/provenance.json",
+      "gitBlob": "5ac12022e7406ca64b33b145f7cd7ef1d0568f0e",
+      "headBytes": 25236,
+      "actualBytes": 25236,
+      "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-chapters/descriptors/coupa.json",
+      "gitBlob": "371654ec93ab7dfba3e11a455dc270ea69b905e0",
+      "headBytes": 1744,
+      "actualBytes": 1744,
+      "sha256": "82210b6f6f025fb97d7cd5c66516b3cea2b5c2668d3ba522fe64fbdf00b6dba1",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-chapters/descriptors/fpv.json",
+      "gitBlob": "4a5fb2e21db1db2e87e1546e67a283afcfa7018f",
+      "headBytes": 1726,
+      "actualBytes": 1726,
+      "sha256": "662b3632d0ce6940cc12f3d4915e62c6bf490a3f6a1b304cb02b8934c36a104e",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-chapters/descriptors/retro.json",
+      "gitBlob": "5f80bdbf3f3c02d539bca54ed6c3993b17ef000a",
+      "headBytes": 1744,
+      "actualBytes": 1744,
+      "sha256": "003a87e724987186862e18254e6806cdc4e3d7956730cfed9225a3069d715f46",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-chapters/descriptors/ukraine.json",
+      "gitBlob": "5d9a98c77370590539497fc37fa6a09aa49386e5",
+      "headBytes": 1762,
+      "actualBytes": 1762,
+      "sha256": "20fc0e98830798809a0807aa4d41033d5c35680944456b4656cd3d5484b70aa1",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent-chapters/editions.json",
+      "gitBlob": "c04d2d10017c5d58b0090886edfce0ee4a27d62c",
+      "headBytes": 6719,
+      "actualBytes": 6719,
+      "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/countercurrent/layouts.json",
+      "gitBlob": "eb56c3248de1e5ed80cacaecd1f73432a12d46cf",
+      "headBytes": 5735,
+      "actualBytes": 5735,
+      "sha256": "daaeb40b6260ada3632d602d42b41788fb0c36de109bcc0a1f648018112f3abc",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["authoring/production/register-countercurrent.json"]
+    },
+    {
+      "path": "authoring/library/dawn-signal-story/candidate-v1/dawn-signal.mp4",
+      "gitBlob": "c42fe110a01c088772b06d7c5ab341dea81143c6",
+      "headBytes": 713732,
+      "actualBytes": 713732,
+      "sha256": "d643a6ebbf92b93dc57a0cfe65ca4bcf484ceecd8ed632ed6476707ec720e85a",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/dawn-signal-story/candidate-v1/frame-95.png",
+      "gitBlob": "dd5aadf97799b7b906c1c3b6d16444429d1fc554",
+      "headBytes": 442522,
+      "actualBytes": 442522,
+      "sha256": "7f851f9806a1be994b2279f3d1acc4f2f39884ac6cf2fdf6b8a7813e61c73745",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/dawn-signal-story/candidate-v1/native-inspection.json",
+      "gitBlob": "a384fbe4b1d14e1ee747e017af27704ef760893e",
+      "headBytes": 16540,
+      "actualBytes": 16540,
+      "sha256": "574953a11d125edfb0d76a7af80c24741f5682ad81f89836a7a2459cff84e8ef",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/dawn-signal-story/provenance.json",
+      "gitBlob": "5109ac5686c3f38ecb41df50cb76d9178d578612",
+      "headBytes": 7008,
+      "actualBytes": 7008,
+      "sha256": "29037037cc5f866b59e6b3b4f70d66d810f4cba17bab6a18eb5a37611707ed00",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/external-chapter-pilot/descriptor.json",
+      "gitBlob": "5964b5eb6dadb4418528733512294f591b32ba61",
+      "headBytes": 1759,
+      "actualBytes": 1759,
+      "sha256": "3e34ccd73ae64fb439014e9364739293946a99d8932800a091fbb7f3225b1624",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/chapters.json",
+      "gitBlob": "b25ac9d23adb41d36286e2e73233288f17ffcd11",
+      "headBytes": 5847,
+      "actualBytes": 5847,
+      "sha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/distribution.json",
+      "gitBlob": "9832f254195f067aecada3df321bb55b85413c1a",
+      "headBytes": 4255,
+      "actualBytes": 4255,
+      "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/four-worlds-source/catalog.json",
+      "gitBlob": "945b269ae7596cc510280197cb912ea588661d31",
+      "headBytes": 12360,
+      "actualBytes": 12360,
+      "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fpv-pressure-art/originals/courtyard-exits.png",
+      "gitBlob": "117de9480c90f425cc4aaa398408e414c05f5834",
+      "headBytes": 2912184,
+      "actualBytes": 2912184,
+      "sha256": "e87e23b60bb32a51d92aa535737420c87ae25d56520ba624eee39054ca2fce62",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fpv-pressure-art/originals/night-crossfire.png",
+      "gitBlob": "d66fc80323d9bc4fa7c3ceaa5eccc7862774a934",
+      "headBytes": 2113587,
+      "actualBytes": 2113587,
+      "sha256": "139a1860eb42e8c315b4bcd997acb1d41fa315db29a1330ebba89b474d67b618",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fpv-pressure-art/originals/orchard-crossing.png",
+      "gitBlob": "8cb6a745cf03a3b45641b7a0cbb13d7cfd177f24",
+      "headBytes": 2999096,
+      "actualBytes": 2999096,
+      "sha256": "20f3a1c03a074d3aae981c989cb063a092d577cb0c0318ea4a1fd1df1d0653fc",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fpv-pressure-art/provenance.json",
+      "gitBlob": "7ed593fdc269389a69f9f0f1e78f8220057ef416",
+      "headBytes": 7620,
+      "actualBytes": 7620,
+      "sha256": "62b1c68194c5fdffba885e7d2432f496651fc50f94875db404283378064048a3",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fpv-route-choices/distribution.json",
+      "gitBlob": "7a176a0b1d4f4200d36d01f8cedeff96ad35721d",
+      "headBytes": 3446,
+      "actualBytes": 3446,
+      "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-coupa-art/originals/fault-fan-coupa.png",
+      "gitBlob": "59329e81b2d7db7203f64aa19fd3e03cd60d7a30",
+      "headBytes": 2950816,
+      "actualBytes": 2950816,
+      "sha256": "e857e9fe8f6876c1bdf628e39606dde1b9c6efa987d913cec2064b86bc530d70",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-coupa-art/originals/frayed-causeway-coupa.png",
+      "gitBlob": "7fe7ae344dbc127f154bedfd1e5c851c7009f824",
+      "headBytes": 2698848,
+      "actualBytes": 2698848,
+      "sha256": "b4b5d78c29a5bfa1345297baf28d8851fb81a51acbc86bd1926e428e4b9d23cb",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-coupa-art/originals/split-ring-coupa.png",
+      "gitBlob": "fa63c6f8292cfe392bf68cf81d8dae026b225137",
+      "headBytes": 3057159,
+      "actualBytes": 3057159,
+      "sha256": "d914da1caf4b59d1892603154514fc865db460595ce8929d43841f1fd94d4362",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-coupa-art/provenance.json",
+      "gitBlob": "4fa84d1dfe089dee1561fb7c26dd5f95e9b19069",
+      "headBytes": 9538,
+      "actualBytes": 9538,
+      "sha256": "3709b1a56f5e88f2335c8fcd50b82c3f7efa4de8f89585db6b6af3325c7898d8",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/fault-fan-fpv.json",
+      "gitBlob": "6c20b8df14b3d9f10a49c43f76a008ba2d874dda",
+      "headBytes": 4033,
+      "actualBytes": 4033,
+      "sha256": "3af3532a160f27cc37796bd36b480d71f0409974732aeea02346bf6454e7e898",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/frayed-causeway-fpv.json",
+      "gitBlob": "7fe429817b846b8e747169b1fb5ea6da209a40bb",
+      "headBytes": 4194,
+      "actualBytes": 4194,
+      "sha256": "ac48d1abe7269c13e73f158fe4d0125a17be1499e9f884eb4666f4f68a0c7e21",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/originals/fault-fan-fpv.png",
+      "gitBlob": "9a7d4b18f7c2aa96bd1c2fd21e59e50075308ddd",
+      "headBytes": 2796382,
+      "actualBytes": 2796382,
+      "sha256": "15474a7d695861364fc6a9a131c1849c7a5e72c65b011450b589eacde7635ec8",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/originals/frayed-causeway-fpv.png",
+      "gitBlob": "6d7238af21650ca9e9820bf8384566e8140cbc3f",
+      "headBytes": 2938361,
+      "actualBytes": 2938361,
+      "sha256": "5aae2f84912ca35b7145617c98d3c4ecac72a93d8d6cc04558d86873ca0938f1",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/originals/split-ring-fpv.png",
+      "gitBlob": "72b690d61f2ab9260b17d9ec0b8f34058ef79b46",
+      "headBytes": 2922125,
+      "actualBytes": 2922125,
+      "sha256": "db9bf4302c55608657f63f1660c4e5859669511942416586d1a6e1fb5394f0b2",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/split-ring-fpv.json",
+      "gitBlob": "b4be14ac2f2c468f34727c56fc188bfb36aeb0b0",
+      "headBytes": 4118,
+      "actualBytes": 4118,
+      "sha256": "0783f15583901347b39070c6a30890b502d1a5cae7a1aec23c6eb559717e9ba9",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-lines-chapter/descriptor.json",
+      "gitBlob": "b0e4bcf1feba8e3fcb2a56e77eafd66c526e92e2",
+      "headBytes": 1741,
+      "actualBytes": 1741,
+      "sha256": "1b51df9beeb4fc8e22eec48d342cf2eb9773a15ec67f9459e92e205121096aa8",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-lines-chapter/edition.json",
+      "gitBlob": "2e89d5fcf78ed3afa1ed38feccc767e1f218ce70",
+      "headBytes": 1230,
+      "actualBytes": 1230,
+      "sha256": "4dbb016b650803670a9f842acd83a699c61165f88cb2efa5bda3beae06c1cb23",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-lines/layouts.json",
+      "gitBlob": "27fcbf9b4049e5602f84c3390329f8ca5e80cafb",
+      "headBytes": 7669,
+      "actualBytes": 7669,
+      "sha256": "af15577704ce673100f7c6d89ae92baffa25c5ebfdae2459ea4c720a9d7ab179",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-retro-art/originals/fault-fan-retro.png",
+      "gitBlob": "a08764815c38419b9f63621c0cc0af70a65be012",
+      "headBytes": 2405219,
+      "actualBytes": 2405219,
+      "sha256": "7e9e33577743b8cfdb36566034f6c7d826ddebb421de4c528d878cae5f6d10d7",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-retro-art/originals/frayed-causeway-retro.png",
+      "gitBlob": "1ab251bd13231585b9406079c03d72a8c49fe0a2",
+      "headBytes": 2731032,
+      "actualBytes": 2731032,
+      "sha256": "0b9ac9c6f0f936fa123672a383709014fdfa175e4d5309a5fa81422412a3df8b",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-retro-art/originals/split-ring-retro.png",
+      "gitBlob": "b4fe2b564a77681e4c4ac7421d233122b1f80efe",
+      "headBytes": 2818631,
+      "actualBytes": 2818631,
+      "sha256": "8618e6f3aac280c915ae9cdd10fe53ee36afad9273e2de9e81748852a09369d9",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-retro-art/provenance.json",
+      "gitBlob": "959e76f9de658860f8cd2ec509cbe2c0d0d2337c",
+      "headBytes": 9146,
+      "actualBytes": 9146,
+      "sha256": "0838b853611aa53f97336e8971b9ec429ec48c13b0b91c91df3a212d7cff2197",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-theme-chapters/descriptors/coupa.json",
+      "gitBlob": "718af0deba145dffa373dbebe2cf7a6dd3d38409",
+      "headBytes": 1739,
+      "actualBytes": 1739,
+      "sha256": "44f8208565215c4494916107494f55bd9f16b7e1c3adff9a764381597dc0ee1e",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-theme-chapters/descriptors/retro.json",
+      "gitBlob": "49b799dc31d31275a4e729cd537b3c8523f5008b",
+      "headBytes": 1739,
+      "actualBytes": 1739,
+      "sha256": "2577c7acbc6e2f72cc5d974b5ff831d51a658b9bc46ff42a9e8b746c0da10f70",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-theme-chapters/descriptors/ukraine.json",
+      "gitBlob": "2bf2d0279420f3a86dddfc8aa840af688610926e",
+      "headBytes": 1757,
+      "actualBytes": 1757,
+      "sha256": "1c40ef018d8154d13e617dca228021121638cc5e0452b023cb0b8b0e6e0b5013",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-theme-chapters/editions.json",
+      "gitBlob": "ae2f412c2b9e5548be97d35d4cdb407e2fbfa4c6",
+      "headBytes": 5806,
+      "actualBytes": 5806,
+      "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/fault-fan-ukraine.png",
+      "gitBlob": "6db325ab34d106b1b6329895bf923daf09f862c6",
+      "headBytes": 2981883,
+      "actualBytes": 2981883,
+      "sha256": "ad53eeeb26cd508212d5dff1893688ba0aed9cf3ce12efc236d93fb0db4b8822",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/frayed-causeway-ukraine.png",
+      "gitBlob": "04d0851b97b12d17c3dd7086566c4b9bf72e2ea7",
+      "headBytes": 2983333,
+      "actualBytes": 2983333,
+      "sha256": "65dc84fbb7fcd068cf4bb7ad4b13193f0f9c1393e71b85fa629c1a16b9e717ab",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/split-ring-ukraine.png",
+      "gitBlob": "4fe9ce548b14ecb16314b409760370e15b7f5f2e",
+      "headBytes": 2756776,
+      "actualBytes": 2756776,
+      "sha256": "1771010fd554d44713b7fc644f8ab8cbd42a41accfc16e6a564771dffcc59ac9",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/provenance.json",
+      "gitBlob": "531dcabfc265863b3f2b6be7c0889e943c252ab8",
+      "headBytes": 10895,
+      "actualBytes": 10895,
+      "sha256": "f8a0f11cc6facfb14b3b1e70de0c2ca3005ce46f2e3a197a15e50e0f2212fe2f",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/retro-route-art/originals/crosswind-courier.png",
+      "gitBlob": "bc9749cd85955ecdb367c93676bd9c9605746981",
+      "headBytes": 2760396,
+      "actualBytes": 2760396,
+      "sha256": "a18d10b88cbd52432436c473b45405950708df48ff115264ea47a56500cba80f",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/retro-route-art/originals/midnight-workshop.png",
+      "gitBlob": "4b6fa4302ba79a829143194b9dad587079e6a3f6",
+      "headBytes": 2378256,
+      "actualBytes": 2378256,
+      "sha256": "39e0cb08e60bcdfafa93a4e57be6a2fb6751c6d72659360e2aa84534a57568a7",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/retro-route-art/originals/signal-thread.png",
+      "gitBlob": "8d19b3ebdb79bc32edf6be6aea089c323fd96db8",
+      "headBytes": 2440128,
+      "actualBytes": 2440128,
+      "sha256": "9e21db2d3ce3b29eef175afb6244a0bf4a1a63f3009803619b681cbb4d67b6b4",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/retro-route-art/provenance.json",
+      "gitBlob": "ce98fe0267d5fa0eaec39cbf887daeea66fabc01",
+      "headBytes": 4104,
+      "actualBytes": 4104,
+      "sha256": "286114f072ac5f73f4aa1d840553d2a03eab7a40a828ef71343a89d5ef579133",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/round-06-fpv/media.json",
+      "gitBlob": "ee3095555c28fc91c224b5078b02aa77f835ad82",
+      "headBytes": 8119,
+      "actualBytes": 8119,
+      "sha256": "569a0b6d23773c04639d91f063b75ee985683a43515ebfe6deb1a561e3d67be7",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": ["test-production-register explicit metadata source"]
+    },
+    {
+      "path": "authoring/library/route-worlds/build.mjs",
+      "gitBlob": "bf4289b797c98c440e3f7d9e7e1bc58badc02c7e",
+      "headBytes": 13370,
+      "actualBytes": 13370,
+      "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/route-worlds/descriptors/coupa.json",
+      "gitBlob": "a8add696cfe8dc2aa8f27a6130e3c98df94e91e1",
+      "headBytes": 1730,
+      "actualBytes": 1730,
+      "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/route-worlds/descriptors/retro.json",
+      "gitBlob": "4976336ef5df8cdfe9148c4fff014fbd8e633ab5",
+      "headBytes": 1730,
+      "actualBytes": 1730,
+      "sha256": "f0c9a6ca4a4b9b3f2ff1a28fa0eaad48ff6d6553a8ded0b193c87d6b0aee2bf1",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/route-worlds/descriptors/ukraine.json",
+      "gitBlob": "6c926a791513d5c89e43dd25485867d3e23ddd1a",
+      "headBytes": 1754,
+      "actualBytes": 1754,
+      "sha256": "256c3f7ae7c6a7aa2878113ea3438dd9428844d69b7087c2dc8e56ec197db908",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/route-worlds/editions.json",
+      "gitBlob": "81fa3221cdf75f9929fb4eb5f9df190cfc9f207a",
+      "headBytes": 2049,
+      "actualBytes": 2049,
+      "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/originals/listening-court.png",
+      "gitBlob": "7a6eca51834c03c3c11a3049426c55ec931c98cd",
+      "headBytes": 2948372,
+      "actualBytes": 2948372,
+      "sha256": "1fc560183995092042e7ddbdfe7020412498f177f1f57cbae2e987c78fdb70e1",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/originals/open-the-circuit.png",
+      "gitBlob": "67dabd26dab6961ddee412e5fc2db83005926f0d",
+      "headBytes": 2701967,
+      "actualBytes": 2701967,
+      "sha256": "102d6083b7dcc21a6a310e80e6e19ee1357fa7f117e3de895db8848829426fe3",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/originals/switchyard-gates.png",
+      "gitBlob": "69425f59b3b5a11c7411c3f06f5b668caee64c3c",
+      "headBytes": 2933729,
+      "actualBytes": 2933729,
+      "sha256": "d6160676bdd2bb8b1e0f79bcc39736321881a9320f1482a8c844ab4c673cc6b3",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/provenance.json",
+      "gitBlob": "a0abf83dc98cf492a8763d6688c45aff1363da7f",
+      "headBytes": 4445,
+      "actualBytes": 4445,
+      "sha256": "a863d2401e01f9107d59d30b9e54daf1a7ebc27235f04d351584e5e5dd83eda7",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-external/build.mjs",
+      "gitBlob": "5bd3fd8f82f79fce708d967e2c9cf436dfced900",
+      "headBytes": 10172,
+      "actualBytes": 10172,
+      "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-external/descriptor.json",
+      "gitBlob": "6ad530d579c166e230f712834ce11359c676a885",
+      "headBytes": 1766,
+      "actualBytes": 1766,
+      "sha256": "4bfccdbd97cddc63b5a89b10e07aacbab9e45cfc20a8aa154f6d0142815c539d",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-circuit/routes.json",
+      "gitBlob": "b86c9d49b801c965efbe34aa674da70237a69e29",
+      "headBytes": 1296963,
+      "actualBytes": 1296963,
+      "sha256": "eb235f9bc26ea3670137f3f7d7ac86ac5e8c4b56b98502b8ef61f0ad98d95e70",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+      "gitBlob": "84548d040b6271c89f6cd268499d8ca046862d0c",
+      "headBytes": 2767187,
+      "actualBytes": 2767187,
+      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+      "gitBlob": "fd26bfd5703dfc561275785623ce16a3faa16608",
+      "headBytes": 2449288,
+      "actualBytes": 2449288,
+      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+      "gitBlob": "553e3885221fa6f484367bf35b2a4f2bdd97d5b8",
+      "headBytes": 2187660,
+      "actualBytes": 2187660,
+      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/provenance.json",
+      "gitBlob": "f51b0f8355055a0f73fb8a60d1a049eef650ef40",
+      "headBytes": 16174,
+      "actualBytes": 16174,
+      "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/retro/originals/listening-court.png",
+      "gitBlob": "94f0ffbc4cfd0c0972243fd2be39ab7a15d04431",
+      "headBytes": 2455383,
+      "actualBytes": 2455383,
+      "sha256": "93c98fc631c7148040d42d8818153e55c32a562096dfc39c66af7d008df9e6cf",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/retro/originals/open-the-circuit.png",
+      "gitBlob": "6507b12a377fbcd4325495caff83d028c8403c8d",
+      "headBytes": 2423183,
+      "actualBytes": 2423183,
+      "sha256": "03a1ee0b83a70df661885d0c9da0c2830a2349b583556be1012ee07264405eee",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/retro/originals/switchyard-gates.png",
+      "gitBlob": "24430e8fc58637cfee0a2c3902fc903c6d6b50c6",
+      "headBytes": 2662328,
+      "actualBytes": 2662328,
+      "sha256": "0acd0b721c9d066e890970a1e6d429f4d2ccb8d94b31893e2fdae34f37a75239",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/ukraine/originals/listening-court.png",
+      "gitBlob": "e2d147d23a61148b3d9f5ddab95d004775c28a76",
+      "headBytes": 3018491,
+      "actualBytes": 3018491,
+      "sha256": "f67723506534671cf8a1979d45f07f2fb442ba08485009924f211540a54bdb91",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/ukraine/originals/open-the-circuit.png",
+      "gitBlob": "08fc567964dd025f6b12085279b5e863a421a439",
+      "headBytes": 2462247,
+      "actualBytes": 2462247,
+      "sha256": "47fde83552f6fc155f4efc41ca834c8a672b116fb392c5bdd893d6f8e6565ebb",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/ukraine/originals/switchyard-gates.png",
+      "gitBlob": "f64898ddcea356f75832fca37b81ab29ea58eaab",
+      "headBytes": 2682645,
+      "actualBytes": 2682645,
+      "sha256": "2d8864ab2d18b130d80f0f8b3738689f00cf65e68093286753e5485db1c3d0a3",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-chapters/descriptors/coupa.json",
+      "gitBlob": "9adc1a486dbfb7d55e18f56def4489d8a77c58be",
+      "headBytes": 1790,
+      "actualBytes": 1790,
+      "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-chapters/descriptors/retro.json",
+      "gitBlob": "54a3b500f7ea9be4dccda349c4c9ed59d9d6ee42",
+      "headBytes": 1790,
+      "actualBytes": 1790,
+      "sha256": "071967ad32c7904d07c61e24e8467aa88ddf30c6302a4978646a771c9878cd22",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-chapters/descriptors/ukraine.json",
+      "gitBlob": "7b0c3a0b495243cfcb15ca33ff283a420c8a99b0",
+      "headBytes": 1814,
+      "actualBytes": 1814,
+      "sha256": "af6775110e4ce60c4e5bd90481eaada43cce785e4b2580fe10d7dbb3614afb20",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/sentinel-theme-chapters/editions.json",
+      "gitBlob": "335d70ded234104fe5a7b8b8112089f4fcbc1a08",
+      "headBytes": 8414,
+      "actualBytes": 8414,
+      "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json"
+      ]
+    },
+    {
+      "path": "authoring/library/spend-network-art/originals/city-savings-observatory.png",
+      "gitBlob": "1cf9389f405fecf7f529db51b23134380fb8b5f4",
+      "headBytes": 2702090,
+      "actualBytes": 2702090,
+      "sha256": "71e39606ce0283c0bb6fe120f22e2429415aba1d9dac0d412f629b686ba82175",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/spend-network-art/originals/shared-value-harbor.png",
+      "gitBlob": "58673a9204dcbd7c6b330785696bbf2a93101afa",
+      "headBytes": 2577915,
+      "actualBytes": 2577915,
+      "sha256": "d80e371a2bc008ce1b893268725add92a5b9a18bc8589e7b5145cbb4a75b46fa",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/spend-network-art/originals/thoughtful-market-workshop.png",
+      "gitBlob": "121f171f155916467cb7f7c750f2e021d1b5eae3",
+      "headBytes": 3005071,
+      "actualBytes": 3005071,
+      "sha256": "4f64115023245871c5ae126ddc8f711e9b0b48d130316045a1ba3baf08934fa0",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/spend-network-art/provenance.json",
+      "gitBlob": "f25f9eb1b7234802e2c9fd7c8ddb07f8fb89e42b",
+      "headBytes": 8373,
+      "actualBytes": 8373,
+      "sha256": "e9210678ac08512c8962a15b11f01bd98ea3a626379c246d442e35d2cc8d3cf6",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/spend-route-art/originals/network-garden.png",
+      "gitBlob": "b548eaeacbec7ec2bf031a7f6f2011d5741b75f0",
+      "headBytes": 2858095,
+      "actualBytes": 2858095,
+      "sha256": "65d18bb0e98d901b9ba4820e62724dfbe32da6cd31c5580fe03096eedbfd39f0",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/spend-route-art/originals/shared-harbor.png",
+      "gitBlob": "db7acded5da57ca1f79c64fbcf3c7eea386b6914",
+      "headBytes": 2686912,
+      "actualBytes": 2686912,
+      "sha256": "8abf21258aef8cee936909fe7d2d8c4eb86a9eb8aff61c6fae6e6f918f5a8e3d",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/spend-route-art/originals/value-foundry.png",
+      "gitBlob": "dac73dc20b9ea2007913e6a3bf8eb9cf4580ca84",
+      "headBytes": 2725160,
+      "actualBytes": 2725160,
+      "sha256": "0f0c8022f3b80732c24131324ce3ecf404219f5de6546ead11ff825e3dbed518",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/spend-route-art/provenance.json",
+      "gitBlob": "4e21e5cc6d2a27f8ac309ec5a0bd930f78daf4a1",
+      "headBytes": 5024,
+      "actualBytes": 5024,
+      "sha256": "273a5ef4dfbb51e9f4da2fabdf7aeb7f6d788cf1470a7fb8efaa4c62d482e4bc",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/ukraine-atlas-art/originals/carpathian-woven-dawn.png",
+      "gitBlob": "cdffc58aba6eddb1b006295928b753a644673eb1",
+      "headBytes": 2920551,
+      "actualBytes": 2920551,
+      "sha256": "df27fc7bd2eac13a8cec95a95d95016d5755104830ce30ce922551c5067de0ee",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/ukraine-atlas-art/originals/dnipro-autumn-watch.png",
+      "gitBlob": "3c244d70ba5e545329c5a2d8884e9549732a00a4",
+      "headBytes": 3046555,
+      "actualBytes": 3046555,
+      "sha256": "ab6a0a07876b2c2b1149cf58eb0596bf7b0b292a6cd37f61f3e96d76d6974f72",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png",
+      "gitBlob": "3276b3eae95474582a8871084ea0bb474b08f7e9",
+      "headBytes": 3286349,
+      "actualBytes": 3286349,
+      "sha256": "523c5449a07811f806acd6448ada9d3c8fc7dbd621f0d5cae9944235d4e257a0",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/ukraine-atlas-art/provenance.json",
+      "gitBlob": "3b7b9defce2b72292a683957824224189cd994ff",
+      "headBytes": 9230,
+      "actualBytes": 9230,
+      "sha256": "4387b783a6fde268fb2ee5dbe002874dbab81d8e587a0c58ca737d84837eac53",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/ukraine-route-art/originals/carpathian-thread-relay.png",
+      "gitBlob": "6dcd7c55cc51ea818375c901c2222710989c31dc",
+      "headBytes": 2926966,
+      "actualBytes": 2926966,
+      "sha256": "6c07adf7345b9e4d7cf1a1426bbb3a2f3e39e57389e7367c0396f39f52458f8f",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/ukraine-route-art/originals/crosswind-market-depot.png",
+      "gitBlob": "57555f1488f4bb7b300a1bc62ec4765e27f63f81",
+      "headBytes": 3107900,
+      "actualBytes": 3107900,
+      "sha256": "18e32f319b61367907a70e22f58310d7206bf2c6aeb7c07e888f3baebe80e9f5",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/ukraine-route-art/originals/two-lanes-forge.png",
+      "gitBlob": "047d89cc6f852ad5099736bd3d91d539f71e2676",
+      "headBytes": 2780010,
+      "actualBytes": 2780010,
+      "sha256": "571f01cc57ba79bfe07828b9e465f979b597edfe70764f88f454e781dd7b7719",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/library/ukraine-route-art/provenance.json",
+      "gitBlob": "f70b51fae31e970c8a12b616fc26f9e97df6f4c6",
+      "headBytes": 6805,
+      "actualBytes": 6805,
+      "sha256": "3adda886c26bad6ad56322c1cc2472104f80d4c9d572d8f54a499652b6934139",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/motion-lab/animation.mjs",
+      "gitBlob": "887cb989d0f849b8c6bad12dee2820eb1a51c584",
+      "headBytes": 8068,
+      "actualBytes": 8068,
+      "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/motion-lab/assets/fpv-body.png",
+      "gitBlob": "ed3f797239be2f9c0b3ec01017f960a6b3648b5e",
+      "headBytes": 644588,
+      "actualBytes": 644588,
+      "sha256": "31a742f952415fb9dd2742eb9ba7ef1dc7a5aedca4593d817713c61932fe68c4",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/motion-lab/assets/heavy-lift.png",
+      "gitBlob": "89e0a3f7490690d979fc80be9c91be6972df409c",
+      "headBytes": 795459,
+      "actualBytes": 795459,
+      "sha256": "2e1b871f2336fe2dc6434ed83afb46572f5afffd17803733914a567d39c517ec",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/motion-lab/assets/navi-avatar.png",
+      "gitBlob": "7f48702f790f140cac56eab4b22fadb95ff1e3dc",
+      "headBytes": 384917,
+      "actualBytes": 384917,
+      "sha256": "3bc265ce6af451a76bc9ab2e9c5c8991c69e43d3d57efbc47c0dea2728e9ff69",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/motion-lab/assets/retro-craft.png",
+      "gitBlob": "8eb46ebbba0c2741c2b8fba3baa4a3d5934715ef",
+      "headBytes": 477364,
+      "actualBytes": 477364,
+      "sha256": "1d0340673c2cf19ab9b88fed271219da5003f82bcd1bd45da4477c774708551b",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/motion-lab/assets/scout-quad.png",
+      "gitBlob": "ea42b9c6f488ec571b5f17911dac364920bbc663",
+      "headBytes": 641545,
+      "actualBytes": 641545,
+      "sha256": "14b18895b5b1c457b8db47a5c7a0485b502ad6b8fccb91697ae6b46397e73c99",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/motion-lab/assets/ukrainian-bird.png",
+      "gitBlob": "f9fb2893dd41fd5f8cfa46f6c8732c148db7c728",
+      "headBytes": 290701,
+      "actualBytes": 290701,
+      "sha256": "fb43fb88833c5a161937097ac74e5588868c82f3b8c896c28139a77c9dffafad",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/motion-lab/presets.json",
+      "gitBlob": "e958dea073c8da46b8ae374e75a2e16f1d657279",
+      "headBytes": 50888,
+      "actualBytes": 50888,
+      "sha256": "c1ad73a04e31f63eaa1244b5a73ba076160960746f57bf0944c53ee28e85d7ba",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "gitBlob": "7a5edad2472ff03253a0e3a7db36588bc1e9ec50",
+      "headBytes": 6660,
+      "actualBytes": 6660,
+      "sha256": "16f55a0a9c8751a9c9ab9e1ea7f741ac727e2786ade9ed288688748e641a8b71",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "authoring/production/cli.mjs",
+      "gitBlob": "db3919dc8624af9f3074f5ce7e394ed0deda2e4e",
+      "headBytes": 6294,
+      "actualBytes": 6294,
+      "sha256": "9873754cb4dd77667355663de5cad06cd19d6bf3053dc0e8bc447d7e02a429cc",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "imported by scripts/test-production-register.mjs",
+        "test executable import closure"
+      ]
+    },
+    {
+      "path": "authoring/production/history/1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a.source",
+      "gitBlob": "82ddb1fee5f892e15d9c96c68455fb4fef361d3e",
+      "headBytes": 6489,
+      "actualBytes": 6489,
+      "sha256": "1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["authoring/production/history/source-index.json"]
+    },
+    {
+      "path": "authoring/production/history/4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a.mjs",
+      "gitBlob": "98bb94616cc676d887309dfb91246b68a8162a3d",
+      "headBytes": 25033,
+      "actualBytes": 25033,
+      "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["authoring/production/history/index.json"]
+    },
+    {
+      "path": "authoring/production/history/4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a.source",
+      "gitBlob": "98bb94616cc676d887309dfb91246b68a8162a3d",
+      "headBytes": 25033,
+      "actualBytes": 25033,
+      "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["authoring/production/history/source-index.json"]
+    },
+    {
+      "path": "authoring/production/history/e857a548bccaa9649d86ccb6443fbf9fd37f8ff4de8e3f6a7a7da900b92ed8cb.json",
+      "gitBlob": "0c903bd349620fafc1f5a959c33bf63ee19a2105",
+      "headBytes": 36911,
+      "actualBytes": 36911,
+      "sha256": "e857a548bccaa9649d86ccb6443fbf9fd37f8ff4de8e3f6a7a7da900b92ed8cb",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["authoring/production/history/index.json"]
+    },
+    {
+      "path": "authoring/production/history/edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca.json",
+      "gitBlob": "c2ed9db72e96ef18abdddec9619a989e94c01de8",
+      "headBytes": 23077,
+      "actualBytes": 23077,
+      "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["authoring/production/history/index.json"]
+    },
+    {
+      "path": "authoring/production/history/index.json",
+      "gitBlob": "508263fcdfc28390a16b0409d99ea1b0d1b1f586",
+      "headBytes": 583,
+      "actualBytes": 583,
+      "sha256": "abb420a06c92c29383ce22c00b947c74c2844071ccb35932fa9b03632bd4c047",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["retained history index"]
+    },
+    {
+      "path": "authoring/production/history/source-index.json",
+      "gitBlob": "68221f6d171d6a759a1342ff520179e683070df8",
+      "headBytes": 419,
+      "actualBytes": 419,
+      "sha256": "56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["retained history index"]
+    },
+    {
+      "path": "authoring/production/model.mjs",
+      "gitBlob": "0c490df3f0fec491b0a8a8ea4d7f5c51bede8e8a",
+      "headBytes": 24204,
+      "actualBytes": 24204,
+      "sha256": "228a554a884fcd8b4cdcb216ec5e7cc3485ff4e53a56dac081a7a1bfde139e80",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "imported by authoring/production/cli.mjs",
+        "imported by authoring/production/panel.mjs",
+        "imported by authoring/production/preview.mjs",
+        "imported by authoring/production/sources.mjs",
+        "imported by scripts/test-production-countercurrent.mjs",
+        "imported by scripts/test-production-fracture-themes.mjs",
+        "imported by scripts/test-production-metadata-history.mjs",
+        "imported by scripts/test-production-panel.mjs",
+        "imported by scripts/test-production-register.mjs",
+        "imported by scripts/test-production-sentinel-themes.mjs",
+        "test executable import closure"
+      ]
+    },
+    {
+      "path": "authoring/production/panel.mjs",
+      "gitBlob": "63c545f0aba5d87b449c519ab1072b65eb3da5a6",
+      "headBytes": 15720,
+      "actualBytes": 15720,
+      "sha256": "d1d7e4a32c097a4f3a87f6fba5af1341889b179c4c699e4332edd9ab74967d5a",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["imported by scripts/test-production-panel.mjs", "test executable import closure"]
+    },
+    {
+      "path": "authoring/production/preview.mjs",
+      "gitBlob": "c96a907c0bc714700f1ccfa60c37b74a054f3fa6",
+      "headBytes": 5237,
+      "actualBytes": 5237,
+      "sha256": "aa914b144c96f95d93aa7f4aebdc6a91f462ca676ead3bde598256963a7b0476",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "imported by authoring/production/panel.mjs",
+        "imported by scripts/test-production-panel.mjs",
+        "test executable import closure"
+      ]
+    },
+    {
+      "path": "authoring/production/register-countercurrent.json",
+      "gitBlob": "53d580216d0c6f5a4d0796bc67d99b7ae84fde31",
+      "headBytes": 207975,
+      "actualBytes": 207975,
+      "sha256": "4ea8066a10cfb12ad5565a9f072399c901fafcb8c60a8c594ddccd010b8e9fe3",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["production register"]
+    },
+    {
+      "path": "authoring/production/register-fracture-themes.json",
+      "gitBlob": "c0562deebaf277319971ee0f9bb006276ba232eb",
+      "headBytes": 175209,
+      "actualBytes": 175209,
+      "sha256": "d1ad89c5dcc730cd96f21e9e3e60c0c6d3f48c1da6d48cdec7b9bdc52886eddd",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["production register"]
+    },
+    {
+      "path": "authoring/production/register-sentinel-themes.json",
+      "gitBlob": "5ced82e59cf68a04f010ddb1235fec275cc98c6d",
+      "headBytes": 144220,
+      "actualBytes": 144220,
+      "sha256": "caa03d95a74ac9c037095c89c5fd1f06edd681293b1d4bc53285d578f01fa0f2",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["production register"]
+    },
+    {
+      "path": "authoring/production/register.json",
+      "gitBlob": "4aa32444e7b64b9c1bcfdcc35d982eecd8d11f75",
+      "headBytes": 120297,
+      "actualBytes": 120297,
+      "sha256": "057f86a1a60c873402f7145e0b6d46cb7d3583b4c9129a7bd755976dadc7369d",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["production register"]
+    },
+    {
+      "path": "authoring/production/sources.mjs",
+      "gitBlob": "275c350af56bb60247c5fca49511d0e44f047a89",
+      "headBytes": 32402,
+      "actualBytes": 32402,
+      "sha256": "daf0dfbc0199b56dc88b6d3953dacb24d08a322d2968c4243480ac5e81bea312",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "imported by authoring/production/cli.mjs",
+        "imported by scripts/test-production-countercurrent.mjs",
+        "imported by scripts/test-production-fracture-themes.mjs",
+        "imported by scripts/test-production-metadata-history.mjs",
+        "imported by scripts/test-production-register.mjs",
+        "imported by scripts/test-production-sentinel-themes.mjs",
+        "imported by scripts/test-production-source-history.mjs",
+        "test executable import closure"
+      ]
+    },
+    {
+      "path": "authoring/skills/presentation-release-pins/SKILL.md",
+      "gitBlob": "72071bb6941676dca2a474fbbabdcd719fec3c43",
+      "headBytes": 2460,
+      "actualBytes": 2460,
+      "sha256": "1d55bf3dbd8c564f0ce3d43e59287c6079dcfca651b0de8828223374e897f5e9",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/visual-theme-identity/SKILL.md",
+      "gitBlob": "06c836ccd896ddcda8bbc4320971f438a8f177ae",
+      "headBytes": 1748,
+      "actualBytes": 1748,
+      "sha256": "75450426a2ece25ae15e10a9b14b23ce3ad7cb2df0b2599b585b20e21786efa4",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-ability-designer/SKILL.md",
+      "gitBlob": "f667c397819ea2fbc8f3628cbb75258dd2f8f077",
+      "headBytes": 10441,
+      "actualBytes": 10441,
+      "sha256": "6ebbc9dbef16eef51afa3aa94be965961a8bc4cfc0aa9c0031153a27d7d94dcb",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-animation-director/SKILL.md",
+      "gitBlob": "ba713e5d1a1572a2d9730a8ca262907d3137edf3",
+      "headBytes": 21118,
+      "actualBytes": 21118,
+      "sha256": "fa4b4cf1324e38c9104a0f6f6c5105bf0fe985f955cb4aa8a9044f9d65000853",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "gitBlob": "adda01c30a6f79a4fb7833e03d64c331ae5f911f",
+      "headBytes": 23778,
+      "actualBytes": 23778,
+      "sha256": "6a98acc5a63fab66944ecbc6b4083fed99b89b1eb43df621d712770dcd5b3b8e",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-audio-director/SKILL.md",
+      "gitBlob": "fe7a408b7f2d0db77de2782790c58fe59a18b15e",
+      "headBytes": 17944,
+      "actualBytes": 17944,
+      "sha256": "f5c263a35315db6e59163317cb6a600b2199f557c19beb5a883f54cfb46d61a1",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "gitBlob": "9ed9eece6b12758a83c358c7fc6b2ecaf698b0f2",
+      "headBytes": 14755,
+      "actualBytes": 14755,
+      "sha256": "1b351596e910f6832a5e453dde380bb05c9e19e67d1ba4aeb3f23d8b1f55c666",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-character-collection/SKILL.md",
+      "gitBlob": "c8bd282675c6145f57b8cfb5ddbe60b50989918f",
+      "headBytes": 15887,
+      "actualBytes": 15887,
+      "sha256": "8866a53423b011875534601f3eeae19316f769738a9b3376490d591ea6b15754",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-couch-music/SKILL.md",
+      "gitBlob": "3c6d6c2b0108d0412a949fda7391f4c2c10e17b8",
+      "headBytes": 7852,
+      "actualBytes": 7852,
+      "sha256": "897b788d365758c4ad4b9c1fb500c6a3dec981cd048d82e001f15212af805868",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-expansion-author/SKILL.md",
+      "gitBlob": "fb76cb444c7ce999f938958bd9100c4364cd9822",
+      "headBytes": 11455,
+      "actualBytes": 11455,
+      "sha256": "a466fb3ebf3474cabd86711ce1057c699ff486ec139a3594a14675b04c5598a4",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-level-designer/SKILL.md",
+      "gitBlob": "b356e3d22cade54aa2faa3e8559bd5e73c0dbae8",
+      "headBytes": 27986,
+      "actualBytes": 27986,
+      "sha256": "e9389d87ffd541d49f1f2c4fa2057d3f461d8b6c80ec19b9add2f6e5452e320a",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-native-packager/SKILL.md",
+      "gitBlob": "a6dbd86a9018583762260b541a75e7eddd5a24dd",
+      "headBytes": 7419,
+      "actualBytes": 7419,
+      "sha256": "f9a7be2e316c94919fc2cdb8294497e298be1b7a26a47498033443a1449efd12",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-pack-reviewer/SKILL.md",
+      "gitBlob": "71026574a12df29fa31263760afbb3d8dc50eb51",
+      "headBytes": 16374,
+      "actualBytes": 16374,
+      "sha256": "64c3c013aae3c6a4367f4219fdaf029d7b12f8b3e4c3d49333021ce0c4555fbb",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-reference-importer/SKILL.md",
+      "gitBlob": "04f5c3b352069ec2ef4cc1ebb9e76741b98a7ce7",
+      "headBytes": 7106,
+      "actualBytes": 7106,
+      "sha256": "0e599c96b962e2fe3c2113cbf7854a0ba54295d527e11f752da4acd3ab94c4a0",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "gitBlob": "fce3e1305b68a2993461bb528787d9adcbfd15a9",
+      "headBytes": 290252,
+      "actualBytes": 290252,
+      "sha256": "ea30c3f2d3aee36745ddacf5c493d58cebf1980a00f5bebb084bf8e3ce76788f",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/skills/xonix-theme-designer/SKILL.md",
+      "gitBlob": "e7ebba6b45803a060c0a2c115100bfd912631588",
+      "headBytes": 14820,
+      "actualBytes": 14820,
+      "sha256": "e48fb7eac3bb4025774435415a7d3bdd4dc64aac1f1467ad265e940cef1cbf00",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel skill workflow contract"]
+    },
+    {
+      "path": "authoring/still-media/examples/dawn-signal/manifest.json",
+      "gitBlob": "919e36f773d1428a1bf4ed103458b3161cac4f02",
+      "headBytes": 2840,
+      "actualBytes": 2840,
+      "sha256": "f207698be2328a687d7f9730f18a57740756186dbd4dfc547d016b828334243a",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "docs/feature-delivery-workflow.md",
+      "gitBlob": "a0bd5fac5b6c5a9523342e70c97bdc019604e06b",
+      "headBytes": 57443,
+      "actualBytes": 57443,
+      "sha256": "bae8502b7239c6f7e058873e4ee1b01d5c3ab5a4825b01b26ef34965df60f1f1",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test-production-panel workflow contract"]
+    },
+    {
+      "path": "docs/verification/round-44/v034-delivery.md",
+      "gitBlob": "902957b989c3347eadd57132a13e8e28d6ceb04a",
+      "headBytes": 3136,
+      "actualBytes": 3136,
+      "sha256": "b6c1a06ed0f928a20649b5abbf57ab0004305b97d00764a81c320051075f7097",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "docs/verification/round-45/v035-delivery.md",
+      "gitBlob": "5969f3bc6abc6816d4e14846dbddf3f86ce2fd1a",
+      "headBytes": 4101,
+      "actualBytes": 4101,
+      "sha256": "70a28661245b0dca8b218addd0d70ad270e4a1b119fb1aa815a74f2805e14fcf",
+      "matchesHEAD": true,
+      "hydrated": true,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "game/content/classes.json",
+      "gitBlob": "e7dbbaec7a732e5bbd4709d3f555ec29ed6205d8",
+      "headBytes": 2227,
+      "actualBytes": 2227,
+      "sha256": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "game/content/themes.json",
+      "gitBlob": "ecf8ac03b979abd2228955522107254d4cd10491",
+      "headBytes": 4266,
+      "actualBytes": 4266,
+      "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "game/enemy-catalog.mjs",
+      "gitBlob": "ad9eb4659a16249934b6eefb8582f7b813b0c5b5",
+      "headBytes": 5966,
+      "actualBytes": 5966,
+      "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "gitBlob": "843ce661ef4f0b7b6ef9a6e8e4f691b8ff0021e7",
+      "headBytes": 11580,
+      "actualBytes": 11580,
+      "sha256": "878852600b15a1551ba136fd506f88c890349472c6fc340225ab423a299159f8",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["imported by scripts/test-production-panel.mjs", "test executable import closure"]
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "gitBlob": "bdc628633e9968490667363215391431c0d2b757",
+      "headBytes": 27239,
+      "actualBytes": 27239,
+      "sha256": "0b28a8f086b5615c071913beaed6d04bd6c2bddb672bb46af6f760c5ed797e60",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "game/ui/music.mjs",
+      "gitBlob": "379171806b8558eb1943a658b70b1fb5a4780cd6",
+      "headBytes": 7050,
+      "actualBytes": 7050,
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": [
+        "authoring/production/register-countercurrent.json",
+        "authoring/production/register-fracture-themes.json",
+        "authoring/production/register-sentinel-themes.json",
+        "authoring/production/register.json"
+      ]
+    },
+    {
+      "path": "game/ui/operation-status.mjs",
+      "gitBlob": "f1aed1bda7ae9c32cfaaaa2869774fb2c1bde757",
+      "headBytes": 4173,
+      "actualBytes": 4173,
+      "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["imported by authoring/production/panel.mjs", "test executable import closure"]
+    },
+    {
+      "path": "scripts/test-production-countercurrent.mjs",
+      "gitBlob": "d2a87437e365d953cf6b44da22f0590e64a410b6",
+      "headBytes": 11044,
+      "actualBytes": 11044,
+      "sha256": "5163bdf974d5e355cc0df32dfa485cce063f7e75f734232661ed6c51f6feaa4c",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test executable import closure"]
+    },
+    {
+      "path": "scripts/test-production-fracture-themes.mjs",
+      "gitBlob": "74c20dfc8efd66fe073bcf57e70851e169573168",
+      "headBytes": 10003,
+      "actualBytes": 10003,
+      "sha256": "ff260d48b25bcc6542fafe2b610f0a40e97545a06cabf071fe644cfd27e2e7ed",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test executable import closure"]
+    },
+    {
+      "path": "scripts/test-production-metadata-history.mjs",
+      "gitBlob": "8deb89a0dbb3f2ce5c4213a268d9bae672d9d7e6",
+      "headBytes": 10915,
+      "actualBytes": 10915,
+      "sha256": "6f5d4ce4a8d9240ba049071de468405e63e7ab8aa74b6b9ccc8c02632aad3335",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test executable import closure"]
+    },
+    {
+      "path": "scripts/test-production-panel.mjs",
+      "gitBlob": "72f8a622864571ef9c22f570e99310248878993f",
+      "headBytes": 14126,
+      "actualBytes": 14126,
+      "sha256": "da86beae156296b8c69a462d84c12384db13d00270b11c6a5f6e572869e1d344",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test executable import closure"]
+    },
+    {
+      "path": "scripts/test-production-register.mjs",
+      "gitBlob": "f317e158bb6e7f1f2a4b8efac6c741cbe9f7ed89",
+      "headBytes": 21597,
+      "actualBytes": 21597,
+      "sha256": "ef06c557319ee7bdc0527bd55f16306476e15b1280d597e292e752f5fb354625",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test executable import closure"]
+    },
+    {
+      "path": "scripts/test-production-sentinel-themes.mjs",
+      "gitBlob": "37b45cfb257cc3c28397f5a54299283bc61fb7ea",
+      "headBytes": 4907,
+      "actualBytes": 4907,
+      "sha256": "de6412acb6fd63b3ab3777995825038d606bcc918eb1fc4c77dce306af319683",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test executable import closure"]
+    },
+    {
+      "path": "scripts/test-production-source-history.mjs",
+      "gitBlob": "a4a76f11144c86250443a72ef025784b0dbbc07d",
+      "headBytes": 8623,
+      "actualBytes": 8623,
+      "sha256": "85f51215d8aab8c18814cee072f348805169039bc9a975cb7e6816aba36db9ab",
+      "matchesHEAD": true,
+      "hydrated": false,
+      "reasons": ["test executable import closure"]
+    }
+  ]
+}

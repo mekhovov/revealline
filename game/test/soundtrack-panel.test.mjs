@@ -2517,6 +2517,60 @@ test('v3 restricted music exposes source and recovery notice without exporting i
   assert.deepEqual(recovered.library.referenceOnlyTrackIds, [id]);
 });
 
+for (const offlineCache of ['denied', 'unknown'])
+  test(`recovery UI explains offline storage ${offlineCache} without requesting redistributable audio`, async (t) => {
+    const raw = await fixture(`storage-reference-${offlineCache}`);
+    const id = `builtin.catalog.storage-reference-${offlineCache}`;
+    const track = resolveCatalogueTrack({
+      ...raw.track,
+      id,
+      edition: 'rights-1',
+      path: `optional/soundtracks/storage-reference-${offlineCache}.mp3`,
+      tags: { genres: ['metal'], role: 'gameplay', energy: 5, themes: [] },
+      policy: {
+        id,
+        sha256: raw.track.asset.sha256,
+        webPlayback: 'allowed',
+        offlineCache,
+        redistribute: 'allowed',
+        modify: 'allowed',
+        gameplayVideo: 'allowed',
+        contentId: 'not-registered',
+      },
+    });
+    const catalogue = {
+      format: 'revealline-soundtrack-catalogue.v2',
+      edition: 'rights-1',
+      tracks: [track],
+    };
+    let reads = 0;
+    const app = await setup(t, {
+      callbacks: {
+        catalogue,
+        readAsset: async () => {
+          reads++;
+          return raw.blob;
+        },
+      },
+    });
+    app.choose('tracks', id);
+    assert.match(app.node('track-info').textContent, /Offline installation is not permitted/);
+    await app.click('apply-listening');
+    await app.click('export-bundle');
+    assert.equal(reads, 0, 'Recovery preparation must not acquire storage-restricted bytes');
+    assert.equal(app.node('download-prepared').disabled, false);
+    assert.match(app.node('backup-info').textContent, /offline (?:storage|installation)/i);
+    assert.doesNotMatch(app.node('backup-info').textContent, /redistribution is not permitted/i);
+    await app.click('download-prepared');
+    const recovered = await importSoundtrackBundle(app.downloads[0].blob, {
+      probeMedia: structuralProbe,
+      catalogue,
+    });
+    assert.deepEqual(recovered.assets, []);
+    assert.deepEqual(recovered.library.referenceOnlyTrackIds, [id]);
+    assert.deepEqual(recovered.library.installedTrackIds, []);
+  });
+
 test('restored reference-only UA-FPV music can install when offline rights allow it and remains excluded from export', async (t) => {
   const raw = await fixture('ua-offline-reference');
   const id = 'builtin.catalog.ua-fpv.verified';
