@@ -1,0 +1,4 @@
+
+> revealline@0.76.0 lint
+> eslint "game/**/*.mjs" "scripts/**/*.mjs" "site/**/*.mjs" "platforms/**/*.{mjs,js}" eslint.config.mjs --max-warnings 0
+

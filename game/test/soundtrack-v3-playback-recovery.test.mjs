@@ -70,3 +70,68 @@ test('explicit successful selection clears the previous failed recording notice'
   assert.equal(state.error, null);
   assert.equal(state.notice, null);
 });
+
+test('Recording mode excludes published music without video and Content ID authority', async (t) => {
+  let reads = 0;
+  const h = createPlayer(t, async () => {
+    throw new Error('No library download should be attempted.');
+  });
+  const library = upgradeSoundtrackLibrary(emptySoundtrackLibrary());
+  h.player.setLibrary({
+    ...library,
+    listening: { ...library.listening, recordingMode: true },
+  });
+  h.player.setContext({ scene: 'gameplay' });
+  h.player.setAuthoredTrack(BUILTIN_SOUNDTRACK_TRACKS[0].recipe);
+  h.player.setPublishedTrack({
+    id: `published.${'b'.repeat(64)}`,
+    title: 'Published music with unknown recording permissions',
+    allowed: () => true,
+    readBlob: async () => {
+      reads++;
+      return new Blob(['modeled published audio'], { type: 'audio/wav' });
+    },
+  });
+  assert.equal(h.player.snapshot().source, 'authored');
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.player.snapshot().track.kind, 'synth');
+  assert.equal(reads, 0);
+});
+
+test('enabling Recording mode retires current published audio and preserves paused intent', async (t) => {
+  let reads = 0;
+  const h = createPlayer(t, async () => {
+    throw new Error('No library download should be attempted.');
+  });
+  const library = upgradeSoundtrackLibrary(emptySoundtrackLibrary());
+  h.player.setLibrary(library);
+  h.player.setContext({ scene: 'gameplay' });
+  h.player.setPublishedTrack({
+    id: `published.${'c'.repeat(64)}`,
+    title: 'Published music with unknown recording permissions',
+    allowed: () => true,
+    readBlob: async () => {
+      reads++;
+      return new Blob(['modeled published audio'], { type: 'audio/wav' });
+    },
+  });
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.player.snapshot().track.kind, 'published');
+  const oldURL = h.media.src;
+  await h.player.selectListening({ ...library.listening, recordingMode: true });
+  assert.equal(h.player.snapshot().playing, true);
+  assert.equal(h.player.snapshot().track.kind, 'synth');
+  assert(h.revoked.includes(oldURL));
+  assert.equal(h.media.paused, true);
+  assert.equal(reads, 1);
+
+  await h.player.selectListening(library.listening);
+  assert.equal(h.player.snapshot().track.kind, 'published');
+  h.player.pause();
+  await h.player.selectListening({ ...library.listening, recordingMode: true });
+  assert.equal(h.player.snapshot().status, 'paused');
+  assert.equal(h.player.snapshot().desired, false);
+  assert.equal(h.player.snapshot().track.kind, 'synth');
+  assert.equal(h.media.plays, 2);
+  assert.equal(reads, 2);
+});
