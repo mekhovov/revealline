@@ -3,6 +3,14 @@
 Current checkpoint: [2026-09-21 item-by-item completion audit](verification/journey-completion-2026-09-21.md).
 The user's difficulty/bonus/Ukrainian-and-FPV/enemy-variety extension is specified in
 [the pressure and variety successor](superpowers/specs/2026-09-21-journey-pressure-and-variety.md).
+
+Current follow-up evidence: [two Sentinel receiver-layout successors](verification/journey-sentinel-spatial.md)
+preserve encounter rules while removing the recorded10–14second shortcuts;
+[new Livewire pressure paths](verification/journey-livewire-pressure.md) cover all42
+configurations without changing those levels. Combined unchanged-pressure route
+coverage is347/498;151 cases remain. Next investigate Crosswind/Apex paths, then
+short-clear spatial choices and objective tails. These are technical candidate
+checks, not human balance or public-deployment acceptance.
 That successor replaces the old balance assumptions; historical phase entries
 below remain provenance, not claims of current public delivery or human approval.
 
