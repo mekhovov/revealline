@@ -32,6 +32,7 @@ import { createCoopPresentationImport } from './coop-import-source.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
 import { coopFailureFeedback, coopRetryFeedback, coopRoamerCaption } from './coop-feedback.mjs';
 import { coopArenaGuidance } from './coop-briefing.mjs';
+import { coopGroundName } from './coop-ground.mjs';
 import { terrainTransitionCaption } from '../ui/terrain-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
@@ -990,7 +991,7 @@ export function bootCoop({
       : strongholds.length
         ? 'Strongholds secured together'
         : coopGoalText(run.level);
-    const reclaimedThreats = run.enemies.some((enemy) => enemy.type === 'claimed-rover');
+    const groundName = coopGroundName(run.level);
     for (const player of run.players) {
       $('coop-state-' + player.id).textContent =
         player.status === 'downed'
@@ -1000,12 +1001,8 @@ export function bootCoop({
           : player.cutting
             ? 'Line exposed'
             : player.graceUntil > run.time
-              ? reclaimedThreats
-                ? 'Recovery shield · reclaimed ground only'
-                : 'Recovery shield · safe ground only'
-              : reclaimedThreats
-                ? 'On reclaimed ground'
-                : 'On safe ground';
+              ? `Recovery shield · ${groundName} only`
+              : `On ${groundName}`;
       const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
       $('coop-charge-' + player.id).textContent =
         player.status === 'downed'
@@ -1018,7 +1015,7 @@ export function bootCoop({
       $('coop-support-' + player.id).textContent = player.rescue
         ? `Rescuing partner · ${Math.min(100, Math.floor((run.time - player.rescue.startedAt) * 100))}%`
         : player.status === 'downed'
-          ? 'Crawl along safe ground toward your partner'
+          ? `Crawl along ${groundName} toward your partner`
           : recharge > 0
             ? `Support recharging · ${recharge.toFixed(1)}s`
             : 'Support ready · tap to cover, hold nearby to rescue';
@@ -2987,7 +2984,7 @@ export function bootCoop({
   function supportGuidance(guidance) {
     $('coop-support-help').textContent = guidance.supportText;
     $('coop-help-support').textContent =
-      `${guidance.supportText} A downed player can crawl along safe ground to meet their partner.`;
+      `${guidance.supportText} A downed player can crawl along ${guidance.groundName} to meet their partner.`;
   }
   function selectedCandidateRow() {
     const level = selectedLevel();
@@ -3004,15 +3001,17 @@ export function bootCoop({
   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
     difficultyControls(level);
     const guidance = coopArenaGuidance(level, experiment);
+    $('coop-closure-help').textContent =
+      `Draw a short loop back to ${guidance.groundName} to claim it. Banking stops your craft; steer again for your next cut.`;
     $('coop-intro').textContent = experiment.jointCuts
       ? 'Start with a small loop. Cover each other, then meet to join a larger cut.'
-      : 'Start with small loops. Cover each other and return to safe ground to bank each line.';
+      : `Start with small loops. Cover each other and return to ${guidance.groundName} to bank each line.`;
     $('coop-cut-title').textContent = experiment.jointCuts
       ? 'Join when ready.'
       : 'Bring each line home.';
     $('coop-cut-help').textContent = experiment.jointCuts
       ? 'Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.'
-      : 'Return to safe ground to bank your cut. Crossing a partner’s line is harmless; meeting their head does not join your lines.';
+      : `Return to ${guidance.groundName} to bank your cut. Crossing a partner’s line is harmless; meeting their head does not join your lines.`;
     $('coop-threat-title').textContent = guidance.threatTitle;
     $('coop-threat-help').textContent = guidance.threatText;
     supportGuidance(guidance);

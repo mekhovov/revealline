@@ -1,5 +1,8 @@
+import { coopGroundName } from './coop-ground.mjs';
+
 /** Presentation advice for an already validated arena. Never changes its recipe. */
 export function coopArenaGuidance(level, { jointCuts = true } = {}) {
+  const groundName = coopGroundName(level);
   const hunters = level.enemies.some((enemy) => enemy.type === 'hunter');
   const drifters = level.enemies.some((enemy) => enemy.type === 'drifter');
   const roamers = level.enemies.some((enemy) => enemy.type === 'claimed-rover');
@@ -40,16 +43,16 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
       : relays
         ? 'Tap Support near a travelling spark to intercept it. '
         : '';
-  const rescue =
-    'Hold Support on safe ground beside a downed partner for one second to rescue them without spending a reserve. Avoid steering while rescuing.';
+  const rescue = `Hold Support on ${groundName} beside a downed partner for one second to rescue them without spending a reserve. Avoid steering while rescuing.`;
   const route = jointCuts
     ? 'Start with a small loop, then meet your partner to join a larger cut.'
-    : 'Bring each cut back to safe ground. Meeting your partner does not join the lines.';
+    : `Bring each cut back to ${groundName}. Meeting your partner does not join the lines.`;
   return {
+    groundName,
     threatTitle: threats.length ? 'Watch the threats.' : 'Practice your routes.',
     threatText: threats.length
       ? threats.join(' ')
-      : 'This arena has no enemies or relay emitters. Build safe ground with short loops, then try longer routes.',
+      : `This arena has no enemies or relay emitters. Build ${groundName} with short loops, then try longer routes.`,
     supportText: pulse + rescue,
     showStrongholds: relays,
     strongholdTitle: requiredCores ? 'Secure the relay cores.' : 'Relay defenses.',
@@ -64,7 +67,9 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
           : 'MAKE YOUR COMMON GROUND',
     levelNote: requiredCores
       ? 'Plan routes to the anchors, then claim the exposed cores with later cuts.'
-      : 'Create safe routes together. Use the revealed ground to launch your next cut.',
+      : groundName === 'reclaimed ground'
+        ? 'Create return routes together. Use reclaimed ground to launch your next cut.'
+        : 'Create safe routes together. Use the revealed ground to launch your next cut.',
     startMessage: roamers
       ? `Keep an escape corridor before enclosing a tracked roamer. WAKING gives one active second to move away. ${route}`
       : hunters

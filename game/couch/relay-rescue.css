@@ -111,6 +111,14 @@
   margin-top: auto;
   white-space: normal;
 }
+.team-mission-optional summary {
+  min-height: 44px;
+  padding-block: 10px;
+  cursor: pointer;
+}
+.team-mission-optional[open] summary {
+  margin-bottom: 8px;
+}
 .field-kit .team-discovery .team-discovery-play {
   margin-top: auto;
 }

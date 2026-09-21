@@ -61,10 +61,9 @@ test('all36 owned Team cards describe exact presets, maps and two craft without 
       card.querySelector('.team-mission-difficulty').textContent,
       new RegExp(`band ${diagram.band}`),
     );
-    assert.match(
-      card.querySelector('.team-mission-mastery').textContent,
-      /^Optional goal \(not tracked\): /,
-    );
+    assert.equal(card.querySelector('.team-mission-mastery').textContent, diagram.mastery);
+    assert.equal(card.querySelector('summary').textContent, 'Optional goal · not tracked');
+    assert.equal(card.querySelector('details').hasAttribute('open'), false);
     assert.equal(card.querySelector('.team-mission-completion').textContent, 'Not cleared');
     assert.match(
       card.querySelector('figcaption').textContent,

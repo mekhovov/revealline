@@ -596,8 +596,8 @@ test('cancelling a held Team Skip keeps the unfinished cuts; a later confirmed s
   f.tick(120);
   assert.equal(f.$('coop-level').value, 'stepping-exchange');
   assert.equal(f.$('coop-coverage').textContent, '0.0%');
-  assert.equal(f.$('coop-state-0').textContent, 'On safe ground');
-  assert.equal(f.$('coop-state-1').textContent, 'On safe ground');
+  assert.equal(f.$('coop-state-0').textContent, 'On reclaimed ground');
+  assert.equal(f.$('coop-state-1').textContent, 'On reclaimed ground');
 });
 
 test('a skipped Team mission remains selectable and a later command-earned clear removes its skip marker', async (t) => {
