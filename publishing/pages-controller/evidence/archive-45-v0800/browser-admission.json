@@ -1,0 +1,53 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "archiveId": "archive-45",
+  "repository": "mekhovov/revealline-archive-45",
+  "infrastructureCommit": "3edb48398c51600ea06e3dd2ba896e678287080c",
+  "deploymentId": 6578526883,
+  "status": "PASS",
+  "workflowRunId": 35657344093,
+  "versions": [
+    "v0.80.0"
+  ],
+  "expectedFiles": 886,
+  "expectedBytes": 423409020,
+  "httpAudit": {
+    "failedCount": 0,
+    "retryCount": 0,
+    "observedFiles": 886,
+    "observedBytes": 423409020
+  },
+  "scopedBrowserJourneyPassed": true,
+  "admitted": true,
+  "evidence": [
+    {
+      "path": "evidence/archive-45-v0800/native-observation.json",
+      "sha256": "d9f9f83031997ed7a933cb195d47bc7a996e5d0faf3c0697d5cc2d92f60f750e"
+    },
+    {
+      "path": "evidence/archive-45-v0800/terminal-run.json",
+      "sha256": "9bb8d2b3461cb0689a789a6d154e8130e3c1ee0ee1e2cbc8a805c8b07b7f180a"
+    },
+    {
+      "path": "evidence/archive-45-v0800/deployments.json",
+      "sha256": "8f626286dc1e573db4958a1021e0ea60b1d43f6d853be4c0919ed7d5626656cb"
+    },
+    {
+      "path": "evidence/archive-45-v0800/deployment-statuses.json",
+      "sha256": "e395e69dec1107098ebb7e1fc950d5c21f4833b4422dcea0925fc2bce15da013"
+    },
+    {
+      "path": "evidence/archive-45-v0800/hosted-receipt.json",
+      "sha256": "e0bcec3bdc28841542237a3ae3cd195dea1bcbeba174ea5e25bf02a530260d0e"
+    },
+    {
+      "path": "evidence/archive-45-v0800/http-report-original.json",
+      "sha256": "a8578d6c73de80c4742bb742909b187c1afd839dff385bfd1f8b7c18fc4712fd"
+    }
+  ],
+  "limits": [
+    "Historical online preservation and a scoped keyboard pause journey only.",
+    "No physical iPhone, Steam Deck, controller, multitouch, audible-listening, offline, victory or whole-phase acceptance is claimed.",
+    "The v0.80.0 Team P-shortcut defect is preserved; its correction belongs to v0.80.1."
+  ]
+}

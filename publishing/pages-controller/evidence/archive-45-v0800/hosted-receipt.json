@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "files": 886,
+  "bytes": 423409020,
+  "archiveId": "archive-45",
+  "releases": [
+    {
+      "version": "v0.80.0",
+      "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+      "tagObject": "52b2b2f7bd248357bfae88f1ec5b0b072bf22185",
+      "originalZipExtraction": {
+        "distributionSha256": "8bdf1b83276896bf72ec0440cf15e0c7e7d7101be6b3797aaf0f872290cf0f6b",
+        "manifestSha256": "289edb93674f902595f9f14c5d2eb27d5fb9dd3853523b9b78dacdf2306a94e8",
+        "gameSourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+        "version": "v0.80.0",
+        "membersVerified": 879,
+        "manifestFilesVerified": 878,
+        "uncompressedBytesVerified": 423268733,
+        "crcAndHashesVerified": true
+      }
+    }
+  ],
+  "toolingCommit": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "archiveCommit": "3edb48398c51600ea06e3dd2ba896e678287080c",
+  "archiveTree": "c5bcfe820270d4a0f3cc38b36c7072da9a0fbb3a",
+  "expectedInventorySha256": "4789af1e6729823ba284d3b6c8de745fdea2535d3a8e50bda7dddccd93d54150",
+  "noHistoricalBuilds": true
+}
