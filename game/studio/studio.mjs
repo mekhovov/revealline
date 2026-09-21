@@ -2,6 +2,7 @@ import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
 import { createTimedBorderCandidates } from '../content-design/timed-border-candidates.mjs';
+import { TIMED_BONUS_TRAIL_VERSION } from '../core/timed-bonuses.mjs';
 import { createCulturalWorkshopCandidates } from '../content-design/cultural-workshop-candidates.mjs';
 import { createPursuitInterceptCandidates } from '../content-design/pursuit-intercept-candidates.mjs';
 import { createCombatCandidates } from '../content-design/combat-candidates.mjs';
@@ -671,7 +672,10 @@ $('border').onclick = guarded(() => {
 $('timed-border').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(
-    withCampaignPresentation(createTimedBorderCandidates({ artwork: true }), 'border'),
+    withCampaignPresentation(
+      createTimedBorderCandidates({ artwork: true, version: TIMED_BONUS_TRAIL_VERSION }),
+      'border',
+    ),
     null,
     2,
   );

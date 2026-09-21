@@ -50,7 +50,7 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
     $('remove').disabled = !schedule;
     $('submit').textContent = schedule ? 'Validate & replace schedule' : 'Validate & add schedule';
     $('result').textContent =
-      'Optional only. Contact before expiry; missed pickups move to a different eligible anchor. Preview does not guarantee live availability.';
+      'Optional only. Applying upgrades this mission’s timed schedules to a trail-aware v2 revision; earlier editions stay unchanged. Contact before expiry; missed pickups move to a different eligible anchor. Preview does not guarantee live availability.';
   }
   function sync() {
     const mission = getMission();

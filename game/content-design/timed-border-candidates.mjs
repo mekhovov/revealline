@@ -1,10 +1,14 @@
 import { createBorderCandidates } from './border-candidates.mjs';
 import { editTimedBonus } from './timed-bonuses.mjs';
 import { dataIdentity } from '../data-json.mjs';
+import { TIMED_BONUS_VERSION } from '../core/timed-bonuses.mjs';
 
 /** Explicit timing study on existing Border layouts and pictures. This does not
  * replace historical Border, count as newly authored maps or enroll a release. */
-export function createTimedBorderCandidates({ artwork = false } = {}) {
+export function createTimedBorderCandidates({
+  artwork = false,
+  version = TIMED_BONUS_VERSION,
+} = {}) {
   let source = createBorderCandidates({ artwork });
   const recipes = [
     [
@@ -47,7 +51,7 @@ export function createTimedBorderCandidates({ artwork = false } = {}) {
       maxAppearances: 3,
       maxCollections: 1,
     };
-    source = editTimedBonus(source, id, { action: 'add', id: schedule.id, schedule });
+    source = editTimedBonus(source, id, { action: 'add', id: schedule.id, schedule }, { version });
   }
   source.id = 'journey-border-timed-review';
   source.name = 'Border Bloom · unvalidated timed bonus study';

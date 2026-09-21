@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after the Courtyard spatial review. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after the trail-aware timed-bonus review. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -48,6 +48,16 @@ are separate gates; percentages would conceal those distinctions.
 
 No phase is labelled fully accepted while its required human or public gate is open.
 Ordinary route completion proves feasibility, not enjoyment or sufficient difficulty.
+
+## Latest timed-bonus correction
+
+[Trail-aware timed bonuses](journey-timed-trail-v2.md) correct a live-trail
+eligibility bug in a new descriptor edition without rewriting historical
+replays. New Studio edits apply v2 to that mission's schedules. All 112 existing
+collection paths retain their outcomes across both difficulty policies; six
+public-input regression cases preserve v1 and prove v2 rejection. The 401-test
+bonus and 65-test host/transport cohorts pass on both Node versions. Native
+Studio countdown/pause is checked. Team, human tuning and deployment remain open.
 
 ## Latest completed spatial unit
 
