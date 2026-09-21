@@ -5,9 +5,11 @@ Depot's relocated reserve now has complementary collection routes on all three
 presets: one pilot takes the second window while the other cuts, both bank with
 substantial work remaining, and real keyboard-host routes finish without loss.
 Preserve the failed cross-preset finishing controls; feasibility is not balance.
-Next integration priority: expose the already-tested pressure catalogue through
-an explicit twelve-mission Team player edition. The old `team-originals` route
-still uses its historical catalogue and must not be silently reinterpreted.
+The [twelve-mission Team pressure player](verification/journey-team-pressure-player.md)
+now exposes the already-tested catalogue with original pictures, isolated progress,
+and eleven uninterrupted Next handovers. The old `team-originals` route keeps its
+historical catalogue. This closes an enrollment gap, not short routes, optional
+mastery, human/controller qualification or public promotion.
 The [Depot inner-lane successor](verification/journey-team-depot-spatial.md)
 addresses a demonstrated difficulty inversion: a corner circuit cleared Expert
 in eight seconds while earning only18.8% on the other presets. Two keeper

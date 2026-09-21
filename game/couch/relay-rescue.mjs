@@ -115,6 +115,7 @@ export function bootCoop({
   candidateCaptureTeaching = null,
   candidateDifficulty = 'standard',
   candidateNotice = '',
+  candidateEditionLabel = '',
 } = {}) {
   // Entry links select a code-owned destination, never a supplied URL or referrer.
   // Older/direct links and ambiguous contexts retain the existing Versus return.
@@ -3677,7 +3678,7 @@ export function bootCoop({
   $('coop-start').textContent = 'Start together →';
   bootDisplay.finish({
     message: candidateJourney
-      ? `Team Journey ${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
+      ? `Team Journey ${candidateEditionLabel ? `${candidateEditionLabel} · ` : ''}${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
       : 'Two players · one screen · a shared victory',
   });
   document.documentElement.dataset.toolState = 'ready';
@@ -3701,11 +3702,12 @@ try {
   let candidateEntry;
   if (
     journeyRequests.length === 1 &&
-    ['team-greybox', 'team-originals'].includes(journeyRequests[0])
+    ['team-greybox', 'team-originals', 'team-pressure-originals-1'].includes(journeyRequests[0])
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
     candidateEntry = await createTeamGreyboxEntry({
       artwork: journeyRequests[0] === 'team-originals',
+      pressure: journeyRequests[0] === 'team-pressure-originals-1',
     });
   } else if (
     journeyRequests.length === 1 &&
