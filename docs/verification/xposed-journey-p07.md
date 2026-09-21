@@ -288,3 +288,34 @@ qualification yet. Broad-area/victory contrast, campaign actor/audio identity,
 device/human acceptance, aggregate offline budgeting, accepted-source integration
 and release/Pages remain open. Completing original compositions is not P07 phase
 acceptance or permission to enroll unqualified content in the public Journey.
+
+## Native seven-picture continuation
+
+Owned server8813 was repinned to
+`133b6d5d784cdf7cdcd203fdfe5f3cd18831c332`. Reload retained checkpoint2; explicit
+Inspect → Apply stored the seven-picture draft as checkpoint3. In native tab38,
+each remaining Standard Solo practice loaded its correct original and briefing.
+Fresh Up inputs completed the following first returns, with3lives throughout:
+
+| Mission | Earned coverage | Target | Score |
+|---|---|---|---|
+| Two ways home | 0.3% | 78% | 60 |
+| Dogleg transfer | 0.7% | 79% | 160 |
+| Crossed bands | 0.6% | 79% | 130 |
+| Pressure ladder | 0.6% | 80% | 130 |
+| Signal channels | 0.6% | 80% | 140 |
+| Close the circuit | 0.3% | 81% | 60 |
+
+Screenshots showed distinct originals through the permanent foundation fragments
+and border: courtyard/mountains, stepped hall, ceramic optical mount, maintenance
+shaft, resonator gallery and brass flywheel. Active trails, bolt carriers, keepers,
+frontier patrols and paired-dash versus framed-cross terrain remained distinct in
+these initial states. The last two roamers stayed dormant; their later activation
+and caption layout were not exercised. Every closure stopped the craft; closing
+the final preview restored Play focus and preserved checkpoint3.
+
+This supersedes the six-without-native-observation limitation above. Alongside
+the first mission's538fef04 evidence, all seven originals have initial native
+picture-binding evidence. No full clear, broad-area/victory contrast, all-mode or
+all-preset visual qualification, physical-device validation, human playtest,
+duration/performance acceptance or public deployment is inferred.

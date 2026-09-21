@@ -133,9 +133,9 @@ verification record and `docs/research/fracture-original-art-prompts.json`.
 
 Phaseworks now has all seven local original compositions (15,168,484bytes), wired
 as opt-in immutable Studio candidates. The28-test art/catalogue/candidate/library
-cohort passes on Node20/22 with unchanged42 clear checkpoints. Native first-return
-fragments at0.6%/2.0% cover A return in reserve only; the other six native checks,
-broad-area visual qualification and publication are still pending. See
+cohort passes on Node20/22 with unchanged42 clear checkpoints. All seven now have
+initial native picture-binding checks (first mission538fef04; remaining six133b6d5d),
+not broad-area/victory, device, human or public-release qualification. See
 the P07 verification record and `docs/research/phase-original-art-prompts.json`.
 
 ### Historical phase snapshots
