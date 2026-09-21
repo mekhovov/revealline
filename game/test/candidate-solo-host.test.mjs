@@ -48,6 +48,27 @@ const running = (p, levelId) =>
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
   });
 
+test('the final authored core mission offers Find missions without recording a fictitious skip', async (t) => {
+  const { p, backend } = await setup(t);
+  p.$('shell-play').click();
+  p.$('journey-cards')
+    .children.find((card) => card.dataset.missionId.endsWith('/long-way-home'))
+    .click();
+  await running(p, 'long-way-home');
+  const original = p.rendered.run;
+  assert.equal(p.$('journey-skip').hidden, false);
+  assert.equal(p.$('journey-skip').textContent, 'Find missions');
+  p.$('journey-skip').click();
+  p.frame(0);
+  assert.equal(p.$('journey-chooser').open, true);
+  assert.equal(p.rendered.run, original);
+  assert.deepEqual((await backend.read()).skipped.solo, []);
+  p.$('journey-back').click();
+  p.frame(0);
+  assert.equal(p.$('journey-skip').textContent, 'Find missions');
+  assert.deepEqual(p.errors, []);
+});
+
 test('cross-pack Skip failure keeps Horizon intact, then retries into Border without awarding a clear', async (t) => {
   let refuseBorder = false;
   const { p, backend, storage } = await setup(t, {
