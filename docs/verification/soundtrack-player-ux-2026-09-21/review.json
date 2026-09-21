@@ -1,0 +1,63 @@
+{
+  "format": "revealline-soundtrack-player-review.v1",
+  "reviewedAt": "2026-09-21T20:27:02Z",
+  "scope": {
+    "audioRecipeSha256": "11e785a62e5246014c77ccdf6e0c72d5133d8c62aed40da3a3ca551132ad4653",
+    "priorAudioRecipeSha256": "8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768",
+    "changes": [
+      "Fresh soundtrack-library v3 catalogues select 90s Synth by default while migrated libraries retain their saved mode.",
+      "The player presents Now Playing, Shuffle all music, style selection and playlist selection before advanced tools.",
+      "Sound, custom filters, offline albums, MP3 editing, playlist authoring, assignments, backups and community downloads start collapsed and remain keyboard/controller reachable.",
+      "The Field Kit audio recipe now fingerprints soundtrack-panel.css as well as soundtrack-panel.mjs so future player presentation changes reopen review."
+    ]
+  },
+  "automatedReview": {
+    "focusedTests": {
+      "path": "focused-tests.log",
+      "sha256": "eeeca3a797eda2df1348235325e68c20e67198dc05803accbfa22539d1ed5d6a",
+      "tests": 273,
+      "passed": 273,
+      "failed": 0
+    },
+    "playerTests": {
+      "path": "player-tests.log",
+      "sha256": "3546ca0ac85cedefb8db6fe268d8a68ef33ddeac0f6db510a8386a0025cc3255",
+      "tests": 51,
+      "passed": 51,
+      "failed": 0
+    },
+    "completeSparseRun": {
+      "tests": 7758,
+      "passed": 7619,
+      "failed": 139,
+      "explanation": "Failures require intentionally absent large optional authoring, picture, video and chapter fixtures in the low-storage checkout. Changed soundtrack and navigation cohorts pass separately. Hosted qualification must use a complete checkout."
+    }
+  },
+  "browserReview": {
+    "url": "http://127.0.0.1:29807/game/",
+    "desktop": [
+      "The music player showed the current track title, artist, playback time, filename, creator source and license.",
+      "Play this style streamed Super Scary Cave Dragon (Sega-style FM synth mix) by Ragnar Random.",
+      "Shuffle all music changed the status to All styles, selected My Mix and streamed Silver Bullet by Vitalezzz.",
+      "All seven advanced sections remained collapsed until explicitly opened."
+    ],
+    "responsive390x844": [
+      "Quick choices form one readable column without horizontal overflow.",
+      "The selected-style status and primary Shuffle all music action remain visible before advanced controls."
+    ],
+    "hostedTrack": {
+      "url": "https://mekhovov.github.io/revealline-soundtracks-01/objects/8b46f7e941447e929c09cbe64921e963e4bc6ab3962332e42c070dc9de9c67e1.mp3",
+      "expectedSha256": "8b46f7e941447e929c09cbe64921e963e4bc6ab3962332e42c070dc9de9c67e1",
+      "contentLength": 1740382,
+      "status": 200,
+      "cors": "*",
+      "headersPath": "hosted-synth-head.log",
+      "headersSha256": "05abe0f008bfcdf51c05d255ce8f9951e38e7fd78ccfd7742534861da335c382"
+    }
+  },
+  "limits": [
+    "This approves the scoped player behavior and source recipe only; it does not approve musical suitability of the hosted creator recordings.",
+    "UA-FPV recordings remain excluded from public playback because a YouTube playlist does not establish public MP3 redistribution permission.",
+    "Physical-device, frozen-build, offline and public-release qualification remain required."
+  ]
+}
