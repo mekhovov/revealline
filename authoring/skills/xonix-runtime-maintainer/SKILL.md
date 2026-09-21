@@ -38,6 +38,17 @@ current/target percent text. Bound short-screen pads without rewriting the chose
 preference; retain44px targets. A layout probe that changes spawn or speed must
 record those changes and cannot qualify the original campaign's difficulty or win.
 
+For Team layouts, test control rectangles against the actual drawable board, not
+just the viewport. Landscape reserves each visible seat's bounded pad width plus
+clearance; a hidden seat must release its gutter. Short portrait may cap the chosen
+pad size to132px and omit duplicate action icons while preserving44px named targets,
+Large text and required objectives. Exercise both First Connection and Relay Yard,
+320×480/390×844/568×320/844×390, regular/Large and all three steering modes. Prompt:
+“Measure every visible control/board intersection, then earn a real Solo win using
+only controller edges, Retry, win again and Next; verify no held Confirm leaks into
+movement.” Actual native layout, modeled controller and physical device evidence
+must remain separately labelled.
+
 For shared touch changes, preserve the session-only practice option and legacy
 profile fallback until a shared choice exists. Mirror the complete shared choice
 on explicit Solo edits, report failed shared writes, and resample a persisted

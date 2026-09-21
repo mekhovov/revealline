@@ -339,3 +339,39 @@ bounded measurements from task progress; picture-reveal progress uses `progressb
 The actual opening Journey host verifies zero and a real capture, not only static
 markup. The initial test incorrectly read an unsupported DOM-harness HTML getter;
 its corrected assertion reads the visible text that the harness actually exposes.
+
+## Ninth iteration: Team board clearance and controller results
+
+The earlier floating-corner arrangement kept the complete bitmap but let two Large
+pads cover playable cells. This is not acceptable arena clearance. Landscape now
+reserves only the visible seat's actual bounded pad width plus an8px gap. Hidden
+pads release that space. This supersedes the earlier full-height overlay description.
+
+Actual UI checks cover First Connection and Relay Yard. At844×390 Large, the complete
+arena is420×210 and both192px pads remain outside it. At568×320,132px pads retain44px
+directions around a264×132 arena. Standard844×390 shows492×246 with Regular controls;
+stick, swipe and D-pad have identical arena bounds. Hiding both pads expands it to
+533.61×266.80. The390×844 Large portrait arena stays370×185.
+
+A neighboring320×480 Large stronghold check caught a105.94×52.97 arena. Short portrait
+now bounds pads to132px and keeps named44px action buttons while omitting their
+repeated decorative icons. Large text, objective and Support state remain readable.
+The actual arena is216.41×108.20. No simulation, hitbox or stored preference changes.
+
+Native rectangle assertions found no control/board overlap, no cropped arena and no
+target below44px in these nine final cases. These are desktop viewport overrides;
+physical Safari bars/safe areas, one-controller/one-touch geometry, simultaneous
+hardware inputs and complete Team missions remain separate acceptance work.
+
+The permanent Solo host regression uses only modeled standard-controller edges to
+start, earn a real opening win, reach Retry, win again and choose Next. Held Confirm
+does not move the new craft. No direct button click/focus assignment or injected win
+is used. All40 focused checks pass on each Node20/22. Receipts and retained failures
+are in `docs/verification/shared-device-play/iteration-9/`.
+
+Apple's [game design guidance](https://developer.apple.com/design/human-interface-guidelines/designing-for-games)
+reinforces adapting controls to the device and safe area. Steam's
+[controller recommendations](https://partner.steamgames.com/doc/steamhardware/recommendations)
+require the default configuration to expose all game functionality; an isolated A
+start test is therefore insufficient. This iteration extends that check through
+actual results and continuation, without claiming physical Deck certification.

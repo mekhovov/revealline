@@ -1,0 +1,121 @@
+{
+  "sourceParent": "6ab355a5862d0f6af6c83b267d6cb46c99ed21a7",
+  "sourceHashes": {
+    "game/ui/handheld-play.css": "ae7adf87aa00cfc4a0c7eba8880d5447dcd610a9daad87fdd125376da3da307e",
+    "game/test/first-journey-entry-host.test.mjs": "40267ccc3e87f46a0e4908b03cd72c23b65d2f005707d2cd2e0ccd3e347aeb6f"
+  },
+  "environment": "Codex in-app browser desktop viewport overrides, DPR1, Plain text. Ordinary local HTTP; no fullscreen. Actual UI settings, actual First Connection and Relay Yard. No game state injection.",
+  "before": {
+    "relayLarge844x390": {
+      "board": [170.3984375, 77.3984375, 503.203125, 251.6015625],
+      "leftPadRight": 204,
+      "overlapWidth": 33.6015625
+    },
+    "firstConnectionReportedByUX": {
+      "board": [143, 50, 558, 279],
+      "overlapWidth": 61,
+      "evidence": ".cache/p08-team-native-terminal-run-c9-r1/responsive-controls.json"
+    },
+    "relayLarge320x480": {
+      "board": [107.03125, 139, 105.9375, 52.96875],
+      "failure": "Preferred pads, wrapped named actions and long objective consumed the board."
+    }
+  },
+  "after": [
+    {
+      "case": "relay-large-landscape",
+      "viewport": [844, 390],
+      "boardXYWH": [212, 98.1953125, 420, 210],
+      "visibleTargets": 13,
+      "minTarget": 44,
+      "maxControlBoardOverlapArea": 0,
+      "documentMatchesViewport": true
+    },
+    {
+      "case": "relay-large-short-landscape",
+      "viewport": [568, 320],
+      "boardXYWH": [152, 102.1953125, 264, 132],
+      "visibleTargets": 13,
+      "minTarget": 44,
+      "maxControlBoardOverlapArea": 0,
+      "documentMatchesViewport": true
+    },
+    {
+      "case": "relay-large-portrait",
+      "viewport": [390, 844],
+      "boardXYWH": [10, 158, 370, 185],
+      "visibleTargets": 13,
+      "minTarget": 44,
+      "maxControlBoardOverlapArea": 0,
+      "documentMatchesViewport": true
+    },
+    {
+      "case": "relay-large-short-portrait",
+      "viewport": [320, 480],
+      "boardXYWH": [51.796875, 131.796875, 216.40625, 108.203125],
+      "visibleTargets": 13,
+      "minTarget": 44,
+      "maxControlBoardOverlapArea": 0,
+      "documentMatchesViewport": true
+    },
+    {
+      "case": "relay-standard-dpad",
+      "viewport": [844, 390],
+      "boardXYWH": [176, 82.59375, 492, 246],
+      "visibleTargets": 13,
+      "minTarget": 44,
+      "maxControlBoardOverlapArea": 0,
+      "documentMatchesViewport": true
+    },
+    {
+      "case": "relay-standard-stick",
+      "viewport": [844, 390],
+      "boardXYWH": [176, 82.59375, 492, 246],
+      "visibleTargets": 7,
+      "minTarget": 44,
+      "maxControlBoardOverlapArea": 0,
+      "documentMatchesViewport": true
+    },
+    {
+      "case": "relay-standard-swipe",
+      "viewport": [844, 390],
+      "boardXYWH": [176, 82.59375, 492, 246],
+      "visibleTargets": 7,
+      "minTarget": 44,
+      "maxControlBoardOverlapArea": 0,
+      "documentMatchesViewport": true
+    },
+    {
+      "case": "relay-hidden-pads",
+      "viewport": [844, 390],
+      "boardXYWH": [155.1953125, 72.1953125, 533.609375, 266.8046875],
+      "visibleTargets": 1,
+      "minTarget": 44,
+      "maxControlBoardOverlapArea": 0,
+      "documentMatchesViewport": true
+    },
+    {
+      "case": "first-connection-large",
+      "viewport": [844, 390],
+      "boardXYWH": [212, 84.5, 420, 210],
+      "visibleTargets": 13,
+      "minTarget": 44,
+      "maxControlBoardOverlapArea": 0,
+      "documentMatchesViewport": true
+    }
+  ],
+  "assertions": [
+    "Every visible touch target and Pause has width and height >=44 CSS px.",
+    "Rectangle intersections between each visible control and arena equal zero.",
+    "Full arena remains 2:1 and inside viewport.",
+    "Document extent matches actual viewport."
+  ],
+  "consoleErrorsOrWarnings": [],
+  "limitations": [
+    "Desktop overrides are not iPhone Safari or real Steam Deck.",
+    "No physical two-finger or controller input in native layout observations.",
+    "Single hidden seat layout not natively exercised.",
+    "Measurements are opening phases, not a complete Team victory or every warning/counter value.",
+    "Source release, frozen/offline and public verification remain separate."
+  ]
+}

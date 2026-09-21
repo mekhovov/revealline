@@ -16,7 +16,7 @@
       "scope": "Iteration cohorts; final source gates and publication not yet run. The final coverage-target DOM annotation followed these cohorts; no simulation changes.",
       "finalTargetSourceNode22": "60/60 after final target annotation;10/10 shared preference/gesture checks after callback error-boundary cleanup",
       "finalInputSource": "60/60 on Node20 and Node22; exact original TAP retained compressed with SHA256 receipts",
-      "expandedControllerJourney": "61/61 shared-input cohort on bothNode20/22 including modeled controller-only Missions\u2192Deploy\u2192Pause\u2192Resume; physical Deck failure still not reproduced",
+      "expandedControllerJourney": "61/61 shared-input cohort on bothNode20/22 including modeled controller-only Missions→Deploy→Pause→Resume; physical Deck failure still not reproduced",
       "teamPictureCompatibility": "19-test predecessor18/19: expected read list lacked shared touch key. Only that key added; complete picture/shared/couch touch cohort29/29 on Node20 and Node22. Writes remain limited to display/menu-style."
     },
     "iteration4": {
@@ -42,6 +42,10 @@
     "iteration8": {
       "finalCohort": "16/16 each Node20/22",
       "scope": "Portrait CSS and explicit progress semantics; boot/build, authored capability and actual Journey entry/capture. Native core-phase geometry separate. No physical or original mission-win acceptance."
+    },
+    "iteration9": {
+      "finalCohort": "40/40 each Node20/22",
+      "scope": "Team board clearance and short portrait layout; actual Solo modeled controller win/Retry/win/Next; native geometry separate. Full device/production/release gates remain open."
     }
   },
   "nativeObservations": [
@@ -319,5 +323,6 @@
     "Coarse-pointer/fullscreen branches and real Safari browser-bar/safe-area behavior",
     "Controller Retry/Next and physical Steam Deck A diagnosis; cold standard-mapped A passes",
     "Exact final-source gates, version allocation, release/public inventory"
-  ]
+  ],
+  "latestCorrection": "iteration-9: per-visible-seat Team landscape gutters; short portrait target cap and named actions; controller results journey"
 }
