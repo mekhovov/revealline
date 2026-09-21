@@ -57,7 +57,8 @@ Do not enroll these maps as a uniformly rising campaign based on solver times.
 
 ## Remaining gates
 
-- Native exact-source inspection of all eight layouts and Studio controls.
+- Native touch/controller/small-screen and full-route observations beyond the
+  desktop Studio/Expert launch check below.
 - More seeds/delays, early pressure and optional mastery usefulness; investigate
   Dnipro and Four motor pacing before promotion, not just increase coverage.
 - Human route choice, cultural legibility, failure explanations, first-play and
@@ -71,3 +72,16 @@ Do not enroll these maps as a uniformly rising campaign based on solver times.
 
 See [reviewed specification](../superpowers/specs/2026-09-21-cultural-workshop-arcs.md)
 for primary cultural references, attribution boundaries and design decisions.
+
+## Native exact-source check
+
+Commit `00b500d3`, read-only port8816, in-app browser: Inspect left the current
+draft unchanged until explicit Apply. Applied into isolated project
+`cultural-workshop-spatial-review`; two campaigns/eight missions appeared. Visually
+inspected all eight compiled boards, including distinct solid foundations and
+patterned walls, intended openings, central spawns and field/frontier/roamer marks.
+The Expert selector reported two lives,75% faster movement and35% shorter rest,
+with handling/warnings unchanged. Exact Toolbench preview loaded, started, showed
+two lives,75% target and matching wall/pad geometry plus dormant roamer. No warning
+or error console entries were observed. This is desktop legibility/launch evidence,
+not a native full-route clear, human acceptance, artwork approval or deployment.

@@ -61,7 +61,7 @@ pass for this slice.
 
 ## Still required
 
-Native exact-source Studio and play observations; controller/touch/small-screen
+Controller/touch/small-screen
 countdown readability; human optional-route/reward balance; bonus-taking route
 qualification across seeds; timed Team ownership/schema design; integrated
 pressure-catalogue balance; reviewed release-owner PR/version/Pages deployment.
@@ -82,5 +82,10 @@ The paused information panel exposed a real integration omission: known schedule
 events were classified as unknown field effects. The follow-up registers the four
 events as ordinary and adds a regression for upcoming/available descriptions and
 unknown-event fallback. The resulting **150-test cohort passes on Node20 and22**.
-No core timing or candidate placement changed in that follow-up. Final native
-follow-up, Team and release gates remain pending.
+No core timing or candidate placement changed in that follow-up.
+
+Final native follow-up at `00b500d3` (contains `49127b9a`), port8816: loaded the
+explicit study and started Behind the patrol Expert preview. Paused at24seconds
+after the first appearance/expiry, opened Field details and confirmed that the
+unknown-effects warning is absent. No warning/error console entries were observed.
+Team, physical-device/human and release gates remain pending.
