@@ -47,6 +47,8 @@ The material below is retained historical status and earlier content accounting,
 
 <a id="current-delivery"></a>
 
+**21 September 2026 — hosted soundtrack integration candidate (v0.80.0):** The game catalogue now connects 70 licensed recordings and 15 selectable albums to the existing player, optional offline storage and mixed playlists. [Player guide and repository integration](hosted-soundtracks.md) and [scoped functional review](verification/hosted-soundtracks-2026-09-21/review.json) describe the implementation and evidence. The full soundtrack cohort passed 316 tests; rebased Solo/Team/Versus audio hosts passed 59. Exact-source hosted qualification, frozen/offline and public checks are still pending. Listening review remains separate; AI originals are paused at 0/36 approved, and UA-FPV publication is not admitted.
+
 ## Retained delivery history
 
 **Play:** [current public game](https://mekhovov.github.io/revealline/game/) · [release explorer](https://mekhovov.github.io/revealline/releases/). These stable entry routes identify the currently served edition. The last directly recorded public-game observation in this workstream was v0.51. The extended Archive 10 separately passed its complete public-byte audit of v0.42 and v0.51: **976 files / 633,532,427 bytes**, with scoped native play for each. Those observations do not certify the identity of a later deployment, every device, save path or offline journey.

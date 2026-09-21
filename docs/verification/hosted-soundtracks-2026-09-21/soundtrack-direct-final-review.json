@@ -1,0 +1,440 @@
+{
+  "format": "revealline-hosted-soundtrack-final-source-review.v1",
+  "status": "PASS",
+  "baseCommit": "9f4bc2dab04a4d7fdd85bffc0ab6761bacb7d44a",
+  "headCommit": "5d0e14a626076128245b76fe91585c4dad3be810",
+  "workingTreeReview": true,
+  "reviewer": "Codex soundtrack_references agent",
+  "authorshipDisclosure": "I independently reviewed hosted compiler/distribution and portable backup integration authored by other agents. I authored the boot preparation/CSP/copy subset; that subset had independent audio_architecture review recorded separately. This is a bounded source review, not wholly independent authorship of every path.",
+  "scope": [
+    "Deployment/compiler admission",
+    "Portable soundtrack/Backup Set integration",
+    "Public versus local preview CSP",
+    "Metadata-only core addition and stable offline budget",
+    "Version consistency and sparse hydration"
+  ],
+  "findings": [],
+  "checks": {
+    "versions": [
+      "0.80.0",
+      "0.80.0",
+      "0.80.0",
+      "0.80.0"
+    ],
+    "workflowsUnchanged": [
+      ".github/workflows/deploy-pages.yml",
+      ".github/workflows/qualify-release-source.yml",
+      ".github/workflows/publish-frozen-pages.yml"
+    ],
+    "buildConfigurationUnchangedExceptVersion": true,
+    "publicSecurityHeadersByteIdentical": true,
+    "localPreviewConnectAllowance": "https://mekhovov.github.io/revealline-soundtracks-01/",
+    "sourceDevelopmentCSP": "Unchanged: none imposed by source server",
+    "offlineGeneratorByteIdentical": true,
+    "offlineLimits": {
+      "files": 2000,
+      "bytes": 67108864
+    },
+    "changedAudioBinaryPaths": [],
+    "hostedTracks": 70,
+    "albums": 15,
+    "runtimeAudioPayloadEntries": 0,
+    "sourceAudioPayloadEntries": 0,
+    "generatedCatalogueAndCollectionsMatchCompiler": true,
+    "externallyHostedMP3Bytes": 354986122,
+    "catalogueAndPortableHelperCoreMetadataGrowthBytes": 260525,
+    "licenseCounts": {
+      "CC0 1.0 Universal": 55,
+      "CC BY 3.0 Unported": 12,
+      "CC BY 4.0 International": 3
+    },
+    "contentIdUnknownCount": 70,
+    "listeningApproval": false,
+    "uaFpvAdmitted": false,
+    "aiOriginalsAdmitted": false,
+    "portableRecovery": "Only exact trusted unused/uninstalled catalogue pins are omitted. Uploads, installed and explicitly referenced tracks, modified/unknown pins and restricted references remain governed by existing recovery permissions."
+  },
+  "audioFingerprint": "e1bd9c13f39d0b00bd370532c3c77cac3aee78ae1738ae940ca8e80127269f6b",
+  "audioInputs": [
+    {
+      "path": "game/ui/audio.mjs",
+      "bytes": 26731,
+      "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388"
+    },
+    {
+      "path": "game/ui/published-audio.mjs",
+      "bytes": 5773,
+      "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 35408,
+      "sha256": "04988fbfbc2ef70268d2b670891962f30c5dda6830e55cf3c68c183167e168f2"
+    },
+    {
+      "path": "game/ui/audio-master.mjs",
+      "bytes": 5277,
+      "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+    },
+    {
+      "path": "game/soundtrack.mjs",
+      "bytes": 38403,
+      "sha256": "decb9f2b10cf2065986dbb1ad8302b8fbc808d140dd0256d4330108b87095fbe"
+    },
+    {
+      "path": "game/soundtrack-rights.mjs",
+      "bytes": 3755,
+      "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04"
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "bytes": 12028,
+      "sha256": "fa6a98e404ca7d169c2dc4fd5383065d79d69f2f8af25e3ca7c4ee6f67d745fd"
+    },
+    {
+      "path": "game/soundtrack-share.mjs",
+      "bytes": 5602,
+      "sha256": "6cc8878ca926476b236c0fb0f9544a5248ee627011787a14c2d1c00cad7a78ee"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "bytes": 4239,
+      "sha256": "70e04379d52b34462f6e105f7c0c05328fbb3a5cc78b721505f003b789145626"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 88945,
+      "sha256": "33dc55f581cfbd3bc4571ae873060d1c55889bbf1f943586b66c22f9b645b63a"
+    },
+    {
+      "path": "game/soundtrack-albums.mjs",
+      "bytes": 11118,
+      "sha256": "632e82dfc0189fd0f11bbdfbbfc4c8ac468725ca967a76d0c478adc86b1645e1"
+    },
+    {
+      "path": "game/soundtrack-portable.mjs",
+      "bytes": 2891,
+      "sha256": "d5423f59dfd25ca6310d47d78e433d7ff1e32a8003bf313bb74968f2e07b1103"
+    },
+    {
+      "path": "game/content/soundtrack-catalogue.mjs",
+      "bytes": 132639,
+      "sha256": "0618993ff8ff9508d1ab4295920c07d0b5a8f6f34df683538029754b438dc44f"
+    }
+  ],
+  "files": [
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 7602519,
+      "sha256": "226084d76df03d1cf1218bc579af142fcb3a8827206183d4f33a705d6dbeb3a9"
+    },
+    {
+      "path": "authoring/library/licensed-audio/hosted-README.md",
+      "bytes": 3498,
+      "sha256": "e71285fb26c6a8204d640a799c2cf400578f676851527bde0f2b2ccb3a7bc2f6"
+    },
+    {
+      "path": "authoring/library/licensed-audio/hosted-evidence.json",
+      "bytes": 4669,
+      "sha256": "1020e5f10a4096118bb174cd6934686222916b9fa3b2c887cb95cb23a4142418"
+    },
+    {
+      "path": "authoring/library/licensed-audio/hosted-inventory.json",
+      "bytes": 15081,
+      "sha256": "2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd"
+    },
+    {
+      "path": "authoring/library/licensed-audio/hosted-preview-catalogue.json",
+      "bytes": 103709,
+      "sha256": "4d10e0cf9074c6d72c7896db9f6e1c9c8d132a34ac4eca0a7c5deeed6eb82950"
+    },
+    {
+      "path": "authoring/library/licensed-audio/hosted-public-albums.json",
+      "bytes": 17311,
+      "sha256": "0811669e2eca9b529ad5d9d00701dbd497e7652b5fb2c82a13ae249962b51842"
+    },
+    {
+      "path": "authoring/library/licensed-audio/hosted-publication.json",
+      "bytes": 174804,
+      "sha256": "50f455abb66e08cb533f9b29a6f16bf05792930ee9dc531fafe9dd152a60f61e"
+    },
+    {
+      "path": "docs/delivery-priorities.md",
+      "bytes": 47118,
+      "sha256": "bfd4f68b3a0c8981edcdd3f7be9bfce46c8e2b1d5ac9538947076df4e9d58bb3"
+    },
+    {
+      "path": "docs/hosted-soundtracks.md",
+      "bytes": 4757,
+      "sha256": "94bfed96348ed77ef84eb92db3d22111829cc9800837c73b2f8b7f37d1bbac85"
+    },
+    {
+      "path": "game/app.mjs",
+      "bytes": 338134,
+      "sha256": "6659738f54fb5f492c59d464a454763f6243edfc8e4ba59607b2a5ad37d45566"
+    },
+    {
+      "path": "game/backup-set.mjs",
+      "bytes": 10658,
+      "sha256": "6ccae4d270eddf22a0868461d6266c81477b537955a7850a291fa57539a8920a"
+    },
+    {
+      "path": "game/build-config.json",
+      "bytes": 5810,
+      "sha256": "c5169f2095766f6da42842846f1d209af8983412cc33cae031c222fd776289de"
+    },
+    {
+      "path": "game/content/optional-soundtracks.json",
+      "bytes": 62,
+      "sha256": "cdcb5ef5cf8b429ef40b9be7296a4f2475df95e8e909d6ba57e784f018fe285c"
+    },
+    {
+      "path": "game/content/soundtrack-catalogue.json",
+      "bytes": 125320,
+      "sha256": "416c3e49f0be5d91e89da85547a83d184e912e487dbfad333a24b71a6afc3039"
+    },
+    {
+      "path": "game/content/soundtrack-catalogue.mjs",
+      "bytes": 132639,
+      "sha256": "0618993ff8ff9508d1ab4295920c07d0b5a8f6f34df683538029754b438dc44f"
+    },
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "bytes": 2643,
+      "sha256": "eed614ad2804c0412da0abaf09efd3b70f45b65ade92dec6f964937bd2460dc1"
+    },
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "bytes": 13564,
+      "sha256": "30aba6c7c26afe1562b791ff0b393e9e4461c89c1cd9207694b51a6771c043ab"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 76396,
+      "sha256": "1daff2ab07ed300b0d5d40d1de297dbb2fef048ae2645fd34cf4b32d68a364b1"
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "bytes": 27214,
+      "sha256": "642ef2f143f599049c5d0cdb2df713c7a6f740c385b1867b5799881312daa601"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 978318,
+      "sha256": "49d4ce0c6519d42b0a0d3b4ea0844a4dd01f878d29d39464cf6c87125d760c0a"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "bytes": 4092934,
+      "sha256": "b8ec5dd8a1383266c7ce959294b273e4573a974f2513451900d933a4ed46bed3"
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "bytes": 12028,
+      "sha256": "fa6a98e404ca7d169c2dc4fd5383065d79d69f2f8af25e3ca7c4ee6f67d745fd"
+    },
+    {
+      "path": "game/soundtrack-portable.mjs",
+      "bytes": 2891,
+      "sha256": "d5423f59dfd25ca6310d47d78e433d7ff1e32a8003bf313bb74968f2e07b1103"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "bytes": 4239,
+      "sha256": "70e04379d52b34462f6e105f7c0c05328fbb3a5cc78b721505f003b789145626"
+    },
+    {
+      "path": "game/soundtrack.mjs",
+      "bytes": 38403,
+      "sha256": "decb9f2b10cf2065986dbb1ad8302b8fbc808d140dd0256d4330108b87095fbe"
+    },
+    {
+      "path": "game/test/backup-set.test.mjs",
+      "bytes": 14239,
+      "sha256": "d7b715669371673d2054e9359f2605624c713f841a6f68f8a532b05dfd79a23f"
+    },
+    {
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "bytes": 25402,
+      "sha256": "49e5867f6d11c96e7a47cec288b78ad7addea6e71b039c8dda50513a7624a2fd"
+    },
+    {
+      "path": "game/test/coop-historical-import-picture.test.mjs",
+      "bytes": 16371,
+      "sha256": "daf8fa5165a2e40841c2e861952185686b54115dcc30bf1d5c8cbc419de18b8d"
+    },
+    {
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "bytes": 8897,
+      "sha256": "71d367c7d8100b56b0688615e1ec46d5f2db3800e974821382216d88e30dbb12"
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "bytes": 47383,
+      "sha256": "f353da12ba56e9e94c755a89a30b9bd557cdbf83afa8cd2a7bdda6447b86c1a5"
+    },
+    {
+      "path": "game/test/helpers/backup-set-fixture.mjs",
+      "bytes": 5662,
+      "sha256": "43983c59cfc1a70c105aa0ee375b0058a137ab7d82acd279941f6bc0bea18a4d"
+    },
+    {
+      "path": "game/test/presentation-production-history.test.mjs",
+      "bytes": 30923,
+      "sha256": "18af123807c1043c0feebd422d3038457c15de9c6244ffd7e0f1baaca2bbb2be"
+    },
+    {
+      "path": "game/test/soundtrack-catalogue.test.mjs",
+      "bytes": 30396,
+      "sha256": "c92a25015e6349e7fe5fb049e58b21f58de742228cd5524c4558f06467abb914"
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "bytes": 25603,
+      "sha256": "b22896c274c07c753e47aed7a5e64534e40e4ff9407c87dfc2645122e12f9f09"
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "bytes": 113982,
+      "sha256": "d37cb97531fa9ad453cc6595f4da18030fe7def97c5d99d6ce7bc33059550ac7"
+    },
+    {
+      "path": "game/test/soundtrack-portable.test.mjs",
+      "bytes": 11570,
+      "sha256": "e5e281824c6de65f054cdbb9f70032c278433ea69760bc05d74bdea37cf7e338"
+    },
+    {
+      "path": "game/test/soundtrack-preparation-policy.test.mjs",
+      "bytes": 9544,
+      "sha256": "4b99927c53f07eca81c3fe59d716a4de9653aa99e5b7ec6162c23a6ebe9f6619"
+    },
+    {
+      "path": "game/test/soundtrack-reference-recovery.test.mjs",
+      "bytes": 12884,
+      "sha256": "1ca6d350e2d62eb43d25aa547b0f66505ce0399a8753f7c8760b91b8e9406bf9"
+    },
+    {
+      "path": "game/test/soundtrack-rights.test.mjs",
+      "bytes": 19121,
+      "sha256": "d55a4fb6abb36d112288ace6af5b155bdb7c07aa31f3c60d3199a8ea01f02927"
+    },
+    {
+      "path": "game/test/soundtrack-source.test.mjs",
+      "bytes": 6215,
+      "sha256": "06ccc27461022f14d2e15786625c43144db3fef2443a177d9f1e637dd47ba16b"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 88945,
+      "sha256": "33dc55f581cfbd3bc4571ae873060d1c55889bbf1f943586b66c22f9b645b63a"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 35408,
+      "sha256": "04988fbfbc2ef70268d2b670891962f30c5dda6830e55cf3c68c183167e168f2"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 36138,
+      "sha256": "0a931f8b97667fab0eeb43099b82160f05ed7284dccbf63d9a0b18d2c4192976"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "61f2c13e83b73012eda4edc043bef6af7d7969fb4be7d855dbe6cde18c4ccf8b"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 63769,
+      "sha256": "d4fa1db541be33292be72bbeef3c5d2c7923cdbb9781490f703b72620083e446"
+    },
+    {
+      "path": "scripts/hosted-soundtrack-publication.mjs",
+      "bytes": 10010,
+      "sha256": "7264f21f39578906f76857425a3ff2a94ffa147803ce494bb614024ecd7a0a0b"
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "bytes": 22362,
+      "sha256": "0cec1e43a3e6121b40b9ac050e32751fee83e30567284acc40e41176669eff9f"
+    },
+    {
+      "path": "scripts/soundtrack-distribution.mjs",
+      "bytes": 13753,
+      "sha256": "7e50c0dd8a803a97601e5e8864942eac1aa64af02f5acf2b5a4b35c5da3fb84c"
+    },
+    {
+      "path": "scripts/test-field-kit-recipe-sources.mjs",
+      "bytes": 1661,
+      "sha256": "88ed86924f00b91eeada84dee8630fe08bc544b1efb22e3f9c767553f937cad7"
+    },
+    {
+      "path": "scripts/test-game-cli.mjs",
+      "bytes": 40648,
+      "sha256": "508d26f5d93e7715fe1839d0944777c7abf80427ffab4e1d0911755afa7b9e92"
+    },
+    {
+      "path": "scripts/test-hosted-soundtrack-publication.mjs",
+      "bytes": 5118,
+      "sha256": "c0ec0ce00b5c415a756f3eafa85a0a131ce17c5a0cb7da216cc988535c14f3df"
+    },
+    {
+      "path": "scripts/test-soundtrack-distribution.mjs",
+      "bytes": 28523,
+      "sha256": "9da207700bcbb65c5e967242b540dda21d574f1ef6ed3d8ebabbea604a3b00fb"
+    },
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".github/workflows/qualify-release-source.yml",
+      "bytes": 9779,
+      "sha256": "1556a65202bc0e70ce84e10333df711fc863aec0f261c710b9216eb7d5b4af83"
+    },
+    {
+      "path": ".github/workflows/publish-frozen-pages.yml",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    }
+  ],
+  "sparseHydration": {
+    "localOnly": true,
+    "fixtures": [
+      {
+        "path": "game/content/packs/catalog.json",
+        "bytes": 4898,
+        "sha256": "2e755c604a6ccc7a71d7e7b9c9e869e005856bae26354322aaff91d0d6232c0c",
+        "matchesHeadBlob": true
+      },
+      {
+        "path": "game/content/packs/archive-catalog.json",
+        "bytes": 2600,
+        "sha256": "6da75db47524940c3d1469274faa652558137ef4ec55d3ef349f4c22ad70341a",
+        "matchesHeadBlob": true
+      },
+      {
+        "path": "game/content/packs/night-shift.json",
+        "bytes": 8848,
+        "sha256": "b82d453a9c7a3feab9b88d960b3bf5cbeca8d5254dec3f259490c54b272acef4",
+        "matchesHeadBlob": true
+      }
+    ],
+    "hostedImpact": "PR and manual source jobs use complete source checkouts without sparse configuration; release-snapshot uses Git archive. Exact HEAD fixture hydration changes only local file availability, not committed bytes, CI discovery, or frozen source contents. Existing distribution tests retain distinct original/runtime fixtures and do not introduce skips."
+  },
+  "verificationPerformed": [
+    "Read-only compilation of runtime and source delivery; exact generated-object comparison",
+    "Byte comparisons of public headers, offline generator, build configuration and workflow files",
+    "Current source/hash inventory read twice; stable before receipt",
+    "Previous scoped88 player/source/CLI and58 host tests are prior evidence; not rerun by this final read-only review"
+  ],
+  "limitations": [
+    "No full build or frozen offline inventory was produced; hosted build/freeze must enforce the unchanged64MiB/2000-file core limit against actual outputs.",
+    "No new browser, audible listening, musical suitability, Ukrainian authenticity or release acceptance is asserted.",
+    "Production ledger/payload preservation is pinned here but not independently unpacked; root owns its dedicated ledger reproduction/prefix/payload audit.",
+    "Existing ignored ZIP preview server still needs the narrow local archive CSP allowance before testing hosted playback there; this does not affect reviewed tracked CLI/public source.",
+    "Later changes require a new source pin review."
+  ],
+  "receiptPath": "/tmp/soundtrack-direct-final-review.json"
+}

@@ -1,0 +1,95 @@
+TAP version 13
+# Subtest: muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play
+ok 1 - muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play
+  ---
+  duration_ms: 1134.804042
+  ...
+# Subtest: Settings music text follows master immediately and remains coherent after transport notifications
+ok 2 - Settings music text follows master immediately and remains coherent after transport notifications
+  ---
+  duration_ms: 1536.209084
+  ...
+# Subtest: late Settings Play cancellation cannot replace a newer Library Pause label
+ok 3 - late Settings Play cancellation cannot replace a newer Library Pause label
+  ---
+  duration_ms: 1328.466708
+  ...
+# Subtest: blocked Settings Play feedback survives master edits until a real transport retry
+ok 4 - blocked Settings Play feedback survives master edits until a real transport retry
+  ---
+  duration_ms: 1456.075916
+  ...
+# Subtest: actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+ok 5 - actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+  ---
+  duration_ms: 4192.444584
+  ...
+# Subtest: actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection
+ok 6 - actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection
+  ---
+  duration_ms: 16526.415375
+  ...
+# Subtest: actual master, music and SFX controls remain independent and the studio fader persists to game settings
+ok 7 - actual master, music and SFX controls remain independent and the studio fader persists to game settings
+  ---
+  duration_ms: 1411.815042
+  ...
+# Subtest: Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight
+ok 8 - Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight
+  ---
+  duration_ms: 1417.895208
+  ...
+# Subtest: actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+ok 9 - actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+  ---
+  duration_ms: 2264.13625
+  ...
+# Subtest: missing file-audio API disables Studio and leaves the original synth fallback usable
+ok 10 - missing file-audio API disables Studio and leaves the original synth fallback usable
+  ---
+  duration_ms: 295.121792
+  ...
+# Subtest: actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight
+ok 11 - actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight
+  ---
+  duration_ms: 1331.215709
+  ...
+# Subtest: a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+ok 12 - a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+  ---
+  duration_ms: 1857.608167
+  ...
+# Subtest: actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight
+ok 13 - actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight
+  ---
+  duration_ms: 6042.421667
+  ...
+# Subtest: closing Studio during pending Play respects play with saved audio disabled when flight starts
+ok 14 - closing Studio during pending Play respects play with saved audio disabled when flight starts
+  ---
+  duration_ms: 1466.777083
+  ...
+# Subtest: closing Studio during pending Play respects pause with saved audio disabled when flight starts
+ok 15 - closing Studio during pending Play respects pause with saved audio disabled when flight starts
+  ---
+  duration_ms: 1499.413792
+  ...
+# Subtest: closing Studio during pending Play respects pause with saved audio enabled when flight starts
+ok 16 - closing Studio during pending Play respects pause with saved audio enabled when flight starts
+  ---
+  duration_ms: 1503.053333
+  ...
+# Subtest: closing Studio during pending Play respects mute with saved audio enabled when flight starts
+ok 17 - closing Studio during pending Play respects mute with saved audio enabled when flight starts
+  ---
+  duration_ms: 1640.77325
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 46987.04475
