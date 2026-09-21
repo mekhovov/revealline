@@ -1,5 +1,7 @@
 # Studio pressure-edition inspection
 
+Independent specification review: Approved2026-09-21; no blocking gaps.
+
 Scope: expose the existing copy-on-write pressure projection to administrators
 without new physics, schemas, defaults, publication, enrollment or live-run changes.
 The user has approved the shared difficulty/admin framework and automatic progress;

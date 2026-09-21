@@ -50,6 +50,9 @@
         <button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button
         ><button id="save">Save checkpoint / retry</button
         ><button id="export">Export backup</button>
+        <button id="pressure-edition" aria-describedby="pressure-edition-help">
+          Inspect pressure-v2 copy of current draft
+        </button>
         <button id="opening">Inspect opening candidates</button>
         <button id="border">Inspect Border Bloom candidates</button>
         <button id="timed-border">Inspect timed bonus study</button>
@@ -81,6 +84,11 @@
           >Inspect import<input id="import" type="file" accept="application/json,.json"
         /></label>
       </div>
+      <p id="pressure-edition-help" class="note">
+        Pressure-v2 changes enemy speed and attack rests for all missions in the current draft.
+        Player handling, warnings, maps and pictures stay unchanged. Inspect, then Apply; nothing is
+        published. Disabled when this draft already uses pressure-v2.
+      </p>
       <div class="workspace">
         <aside aria-label="Project and missions">
           <p class="eyebrow">PROJECT</p>

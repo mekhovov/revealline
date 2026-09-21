@@ -15,6 +15,7 @@ import { createRelayCandidates } from '../content-design/relay-candidates.mjs';
 import { createCrosswindCandidates } from '../content-design/crosswind-candidates.mjs';
 import { createSentinelCandidates } from '../content-design/sentinel-candidates.mjs';
 import { createSentinelSpatialCandidates } from '../content-design/sentinel-spatial-candidates.mjs';
+import { withPressureDifficulty } from '../content-design/pressure-candidates.mjs';
 import { createApexCandidates } from '../content-design/apex-candidates.mjs';
 import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
@@ -403,6 +404,7 @@ function render(selected = $('mission').value) {
   pacingInspector.sync();
   tuningRevision = null;
   const project = session.current();
+  $('pressure-edition').disabled = project.difficultyCatalogId === 'journey-difficulty-v2';
   $('project-id').value = project.id;
   $('project-name').textContent = project.name;
   const nameCounts = new Map();
@@ -619,6 +621,15 @@ $('new').onclick = guarded(() => {
   if (id === session.current().id)
     throw new Error('Choose a new project ID; this action does not reset an existing project.');
   $('source').value = JSON.stringify(createStarterProject(id), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('pressure-edition').onclick = guarded(() => {
+  if (!discardSource()) return;
+  inspections.invalidate();
+  inspected = null;
+  $('apply').disabled = true;
+  $('source').value = JSON.stringify(withPressureDifficulty(session.current()), null, 2);
   sourceChanged = true;
   inspectSource();
 });
