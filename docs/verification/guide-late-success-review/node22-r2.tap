@@ -9,11 +9,11 @@ not ok 1 - review: successful delayed practice preserves newer Read focus
   error: |-
     A completed request must not steal newer attention.
     + actual - expected
-    
+
     + 'enemy-guide-frame'
     - 'enemy-guide-read'
                    ^
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected: 'enemy-guide-read'
@@ -35,10 +35,10 @@ not ok 2 - review: successful delayed practice preserves newer hidden then visib
   error: |-
     A completed request must not steal newer attention.
     + actual - expected
-    
+
     + 'enemy-guide-frame'
     - 'BODY'
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected: 'BODY'
@@ -60,10 +60,10 @@ not ok 3 - review: successful delayed practice preserves newer pagehide then pag
   error: |-
     A completed request must not steal newer attention.
     + actual - expected
-    
+
     + 'enemy-guide-frame'
     - 'BODY'
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected: 'BODY'
