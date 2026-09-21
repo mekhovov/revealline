@@ -1,0 +1,28 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "patchSha256": "35c3fcd50b06c66d7837b8049154189e92bc612785bf8c8b4c6c0f450064d382",
+  "status": "independent-scoped-review-not-adopted",
+  "cohorts": {
+    "node20": {
+      "passed": 58,
+      "failed": 0,
+      "reads": 375,
+      "uniqueFiles": 267,
+      "tapSha256": "79ab90d04de9cf4221cf6aaefc643ee0db48e64a22508ba93d3c2546bbdf834c"
+    },
+    "node22": {
+      "passed": 58,
+      "failed": 0,
+      "reads": 375,
+      "uniqueFiles": 267,
+      "tapSha256": "6fef34665bbdb126439502c84776a6c2e6acf2c544ec3446b2672b8cc16d8ab6"
+    },
+    "baseline-red": {
+      "passed": 0,
+      "failed": 1,
+      "reads": 262,
+      "uniqueFiles": 262,
+      "tapSha256": "40453be57e47b764bfdcb56ec68905eafd8c56e89d73f4f0908354aa65c31e35"
+    }
+  }
+}
