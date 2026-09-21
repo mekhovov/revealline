@@ -20,8 +20,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Directional arrows, capture neutralization and erosion-restored fields readable over artwork",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -53,8 +53,8 @@
           "Selected edit removes both survey-stone markings while retaining the three-shelter scene."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Directional arrows, capture neutralization and erosion-restored fields readable over artwork",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -78,8 +78,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Directional arrows, capture neutralization and erosion-restored fields readable over artwork",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -103,8 +103,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Directional arrows, capture neutralization and erosion-restored fields readable over artwork",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -128,8 +128,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Directional arrows, capture neutralization and erosion-restored fields readable over artwork",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -153,8 +153,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Directional arrows, capture neutralization and erosion-restored fields readable over artwork",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -178,8 +178,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Directional arrows, capture neutralization and erosion-restored fields readable over artwork",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -187,5 +187,87 @@
         ]
       }
     }
-  ]
+  ],
+  "nativePreview": {
+    "kind": "assistant-native-keyboard-observation-not-human-playtest",
+    "sourceCommit": "422f1587f1a50764bfd52a6efeef5768ff424b4f",
+    "context": "Read-only exact-source local server; explicit Studio Inspect then Apply, Standard Solo Practice, normal Start and directional input. No state injection.",
+    "observations": [
+      {
+        "missionId": "read-the-arrows",
+        "input": "Down",
+        "coveragePercent": 0.6,
+        "score": 140,
+        "targetPercent": 82,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "survey-markers",
+        "input": "Up",
+        "coveragePercent": 0.4,
+        "score": 90,
+        "targetPercent": 82,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "windbreak-weave",
+        "input": "Up",
+        "coveragePercent": 0.4,
+        "score": 80,
+        "targetPercent": 82,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "compass-array",
+        "input": "Up",
+        "coveragePercent": 0.3,
+        "score": 70,
+        "targetPercent": 83,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "outer-loop",
+        "input": "Right",
+        "coveragePercent": 0.9,
+        "score": 170,
+        "targetPercent": 83,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "long-wave",
+        "input": "Down",
+        "coveragePercent": 0.6,
+        "score": 140,
+        "targetPercent": 83,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "crosswind-remix",
+        "input": "Down",
+        "coveragePercent": 0.6,
+        "score": 630,
+        "targetPercent": 84,
+        "lives": 3,
+        "stoppedOnCapture": true
+      }
+    ],
+    "findings": [
+      "All seven originals visibly loaded in the border, authored foundations and first captured strip.",
+      "Captured strips lost their directional arrows while adjacent unclaimed fields retained theirs.",
+      "Return currents opened its numbered connector and showed Relay 1/1; its eroder, keeper and emitter silhouettes remained distinct.",
+      "Long wave and Return currents showed the lane-warning caption; no active lane overlay or erosion-restoration claim is made.",
+      "All previews closed; focus returned to Play exact Solo preview."
+    ],
+    "limitations": [
+      "First captures only; no native full clear or broad-area/victory matrix",
+      "No erosion-restored artwork observation or complete threat-state matrix",
+      "No physical-device, accessibility matrix, human enjoyment or public-release qualification"
+    ]
+  }
 }

@@ -23,8 +23,16 @@ default greyboxes, editions, physics and progress authority are unchanged. The
 seven-file art/candidate/directional-core/framework/registry/whole-library cohort
 passes40/40 on Node20.19.5 and22.22.2, no failures, skips or cancellations, preserving
 all42 historical clear checkpoints and498 whole-library manifests. Scoped ESLint,
-formatting and diff checks pass. Native picture/arrow/neutralization and restored-
-terrain observations, broad-area/victory, actors/audio, device/human acceptance and
+formatting and diff checks pass. All seven initial native picture/arrow/capture
+checks now pass at exact source422f1587f1a50764bfd52a6efeef5768ff424b4f.
+Normal Standard Solo Start plus Down/Up/Up/Up/Right/Down/Down respectively produced
+0.6/0.4/0.4/0.3/0.9/0.6/0.6% and140/90/80/70/170/140/630points, with3lives
+and stopped craft in each. Original border/foundation/cut fragments loaded; only
+captured strips lost arrows. Return currents opened its numbered connector and
+showed Relay1/1. Long wave and the Remix showed a lane-warning caption, not proof
+of the active-lane artwork overlay. All previews closed, restoring Play focus.
+These are initial keyboard observations, not full native clears or human evidence.
+Restored-terrain observations, broad-area/victory, actors/audio, device/human acceptance and
 accepted-source publication remain open. The existing code-level Pages guard is
 950,000,000bytes; this increment does not raise it or claim aggregate release fit.
 

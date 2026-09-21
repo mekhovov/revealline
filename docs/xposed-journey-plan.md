@@ -163,11 +163,19 @@ remain local source candidates without a new phase/version allocation.
 Crosswind Array has seven local original highland compositions (18,900,961bytes),
 exact pins/prompts and explicit Studio opt-in. Its40-test art/directional-core/
 framework/candidate/library cohort passes on Node20/22 with42 unchanged clear
-checkpoints. Native arrow/picture/reclamation/restoration, broad-area/victory,
-device/human and release gates remain open; see P10 and its artwork prompt record.
+checkpoints. All seven initial native picture/capture checks at422f1587 retain
+3lives and show captured strips losing arrows; the Remix opens its connector.
+Restoration, broader threat-state/broad-area/victory, device/human and release gates
+remain open; see P10 and its artwork prompt record.
 The existing implementation guard is950,000,000bytes (stricter than950MiB wording
 below). Preserve it unchanged and requalify aggregate current/previous deployment
 size on accepted source before promotion; candidate originals do not prove fit.
+The read-only capacity forecast in
+`docs/verification/journey-art-pages-capacity.md` finds1,015,952,424bytes for
+two preserved payload copies after adding the35 unpublished originals, exceeding
+the existing guard by65,952,424bytes before other costs. This is conditional on
+unchanged packaging, not a failure of accepted v0.76.1. Packaging review is an
+explicit integration gate; do not delete originals or raise the guard.
 
 ### Historical phase snapshots
 
