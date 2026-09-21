@@ -198,3 +198,13 @@ a rejected terminal-tick activation proposal remains a negative regression.
 The original16 failed probes stay unchanged. Slice4 is still partial because
 later windows, reserve taking, broader start sampling and pacing remain open.
 This successor does not close device/human, artwork, enrollment or release gates.
+
+## Shared reserve route successor
+
+[Reserve-taking evidence](../../verification/journey-team-reserve-routes.md)
+adds twelve no-loss shared clears across three presets and four seat/joint
+configurations. Collection grants one shared reserve while the partner is
+cutting. Standard also proves a materialized bonus remains after enclosure and
+grants nothing until contact. Its later first eligible appearance must not be
+called a missed-visible-window relocation. That relocation-taking route, broader
+sampling, pacing, device/human, artwork and publication gates remain open.
