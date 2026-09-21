@@ -1,0 +1,115 @@
+TAP version 13
+# (node:22109) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: crop uses an integer centered frame and never mutates source coordinates
+ok 1 - crop uses an integer centered frame and never mutates source coordinates
+  ---
+  duration_ms: 1.50075
+  type: 'test'
+  ...
+# Subtest: occupied bounds distinguish alpha from actual visible silhouette, including empty sprite
+ok 2 - occupied bounds distinguish alpha from actual visible silhouette, including empty sprite
+  ---
+  duration_ms: 0.228959
+  type: 'test'
+  ...
+# Subtest: inventory combines usage/state/media/readiness filters without treating source as produced
+ok 3 - inventory combines usage/state/media/readiness filters without treating source as produced
+  ---
+  duration_ms: 0.25075
+  type: 'test'
+  ...
+# Subtest: edited sprite retains only authored placement while remeasuring its new frame and pixels
+ok 4 - edited sprite retains only authored placement while remeasuring its new frame and pixels
+  ---
+  duration_ms: 0.3215
+  type: 'test'
+  ...
+# Subtest: edited sprite placement falls back to valid defaults for changed dimensions or any partial crop
+ok 5 - edited sprite placement falls back to valid defaults for changed dimensions or any partial crop
+  ---
+  duration_ms: 0.12525
+  type: 'test'
+  ...
+# (node:22110) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+ok 6 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 17869.640791
+  type: 'test'
+  ...
+# (node:22128) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: sprite preparation owns the opening origin and each callback receives an independent copy
+ok 7 - sprite preparation owns the opening origin and each callback receives an independent copy
+  ---
+  duration_ms: 5.373875
+  type: 'test'
+  ...
+# Subtest: a blank sprite drops the previous edit origin
+ok 8 - a blank sprite drops the previous edit origin
+  ---
+  duration_ms: 0.980541
+  type: 'test'
+  ...
+# Subtest: a blank sprite drops the previous edit origin after Reset
+ok 9 - a blank sprite drops the previous edit origin after Reset
+  ---
+  duration_ms: 1.3275
+  type: 'test'
+  ...
+# Subtest: reset during sprite encoding aborts before preparation reaches the host
+ok 10 - reset during sprite encoding aborts before preparation reaches the host
+  ---
+  duration_ms: 0.723209
+  type: 'test'
+  ...
+# Subtest: reset after encoding rejects delayed acceptance and preserves the newer editor
+ok 11 - reset after encoding rejects delayed acceptance and preserves the newer editor
+  ---
+  duration_ms: 0.791958
+  type: 'test'
+  ...
+# Subtest: open during sprite encoding aborts before preparation reaches the host
+ok 12 - open during sprite encoding aborts before preparation reaches the host
+  ---
+  duration_ms: 0.639
+  type: 'test'
+  ...
+# Subtest: open after encoding rejects delayed acceptance and preserves the newer editor
+ok 13 - open after encoding rejects delayed acceptance and preserves the newer editor
+  ---
+  duration_ms: 2.300292
+  type: 'test'
+  ...
+# Subtest: accepting a delayed snapshot preserves newer edits in the same sprite and an undoable clean baseline
+ok 14 - accepting a delayed snapshot preserves newer edits in the same sprite and an undoable clean baseline
+  ---
+  duration_ms: 0.855834
+  type: 'test'
+  ...
+# Subtest: operation cancellation after encoding starts does not prepare or accept a sprite
+ok 15 - operation cancellation after encoding starts does not prepare or accept a sprite
+  ---
+  duration_ms: 0.566625
+  type: 'test'
+  ...
+# Subtest: an encoding failure leaves edits and origin available for a retry
+ok 16 - an encoding failure leaves edits and origin available for a retry
+  ---
+  duration_ms: 1.149334
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19420.303834

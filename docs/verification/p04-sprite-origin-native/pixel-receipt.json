@@ -1,0 +1,13 @@
+{
+  "dimensions": [64, 64],
+  "changes": [
+    {
+      "x": 0,
+      "y": 0,
+      "before": [0, 0, 0, 0],
+      "after": [244, 191, 98, 255]
+    }
+  ],
+  "actualBrowserPNG": true,
+  "decoder": "Pillow in bundled workspace Python; system Python lacked PIL"
+}

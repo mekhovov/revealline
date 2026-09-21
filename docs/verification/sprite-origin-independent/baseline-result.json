@@ -1,0 +1,5 @@
+{
+  "exitCode": 1,
+  "hostSha256": "9b86b47d7aa9bbcaaccfd34ffdd93636d32682c8a7e2c360b4639c0b56da9ee3",
+  "scope": "Full new host regression against previous bc41 host; other bytes remain frozen candidate."
+}

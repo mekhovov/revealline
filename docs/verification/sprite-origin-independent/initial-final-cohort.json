@@ -1,0 +1,26 @@
+{
+  "files": [
+    "presentation-studio",
+    "studio-transfer-history",
+    "studio-slot-history",
+    "sprite-editor",
+    "asset-studio-host-loading",
+    "published-studio",
+    "asset-studio-helpers",
+    "sprite-edit-origin"
+  ],
+  "results": [
+    {
+      "node": "22.22.2",
+      "exitCode": 0,
+      "log": "final-node22.log",
+      "sha256": "6457011bc269978e06ac096be54d9fe8d634196d6c088e96e1a320109f6df422"
+    },
+    {
+      "node": "20.19.5",
+      "exitCode": 1,
+      "log": "final-node20.log",
+      "sha256": "f9b267dfeb8c2eb5da78fd199d9dd8c3996709bc828749fc57c558d6a7822094"
+    }
+  ]
+}

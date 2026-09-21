@@ -1,0 +1,20 @@
+{
+  "sourceExport": {
+    "bytes": 7406343,
+    "sha256": "45482e2dc5fcf61d8a67178db17921b4b42a6caf7fdc9b9b079a3a9f53fbbea8"
+  },
+  "freshOriginReexport": {
+    "path": "/Users/oleksandr.mekhovov/Downloads/revealline-fpv-r42 (2).rltheme",
+    "bytes": 7565216,
+    "sha256": "2cdf5d2086b13db40e21c213181129593828f3c69c52a3085e2618e9f073485e"
+  },
+  "payloads": 134,
+  "payloadBytes": 4010515,
+  "allPayloadsExact": true,
+  "priorRecordsVerifiedAfterExplicitRemapping": 1354,
+  "mapping": {
+    "player.scout.detailed.custom@1": "import-42-1351@1",
+    "player.scout.detailed.custom.source@1": "import-42-1352@1",
+    "player.scout.detailed.custom@2": "import-42-1353@1"
+  }
+}

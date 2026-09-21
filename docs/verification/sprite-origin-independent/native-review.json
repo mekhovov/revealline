@@ -1,0 +1,23 @@
+{
+  "packetSha256": "e4c09f7fe89f59c9a9ea654d893245720f51cb0a83cb14cf6c84d7e461897dd7",
+  "uniqueSourceBindingsPerOrigin": 297,
+  "bytesPerOrigin": 10042970,
+  "sourceVerification": "All candidates matched freshly applied patches, every other observed blob matched exact8cff regardless of historical origin label.",
+  "downloadedBytes": [
+    7406343,
+    7565216
+  ],
+  "downloadedHashes": [
+    "45482e2dc5fcf61d8a67178db17921b4b42a6caf7fdc9b9b079a3a9f53fbbea8",
+    "2cdf5d2086b13db40e21c213181129593828f3c69c52a3085e2618e9f073485e"
+  ],
+  "exactPayloads": 134,
+  "exactPayloadBytes": 4010515,
+  "exactPriorRecordsAfterDeclaredRemapping": 1354,
+  "namespaceMapping": {
+    "player.scout.detailed.custom@1": "import-42-1351@1",
+    "player.scout.detailed.custom.source@1": "import-42-1352@1",
+    "player.scout.detailed.custom@2": "import-42-1353@1"
+  },
+  "limitation": "Independent bytes/source/metadata review of owner native observations; no second native journey or physical-device acceptance."
+}

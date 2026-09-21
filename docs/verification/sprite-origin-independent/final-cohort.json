@@ -1,0 +1,38 @@
+{
+  "files": [
+    "presentation-studio",
+    "studio-transfer-history",
+    "studio-slot-history",
+    "sprite-editor",
+    "asset-studio-host-loading",
+    "published-studio",
+    "asset-studio-helpers",
+    "sprite-edit-origin"
+  ],
+  "results": [
+    {
+      "counts": {
+        "tests": 60,
+        "pass": 60,
+        "fail": 0,
+        "skipped": 0
+      },
+      "node": "22.22.2",
+      "exitCode": 0,
+      "log": "final-node22.log",
+      "sha256": "469061ec40224fe0b53dde0973ca732526bcebc619be7c5b4db13485e0d1352d"
+    },
+    {
+      "counts": {
+        "tests": 60,
+        "pass": 60,
+        "fail": 0,
+        "skipped": 0
+      },
+      "node": "20.19.5",
+      "exitCode": 0,
+      "log": "final-node20.log",
+      "sha256": "26aa89b3f856296bab40d3c00d22a8aa1dee2ad4ca400160021c29b6a77dd35e"
+    }
+  ]
+}

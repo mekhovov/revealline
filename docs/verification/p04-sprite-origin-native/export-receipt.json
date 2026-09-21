@@ -1,0 +1,205 @@
+{
+  "path": "/Users/oleksandr.mekhovov/Downloads/revealline-fpv-r43.rltheme",
+  "bytes": 7406343,
+  "sha256": "45482e2dc5fcf61d8a67178db17921b4b42a6caf7fdc9b9b079a3a9f53fbbea8",
+  "documentRevision": 43,
+  "assetRecords": 1354,
+  "payloads": 134,
+  "current": {
+    "description": "scout detailed body",
+    "file": {
+      "bytes": 1267,
+      "height": 64,
+      "mime": "image/png",
+      "sha256": "1aaed0b6e74dbc6f3ab4e4a839422416df89daafd7a4f70b1499347172c826e8",
+      "width": 64
+    },
+    "format": "revealline-asset-revision.v1",
+    "geometry": {
+      "frame": {
+        "height": 64,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "nineSlice": null,
+      "occupiedBounds": {
+        "height": 0.875,
+        "width": 0.828125,
+        "x": 0,
+        "y": 0
+      },
+      "pivot": {
+        "x": 0.4,
+        "y": 0.5
+      },
+      "rotorAnchors": [
+        {
+          "blades": 3,
+          "radius": 0.12,
+          "x": 0.3,
+          "y": 0.25
+        },
+        {
+          "blades": 3,
+          "radius": 0.12,
+          "x": 0.75,
+          "y": 0.25
+        },
+        {
+          "blades": 3,
+          "radius": 0.12,
+          "x": 0.25,
+          "y": 0.75
+        },
+        {
+          "blades": 3,
+          "radius": 0.12,
+          "x": 0.75,
+          "y": 0.75
+        }
+      ]
+    },
+    "id": "player.scout.detailed.custom",
+    "kind": "image",
+    "provenance": {
+      "creator": "RevealLine original recipe; native QA pixel edit by Codex",
+      "license": "Original project artwork; local QA derivative, not production approved.",
+      "parent": {
+        "id": "player.scout.detailed.custom.source",
+        "revision": 1
+      },
+      "prompt": "",
+      "source": "Local QA: player.scout.detailed.custom@1, one corner pixel"
+    },
+    "quality": {
+      "evidence": [],
+      "stage": "produced"
+    },
+    "recipe": null,
+    "revision": 2
+  },
+  "editedOriginal": {
+    "description": "scout detailed body original source",
+    "file": {
+      "bytes": 1267,
+      "height": 64,
+      "mime": "image/png",
+      "sha256": "1aaed0b6e74dbc6f3ab4e4a839422416df89daafd7a4f70b1499347172c826e8",
+      "width": 64
+    },
+    "format": "revealline-asset-revision.v1",
+    "geometry": {
+      "frame": {
+        "height": 64,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "nineSlice": null,
+      "occupiedBounds": {
+        "height": 0.875,
+        "width": 0.828125,
+        "x": 0,
+        "y": 0
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "rotorAnchors": []
+    },
+    "id": "player.scout.detailed.custom.source",
+    "kind": "image",
+    "provenance": {
+      "creator": "RevealLine original recipe; native QA pixel edit by Codex",
+      "license": "Original project artwork; local QA derivative, not production approved.",
+      "parent": {
+        "id": "player.scout.detailed.custom",
+        "revision": 1
+      },
+      "prompt": "",
+      "source": "Local QA: player.scout.detailed.custom@1, one corner pixel"
+    },
+    "quality": {
+      "evidence": [],
+      "stage": "produced"
+    },
+    "recipe": null,
+    "revision": 1
+  },
+  "previous": {
+    "description": "Slim X frame with one strapped amber battery and a front camera. The narrow fuselage keeps the reference scout silhouette light.",
+    "file": {
+      "bytes": 600,
+      "height": 64,
+      "mime": "image/png",
+      "sha256": "3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c",
+      "width": 64
+    },
+    "format": "revealline-asset-revision.v1",
+    "geometry": {
+      "frame": {
+        "height": 64,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "nineSlice": null,
+      "occupiedBounds": {
+        "height": 0.75,
+        "width": 0.640625,
+        "x": 0.1875,
+        "y": 0.125
+      },
+      "pivot": {
+        "x": 0.4,
+        "y": 0.5
+      },
+      "rotorAnchors": [
+        {
+          "blades": 3,
+          "radius": 0.12,
+          "x": 0.3,
+          "y": 0.25
+        },
+        {
+          "blades": 3,
+          "radius": 0.12,
+          "x": 0.75,
+          "y": 0.25
+        },
+        {
+          "blades": 3,
+          "radius": 0.12,
+          "x": 0.25,
+          "y": 0.75
+        },
+        {
+          "blades": 3,
+          "radius": 0.12,
+          "x": 0.75,
+          "y": 0.75
+        }
+      ]
+    },
+    "id": "player.scout.detailed.custom",
+    "kind": "image",
+    "provenance": {
+      "creator": "RevealLine original pixel-art recipe, authored with Codex",
+      "license": "Original project artwork; no third-party or concept-image pixels incorporated.",
+      "parent": {
+        "id": "player.scout.detailed.field-kit",
+        "revision": 2
+      },
+      "prompt": "Create one original FPV Field Kit scout detailed body for slot player.scout.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.\n\nPRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 64\u00d764; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.\n\nSLOT GEOMETRY:\n{\"frame\":{\"x\":0,\"y\":0,\"width\":64,\"height\":64},\"pivot\":{\"x\":0.5,\"y\":0.5},\"occupiedBounds\":{\"x\":0.125,\"y\":0.125,\"width\":0.75,\"height\":0.75},\"rotorAnchors\":[{\"x\":0.25,\"y\":0.25,\"radius\":0.12,\"blades\":3},{\"x\":0.75,\"y\":0.25,\"radius\":0.12,\"blades\":3},{\"x\":0.25,\"y\":0.75,\"radius\":0.12,\"blades\":3},{\"x\":0.75,\"y\":0.75,\"radius\":0.12,\"blades\":3}],\"nineSlice\":null}\n\nREQUIREMENTS:\n- North-facing body with real alpha, center pivot and no baked propeller blades.\n- Keep four explicit motor hubs; rotor anchors use the full source rectangle.\n- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.\n\nSave an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.",
+      "source": "game/presentation/pixel-art.mjs v1"
+    },
+    "quality": {
+      "evidence": [],
+      "stage": "produced"
+    },
+    "recipe": null,
+    "revision": 1
+  }
+}
