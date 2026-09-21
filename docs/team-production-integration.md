@@ -62,3 +62,10 @@ Relay Yard asserts both the selected background and actual anchor artwork.
 Earlier failures included sparse dependencies and the obsolete final-draw
 assumption, preserved in the local logs. Host/canvas/decode are modeled boundaries.
 The actual compiled candidate still needs native/offline/full-source acceptance.
+
+A bounded desktop-browser smoke at844×390 loaded the exact adopted runtime and
+all six new PNGs (237 unique requests). Relay Yard started with Enter, displayed
+available anchors and the complete field, responded to Q with Support cooldown,
+and paused with Escape. No console errors/warnings were observed. This verifies
+loading and the observed scene, not all animation states or physical devices.
+See `verification/team-presentation-integration/native-adopted-smoke.json`.
