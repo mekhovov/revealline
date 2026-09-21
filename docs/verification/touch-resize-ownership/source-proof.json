@@ -1,0 +1,81 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "candidateFiles": {
+    "game/ui/input.mjs": "93071b464fad1df0d2c5c604ba83d9bdaac87870b6d1c03acd12cac9f58c8254",
+    "game/ui/touch-steering.mjs": "4a129cd0bf2cf09746b69190c07755481b5d1b4b338c28bab20792a80d8a23d9",
+    "game/couch/couch-input.mjs": "cfbc198523b46436a6bd616222518f234986e375b65722f8eca3279e4e3b6375",
+    "game/test/touchscreen-controller-host.test.mjs": "4cbaec0df98b8e4d4eeb63b58c609d309a752b2b84b0476befe04a2e7653db7c",
+    "game/test/couch-shared-touch.test.mjs": "33f7df09f1b255260f452fc1d697d0ad90723d2cfcccdd8f5c85bf5d451778fc"
+  },
+  "runs": [
+    {
+      "label": "couch-20.19.5",
+      "tests": 116,
+      "pass": 116,
+      "fail": 0,
+      "skipped": 0,
+      "moduleReads": 414,
+      "uniqueBindings": 197,
+      "logSHA256": "a5050854ac484c65fa163f819217c12ed9ad9ceadf10f096d4e91986837a8e54"
+    },
+    {
+      "label": "solo-20.19.5",
+      "tests": 69,
+      "pass": 69,
+      "fail": 0,
+      "skipped": 0,
+      "moduleReads": 302,
+      "uniqueBindings": 254,
+      "logSHA256": "f8eaf3def26689cd1799ff4713c8996f623fb7d3f62cfcc129a1b216c274a750"
+    },
+    {
+      "label": "couch-22.22.2",
+      "tests": 116,
+      "pass": 116,
+      "fail": 0,
+      "skipped": 0,
+      "moduleReads": 414,
+      "uniqueBindings": 197,
+      "logSHA256": "68035073bdbc16c79a7289e3bde56cbcf15128c6b7f31941c061b7e173f86eff"
+    },
+    {
+      "label": "solo-22.22.2",
+      "tests": 69,
+      "pass": 69,
+      "fail": 0,
+      "skipped": 0,
+      "moduleReads": 302,
+      "uniqueBindings": 254,
+      "logSHA256": "652b16bae2ec9b6ebe7b7a8bbad90c04d2b0d5f2f2c55c294bb4041ceac942b2"
+    }
+  ],
+  "boundary": "Separate complete Solo and couch source compositions; not combined release qualification or physical-device evidence.",
+  "baseline": {
+    "baseline-couch": {
+      "source": "f9bbe3e8",
+      "node": "22.22.2",
+      "note": "New reproducer before formatting; existing9ec extra-finger fix remains present. Solo selects only new resize cases.",
+      "originalLogSHA256": "d124eb44c84590abbc60c09a04f9532df6aa2f44b97c50616d97f2c2a78e98b9",
+      "retainedLogSHA256": "826a8bc06ea221911bfb8b58ace5bc00d1385daed348760fe1ae37653f21286c",
+      "counts": {
+        "tests": 9,
+        "pass": 6,
+        "fail": 3,
+        "skipped": 0
+      }
+    },
+    "baseline-solo": {
+      "source": "f9bbe3e8",
+      "node": "22.22.2",
+      "note": "New reproducer before formatting; existing9ec extra-finger fix remains present. Solo selects only new resize cases.",
+      "originalLogSHA256": "bc20b42c3b8b921a10c409aa21921d6f1b46a59414fae0124602c9edd98cece5",
+      "retainedLogSHA256": "5a9b2aa03d96c9cae22e77efd03d54752d2ced8426fe9f81f33eede3db8e4961",
+      "counts": {
+        "tests": 3,
+        "pass": 0,
+        "fail": 3,
+        "skipped": 0
+      }
+    }
+  }
+}

@@ -72,7 +72,15 @@ function fixture(t, mode) {
       pointerType: 'touch',
       button: 0,
     });
-  return { input, pointer, pads, surfaces, pauses: () => pauses, setActive: (v) => (active = v) };
+  return {
+    win,
+    input,
+    pointer,
+    pads,
+    surfaces,
+    pauses: () => pauses,
+    setActive: (v) => (active = v),
+  };
 }
 for (const mode of ['stick', 'swipe', 'dpad'])
   test(`${mode}: both seats steer independently, release persists, recovery clears stale fingers`, (t) => {
@@ -141,4 +149,33 @@ for (const mode of ['stick', 'swipe', 'dpad'])
     if (mode !== 'dpad') f.pointer(1, 'pointermove', 5, 78, 33);
     assert.equal(f.input.snapshotDirection(1), 'left');
     assert.equal(f.input.snapshotDirection(0), 'right');
+  });
+
+for (const mode of ['stick', 'swipe', 'dpad'])
+  test(`${mode}: resizing an owned gesture pauses once and retires both seats`, (t) => {
+    const f = fixture(t, mode);
+    f.win.emit('resize');
+    assert.equal(f.pauses(), 0, 'Idle resize does not pause keyboard or controller play.');
+    f.pointer(0, 'pointerdown', mode === 'dpad' ? 145 : 78, 78, 11);
+    f.pointer(1, 'pointerdown', 78, mode === 'dpad' ? 145 : 78, 22);
+    if (mode !== 'dpad') {
+      f.pointer(0, 'pointermove', 115, 78, 11);
+      f.pointer(1, 'pointermove', 78, 115, 22);
+    }
+    f.win.emit('resize');
+    assert.equal(f.pauses(), 1, 'Layout interruption cannot silently strand moving players.');
+    assert.equal(f.surfaces[0].hasPointerCapture(11), false);
+    assert.equal(f.surfaces[1].hasPointerCapture(22), false);
+    f.win.emit('resize');
+    f.pointer(0, 'pointercancel', 115, 78, 11);
+    f.pointer(1, 'lostpointercapture', 78, 115, 22);
+    assert.equal(f.pauses(), 1, 'Duplicate resize/capture events cannot pause again.');
+    f.setActive(true);
+    f.pointer(0, 'pointermove', 5, 78, 11);
+    assert.equal(f.input.snapshotDirection(0), 'right');
+    assert.equal(f.input.snapshotDirection(1), 'down');
+    f.pointer(0, 'pointerdown', mode === 'dpad' ? 5 : 78, 78, 33);
+    if (mode !== 'dpad') f.pointer(0, 'pointermove', 5, 78, 33);
+    assert.equal(f.input.snapshotDirection(0), 'left');
+    assert.equal(f.input.snapshotDirection(1), 'down');
   });

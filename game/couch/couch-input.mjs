@@ -399,7 +399,7 @@ export function attachCouchInput({
         },
       });
     }
-    listen(win, 'resize', () => touchInputs.forEach((touch) => touch.clear()));
+    listen(win, 'resize', () => touchInputs.forEach((touch) => touch.cancel()));
   }
   function poll() {
     if (destroyed) return players.map(neutralCommand);

@@ -1350,3 +1350,10 @@ Prompt example: “Steer both couch seats with different fingers in stick, swipe
 Fullscreen is optional browser presentation. Keep one pending browser transition per attached control, preserve focus, and retire all late UI writes when the control owner detaches. A successful explicit retry clears a previous denial; an unsuccessful request must leave ordinary fitted play usable. Do not automatically retry or advertise unavailable document fullscreen. Retain standalone display recognition and real fullscreen-change handling.
 
 Prompt example: “Hold a fullscreen promise and activate twice, then test both settlement outcomes after teardown. Verify one request, harmless retired completion, successful retry/exit, and unchanged responsive play. Use docs/verification/fullscreen-request-ownership/README.md and distinguish finite API tests from actual iPhone Safari and Steam Deck qualification.”
+
+
+### Touch layout interruption
+
+Window resize that retires an owned steering finger must use the shared adapter's interruption path, not silently clear the gesture while flight continues. `clear()` remains for intentional handoff, lifecycle teardown and control resets; `cancel()` notifies the host only for an actual owned gesture. Couch must pause once and retire both fingers; repeated resize and late capture-loss events are harmless. Ordinary pointer-up still preserves continuous movement. Resize without a gesture must not pause keyboard/controller play.
+
+Prompt example: “Exercise stick/swipe/D-pad resize with real host input, compare exact paused state through stale events, then explicitly Resume and use a fresh finger. Verify both couch seats and idle resize. Record desktop viewport checks separately from physical iPhone rotation, browser bars and controller hardware.” See `docs/verification/touch-resize-ownership/README.md`.
