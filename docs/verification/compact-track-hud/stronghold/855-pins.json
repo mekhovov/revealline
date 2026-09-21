@@ -1,0 +1,18 @@
+{
+  "game/app.mjs": {
+    "bytes": 337897,
+    "sha256": "0959f7276a4b86bd856df86db74486df8498a8e70af80faf0d03a9b41d0fade3"
+  },
+  "game/couch/couch-music-host.mjs": {
+    "bytes": 13541,
+    "sha256": "83b3a7cc982b92af8835055f499b559566fe870d53ee5cb42f5a867f03eafcf8"
+  },
+  "game/ui/music-credit.mjs": {
+    "bytes": 3358,
+    "sha256": "44f4f36c37ea6699886c9db5c3cbf4837007cb709aa6ecde5e813dc10c8c9eb9"
+  },
+  "game/ui/handheld-play.css": {
+    "bytes": 57722,
+    "sha256": "ea50aa407c96c616994e0b41a09ec538f1d99d504691d485bcfd88562bd47569"
+  }
+}
