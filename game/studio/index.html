@@ -123,12 +123,17 @@
           <label>Mission<select id="mission"></select></label>
           <p id="structure" class="note"></p>
           <label
-            >Difficulty<select id="difficulty">
-              <option value="gentle">Gentle · 5 lives</option>
-              <option value="standard" selected>Standard · 3 lives</option>
-              <option value="expert">Expert · 2 lives</option>
+            >Difficulty<select id="difficulty" aria-describedby="difficulty-help rules">
+              <option value="gentle">Gentle</option>
+              <option value="standard" selected>Standard</option>
+              <option value="expert">Expert</option>
             </select></label
           >
+          <p id="difficulty-help" class="note">
+            Enemy speed is relative to each moving actor's authored tier. The selected rules below
+            describe attack rests and countdowns. Player handling and warning lengths stay
+            unchanged.
+          </p>
           <p id="lesson"></p>
           <p id="rules" class="note"></p>
           <details>

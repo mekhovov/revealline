@@ -49,6 +49,7 @@ import { tuneContentMission } from '../content-design/tuning.mjs';
 import { createImageWorkbench } from './image-workbench.mjs';
 import { createTraceRecovery } from './trace-recovery.mjs';
 import { journeyPreset } from '../content-design/catalogs.mjs';
+import { syncStudioDifficulty } from './difficulty-view.mjs';
 import { createTeamTestPack, createTeamCampaignTestPack } from '../content-design/team-export.mjs';
 import { createActorEditor } from './actor-editor.mjs';
 import { createCombatEditor } from './combat-editor.mjs';
@@ -296,6 +297,9 @@ function draw(preview) {
 }
 function inspectBoard(trailCells = []) {
   const mission = currentMission();
+  syncStudioDifficulty($('difficulty'), session.current().difficultyCatalogId, {
+    team: !!mission && !mission.modes.includes('solo') && mission.modes[0] === 'team',
+  });
   acceptanceInspector.sync();
   actorEditor.sync();
   combatEditor.sync();

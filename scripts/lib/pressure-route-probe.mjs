@@ -22,6 +22,9 @@ export function probePressureRoute(
   const delaySeconds = Number(process.argv.find((a) => a.startsWith('--delay='))?.slice(8) ?? 0);
   const resumePath = process.argv.find((a) => a.startsWith('--resume='))?.slice(9);
   const seed = Number(process.argv.find((a) => a.startsWith('--seed='))?.slice(7) ?? 1);
+  // Offline experiment only: forbid adding waits while searching. A declared
+  // initial delay or an exact resumed prefix remains part of the public log.
+  const searchWaitTicks = process.argv.includes('--no-wait') ? [0] : [0, 60, 120, 240, 600, 960];
   if (!Number.isSafeInteger(seed) || seed < 1 || seed > 2147483647)
     throw Error('Seed must fit a positive int32');
   const maxMs = Number(process.argv.find((a) => a.startsWith('--max-ms='))?.slice(9) ?? 60000);
@@ -188,7 +191,7 @@ export function probePressureRoute(
       for (const choice of [{ direction: null, path: [] }, ...choices(run)]) {
         if (Date.now() - start >= maxMs) break;
         // Waiting is a legal choice on reclaimed ground, not a simulation edit.
-        for (const waitTicks of [0, 60, 120, 240, 600, 960]) {
+        for (const waitTicks of searchWaitTicks) {
           const next = structuredClone(run),
             moves = [];
           for (
@@ -311,6 +314,7 @@ export function probePressureRoute(
         coverage: run.coverage,
         cuts: closures.length,
         searchSteps: cuts,
+        searchWaitTicks,
         checkpoint: authoritativeCheckpoint(run).hash,
         events,
         closures,
