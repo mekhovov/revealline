@@ -1,0 +1,49 @@
+{
+  "tests": [
+    {
+      "runtime": "20",
+      "passed": 39,
+      "file": "ui-host-node20.tap.gz",
+      "rawSha256": "7f78fbe3f01b8c3a6de6111af2f7eb62e025f0817bf04240742080daeeb262b2",
+      "compressedSha256": "30a3b88d42c9a4f373cb0ead1e34b756bef73c863ff1db76ebc4151c23199baf"
+    },
+    {
+      "runtime": "22",
+      "passed": 39,
+      "file": "ui-host-node22.tap.gz",
+      "rawSha256": "b93d94d84829ab8c6c733c26673531d02e69c42b16868f8041ea93c6b412ae0a",
+      "compressedSha256": "48507888e685f00a36e46076baf2975f2b5fb88a16cb91ffa30856e09edaf352"
+    },
+    {
+      "runtime": "20",
+      "passed": 9,
+      "file": "ui-producer-node20.tap.gz",
+      "rawSha256": "514921871b2ec3e4b7bfbc463ea506763609945092cd9ac0ee7e09a16b87a497",
+      "compressedSha256": "0edb8905718a92c46aa21f0aa276a1dd72d6846f7887e0d0d9549c999226f5f0"
+    },
+    {
+      "runtime": "22",
+      "passed": 9,
+      "file": "ui-producer-node22.tap.gz",
+      "rawSha256": "8890324eecb14f39278f5bb3f1c116ddb69aadefce3b46d1248ff5936b455a05",
+      "compressedSha256": "ae964d415d4cc74e6417b1a1b69bbb8afe8414e926ee95693329e0e75d65ad26"
+    }
+  ],
+  "sources": {
+    "game/ui/field-kit-components.css": "ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497",
+    "game/ui/field-kit-compiled.css": "9550b98a7bb3a7866716c0a16c06a2b9b32cd3a5542da32489b0f5dd4a652f01",
+    "game/presentation/host.mjs": "df15e6dd2635e5eb46ca886f59e075f42a820e330d81f4304c5eb9628ca7709a",
+    "game/ui/operation-status.css": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e",
+    "game/ui/operation-status.mjs": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab",
+    "game/presentation/dom-ownership.mjs": "d558d33a28023e98489c0ae2ccb402e4deffeea0be5a0f54ed3040c0e4f5df7e",
+    "game/presentation/manifest-path.mjs": "759bac83965a5ad8decfda59e4b10d68b240ef20234df06e21fb2dfcc4ae0a14",
+    "game/presentation/team-actor-slots.mjs": "97b9a12bbf2127f0fe8a2e6a6803b2fc0dd76006ddd40024bc0377ee9425c97a",
+    "game/presentation/team-anchor-slots.mjs": "2dee100af12eec8e5d60eff5bd2e0c2d431d55c6db7c800427bde937e391eb8f",
+    "game/presentation/team-effect-slots.mjs": "82328525ddb631d33ae70ff24e28dc509356015a2c6d5df69545a60e866ec936",
+    "game/presentation/team-threat-slots.mjs": "4c5ec435733c998d62d2aebe54955f2f07fd085c094e3d2fe5fcc8a7a4a7c869",
+    "game/presentation/team-event-slots.mjs": "2e92c99e3775041a147e05ed5c304e951fa4ed9de57eb5afbf46e4cf01b3f886",
+    "scripts/produce-field-kit-theme.mjs": "71c9050ecede48fce4f536a0d2772619764052f08b3c4561ed84ee33db660827",
+    "game/test/field-kit-team-production.test.mjs": "6a0c133c4d010421d78046ff3cfc5d3a2e14d21c2d420c0753b1fbb025488993"
+  },
+  "scope": "Functional source review only; compiled and public adoption remain open."
+}
