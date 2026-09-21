@@ -1,0 +1,25 @@
+{
+  "source": "efd340d4aefef70023d6e55d464cd0b8f05777eb",
+  "runtimeBase": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "node": "22.22.2",
+  "tests": [
+    "game/test/coop-lobby-preview.test.mjs",
+    "game/test/coop-picture-recovery-focus.test.mjs",
+    "game/test/coop-presentation-bootstrap-retry.test.mjs",
+    "game/test/coop-won-terminal-host.test.mjs",
+    "game/test/coop-historical-import-picture.test.mjs",
+    "game/test/couch-audio-master.test.mjs",
+    "game/test/coop-victory-picture.test.mjs",
+    "game/test/coop-actor-presentation.test.mjs",
+    "game/test/coop-event-host.test.mjs",
+    "game/test/coop-terrain-trail.test.mjs",
+    "game/test/coop-owned-presentation.test.mjs"
+  ],
+  "startedAt": "2026-09-21T09:10:53.213528+00:00",
+  "status": "complete",
+  "log": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/.cache/full-team-source-r1/final-node22.tap",
+  "boundary": "Exact committed test modules over unchanged runtime source; finite DOM/Canvas, not browser or hardware acceptance.",
+  "exitCode": 0,
+  "completedAt": "2026-09-21T09:12:28.146287+00:00",
+  "logSha256": "1bf6b5d10b07cb2a1693402cb0e74ae057b5eca1752d0cb292c7b97de7ea69f7"
+}
