@@ -163,3 +163,16 @@ checkpoints and all498 composed Solo/Versus manifests remain unchanged. Scoped
 lint, formatting and diff checks pass. Generated-image inspection is not a native
 overlay or human playtest. Partial reveal, small screens, other compositions,
 final theme identity, human qualification and accepted release integration remain.
+
+Native exact-source232bd92c preview on the owned port8813/tab38 verified the
+actual Inspect → Apply → Play path. Apply selected First fracture, retained seven
+missions and showed `candidate-art-not-visually-qualified`. The exact Solo preview
+loaded with76% target and3lives. A legal Down return reached0.5%; erosion reopened
+a gap while the permanent landing remained visible. A subsequent Left closure
+reached1.7%, retained3lives and displayed the original scene through the reclaimed
+landing, border and trails. The live screenshot showed distinct craft/field-keeper/
+eroder/patrol silhouettes over the scene fragments. Closing returned focus to Play.
+This is an early partial-reveal check, not broad-area contrast, full victory,
+Versus/device or human qualification. Two embedded-frame locator attempts timed
+out; fresh native accessibility inspection found the controls and actual0.5%
+state, without restarting or modifying the simulation. No timing claim is made.
