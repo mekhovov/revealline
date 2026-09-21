@@ -1,0 +1,249 @@
+{
+  "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "reads": 160,
+  "unique": 40,
+  "verified": true,
+  "failedFixtureRuns": "Raw initial missing-binary and incorrect binding-property fixtures retained in .cache/shared-device-r1/post078-overlap/trial; no product failure inferred.",
+  "modules": [
+    {
+      "name": "game/presentation/bundle.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 8883,
+      "sha256": "40f293fceb60c971d46f9069c91bc7594aa4065d23bfdbfc06a3b5db74cf3755"
+    },
+    {
+      "name": "game/presentation/model.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 27188,
+      "sha256": "5404c14aa3e9ed3c306164e9784ea2da4ce746f5055bf70db03d01b2f5ef9120"
+    },
+    {
+      "name": "game/presentation/studio-session.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 16642,
+      "sha256": "ffb87f41b51414d3e4314ca2251a106ea4b4c4428f930d7c3439af310ef41a10"
+    },
+    {
+      "name": "scripts/presentation-production-history.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 4348,
+      "sha256": "775e70cb731f0656feceeb012e6a482c9677b2758655bd175587dad3eaf30045"
+    },
+    {
+      "name": "game/data-json.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 4920,
+      "sha256": "bcf8c3cb859473a39973cc93cee347085d3146164b0b92a02e81df57f6ffc823"
+    },
+    {
+      "name": "game/content.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 23401,
+      "sha256": "5270f582ec3b6f27e7252bda373bbb93bf5f199caceefca1580dfea13751b7d4"
+    },
+    {
+      "name": "game/imports.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 4923,
+      "sha256": "439c5495d62b22dd3df3e1b0abb946c18301000018afc8d84a5a8b8ca7c3f51f"
+    },
+    {
+      "name": "game/presentation/team-actor-slots.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 10820,
+      "sha256": "97b9a12bbf2127f0fe8a2e6a6803b2fc0dd76006ddd40024bc0377ee9425c97a"
+    },
+    {
+      "name": "game/platform.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 2524,
+      "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260"
+    },
+    {
+      "name": "game/ui/music.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 7050,
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+    },
+    {
+      "name": "game/core/index.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 17691,
+      "sha256": "fa0d5e2affd2be15b6919f112fee84e0862c5c3bb7b95f2d3d604eb4ff352c5d"
+    },
+    {
+      "name": "game/mastery-catalog.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 13823,
+      "sha256": "6e91dee8471c950acef82ed45b418c9e5ebfff5fa36ce1f773207efdd745b29e"
+    },
+    {
+      "name": "game/presentation/team-event-slots.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 6536,
+      "sha256": "2e92c99e3775041a147e05ed5c304e951fa4ed9de57eb5afbf46e4cf01b3f886"
+    },
+    {
+      "name": "game/presentation/team-threat-slots.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 6604,
+      "sha256": "4c5ec435733c998d62d2aebe54955f2f07fd085c094e3d2fe5fcc8a7a4a7c869"
+    },
+    {
+      "name": "game/presentation/team-effect-slots.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 6136,
+      "sha256": "82328525ddb631d33ae70ff24e28dc509356015a2c6d5df69545a60e866ec936"
+    },
+    {
+      "name": "game/presentation/team-anchor-slots.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 5532,
+      "sha256": "2dee100af12eec8e5d60eff5bd2e0c2d431d55c6db7c800427bde937e391eb8f"
+    },
+    {
+      "name": "game/core/line-impact.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 9142,
+      "sha256": "e3a11756a9fb7272ad660dbf9a2c175095f89e26f889e3f3edb25865b2b7c5a0"
+    },
+    {
+      "name": "game/core/registry.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 6661,
+      "sha256": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c"
+    },
+    {
+      "name": "game/core/level.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 14696,
+      "sha256": "e294005640e2834672feccaeb6f57a659923194be38237b6ff5dda3731e1e88c"
+    },
+    {
+      "name": "game/core/geometry.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 4005,
+      "sha256": "d7252d751c56f77cebffcdd5c3adc5b5db9c0f4f489a821591bb356f05c0af55"
+    },
+    {
+      "name": "game/core/movement.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 10912,
+      "sha256": "3f9ee5115eb94c001fe38595f39763b188ea276114ca21d1bc7a426be6e6922a"
+    },
+    {
+      "name": "game/core/capture.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 7160,
+      "sha256": "081572756599471e0c1811812f2d20576ad4e479157be390ed945c6b12de263b"
+    },
+    {
+      "name": "game/core/versions.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 3430,
+      "sha256": "2c782b83a7ceaa5765cf2d17fac3af06ca3ad596071cad10f4890601bc7079ce"
+    },
+    {
+      "name": "game/core/encounter.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 8716,
+      "sha256": "7b98eb4ec29998ce902a62388b089a0a26b41675199bb9601e4b2a55f0df44ba"
+    },
+    {
+      "name": "game/core/contacts.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 5263,
+      "sha256": "d8c8294bf7141471a125dc325ab1202e2a705ca62ad7632d89129907c8072df4"
+    },
+    {
+      "name": "game/core/abilities.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 3855,
+      "sha256": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde"
+    },
+    {
+      "name": "game/core/systems.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 4621,
+      "sha256": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6"
+    },
+    {
+      "name": "game/core/classic-state.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 2356,
+      "sha256": "2b328066188d54dc3010540384427fee18ac2f49f13c67f8c55f65539f61a500"
+    },
+    {
+      "name": "game/core/classic-step.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 16458,
+      "sha256": "e9c532a138bf5eede4f8c11e08bf7a3b966e292d65ba4a79c8e7b8cc8dda7695"
+    },
+    {
+      "name": "game/core/foundations.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 2463,
+      "sha256": "d5aa7b471790e3d3f8ed04fc26747665ac316ce201962fdd6cfcc31f6f84389c"
+    },
+    {
+      "name": "game/mastery.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 16941,
+      "sha256": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504"
+    },
+    {
+      "name": "game/core/classic-definition.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 8310,
+      "sha256": "af9a726d1a96f371122c4e308c8024ebe6ed0232f4fb3815c2a1e94df870e3bb"
+    },
+    {
+      "name": "game/core/classic-topology.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 6458,
+      "sha256": "e72c4c6e3d75be33d0c2995c7ced65a21c81eba34874e18737b05e8c011284b3"
+    },
+    {
+      "name": "game/core/capture-regions.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 4040,
+      "sha256": "57d7b36d8e82d4640bd8ae4b92b48924ccee42508963ab99142138e730d9b203"
+    },
+    {
+      "name": "game/core/arcade-actions.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 848,
+      "sha256": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726"
+    },
+    {
+      "name": "game/core/classic-contour.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 7465,
+      "sha256": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8"
+    },
+    {
+      "name": "game/core/classic-motion.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 12271,
+      "sha256": "d593680e715467fd4ebfd50bf68bfdd2c3690e79ebbc579a64cdbab093c0a020"
+    },
+    {
+      "name": "game/core/enemy-pressure.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 11725,
+      "sha256": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb"
+    },
+    {
+      "name": "game/content-design/map.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 7783,
+      "sha256": "93edb45d6af77738a3ba8ff42f3fb9d672bcecd9a00ccee20d259fe496b34c28"
+    },
+    {
+      "name": "game/mastery-equipment.mjs",
+      "origin": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+      "bytes": 29233,
+      "sha256": "5d45dfb343754c728277ea83a6a32ff46547adf747da65eee5ec0aa30bd09d1a"
+    }
+  ]
+}
