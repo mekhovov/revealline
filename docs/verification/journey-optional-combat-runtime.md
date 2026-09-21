@@ -74,9 +74,11 @@ node --import ./.cache/read-source-git.mjs --test game/test/combat-definition.te
 
 ## Remaining / release boundary
 
-1. **D2b:** successor catalogue, shared compiler/Studio CRUD and effective pressure
-   inspection, explicit copy-on-write on/off projection, diagnostics and original
-   greybox encounters. Unsupported Team combat must remain rejected.
+1. **D2b follow-up now implemented locally:** successor catalogue, shared compiler/
+   Studio CRUD, exact pressure/capture inspection, copy-on-write on/off editions
+   and three greyboxes.219 tests per Node pass; native and release gates remain.
+   [Follow-up evidence](journey-optional-combat-authoring.md). Unsupported Team
+   combat remains rejected.
 2. **D2c:** pixel actor/locked aim/projectile/impact/scrap presentation, captions and
    sound, cosmetic/reduced-effects options, persistent restart-or-next combat
    preference, player-facing host integration and native/device qualification.

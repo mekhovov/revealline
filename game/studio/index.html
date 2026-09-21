@@ -65,6 +65,7 @@
         </label>
         <button id="cultural-workshop">Inspect ornament + workshop greyboxes</button>
         <button id="pursuit-intercept">Inspect pursuit + interception study</button>
+        <button id="combat-study">Inspect optional robot greyboxes</button>
         <button id="signal">Inspect Signal Gardens greyboxes</button>
         <button id="neon">Inspect Neon Contours picture candidates</button>
         <button id="rover">Inspect Rover Yard picture candidates</button>
@@ -327,6 +328,17 @@
               Shared catalog roles and speed tiers keep rules consistent. Positions are checked in
               every supported mode and preset before applying.
             </p>
+            <fieldset id="combat-tools">
+              <legend>Optional combat · candidate edition</legend>
+              <p id="combat-state" class="note"></p>
+              <button id="combat-prepare" type="button">Prepare optional combat authoring</button>
+              <label
+                ><input id="combat-enabled" type="checkbox" /> Enable authored scouts and
+                sentries</label
+              >
+              <button id="combat-apply" type="button">Validate & apply combat setting</button>
+              <p id="combat-result" class="note" role="status"></p>
+            </fieldset>
             <form id="actor-form">
               <fieldset id="actor-tools">
                 <legend>Mission actors</legend>

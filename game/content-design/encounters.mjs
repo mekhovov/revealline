@@ -1,7 +1,7 @@
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { compileContentProject } from './project.mjs';
 import { forkMissionMap } from './drafts.mjs';
-import { SENTINEL_ACTOR_CATALOG, SENTINEL_RECIPE } from './catalogs.mjs';
+import { journeyActors, SENTINEL_ACTOR_CATALOG, SENTINEL_RECIPE } from './catalogs.mjs';
 
 /** Candidate-only atomic authoring: actor, core and shield bindings travel together.
  * Explicit opt-in forks older geometry, never changes a shared historical map. */
@@ -67,7 +67,10 @@ export function editContentEncounter(source, missionId, input) {
       coreObjectiveId: core.id,
       shieldObjectiveIds: command.shieldObjectiveIds,
     };
-    project.actorCatalogId = SENTINEL_ACTOR_CATALOG.id;
+    if (
+      journeyActors(project.actorCatalogId).roles['relay-sentinel']?.recipeId !== SENTINEL_RECIPE.id
+    )
+      project.actorCatalogId = SENTINEL_ACTOR_CATALOG.id;
     if (map.format !== 'MapDesignV3')
       project = forkMissionMap(project, missionId, {
         format: 'MapDesignV3',

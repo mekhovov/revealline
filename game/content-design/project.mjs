@@ -15,6 +15,7 @@ import {
   journeyPreset,
   journeyPressureTiming,
   freezeDesign,
+  COMBAT_ACTOR_CATALOG,
 } from './catalogs.mjs';
 
 const compiledProjects = new WeakSet();
@@ -176,6 +177,7 @@ export function compileContentProject(source) {
         'objectives',
         'bonuses',
         'timedBonuses',
+        'combat',
         'coverage',
         'timeLimitSeconds',
         'design',
@@ -217,6 +219,27 @@ export function compileContentProject(source) {
       'Team mode needs an explicit Team mission definition.',
     );
     unique(mission.actors, 'actors', 24);
+    const combatActors = mission.actors.filter((actor) => actors.roles[actor.role]?.combatRole);
+    if (Object.hasOwn(mission, 'combat')) {
+      exactKeys(mission.combat, ['version', 'enabled'], 'mission combat');
+      required(
+        mission.combat.version === 'mission-combat.v1' &&
+          typeof mission.combat.enabled === 'boolean',
+        'Mission combat requires an explicit version and enabled boolean.',
+      );
+      required(
+        actors.id === COMBAT_ACTOR_CATALOG.id,
+        'Mission combat requires the v8 actor catalogue.',
+      );
+      required(
+        !mission.modes.includes('team'),
+        'Optional combat is not qualified for Team, even when disabled.',
+      );
+    }
+    required(
+      !combatActors.length || Object.hasOwn(mission, 'combat'),
+      'Optional actors require an explicit mission combat setting.',
+    );
     unique(mission.objectives, 'objectives', 40);
     unique(mission.bonuses, 'bonuses', 64);
     if (relays) {
@@ -323,6 +346,9 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const spawn = map.geometry.spawns.find((candidate) => candidate.id === mission.spawnId);
   required(spawn, 'Mission spawn is missing from its map revision.');
   const carriers = mission.actors.filter((actor) => actor.role === 'impact-carrier');
+  const combatActors = mission.actors.filter(
+    (actor) => project.actors.roles[actor.role]?.combatRole,
+  );
   const pressureActors = mission.actors
     .filter((actor) => project.actors.roles[actor.role]?.pressureRecipe)
     .sort((a, b) => (a.id < b.id ? -1 : 1));
@@ -389,6 +415,17 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
           }
         : {}),
       ...(Object.hasOwn(mission, 'timedBonuses') ? { timedBonuses: mission.timedBonuses } : {}),
+      ...(Object.hasOwn(mission, 'combat')
+        ? {
+            combatPatrols: {
+              version: 'combat-patrols.v1',
+              enabled: mission.combat.enabled,
+              actors: combatActors.map((actor) =>
+                compileActor(actor, difficulty, project.actors.id, project.difficulty.id),
+              ),
+            },
+          }
+        : {}),
       ...(policy.arcadeActions ? { arcadeActions: policy.arcadeActions } : {}),
       ...(carriers.length
         ? {
@@ -400,9 +437,9 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
           }
         : {}),
     },
-    enemies: mission.actors.map((actor) =>
-      compileActor(actor, difficulty, project.actors.id, project.difficulty.id),
-    ),
+    enemies: mission.actors
+      .filter((actor) => !project.actors.roles[actor.role]?.combatRole)
+      .map((actor) => compileActor(actor, difficulty, project.actors.id, project.difficulty.id)),
     objectives: mission.objectives,
     supplies: [],
     rules: {
@@ -443,6 +480,16 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     diagnostics: [
       ...map.geometry.diagnostics,
       ...topology.diagnostics,
+      ...(Object.hasOwn(mission, 'combat')
+        ? [
+            {
+              severity: 'warning',
+              code: 'candidate-combat-not-presentation-qualified',
+              message:
+                'Optional combat authoring is a test candidate. Live actor/projectile presentation, player preferences and human qualification are pending.',
+            },
+          ]
+        : []),
       ...(mission.presentation.backgroundAssetId === null
         ? [{ severity: 'warning', code: 'greybox-background' }]
         : [{ severity: 'warning', code: 'candidate-art-not-visually-qualified' }]),

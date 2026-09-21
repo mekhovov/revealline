@@ -13,6 +13,10 @@ and reviewed public promotion are not complete.
 
 ## Public versus local
 
+The dated incremental counts below describe the evidence trail. Earlier312/498,
+347/498 and similar milestones are superseded by the current498/498 feasibility
+result, not outstanding route failures. Acceptance gaps remain in the phase table.
+
 - Release-owner report: public **v0.76.1**, source `17bd1965`, publisher `3e1c4ec8`,
   PR208/210, Pages run `35551436420`, 864,317,088 bytes /4,130 files.
 - Device candidate v0.77.0 `432110b51c570b838cdae390790b67dfa76f0785`, PR211,
@@ -152,10 +156,14 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
   remain. Optional combat D2a engine/transport is now implemented: separate seeded
   scouts/sentries, readable attack deadlines, contact/capture removal, bounded
   projectiles and strict replay/save authority;45 new tests and700 historical
-  regression cases verified on both Node versions. Catalogue/Studio, actual pixel
-  presentation/player toggle, Team semantics, native/human and release gates
-  remain. [D1 evidence](journey-pursuit-interception.md),
-  [D2a evidence and boundaries](journey-optional-combat-runtime.md).
+  regression cases verified on both Node versions. D2b catalogue/Studio authoring,
+  explicit editions, pressure/capture inspection and three original greyboxes are
+  now implemented and reviewed:219 tests per Node,42 on/off clear/replays and42
+  paired races. Actual pixel presentation/player toggle, Team semantics,
+  native/human and release gates remain. Enabled live preview is intentionally
+  blocked until readable presentation exists. [D1 evidence](journey-pursuit-interception.md),
+  [D2a evidence](journey-optional-combat-runtime.md),
+  [D2b evidence and pacing limits](journey-optional-combat-authoring.md).
 - [ ] Full Studio recoverability/conflict/large-library usability acceptance with
   real users, not inferred from automated checks.
 - [ ] Every released map readable picture/actors/audio in all display modes.

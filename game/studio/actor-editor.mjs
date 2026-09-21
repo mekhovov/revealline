@@ -4,6 +4,7 @@ import {
   journeyLaneTiming,
   journeySentinelTiming,
   journeyPressureTiming,
+  journeyCombatTiming,
 } from '../content-design/catalogs.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
 import { teamRoleQualified } from '../content-design/team-qualification.mjs';
@@ -20,6 +21,8 @@ const names = {
   'relay-sentinel': 'Shield-relay Sentinel',
   'trail-pursuer': 'Trail pursuer',
   'heading-interceptor': 'Heading interceptor',
+  'optional-scout': 'Optional removable scout',
+  'optional-sentry': 'Optional firing sentry',
 };
 
 /** Catalog-only controls. Unsaved fields are local; only an explicit validated
@@ -31,7 +34,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
   const context = () => missionEditContext(getSource(), getMission(), getDifficulty());
   const catalog = () => journeyActors(getSource().actorCatalogId);
   const hasHeading = (role) =>
-    ['bouncer', 'claimed-rover', 'eroder'].includes(catalog().roles[role]?.type);
+    ['bouncer', 'claimed-rover', 'eroder', 'combat-patrol'].includes(catalog().roles[role]?.type);
   const options = (element, rows) =>
     element.replaceChildren(
       ...rows.map(([value, label]) => {
@@ -108,6 +111,16 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
       $('position-help').textContent =
         `Start in unclaimed field. Locked target: ${timing.warningTicks / 120}s warning / ${timing.commitTicks / 120}s commitment / ${timing.cooldownTicks / 120}s recovery. Sense radius ${timing.senseRadius} cells; no tracking after target lock. Closure cancels the attack. Body and trail contact remain dangerous.`;
     }
+    if (role.combatRole) {
+      const timing = journeyCombatTiming(
+        $('role').value,
+        getDifficulty(),
+        catalog().id,
+        difficultyCatalogId,
+      );
+      $('position-help').textContent =
+        `Use field cell centres ending in .5 with two cells of spawn clearance. ${getMission()?.combat?.enabled ? 'Combat enabled.' : 'Inactive authored actor; combat is disabled.'} Removed by craft contact or capture; never retains field.${role.combatRole === 'sentry' ? ` ${timing.openingTicks / 120}s opening / ${timing.warningTicks / 120}s locked warning / ${timing.recoveryTicks / 120}s recovery / ${timing.restTicks / 120}s rest. Only its projectile harms the craft.` : ' No contact damage.'}`;
+    }
   }
   function select() {
     cancelRemoval();
@@ -139,6 +152,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
       Object.entries(names).filter(
         ([role]) =>
           Object.hasOwn(catalog().roles, role) &&
+          (!catalog().roles[role].combatRole || !!mission?.combat) &&
           (role !== 'relay-sentinel' || !!mission?.encounter) &&
           (!mission?.modes.includes('team') || teamRoleQualified(mission.team?.format, role)),
       ),
