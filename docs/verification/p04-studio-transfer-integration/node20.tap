@@ -1,0 +1,499 @@
+TAP version 13
+# Subtest: crop uses an integer centered frame and never mutates source coordinates
+ok 1 - crop uses an integer centered frame and never mutates source coordinates
+  ---
+  duration_ms: 0.996708
+  ...
+# Subtest: occupied bounds distinguish alpha from actual visible silhouette, including empty sprite
+ok 2 - occupied bounds distinguish alpha from actual visible silhouette, including empty sprite
+  ---
+  duration_ms: 0.204333
+  ...
+# Subtest: inventory combines usage/state/media/readiness filters without treating source as produced
+ok 3 - inventory combines usage/state/media/readiness filters without treating source as produced
+  ---
+  duration_ms: 0.150167
+  ...
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+ok 4 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 12026.487125
+  ...
+# Subtest: P02 retains the published P01 history and appends audio7 under a new fpv24
+not ok 5 - P02 retains the published P01 history and appends audio7 under a new fpv24
+  ---
+  duration_ms: 4.042208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:48:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/authoring/library/fpv-field-kit/production.rltheme'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async Object.readFile (node:internal/fs/promises:1246:14)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:55:22)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: P03 retains the measured fpv25 source-stage checkpoint after published P02
+not ok 6 - P03 retains the measured fpv25 source-stage checkpoint after published P02
+  ---
+  duration_ms: 2.753333
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:175:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/authoring/library/fpv-field-kit/production.rltheme'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async Object.readFile (node:internal/fs/promises:1246:14)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:187:7)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: current P03 reproduction retains its measured source stage before any review successor
+not ok 7 - current P03 reproduction retains its measured source stage before any review successor
+  ---
+  duration_ms: 1.054125
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:257:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/authoring/library/fpv-field-kit/production.rltheme'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async Object.readFile (node:internal/fs/promises:1246:14)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:264:15)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Journey music review retains fpv33 source evidence and every earlier immutable record
+not ok 8 - Journey music review retains fpv33 source evidence and every earlier immutable record
+  ---
+  duration_ms: 2.190084
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:298:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/authoring/library/fpv-field-kit/production.rltheme'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async Object.readFile (node:internal/fs/promises:1246:14)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:305:22)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: unchanged production preserves its exact document and appends changed revisions
+ok 9 - unchanged production preserves its exact document and appends changed revisions
+  ---
+  duration_ms: 874.873834
+  ...
+# Subtest: review evidence gets an immutable successor and normal reproduction keeps the review
+ok 10 - review evidence gets an immutable successor and normal reproduction keeps the review
+  ---
+  duration_ms: 1070.08175
+  ...
+# Subtest: production refuses silent slot contract mutation and can explicitly return to an old revision
+ok 11 - production refuses silent slot contract mutation and can explicitly return to an old revision
+  ---
+  duration_ms: 778.2755
+  ...
+# Subtest: Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
+not ok 12 - Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
+  ---
+  duration_ms: 100.404333
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:413:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/assets/field-kit/sprites/player-scout-compact.png'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async Object.readFile (node:internal/fs/promises:1246:14)
+    async createFieldKitProduction (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/scripts/produce-field-kit-theme.mjs:178:7)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:414:22)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: DOM ownership and Journey P02 audio bind only their reviewed current inputs
+not ok 13 - DOM ownership and Journey P02 audio bind only their reviewed current inputs
+  ---
+  duration_ms: 57.436833
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:444:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/assets/field-kit/sprites/player-scout-compact.png'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async Object.readFile (node:internal/fs/promises:1246:14)
+    async createFieldKitProduction (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/scripts/produce-field-kit-theme.mjs:178:7)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:445:22)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: P03 screen and P08-A motion reviews bind only the inspected current inputs
+not ok 14 - P03 screen and P08-A motion reviews bind only the inspected current inputs
+  ---
+  duration_ms: 52.195959
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:479:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/assets/field-kit/sprites/player-scout-compact.png'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async Object.readFile (node:internal/fs/promises:1246:14)
+    async createFieldKitProduction (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/scripts/produce-field-kit-theme.mjs:178:7)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:480:22)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: changed recipe inputs reopen only their own reviewed group
+not ok 15 - changed recipe inputs reopen only their own reviewed group
+  ---
+  duration_ms: 50.968542
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:505:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/assets/field-kit/sprites/player-scout-compact.png'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async Object.readFile (node:internal/fs/promises:1246:14)
+    async createFieldKitProduction (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/scripts/produce-field-kit-theme.mjs:178:7)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:506:22)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: the whole production collection has capacity for immutable review successors
+not ok 16 - the whole production collection has capacity for immutable review successors
+  ---
+  duration_ms: 0.573916
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:573:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/authoring/library/fpv-field-kit/production.rltheme'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async Object.readFile (node:internal/fs/promises:1246:14)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/presentation-production-history.test.mjs:576:7)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: explicit Team slot migration appends one successor and preserves exact historical selection
+ok 17 - explicit Team slot migration appends one successor and preserves exact historical selection
+  ---
+  duration_ms: 1367.272417
+  ...
+# Subtest: implicit, incomplete and altered slot migrations fail without changing inputs
+ok 18 - implicit, incomplete and altered slot migrations fail without changing inputs
+  ---
+  duration_ms: 413.80675
+  ...
+# Subtest: explicit migration cannot change, remove or reorder any historical slot
+ok 19 - explicit migration cannot change, remove or reorder any historical slot
+  ---
+  duration_ms: 1042.258916
+  ...
+# Subtest: a no-op rerun still rejects conflicting or duplicate migration specifications
+ok 20 - a no-op rerun still rejects conflicting or duplicate migration specifications
+  ---
+  duration_ms: 493.023208
+  ...
+# Subtest: new required slots and unbound optional slots cannot silently change old-theme behavior
+ok 21 - new required slots and unbound optional slots cannot silently change old-theme behavior
+  ---
+  duration_ms: 538.725333
+  ...
+# Subtest: ordinary asset review and explicit migration share one immutable successor
+ok 22 - ordinary asset review and explicit migration share one immutable successor
+  ---
+  duration_ms: 601.005458
+  ...
+# Subtest: studio revisions preserve prior theme records and apply explicit token changes
+ok 23 - studio revisions preserve prior theme records and apply explicit token changes
+  ---
+  duration_ms: 229.642708
+  ...
+# Subtest: a complete required collection can retain separate compact edit revisions
+ok 24 - a complete required collection can retain separate compact edit revisions
+  ---
+  duration_ms: 245.779333
+  ...
+# Subtest: collection replacement rejects incomplete members and missing dependencies atomically
+ok 25 - collection replacement rejects incomplete members and missing dependencies atomically
+  ---
+  duration_ms: 212.733167
+  ...
+# Subtest: studio database compare-and-swap rejects stale tabs and preserves data on write failure
+ok 26 - studio database compare-and-swap rejects stale tabs and preserves data on write failure
+  ---
+  duration_ms: 384.13575
+  ...
+# Subtest: generated prompts carry real slot, theme, states and release limitations
+ok 27 - generated prompts carry real slot, theme, states and release limitations
+  ---
+  duration_ms: 52.11675
+  ...
+# Subtest: audio and font briefs request the actual output medium and preserve the immutable slot document
+ok 28 - audio and font briefs request the actual output medium and preserve the immutable slot document
+  ---
+  duration_ms: 59.4015
+  ...
+# Subtest: all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection
+ok 29 - all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection
+  ---
+  duration_ms: 87.176417
+  ...
+# Subtest: edit briefs retain actual custom geometry and the production palette contract
+ok 30 - edit briefs retain actual custom geometry and the production palette contract
+  ---
+  duration_ms: 126.202583
+  ...
+# Subtest: saved lineage allows a batch of staged actions and reset, but refuses rewritten history
+ok 31 - saved lineage allows a batch of staged actions and reset, but refuses rewritten history
+  ---
+  duration_ms: 1101.661
+  ...
+# Subtest: two independent studio tabs serialize compare-and-swap without dropping the winning save
+ok 32 - two independent studio tabs serialize compare-and-swap without dropping the winning save
+  ---
+  duration_ms: 424.661417
+  ...
+# Subtest: a failed save of new bytes and invalid geometry both retain the saved workspace
+ok 33 - a failed save of new bytes and invalid geometry both retain the saved workspace
+  ---
+  duration_ms: 403.616584
+  ...
+# Subtest: imports reserve unoccupied asset and collection identities and retain derivative links
+ok 34 - imports reserve unoccupied asset and collection identities and retain derivative links
+  ---
+  duration_ms: 244.661333
+  ...
+# Subtest: self-imports retain every revision without duplicating history; conflicting parents stay isolated
+ok 35 - self-imports retain every revision without duplicating history; conflicting parents stay isolated
+  ---
+  duration_ms: 491.788708
+  ...
+# Subtest: incompatible imported slots fail atomically and replaced collections retain history
+ok 36 - incompatible imported slots fail atomically and replaced collections retain history
+  ---
+  duration_ms: 456.377584
+  ...
+# Subtest: closing a pending open rejects its caller promptly and closes a late database
+ok 37 - closing a pending open rejects its caller promptly and closes a late database
+  ---
+  duration_ms: 1.019875
+  ...
+# Subtest: closing before a pending upgrade aborts that upgrade without creating a workspace
+ok 38 - closing before a pending upgrade aborts that upgrade without creating a workspace
+  ---
+  duration_ms: 0.341667
+  ...
+# Subtest: a blocked open that succeeds late cannot invalidate the newer studio connection
+ok 39 - a blocked open that succeeds late cannot invalidate the newer studio connection
+  ---
+  duration_ms: 2.74
+  ...
+# Subtest: a retired database close callback does not detach a newer owned handle
+ok 40 - a retired database close callback does not detach a newer owned handle
+  ---
+  duration_ms: 1.368709
+  ...
+# Subtest: the complete semantic registry covers every screen and resolves procedural baselines
+ok 41 - the complete semantic registry covers every screen and resolves procedural baselines
+  ---
+  duration_ms: 65.547292
+  ...
+# Subtest: future theme IDs inherit a complete base without enumerating four worlds
+ok 42 - future theme IDs inherit a complete base without enumerating four worlds
+  ---
+  duration_ms: 66.986417
+  ...
+# Subtest: unknown fields, executable recipes, CSS injection and accessor data are refused
+ok 43 - unknown fields, executable recipes, CSS injection and accessor data are refused
+  ---
+  duration_ms: 165.291625
+  ...
+# Subtest: missing references, mismatched kinds and incomplete base coverage are refused
+ok 44 - missing references, mismatched kinds and incomplete base coverage are refused
+  ---
+  duration_ms: 165.095584
+  ...
+# Subtest: inheritance and derivative cycles cannot enter a resolved theme
+ok 45 - inheritance and derivative cycles cannot enter a resolved theme
+  ---
+  duration_ms: 95.075958
+  ...
+# Subtest: collections replace their declared set atomically and drafts override them last
+ok 46 - collections replace their declared set atomically and drafts override them last
+  ---
+  duration_ms: 205.234458
+  ...
+# Subtest: collections cannot silently cross world identity
+ok 47 - collections cannot silently cross world identity
+  ---
+  duration_ms: 58.132875
+  ...
+# Subtest: compare-and-swap and immutable revision history reject stale or destructive successors
+ok 48 - compare-and-swap and immutable revision history reject stale or destructive successors
+  ---
+  duration_ms: 232.572875
+  ...
+# Subtest: image bindings require the slot exact dimensions
+ok 49 - image bindings require the slot exact dimensions
+  ---
+  duration_ms: 79.878792
+  ...
+# Subtest: theme transfer retains exact bytes and produces deterministic output
+ok 50 - theme transfer retains exact bytes and produces deterministic output
+  ---
+  duration_ms: 245.737917
+  ...
+# Subtest: invalid hash, corrupt image bytes and extra payloads fail before adoption
+ok 51 - invalid hash, corrupt image bytes and extra payloads fail before adoption
+  ---
+  duration_ms: 289.14475
+  ...
+# Subtest: failed decoding and cancellation never return an accepted candidate
+ok 52 - failed decoding and cancellation never return an accepted candidate
+  ---
+  duration_ms: 328.717666
+  ...
+# Subtest: runtime tokens map to shared Field Kit styles and preserve gameplay palette vocabulary
+ok 53 - runtime tokens map to shared Field Kit styles and preserve gameplay palette vocabulary
+  ---
+  duration_ms: 50.94375
+  ...
+# Subtest: compiler emits deterministic allowlisted local assets without source paths or code
+ok 54 - compiler emits deterministic allowlisted local assets without source paths or code
+  ---
+  duration_ms: 245.903625
+  ...
+# Subtest: production adapter preserves the exact v1 document and read-only binding history
+ok 55 - production adapter preserves the exact v1 document and read-only binding history
+  ---
+  duration_ms: 15.589375
+  ...
+# Subtest: frame, occupied bounds, rotor envelopes, nine-slice center and slot budgets are checked
+ok 56 - frame, occupied bounds, rotor envelopes, nine-slice center and slot budgets are checked
+  ---
+  duration_ms: 182.98525
+  ...
+# Subtest: frame-local rig conversion preserves pivot and leaves source and physics untouched
+ok 57 - frame-local rig conversion preserves pivot and leaves source and physics untouched
+  ---
+  duration_ms: 52.629917
+  ...
+# Subtest: bindings reject geometry controls that their renderer cannot apply
+ok 58 - bindings reject geometry controls that their renderer cannot apply
+  ---
+  duration_ms: 145.950583
+  ...
+# Subtest: rotor geometry permits only blade counts supported by the registered renderer
+ok 59 - rotor geometry permits only blade counts supported by the registered renderer
+  ---
+  duration_ms: 55.760833
+  ...
+# Subtest: source recipe coverage is not a completed production-art claim
+ok 60 - source recipe coverage is not a completed production-art claim
+  ---
+  duration_ms: 112.238125
+  ...
+# Subtest: portable bundles compile through the CLI without rewriting their asset bytes
+ok 61 - portable bundles compile through the CLI without rewriting their asset bytes
+  ---
+  duration_ms: 820.529709
+  ...
+# Subtest: every current base, playable archive, optional and external picture owner has a stable slot
+ok 62 - every current base, playable archive, optional and external picture owner has a stable slot
+  ---
+  duration_ms: 11989.910917
+  ...
+# Subtest: exact historical bindings retain approved field-kit assets after a custom upload
+ok 63 - exact historical bindings retain approved field-kit assets after a custom upload
+  ---
+  duration_ms: 371.254209
+  ...
+# Subtest: unbound same-ID revisions and unrelated slot assets are not guessed into history
+ok 64 - unbound same-ID revisions and unrelated slot assets are not guessed into history
+  ---
+  duration_ms: 374.952209
+  ...
+# Subtest: old collection revisions and arbitrary imported asset identities remain reachable
+ok 65 - old collection revisions and arbitrary imported asset identities remain reachable
+  ---
+  duration_ms: 795.919792
+  ...
+# Subtest: source lineage is exact, download-only, and cannot become a binding by naming convention
+ok 66 - source lineage is exact, download-only, and cannot become a binding by naming convention
+  ---
+  duration_ms: 375.825583
+  ...
+# Subtest: a parent that was itself bound remains restorable and shared sources are deduplicated
+ok 67 - a parent that was itself bound remains restorable and shared sources are deduplicated
+  ---
+  duration_ms: 383.440375
+  ...
+# Subtest: restoring an earlier choice appends a theme revision without rewriting any retained asset
+ok 68 - restoring an earlier choice appends a theme revision without rewriting any retained asset
+  ---
+  duration_ms: 434.23125
+  ...
+# Subtest: unknown slots and invalid historical bindings fail through the existing validator
+ok 69 - unknown slots and invalid historical bindings fail through the existing validator
+  ---
+  duration_ms: 290.700625
+  ...
+# Subtest: real PNG bundle transfer retains independent historical bindings, originals, names and rebind/export bytes
+ok 70 - real PNG bundle transfer retains independent historical bindings, originals, names and rebind/export bytes
+  ---
+  duration_ms: 980.567625
+  ...
+# Subtest: mapped historical theme parents, tokens and collection bindings remain selectable
+ok 71 - mapped historical theme parents, tokens and collection bindings remain selectable
+  ---
+  duration_ms: 901.8155
+  ...
+# Subtest: more than 128 incoming theme revisions retain their exact token history within existing limits
+ok 72 - more than 128 incoming theme revisions retain their exact token history within existing limits
+  ---
+  duration_ms: 7220.60575
+  ...
+# Subtest: self-import shares exact existing immutable records and namespaces avoid theme collisions
+ok 73 - self-import shares exact existing immutable records and namespaces avoid theme collisions
+  ---
+  duration_ms: 457.307625
+  ...
+# Subtest: foreign root and conflicting parent assets are mapped without rewriting local identities
+ok 74 - foreign root and conflicting parent assets are mapped without rewriting local identities
+  ---
+  duration_ms: 188.043417
+  ...
+# Subtest: history capacity rejection leaves both validated inputs unchanged
+ok 75 - history capacity rejection leaves both validated inputs unchanged
+  ---
+  duration_ms: 2833.691333
+  ...
+# Subtest: sparse foreign theme and collection families remap contiguous revisions and exact parent references
+ok 76 - sparse foreign theme and collection families remap contiguous revisions and exact parent references
+  ---
+  duration_ms: 184.185375
+  ...
+# Subtest: atomic transition accepts contiguous immutable batches but rejects gaps, duplicates and rewrites
+ok 77 - atomic transition accepts contiguous immutable batches but rejects gaps, duplicates and rewrites
+  ---
+  duration_ms: 294.379958
+  ...
+# Subtest: asset and collection batches enforce contiguous append-only records; slots remain unique
+ok 78 - asset and collection batches enforce contiguous append-only records; slots remain unique
+  ---
+  duration_ms: 437.397
+  ...
+# Subtest: theme choices distinguish imported and local family names without per-revision choices
+ok 79 - theme choices distinguish imported and local family names without per-revision choices
+  ---
+  duration_ms: 228.406958
+  ...
+1..79
+# tests 79
+# suites 0
+# pass 70
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 29631.221042

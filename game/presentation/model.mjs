@@ -646,15 +646,17 @@ export function validateThemeBundle(source, { previous = null, expectedRevision 
           canonicalJSON(next.get(key(row))) === canonicalJSON(row),
           `Immutable ${field} history changed.`,
         );
-      for (const row of value[field]) {
-        if (old[field].some((prior) => key(prior) === key(row))) continue;
-        const revisions = old[field]
-          .filter((prior) => prior.id === row.id)
-          .map((prior) => prior.revision);
+      const newest = new Map();
+      for (const row of old[field])
+        newest.set(row.id, Math.max(newest.get(row.id) ?? 0, row.revision));
+      const retained = new Set(old[field].map(key));
+      for (const row of [...value[field]].sort((a, b) => a.revision - b.revision)) {
+        if (retained.has(key(row))) continue;
         required(
-          row.revision === (revisions.length ? Math.max(...revisions) + 1 : 1),
+          row.revision === (newest.get(row.id) ?? 0) + 1,
           `New ${field} revision must be the next revision.`,
         );
+        newest.set(row.id, row.revision);
       }
     }
   } else if (expectedRevision !== undefined)
