@@ -1,0 +1,193 @@
+TAP version 13
+# Subtest: guide has concise theme-aware copy and native controls reachable through shared navigation
+ok 1 - guide has concise theme-aware copy and native controls reachable through shared navigation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.402208
+  ...
+# Subtest: original role previews move but Pause and reduced effects hold their cosmetic frames
+ok 2 - original role previews move but Pause and reduced effects hold their cosmetic frames # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.09625
+  ...
+# Subtest: the guide paints only the selected registered image and motion, with separate boss bodies
+ok 3 - the guide paints only the selected registered image and motion, with separate boss bodies # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037458
+  ...
+# Subtest: the FPV guide uses the release sprite geometry and retains other-theme and legacy fallbacks
+ok 4 - the FPV guide uses the release sprite geometry and retains other-theme and legacy fallbacks # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.073916
+  ...
+# Subtest: artwork completion repaints the same manual-clock frame and preserves reduced effects
+ok 5 - artwork completion repaints the same manual-clock frame and preserves reduced effects # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.087459
+  ...
+# Subtest: retired guide catalogs cannot request images after a topic change, hidden page or disposal
+ok 6 - retired guide catalogs cannot request images after a topic change, hidden page or disposal # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.073166
+  ...
+# Subtest: returning to a visible or reopened guide reacquires only its selected body
+ok 7 - returning to a visible or reopened guide reacquires only its selected body # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.058167
+  ...
+# Subtest: hidden, closed, page-hidden and disposed previews release pending decodes without late painting
+ok 8 - hidden, closed, page-hidden and disposed previews release pending decodes without late painting # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.059667
+  ...
+# Subtest: practice releases artwork immediately and its return errors survive independent artwork failures
+ok 9 - practice releases artwork immediately and its return errors survive independent artwork failures # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.16025
+  ...
+# Subtest: practice uses a version-relative same-origin URL and restores only its own temporary handoff
+ok 10 - practice uses a version-relative same-origin URL and restores only its own temporary handoff # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.16675
+  ...
+# Subtest: Cancel or disposal during preparation cannot launch late or replace preview/save data
+ok 11 - Cancel or disposal during preparation cannot launch late or replace preview/save data # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.069417
+  ...
+# Subtest: storage failure is visible and returns the suspended parent without launching a child
+ok 12 - storage failure is visible and returns the suspended parent without launching a child # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.065167
+  ...
+# Subtest: a denied preview restoration stays visible after practice returns to the guide
+ok 13 - a denied preview restoration stays visible after practice returns to the guide # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.064167
+  ...
+# Subtest: a cancelled asynchronous pause callback cannot close a newer lesson
+ok 14 - a cancelled asynchronous pause callback cannot close a newer lesson # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.271833
+  ...
+# Subtest: bridge accepts only finite return destinations and never a foreign game URL
+ok 15 - bridge accepts only finite return destinations and never a foreign game URL # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.253584
+  ...
+# Subtest: actual child practice can lose, Retry the same impact lesson and return to the unchanged guide without rewards
+ok 16 - actual child practice can lose, Retry the same impact lesson and return to the unchanged guide without rewards # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.1235
+  ...
+# Subtest: enlarged guide artwork keeps a 56px body within its canvas without enlarging contact or sampled poses
+ok 17 - enlarged guide artwork keeps a 56px body within its canvas without enlarging contact or sampled poses # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.142625
+  ...
+# Subtest: enlargement preserves failed-art and theme vector fallbacks, while the impact diagram stays separate
+ok 18 - enlargement preserves failed-art and theme vector fallbacks, while the impact diagram stays separate # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.347209
+  ...
+# Subtest: the guide uses the selected compiled enemy geometry without acquiring original images
+ok 19 - the guide uses the selected compiled enemy geometry without acquiring original images # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.131458
+  ...
+# Subtest: current presentation readiness releases the old guide image and repaints its held pose without disturbing practice or hidden state
+ok 20 - current presentation readiness releases the old guide image and repaints its held pose without disturbing practice or hidden state # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041833
+  ...
+# Subtest: compiled Guide motion uses the runtime snapshot scale while impact and other themes retain their lesson timing
+ok 21 - compiled Guide motion uses the runtime snapshot scale while impact and other themes retain their lesson timing # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.091
+  ...
+# Subtest: failed practice request returns owned focus to enabled Play and explicit retry succeeds
+ok 22 - failed practice request returns owned focus to enabled Play and explicit retry succeeds # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028333
+  ...
+# Subtest: failed practice pause callback returns owned focus to enabled Play and explicit retry succeeds
+ok 23 - failed practice pause callback returns owned focus to enabled Play and explicit retry succeeds # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022458
+  ...
+# Subtest: failed practice handoff storage returns owned focus to enabled Play and explicit retry succeeds
+ok 24 - failed practice handoff storage returns owned focus to enabled Play and explicit retry succeeds # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026125
+  ...
+# Subtest: failed practice cannot reclaim Play after newer Read focus intent
+ok 25 - failed practice cannot reclaim Play after newer Read focus intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021417
+  ...
+# Subtest: failed practice cannot reclaim Play after newer pointer intent
+ok 26 - failed practice cannot reclaim Play after newer pointer intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021584
+  ...
+# Subtest: failed practice cannot reclaim Play after newer keyboard intent
+ok 27 - failed practice cannot reclaim Play after newer keyboard intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020084
+  ...
+# Subtest: failed practice cannot reclaim Play after newer new dialog intent
+ok 28 - failed practice cannot reclaim Play after newer new dialog intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0195
+  ...
+# Subtest: failed practice cannot reclaim Play after newer blur intent
+ok 29 - failed practice cannot reclaim Play after newer blur intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021042
+  ...
+# Subtest: failed practice cannot reclaim Play after newer hidden intent
+ok 30 - failed practice cannot reclaim Play after newer hidden intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019709
+  ...
+# Subtest: failed practice cannot reclaim Play after newer pagehide intent
+ok 31 - failed practice cannot reclaim Play after newer pagehide intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022208
+  ...
+# Subtest: a failed closed visit cannot steal focus or replace a newer successful practice
+ok 32 - a failed closed visit cannot steal focus or replace a newer successful practice # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020458
+  ...
+# Subtest: disposing pending practice retires completion focus before its request rejects
+ok 33 - disposing pending practice retires completion focus before its request rejects # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.085833
+  ...
+# Subtest: review: successful delayed practice preserves newer Read focus
+ok 34 - review: successful delayed practice preserves newer Read focus
+  ---
+  duration_ms: 4.277292
+  ...
+# {"intent":"Read focus","result":false,"active":false,"frameHidden":true,"focusBefore":"enemy-guide-read","focusAfter":"enemy-guide-read","started":0,"handoffChanged":false}
+# Subtest: review: successful delayed practice preserves newer hidden then visible
+ok 35 - review: successful delayed practice preserves newer hidden then visible
+  ---
+  duration_ms: 0.678042
+  ...
+# {"intent":"hidden then visible","result":false,"active":false,"frameHidden":true,"focusBefore":"BODY","focusAfter":"BODY","started":0,"handoffChanged":false}
+# Subtest: review: successful delayed practice preserves newer pagehide then pageshow
+ok 36 - review: successful delayed practice preserves newer pagehide then pageshow
+  ---
+  duration_ms: 0.747375
+  ...
+# {"intent":"pagehide then pageshow","result":false,"active":false,"frameHidden":true,"focusBefore":"BODY","focusAfter":"BODY","started":0,"handoffChanged":false}
+1..36
+# tests 36
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 33
+# todo 0
+# duration_ms 422.597042

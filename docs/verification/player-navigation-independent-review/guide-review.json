@@ -1,0 +1,29 @@
+{
+  "patch": {
+    "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "requires": "cff7118860a080d833e78bc47f8a3a8186d5b984e5456c2e2f9662bd45b147db",
+    "patchSHA256": "c8bfdfb1de8b5acfa36a212d9539194324c9419a9df30b287e84606f25abc895",
+    "postimages": {
+      "authoring/skills/xonix-runtime-maintainer/SKILL.md": "2d48a3f47f061b24cc6aeaf3793645230034caf86d7f1ae7674a38022ade773c",
+      "docs/enemy-guide.md": "8c55bb417e0043010fb1c07c10f9c0147c47d4de40ad9005e2deb7308d92ec38",
+      "game/test/enemy-guide-host.test.mjs": "3c3fb656783237e84dc2f0157cbd040f66468c55a129da6f985a4918b8c993d5",
+      "game/test/enemy-guide-panel.test.mjs": "5667565f7c1d3a2ac6a78761859393035ff67651e18eddb9616fff0a0636b3d0",
+      "game/ui/enemy-guide.mjs": "3e99e807a9dd2cffc034963da7c8a6aa6e0794fd49b896db991bd1e897cc0f67"
+    }
+  },
+  "results": [
+    {
+      "node": "20.19.5",
+      "exitCode": 0,
+      "log": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/guide-success-final-review/node20.19.5.tap",
+      "sha256": "416226f0bcf401df992ac21cc4aa62400e020ccd92b7ba66756229eb8f55c04f"
+    },
+    {
+      "node": "22.22.2",
+      "exitCode": 0,
+      "log": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/guide-success-final-review/node22.22.2.tap",
+      "sha256": "21d5255078a4d2b9c6a98146ead6a211886c6fb9e6ece8244b1c5993250fa808"
+    }
+  ],
+  "scope": "Independent repeat of root three regression probes against corrected candidate; modeled DOM, no native device or release qualification."
+}
