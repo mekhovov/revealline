@@ -122,8 +122,10 @@ live release or duplicate its builds. Independent bounded local work continues.
 
 Local content continuation: all seven Fractured Grid reveal originals are now
 produced as immutable candidates (18,019,065bytes total), with explicit opt-in
-Studio binding and unchanged physics/receipts. First fracture has a scoped native
-partial-reveal check; the full set has exact-byte/preview/route regression checks
+Studio binding and unchanged physics/receipts. All seven have scoped native
+partial-reveal checks (First fracture at232bd92c; the other six at0ef504e0), including
+one25% Two districts reveal. A transient caption/frame overflow concern is recorded
+for the shared HUD owner. The full set has exact-byte/preview/route regression checks
 on Node20/22. These local additions are not in the accepted v0.76 release and do
 not complete visual, human, device or whole-phase qualification. See the P06
 verification record and `docs/research/fracture-original-art-prompts.json`.
