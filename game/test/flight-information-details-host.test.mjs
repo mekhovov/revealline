@@ -8,6 +8,8 @@ import { readFlightInformation } from '../ui/flight-information-host.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, saveLibrary, updatePreferences } from '../library.mjs';
+import { createApexSpatialCandidates } from '../content-design/apex-spatial-candidates.mjs';
+import { prepareContentPreview } from '../content-design/preview.mjs';
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const campaign = {
   version: 'xonix-campaign.v1',
@@ -327,6 +329,42 @@ test('mounted encounter Details uses actual full instruction and typed lane', as
   assert.doesNotMatch(p.$('flight-details-content').textContent, /simulation-ticks|actor-ticks/);
   assert.match(p.$('flight-details-content').textContent, /Current cut: 0 \/ 8/);
   assert.doesNotMatch(p.$('flight-details-content').textContent, /undefined|NaN/);
+  assert.deepEqual(p.errors, []);
+});
+
+test('mounted authored three-relay preview shares guide names and exact paused encounter instructions', async (t) => {
+  const theme = JSON.parse(readFileSync(new URL('../content-design/themes.json', import.meta.url)))
+    .themes[0];
+  const { scenario } = prepareContentPreview(createApexSpatialCandidates(), 'home-signal', {
+    theme,
+  });
+  const p = await soloPage(t, {
+    campaign,
+    search: '?practice=1',
+    previewStorage: memoryStorage({
+      'revealline.playground.current': JSON.stringify(scenario),
+    }),
+  });
+  await start(p);
+  p.$('pause-button').click();
+  const before = authoritativeCheckpoint(p.rendered.run);
+  const source = info(p);
+  assert.deepEqual(source.snapshot.issues, []);
+  assert.equal(source.snapshot.encounter.shields.total, 3);
+  open(p);
+  const text = p.$('flight-details-content').textContent;
+  assert.match(text, /Relay sentinel: Shield relays 0 \/ 3/);
+  assert.match(text, /Capture all remaining shield relays/);
+  assert.match(text, /Contour crawler:.*changing frontier/);
+  assert.doesNotMatch(text, /Boundary patrol|Signal sentinel|capture its relay/);
+  assert.match(p.$('classic-summary').textContent, /1 relay sentinel/);
+  assert.match(p.$('classic-summary').textContent, /1 contour crawler/);
+  ticks(p, 10);
+  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+  p.$('flight-details-back').click();
+  await Promise.resolve();
+  assert.equal(info(p).snapshot.paused, true);
+  assert.equal(p.doc.activeElement, p.$('overlay-field-details'));
   assert.deepEqual(p.errors, []);
 });
 test('mounted controller navigates Pause to Details and reading; held Back cannot resume after closing Details', async (t) => {

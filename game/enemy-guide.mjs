@@ -28,8 +28,8 @@ const advice = {
     'Cross during the gap. Do not wait inside a warned lane.',
   ],
   'relay-sentinel': [
-    'The lock marks a core linked to a relay objective.',
-    'Capture the relay, then make a sufficient new cut during an opening.',
+    'The lock marks a core protected by linked shield relays.',
+    'Capture every linked shield relay. During CORE OPEN, close a sufficient new cut—or, if the core is isolated, return to reclaimed ground with no unfinished line.',
   ],
 };
 export const ENEMY_GUIDE_TOPICS = Object.freeze([

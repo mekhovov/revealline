@@ -3,6 +3,7 @@ import { TIMED_BONUS_VERSIONS } from '../core/timed-bonuses.mjs';
 import { drawPresentedActor, PRESENTATION_INK, PRESENTATION_PLATE } from './actor-presentation.mjs';
 import { drawPresentationImage } from './presentation-draw-image.mjs';
 import { traceContentActor } from '../content-design/actor-marker.mjs';
+import { enemyCatalogRecord } from '../enemy-catalog.mjs';
 
 const SIZE = 16;
 const KINDS = ['extra-life', 'player-speed', 'enemy-slow', 'enemy-freeze'];
@@ -301,16 +302,10 @@ export function classicView(run) {
     });
     for (const id of carrierIds)
       check(enemies.some((enemy) => enemy.id === id && enemy.type === 'bouncer'));
-    const roles = [
-      ['bouncer', 'field enemy'],
-      ['contour-patrol', 'contour patrol'],
-      ['claimed-rover', 'claimed rover'],
-      ['eroder', 'eroder'],
-      ['lane-boss', 'lane emitter'],
-    ].flatMap(([type, label]) => {
+    const roles = TYPES.flatMap((type) => {
+      const label = enemyCatalogRecord(type).label.toLowerCase();
       const count = enemies.filter((enemy) => enemy.type === type && !enemy.impactCarrier).length;
-      const plural = label.endsWith('enemy') ? `${label.slice(0, -5)}enemies` : `${label}s`;
-      return count ? [`${count} ${count === 1 ? label : plural}`] : [];
+      return count ? [`${count} ${label}${count === 1 ? '' : 's'}`] : [];
     });
     return freeze({
       actorTick,
