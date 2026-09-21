@@ -25,7 +25,7 @@ const known = journeyMissionId({
   campaignId: 'prologue',
   levelId: 'first-return',
 });
-async function setup(t, { route = 'opening', events = [], denied = false } = {}) {
+async function setup(t, { route = 'opening', events = [], denied = false, readPads } = {}) {
   const memory = managedIndexedDB(),
     backend = createJourneyBackend(memory);
   if (events.length) await backend.commit(events);
@@ -33,6 +33,7 @@ async function setup(t, { route = 'opening', events = [], denied = false } = {})
   const p = await soloPage(t, {
     search: `?journey=${route}`,
     titleScreen: true,
+    ...(readPads ? { readPads } : {}),
     storage: memoryStorage(),
     journeyIndexedDB: denied
       ? {
@@ -114,3 +115,61 @@ test('denied Journey storage still offers truthful one-action Start', async (t) 
   assert.equal(p.$('journey-save-status').hidden, false);
   await activate(p, 'shell-featured', 'first-return');
 });
+
+for (const route of ['opening', 'authored'])
+  test(`${route}: cold controller discovery and fresh A launch the actual Journey entry`, async (t) => {
+    const pad = {
+      index: 0,
+      id: 'Steam Deck Controller',
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+    };
+    let connected = false;
+    const { p, backend, before } = await setup(t, {
+      route,
+      readPads: () => (connected ? [pad] : []),
+    });
+    const release = () => {
+      for (const b of pad.buttons) {
+        b.pressed = false;
+        b.value = 0;
+      }
+      p.frame();
+      p.frame();
+    };
+    const press = (index) => {
+      release();
+      pad.buttons[index].pressed = true;
+      pad.buttons[index].value = 1;
+      p.frame();
+    };
+    connected = true;
+    pad.buttons[0].pressed = true;
+    pad.buttons[0].value = 1;
+    p.frame();
+    assert.equal(p.$('shell-home').open, true, 'A held during discovery cannot launch');
+    assert.deepEqual(await backend.read(), before, 'Discovery cannot grant progress');
+    press(0);
+    await settle(() => {
+      p.frame(0);
+      return p.doc.body.dataset.flightState === 'running';
+    });
+    assert.equal(p.$('shell-home').open, false);
+    assert.equal(p.rendered.run.levelId, 'first-return');
+    assert.equal(p.rendered.run.player.speed, 0, 'Confirm does not become a flight command');
+    press(9);
+    assert.equal(p.doc.body.dataset.flightState, 'paused');
+    const tick = p.rendered.run.tick;
+    release();
+    p.frame();
+    assert.equal(p.rendered.run.tick, tick);
+    press(0);
+    await settle(() => {
+      p.frame(0);
+      return p.doc.body.dataset.flightState === 'running';
+    });
+    assert.equal(p.rendered.run.levelId, 'first-return');
+    assert.deepEqual(p.errors, []);
+  });

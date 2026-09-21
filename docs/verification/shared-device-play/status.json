@@ -29,6 +29,11 @@
       "node22": "107/107",
       "finalBootBuild": "3/3 each runtime after final CSS changes",
       "scope": "Boot, build/offline inventory, Team host, paused resize, shared touch. Final source CI and physical devices remain open."
+    },
+    "iteration6": {
+      "titleInputAndBoot": "47/47 each Node20/22 before adding two controller cases",
+      "expandedJourneyEntry": "9/9 each Node20/22 including original7 plus2 fresh A launch/Pause/Resume cases",
+      "scope": "Actual opening/authored hosts with modeled standard Gamepad. No physical Steam Deck fix claim; final release CI remains open."
     }
   },
   "nativeObservations": [
@@ -249,6 +254,38 @@
       "mode": "Solo title Large text",
       "modeCard": [85.3359375, 123.890625],
       "note": "Mode names remain single-line with6px side padding; no card overflow. Portrait title still scrolls; long artwork explanation needs entry-flow polish."
+    },
+    {
+      "viewport": [320, 480],
+      "mode": "Solo compact title Large text iteration6",
+      "primaryAction": [16, 277.671875, 288, 51],
+      "note": "Mode row129.78..253.67; Continue277.67..328.67 instead of722.45. Tab x4 reveals Workshop413.17..464.17; Enter opens Workshop. Offline copy retained below menu; scroll remains."
+    },
+    {
+      "viewport": [568, 320],
+      "mode": "Solo compact title Large text iteration6",
+      "primaryAction": [16, 244.8046875, 350, 51],
+      "note": "Initial title scroll0; mode row121.21..220.80; primary action fully visible."
+    },
+    {
+      "viewport": [844, 390],
+      "mode": "Solo compact title Large text iteration6",
+      "primaryAction": [443, 154.390625, 332, 51],
+      "note": "Full804px mode row; menu350x344 remains scrollable. Offline copy follows destination; no overlap."
+    },
+    {
+      "viewport": [1010, 720],
+      "mode": "Embedded Playground actual Classic Lab terrain",
+      "arena": [592, 296],
+      "minimumControl": [44, 44],
+      "note": "Frame reports actual CSS size; host displayed frame43%. Complete running arena155..451, all7 controls inside frame; explicit Pause retains attempt. Desktop frame measurement only."
+    },
+    {
+      "viewport": [710, 620],
+      "mode": "Embedded Playground actual Classic Lab terrain",
+      "arena": [392, 196],
+      "minimumControl": [44, 44],
+      "note": "Frame reports actual CSS size; host displayed frame62%. Complete running arena181..377, all7 controls inside frame; explicit Pause and Return to Workshop restored Mission playground focus. Taller-tablet space efficiency still merits review."
     }
   ],
   "pending": [
