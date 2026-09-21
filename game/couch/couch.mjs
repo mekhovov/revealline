@@ -1,3 +1,4 @@
+import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
 import { createBoardFootprints } from './board-footprint.mjs';
@@ -1350,7 +1351,12 @@ try {
       }
     };
   }
+  const couchTouch = attachCouchTouch({
+    controls: $('race-touch-0').closest('.race-fields'),
+    clear: () => input?.clearPhysical(),
+  });
   const input = attachCouchInput({
+    getTouchSettings: () => couchTouch.snapshot(),
     continuousSteering: () => true,
     getGamepads: readCachedPads,
     active: () => match?.status === 'running',
@@ -1970,6 +1976,7 @@ try {
     contentController?.abort();
     disposed = true;
     preparationStatus.dispose();
+    couchTouch.destroy();
     input.destroy();
     menuRouter.destroy();
     reading.destroy();
