@@ -64,6 +64,68 @@ export const DIFFICULTY_CATALOG = freezeDesign({
     },
   },
 });
+// Explicit successor: historical projects/replays keep v1, including its exact
+// floating-point timings. These values are pressure-test hypotheses, not a claim
+// of human-balanced content. Player handling and warning windows never scale.
+export const PRESSURE_DIFFICULTY_CATALOG = freezeDesign({
+  format: 'DifficultyCatalogV1',
+  id: 'journey-difficulty-v2',
+  presets: {
+    gentle: {
+      lives: 5,
+      enemySpeedFactor: 1,
+      attackRestFactor: 1.25,
+      failingDeadline: false,
+      description: 'Five lives, base enemy speed, 25% longer attack rests, no failing countdown.',
+    },
+    standard: {
+      lives: 3,
+      enemySpeedFactor: 1.4,
+      attackRestFactor: 0.85,
+      failingDeadline: true,
+      description: 'Three lives, enemies 40% faster than base, 15% shorter attack rests.',
+    },
+    expert: {
+      lives: 2,
+      enemySpeedFactor: 1.75,
+      attackRestFactor: 0.65,
+      failingDeadline: true,
+      description: 'Two lives, enemies 75% faster than base, 35% shorter attack rests.',
+    },
+  },
+});
+
+export function journeyDifficultyCatalog(id = DIFFICULTY_CATALOG.id) {
+  if (id === DIFFICULTY_CATALOG.id) return DIFFICULTY_CATALOG;
+  if (id === PRESSURE_DIFFICULTY_CATALOG.id) return PRESSURE_DIFFICULTY_CATALOG;
+  throw new Error('Project must pin a registered difficulty catalog.');
+}
+
+export function journeyLaneTiming(timing, difficulty, catalogId = DIFFICULTY_CATALOG.id) {
+  const preset = journeyPreset(difficulty, catalogId);
+  if (preset.attackRestFactor === undefined) return { ...timing };
+  const activeTicks = Math.round((timing.warningSeconds + timing.activeSeconds) / FIXED_DT);
+  const restTicks = Math.max(
+    1,
+    Math.round(
+      ((timing.period - timing.warningSeconds - timing.activeSeconds) * preset.attackRestFactor) /
+        FIXED_DT,
+    ),
+  );
+  return { ...timing, period: (activeTicks + restTicks) * FIXED_DT };
+}
+
+export function journeySentinelTiming(difficulty, catalogId = DIFFICULTY_CATALOG.id) {
+  const preset = journeyPreset(difficulty, catalogId);
+  const recipe = structuredClone(SENTINEL_RECIPE.definition);
+  if (preset.attackRestFactor !== undefined)
+    recipe.shielded.restTicks = Math.max(
+      1,
+      Math.round(recipe.shielded.restTicks * preset.attackRestFactor),
+    );
+  // CORE OPEN is an objective opportunity, not ordinary attack downtime.
+  return recipe;
+}
 export const ACTOR_CATALOG = freezeDesign({
   format: 'ActorCatalogV1',
   id: 'journey-actors-v1',
@@ -238,7 +300,12 @@ export const SENTINEL_ACTOR_CATALOG = freezeDesign({
   },
 });
 
-export function compileJourneyEncounter(source, catalogId) {
+export function compileJourneyEncounter(
+  source,
+  catalogId,
+  difficulty = 'standard',
+  difficultyCatalogId = DIFFICULTY_CATALOG.id,
+) {
   if (source === null) return null;
   const value = boundedJSON(source, { maxBytes: 2048, maxNodes: 16, maxDepth: 3, maxArray: 4 });
   exactKeys(
@@ -252,7 +319,7 @@ export function compileJourneyEncounter(source, catalogId) {
     'Journey encounter needs its registered Sentinel recipe and actor catalog.',
   );
   return {
-    ...structuredClone(SENTINEL_RECIPE.definition),
+    ...journeySentinelTiming(difficulty, difficultyCatalogId),
     enemyId: value.enemyId,
     shieldObjectiveIds: value.shieldObjectiveIds,
     coreObjectiveId: value.coreObjectiveId,
@@ -272,17 +339,23 @@ export function journeyActors(id = ACTOR_CATALOG.id) {
   return catalogs[id];
 }
 
-export function journeyPreset(id = 'standard') {
-  required(Object.hasOwn(DIFFICULTY_CATALOG.presets, id), 'Unsupported Journey difficulty.');
-  return DIFFICULTY_CATALOG.presets[id];
+export function journeyPreset(id = 'standard', catalogId = DIFFICULTY_CATALOG.id) {
+  const catalog = journeyDifficultyCatalog(catalogId);
+  required(Object.hasOwn(catalog.presets, id), 'Unsupported Journey difficulty.');
+  return catalog.presets[id];
 }
 
-export function compileActor(source, difficulty = 'standard', catalogId = ACTOR_CATALOG.id) {
+export function compileActor(
+  source,
+  difficulty = 'standard',
+  catalogId = ACTOR_CATALOG.id,
+  difficultyCatalogId = DIFFICULTY_CATALOG.id,
+) {
   const actor = boundedJSON(source, { maxBytes: 4096, maxNodes: 64, maxDepth: 5, maxArray: 2 });
   const catalog = journeyActors(catalogId);
   const role = catalog.roles[actor.role];
   required(Object.hasOwn(catalog.roles, actor.role), 'Unsupported actor role.');
-  const preset = journeyPreset(difficulty);
+  const preset = journeyPreset(difficulty, difficultyCatalogId);
   if (role.type === 'relay-sentinel') {
     exactKeys(actor, ['id', 'role', 'tier', 'x', 'y'], 'actor');
     required(actor.tier === 'measured', 'Sentinel uses the shared measured cadence.');
@@ -298,7 +371,7 @@ export function compileActor(source, difficulty = 'standard', catalogId = ACTOR_
       x: actor.x,
       y: actor.y,
       axis: actor.axis,
-      ...role.timings[actor.tier],
+      ...journeyLaneTiming(role.timings[actor.tier], difficulty, difficultyCatalogId),
       laneWidth: role.laneWidth,
     };
   }

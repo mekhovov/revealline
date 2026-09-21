@@ -13,8 +13,8 @@ export function resolveContentJourney(source, options = {}) {
   exactKeys(selected, ['packIds', 'mode', 'difficulty'], 'Journey selection');
   const { mode = 'solo', difficulty = 'standard' } = selected;
   required(['solo', 'versus', 'team'].includes(mode), 'Unsupported candidate mode.');
-  journeyPreset(difficulty);
   const project = compileContentProject(source);
+  journeyPreset(difficulty, project.difficulty.id);
   const packIds = selected.packIds ?? project.packs.map((pack) => pack.id);
   required(
     Array.isArray(packIds) &&

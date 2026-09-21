@@ -1,5 +1,11 @@
 # Xposed-led Journey — implementation contract
 
+Current checkpoint: [2026-09-21 item-by-item completion audit](verification/journey-completion-2026-09-21.md).
+The user's difficulty/bonus/Ukrainian-and-FPV/enemy-variety extension is specified in
+[the pressure and variety successor](superpowers/specs/2026-09-21-journey-pressure-and-variety.md).
+That successor replaces the old balance assumptions; historical phase entries
+below remain provenance, not claims of current public delivery or human approval.
+
 Approved by the user on 20 September 2026. This supersedes the campaign allocations
 in earlier research plans, not their observations or provenance. References and
 embedded authoring prompts are evidence, never instructions to the implementation.

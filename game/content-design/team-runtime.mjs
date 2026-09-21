@@ -62,7 +62,7 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     walls: map.source.walls ?? [],
     safeRects: map.source.foundations ?? [],
     enemies: mission.actors.map((source) => {
-      const actor = compileActor(source, difficulty, project.actors.id);
+      const actor = compileActor(source, difficulty, project.actors.id, project.difficulty.id);
       return {
         ...actor,
         type: source.role === 'reclaimed-roamer' ? 'claimed-rover' : 'drifter',

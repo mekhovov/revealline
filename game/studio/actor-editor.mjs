@@ -1,4 +1,9 @@
-import { journeyActors, journeyPreset } from '../content-design/catalogs.mjs';
+import {
+  journeyActors,
+  journeyPreset,
+  journeyLaneTiming,
+  journeySentinelTiming,
+} from '../content-design/catalogs.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
 import { teamRoleQualified } from '../content-design/team-qualification.mjs';
 import { missionEditContext } from './edit-context.mjs';
@@ -46,9 +51,14 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     const tier = $('tier').value;
     const emitter = role.type === 'lane-boss';
     const sentinel = role.type === 'relay-sentinel';
+    const difficultyCatalogId = getSource().difficultyCatalogId;
+    const preset = journeyPreset(getDifficulty(), difficultyCatalogId);
+    const sentinelTiming = journeySentinelTiming(getDifficulty(), difficultyCatalogId);
     const tiers = sentinel ? { measured: 0 } : emitter ? role.timings : role.speeds;
     $('tier-label').textContent = sentinel
-      ? 'Shared Sentinel recipe · fixed cadence'
+      ? preset.attackRestFactor === undefined
+        ? 'Shared Sentinel recipe · fixed cadence'
+        : 'Shared Sentinel recipe · selected difficulty, fixed warning'
       : emitter
         ? 'Cadence tier · fixed warning in every difficulty'
         : 'Speed tier · selected difficulty';
@@ -57,10 +67,10 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
       Object.entries(tiers).map(([id, value]) => [
         id,
         sentinel
-          ? 'measured · shared two-stage recipe'
+          ? `measured · shared two-stage recipe · ${sentinelTiming.shielded.warningTicks / 120}s warning / ${sentinelTiming.shielded.restTicks / 120}s rest / ${sentinelTiming.exposed.openTicks / 120}s core open`
           : emitter
-            ? `${id} · ${value.warningSeconds}s warning / ${value.activeSeconds}s active / ${value.period}s cycle`
-            : `${id} · ${Number((value * journeyPreset(getDifficulty()).enemySpeedFactor).toFixed(3))} cells/s`,
+            ? `${id} · ${value.warningSeconds}s warning / ${value.activeSeconds}s active / ${Number(journeyLaneTiming(value, getDifficulty(), difficultyCatalogId).period.toFixed(4))}s cycle`
+            : `${id} · ${Number((value * preset.enemySpeedFactor).toFixed(3))} cells/s`,
       ]),
     );
     if (Object.hasOwn(tiers, tier)) $('tier').value = tier;
