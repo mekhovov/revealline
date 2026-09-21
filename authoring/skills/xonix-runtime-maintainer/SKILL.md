@@ -1313,3 +1313,12 @@ Preserve historical slot bindings as well as original media bytes during import.
 ### Scoped production review successors
 
 When recipe inputs drift, generate and pin the actual source-stage ledger before adopting a new reviewed revision. Review the changed sources against retained native/test evidence; never transfer a prior approval by replacing its hash alone. Preserve every historical record and original payload, rebind Team's current exact theme identity to the generated successor, and keep earlier import policy separate. Verify pinned source-stage reconstruction, exact producer reproduction and affected real host/Studio tests. See `docs/verification/presentation-followup-review/README.md`; whole-source, final native and public gates remain mandatory.
+
+
+### Complete Team presentation test fixtures
+
+When selected Team records add image slots, prepare every advertised anchor, effect, threat and actor frame in current host/painter fixtures. Reuse hash-checked originals and exact geometry; a body-only fixture cannot represent the current presentation. Retained primitive/no-reader scenarios must use their pinned historical manifest. Keep malformed-current-frame rejection and historical identity assertions separate.
+
+Observe arena pictures by their full-arena draw geometry and exact decoded image identity, while retaining the raw draw log for decoration and ordering checks. Do not treat the last decorative icon as the background or delete stale-image/ownership assertions. Finite Canvas fixtures must return assigned style properties so contrast calculations see real colors. No fixture repair may bypass production preparation checks.
+
+Prompt example: “Run the complete Team host and painter cohort after a presentation successor. Distinguish original picture calls from later actors and effects, preserve required asset validation and prior snapshot ownership, and compare paused state and input journeys. Report finite Canvas evidence separately from real browser pixels and physical-device qualification.”

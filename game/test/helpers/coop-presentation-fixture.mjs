@@ -67,6 +67,10 @@ const teamFrames = new Map(
   ),
 );
 
+export function preparedTeamImage(id) {
+  return teamFrames.get(id) ?? null;
+}
+
 export function deferred() {
   let resolve, reject;
   const promise = new Promise((yes, no) => {

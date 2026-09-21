@@ -86,6 +86,7 @@ export async function page(
     }
   }
   const drawImages = [];
+  const arenaDrawImages = [];
   const earnedDrawImages = [];
   let failEarnedPaint = false;
   $('coop-earned-picture-canvas').getContext = () => ({
@@ -162,7 +163,12 @@ export async function page(
       get(target, key) {
         if (Object.hasOwn(target, key)) return target[key];
         return (...args) => {
-          if (key === 'drawImage') drawImages.push(args[0]);
+          if (key === 'drawImage') {
+            drawImages.push(args[0]);
+            // A scene spans the full arena; later 24px Team icons are separate draws.
+            if (JSON.stringify(args.slice(1)) === JSON.stringify([0, 0, 1152, 576, 0, 0, 72, 36]))
+              arenaDrawImages.push(args[0]);
+          }
           if (key === 'save') {
             if (paintDepth === 0) {
               if (failPaint) {
@@ -347,6 +353,7 @@ export async function page(
   return {
     artwork,
     drawImages,
+    arenaDrawImages,
     earnedDrawImages,
     failNextEarnedPaint() {
       failEarnedPaint = true;

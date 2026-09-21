@@ -99,7 +99,7 @@ for (const [width, height] of [
     assert.equal(f.drawImages.length, 0);
     f.tap('Enter');
     assert.equal(f.doc.activeElement.id, 'coop-canvas');
-    assert.equal(f.drawImages.at(-1).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+    assert.equal(f.arenaDrawImages.at(-1).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   });
 
 test('visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry', async (t) => {
@@ -147,7 +147,7 @@ test('a failed picture can be replaced by a different arena through the real sel
   assert.equal(f.doc.activeElement.id, 'coop-start');
   assert.equal(f.drawImages.length, 0);
   f.tap('Enter');
-  assert.equal(f.drawImages.at(-1).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
+  assert.equal(f.arenaDrawImages.at(-1).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
   assert.equal(f.$('coop-stage').textContent, 'FIRST CONNECTION');
 });
 

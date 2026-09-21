@@ -26,7 +26,7 @@ const settle = (f, expected = 'ready') =>
   );
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 const lastPreview = (f) => f.previewDrawImages.at(-1);
-const lastArena = (f) => f.drawImages.at(-1);
+const lastArena = (f) => f.arenaDrawImages.at(-1);
 function assertMysteryPreview(f) {
   const canvas = f.$('coop-preview-canvas'),
     image = lastPreview(f),

@@ -60,8 +60,9 @@ function prepared({ missing = null, motionScale = 1 } = {}) {
   const reads = [],
     images = new Map();
   let closed = 0;
-  for (const [slot] of SLOTS) {
-    const asset = compiled.resolved.assets[slot];
+  for (const [slot, asset] of Object.entries(compiled.resolved.assets)) {
+    if (asset.kind !== 'image' || (!slot.startsWith('team.') && !SLOTS.some(([id]) => id === slot)))
+      continue;
     images.set(
       slot,
       Object.freeze({
@@ -141,7 +142,7 @@ const labels = (calls) => calls.filter((call) => call.name === 'fillText');
 test('five approved source frames retain exact IDs, revisions, PNG hashes and dimensions', async () => {
   assert.deepEqual(compiled.resolved.theme, {
     id: 'fpv',
-    revision: 38,
+    revision: 41,
     name: compiled.resolved.theme.name,
   });
   assert.equal(compiled.resolved.collection, null);
@@ -405,8 +406,16 @@ test('actual painter places body images below 1/2, down/grace, lock/recovery/slo
   painter.paint(run, { reduced: true });
   const lastBody = view.calls.findLastIndex((call) => call.name === 'drawImage');
   assert.equal(
-    view.calls.filter((call) => call.name === 'drawImage').length,
+    view.calls.filter(
+      (call) => call.name === 'drawImage' && SLOTS.some(([slot]) => call.args[0].slot === slot),
+    ).length,
     run.players.length + run.enemies.length + run.strongholds.length,
+  );
+  assert.ok(
+    view.calls.some(
+      (call) => call.name === 'drawImage' && call.args[0].slot?.startsWith('team.anchor.'),
+    ),
+    'The full current snapshot exercises prepared anchors as well as actor bodies.',
   );
   for (const label of ['1', '+', '2', '✓', 'B', 'SHIELD', 'LOCK 2', 'RECOVER', 'SLOWED']) {
     const call = labels(view.calls).find((item) => item.args[0] === label);

@@ -6,6 +6,8 @@ import { createCoop, startCoop, pauseCoop, stepCoop, WALL } from '../coop/core.m
 import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
+import { preparedTeamImage } from './helpers/coop-presentation-fixture.mjs';
+import { RETAINED_FPV38_PRESENTATION } from '../couch/coop-retained-presentation.mjs';
 import { imagePresentation } from '../presentation/runtime.mjs';
 import {
   drawActiveTrail,
@@ -19,6 +21,19 @@ import {
 const compiled = JSON.parse(
   await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url)),
 );
+// The no-reader contract belongs to the retained primitive presentation. Current
+// image-based Team records deliberately require their complete prepared frames.
+const retainedBytes = await readFile(
+  new URL(
+    `../presentation/compiled/runtime.${RETAINED_FPV38_PRESENTATION.sha256}.json`,
+    import.meta.url,
+  ),
+);
+assert.equal(
+  createHash('sha256').update(retainedBytes).digest('hex'),
+  RETAINED_FPV38_PRESENTATION.sha256,
+);
+const retained = JSON.parse(retainedBytes);
 const wallAsset = compiled.resolved.assets['terrain.wall'];
 const palette = Object.freeze({
   ink: '#f6f3e8',
@@ -144,14 +159,14 @@ function prepared({ tag = 'approved-wall', wall = true, motionScale = 1, reader 
   });
   const tile = Object.freeze({ image, asset: wallAsset, geometry: imagePresentation(wallAsset) });
   const snapshot = {
-    resolved: compiled.resolved,
+    resolved: reader ? compiled.resolved : retained.resolved,
     canvas: { palette, motionScale },
     fonts: { ui: 'Prepared Team UI, sans-serif', numeric: 'Prepared Team Mono, monospace' },
   };
   if (reader) {
     snapshot.image = (slot) => {
       reads.push(slot);
-      return slot === 'terrain.wall' && wall ? tile : null;
+      return slot === 'terrain.wall' ? (wall ? tile : null) : preparedTeamImage(slot);
     };
   }
   return { snapshot: Object.freeze(snapshot), reads, image, tile, closes: () => closes };
@@ -326,8 +341,14 @@ test('Team wall replacement uses only the newly accepted image and clearing rest
   view.reset();
   painter.paint(run);
   const draws = view.calls.filter((call) => call.name === 'drawImage');
-  assert.ok(draws.length > 0, 'The replacement still has authored wall artwork.');
-  assert.ok(draws.every((call) => call.args[0] === second.image));
+  assert.equal(
+    draws.filter((call) => call.args[0] === second.image).length,
+    Array.from(run.cells).filter((cell) => cell === WALL).length,
+  );
+  assert.ok(
+    draws.every((call) => call.args[0] !== first.image),
+    'No stale wall survives replacement.',
+  );
   painter.setPresentation(null);
   view.reset();
   painter.paint(run);
@@ -351,7 +372,7 @@ test('snapshots without a terrain reader or wall keep flat backing and never ret
     view.reset();
     painter.paint(run);
     assert.equal(
-      view.calls.some((call) => call.name === 'drawImage'),
+      view.calls.some((call) => call.name === 'drawImage' && call.args[0]?.tag),
       false,
     );
     assert.ok(
@@ -498,7 +519,7 @@ test('First Connection never invents wall cells and clearing a prepared snapshot
   view.reset();
   painter.paint(run, { reduced: true });
   assert.equal(
-    view.calls.some((call) => call.name === 'drawImage'),
+    view.calls.some((call) => call.name === 'drawImage' && call.args[0]?.tag),
     false,
   );
   painter.setPresentation(null);
@@ -565,7 +586,14 @@ for (const [name, malformed] of [
     painter.paint(run);
     const draws = view.calls.filter((call) => call.name === 'drawImage');
     assert.ok(draws.length > 0, 'The previous artwork remains paintable after rejection.');
-    assert.ok(draws.every((call) => call.args[0] === previous.image));
+    assert.equal(
+      draws.filter((call) => call.args[0] === previous.image).length,
+      Array.from(run.cells).filter((cell) => cell === WALL).length,
+    );
+    assert.ok(
+      draws.every((call) => call.args[0] !== replacement.image),
+      'Rejected wall is never painted.',
+    );
     const wallBacking = view.calls.find(
       (call) =>
         call.name === 'fillRect' &&
@@ -601,7 +629,7 @@ test('accepted noncentral and boundary wall pivots keep the declared pivot at ea
     const tile = { ...p.tile, geometry: { ...p.tile.geometry, pivot } };
     painter.setPresentation({
       ...p.snapshot,
-      image: (slot) => (slot === 'terrain.wall' ? tile : null),
+      image: (slot) => (slot === 'terrain.wall' ? tile : p.snapshot.image(slot)),
     });
     view.reset();
     painter.paint(run);
@@ -626,10 +654,13 @@ test('an undefined wall override is explicitly absent and clears a previously bo
     run = createCoop(RELAY_YARD),
     p = prepared();
   painter.setPresentation(p.snapshot);
-  painter.setPresentation({ ...p.snapshot, image: () => undefined });
+  painter.setPresentation({
+    ...p.snapshot,
+    image: (slot) => (slot === 'terrain.wall' ? undefined : p.snapshot.image(slot)),
+  });
   painter.paint(run);
   assert.equal(
-    view.calls.some((call) => call.name === 'drawImage'),
+    view.calls.some((call) => call.name === 'drawImage' && call.args[0]?.tag),
     false,
   );
   assert.ok(

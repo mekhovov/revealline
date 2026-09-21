@@ -10,6 +10,7 @@ import { createCoopPresentation } from '../couch/coop-presentation.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 import { validateCompiledPresentation } from '../presentation/host.mjs';
 import { canvasPresentation, presentationCSSVariables } from '../presentation/runtime.mjs';
+import { preparedTeamImage } from './helpers/coop-presentation-fixture.mjs';
 import { coverageClear, yardOpening } from './helpers/coop-route-search.mjs';
 
 const compiled = validateCompiledPresentation(
@@ -36,6 +37,7 @@ async function fixture(t, index) {
   );
   const snapshot = {
     resolved: compiled.resolved,
+    image: preparedTeamImage,
     canvas: canvasPresentation(compiled.resolved),
     fonts: { ui: css['--fk-font-ui'], numeric: css['--fk-font-mono'] },
   };
@@ -192,7 +194,11 @@ test('won runs without an approved image keep the existing procedural arena', as
     f.calls.length = 0;
     f.painter.paint(run, { picture });
     assert.equal(
-      f.calls.some((call) => call.name === 'drawImage'),
+      f.calls.some(
+        (call) =>
+          call.name === 'drawImage' &&
+          JSON.stringify(call.args.slice(1)) === JSON.stringify([0, 0, 1152, 576, 0, 0, 72, 36]),
+      ),
       false,
     );
     assert.ok(
