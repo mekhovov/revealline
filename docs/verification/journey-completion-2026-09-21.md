@@ -93,13 +93,13 @@ result, not outstanding route failures. Acceptance gaps remain in the phase tabl
   verification. Short22–32second optimized paths and brief impact visibility remain
   open concerns. [Study evidence](journey-reserve-spatial.md).
 - Team stronger-pressure feasibility now has an explicit36-set audit. Initial
-  unchanged-route reuse passed13 sets; four fresh Twin Landings/Shared Detour
-  Standard/Expert routes raise ordinary coverage to17/36 sets,68/144 joint-setting
-  and seat-label configurations. Those four paths also pass16 additional delayed
-  configurations. Short clears and mostly alternating-seat continuations remain
+  unchanged-route reuse passed13 sets; nine fresh opening/foundation routes raise
+  ordinary coverage to22/36 sets,88/144 joint-setting and seat-label configurations.
+  Those paths also pass32 additional delayed configurations; four later-start
+  Divided Standard failures remain explicit. Short clears and mostly alternating-seat continuations remain
   cooperative-design concerns, not completed human balance. Team seeds do not
   vary enemy movement; timing probes are distinguished from seed metadata checks.
-  [Evidence and remaining19 sets](journey-team-pressure.md).
+  [Evidence and remaining14 sets](journey-team-pressure.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
@@ -134,7 +134,7 @@ successor, including relevant public/human gates.
 | P11 — Sentinel | Four core + Remix/art; multi-relay encounter; all30 original pressure clear/replay/race cases; two explicit receiver-layout successors with12 clear/replay/race cases and native first returns | Optimized21–38second Twin clears remain pacing risks; Crown separate-shield mastery; successor full native/art/host adoption, human boss balance, public integration |
 | P12 — Apex | Four core + Remix/art; capstone combinations; all30 pressure clear/replay/race cases | Short optimized finales need rework; optional-goal routes, human mastery, public integration |
 | P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22; all498 ordinary pressure clear/replay/race cases | Flagged spatial/teaching/cleanup issues; optional mastery, multi-seed and human balance; final cuts/reference dispositions; integrated Pages |
-| P14 —12 Team missions | Three four-mission arcs; original art; joint cuts/seat swaps; Team flow/Skip/chooser/presets; stronger-pressure17/36 mission/preset sets with68 ordinary configurations and16 extra delayed opening configurations | Remaining19 pressure sets, short/alternating-seat routes; live two-player balance/controllers; material successor host adoption; new mechanic qualification; Pages |
+| P14 —12 Team missions | Three four-mission arcs; original art; joint cuts/seat swaps; Team flow/Skip/chooser/presets; stronger-pressure22/36 mission/preset sets with88 ordinary configurations and32 extra delayed configurations | Remaining14 pressure sets, short/alternating-seat routes; live two-player balance/controllers; material successor host adoption; new mechanic qualification; Pages |
 | P15 — final validation/Legacy/rollback | Immutable evidence records; compiler/CLI/Studio inspection; persistence/compatibility groundwork | Human sessions; full device/accessibility/performance; Legacy transition; public rollback proof; deployment |
 
 ## Cross-cutting checklist
@@ -143,7 +143,7 @@ successor, including relevant public/human gates.
 
 | Request | Completed locally | Still required |
 |---|---|---|
-| Difficulty beyond lives | Explicit v2 speed factors Gentle1.0 / Standard1.4 / Expert1.75 and attack-rest factors1.25 /0.85 /0.65 where actors have an attack cycle; fixed player handling and warning windows;498 Solo/Versus ordinary cases and68 Team ordinary configurations pass | Human balance, spatial shortcut/cleanup fixes, legacy-public migration and19 Team mission/preset sets; no claim these multipliers are final or deployed |
+| Difficulty beyond lives | Explicit v2 speed factors Gentle1.0 / Standard1.4 / Expert1.75 and attack-rest factors1.25 /0.85 /0.65 where actors have an attack cycle; fixed player handling and warning windows;498 Solo/Versus ordinary cases and88 Team ordinary configurations pass | Human balance, spatial shortcut/cleanup fixes, legacy-public migration and14 Team mission/preset sets; no claim these multipliers are final or deployed |
 | Appearing/expiring/relocating bonuses | Versioned engine, shared Studio schedules, visual announcement/countdown; desktop native observation;54 bonus-taking clear/replay/race cases in each of original and pressure-v2 editions, plus expiry/relocation probes and post-contact saves | Broader seed/opportunity sampling, tempting-route/short-clear balance, Team/device/human checks and publication |
 | Ukrainian ornament/culture and FPV workshop maps | Eight distinct greyboxes, two arcs, cultural attribution;48 preset/control clear/replays and equal races; two successor geometry studies; eight original pinned picture candidates and74 art/geometry regression tests per Node; native import/Apply and two partial reveals | Remaining short routes, whole-set picture/cultural/playability review, final asset acceptance, mode qualification and enrollment |
 | Additional enemy behavior | Pursuer/interceptor catalogue and authoring, six variants,36 clear/replays and equal races; existing terrain/rover/erosion/relay/contour roles retained | Whole-Journey distribution/pacing, native/human/Team and public integration |
