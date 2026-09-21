@@ -1,6 +1,6 @@
 # Optional combat D2c — readable presentation and deliberate player choice
 
-Status: proposed for independent review after D2b `a22bbb16`. Implements the
+Status: approved by independent specification review after D2b `a22bbb16`. Implements the
 existing approved optional-combat direction, not new simulation rules. The user
 authorized automatic continuation; no routine confirmation pause. Release/host
 ownership and human acceptance still apply. Original soundtrack remains paused.
@@ -72,7 +72,9 @@ input prediction is added to the simulation.
 - Locked warning: dashed two-ink aim ray, fixed target cross and a compact static
   countdown segment beside the emitter. The ray goes through the locked point
   toward the current wall/reclaimed obstruction or maximum projectile travel;
-  it must not falsely imply the projectile stops at its aim point. It is a current
+  clip with the existing radius-aware projectile boundary geometry, not a
+  centre-only ray that can cross an obstacle corner. It must not falsely imply
+  the projectile stops at its aim point. It is a current
   geometry cue, not a guarantee after a future capture. Bound work to the board
   size; no scene-wide searches per actor or unbounded sampling.
 - Live shot: solid high-contrast diamond with short direction tail and an accurate
@@ -84,7 +86,9 @@ input prediction is added to the simulation.
   state but may use a different brief shape. Maximum24 marks, drawn below hazards,
   active trail and craft; no particles that hide danger, score/life reward or
   collision effect. Reduced effects skips the spark. A cosmetic `showScrap:false`
-  hides only inert marks, never live actors, warnings or shots.
+  hides only inert marks, never live actors, warnings or shots. Terminal won/lost
+  views show static scrap immediately, never a permanently young spark when the
+  simulation clock stops; C2's independent victory animation cannot revive it.
 - Scrap remains on the current board and can be shown over the victory picture;
   replay/gallery artwork itself and recorded coverage are not modified. A new
   attempt removes old scrap by creating a new run, not by clearing saved records.
