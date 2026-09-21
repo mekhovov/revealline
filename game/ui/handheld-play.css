@@ -1261,6 +1261,32 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   }
 }
 
+/* Classic-field summaries are hidden during flight, leaving the authored
+   warning band available for live rover, loss and pickup notices. Use that
+   space rather than truncating the event over playable cells. */
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    ):has(#encounter-status[data-kind='classic'][data-phase='open'])
+    #run-message {
+    display: block;
+    position: fixed;
+    top: auto;
+    bottom: max(4px, var(--safe-bottom));
+    left: max(12px, var(--safe-left));
+    right: max(12px, var(--safe-right));
+    width: auto;
+    margin: 0;
+    max-height: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.3;
+  }
+}
+
 /* Warning-capable portrait play shares the same floating control convention.
    A second full-height pad reservation must not collapse the complete arena. */
 @media (max-width: 680px) and (orientation: portrait) {

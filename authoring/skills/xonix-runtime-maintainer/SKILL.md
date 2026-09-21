@@ -38,6 +38,13 @@ call: relay/effect art is drawn above it. Keep raw draw records and separately a
 that the expected objective image is painted; never hide selected art to pass tests.
 
 For the shared handheld-control candidate, follow `docs/shared-device-play.md`.
+Classic-field live notices may use the already-reserved warning band only while
+the static classic summary is hidden. Keep full activation/loss text visible and
+wrapped outside the arena; inspect both ellipsis and inherited display:none rules.
+Do not move it into an occupied staged encounter card. Verify Large text, actual
+text-line rectangles, shown/hidden touch controls and complete arena geometry in
+portrait and short landscape. A byte-identical CSS check in a composed preview
+does not establish frozen-source, public or physical-device acceptance.
 Capture loss may arrive after deliberate input cleanup. Require a live gesture
 and its matching pointer ID before treating a capture-loss/cancel event as a
 gameplay interruption. Retire the gesture before releasing capture; its cleanup
