@@ -1,0 +1,120 @@
+{
+  "format": "revealline-independent-preview-site-review.v1",
+  "reviewedDate": "2026-09-21",
+  "sourceCommit": "6b0c3d0aac6789174964a2d4455d11e1a0daf15f",
+  "sourcePins": [
+    {
+      "path": "scripts/prepare-licensed-preview-site.mjs",
+      "bytes": 6019,
+      "sha256": "cf4ed673370cecf44a3dd711aa71c8a4d9b5c0eb666733b1f390876b96143605"
+    },
+    {
+      "path": "authoring/library/licensed-audio/preview-site/render.mjs",
+      "bytes": 5924,
+      "sha256": "140f2b158279949f35a2871acb7ae6a1adc03a0e074cc4342f26e61fae41877d"
+    },
+    {
+      "path": "authoring/library/licensed-audio/preview-site/player.mjs",
+      "bytes": 2800,
+      "sha256": "381b347c3b902ae953fb4ae69a7fc62d4f3383ea3799bf5649e3a59e63252249"
+    },
+    {
+      "path": "authoring/library/licensed-audio/preview-site/style.css",
+      "bytes": 4087,
+      "sha256": "b0958140e1d36883bec5b63310141c852f2721063aa95ebb17c8a7670af832bb"
+    },
+    {
+      "path": "scripts/build-licensed-preview-archive.mjs",
+      "bytes": 20696,
+      "sha256": "3ff1b3b761f5d560c00e1752d3e03e9dd7b9e726020e751a8c9fe5dc99b38f75"
+    },
+    {
+      "path": "authoring/library/licensed-audio/sources.json",
+      "bytes": 159672,
+      "sha256": "7f738c8291a829eb87d03cc4f3317fe5babcc353845ba42073a9dcce71011982"
+    },
+    {
+      "path": "authoring/library/licensed-audio/production-register.json",
+      "bytes": 285022,
+      "sha256": "0173d83d022875c20d45a5c881719dde2a1e9dc121cbd4aa63a53a6d75cac287"
+    }
+  ],
+  "method": "Read-only source review plus Node in-memory DOM/audio stubs executing the actual player source; render checks use the current70 source metadata shaped as the compiler emits it. Fixed Math.random=0.999 for deterministic shuffle reproduction. No real Audio implementation, browser, audio request, decode or listening.",
+  "findings": [
+    {
+      "id": "source-vs-delivery-filename",
+      "before": "Renderer labelled runtime delivery basename Original filename for33 converted MP3s.",
+      "after": "Renderer displays separate MP3 filename and Source filename; all70 match runtime/source basenames, including33 derivatives.",
+      "result": "resolved"
+    },
+    {
+      "id": "manual-selection-shuffle-repeat",
+      "before": {
+        "actions": "Click track0 with three visible tracks and shuffle enabled; Next three times, Math.random=0.999.",
+        "observedSequence": [0, 1, 0, 2]
+      },
+      "after": {
+        "observedSequence": [0, 1, 2, 0],
+        "meaning": "The manual selection is removed from the initial remaining queue; all other entries play before its return."
+      },
+      "result": "resolved"
+    }
+  ],
+  "checks": [
+    {
+      "name": "single-filtered-track-repeats",
+      "result": "pass",
+      "visibleTracks": 1,
+      "actions": "Filter ambient, click track0, dispatch ended twice.",
+      "observedSequence": [0, 0, 0]
+    },
+    {
+      "name": "empty-filter-bounds",
+      "result": "pass",
+      "srcWrites": 0,
+      "status": "No recordings match the current filters."
+    },
+    {
+      "name": "audio-error-does-not-autofetch-next",
+      "result": "pass",
+      "additionalSrcWrites": 0
+    },
+    {
+      "name": "idle-resource-boundary",
+      "result": "pass",
+      "audioElements": 1,
+      "preload": "none",
+      "initialSrc": false,
+      "stubSrcWritesOnInitialization": 0,
+      "stubFetchCalls": 0
+    },
+    {
+      "name": "creator-credit-rendering",
+      "result": "pass",
+      "tracks": 70,
+      "sourceLinks": 70,
+      "licenseLinks": 70,
+      "zanderNameLinks": 9,
+      "zanderURL": "https://twitter.com/ZanderNoriega",
+      "convertedTracksWithChangeNotices": 33
+    },
+    {
+      "name": "html-text-and-attribute-escaping",
+      "result": "pass",
+      "cases": ["title", "artist", "credit", "MP3 filename", "source filename"],
+      "meaning": "Injected markup rendered as text; URL-scheme/path validation remains the compiler boundary."
+    },
+    {
+      "name": "approval-claims",
+      "result": "pass",
+      "meaning": "Rendered page says game integration and musical review pending, no creator endorsement or Content ID clearance; source builder preserves preview-only separation."
+    }
+  ],
+  "remainingActionableFindingsInReviewedRootFiles": [],
+  "limitations": [
+    "No native browser execution or network waterfall observed. Root owns native verification.",
+    "No musical listening, game-integration approval or Content ID clearance.",
+    "Verifier/workflow names were separately being aligned by their owner and are outside this receipt scope."
+  ],
+  "codeModifiedByReviewer": false
+}
