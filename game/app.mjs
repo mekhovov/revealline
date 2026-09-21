@@ -1,3 +1,4 @@
+import { createTouchPreferences } from './touch-preferences.mjs';
 import { createCharacterPresentations } from './character-presentations.mjs';
 import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs';
 import { createJourneyAuthority } from './journey/authority.mjs';
@@ -752,6 +753,7 @@ try {
     getState: () => ({ started, paused }),
     writeWarning(message, cue) {
       runMessageCue = cue;
+      $('run-message').dataset.cue = cue || '';
       $('run-message').textContent = message;
       captionUntil = (run?.time || 0) + 5;
       return { fullText: message, cue, expiresAt: captionUntil };
@@ -1551,6 +1553,13 @@ try {
   applyDisplayPreferences(displayPreferences.snapshot());
   $('tap-steering').checked =
     library.preferences.tapSteering ?? matchMedia('(pointer: coarse)').matches;
+  const touchPreferences = createTouchPreferences({
+    legacy: library.preferences.touchControls,
+    onChange: () => {
+      clearInput();
+      syncAssistControls();
+    },
+  });
   syncAssistControls();
   refreshTextSize();
   $('music-select').value = library.preferences.musicGenre;
@@ -1794,7 +1803,7 @@ try {
     arena: $('game-canvas'),
     onPause: (force) => pause(force),
     continuousSteering: () => true,
-    getTouchSettings: () => resolveTouchControls(library.preferences.touchControls),
+    getTouchSettings: () => touchPreferences.snapshot(),
     touchEnabled: () => library.preferences.screenControls !== 'off',
     tapMode: () => $('tap-steering').checked,
     active: () =>
@@ -2027,6 +2036,7 @@ try {
     persistenceReady = false;
     controllerPreview?.clear();
     if (!event.persisted) {
+      touchPreferences.destroy();
       flightDetails.dispose();
       flightInformation.dispose();
       soundtrackDisposed = true;
@@ -5425,21 +5435,28 @@ try {
       saved = preferences({
         screenSteeringHand: requested,
         touchControls: {
-          ...resolveTouchControls(library.preferences.touchControls),
+          ...touchPreferences.snapshot(),
           side: requested,
         },
       });
+    touchPreferences.set(
+      { ...touchPreferences.snapshot(), side: requested },
+      { persist: !practice && !courseEntry },
+    );
     syncAssistControls();
     const status = $('screen-steering-status');
-    status.textContent = saved.ok
-      ? 'Steering hand saved.'
-      : resolveTouchControls(library.preferences.touchControls).side === requested
-        ? `Steering hand selected for this session. ${saved.warning}`
-        : `Steering hand unchanged. ${saved.warning}`;
+    status.textContent =
+      touchPreferences.warning() ||
+      (saved.ok
+        ? 'Steering hand saved.'
+        : resolveTouchControls(library.preferences.touchControls).side === requested
+          ? `Steering hand selected for this session. ${saved.warning}`
+          : `Steering hand unchanged. ${saved.warning}`);
     status.hidden = false;
   };
   function refreshScreenSteeringHand() {
-    const hand = resolveTouchControls(library.preferences.touchControls).side;
+    touchPreferences.adoptLegacy(library.preferences.touchControls);
+    const hand = touchPreferences.snapshot().side;
     $('touch-side').value = hand;
     document.body.dataset.screenSteeringHand = hand;
     document.body.dataset.touchSide = hand;
@@ -5463,13 +5480,17 @@ try {
   for (const key of ['mode', 'size', 'opacity']) {
     $(`touch-${key}`).onchange = () => {
       clearInput();
-      preferences({
-        touchControls: {
-          ...resolveTouchControls(library.preferences.touchControls),
-          [key]: key === 'opacity' ? Number($(`touch-${key}`).value) : $(`touch-${key}`).value,
-        },
-      });
+      const next = {
+        ...touchPreferences.snapshot(),
+        [key]: key === 'opacity' ? Number($(`touch-${key}`).value) : $(`touch-${key}`).value,
+      };
+      preferences({ touchControls: next, screenSteeringHand: next.side });
+      touchPreferences.set(next, { persist: !practice && !courseEntry });
       syncAssistControls();
+      if (touchPreferences.warning()) {
+        $('screen-steering-status').textContent = touchPreferences.warning();
+        $('screen-steering-status').hidden = false;
+      }
     };
   }
   $('text-face').onchange = () => changeDisplay({ textFace: $('text-face').value });
@@ -5510,7 +5531,7 @@ try {
     $('settings-reduced-effects').checked = $('reduced-effects').checked;
     $('settings-tap-steering').checked = $('tap-steering').checked;
     $('screen-controls').value = library.preferences.screenControls;
-    const touch = resolveTouchControls(library.preferences.touchControls);
+    const touch = touchPreferences.snapshot();
     for (const key of ['mode', 'size', 'opacity']) $(`touch-${key}`).value = touch[key];
     document.body.dataset.touchMode = touch.mode;
     document.body.dataset.touchSide = touch.side;
@@ -6737,12 +6758,21 @@ try {
               ? 'paused'
               : 'running';
     $('coverage').innerHTML = `${(run.coverage * 100).toFixed(1)}<small>%</small>`;
+    $('coverage').setAttribute('aria-valuenow', (run.coverage * 100).toFixed(1));
+    $('coverage').setAttribute(
+      'aria-valuetext',
+      `${(run.coverage * 100).toFixed(1)} percent revealed; target ${Math.round(run.level.goal.coverage * 100)} percent`,
+    );
     $('coverage-bar').style.width = `${run.coverage * 100}%`;
     $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
     $('target').textContent = `TARGET ${Math.round(run.level.goal.coverage * 100)}%`;
+    $('coverage').dataset.target = Number.isFinite(run.level.goal.coverage)
+      ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
+      : '';
     $('lives').textContent =
       run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—';
     $('lives').setAttribute('aria-label', `${run.lives} lives`);
+    $('lives').dataset.compactValue = `♥ ${run.lives}`;
     $('time').textContent = timeLabel(run.time);
     $('score').textContent = String(run.score).padStart(5, '0');
     const required = run.objectives.filter((o) => o.required),
@@ -6956,7 +6986,7 @@ try {
             event.type === 'encounter.defeated'
           ) {
             const cue = encounterView(run);
-            if (cue) warning(`${cue.title}. ${cue.instruction}`);
+            if (cue) warning(`${cue.title}. ${cue.instruction}`, 'encounter');
           }
           if (event.type === 'boss.warning')
             warning(`${theme.labels.boss}: the marked lane will activate shortly.`);

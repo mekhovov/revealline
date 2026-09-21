@@ -625,7 +625,8 @@
     font-size: 13px;
     pointer-events: none;
   }
-  .game-shell[data-flight-state='running'] .encounter-status[data-phase='open'] {
+  .game-shell[data-flight-state='running']
+    .encounter-status[data-kind='classic'][data-phase='open'] {
     display: none;
   }
   .game-shell[data-flight-state='running'] .controller-connection-hint {

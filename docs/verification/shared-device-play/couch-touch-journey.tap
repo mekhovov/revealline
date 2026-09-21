@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: two sparse pads deliberately claim one menu; join/held Confirm cannot start or leak flight actions
+ok 1 - two sparse pads deliberately claim one menu; join/held Confirm cannot start or leak flight actions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.522833
+  ...
+# Subtest: actual select previews cancel without replacing the duel and commit once through onchange
+ok 2 - actual select previews cancel without replacing the duel and commit once through onchange # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.047916
+  ...
+# Subtest: Back and Menu cancel previews or focus the primary action without starting or resetting
+ok 3 - Back and Menu cancel previews or focus the primary action without starting or resetting # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034417
+  ...
+# Subtest: native menu focus cancels a held D-pad repeat until neutral without clearing either flight keyboard
+ok 4 - native menu focus cancels a held D-pad repeat until neutral without clearing either flight keyboard # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.08725
+  ...
+# Subtest: Ready slot loss consumes another pad Confirm; the surviving player keeps its slot
+ok 5 - Ready slot loss consumes another pad Confirm; the surviving player keeps its slot # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036958
+  ...
+# Subtest: descriptor change at the same index pauses flight and requires neutral plus a new menu join
+ok 6 - descriptor change at the same index pauses flight and requires neutral plus a new menu join # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030291
+  ...
+# Subtest: disconnect event at the same index pauses flight and requires neutral plus a new menu join
+ok 7 - disconnect event at the same index pauses flight and requires neutral plus a new menu join # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030625
+  ...
+# Subtest: explicit menu release permits the other player to join, never transfers a held edge
+ok 8 - explicit menu release permits the other player to join, never transfers a held edge # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039583
+  ...
+# Subtest: one hardware read per visible frame and no reads or ticks while unfocused, hidden or disposed
+ok 9 - one hardware read per visible frame and no reads or ticks while unfocused, hidden or disposed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.082958
+  ...
+# Subtest: persisted return and Ready Escape preserve the true state and cancel a pending edit
+ok 10 - persisted return and Ready Escape preserve the true state and cancel a pending edit # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.089458
+  ...
+# Subtest: API errors and unsupported pads remain usable with keyboard and truthful Ready status
+ok 11 - API errors and unsupported pads remain usable with keyboard and truthful Ready status # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0415
+  ...
+# Subtest: immediate: actual Sentinel round win and First to two rematch retain legal core route results
+ok 12 - immediate: actual Sentinel round win and First to two rematch retain legal core route results # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039
+  ...
+# Subtest: grid-center: actual Sentinel round win and First to two rematch retain legal core route results
+ok 13 - grid-center: actual Sentinel round win and First to two rematch retain legal core route results # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029208
+  ...
+# Subtest: one lost craft does not expose shared menu; both ended draws retain explicit Next
+ok 14 - one lost craft does not expose shared menu; both ended draws retain explicit Next # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.077625
+  ...
+# Subtest: native checkboxes and both held touch pads stay independent after leaving controller navigation
+ok 15 - native checkboxes and both held touch pads stay independent after leaving controller navigation
+  ---
+  duration_ms: 1949.859709
+  ...
+# Subtest: immediate: actual Pause retains two different requested turns and explicit Resume continues both
+ok 16 - immediate: actual Pause retains two different requested turns and explicit Resume continues both # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.073583
+  ...
+# Subtest: immediate: real recovery clears only that player's continuous intent before later substeps
+ok 17 - immediate: real recovery clears only that player's continuous intent before later substeps # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.151792
+  ...
+# Subtest: grid-center: actual Pause retains two different requested turns and explicit Resume continues both
+ok 18 - grid-center: actual Pause retains two different requested turns and explicit Resume continues both # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034417
+  ...
+# Subtest: grid-center: real recovery clears only that player's continuous intent before later substeps
+ok 19 - grid-center: real recovery clears only that player's continuous intent before later substeps # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022292
+  ...
+# Subtest: timeout draw keeps series at zero and needs a fresh explicit Next gesture
+ok 20 - timeout draw keeps series at zero and needs a fresh explicit Next gesture # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019584
+  ...
+# Subtest: immediate, keyboard: real cut closure stops only its player across substeps and held input
+ok 21 - immediate, keyboard: real cut closure stops only its player across substeps and held input # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021334
+  ...
+# Subtest: immediate, controller: real cut closure stops only its player across substeps and held input
+ok 22 - immediate, controller: real cut closure stops only its player across substeps and held input # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016959
+  ...
+# Subtest: grid-center, keyboard: real cut closure stops only its player across substeps and held input
+ok 23 - grid-center, keyboard: real cut closure stops only its player across substeps and held input # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016916
+  ...
+# Subtest: grid-center, controller: real cut closure stops only its player across substeps and held input
+ok 24 - grid-center, controller: real cut closure stops only its player across substeps and held input # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016958
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 23
+# todo 0
+# duration_ms 2275.497375

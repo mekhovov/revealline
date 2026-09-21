@@ -1,0 +1,50 @@
+[
+  {
+    "path": "node20-boot-layout.tap.gz",
+    "originalBytes": 1583,
+    "originalSha256": "bc770b973d7e0733d9643bc1e5df83dd9e65493830e4723e00e1334fff15c435",
+    "compressedSha256": "dc1f516b63c6ba079f026fff43e52137b6fcd756c5dc390d894afbe7020198a3"
+  },
+  {
+    "path": "node22-boot-layout.tap.gz",
+    "originalBytes": 1665,
+    "originalSha256": "bacd96c238403274479af4ebca32d9a7ea6c38656316d766189c5c9155759bb9",
+    "compressedSha256": "ebdb435b2d42229ac415a72ece31653a0eb2184152ad7fb3c64654e9649f8dfc"
+  },
+  {
+    "path": "node20-accepted.tap.gz",
+    "originalBytes": 3557,
+    "originalSha256": "fccb49a0310a1f28d73eab2fca511e180af1bdc910fe70053bc343fbf5f5c89a",
+    "compressedSha256": "e3ae05a964d6f3e30ef403baec690e5fc27f069e500efdf53a58b7b9da4a81fc"
+  },
+  {
+    "path": "node20-final-meter.tap.gz",
+    "originalBytes": 4234,
+    "originalSha256": "8fa8172cd0ecfd02be951fda6dcd0e76eff9e25ce6db8f88577847a55cc8c0e6",
+    "compressedSha256": "1f044e0b831b5a758a135e9b39b5c6f55f2b65c8fd31478f7d289d0554c57281"
+  },
+  {
+    "path": "node20-final.tap.gz",
+    "originalBytes": 1579,
+    "originalSha256": "d6aae954b00aba43a38dd83cfdc3a3a4ea456a4a170d9f8339c11e03b90b4a92",
+    "compressedSha256": "28eba61b471e918e5f5e674028bfa04b9a82b2e111cda1b2e9feaf2b34f577ed"
+  },
+  {
+    "path": "node22-accepted.tap.gz",
+    "originalBytes": 3791,
+    "originalSha256": "a8ea205fcb43dd01dbcf69dbf5be43be640016fdda49d91505e9f2ce868e2b0b",
+    "compressedSha256": "5dc65a873a91373998465c17ebba2c8141f9b764b64b42a5ef75044193fd00bb"
+  },
+  {
+    "path": "node22-final-meter.tap.gz",
+    "originalBytes": 4480,
+    "originalSha256": "a67c905d93cb9bcf80db1b04db69008b2f8a56254329ed920897f7a5a2d58dc3",
+    "compressedSha256": "841e72fced3b0f204c2c9dd37397d9ce41e7a7d19f23f8bd64b47d8b65ad3ba0"
+  },
+  {
+    "path": "node22-final.tap.gz",
+    "originalBytes": 1668,
+    "originalSha256": "84f857c33987a9d3fd2bf1546272c0c4ec617b738cc3fe1cbef30b75bf69150a",
+    "compressedSha256": "a89a10155e67c260191ec8434b3413c5873a76a42b9d4657aecd8ad24d748eb7"
+  }
+]
