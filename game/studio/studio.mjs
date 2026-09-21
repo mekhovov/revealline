@@ -22,6 +22,7 @@ import { createSentinelSpatialCandidates } from '../content-design/sentinel-spat
 import { withPressureDifficulty } from '../content-design/pressure-candidates.mjs';
 import { createApexCandidates } from '../content-design/apex-candidates.mjs';
 import { createApexSpatialCandidates } from '../content-design/apex-spatial-candidates.mjs';
+import { createApexFieldCandidates } from '../content-design/apex-field-candidates.mjs';
 import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
 import { createWholeSpatialCandidates } from '../content-design/whole-spatial-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
@@ -850,6 +851,12 @@ $('apex').onclick = guarded(() => {
 $('apex-spatial').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createApexSpatialCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('apex-field').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createApexFieldCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
