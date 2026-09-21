@@ -1,5 +1,6 @@
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from './data-json.mjs';
 import { DEFAULT_TRACKS, MUSIC_STYLES } from './ui/music.mjs';
+import { SOUNDTRACK_COLLECTIONS } from './content/soundtrack-catalogue.mjs';
 import {
   resolveSoundtrackPolicy,
   resolveSoundtrackWebsites,
@@ -745,6 +746,77 @@ function matchesMode(tags, mode, genres) {
   if (SOUNDTRACK_GENRES.includes(mode)) return tags.genres.includes(mode);
   return tags.genres.length === 0 || tags.genres.some((genre) => genres.includes(genre));
 }
+/** Code-owned album descriptions only. These definitions never authorize audio bytes or URLs. */
+export function resolveSoundtrackCollections(value) {
+  const collections = boundedJSON(value, {
+    maxBytes: SOUNDTRACK_LIMITS.metadataBytes,
+    maxNodes: 10000,
+    maxDepth: 3,
+    maxArray: SOUNDTRACK_LIMITS.catalogueTracks,
+    maxString: 512,
+  });
+  required(
+    Array.isArray(collections) && collections.length <= 32,
+    'Invalid soundtrack collections.',
+  );
+  const ids = new Set();
+  for (const collection of collections) {
+    ownKeys(
+      collection,
+      ['id', 'title', 'description', 'genre', 'trackIds', 'order', 'repeat'],
+      'soundtrack collection',
+    );
+    required(
+      stableId(collection.id) &&
+        collection.id.startsWith('builtin.album.') &&
+        !ids.has(collection.id),
+      'Invalid or duplicate soundtrack collection identity.',
+    );
+    ids.add(collection.id);
+    required(
+      text(collection.title, 120) &&
+        text(collection.description, 512) &&
+        SOUNDTRACK_GENRES.includes(collection.genre),
+      'Invalid soundtrack collection description.',
+    );
+    required(
+      Array.isArray(collection.trackIds) &&
+        collection.trackIds.length > 0 &&
+        collection.trackIds.length <= SOUNDTRACK_LIMITS.catalogueTracks &&
+        new Set(collection.trackIds).size === collection.trackIds.length &&
+        collection.trackIds.every((id) => stableId(id) && id.startsWith('builtin.catalog.')),
+      'Invalid soundtrack collection tracks.',
+    );
+    required(
+      collection.order === 'shuffle' && collection.repeat === 'all',
+      'Invalid soundtrack collection playback.',
+    );
+  }
+  return freezeSoundtrack(collections);
+}
+let collectionDefinitions;
+function albumPlaylists(library) {
+  if (library.format !== SOUNDTRACK_FORMAT_V3) return [];
+  collectionDefinitions ??= resolveSoundtrackCollections(SOUNDTRACK_COLLECTIONS);
+  const present = new Set(library.catalogTracks.map((track) => track.id));
+  return collectionDefinitions.flatMap(({ id, title, trackIds, order, repeat }) => {
+    const adopted = trackIds.filter((trackId) => present.has(trackId));
+    return adopted.length ? [{ id, title, trackIds: adopted, order, repeat }] : [];
+  });
+}
+/** Shipped albums are built-in playlists; uploads and custom-playlist capacity stay independent. */
+export function soundtrackAlbumPlaylists(value) {
+  return freezeSoundtrack(albumPlaylists(resolveSoundtrackLibrary(value)));
+}
+function uniqueRecordings(tracks) {
+  const seen = new Set();
+  return tracks.filter((track) => {
+    const key = track.kind === 'mp3' ? track.asset.sha256 : track.id;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
 function cataloguePlaylists(library) {
   if (library.format === SOUNDTRACK_FORMAT) return [];
   const tracks = [...BUILTIN_SOUNDTRACK_TRACKS, ...library.catalogTracks, ...library.tracks];
@@ -753,9 +825,9 @@ function cataloguePlaylists(library) {
   const playlists = [...genres, 'fusion', 'mix'].map((mode) => ({
     id: `builtin.playlist.${mode}`,
     title: genreLabels[mode],
-    trackIds: tracks
-      .filter((track) => matchesMode(trackTags(library, track), mode, SOUNDTRACK_GENRES))
-      .map((track) => track.id),
+    trackIds: uniqueRecordings(
+      tracks.filter((track) => matchesMode(trackTags(library, track), mode, SOUNDTRACK_GENRES)),
+    ).map((track) => track.id),
     order: 'shuffle',
     repeat: 'all',
   }));
@@ -770,7 +842,7 @@ function cataloguePlaylists(library) {
       order: 'shuffle',
       repeat: 'all',
     });
-  return playlists;
+  return [...playlists, ...albumPlaylists(library)];
 }
 export function soundtrackPlaylists(value) {
   const library = resolveSoundtrackLibrary(value);
@@ -824,6 +896,15 @@ function automaticSelection(library, context, catalogue) {
   // after scene/theme matching; this never changes gameplay or explicit playlists.
   const { mode, genres, installedOnly } = library.listening;
   let tracks = [...library.catalogTracks, ...library.tracks];
+  const recordingExcluded =
+    library.listening.recordingMode &&
+    tracks.some(
+      (track) =>
+        matchesMode(trackTags(library, track), mode, genres) &&
+        !eligibleRecording(track, library, catalogue),
+    );
+  const recordingNotice =
+    'Recording mode excludes music without verified gameplay-video permission and unregistered Content ID.';
   tracks = tracks.filter((track) => eligibleRecording(track, library, catalogue));
   tracks = tracks.filter((track) => matchesMode(trackTags(library, track), mode, genres));
   const unavailable = new Set(soundtrackOffloadedBonusTrackIds(library));
@@ -862,8 +943,10 @@ function automaticSelection(library, context, catalogue) {
       (track) => Math.abs(trackTags(library, track).energy - context.energy) === distance,
     );
   }
+  tracks = uniqueRecordings(tracks);
   if (!tracks.length) {
     const fallback = soundtrackFallbackSelection(mode, genres);
+    if (recordingExcluded) return freezeSoundtrack({ ...fallback, notice: recordingNotice });
     return hasOffloaded
       ? freezeSoundtrack({
           ...fallback,
@@ -881,6 +964,7 @@ function automaticSelection(library, context, catalogue) {
       repeat: 'all',
     },
     source: 'catalogue',
+    ...(recordingExcluded ? { notice: recordingNotice } : {}),
   });
 }
 

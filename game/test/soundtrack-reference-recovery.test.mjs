@@ -72,7 +72,10 @@ for (const alias of [false, true])
             ...emptySoundtrackLibrary({ catalogue: true }),
             tracks: [{ ...free.track, id }],
           })
-        : setCatalogueTracks(emptySoundtrackLibrary(), [allowed]),
+        : resolveSoundtrackLibrary({
+            ...setCatalogueTracks(emptySoundtrackLibrary(), [allowed]),
+            installedTrackIds: [allowed.id],
+          }),
       omitted = await withoutOriginal(
         await exportSoundtrackBundle(library, free.assets, { catalogue }),
         id,
@@ -96,7 +99,7 @@ test('a reference imported without authority cannot bypass trusted validation th
       options,
     ),
     omitted = await withoutOriginal(
-      await exportSoundtrackBundle(base, free.assets, { catalogue }),
+      await exportSoundtrackBundle(full.library, free.assets, { catalogue }),
       allowed.id,
     ),
     unknown = await importSoundtrackBundle(omitted, { probeMedia: structuralProbe }),

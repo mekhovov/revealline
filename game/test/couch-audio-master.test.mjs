@@ -15,7 +15,7 @@ import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
-import { upgradeSoundtrackLibrary } from '../soundtrack.mjs';
+import { emptySoundtrackLibrary, upgradeSoundtrackLibrary } from '../soundtrack.mjs';
 import { DEFAULT_TRACKS } from '../ui/music.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
@@ -611,6 +611,18 @@ for (const mode of ['Team', 'Versus']) {
     const saved = storage({ muted: true, volume: 0.13 }),
       a = audio(t),
       db = memoryIndexedDB();
+    // Keep this procedural master-control check independent of the edition's
+    // automatic online catalogue; shared MP3 behavior is covered below.
+    const manager = createManagedMediaStore({ indexedDB: db.indexedDB, soundtrackCatalogue: true });
+    const prepared = await prepareSoundtrackLibrary(
+      {
+        ...emptySoundtrackLibrary(),
+        selection: { playlistId: 'builtin.all' },
+      },
+      [],
+    );
+    await manager.commitDomain('audio', prepared, { expectedGeneration: 0 });
+    manager.close();
     const page =
       mode === 'Team'
         ? await teamPage(t, saved, { audio: a, assetDatabase: db.indexedDB })
@@ -1117,19 +1129,29 @@ test('Couch explicit scene keeps level music across inactive Pause, Settings, re
   await settleUntil(() => doc.getElementById('scene-music-status').dataset.state === 'ready');
   host.player.setAuthoredTrack(DEFAULT_TRACKS[1]);
   host.update(false, { family: 'fpv' });
-  assert.notEqual(host.player.snapshot().source, 'authored');
+  assert.equal(host.player.snapshot().source, 'catalogue');
+  assert.equal(host.player.snapshot().playlistId, 'builtin.listening.auto.menu');
   scene = 'gameplay';
   host.update(true, { family: 'fpv' });
   await host.player.prepare();
-  assert.equal(host.player.snapshot().source, 'authored');
+  assert.equal(host.player.snapshot().source, 'catalogue');
   const before = host.player.snapshot();
+  assert.equal(before.pendingPlaylistId ?? before.playlistId, 'builtin.listening.auto.gameplay');
   for (const status of ['paused', 'settings', 'finished', 'retry']) {
     host.update(false, { family: 'fpv' }, { status });
-    assert.equal(host.player.snapshot().source, 'authored');
+    assert.equal(host.player.snapshot().source, 'catalogue');
+    assert.equal(
+      host.player.snapshot().pendingPlaylistId ?? host.player.snapshot().playlistId,
+      'builtin.listening.auto.gameplay',
+    );
     assert.deepEqual(host.player.snapshot().queue, before.queue);
     assert.equal(host.player.snapshot().track.id, before.track.id);
   }
   scene = 'menu';
   host.update(false, { family: 'fpv' });
-  assert.notEqual(host.player.snapshot().source, 'authored');
+  assert.equal(host.player.snapshot().source, 'catalogue');
+  assert.equal(
+    host.player.snapshot().pendingPlaylistId ?? host.player.snapshot().playlistId,
+    'builtin.listening.auto.menu',
+  );
 });

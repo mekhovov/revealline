@@ -46,10 +46,12 @@ async function fixture(t) {
   };
   await put('game/index.html', '<html><head></head><body>Audio fixture</body></html>');
   await put('game/offline.mjs', 'export const offline = true;');
+  await put('game/content/soundtrack-catalogue.mjs', 'export const SOUNDTRACK_COLLECTIONS = [];');
   for (const name of [
     'game/offline/service-worker.template.js',
     'game/soundtrack-albums.mjs',
     'game/soundtrack-bundle.mjs',
+    'game/soundtrack-portable.mjs',
     'game/soundtrack.mjs',
     'game/soundtrack-rights.mjs',
     'game/mp3.mjs',
@@ -114,11 +116,19 @@ test('publication writer preserves catalogue values and emits reproducible repos
     await check(first, { ...(await resolveConfig(modulePath)), filepath: modulePath }),
     true,
   );
-  const runtime = await import(pathToFileURL(modulePath));
+  const runtime = await import(`${pathToFileURL(modulePath).href}?sha256=${sha(first)}`);
   assert.deepEqual(runtime.SOUNDTRACK_CATALOGUE, built.catalogue);
   assert.deepEqual(runtime.SOUNDTRACK_CATALOGUE.tracks[0], catalogue.tracks[0]);
   assert.deepEqual(runtime.SOUNDTRACK_ARCHIVES, built.archives);
+  assert.deepEqual(runtime.SOUNDTRACK_COLLECTIONS, built.collections);
   const firstMetadata = await readFile(path.join(f.root, 'game/content/soundtrack-catalogue.json'));
+  assert.equal(
+    await check(firstMetadata.toString('utf8'), {
+      ...(await resolveConfig(modulePath)),
+      parser: 'json',
+    }),
+    true,
+  );
   await writePublishedSoundtrackMetadata(f.root);
   assert.equal(await readFile(modulePath, 'utf8'), first);
   assert.deepEqual(
@@ -133,6 +143,7 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
     'scripts/pack-indexes.mjs',
     'scripts/soundtrack-distribution.mjs',
     'scripts/soundtrack-archive-admissions.mjs',
+    'scripts/hosted-soundtrack-publication.mjs',
     'game/content-launch.mjs',
     'game/soundtrack-archive.mjs',
     'game/soundtrack-album-download.mjs',
@@ -156,7 +167,7 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
   await f.put(f.config.soundtrackAlbums.originalCatalogue, JSON.stringify(catalogue));
   await f.put(
     'game/content/soundtrack-catalogue.mjs',
-    `export const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue)}; export const SOUNDTRACK_ARCHIVES = [];`,
+    `export const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue)}; export const SOUNDTRACK_ARCHIVES = []; export const SOUNDTRACK_COLLECTIONS = [];`,
   );
   await f.put(
     `${licensedFolder}/publication.json`,
@@ -313,7 +324,7 @@ test('incorrect compiled body, symbolic source or automatic binary inclusion ref
   await assert.rejects(buildProject(f), /outside automatic includes/);
   assert.deepEqual(await readFile(path.join(f.out, 'distribution.zip')), before);
 });
-test('all 70 candidate registrations retain album, license and derivative provenance without publication admission', async () => {
+test('all 70 hosted registrations retain provenance without inventing listening approval', async () => {
   // Metadata integrity only: private creator recordings are not needed or read here.
   const load = async (name) =>
     JSON.parse(await readFile(path.join(source, licensedFolder, name), 'utf8'));
@@ -386,7 +397,11 @@ test('all 70 candidate registrations retain album, license and derivative proven
   const catalogue = JSON.parse(
     await readFile(path.join(source, 'game/content/soundtrack-catalogue.json'), 'utf8'),
   );
-  assert.deepEqual(catalogue.tracks, []);
+  assert.equal(catalogue.tracks.length, 70);
+  assert.deepEqual(
+    new Set(catalogue.tracks.map((track) => track.asset.sha256)),
+    new Set(register.tracks.map((track) => track.runtime.sha256)),
+  );
 });
 
 async function candidateFixture(t) {
