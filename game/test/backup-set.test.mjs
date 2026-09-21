@@ -5,12 +5,59 @@ import { prepareBackupSet } from '../backup-set.mjs';
 import { exportBackup } from '../backup.mjs';
 import { exportMediaBundle } from '../media-bundle.mjs';
 import { exportStoryBundle } from '../story-bundle.mjs';
-import { exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
+import { exportSoundtrackBundle, importSoundtrackBundle } from '../soundtrack-bundle.mjs';
+import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_COLLECTIONS } from '../content/soundtrack-catalogue.mjs';
+import { structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 import { backupSetFixture, catalogueBackupAudio } from './helpers/backup-set-fixture.mjs';
-import { emptySoundtrackLibrary, setCatalogueTracks } from '../soundtrack.mjs';
+import {
+  emptySoundtrackLibrary,
+  setCatalogueTracks,
+  resolveSoundtrackLibrary,
+} from '../soundtrack.mjs';
 import { deferred, pngBytes } from './helpers/media-fixtures.mjs';
 const bytes = async (blob) => Buffer.from(await blob.arrayBuffer());
 const hash = (b) => createHash('sha256').update(b).digest('hex');
+
+test('fresh online catalogue backup needs no music download and explicitly reports unused online omissions', async () => {
+  const f = await backupSetFixture(),
+    library = setCatalogueTracks(emptySoundtrackLibrary(), SOUNDTRACK_CATALOGUE.tracks);
+  f.source.catalogue = SOUNDTRACK_CATALOGUE;
+  f.source.readAudio = async () => ({ generation: f.metadata.audio, library, assets: [] });
+  f.source.readAudioAsset = async () => {
+    throw Error('Unused online music must not be downloaded');
+  };
+  const set = await prepareBackupSet(f.source),
+    restored = await importSoundtrackBundle(set.files.find((file) => file.id === 'audio').blob, {
+      catalogue: SOUNDTRACK_CATALOGUE,
+      probeMedia: structuralProbe,
+    });
+  assert.deepEqual(restored.library.catalogTracks, []);
+  assert.deepEqual(restored.library.referenceOnlyTrackIds, []);
+  assert.equal(set.coverage.domains.find((domain) => domain.id === 'audio').originalBytes, 0);
+  assert.match(set.coverage.musicRecoveryNotice, /unused online catalogue/);
+  assert(set.coverage.exclusions.includes('Unused, uninstalled online catalogue recordings'));
+  assert.deepEqual(setCatalogueTracks(restored.library, SOUNDTRACK_CATALOGUE.tracks), library);
+});
+
+test('selected hosted album backup requests its originals and cannot silently omit a missing member', async () => {
+  const f = await backupSetFixture(),
+    album = SOUNDTRACK_COLLECTIONS[0],
+    library = resolveSoundtrackLibrary({
+      ...setCatalogueTracks(emptySoundtrackLibrary(), SOUNDTRACK_CATALOGUE.tracks),
+      selection: { playlistId: album.id },
+    }),
+    requests = [];
+  f.source.catalogue = SOUNDTRACK_CATALOGUE;
+  f.source.readAudio = async () => ({ generation: f.metadata.audio, library, assets: [] });
+  f.source.readAudioAsset = async (sha256) => {
+    requests.push(sha256);
+    return null;
+  };
+  await assert.rejects(prepareBackupSet(f.source), /Music original is unavailable/);
+  assert.deepEqual(requests, [
+    SOUNDTRACK_CATALOGUE.tracks.find((track) => track.id === album.trackIds[0]).asset.sha256,
+  ]);
+});
 
 test('v3 backup fetches every permitted offloaded original and records restricted music without reading its bytes', async () => {
   const f = await backupSetFixture(),

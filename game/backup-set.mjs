@@ -3,11 +3,8 @@ import { exportBackup, MAX_BACKUP_BYTES } from './backup.mjs';
 import { exportMediaBundle } from './media-bundle.mjs';
 import { exportStoryBundle } from './story-bundle.mjs';
 import { exportSoundtrackBundle, ownSoundtrackAssets } from './soundtrack-bundle.mjs';
-import {
-  SOUNDTRACK_FORMAT_V3,
-  soundtrackRecoveryPlan,
-  soundtrackReferencedTracks,
-} from './soundtrack.mjs';
+import { SOUNDTRACK_FORMAT_V3, soundtrackReferencedTracks } from './soundtrack.mjs';
+import { soundtrackPortableRecoveryPlan } from './soundtrack-portable.mjs';
 import { MANAGED_MEDIA_LIMITS } from './managed-media-store.mjs';
 
 // One saved shared-media inventory plus the existing per-format metadata bounds.
@@ -108,7 +105,7 @@ export async function prepareBackupSet(
   onProgress('Checking saved music originals…');
   const audio = await source.readAudio({ signal });
   required(audio.generation === metadata.audio, 'Music changed. Prepare the backup set again.');
-  const audioPlan = soundtrackRecoveryPlan(audio.library, { catalogue: source.catalogue }),
+  const audioPlan = soundtrackPortableRecoveryPlan(audio.library, { catalogue: source.catalogue }),
     referencedAudio = soundtrackReferencedTracks(audio.library),
     referencedHashes = new Set(referencedAudio.map((track) => track.asset.sha256)),
     requiredAudio = new Map(audioPlan.requiredTracks.map((track) => [track.asset.sha256, track])),
@@ -198,6 +195,9 @@ export async function prepareBackupSet(
       'Other profile channels',
       'Unreferenced blobs and browser caches',
       'Unavailable or detached originals',
+      ...(audioPlan.omittedCatalogueTrackIds.length
+        ? ['Unused, uninstalled online catalogue recordings']
+        : []),
       ...(referenceOnlyMusic.length ? ['Audio bytes of reference-only restricted music'] : []),
     ],
     restoreOrder: [

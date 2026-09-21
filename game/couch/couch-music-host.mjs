@@ -183,7 +183,7 @@ export function attachCouchMusicHost({
     musicSession: session,
     adoptLibrary: (value) => library.adoptVerifiedSnapshot(value),
     onLibrary: async () => {
-      await player.prepare();
+      await player.prepare({ allowNetwork: false });
       render();
     },
     onError: report,

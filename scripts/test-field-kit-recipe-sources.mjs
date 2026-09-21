@@ -15,6 +15,8 @@ test('functional helper changes invalidate only their explicit recipe group', as
     ['game/content-design/actor-marker.mjs', 'effects'],
     ['game/ui/lane-presentation.mjs', 'effects'],
     ['game/ui/render.mjs', 'effects'],
+    ['game/soundtrack-portable.mjs', 'audio'],
+    ['game/content/soundtrack-catalogue.mjs', 'audio'],
   ]) {
     assert(inputs.has(name), `${name}: missing dependency`);
     const after = await fieldKitRecipeSources(async (file) =>
