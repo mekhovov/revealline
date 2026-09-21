@@ -1,0 +1,183 @@
+{
+  "campaign": "Livewire Foundry",
+  "status": "seven-original-candidates-not-final-visual-or-human-qualification",
+  "tool": "built-in-imagegen",
+  "useCase": "stylized-concept",
+  "assets": [
+    {
+      "missionId": "read-the-lock",
+      "path": "game/content-design/assets/livewire-foundry-r1/read-the-lock.png",
+      "bytes": 2381516,
+      "sha256": "d0f5ed0f7e45bcd16818d54befe2e0fb149097e36958b13c485a8c4abca99ff3",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for the Xonix-style game Reveal Line, Livewire Foundry campaign, Read the lock. Create one opaque full-bleed wide 2:1 landscape. Scene: A quiet foundry inspection bay with a heavy cast-iron shutter held just above a broad steel maintenance landing. A thick mechanical latch and its clearly separated resting position are the main discovery, with a small amber inspection lamp and stacks of cooled ceramic molds deeper in the hall. Look obliquely from the landing through the raised shutter, emphasizing a sheltered nearby stopping point and a larger open work floor beyond. Style: crafted environmental illustration with subtle pixel-art-inspired grouped textures, large readable silhouettes and restrained industrial detail. Materials: charcoal cast iron, desaturated blue-grey steel, dull copper, refractory brick and pale ceramic. Diffuse lighting, low glare, plenty of quiet floor or wall areas for bright gameplay overlays. Distinct composition with discoveries distributed across the width for progressive revelation; not a recolor or crop of another scene. Natural oblique perspective, not top-down. Original decorative art only, no copied game imagery or playable collision geometry. No people, enemies, playable craft, characters, labels, letters, text, numbers, logos, warning stripes, arrows, grid, UI, map diagrams, hazard symbols, collectibles, glowing trails, frames or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A raised cast-iron shutter and heavy latch overlook a steel maintenance landing and cooled ceramic molds in a foundry inspection bay.",
+          "Original independently generated composition, not a copied reference screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Lane warning/active/recovery contrast over revealed artwork",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "cross-the-afterglow",
+      "path": "game/content-design/assets/livewire-foundry-r1/cross-the-afterglow.png",
+      "bytes": 2279834,
+      "sha256": "814627fbb9efac9b000230d56c109eeac86c5993e81def1fb7a3691586447cbe",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for the Xonix-style game Reveal Line, Livewire Foundry campaign, Cross the afterglow. Create one opaque full-bleed wide 2:1 landscape. Scene: An empty foundry cooling hall after a pour, viewed low across a broad stone crossing between substantial work platforms. A large tilted ladle rests securely in a cradle, its interior showing only a subdued residual amber glow; most surfaces are cool charcoal, dull copper and grey refractory brick. High frosted windows and a little suspended haze soften the distant hall. A quiet near platform and a farther overhead gallery offer different architectural routes. Style: crafted environmental illustration with subtle pixel-art-inspired grouped textures, large readable silhouettes and restrained industrial detail. Materials: charcoal cast iron, desaturated blue-grey steel, dull copper, refractory brick and pale ceramic. Diffuse lighting, low glare, plenty of quiet floor or wall areas for bright gameplay overlays. Distinct composition with discoveries distributed across the width for progressive revelation; not a recolor or crop of another scene. Natural oblique perspective, not top-down. Original decorative art only, no copied game imagery or playable collision geometry. No people, enemies, playable craft, characters, labels, letters, text, numbers, logos, warning stripes, arrows, grid, UI, map diagrams, hazard symbols, collectibles, glowing trails, frames or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A resting ladle with subdued amber afterglow stands beside broad crossings and cool work platforms beneath frosted foundry windows.",
+          "Original independently generated composition, not a copied reference screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Lane warning/active/recovery contrast over revealed artwork",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "switchyard",
+      "path": "game/content-design/assets/livewire-foundry-r1/switchyard.png",
+      "bytes": 2467333,
+      "sha256": "5bb7761dfe9d7ee763febce40e918839cb6fee64be5f71ad718b652524c287a5",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for the Xonix-style game Reveal Line, Livewire Foundry campaign, Switchyard. Create one opaque full-bleed wide 2:1 landscape. Scene: A covered industrial transfer yard with offset stretches of heavy trolley rail beside broad maintenance platforms. A large plain ceramic-insulated busbar assembly and a parked empty low flatbed cart create distinct focal discoveries, with stacked metal billets under a corrugated roof. Rails curve and terminate naturally in perspective rather than forming a regular grid. Open matte concrete between the platforms gives visual breathing room. Style: crafted environmental illustration with subtle pixel-art-inspired grouped textures, large readable silhouettes and restrained industrial detail. Materials: charcoal cast iron, desaturated blue-grey steel, dull copper, refractory brick and pale ceramic. Diffuse lighting, low glare, plenty of quiet floor or wall areas for bright gameplay overlays. Distinct composition with discoveries distributed across the width for progressive revelation; not a recolor or crop of another scene. Natural oblique perspective, not top-down. Original decorative art only, no copied game imagery or playable collision geometry. No people, enemies, playable craft, characters, labels, letters, text, numbers, logos, warning stripes, arrows, grid, UI, map diagrams, hazard symbols, collectibles, glowing trails, frames or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "Offset trolley rails and broad platforms pass a ceramic-insulated busbar assembly, an empty flatbed and stacked billets in a covered transfer yard.",
+          "Original independently generated composition, not a copied reference screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Lane warning/active/recovery contrast over revealed artwork",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "split-junction",
+      "path": "game/content-design/assets/livewire-foundry-r1/split-junction.png",
+      "bytes": 2460435,
+      "sha256": "8d14f0d044c923c81546f6b1eca217aa1992705665df359dd81d8925183cef5c",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for the Xonix-style game Reveal Line, Livewire Foundry campaign, Split junction. Create one opaque full-bleed wide 2:1 landscape. Scene: Look from a central steel landing into two differently lit wings of a foundry maintenance hall, separated by a thick structural pier. One wing contains large copper ventilation ducts and a cool daylight workbench; the other contains stacked refractory molds and a softly warm annealing cabinet. The central landing branches into two broad incomplete-looking but structurally sound walkways at different depths. Keep the branching route readable as natural architecture, not a game map. Style: crafted environmental illustration with subtle pixel-art-inspired grouped textures, large readable silhouettes and restrained industrial detail. Materials: charcoal cast iron, desaturated blue-grey steel, dull copper, refractory brick and pale ceramic. Diffuse lighting, low glare, plenty of quiet floor or wall areas for bright gameplay overlays. Distinct composition with discoveries distributed across the width for progressive revelation; not a recolor or crop of another scene. Natural oblique perspective, not top-down. Original decorative art only, no copied game imagery or playable collision geometry. No people, enemies, playable craft, characters, labels, letters, text, numbers, logos, warning stripes, arrows, grid, UI, map diagrams, hazard symbols, collectibles, glowing trails, frames or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A central steel landing branches around a structural pier toward copper ventilation ducts and a warm refractory-mold workshop.",
+          "Original independently generated composition, not a copied reference screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Lane warning/active/recovery contrast over revealed artwork",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "crossbar-depot",
+      "path": "game/content-design/assets/livewire-foundry-r1/crossbar-depot.png",
+      "bytes": 2600502,
+      "sha256": "0598e3c6f97466486442cf02698158a19a29565cfaebcd2affaf9d8be58bef2e",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for the Xonix-style game Reveal Line, Livewire Foundry campaign, Crossbar depot. Create one opaque full-bleed wide 2:1 landscape. Scene: A high-roofed foundry parts depot viewed from an elevated corner. A massive overhead lifting crossbeam rests over a central assembly platform, with four substantial approach galleries at differing heights and angles. A pale ceramic turbine casing on one platform and a dark cast-iron wheel on another are secondary discoveries. Exposed rivets and beams have grouped restrained detail. No perfect symmetry or top-down cross diagram. Style: crafted environmental illustration with subtle pixel-art-inspired grouped textures, large readable silhouettes and restrained industrial detail. Materials: charcoal cast iron, desaturated blue-grey steel, dull copper, refractory brick and pale ceramic. Diffuse lighting, low glare, plenty of quiet floor or wall areas for bright gameplay overlays. Distinct composition with discoveries distributed across the width for progressive revelation; not a recolor or crop of another scene. Natural oblique perspective, not top-down. Original decorative art only, no copied game imagery or playable collision geometry. No people, enemies, playable craft, characters, labels, letters, text, numbers, logos, warning stripes, arrows, grid, UI, map diagrams, hazard symbols, collectibles, glowing trails, frames or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "An overhead lifting crossbeam spans an assembly platform between approach galleries, a ceramic turbine casing and a cast-iron wheel.",
+          "Original independently generated composition, not a copied reference screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Lane warning/active/recovery contrast over revealed artwork",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "cooling-loop",
+      "path": "game/content-design/assets/livewire-foundry-r1/cooling-loop.png",
+      "bytes": 2621513,
+      "sha256": "8cb6dae5f03e22b522df86d7d7c6ead52c80ba341205a6805887a3e2f51a959b",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for the Xonix-style game Reveal Line, Livewire Foundry campaign, Cooling loop. Create one opaque full-bleed wide 2:1 landscape. Scene: An industrial water-cooling courtyard at overcast dawn, with a broad curved pipe looping around a still dark reservoir. Several permanent stone maintenance landings and a repaired steel footbridge connect a pump housing to an old brick foundry wall. One drained trough reveals worn refractory blocks while another basin remains full. Emphasize the difference between durable landings and repaired working surfaces without drawing hazard zones. Style: crafted environmental illustration with subtle pixel-art-inspired grouped textures, large readable silhouettes and restrained industrial detail. Materials: charcoal cast iron, desaturated blue-grey steel, dull copper, refractory brick and pale ceramic. Diffuse lighting, low glare, plenty of quiet floor or wall areas for bright gameplay overlays. Distinct composition with discoveries distributed across the width for progressive revelation; not a recolor or crop of another scene. Natural oblique perspective, not top-down. Original decorative art only, no copied game imagery or playable collision geometry. No people, enemies, playable craft, characters, labels, letters, text, numbers, logos, warning stripes, arrows, grid, UI, map diagrams, hazard symbols, collectibles, glowing trails, frames or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A curved cooling pipe encircles a dark reservoir beside stone maintenance landings, a repaired footbridge and an old brick pump courtyard.",
+          "Original independently generated composition, not a copied reference screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Lane warning/active/recovery contrast over revealed artwork",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "livewire-remix",
+      "path": "game/content-design/assets/livewire-foundry-r1/livewire-remix.png",
+      "bytes": 2436701,
+      "sha256": "13b8b69daf7d361678328702a1fc5643bd5663b33d938e9970ffcb64205c499e",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for the Xonix-style game Reveal Line, Livewire Foundry campaign, Windows in the wire. Create one opaque full-bleed wide 2:1 landscape. Scene: A panoramic view through the upper windows of a foundry power hall at blue hour. Broad maintenance galleries weave between two monumental ceramic-insulated copper conductor assemblies, with a heavy flywheel and a bank of closed plain switch cabinets at different depths. Soft warm work lamps contrast with the cool sky beyond roof windows. No electrical arcs, sparks, glowing wires or active machinery effects. The connected architecture forms a satisfying finale without becoming a circuit diagram. Style: crafted environmental illustration with subtle pixel-art-inspired grouped textures, large readable silhouettes and restrained industrial detail. Materials: charcoal cast iron, desaturated blue-grey steel, dull copper, refractory brick and pale ceramic. Diffuse lighting, low glare, plenty of quiet floor or wall areas for bright gameplay overlays. Distinct composition with discoveries distributed across the width for progressive revelation; not a recolor or crop of another scene. Natural oblique perspective, not top-down. Original decorative art only, no copied game imagery or playable collision geometry. No people, enemies, playable craft, characters, labels, letters, text, numbers, logos, warning stripes, arrows, grid, UI, map diagrams, hazard symbols, collectibles, glowing trails, frames or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "Maintenance galleries weave between ceramic-insulated copper conductors, a heavy flywheel and plain switch cabinets in a foundry power hall at blue hour.",
+          "Original independently generated composition, not a copied reference screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Lane warning/active/recovery contrast over revealed artwork",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    }
+  ]
+}

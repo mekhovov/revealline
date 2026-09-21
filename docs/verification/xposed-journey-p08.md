@@ -1,5 +1,24 @@
 # P08 Livewire Foundry — source preparation, not release acceptance
 
+## September21 original-art continuation
+
+All seven Livewire missions now have distinct original foundry compositions,
+17,247,834bytes total. Their1774×887 opaque PNGs have immutable byte/hash/dimension
+pins and complete generation prompts in
+`../research/livewire-original-art-prompts.json`. They are detailed stylized
+environmental illustrations, not strict low-resolution pixel art or collision maps.
+The opt-in factory and Studio Inspect → Apply path use the shared asset registry;
+default greyboxes, mission geometry, rules, replay identities and receipts are unchanged.
+
+The six-file art/catalogue/candidate/presentation/registry/whole-library cohort
+passes38/38 on Node20.19.5 and22.22.2, with zero failures, skips or cancellations.
+It verifies exact pins, decoded-preview inputs, all42 historical Livewire clear
+checkpoints, shared-registry uniqueness and the498 whole-library manifests.
+Scoped ESLint, formatting and diff checks pass. These are local candidates:
+native artwork/attack-overlay checks, broad-area/victory presentation, devices,
+human qualification, accepted-source integration and deployment remain open.
+No version or release is allocated by this continuation.
+
 Provisional version0.76.0, stacked on P07 source96dd5cdd. Earlier phase release,
 human and production-review gates remain open; this does not bypass promotion.
 

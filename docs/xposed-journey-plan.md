@@ -114,8 +114,11 @@ That release includes P03–P08 **Studio candidates**, not their public Journey
 enrollment or full phase acceptance. Signal/Neon/Rover have art candidates;
 Fracture/Phase/Livewire art and broader human/device qualification remain pending.
 P09–P15 remain isolated local successors. No v0.77.0 allocation is confirmed.
-PR208/v0.76.1 merged at `d70f3a586f3692a9bef58a87d8181714b62798f5`; this read-only
-PR check is not release/Pages verification. The active release owner is prioritizing
+PR208/v0.76.1 merged at `d70f3a586f3692a9bef58a87d8181714b62798f5`.
+The release record is published and the independently fetched public `release.json`
+now names v0.76.1 and source `17bd1965a2979489f5a163de13dc23c47c5b538d`.
+This is a marker check, not a repeat of full public-byte or native acceptance.
+The active release owner is prioritizing
 the user's shared touch, compact mobile HUD and Steam Deck launch corrections.
 Reconcile against the owner's accepted-source handoff and agreed phase order before opening a new
 phase PR; preserve accepted UX, Studio and controller changes. Do not race a
@@ -137,6 +140,13 @@ cohort passes on Node20/22 with unchanged42 clear checkpoints. All seven now hav
 initial native picture-binding checks (first mission538fef04; remaining six133b6d5d),
 not broad-area/victory, device, human or public-release qualification. See
 the P07 verification record and `docs/research/phase-original-art-prompts.json`.
+
+Livewire Foundry now also has seven local original compositions (17,247,834bytes),
+with exact pins, opt-in factory/Studio binding and unchanged42 clear checkpoints.
+The38-test art/catalogue/candidate/presentation/library cohort passes on Node20/22.
+Native artwork/attack overlays, broad-area/victory presentation, devices, human
+qualification and accepted-source release remain open. See the P08 record and
+`docs/research/livewire-original-art-prompts.json`. No new version is allocated.
 
 ### Historical phase snapshots
 
