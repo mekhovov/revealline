@@ -158,13 +158,13 @@ export function attachGameShell({
     }
     return typeof element.getClientRects !== 'function' || element.getClientRects().length > 0;
   };
-  const openMissions = ({ opener = null } = {}) => {
+  const openMissions = ({ opener = null, legacy = false } = {}) => {
     if (destroyed) return;
     if (practiceReturn) {
       if (!practiceReturn.disabled) openBrief(opener);
       return;
     }
-    if (onMissions) {
+    if (onMissions && !legacy) {
       pause(true);
       if (destroyed) return;
       // The host chooser is a child of its actual entry screen. Keep Home

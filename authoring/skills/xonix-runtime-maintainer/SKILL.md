@@ -14,6 +14,16 @@ older card selector still wins. Keep 44px direction targets clear of the HUD.
 Record that recovery hides controls and that portrait retains its existing
 translucent arena overlay; do not claim simultaneous states from separate samples.
 
+For completed Legacy campaigns, keep the earned final result as the parent of
+Browse campaigns. Resolve current mission ownership before choosing the Legacy
+picker: a Journey-enabled page may still contain a restored or installed Legacy
+attempt. Preserve the result picture, authoritative checkpoint, stored awards
+and opener focus through Browse/Back. Keep normal Journey/header routing and
+cold completed-campaign overview behavior intact. Verify legal consecutive wins,
+keyboard activation, picture viewing, Retry and cancelled/failed Next preparation.
+See `docs/solo-result-continuation.md`; navigation evidence does not establish
+campaign balance, physical-controller acceptance or a published release.
+
 For Pause-menu Sound, reuse the shared master subscription and mute adapter.
 Keep the accessible name `Sound` stable while `aria-pressed` and visible on/off
 text reflect the current preference. Do not change music transport, the selected
