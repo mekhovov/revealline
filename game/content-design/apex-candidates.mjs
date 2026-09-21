@@ -1,4 +1,5 @@
 import { createStarterProject } from './starter.mjs';
+import { APEX_ART_CANDIDATES } from './apex-art.mjs';
 import { freezeDesign, SENTINEL_ACTOR_CATALOG, SENTINEL_RECIPE } from './catalogs.mjs';
 
 // Original capstone greyboxes. No new mechanic, source coordinates or artwork.
@@ -264,11 +265,11 @@ export const APEX_REFERENCE_ADAPTATIONS = freezeDesign(
     })),
 );
 
-export function createApexCandidates() {
+export function createApexCandidates({ artwork = false } = {}) {
   const project = createStarterProject('apex-greybox-candidates');
   project.name = 'Apex Aurora · greybox candidates';
   project.actorCatalogId = SENTINEL_ACTOR_CATALOG.id;
-  project.assets = [];
+  project.assets = artwork ? structuredClone(APEX_ART_CANDIDATES) : [];
   project.maps = rows.map((row) => ({
     format: 'MapDesignV3',
     id: `${row.id}-map`,
@@ -297,7 +298,10 @@ export function createApexCandidates() {
     encounter: structuredClone(row.encounter ?? null),
     coverage: row.coverage,
     timeLimitSeconds: 0,
-    presentation: { themeId: 'horizon', backgroundAssetId: null },
+    presentation: {
+      themeId: 'horizon',
+      backgroundAssetId: artwork ? 'apex-polar-' + row.id : null,
+    },
     design: {
       routeDecision: row.decision,
       lesson: row.lesson,
