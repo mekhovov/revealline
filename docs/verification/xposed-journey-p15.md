@@ -200,3 +200,32 @@ game. Genuine human sessions, physical devices, complete accessibility/performan
 checks, Legacy transition, rollback proof, original pending artwork, accepted
 composition and public Pages verification remain open. Disk/publication constraints
 continue to prohibit bulk builds, art generation and broad hydration in this worktree.
+
+## First-capture successor and explicit audit editions
+
+The later `whole-originals-v2` review addresses the two Rover learning-order
+findings through revised encounters, not warning suppression. Historical defaults
+and the earlier picture review remain exact. See the [Rover teaching record](rover-first-capture-teaching.md)
+for180 sampled starts,12 clears,12 unchanged optional-goal routes, native warning
+observations, preserved negative evidence and full-host qualification scope.
+The two Signal warnings stay visible with a [scaffolding disposition](signal-practice-scaffolding.md):
+180 protected sampled returns support retaining those layouts for human review,
+not declaring their difficulty or readability validated.
+
+Reference inspection now accepts an explicit content selection:
+
+```sh
+node scripts/audit-journey-adaptations.mjs --edition teaching-originals
+```
+
+`greybox` remains the historical default; `originals` selects the prior picture
+edition. `teaching-originals` uses the same chapter-source factory as the v2
+Studio/gameplay composition. The report identifies its content edition and
+resolves current mission revisions, including the two `teaching-1` successors.
+Unknown selections fail rather than silently falling back. Original crosswalk
+pins and observations remain untouched. Coverage still means48 references/66
+links/83 Solo candidates and zero final dispositions, not human or release approval.
+The four audit tests pass on Node20.19.5 and22.22.2, including exact v2 route/CLI
+parity and rejection of unknown editions. Wake is explicitly an original mission
+without a numbered-reference link; Split's existing adaptation carries the new
+revision. No synthetic reference link was added to make that distinction disappear.

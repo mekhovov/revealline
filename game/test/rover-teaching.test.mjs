@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
 import { createRoverTeachingCandidates } from '../content-design/rover-teaching-candidates.mjs';
+import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { inspectContentPacing } from '../content-design/pacing.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
@@ -49,6 +50,31 @@ test('teaching successors revise two encounters without altering historical maps
   assert.deepEqual(report.diagnostics, []);
   const bytes = await readFile(new URL('./fixtures/rover-clear-routes.json', import.meta.url));
   assert.equal(createHash('sha256').update(bytes).digest('hex'), fixture.input.sha256);
+});
+
+test('all498 whole-review manifests retain their exact editions except the twelve explicit Rover successors', () => {
+  const historical = compileContentProject(createWholeJourneyCandidates({ artwork: true }));
+  const current = compileContentProject(
+    createWholeJourneyCandidates({ artwork: true, roverTeaching: true }),
+  );
+  let changed = 0,
+    unchanged = 0;
+  for (const mission of current.missions)
+    for (const mode of ['solo', 'versus'])
+      for (const difficulty of ['gentle', 'standard', 'expert']) {
+        const next = resolveMission(current, mission.id, { mode, difficulty });
+        const previous = resolveMission(historical, mission.id, { mode, difficulty });
+        if (ids.includes(mission.id)) {
+          assert.deepEqual(next, resolveMission(project, mission.id, { mode, difficulty }));
+          assert.notEqual(next.simulationIdentity, previous.simulationIdentity);
+          changed++;
+        } else {
+          assert.deepEqual(next, previous);
+          unchanged++;
+        }
+      }
+  assert.equal(changed, 12);
+  assert.equal(unchanged, 486);
 });
 
 test('first closure teaches warning and activation with two seconds to choose either escape in sampled starts', () => {

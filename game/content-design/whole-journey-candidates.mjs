@@ -34,6 +34,14 @@ export const WHOLE_JOURNEY_CHAPTERS = freezeDesign(
 export const WHOLE_JOURNEY_CORE_PACK_IDS = freezeDesign(chapters.map((row) => row[1]));
 export const WHOLE_JOURNEY_REMIX_PACK_IDS = freezeDesign(chapters.map((row) => row[2]));
 
+/** The one chapter selection used by composition and read-only evidence tools. */
+export function createWholeJourneyChapterSources({ artwork = false, roverTeaching = false } = {}) {
+  return chapters.map(([id, , , create]) => ({
+    id,
+    source: (roverTeaching && id === 'rover' ? createRoverTeachingCandidates : create)({ artwork }),
+  }));
+}
+
 /** Review source for the existing compiler/Studio/execution adapters. Historical
  * callers retain greyboxes; explicit artwork selects each chapter's already
  * authored picture edition (including Signal's distinct theme revision). Neither
@@ -42,8 +50,8 @@ export const WHOLE_JOURNEY_REMIX_PACK_IDS = freezeDesign(chapters.map((row) => r
  * teaching successor has a distinct project revision; default editions remain
  * frozen, including the previous pictured source and its suspended-game route. */
 export function createWholeJourneyCandidates({ artwork = false, roverTeaching = false } = {}) {
-  const sources = chapters.map(([id, , , create]) =>
-    (roverTeaching && id === 'rover' ? createRoverTeachingCandidates : create)({ artwork }),
+  const sources = createWholeJourneyChapterSources({ artwork, roverTeaching }).map(
+    (chapter) => chapter.source,
   );
   const source = {
     ...sources[0],
