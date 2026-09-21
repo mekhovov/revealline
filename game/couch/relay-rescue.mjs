@@ -96,6 +96,7 @@ export function bootCoop({
   candidateJourney = null,
   candidateProgress = null,
   candidatePreferences = null,
+  candidateCardPresenter = undefined,
   candidateDifficulty = 'standard',
   candidateNotice = '',
 } = {}) {
@@ -2278,6 +2279,7 @@ export function bootCoop({
     back: $('coop-discovery-back'),
     cancel: $('coop-discovery-cancel'),
     getEntries: currentDiscoveryRows,
+    presentCard: candidateCardPresenter,
     canOpen: canOpenDiscovery,
     activate: activateDiscovery,
     preparePreview: prepareDiscoveryPreview,
