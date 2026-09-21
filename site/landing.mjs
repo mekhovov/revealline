@@ -61,7 +61,7 @@ picker.addEventListener('change', () => {
   versionPlay.href = picker.value;
 });
 
-async function loadCatalogs() {
+async function loadReleaseCatalog() {
   try {
     const response = await fetch(catalogIndex, { cache: 'no-cache' });
     if (!navigation.current()) return;
@@ -89,7 +89,9 @@ async function loadCatalogs() {
     if (!navigation.current()) return;
     status.textContent = `The current build is ready. Preserved builds will appear when the archive is available.`;
   }
+}
 
+async function loadPackCatalog() {
   if (!navigation.current()) return;
   try {
     const response = await fetch(new URL('../game/content/packs/catalog.json', import.meta.url));
@@ -150,4 +152,6 @@ async function loadCatalogs() {
     packStatus.textContent = 'Quick selector unavailable. Use any pack card below.';
   }
 }
-await loadCatalogs();
+// Software history is optional and may live on a different host. Mission
+// discovery must not wait for that request, and neither completion owns focus.
+await Promise.all([loadReleaseCatalog(), loadPackCatalog()]);
