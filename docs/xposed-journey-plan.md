@@ -8,9 +8,11 @@ Current follow-up evidence: [two Sentinel receiver-layout successors](verificati
 preserve encounter rules while removing the recorded10–14second shortcuts;
 [new Livewire pressure paths](verification/journey-livewire-pressure.md) cover all42
 configurations without changing those levels. Combined unchanged-pressure route
-coverage is383/498 after [Crosswind/Apex refinement](verification/journey-late-pressure.md);
-115 cases remain, with45/83 missions covered in all six configurations. Next
-investigate Relay/Fracture paths, short-clear spatial choices and objective tails.
+coverage is416/498 after [Crosswind/Apex](verification/journey-late-pressure.md)
+and [Relay/Fracture refinement](verification/journey-relay-fracture-pressure.md);
+82 cases remain, with55/83 missions covered in all six configurations. Next
+implement the Two Districts spatial study, investigate earlier-chapter paths,
+connector bypasses, short-clear spatial choices and objective tails.
 These are technical candidate
 checks, not human balance or public-deployment acceptance.
 Studio's [explicit pressure-edition inspection](verification/studio-pressure-inspection.md)

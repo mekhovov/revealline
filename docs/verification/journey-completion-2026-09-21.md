@@ -49,6 +49,11 @@ separate gates. Older phase notes are provenance, not current release claims.
 - Studio now offers an explicit pressure-v2 inspection of the current draft;
   Apply/Undo/Redo and a pictured native first return are verified. It does not
   auto-enroll or publish content. [Studio evidence](studio-pressure-inspection.md).
+- Relay/Fracture now cover all84 pressure configurations:33 new paths and51
+  preserved historical successes. Combined coverage is416/498,82 unresolved,
+  55/83 complete six-case sets. Opening probes expose Two Districts Expert's
+  failing old departure and Keep the Network's idle-roamer pressure; short clears
+  and connector bypasses remain redesign targets. [Evidence](journey-relay-fracture-pressure.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
@@ -71,14 +76,14 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | P03 — Signal/terrain/catalogues/presentation/trace | Seven candidates/art; terrain contracts; actor catalogues; bounded trace benchmark; reactive captions | Whole-set native/human; final audio; public integration |
 | P04 — Neon | Seven candidates/art; frontier-shaping routes; Remix; replay/race/mastery/seed checks | Stronger-pressure retest, human pacing, public integration |
 | P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; route checks | Presentation/pressure successor, human balance, public integration |
-| P06 — Fractured Grid | Seven candidates/art; erosion/anchors/repair; Remix; route checks | Human repair readability/pacing, pressure retest, public integration |
+| P06 — Fractured Grid | Seven candidates/art; erosion/anchors/repair; Remix; all42 pressure clear/replay/race cases; opening observations | Two Districts spatial successor; repair/roamer teaching, human pacing, public integration |
 | P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; route checks | Whole-set native hit explanations, human difficulty, public integration |
 | P08 — Livewire | Seven candidates/art; telegraphed lanes; Remix; all42 stronger-pressure clear/replay/race cases;32 optional goals | Short-clear spatial review;10 optional-goal cases; human warning overlap/ordering, public integration |
-| P09 — Relay | Seven candidates/art; permanent connectors; Studio links; Remix; route checks | Pressure/replay checks, human shortcut usefulness, public integration |
+| P09 — Relay | Seven candidates/art; permanent connectors; Studio links; Remix; all42 pressure clear/replay/race cases; opening observations | Connector bypass/long post-objective intervals, human shortcut usefulness, public integration |
 | P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; all42 pressure clear/replay/race cases | Short-clear/connector/optional-goal review; human precision/readability, public integration |
 | P11 — Sentinel | Four core + Remix/art; multi-relay encounter; replay/restoration; two explicit receiver-layout successors with12 clear/replay/race cases and native first returns | Optimized21–38second Twin clears remain pacing risks; successor full native/art/host adoption, human boss balance, public integration |
 | P12 — Apex | Four core + Remix/art; capstone combinations; all30 pressure clear/replay/race cases | Short optimized finales need rework; optional-goal routes, human mastery, public integration |
-| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22;498-case pressure audit plus Livewire/Crosswind/Apex refinement | Resolve115 remaining pressure-route cases and flagged cleanup tails; human cuts, final reference dispositions, integrated Pages |
+| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22;498-case pressure audit plus five-chapter refinement | Resolve82 remaining pressure-route cases and flagged cleanup tails; human cuts, final reference dispositions, integrated Pages |
 | P14 —12 Team missions | Three four-mission arcs; original art; joint cuts/seat swaps; Team flow/Skip/chooser/presets | Live two-player balance/controllers; material successor host adoption; new mechanic qualification; Pages |
 | P15 — final validation/Legacy/rollback | Immutable evidence records; compiler/CLI/Studio inspection; persistence/compatibility groundwork | Human sessions; full device/accessibility/performance; Legacy transition; public rollback proof; deployment |
 
