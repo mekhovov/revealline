@@ -2,7 +2,8 @@
 
 Base: shared-device source `290aeb7ed4b31cb81271bea8a58f6fdef0734266`.
 The accepted public edition remains v0.76.1. This branch does not allocate a game
-version, change compiled defaults or claim phase completion.
+version or claim phase completion. Its separate candidate now adopts compiled Team
+artwork through the actual guarded producer; the device release remains unaffected.
 
 The source integration carries the previously reviewed Team actor/anchor/effect
 registries, Studio states, presentation lifetime, exact historical picture ownership,
@@ -40,11 +41,8 @@ passes. These counts overlap earlier cohorts and are not a whole-repository resu
 Before release:
 
 1. Scoped UI loader input review is recorded in `verification/team-presentation-integration/ui-recipe-review.md`;39/39 host checks pass on both runtimes. Recheck final-source fingerprints after any further integration.
-2. Adopt a fresh ledger through the guarded producer, retaining exactfpv38 and
-   every authenticated dependency. Attach scoped six-image review to new immutable
-   asset revisions; keep the original prepared manifests unchanged.
-3. Derive current Team picture bindings from the actual selected compiled theme;
-   do not alter historical receipt identities or accept arbitrary latest revisions.
+2. Candidate adoption is recorded in `verification/team-presentation-integration/adoption-history-proof.json`: actual field-kit39 / fpv39, runtime SHA-256 `9a9c4e1d16d440204e9d05e62912f226c536fa448ed0a17318e86c22db19dc4a`. This identity was generated here, not copied from either revision39 fixture. Every prior asset/theme/collection/slot record and all127 original payloads remain identical. Six new originals and six slots are added; the exact fpv38 runtime is archived by its hash. Prepared manifests remain produced, while the six adopted revisions carry their scoped reviews.
+3. Current Team bindings now name the actual selected fpv39; both picture assets and their bytes are unchanged. Exact fpv38 retained bindings/import policy remain untouched. The production writer immediately reproduces its output with `--check`; declaration readiness reports200 reviewed required slots and99 optional source slots. Native acceptance is still outstanding.
 4. Run full source gates, ordinary build and production readiness/reproduction.
    Verify original-byte exports, interrupted preparation, actual offline Team play,
    exact retained imports, and compiled visuals in native browser journeys.
@@ -56,3 +54,11 @@ Maintenance prompt: “Add complete registered Team art families to the real pro
 Verify prepared source/manifest/PNG equality, immutable old selection, one successor,
 unchanged reproduction and exact bundle bytes. Keep generated and visually reviewed
 quality separate. Never publish a native test fixture as production.”
+
+Adopted-output cohort: **81/81 on each Node20/22**. Exact original-picture
+identity remains separate from relay/effect draw ordering. The test snapshot now
+prepares selected Team frames from verified compiled PNG hashes and headers;
+Relay Yard asserts both the selected background and actual anchor artwork.
+Earlier failures included sparse dependencies and the obsolete final-draw
+assumption, preserved in the local logs. Host/canvas/decode are modeled boundaries.
+The actual compiled candidate still needs native/offline/full-source acceptance.
