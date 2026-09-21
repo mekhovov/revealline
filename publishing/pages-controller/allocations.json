@@ -348,6 +348,13 @@
         "v0.70.0",
         "v0.76.0"
       ]
+    },
+    {
+      "id": "archive-40",
+      "repository": "mekhovov/revealline-archive-40",
+      "versions": [
+        "v0.76.1"
+      ]
     }
   ]
 }
