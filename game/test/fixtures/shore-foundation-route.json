@@ -1,0 +1,20 @@
+{
+  "format": "ShoreFoundationRouteV1",
+  "id": "nearby-shore",
+  "difficulty": "standard",
+  "turnPolicy": "immediate",
+  "seed": 1,
+  "simulationIdentity": "1ffa5b455b3168cb",
+  "ticks": 2178,
+  "checkpoint": "99631afcde03aa62",
+  "segments": [
+    ["down", 174],
+    ["right", 468],
+    ["down", 138],
+    ["left", 846],
+    ["right", 6],
+    ["left", 12],
+    ["up", 156],
+    ["right", 378]
+  ]
+}

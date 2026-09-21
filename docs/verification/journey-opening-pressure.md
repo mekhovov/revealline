@@ -36,11 +36,11 @@ historical identities or inflate this count.
 All102 seed1 idle probes survive10seconds.96/102 old straight first departures
 close without loss. The six exceptions remain explicit, not overwritten:
 
-| Level/preset | Old departure | Failure | Verified no-wait alternative, both steering modes |
-|---|---|---|---|
-| Two bays / Standard | Left | Tick367 | Down24ticks, Left414: closure438 (3.65s) |
-| Two bays / Expert | Left | Tick293 | Up48ticks, Left414: closure462 (3.85s) |
-| Return pocket / Expert | Right | Tick435 | Up198: closure198 (1.65s) |
+| Level/preset           | Old departure | Failure | Verified no-wait alternative, both steering modes |
+| ---------------------- | ------------- | ------- | ------------------------------------------------- |
+| Two bays / Standard    | Left          | Tick367 | Down24ticks, Left414: closure438 (3.65s)          |
+| Two bays / Expert      | Left          | Tick293 | Up48ticks, Left414: closure462 (3.85s)            |
+| Return pocket / Expert | Right         | Tick435 | Up198: closure198 (1.65s)                         |
 
 All six alternatives have exact checkpoint/public-replay tests and stop on
 closure. These show that damage is avoidable without a compulsory wait. They do
@@ -51,20 +51,27 @@ alternative is independent evidence, not silently spliced into those full routes
 
 ## Pacing and spatial decisions to review
 
+These are the original V1 point-based observations. The later
+[boundary-ownership correction](journey-foundation-observation-correction.md)
+preserves these historical fixtures but corrects four visited-foundation sets.
+In particular, Return pocket's recorded Standard/Immediate route contacts three
+foundation pieces, not two. Nearby shore, Second landing and Horizon Remix's
+specific bypass findings below remain unchanged.
+
 New route ranges are not human clear-time estimates:
 
-| Level | New clears | Observation |
-|---|---:|---|
-| Courtyard return |9.85–11.35s|Cuts occur in both initial inside/outside regions; the short duration is not simply skipping the courtyard.|
-| Island outpost |9.65–10.75s|Two closures at Expert; review whether the departure decision has enough pressure.|
-| Two bays |16.25–17.95s|Both regions receive cuts; safe reposition and keeper timing matter.|
-| Nearby shore |20.45–33.05s|No new route physically visits the foundation; one Expert route leaves it disconnected from the perimeter.|
-| Horizon Remix |23.95–38.25s|Only the initial foundation is visited; the upper platform stays disconnected in all four new routes.|
-| Second landing |13.25–19.95s|Neither landing is physically visited, although both connect through reclaimed territory by the clear.|
-| Return pocket |21.25s|The new Standard route uses two foundation pieces, no freeze pickup.|
-| Turn the corner |29.35–33.25s|Both arms are visited; no enemy-slow pickup.|
-| Border Remix |35.75–51.95s|All foundations link; Standard visits all three, Expert visits two.|
-| Long way home |53.35s|Both side outposts are visited and all foundations link.|
+| Level            |   New clears | Observation                                                                                                 |
+| ---------------- | -----------: | ----------------------------------------------------------------------------------------------------------- |
+| Courtyard return |  9.85–11.35s | Cuts occur in both initial inside/outside regions; the short duration is not simply skipping the courtyard. |
+| Island outpost   |  9.65–10.75s | Two closures at Expert; review whether the departure decision has enough pressure.                          |
+| Two bays         | 16.25–17.95s | Both regions receive cuts; safe reposition and keeper timing matter.                                        |
+| Nearby shore     | 20.45–33.05s | No new route physically visits the foundation; one Expert route leaves it disconnected from the perimeter.  |
+| Horizon Remix    | 23.95–38.25s | Only the initial foundation is visited; the upper platform stays disconnected in all four new routes.       |
+| Second landing   | 13.25–19.95s | Neither landing is physically visited, although both connect through reclaimed territory by the clear.      |
+| Return pocket    |       21.25s | The new Standard route uses two foundation pieces, no freeze pickup.                                        |
+| Turn the corner  | 29.35–33.25s | Both arms are visited; no enemy-slow pickup.                                                                |
+| Border Remix     | 35.75–51.95s | All foundations link; Standard visits all three, Expert visits two.                                         |
+| Long way home    |       53.35s | Both side outposts are visited and all foundations link.                                                    |
 
 The test-only observer distinguishes physical visits, mutual foundation linkage,
 perimeter linkage and the initial retained regions traversed by completed cuts.
