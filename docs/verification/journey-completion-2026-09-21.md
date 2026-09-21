@@ -28,6 +28,10 @@ separate gates. Older phase notes are provenance, not current release claims.
   all18 preset/steering clear routes plus three delayed-start samples. Earlier
   editions remain unchanged. [Comparative evidence](journey-spatial-balance.md)
   still flags Dnipro pacing and preset inversions; this is not final balance.
+- All83 core/Remix candidates now have an explicit498-case pressure route audit:
+  312 no-loss clear/replay/equal-race cases,303 without collecting pickups;27
+  missions cover all six configurations.186 cases remain unresolved, with concrete
+  capstone/window/cleanup review priorities. [Per-mission results](journey-pressure-route-assessment.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
