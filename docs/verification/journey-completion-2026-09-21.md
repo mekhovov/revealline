@@ -1,5 +1,8 @@
 # Journey redesign: completion and remaining work
 
+Current summary: [September 22 completion and remaining items](journey-completion-2026-09-22.md).
+The evidence and historical checkpoints below are retained.
+
 Updated 2026-09-21 after optional ornament/workshop integration, native transition measurements and selective source loading. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment

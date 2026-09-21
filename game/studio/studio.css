@@ -86,6 +86,90 @@ h2 {
 .toolbar {
   padding: 8px 0 24px;
 }
+.workbench-jump {
+  margin-left: auto;
+  padding: 12px 0;
+}
+.candidate-library,
+.difficulty-edition {
+  margin: 0 0 12px;
+  padding: 0;
+}
+.candidate-library > summary,
+.difficulty-edition > summary {
+  font-size: 15px;
+}
+.library-summary-note {
+  color: var(--muted);
+  margin-left: 16px;
+  font-size: 12px;
+}
+.library-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: end;
+}
+.library-filters label {
+  min-width: 0;
+  margin: 0;
+}
+.candidate-group {
+  margin: 24px 0;
+}
+.candidate-group h2 {
+  margin-bottom: 12px;
+}
+.candidate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.candidate-entry {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: #15251f;
+  overflow-wrap: anywhere;
+}
+.candidate-entry button {
+  width: 100%;
+  text-align: left;
+}
+.candidate-entry button + button {
+  margin-top: 8px;
+}
+.candidate-entry a {
+  display: inline-block;
+  padding-block: 10px;
+}
+.candidate-library [hidden] {
+  display: none;
+}
+.library-inspection {
+  position: sticky;
+  top: 8px;
+  z-index: 2;
+  border-left: 3px solid var(--accent);
+  padding: 12px 16px;
+  background: #1c302b;
+}
+.library-inspection p {
+  margin-top: 0;
+}
+@media (max-width: 650px) {
+  .candidate-grid,
+  .library-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .library-summary-note {
+    display: block;
+    margin: 4px 0 0 18px;
+  }
+  .workbench-jump {
+    margin-left: 0;
+  }
+}
 .workspace {
   display: grid;
   grid-template-columns: minmax(180px, 0.7fr) minmax(440px, 2.2fr) minmax(260px, 1fr);

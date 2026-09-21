@@ -134,7 +134,7 @@ test('Studio exposes explicit Inspect and mode links without making review conte
   assert.match(html, /id="whole-spatial"/);
   assert.match(html, /\.\.\/\?journey=whole-spatial-v1/);
   assert.match(html, /\.\.\/couch\/\?journey=whole-spatial-v1/);
-  assert.match(html, /Unvalidated candidates with separate/);
+  assert.match(html.replace(/\s+/g, ' '), /Unvalidated candidates with separate/);
   assert.match(
     script,
     /\$\('whole-spatial'\)\.onclick = guarded\(\(\) => \{\s+if \(!discardSource\(\)\) return;/,

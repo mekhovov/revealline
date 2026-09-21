@@ -69,8 +69,10 @@ import { createEncounterEditor } from './encounter-editor.mjs';
 import { createPacingInspector } from './pacing-inspector.mjs';
 import { createAcceptanceInspector } from './acceptance-inspector.mjs';
 import { observePreviewReadiness } from './preview-readiness.mjs';
+import { createCandidateLibrary } from './candidate-library.mjs';
 
 const $ = (id) => document.getElementById(id);
+const candidateLibrary = createCandidateLibrary({ document });
 const backend = createContentDraftBackend();
 const pacingInspector = createPacingInspector({ document, getSource: () => session.current() });
 const acceptanceInspector = createAcceptanceInspector({
@@ -462,6 +464,7 @@ function render(selected = $('mission').value) {
   $('source').value = session.export();
   sourceChanged = false;
   inspected = null;
+  candidateLibrary.clearInspection();
   $('apply').disabled = true;
   $('validation').textContent =
     `Current draft: ${project.maps.length} map revisions, ${project.missions.length} missions. Source edits require a new inspection before applying.`;
@@ -601,6 +604,7 @@ $('structure-form').onsubmit = guarded((event) => {
 function inspectSource({ head, selectedRevision } = {}) {
   inspections.invalidate();
   inspected = null;
+  candidateLibrary.clearInspection();
   $('apply').disabled = true;
   const text = $('source').value,
     project = compileContentProject(text).source;
@@ -608,11 +612,15 @@ function inspectSource({ head, selectedRevision } = {}) {
   $('validation').textContent =
     `${project.name}: ${project.maps.length} map revisions, ${project.missions.length} missions compile. ${head ? `Inspected checkpoint ${selectedRevision} (latest ${head.revision}). Older versions restore as a new checkpoint. ` : ''}Human playtesting and publication remain pending. Apply to replace the workbench draft.`;
   $('apply').disabled = false;
+  candidateLibrary.reportInspection(
+    `${project.name}: ${project.missions.length} missions inspected. The applied draft is unchanged. Review the source before Apply.`,
+  );
 }
 $('source').addEventListener('input', () => {
   inspections.invalidate();
   sourceChanged = true;
   inspected = null;
+  candidateLibrary.clearInspection();
   $('apply').disabled = true;
   $('validation').textContent =
     'Unapplied JSON edits. Inspect, then apply. These edits are not autosaved.';
@@ -666,6 +674,7 @@ $('pressure-edition').onclick = guarded(() => {
   if (!discardSource()) return;
   inspections.invalidate();
   inspected = null;
+  candidateLibrary.clearInspection();
   $('apply').disabled = true;
   $('source').value = JSON.stringify(withPressureDifficulty(session.current()), null, 2);
   sourceChanged = true;

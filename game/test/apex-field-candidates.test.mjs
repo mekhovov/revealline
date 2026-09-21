@@ -139,10 +139,9 @@ for (const difficulty of presets)
 test('Studio inspects the pending study and requires explicit Apply, without launching or publishing', async () => {
   const host = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
-  assert(
-    html.includes(
-      'id="apex-field">Inspect Home Signal field-finale study · balance pending</button>',
-    ),
+  assert.match(
+    html,
+    /id="apex-field">\s*Inspect Home Signal field-finale study · balance pending\s*<\/button>/,
   );
   const action = host.slice(
     host.indexOf("$('apex-field').onclick"),
