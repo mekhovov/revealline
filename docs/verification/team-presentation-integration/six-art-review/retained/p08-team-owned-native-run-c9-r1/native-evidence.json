@@ -1,0 +1,92 @@
+{
+  "qualification": "Local native browser, provisional assets; not deployed or offline acceptance",
+  "exactFallback": "f2e05d349954aa0b2f5afc788c96264108336252",
+  "sourcePinsSHA256": "a83d72f4fb8bd670ce90caa77dcaf37c5b4d77a850ca0f68cc07d83e7cc34193",
+  "hostSHA256": "609c335213c9629e08e8def1bd3843160a966b10d36cf9dd79f40ac8c90bb4eb",
+  "displaySHA256": "b5d62cf116f083502abea06582f14cd59073a5a5cb1b702cae26a2e67dddaee1",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "input": "Keyboard Enter/Escape for Start, Pause, Retry and catalogue play; pointer for file-disclosure and native file chooser",
+  "journeys": [
+    "Current startup shows Loading Relay Rescue, Preparing artwork and disabled Start, then ready.",
+    "Import authentic fpv38 .rlteam shows Checking local artwork 1/2 or 2/2, disables competing play, then Local artwork ready and deliberate Start.",
+    "Imported First Connection starts at 0:00, pauses with explicit Resume, and Retry confirmation directly restarts at 0:00.",
+    "Browse from paused imported attempt exposes both Starter arena and Local pack entries. Selecting current Relay Yard prepares assets while keeping prior run, then Replace & play starts at 0:00.",
+    "After current Relay Yard adoption all six new Team asset CSS properties contain blob URLs. Native host ready state and source hash verification accompany actual asset requests.",
+    "Current Relay Yard pause/reload prepares cleanly again; no captured warnings/errors."
+  ],
+  "previousHostPreviewCheck": {
+    "scope": "Same implementation before terminal cleanup ordering fix",
+    "hostSourcePinsSHA256": "9fd30bd853b0ed5f06a8cda7581e7c5c3d66080a026e316cb4033a6ee03ee25b",
+    "finding": "Starter Relay Yard preview retained paused imported First Connection at0:03 and returned focus to Preview Relay Yard; preview did not start play. Full board, actors, available anchors/core and HUD visually inspected; no completed/rescue/capture-state claim."
+  },
+  "consoleWarningsErrors": [],
+  "currentManifest": {
+    "path": "game/presentation/compiled/runtime.json",
+    "bytes": 870554,
+    "sha256": "28f7c9a2409b183e93798120d4f41338b7eea6104e7c70dd23cec5e4d1bae33d",
+    "origin": "candidate"
+  },
+  "retainedManifest": {
+    "path": "game/presentation/compiled/runtime.a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584.json",
+    "bytes": 968465,
+    "sha256": "a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584",
+    "origin": "candidate"
+  },
+  "sixServedTeamImages": [
+    {
+      "slot": "team.anchor.available",
+      "path": "game/presentation/compiled/assets/e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353.png",
+      "bytes": 194,
+      "sha256": "e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353",
+      "origin": "candidate"
+    },
+    {
+      "slot": "team.anchor.captured",
+      "path": "game/presentation/compiled/assets/fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6.png",
+      "bytes": 192,
+      "sha256": "fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6",
+      "origin": "candidate"
+    },
+    {
+      "slot": "team.effect.support",
+      "path": "game/presentation/compiled/assets/a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def.png",
+      "bytes": 271,
+      "sha256": "a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def",
+      "origin": "candidate"
+    },
+    {
+      "slot": "team.effect.slowed",
+      "path": "game/presentation/compiled/assets/4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf.png",
+      "bytes": 220,
+      "sha256": "4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf",
+      "origin": "candidate"
+    },
+    {
+      "slot": "team.effect.rescue",
+      "path": "game/presentation/compiled/assets/0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c.png",
+      "bytes": 266,
+      "sha256": "0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c",
+      "origin": "candidate"
+    },
+    {
+      "slot": "team.effect.recovery",
+      "path": "game/presentation/compiled/assets/53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408.png",
+      "bytes": 289,
+      "sha256": "53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408",
+      "origin": "candidate"
+    }
+  ],
+  "servedUniquePaths": 253,
+  "limitations": [
+    "No physical controller or touch-device check in this run.",
+    "No short-landscape, portrait, zoom, screen-reader or Large-text qualification in this run.",
+    "Both variants use fpv identity/palette with different revisions and image bindings; differing menu palettes are covered by real DOM/menu regression fixtures, not this native pair.",
+    "No native victory, joint capture, Support/rescue/recovery animation or imported multi-stronghold qualification in this scoped run.",
+    "Service workers deliberately blocked by test server; no offline/cold-start claim.",
+    "No public default, version, commit or release changed.",
+    "Exact terminal-during-decode race proven by modeled host tests, not claimed reproduced in native timing."
+  ]
+}

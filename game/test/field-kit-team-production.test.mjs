@@ -7,6 +7,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { createFieldKitTeamAssets } from '../../scripts/field-kit-team-assets.mjs';
 import { createFieldKitProduction } from '../../scripts/produce-field-kit-theme.mjs';
+import { applyReviewedTeamArt } from '../../scripts/reviewed-team-art.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { FORMATS, resolvePresentation } from '../presentation/model.mjs';
 import { reviseStudioTheme } from '../presentation/studio-session.mjs';
@@ -130,9 +131,44 @@ test('the actual Field Kit producer appends the complete Team family without mut
   for (const slot of produced.appendSlots) {
     const asset = resolved.assets[slot.id];
     assert.equal(asset.kind, 'image');
-    assert.equal(asset.quality.stage, 'produced');
+    assert.equal(
+      asset.quality.stage,
+      'reviewed',
+      'Only the exact separately reviewed family is adopted.',
+    );
     const body = Buffer.from(await produced.assets.get(asset.file.sha256).arrayBuffer());
     assert.equal(hash(body), asset.file.sha256);
     assert.equal(body.length, asset.file.bytes);
   }
+});
+
+test('changing a reviewed contract or producer revokes the family approval without altering generated assets', async () => {
+  const prepared = (await createFieldKitTeamAssets({ projectRoot: root })).assets;
+  for (const changed of [
+    'game/presentation/team-anchor-slots.mjs',
+    'scripts/produce-team-feedback-art.mjs',
+  ]) {
+    const result = await applyReviewedTeamArt(prepared, async (name) =>
+      name === changed ? Buffer.from('changed') : fs.readFile(path.join(root, name)),
+    );
+    assert.equal(result, prepared);
+    assert.ok(result.every((asset) => asset.values.quality.stage === 'produced'));
+  }
+  const approved = await applyReviewedTeamArt(prepared, (name) =>
+    fs.readFile(path.join(root, name)),
+  );
+  assert.ok(approved.every((asset) => asset.values.quality.stage === 'reviewed'));
+  assert.ok(prepared.every((asset) => asset.values.quality.stage === 'produced'));
+});
+
+test('review approval is bound to each role, not merely any previously inspected PNG', async () => {
+  const prepared = (await createFieldKitTeamAssets({ projectRoot: root })).assets;
+  const swapped = prepared.map((asset, i) =>
+    i === 0 ? { ...asset, body: prepared[1].body } : asset,
+  );
+  assert.equal(
+    await applyReviewedTeamArt(swapped, (name) => fs.readFile(path.join(root, name))),
+    swapped,
+  );
+  assert.ok(swapped.every((asset) => asset.values.quality.stage === 'produced'));
 });
