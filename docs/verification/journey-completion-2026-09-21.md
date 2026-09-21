@@ -158,8 +158,13 @@ progress and backups prevent historical clears leaking into revised encounters;
 actual difficulty descriptions follow the selected pressure policy. The
 87-test integrated cohort passes on both Node versions, and native Studio/first
 Solo clear/Next are checked. This advances P13 integration, **not full content
-enrollment, human balance or deployment**. Cold construction remains slow and
-performance acceptance is explicitly open; historical routes are unchanged.
+enrollment, human balance or deployment**. The subsequent
+[source-loading optimization](journey-spatial-source-performance.md) reduces local
+Node source assembly from 4.44 seconds to under 1 ms with exact authored data,
+normal compiler validation and stale-snapshot build gates. Its 120-test cohort
+passes on both Node versions; native Studio Inspect and saved-flight Continue
+are checked. Browser/device performance acceptance and release remain open;
+historical routes are unchanged.
 
 | Addition                             | Current result                                                                                                                                                                                                                   | Remaining                                                                                                                             |
 | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
