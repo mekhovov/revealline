@@ -3,6 +3,23 @@
   "status": "seven-original-candidates-not-final-visual-or-human-qualification",
   "tool": "built-in-imagegen",
   "useCase": "stylized-concept",
+  "nativePreview": {
+    "kind": "assistant-native-browser-observation-not-human-playtest",
+    "sourceRevision": "8eda2234148815408e616e3ee9b27a4ecc13b119",
+    "host": "isolated localhost8813 exact Git source; Studio explicit Inspect then Apply",
+    "mode": "Solo Standard keyboard, normal desktop viewport, no visibility override or injected simulation state",
+    "observations": [
+      "All seven originals loaded in real Practice and retained three lives after the first closure, with craft stopped on reclaimed ground.",
+      "Read the lock: Down 1.2%, score270, target79; a subsequent Left closure reached2.6%, score610, still three lives; paused at23seconds.",
+      "Cross the afterglow: Left0.6%, score140, target79. Dashed vertical warning visibly crosses the pictured western foundation and connector.",
+      "Switchyard: Up0.7%, score150, target80. Slow/lethal symbols, frontier and emitter remain distinct from revealed picture fragments.",
+      "Split junction: Down0.6%, score140, target80. At9seconds a solid active vertical lane crosses the pictured center connector; craft remains sheltered on reclaimed ground.",
+      "Crossbar depot: Up0.2%, score40, target81. Paired horizontal and vertical dashed warnings remain visible across pictured foundations.",
+      "Cooling loop: Up0.3%, score70, target81. The eroder, emitter and lethal terrain are visually distinct; this is not an erosion-restoration check.",
+      "Windows in the wire: Up0.3%, score70, target82. Both emitters, bolt carrier and dormant roamer have distinct cues; no roamer activation or travelling-impact claim.",
+      "Each preview closed normally; final focus returned to Studio Play. No mission victory, broad-area, device, muted/reduced-effects or human validation is implied."
+    ]
+  },
   "assets": [
     {
       "missionId": "read-the-lock",
@@ -20,8 +37,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Lane warning/active/recovery contrast over revealed artwork",
+          "Native broad-area and victory overlay checks beyond the recorded initial return",
+          "Complete lane warning/active/recovery contrast matrix beyond scoped observed states",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -45,8 +62,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Lane warning/active/recovery contrast over revealed artwork",
+          "Native broad-area and victory overlay checks beyond the recorded initial return",
+          "Complete lane warning/active/recovery contrast matrix beyond scoped observed states",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -70,8 +87,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Lane warning/active/recovery contrast over revealed artwork",
+          "Native broad-area and victory overlay checks beyond the recorded initial return",
+          "Complete lane warning/active/recovery contrast matrix beyond scoped observed states",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -95,8 +112,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Lane warning/active/recovery contrast over revealed artwork",
+          "Native broad-area and victory overlay checks beyond the recorded initial return",
+          "Complete lane warning/active/recovery contrast matrix beyond scoped observed states",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -120,8 +137,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Lane warning/active/recovery contrast over revealed artwork",
+          "Native broad-area and victory overlay checks beyond the recorded initial return",
+          "Complete lane warning/active/recovery contrast matrix beyond scoped observed states",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -145,8 +162,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Lane warning/active/recovery contrast over revealed artwork",
+          "Native broad-area and victory overlay checks beyond the recorded initial return",
+          "Complete lane warning/active/recovery contrast matrix beyond scoped observed states",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
@@ -170,8 +187,8 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
-          "Lane warning/active/recovery contrast over revealed artwork",
+          "Native broad-area and victory overlay checks beyond the recorded initial return",
+          "Complete lane warning/active/recovery contrast matrix beyond scoped observed states",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
