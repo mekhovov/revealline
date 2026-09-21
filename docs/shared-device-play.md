@@ -249,3 +249,48 @@ New research reaffirms safe-area placement independent of browser fullscreen:
 The [Steam Deck recommendations](https://partner.steamgames.com/doc/steamhardware/recommendations)
 also explicitly identify mixed controller/mouse lockout and changing prompts as
 problems to test. Keep the hybrid input and physical-device gate open.
+
+## Seventh iteration: hybrid input and readable encounter bands
+
+The actual installed host now has three additional stick/swipe/D-pad cases:
+a new touch direction supersedes a held controller stick; releasing touch does
+not restore stale input; a fresh controller movement may take over. Interrupted
+fingers pause, cannot resume through stale movement, and explicit A Resume
+preserves a verified replay. These are modeled input tests, not physical Deck tests.
+
+Native browser inspection reproduced a real warning-layout overflow: at1010×720
+with Large text and hidden controls, the run notice ended at748.68px. Fine-pointer
+warning-capable layouts now reserve space for instructions and notices before
+fitting the board. At710×620, the complete arena is342.66×256.99, the instruction
+ends at567px and the notice ends at616px. Plain/Large text and shown/hidden controls
+retain the same arena geometry. At1010×720 the arena is476×357. A preliminary
+prototype that also subtracted a full touch-pad height was rejected because it
+made the board unnecessarily small.
+
+Short landscape reserves one additional full-width instruction band only for
+warning-capable missions. At568×320 Large, the staged Sentinel Relay arena is
+239.99×179.99; the caption is544×56.80 and ends at316px. Its actual text lines end
+before310px. The132px D-pad retains44px direction targets. At844×390 Large the
+initial long shield instruction is fully visible below the complete field.
+Ordinary compact Arcade boards keep their existing larger layout.
+
+An old selector hid every phase named `open`; it now applies only to an idle
+classic field, not the staged core-open instruction. Encounter phase notices carry
+an explicit presentation cue: when the live encounter card already presents the
+same phase information, short landscape suppresses the duplicate run notice.
+Other notices retain their own presentation above the instruction band. Full
+instructions remain in Field details. Native shield/warning/active cycles were
+observed; actual core-open completion, long recovery notices, coarse-pointer
+variants and hardware/browser-fullscreen variants remain separate checks.
+
+The final four-file cohort passes29/29 on both Node20 and Node22 (hybrid host,
+Field details host, boot/build and authored arena capability). Earlier overlapping
+cohorts and one incorrectly broadened test assertion are retained in iteration-7
+receipts; counts are not additive. No physics, scoring, campaign identity or old
+replay branch changed. The full phase and public release are still pending.
+
+The fresh primary-source review reinforces using dynamic viewport dimensions and
+safe-area insets instead of depending on a fullscreen grant: [MDN lengths](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length)
+and [MDN environment insets](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/env).
+[Steamworks recommendations](https://partner.steamgames.com/doc/steamhardware/recommendations)
+explicitly call out hybrid-input lockout; that motivates the new handoff cases.
