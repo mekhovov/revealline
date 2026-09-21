@@ -194,6 +194,16 @@ real controllers/two-human testing, art, release and human pacing remain open.
 The nine-file regression cohort passes 331 tests on each supported Node runtime;
 that count includes negative-outcome assertions, not 331 successful playthroughs.
 
+The [Shared windows pictured successor](journey-team-timed-originals.md) adds an
+explicit three-mission Team test route, three original pictures, matching Studio
+Inspect/Apply and separately scoped progress. All nine gameplay editions remain
+identical to their timed greyboxes. Bonus-optional qualification now covers all
+nine production-seed keyboard routes and 36 seat/joint core cases; the 47-test
+focused suite passes both runtimes. Native checks cover inspection/application,
+pickup visuals, Skip and cursor restoration. All 246 broader regression checks
+pass on each Node version; coordinated promotion remains open. This closes the earlier original-art and bonus-optional
+host gaps for these three studies, not human balance, public enrollment or P14.
+
 ## Latest completed spatial unit
 
 [Afterglow](journey-livewire-spatial.md) redirects its keeper with two walls;

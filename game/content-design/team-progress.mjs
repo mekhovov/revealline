@@ -1,11 +1,11 @@
 import { createJourneyBackend, createJourneyProfileStore } from '../journey/profile.mjs';
 
-function availableBackend() {
+function availableBackend(profileKey) {
   // Resolve inside the store's bounded operation: a denied global getter is
   // session-only, not a boot error. A successful retry reuses one connection.
   let backend;
-  const current = () => (backend ??= createJourneyBackend());
-  return { read: () => current().read(), commit: (events) => current().commit(events) };
+  const current = () => (backend ??= createJourneyBackend({ profileKey }));
+  return { profileKey, read: () => current().read(), commit: (events) => current().commit(events) };
 }
 
 /** Shared, release-independent Team bookmarks/receipts. Only runs admitted by
@@ -13,14 +13,20 @@ function availableBackend() {
  * from matching IDs. Local receipts are not official scores or human approval. */
 export function createTeamJourneyProgress(
   journey,
-  { backend = availableBackend(), sessionId = crypto.randomUUID(), operationTimeoutMs } = {},
+  {
+    backend,
+    profileKey = backend?.profileKey ?? 'journey',
+    sessionId = crypto.randomUUID(),
+    operationTimeoutMs,
+  } = {},
 ) {
   const listeners = new Set(),
     attempts = new WeakMap();
   let disposed = false,
     sequence = 0;
   const store = createJourneyProfileStore({
-    backend,
+    backend: backend ?? availableBackend(profileKey),
+    profileKey,
     operationTimeoutMs,
     onStatus(status) {
       for (const listener of [...listeners]) {
@@ -39,6 +45,7 @@ export function createTeamJourneyProgress(
     status: () => store.status(),
     retry: () => store.flush(),
     export: () => store.export(),
+    backupFilename: store.backupFilename,
     initial(difficulty) {
       const profile = store.snapshot(),
         cursor = journey.catalog.find(profile.cursors.team);

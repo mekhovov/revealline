@@ -3656,7 +3656,7 @@ export function bootCoop({
     candidateProgress,
     'coop-journey-save',
     'Team Journey progress',
-    'revealline-journey-progress.json',
+    candidateProgress?.backupFilename ?? 'revealline-journey-progress.json',
   );
   attachJourneyRecovery(
     candidatePreferences,
@@ -3677,7 +3677,7 @@ export function bootCoop({
   $('coop-start').textContent = 'Start together →';
   bootDisplay.finish({
     message: candidateJourney
-      ? `Team Journey ${candidateJourney.rows.some((row) => row.background) ? 'original-art test · twelve missions · human validation pending.' : 'geometry test · twelve missions · human validation and original artwork pending.'} ${candidatePreferences ? '' : candidateNotice}`.trim()
+      ? `Team Journey ${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
       : 'Two players · one screen · a shared victory',
   });
   document.documentElement.dataset.toolState = 'ready';
@@ -3707,6 +3707,9 @@ try {
     candidateEntry = await createTeamGreyboxEntry({
       artwork: journeyRequests[0] === 'team-originals',
     });
+  } else if (journeyRequests.length === 1 && journeyRequests[0] === 'team-timed-originals') {
+    const { createTeamTimedEntry } = await import('../content-design/team-timed-entry.mjs');
+    candidateEntry = await createTeamTimedEntry();
   }
   bootCoop(candidateEntry);
 } catch (error) {
