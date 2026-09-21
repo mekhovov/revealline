@@ -1570,3 +1570,83 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
     background: var(--fk-bg);
   }
 }
+
+/* One stable Pause target owns the compact track caption. Details stay in Audio.
+   Its footprint is reserved even with no track, mute, loading or failed playback. */
+.music-credit-details p {
+  overflow-wrap: anywhere;
+}
+.compact-track-pause::after {
+  display: none;
+}
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-flight-state='running'],
+  body.field-kit.game-shell[data-flight-state='running']:has(#game-now-playing:not([hidden])),
+  body.field-kit.race-focus,
+  body.field-kit.race-focus:has(#race-music-now-playing:not([hidden])),
+  body.field-kit.playing:has(#coop-overlay[hidden]),
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-music-now-playing:not([hidden])),
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-music-now-playing:not([hidden])):has(
+      #coop-objective[data-kind='stronghold']
+    ) {
+    --handheld-music-space: 0px;
+    --team-music-objective-space: 0px;
+  }
+  body.field-kit.game-shell[data-flight-state='running'] #game-now-playing,
+  body.field-kit.race-focus #race-music-now-playing:not([hidden]),
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-music-now-playing:not([hidden]) {
+    display: none;
+  }
+  body.field-kit.game-shell[data-flight-state='running'] #pause-button.compact-track-pause,
+  body.field-kit.race-focus #race-pause.compact-track-pause,
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-pause.compact-track-pause {
+    width: 88px;
+    min-width: 88px;
+    max-width: 88px;
+    height: 44px;
+    min-height: 44px;
+    padding: 2px 4px;
+    font-size: var(--handheld-label);
+    line-height: 1;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  body.field-kit.game-shell[data-flight-state='running'] #pause-button.compact-track-pause::before,
+  body.field-kit.race-focus #race-pause.compact-track-pause::before,
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-pause.compact-track-pause::before {
+    display: none;
+  }
+  body.field-kit.game-shell[data-flight-state='running'] #pause-button.compact-track-pause::after,
+  body.field-kit.race-focus #race-pause.compact-track-pause::after,
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-pause.compact-track-pause::after {
+    content: attr(data-track-caption);
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font: inherit;
+  }
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry {
+    right: calc(var(--safe-right) + 152px);
+  }
+  body.field-kit.game-shell[data-flight-state='running'] #shell-fullscreen {
+    right: max(108px, calc(var(--safe-right) + 96px));
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
+    margin-inline-end: 96px;
+  }
+}
+@media (max-width: 680px) and (orientation: portrait) {
+  body.field-kit.game-shell[data-flight-state='running'] #shell-fullscreen.shell-fullscreen {
+    display: none;
+  }
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry {
+    right: calc(var(--safe-right) + 96px);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
+    right: max(96px, calc(96px + env(safe-area-inset-right)));
+    margin-inline-end: 0;
+  }
+}
