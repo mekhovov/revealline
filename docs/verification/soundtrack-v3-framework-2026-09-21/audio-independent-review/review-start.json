@@ -1,0 +1,127 @@
+{
+  "recordedUTC": "2026-09-21T01:11:09.938672+00:00",
+  "head": "283685e050219af03ed221d8cce3c8e2c46a8077",
+  "base": "14298758fee0f7af08dd87376187568ada531d0a",
+  "files": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 336295,
+      "sha256": "ac515e6107d999468617006d1750c18f6b689d012bd1dbcc775d8f033ad9938b"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 34053,
+      "sha256": "91c268ded6fd212a6ab285a8d7f9443f8a4af582824339031469f4238436e244"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 83656,
+      "sha256": "1d0386e7193f2d79f0263fbeddd3c424109e9844a0ce3b7f81337a4c25b0ae82"
+    },
+    {
+      "path": "game/soundtrack.mjs",
+      "bytes": 33938,
+      "sha256": "6f844028e0473cd438ed584a59dc9c2fb7cbbe85dbb4eed40d75f28815e7127f"
+    },
+    {
+      "path": "game/soundtrack-rights.mjs",
+      "bytes": 3755,
+      "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "bytes": 3895,
+      "sha256": "b1a1fd56262bacca1a75ac9c88b7106bc43f2c91eb34cad4ca80591dd4dff3f7"
+    },
+    {
+      "path": "game/soundtrack-archive.mjs",
+      "bytes": 5240,
+      "sha256": "f463131be133e57e2c7bc23a14cd9e16b310d9b714006ea47c5d44cbe1b6cebf"
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "bytes": 11884,
+      "sha256": "1bdd70af4a316ea5333135f0f07ccd0e74b64e179397801c92bf809c2cd66fea"
+    },
+    {
+      "path": "game/soundtrack-share.mjs",
+      "bytes": 5593,
+      "sha256": "44cc5e9bb5b5c7008fa48c87c1089da64a2ca1333de6a2b137bd10f7080b5c07"
+    },
+    {
+      "path": "game/soundtrack-store.mjs",
+      "bytes": 1317,
+      "sha256": "24377cdeda0a2755f964153f89cfe6a9bcb3eeb14218c12cf11da3f35ada5eda"
+    },
+    {
+      "path": "game/managed-media-store.mjs",
+      "bytes": 39202,
+      "sha256": "1051aebfc257aaa1596f67b45e15dbccfa6fad36ee58ee47a09ade507bc01500"
+    },
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "bytes": 13236,
+      "sha256": "0a88e5f5e3b49e36a4b182d3283b0ad4fcd69ce06016b8c492f32a213f5a4adb"
+    },
+    {
+      "path": "game/couch/couch-music-session.mjs",
+      "bytes": 4977,
+      "sha256": "cabc51a7250c93ba17aa20d7cb3421fab745cfe63f6b78a7b9375c857bb45eaf"
+    },
+    {
+      "path": "game/couch/couch-music-library.mjs",
+      "bytes": 7886,
+      "sha256": "030a76a886d925e98e2726d33b5f832c25fdb2032b1fc08269c7387c50adef20"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 83545,
+      "sha256": "70c686ed07d2bc436969a4cb2e9603ae30fb730eee924370d24a3d532399d223"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 124853,
+      "sha256": "86725d283838d4d636ed6d805d103a0cc0c374d695d363358873653bbe244fc0"
+    },
+    {
+      "path": "game/test/practice-media-v3-host.test.mjs",
+      "bytes": 6722,
+      "sha256": "aa677a720d0f1051bc771d4e6f97523d6bb78a9198109ce6742a1c4fc7aa1608"
+    },
+    {
+      "path": "game/test/soundtrack-player.test.mjs",
+      "bytes": 36460,
+      "sha256": "8f4f4e945d258a238d7010d5a3fff40c8c5edade8da21bab4f2b0243a33c44dd"
+    },
+    {
+      "path": "game/test/soundtrack-v3-playback-recovery.test.mjs",
+      "bytes": 5063,
+      "sha256": "c66c0617bfdf6eb826770cba8acb67083150d3c98a2ca2409322f48e1e892951"
+    },
+    {
+      "path": "game/test/couch-menu-music.test.mjs",
+      "bytes": 5924,
+      "sha256": "4dffa84ac4aebcea9d8c17b287f0f045a808fb8d9c97e816814276d0d8307735"
+    },
+    {
+      "path": "game/test/soundtrack-rights.test.mjs",
+      "bytes": 16441,
+      "sha256": "6916f9c6dbf0ab45a7af0166505361d2a0c35018449014c4f5381ebfb8477a1c"
+    },
+    {
+      "path": "game/test/soundtrack-reference-recovery.test.mjs",
+      "bytes": 9351,
+      "sha256": "fad2eb706ae62f26b3a362733d21bc9880a46d38be9611978eeef92bd5b27016"
+    },
+    {
+      "path": "game/test/soundtrack-source.test.mjs",
+      "bytes": 3447,
+      "sha256": "25e55e7662d0d3af02376808ce426cd573ff40816785a04aedb29d404c49c6ba"
+    },
+    {
+      "path": "game/test/soundtrack-v3-compatibility.test.mjs",
+      "bytes": 4187,
+      "sha256": "0c578773930e19fa2de94b2f56f79d125739143e8f68d655ed74325c74aa2cc2"
+    }
+  ]
+}
