@@ -364,3 +364,26 @@ same origin, Stepping exchange is selected with Standard and a ready Start
 button. This verifies browser control flow and persistent mission restoration,
 not preservation of an unfinished attempt, a native clear, input latency,
 small-screen layout, physical controllers or human enjoyment.
+
+### Explicit Team difficulty selection
+
+Owned candidate missions now allow Gentle, Standard and Expert selection before
+Start. Each choice selects the exact compiled edition and retires the previous
+picture lease before exposing new setup. Starting, Next and Skip pin that edition;
+active attempts and immutable imported editions cannot be silently reconfigured.
+Later decode completion cannot replace a newer choice. Failed preparation keeps
+the requested preset and offers picture retry rather than changing difficulty.
+
+The shared release-independent difficulty preference persists explicit choices.
+Denied storage leaves the selected edition playable with a truthful session-only
+notice, retry and portable export. Browser-restored form values and changes from
+another tab cannot replace this visit's prepared or accepted edition. Returning
+to setup permits a deliberate new choice. Successful saving restores the visible
+primary action without starting or resuming play.
+
+Nine focused preset cases pass on Node20. The broader host/import/legacy cohort
+passes67/67 on Node22; the corresponding host/import subset passes40/40 on
+Node20. Shared preference/restoration checks pass18/18 on both versions. Scoped
+Prettier, ESLint and diff checks pass. These are modeled DOM/storage/input tests;
+native preset qualification, chooser clarity, original art, human/device evidence
+and publication remain separate gates.
