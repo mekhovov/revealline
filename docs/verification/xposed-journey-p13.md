@@ -162,5 +162,67 @@ files have freshly verified SHA-256 hashes. The sparse checkout omits21 older
 Signal/Neon/Rover PNGs; tests read those exact existing Git blobs through the local
 read-only source adapter. An initial host run stopped at those missing files before
 this adapter was corrected; no gameplay check was relaxed or asset substituted.
-Full command-earned host, native, performance and accepted-tree checks remain
-pending. No phase version, PR, public deployment or publisher change is made here.
+The later scoped host/native results are recorded below. Performance and
+accepted-tree checks remain pending. No phase version, PR, public deployment or
+publisher change is made here.
+
+The subsequent host checks use the actual Solo application and paired-board host
+with finite DOM/image boundaries, existing Standard/immediate steering command
+fixtures and real asset bytes. No won state, coverage, clock or runtime geometry
+is injected. The71-race Versus test passes on Node20 and22, with70Next actions,
+equal per-seat checkpoints, exact original hashes and71separate Versus receipts.
+The71-mission Solo sequence passes on both Node20 and22. It verifies every earned
+checkpoint, original hash,70Next actions,
+no mandatory chooser, optional Journey ending and71candidate Solo receipts with
+no writes to old suspended slots or Legacy awards. A deliberately unavailable
+Signal picture keeps the previous Border victory and drawable until successful
+retry. The finite decoder is not native image decoding or visual qualification.
+
+Initial Solo assertions incorrectly compared Signal's explicit pictured
+`greybox-2` edition directly with a `greybox-1` identity hash, then overlooked
+the same revision field embedded in the result. The corrected test independently
+replays the historical edition against its frozen checkpoint, checks the current
+host against its exact current edition, and compares every non-identity gameplay
+section plus the complete result with only that explicit revision difference.
+Neither content, live state, frozen fixture nor replay implementation was changed.
+
+The final Solo cases passed in separate name-filtered invocations (Node20:658s;
+Node22:513s); the unchanged Versus case passed earlier on both versions. These
+durations describe this finite host regression, not real browser play or frame
+performance. The14route/composition checks also pass both versions, as do four
+Studio label/export checks. Eight already-pictured Studio actions now say picture
+candidates; the two historical unillustrated Signal actions remain greyboxes.
+Scoped lint, formatting and diff checks pass. This is not a full repository or
+accepted-composition suite, nor permission to bypass the guarded release build.
+
+### Scoped native continuous-route check
+
+Exact source `e940e43890c1184e681bc2c5a3ffe851c0cfef06`, read-only8813, tab38:
+Solo's title identified the unvalidated original-picture review and its online
+picture requirement. Missions exposed all83 entries with campaign filters. Global
+search for Home signal found one result and launched it directly. An Up return
+earned0.6%/130 with3lives, leaving shields0/3 and relays0/4; original islands,
+line/perimeter and the patterned lane warning were visible. No full clear claimed.
+
+At the last mission, Skip opened the chooser rather than assigning more work.
+Searching Returning light launched it directly. First Skip paused with a named
+Home signal confirmation and no-clear explanation; the second started Home signal
+at0%/0points/3lives without another menu. Pause/reload restored a Continue label
+for Apex Aurora · Home signal. The title's existing cross-mode links drop the
+candidate route; this UX seam was reported to the release/host owner, not changed.
+
+Versus's explicit review URL likewise identified the unvalidated route. Its
+83-mission chooser found Read the arrows and launched both boards directly.
+Sequential browser keyboard gestures S and Down each earned0.6%/140 with3lives. A
+native screenshot showed matching originals, readable arrows on unclaimed field
+and no arrows on the captured vertical strip. Escape paused both boards. This is
+a scoped native input/presentation observation, not synchronized-command fairness,
+a complete race, small-screen/controller qualification or human playtesting.
+
+A separate native First return race then completed through normal input: Sunflower
+earned34.3%/8160 with3lives and won by first clear; the second board remained0% when
+the race ended. Sequential browser gestures are not a synchronized fairness test.
+One Next mission activation checked the next original and started both Choose
+your share boards at0%/3lives without a lobby confirmation or chooser. Both were
+left paused. This verifies one native earned victory-to-Next transition, not the
+whole71-mission native sequence or a measured warm-transition latency target.

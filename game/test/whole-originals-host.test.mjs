@@ -10,8 +10,11 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
 const route = createAuthoredJourneyRoute('whole-originals');
+const historicalSignal = compileContentProject(createSignalCandidates());
 const fixtures = [
   'horizon-greybox',
   'border-clear',
@@ -94,6 +97,12 @@ test('71 real Solo host clears retain originals across70 Next actions, a failed 
     assert.equal(p.rendered.backdrop.image.sha256, asset.sha256, id);
     assert.equal(p.rendered.backdrop.image.width, asset.width, id);
     const reference = createRun(p.rendered.run.level, { seed: 1, classId: 'scout' });
+    // Signal's pictured edition deliberately has a new level revision. Retain
+    // the frozen historical replay proof without mistaking its identity hash
+    // for the later edition's hash, or rewriting a live level to make it match.
+    const historical = historicalSignal.missions.some((m) => m.id === id)
+      ? createRun(resolveMission(historicalSignal, id).level, { seed: 1, classId: 'scout' })
+      : null;
     for (const [direction, ticks] of segments) {
       if (direction !== null) {
         p.key(keys[direction]);
@@ -102,6 +111,7 @@ test('71 real Solo host clears retain originals across70 Next actions, a failed 
       let frames = 0;
       for (let tick = 0; tick < ticks; tick++) {
         stepRun(reference, { direction }, FIXED_DT);
+        if (historical) stepRun(historical, { direction }, FIXED_DT);
         frames++;
         const closure = reference.events.some((e) => e.type === 'capture.stopped');
         if (closure || frames === 12 || tick === ticks - 1) {
@@ -116,7 +126,22 @@ test('71 real Solo host clears retain originals across70 Next actions, a failed 
       }
     }
     assert.equal(p.rendered.run.status, 'won', id);
-    assert.equal(authoritativeCheckpoint(p.rendered.run).hash, checkpoint, id);
+    assert.equal(
+      authoritativeCheckpoint(p.rendered.run).hash,
+      authoritativeCheckpoint(reference).hash,
+      id,
+    );
+    assert.equal(authoritativeCheckpoint(historical ?? reference).hash, checkpoint, id);
+    if (historical) {
+      const oldSections = authoritativeCheckpoint(historical).sections;
+      const newSections = authoritativeCheckpoint(reference).sections;
+      for (const key of Object.keys(oldSections))
+        if (!['identity', 'result'].includes(key))
+          assert.equal(newSections[key], oldSections[key], `${id}/${key}`);
+      assert.equal(historical.result.revision, 'greybox-1');
+      assert.equal(reference.result.revision, 'greybox-2');
+      assert.deepEqual(reference.result, { ...historical.result, revision: 'greybox-2' });
+    }
     assert.equal(p.$('game-overlay').dataset.kind, 'won', id);
     assert.equal(p.$('journey-chooser').open, false, id);
     if (index === rows.length - 1) break;
