@@ -667,7 +667,7 @@ $('team-journey').onclick = guarded(() => {
 });
 $('crosswind').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createCrosswindCandidates(), null, 2);
+  $('source').value = JSON.stringify(createCrosswindCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

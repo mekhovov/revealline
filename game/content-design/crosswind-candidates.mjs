@@ -1,5 +1,6 @@
 import { createStarterProject } from './starter.mjs';
 import { freezeDesign, LIVEWIRE_ACTOR_CATALOG } from './catalogs.mjs';
+import { CROSSWIND_ART_CANDIDATES } from './crosswind-art.mjs';
 
 // Original greyboxes. Reference silhouettes do not establish movement rules.
 const rect = (x, y, w, h) => ({ x, y, w, h });
@@ -293,11 +294,11 @@ export const CROSSWIND_REFERENCE_ADAPTATIONS = freezeDesign(
     })),
 );
 
-export function createCrosswindCandidates() {
+export function createCrosswindCandidates({ artwork = false } = {}) {
   const project = createStarterProject('crosswind-greybox-candidates');
   project.name = 'Crosswind Array · greybox candidates';
   project.actorCatalogId = LIVEWIRE_ACTOR_CATALOG.id;
-  project.assets = [];
+  project.assets = artwork ? structuredClone(CROSSWIND_ART_CANDIDATES) : [];
   project.maps = rows.map((row) => ({
     format: 'MapDesignV3',
     id: `${row.id}-map`,
@@ -324,7 +325,13 @@ export function createCrosswindCandidates() {
     bonuses: [],
     relayLinks: structuredClone(row.relayLinks ?? []),
     coverage: row.coverage,
-    presentation: { themeId: 'horizon', backgroundAssetId: null },
+    presentation: {
+      themeId: 'horizon',
+      backgroundAssetId: artwork
+        ? (CROSSWIND_ART_CANDIDATES.find((asset) => asset.id === `crosswind-highlands-${row.id}`)
+            ?.id ?? null)
+        : null,
+    },
     design: {
       routeDecision: row.decision,
       lesson: row.lesson,
