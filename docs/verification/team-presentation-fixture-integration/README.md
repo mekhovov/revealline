@@ -27,3 +27,12 @@ No version is allocated. PR209 and its public acceptance precede the held landsc
 [Apple’s viewport guidance](https://developer.apple.com/videos/play/wwdc2022/10048/) distinguishes small, large and dynamic viewport heights. Test actual Safari browser-bar expansion/collapse and rotation instead of treating fullscreen permission as a prerequisite for a usable arena.
 
 [Valve’s compatibility requirements](https://partner.steamgames.com/doc/steamhardware/compat?language=english) require the default controller configuration to reach the game’s content. A modeled fresh-A launch does not qualify a physical Steam Deck, reconnect or every menu journey. These remain explicit rows in `docs/shared-device-play.md`.
+
+
+## Full-run interruption —2026-09-21
+
+The release coordinator explicitly stopped the unchanged689-file Node20 run when shared free disk reached approximately1.2GiB. Session54995 terminated with exit143; its process group was confirmed empty. Its last observed top-level case was3615. This is **incomplete qualification**, not a successful source gate. The exact1,834,913-byte partial TAP remains at the absolute path in `interrupted-full-run/full-node20-status.json`, with SHA256. Earlier statements that the run was active describe the focused checks' observation time.
+
+After every owned worker stopped, only the78 measured temporary hydration inputs were removed. Each original was checked against its exact Git blob before restoring its absent sparse-checkout state. The detailed cleanup receipt records all paths and hashes:122,693,557 logical bytes removed,119,824,384-byte observed shared-volume free-space increase. Source8cff remains clean; Git objects, commits, focused proofs and all controller/release/browser caches were preserved. The observed additional26 missing test inputs are inventoried, not downloaded. That inventory is partial and does not establish a complete future test environment.
+
+Do not restart the full run until capacity and the complete intended test inputs are available. Adopt the reviewed test corrections in the final intended source, then rerun required source/browser/public gates. Do not overwrite the earlier raw failure evidence or promote partial counts to acceptance. The original167-case focused results and later9-case display results remain bounded passes on their recorded commits.
