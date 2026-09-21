@@ -12,6 +12,7 @@ import { createRelayCandidates } from './relay-candidates.mjs';
 import { createCrosswindCandidates } from './crosswind-candidates.mjs';
 import { createSentinelCandidates } from './sentinel-candidates.mjs';
 import { createApexCandidates } from './apex-candidates.mjs';
+import { withCampaignPresentation } from './campaign-presentation.mjs';
 
 // Explicit review order, never inferred from titles or an imported "official" flag.
 const chapters = [
@@ -35,11 +36,17 @@ export const WHOLE_JOURNEY_CORE_PACK_IDS = freezeDesign(chapters.map((row) => ro
 export const WHOLE_JOURNEY_REMIX_PACK_IDS = freezeDesign(chapters.map((row) => row[2]));
 
 /** The one chapter selection used by composition and read-only evidence tools. */
-export function createWholeJourneyChapterSources({ artwork = false, roverTeaching = false } = {}) {
-  return chapters.map(([id, , , create]) => ({
-    id,
-    source: (roverTeaching && id === 'rover' ? createRoverTeachingCandidates : create)({ artwork }),
-  }));
+export function createWholeJourneyChapterSources({
+  artwork = false,
+  roverTeaching = false,
+  campaignPresentation = false,
+} = {}) {
+  return chapters.map(([id, , , create]) => {
+    const source = (roverTeaching && id === 'rover' ? createRoverTeachingCandidates : create)({
+      artwork,
+    });
+    return { id, source: campaignPresentation ? withCampaignPresentation(source, id) : source };
+  });
 }
 
 /** Review source for the existing compiler/Studio/execution adapters. Historical
@@ -49,10 +56,16 @@ export function createWholeJourneyChapterSources({ artwork = false, roverTeachin
  * progress. Independent drafts cannot mutate another chapter. The opt-in Rover
  * teaching successor has a distinct project revision; default editions remain
  * frozen, including the previous pictured source and its suspended-game route. */
-export function createWholeJourneyCandidates({ artwork = false, roverTeaching = false } = {}) {
-  const sources = createWholeJourneyChapterSources({ artwork, roverTeaching }).map(
-    (chapter) => chapter.source,
-  );
+export function createWholeJourneyCandidates({
+  artwork = false,
+  roverTeaching = false,
+  campaignPresentation = false,
+} = {}) {
+  const sources = createWholeJourneyChapterSources({
+    artwork,
+    roverTeaching,
+    campaignPresentation,
+  }).map((chapter) => chapter.source);
   const source = {
     ...sources[0],
     id: artwork ? 'whole-journey-original-review' : 'whole-journey-greybox-review',
@@ -68,6 +81,11 @@ export function createWholeJourneyCandidates({ artwork = false, roverTeaching = 
       : 'whole-journey-teaching-review';
     source.revision = 'teaching-review-1';
     source.name = 'Whole Journey · unvalidated first-capture teaching review';
+  }
+  if (campaignPresentation) {
+    source.id += '-themes';
+    source.revision += '-theme-1';
+    source.name = 'Whole Journey · unvalidated campaign presentation review';
   }
   for (const key of ['maps', 'missions', 'campaigns', 'packs', 'assets'])
     source[key] = sources.flatMap((chapter) => chapter[key] ?? []);
