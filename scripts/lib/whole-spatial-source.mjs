@@ -11,6 +11,8 @@ import { createSentinelSpatialCandidates } from '../../game/content-design/senti
 import { createApexFieldCandidates } from '../../game/content-design/apex-field-candidates.mjs';
 import { createTimedBorderCandidates } from '../../game/content-design/timed-border-candidates.mjs';
 import { TIMED_BONUS_TRAIL_VERSION } from '../../game/core/timed-bonuses.mjs';
+import { createCulturalWorkshopArtCandidates } from '../../game/content-design/cultural-workshop-art-candidates.mjs';
+import { createSpatialBalanceCandidates } from '../../game/content-design/spatial-balance-candidates.mjs';
 
 const studies = [
   {
@@ -45,7 +47,9 @@ export function composeWholeSpatialCandidates({
   artwork = false,
   fieldFinale = false,
   timedBorder = false,
+  culturalWorkshop = false,
 } = {}) {
+  if (culturalWorkshop) timedBorder = true;
   const source = withPressureDifficulty(
     createWholeJourneyCandidates({ artwork, roverTeaching: true, campaignActors: true }),
   );
@@ -109,6 +113,34 @@ export function composeWholeSpatialCandidates({
     source.id = artwork ? 'whole-timed-original-review' : 'whole-timed-greybox-review';
     source.revision = 'timed-border-review-1';
     source.name = 'Whole Journey · unvalidated timed-bonus review';
+  }
+  if (culturalWorkshop) {
+    const extra = compileContentProject(
+      artwork
+        ? createCulturalWorkshopArtCandidates({ spatial: true })
+        : createSpatialBalanceCandidates(),
+    ).source;
+    for (const key of ['policyId', 'difficultyCatalogId'])
+      if (extra[key] !== source[key])
+        throw new Error(`Cultural study ${key} must match the Journey.`);
+    for (const key of ['maps', 'missions', 'campaigns', 'packs', 'assets']) {
+      const ids = new Set(source[key].map((item) => item.id));
+      for (const item of key === 'assets' ? (extra.assets ?? []) : extra[key]) {
+        if (ids.has(item.id)) throw new Error(`Duplicate cultural study ${key}: ${item.id}`);
+        ids.add(item.id);
+        source[key].push(structuredClone(item));
+      }
+    }
+    for (const campaign of source.campaigns) {
+      if (campaign.id === 'ornament-crossings')
+        campaign.name = 'Ukrainian-inspired ornament · optional';
+      if (campaign.id === 'workshop-routing') campaign.name = 'FPV workshop · optional';
+    }
+    for (const pack of source.packs.filter((item) => extra.packs.some((p) => p.id === item.id)))
+      pack.name = source.campaigns.find((c) => c.id === pack.campaignIds[0]).name;
+    source.id = artwork ? 'whole-variety-original-review' : 'whole-variety-greybox-review';
+    source.revision = 'cultural-workshop-review-1';
+    source.name = 'Whole Journey · unvalidated ornament and workshop review';
   }
   for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
   return structuredClone(compileContentProject(source).source);

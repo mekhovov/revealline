@@ -7,6 +7,7 @@ import {
   createWholeSpatialCandidates,
   createWholeFieldCandidates,
   createWholeTimedCandidates,
+  createWholeVarietyCandidates,
 } from './whole-spatial-candidates.mjs';
 import {
   createWholeJourneyCandidates,
@@ -18,6 +19,17 @@ import {
  * The frozen opening URL retains its previous library and suspended-flight slot. */
 export function createAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v4')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey ornament and workshop review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v4',
+      profileKey: 'journey-whole-spatial-v4',
+      source: createWholeVarietyCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v3')
     return freezeDesign({
       id,
@@ -99,7 +111,7 @@ export function createAuthoredJourneyRoute(id) {
 
 /** Navigation policy shared by real Solo and paired-board hosts. IDs are an
  * explicit authoring selection, not inferred from titles or imported flags. */
-export function createCandidateSequence(catalog, corePackIds) {
+export function createCandidateSequence(catalog, corePackIds, optionalCampaignIds = []) {
   required(
     Array.isArray(corePackIds) &&
       corePackIds.length > 0 &&
@@ -110,11 +122,35 @@ export function createCandidateSequence(catalog, corePackIds) {
   );
   const core = catalog.missions.filter((mission) => corePackIds.includes(mission.packId));
   const indices = new Map(core.map((mission, index) => [mission.id, index]));
+  required(
+    Array.isArray(optionalCampaignIds) &&
+      optionalCampaignIds.every(stableId) &&
+      new Set(optionalCampaignIds).size === optionalCampaignIds.length &&
+      optionalCampaignIds.every((id) => {
+        const missions = catalog.missions.filter((mission) => mission.campaignId === id);
+        return missions.length > 0 && missions.every((mission) => !indices.has(mission.id));
+      }),
+    'Choose unique existing optional campaigns outside the core route.',
+  );
+  const optionalNext = new Map();
+  for (const id of optionalCampaignIds) {
+    const owners = new Map();
+    for (const mission of catalog.missions.filter((item) => item.campaignId === id)) {
+      const owner = JSON.stringify([mission.source, mission.packId, mission.campaignId]);
+      if (!owners.has(owner)) owners.set(owner, []);
+      owners.get(owner).push(mission);
+    }
+    for (const missions of owners.values())
+      missions.forEach((mission, index) =>
+        optionalNext.set(mission.id, missions[index + 1] ?? null),
+      );
+  }
   return Object.freeze({
     isCore: (id) => indices.has(id),
+    isOptionalSequence: (id) => optionalNext.has(id),
     next(id) {
       const index = indices.get(id);
-      return index === undefined ? null : (core[index + 1] ?? null);
+      return index === undefined ? (optionalNext.get(id) ?? null) : (core[index + 1] ?? null);
     },
   });
 }

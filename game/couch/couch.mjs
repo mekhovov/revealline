@@ -245,9 +245,12 @@ try {
     document.body.classList.add('candidate-journey');
     candidateJourney = createCandidateVersusHost(authoredRoute.source, {
       themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
-        ? journeyActorThemeCandidates((await json('../content-design/themes.json')).themes)
+        ? journeyActorThemeCandidates((await json('../content-design/themes.json')).themes, {
+            includeOriginals: authoredRoute.preserveOriginalThemes === true,
+          })
         : (await json('../content-design/themes.json')).themes,
       corePackIds: authoredRoute.corePackIds,
+      optionalCampaignIds: authoredRoute.optionalCampaignIds,
     });
     journeyPreferences = createJourneyPreferences({ window });
     $('race-journey-note').hidden = false;
@@ -2092,11 +2095,17 @@ try {
         `${match.winner === null ? 'Draw' : `${name} wins the ${series ? 'round' : 'race'}`}. ${match.reason}.${series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
       if (
         candidateJourney &&
-        candidateJourney.isCore(roundRecipe.entry.mission.id) &&
+        (candidateJourney.isCore(roundRecipe.entry.mission.id) ||
+          candidateJourney.isOptionalSequence(roundRecipe.entry.mission.id)) &&
         !candidateJourney.next(roundRecipe.entry.mission.id)
       )
-        $('race-message').textContent +=
-          ' End of this test route. Choose Find missions for optional Remixes, Rematch, or leave whenever you like.';
+        $('race-message').textContent += candidateJourney.isOptionalSequence(
+          roundRecipe.entry.mission.id,
+        )
+          ? ' End of this optional sequence. Choose Find missions, Rematch, or leave whenever you like.'
+          : authoredRoute.optionalCampaignIds?.length
+            ? ' End of this test route. Choose Find missions for optional Remixes and sequences, Rematch, or leave whenever you like.'
+            : ' End of this test route. Choose Find missions for optional Remixes, Rematch, or leave whenever you like.';
       $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')

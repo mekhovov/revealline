@@ -25,6 +25,13 @@ Border schedules. Other80 missions/maps/pictures and historical editions remain
 unchanged. Shared Studio Inspect/Apply, Solo/Versus direct continuation and exact
 bonus saves are qualified separately from human balance and public promotion.
 
+The [optional ornament/workshop integration](verification/journey-whole-variety-review.md)
+adds the eight existing pictured spatial studies to `whole-spatial-v4` as two
+voluntary four-mission sequences. The71-core/12-Remix route stays intact; Next/Skip
+remain inside the chosen optional sequence, and its ending makes no blanket
+completion claim. Separate progress and original theme dependencies are explicit.
+Technical qualification does not close human pacing/cultural/device or release gates.
+
 Current follow-up evidence: [two Sentinel receiver-layout successors](verification/journey-sentinel-spatial.md)
 preserve encounter rules while removing the recorded10–14second shortcuts;
 [new Livewire pressure paths](verification/journey-livewire-pressure.md) cover all42
