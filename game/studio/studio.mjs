@@ -10,6 +10,7 @@ import { createSpatialBalanceCandidates } from '../content-design/spatial-balanc
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
 import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
 import { createRoverTeachingCandidates } from '../content-design/rover-teaching-candidates.mjs';
+import { createRoverSpatialCandidates } from '../content-design/rover-spatial-candidates.mjs';
 import { createFractureCandidates } from '../content-design/fracture-candidates.mjs';
 import { createFractureSpatialCandidates } from '../content-design/fracture-spatial-candidates.mjs';
 import { createPhaseCandidates } from '../content-design/phase-candidates.mjs';
@@ -753,8 +754,12 @@ $('neon').onclick = guarded(() => {
 });
 $('rover').onclick = guarded(() => {
   if (!discardSource()) return;
+  const create =
+    $('rover-edition').value === 'sorting-spatial-1'
+      ? createRoverSpatialCandidates
+      : createRoverTeachingCandidates;
   $('source').value = JSON.stringify(
-    withCampaignPresentation(createRoverTeachingCandidates({ artwork: true }), 'rover'),
+    withCampaignPresentation(create({ artwork: true }), 'rover'),
     null,
     2,
   );
