@@ -1,0 +1,3108 @@
+{
+  "format": "revealline-source-qualification.v1",
+  "version": "v0.80.0",
+  "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+  "sourceTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+  "actualCheckoutCommit": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+  "actualCheckoutTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+  "sourceMerge": "5050cd6231d06e24a4a9c9e3d1824a6f77124248",
+  "sourceMergeTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+  "sourcePR": 215,
+  "qualifiedAt": "2026-09-21T18:12:13Z",
+  "passed": true,
+  "qualificationBasis": "hosted-exact-source-with-verified-frozen-originals",
+  "allTrackedSourceContentsAndModesMatch": true,
+  "sourceIdentity": {
+    "format": "revealline-source-identity.v1",
+    "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+    "sourceTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+    "files": 15788,
+    "bytes": 1387852986,
+    "aggregateSha256": "b9045b62123efc0d589e3b2517bca2f4fddbdc808db2722f4c0af48149bbd30c",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/35632131591",
+  "runId": 35632131591,
+  "workflowPath": ".github/workflows/deploy-pages.yml",
+  "workflowRevision": "c63891e00971074079a8e95656f21fec6a265be1",
+  "workflowTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+  "sourceWorkflowSha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7",
+  "gates": [
+    {
+      "gate": "validate",
+      "command": "npm run validate",
+      "jobId": 106440618062,
+      "step": {
+        "completedAt": "2026-09-21T17:29:26Z",
+        "conclusion": "success",
+        "name": "Validate, lint, and format source",
+        "number": 7,
+        "startedAt": "2026-09-21T17:28:38Z",
+        "status": "completed"
+      },
+      "scope": "Five commands share the exact successful preflight step; no individual timestamps are invented."
+    },
+    {
+      "gate": "lint",
+      "command": "npm run lint",
+      "jobId": 106440618062,
+      "step": {
+        "completedAt": "2026-09-21T17:29:26Z",
+        "conclusion": "success",
+        "name": "Validate, lint, and format source",
+        "number": 7,
+        "startedAt": "2026-09-21T17:28:38Z",
+        "status": "completed"
+      },
+      "scope": "Five commands share the exact successful preflight step; no individual timestamps are invented."
+    },
+    {
+      "gate": "format",
+      "command": "npm run format:check",
+      "jobId": 106440618062,
+      "step": {
+        "completedAt": "2026-09-21T17:29:26Z",
+        "conclusion": "success",
+        "name": "Validate, lint, and format source",
+        "number": 7,
+        "startedAt": "2026-09-21T17:28:38Z",
+        "status": "completed"
+      },
+      "scope": "Five commands share the exact successful preflight step; no individual timestamps are invented."
+    },
+    {
+      "gate": "native-format",
+      "command": "npm run format:native:check",
+      "jobId": 106440618062,
+      "step": {
+        "completedAt": "2026-09-21T17:29:26Z",
+        "conclusion": "success",
+        "name": "Validate, lint, and format source",
+        "number": 7,
+        "startedAt": "2026-09-21T17:28:38Z",
+        "status": "completed"
+      },
+      "scope": "Five commands share the exact successful preflight step; no individual timestamps are invented."
+    },
+    {
+      "gate": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "jobId": 106440618062,
+      "step": {
+        "completedAt": "2026-09-21T17:29:26Z",
+        "conclusion": "success",
+        "name": "Validate, lint, and format source",
+        "number": 7,
+        "startedAt": "2026-09-21T17:28:38Z",
+        "status": "completed"
+      },
+      "scope": "Five commands share the exact successful preflight step; no individual timestamps are invented."
+    },
+    {
+      "gate": "test",
+      "command": "node automation/scripts/run-test-shard.mjs --shard N/4 --root .",
+      "jobId": 106441427215,
+      "step": {
+        "completedAt": "2026-09-21T17:58:29Z",
+        "conclusion": "success",
+        "name": "Run test shard 4/4",
+        "number": 7,
+        "startedAt": "2026-09-21T17:30:45Z",
+        "status": "completed"
+      },
+      "actualJobSteps": [
+        {
+          "shard": 1,
+          "jobId": 106441427495,
+          "files": [
+            "authoring/motion-lab/test-ability.mjs",
+            "authoring/motion-lab/test-motion.mjs",
+            "game/test/appearance-milestones.test.mjs",
+            "game/test/asset-studio-context-geometry.test.mjs",
+            "game/test/asset-studio-font-specimen.test.mjs",
+            "game/test/asset-studio-interface-preferences.test.mjs",
+            "game/test/asset-studio-preview-motion.test.mjs",
+            "game/test/async-wait.test.mjs",
+            "game/test/audio-master.test.mjs",
+            "game/test/authored-mode-entry-host.test.mjs",
+            "game/test/backup-set.test.mjs",
+            "game/test/body-derivatives.test.mjs",
+            "game/test/border-art.test.mjs",
+            "game/test/border-routes.test.mjs",
+            "game/test/campaign-difficulty-library.test.mjs",
+            "game/test/candidate-couch-pictures.test.mjs",
+            "game/test/capture-regions.test.mjs",
+            "game/test/chapter-focus-clearance.test.mjs",
+            "game/test/classic-core.test.mjs",
+            "game/test/classic-lab.test.mjs",
+            "game/test/collection-context-host.test.mjs",
+            "game/test/compact-flight-captions-host.test.mjs",
+            "game/test/content-archive.test.mjs",
+            "game/test/content-capture-overlay.test.mjs",
+            "game/test/content-execution.test.mjs",
+            "game/test/content-image-trace.test.mjs",
+            "game/test/content-livewire-catalog.test.mjs",
+            "game/test/content-phase-catalog.test.mjs",
+            "game/test/content-recovery.test.mjs",
+            "game/test/content-structure.test.mjs",
+            "game/test/content-team-export.test.mjs",
+            "game/test/content-team-signal-routes.test.mjs",
+            "game/test/content.test.mjs",
+            "game/test/control-geometry.test.mjs",
+            "game/test/controller-boost-settings.test.mjs",
+            "game/test/controller-practice-pause-host.test.mjs",
+            "game/test/controller-router-bindings.test.mjs",
+            "game/test/coop-actor-presentation.test.mjs",
+            "game/test/coop-cooperation.test.mjs",
+            "game/test/coop-entry-memory.test.mjs",
+            "game/test/coop-host.test.mjs",
+            "game/test/coop-import-retry.test.mjs",
+            "game/test/coop-library.test.mjs",
+            "game/test/coop-lobby-resize.test.mjs",
+            "game/test/coop-next-reentry.test.mjs",
+            "game/test/coop-picture-host.test.mjs",
+            "game/test/coop-presentation-envelope.test.mjs",
+            "game/test/coop-startup-selection.test.mjs",
+            "game/test/coop-victory-picture.test.mjs",
+            "game/test/core-abilities.test.mjs",
+            "game/test/core-systems.test.mjs",
+            "game/test/couch-catalogue-reentry.test.mjs",
+            "game/test/couch-encounter.test.mjs",
+            "game/test/couch-installed-chapters.test.mjs",
+            "game/test/couch-music-context.test.mjs",
+            "game/test/couch-reading.test.mjs",
+            "game/test/couch-static-picture-host.test.mjs",
+            "game/test/course-pause-host.test.mjs",
+            "game/test/data-json.test.mjs",
+            "game/test/difficulty-access.test.mjs",
+            "game/test/direct-tools-loading.test.mjs",
+            "game/test/encounter-authoring.test.mjs",
+            "game/test/encounter-packs-backup.test.mjs",
+            "game/test/enemy-catalog-panel.test.mjs",
+            "game/test/enemy-guide.test.mjs",
+            "game/test/enemy-workshop-return.test.mjs",
+            "game/test/external-backup-host.test.mjs",
+            "game/test/external-chapter-download.test.mjs",
+            "game/test/external-chapters-panel.test.mjs",
+            "game/test/field-kit-flow.test.mjs",
+            "game/test/field-kit-scenes.test.mjs",
+            "game/test/first-flight-launch.test.mjs",
+            "game/test/first-flight.test.mjs",
+            "game/test/flight-information-backup-host.test.mjs",
+            "game/test/flight-information-source.test.mjs",
+            "game/test/focus-clearance.test.mjs",
+            "game/test/four-worlds-chapters.test.mjs",
+            "game/test/fpv-r5-playthrough.test.mjs",
+            "game/test/fracture-chapter-distribution.test.mjs",
+            "game/test/fracture-mastery.test.mjs",
+            "game/test/fracture-theme-chapters.test.mjs",
+            "game/test/gallery-focus.test.mjs",
+            "game/test/history-picture-host.test.mjs",
+            "game/test/horizon-versus.test.mjs",
+            "game/test/initial-focus-host.test.mjs",
+            "game/test/journey-continue-caption-host.test.mjs",
+            "game/test/journey-music-context.test.mjs",
+            "game/test/key-bindings.test.mjs",
+            "game/test/library-launch-host.test.mjs",
+            "game/test/line-impact.test.mjs",
+            "game/test/livewire-presentation.test.mjs",
+            "game/test/main-menu-collection-host.test.mjs",
+            "game/test/mastery-catalog.test.mjs",
+            "game/test/mastery-pack-view.test.mjs",
+            "game/test/mastery-view.test.mjs",
+            "game/test/media-library.test.mjs",
+            "game/test/menu-appearance.test.mjs",
+            "game/test/menu-style-preferences.test.mjs",
+            "game/test/mission-picker.test.mjs",
+            "game/test/modal-navigation.test.mjs",
+            "game/test/mode-return.test.mjs",
+            "game/test/motion-lab-png-preview.test.mjs",
+            "game/test/multiplayer-encounter.test.mjs",
+            "game/test/neon-art.test.mjs",
+            "game/test/neon-routes.test.mjs",
+            "game/test/offline.test.mjs",
+            "game/test/optional-chapters-host-copy.test.mjs",
+            "game/test/optional-world-play-host.test.mjs",
+            "game/test/pack-mastery.test.mjs",
+            "game/test/pause-menu-host.test.mjs",
+            "game/test/phase-mastery.test.mjs",
+            "game/test/picture-backup-transfer.test.mjs",
+            "game/test/player-body-layout.test.mjs",
+            "game/test/playground-model.test.mjs",
+            "game/test/practice-media-v3-host.test.mjs",
+            "game/test/preference-restoration.test.mjs",
+            "game/test/presentation-dependencies.test.mjs",
+            "game/test/presentation-image.test.mjs",
+            "game/test/presentation-page-entry.test.mjs",
+            "game/test/presentation-production-history.test.mjs",
+            "game/test/presentation-system.test.mjs",
+            "game/test/profile-original-recovery-view.test.mjs",
+            "game/test/profile-recovery-display.test.mjs",
+            "game/test/profile-recovery-view.test.mjs",
+            "game/test/profile-writer.test.mjs",
+            "game/test/reading-input-prompt.test.mjs",
+            "game/test/replay-player.test.mjs",
+            "game/test/replay.test.mjs",
+            "game/test/retry-view.test.mjs",
+            "game/test/route-worlds.test.mjs",
+            "game/test/rover-preview.test.mjs",
+            "game/test/screen-steering-hand.test.mjs",
+            "game/test/sentinel-circuit-external.test.mjs",
+            "game/test/sentinel-theme-distribution.test.mjs",
+            "game/test/sessions-mastery.test.mjs",
+            "game/test/settings-restoration-host.test.mjs",
+            "game/test/shared-touch-preferences.test.mjs",
+            "game/test/signal-presentation.test.mjs",
+            "game/test/site-release-links.test.mjs",
+            "game/test/soundtrack-bonus-offload.test.mjs",
+            "game/test/soundtrack-master-keyboard-host.test.mjs",
+            "game/test/soundtrack-player.test.mjs",
+            "game/test/soundtrack-rights.test.mjs",
+            "game/test/soundtrack-v3-compatibility.test.mjs",
+            "game/test/sprite-editor.test.mjs",
+            "game/test/still-media-channel.test.mjs",
+            "game/test/still-media-preview.test.mjs",
+            "game/test/storage-retention-host.test.mjs",
+            "game/test/story-binding-store.test.mjs",
+            "game/test/story-media-store.test.mjs",
+            "game/test/tactical-challenges.test.mjs",
+            "game/test/team-discovery-input.test.mjs",
+            "game/test/team-entry.test.mjs",
+            "game/test/text-face-library.test.mjs",
+            "game/test/title-mode-departure-host.test.mjs",
+            "game/test/touch-steering.test.mjs",
+            "game/test/ukraine-role-presentation.test.mjs",
+            "game/test/video-poster.test.mjs",
+            "game/test/visual-theme-lease.test.mjs",
+            "game/test/wide-presentation.test.mjs",
+            "platforms/desktop/test/package-security.test.mjs",
+            "platforms/ios/test/bridge.test.mjs",
+            "scripts/native-cli.test.mjs",
+            "scripts/test-build-soundtrack-archive.mjs",
+            "scripts/test-expansion-proof-dispatch.mjs",
+            "scripts/test-hosted-soundtrack-publication.mjs",
+            "scripts/test-optional-distribution.mjs",
+            "scripts/test-production-countercurrent.mjs",
+            "scripts/test-production-register.mjs",
+            "scripts/test-run-test-shard.mjs",
+            "scripts/test-source-identity.mjs"
+          ],
+          "counts": {
+            "tests": 2157,
+            "pass": 2157,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "step": {
+            "completedAt": "2026-09-21T18:03:17Z",
+            "conclusion": "success",
+            "name": "Run test shard 1/4",
+            "number": 7,
+            "startedAt": "2026-09-21T17:30:58Z",
+            "status": "completed"
+          },
+          "collectorEvidence": {
+            "path": ".cache/v080-qualification/final-9dc3af75/pr/shard-1.txt",
+            "bytes": 6630,
+            "sha256": "64399f0855add92360fa521e1c628a7ca208ccc407d3adaf57e13234de2b05e7"
+          }
+        },
+        {
+          "shard": 2,
+          "jobId": 106441427389,
+          "files": [
+            "authoring/motion-lab/test-animation.mjs",
+            "authoring/motion-lab/test-steering.mjs",
+            "game/test/arcade-actions.test.mjs",
+            "game/test/asset-studio-cross-mode.test.mjs",
+            "game/test/asset-studio-guide.test.mjs",
+            "game/test/asset-studio-loading.test.mjs",
+            "game/test/asset-studio-return.test.mjs",
+            "game/test/attempt-export-panel.test.mjs",
+            "game/test/audio-preferences.test.mjs",
+            "game/test/authoring-host-display.test.mjs",
+            "game/test/backup-storage.test.mjs",
+            "game/test/boot-build.test.mjs",
+            "game/test/border-candidates.test.mjs",
+            "game/test/border-timing.test.mjs",
+            "game/test/campaign-difficulty.test.mjs",
+            "game/test/candidate-legacy-save-host.test.mjs",
+            "game/test/challenges.test.mjs",
+            "game/test/chapter-focus-nested.test.mjs",
+            "game/test/classic-domain-edge-recovery.test.mjs",
+            "game/test/classic-presentation.test.mjs",
+            "game/test/collection-records-return-host.test.mjs",
+            "game/test/compatibility-v0100.test.mjs",
+            "game/test/content-assets.test.mjs",
+            "game/test/content-color-trace.test.mjs",
+            "game/test/content-fracture-catalog.test.mjs",
+            "game/test/content-journey.test.mjs",
+            "game/test/content-objectives.test.mjs",
+            "game/test/content-picture.test.mjs",
+            "game/test/content-removal.test.mjs",
+            "game/test/content-studio-empty.test.mjs",
+            "game/test/content-team-host.test.mjs",
+            "game/test/content-team.test.mjs",
+            "game/test/continuation.test.mjs",
+            "game/test/controller-bindings.test.mjs",
+            "game/test/controller-boost.test.mjs",
+            "game/test/controller-preference-library.test.mjs",
+            "game/test/controller-router.test.mjs",
+            "game/test/coop-authoring.test.mjs",
+            "game/test/coop-core.test.mjs",
+            "game/test/coop-experiment.test.mjs",
+            "game/test/coop-import-artwork-host.test.mjs",
+            "game/test/coop-import-source-retire.test.mjs",
+            "game/test/coop-live-rescue.test.mjs",
+            "game/test/coop-local-artwork-picture.test.mjs",
+            "game/test/coop-pack-destination.test.mjs",
+            "game/test/coop-picture-recovery-focus.test.mjs",
+            "game/test/coop-presentation.test.mjs",
+            "game/test/coop-terminal-player-hud.test.mjs",
+            "game/test/coop-view-presentation.test.mjs",
+            "game/test/core-capture.test.mjs",
+            "game/test/couch-audio-master.test.mjs",
+            "game/test/couch-chapter-install.test.mjs",
+            "game/test/couch-external-picture-parity.test.mjs",
+            "game/test/couch-installed-release-parity.test.mjs",
+            "game/test/couch-music-library.test.mjs",
+            "game/test/couch-resize-focus.test.mjs",
+            "game/test/couch-static-pictures.test.mjs",
+            "game/test/course-selection-host.test.mjs",
+            "game/test/dawn-signal-example.test.mjs",
+            "game/test/difficulty-host.test.mjs",
+            "game/test/display-preferences-host.test.mjs",
+            "game/test/encounter-compatibility.test.mjs",
+            "game/test/encounter-view.test.mjs",
+            "game/test/enemy-catalog.test.mjs",
+            "game/test/enemy-presentations.test.mjs",
+            "game/test/equipment-help-host.test.mjs",
+            "game/test/external-chapter-app.test.mjs",
+            "game/test/external-chapter-host.test.mjs",
+            "game/test/external-choice-capacity.test.mjs",
+            "game/test/field-kit-icons.test.mjs",
+            "game/test/field-kit-surfaces.test.mjs",
+            "game/test/first-flight-preview.test.mjs",
+            "game/test/first-journey-entry-host.test.mjs",
+            "game/test/flight-information-bridge.test.mjs",
+            "game/test/flight-media-pins.test.mjs",
+            "game/test/foundation-core.test.mjs",
+            "game/test/fpv-r2-playthrough.test.mjs",
+            "game/test/fpv-role-host.test.mjs",
+            "game/test/fracture-chapter-host.test.mjs",
+            "game/test/fracture-preview.test.mjs",
+            "game/test/fracture-timing.test.mjs",
+            "game/test/gallery-reduced-effects.test.mjs",
+            "game/test/homeward-playthrough.test.mjs",
+            "game/test/host-presentation-size.test.mjs",
+            "game/test/journey-arcade-policy.test.mjs",
+            "game/test/journey-host.test.mjs",
+            "game/test/journey-preferences.test.mjs",
+            "game/test/key-capture-navigation-host.test.mjs",
+            "game/test/library-pager-host.test.mjs",
+            "game/test/livewire-candidates.test.mjs",
+            "game/test/livewire-routes.test.mjs",
+            "game/test/managed-media-connection.test.mjs",
+            "game/test/mastery-equipment-replay.test.mjs",
+            "game/test/mastery-records.test.mjs",
+            "game/test/mastery.test.mjs",
+            "game/test/media-runtime-read.test.mjs",
+            "game/test/menu-initial-focus.test.mjs",
+            "game/test/mission-brief.test.mjs",
+            "game/test/mission-replacement-host.test.mjs",
+            "game/test/modal-tab-boundary.test.mjs",
+            "game/test/motion-lab-display-host.test.mjs",
+            "game/test/motion-lab-preview-loop.test.mjs",
+            "game/test/multiplayer-untimed.test.mjs",
+            "game/test/neon-candidates.test.mjs",
+            "game/test/neon-timing.test.mjs",
+            "game/test/operation-focus-host.test.mjs",
+            "game/test/optional-chapters-host.test.mjs",
+            "game/test/optional-world-play-lifetime.test.mjs",
+            "game/test/packs.test.mjs",
+            "game/test/phase-briefing.test.mjs",
+            "game/test/phase-routes.test.mjs",
+            "game/test/picture-ready-status.test.mjs",
+            "game/test/player-locator.test.mjs",
+            "game/test/playground-tab-boundary.test.mjs",
+            "game/test/practice-navigation.test.mjs",
+            "game/test/presentation-adoption.test.mjs",
+            "game/test/presentation-fonts.test.mjs",
+            "game/test/presentation-manifest-budget.test.mjs",
+            "game/test/presentation-page-retry.test.mjs",
+            "game/test/presentation-readiness.test.mjs",
+            "game/test/presentation-ui.test.mjs",
+            "game/test/profile-original-recovery.test.mjs",
+            "game/test/profile-recovery-settings-host.test.mjs",
+            "game/test/profile-shared-media.test.mjs",
+            "game/test/progress.test.mjs",
+            "game/test/reading-prompts-host.test.mjs",
+            "game/test/replay-theater-display-host.test.mjs",
+            "game/test/restart-navigation-host.test.mjs",
+            "game/test/rewards.test.mjs",
+            "game/test/rover-art.test.mjs",
+            "game/test/rover-routes.test.mjs",
+            "game/test/selection-bookmark-host.test.mjs",
+            "game/test/sentinel-circuit.test.mjs",
+            "game/test/sentinel-theme-host.test.mjs",
+            "game/test/sessions.test.mjs",
+            "game/test/shared-settings-reading.test.mjs",
+            "game/test/signal-art.test.mjs",
+            "game/test/signal-reference-crosswalk.test.mjs",
+            "game/test/solo-result-continuation-host.test.mjs",
+            "game/test/soundtrack-catalogue.test.mjs",
+            "game/test/soundtrack-master.test.mjs",
+            "game/test/soundtrack-portable.test.mjs",
+            "game/test/soundtrack-share.test.mjs",
+            "game/test/soundtrack-v3-playback-recovery.test.mjs",
+            "game/test/starting-setup-host.test.mjs",
+            "game/test/still-media-display-host.test.mjs",
+            "game/test/still-story-lifecycle.test.mjs",
+            "game/test/storage-retention.test.mjs",
+            "game/test/story-bundle.test.mjs",
+            "game/test/story-receipts.test.mjs",
+            "game/test/tactical-teaching.test.mjs",
+            "game/test/team-discovery-panel.test.mjs",
+            "game/test/terminal-navigation.test.mjs",
+            "game/test/text-size-host.test.mjs",
+            "game/test/title-operation-status-host.test.mjs",
+            "game/test/touchscreen-controller-host.test.mjs",
+            "game/test/victory-story-ui.test.mjs",
+            "game/test/viewport-startup-host.test.mjs",
+            "game/test/visual-theme-pin.test.mjs",
+            "game/test/workshop-art-integration.test.mjs",
+            "platforms/desktop/test/packaging.test.mjs",
+            "platforms/ios/test/configuration.test.mjs",
+            "scripts/test-audit-signal-mastery.mjs",
+            "scripts/test-build-workshop-pack.mjs",
+            "scripts/test-external-distribution.mjs",
+            "scripts/test-inspect-goals.mjs",
+            "scripts/test-pack-indexes.mjs",
+            "scripts/test-production-fracture-themes.mjs",
+            "scripts/test-production-sentinel-themes.mjs",
+            "scripts/test-snapshot-archive-transfer.mjs",
+            "scripts/test-ua-fpv-local-pack.mjs"
+          ],
+          "counts": {
+            "tests": 1839,
+            "pass": 1839,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "step": {
+            "completedAt": "2026-09-21T18:22:46Z",
+            "conclusion": "success",
+            "name": "Run test shard 2/4",
+            "number": 7,
+            "startedAt": "2026-09-21T17:30:53Z",
+            "status": "completed"
+          },
+          "collectorEvidence": {
+            "path": ".cache/v080-qualification/final-9dc3af75/pr/shard-2.txt",
+            "bytes": 6660,
+            "sha256": "b63abe1b77edfcad47e87c29020fa8fe88e384e16d9117c93748a6ad95433728"
+          }
+        },
+        {
+          "shard": 3,
+          "jobId": 106441427312,
+          "files": [
+            "authoring/motion-lab/test-collection.mjs",
+            "game/test/about-navigation-host.test.mjs",
+            "game/test/asset-studio-audio-master.test.mjs",
+            "game/test/asset-studio-fixture.test.mjs",
+            "game/test/asset-studio-helpers.test.mjs",
+            "game/test/asset-studio-offline-fixtures.test.mjs",
+            "game/test/asset-studio-rotors.test.mjs",
+            "game/test/attempt-export.test.mjs",
+            "game/test/audio.test.mjs",
+            "game/test/backup-content-feedback-host.test.mjs",
+            "game/test/backup.test.mjs",
+            "game/test/boot-host.test.mjs",
+            "game/test/border-legacy-routes.test.mjs",
+            "game/test/campaign-contexts.test.mjs",
+            "game/test/campaign-playthrough.test.mjs",
+            "game/test/candidate-solo-host.test.mjs",
+            "game/test/chapter-download-host.test.mjs",
+            "game/test/chapter-reward-integration.test.mjs",
+            "game/test/classic-domain-recovery.test.mjs",
+            "game/test/classic-progression.test.mjs",
+            "game/test/collection-results.test.mjs",
+            "game/test/compatibility-v060.test.mjs",
+            "game/test/content-attempt.test.mjs",
+            "game/test/content-diagnostics.test.mjs",
+            "game/test/content-geometry-edit.test.mjs",
+            "game/test/content-launch.test.mjs",
+            "game/test/content-pacing-inspector.test.mjs",
+            "game/test/content-preview-loader.test.mjs",
+            "game/test/content-route.test.mjs",
+            "game/test/content-studio-navigation.test.mjs",
+            "game/test/content-team-recovery-host.test.mjs",
+            "game/test/content-terrain-contract.test.mjs",
+            "game/test/continuous-host.test.mjs",
+            "game/test/controller-boost-library.test.mjs",
+            "game/test/controller-lab.test.mjs",
+            "game/test/controller-preview.test.mjs",
+            "game/test/controller-settings.test.mjs",
+            "game/test/coop-balanced-routes.test.mjs",
+            "game/test/coop-custom-artwork-host.test.mjs",
+            "game/test/coop-foundations.test.mjs",
+            "game/test/coop-import-next.test.mjs",
+            "game/test/coop-import-source.test.mjs",
+            "game/test/coop-lobby-focus.test.mjs",
+            "game/test/coop-materials.test.mjs",
+            "game/test/coop-paused-resize.test.mjs",
+            "game/test/coop-pilot-states.test.mjs",
+            "game/test/coop-recovery-copy.test.mjs",
+            "game/test/coop-terrain-trail.test.mjs",
+            "game/test/coop-wall-sliding.test.mjs",
+            "game/test/core-movement.test.mjs",
+            "game/test/couch-board-footprint-host.test.mjs",
+            "game/test/couch-chapter.test.mjs",
+            "game/test/couch-initial-focus.test.mjs",
+            "game/test/couch-markup.test.mjs",
+            "game/test/couch-music-session.test.mjs",
+            "game/test/couch-shared-touch.test.mjs",
+            "game/test/countercurrent-chapter-distribution.test.mjs",
+            "game/test/creator-tools-scope-host.test.mjs",
+            "game/test/defeat-presentation-host.test.mjs",
+            "game/test/difficulty-navigation.test.mjs",
+            "game/test/display-preferences.test.mjs",
+            "game/test/encounter-consumers.test.mjs",
+            "game/test/enemy-body-assets.test.mjs",
+            "game/test/enemy-guide-host.test.mjs",
+            "game/test/enemy-pressure.test.mjs",
+            "game/test/equipment-workshop.test.mjs",
+            "game/test/external-chapter-backup.test.mjs",
+            "game/test/external-chapter-install.test.mjs",
+            "game/test/external-recovery-catalog.test.mjs",
+            "game/test/field-kit-pixel-art.test.mjs",
+            "game/test/field-kit-title-v2.test.mjs",
+            "game/test/first-flight-routes.test.mjs",
+            "game/test/first-light-playthrough.test.mjs",
+            "game/test/flight-information-details-host.test.mjs",
+            "game/test/flight-pictures-host.test.mjs",
+            "game/test/foundation-host.test.mjs",
+            "game/test/fpv-r3-playthrough.test.mjs",
+            "game/test/fpv-role-presentation.test.mjs",
+            "game/test/fracture-lines-chapter.test.mjs",
+            "game/test/fracture-routes.test.mjs",
+            "game/test/fullscreen.test.mjs",
+            "game/test/gallery-return-host.test.mjs",
+            "game/test/horizon-candidates.test.mjs",
+            "game/test/hud-status-cues.test.mjs",
+            "game/test/journey-authority.test.mjs",
+            "game/test/journey-legacy-routes.test.mjs",
+            "game/test/journey-visual-theme-identities.test.mjs",
+            "game/test/key-settings.test.mjs",
+            "game/test/library-row-focus-host.test.mjs",
+            "game/test/livewire-goal-evidence.test.mjs",
+            "game/test/livewire-seeds.test.mjs",
+            "game/test/managed-media-store.test.mjs",
+            "game/test/mastery-equipment.test.mjs",
+            "game/test/mastery-replay.test.mjs",
+            "game/test/media-bundle.test.mjs",
+            "game/test/media-still.test.mjs",
+            "game/test/menu-style-controls.test.mjs",
+            "game/test/mission-card.test.mjs",
+            "game/test/mission-selection-focus-host.test.mjs",
+            "game/test/mode-return-host.test.mjs",
+            "game/test/motion-lab-display-restoration.test.mjs",
+            "game/test/motion-lab-render-ability.test.mjs",
+            "game/test/multiplayer.test.mjs",
+            "game/test/neon-mastery.test.mjs",
+            "game/test/nonmodal-header-navigation.test.mjs",
+            "game/test/operation-status.test.mjs",
+            "game/test/optional-chapters.test.mjs",
+            "game/test/original-soundtrack-production.test.mjs",
+            "game/test/pages-delivery.test.mjs",
+            "game/test/phase-candidates.test.mjs",
+            "game/test/phase-seeds.test.mjs",
+            "game/test/picture-receipts.test.mjs",
+            "game/test/playground-import-host.test.mjs",
+            "game/test/playground-viewport.test.mjs",
+            "game/test/practice-playground-display.test.mjs",
+            "game/test/presentation-backdrop.test.mjs",
+            "game/test/presentation-host-manifest-pin.test.mjs",
+            "game/test/presentation-metadata.test.mjs",
+            "game/test/presentation-page.test.mjs",
+            "game/test/presentation-renderer.test.mjs",
+            "game/test/profile-channel-assets.test.mjs",
+            "game/test/profile-recovery-catalogs.test.mjs",
+            "game/test/profile-recovery-snapshot.test.mjs",
+            "game/test/profile-transfer-suspended.test.mjs",
+            "game/test/published-audio.test.mjs",
+            "game/test/release-pictures.test.mjs",
+            "game/test/replay-theater-navigation.test.mjs",
+            "game/test/result-picture.test.mjs",
+            "game/test/route-choices-chapter.test.mjs",
+            "game/test/rover-candidates.test.mjs",
+            "game/test/rover-timing.test.mjs",
+            "game/test/selection-bookmark.test.mjs",
+            "game/test/sentinel-playthrough.test.mjs",
+            "game/test/sessions-continuous.test.mjs",
+            "game/test/settings-assists-host.test.mjs",
+            "game/test/shared-settings-solo.test.mjs",
+            "game/test/signal-candidates.test.mjs",
+            "game/test/signal-routes.test.mjs",
+            "game/test/soundtrack-albums.test.mjs",
+            "game/test/soundtrack-gain-leases.test.mjs",
+            "game/test/soundtrack-original-flac-production.test.mjs",
+            "game/test/soundtrack-preparation-policy.test.mjs",
+            "game/test/soundtrack-source.test.mjs",
+            "game/test/soundtrack.test.mjs",
+            "game/test/still-media-bundle-ui.test.mjs",
+            "game/test/still-media-host.test.mjs",
+            "game/test/still-story-panel.test.mjs",
+            "game/test/story-backup-transfer.test.mjs",
+            "game/test/story-dialog.test.mjs",
+            "game/test/studio-preview-readiness.test.mjs",
+            "game/test/team-arena-preference.test.mjs",
+            "game/test/team-discovery-pictures.test.mjs",
+            "game/test/terrain-feedback.test.mjs",
+            "game/test/text-size-library.test.mjs",
+            "game/test/tool-display-restoration.test.mjs",
+            "game/test/ui-input.test.mjs",
+            "game/test/victory-story.test.mjs",
+            "game/test/visual-theme-catalogue.test.mjs",
+            "game/test/wide-content.test.mjs",
+            "game/test/workshop-return.test.mjs",
+            "platforms/desktop/test/policy.test.mjs",
+            "platforms/ios/test/diagnostics.test.mjs",
+            "scripts/test-audit-signal-pacing.mjs",
+            "scripts/test-check-backup-set.mjs",
+            "scripts/test-field-kit-recipe-sources.mjs",
+            "scripts/test-licensed-audio-build.mjs",
+            "scripts/test-pages-archive.mjs",
+            "scripts/test-production-metadata-history.mjs",
+            "scripts/test-production-source-history.mjs",
+            "scripts/test-soundtrack-archive-admissions.mjs",
+            "scripts/test-ua-fpv-publication.mjs"
+          ],
+          "counts": {
+            "tests": 1942,
+            "pass": 1942,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "step": {
+            "completedAt": "2026-09-21T17:58:08Z",
+            "conclusion": "success",
+            "name": "Run test shard 3/4",
+            "number": 7,
+            "startedAt": "2026-09-21T17:30:50Z",
+            "status": "completed"
+          },
+          "collectorEvidence": {
+            "path": ".cache/v080-qualification/final-9dc3af75/pr/shard-3.txt",
+            "bytes": 6683,
+            "sha256": "d3f911973fc15ae05608fc21c73645cfb16bb365160f92749e9935f85d57588e"
+          }
+        },
+        {
+          "shard": 4,
+          "jobId": 106441427215,
+          "files": [
+            "authoring/motion-lab/test-grid-motion.mjs",
+            "game/test/actor-presentation.test.mjs",
+            "game/test/asset-studio-build.test.mjs",
+            "game/test/asset-studio-font-cache.test.mjs",
+            "game/test/asset-studio-host-loading.test.mjs",
+            "game/test/asset-studio-picture-context.test.mjs",
+            "game/test/asset-studio-team-fixture.test.mjs",
+            "game/test/attempt-file.test.mjs",
+            "game/test/authored-mode-bootstrap.test.mjs",
+            "game/test/backup-set-host.test.mjs",
+            "game/test/board-footprint.test.mjs",
+            "game/test/boot.test.mjs",
+            "game/test/border-reference-crosswalk.test.mjs",
+            "game/test/campaign-difficulty-backup.test.mjs",
+            "game/test/campaign-theme-integration.test.mjs",
+            "game/test/candidate-versus-host.test.mjs",
+            "game/test/chapter-download.test.mjs",
+            "game/test/classic-capture-stop.test.mjs",
+            "game/test/classic-host.test.mjs",
+            "game/test/classic-transport.test.mjs",
+            "game/test/compact-arena-layout.test.mjs",
+            "game/test/content-actors.test.mjs",
+            "game/test/content-bonuses.test.mjs",
+            "game/test/content-drafts.test.mjs",
+            "game/test/content-image-authoring.test.mjs",
+            "game/test/content-library-capacity.test.mjs",
+            "game/test/content-pacing.test.mjs",
+            "game/test/content-project.test.mjs",
+            "game/test/content-rover-catalog.test.mjs",
+            "game/test/content-studio.test.mjs",
+            "game/test/content-team-routes.test.mjs",
+            "game/test/content-tuning.test.mjs",
+            "game/test/continuous-input.test.mjs",
+            "game/test/controller-boost-recovery.test.mjs",
+            "game/test/controller-navigation.test.mjs",
+            "game/test/controller-reading.test.mjs",
+            "game/test/coop-actor-layout.test.mjs",
+            "game/test/coop-briefing-host.test.mjs",
+            "game/test/coop-display-reflow.test.mjs",
+            "game/test/coop-historical-import-picture.test.mjs",
+            "game/test/coop-import-production-reader.test.mjs",
+            "game/test/coop-input-policy.test.mjs",
+            "game/test/coop-lobby-preview.test.mjs",
+            "game/test/coop-next-host.test.mjs",
+            "game/test/coop-picture-bindings.test.mjs",
+            "game/test/coop-presentation-bootstrap-retry.test.mjs",
+            "game/test/coop-shared-settings.test.mjs",
+            "game/test/coop-threat-pacing.test.mjs",
+            "game/test/coop-won-terminal-host.test.mjs",
+            "game/test/core-roster-viability.test.mjs",
+            "game/test/couch-catalogue-host.test.mjs",
+            "game/test/couch-departure.test.mjs",
+            "game/test/couch-input.test.mjs",
+            "game/test/couch-menu-music.test.mjs",
+            "game/test/couch-navigation.test.mjs",
+            "game/test/couch-shell.test.mjs",
+            "game/test/countercurrent-chapter-host.test.mjs",
+            "game/test/current-art.test.mjs",
+            "game/test/device-controls-host.test.mjs",
+            "game/test/direct-tool-launch.test.mjs",
+            "game/test/earned-picture.test.mjs",
+            "game/test/encounter-core.test.mjs",
+            "game/test/enemy-body-motion.test.mjs",
+            "game/test/enemy-guide-panel.test.mjs",
+            "game/test/enemy-workshop-host.test.mjs",
+            "game/test/expansion-playthrough.test.mjs",
+            "game/test/external-chapter-card-focus.test.mjs",
+            "game/test/external-chapter.test.mjs",
+            "game/test/featured-chapter.test.mjs",
+            "game/test/field-kit-reveals.test.mjs",
+            "game/test/first-flight-entry.test.mjs",
+            "game/test/first-flight-view.test.mjs",
+            "game/test/flight-authored-pictures.test.mjs",
+            "game/test/flight-information-host.test.mjs",
+            "game/test/flight-pictures.test.mjs",
+            "game/test/foundation-transport.test.mjs",
+            "game/test/fpv-r4-playthrough.test.mjs",
+            "game/test/fracture-candidates.test.mjs",
+            "game/test/fracture-lines.test.mjs",
+            "game/test/fracture-seeds.test.mjs",
+            "game/test/gallery-difficulty.test.mjs",
+            "game/test/gentle-routes.test.mjs",
+            "game/test/horizon-reference-crosswalk.test.mjs",
+            "game/test/imports.test.mjs",
+            "game/test/journey-backup.test.mjs",
+            "game/test/journey-menu-return-host.test.mjs",
+            "game/test/journey.test.mjs",
+            "game/test/landing-release-history-host.test.mjs",
+            "game/test/library.test.mjs",
+            "game/test/livewire-mastery.test.mjs",
+            "game/test/livewire-timing.test.mjs",
+            "game/test/map-design.test.mjs",
+            "game/test/mastery-library.test.mjs",
+            "game/test/mastery-v070-compatibility.test.mjs",
+            "game/test/media-generic-portability.test.mjs",
+            "game/test/media-store.test.mjs",
+            "game/test/menu-style-host.test.mjs",
+            "game/test/mission-picker-older.test.mjs",
+            "game/test/mission-thumbnails.test.mjs",
+            "game/test/mode-return-v2.test.mjs",
+            "game/test/motion-lab-labels.test.mjs",
+            "game/test/mp3.test.mjs",
+            "game/test/music-credit.test.mjs",
+            "game/test/neon-preview.test.mjs",
+            "game/test/offline-panel.test.mjs",
+            "game/test/optional-chapter-descriptions.test.mjs",
+            "game/test/optional-world-choice-lifetime.test.mjs",
+            "game/test/pack-mastery-integration.test.mjs",
+            "game/test/pause-layout-contract.test.mjs",
+            "game/test/phase-goal-evidence.test.mjs",
+            "game/test/phase-timing.test.mjs",
+            "game/test/platform.test.mjs",
+            "game/test/playground-map-diagnostics.test.mjs",
+            "game/test/practice-brief-host.test.mjs",
+            "game/test/practice-retry.test.mjs",
+            "game/test/presentation-component-specimens.test.mjs",
+            "game/test/presentation-host.test.mjs",
+            "game/test/presentation-output.test.mjs",
+            "game/test/presentation-pins.test.mjs",
+            "game/test/presentation-studio.test.mjs",
+            "game/test/profile-channel-reader.test.mjs",
+            "game/test/profile-recovery-dialog.test.mjs",
+            "game/test/profile-recovery-startup-navigation.test.mjs",
+            "game/test/profile-transfer.test.mjs",
+            "game/test/published-studio.test.mjs",
+            "game/test/renderer-readability.test.mjs",
+            "game/test/replay-theater-wide.test.mjs",
+            "game/test/retry-integration.test.mjs",
+            "game/test/route-worlds-host.test.mjs",
+            "game/test/rover-mastery.test.mjs",
+            "game/test/scenario-mastery.test.mjs",
+            "game/test/selective-line-impact.test.mjs",
+            "game/test/sentinel-theme-chapters.test.mjs",
+            "game/test/sessions-equipment-mastery.test.mjs",
+            "game/test/settings-panels.test.mjs",
+            "game/test/shared-settings-versus.test.mjs",
+            "game/test/signal-mastery.test.mjs",
+            "game/test/signal-timing.test.mjs",
+            "game/test/soundtrack-archive.test.mjs",
+            "game/test/soundtrack-host.test.mjs",
+            "game/test/soundtrack-panel.test.mjs",
+            "game/test/soundtrack-reference-recovery.test.mjs",
+            "game/test/soundtrack-store.test.mjs",
+            "game/test/specialty-playthrough.test.mjs",
+            "game/test/still-media-catalog.test.mjs",
+            "game/test/still-media-panel.test.mjs",
+            "game/test/still-workshop-build.test.mjs",
+            "game/test/story-binding-model.test.mjs",
+            "game/test/story-flight-host.test.mjs",
+            "game/test/studio-slot-history.test.mjs",
+            "game/test/team-discovery-host.test.mjs",
+            "game/test/team-discovery-preview-host.test.mjs",
+            "game/test/text-face-host.test.mjs",
+            "game/test/title-entry-host.test.mjs",
+            "game/test/touch-hand-compatibility.test.mjs",
+            "game/test/ukraine-role-host.test.mjs",
+            "game/test/video-poster-workshop.test.mjs",
+            "game/test/visual-theme-identities.test.mjs",
+            "game/test/wide-core.test.mjs",
+            "game/test/worlds-browser.test.mjs",
+            "platforms/desktop/test/resources.test.mjs",
+            "scripts/native-art.test.mjs",
+            "scripts/test-build-licensed-preview-archive.mjs",
+            "scripts/test-encounter-consumers.mjs",
+            "scripts/test-game-cli.mjs",
+            "scripts/test-optional-artwork.mjs",
+            "scripts/test-pages-current-entry.mjs",
+            "scripts/test-production-panel.mjs",
+            "scripts/test-release-catalog.mjs",
+            "scripts/test-soundtrack-distribution.mjs"
+          ],
+          "counts": {
+            "tests": 2162,
+            "pass": 2162,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "step": {
+            "completedAt": "2026-09-21T17:58:29Z",
+            "conclusion": "success",
+            "name": "Run test shard 4/4",
+            "number": 7,
+            "startedAt": "2026-09-21T17:30:45Z",
+            "status": "completed"
+          },
+          "collectorEvidence": {
+            "path": ".cache/v080-qualification/final-9dc3af75/pr/shard-4.txt",
+            "bytes": 6512,
+            "sha256": "e4035cf5acb2b98c87852fe29f21a2345c007c324f10c8a8d67c6ac377359e62"
+          }
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "tests": 8100,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "pass": 8100
+  },
+  "testFiles": 683,
+  "observations": [
+    {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+      "sourceTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+      "files": 15788,
+      "bytes": 1387852986,
+      "aggregateSha256": "b9045b62123efc0d589e3b2517bca2f4fddbdc808db2722f4c0af48149bbd30c",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    },
+    {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+      "sourceTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+      "files": 15788,
+      "bytes": 1387852986,
+      "aggregateSha256": "b9045b62123efc0d589e3b2517bca2f4fddbdc808db2722f4c0af48149bbd30c",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    },
+    {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+      "sourceTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+      "files": 15788,
+      "bytes": 1387852986,
+      "aggregateSha256": "b9045b62123efc0d589e3b2517bca2f4fddbdc808db2722f4c0af48149bbd30c",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    },
+    {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+      "sourceTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+      "files": 15788,
+      "bytes": 1387852986,
+      "aggregateSha256": "b9045b62123efc0d589e3b2517bca2f4fddbdc808db2722f4c0af48149bbd30c",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    },
+    {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+      "sourceTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+      "files": 15788,
+      "bytes": 1387852986,
+      "aggregateSha256": "b9045b62123efc0d589e3b2517bca2f4fddbdc808db2722f4c0af48149bbd30c",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    },
+    {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+      "sourceTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+      "files": 15788,
+      "bytes": 1387852986,
+      "aggregateSha256": "b9045b62123efc0d589e3b2517bca2f4fddbdc808db2722f4c0af48149bbd30c",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    },
+    {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+      "sourceTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+      "files": 15788,
+      "bytes": 1387852986,
+      "aggregateSha256": "b9045b62123efc0d589e3b2517bca2f4fddbdc808db2722f4c0af48149bbd30c",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    },
+    {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "9dc3af75801517efe4a9f52266ffef6d37cb77e9",
+      "sourceTree": "f830c0f56a3e497e5a77168e5a803a9f48419f97",
+      "files": 15788,
+      "bytes": 1387852986,
+      "aggregateSha256": "b9045b62123efc0d589e3b2517bca2f4fddbdc808db2722f4c0af48149bbd30c",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  ],
+  "hostedSourceReview": {
+    "summary": {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/summary.json",
+      "bytes": 36517,
+      "sha256": "b3185225ca2d37abed9d4b08a1d16dc4c0ae0868caada1ebd9b1385d28337f24"
+    },
+    "collectorMetadata": {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/metadata.json",
+      "bytes": 14469,
+      "sha256": "556d4b0dcc25ccd4f629ed3c24e6698ec245e7a0c103501c87a4a0a7b1b8d575"
+    },
+    "helpers": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "bytes": 8015,
+        "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7",
+        "blob": "9b0bca5ed0b32682dba717ad217fc3343f76317e",
+        "automationBlob": "9b0bca5ed0b32682dba717ad217fc3343f76317e",
+        "matchesExactSource": true
+      },
+      {
+        "path": ".github/workflows/publish-frozen-pages.yml",
+        "bytes": 4425,
+        "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9",
+        "blob": "970e6b0d0ea057843a202762ce2c3cf4138ad874",
+        "automationBlob": "970e6b0d0ea057843a202762ce2c3cf4138ad874",
+        "matchesExactSource": true
+      },
+      {
+        "path": "scripts/run-test-shard.mjs",
+        "bytes": 2719,
+        "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730",
+        "blob": "2fed1c91b4c2d1b44eb4f7fbb8d3192e607bc84a",
+        "automationBlob": "2fed1c91b4c2d1b44eb4f7fbb8d3192e607bc84a",
+        "matchesExactSource": true
+      },
+      {
+        "path": "scripts/check-source-identity.mjs",
+        "bytes": 7275,
+        "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4",
+        "blob": "56ad477033516d565fbb7f85cea70d0430ceae1c",
+        "automationBlob": "56ad477033516d565fbb7f85cea70d0430ceae1c",
+        "matchesExactSource": true
+      }
+    ],
+    "productionSteps": [
+      {
+        "completedAt": "2026-09-21T17:29:32Z",
+        "conclusion": "success",
+        "name": "Verify Field Kit production ledger and compiled output",
+        "number": 8,
+        "startedAt": "2026-09-21T17:29:26Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-09-21T17:29:36Z",
+        "conclusion": "success",
+        "name": "Verify immutable production sources first",
+        "number": 9,
+        "startedAt": "2026-09-21T17:29:32Z",
+        "status": "completed"
+      }
+    ]
+  },
+  "hostedNodeRequest": "20.19.x",
+  "additionalManualQualification": {
+    "summary": {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/summary.json",
+      "bytes": 29283,
+      "sha256": "be5d1755f75221baf7c741b53189234c0c5bc9ea5d65988a492a132dd2fb4e53"
+    },
+    "collectorMetadata": {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/metadata.json",
+      "bytes": 13687,
+      "sha256": "fd02d6e499908f05dd09d5f59e7e469b72919d43f347c5a132cf0c397a224076"
+    },
+    "preflight": {
+      "name": "qualify",
+      "jobId": 106440740233,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "completedAt": "2026-09-21T17:27:59Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-21T17:27:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:28:21Z",
+          "conclusion": "success",
+          "name": "Check out exact candidate",
+          "number": 2,
+          "startedAt": "2026-09-21T17:27:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:28:27Z",
+          "conclusion": "success",
+          "name": "Set up Node.js",
+          "number": 3,
+          "startedAt": "2026-09-21T17:28:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:28:27Z",
+          "conclusion": "success",
+          "name": "Record source identity",
+          "number": 4,
+          "startedAt": "2026-09-21T17:28:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:28:29Z",
+          "conclusion": "success",
+          "name": "Install dependencies",
+          "number": 5,
+          "startedAt": "2026-09-21T17:28:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:28:53Z",
+          "conclusion": "success",
+          "name": "Check hosted artifact utility locally",
+          "number": 6,
+          "startedAt": "2026-09-21T17:28:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:06Z",
+          "conclusion": "success",
+          "name": "Validate source",
+          "number": 7,
+          "startedAt": "2026-09-21T17:28:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:18Z",
+          "conclusion": "success",
+          "name": "Lint source",
+          "number": 8,
+          "startedAt": "2026-09-21T17:29:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:41Z",
+          "conclusion": "success",
+          "name": "Check formatting",
+          "number": 9,
+          "startedAt": "2026-09-21T17:29:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:42Z",
+          "conclusion": "success",
+          "name": "Check native formatting",
+          "number": 10,
+          "startedAt": "2026-09-21T17:29:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:42Z",
+          "conclusion": "success",
+          "name": "Check motion lab syntax",
+          "number": 11,
+          "startedAt": "2026-09-21T17:29:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:48Z",
+          "conclusion": "success",
+          "name": "Reproduce production collection when available",
+          "number": 12,
+          "startedAt": "2026-09-21T17:29:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:50Z",
+          "conclusion": "success",
+          "name": "Require reviewed production slots in the committed ledger",
+          "number": 13,
+          "startedAt": "2026-09-21T17:29:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:50Z",
+          "conclusion": "success",
+          "name": "Verify qualified tracked source is unchanged",
+          "number": 14,
+          "startedAt": "2026-09-21T17:29:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:50Z",
+          "conclusion": "success",
+          "name": "Post Set up Node.js",
+          "number": 27,
+          "startedAt": "2026-09-21T17:29:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:50Z",
+          "conclusion": "success",
+          "name": "Post Check out exact candidate",
+          "number": 28,
+          "startedAt": "2026-09-21T17:29:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T17:29:50Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 29,
+          "startedAt": "2026-09-21T17:29:50Z",
+          "status": "completed"
+        }
+      ]
+    },
+    "shards": [
+      {
+        "shard": 1,
+        "jobId": 106441438985,
+        "files": [
+          "authoring/motion-lab/test-ability.mjs",
+          "authoring/motion-lab/test-motion.mjs",
+          "game/test/appearance-milestones.test.mjs",
+          "game/test/asset-studio-context-geometry.test.mjs",
+          "game/test/asset-studio-font-specimen.test.mjs",
+          "game/test/asset-studio-interface-preferences.test.mjs",
+          "game/test/asset-studio-preview-motion.test.mjs",
+          "game/test/async-wait.test.mjs",
+          "game/test/audio-master.test.mjs",
+          "game/test/authored-mode-entry-host.test.mjs",
+          "game/test/backup-set.test.mjs",
+          "game/test/body-derivatives.test.mjs",
+          "game/test/border-art.test.mjs",
+          "game/test/border-routes.test.mjs",
+          "game/test/campaign-difficulty-library.test.mjs",
+          "game/test/candidate-couch-pictures.test.mjs",
+          "game/test/capture-regions.test.mjs",
+          "game/test/chapter-focus-clearance.test.mjs",
+          "game/test/classic-core.test.mjs",
+          "game/test/classic-lab.test.mjs",
+          "game/test/collection-context-host.test.mjs",
+          "game/test/compact-flight-captions-host.test.mjs",
+          "game/test/content-archive.test.mjs",
+          "game/test/content-capture-overlay.test.mjs",
+          "game/test/content-execution.test.mjs",
+          "game/test/content-image-trace.test.mjs",
+          "game/test/content-livewire-catalog.test.mjs",
+          "game/test/content-phase-catalog.test.mjs",
+          "game/test/content-recovery.test.mjs",
+          "game/test/content-structure.test.mjs",
+          "game/test/content-team-export.test.mjs",
+          "game/test/content-team-signal-routes.test.mjs",
+          "game/test/content.test.mjs",
+          "game/test/control-geometry.test.mjs",
+          "game/test/controller-boost-settings.test.mjs",
+          "game/test/controller-practice-pause-host.test.mjs",
+          "game/test/controller-router-bindings.test.mjs",
+          "game/test/coop-actor-presentation.test.mjs",
+          "game/test/coop-cooperation.test.mjs",
+          "game/test/coop-entry-memory.test.mjs",
+          "game/test/coop-host.test.mjs",
+          "game/test/coop-import-retry.test.mjs",
+          "game/test/coop-library.test.mjs",
+          "game/test/coop-lobby-resize.test.mjs",
+          "game/test/coop-next-reentry.test.mjs",
+          "game/test/coop-picture-host.test.mjs",
+          "game/test/coop-presentation-envelope.test.mjs",
+          "game/test/coop-startup-selection.test.mjs",
+          "game/test/coop-victory-picture.test.mjs",
+          "game/test/core-abilities.test.mjs",
+          "game/test/core-systems.test.mjs",
+          "game/test/couch-catalogue-reentry.test.mjs",
+          "game/test/couch-encounter.test.mjs",
+          "game/test/couch-installed-chapters.test.mjs",
+          "game/test/couch-music-context.test.mjs",
+          "game/test/couch-reading.test.mjs",
+          "game/test/couch-static-picture-host.test.mjs",
+          "game/test/course-pause-host.test.mjs",
+          "game/test/data-json.test.mjs",
+          "game/test/difficulty-access.test.mjs",
+          "game/test/direct-tools-loading.test.mjs",
+          "game/test/encounter-authoring.test.mjs",
+          "game/test/encounter-packs-backup.test.mjs",
+          "game/test/enemy-catalog-panel.test.mjs",
+          "game/test/enemy-guide.test.mjs",
+          "game/test/enemy-workshop-return.test.mjs",
+          "game/test/external-backup-host.test.mjs",
+          "game/test/external-chapter-download.test.mjs",
+          "game/test/external-chapters-panel.test.mjs",
+          "game/test/field-kit-flow.test.mjs",
+          "game/test/field-kit-scenes.test.mjs",
+          "game/test/first-flight-launch.test.mjs",
+          "game/test/first-flight.test.mjs",
+          "game/test/flight-information-backup-host.test.mjs",
+          "game/test/flight-information-source.test.mjs",
+          "game/test/focus-clearance.test.mjs",
+          "game/test/four-worlds-chapters.test.mjs",
+          "game/test/fpv-r5-playthrough.test.mjs",
+          "game/test/fracture-chapter-distribution.test.mjs",
+          "game/test/fracture-mastery.test.mjs",
+          "game/test/fracture-theme-chapters.test.mjs",
+          "game/test/gallery-focus.test.mjs",
+          "game/test/history-picture-host.test.mjs",
+          "game/test/horizon-versus.test.mjs",
+          "game/test/initial-focus-host.test.mjs",
+          "game/test/journey-continue-caption-host.test.mjs",
+          "game/test/journey-music-context.test.mjs",
+          "game/test/key-bindings.test.mjs",
+          "game/test/library-launch-host.test.mjs",
+          "game/test/line-impact.test.mjs",
+          "game/test/livewire-presentation.test.mjs",
+          "game/test/main-menu-collection-host.test.mjs",
+          "game/test/mastery-catalog.test.mjs",
+          "game/test/mastery-pack-view.test.mjs",
+          "game/test/mastery-view.test.mjs",
+          "game/test/media-library.test.mjs",
+          "game/test/menu-appearance.test.mjs",
+          "game/test/menu-style-preferences.test.mjs",
+          "game/test/mission-picker.test.mjs",
+          "game/test/modal-navigation.test.mjs",
+          "game/test/mode-return.test.mjs",
+          "game/test/motion-lab-png-preview.test.mjs",
+          "game/test/multiplayer-encounter.test.mjs",
+          "game/test/neon-art.test.mjs",
+          "game/test/neon-routes.test.mjs",
+          "game/test/offline.test.mjs",
+          "game/test/optional-chapters-host-copy.test.mjs",
+          "game/test/optional-world-play-host.test.mjs",
+          "game/test/pack-mastery.test.mjs",
+          "game/test/pause-menu-host.test.mjs",
+          "game/test/phase-mastery.test.mjs",
+          "game/test/picture-backup-transfer.test.mjs",
+          "game/test/player-body-layout.test.mjs",
+          "game/test/playground-model.test.mjs",
+          "game/test/practice-media-v3-host.test.mjs",
+          "game/test/preference-restoration.test.mjs",
+          "game/test/presentation-dependencies.test.mjs",
+          "game/test/presentation-image.test.mjs",
+          "game/test/presentation-page-entry.test.mjs",
+          "game/test/presentation-production-history.test.mjs",
+          "game/test/presentation-system.test.mjs",
+          "game/test/profile-original-recovery-view.test.mjs",
+          "game/test/profile-recovery-display.test.mjs",
+          "game/test/profile-recovery-view.test.mjs",
+          "game/test/profile-writer.test.mjs",
+          "game/test/reading-input-prompt.test.mjs",
+          "game/test/replay-player.test.mjs",
+          "game/test/replay.test.mjs",
+          "game/test/retry-view.test.mjs",
+          "game/test/route-worlds.test.mjs",
+          "game/test/rover-preview.test.mjs",
+          "game/test/screen-steering-hand.test.mjs",
+          "game/test/sentinel-circuit-external.test.mjs",
+          "game/test/sentinel-theme-distribution.test.mjs",
+          "game/test/sessions-mastery.test.mjs",
+          "game/test/settings-restoration-host.test.mjs",
+          "game/test/shared-touch-preferences.test.mjs",
+          "game/test/signal-presentation.test.mjs",
+          "game/test/site-release-links.test.mjs",
+          "game/test/soundtrack-bonus-offload.test.mjs",
+          "game/test/soundtrack-master-keyboard-host.test.mjs",
+          "game/test/soundtrack-player.test.mjs",
+          "game/test/soundtrack-rights.test.mjs",
+          "game/test/soundtrack-v3-compatibility.test.mjs",
+          "game/test/sprite-editor.test.mjs",
+          "game/test/still-media-channel.test.mjs",
+          "game/test/still-media-preview.test.mjs",
+          "game/test/storage-retention-host.test.mjs",
+          "game/test/story-binding-store.test.mjs",
+          "game/test/story-media-store.test.mjs",
+          "game/test/tactical-challenges.test.mjs",
+          "game/test/team-discovery-input.test.mjs",
+          "game/test/team-entry.test.mjs",
+          "game/test/text-face-library.test.mjs",
+          "game/test/title-mode-departure-host.test.mjs",
+          "game/test/touch-steering.test.mjs",
+          "game/test/ukraine-role-presentation.test.mjs",
+          "game/test/video-poster.test.mjs",
+          "game/test/visual-theme-lease.test.mjs",
+          "game/test/wide-presentation.test.mjs",
+          "platforms/desktop/test/package-security.test.mjs",
+          "platforms/ios/test/bridge.test.mjs",
+          "scripts/native-cli.test.mjs",
+          "scripts/test-build-soundtrack-archive.mjs",
+          "scripts/test-expansion-proof-dispatch.mjs",
+          "scripts/test-hosted-soundtrack-publication.mjs",
+          "scripts/test-optional-distribution.mjs",
+          "scripts/test-production-countercurrent.mjs",
+          "scripts/test-production-register.mjs",
+          "scripts/test-run-test-shard.mjs",
+          "scripts/test-source-identity.mjs"
+        ],
+        "counts": {
+          "tests": 2157,
+          "pass": 2157,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "step": {
+          "completedAt": "2026-09-21T17:50:24Z",
+          "conclusion": "success",
+          "name": "Run test shard 1/4",
+          "number": 7,
+          "startedAt": "2026-09-21T17:30:24Z",
+          "status": "completed"
+        },
+        "collectorEvidence": {
+          "path": ".cache/v080-qualification/final-9dc3af75/manual/shard-1.txt",
+          "bytes": 6630,
+          "sha256": "64399f0855add92360fa521e1c628a7ca208ccc407d3adaf57e13234de2b05e7"
+        }
+      },
+      {
+        "shard": 2,
+        "jobId": 106441438412,
+        "files": [
+          "authoring/motion-lab/test-animation.mjs",
+          "authoring/motion-lab/test-steering.mjs",
+          "game/test/arcade-actions.test.mjs",
+          "game/test/asset-studio-cross-mode.test.mjs",
+          "game/test/asset-studio-guide.test.mjs",
+          "game/test/asset-studio-loading.test.mjs",
+          "game/test/asset-studio-return.test.mjs",
+          "game/test/attempt-export-panel.test.mjs",
+          "game/test/audio-preferences.test.mjs",
+          "game/test/authoring-host-display.test.mjs",
+          "game/test/backup-storage.test.mjs",
+          "game/test/boot-build.test.mjs",
+          "game/test/border-candidates.test.mjs",
+          "game/test/border-timing.test.mjs",
+          "game/test/campaign-difficulty.test.mjs",
+          "game/test/candidate-legacy-save-host.test.mjs",
+          "game/test/challenges.test.mjs",
+          "game/test/chapter-focus-nested.test.mjs",
+          "game/test/classic-domain-edge-recovery.test.mjs",
+          "game/test/classic-presentation.test.mjs",
+          "game/test/collection-records-return-host.test.mjs",
+          "game/test/compatibility-v0100.test.mjs",
+          "game/test/content-assets.test.mjs",
+          "game/test/content-color-trace.test.mjs",
+          "game/test/content-fracture-catalog.test.mjs",
+          "game/test/content-journey.test.mjs",
+          "game/test/content-objectives.test.mjs",
+          "game/test/content-picture.test.mjs",
+          "game/test/content-removal.test.mjs",
+          "game/test/content-studio-empty.test.mjs",
+          "game/test/content-team-host.test.mjs",
+          "game/test/content-team.test.mjs",
+          "game/test/continuation.test.mjs",
+          "game/test/controller-bindings.test.mjs",
+          "game/test/controller-boost.test.mjs",
+          "game/test/controller-preference-library.test.mjs",
+          "game/test/controller-router.test.mjs",
+          "game/test/coop-authoring.test.mjs",
+          "game/test/coop-core.test.mjs",
+          "game/test/coop-experiment.test.mjs",
+          "game/test/coop-import-artwork-host.test.mjs",
+          "game/test/coop-import-source-retire.test.mjs",
+          "game/test/coop-live-rescue.test.mjs",
+          "game/test/coop-local-artwork-picture.test.mjs",
+          "game/test/coop-pack-destination.test.mjs",
+          "game/test/coop-picture-recovery-focus.test.mjs",
+          "game/test/coop-presentation.test.mjs",
+          "game/test/coop-terminal-player-hud.test.mjs",
+          "game/test/coop-view-presentation.test.mjs",
+          "game/test/core-capture.test.mjs",
+          "game/test/couch-audio-master.test.mjs",
+          "game/test/couch-chapter-install.test.mjs",
+          "game/test/couch-external-picture-parity.test.mjs",
+          "game/test/couch-installed-release-parity.test.mjs",
+          "game/test/couch-music-library.test.mjs",
+          "game/test/couch-resize-focus.test.mjs",
+          "game/test/couch-static-pictures.test.mjs",
+          "game/test/course-selection-host.test.mjs",
+          "game/test/dawn-signal-example.test.mjs",
+          "game/test/difficulty-host.test.mjs",
+          "game/test/display-preferences-host.test.mjs",
+          "game/test/encounter-compatibility.test.mjs",
+          "game/test/encounter-view.test.mjs",
+          "game/test/enemy-catalog.test.mjs",
+          "game/test/enemy-presentations.test.mjs",
+          "game/test/equipment-help-host.test.mjs",
+          "game/test/external-chapter-app.test.mjs",
+          "game/test/external-chapter-host.test.mjs",
+          "game/test/external-choice-capacity.test.mjs",
+          "game/test/field-kit-icons.test.mjs",
+          "game/test/field-kit-surfaces.test.mjs",
+          "game/test/first-flight-preview.test.mjs",
+          "game/test/first-journey-entry-host.test.mjs",
+          "game/test/flight-information-bridge.test.mjs",
+          "game/test/flight-media-pins.test.mjs",
+          "game/test/foundation-core.test.mjs",
+          "game/test/fpv-r2-playthrough.test.mjs",
+          "game/test/fpv-role-host.test.mjs",
+          "game/test/fracture-chapter-host.test.mjs",
+          "game/test/fracture-preview.test.mjs",
+          "game/test/fracture-timing.test.mjs",
+          "game/test/gallery-reduced-effects.test.mjs",
+          "game/test/homeward-playthrough.test.mjs",
+          "game/test/host-presentation-size.test.mjs",
+          "game/test/journey-arcade-policy.test.mjs",
+          "game/test/journey-host.test.mjs",
+          "game/test/journey-preferences.test.mjs",
+          "game/test/key-capture-navigation-host.test.mjs",
+          "game/test/library-pager-host.test.mjs",
+          "game/test/livewire-candidates.test.mjs",
+          "game/test/livewire-routes.test.mjs",
+          "game/test/managed-media-connection.test.mjs",
+          "game/test/mastery-equipment-replay.test.mjs",
+          "game/test/mastery-records.test.mjs",
+          "game/test/mastery.test.mjs",
+          "game/test/media-runtime-read.test.mjs",
+          "game/test/menu-initial-focus.test.mjs",
+          "game/test/mission-brief.test.mjs",
+          "game/test/mission-replacement-host.test.mjs",
+          "game/test/modal-tab-boundary.test.mjs",
+          "game/test/motion-lab-display-host.test.mjs",
+          "game/test/motion-lab-preview-loop.test.mjs",
+          "game/test/multiplayer-untimed.test.mjs",
+          "game/test/neon-candidates.test.mjs",
+          "game/test/neon-timing.test.mjs",
+          "game/test/operation-focus-host.test.mjs",
+          "game/test/optional-chapters-host.test.mjs",
+          "game/test/optional-world-play-lifetime.test.mjs",
+          "game/test/packs.test.mjs",
+          "game/test/phase-briefing.test.mjs",
+          "game/test/phase-routes.test.mjs",
+          "game/test/picture-ready-status.test.mjs",
+          "game/test/player-locator.test.mjs",
+          "game/test/playground-tab-boundary.test.mjs",
+          "game/test/practice-navigation.test.mjs",
+          "game/test/presentation-adoption.test.mjs",
+          "game/test/presentation-fonts.test.mjs",
+          "game/test/presentation-manifest-budget.test.mjs",
+          "game/test/presentation-page-retry.test.mjs",
+          "game/test/presentation-readiness.test.mjs",
+          "game/test/presentation-ui.test.mjs",
+          "game/test/profile-original-recovery.test.mjs",
+          "game/test/profile-recovery-settings-host.test.mjs",
+          "game/test/profile-shared-media.test.mjs",
+          "game/test/progress.test.mjs",
+          "game/test/reading-prompts-host.test.mjs",
+          "game/test/replay-theater-display-host.test.mjs",
+          "game/test/restart-navigation-host.test.mjs",
+          "game/test/rewards.test.mjs",
+          "game/test/rover-art.test.mjs",
+          "game/test/rover-routes.test.mjs",
+          "game/test/selection-bookmark-host.test.mjs",
+          "game/test/sentinel-circuit.test.mjs",
+          "game/test/sentinel-theme-host.test.mjs",
+          "game/test/sessions.test.mjs",
+          "game/test/shared-settings-reading.test.mjs",
+          "game/test/signal-art.test.mjs",
+          "game/test/signal-reference-crosswalk.test.mjs",
+          "game/test/solo-result-continuation-host.test.mjs",
+          "game/test/soundtrack-catalogue.test.mjs",
+          "game/test/soundtrack-master.test.mjs",
+          "game/test/soundtrack-portable.test.mjs",
+          "game/test/soundtrack-share.test.mjs",
+          "game/test/soundtrack-v3-playback-recovery.test.mjs",
+          "game/test/starting-setup-host.test.mjs",
+          "game/test/still-media-display-host.test.mjs",
+          "game/test/still-story-lifecycle.test.mjs",
+          "game/test/storage-retention.test.mjs",
+          "game/test/story-bundle.test.mjs",
+          "game/test/story-receipts.test.mjs",
+          "game/test/tactical-teaching.test.mjs",
+          "game/test/team-discovery-panel.test.mjs",
+          "game/test/terminal-navigation.test.mjs",
+          "game/test/text-size-host.test.mjs",
+          "game/test/title-operation-status-host.test.mjs",
+          "game/test/touchscreen-controller-host.test.mjs",
+          "game/test/victory-story-ui.test.mjs",
+          "game/test/viewport-startup-host.test.mjs",
+          "game/test/visual-theme-pin.test.mjs",
+          "game/test/workshop-art-integration.test.mjs",
+          "platforms/desktop/test/packaging.test.mjs",
+          "platforms/ios/test/configuration.test.mjs",
+          "scripts/test-audit-signal-mastery.mjs",
+          "scripts/test-build-workshop-pack.mjs",
+          "scripts/test-external-distribution.mjs",
+          "scripts/test-inspect-goals.mjs",
+          "scripts/test-pack-indexes.mjs",
+          "scripts/test-production-fracture-themes.mjs",
+          "scripts/test-production-sentinel-themes.mjs",
+          "scripts/test-snapshot-archive-transfer.mjs",
+          "scripts/test-ua-fpv-local-pack.mjs"
+        ],
+        "counts": {
+          "tests": 1839,
+          "pass": 1839,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "step": {
+          "completedAt": "2026-09-21T18:08:21Z",
+          "conclusion": "success",
+          "name": "Run test shard 2/4",
+          "number": 7,
+          "startedAt": "2026-09-21T17:30:42Z",
+          "status": "completed"
+        },
+        "collectorEvidence": {
+          "path": ".cache/v080-qualification/final-9dc3af75/manual/shard-2.txt",
+          "bytes": 6660,
+          "sha256": "b63abe1b77edfcad47e87c29020fa8fe88e384e16d9117c93748a6ad95433728"
+        }
+      },
+      {
+        "shard": 3,
+        "jobId": 106441438356,
+        "files": [
+          "authoring/motion-lab/test-collection.mjs",
+          "game/test/about-navigation-host.test.mjs",
+          "game/test/asset-studio-audio-master.test.mjs",
+          "game/test/asset-studio-fixture.test.mjs",
+          "game/test/asset-studio-helpers.test.mjs",
+          "game/test/asset-studio-offline-fixtures.test.mjs",
+          "game/test/asset-studio-rotors.test.mjs",
+          "game/test/attempt-export.test.mjs",
+          "game/test/audio.test.mjs",
+          "game/test/backup-content-feedback-host.test.mjs",
+          "game/test/backup.test.mjs",
+          "game/test/boot-host.test.mjs",
+          "game/test/border-legacy-routes.test.mjs",
+          "game/test/campaign-contexts.test.mjs",
+          "game/test/campaign-playthrough.test.mjs",
+          "game/test/candidate-solo-host.test.mjs",
+          "game/test/chapter-download-host.test.mjs",
+          "game/test/chapter-reward-integration.test.mjs",
+          "game/test/classic-domain-recovery.test.mjs",
+          "game/test/classic-progression.test.mjs",
+          "game/test/collection-results.test.mjs",
+          "game/test/compatibility-v060.test.mjs",
+          "game/test/content-attempt.test.mjs",
+          "game/test/content-diagnostics.test.mjs",
+          "game/test/content-geometry-edit.test.mjs",
+          "game/test/content-launch.test.mjs",
+          "game/test/content-pacing-inspector.test.mjs",
+          "game/test/content-preview-loader.test.mjs",
+          "game/test/content-route.test.mjs",
+          "game/test/content-studio-navigation.test.mjs",
+          "game/test/content-team-recovery-host.test.mjs",
+          "game/test/content-terrain-contract.test.mjs",
+          "game/test/continuous-host.test.mjs",
+          "game/test/controller-boost-library.test.mjs",
+          "game/test/controller-lab.test.mjs",
+          "game/test/controller-preview.test.mjs",
+          "game/test/controller-settings.test.mjs",
+          "game/test/coop-balanced-routes.test.mjs",
+          "game/test/coop-custom-artwork-host.test.mjs",
+          "game/test/coop-foundations.test.mjs",
+          "game/test/coop-import-next.test.mjs",
+          "game/test/coop-import-source.test.mjs",
+          "game/test/coop-lobby-focus.test.mjs",
+          "game/test/coop-materials.test.mjs",
+          "game/test/coop-paused-resize.test.mjs",
+          "game/test/coop-pilot-states.test.mjs",
+          "game/test/coop-recovery-copy.test.mjs",
+          "game/test/coop-terrain-trail.test.mjs",
+          "game/test/coop-wall-sliding.test.mjs",
+          "game/test/core-movement.test.mjs",
+          "game/test/couch-board-footprint-host.test.mjs",
+          "game/test/couch-chapter.test.mjs",
+          "game/test/couch-initial-focus.test.mjs",
+          "game/test/couch-markup.test.mjs",
+          "game/test/couch-music-session.test.mjs",
+          "game/test/couch-shared-touch.test.mjs",
+          "game/test/countercurrent-chapter-distribution.test.mjs",
+          "game/test/creator-tools-scope-host.test.mjs",
+          "game/test/defeat-presentation-host.test.mjs",
+          "game/test/difficulty-navigation.test.mjs",
+          "game/test/display-preferences.test.mjs",
+          "game/test/encounter-consumers.test.mjs",
+          "game/test/enemy-body-assets.test.mjs",
+          "game/test/enemy-guide-host.test.mjs",
+          "game/test/enemy-pressure.test.mjs",
+          "game/test/equipment-workshop.test.mjs",
+          "game/test/external-chapter-backup.test.mjs",
+          "game/test/external-chapter-install.test.mjs",
+          "game/test/external-recovery-catalog.test.mjs",
+          "game/test/field-kit-pixel-art.test.mjs",
+          "game/test/field-kit-title-v2.test.mjs",
+          "game/test/first-flight-routes.test.mjs",
+          "game/test/first-light-playthrough.test.mjs",
+          "game/test/flight-information-details-host.test.mjs",
+          "game/test/flight-pictures-host.test.mjs",
+          "game/test/foundation-host.test.mjs",
+          "game/test/fpv-r3-playthrough.test.mjs",
+          "game/test/fpv-role-presentation.test.mjs",
+          "game/test/fracture-lines-chapter.test.mjs",
+          "game/test/fracture-routes.test.mjs",
+          "game/test/fullscreen.test.mjs",
+          "game/test/gallery-return-host.test.mjs",
+          "game/test/horizon-candidates.test.mjs",
+          "game/test/hud-status-cues.test.mjs",
+          "game/test/journey-authority.test.mjs",
+          "game/test/journey-legacy-routes.test.mjs",
+          "game/test/journey-visual-theme-identities.test.mjs",
+          "game/test/key-settings.test.mjs",
+          "game/test/library-row-focus-host.test.mjs",
+          "game/test/livewire-goal-evidence.test.mjs",
+          "game/test/livewire-seeds.test.mjs",
+          "game/test/managed-media-store.test.mjs",
+          "game/test/mastery-equipment.test.mjs",
+          "game/test/mastery-replay.test.mjs",
+          "game/test/media-bundle.test.mjs",
+          "game/test/media-still.test.mjs",
+          "game/test/menu-style-controls.test.mjs",
+          "game/test/mission-card.test.mjs",
+          "game/test/mission-selection-focus-host.test.mjs",
+          "game/test/mode-return-host.test.mjs",
+          "game/test/motion-lab-display-restoration.test.mjs",
+          "game/test/motion-lab-render-ability.test.mjs",
+          "game/test/multiplayer.test.mjs",
+          "game/test/neon-mastery.test.mjs",
+          "game/test/nonmodal-header-navigation.test.mjs",
+          "game/test/operation-status.test.mjs",
+          "game/test/optional-chapters.test.mjs",
+          "game/test/original-soundtrack-production.test.mjs",
+          "game/test/pages-delivery.test.mjs",
+          "game/test/phase-candidates.test.mjs",
+          "game/test/phase-seeds.test.mjs",
+          "game/test/picture-receipts.test.mjs",
+          "game/test/playground-import-host.test.mjs",
+          "game/test/playground-viewport.test.mjs",
+          "game/test/practice-playground-display.test.mjs",
+          "game/test/presentation-backdrop.test.mjs",
+          "game/test/presentation-host-manifest-pin.test.mjs",
+          "game/test/presentation-metadata.test.mjs",
+          "game/test/presentation-page.test.mjs",
+          "game/test/presentation-renderer.test.mjs",
+          "game/test/profile-channel-assets.test.mjs",
+          "game/test/profile-recovery-catalogs.test.mjs",
+          "game/test/profile-recovery-snapshot.test.mjs",
+          "game/test/profile-transfer-suspended.test.mjs",
+          "game/test/published-audio.test.mjs",
+          "game/test/release-pictures.test.mjs",
+          "game/test/replay-theater-navigation.test.mjs",
+          "game/test/result-picture.test.mjs",
+          "game/test/route-choices-chapter.test.mjs",
+          "game/test/rover-candidates.test.mjs",
+          "game/test/rover-timing.test.mjs",
+          "game/test/selection-bookmark.test.mjs",
+          "game/test/sentinel-playthrough.test.mjs",
+          "game/test/sessions-continuous.test.mjs",
+          "game/test/settings-assists-host.test.mjs",
+          "game/test/shared-settings-solo.test.mjs",
+          "game/test/signal-candidates.test.mjs",
+          "game/test/signal-routes.test.mjs",
+          "game/test/soundtrack-albums.test.mjs",
+          "game/test/soundtrack-gain-leases.test.mjs",
+          "game/test/soundtrack-original-flac-production.test.mjs",
+          "game/test/soundtrack-preparation-policy.test.mjs",
+          "game/test/soundtrack-source.test.mjs",
+          "game/test/soundtrack.test.mjs",
+          "game/test/still-media-bundle-ui.test.mjs",
+          "game/test/still-media-host.test.mjs",
+          "game/test/still-story-panel.test.mjs",
+          "game/test/story-backup-transfer.test.mjs",
+          "game/test/story-dialog.test.mjs",
+          "game/test/studio-preview-readiness.test.mjs",
+          "game/test/team-arena-preference.test.mjs",
+          "game/test/team-discovery-pictures.test.mjs",
+          "game/test/terrain-feedback.test.mjs",
+          "game/test/text-size-library.test.mjs",
+          "game/test/tool-display-restoration.test.mjs",
+          "game/test/ui-input.test.mjs",
+          "game/test/victory-story.test.mjs",
+          "game/test/visual-theme-catalogue.test.mjs",
+          "game/test/wide-content.test.mjs",
+          "game/test/workshop-return.test.mjs",
+          "platforms/desktop/test/policy.test.mjs",
+          "platforms/ios/test/diagnostics.test.mjs",
+          "scripts/test-audit-signal-pacing.mjs",
+          "scripts/test-check-backup-set.mjs",
+          "scripts/test-field-kit-recipe-sources.mjs",
+          "scripts/test-licensed-audio-build.mjs",
+          "scripts/test-pages-archive.mjs",
+          "scripts/test-production-metadata-history.mjs",
+          "scripts/test-production-source-history.mjs",
+          "scripts/test-soundtrack-archive-admissions.mjs",
+          "scripts/test-ua-fpv-publication.mjs"
+        ],
+        "counts": {
+          "tests": 1942,
+          "pass": 1942,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "step": {
+          "completedAt": "2026-09-21T17:44:45Z",
+          "conclusion": "success",
+          "name": "Run test shard 3/4",
+          "number": 7,
+          "startedAt": "2026-09-21T17:30:58Z",
+          "status": "completed"
+        },
+        "collectorEvidence": {
+          "path": ".cache/v080-qualification/final-9dc3af75/manual/shard-3.txt",
+          "bytes": 6683,
+          "sha256": "d3f911973fc15ae05608fc21c73645cfb16bb365160f92749e9935f85d57588e"
+        }
+      },
+      {
+        "shard": 4,
+        "jobId": 106441438420,
+        "files": [
+          "authoring/motion-lab/test-grid-motion.mjs",
+          "game/test/actor-presentation.test.mjs",
+          "game/test/asset-studio-build.test.mjs",
+          "game/test/asset-studio-font-cache.test.mjs",
+          "game/test/asset-studio-host-loading.test.mjs",
+          "game/test/asset-studio-picture-context.test.mjs",
+          "game/test/asset-studio-team-fixture.test.mjs",
+          "game/test/attempt-file.test.mjs",
+          "game/test/authored-mode-bootstrap.test.mjs",
+          "game/test/backup-set-host.test.mjs",
+          "game/test/board-footprint.test.mjs",
+          "game/test/boot.test.mjs",
+          "game/test/border-reference-crosswalk.test.mjs",
+          "game/test/campaign-difficulty-backup.test.mjs",
+          "game/test/campaign-theme-integration.test.mjs",
+          "game/test/candidate-versus-host.test.mjs",
+          "game/test/chapter-download.test.mjs",
+          "game/test/classic-capture-stop.test.mjs",
+          "game/test/classic-host.test.mjs",
+          "game/test/classic-transport.test.mjs",
+          "game/test/compact-arena-layout.test.mjs",
+          "game/test/content-actors.test.mjs",
+          "game/test/content-bonuses.test.mjs",
+          "game/test/content-drafts.test.mjs",
+          "game/test/content-image-authoring.test.mjs",
+          "game/test/content-library-capacity.test.mjs",
+          "game/test/content-pacing.test.mjs",
+          "game/test/content-project.test.mjs",
+          "game/test/content-rover-catalog.test.mjs",
+          "game/test/content-studio.test.mjs",
+          "game/test/content-team-routes.test.mjs",
+          "game/test/content-tuning.test.mjs",
+          "game/test/continuous-input.test.mjs",
+          "game/test/controller-boost-recovery.test.mjs",
+          "game/test/controller-navigation.test.mjs",
+          "game/test/controller-reading.test.mjs",
+          "game/test/coop-actor-layout.test.mjs",
+          "game/test/coop-briefing-host.test.mjs",
+          "game/test/coop-display-reflow.test.mjs",
+          "game/test/coop-historical-import-picture.test.mjs",
+          "game/test/coop-import-production-reader.test.mjs",
+          "game/test/coop-input-policy.test.mjs",
+          "game/test/coop-lobby-preview.test.mjs",
+          "game/test/coop-next-host.test.mjs",
+          "game/test/coop-picture-bindings.test.mjs",
+          "game/test/coop-presentation-bootstrap-retry.test.mjs",
+          "game/test/coop-shared-settings.test.mjs",
+          "game/test/coop-threat-pacing.test.mjs",
+          "game/test/coop-won-terminal-host.test.mjs",
+          "game/test/core-roster-viability.test.mjs",
+          "game/test/couch-catalogue-host.test.mjs",
+          "game/test/couch-departure.test.mjs",
+          "game/test/couch-input.test.mjs",
+          "game/test/couch-menu-music.test.mjs",
+          "game/test/couch-navigation.test.mjs",
+          "game/test/couch-shell.test.mjs",
+          "game/test/countercurrent-chapter-host.test.mjs",
+          "game/test/current-art.test.mjs",
+          "game/test/device-controls-host.test.mjs",
+          "game/test/direct-tool-launch.test.mjs",
+          "game/test/earned-picture.test.mjs",
+          "game/test/encounter-core.test.mjs",
+          "game/test/enemy-body-motion.test.mjs",
+          "game/test/enemy-guide-panel.test.mjs",
+          "game/test/enemy-workshop-host.test.mjs",
+          "game/test/expansion-playthrough.test.mjs",
+          "game/test/external-chapter-card-focus.test.mjs",
+          "game/test/external-chapter.test.mjs",
+          "game/test/featured-chapter.test.mjs",
+          "game/test/field-kit-reveals.test.mjs",
+          "game/test/first-flight-entry.test.mjs",
+          "game/test/first-flight-view.test.mjs",
+          "game/test/flight-authored-pictures.test.mjs",
+          "game/test/flight-information-host.test.mjs",
+          "game/test/flight-pictures.test.mjs",
+          "game/test/foundation-transport.test.mjs",
+          "game/test/fpv-r4-playthrough.test.mjs",
+          "game/test/fracture-candidates.test.mjs",
+          "game/test/fracture-lines.test.mjs",
+          "game/test/fracture-seeds.test.mjs",
+          "game/test/gallery-difficulty.test.mjs",
+          "game/test/gentle-routes.test.mjs",
+          "game/test/horizon-reference-crosswalk.test.mjs",
+          "game/test/imports.test.mjs",
+          "game/test/journey-backup.test.mjs",
+          "game/test/journey-menu-return-host.test.mjs",
+          "game/test/journey.test.mjs",
+          "game/test/landing-release-history-host.test.mjs",
+          "game/test/library.test.mjs",
+          "game/test/livewire-mastery.test.mjs",
+          "game/test/livewire-timing.test.mjs",
+          "game/test/map-design.test.mjs",
+          "game/test/mastery-library.test.mjs",
+          "game/test/mastery-v070-compatibility.test.mjs",
+          "game/test/media-generic-portability.test.mjs",
+          "game/test/media-store.test.mjs",
+          "game/test/menu-style-host.test.mjs",
+          "game/test/mission-picker-older.test.mjs",
+          "game/test/mission-thumbnails.test.mjs",
+          "game/test/mode-return-v2.test.mjs",
+          "game/test/motion-lab-labels.test.mjs",
+          "game/test/mp3.test.mjs",
+          "game/test/music-credit.test.mjs",
+          "game/test/neon-preview.test.mjs",
+          "game/test/offline-panel.test.mjs",
+          "game/test/optional-chapter-descriptions.test.mjs",
+          "game/test/optional-world-choice-lifetime.test.mjs",
+          "game/test/pack-mastery-integration.test.mjs",
+          "game/test/pause-layout-contract.test.mjs",
+          "game/test/phase-goal-evidence.test.mjs",
+          "game/test/phase-timing.test.mjs",
+          "game/test/platform.test.mjs",
+          "game/test/playground-map-diagnostics.test.mjs",
+          "game/test/practice-brief-host.test.mjs",
+          "game/test/practice-retry.test.mjs",
+          "game/test/presentation-component-specimens.test.mjs",
+          "game/test/presentation-host.test.mjs",
+          "game/test/presentation-output.test.mjs",
+          "game/test/presentation-pins.test.mjs",
+          "game/test/presentation-studio.test.mjs",
+          "game/test/profile-channel-reader.test.mjs",
+          "game/test/profile-recovery-dialog.test.mjs",
+          "game/test/profile-recovery-startup-navigation.test.mjs",
+          "game/test/profile-transfer.test.mjs",
+          "game/test/published-studio.test.mjs",
+          "game/test/renderer-readability.test.mjs",
+          "game/test/replay-theater-wide.test.mjs",
+          "game/test/retry-integration.test.mjs",
+          "game/test/route-worlds-host.test.mjs",
+          "game/test/rover-mastery.test.mjs",
+          "game/test/scenario-mastery.test.mjs",
+          "game/test/selective-line-impact.test.mjs",
+          "game/test/sentinel-theme-chapters.test.mjs",
+          "game/test/sessions-equipment-mastery.test.mjs",
+          "game/test/settings-panels.test.mjs",
+          "game/test/shared-settings-versus.test.mjs",
+          "game/test/signal-mastery.test.mjs",
+          "game/test/signal-timing.test.mjs",
+          "game/test/soundtrack-archive.test.mjs",
+          "game/test/soundtrack-host.test.mjs",
+          "game/test/soundtrack-panel.test.mjs",
+          "game/test/soundtrack-reference-recovery.test.mjs",
+          "game/test/soundtrack-store.test.mjs",
+          "game/test/specialty-playthrough.test.mjs",
+          "game/test/still-media-catalog.test.mjs",
+          "game/test/still-media-panel.test.mjs",
+          "game/test/still-workshop-build.test.mjs",
+          "game/test/story-binding-model.test.mjs",
+          "game/test/story-flight-host.test.mjs",
+          "game/test/studio-slot-history.test.mjs",
+          "game/test/team-discovery-host.test.mjs",
+          "game/test/team-discovery-preview-host.test.mjs",
+          "game/test/text-face-host.test.mjs",
+          "game/test/title-entry-host.test.mjs",
+          "game/test/touch-hand-compatibility.test.mjs",
+          "game/test/ukraine-role-host.test.mjs",
+          "game/test/video-poster-workshop.test.mjs",
+          "game/test/visual-theme-identities.test.mjs",
+          "game/test/wide-core.test.mjs",
+          "game/test/worlds-browser.test.mjs",
+          "platforms/desktop/test/resources.test.mjs",
+          "scripts/native-art.test.mjs",
+          "scripts/test-build-licensed-preview-archive.mjs",
+          "scripts/test-encounter-consumers.mjs",
+          "scripts/test-game-cli.mjs",
+          "scripts/test-optional-artwork.mjs",
+          "scripts/test-pages-current-entry.mjs",
+          "scripts/test-production-panel.mjs",
+          "scripts/test-release-catalog.mjs",
+          "scripts/test-soundtrack-distribution.mjs"
+        ],
+        "counts": {
+          "tests": 2162,
+          "pass": 2162,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "step": {
+          "completedAt": "2026-09-21T17:50:12Z",
+          "conclusion": "success",
+          "name": "Run test shard 4/4",
+          "number": 7,
+          "startedAt": "2026-09-21T17:31:12Z",
+          "status": "completed"
+        },
+        "collectorEvidence": {
+          "path": ".cache/v080-qualification/final-9dc3af75/manual/shard-4.txt",
+          "bytes": 6512,
+          "sha256": "e4035cf5acb2b98c87852fe29f21a2345c007c324f10c8a8d67c6ac377359e62"
+        }
+      }
+    ]
+  },
+  "manualFreezeObservation": {
+    "runId": 35632165904,
+    "jobId": 106454968949,
+    "conclusion": "success",
+    "steps": [
+      {
+        "completedAt": "2026-09-21T18:08:54Z",
+        "conclusion": "success",
+        "name": "Check out the qualified source",
+        "number": 2,
+        "startedAt": "2026-09-21T18:08:31Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-09-21T18:08:59Z",
+        "conclusion": "success",
+        "name": "Set up Node.js",
+        "number": 3,
+        "startedAt": "2026-09-21T18:08:54Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-09-21T18:11:50Z",
+        "conclusion": "success",
+        "name": "Freeze the exact qualified commit",
+        "number": 4,
+        "startedAt": "2026-09-21T18:08:59Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-09-21T18:12:09Z",
+        "conclusion": "success",
+        "name": "Retain original release assets",
+        "number": 5,
+        "startedAt": "2026-09-21T18:11:50Z",
+        "status": "completed"
+      }
+    ],
+    "artifact": {
+      "id": 10656003683,
+      "runId": 35632165904,
+      "bytes": 1824349513,
+      "sha256": "a1c3449271af99280c5e9a74c5b32ed540047bb82f5f5730d1d6f4844dee5131"
+    },
+    "artifactMetadata": {
+      "path": ".cache/v080-inspection-r1/evidence/api/001.json",
+      "bytes": 725,
+      "sha256": "d521475715d9ec72399b96de8f7b25a9a06f661660069096a08a630a0e4e6dc8"
+    }
+  },
+  "inspectionObservation": {
+    "runId": 35637487152,
+    "jobId": 106458366905,
+    "conclusion": "success",
+    "summary": {
+      "path": ".cache/v080-inspection-r1/run/metadata.json",
+      "bytes": 3544,
+      "sha256": "3ee246845defe0044aa9fda4b0259284790c36d1de4abc6d011e41e5e8604f88"
+    },
+    "completedAt": "2026-09-21T18:21:16Z",
+    "result": {
+      "path": ".cache/v080-inspection-r1/evidence/result.json",
+      "bytes": 548,
+      "sha256": "5720b8c1a19b732312aa764863532db28615a622b12e582402a195c119d6db58"
+    },
+    "execution": {
+      "path": ".cache/v080-inspection-r1/evidence/execution.json",
+      "bytes": 2442,
+      "sha256": "b8f58e1b8c8322d4102e8ab4afb7c63d54354422b089d9a2b00f19583f5bd98e"
+    }
+  },
+  "browserObservation": {
+    "evidence": {
+      "path": ".cache/v080-qualification/final-browser/browser-evidence.json",
+      "bytes": 11216,
+      "sha256": "4cced15e12ce8de48fc1eddb2fa7017721deeaa5f19cfc1da09d840a98e41d93"
+    },
+    "checks": 12,
+    "status": "PASS_SCOPED",
+    "publicAcceptance": false,
+    "distribution": {
+      "bytes": 423417555,
+      "sha256": "8bdf1b83276896bf72ec0440cf15e0c7e7d7101be6b3797aaf0f872290cf0f6b"
+    },
+    "offline": {
+      "status": "PASS_SCOPED",
+      "blockedPolicyObservedBeforeCorePreparation": true,
+      "coreVerified": true,
+      "allCandidateTabsClosed": true,
+      "localServerStopped": true,
+      "coldReopen": true,
+      "installedRecordingHashesPlayed": [
+        "3dd1b959c4734a7463998e07f9b95a810d277c3b8946630988651ff2ef3fc222",
+        "4616ba62005e668bd5d1d6ba7327ec280876f076b7195e2eed923b6d52e8dcd3"
+      ]
+    },
+    "limitations": [
+      "NativeobservationsareownertranscriptionsofsupportedCUAAX/DOM/inlineimages,notexportedvideoorindependentphysicalwitness. Noarbitraryruntimestorage/serviceworkermanipulationused.",
+      "CSPconsoleAPIreturnedempty;earlierattemptretainedasnarrowfailureonly. Lateruntrustedloopbackreportcorrelatedwithnativeactionprovesexpectedrequestdenial,notauthenticatedbrowserattestation. No synthetic POST was sent to live endpoint.",
+      "Localserveroffandcachedself-onlyconnectpolicy;notphysicalairplanemode,allnetworkisolation,all70recordingsoffline,physicaliPhoneorcontrollerqualification.",
+      "TransportandexactfileverificationdoNOTapprovefull-tracklistening,musicalsuitability,36originalsorUA-FPVpublicrights.",
+      "Adjacentcreator/licenseinline labelsvisuallytouch;nonblockingcosmeticfollow-up. Shortlandscapescreenshotatresizewasscaled;claimlimitedtoobservedDOMbounds.",
+      "Saveddownloadremovalallowscurrentin-memorydecktocontinueuntilfreshplayer;freshplayerrefusalverified.",
+      "Restrictedreference-only recovery fixtures,full-capacity123/26,multiwriterrollbackandcrossfadeedgecasescoveredbyautomatedsuites,notnewnativecaseshere.",
+      "The original recovery bundle is retained separately with an exact media descriptor; metadata-package evidence includes the independent binary review, not the MP3 payload. No generic recursive all-bodies-retained claim is made."
+    ]
+  },
+  "musicBoundary": {
+    "distributionFormat": "revealline-soundtrack-distribution.v2",
+    "legacyOptionalLicensedApprovals": 0,
+    "optionalAlbums": 0,
+    "catalogueTracks": 70,
+    "collections": 15,
+    "archives": 1,
+    "listeningApproval": false,
+    "builtInOriginalRecordings": 0,
+    "uaPublicAdmission": false,
+    "archiveAuthority": {
+      "id": "licensed-preview-01",
+      "baseURL": "https://mekhovov.github.io/revealline-soundtracks-01/",
+      "inventorySha256": "2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd"
+    },
+    "hostedAuthorityPins": [
+      {
+        "path": "authoring/library/licensed-audio/hosted-publication.json",
+        "bytes": 174804,
+        "sha256": "50f455abb66e08cb533f9b29a6f16bf05792930ee9dc531fafe9dd152a60f61e",
+        "blob": "e385d6f551e913c8df4efd45504ef8c918e80a36"
+      },
+      {
+        "path": "authoring/library/licensed-audio/hosted-evidence.json",
+        "bytes": 4669,
+        "sha256": "1020e5f10a4096118bb174cd6934686222916b9fa3b2c887cb95cb23a4142418",
+        "blob": "9037b895d544efa1ee3ebabf12ba82eecd170578"
+      }
+    ],
+    "hostedProvenancePins": [
+      {
+        "path": "authoring/library/licensed-audio/sources.json",
+        "bytes": 159672,
+        "sha256": "7f738c8291a829eb87d03cc4f3317fe5babcc353845ba42073a9dcce71011982"
+      },
+      {
+        "path": "authoring/library/licensed-audio/production-register.json",
+        "bytes": 285022,
+        "sha256": "0173d83d022875c20d45a5c881719dde2a1e9dc121cbd4aa63a53a6d75cac287"
+      },
+      {
+        "path": "authoring/library/licensed-audio/provenance/license-revalidation.json",
+        "bytes": 30098,
+        "sha256": "3c0f26d136c5a0e36097e0f8ca67afa6d3f26a7f1d1b4a0d0980c5344b762626"
+      },
+      {
+        "path": "authoring/library/licensed-audio/preview-authorization.json",
+        "bytes": 10810,
+        "sha256": "7920db5ae2cfe4e0b13f73c8e2a6ffeb2e09ca65ff20438caebfc0ac20a71da4"
+      },
+      {
+        "path": "docs/verification/music-publication-2026-09-21/rights-audit.json",
+        "bytes": 8868,
+        "sha256": "250f88abedc7084b0efdeb5c56ae71322ef5145135aa8f3076b34e4ab9c68ea6"
+      },
+      {
+        "path": "docs/verification/music-publication-2026-09-21/public-delivery.json",
+        "bytes": 31554,
+        "sha256": "c882a7d74ddd1f3eee1f078d8cb04652b86e5ebe75e3a83a2f3d20c6e48dfb28"
+      },
+      {
+        "path": "authoring/library/licensed-audio/hosted-preview-catalogue.json",
+        "url": "https://mekhovov.github.io/revealline-soundtracks-01/preview-catalogue.json",
+        "bytes": 103709,
+        "sha256": "4d10e0cf9074c6d72c7896db9f6e1c9c8d132a34ac4eca0a7c5deeed6eb82950"
+      },
+      {
+        "path": "authoring/library/licensed-audio/hosted-inventory.json",
+        "url": "https://mekhovov.github.io/revealline-soundtracks-01/inventory.json",
+        "bytes": 15081,
+        "sha256": "2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd"
+      },
+      {
+        "path": "authoring/library/licensed-audio/hosted-public-albums.json",
+        "url": "https://github.com/mekhovov/revealline-soundtracks-01/releases/download/preview-playlists-2026-09-21/public-albums.json",
+        "bytes": 17311,
+        "sha256": "0811669e2eca9b529ad5d9d00701dbd497e7652b5fb2c82a13ae249962b51842"
+      }
+    ],
+    "manifestFiles": 878,
+    "zeroOptionalSoundtrackPayloads": true,
+    "zeroHostedRecordingPayloads": true,
+    "zeroHostedRecordingPrecacheBytes": true,
+    "offlineInventorySha256": "f84b9e807fe8862f5688455edac364e78c90047be0ed1b554bfa8a5247357d0c"
+  },
+  "localFullTest": {
+    "status": "not-run-by-this-package",
+    "executed": false
+  },
+  "localOrdinaryBuild": {
+    "status": "not-run-by-this-package",
+    "executed": false
+  },
+  "ordinaryBuildCorroboration": {
+    "runId": 35632131591,
+    "jobId": 106441427257,
+    "command": "npm run build",
+    "step": {
+      "completedAt": "2026-09-21T17:32:49Z",
+      "conclusion": "success",
+      "name": "Build pull-request artifact",
+      "number": 7,
+      "startedAt": "2026-09-21T17:30:43Z",
+      "status": "completed"
+    },
+    "collectorSummary": {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/summary.json",
+      "bytes": 36517,
+      "sha256": "b3185225ca2d37abed9d4b08a1d16dc4c0ae0868caada1ebd9b1385d28337f24"
+    }
+  },
+  "frozenArtifactCorroboration": {
+    "inputs": {
+      "inspection": {
+        "path": ".cache/v080-inspection-r1/evidence/qualified-artifact-verified/inspection.json",
+        "bytes": 1914,
+        "sha256": "76ca0ba166875904c3ef6cc347a494e42a3cb0dad9457c1f49f61063c119210c"
+      },
+      "manifest": {
+        "path": ".cache/v080-inspection-r1/evidence/qualified-artifact-verified/manifest.json",
+        "bytes": 160120,
+        "sha256": "289edb93674f902595f9f14c5d2eb27d5fb9dd3853523b9b78dacdf2306a94e8"
+      },
+      "releaseRecord": {
+        "path": ".cache/v080-inspection-r1/evidence/qualified-artifact-verified/release.json",
+        "bytes": 465,
+        "sha256": "9093935aa9abe83b0a19349f60236f768d0ba1190b6e5bc35ed0a13511830732"
+      },
+      "checksum": {
+        "path": ".cache/v080-inspection-r1/evidence/qualified-artifact-verified/distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "750bd6c3154314de63da858de4ad8c04c81dc2623c59db48612cda0d1689bead"
+      },
+      "frozenOfflineReview": {
+        "path": ".cache/v080-inspection-r1/evidence/frozen-offline-review/review.json",
+        "bytes": 3411,
+        "sha256": "8adf1572f10cb3cb14ad10a39b4fad0f305e56cf89ab9e21cb952e5d48bc7e1e"
+      }
+    },
+    "artifactId": 10656003683,
+    "wholeOriginalArtifactVerifiedBeforeQualification": true,
+    "sourceTarGitBlobTypeModeAndPaxCommitVerified": true,
+    "allInnerZipManifestBytesVerified": true,
+    "frozenOfflineInventoryAndBindingsVerified": true,
+    "originalPayloadsCopiedToDisk": false
+  },
+  "evidencePins": [
+    {
+      "path": ".cache/v078-qualification/fetch-frozen-distribution.py",
+      "bytes": 21890,
+      "sha256": "0c8617eb3a6e7d3357642e7c0d6dbf984d08df0e37eeae56d986e47616cbaa62"
+    },
+    {
+      "path": ".cache/v078-qualification/serve-frozen-zips.py",
+      "bytes": 11749,
+      "sha256": "da24affefe3efb59b0ed45cdf3676b15fc4095d4285447ca1ec1cc4ff57d95db"
+    },
+    {
+      "path": ".cache/v080-frozen-r1/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "750bd6c3154314de63da858de4ad8c04c81dc2623c59db48612cda0d1689bead"
+    },
+    {
+      "path": ".cache/v080-frozen-r1/release.json",
+      "bytes": 465,
+      "sha256": "9093935aa9abe83b0a19349f60236f768d0ba1190b6e5bc35ed0a13511830732"
+    },
+    {
+      "path": ".cache/v080-frozen-r1/retrieval.json",
+      "bytes": 1293,
+      "sha256": "28f6478f7092c89d3c38396837213b39296859ec7ec0631f4259837d259f79f5"
+    },
+    {
+      "path": ".cache/v080-frozen-r1/site/manifest.json",
+      "bytes": 160120,
+      "sha256": "289edb93674f902595f9f14c5d2eb27d5fb9dd3853523b9b78dacdf2306a94e8"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/binding-proposed.json",
+      "bytes": 469,
+      "sha256": "6e3ace8bd31dd9cb7461177347fb523387369e435f2684e5f0bf14d1bdc7e0bd"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/binding.json",
+      "bytes": 468,
+      "sha256": "ead309027f2ce052c31a1b52990db1133994f9444a42b6576f5e1760528d89cc"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/discovery-run-list.json",
+      "bytes": 1721,
+      "sha256": "01e2e09713a26688b7a544092fb8428b5435f42062dda22c5247dcf7b044a782"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/discovery.json",
+      "bytes": 1320,
+      "sha256": "5999c54492daa27d5cac9e1501a065d42212b501b5a1638c188525cf85577084"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/dispatch-branch-authority.json",
+      "bytes": 435,
+      "sha256": "7a6e074d7fbe7d2c452bc63ba6238a1926d5279ec8a35bc0e74681e4f78466df"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/dispatch-request.json",
+      "bytes": 655,
+      "sha256": "cc61246cd8237c4d4bccd816ef67913b9e637c4327e5aff079edfb7aaf0143c2"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/dispatch-result.json",
+      "bytes": 407,
+      "sha256": "7d92b5c4c5c81febfb15694aa2ebfd71e28f6ba871bfdd1e40466e7353002099"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/001.json",
+      "bytes": 725,
+      "sha256": "d521475715d9ec72399b96de8f7b25a9a06f661660069096a08a630a0e4e6dc8"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/001.request.json",
+      "bytes": 304,
+      "sha256": "9d59de8d8c4ff0fef89cf53706055da3ac3e170f464aaa3860c74dd3141b8311"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/002.json",
+      "bytes": 12630,
+      "sha256": "5e6353ec74950ba0a5361012d156a2dacabef43eda1d459501999442865009f7"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/002.request.json",
+      "bytes": 301,
+      "sha256": "d0018d51e6b6f90e2640a22c7523a4f9b0b3e8c26aaf734aba0b7c038e1ae2dc"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/003.json",
+      "bytes": 18663,
+      "sha256": "7180ae51519a9da0c61ddb47ed42a16bc3e8c59042e4b5e5e768472ad0618d81"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/003.request.json",
+      "bytes": 326,
+      "sha256": "cc2cc81e8bbab1b64feb90e0a5398a6ce7ee49fa91713635a46bd80024b47ae2"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/004.json",
+      "bytes": 725,
+      "sha256": "d521475715d9ec72399b96de8f7b25a9a06f661660069096a08a630a0e4e6dc8"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/004.request.json",
+      "bytes": 304,
+      "sha256": "c8e3f66c1ac068aa2f781002342ea4015588edd1ea79d0b56879fa2e131bca74"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/005.json",
+      "bytes": 12630,
+      "sha256": "5e6353ec74950ba0a5361012d156a2dacabef43eda1d459501999442865009f7"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/005.request.json",
+      "bytes": 301,
+      "sha256": "5cb259d6d88d7fc96d7a9733f34a302f765f64a72e98d57507d6a17a146af9a1"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/006.json",
+      "bytes": 18663,
+      "sha256": "7180ae51519a9da0c61ddb47ed42a16bc3e8c59042e4b5e5e768472ad0618d81"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/api/006.request.json",
+      "bytes": 326,
+      "sha256": "3298250180d8353143c7758b49b50cdcbec73ea7b270c976f01405430e8273f8"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/artifact-authority.json",
+      "bytes": 808,
+      "sha256": "fe8b57ca9416b222bf8bd1b8cf81d6d65bf51c8a21fdd5d76a779f0a07cbcfd7"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/binding.json",
+      "bytes": 468,
+      "sha256": "ead309027f2ce052c31a1b52990db1133994f9444a42b6576f5e1760528d89cc"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/execution.json",
+      "bytes": 2442,
+      "sha256": "b8f58e1b8c8322d4102e8ab4afb7c63d54354422b089d9a2b00f19583f5bd98e"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/frozen-offline-review/originals/game/build-info.json",
+      "bytes": 143,
+      "sha256": "55df28362b3b5c961ec0b6c38c1ff93c5863459685885c1c3c13a8cbb125b5d6"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/frozen-offline-review/originals/game/index.html",
+      "bytes": 87980,
+      "sha256": "7976b6cd6bb8234ca6385dca6138de907a8d57297e206b8ff798307cd327e230"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/frozen-offline-review/originals/offline-cache.json",
+      "bytes": 153652,
+      "sha256": "f84b9e807fe8862f5688455edac364e78c90047be0ed1b554bfa8a5247357d0c"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/frozen-offline-review/originals/service-worker.js",
+      "bytes": 137658,
+      "sha256": "db093661f685ccf8ad4bc7bfa9ac0b5358178c8216c9c09a3d178f8e31fab3a4"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/frozen-offline-review/review.json",
+      "bytes": 3411,
+      "sha256": "8adf1572f10cb3cb14ad10a39b4fad0f305e56cf89ab9e21cb952e5d48bc7e1e"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/inspection.log",
+      "bytes": 4689,
+      "sha256": "1971ca5587b6896eebceb2b0da6374e6a585b7831a44899a09a7c8cbf4d6cc18"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/offline-review.log",
+      "bytes": 194,
+      "sha256": "6855ea15e854e4d8a4a86e187ed1c1ef37de81e958c699e1bc9b3fca0c2803a6"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/qualified-artifact-original.download.json",
+      "bytes": 594,
+      "sha256": "8488f3bb1515758a8a73ffaccbd6459a05e07729774a9e502d22bbe0a9962e6d"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/qualified-artifact-verified/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "750bd6c3154314de63da858de4ad8c04c81dc2623c59db48612cda0d1689bead"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/qualified-artifact-verified/inspection.json",
+      "bytes": 1914,
+      "sha256": "76ca0ba166875904c3ef6cc347a494e42a3cb0dad9457c1f49f61063c119210c"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/qualified-artifact-verified/manifest.json",
+      "bytes": 160120,
+      "sha256": "289edb93674f902595f9f14c5d2eb27d5fb9dd3853523b9b78dacdf2306a94e8"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/qualified-artifact-verified/release.json",
+      "bytes": 465,
+      "sha256": "9093935aa9abe83b0a19349f60236f768d0ba1190b6e5bc35ed0a13511830732"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/result.json",
+      "bytes": 548,
+      "sha256": "5720b8c1a19b732312aa764863532db28615a622b12e582402a195c119d6db58"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/retained-manifest.json",
+      "bytes": 6782,
+      "sha256": "4ea990aafacdad6d29f951f4eb0fc551b0c9eaa27ae785df0b83e4ff4cc446ad"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/source-after.json",
+      "bytes": 159,
+      "sha256": "e0335d6260abd56c27b87f30251b602d2f943817482d0aa0008778ffb86ec12a"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence/source-before.json",
+      "bytes": 159,
+      "sha256": "e0335d6260abd56c27b87f30251b602d2f943817482d0aa0008778ffb86ec12a"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/evidence-retrieval.json",
+      "bytes": 7460,
+      "sha256": "a1e01cd6fa3b7cb7b19b33bb39383615f797fc2d4cc26ee81f4b35d16757f949"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/independent-inspection-review.json",
+      "bytes": 16150,
+      "sha256": "8f3b579b5264e67937eb78201853bfb201be7fe891de6cdf0173b506c08f37da"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/original-inspection-evidence.zip",
+      "bytes": 632617,
+      "sha256": "8e3325f4701a703e568d6bfdf29bdd338bc675721af51392924e646d59b1eab6"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/pre-dispatch-review.json",
+      "bytes": 11718,
+      "sha256": "105fa40acdea3d253eded71286d9a654db51fbe39852d25f5c0d2a7e06178046"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/root-review.json",
+      "bytes": 1461,
+      "sha256": "493ba7d3edf837fa05452ad4b378eb0a3251072f021884d8b5012a63703c94fa"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/run/artifact-metadata.json",
+      "bytes": 752,
+      "sha256": "1e40fc13db9b62d05e2b491cce486481a5df7cfc07d2217753b2571a17664bd4"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/run/hash-manifest.json",
+      "bytes": 660,
+      "sha256": "5b869bc9a8cb3a4877e727d5a9c3f961aaaab8650380c73ff15b729bf12b1305"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/run/metadata.json",
+      "bytes": 3544,
+      "sha256": "3ee246845defe0044aa9fda4b0259284790c36d1de4abc6d011e41e5e8604f88"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/run/run.log",
+      "bytes": 133257,
+      "sha256": "64eb5157771098c3587bf7ec63ea6c8bae16d4516e28aca2f30c2b085a174f4a"
+    },
+    {
+      "path": ".cache/v080-inspection-r1/run/summary.json",
+      "bytes": 6046,
+      "sha256": "7cd821c63dcbcaebf92cb6d6c0bc7053b60e2c3281dd1db79d11432091091986"
+    },
+    {
+      "path": ".cache/v080-qualification/CSP-REPORTING.md",
+      "bytes": 6119,
+      "sha256": "a0c568f5b25dc0938f7244b77dba52485ab9241c5cc144f1b525f9f8d7d47522"
+    },
+    {
+      "path": ".cache/v080-qualification/README.md",
+      "bytes": 6030,
+      "sha256": "cbef1db527eae28b5f05417d54dd0998d60e94a7d22a95349aefb303125455fd"
+    },
+    {
+      "path": ".cache/v080-qualification/csp-report-preparation.json",
+      "bytes": 2823,
+      "sha256": "fa69d4dd3a63908283881bb9f06ae7ae88693cb52ecf94b913f4fdfa51acba1b"
+    },
+    {
+      "path": ".cache/v080-qualification/csp-report-tests-final.log",
+      "bytes": 3617,
+      "sha256": "356fb56af4c5bf12e1bc5024b9b8eb5f99e4a9492f6f3421fe8fecaf8ab3e901"
+    },
+    {
+      "path": ".cache/v080-qualification/csp-report-tests.log",
+      "bytes": 3469,
+      "sha256": "9aac88bb708eaee7f9fdd45038a0c2f4d9e7389651e70e9d6c4a1a68c2ba5343"
+    },
+    {
+      "path": ".cache/v080-qualification/fetch-frozen-distribution.py",
+      "bytes": 21890,
+      "sha256": "0c8617eb3a6e7d3357642e7c0d6dbf984d08df0e37eeae56d986e47616cbaa62"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/artifact-metadata-command.json",
+      "bytes": 568,
+      "sha256": "862ba590a00418d87cddef2df32051b5672d18624446d94ee8aff8287eefe0ed"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/artifact-metadata.json",
+      "bytes": 757,
+      "sha256": "68869a9817f41a70e0db93ade28238938d7f6f1db46038f58099b2ee66b11a31"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/automation-authority/checkout-evidence.json",
+      "bytes": 3199,
+      "sha256": "2cf03c535cf20e6298156c81f3a8ca967d23e8d34db1d5b21e8c8866ec45fd72"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/automation-authority/request.json",
+      "bytes": 996,
+      "sha256": "c6ef06f9543a3e740d4e21f7469fc3426184088d5eaa721b93b1dd550adc356e"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/automation-authority/response.json",
+      "bytes": 23684,
+      "sha256": "0c9752b9015440722c415401b61129985afda02eb973422ec1e3e60e60251c41"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/automation-authority/source-git-entries.json",
+      "bytes": 378,
+      "sha256": "acceb6f65b6987244e7c82f7fe3f2b3015b9178ada31e1f8fa859aea5823bce4"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/automation-review.json",
+      "bytes": 7998,
+      "sha256": "5836a35f0fadbeacf1fad8eaee362df0d45a614e3fcf79ee7a6c97253bf09afd"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/browser-origin-preflight.json",
+      "bytes": 859,
+      "sha256": "d12384876e4012142a67947ccc07936ed694991809eb15ccd331b71dead98b7a"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/comparison.json",
+      "bytes": 1485,
+      "sha256": "14431b6ffc4f8d5a9f4a9086c2e6d8778f09daaede1467d83b4e3fd63ce821ea"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/format.log",
+      "bytes": 195,
+      "sha256": "fe8d291786a71760f0390d2915f1b73747d39eb37efb22438cdb5f7962b2325b"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/independent-ci-audit.py",
+      "bytes": 18151,
+      "sha256": "86859b7d9b632fcd6a705f28999aec832916a6db39221d0f33ad85e88acc0f27"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/independent-final-ci-review.json",
+      "bytes": 31347,
+      "sha256": "b5dad13d498d2eaef2d48c5a08fb19a788eba1e4b1ba9aac1bb49f44abbc94b8"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/independent-integration-review.json",
+      "bytes": 60056,
+      "sha256": "2ba7a1e0b454721f9f1018f520a427a79f6303081fc5de2a902140b98e55cef9"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/lint.log",
+      "bytes": 148,
+      "sha256": "161e7de480aefc08076ea6dd1237575e2ee362e42b7dcf029fd74da312fee6c0"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/local-gates.json",
+      "bytes": 1824,
+      "sha256": "6faba3d45750d54b4b28375ba6368ba2fa3e267fffa5d8796c7b01864a66c6e7"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/hash-manifest.json",
+      "bytes": 1238,
+      "sha256": "d4b3e5946b607bbba957c3ebf616c4dde0e3feb09c46f73b6522f1cc04eadf25"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/metadata.json",
+      "bytes": 13687,
+      "sha256": "fd02d6e499908f05dd09d5f59e7e469b72919d43f347c5a132cf0c397a224076"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/run.log",
+      "bytes": 4807061,
+      "sha256": "05a43c6abbaf11f343722c355a94f4dba5dfe09e2b080c9136c4fb66554a59b4"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/shard-1.txt",
+      "bytes": 6630,
+      "sha256": "64399f0855add92360fa521e1c628a7ca208ccc407d3adaf57e13234de2b05e7"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/shard-2.txt",
+      "bytes": 6660,
+      "sha256": "b63abe1b77edfcad47e87c29020fa8fe88e384e16d9117c93748a6ad95433728"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/shard-3.txt",
+      "bytes": 6683,
+      "sha256": "d3f911973fc15ae05608fc21c73645cfb16bb365160f92749e9935f85d57588e"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/shard-4.txt",
+      "bytes": 6512,
+      "sha256": "e4035cf5acb2b98c87852fe29f21a2345c007c324f10c8a8d67c6ac377359e62"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/source.json",
+      "bytes": 32707,
+      "sha256": "bd3bd7cc92da26e49c5b1b88184c5a3ef326fd72bdf1ad7644c742a7b9693c00"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/manual/summary.json",
+      "bytes": 29283,
+      "sha256": "be5d1755f75221baf7c741b53189234c0c5bc9ea5d65988a492a132dd2fb4e53"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/native-format.log",
+      "bytes": 254,
+      "sha256": "b5da3666c8da0c0205fc611c2df89b03ff98c1ea68ba552ccc1e8ed8d83e4e68"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/hash-manifest.json",
+      "bytes": 1238,
+      "sha256": "5fd40d3a6ca8f384f0669666e60ec660257edd500ae99cde0ea8f55c2023d5a3"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/metadata.json",
+      "bytes": 14469,
+      "sha256": "556d4b0dcc25ccd4f629ed3c24e6698ec245e7a0c103501c87a4a0a7b1b8d575"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/run.log",
+      "bytes": 4608171,
+      "sha256": "2a4af8bb08c0e056d7f0ab1eb0881a4f5e6106380caf4efe428b6a180c592b70"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/shard-1.txt",
+      "bytes": 6630,
+      "sha256": "64399f0855add92360fa521e1c628a7ca208ccc407d3adaf57e13234de2b05e7"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/shard-2.txt",
+      "bytes": 6660,
+      "sha256": "b63abe1b77edfcad47e87c29020fa8fe88e384e16d9117c93748a6ad95433728"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/shard-3.txt",
+      "bytes": 6683,
+      "sha256": "d3f911973fc15ae05608fc21c73645cfb16bb365160f92749e9935f85d57588e"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/shard-4.txt",
+      "bytes": 6512,
+      "sha256": "e4035cf5acb2b98c87852fe29f21a2345c007c324f10c8a8d67c6ac377359e62"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/source.json",
+      "bytes": 32707,
+      "sha256": "bd3bd7cc92da26e49c5b1b88184c5a3ef326fd72bdf1ad7644c742a7b9693c00"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/pr/summary.json",
+      "bytes": 36517,
+      "sha256": "b3185225ca2d37abed9d4b08a1d16dc4c0ae0868caada1ebd9b1385d28337f24"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/production.log",
+      "bytes": 245,
+      "sha256": "28fc09441da4721d7cb7c5611c1831c73b3401ddf15394ceffc515270a230093"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/qualify-dispatch-request.json",
+      "bytes": 126,
+      "sha256": "bd395016dbcd65a9e6705804cdd4d50c9b68ba2008678d328ab668d79b863b6c"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/qualify-dispatch-result.json",
+      "bytes": 123,
+      "sha256": "f3fee8136474f11c1290a7ff771b58526ecd2a0f795e49663dc86a3807b9ab93"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/readiness.log",
+      "bytes": 673,
+      "sha256": "4fa68a071b0e7377adb97406a74366cd4e5f47279963e4eb0bb110e180266ab2"
+    },
+    {
+      "path": ".cache/v080-qualification/final-9dc3af75/validate.log",
+      "bytes": 510,
+      "sha256": "4c32fdd7f2662d125075927f80f8b8980b1163573539ae1603370f66e508c794"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/actual-backup-verification.json",
+      "bytes": 10949,
+      "sha256": "ddc7d5ce20d61790c5f9ebd11a80210e6cca683bb0f2c2fbb2011f870e2d1648"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/actual-csp-observation.json",
+      "bytes": 1600,
+      "sha256": "7cef66dbe9d28570c612be126b79bf0c80bc31e5c5bb10ac9b85c34a062be59a"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/affected-frozen-paths.json",
+      "bytes": 2270,
+      "sha256": "1892636fa503bc2461d3f9658856fbc8fb180736376a7ef612c3e0ef71e8efdb"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/browser-evidence.json",
+      "bytes": 11216,
+      "sha256": "4cced15e12ce8de48fc1eddb2fa7017721deeaa5f19cfc1da09d840a98e41d93"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/cold-reopen-observation.json",
+      "bytes": 1309,
+      "sha256": "69843003e90967187243f4733eb2854797768b62dd84d66f5af192aedc264dc8"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/core-ui-verification.json",
+      "bytes": 1062,
+      "sha256": "6c0bfbf5037ba9d14168d53683b64a26ee2a8819002ecdee5fff0256dd13b28d"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/csp-report-reference.json",
+      "bytes": 943,
+      "sha256": "8ecdf4ed9e2efb8328080ab6472ad7534356fbb03b5142fa51049523e4ba0a8c"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/csp-reports-attempt1.jsonl",
+      "bytes": 1398,
+      "sha256": "23b87eaf043839e4e5b1d8948bbb6863b769c808a33f9db5f8e290f955cd36b7"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/events.jsonl",
+      "bytes": 11565,
+      "sha256": "27ce96673abe7df13a8bcac102dcb5faf659a97419ee1440b2c74a850d1c85f7"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/final-cleanup.json",
+      "bytes": 871,
+      "sha256": "9c78662305b9df0fe7299a6ae05b7b38a21ed65f0563903531602322587d8082"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/helperreview/csp-report-helper-independent-review.json",
+      "bytes": 6956,
+      "sha256": "f190d4d934b0e2d46a65adad8a70ca6ed0583abce5cabaf85ca11d7c7b985209"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/independent-actual-backup-review.json",
+      "bytes": 10082,
+      "sha256": "c809732c0269d18c4bdef266b1386fc5f84d432111b3febe24cbb81db6a0c1de"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/independent-browser-evidence-review.json",
+      "bytes": 50699,
+      "sha256": "0132c6f788b00fec8d1bb5fd2860d88c0d385ee3bfbe2b08eaa139cf43941d7c"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/independent-csp-observation-review.json",
+      "bytes": 14727,
+      "sha256": "7bdfe1f4b47edbf8c6f5ee65fa1c2f520a8523c8ffc4d093a7abb56db6d0021e"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/independent-retrieval-review.json",
+      "bytes": 6467,
+      "sha256": "62dbd8dd48fbc6bb19a988eb5be021bb2c54cfb9581f97206b50a9e064275fbd"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/listener-preflight.json",
+      "bytes": 151,
+      "sha256": "95afbe39f4bfab83e7b66381edb11dd406c8a0587e1ad714f9a84b568be69e29"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/removal-observation.json",
+      "bytes": 1120,
+      "sha256": "20e9c895d1b12087fe15de3339dd4bd754747ade8692ed00ff78f3cda6c26d25"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/server-blocked-reporting.log",
+      "bytes": 1082,
+      "sha256": "c907219dd46e162a745fc06bf3dd0ef8ebae3b99a826b5edba019ea3cc8477c2"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/server-blocked.log",
+      "bytes": 652,
+      "sha256": "483bb96047dcf70e3d4b5be857e825d1d9fb8236fd5e444859102e885525884f"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/server-online-ownership.json",
+      "bytes": 845,
+      "sha256": "65643636c75e45029880057b9e32f9f569b9066bf5e11f34a76862f5df047e76"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/server-online.log",
+      "bytes": 705,
+      "sha256": "1cece161bb24976c99cab7b8df567e835a605e10d165c02f9fe351ec46febb4b"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/verify-still-backup-independent-review.json",
+      "bytes": 4789,
+      "sha256": "99e5752b6943a9ab202f015ad689dde9d698128eaea53a24b31762924a1b4030"
+    },
+    {
+      "path": ".cache/v080-qualification/final-browser/verify-still-backup.mjs",
+      "bytes": 12121,
+      "sha256": "8c3f506d8f2caf1ed2b53382e90a52ddf4177ac166d4e1bacb967bd7914ee245"
+    },
+    {
+      "path": ".cache/v080-qualification/independent-tool-review.json",
+      "bytes": 6476,
+      "sha256": "35138179f5575fc4e775e9fb09bb3fb6732bf34a29d11f031314667f55550bb2"
+    },
+    {
+      "path": ".cache/v080-qualification/pr215-final-metadata.json",
+      "bytes": 3617,
+      "sha256": "de203d4b95c5acb935743ff16600098fdc2eeccae3ed0e817fa973f151ba46a3"
+    },
+    {
+      "path": ".cache/v080-qualification/run-tests.py",
+      "bytes": 394,
+      "sha256": "d9eda045f07d65bfa8a2a906830fb9c46ea91aa4f7f982057a67b3a9ba4ccf46"
+    },
+    {
+      "path": ".cache/v080-qualification/serve-frozen-zips-csp-report.py",
+      "bytes": 10121,
+      "sha256": "b713918e8933b3d17b7fd8030905575b1e6e946a795453344ee2ce0a75e7406b"
+    },
+    {
+      "path": ".cache/v080-qualification/serve-frozen-zips.py",
+      "bytes": 12883,
+      "sha256": "cb49fb3a40160afac3ee8269e9f035383f6b722b1cbf8aa1b4c633000a8e5f08"
+    },
+    {
+      "path": ".cache/v080-qualification/source-handoff.json",
+      "bytes": 7159,
+      "sha256": "0df43663fbedfaeef9a54ab9c61abf732ff995af755229da5c45ff74fb0a1d82"
+    },
+    {
+      "path": ".cache/v080-qualification/test_fetch_frozen_distribution.py",
+      "bytes": 12668,
+      "sha256": "723665ea143741814cae18b5ae9e6d83765306616129f26636e74bcecf5f9bad"
+    },
+    {
+      "path": ".cache/v080-qualification/test_serve_frozen_zips.py",
+      "bytes": 8789,
+      "sha256": "160b336158f967e820a172a245021220c5a11b8bd4dab0b12426635532f8b42f"
+    },
+    {
+      "path": ".cache/v080-qualification/test_serve_frozen_zips_csp_report.py",
+      "bytes": 13346,
+      "sha256": "84f0099aa20d2adc265414cc6d38e2c9850134a2f3835736c375d1dd70c4badc"
+    },
+    {
+      "path": ".cache/v080-qualification/tool-review.json",
+      "bytes": 4824,
+      "sha256": "e05d3d657b84c2f4308521e12a463bef0cc5fcbf1a1e8c0a0dc7887c0ddd46fc"
+    },
+    {
+      "path": ".cache/v080-qualification/tool-tests.log",
+      "bytes": 3931,
+      "sha256": "35c50e2d9fadd4a294a298ac477ca96954ba8a8ef38d49c7c162735400fbad8d"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/PREPARATION.md",
+      "bytes": 6687,
+      "sha256": "4d2f09e5eb3f46073146ae573cd422bb01ac91bb4c7df2d93043225f34379f4e"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/assemble.py",
+      "bytes": 61191,
+      "sha256": "28c472169f4651f90e2898dec1c05c154c20579ab91f1df3a562da4ae3bd9067"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/assembly-attempt1-result.json",
+      "bytes": 2398,
+      "sha256": "c7f083dea536a7df83cd0d9d6e0891cc0cb0cc8d889f8ea7f5a3593930291c62"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/assembly-attempt1.log",
+      "bytes": 1535,
+      "sha256": "c2343837c2cb126fc0a8ad04560a98aa3738d93261d64c9c49950069cd38fadd"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/assembly-attempt2-result.json",
+      "bytes": 791,
+      "sha256": "790af37e83846d494ff566844e491185257698b95037576ab9233e0608e944f3"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/assembly.log",
+      "bytes": 907,
+      "sha256": "99d528bfc55e0a6568f31994ae96e4983f0e915056270d9078c09b0321d9a4ce"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/closure-checklist.md",
+      "bytes": 9533,
+      "sha256": "a542ec264724267b05124d7819ee3f85384dea37af03f0af244601cda5c94459"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/config-attempt1.json",
+      "bytes": 27505,
+      "sha256": "aeaa9bf16d58fbd3d054deb4262ebccb37f50e693dddcc6b16365860c2c119de"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/config-inputs-draft.json",
+      "bytes": 30365,
+      "sha256": "14d48fc83461a3fe8ba224f8b258ad50df4f5d85d8c9e63d9eb551958ac61780"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/config.json",
+      "bytes": 28068,
+      "sha256": "76e8da34cf26b0ba2624b251fdb64817682a94f7d2027064b40791be0a183f40"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/independent-review.json",
+      "bytes": 8684,
+      "sha256": "e93e0e59d409b623098c4d5b6f2a1443f9b2dbcd6a3da34c8185699da97a51a3"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/merge-authority.json",
+      "bytes": 1169,
+      "sha256": "1f26b36e2c1d1774b87055fd1ca47a8a295ab172116fd7dfc062d477fa117a91"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/merge-command-results.json",
+      "bytes": 3382,
+      "sha256": "0e0da907c0261aa6a959a3df2a5f8a1aebe91ca82df041630115620ef9ef4cd9"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/merge-object.txt",
+      "bytes": 1220,
+      "sha256": "ffda469339050b17f2da6e5f2f1009f15992dae668611d61569a6ec3124ae9ab"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/pr215-merged-metadata.json",
+      "bytes": 246,
+      "sha256": "a9d73d6d83cfa5d45f46d54cc6fa619d8b3321d763be9c599110d36e0f1e70ee"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/preparation-review.json",
+      "bytes": 4174,
+      "sha256": "9b26b04bc813ddafca43cdc923f169f85e0d753f89a2ea6221e4ce3bddcd9c2a"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/preparation-tests-final.log",
+      "bytes": 1784,
+      "sha256": "319e23221942b5fcaf60273d338e782325dd69c7706aac9673aa9ccc88d1b4de"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/preparation.diff",
+      "bytes": 30106,
+      "sha256": "5b778d4a67a5b573d628c6f8958766782e0b7853594873d97277baf6557dbcb7"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/source-inventory.json",
+      "bytes": 1458,
+      "sha256": "a087f11e1b5edfe4868b91db4dda69fd0887174e386e3f777dd2e2882b6040cf"
+    },
+    {
+      "path": ".cache/v080-small-package-r1/test_preparation.py",
+      "bytes": 8509,
+      "sha256": "3af68d6a763c1e07037bb4080ba5fd38909c7f70686aabe3f8dc0915b4da5a1e"
+    },
+    {
+      "path": ".cache/v080-small-package-r2/assemble.py",
+      "bytes": 61191,
+      "sha256": "28c472169f4651f90e2898dec1c05c154c20579ab91f1df3a562da4ae3bd9067"
+    },
+    {
+      "path": ".cache/v080-small-package-r2/config.json",
+      "bytes": 28611,
+      "sha256": "997ae53985974db03276c5e3423c29b351ea62119359a5cbb089df4e44396b36"
+    },
+    {
+      "path": "publishing/utility/inspect_qualified_artifact.py",
+      "bytes": 25776,
+      "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+    },
+    {
+      "path": "publishing/utility/release_artifact.py",
+      "bytes": 32143,
+      "sha256": "53662aae608f6245bb40f6468427c5825c3eed233b095d4df190a7fbc2ac3698"
+    },
+    {
+      "path": "publishing/utility/test_release_artifact.py",
+      "bytes": 35031,
+      "sha256": "abc3d7e480ddbef330a264594b79f5c783fb05ddc041d950f995798540561098"
+    },
+    {
+      "path": "publishing/utility/test_upload_diagnostics.py",
+      "bytes": 12712,
+      "sha256": "14a87102a09eabeba741d19e7839b9320ac5b634bc2d790baf14ebb7f8687045"
+    },
+    {
+      "path": "publishing/utility/test_upload_distribution.py",
+      "bytes": 14627,
+      "sha256": "463537b0d7e6ecdc8a852134e0b1084e037f82f0d8e894167fdadee919836eda"
+    },
+    {
+      "path": "publishing/utility/test_upload_source.py",
+      "bytes": 14451,
+      "sha256": "d304013e9d8ba2a514c0034ebd35e32a211b595e4faaf1bdb5c3b93cd1955d79"
+    },
+    {
+      "path": "publishing/utility/upload_distribution.py",
+      "bytes": 20002,
+      "sha256": "5ed2a8940e4c862763ee4dfc34394e2ac1825c40cdbe5e68ad0674af707cfa27"
+    },
+    {
+      "path": "publishing/utility/upload_source.py",
+      "bytes": 19932,
+      "sha256": "993fcc897682277998df54c40dee83335d9d4b6746611084731c6af63abac6e6"
+    },
+    {
+      "path": "publishing/utility/verify_frozen_offline.py",
+      "bytes": 10600,
+      "sha256": "3345a0aa397de53f6cda0237fdb088ffaf3b9b90e5fe0ea10c89609275fcac25"
+    }
+  ],
+  "limits": [
+    "Both complete hosted test families request Node 20.19.x in the exact-source workflows; the collector does not report the resolved patch runtime, so this is not a two-runtime matrix or a runtime-version observation.",
+    "The assembler itself executes no browser. Its separate pinned browser receipt records only the actual scoped frozen-preview and cold-offline observations; deployed public acceptance remains separate.",
+    "The exact-distribution browser evidence is pre-release scoped evidence only; it does not establish public v0.80.0 release or GitHub Pages acceptance.",
+    "No physical-hardware certification, complete controller/touch/screen-reader matrix, latency/memory benchmark, full-track listening approval, musical transition/loop-seam/mix approval, or Content ID clearance is claimed.",
+    "The zero-skip derivative fixture uses opaque OGG provenance bytes and a structurally inspected MP3 runtime; it does not decode OGG or prove a real audio conversion.",
+    "The frozen v0.80.0 payload admits metadata for 70 rights-audited hosted recordings, 15 collections and one pinned archive. It embeds none of their MP3 bytes in the distribution/core precache. Subjective listening approval remains pending; built-in original recordings and legacy optional soundtrack albums remain zero.",
+    "The 70 external MP3 objects and fifteen manual-import .rlsound packs remain externally hosted. AI-generated originals are paused/unadmitted; UA-FPV material remains private/unadmitted. No new rights or Content ID approval is granted by this package.",
+    "Tag creation, release publication, original uploads, and deployed acceptance remain separate operations.",
+    "The merge has ordered parents base then exact source, an identical source/merge tree, and an empty source-to-merge diff; the release payload remains bound to the exact qualified source commit and tree."
+  ]
+}
