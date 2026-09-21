@@ -1,6 +1,12 @@
 # Team picture authority preparation
 
-## Current revision compatibility correction
+## Current revision 41 compatibility correction
+
+The soundtrack framework's metadata successor selects `fpv@41`, collection `null`. The two starter bindings and the historical-import policy now explicitly admit that revision. All 127 original payload bodies, all prior asset/theme records, both complete Orchard/Foundry picture descriptors and their 1152×576 full-frame geometry are preserved from revision 38. The lease, starter pack, pack/level hashes and picture asset revisions are unchanged; older and newer unbound snapshots still fail closed.
+
+The [source-pinned revision-41 receipt](verification/soundtrack-v3-framework-2026-09-21/preflight-repair/team-bindings/README.md) records byte comparisons, the preserved revision-40 history, and all 235 passing tests across the complete binding, historical import and Team presentation cohort. This is source compatibility evidence with finite test decoders, not new native, artwork or release approval.
+
+## Historical revision 27 compatibility correction
 
 The current two-row authority admits the reviewed `fpv@27` snapshot, with collection `null`. The producer's revision-27 metadata repair changed no Team pack, level, picture asset, original bytes, geometry or simulation. Both bindings retain their exact pack/level hashes and the Orchard/Foundry asset tuples below; only the explicit theme revision advances. Older and newer theme snapshots still fail closed before picture reads. Historical release bindings remain unchanged.
 

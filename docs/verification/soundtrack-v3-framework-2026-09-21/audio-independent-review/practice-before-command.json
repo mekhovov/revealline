@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "node",
+    "--test",
+    "--test-name-pattern=^practice: shared v3",
+    "game/test/practice-media-v3-host.test.mjs"
+  ],
+  "exitCode": 1,
+  "log": "practice-before.log"
+}
