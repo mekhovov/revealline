@@ -122,6 +122,60 @@ test('authored Versus preserves both previous boards and original when Next artw
   assert.equal(p.renders[0].levelId, 'choose-your-share');
 });
 
+test('cross-campaign theme controls commit with the accepted picture, never a failed preparation', async (t) => {
+  let refuse = true;
+  const p = await setup(t, 'standard', {
+    href: 'http://localhost/game/couch/?journey=authored',
+    fetchResponse: async (url) => {
+      if (String(url).includes('/content-design/assets/')) {
+        if (refuse && String(url).includes('/border-'))
+          return new Response('Offline', { status: 503 });
+        return new Response(await readFile(url));
+      }
+    },
+  });
+  p.$('race-start').click();
+  await waitFor(() => {
+    p.frame(0);
+    return !p.$('race-pause').disabled;
+  });
+  const previous = [...p.renders],
+    picture = p.drawOptions[0].backdrop;
+  const chooseBorder = () => {
+    p.$('race-journey-find').click();
+    p.$('journey-cards')
+      .children.find((card) => card.dataset.missionId.endsWith('/behind-the-patrol'))
+      .click();
+  };
+  assert.equal(p.$('race-theme').value, 'horizon');
+  chooseBorder();
+  await waitFor(() => p.$('race-preparation').dataset.state === 'error');
+  p.frame(0);
+  assert.equal(p.renders[0], previous[0]);
+  assert.equal(p.renders[1], previous[1]);
+  assert.equal(p.drawOptions[0].backdrop, picture);
+  assert.equal(p.$('race-theme').value, 'horizon');
+  assert.deepEqual(
+    p.$('race-theme').children.map((option) => option.value),
+    ['horizon'],
+  );
+  refuse = false;
+  chooseBorder();
+  await waitFor(() => {
+    p.frame(0);
+    return p.renders[0].levelId === 'behind-the-patrol' && !p.$('race-pause').disabled;
+  });
+  assert.equal(p.renders[1].levelId, 'behind-the-patrol');
+  assert.equal(p.$('race-theme').value, 'border-bloom');
+  assert.deepEqual(
+    p.$('race-theme').children.map((option) => option.value),
+    ['border-bloom'],
+  );
+  assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
+  assert.notEqual(p.drawOptions[0].backdrop, picture);
+  assert.equal(p.$('journey-chooser').open, false);
+});
+
 test('Versus Skip requires two actions and flat chooser can launch an island mission', async (t) => {
   const p = await setup(t);
   p.$('race-start').click();

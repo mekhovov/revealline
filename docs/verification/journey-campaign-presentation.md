@@ -88,8 +88,10 @@ greybox scenario constructions, individual Studio-handler projection/Apply
 boundaries, and adaptation-edition parity.
 
 The original60-test source/route/Studio/CLI/picture/theme/readability cohort passes
-both Nodes; the additional eighth presentation test also passes both. Full
-71-Solo/71-Versus actual-host flows on both Nodes remain running at this checkpoint. The host
+both Nodes; the additional eighth presentation test also passes both. All71 Solo
+host clears,70 Next actions, exact theme selectors/art pins, failed-preload recovery,
+separate receipts and final voluntary exit pass Node22 (505s) and Node20 (650s).
+The host
 tests retain every frozen route/checkpoint and compare all physical replay sections
 against the new edition without mutating runtime state or rewriting expected hashes.
 
@@ -108,8 +110,30 @@ Folded corner retained222 foundation cells/2158 earnable cells and the same
 three actors. Play exact Solo preview reached Engine ready/Practice and its
 native theme selector chose Neon Contours. Closing preview returned to the draft.
 Warnings still explicitly mark candidate art and disconnected foundations.
-The later individual-inspection correction is separately covered by automated
-handler checks; it was not present in that pinned native source.
+After the server advanced to exact `da267de0`, standalone Neon inspection
+showed all seven `neon-contours` mission revisions while preserving the83-mission
+workbench until Apply. Explicit Apply opened `neon-greybox-candidates-themes`
+with exactly seven missions. Its mission/theme revisions match the whole-library
+projection. This is not an additional standalone native gameplay playthrough.
+
+### Failure found by stronger Versus assertions
+
+Both original full-host runs failed at the first Horizon → Border Next transition:
+the `race-theme` selector still displayed Horizon, although the new round recipe,
+picture and painter received Border. Earlier whole-host assertions checked boards
+and artwork but not the selector. This was an existing continuation-control bug,
+not an enemy-speed or theme-renderer failure. The failed runs are retained as
+evidence; no assertion or frozen replay was weakened.
+
+A six-line hunk in `couch.mjs` now replaces theme options and selected value only
+after the prepared next attempt is committed and its ownership rechecked. Failed,
+cancelled and stale preparation must keep previous controls. A focused real-host
+regression first reproduced the stale Horizon value; after the fix it passes,
+including an intentionally failed Border picture, preservation of both prior
+boards/picture/theme options, and successful retry into the exact Border theme.
+Full71-race and existing picture/preparation regression reruns are in progress.
+The UX owner confirmed no overlap; integrate this small hunk into accepted
+`prepareNext`, never replace the root owner's complete couch host.
 
 No new PR, version, release, Pages deployment or accepted-tree CI pass is claimed.
 The release owner's device priority and selective integration hold remain in force.

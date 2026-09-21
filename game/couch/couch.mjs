@@ -886,6 +886,12 @@ try {
       )
         return null;
       clear({ resetDirection: true });
+      // Only the adopted, still-owned continuation may replace these controls.
+      // A failed/cancelled picture keeps the previous map and theme choices.
+      $('race-theme').replaceChildren(
+        ...entry.themes.map((item) => new Option(item.name, item.id)),
+      );
+      $('race-theme').value = attempt.recipe.theme.id;
       paintRound(attempt.recipe);
       if (candidateJourney)
         journeyProfile.record({
