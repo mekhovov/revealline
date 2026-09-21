@@ -1,5 +1,6 @@
 import { createStarterProject } from './starter.mjs';
 import { freezeDesign, LIVEWIRE_ACTOR_CATALOG } from './catalogs.mjs';
+import { RELAY_ART_CANDIDATES } from './relay-art.mjs';
 
 // Original greyboxes, not released content. Reference images establish motifs only.
 const rect = (x, y, w, h) => ({ x, y, w, h });
@@ -296,11 +297,11 @@ export const RELAY_REFERENCE_ADAPTATIONS = freezeDesign(
     })),
 );
 
-export function createRelayCandidates() {
+export function createRelayCandidates({ artwork = false } = {}) {
   const project = createStarterProject('relay-greybox-candidates');
   project.name = 'Relay Labyrinth · greybox candidates';
   project.actorCatalogId = LIVEWIRE_ACTOR_CATALOG.id;
-  project.assets = [];
+  project.assets = artwork ? structuredClone(RELAY_ART_CANDIDATES) : [];
   project.maps = rows.map((row) => ({
     format: 'MapDesignV2',
     id: `${row.id}-map`,
@@ -326,7 +327,12 @@ export function createRelayCandidates() {
     bonuses: [],
     relayLinks: row.gates.map(({ id, objectiveId }) => ({ gateId: id, objectiveId })),
     coverage: row.coverage,
-    presentation: { themeId: 'horizon', backgroundAssetId: null },
+    presentation: {
+      themeId: 'horizon',
+      backgroundAssetId: artwork
+        ? (RELAY_ART_CANDIDATES.find((asset) => asset.id === `relay-archive-${row.id}`)?.id ?? null)
+        : null,
+    },
     design: {
       routeDecision: row.decision,
       lesson: row.lesson,

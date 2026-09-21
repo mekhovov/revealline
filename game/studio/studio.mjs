@@ -649,7 +649,7 @@ $('livewire').onclick = guarded(() => {
 });
 $('relay').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createRelayCandidates(), null, 2);
+  $('source').value = JSON.stringify(createRelayCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

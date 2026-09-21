@@ -150,6 +150,14 @@ attack/device matrix, human qualification and accepted-source release remain ope
 See the P08 record and
 `docs/research/livewire-original-art-prompts.json`. No new version is allocated.
 
+Relay Labyrinth now has seven local original archive compositions (17,223,024bytes),
+again opt-in with immutable pins and no changes to the42 historical clear checkpoints.
+The40-test art/relay-framework/candidate/registry/library cohort passes on Node20/22.
+Native gate/picture overlays, broader visual/device/human qualification and release
+remain open; see P09 and `docs/research/relay-original-art-prompts.json`.
+The release owner confirms devicePR211 has the next delivery priority; these assets
+remain local source candidates without a new phase/version allocation.
+
 ### Historical phase snapshots
 
 The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0

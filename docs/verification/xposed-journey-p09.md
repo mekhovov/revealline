@@ -4,6 +4,27 @@ Status: isolated implementation candidate, excluded from the frozen v0.76 releas
 No P09 release, Pages deployment, final artwork, human acceptance or Team relay
 qualification is implied by these checks.
 
+## Original archive artwork continuation
+
+Seven original Relay Labyrinth compositions are now pinned as opt-in candidates,
+17,223,024bytes total in1774×887 opaque PNGs. Courtyards, connected pavilions,
+separate conservation yards, circular stores, nested arches, a watchpost and a
+blue-hour exchange give each mission its own composition. The Nested relays
+variant was edited to remove decorative banner glyphs. Full prompts, exact pins,
+inspection limits and pending gates live in
+`../research/relay-original-art-prompts.json`. These are detailed stylized
+environmental illustrations, not strict pixel art, copied references or collision maps.
+
+The factory retains its unchanged greybox default. Explicit artwork opt-in and
+Studio Inspect → Apply use the same immutable registry as packaging. No public
+Journey enrollment, score/progress authority or publication permission is added.
+The six-file art/candidate/relay-framework/registry/whole-library cohort passes
+40/40 on Node20.19.5 and22.22.2, no failures, skips or cancellations, including all42
+historical Relay clear checkpoints and498 whole-library manifests. Scoped
+ESLint, formatting and diff checks pass. Native picture/gate-overlay observations,
+broad-area/victory states, campaign actors/audio, devices, human qualification,
+accepted-source integration and release remain separate open gates.
+
 ## Explicit editions and capture contract
 
 `MapDesignV2` adds up to 32 named interior gate rectangles. `MissionDesignV2`
