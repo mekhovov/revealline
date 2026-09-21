@@ -1,0 +1,247 @@
+TAP version 13
+# (node:82117) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: existing projectile at closure wins; newly captured ground cannot retroactively absorb it
+ok 1 - existing projectile at closure wins; newly captured ground cannot retroactively absorb it
+  ---
+  duration_ms: 13.018334
+  ...
+# Subtest: a later projectile hit is absorbed by accepted capture with no life lost
+ok 2 - a later projectile hit is absorbed by accepted capture with no life lost
+  ---
+  duration_ms: 8.353667
+  ...
+# Subtest: ram/capture tie emits exactly one capture elimination
+ok 3 - ram/capture tie emits exactly one capture elimination
+  ---
+  duration_ms: 3.758625
+  ...
+# Subtest: frozen patrol can be rammed; a frozen touching shot does not damage
+ok 4 - frozen patrol can be rammed; a frozen touching shot does not damage
+  ---
+  duration_ms: 8.089625
+  ...
+# Subtest: already-fired contact wins its owner ram tie; a strictly earlier ram cancels the shot
+ok 5 - already-fired contact wins its owner ram tie; a strictly earlier ram cancels the shot
+  ---
+  duration_ms: 6.187083
+  ...
+# Subtest: impact redeployment clears projectiles and warnings without costing a life
+ok 6 - impact redeployment clears projectiles and warnings without costing a life
+  ---
+  duration_ms: 14.263292
+  ...
+# Subtest: remote disconnected chamber and isolated boss release remove combat actors without retaining field
+ok 7 - remote disconnected chamber and isolated boss release remove combat actors without retaining field
+  ---
+  duration_ms: 2.283416
+  ...
+# (node:82870) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: combat descriptors are optional and restricted to foundation-aware v5..v8
+ok 8 - combat descriptors are optional and restricted to foundation-aware v5..v8
+  ---
+  duration_ms: 39.848375
+  ...
+# Subtest: strict descriptor and role-specific keys reject missing, unknown and malformed data even when disabled
+ok 9 - strict descriptor and role-specific keys reject missing, unknown and malformed data even when disabled
+  ---
+  duration_ms: 44.111125
+  ...
+# Subtest: all numeric bounds are explicit, finite and inclusive; tick values must be integers
+ok 10 - all numeric bounds are explicit, finite and inclusive; tick values must be integers
+  ---
+  duration_ms: 78.610916
+  ...
+# Subtest: bounded populations allow 24 patrols with 8 sentries and reject either excess
+ok 11 - bounded populations allow 24 patrols with 8 sentries and reject either excess
+  ---
+  duration_ms: 4.983916
+  ...
+# Subtest: starts require legal unclaimed geometry, centered coordinates and two cells of spawn clearance
+ok 12 - starts require legal unclaimed geometry, centered coordinates and two cells of spawn clearance
+  ---
+  duration_ms: 18.365709
+  ...
+# Subtest: patrol starts cannot overlap patrols or field enemies, including continuous-radius overlap
+ok 13 - patrol starts cannot overlap patrols or field enemies, including continuous-radius overlap
+  ---
+  duration_ms: 9.710416
+  ...
+# Subtest: patrol IDs are globally unique across entities, terrain, bonuses, relays and directional zones
+ok 14 - patrol IDs are globally unique across entities, terrain, bonuses, relays and directional zones
+  ---
+  duration_ms: 12.887
+  ...
+# Subtest: the public JSON boundary rejects executable values and sparse arrays without invoking accessors
+ok 15 - the public JSON boundary rejects executable values and sparse arrays without invoking accessors
+  ---
+  duration_ms: 0.412209
+  ...
+# Subtest: synthesized home IDs respect authored combat IDs even in disabled descriptors
+ok 16 - synthesized home IDs respect authored combat IDs even in disabled descriptors
+  ---
+  duration_ms: 2.162375
+  ...
+# (node:83535) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: absent and disabled descriptors create no runtime population or random draws
+ok 17 - absent and disabled descriptors create no runtime population or random draws
+  ---
+  duration_ms: 31.077416
+  ...
+# Subtest: private stable-ID random streams ignore actor input order and preserve exact replay state
+ok 18 - private stable-ID random streams ignore actor input order and preserve exact replay state
+  ---
+  duration_ms: 33.296667
+  ...
+# Subtest: diagonal speed is normalized and resolved exactly once; wall reflections stay legal
+ok 19 - diagonal speed is normalized and resolved exactly once; wall reflections stay legal
+  ---
+  duration_ms: 18.989459
+  ...
+# Subtest: sentry opening, failed scan, locked aim, warning, recovery and rest have exact tick origins
+ok 20 - sentry opening, failed scan, locked aim, warning, recovery and rest have exact tick origins
+  ---
+  duration_ms: 1.600084
+  ...
+# Subtest: warning cancels on return or occlusion, unrelated remote fill does not cancel
+ok 21 - warning cancels on return or occlusion, unrelated remote fill does not cancel
+  ---
+  duration_ms: 4.755667
+  ...
+# Subtest: overdue stationary turns draw once on resume; no scan/turn catch-up bursts
+ok 22 - overdue stationary turns draw once on resume; no scan/turn catch-up bursts
+  ---
+  duration_ms: 1.562958
+  ...
+# Subtest: freeze pauses movement/clocks/shot damage; slow scales travel, not warning
+ok 23 - freeze pauses movement/clocks/shot damage; slow scales travel, not warning
+  ---
+  duration_ms: 5.910167
+  ...
+# Subtest: life recovery cancels threats even while frozen; elimination never respawns or scores
+ok 24 - life recovery cancels threats even while frozen; elimination never respawns or scores
+  ---
+  duration_ms: 2.705709
+  ...
+# Subtest: capture removes radius-overlapping actors, bullets and warnings, never retaining remote chambers
+ok 25 - capture removes radius-overlapping actors, bullets and warnings, never retaining remote chambers
+  ---
+  duration_ms: 1.584375
+  ...
+# Subtest: expiry precedes contact and terminal cleanup cannot create attacks
+ok 26 - expiry precedes contact and terminal cleanup cannot create attacks
+  ---
+  duration_ms: 1.347709
+  ...
+# Subtest: projectile capacity is bounded, actor-ID ordered, skipped shots enter recovery
+ok 27 - projectile capacity is bounded, actor-ID ordered, skipped shots enter recovery
+  ---
+  duration_ms: 1.525083
+  ...
+# Subtest: swept crossing rams and bullets hit between endpoints, boundary ties absorb
+ok 28 - swept crossing rams and bullets hit between endpoints, boundary ties absorb
+  ---
+  duration_ms: 1.492166
+  ...
+# (node:84334) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: public inputs and equal paired boards: ram/immediate/seed1
+ok 29 - public inputs and equal paired boards: ram/immediate/seed1
+  ---
+  duration_ms: 123.4885
+  ...
+# Subtest: public inputs and equal paired boards: capture/immediate/seed1
+ok 30 - public inputs and equal paired boards: capture/immediate/seed1
+  ---
+  duration_ms: 77.183334
+  ...
+# Subtest: public inputs and equal paired boards: evade/immediate/seed1
+ok 31 - public inputs and equal paired boards: evade/immediate/seed1
+  ---
+  duration_ms: 62.575208
+  ...
+# Subtest: public inputs and equal paired boards: ram/immediate/seed7
+ok 32 - public inputs and equal paired boards: ram/immediate/seed7
+  ---
+  duration_ms: 64.527375
+  ...
+# Subtest: public inputs and equal paired boards: capture/immediate/seed7
+ok 33 - public inputs and equal paired boards: capture/immediate/seed7
+  ---
+  duration_ms: 69.692125
+  ...
+# Subtest: public inputs and equal paired boards: evade/immediate/seed7
+ok 34 - public inputs and equal paired boards: evade/immediate/seed7
+  ---
+  duration_ms: 57.012208
+  ...
+# Subtest: public inputs and equal paired boards: ram/grid-center/seed1
+ok 35 - public inputs and equal paired boards: ram/grid-center/seed1
+  ---
+  duration_ms: 56.752042
+  ...
+# Subtest: public inputs and equal paired boards: capture/grid-center/seed1
+ok 36 - public inputs and equal paired boards: capture/grid-center/seed1
+  ---
+  duration_ms: 50.399417
+  ...
+# Subtest: public inputs and equal paired boards: evade/grid-center/seed1
+ok 37 - public inputs and equal paired boards: evade/grid-center/seed1
+  ---
+  duration_ms: 55.568333
+  ...
+# Subtest: public inputs and equal paired boards: ram/grid-center/seed7
+ok 38 - public inputs and equal paired boards: ram/grid-center/seed7
+  ---
+  duration_ms: 48.109459
+  ...
+# Subtest: public inputs and equal paired boards: capture/grid-center/seed7
+ok 39 - public inputs and equal paired boards: capture/grid-center/seed7
+  ---
+  duration_ms: 49.427208
+  ...
+# Subtest: public inputs and equal paired boards: evade/grid-center/seed7
+ok 40 - public inputs and equal paired boards: evade/grid-center/seed7
+  ---
+  duration_ms: 49.818625
+  ...
+# Subtest: public warning/shot timing, fixed aim, expiry and subsequent scan do not depend on render batches
+ok 41 - public warning/shot timing, fixed aim, expiry and subsequent scan do not depend on render batches
+  ---
+  duration_ms: 7.936417
+  ...
+# Subtest: suspend/restore preserves warning/projectile authority and exact continuation at tick300
+ok 42 - suspend/restore preserves warning/projectile authority and exact continuation at tick300
+  ---
+  duration_ms: 93.162708
+  ...
+# Subtest: suspend/restore preserves warning/projectile authority and exact continuation at tick380
+ok 43 - suspend/restore preserves warning/projectile authority and exact continuation at tick380
+  ---
+  duration_ms: 86.048625
+  ...
+# Subtest: stationary exposed craft is hit by one telegraphed shot and life recovery clears all threats
+ok 44 - stationary exposed craft is hit by one telegraphed shot and life recovery clears all threats
+  ---
+  duration_ms: 35.55075
+  ...
+# Subtest: public keeper collision is not replaced by optional patrol rules
+ok 45 - public keeper collision is not replaced by optional patrol rules
+  ---
+  duration_ms: 38.444875
+  ...
+1..45
+# tests 45
+# suites 0
+# pass 45
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5256.353542

@@ -1,0 +1,36 @@
+[
+  {
+    "runtime": "20.19.5",
+    "exitCode": 0,
+    "argv": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "--max-old-space-size=512",
+      "--experimental-loader",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/loader.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/source/game/test/combat-definition.test.mjs",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/source/game/test/combat-patrols.test.mjs",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/source/game/test/combat-collisions.test.mjs",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/source/game/test/combat-transport.test.mjs"
+    ],
+    "logSha256": "43aa7397d68e7e1248d33fb00929fc0729be98f686127683af8b269e73929209"
+  },
+  {
+    "runtime": "22.22.2",
+    "exitCode": 0,
+    "argv": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "--max-old-space-size=512",
+      "--experimental-loader",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/loader.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/source/game/test/combat-definition.test.mjs",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/source/game/test/combat-patrols.test.mjs",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/source/game/test/combat-collisions.test.mjs",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/source/game/test/combat-transport.test.mjs"
+    ],
+    "logSha256": "2904dbc8224168dd70c87f49d7884e16e72b0767d6148875fd01c8fe0fe4751f"
+  }
+]

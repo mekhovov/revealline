@@ -1,0 +1,17 @@
+[
+  {
+    "path": "game/content/packs/fpv-arcade-r5.json",
+    "bytes": 11708176,
+    "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+  },
+  {
+    "path": "game/content/packs/classic-lab.json",
+    "bytes": 40556,
+    "sha256": "661dfa8ec8a7304b2b3efd47195f83a0424fd9e36a2ced570435402cca5c852b"
+  },
+  {
+    "path": "game/content/packs/sentinel-relay.json",
+    "bytes": 11416,
+    "sha256": "de523b416fa5a107d8d831061b54277d53b63faf17e58ab828a87e28f0fe48f1"
+  }
+]

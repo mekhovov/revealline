@@ -1,0 +1,23 @@
+(node:93935) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("./.cache/shared-device-r1/combat-independent/comparison-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/source/game/core/index.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/compare.mjs
+    at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    at moduleResolve (node:internal/modules/esm/resolve:861:10)
+    at defaultResolve (node:internal/modules/esm/resolve:985:11)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at resolve (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/comparison-loader.mjs:11:9)
+    at nextResolve (node:internal/modules/esm/hooks:748:28)
+    at Hooks.resolve (node:internal/modules/esm/hooks:240:30)
+    at handleMessage (node:internal/modules/esm/worker:199:24)
+    at checkForMessages (node:internal/modules/esm/worker:141:28)
+    at process.<anonymous> (node:internal/modules/esm/worker:160:5) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/combat-independent/source/game/core/index.mjs'
+}
+
+Node.js v22.22.2
