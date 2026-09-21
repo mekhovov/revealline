@@ -40,6 +40,12 @@ and evidence limitations. Each of the 48 numbered references receives an origina
 adaptation proposal and final disposition; merge/cut weak candidates with reasons.
 Do not copy third-party artwork, names, coordinates or UI composition.
 
+Current implementation coverage is derived by
+`node scripts/audit-journey-adaptations.mjs`: all48 numbered references link to
+current original candidates through66 explicit declarations. This is provisional
+coverage, not48 final dispositions or released adaptations. The64 original source
+records remain unchanged; human, artwork and release acceptance stay separate.
+
 Backlog target: 242 Solo candidates, 12 finale Remixes and 12 purpose-built Team
 missions. There is no minimum shipped count. Every candidate records its route
 decision, failure lesson, counterplay, capture consequences, learning prerequisites,
