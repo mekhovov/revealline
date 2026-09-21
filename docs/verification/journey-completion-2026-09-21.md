@@ -149,7 +149,13 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
   pixel effects, bounded decals and cross-mode fairness.
   Trail-pursuer/heading-interceptor authoring and six encounter variants are now
   implemented with36 clear/replays and36 equal races; native/human/release gates
-  remain. Optional combat is still unimplemented. [D1 evidence](journey-pursuit-interception.md).
+  remain. Optional combat D2a engine/transport is now implemented: separate seeded
+  scouts/sentries, readable attack deadlines, contact/capture removal, bounded
+  projectiles and strict replay/save authority;45 new tests and700 historical
+  regression cases verified on both Node versions. Catalogue/Studio, actual pixel
+  presentation/player toggle, Team semantics, native/human and release gates
+  remain. [D1 evidence](journey-pursuit-interception.md),
+  [D2a evidence and boundaries](journey-optional-combat-runtime.md).
 - [ ] Full Studio recoverability/conflict/large-library usability acceptance with
   real users, not inferred from automated checks.
 - [ ] Every released map readable picture/actors/audio in all display modes.

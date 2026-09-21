@@ -273,6 +273,16 @@ export function validateLevel(level) {
     const foundations = version?.value === 'xonix-level.v5' || relays;
     const classic = version?.value === 'xonix-level.v4' || foundations;
     const wide = version?.value === 'xonix-level.v3' || classic;
+    const oldClassic =
+      level && typeof level === 'object' ? Object.getOwnPropertyDescriptor(level, 'classic') : null;
+    if (
+      !foundations &&
+      oldClassic &&
+      Object.hasOwn(oldClassic, 'value') &&
+      oldClassic.value &&
+      Object.hasOwn(oldClassic.value, 'combatPatrols')
+    )
+      return { valid: false, errors: ['combat patrols require foundation levels v5–v8'] };
     if (version?.value !== 'xonix-level.v2' && !wide) {
       if (level && Object.hasOwn(level, 'encounter'))
         return { valid: false, errors: ['encounter requires xonix-level.v2'] };
@@ -404,6 +414,7 @@ export function normalizedLevel(level) {
       ...level.classic.terrain,
       ...level.classic.powerups,
       ...(level.classic.timedBonuses?.schedules ?? []),
+      ...(level.classic.combatPatrols?.actors ?? []),
     ])
       ids.add(item.id);
   let homeId = 'home-hangar';

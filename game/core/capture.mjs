@@ -5,6 +5,7 @@ import { releaseCutCells, finishEncounterCapture, defeatEncounter } from './enco
 import { classicClaim, updateClassicAnchors } from './classic-topology.mjs';
 import { retainedCaptureCells } from './capture-regions.mjs';
 import { openCapturedRelays } from './relay-gates.mjs';
+import { captureCombatPatrols } from './combat-patrols.mjs';
 
 export function tracePlan(state, paths, duration) {
   const additions = [],
@@ -190,6 +191,7 @@ function captureCells(state, releaseSeed, closeCut) {
       });
     }
   openCapturedRelays(state);
+  captureCombatPatrols(state);
   if (state.classic) updateClassicAnchors(state);
 }
 
