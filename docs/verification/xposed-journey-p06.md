@@ -202,3 +202,44 @@ native gameplay qualification. Broad-area reveal contrast, campaign-specific act
 presentation/audio, all-device and human review, aggregate offline budget, accepted
 integration and release/Pages are still open. This completes original-composition
 candidate production for P06, not P06 phase acceptance.
+
+## Native full-set partial-reveal continuation
+
+The owned read-only server8813 was restarted at exact
+`0ef504e0d99bb05771fec21726afb37ad6c7e7fd`. Native Studio tab38 explicitly
+inspected and applied the seven-picture source, preserving the normal checkpoint
+flow. Standard Solo practice then loaded each remaining picture through the same
+verified preview path. One fresh direction produced each legal first return:
+
+| Mission | Direction | Observed earned coverage | Target | Lives |
+|---|---|---|---|---|
+| Island reserve | Up | 0.6% | 76% | 3 |
+| Two districts | Left | 25.0% after erosion | 77% | 3 |
+| Bank the crossing | Down | 5.7% | 77% | 3 |
+| Five landings | Up | 0.6% | 78% | 3 |
+| Staggered reserve | Up | 0.6% | 78% | 3 |
+| Keep the network | Down | 0.7% | 79% | 3 |
+
+Each craft stopped on closure; required anchors remained visibly unmet rather
+than receiving credit from artwork or foundation cells. Screenshots showed each
+original through its permanent foundations and early captured regions. Two
+districts additionally exposed a substantial lower-left waterwheel/causeway area:
+slow and lethal terrain markings, erosion gaps and the cyan frontier patrol stayed
+distinguishable. The other five checks primarily cover fragments, not broad-area
+contrast. Close preview returned focus to Play and retained the Studio draft.
+
+A presentation concern remains: with the normal desktop viewport and Studio's
+720px-high iframe, Bank the crossing and Staggered reserve briefly displayed the
+Field conditions row together with a rover caption that extended below the frame.
+The complete caption remained in accessibility text. Once the conditions row
+disappeared, the caption fit. A repeated Bank the crossing Start/Down reproduced
+the screenshot; a native scroll attempt coincided with disappearance of the row,
+so it does not establish whether the overflow is unreachable. This reproduction
+was sent to the shared HUD owner; no speculative shell or fixed-height patch was
+made on this older integration branch.
+
+Together with the exact232bd92c First fracture observation above, all seven now
+have early native picture-binding evidence. This supersedes the earlier six-not-
+native limitation, not their candidate status. Full victory reveal, broad-area
+contrast across all pictures, other presets, Versus, reduced effects, physical
+devices, human enjoyment and accepted-source release/Pages remain unqualified.
