@@ -3103,3 +3103,15 @@ test('saved built-in album backup contains that album originals and excludes unr
     'Export does not silently install online originals.',
   );
 });
+
+test('legacy music libraries retain a visible playlist playback choice without a catalogue', async (t) => {
+  const app = await setup(t);
+  for (const id of ['selection', 'use-selection']) {
+    for (let node = app.node(id); node; node = node.parentNode)
+      assert.equal(node.hidden, false, `${id} must not be inside a hidden section`);
+  }
+  assert.match(app.node('selection').children[0].textContent, /Automatic.*map.*campaign.*theme/);
+  app.choose('selection', 'builtin.all');
+  await app.click('use-selection');
+  assert.equal((await app.store.read()).library.selection.playlistId, 'builtin.all');
+});
