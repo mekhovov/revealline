@@ -1,0 +1,123 @@
+{
+  "base": "d166a45dca6d42585e385a765903dca826d60950",
+  "patchSHA256": "c3e24e50b410fe10ec48bf7028cbd1b8836561a126d0867f902871fee40874ae",
+  "paths": [
+    "game/replay-theater/app.mjs",
+    "game/test/replay-theater-navigation.test.mjs",
+    "docs/replay-theater.md"
+  ],
+  "sourcePins": {
+    "game/replay-theater/app.mjs": {
+      "bytes": 20143,
+      "sha256": "ddc3fb56aff29fa88025aa9599c588d494a2e0157d8b98ff721bf7aa0e61ce2b",
+      "parentSHA256": "68926f899a9beff1dd2c1f37c0f86f822d3f776de9ff336c492640d2d5863444"
+    },
+    "game/test/replay-theater-navigation.test.mjs": {
+      "bytes": 34102,
+      "sha256": "059e4c577415fa269233b8cb04603d5ecffd496292cebe0a057a007233ee9c30",
+      "parentSHA256": "ac58c463487531cfcf89233c5097b1b376653e1f32464b15e9cf94456b9d8572"
+    },
+    "docs/replay-theater.md": {
+      "bytes": 10239,
+      "sha256": "a864591294a5e2f00cf45adf412e84e65bd7a5d1f159d412acca6f3a6fa14230",
+      "parentSHA256": "09611cb7712977ca9e3e0557d3e597260ceff7ef459b69fcea8e266aee17ecab"
+    }
+  },
+  "sourceProofSHA256": "b08caf904b1c6db2b14adc175e97271d8c2636c5a5a8d7d18b17adbe5cfe6237",
+  "red": {
+    "node": "20.19.5",
+    "result": "2 requested discriminator cases fail on exact unchanged runtime; 24 unrelated cases skipped by name filter",
+    "log": "red-node20.log",
+    "sha256": "d48c28725509017dba0a5ab1bfd072ecf34241577627618031c1dbc6821d297b"
+  },
+  "finalRuns": {
+    "final-node20": {
+      "node": "v20.19.5",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--experimental-loader",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/loader.mjs",
+        "--test",
+        "--test-concurrency=2",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/candidate/game/test/replay-theater-navigation.test.mjs",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/candidate/game/test/replay-theater-display-host.test.mjs",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/candidate/game/test/replay-player.test.mjs",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/candidate/game/test/replay-theater-wide.test.mjs",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/candidate/game/test/operation-status.test.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.583,
+      "pins": {
+        "game/replay-theater/app.mjs": "ddc3fb56aff29fa88025aa9599c588d494a2e0157d8b98ff721bf7aa0e61ce2b",
+        "game/test/replay-theater-navigation.test.mjs": "059e4c577415fa269233b8cb04603d5ecffd496292cebe0a057a007233ee9c30",
+        "docs/replay-theater.md": "a864591294a5e2f00cf45adf412e84e65bd7a5d1f159d412acca6f3a6fa14230"
+      },
+      "unchanged": true,
+      "counts": {
+        "tests": 52,
+        "pass": 52,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "logSHA256": "a63f062130856cb3aff3fe619592bcf50ae968844a111da46d72cb0723cb8bd2"
+    },
+    "final-node22": {
+      "node": "v22.22.2",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--experimental-loader",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/loader.mjs",
+        "--test",
+        "--test-concurrency=2",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/candidate/game/test/replay-theater-navigation.test.mjs",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/candidate/game/test/replay-theater-display-host.test.mjs",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/candidate/game/test/replay-player.test.mjs",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/candidate/game/test/replay-theater-wide.test.mjs",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-replay-status-focus-d166-r1/candidate/game/test/operation-status.test.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 4.747,
+      "pins": {
+        "game/replay-theater/app.mjs": "ddc3fb56aff29fa88025aa9599c588d494a2e0157d8b98ff721bf7aa0e61ce2b",
+        "game/test/replay-theater-navigation.test.mjs": "059e4c577415fa269233b8cb04603d5ecffd496292cebe0a057a007233ee9c30",
+        "docs/replay-theater.md": "a864591294a5e2f00cf45adf412e84e65bd7a5d1f159d412acca6f3a6fa14230"
+      },
+      "unchanged": true,
+      "counts": {
+        "tests": 52,
+        "pass": 52,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "logSHA256": "e2db31ac398777f5cdd1ad72599269382a84b06802ee6c6fd7f5e3e3d7e5de29"
+    }
+  },
+  "checks": {
+    "eslint": "pass",
+    "prettier": "pass",
+    "gitDiffWhitespace": "pass",
+    "gitApply": "pass",
+    "postimages": "all three equal",
+    "relativeDocumentationTargets": [
+      "game/replay-theater",
+      "game/replay-player.mjs",
+      "game/replay-theater/data",
+      "game/replays/fieldcraft-routes.json",
+      "docs/fieldcraft-challenges.md",
+      "game/test/replay-theater-navigation.test.mjs"
+    ]
+  },
+  "development": "First whole navigation run24/26 had two new-test checkpoint snapshot timing mistakes: before was drawn before the deliberately stepped tick. Fixed test to sample current exact checkpoint, no runtime workaround. Intermediate26/26 and guarded28/28 retained. Final adds actual-player checkpoint-error regression.",
+  "native": {
+    "owner": "parent",
+    "baseline": "Parent confirmed exactd166 held-example Jump\u2192Cancel Enter loses focus to BODY; .cache/p16-replay-native-d166-r1",
+    "final": "Pending separate parent receipt at seal time; no native final acceptance claimed by this packet."
+  },
+  "limits": [
+    "Actual entry/markup/replay verification/core/navigation are real; DOM hide-focus behavior, frame timing, drawing and controller samples are modeled.",
+    "No physical controller/touch or screen-reader, native file picker, public deployment, offline or whole-P16 acceptance.",
+    "No renderer, game mechanics, Team, production, root/index/branch/version edits."
+  ]
+}

@@ -1,0 +1,9 @@
+# Replay Theater focus and terminal status — integration
+
+Source-only correction on b6502bfc. The three sealed runtime/test/guide paths match their packet hashes. A focused Cancel control now hands focus to enabled Play, Restart or Load example when hidden by cancellation/load settlement, without starting playback. Newer input, focus, load generations and backgrounding retire that ownership. Completed recordings retain Restart advice through lifecycle/controller inactivity; empty/error states no longer acquire false Play advice.
+
+All52 tests across the five relevant files pass on Node20.19.5 and22.22.2. The actual mounted host covers delayed success/error/cancel, body focus after native hiding, newer editing and pointer action, replacement work, lifecycle suspension, complete/error/empty advice and preserved checkpoints. Baseline failures, the original sealed packet and its separate native supplement are retained; they are not counted as new integration tests.
+
+A fresh browser journey uses this integration’s exact b650 objects and one pinned Replay app. Keyboard Jump → Cancel restores Load example; retry → Jump → HTTP release restores Play at paused tick0. Native Speed selection to2x and Play complete all1305 ticks, matching861a6de2ffd7e119 with no rewards. Focus reaches visible44px Restart; Enter resets to paused tick0 without autoplay. No console warnings/errors. Request receipts, runtime pin and observed states are retained.
+
+Native lifecycle backgrounding was not exercised; those claims remain modeled. Physical controllers/touch, mobile layout, assistive-technology listening, offline and public release remain separate. The server/tab were closed. This correction does not change simulation, the current frozen release or production recipe inputs. Full-source release gates and public acceptance are still required.
