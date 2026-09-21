@@ -9,6 +9,7 @@ import { attachCouchCatalogue } from './couch-catalogue.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
+import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
 import { DIFFICULTY_CATALOG } from '../content-design/catalogs.mjs';
@@ -242,7 +243,10 @@ try {
   if (authoredJourney) {
     document.body.classList.add('candidate-journey');
     candidateJourney = createCandidateVersusHost(authoredRoute.source, {
-      themes: (await json('../content-design/themes.json')).themes,
+      themes:
+        authoredRoute.id === 'whole-originals-v4'
+          ? journeyActorThemeCandidates((await json('../content-design/themes.json')).themes)
+          : (await json('../content-design/themes.json')).themes,
       corePackIds: authoredRoute.corePackIds,
     });
     journeyPreferences = createJourneyPreferences({ window });

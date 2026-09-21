@@ -13,6 +13,7 @@ import { createCrosswindCandidates } from './crosswind-candidates.mjs';
 import { createSentinelCandidates } from './sentinel-candidates.mjs';
 import { createApexCandidates } from './apex-candidates.mjs';
 import { withCampaignPresentation } from './campaign-presentation.mjs';
+import { withCampaignActorPresentation } from './campaign-actor-presentation.mjs';
 
 // Explicit review order, never inferred from titles or an imported "official" flag.
 const chapters = [
@@ -40,12 +41,20 @@ export function createWholeJourneyChapterSources({
   artwork = false,
   roverTeaching = false,
   campaignPresentation = false,
+  campaignActors = false,
 } = {}) {
   return chapters.map(([id, , , create]) => {
     const source = (roverTeaching && id === 'rover' ? createRoverTeachingCandidates : create)({
       artwork,
     });
-    return { id, source: campaignPresentation ? withCampaignPresentation(source, id) : source };
+    return {
+      id,
+      source: campaignActors
+        ? withCampaignActorPresentation(source, id)
+        : campaignPresentation
+          ? withCampaignPresentation(source, id)
+          : source,
+    };
   });
 }
 
@@ -60,11 +69,13 @@ export function createWholeJourneyCandidates({
   artwork = false,
   roverTeaching = false,
   campaignPresentation = false,
+  campaignActors = false,
 } = {}) {
   const sources = createWholeJourneyChapterSources({
     artwork,
     roverTeaching,
     campaignPresentation,
+    campaignActors,
   }).map((chapter) => chapter.source);
   const source = {
     ...sources[0],
@@ -82,10 +93,15 @@ export function createWholeJourneyCandidates({
     source.revision = 'teaching-review-1';
     source.name = 'Whole Journey · unvalidated first-capture teaching review';
   }
-  if (campaignPresentation) {
+  if (campaignPresentation || campaignActors) {
     source.id += '-themes';
     source.revision += '-theme-1';
     source.name = 'Whole Journey · unvalidated campaign presentation review';
+  }
+  if (campaignActors) {
+    source.id += '-actors';
+    source.revision += '-actors-1';
+    source.name = 'Whole Journey · unvalidated actor material review';
   }
   for (const key of ['maps', 'missions', 'campaigns', 'packs', 'assets'])
     source[key] = sources.flatMap((chapter) => chapter[key] ?? []);

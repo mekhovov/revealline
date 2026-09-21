@@ -5,6 +5,7 @@ export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
   'whole-originals',
   'whole-originals-v2',
   'whole-originals-v3',
+  'whole-originals-v4',
 ]);
 export const isAuthoredJourneyRouteId = (id) => AUTHORED_JOURNEY_ROUTE_IDS.includes(id);
 

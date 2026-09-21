@@ -734,6 +734,21 @@ $('whole-journey').onclick = guarded(() => {
   sourceChanged = true;
   inspectSource();
 });
+$('whole-journey-actors').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(
+    createWholeJourneyCandidates({
+      artwork: true,
+      roverTeaching: true,
+      campaignPresentation: true,
+      campaignActors: true,
+    }),
+    null,
+    2,
+  );
+  sourceChanged = true;
+  inspectSource();
+});
 $('import').onchange = guarded(async () => {
   const file = $('import').files[0];
   if (!file || !discardSource()) return;

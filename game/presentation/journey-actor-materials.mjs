@@ -10,6 +10,7 @@ const freeze = (value) => {
 export const JOURNEY_ACTOR_MATERIALS = freeze([
   {
     id: 'horizon-enamel-v1',
+    sourceThemeId: 'horizon',
     name: 'Horizon enamel',
     material: 'sunlit ceramic',
     motif: 'glaze',
@@ -19,6 +20,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'border-seedpod-v1',
+    sourceThemeId: 'border-bloom',
     name: 'Border seedpod',
     material: 'ribbed botanical casing',
     motif: 'seed',
@@ -28,6 +30,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'signal-porcelain-v1',
+    sourceThemeId: 'signal-gardens',
     name: 'Signal porcelain',
     material: 'porcelain circuit inlays',
     motif: 'circuit',
@@ -37,6 +40,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'neon-glass-v1',
+    sourceThemeId: 'neon-contours',
     name: 'Neon glass',
     material: 'stepped smoked glass',
     motif: 'steps',
@@ -46,6 +50,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'rover-rivets-v1',
+    sourceThemeId: 'rover-yard',
     name: 'Rover rivets',
     material: 'riveted workshop plates',
     motif: 'rivets',
@@ -55,6 +60,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'fracture-basalt-v1',
+    sourceThemeId: 'fractured-grid',
     name: 'Fracture basalt',
     material: 'split basalt plates',
     motif: 'fracture',
@@ -64,6 +70,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'phase-prism-v1',
+    sourceThemeId: 'phaseworks',
     name: 'Phase prism',
     material: 'diagonal prism facets',
     motif: 'prism',
@@ -73,6 +80,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'livewire-copper-v1',
+    sourceThemeId: 'livewire-foundry',
     name: 'Livewire copper',
     material: 'vented copper housings',
     motif: 'vents',
@@ -82,6 +90,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'relay-lacquer-v1',
+    sourceThemeId: 'relay-labyrinth',
     name: 'Relay lacquer',
     material: 'linked lacquer tiles',
     motif: 'links',
@@ -91,6 +100,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'crosswind-sail-v1',
+    sourceThemeId: 'crosswind-array',
     name: 'Crosswind sail',
     material: 'woven sail panels',
     motif: 'weave',
@@ -100,6 +110,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'sentinel-gilt-v1',
+    sourceThemeId: 'sentinel-crown',
     name: 'Sentinel gilt',
     material: 'gilt crown armor',
     motif: 'crown',
@@ -109,6 +120,7 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
   },
   {
     id: 'apex-ice-v1',
+    sourceThemeId: 'apex-aurora',
     name: 'Apex ice',
     material: 'polar ice facets',
     motif: 'frost',
@@ -119,6 +131,27 @@ export const JOURNEY_ACTOR_MATERIALS = freeze([
 ]);
 const byId = new Map(JOURNEY_ACTOR_MATERIALS.map((entry) => [entry.id, entry]));
 export const journeyActorMaterial = (id) => byId.get(id) ?? null;
+const themeMaterials = new Map(
+  JOURNEY_ACTOR_MATERIALS.map((entry) => [`${entry.sourceThemeId}-actors-v1`, entry]),
+);
+export const journeyActorThemeMaterial = (themeId) => themeMaterials.get(themeId) ?? null;
+
+/** Explicit cosmetic successor, not a new theme schema or a changed old ID.
+ * Keep palette/labels/player bodies from the existing theme authority. */
+export function createJourneyActorTheme(theme) {
+  const material = JOURNEY_ACTOR_MATERIALS.find((entry) => entry.sourceThemeId === theme?.id);
+  if (!material) throw new Error('A registered Journey campaign theme is required.');
+  return {
+    ...structuredClone(theme),
+    id: `${theme.id}-actors-v1`,
+    name: `${theme.name} · material review`,
+  };
+}
+
+/** Explicit route catalog preparation; old callers keep their original array. */
+export function journeyActorThemeCandidates(themes) {
+  return themes.map((theme) => createJourneyActorTheme(theme));
+}
 
 // Role topology stays recognizable across all materials: diamond keeper, long
 // perimeter shuttle, bent frontier crawler, feet, bite, lanes and locked crown.
