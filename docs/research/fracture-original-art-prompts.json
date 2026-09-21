@@ -23,7 +23,7 @@
           "No copied reference artwork, interface, visible text, grid or enemy sprites were supplied or requested."
         ],
         "pending": [
-          "Partial-reveal and gameplay-overlay legibility across modes and presets",
+          "Broad-area reveal and gameplay-overlay legibility across modes and presets; an early0.5%/1.7% Solo native preview was checked at source232bd92c",
           "Reduced effects and small-screen/device review",
           "Human visual and gameplay qualification",
           "Six other mission compositions",
