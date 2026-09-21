@@ -41,6 +41,13 @@ export function attachTouchSteering({
       if (old.element.hasPointerCapture(old.id)) old.element.releasePointerCapture(old.id);
     } catch {}
   };
+  // Layout changes can retire a captured finger before a native pointercancel.
+  // Notify the host only when there was an actual gesture to interrupt.
+  const cancel = () => {
+    if (!gesture) return;
+    clear();
+    onCancel();
+  };
   const move = (event) => {
     if (!gesture || gesture.id !== event.pointerId) return;
     if (!active()) {
@@ -99,13 +106,14 @@ export function attachTouchSteering({
         // A deliberate clear releases capture after retiring its gesture.
         // Late or incomplete capture-loss events cannot cancel the new owner.
         if (gesture && gesture.id === event.pointerId) {
-          clear();
-          if (type !== 'pointerup') onCancel();
+          if (type === 'pointerup') clear();
+          else cancel();
         }
       });
   }
   return {
     clear,
+    cancel,
     destroy() {
       clear();
       listeners.forEach((remove) => remove());

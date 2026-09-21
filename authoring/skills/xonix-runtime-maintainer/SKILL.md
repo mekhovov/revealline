@@ -1151,3 +1151,12 @@ their text fallback twice. Inspect long captions between Large landscape pads;
 a fitting canvas alone does not establish unobscured action feedback. Extend
 controller checks through Missions/Deploy/Pause/Resume without pointer clicks,
 while keeping modeled and physical Steam Deck evidence separate.
+
+
+### Combined handheld input and HUD qualification
+
+Keep Solo, Versus and Team on `attachTouchSteering` and shared preferences. A second ignored finger must not cancel the owning finger or another seat. Layout resize cancels only an active captured gesture and pauses through the host; idle resize does not pause. Explicit Resume and fresh input remain mandatory after interruption. Test every pad style and both turning policies through the actual host.
+
+Fullscreen is optional. Allow one pending request, retire listeners on teardown, and prevent late settlement from writing to a retired button. Keep the responsive arena usable when fullscreen is unavailable or denied. Team landscape must own its complete grid sizing through the full 600px-height breakpoint; use corner overlays without full-height pad gutters. Preserve safe areas, 44px minimum actual targets, readable objectives and the complete bitmap.
+
+Integration prompt: “Compose the compact HUD, Team landscape, extra-finger, resize and fullscreen patches on the accepted source. Include all helper imports rather than assuming a donor test ancestry. Run complete host files on both supported test runtimes. Record failed attempts separately, bind reads to exact sources, and distinguish native browser layout from physical iPhone/Steam Deck evidence. Do not claim a public release from local tests.”
