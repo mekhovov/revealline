@@ -205,6 +205,15 @@ additional to the capacity forecast; no budget or release authority changes.
 
 ### Historical phase snapshots
 
+Local whole-library continuation now has an explicit `whole-originals` review URL
+in Solo and Versus, separate from the unchanged opening/authored routes and their
+save slots. It exposes71 core missions with12 optional Remixes and original pins,
+not official enrollment. The full71-mission Solo and71-race Versus host checks
+pass Node20/22, each with70Next transitions. Native Studio composition/reload,
+late Solo search/launch/Skip/Continue and a paired Crosswind first-return check
+are recorded in P13. These scoped results do not close human, device, release
+packaging or accepted-tree gates. DevicePR211 remains the release owner's priority.
+
 The whole-library Studio inspection now explicitly selects an original-picture
 review draft:83 unique mission originals, all498 Solo/Versus preset manifests and
 execution keys matching standalone pictured editions, and unchanged simulation
