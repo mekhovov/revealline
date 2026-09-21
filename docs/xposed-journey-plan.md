@@ -43,7 +43,10 @@ themes without changing498 resolved simulation identities, old editions, uploade
 body precedence or the V3 suspended slot.95 checks pass on each supported Node;
 native opening clear/Next, Neon Solo/Versus rendering and Studio inspect-only flow
 pass within the documented scope. Team's separate prepared-sprite pipeline is not
-yet enrolled. Human recognition, final character art, newer-host integration and
+yet enrolled; an additive twelve-mission successor source and verified-picture
+selection adapter preserve36 Team preset simulations and pass45 checks per Node,
+but require the newer host's exact ready-look transaction before live adoption.
+Human recognition, final character art, newer-host integration and
 Pages publication remain open. See `verification/journey-actor-material-studies.md`.
 
 Team original-art source checkpoint: eleven new originals plus the existing Shared
