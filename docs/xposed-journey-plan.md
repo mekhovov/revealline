@@ -160,6 +160,15 @@ gate-traversal/victory states and release remain open; see P09 and
 The release owner confirms devicePR211 has the next delivery priority; these assets
 remain local source candidates without a new phase/version allocation.
 
+Crosswind Array has seven local original highland compositions (18,900,961bytes),
+exact pins/prompts and explicit Studio opt-in. Its40-test art/directional-core/
+framework/candidate/library cohort passes on Node20/22 with42 unchanged clear
+checkpoints. Native arrow/picture/reclamation/restoration, broad-area/victory,
+device/human and release gates remain open; see P10 and its artwork prompt record.
+The existing implementation guard is950,000,000bytes (stricter than950MiB wording
+below). Preserve it unchanged and requalify aggregate current/previous deployment
+size on accepted source before promotion; candidate originals do not prove fit.
+
 ### Historical phase snapshots
 
 The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0

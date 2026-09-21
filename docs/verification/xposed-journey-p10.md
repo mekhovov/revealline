@@ -1,10 +1,32 @@
 # P10 Crosswind Array — candidate verification
 
-Local-only work continues from P09 `17825389` on `codex/xposed-journey-p10`.
-This is not an accepted release baseline, hosted qualification or a Pages build.
-The sole publication coordinator owns the frozen v0.76 sequence; no P09/P10 push,
-phase PR, version selection, release mutation, bulk hydration or asset generation
-is authorized during that sequence.
+The original engine checkpoint continued from P09 `17825389` on
+`codex/xposed-journey-p10`. It is not an accepted release baseline, hosted
+qualification or a Pages build. The historical v0.76 freeze prohibited asset
+generation during that sequence. The current September21 owner handoff supersedes
+that freeze: independent local content work continues, while devicePR211 owns
+the next delivery. No P09/P10 integration, push, phase PR, version allocation,
+release mutation or duplicate bulk build is authorized by this checkpoint.
+
+## Original highland artwork continuation
+
+All seven Crosswind missions now have independent original compositions,
+18,900,961bytes total in1774×887 opaque PNGs, with exact pins and full prompts in
+`../research/crosswind-original-art-prompts.json`. Weather stations, survey terraces,
+windbreaks, a circular courtyard, a long promenade, coastal masts and a blue-dusk
+bridge give distinct reveals. A targeted edit removed unintended glyphs from
+Survey markers' stones. Directional arrows remain engine-owned, never image content.
+These are detailed stylized illustrations, not strict low-resolution pixel art.
+
+The opt-in factory and Studio Inspect → Apply path use the shared immutable registry;
+default greyboxes, editions, physics and progress authority are unchanged. The
+seven-file art/candidate/directional-core/framework/registry/whole-library cohort
+passes40/40 on Node20.19.5 and22.22.2, no failures, skips or cancellations, preserving
+all42 historical clear checkpoints and498 whole-library manifests. Scoped ESLint,
+formatting and diff checks pass. Native picture/arrow/neutralization and restored-
+terrain observations, broad-area/victory, actors/audio, device/human acceptance and
+accepted-source publication remain open. The existing code-level Pages guard is
+950,000,000bytes; this increment does not raise it or claim aggregate release fit.
 
 ## Directional-field contract
 
