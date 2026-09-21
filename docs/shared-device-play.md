@@ -403,3 +403,32 @@ under `docs/verification/shared-device-play/iteration-10/`.
 confirms that releasing pointer capture produces this event. Our ownership guard
 distinguishes intentional cleanup from interruption of a current gesture; the
 missing-ID reproducer is explicitly synthetic and does not model a native pointer ID.
+
+## Eleventh iteration: readable classic-field event notices
+
+An actual imported rover probe exposed a remaining failure at 568×320 with
+Large/Plain text: the activation and collision notices were single-line ellipses
+over playable cells. At 844×390 another inherited rule hid the notice entirely.
+Classic fields already reserve a warning band while their static summary is
+hidden. The correction uses that existing band, wraps the complete event text,
+and explicitly keeps it displayed. It changes neither arena size nor gameplay.
+
+The actual probe earned 51.4% with Down, then lost a life through Up/rover contact.
+At 568×320, the 344×172 canvas is unchanged and the full two-line notice fits
+544×46.80 below it. At 320×480, the complete 296×148 canvas and three-line
+296×70.20 notice fit. At 844×390, the 484×242 canvas and single-line 820×23.40
+notice fit, including with Large touch controls shown. The probe's newer direct
+rover wording came from the separate Team integration candidate; the corrected
+stylesheet is byte-identical to this device candidate. This is composed local
+browser evidence, not final frozen-source or public qualification.
+
+Sentinel Relay retains its separate live instruction card: the measured arenas
+remain 322.66×241.99 at 844×390 and 229.33×171.99 at 568×320. Lane warnings remain
+visible and duplicate phase notices stay hidden. Independent loss messages
+alongside an active staged instruction card still require separate verification.
+The change deliberately does not repurpose that occupied card's band.
+
+Boot/build and authored compact-arena checks pass 6/6 on each Node 20/22.
+Actual layout evidence and the original failures are retained under iteration-11.
+The preview used desktop Chromium viewport overrides without fullscreen, not
+physical Safari/Steam Deck. No complete device or production phase closes here.
