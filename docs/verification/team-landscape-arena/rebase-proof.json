@@ -1,0 +1,24 @@
+{
+  "candidate": "3b579b7b12ca497851ade7bde4f8fcf9a44e8b22",
+  "base": "bce7b912",
+  "originalLandscape": "39381478825a4739222c071f6f294c713f197faa",
+  "runtimeDiffFromEarlier": [
+    "game/build-config.json version0.76.1→0.77.0 only"
+  ],
+  "retainedBrowserRequestsMatched": 252,
+  "retainedBrowserBytesMatched": 2731529,
+  "changedResponses": [],
+  "handheldCSSChangesProductionRecipeInput": false,
+  "limitations": [
+    "Fresh source-to-retained-observation comparison, not a new browser session.",
+    "No version, PR, full build or public acceptance.",
+    "Physical input/device gates remain open."
+  ],
+  "productionRecipeGroupsEqualHeldIntegration": {
+    "ui": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41",
+    "screens": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0",
+    "motion": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4",
+    "effects": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/look-preparation.mjs sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79",
+    "audio": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:b07a0865c1ff94faf7d1b45ccd7db1a9c0f4b417e366da9ddb1a5e7849beecba"
+  }
+}
