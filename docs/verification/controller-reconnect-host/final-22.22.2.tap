@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: actual host: either stick moves, face pause/resume preserves the run and replay, disconnect pauses
+ok 1 - actual host: either stick moves, face pause/resume preserves the run and replay, disconnect pauses
+  ---
+  duration_ms: 2448.563667
+  type: 'test'
+  ...
+# Subtest: actual host: B pauses, X opens field guide, Y opens missions; back closes the active modal
+ok 2 - actual host: B pauses, X opens field guide, Y opens missions; back closes the active modal
+  ---
+  duration_ms: 2593.779208
+  type: 'test'
+  ...
+# Subtest: actual host: stick changes direction and gesture release keeps continuous flight
+ok 3 - actual host: stick changes direction and gesture release keeps continuous flight
+  ---
+  duration_ms: 1428.347666
+  type: 'test'
+  ...
+# Subtest: actual host: swipe changes direction and gesture release keeps continuous flight
+ok 4 - actual host: swipe changes direction and gesture release keeps continuous flight
+  ---
+  duration_ms: 1343.963958
+  type: 'test'
+  ...
+# Subtest: actual host: dpad changes direction and gesture release keeps continuous flight
+ok 5 - actual host: dpad changes direction and gesture release keeps continuous flight
+  ---
+  duration_ms: 1358.946
+  type: 'test'
+  ...
+# Subtest: cold Steam Deck-style discovery: fresh A starts the selected flight after neutral input
+ok 6 - cold Steam Deck-style discovery: fresh A starts the selected flight after neutral input
+  ---
+  duration_ms: 489.308375
+  type: 'test'
+  ...
+# Subtest: Solo adopts the shared couch choice and editing opacity preserves its other fields
+ok 7 - Solo adopts the shared couch choice and editing opacity preserves its other fields
+  ---
+  duration_ms: 301.049458
+  type: 'test'
+  ...
+# Subtest: Solo reports a denied shared save while retaining the current touch choice
+ok 8 - Solo reports a denied shared save while retaining the current touch choice
+  ---
+  duration_ms: 313.93075
+  type: 'test'
+  ...
+# Subtest: modeled controller: Missions selection, Deploy, Pause and explicit Resume need no pointer click
+ok 9 - modeled controller: Missions selection, Deploy, Pause and explicit Resume need no pointer click
+  ---
+  duration_ms: 4046.260333
+  type: 'test'
+  ...
+# Subtest: actual host: stick hands steering to and from a held controller without stealing direction
+ok 10 - actual host: stick hands steering to and from a held controller without stealing direction
+  ---
+  duration_ms: 2318.604458
+  type: 'test'
+  ...
+# Subtest: actual host: swipe hands steering to and from a held controller without stealing direction
+ok 11 - actual host: swipe hands steering to and from a held controller without stealing direction
+  ---
+  duration_ms: 2099.874042
+  type: 'test'
+  ...
+# Subtest: actual host: dpad hands steering to and from a held controller without stealing direction
+ok 12 - actual host: dpad hands steering to and from a held controller without stealing direction
+  ---
+  duration_ms: 2168.365625
+  type: 'test'
+  ...
+# Subtest: actual host: immediate reconnect requires neutral then fresh Resume without losing the cut
+ok 13 - actual host: immediate reconnect requires neutral then fresh Resume without losing the cut
+  ---
+  duration_ms: 2816.35175
+  type: 'test'
+  ...
+# Subtest: actual host: grid-center reconnect requires neutral then fresh Resume without losing the cut
+ok 14 - actual host: grid-center reconnect requires neutral then fresh Resume without losing the cut
+  ---
+  duration_ms: 3373.245
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 27248.423375
