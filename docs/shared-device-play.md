@@ -130,3 +130,42 @@ A broader Team picture-host check reproduced one stale storage-read inventory
 The correction adds only that key; display/menu-style write restrictions and all
 picture/HUD continuity checks are unchanged. The complete affected picture and
 shared-touch cohorts pass29/29 on both Node20 and Node22. Original failure retained.
+
+## Fourth iteration: short Versus and First Flight
+
+At 568×320, the older Versus width breakpoint stacked both arenas and authored
+Journey navigation took a second top row. Active handheld Journey now hides Skip
+and Find until Pause, preserves an optional save warning row, and keeps landscape
+boards side by side. The untimed clock shows infinity while its accessible text
+remains “No countdown”. Timed clocks retain their exact countdown text.
+
+Native desktop-browser checks (DPR1, not physical touch certification):
+
+- Versus 568×320: 44px HUD; two complete 270×135 arenas.
+- Versus 320×480: 44px HUD; two complete 302×151 arenas; Large-preference
+  pads fit each seat at 170×170, with 56.66px D-pad targets. They no longer cover
+  the global Pause button. Empty equipment groups no longer reserve a gap.
+- First Flight initially collapsed to a 30px-wide board at 320×480 because the
+  course was excluded from handheld fitting while inheriting a touch-height
+  reservation. Active training now shares the compact HUD and viewport; its
+  current task stays visible and course selection returns on Pause.
+- First Flight 320×480 with Large text/192px controls: 44px HUD, full 131.20×98.40
+  board, readable two-line task and status, no document overflow. This smallest
+  layout still needs a physical comfort review. At 568×320 the complete board
+  measures 277.33×207.99 with the task above it. The first lesson cleared 52.2%
+  with three lives after the direction control; lesson choices returned.
+
+The affected 113-test cohort passes on both Node 20 and Node 22. Retained failures
+include a stale test pressing a hidden D-pad (corrected to the visible stick), an
+invalid untimed Legacy fixture (untimed assertions belong to the authored Journey
+host), and missing sparse-worktree image dependencies (exact HEAD bytes restored).
+Original failing outputs and final logs are retained with hashes. These checks
+also preserve replay/checkpoint, pause, course progress and picture ownership;
+they do not establish hardware certification or complete source qualification.
+
+Final ordinary Solo recheck after sharing the course rules: at 568×320 with Large
+text and 192px D-pad, the complete arena remains 512×256 below the 44px HUD;
+at 320×480 it remains 296×148. Both documents fit the viewport. This catches the
+old D-pad side reservation and high-specificity hidden field-condition width
+rule; the handheld layout explicitly owns those dimensions. Rotation stayed
+paused until explicit Resume. Further device/encounter stress checks remain.

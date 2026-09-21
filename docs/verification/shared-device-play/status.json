@@ -18,6 +18,11 @@
       "finalInputSource": "60/60 on Node20 and Node22; exact original TAP retained compressed with SHA256 receipts",
       "expandedControllerJourney": "61/61 shared-input cohort on bothNode20/22 including modeled controller-only Missions\u2192Deploy\u2192Pause\u2192Resume; physical Deck failure still not reproduced",
       "teamPictureCompatibility": "19-test predecessor18/19: expected read list lacked shared touch key. Only that key added; complete picture/shared/couch touch cohort29/29 on Node20 and Node22. Writes remain limited to display/menu-style."
+    },
+    "iteration4": {
+      "node20": "113/113",
+      "node22": "113/113",
+      "scope": "Couch shell, candidate Versus host, board footprint and complete First Flight cohort; native CSS checks separate. Final release gates remain pending."
     }
   },
   "nativeObservations": [
@@ -138,6 +143,61 @@
       "touchSurfaces": [192, 192],
       "document": [568, 320],
       "note": "Both corner controls and complete board fit; compact Safe/Support labels. Central hazard/status text still needs placement refinement with Large controls."
+    },
+    {
+      "viewport": [568, 320],
+      "mode": "Versus Journey",
+      "hudHeight": 44,
+      "arenas": [
+        [270, 135],
+        [270, 135]
+      ],
+      "document": [568, 320],
+      "note": "Large touch preference; side-by-side complete arenas; Journey navigation returns on Pause."
+    },
+    {
+      "viewport": [320, 480],
+      "mode": "Versus Journey",
+      "hudHeight": 44,
+      "arenas": [
+        [302, 151],
+        [302, 151]
+      ],
+      "touchSurfaces": [170, 170],
+      "document": [320, 480],
+      "note": "Large preferred controls bounded to seats; minimum direction target56.66px; Pause unobscured."
+    },
+    {
+      "viewport": [320, 480],
+      "mode": "First Flight",
+      "hudHeight": 44,
+      "arena": [131.203125, 98.3984375],
+      "document": [320, 480],
+      "note": "Large text and192px controls; current task and status visible. Earlier30px collapse corrected."
+    },
+    {
+      "viewport": [568, 320],
+      "mode": "First Flight",
+      "hudHeight": 44,
+      "arena": [277.328125, 207.9921875],
+      "document": [568, 320],
+      "note": "Task visible above full4:3arena; first lesson won52.2%with3lives. Native desktop browser override, not real device."
+    },
+    {
+      "viewport": [568, 320],
+      "mode": "Solo Journey final shared course rules",
+      "hudHeight": 44,
+      "arena": [512, 256],
+      "document": [568, 320],
+      "note": "Large text/192px Dpad; final complete arena restored after old side-reservation rule."
+    },
+    {
+      "viewport": [320, 480],
+      "mode": "Solo Journey final shared course rules",
+      "hudHeight": 44,
+      "arena": [296, 148],
+      "document": [320, 480],
+      "note": "Large text/192px Dpad; hidden field-condition width no longer shrinks arena; rotation retains Pause."
     }
   ],
   "pending": [

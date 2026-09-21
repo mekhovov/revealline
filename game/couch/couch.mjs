@@ -2098,6 +2098,7 @@ try {
       left === null
         ? 'No countdown'
         : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+    $('race-clock').dataset.compact = left === null ? '∞' : $('race-clock').textContent;
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i];
       $(`racer-stats-${i}`).textContent =
