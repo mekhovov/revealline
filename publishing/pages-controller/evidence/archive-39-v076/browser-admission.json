@@ -1,0 +1,30 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-39",
+  "infrastructureCommit": "feb8a8d3ec1919cf0283a44275b763ce5b364f72",
+  "deploymentId": 6559085319,
+  "versions": [
+    "v0.70.0",
+    "v0.76.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-39-v076/native-observation.json",
+      "sha256": "ed16e082f3b1b5fb99dddb968d980e2f9c89cc669bd14b5e6675ef3e5c89d293"
+    },
+    {
+      "path": "evidence/archive-39-v076/terminal-run.json",
+      "sha256": "15f6ff996554af3b959ae89c4760a1e7ca968320fa039f4b3d2241b8ff5ec38b"
+    },
+    {
+      "path": "evidence/archive-39-v076/deployments.json",
+      "sha256": "4553ed7b9e8bd7da68ddb1d77932a56551664ad76294975eab193d3ca4be8e51"
+    },
+    {
+      "path": "evidence/archive-39-v076/deployment-statuses.json",
+      "sha256": "4180b9f9359c9b27c62929a51d8cb445c19b16e4d6f4386226f1882ef2f5b872"
+    }
+  ],
+  "scope": "Original bytes preserved for both editions; actual online keyboard startup/pause on v0.70, win/Next/save/reload/explicit Continue on v0.76, archive-to-explorer navigation. No offline, physical-device, audible-listening or whole-phase qualification."
+}
