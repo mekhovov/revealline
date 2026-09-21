@@ -5,8 +5,9 @@ import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
 import { check, resolveConfig } from 'prettier';
-import { buildProject } from './game-cli.mjs';
+import { buildProject, readTarEntries } from './game-cli.mjs';
 import {
   readSoundtrackDistributionEntries,
   validateSoundtrackDistributionConfig,
@@ -124,6 +125,122 @@ test('publication writer preserves catalogue values and emits reproducible repos
     await readFile(path.join(f.root, 'game/content/soundtrack-catalogue.json')),
     firstMetadata,
   );
+});
+test('real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies', async (t) => {
+  const f = await fixture(t);
+  for (const name of [
+    'scripts/game-cli.mjs',
+    'scripts/pack-indexes.mjs',
+    'scripts/soundtrack-distribution.mjs',
+    'scripts/soundtrack-archive-admissions.mjs',
+    'game/content-launch.mjs',
+    'game/soundtrack-archive.mjs',
+    'game/soundtrack-album-download.mjs',
+  ])
+    await f.put(name, await readFile(path.join(source, name)));
+  const catalogue = {
+    format: 'revealline-soundtrack-catalogue.v2',
+    edition: 'archived-fixture',
+    tracks: [],
+  };
+  f.config.soundtrackAlbums = {
+    ...option,
+    format: 'revealline-soundtrack-distribution.v2',
+    originalCatalogue: 'game/content/soundtrack-catalogue.json',
+  };
+  await f.save();
+  await f.put(
+    option.catalog,
+    JSON.stringify({ format: 'revealline-soundtrack-albums.v1', albums: [] }),
+  );
+  await f.put(f.config.soundtrackAlbums.originalCatalogue, JSON.stringify(catalogue));
+  await f.put(
+    'game/content/soundtrack-catalogue.mjs',
+    `export const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue)}; export const SOUNDTRACK_ARCHIVES = [];`,
+  );
+  await f.put(
+    `${licensedFolder}/publication.json`,
+    JSON.stringify({ format: 'revealline-licensed-publication.v1', approved: [] }),
+  );
+  await f.put(`${licensedFolder}/production-register.json`, JSON.stringify({ tracks: [] }));
+  await f.put(
+    'authoring/library/revealline-original-soundtrack/build.mjs',
+    `export async function buildOriginalSoundtrackCatalogue() { return { catalogue: ${JSON.stringify(catalogue)}, files: [] }; }`,
+  );
+  await f.put('.gitignore', 'releases/\n');
+  const environment = Object.fromEntries(
+    Object.entries(process.env).filter(
+      ([key]) => !key.startsWith('GIT_') && !['NODE_PATH', 'NODE_OPTIONS'].includes(key),
+    ),
+  );
+  Object.assign(environment, {
+    GIT_CONFIG_GLOBAL: os.devNull,
+    GIT_CONFIG_NOSYSTEM: '1',
+    GIT_AUTHOR_NAME: 'Archived soundtrack fixture',
+    GIT_AUTHOR_EMAIL: 'fixture@example.invalid',
+    GIT_COMMITTER_NAME: 'Archived soundtrack fixture',
+    GIT_COMMITTER_EMAIL: 'fixture@example.invalid',
+    GIT_AUTHOR_DATE: '2026-09-21T12:00:00Z',
+    GIT_COMMITTER_DATE: '2026-09-21T12:00:00Z',
+  });
+  const run = (binary, args) => {
+    const result = spawnSync(binary, args, {
+      cwd: f.root,
+      env: environment,
+      encoding: 'utf8',
+      timeout: 30000,
+      maxBuffer: 1024 * 1024,
+    });
+    assert.equal(result.status, 0, result.error?.message || result.stderr);
+    return result.stdout;
+  };
+  run('git', ['init', '--quiet']);
+  run('git', ['add', '.']);
+  run('git', [
+    '-c',
+    'commit.gpgsign=false',
+    '-c',
+    `core.hooksPath=${os.devNull}`,
+    'commit',
+    '--quiet',
+    '-m',
+    'Dependency-free archived soundtrack fixture',
+  ]);
+  const commit = run('git', ['rev-parse', 'HEAD']).trim();
+  // Both this checkout and releaseSnapshot's separately extracted Git archive
+  // contain only the copied source files: no formatter installation or symlink.
+  const version = 'archived-soundtrack-fixture';
+  const release = JSON.parse(
+    run(process.execPath, [
+      path.join(f.root, 'scripts/game-cli.mjs'),
+      'release-snapshot',
+      '--ref',
+      commit,
+      '--version',
+      version,
+    ]),
+  );
+  assert.equal(release.sourceRevision, commit);
+  const output = path.join(f.root, 'releases', version);
+  const archive = await readFile(path.join(output, 'source.tar'));
+  const entries = new Map(readTarEntries(archive).map((entry) => [entry.name, entry.bytes]));
+  assert(![...entries.keys()].some((name) => name.split('/').includes('node_modules')));
+  assert.deepEqual(
+    entries.get('scripts/soundtrack-distribution.mjs'),
+    await readFile(path.join(source, 'scripts/soundtrack-distribution.mjs')),
+  );
+  assert.equal(release.sourceArchiveSha256, sha(archive));
+  assert.equal(
+    release.distributionSha256,
+    sha(await readFile(path.join(output, 'site/distribution.zip'))),
+  );
+  assert.deepEqual(
+    JSON.parse(
+      await readFile(path.join(output, 'site', f.config.soundtrackAlbums.originalCatalogue)),
+    ),
+    catalogue,
+  );
+  assert.equal(run('git', ['status', '--porcelain']), '');
 });
 test('absent album opt-in preserves output bytes and does not read the audio producer', async (t) => {
   const f = await fixture(t);
