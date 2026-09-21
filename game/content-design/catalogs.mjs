@@ -64,6 +64,68 @@ export const DIFFICULTY_CATALOG = freezeDesign({
     },
   },
 });
+// Explicit successor: historical projects/replays keep v1, including its exact
+// floating-point timings. These values are pressure-test hypotheses, not a claim
+// of human-balanced content. Player handling and warning windows never scale.
+export const PRESSURE_DIFFICULTY_CATALOG = freezeDesign({
+  format: 'DifficultyCatalogV1',
+  id: 'journey-difficulty-v2',
+  presets: {
+    gentle: {
+      lives: 5,
+      enemySpeedFactor: 1,
+      attackRestFactor: 1.25,
+      failingDeadline: false,
+      description: 'Five lives, base enemy speed, 25% longer attack rests, no failing countdown.',
+    },
+    standard: {
+      lives: 3,
+      enemySpeedFactor: 1.4,
+      attackRestFactor: 0.85,
+      failingDeadline: true,
+      description: 'Three lives, enemies 40% faster than base, 15% shorter attack rests.',
+    },
+    expert: {
+      lives: 2,
+      enemySpeedFactor: 1.75,
+      attackRestFactor: 0.65,
+      failingDeadline: true,
+      description: 'Two lives, enemies 75% faster than base, 35% shorter attack rests.',
+    },
+  },
+});
+
+export function journeyDifficultyCatalog(id = DIFFICULTY_CATALOG.id) {
+  if (id === DIFFICULTY_CATALOG.id) return DIFFICULTY_CATALOG;
+  if (id === PRESSURE_DIFFICULTY_CATALOG.id) return PRESSURE_DIFFICULTY_CATALOG;
+  throw new Error('Project must pin a registered difficulty catalog.');
+}
+
+export function journeyLaneTiming(timing, difficulty, catalogId = DIFFICULTY_CATALOG.id) {
+  const preset = journeyPreset(difficulty, catalogId);
+  if (preset.attackRestFactor === undefined) return { ...timing };
+  const activeTicks = Math.round((timing.warningSeconds + timing.activeSeconds) / FIXED_DT);
+  const restTicks = Math.max(
+    1,
+    Math.round(
+      ((timing.period - timing.warningSeconds - timing.activeSeconds) * preset.attackRestFactor) /
+        FIXED_DT,
+    ),
+  );
+  return { ...timing, period: (activeTicks + restTicks) * FIXED_DT };
+}
+
+export function journeySentinelTiming(difficulty, catalogId = DIFFICULTY_CATALOG.id) {
+  const preset = journeyPreset(difficulty, catalogId);
+  const recipe = structuredClone(SENTINEL_RECIPE.definition);
+  if (preset.attackRestFactor !== undefined)
+    recipe.shielded.restTicks = Math.max(
+      1,
+      Math.round(recipe.shielded.restTicks * preset.attackRestFactor),
+    );
+  // CORE OPEN is an objective opportunity, not ordinary attack downtime.
+  return recipe;
+}
 export const ACTOR_CATALOG = freezeDesign({
   format: 'ActorCatalogV1',
   id: 'journey-actors-v1',
@@ -202,6 +264,180 @@ export const LIVEWIRE_ACTOR_CATALOG = freezeDesign({
   },
 });
 
+// One shared two-stage cadence. Authored missions choose relay placement/order,
+// not shorter warnings, faster physics or an unmarked per-level boss recipe.
+export const SENTINEL_RECIPE = freezeDesign({
+  id: 'shield-relays-v1',
+  definition: {
+    version: 'xonix-encounter.v2',
+    kind: 'relay-sentinel',
+    minReleaseCutCells: 8,
+    initialDelayTicks: 240,
+    transitionTicks: 180,
+    shielded: { warningTicks: 240, activeTicks: 84, restTicks: 396 },
+    exposed: { warningTicks: 240, activeTicks: 84, openTicks: 480 },
+    laneWidth: 1.2,
+  },
+});
+export const SENTINEL_ACTOR_CATALOG = freezeDesign({
+  format: 'ActorCatalogV1',
+  id: 'journey-actors-v6',
+  roles: {
+    ...LIVEWIRE_ACTOR_CATALOG.roles,
+    'relay-sentinel': {
+      type: 'relay-sentinel',
+      domain: 'stationary-unclaimed-field',
+      damageTarget: 'body-contact-and-exposed-body-or-trail-in-active-lane',
+      retainsField: true,
+      captureResponse: 'all-shield-relays-open-explicit-core-release-stage',
+      warning: 'locked-horizontal-then-vertical-lanes; 240-actor-tick-warning',
+      action: 'shielded-warning-attack-rest; exposed-warning-attack-open',
+      recovery: '180-actor-tick-transition; freeze-pauses-clock; captures-persist-after-life-loss',
+      counterplay:
+        'Capture every marked shield relay in a chosen order. Watch the locked lane and shelter on reclaimed ground. After the vertical attack, close a fresh eight-cell cut during CORE OPEN, or isolate the core and wait on reclaimed ground with no live trail.',
+      recipeId: SENTINEL_RECIPE.id,
+    },
+  },
+});
+
+// Add existing, telegraphed engine behaviours without changing earlier catalogues.
+const pressureRole = (mode) => ({
+  type: 'bouncer',
+  domain: 'unclaimed-field',
+  damageTarget: 'body-and-trail',
+  retainsField: true,
+  captureResponse: 'remains-in-retained-region; closure-cancels-commit',
+  warning: 'locked-target-and-120-actor-tick-warning',
+  action: mode === 'trail-pursuit' ? 'commit-to-observed-trail' : 'commit-to-observed-heading',
+  recovery: 'registered-cooldown; topology-change-or-return-cancels-attack',
+  counterplay:
+    mode === 'trail-pursuit'
+      ? 'Close before the committed approach reaches your trail. The marked target locks before the attack; walls and reclaimed ground block sensing.'
+      : 'Turn after the heading target locks and take another return. It predicts only your observed direction, not your next turn; close to cancel the attack.',
+  speeds: { measured: 2.4, standard: 3.2, brisk: 4 },
+  pressureRecipe: {
+    mode,
+    senseRadius: 18,
+    scanTicks: 24,
+    warningTicks: 120,
+    commitTicks: 180,
+    cooldownTicks: 360,
+    leadTicks: mode === 'head-intercept' ? 36 : 0,
+  },
+});
+export const PRESSURE_ACTOR_CATALOG = freezeDesign({
+  format: 'ActorCatalogV1',
+  id: 'journey-actors-v7',
+  roles: {
+    ...SENTINEL_ACTOR_CATALOG.roles,
+    'trail-pursuer': pressureRole('trail-pursuit'),
+    'heading-interceptor': pressureRole('head-intercept'),
+  },
+});
+
+const combatRole = (role) => ({
+  type: 'combat-patrol',
+  combatRole: role,
+  domain: 'unclaimed-field',
+  damageTarget: role === 'sentry' ? 'exposed-body-by-projectile-only' : 'none',
+  retainsField: false,
+  captureResponse: 'removed-by-craft-contact-or-capture; never-retains-field',
+  warning: role === 'sentry' ? 'locked-aim-and-180-actor-tick-warning' : 'visible-wandering',
+  action: role === 'sentry' ? 'wander-lock-one-shot-recover' : 'wander-with-seeded-turns',
+  recovery: 'no-respawn; owner-removal-cancels-projectiles',
+  counterplay:
+    role === 'sentry'
+      ? 'Change route after aim locks, return to ground, or remove the sentry by contact or enclosure. Only its shot harms the craft; ordinary keepers remain dangerous.'
+      : 'Choose direct contact or enclose the scout. It never retains a field region and awards no extra score. Ordinary keepers still damage body and trail.',
+  speeds: { measured: 1.8, standard: 2.2, brisk: 2.6 },
+  combatRecipe: {
+    turnTicks: 120,
+    ...(role === 'sentry'
+      ? {
+          senseRadius: 16,
+          scanTicks: 30,
+          openingTicks: 480,
+          warningTicks: 180,
+          recoveryTicks: 180,
+          restTicks: 1200,
+          shotSpeed: 8,
+          shotLifeTicks: 360,
+        }
+      : {}),
+  },
+});
+
+export const COMBAT_ACTOR_CATALOG = freezeDesign({
+  format: 'ActorCatalogV1',
+  id: 'journey-actors-v8',
+  roles: {
+    ...PRESSURE_ACTOR_CATALOG.roles,
+    'optional-scout': combatRole('scout'),
+    'optional-sentry': combatRole('sentry'),
+  },
+});
+
+/** Resolved once by authoring; the simulation never applies preset factors. */
+export function journeyCombatTiming(
+  roleId,
+  difficulty = 'standard',
+  catalogId = COMBAT_ACTOR_CATALOG.id,
+  difficultyCatalogId = DIFFICULTY_CATALOG.id,
+) {
+  const recipe = journeyActors(catalogId).roles[roleId]?.combatRecipe;
+  required(recipe, 'Combat timing needs a registered optional combat actor role.');
+  const preset = journeyPreset(difficulty, difficultyCatalogId);
+  return {
+    ...recipe,
+    ...(recipe.restTicks === undefined
+      ? {}
+      : {
+          restTicks: Math.round(recipe.restTicks * (preset.attackRestFactor ?? 1)),
+        }),
+  };
+}
+
+export function journeyPressureTiming(
+  roleId,
+  difficulty = 'standard',
+  catalogId = PRESSURE_ACTOR_CATALOG.id,
+  difficultyCatalogId = DIFFICULTY_CATALOG.id,
+) {
+  const recipe = journeyActors(catalogId).roles[roleId]?.pressureRecipe;
+  required(recipe, 'Pressure timing needs a registered pressure actor role.');
+  const preset = journeyPreset(difficulty, difficultyCatalogId);
+  return {
+    ...recipe,
+    cooldownTicks: Math.round(recipe.cooldownTicks * (preset.attackRestFactor ?? 1)),
+  };
+}
+
+export function compileJourneyEncounter(
+  source,
+  catalogId,
+  difficulty = 'standard',
+  difficultyCatalogId = DIFFICULTY_CATALOG.id,
+) {
+  if (source === null) return null;
+  const value = boundedJSON(source, { maxBytes: 2048, maxNodes: 16, maxDepth: 3, maxArray: 4 });
+  exactKeys(
+    value,
+    ['recipeId', 'enemyId', 'shieldObjectiveIds', 'coreObjectiveId'],
+    'Journey encounter',
+  );
+  required(
+    value.recipeId === SENTINEL_RECIPE.id &&
+      journeyActors(catalogId).roles['relay-sentinel']?.recipeId === value.recipeId,
+    'Journey encounter needs its registered Sentinel recipe and actor catalog.',
+  );
+  return {
+    ...journeySentinelTiming(difficulty, difficultyCatalogId),
+    enemyId: value.enemyId,
+    shieldObjectiveIds: value.shieldObjectiveIds,
+    coreObjectiveId: value.coreObjectiveId,
+  };
+}
+
 export function journeyActors(id = ACTOR_CATALOG.id) {
   const catalogs = {
     [ACTOR_CATALOG.id]: ACTOR_CATALOG,
@@ -209,22 +445,36 @@ export function journeyActors(id = ACTOR_CATALOG.id) {
     [FRACTURE_ACTOR_CATALOG.id]: FRACTURE_ACTOR_CATALOG,
     [PHASE_ACTOR_CATALOG.id]: PHASE_ACTOR_CATALOG,
     [LIVEWIRE_ACTOR_CATALOG.id]: LIVEWIRE_ACTOR_CATALOG,
+    [SENTINEL_ACTOR_CATALOG.id]: SENTINEL_ACTOR_CATALOG,
+    [PRESSURE_ACTOR_CATALOG.id]: PRESSURE_ACTOR_CATALOG,
+    [COMBAT_ACTOR_CATALOG.id]: COMBAT_ACTOR_CATALOG,
   };
   required(Object.hasOwn(catalogs, id), 'Project must pin a registered actor catalog.');
   return catalogs[id];
 }
 
-export function journeyPreset(id = 'standard') {
-  required(Object.hasOwn(DIFFICULTY_CATALOG.presets, id), 'Unsupported Journey difficulty.');
-  return DIFFICULTY_CATALOG.presets[id];
+export function journeyPreset(id = 'standard', catalogId = DIFFICULTY_CATALOG.id) {
+  const catalog = journeyDifficultyCatalog(catalogId);
+  required(Object.hasOwn(catalog.presets, id), 'Unsupported Journey difficulty.');
+  return catalog.presets[id];
 }
 
-export function compileActor(source, difficulty = 'standard', catalogId = ACTOR_CATALOG.id) {
+export function compileActor(
+  source,
+  difficulty = 'standard',
+  catalogId = ACTOR_CATALOG.id,
+  difficultyCatalogId = DIFFICULTY_CATALOG.id,
+) {
   const actor = boundedJSON(source, { maxBytes: 4096, maxNodes: 64, maxDepth: 5, maxArray: 2 });
   const catalog = journeyActors(catalogId);
   const role = catalog.roles[actor.role];
   required(Object.hasOwn(catalog.roles, actor.role), 'Unsupported actor role.');
-  const preset = journeyPreset(difficulty);
+  const preset = journeyPreset(difficulty, difficultyCatalogId);
+  if (role.type === 'relay-sentinel') {
+    exactKeys(actor, ['id', 'role', 'tier', 'x', 'y'], 'actor');
+    required(actor.tier === 'measured', 'Sentinel uses the shared measured cadence.');
+    return { id: actor.id, type: role.type, x: actor.x, y: actor.y };
+  }
   if (role.type === 'lane-boss') {
     exactKeys(actor, ['id', 'role', 'tier', 'x', 'y', 'axis'], 'actor');
     required(Object.hasOwn(role.timings, actor.tier), 'Unsupported actor cadence tier.');
@@ -235,13 +485,13 @@ export function compileActor(source, difficulty = 'standard', catalogId = ACTOR_
       x: actor.x,
       y: actor.y,
       axis: actor.axis,
-      ...role.timings[actor.tier],
+      ...journeyLaneTiming(role.timings[actor.tier], difficulty, difficultyCatalogId),
       laneWidth: role.laneWidth,
     };
   }
   required(Object.hasOwn(role.speeds, actor.tier), 'Unsupported actor speed tier.');
   const speed = role.speeds[actor.tier] * preset.enemySpeedFactor;
-  if (['bouncer', 'claimed-rover', 'eroder'].includes(role.type)) {
+  if (['bouncer', 'claimed-rover', 'eroder', 'combat-patrol'].includes(role.type)) {
     exactKeys(actor, ['id', 'role', 'tier', 'x', 'y', 'heading'], 'actor');
     required(
       Array.isArray(actor.heading) &&
@@ -251,6 +501,17 @@ export function compileActor(source, difficulty = 'standard', catalogId = ACTOR_
       'Actor heading must be a nonzero eight-way direction.',
     );
     const magnitude = Math.hypot(...actor.heading);
+    if (role.combatRole)
+      return {
+        id: actor.id,
+        role: role.combatRole,
+        x: actor.x,
+        y: actor.y,
+        headingX: actor.heading[0],
+        headingY: actor.heading[1],
+        speed,
+        ...journeyCombatTiming(actor.role, difficulty, catalogId, difficultyCatalogId),
+      };
     return {
       id: actor.id,
       type: role.type,

@@ -1,21 +1,47 @@
-import { compileMapGeometry } from '../content-design/map.mjs';
+import {
+  compileMapGeometry,
+  compileRelayMapGeometry,
+  compileDirectionalMapGeometry,
+} from '../content-design/map.mjs';
 import { required } from '../data-json.mjs';
 import { CELL } from './registry.mjs';
+import { relayGeometryDefinition } from './relay-gates.mjs';
+import { directionalGeometryDefinition } from './directional-fields.mjs';
 
 /** Shared geometry boundary for new editions only. Legacy maps retain their compiler. */
 export function foundationGeometry(level) {
   required(Array.isArray(level.foundations), 'Foundation editions require explicit foundations.');
-  return compileMapGeometry({
+  const directional = ['xonix-level.v7', 'xonix-level.v8'].includes(level.version);
+  const relays = level.version === 'xonix-level.v6' || directional;
+  return (
+    directional
+      ? compileDirectionalMapGeometry
+      : relays
+        ? compileRelayMapGeometry
+        : compileMapGeometry
+  )({
     width: level.width,
     height: level.height,
     walls: level.walls ?? [],
     foundations: level.foundations,
     terrain: level.classic?.terrain ?? [],
     spawns: [{ id: 'player', ...level.spawn }],
+    ...(relays ? { gates: relayGeometryDefinition(level) } : {}),
+    ...(directional ? { speedZones: directionalGeometryDefinition(level) } : {}),
   });
 }
 
 export function validateFoundationOccupants(level, geometry) {
+  if (['xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8'].includes(level.version))
+    for (const item of [
+      ...(level.classic?.powerups ?? []),
+      ...(level.supplies ?? []),
+      ...(level.hangars ?? []),
+    ])
+      required(
+        geometry.cells[Math.floor(item.y) * level.width + Math.floor(item.x)] !== CELL.WALL,
+        'Gate cells cannot contain pickups or return facilities.',
+      );
   for (const objective of level.objectives ?? [])
     required(
       geometry.eligible[Math.floor(objective.y) * level.width + Math.floor(objective.x)],

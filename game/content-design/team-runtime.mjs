@@ -30,6 +30,7 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     mission.actors.every((actor) => actor.role === 'field-keeper') &&
       mission.objectives.length === 0 &&
       mission.bonuses.length === 0 &&
+      !Object.hasOwn(mission, 'timedBonuses') &&
       mission.timeLimitSeconds === 0 &&
       (mission.team.format === 'TeamMissionV2' || (map.source.terrain ?? []).length === 0),
     'Team foundation candidates currently support field keepers and coverage, not unqualified terrain, bonuses, objectives or timers.',
@@ -59,7 +60,7 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     walls: map.source.walls ?? [],
     safeRects: map.source.foundations ?? [],
     enemies: mission.actors.map((source) => {
-      const actor = compileActor(source, difficulty, project.actors.id);
+      const actor = compileActor(source, difficulty, project.actors.id, project.difficulty.id);
       return { ...actor, type: 'drifter', radius: 0.25 };
     }),
     goal: { coverage: mission.coverage },

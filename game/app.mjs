@@ -6,6 +6,10 @@ import { createJourneyProfileStore } from './journey/profile.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
 import { createAuthoredJourneyRoute } from './content-design/route.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
+import { createCombatSoloHost } from './content-design/combat-host.mjs';
+import { createCombatPreferences } from './combat-preferences.mjs';
+import { selectCombatCaption } from './ui/combat-feedback.mjs';
+import { combatView } from './ui/combat-view.mjs';
 import { DIFFICULTY_CATALOG, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
 import { attachJourneyChooser } from './ui/journey-chooser.mjs';
@@ -328,8 +332,11 @@ try {
   // P00 technical preview. Historical editions keep their original navigation.
   const authoredRoute = !practiceSession && createAuthoredJourneyRoute(params.get('journey'));
   const authoredJourney = !!authoredRoute;
+  const combatStudy = authoredRoute?.id === 'combat-study';
+  const combatPreferences = createCombatPreferences({ window });
   const candidateHost = authoredJourney
-    ? createCandidateSoloHost(authoredRoute.source, {
+    ? (combatStudy ? createCombatSoloHost : createCandidateSoloHost)(authoredRoute.source, {
+        ...(combatStudy ? { getCombatMode: () => combatPreferences.snapshot().mode } : {}),
         themes: (await getJSON('content-design/themes.json')).themes,
         buildVersion,
         corePackIds: authoredRoute.corePackIds,
@@ -699,6 +706,7 @@ try {
     runId,
     started = false,
     paused = true,
+    presentationFailureRun = null,
     demo = false,
     practice = practiceSession,
     accumulator = 0,
@@ -2147,6 +2155,7 @@ try {
       flightPictures?.dispose();
       candidateHost?.preparer.dispose();
       journeyPreferences?.dispose();
+      combatPreferences.dispose();
       missionThumbnails.close();
       pictureStore?.close();
       storyStore?.close();
@@ -3831,10 +3840,10 @@ try {
       $('difficulty-select').value = next.difficulty;
       $('difficulty-select').disabled = contentSwitchBusy || backupBusy || sessionBusy;
       $('difficulty-note').textContent =
-        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${journeyPreset(next.difficulty).description} Resume and Load preserve this flight. ${next.error}`;
+        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${journeyPreset(next.difficulty, authoredRoute.source.difficultyCatalogId).description} Resume and Load preserve this flight. ${next.error}`;
       show('difficulty-details', false);
       $('overlay-difficulty').textContent =
-        `Journey ${activeEntry.difficulty}. ${journeyPreset(activeEntry.difficulty).description}`;
+        `Journey ${activeEntry.difficulty}. ${journeyPreset(activeEntry.difficulty, authoredRoute.source.difficultyCatalogId).description}`;
       show('overlay-difficulty', true);
       return;
     }
@@ -4185,10 +4194,13 @@ try {
     scenario = null;
     practice = practiceSession;
     demo = false;
-    entry = executionForEntry(
-      entry,
-      difficulty ?? (practiceSession ? 'standard' : library.preferences.campaignDifficulty),
-    );
+    // A checked saved edition owns its campaign as well as its restored run.
+    // Re-selecting with pending intent here would save an On replay under Off.
+    if (!(restoreAdoption && candidateHost?.owns(entry)))
+      entry = executionForEntry(
+        entry,
+        difficulty ?? (practiceSession ? 'standard' : library.preferences.campaignDifficulty),
+      );
     activeEntry = entry;
     campaign = entry.campaign;
     classRegistry = entry.classRecipes;
@@ -6120,6 +6132,7 @@ try {
       themeOverride === ticket.themeOverride &&
       library.preferences.campaignDifficulty === ticket.difficulty &&
       journeyPreferences?.snapshot().revision === ticket.journeyRevision &&
+      (!combatStudy || combatPreferences.snapshot().gameplayRevision === ticket.combatRevision) &&
       (ticket.kind !== 'next' || run.status === 'won') &&
       libraryGeneration === ticket.libraryGeneration &&
       packs === ticket.packs &&
@@ -6177,7 +6190,8 @@ try {
       dialogOpen() ||
       document.hidden ||
       !document.hasFocus() ||
-      (kind !== 'choose' && !['won', 'lost'].includes(run?.status)) ||
+      (!['choose', 'restart'].includes(kind) && !['won', 'lost'].includes(run?.status)) ||
+      (kind === 'restart' && (!combatStudy || !run || !paused)) ||
       (kind === 'choose' && (!journeyEnabled || !run || !paused)) ||
       (kind === 'next' && run.status !== 'won')
     )
@@ -6200,6 +6214,7 @@ try {
       themeOverride,
       difficulty: library.preferences.campaignDifficulty,
       journeyRevision: journeyPreferences?.snapshot().revision,
+      combatRevision: combatPreferences.snapshot().gameplayRevision,
       libraryGeneration,
       packs,
       writable: writer.writable,
@@ -6226,6 +6241,7 @@ try {
         throw new DOMException('Preparation cancelled.', 'AbortError');
       const entry =
           destinationEntry ||
+          (kind === 'recover' ? activeEntry : null) ||
           (candidateHost?.owns(activeEntry)
             ? candidateHost.select(journeyMission(), journeyPreferences.snapshot().difficulty)
             : null) ||
@@ -6260,6 +6276,7 @@ try {
             difficulty: entry.difficulty,
             seed,
             turnPolicy,
+            ...(combatStudy ? { executionKey: entry.executionKey } : {}),
           },
           { signal: ticket.controller.signal, onStatus: ticket.feedback.update },
         );
@@ -6336,6 +6353,7 @@ try {
         libraryGeneration === ticket.libraryGeneration &&
         library.preferences.campaignDifficulty === ticket.difficulty &&
         journeyPreferences?.snapshot().revision === ticket.journeyRevision &&
+        (!combatStudy || combatPreferences.snapshot().gameplayRevision === ticket.combatRevision) &&
         packs === ticket.packs &&
         writer.writable === ticket.writable &&
         persistenceReady === ticket.persistenceReady &&
@@ -6591,6 +6609,7 @@ try {
     }
     if (scenario?.music) assignMusic(scenario.music);
     painter.setLevel?.(run.level, { seed });
+    if (presentationFailureRun !== run) $('combat-presentation-error').hidden = true;
     setTheme();
     started = false;
     paused = true;
@@ -6640,6 +6659,13 @@ try {
     return true;
   }
   function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
+    if (presentationFailureRun === run && run) {
+      warning(
+        'Flight stopped: threat presentation is unavailable. Restart or choose another mission.',
+        'failure',
+      );
+      return;
+    }
     // A queued activation may arrive after blur even when the picture is cached.
     // Use actual foreground state: a fresh Resume need not wait for another frame.
     if (document.hidden || !document.hasFocus()) return;
@@ -6761,7 +6787,7 @@ try {
     overlay('lost');
     warning('Flight ended. Read the details or try again.');
     if (journeyEnabled && journeyMission() && !practice && !scenario)
-      void prepareResultAttempt('retry');
+      void prepareResultAttempt(combatStudy ? 'recover' : 'retry');
   }
   function defeatEffectsRunning() {
     return (
@@ -6947,6 +6973,7 @@ try {
   }
   function eventFeedback(events) {
     const ticket = flightInformation.begin(run, events);
+    const combatCaption = selectCombatCaption(events);
     // capture.stopped follows cells.claimed in the same accepted closure. Keep
     // the rule explanation when adding the fresh-steering cue; do not replace it.
     const teachingCapture =
@@ -6967,6 +6994,8 @@ try {
       for (const [index, event] of events.entries()) {
         flightInformation.observeEvent(ticket, index, () => {
           sound.event(event);
+          if (combatCaption?.eventIndex === index)
+            warning(combatCaption.text, combatCaption.cue, 'combat.event');
           if (event.type === 'class.switched') {
             updateLoadout();
             setTheme();
@@ -7005,6 +7034,8 @@ try {
                 'cut-timeout': 'Your live line stayed open too long. Make a shorter cut.',
                 'cable-limit': 'Your cable budget ran out. Close a shorter line.',
                 'lethal-terrain': 'A lethal field caught your craft. Enclose it before crossing.',
+                'combat-projectile':
+                  'A sentry shot hit your exposed craft. Change direction after the marked aim locks; the shot does not target your trail.',
               }[event.cause] || 'Your line was caught. The territory you revealed is kept.',
               'failure',
             );
@@ -7204,6 +7235,7 @@ try {
     });
     if (
       !courseBlocked() &&
+      presentationFailureRun !== run &&
       !paused &&
       started &&
       flightPictures?.ready(theme.id) &&
@@ -7673,6 +7705,10 @@ try {
     if ($('shell-workshop-dialog').open) $('shell-workshop-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     demo = false;
+    if (combatStudy) {
+      void prepareResultAttempt('restart');
+      return;
+    }
     prepare();
     resume();
   };
@@ -8032,30 +8068,56 @@ try {
       if (globalThis.RevealLineBoot && document.documentElement.dataset.bootState !== 'ready')
         return;
       const dt = clamp(delta / 1000, 0, 1);
-      update(dt);
-      const { width, height } = boardPaintSizeForRun(run);
-      if (width !== this.boardSize.width || height !== this.boardSize.height) {
-        this.boardTexture.setSize(width, height);
-        this.boardImage.setSizeToFrame();
-        this.scale.resize(width, height);
-        this.cameras.main.setSize(width, height);
-        this.boardSize = { width, height };
-        document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
-        document.documentElement.style.setProperty('--board-aspect', String(width / height));
+      if (presentationFailureRun === run) {
+        // Keep menu/controller navigation available, but never step a failed run.
+        update(0);
+        return;
       }
-      painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
-        textFace: displayPreferences.snapshot().textFace,
-        // The texture is detached; only the displayed Phaser canvas has a CSS size.
-        displayCSSWidth: this.game.canvas.clientWidth,
-        paused,
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        fullReveal: run.status === 'won',
-        showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
-        backdrop: flightPictures?.current(),
-        celebrationPaused: document.hidden || dialogOpen(),
-        defeatEffectsRunning: defeatEffectsRunning(),
-      });
-      advanceDefeatPresentation(Math.min(dt, 0.1));
+      try {
+        // Validate before advancing: an invalid threat must never become invisible
+        // damage. The painter checks again after the accepted simulation step.
+        const combat = combatView(run);
+        if (combat && !combat.valid) throw new Error(combat.error);
+        update(dt);
+        const { width, height } = boardPaintSizeForRun(run);
+        if (width !== this.boardSize.width || height !== this.boardSize.height) {
+          this.boardTexture.setSize(width, height);
+          this.boardImage.setSizeToFrame();
+          this.scale.resize(width, height);
+          this.cameras.main.setSize(width, height);
+          this.boardSize = { width, height };
+          document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
+          document.documentElement.style.setProperty('--board-aspect', String(width / height));
+        }
+        painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
+          textFace: displayPreferences.snapshot().textFace,
+          // The texture is detached; only the displayed Phaser canvas has a CSS size.
+          displayCSSWidth: this.game.canvas.clientWidth,
+          paused,
+          reduced: displayPreferences.snapshot().effectiveReducedEffects,
+          showCombatScrap: combatPreferences.snapshot().showScrap,
+          fullReveal: run.status === 'won',
+          showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
+          backdrop: flightPictures?.current(),
+          celebrationPaused: document.hidden || dialogOpen(),
+          defeatEffectsRunning: defeatEffectsRunning(),
+        });
+        advanceDefeatPresentation(Math.min(dt, 0.1));
+      } catch (error) {
+        presentationFailureRun = run;
+        cancelResultAttempt();
+        paused = true;
+        clearInput();
+        sound.pause();
+        overlay('pause');
+        warning(
+          `Flight stopped: threat presentation failed. ${String(error.message).slice(0, 240)} Restart or choose another mission.`,
+          'failure',
+        );
+        $('combat-presentation-error').hidden = false;
+        $('combat-presentation-error').textContent =
+          'Flight stopped because threat presentation failed. Restart or choose another mission; this attempt cannot resume.';
+      }
     }
   }
   new Phaser.Game({
@@ -8178,6 +8240,44 @@ try {
       }
     };
   }
+  show('combat-preferences', combatStudy);
+  let combatRevision = combatPreferences.snapshot().gameplayRevision,
+    combatExportSequence = 0;
+  combatPreferences.subscribe((snapshot) => {
+    if (combatRevision !== snapshot.gameplayRevision) {
+      combatRevision = snapshot.gameplayRevision;
+      if (combatStudy) cancelResultAttempt();
+    }
+    combatExportSequence++;
+    $('combat-mode').value = snapshot.mode;
+    $('combat-scrap').checked = snapshot.showScrap;
+    show('combat-preferences-recovery', !snapshot.durable);
+    $('combat-preferences-message').textContent = snapshot.error;
+    if (combatStudy) journeyChooser?.refresh();
+  });
+  $('combat-mode').onchange = () => combatPreferences.choose($('combat-mode').value);
+  $('combat-scrap').onchange = () => combatPreferences.setScrap($('combat-scrap').checked);
+  $('combat-preferences-retry').onclick = () => {
+    const ownedFocus = document.activeElement === $('combat-preferences-retry');
+    const snapshot = combatPreferences.retry();
+    if (snapshot.durable && ownedFocus) $('combat-mode').focus({ preventScroll: true });
+  };
+  $('combat-preferences-export').onclick = async () => {
+    const ticket = ++combatExportSequence;
+    try {
+      const result = await downloadJSON(
+        JSON.parse(combatPreferences.export()),
+        'revealline-combat-preferences.json',
+      );
+      if (ticket === combatExportSequence)
+        $('combat-preferences-message').textContent =
+          `${combatPreferences.snapshot().error} ${result.message}`;
+    } catch (error) {
+      if (ticket === combatExportSequence)
+        $('combat-preferences-message').textContent =
+          `Export failed: ${error.message}. Your session robot choice is still here.`;
+    }
+  };
   optionalWorlds = attachOptionalChaptersPanel({
     onPlayActivation: captureWorldPlay,
     getLibrary: () => packs,

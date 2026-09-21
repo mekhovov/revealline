@@ -18,22 +18,39 @@ const DESCRIPTOR_KEYS = [
 ];
 const ticks = (value) => Number.isInteger(value) && value >= 1 && value <= 7200;
 const actorTick = (state) => (state.classic ? state.classic.actorTick : state.tick);
+export const encounterShieldIds = (descriptor) =>
+  descriptor.version === 'xonix-encounter.v2'
+    ? [...descriptor.shieldObjectiveIds]
+    : [descriptor.shieldObjectiveId];
 
 /** Called only after the surrounding staged level has passed ordinary geometry checks. */
-export function resolveEncounterDescriptor(source, level) {
+export function resolveEncounterDescriptor(source, level, geometry = null) {
   required(plainObject(source), 'encounter must be an object');
   const value = boundedJSON(source, { maxBytes: 4096, maxNodes: 40, maxDepth: 3, maxString: 80 });
-  exactKeys(value, DESCRIPTOR_KEYS, 'encounter');
+  const multiple = value.version === 'xonix-encounter.v2';
+  const keys = multiple
+    ? DESCRIPTOR_KEYS.map((key) => (key === 'shieldObjectiveId' ? 'shieldObjectiveIds' : key))
+    : DESCRIPTOR_KEYS;
+  exactKeys(value, keys, 'encounter');
   required(
-    DESCRIPTOR_KEYS.every((key) => Object.hasOwn(value, key)),
+    keys.every((key) => Object.hasOwn(value, key)),
     'encounter fields are required',
   );
   required(
-    value.version === 'xonix-encounter.v1' && value.kind === 'relay-sentinel',
+    (value.version === 'xonix-encounter.v1' || multiple) && value.kind === 'relay-sentinel',
     'unsupported encounter',
   );
-  for (const key of ['enemyId', 'shieldObjectiveId', 'coreObjectiveId'])
+  for (const key of ['enemyId', ...(multiple ? [] : ['shieldObjectiveId']), 'coreObjectiveId'])
     required(stableId(value[key]), `encounter.${key} must be a stable ID`);
+  if (multiple)
+    required(
+      Array.isArray(value.shieldObjectiveIds) &&
+        value.shieldObjectiveIds.length >= 1 &&
+        value.shieldObjectiveIds.length <= 4 &&
+        value.shieldObjectiveIds.every(stableId) &&
+        new Set(value.shieldObjectiveIds).size === value.shieldObjectiveIds.length,
+      'encounter.shieldObjectiveIds needs one to four distinct stable IDs',
+    );
   for (const key of ['initialDelayTicks', 'transitionTicks'])
     required(ticks(value[key]), `encounter.${key} must be 1..7200 ticks`);
   for (const [stage, keys] of [
@@ -50,9 +67,10 @@ export function resolveEncounterDescriptor(source, level) {
     Number.isFinite(value.laneWidth) && value.laneWidth >= 0.25 && value.laneWidth <= 5,
     'encounter.laneWidth must be 0.25..5',
   );
-  const claimable =
-    (level.width - 2) * (level.height - 2) -
-    (level.walls ?? []).reduce((sum, wall) => sum + wall.w * wall.h, 0);
+  const claimable = multiple
+    ? geometry?.eligible.reduce((sum, cell) => sum + cell, 0)
+    : (level.width - 2) * (level.height - 2) -
+      (level.walls ?? []).reduce((sum, wall) => sum + wall.w * wall.h, 0);
   required(
     Number.isInteger(value.minReleaseCutCells) &&
       value.minReleaseCutCells >= 1 &&
@@ -70,25 +88,29 @@ export function resolveEncounterDescriptor(source, level) {
     'relay-sentinel must occupy an interior cell center',
   );
   exactKeys(sentinel, ['id', 'type', 'x', 'y', 'radius'], 'relay-sentinel');
-  const shield = (level.objectives ?? []).find(
-    (objective) => objective.id === value.shieldObjectiveId,
+  const shields = encounterShieldIds(value).map((id) =>
+    (level.objectives ?? []).find((objective) => objective.id === id),
   );
   const core = (level.objectives ?? []).find((objective) => objective.id === value.coreObjectiveId);
   required(
-    shield &&
-      core &&
-      shield !== core &&
-      shield.required === true &&
+    core &&
       core.required === true &&
-      shield.hidden !== true &&
-      core.hidden !== true,
-    'encounter needs two distinct visible required objectives',
+      core.hidden !== true &&
+      shields.every(
+        (shield) => shield && shield !== core && shield.required === true && shield.hidden !== true,
+      ),
+    multiple
+      ? 'encounter needs distinct visible required shield and core objectives'
+      : 'encounter needs two distinct visible required objectives',
   );
   required(
-    Math.floor(shield.x) >= 1 &&
-      Math.floor(shield.x) <= level.width - 2 &&
-      Math.floor(shield.y) >= 1 &&
-      Math.floor(shield.y) <= level.height - 2,
+    shields.every(
+      (shield) =>
+        Math.floor(shield.x) >= 1 &&
+        Math.floor(shield.x) <= level.width - 2 &&
+        Math.floor(shield.y) >= 1 &&
+        Math.floor(shield.y) <= level.height - 2,
+    ),
     'shield relay must occupy a claimable interior cell',
   );
   required(
@@ -96,9 +118,17 @@ export function resolveEncounterDescriptor(source, level) {
     'core must occupy the sentinel cell',
   );
   required(
-    cellIndex(shield.x, shield.y, level) !== cellIndex(core.x, core.y, level),
+    shields.every(
+      (shield) => cellIndex(shield.x, shield.y, level) !== cellIndex(core.x, core.y, level),
+    ),
     'shield relay must occupy another cell',
   );
+  if (multiple)
+    required(
+      new Set(shields.map((shield) => cellIndex(shield.x, shield.y, level))).size ===
+        shields.length,
+      'shield relays must occupy distinct cells',
+    );
   return value;
 }
 
@@ -200,8 +230,8 @@ export function finishEncounterCapture(state, releaseCells) {
   }
   if (
     e.stage === 'shielded' &&
-    state.objectives.some(
-      (objective) => objective.id === state.level.encounter.shieldObjectiveId && objective.captured,
+    encounterShieldIds(state.level.encounter).every((id) =>
+      state.objectives.some((objective) => objective.id === id && objective.captured),
     )
   ) {
     e.stage = 'transition';

@@ -9,9 +9,11 @@ import { attachCouchCatalogue } from './couch-catalogue.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
+import { createCombatVersusHost } from '../content-design/combat-host.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
-import { DIFFICULTY_CATALOG } from '../content-design/catalogs.mjs';
+import { createCombatPreferences } from '../combat-preferences.mjs';
+import { DIFFICULTY_CATALOG, journeyDifficultyCatalog } from '../content-design/catalogs.mjs';
 import { createJourneyProfileStore } from '../journey/profile.mjs';
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 import { dataIdentity } from '../data-json.mjs';
@@ -36,6 +38,7 @@ import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
 import { nextInputModality } from '../input-presentation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
+import { selectCombatCaption } from '../ui/combat-feedback.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
@@ -179,7 +182,8 @@ let featured,
   boardFootprints,
   catalogue,
   candidateJourney,
-  journeyPreferences;
+  journeyPreferences,
+  combatPreferences;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
@@ -202,6 +206,7 @@ const releaseArtwork = (event) => {
   installed?.dispose();
   staticPictures?.dispose();
   journeyPreferences?.dispose();
+  combatPreferences?.dispose();
   boardFootprints?.dispose();
   window.removeEventListener('pagehide', releaseArtwork);
 };
@@ -236,15 +241,22 @@ try {
     new URL(location.href).searchParams.get('journey'),
   );
   const authoredJourney = !!authoredRoute;
+  const routeDifficultyCatalog = authoredJourney
+    ? journeyDifficultyCatalog(authoredRoute.source.difficultyCatalogId)
+    : DIFFICULTY_CATALOG;
   let journeyProfile = null,
     journeyChooser = null,
     journeySkipArmed = null;
   const journeySessionId = authoredJourney ? crypto.randomUUID() : null;
   if (authoredJourney) {
     document.body.classList.add('candidate-journey');
-    candidateJourney = createCandidateVersusHost(authoredRoute.source, {
+    const combatRoute = authoredRoute.id === 'combat-study';
+    if (combatRoute) combatPreferences = createCombatPreferences({ window });
+    const versusHost = combatRoute ? createCombatVersusHost : createCandidateVersusHost;
+    candidateJourney = versusHost(authoredRoute.source, {
       themes: (await json('../content-design/themes.json')).themes,
       corePackIds: authoredRoute.corePackIds,
+      ...(combatRoute ? { getCombatMode: () => combatPreferences.snapshot().mode } : {}),
     });
     journeyPreferences = createJourneyPreferences({ window });
     $('race-journey-note').hidden = false;
@@ -252,11 +264,20 @@ try {
       `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
-      ...Object.keys(DIFFICULTY_CATALOG.presets).map(
+      ...Object.keys(routeDifficultyCatalog.presets).map(
         (id) => new Option(id[0].toUpperCase() + id.slice(1), id),
       ),
     );
     $('race-journey-difficulty').value = journeyPreferences.snapshot().difficulty;
+    if (combatPreferences) {
+      $('race-combat-mode-field').hidden = false;
+      $('race-combat-mode').replaceChildren(
+        new Option('Follow this mission', 'authored'),
+        new Option('Robots on', 'on'),
+        new Option('Robots off', 'off'),
+      );
+      $('race-combat-scrap-field').hidden = false;
+    }
     journeyProfile = createJourneyProfileStore({
       onStatus({ ready, durable, error }) {
         $('race-journey-save').hidden = !ready || durable || !error;
@@ -372,10 +393,14 @@ try {
     throw new DOMException('Couch artwork loading cancelled.', 'AbortError');
   const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? 'Tactical' : 'Arcade');
   function showMaps() {
+    const difficulty = journeyPreferences?.snapshot().difficulty;
     $('race-level').replaceChildren(
       ...maps
         .filter(
-          (row) => !candidateJourney || row.difficulty === journeyPreferences.snapshot().difficulty,
+          (row) =>
+            !candidateJourney ||
+            (row.difficulty === difficulty &&
+              candidateJourney.row(row.mission, difficulty) === row),
         )
         .map((m) => new Option(`${m.chapter} · ${m.level.name} · ${mode(m.level)}`, m.key)),
     );
@@ -455,6 +480,7 @@ try {
     contentError = null,
     contentController = null,
     contentScope = null,
+    contentCombatGameplayRevision = null,
     accumulator = 0,
     last = 0,
     won = [0, 0],
@@ -463,6 +489,7 @@ try {
     raceSequence = 0,
     roundRecipe = null,
     nextAttempt = null,
+    combatHalted = false,
     preparedFocusMatch = null,
     startIntentEpoch = 0,
     framePads = [],
@@ -487,6 +514,16 @@ try {
   let preparationDisplay = null;
   let menuRouter, navigation, shell, reading;
   let readingModality = 'pointer';
+  const combatModeName = (mode) =>
+    mode === 'on' ? 'robots on' : mode === 'off' ? 'robots off' : 'the authored mission';
+  function renderCombatStatus(snapshot = combatPreferences?.snapshot()) {
+    if (!snapshot) return;
+    const patrols = roundRecipe?.entry.level.classic?.combatPatrols;
+    const current = patrols ? (patrols.enabled ? 'robots on' : 'robots off') : 'no optional robots';
+    $('race-combat-note').textContent =
+      `Current selected race or series: ${current}. Next fresh race: ${combatModeName(snapshot.mode)}. ` +
+      'Current boards and an unfinished first-to-two series keep their selected rules.';
+  }
   const readingPrompt = ({ scrollable }) =>
     readingInputPrompt({
       modality: readingModality,
@@ -509,6 +546,25 @@ try {
     navigation?.clear();
     if (match?.status === 'running') menuScope = 'flight';
     menuHint = '';
+  }
+  function publishCombatCaption(player, events) {
+    const selected = selectCombatCaption(events);
+    if (!selected) return;
+    const higherPriorityHostNotice = events.some(
+      (event) =>
+        event?.type === 'player.failed' ||
+        event?.type === 'cells.claimed' ||
+        event?.type === 'capture.stopped',
+    );
+    if (
+      higherPriorityHostNotice &&
+      ['combat.eliminated', 'combat.cancelled'].includes(selected.type)
+    )
+      return;
+    const caption = $(`racer-combat-${player}`);
+    caption.textContent = selected.text;
+    caption.dataset.cue = selected.cue;
+    caption.hidden = false;
   }
   function actionFocus(origin) {
     const foreground = () => !document.hidden && document.hasFocus(),
@@ -580,6 +636,7 @@ try {
     preparationDisplay?.finish({ state: 'cancelled', message: '' });
     preparationDisplay = null;
     contentController?.abort();
+    contentCombatGameplayRevision = null;
     const retainedResult =
       nextAttempt?.previous === match && (candidateJourney || match?.status === 'finished');
     if (retainedResult) {
@@ -622,6 +679,13 @@ try {
     contentError = null;
     contentBusy = false;
     contentReady = false;
+    combatHalted = false;
+    for (const player of [0, 1]) {
+      const caption = $(`racer-combat-${player}`);
+      caption.hidden = true;
+      caption.textContent = '';
+      delete caption.dataset.cue;
+    }
     clear({ resetDirection: true });
     const entry = maps.find((m) => m.key === $('race-level').value);
     const classId = candidateJourney
@@ -653,6 +717,7 @@ try {
       seconds: candidateJourney ? 0 : Number($('race-time').value),
       format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
     };
+    renderCombatStatus();
     $('race-format').value = roundRecipe.format;
     match = createRound(roundRecipe);
     generation = ++raceSequence;
@@ -725,13 +790,20 @@ try {
       message = staticEntry
         ? 'Checking this map and preparing the same picture for both boards…'
         : 'Checking this chapter and loading its original picture…';
+    const combatGameplayRevision = combatPreferences?.snapshot().gameplayRevision ?? null;
+    contentCombatGameplayRevision = combatGameplayRevision;
     $('race-message').textContent = message;
     updateMenu();
     const selectedRun = match,
       ticket = generation,
       controller = contentController;
     const current = () =>
-      !disposed && !controller.signal.aborted && match === selectedRun && ticket === generation;
+      !disposed &&
+      !controller.signal.aborted &&
+      match === selectedRun &&
+      ticket === generation &&
+      (combatGameplayRevision === null ||
+        combatPreferences?.snapshot().gameplayRevision === combatGameplayRevision);
     const display = preparationStatus.begin({
       message,
       stage: 'verifying',
@@ -768,6 +840,7 @@ try {
         return false;
       } finally {
         if (!disposed && controller === contentController && !controller.signal.aborted) {
+          contentCombatGameplayRevision = null;
           contentBusy = false;
           updateMenu();
         }
@@ -785,6 +858,10 @@ try {
   }
   async function prepareNext(destination = null) {
     const target = destination ?? roundRecipe.entry;
+    const combatGameplayRevision =
+      combatPreferences && destination !== null
+        ? combatPreferences.snapshot().gameplayRevision
+        : null;
     const recipe =
       target === roundRecipe.entry
         ? roundRecipe
@@ -808,6 +885,7 @@ try {
         previousRecipe: roundRecipe,
         recipe,
         journeyRevision: journeyPreferences?.snapshot().revision,
+        combatGameplayRevision,
         match: createRound(recipe),
         raceId: ++raceSequence,
         resetWins:
@@ -825,6 +903,7 @@ try {
     contentController?.abort();
     const controller = new AbortController();
     contentController = controller;
+    contentCombatGameplayRevision = attempt.combatGameplayRevision;
     contentScope = shell.scope();
     contentBusy = true;
     contentError = null;
@@ -835,6 +914,8 @@ try {
       contentController === controller &&
       nextAttempt === attempt &&
       journeyPreferences?.snapshot().revision === attempt.journeyRevision &&
+      (attempt.combatGameplayRevision === null ||
+        combatPreferences?.snapshot().gameplayRevision === attempt.combatGameplayRevision) &&
       roundRecipe === attempt.previousRecipe &&
       match === attempt.previous &&
       generation === attempt.previousGeneration;
@@ -871,13 +952,26 @@ try {
       // Publish only plain references before cleanup can call back into the page.
       match = attempt.match;
       roundRecipe = attempt.recipe;
+      renderCombatStatus();
       theme = attempt.recipe.theme;
       selectedMapKey = attempt.recipe.entry.key;
-      $('race-level').value = selectedMapKey;
+      $('race-level').value = candidateJourney
+        ? candidateJourney.row(
+            attempt.recipe.entry.mission,
+            journeyPreferences.snapshot().difficulty,
+          ).key
+        : selectedMapKey;
       preparedFocusMatch = match;
       backdrop = lease.picture;
       generation = attempt.raceId;
       finished = false;
+      combatHalted = false;
+      for (const player of [0, 1]) {
+        const caption = $(`racer-combat-${player}`);
+        caption.hidden = true;
+        caption.textContent = '';
+        delete caption.dataset.cue;
+      }
       if (attempt.resetWins) won = [0, 0];
       nextAttempt = null;
       adopted = true;
@@ -926,6 +1020,7 @@ try {
       lease?.cancel();
       if (attempt.lease === lease) attempt.lease = null;
       if (!disposed && controller === contentController && !controller.signal.aborted) {
+        contentCombatGameplayRevision = null;
         contentBusy = false;
         updateMenu();
       }
@@ -951,6 +1046,18 @@ try {
     }
     updateMenu();
   }
+  function haltForRenderer(error) {
+    if (combatHalted || disposed) return;
+    combatHalted = true;
+    startIntentEpoch++;
+    sound.pause();
+    if (match?.status === 'running') pauseDuel(match, { preserveContinuation: true });
+    clear({ resetDirection: true });
+    $('race-message').textContent =
+      `Race stopped because a board could not render optional combat safely: ${error.message}. ` +
+      'Both boards are frozen. Choose another mission or reload before racing again.';
+    updateMenu();
+  }
   async function startRace(destination = null) {
     if (
       disposed ||
@@ -959,6 +1066,7 @@ try {
       document.hidden ||
       !document.hasFocus() ||
       match.status === 'running' ||
+      (combatHalted && !destination) ||
       shell.scope() !== 'main'
     )
       return;
@@ -1134,12 +1242,17 @@ try {
     }
   }
 
-  $('race-start').onclick = () =>
-    startRace(
-      candidateJourney && match.status === 'finished'
+  $('race-start').onclick = () => {
+    const freshCandidate =
+      candidateJourney &&
+      match.status === 'finished' &&
+      (roundRecipe.format === 'single' || won.some((score) => score >= 2));
+    return startRace(
+      freshCandidate
         ? candidateJourney.row(roundRecipe.entry.mission, journeyPreferences.snapshot().difficulty)
         : null,
     );
+  };
   $('race-chapter-retry').onclick = async () => {
     if (disposed || contentBusy || match.status !== 'ready') return;
     const restoreFocus = actionFocus($('race-chapter-retry'));
@@ -1257,7 +1370,7 @@ try {
       }
       $('race-journey-difficulty').value = snapshot.difficulty;
       $('race-journey-difficulty-note').textContent =
-        `Next fresh race: ${snapshot.difficulty}. Both current boards keep their rules.`;
+        `Next fresh race: ${snapshot.difficulty}. ${routeDifficultyCatalog.presets[snapshot.difficulty].description} Both current boards keep their rules.`;
       preferenceExportSequence++;
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
       $('race-journey-preferences-message').textContent = snapshot.error;
@@ -1350,6 +1463,69 @@ try {
       } catch (error) {
         $('race-journey-save-message').textContent =
           `Export failed: ${error.message}. Your session progress is still here.`;
+      }
+    };
+  }
+  if (combatPreferences) {
+    let combatGameplayRevision = combatPreferences.snapshot().gameplayRevision,
+      combatExportSequence = 0;
+    combatPreferences.subscribe((snapshot) => {
+      const gameplayChanged = snapshot.gameplayRevision !== combatGameplayRevision;
+      if (gameplayChanged) {
+        combatGameplayRevision = snapshot.gameplayRevision;
+        startIntentEpoch++;
+        if (
+          contentBusy &&
+          contentCombatGameplayRevision !== null &&
+          contentCombatGameplayRevision !== snapshot.gameplayRevision
+        ) {
+          cancelContent();
+          nextAttempt?.lease?.cancel();
+          nextAttempt = null;
+        }
+      }
+      $('race-combat-mode').value = snapshot.mode;
+      $('race-combat-scrap').checked = snapshot.showScrap;
+      renderCombatStatus(snapshot);
+      combatExportSequence++;
+      $('race-combat-preferences-recovery').hidden = snapshot.durable;
+      $('race-combat-preferences-message').textContent = snapshot.error;
+      journeyChooser?.refresh();
+      showMaps();
+      const mission = roundRecipe?.entry.mission ?? initialJourneyMission;
+      if (mission)
+        $('race-level').value = candidateJourney.row(
+          mission,
+          journeyPreferences.snapshot().difficulty,
+        ).key;
+      if (gameplayChanged && match?.status === 'ready' && !contentBusy) void prepare();
+    });
+    $('race-combat-mode').onchange = () => {
+      combatPreferences.choose($('race-combat-mode').value);
+    };
+    $('race-combat-scrap').onchange = () => {
+      combatPreferences.setScrap($('race-combat-scrap').checked);
+    };
+    $('race-combat-preferences-retry').onclick = () => {
+      const restoreFocus = document.activeElement === $('race-combat-preferences-retry');
+      const snapshot = combatPreferences.retry();
+      if (snapshot.durable && restoreFocus && !document.hidden && document.hasFocus())
+        $('race-combat-mode').focus({ preventScroll: true });
+    };
+    $('race-combat-preferences-export').onclick = async () => {
+      const ticket = ++combatExportSequence;
+      try {
+        const result = await downloadJSON(
+          JSON.parse(combatPreferences.export()),
+          'revealline-optional-robots.json',
+        );
+        if (ticket === combatExportSequence && !$('race-combat-preferences-recovery').hidden)
+          $('race-combat-preferences-message').textContent =
+            `${combatPreferences.snapshot().error} ${result.message}`;
+      } catch (error) {
+        if (ticket === combatExportSequence && !$('race-combat-preferences-recovery').hidden)
+          $('race-combat-preferences-message').textContent =
+            `Export failed: ${error.message}. Your session robot choice is still here.`;
       }
     };
   }
@@ -1690,6 +1866,8 @@ try {
             $(`racer-encounter-${i}`).hidden,
             $(`racer-encounter-title-${i}`).textContent,
             $(`racer-encounter-instruction-${i}`).textContent,
+            $(`racer-combat-${i}`).hidden,
+            $(`racer-combat-${i}`).textContent,
             ...(touchPads[i].hidden
               ? []
               : touchActions[i].flatMap((button) => [
@@ -1719,7 +1897,7 @@ try {
     }
     $('race-message').hidden = contentBusy;
     $('race-installed-status').hidden = contentBusy;
-    $('race-start').disabled = running || contentBusy || !contentReady;
+    $('race-start').disabled = running || contentBusy || !contentReady || combatHalted;
     $('race-chapters').disabled = running || contentBusy || !catalogue;
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
@@ -1765,6 +1943,10 @@ try {
     'race-journey-difficulty',
     'race-journey-preferences-retry',
     'race-journey-preferences-export',
+    'race-combat-mode',
+    'race-combat-scrap',
+    'race-combat-preferences-retry',
+    'race-combat-preferences-export',
     'race-journey-save-retry',
     'race-journey-save-export',
     'race-chapter-retry',
@@ -2050,6 +2232,7 @@ try {
             if (match.runs[i].tick !== before[i]) {
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
               for (const event of match.runs[i].events) sound.event(event);
+              publishCombatCaption(i, match.runs[i].events);
             }
         }
       }
@@ -2140,18 +2323,24 @@ try {
     // Both HUDs, including shell-owned input/equipment labels, settle before
     // one signature-gated fallback measurement and either board draw.
     updateMenu();
-    for (let i = 0; i < 2; i++) {
-      const run = match.runs[i];
-      painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
-        displayCSSWidth: boardFootprints.width(i),
-        textFace: displayPreferences.snapshot().textFace,
-        paused: match.status !== 'running',
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        fullReveal: run.status === 'won',
-        celebrationPaused: document.hidden,
-        backdrop,
-      });
-    }
+    if (!combatHalted)
+      try {
+        for (let i = 0; i < 2; i++) {
+          const run = match.runs[i];
+          painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
+            displayCSSWidth: boardFootprints.width(i),
+            textFace: displayPreferences.snapshot().textFace,
+            paused: match.status !== 'running',
+            reduced: displayPreferences.snapshot().effectiveReducedEffects,
+            fullReveal: run.status === 'won',
+            showCombatScrap: combatPreferences?.snapshot().showScrap ?? true,
+            celebrationPaused: document.hidden,
+            backdrop,
+          });
+        }
+      } catch (error) {
+        haltForRenderer(error);
+      }
     (music || sound).update(
       match.status === 'running',
       theme,

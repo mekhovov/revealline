@@ -3,6 +3,8 @@ import { onNativeInactive } from '../platform.mjs';
 import { prepareReplayPlayer } from '../replay-player.mjs';
 import { MAX_REPLAY_BYTES } from '../replay.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
+import { combatView } from '../ui/combat-view.mjs';
+import { createCombatPreferences } from '../combat-preferences.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
@@ -12,6 +14,7 @@ const $ = (id) => document.getElementById(id);
 globalThis.RevealLineToolLaunch?.attached();
 let theaterDisposed = false;
 const replayDisplay = mountReplayDisplay();
+const combatPreferences = createCombatPreferences({ window });
 const bootStatus = createOperationStatus($('boot-status'));
 const bootDisplay = bootStatus.begin({ message: 'Preparing the theater…', stage: 'reading' });
 const presentationFeedback = createOperationStatus($('presentation-status'));
@@ -37,6 +40,7 @@ const closeTheater = (event = {}) => {
   if (event.persisted || theaterDisposed) return;
   theaterDisposed = true;
   replayDisplay.dispose();
+  combatPreferences.dispose();
   bootStatus.dispose();
   presentationFeedback.dispose();
   presentationPage.close();
@@ -86,6 +90,8 @@ try {
     $('theme').append(option);
   }
   let player = null,
+    presentationFailurePlayer = null,
+    presentationFailureMessage = '',
     painter = null,
     releasePresentationPainter = null,
     pending = false,
@@ -111,10 +117,16 @@ try {
       document.hasFocus?.() !== false &&
       [$('play-pause'), $('step')].includes(previousFocus);
     const disabled = pending || !player;
-    $('play-pause').disabled = disabled || ['complete', 'error'].includes(player?.phase);
+    $('play-pause').disabled =
+      disabled ||
+      presentationFailurePlayer === player ||
+      ['complete', 'error'].includes(player?.phase);
     $('play-pause').textContent = player?.phase === 'playing' ? 'Pause' : 'Play';
     $('restart').disabled = disabled;
-    $('step').disabled = disabled || ['complete', 'error'].includes(player?.phase);
+    $('step').disabled =
+      disabled ||
+      presentationFailurePlayer === player ||
+      ['complete', 'error'].includes(player?.phase);
     $('speed').disabled = disabled;
     $('theme').disabled = pending;
     $('cancel-load').hidden = !pending;
@@ -294,7 +306,13 @@ try {
     $('example-brief').textContent = examples[$('example').value].brief;
   }
   function togglePlay() {
-    if (!player || pending || ['complete', 'error'].includes(player.phase)) return;
+    if (
+      !player ||
+      pending ||
+      presentationFailurePlayer === player ||
+      ['complete', 'error'].includes(player.phase)
+    )
+      return;
     consume(player.phase === 'playing' ? player.pause() : player.play());
     lastFrame = 0;
     $('transport-status').textContent =
@@ -308,7 +326,12 @@ try {
       action();
     } catch (error) {
       player?.pause();
-      $('transport-status').textContent = clipped(error.message, 300);
+      if (presentationFailurePlayer === player)
+        presentationFailureMessage = clipped(error.message, 300);
+      $('transport-status').textContent =
+        presentationFailurePlayer === player
+          ? presentationFailureMessage
+          : clipped(error.message, 300);
       updateControls();
       readouts();
     }
@@ -334,6 +357,8 @@ try {
     safely(() => {
       if (!player || pending) return;
       player.reset();
+      presentationFailurePlayer = null;
+      presentationFailureMessage = '';
       painter.setLevel(player.state.level, { seed: player.info.seed });
       eventLines = [];
       displayEvents([]);
@@ -343,7 +368,12 @@ try {
     }),
   );
   const step = () => {
-    if (!player || pending) return;
+    if (!player || pending || presentationFailurePlayer === player) return;
+    const combat = combatView(player.state);
+    if (combat && !combat.valid) {
+      presentationFailurePlayer = player;
+      throw new Error(`Playback stopped: ${combat.error}`);
+    }
     consume(player.step());
     if (player.phase !== 'complete')
       $('transport-status').textContent = `Paused at tick ${player.state.tick}.`;
@@ -361,7 +391,9 @@ try {
       const theme = chosenTheme();
       void painter.setLook(theme, bodyFor(theme, player.state));
       $('transport-status').textContent =
-        'Presentation changed. The recording remains paused at the same tick.';
+        presentationFailurePlayer === player
+          ? presentationFailureMessage
+          : 'Presentation changed. The recording remains paused at the same tick.';
     }),
   );
   const navigation = attachReplayNavigation({
@@ -375,7 +407,10 @@ try {
     step: () => safely(step),
     onInactive: () => {
       lastFrame = 0;
-      $('transport-status').textContent = 'Playback paused. Choose Play to continue.';
+      $('transport-status').textContent =
+        presentationFailurePlayer === player
+          ? presentationFailureMessage
+          : 'Playback paused. Choose Play to continue.';
     },
     onDispose: () => {
       disposed = true;
@@ -393,7 +428,10 @@ try {
     })
     .catch((error) => {
       if (!disposed)
-        $('transport-status').textContent = `App lifecycle adapter unavailable: ${error.message}`;
+        $('transport-status').textContent =
+          presentationFailurePlayer === player
+            ? presentationFailureMessage
+            : `App lifecycle adapter unavailable: ${error.message}`;
     });
   function frame(now) {
     if (disposed) return;
@@ -402,16 +440,27 @@ try {
     lastFrame = now;
     safely(() => {
       if (player && painter) {
-        if (player.phase === 'playing' && !pending) consume(player.advance(dt));
-        const display = replayDisplay.snapshot();
-        painter.draw(context, player.state, Math.min(dt, 0.1), {
-          paused: player.phase !== 'playing',
-          reduced: display.effectiveReducedEffects,
-          textFace: display.textFace,
-          showGrid: $('grid').checked,
-          fullReveal: player.phase === 'complete' && player.state.status === 'won',
-          celebrationPaused: document.hidden,
-        });
+        if (presentationFailurePlayer === player) return;
+        try {
+          const combat = combatView(player.state);
+          if (combat && !combat.valid) throw new Error(combat.error);
+          if (player.phase === 'playing' && !pending) consume(player.advance(dt));
+          const display = replayDisplay.snapshot();
+          painter.draw(context, player.state, Math.min(dt, 0.1), {
+            paused: player.phase !== 'playing',
+            reduced: display.effectiveReducedEffects,
+            showCombatScrap: combatPreferences.snapshot().showScrap,
+            textFace: display.textFace,
+            showGrid: $('grid').checked,
+            fullReveal: player.phase === 'complete' && player.state.status === 'won',
+            celebrationPaused: document.hidden,
+          });
+        } catch (error) {
+          presentationFailurePlayer = player;
+          throw new Error(
+            `Playback stopped: threat presentation failed. ${error.message} Restart or load another recording.`,
+          );
+        }
       }
     });
     frameId = requestAnimationFrame(frame);

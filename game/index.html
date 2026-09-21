@@ -465,6 +465,7 @@
           <p id="run-message" class="run-message" role="status">
             Your first route: fly down from the marked start to the opposite border.
           </p>
+          <p id="combat-presentation-error" class="micro-note" role="alert" hidden></p>
           <aside id="journey-save-status" class="journey-status" hidden>
             <p id="journey-save-message" role="status"></p>
             <button id="journey-save-retry" type="button">Retry save</button>
@@ -990,6 +991,29 @@
         hidden
       >
         <h3 data-field-kit-copy="settings.controls">Controls</h3>
+        <fieldset id="combat-preferences" hidden>
+          <legend>Optional robots · test route</legend>
+          <label class="field"
+            >Next-attempt robots
+            <select id="combat-mode" aria-describedby="combat-note">
+              <option value="authored">As authored</option>
+              <option value="on">On where authored</option>
+              <option value="off">Off</option>
+            </select>
+          </label>
+          <label
+            ><input id="combat-scrap" type="checkbox" checked /> Show cosmetic robot scrap</label
+          >
+          <p id="combat-note" class="micro-note" role="status">
+            Restart, Retry or Next applies this choice. Continue and automatic recovery keep the
+            current flight. No robots are added to unauthored maps.
+          </p>
+          <aside id="combat-preferences-recovery" hidden>
+            <p id="combat-preferences-message" role="status"></p>
+            <button id="combat-preferences-retry" type="button">Retry robot preference save</button>
+            <button id="combat-preferences-export" type="button">Export robot preferences</button>
+          </aside>
+        </fieldset>
         <p class="micro-note" data-field-kit-copy="settings.controlsDescription">
           Keyboard, controller and touch.
         </p>

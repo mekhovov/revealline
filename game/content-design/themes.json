@@ -119,6 +119,46 @@
         "impact": "retro-craft",
         "trapper": "retro-craft"
       }
+    },
+    {
+      "id": "rover-yard",
+      "name": "Rover Yard",
+      "subtitle": "Make a landing. Keep a way out.",
+      "family": "retro",
+      "player": "retro-craft",
+      "enemyShape": "orb",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "arcade",
+      "labels": {
+        "objective": "Relay",
+        "supply": "Supply",
+        "enemy": "Field keeper",
+        "boss": "Sentinel",
+        "currency": "Score",
+        "ability": "Ability"
+      },
+      "palette": {
+        "ink": "#2e2b26",
+        "paper": "#f4ede0",
+        "muted": "#c2b8a4",
+        "accent": "#ffd27b",
+        "safe": "#65dcc5",
+        "danger": "#ff7795",
+        "field": "#242c2c",
+        "grid": "#455150",
+        "sky": "#cad0be",
+        "land": "#887c65"
+      },
+      "classBodies": {
+        "scout": "retro-craft",
+        "bomber": "retro-craft",
+        "carrier": "retro-craft",
+        "interceptor": "retro-craft",
+        "fiber": "retro-craft",
+        "impact": "retro-craft",
+        "trapper": "retro-craft"
+      }
     }
   ]
 }

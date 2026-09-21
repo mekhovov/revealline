@@ -45,6 +45,7 @@
         <button id="fracture">Inspect Fractured Grid greyboxes</button>
         <button id="phase">Inspect Phaseworks greyboxes</button>
         <button id="livewire">Inspect Livewire Foundry greyboxes</button>
+        <button id="combat-study">Inspect optional robot greyboxes</button>
         <button id="team-signal">Inspect Team Signal greybox</button>
         <label class="file-button"
           >Inspect import<input id="import" type="file" accept="application/json,.json"
@@ -205,6 +206,10 @@
             <span>Framed pickups: + Life · &gt; Speed · v Slow · * Freeze</span>
             <span>Capture markers: ! Required · o Optional · ? Hidden</span>
             <span>Slow field: paired dashes · Lethal field: framed ×</span>
+            <span
+              >Arrow field: faster with, slower against, unchanged across; never forced drift.</span
+            >
+            <span>Bracketed robots: removable scout / firing sentry; never retain field.</span>
             <span>Capturing field neutralizes its terrain; walls never close cuts.</span>
           </p>
           <p id="geometry" class="note"></p>
@@ -281,6 +286,21 @@
               Shared catalog roles and speed tiers keep rules consistent. Positions are checked in
               every supported mode and preset before applying.
             </p>
+            <fieldset id="combat-tools">
+              <legend>Optional robots · draft edition</legend>
+              <p id="combat-state" class="note"></p>
+              <button id="combat-prepare" type="button">Prepare optional combat authoring</button>
+              <label
+                ><input id="combat-enabled" type="checkbox" /> Enable authored scouts and
+                sentries</label
+              >
+              <button id="combat-apply" type="button">Validate & apply combat setting</button>
+              <p id="combat-result" class="note" role="status"></p>
+              <p class="note">
+                This edits the local mission, not the player's next-attempt preference. Ordinary
+                keepers remain dangerous. Optional robots are not qualified for Team.
+              </p>
+            </fieldset>
             <form id="actor-form">
               <fieldset id="actor-tools">
                 <legend>Mission actors</legend>
@@ -520,6 +540,11 @@
             ><span>Practice only · no awards · candidate presentation</span>
             <button id="export-team" hidden>Export exact Team test mission</button>
           </div>
+          <p id="combat-preview-help" class="note" hidden>
+            Exact Solo practice preview supports optional robots and uses this draft's authored
+            On/Off setting, not the player's next-attempt preference. Human playability and device
+            qualification are still pending. Team remains unsupported.
+          </p>
           <p id="team-test-help" class="note" hidden>
             Geometry and rules only. Import this file in the
             <a href="../couch/relay-rescue.html" target="_blank" rel="noopener"

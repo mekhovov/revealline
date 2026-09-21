@@ -74,7 +74,15 @@
               aria-label="Player 1 race board"
             ></canvas>
           </div>
-          <p id="racer-stats-0" class="racer-stats">0.0% · 3 lives · 0 points</p>
+          <div class="racer-feedback">
+            <p id="racer-stats-0" class="racer-stats">0.0% · 3 lives · 0 points</p>
+            <p
+              id="racer-combat-0"
+              class="racer-encounter racer-combat-caption"
+              role="status"
+              hidden
+            ></p>
+          </div>
           <div
             id="racer-encounter-0"
             class="racer-encounter"
@@ -116,7 +124,15 @@
               aria-label="Player 2 race board"
             ></canvas>
           </div>
-          <p id="racer-stats-1" class="racer-stats">0.0% · 3 lives · 0 points</p>
+          <div class="racer-feedback">
+            <p id="racer-stats-1" class="racer-stats">0.0% · 3 lives · 0 points</p>
+            <p
+              id="racer-combat-1"
+              class="racer-encounter racer-combat-caption"
+              role="status"
+              hidden
+            ></p>
+          </div>
           <div
             id="racer-encounter-1"
             class="racer-encounter"
@@ -313,6 +329,15 @@
           >
             <h2>Controls</h2>
             <div class="race-fields">
+              <label id="race-combat-mode-field" hidden>
+                <span id="race-combat-mode-label">Optional robots for the next fresh race</span>
+                <select
+                  id="race-combat-mode"
+                  aria-labelledby="race-combat-mode-label"
+                  aria-describedby="race-combat-note"
+                ></select>
+                <span id="race-combat-note" role="status"></span>
+              </label>
               <label
                 >Player 1 touch controls<select id="race-touch-0">
                   <option value="auto">Auto</option>
@@ -327,6 +352,19 @@
                   <option value="off">Off</option>
                 </select></label
               >
+            </div>
+            <label id="race-combat-scrap-field" class="race-check" hidden
+              ><input id="race-combat-scrap" type="checkbox" checked /> Show inert robot scrap
+              (cosmetic only)</label
+            >
+            <div id="race-combat-preferences-recovery" hidden>
+              <p id="race-combat-preferences-message" role="status"></p>
+              <button id="race-combat-preferences-retry" type="button">
+                Retry saving robot settings
+              </button>
+              <button id="race-combat-preferences-export" type="button">
+                Export robot settings
+              </button>
             </div>
             <p>
               Auto shows a player's controls after a touch on their board. Keyboard or controller

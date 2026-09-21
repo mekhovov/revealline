@@ -1,4 +1,4 @@
-const ROUTES = new Set(['opening', 'authored']);
+const ROUTES = new Set(['opening', 'authored', 'combat-study']);
 
 /** Code-owned destinations only. Mode entry retains the library route, never a
  * simulation, mission selection, save slot, receipt or arbitrary return URL. */

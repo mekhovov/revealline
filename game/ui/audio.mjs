@@ -1,4 +1,5 @@
 import { createPublishedCues } from './published-audio.mjs';
+import { combatSoundCue } from './combat-feedback.mjs';
 import {
   MUSIC_STYLES,
   DEFAULT_TRACKS,
@@ -592,13 +593,14 @@ export class Soundscape {
           }[event.type];
     if (publishedCue && this.publishedAudio?.play(publishedCue)) return;
     const base = clamp(this.track.root + 12, 48, 76),
-      cue = (steps, voice = 'bell', spacing = 0.09, duration = 0.25) =>
+      cue = (steps, voice = 'bell', spacing = 0.09, duration = 0.25, volume = 0.08) =>
         steps.forEach((n, i) =>
           this.play(
-            { kind: 'tone', frequency: midiFrequency(base + n), voice, volume: 0.08, duration },
+            { kind: 'tone', frequency: midiFrequency(base + n), voice, volume, duration },
             now + 0.015 + i * spacing,
           ),
         );
+    const combatCue = combatSoundCue(event);
     if (event.type === 'run.completed') {
       if (!this.persistentMusic) {
         this.stopVoices('music');
@@ -628,7 +630,15 @@ export class Soundscape {
             now + 0.68,
           );
       }
-    } else if (event.type === 'player.failed') cue([0, -5, -12], 'lead', 0.065, 0.17);
+    } else if (combatCue)
+      cue(
+        combatCue.steps,
+        combatCue.voice,
+        combatCue.spacing,
+        combatCue.duration,
+        combatCue.volume,
+      );
+    else if (event.type === 'player.failed') cue([0, -5, -12], 'lead', 0.065, 0.17);
     else if (event.type === 'cells.claimed') cue([0, 4, 7], 'bell', 0.04, 0.2);
     else if (event.type === 'cells.eroded') cue([7, 3, 0], 'chip', 0.07, 0.12);
     else if (event.type === 'powerup.collected') {
