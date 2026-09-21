@@ -18,6 +18,17 @@ seats in stick/swipe/D-pad, release and interrupt each finger, rotate while paus
 then navigate Start/Settings/Back/Resume using A/B alone. Record source identity,
 actual CSS viewport, complete arena bounds, failures and real-device limitations.”
 
+For warning-capable layouts, reserve a stable instruction band from authored
+capability before fitting the board. Do not subtract the complete touch-pad height
+again when controls already overlay field edges. Check actual text line bounds,
+not only card bounds or accessibility text. `open` is also a staged core phase;
+only an idle classic card may be hidden by that name. Suppress duplicate encounter
+phase notices only through their explicit cue and a present live card; damage,
+pickup and failure notices remain independent. Exercise held-controller → new
+touch → finger release → fresh-controller handoff in stick/swipe/D-pad modes and
+verify interruption plus explicit Resume against the saved replay. Never convert
+modeled handoff tests into hardware certification.
+
 For shared touch changes, preserve the session-only practice option and legacy
 profile fallback until a shared choice exists. Mirror the complete shared choice
 on explicit Solo edits, report failed shared writes, and resample a persisted

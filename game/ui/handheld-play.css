@@ -1074,3 +1074,158 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
     margin-top: 12px;
   }
 }
+
+/* Warning-capable desktop/tablet fields reserve captions before fitting the
+   board. Touch pads overlay the field edges instead of claiming a second
+   vertical reservation. Authored capability keeps geometry stable by phase. */
+@media (min-width: 681px) and (min-height: 601px) and (not (any-pointer: coarse)) {
+  :root:not([data-game-fullscreen='true'])
+    body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    ) {
+    --flight-warning-space: calc(var(--handheld-label) * 7);
+    --flight-notice-space: calc(var(--handheld-label) * 2.5 + 8px);
+    --flight-top-space: 184px;
+    --flight-board-space: calc(
+      100dvh - var(--flight-top-space) - var(--flight-warning-space) - var(--flight-notice-space) -
+        var(--safe-top) - var(--safe-bottom)
+    );
+  }
+  :root:not([data-game-fullscreen='true'])
+    body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    .arena-panel {
+    max-width: 100%;
+  }
+  :root:not([data-game-fullscreen='true'])
+    body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    .arena-panel
+    > .arena-shell {
+    position: fixed;
+    left: calc(var(--safe-left) + (100% - var(--safe-left) - var(--safe-right)) / 2);
+    top: calc(var(--safe-top) + var(--flight-top-space) + var(--flight-board-space) / 2);
+    transform: translate(-50%, -50%);
+    width: min(
+      calc(100% - 24px - var(--safe-left) - var(--safe-right)),
+      calc(var(--flight-board-space) * var(--board-aspect, 1.333333))
+    );
+    max-width: none;
+    margin: 0;
+  }
+  :root:not([data-game-fullscreen='true'])
+    body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    .flight-status {
+    position: fixed;
+    top: calc(var(--safe-top) + 154px);
+    left: max(12px, var(--safe-left));
+    right: max(12px, var(--safe-right));
+    margin: 0;
+    height: 26px;
+  }
+  :root:not([data-game-fullscreen='true'])
+    body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    #encounter-status:not([hidden]):not([data-kind='classic'][data-phase='open']) {
+    display: grid;
+    position: fixed;
+    bottom: calc(var(--flight-notice-space) + var(--safe-bottom));
+    left: max(12px, var(--safe-left));
+    right: max(12px, var(--safe-right));
+    width: auto;
+    transform: none;
+    font-size: var(--handheld-label);
+    line-height: 1.4;
+    margin: 0;
+    padding: 4px 8px;
+  }
+  :root:not([data-game-fullscreen='true'])
+    body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    #run-message {
+    position: fixed;
+    left: max(12px, var(--safe-left));
+    right: max(12px, var(--safe-right));
+    bottom: var(--safe-bottom);
+    margin: 4px 0;
+    width: auto;
+    font-size: var(--handheld-label);
+    line-height: 1.25;
+    max-height: 2.5em;
+    overflow: auto;
+  }
+  :root:not([data-game-fullscreen='true'])
+    body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    .play-controls {
+    bottom: calc(
+      var(--flight-warning-space) + var(--flight-notice-space) + var(--safe-bottom) + 8px
+    );
+  }
+}
+
+/* A real encounter instruction is not an idle classic-field summary. Reserve
+   its band for the authored mission, including the core-open phase, so danger
+   cycles cannot resize the arena or disappear behind touch controls. */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    ) {
+    --fk-flight-bottom: calc(var(--handheld-label) * 4 + 12px);
+  }
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    #encounter-status:not([hidden]):not([data-kind='classic'][data-phase='open']) {
+    display: grid;
+    left: max(12px, var(--safe-left));
+    right: max(12px, var(--safe-right));
+    bottom: max(4px, var(--safe-bottom));
+    transform: none;
+    width: auto;
+    font-size: var(--handheld-label);
+    line-height: 1.3;
+    background: var(--fk-bg, #070b12);
+  }
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    .play-controls {
+    bottom: calc(var(--fk-flight-bottom) + var(--safe-bottom) + 8px);
+  }
+}
+/* Event notices must not cover the persistent instruction below the field. */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    #run-message {
+    bottom: calc(var(--fk-flight-bottom) + var(--safe-bottom) + 4px);
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 350px) {
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    ) {
+    --touch-size: 132px;
+  }
+}
+
+/* The persistent encounter card already presents these exact phase messages.
+   Keep other event notices (loss, pickup, storage failure) available. Full
+   encounter text remains in Field details and the live card. */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-flight-state='running']:has(
+      #encounter-status[data-kind='encounter']:not([hidden])
+    )
+    #run-message[data-cue='encounter'] {
+    display: none;
+  }
+}

@@ -34,6 +34,10 @@
       "titleInputAndBoot": "47/47 each Node20/22 before adding two controller cases",
       "expandedJourneyEntry": "9/9 each Node20/22 including original7 plus2 fresh A launch/Pause/Resume cases",
       "scope": "Actual opening/authored hosts with modeled standard Gamepad. No physical Steam Deck fix claim; final release CI remains open."
+    },
+    "iteration7": {
+      "finalCohort": "29/29 each Node20/22",
+      "scope": "Hybrid actual host, Field details actual host, boot/build and arena capability; native text bounds separate. Full source/release and real devices remain open."
     }
   },
   "nativeObservations": [
@@ -286,6 +290,23 @@
       "arena": [392, 196],
       "minimumControl": [44, 44],
       "note": "Frame reports actual CSS size; host displayed frame62%. Complete running arena181..377, all7 controls inside frame; explicit Pause and Return to Workshop restored Mission playground focus. Taller-tablet space efficiency still merits review."
+    },
+    {
+      "viewport": [710, 620],
+      "mode": "Staged Sentinel Relay, Large / Plain, fine pointer",
+      "arena": [342.6640625, 256.9921875],
+      "captionBottom": 567,
+      "noticeBottom": 616,
+      "note": "Shown/hidden controls preserve geometry. Desktop browser override, not actual tablet."
+    },
+    {
+      "viewport": [568, 320],
+      "mode": "Staged Sentinel Relay, Large, D-pad",
+      "arena": [239.9921875, 179.9921875],
+      "caption": [544, 56.796875],
+      "captionBottom": 316,
+      "minimumDirectionTarget": [44, 44],
+      "note": "Shield/warning/active observed; duplicate phase notice suppressed only while live card exists. Core-open win not yet observed."
     }
   ],
   "pending": [

@@ -753,6 +753,7 @@ try {
     getState: () => ({ started, paused }),
     writeWarning(message, cue) {
       runMessageCue = cue;
+      $('run-message').dataset.cue = cue || '';
       $('run-message').textContent = message;
       captionUntil = (run?.time || 0) + 5;
       return { fullText: message, cue, expiresAt: captionUntil };
@@ -6980,7 +6981,7 @@ try {
             event.type === 'encounter.defeated'
           ) {
             const cue = encounterView(run);
-            if (cue) warning(`${cue.title}. ${cue.instruction}`);
+            if (cue) warning(`${cue.title}. ${cue.instruction}`, 'encounter');
           }
           if (event.type === 'boss.warning')
             warning(`${theme.labels.boss}: the marked lane will activate shortly.`);

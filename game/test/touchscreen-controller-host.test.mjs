@@ -290,3 +290,69 @@ test('modeled controller: Missions selection, Deploy, Pause and explicit Resume 
   });
   assert.deepEqual(page.errors, []);
 });
+
+for (const mode of ['stick', 'swipe', 'dpad'])
+  test(`actual host: ${mode} hands steering to and from a held controller without stealing direction`, async (t) => {
+    const { page, pad, press, release, start } = await setup(t);
+    page.change('touch-mode', mode);
+    page.change('screen-controls', 'always');
+    await start();
+    const surface =
+      mode === 'dpad' ? page.doc.querySelector('.direction-controls') : page.$('touch-surface');
+    surface._rect = { x: 0, y: 0, width: 156, height: 156 };
+    const pointer = (type, x, y = 78) =>
+      surface.emit(type, {
+        pointerId: 71,
+        pointerType: 'touch',
+        button: 0,
+        clientX: x,
+        clientY: y,
+      });
+    pad.axes[0] = 1;
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.equal(page.rendered.run.player.direction, 'right');
+    const beforeTouch = page.rendered.run.player.x;
+    pointer('pointerdown', mode === 'dpad' ? 8 : 78);
+    if (mode !== 'dpad') pointer('pointermove', 40);
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.equal(page.rendered.run.player.direction, 'left');
+    assert.ok(page.rendered.run.player.x < beforeTouch, 'New touch input beats the old held stick');
+    pointer('pointerup', 40);
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.equal(
+      page.rendered.run.player.direction,
+      'left',
+      'Releasing touch does not hand back to stale stick',
+    );
+    release();
+    pad.axes[0] = 1;
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.equal(
+      page.rendered.run.player.direction,
+      'right',
+      'Fresh controller movement can reclaim steering',
+    );
+    pointer('pointerdown', mode === 'dpad' ? 8 : 78);
+    if (mode !== 'dpad') pointer('pointermove', 40);
+    page.frame();
+    pointer('pointercancel', 40);
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    const pausedTick = page.rendered.run.tick;
+    pointer('pointermove', 145);
+    for (let i = 0; i < 5; i++) page.frame();
+    assert.equal(
+      page.rendered.run.tick,
+      pausedTick,
+      'Interrupted finger and held stick cannot resume',
+    );
+    press(0);
+    await settle(() => {
+      page.frame(0);
+      return page.doc.body.dataset.flightState === 'running';
+    });
+    release();
+    press(9);
+    const saved = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
+    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.deepEqual(page.errors, []);
+  });
