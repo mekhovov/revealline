@@ -12,6 +12,7 @@ import { createCrosswindCandidates } from '../content-design/crosswind-candidate
 import { createSentinelCandidates } from '../content-design/sentinel-candidates.mjs';
 import { createApexCandidates } from '../content-design/apex-candidates.mjs';
 import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
+import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
@@ -619,37 +620,61 @@ $('signal').onclick = guarded(() => {
 });
 $('neon').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createNeonCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    withCampaignPresentation(createNeonCandidates({ artwork: true }), 'neon'),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });
 $('rover').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createRoverTeachingCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    withCampaignPresentation(createRoverTeachingCandidates({ artwork: true }), 'rover'),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });
 $('fracture').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createFractureCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    withCampaignPresentation(createFractureCandidates({ artwork: true }), 'fracture'),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });
 $('phase').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createPhaseCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    withCampaignPresentation(createPhaseCandidates({ artwork: true }), 'phase'),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });
 $('livewire').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createLivewireCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    withCampaignPresentation(createLivewireCandidates({ artwork: true }), 'livewire'),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });
 $('relay').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createRelayCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    withCampaignPresentation(createRelayCandidates({ artwork: true }), 'relay'),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });
@@ -667,19 +692,31 @@ $('team-journey').onclick = guarded(() => {
 });
 $('crosswind').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createCrosswindCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    withCampaignPresentation(createCrosswindCandidates({ artwork: true }), 'crosswind'),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });
 $('sentinel').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createSentinelCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    withCampaignPresentation(createSentinelCandidates({ artwork: true }), 'sentinel'),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });
 $('apex').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createApexCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    withCampaignPresentation(createApexCandidates({ artwork: true }), 'apex'),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });

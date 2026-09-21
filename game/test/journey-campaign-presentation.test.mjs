@@ -200,6 +200,34 @@ test('Studio loads exact theme IDs with no Horizon substitution; greybox scenari
   );
 });
 
+test('individual Studio chapter inspections use the same presentation projection and require explicit Apply', async () => {
+  const studio = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
+  for (const [id, factory] of [
+    ['neon', 'Neon'],
+    ['rover', 'RoverTeaching'],
+    ['fracture', 'Fracture'],
+    ['phase', 'Phase'],
+    ['livewire', 'Livewire'],
+    ['relay', 'Relay'],
+    ['crosswind', 'Crosswind'],
+    ['sentinel', 'Sentinel'],
+    ['apex', 'Apex'],
+  ]) {
+    const start = studio.indexOf(`$('${id}').onclick = guarded(() => {`);
+    assert(start >= 0, id);
+    const handler = studio.slice(start, studio.indexOf('\n});', start));
+    assert(
+      handler.includes(
+        `withCampaignPresentation(create${factory}Candidates({ artwork: true }), '${id}')`,
+      ),
+      id,
+    );
+    assert(handler.includes('discardSource()'), id);
+    assert(handler.includes('inspectSource()'), id);
+    assert.doesNotMatch(handler, /session\.(?:apply|replace|transact)|location\.|publish/i);
+  }
+});
+
 test('adaptation inspection uses the same campaign edition and does not invent final acceptance', async () => {
   const report = await auditJourneyAdaptations({ edition: 'campaign-originals' });
   assert.equal(report.contentEdition, 'campaign-originals');

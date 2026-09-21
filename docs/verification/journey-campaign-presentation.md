@@ -40,7 +40,8 @@ antialiasing, thin marks, user overrides and physical displays need separate rev
 - The explicit `?journey=whole-originals-v3` route owns the independent
   `revealline.suspended.journey-whole-originals.v3` slot. Earlier opening/authored,
   whole-originals and v2 routes do not expand or migrate.
-- Studio's optional whole-library inspection and play links select v3. Inspection
+- Studio's optional whole-library inspection and play links select v3. All nine
+  individual later-chapter inspections use the same projection. Inspection
   still requires explicit Apply. The exact authored theme loader rejects missing
   themes instead of silently substituting Horizon.
 - `node scripts/audit-journey-adaptations.mjs --edition campaign-originals`
@@ -79,17 +80,36 @@ qualified. No synthetic recording workaround or unreviewed rights claim is added
 
 ## Verification
 
-Seven dedicated tests pass on Node20.19.5 and22.22.2: palette/schema/body validity,
+Eight dedicated tests pass on Node20.19.5 and22.22.2: palette/schema/body validity,
 contrast floors, copy-on-write and fail-closed projection, all498 physical
 equivalents (354 explicit new presentation manifests and144 exact earlier manifests),
 249 exact Solo host selections,249 exact Versus host selections,83 Studio
-greybox scenario constructions, and adaptation-edition parity.
+greybox scenario constructions, individual Studio-handler projection/Apply
+boundaries, and adaptation-edition parity.
 
-The60-test source/route/Studio/CLI/picture/theme/readability cohort passes Node22.
-Node20 companion regressions, full71-Solo/71-Versus actual-host flows on both
-Nodes and native observations are pending at this source checkpoint. The host
+The original60-test source/route/Studio/CLI/picture/theme/readability cohort passes
+both Nodes; the additional eighth presentation test also passes both. Full
+71-Solo/71-Versus actual-host flows on both Nodes remain running at this checkpoint. The host
 tests retain every frozen route/checkpoint and compare all physical replay sections
 against the new edition without mutating runtime state or rewriting expected hashes.
+
+Native exact `bd150e3f`, read-only port8814, owned browser1/tab38:
+the chooser directly launched Folded corner, Read the lock and Crossing complete.
+Screenshots show their distinct original images, foundation/terrain/role shapes
+and3 starting lives. Read-only inspection of the native theme selector confirms
+`neon-contours`, `livewire-foundry` and `apex-aurora`, each the only
+offered authored theme for its mission. The unclaimed field remains deliberately
+opaque; these observations are not whole-image contrast or new character-art proof.
+No complete native playthrough is claimed.
+
+Studio inspection compiled83 without replacing the one-mission workbench; explicit
+Apply produced24 packs/25 campaigns/83 missions in the new local project. Selecting
+Folded corner retained222 foundation cells/2158 earnable cells and the same
+three actors. Play exact Solo preview reached Engine ready/Practice and its
+native theme selector chose Neon Contours. Closing preview returned to the draft.
+Warnings still explicitly mark candidate art and disconnected foundations.
+The later individual-inspection correction is separately covered by automated
+handler checks; it was not present in that pinned native source.
 
 No new PR, version, release, Pages deployment or accepted-tree CI pass is claimed.
 The release owner's device priority and selective integration hold remain in force.
