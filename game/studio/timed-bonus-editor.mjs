@@ -49,12 +49,13 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
     $('collections').value = schedule?.maxCollections ?? 1;
     $('remove').disabled = !schedule;
     $('submit').textContent = schedule ? 'Validate & replace schedule' : 'Validate & add schedule';
-    $('result').textContent =
-      'Optional only. Applying upgrades this mission’s timed schedules to a trail-aware v2 revision; earlier editions stay unchanged. Contact before expiry; missed pickups move to a different eligible anchor. Preview does not guarantee live availability.';
+    $('result').textContent = getMission()?.modes.includes('team')
+      ? 'Optional Team pickups. Apply creates a new Team bonus edition for this mission only; earlier editions stay unchanged. One shared pickup/grant; speed affects its collector, enemy effects and reserves are shared. Missed pickups relocate. Test both pilots and pickup-free routes.'
+      : 'Optional only. Applying upgrades this mission’s timed schedules to a trail-aware v2 revision; earlier editions stay unchanged. Contact before expiry; missed pickups move to a different eligible anchor. Preview does not guarantee live availability.';
   }
   function sync() {
     const mission = getMission();
-    $('tools').disabled = !mission || mission.modes.includes('team');
+    $('tools').disabled = !mission;
     const next = context();
     if (next === key) return;
     key = next;
@@ -66,9 +67,6 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
     if (mission?.timedBonuses?.schedules.some((s) => s.id === selected))
       $('select').value = selected;
     select();
-    if (mission?.modes.includes('team'))
-      $('result').textContent =
-        'Timed bonuses are not yet qualified for Team. No schedules are silently converted.';
   }
   function commit(action) {
     try {

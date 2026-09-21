@@ -104,8 +104,14 @@ test('invalid schedule and Team imports fail closed, not silently dropping or pu
     );
   const team = createTeamOpeningCandidates();
   assert.throws(
-    () => editTimedBonus(team, 'twin-landings', { action: 'add', id: schedule.id, schedule }),
-    /not yet qualified/,
+    () =>
+      editTimedBonus(
+        team,
+        'twin-landings',
+        { action: 'add', id: schedule.id, schedule },
+        { version: 'timed-bonuses.v1' },
+      ),
+    /trail-aware v2/,
   );
   team.missions[0].timedBonuses = { version: 'timed-bonuses.v1', schedules: [schedule] };
   assert.throws(() => compileContentProject(team), /not unqualified/);
@@ -282,6 +288,17 @@ test('Studio adds, replaces and confirms removal; invalid/stale fields never par
   f.submit();
   assert.match(f.node('result').textContent, /draft changed/);
   f.update(createTeamOpeningCandidates());
-  assert(f.node('tools').disabled);
-  assert.match(f.node('result').textContent, /not yet qualified/);
+  assert.equal(f.node('tools').disabled, false);
+  assert.match(f.node('result').textContent, /new Team bonus edition/);
+  f.fill();
+  const originalTeam = structuredClone(f.source());
+  f.submit();
+  assert.match(f.node('result').textContent, /^Applied/);
+  assert.equal(f.source().missions[0].team.format, 'TeamMissionV4');
+  assert.equal(originalTeam.missions[0].team.format, 'TeamMissionV1');
+  assert.deepEqual(f.source().missions.slice(1), originalTeam.missions.slice(1));
+  f.node('remove').onclick();
+  f.node('remove').onclick();
+  assert.equal(f.source().missions[0].timedBonuses, undefined);
+  assert.equal(f.source().missions[0].team.format, 'TeamMissionV4');
 });

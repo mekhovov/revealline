@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after the trail-aware timed-bonus review. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after Team timed-bonus authoring/host integration. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -70,9 +70,18 @@ the qualification primitive alone did not implement a playable mode.
 The [Team engine successor](journey-team-timed-runtime.md) now adds shared schedules,
 swept collection, all four bounded effects and deterministic damage/revival tie
 handling under an explicit runtime edition. Seventeen new engine tests and the
-combined727-test cohort pass on both Node versions. **Compiler/import/editor and
-presentation remain closed/pending**, as do actual-host, purpose-built route,
-device/two-human and release gates. Engine evidence does not close P02 or P14.
+combined727-test cohort pass on both Node versions. That engine gate did not yet
+enable compiler/import/editor or presentation. Engine evidence alone does not
+close P02 or P14.
+
+The [Team authoring/host successor](journey-team-timed-integration.md) now enables
+explicit selected-mission Apply, exact pack export/import, shared pickup visuals,
+per-pilot/shared effect expiry, captions and pause details. Eight new integration
+tests and the combined761-test cohort pass on both Node versions; independent
+review passes after fixing a nested canvas-state recovery bug. Native Studio
+Apply/export and actual Team import/announcement pause/expiry are checked.
+**Purpose-built route studies, device/two-human qualification and release remain
+open.** No automatic enrollment, Team save/replay claim or fully accepted phase.
 
 ## Latest completed spatial unit
 

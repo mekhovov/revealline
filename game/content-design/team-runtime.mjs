@@ -4,6 +4,7 @@ import {
   COOP_FOUNDATION_LEVEL_VERSION,
   COOP_TERRAIN_LEVEL_VERSION,
   COOP_ROVER_LEVEL_VERSION,
+  COOP_BONUS_LEVEL_VERSION,
   journeyTeamPackEdition,
 } from '../coop/foundations.mjs';
 import { compileActor, freezeDesign } from './catalogs.mjs';
@@ -31,10 +32,17 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     mission.actors.every((actor) => teamRoleQualified(mission.team.format, actor.role)) &&
       mission.objectives.length === 0 &&
       mission.bonuses.length === 0 &&
-      !Object.hasOwn(mission, 'timedBonuses') &&
+      (!Object.hasOwn(mission, 'timedBonuses') || mission.team.format === 'TeamMissionV4') &&
       mission.timeLimitSeconds === 0 &&
       (mission.team.format !== 'TeamMissionV1' || (map.source.terrain ?? []).length === 0),
     'Team candidates support only qualified actor roles and coverage, not unqualified terrain, bonuses, objectives or timers.',
+  );
+  required(
+    mission.team.format !== 'TeamMissionV4' ||
+      (map.source.format === 'MapDesignV1' &&
+        !Object.hasOwn(mission, 'encounter') &&
+        !Object.hasOwn(mission, 'relayLinks')),
+    'Team timed bonuses currently qualify foundation/terrain maps, not relay, directional or encounter mechanics.',
   );
   const spawns = mission.team.spawnIds.map((id) => {
     const spawn = map.geometry.spawns.find((item) => item.id === id);
@@ -47,12 +55,15 @@ export function resolveTeamMission(project, mission, map, difficulty) {
   );
   const level = {
     version:
-      mission.team.format === 'TeamMissionV3'
-        ? COOP_ROVER_LEVEL_VERSION
-        : mission.team.format === 'TeamMissionV2'
-          ? COOP_TERRAIN_LEVEL_VERSION
-          : COOP_FOUNDATION_LEVEL_VERSION,
+      mission.team.format === 'TeamMissionV4'
+        ? COOP_BONUS_LEVEL_VERSION
+        : mission.team.format === 'TeamMissionV3'
+          ? COOP_ROVER_LEVEL_VERSION
+          : mission.team.format === 'TeamMissionV2'
+            ? COOP_TERRAIN_LEVEL_VERSION
+            : COOP_FOUNDATION_LEVEL_VERSION,
     ...(mission.team.format !== 'TeamMissionV1' ? { terrain: map.source.terrain ?? [] } : {}),
+    ...(Object.hasOwn(mission, 'timedBonuses') ? { timedBonuses: mission.timedBonuses } : {}),
     id: mission.id,
     revision: mission.revision,
     name: mission.name,
