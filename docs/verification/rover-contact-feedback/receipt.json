@@ -1,0 +1,53 @@
+{
+  "base": "d62d40a1",
+  "sourcePatch": "b6cf4bef8f23fa0d36cb71963962b6529092e223730ba2d301fdafda586dd8ff",
+  "tests": [
+    {
+      "file": "node20.tap.gz",
+      "pass": 56,
+      "fail": 0,
+      "rawSha256": "2a3828a48170289bd30ea7b83a2a6456635565252b0927b8e589e50d6ea30a39",
+      "gzipSha256": "e2dcb03fe449e589c84406f659afbd9ba1cd64a4f06e15c639e39863a7e667dc"
+    },
+    {
+      "file": "node22.tap.gz",
+      "pass": 56,
+      "fail": 0,
+      "rawSha256": "4d67ed0cc018e7df713753a013e3a950f65c8860090e787e400361fdd00ff66f",
+      "gzipSha256": "b1eb14b05962511684a036df4e606c5d5954cd53fb4a066f67ae9b0d9df8c27a"
+    }
+  ],
+  "source": {
+    "game/app.mjs": "57eb08593eb99a080e198881fbdef9030a1413490306e4af48678f244f75ca47",
+    "game/test/hud-status-cues.test.mjs": "22268f3966b075eb1b5ce9f7cb2036b510956d1d5d6330261638932226cea79c"
+  },
+  "native": {
+    "origin": "http://127.0.0.1:18819/game/",
+    "viewport": [
+      568,
+      320
+    ],
+    "display": "Large/Plain; desktop Chromium override, no fullscreen",
+    "workflow": "File import via Settings/Installed chapters; Play; Enter; Down earned51.4%; Up caused real rover collision; Escape explicitPause. No injected simulation state.",
+    "afterCollision": {
+      "lives": 2,
+      "coverage": 51.4,
+      "message": "A rover hit your craft on reclaimed ground. Your revealed territory is kept."
+    },
+    "canvas": [
+      112,
+      56,
+      344,
+      172
+    ],
+    "notice": [
+      136.3125,
+      200.6015625,
+      295.375,
+      23.3984375
+    ],
+    "layoutResult": "FAIL: nowrap/ellipsis clipped activation and collision captions inside arena. Separate shared-handheld correction required.",
+    "consoleErrors": []
+  },
+  "scope": "Correct direct-contact event feedback and saved replay. Does not close small-screen, physical hardware, campaign difficulty or public acceptance."
+}
