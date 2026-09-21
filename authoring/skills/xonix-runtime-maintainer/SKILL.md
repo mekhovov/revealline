@@ -1294,3 +1294,8 @@ Load optional software history independently of same-release mission choices. Pr
 ### Replay load settlement and terminal advice
 
 When focused Cancel load is hidden, restore an enabled transport action only while that load still owns foreground focus. Preserve newer input, editor/reader focus, replacement loads and lifecycle suspension. Completed replays keep Restart advice; empty/error states must not claim Play is available. Verify native Cancel→retry→paused Play→complete→Restart with exact checkpoints, and keep lifecycle/physical-input evidence separate. Use [Replay Theater’s prompt](../../../docs/replay-theater.md#load-focus-and-completed-playback) and [integration evidence](../../../docs/verification/p16-replay-integration/README.md).
+
+
+### Studio revision transfer
+
+Preserve historical slot bindings as well as original media bytes during import. Keep complete theme and collection families, collision-safe IDs, contiguous mapped revision batches, and one distinguishable menu choice per family. Never rewrite local history or silently drop revisions at capacity. Follow the transfer prompt in `docs/asset-studio.md`; verify two independent replacements through actual import, earlier binding, Save, Reload and exported bytes. Separate inherited production-reproduction failures from transfer regressions with pinned baseline comparison; do not weaken production gates. See `docs/verification/p04-studio-transfer-integration/README.md`.

@@ -1,0 +1,41 @@
+{
+  "base": "02079f9bd86aea0e05b0ed3ae8d58ffd21ebd2e9",
+  "url": "http://127.0.0.1:62886/authoring/asset-studio/",
+  "viewport": [1280, 720],
+  "sourcePins": {
+    "game/presentation/studio-session.mjs": {
+      "bytes": 16642,
+      "sha256": "ffb87f41b51414d3e4314ca2251a106ea4b4c4428f930d7c3439af310ef41a10"
+    },
+    "game/presentation/model.mjs": {
+      "bytes": 27188,
+      "sha256": "5404c14aa3e9ed3c306164e9784ea2da4ce746f5055bf70db03d01b2f5ef9120"
+    },
+    "authoring/asset-studio/studio.mjs": {
+      "bytes": 55326,
+      "sha256": "d566368cad4c85436f528b050661dbc33653240cabd2e745c93a9a1fb099ce11"
+    },
+    "authoring/asset-studio/helpers.mjs": {
+      "bytes": 3396,
+      "sha256": "162b1a5cf018d0597b3a240604ab27766e16e042264467040b5722203d591c5f"
+    }
+  },
+  "servedByteAudit": {
+    "uniqueResponses": 297,
+    "allMatchIntegratedFiles": true
+  },
+  "steps": [
+    "Fresh local origin; actual chooser import of owned two-upload bundle",
+    "Theme family selection; open objective pickup history with seven rows and three distinct theme choices",
+    "Bind earlier import-40-1318@1",
+    "Save local revision; Reload saved retains document r42/local save 1 and exact earlier binding",
+    "Export through keyboard Enter; UI confirms download, resulting actual file parsed and all135payloads match input"
+  ],
+  "consoleWarningsAndErrors": [],
+  "downloadObservation": "Browser download event waiter timed out at15s; actual file and in-game download feedback confirmed completion independently. No repeated export.",
+  "limitations": [
+    "Mixed keyboard/pointer/file chooser at1280x720",
+    "No physical device, all responsive states, audio/offline or public acceptance",
+    "Production history gate separately open; five failures also reproduced with unchanged02079 model/session"
+  ]
+}
