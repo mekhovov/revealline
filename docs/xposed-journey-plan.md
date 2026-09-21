@@ -36,6 +36,14 @@ and a native Solo clear, preference change and immediate Next pass. See
 `verification/journey-character-reactions.md`. Character artwork/materials,
 soundtrack, human reception and accepted-release integration remain separate gates.
 
+Original music production is explicitly paused by the user in the soundtrack
+lane after rejected samples; this continuation does not resume it. Twelve
+machine-readable campaign direction briefs now bind to exact Solo/Versus and
+separately hashed Team contexts without selecting recordings or writing player
+preferences.18 checks pass per Node; original approvals remain zero. Licensed
+recording matching, rights and playback continuity remain with the soundtrack
+owner. See the soundtrack handoff in `verification/journey-campaign-presentation.md`.
+
 Actor-material follow-up has84 bounded code-native body recipes (twelve material
 treatments across seven existing roles), with a read-only native-size review sheet.
 An explicit `whole-originals-v4` Solo/Versus candidate now uses twelve successor

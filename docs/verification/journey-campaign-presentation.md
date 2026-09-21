@@ -50,26 +50,57 @@ antialiasing, thin marks, user overrides and physical displays need separate rev
 
 ## Presentation and soundtrack handoff
 
+### Current production boundary and machine-readable direction
+
+On21 September2026 the soundtrack owner confirmed the user's explicit pause on
+original AI music production after rejected listening samples. Its source record is
+`docs/music-production-pause.md` in the soundtrack worktree. Original approvals
+remain zero; this Journey continuation does not resume synthesis or treat the
+existing five procedural genres as approved campaign compositions. Rights,
+recording quality, musical approval and game-catalogue enrollment remain distinct.
+
+`game/content-design/campaign-music-direction.mjs` now provides twelve frozen
+direction briefs with preferred genre tags, separate menu/gameplay roles and
+authored energy. It selects no recording, writes no assignment, accesses no audio
+transport/preferences and grants no rights. Ukrainian recordings are not inferred
+from scenery or assigned without the soundtrack owner's rights and musical review.
+
+`createJourneyMusicDirectionReview(routeId)` binds the brief to exact compiler
+baseCampaignKey, level/revision and theme identities. V3 and V4 each report249
+preset mission contexts and match the compatible Versus host exactly, including
+Remixes. Material-successor themes never replace the old assignment identity.
+`createTeamMusicDirectionReview({ actors })` reports36 contexts for each explicit
+Team variant using the separately validated pack hash. It retains the current
+prepared FPV context and keeps desired authored materials separate; it does not
+pretend the live Team look has already adopted those themes.
+
+18 relevant direction/identity checks pass on Node20.19.5 and22.22.2. The soundtrack
+owner retains runtime matching and all precedence/continuity work. Do not spread
+the whole direction object into the soundtrack context: use only its existing
+exact context fields and separately reviewed scene/energy hints. Genre hints
+never override an explicit genre, playlist or My Mix choice. No composition,
+listening approval, publication or Pages enrollment is established by metadata.
+
 The table is a creative brief, **not** installed recordings or saved assignments.
 Music implementation belongs to the soundtrack owner after accepted integration.
 Do not persist these briefs into player libraries or replace an explicit choice.
 All scenes below describe the reveal art; procedural fallback scenes remain within
 the existing renderer's supported vocabulary.
 
-| Chapter | Campaign IDs (including optional Remix) | Stable theme ID | Visual material / setting | Suggested music character; gameplay energy |
-| --- | --- | --- | --- | --- |
-| Horizon | prologue, horizon-school, horizon-remixes | horizon | Warm dawn, open shore and small landmarks | Spacious melodic exploration;2 |
-| Border | border-bloom, border-remixes | border-bloom | Quiet garden stone and muted green | Light rhythmic movement;2 |
-| Signal | signal-gardens, signal-remixes | signal-gardens | Cool glass, planted paths and blue-gray structure | Airy electronic detail;3 |
-| Neon | neon-contours, neon-remixes | neon-contours | Midnight harbor water and amber windows | Restrained night-drive pulse;3 |
-| Rover | rover-yard, rover-remixes | rover-yard | Salvaged copper, olive-gray steel and repair sheds | Dry percussive workshop motion;3 |
-| Fracture | fractured-grid, fracture-remixes | fractured-grid | Tidal blue-green stone, bridges and copper repairs | Measured tidal pulse with space for erosion warnings;3 |
-| Phase | phaseworks, phase-remixes | phaseworks | Brass optics, sunset stone and muted plum | Clockwork layers with clear warning space;4 |
-| Livewire | livewire-foundry, livewire-remixes | livewire-foundry | Warm charcoal, cooled ceramic and steel | Controlled industrial rhythm, not continuous maximum tension;4 |
-| Relay | relay-labyrinth, relay-remixes | relay-labyrinth | Sandstone archives, shaded canals and olive patina | Interlocking exploratory phrases;3 |
-| Crosswind | crosswind-array, crosswind-remixes | crosswind-array | Cloud-blue highlands, pale grasses and brass instruments | Airy forward motion;4 |
-| Sentinel | sentinel-crown, sentinel-remixes | sentinel-crown | Weathered violet-gray citadel stone and bronze | Measured monumental tension, room for shield/attack cues;4 |
-| Apex | apex-aurora, apex-remixes | apex-aurora | Polar indigo water, warm cabins and lavender aurora | Broad returning motifs with capstone lift;4 |
+| Chapter   | Campaign IDs (including optional Remix)   | Stable theme ID  | Visual material / setting                                | Suggested music character; gameplay energy                     |
+| --------- | ----------------------------------------- | ---------------- | -------------------------------------------------------- | -------------------------------------------------------------- |
+| Horizon   | prologue, horizon-school, horizon-remixes | horizon          | Warm dawn, open shore and small landmarks                | Spacious melodic exploration;2                                 |
+| Border    | border-bloom, border-remixes              | border-bloom     | Quiet garden stone and muted green                       | Light rhythmic movement;2                                      |
+| Signal    | signal-gardens, signal-remixes            | signal-gardens   | Cool glass, planted paths and blue-gray structure        | Airy electronic detail;3                                       |
+| Neon      | neon-contours, neon-remixes               | neon-contours    | Midnight harbor water and amber windows                  | Restrained night-drive pulse;3                                 |
+| Rover     | rover-yard, rover-remixes                 | rover-yard       | Salvaged copper, olive-gray steel and repair sheds       | Dry percussive workshop motion;3                               |
+| Fracture  | fractured-grid, fracture-remixes          | fractured-grid   | Tidal blue-green stone, bridges and copper repairs       | Measured tidal pulse with space for erosion warnings;3         |
+| Phase     | phaseworks, phase-remixes                 | phaseworks       | Brass optics, sunset stone and muted plum                | Clockwork layers with clear warning space;4                    |
+| Livewire  | livewire-foundry, livewire-remixes        | livewire-foundry | Warm charcoal, cooled ceramic and steel                  | Controlled industrial rhythm, not continuous maximum tension;4 |
+| Relay     | relay-labyrinth, relay-remixes            | relay-labyrinth  | Sandstone archives, shaded canals and olive patina       | Interlocking exploratory phrases;3                             |
+| Crosswind | crosswind-array, crosswind-remixes        | crosswind-array  | Cloud-blue highlands, pale grasses and brass instruments | Airy forward motion;4                                          |
+| Sentinel  | sentinel-crown, sentinel-remixes          | sentinel-crown   | Weathered violet-gray citadel stone and bronze           | Measured monumental tension, room for shield/attack cues;4     |
+| Apex      | apex-aurora, apex-remixes                 | apex-aurora      | Polar indigo water, warm cabins and lavender aurora      | Broad returning motifs with capstone lift;4                    |
 
 Numbers are proposed authored energy1–5, not enemy speed or a promise of tracks.
 Optional finales may use5 only after listening with actual threat cues. Automatic
