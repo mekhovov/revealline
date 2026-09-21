@@ -27,6 +27,9 @@ export function captureOverlay(preview) {
       (capture.affectedGateIds
         ? `Would-open gates: ${capture.affectedGateIds.join(', ') || 'none'}. ${capture.reservedGateCells.length} reserved gate cells never count toward earned coverage. `
         : '') +
+      (capture.affectedCombatIds
+        ? `Would-remove optional actors: ${capture.affectedCombatIds.join(', ') || 'none'}. `
+        : '') +
       capture.assumption,
   };
 }

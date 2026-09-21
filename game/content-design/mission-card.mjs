@@ -2,7 +2,11 @@ import { createRun, CELL } from '../core/index.mjs';
 import { createCoop } from '../coop/core.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
-import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
+import {
+  traceContentActor,
+  contentActorMarkerType,
+  contentCombatMarkers,
+} from './actor-marker.mjs';
 const cards = new WeakMap();
 
 /** Read-only initial-state diagram. Uses the engine's actual topology and actor
@@ -26,11 +30,14 @@ export function createMissionCard(manifest) {
       ? { x: run.players[0].x, y: run.players[0].y }
       : { x: run.player.x, y: run.player.y },
     ...(team ? { spawns: run.players.map(({ id, x, y }) => ({ seat: id, x, y })) } : {}),
-    actors: run.enemies.map((actor) => ({
-      type: contentActorMarkerType(manifest.level, actor),
-      x: actor.x,
-      y: actor.y,
-    })),
+    actors: [
+      ...run.enemies.map((actor) => ({
+        type: contentActorMarkerType(manifest.level, actor),
+        x: actor.x,
+        y: actor.y,
+      })),
+      ...contentCombatMarkers(manifest.level),
+    ],
     objectives: (run.objectives ?? [])
       .filter((objective) => objective.revealed)
       .map(({ x, y }) => ({ x, y })),
@@ -73,6 +80,13 @@ export function paintMissionThumbnail(ctx, card, width = 288) {
     ctx.beginPath();
     traceContentActor(ctx, actor.type, x, y, r);
     ctx.fill();
+    if (actor.inactive) {
+      ctx.strokeStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(x - r, y + r);
+      ctx.lineTo(x + r, y - r);
+      ctx.stroke();
+    }
   }
   ctx.strokeStyle = '#fff0ad';
   ctx.lineWidth = 1.5;

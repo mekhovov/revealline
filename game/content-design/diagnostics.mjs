@@ -50,6 +50,14 @@ export function inspectRuntimeTopology(run, level, geometry, spawns, objectives 
     flood();
   }
   const diagnostics = [];
+  if (capture.affectedCombatIds?.length)
+    diagnostics.push({
+      severity: 'warning',
+      code: 'combat-auto-fill-removal',
+      actorIds: capture.affectedCombatIds,
+      message:
+        'These optional actors start in an unretained region and may disappear at the next unrelated closure. They never retain field; confirm this is intentional.',
+    });
   const inaccessibleRetained = new Set();
   for (const gate of gates)
     if (!accessibleGates.has(gate.id))

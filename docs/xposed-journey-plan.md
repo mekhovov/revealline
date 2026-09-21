@@ -28,8 +28,12 @@ That successor replaces the old balance assumptions; historical phase entries
 below remain provenance, not claims of current public delivery or human approval.
 The [optional-combat D2a engine](verification/journey-optional-combat-runtime.md)
 now has deterministic scout/sentry, capture/contact/projectile and replay/save
-proof. Catalogue/Studio, pixel presentation and player toggle, Team semantics,
-human qualification and deployment remain separate unfinished increments.
+proof. [D2b shared catalogue/Studio authoring](verification/journey-optional-combat-authoring.md)
+now adds explicit on/off editions, exact inspection and three original greyboxes;
+219 tests pass on each Node, including42 on/off clear/replays and42 paired races.
+Pixel presentation/player toggle, native/human qualification, Team semantics and
+deployment remain unfinished. Enabled gameplay preview stays blocked until the
+new attacks are visible; automated feasibility does not establish balanced pacing.
 
 Approved by the user on 20 September 2026. This supersedes the campaign allocations
 in earlier research plans, not their observations or provenance. References and

@@ -44,7 +44,10 @@ export function inspectPressureDifficulty(source) {
           coverage: mission.coverage,
           countdownSeconds: level.rules.timeLimitSeconds ?? 0,
           actors: mission.actors.map((sourceActor) => {
-            const actor = level.enemies.find((item) => item.id === sourceActor.id);
+            const optional = level.classic?.combatPatrols?.actors.find(
+              (item) => item.id === sourceActor.id,
+            );
+            const actor = optional ?? level.enemies.find((item) => item.id === sourceActor.id);
             const speed = actor.speed ?? Math.hypot(actor.vx ?? 0, actor.vy ?? 0);
             return {
               id: actor.id,
@@ -54,6 +57,27 @@ export function inspectPressureDifficulty(source) {
               retainsField: project.actors.roles[sourceActor.role].retainsField,
               speed,
               speedRelativeToCraft: speed / level.rules.moveSpeed,
+              ...(optional
+                ? {
+                    combatEnabled: level.classic.combatPatrols.enabled,
+                    activeSpeed: level.classic.combatPatrols.enabled ? speed : 0,
+                    combatTiming: Object.fromEntries(
+                      Object.entries(optional).filter(([key]) =>
+                        [
+                          'turnTicks',
+                          'senseRadius',
+                          'scanTicks',
+                          'openingTicks',
+                          'warningTicks',
+                          'recoveryTicks',
+                          'restTicks',
+                          'shotSpeed',
+                          'shotLifeTicks',
+                        ].includes(key),
+                      ),
+                    ),
+                  }
+                : {}),
               ...(level.classic?.enemyPressure?.actors.some((entry) => entry.id === actor.id)
                 ? {
                     pressureTiming: level.classic.enemyPressure.actors.find(

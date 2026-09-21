@@ -1,6 +1,6 @@
 import { CELL } from './registry.mjs';
 import { cellIndex } from './movement.mjs';
-import { classicSeedsField } from './classic-topology.mjs';
+import { classicSeedsField, fitsClassicDomain } from './classic-topology.mjs';
 
 /** Shared engine/Studio seed ownership. Historical rules retain their own branch. */
 export function captureSeedEnemies(state, releaseBoss = false) {
@@ -101,6 +101,19 @@ export function inspectCaptureSnapshot(state, { trailCells = [], releaseBoss = f
         !objective.captured && captured.has(cellIndex(objective.x, objective.y, snapshot)),
     )
     .map((objective) => objective.id);
+  let combat = {};
+  if (state.level?.classic?.combatPatrols) {
+    const reclaimed = Uint8Array.from(cells);
+    for (const index of filledCells) reclaimed[index] = CELL.SAFE;
+    const after = { ...snapshot, cells: reclaimed };
+    combat = {
+      affectedCombatIds: (state.classic?.combatPatrols?.actors ?? [])
+        .filter(
+          (actor) => actor.alive && !fitsClassicDomain(after, actor, actor.radius, CELL.FIELD),
+        )
+        .map((actor) => actor.id),
+    };
+  }
   return {
     tick: state.tick ?? null,
     assumption:
@@ -109,6 +122,7 @@ export function inspectCaptureSnapshot(state, { trailCells = [], releaseBoss = f
     filledCells,
     components,
     affectedObjectiveIds,
+    ...combat,
     ...(state.relay
       ? {
           affectedGateIds: state.relay.gates

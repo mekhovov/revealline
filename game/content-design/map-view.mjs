@@ -110,6 +110,15 @@ export function paintContentMap(
     ctx.beginPath();
     traceContentActor(ctx, contentActorMarkerType(manifest.level, actor), x, y, radius);
     ctx.fill();
+    if (actor.inactive) {
+      ctx.strokeStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(x - radius, y + radius);
+      ctx.lineTo(x + radius, y - radius);
+      ctx.stroke();
+      ctx.font = `bold ${Math.max(9, size * 0.65)}px monospace`;
+      ctx.fillText('OFF', x + radius, y - radius);
+    }
     if (showCapture && actor.anchor) {
       ctx.strokeStyle = '#fff0ad';
       ctx.beginPath();

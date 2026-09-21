@@ -12,6 +12,7 @@ import { verifiedPreviewBackground } from './assets.mjs';
 import { createCoop } from '../coop/core.mjs';
 import { relayView } from '../ui/relay-view.mjs';
 import { directionalView } from '../ui/directional-view.mjs';
+import { contentCombatMarkers } from './actor-marker.mjs';
 
 /** Both preview surfaces use the same resolved candidate as the CLI. No awards. */
 export function prepareContentPreview(
@@ -35,6 +36,10 @@ export function prepareContentPreview(
   const capture = inspectCaptureSnapshot(run, { trailCells });
   let scenario = null;
   if (theme) {
+    if (manifest.level.classic?.combatPatrols?.enabled)
+      throw new Error(
+        'Enabled combat gameplay preview requires qualified actor/projectile presentation. Use static inspection or explicitly disable combat in a new draft edition.',
+      );
     if (mode !== 'solo')
       throw new Error(
         'Only Solo has a Studio gameplay preview; Team and paired-race launches are not substituted.',
@@ -72,7 +77,10 @@ export function prepareContentPreview(
   // an alternate placement or expose the mutable run to Studio.
   const relays = run.relay ? relayView(run) : null;
   const markers = {
-    actors: run.enemies.map(({ id, type, x, y }) => ({ id, type, x, y })),
+    actors: [
+      ...run.enemies.map(({ id, type, x, y }) => ({ id, type, x, y })),
+      ...contentCombatMarkers(manifest.level),
+    ],
     objectives: (run.objectives ?? []).map(({ id, x, y }) => ({ id, x, y })),
     ...(mode === 'team' ? { spawns: run.players.map(({ id, x, y }) => ({ id, x, y })) } : {}),
     ...(relays ? { gates: relays.gates, relayTriggers: relays.triggers } : {}),

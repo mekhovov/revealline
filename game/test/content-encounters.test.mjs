@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import { editContentEncounter } from '../content-design/encounters.mjs';
+import { prepareCombatAuthoring } from '../content-design/combat-authoring.mjs';
 import { createDraftHistory } from '../content-design/drafts.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { inspectManualImageMap } from '../content-design/image-authoring.mjs';
@@ -34,6 +35,28 @@ const command = (p, action = 'set', overrides = {}) => ({
   ...overrides,
 });
 const edit = (p, input = command(p)) => editContentEncounter(p, 'nearby-shore', input);
+
+test('encounter editing upgrades old catalogues but preserves prepared combat in any mission', () => {
+  assert.equal(edit(source()).actorCatalogId, 'journey-actors-v6');
+  for (const preparedId of ['nearby-shore', 'shared']) {
+    let project = edit(source());
+    project.missions.push({ ...structuredClone(project.missions[0]), id: 'shared' });
+    project = prepareCombatAuthoring(project, preparedId);
+    const before = structuredClone(project);
+    const next = edit(project, command(project, 'set', { shieldObjectiveIds: ['east'] }));
+    assert.equal(next.actorCatalogId, 'journey-actors-v8');
+    assert.deepEqual(next.missions.find((m) => m.id === preparedId).combat, {
+      version: 'mission-combat.v1',
+      enabled: false,
+    });
+    assert.deepEqual(next.missions[1], before.missions[1]);
+    assert.deepEqual(project, before);
+    compileContentProject(next);
+  }
+  const newer = source();
+  newer.actorCatalogId = 'journey-actors-v7';
+  assert.equal(edit(newer).actorCatalogId, 'journey-actors-v7');
+});
 
 test('explicit boss opt-in is atomic, copy-on-write and undoable without changing shared missions', () => {
   const project = source();

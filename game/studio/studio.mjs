@@ -4,6 +4,7 @@ import { createBorderCandidates } from '../content-design/border-candidates.mjs'
 import { createTimedBorderCandidates } from '../content-design/timed-border-candidates.mjs';
 import { createCulturalWorkshopCandidates } from '../content-design/cultural-workshop-candidates.mjs';
 import { createPursuitInterceptCandidates } from '../content-design/pursuit-intercept-candidates.mjs';
+import { createCombatCandidates } from '../content-design/combat-candidates.mjs';
 import { createSpatialBalanceCandidates } from '../content-design/spatial-balance-candidates.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
 import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
@@ -45,6 +46,7 @@ import { createTraceRecovery } from './trace-recovery.mjs';
 import { journeyPreset } from '../content-design/catalogs.mjs';
 import { createTeamTestPack, createTeamCampaignTestPack } from '../content-design/team-export.mjs';
 import { createActorEditor } from './actor-editor.mjs';
+import { createCombatEditor } from './combat-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
 import { createTimedBonusEditor } from './timed-bonus-editor.mjs';
@@ -109,6 +111,18 @@ const actorEditor = createActorEditor({
   getSource: () => session.current(),
   getMission: currentMission,
   getDifficulty: () => $('difficulty').value,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const combatEditor = createCombatEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
   apply: (candidate) => {
     if (!discardSource()) return false;
     session.replace(candidate);
@@ -279,6 +293,7 @@ function inspectBoard(trailCells = []) {
   const mission = currentMission();
   acceptanceInspector.sync();
   actorEditor.sync();
+  combatEditor.sync();
   geometryEditor.sync();
   bonusEditor.sync();
   timedBonusEditor.sync();
@@ -339,6 +354,9 @@ function inspectBoard(trailCells = []) {
       simulationIdentity: manifest.simulationIdentity,
       rules: manifest.level.rules,
       actors: manifest.level.enemies,
+      ...(manifest.level.classic?.combatPatrols
+        ? { combatPatrols: manifest.level.classic.combatPatrols }
+        : {}),
       objectives: mission.objectives,
       terrain: authoredTerrain,
       ...(manifest.level.directionalFields
@@ -354,6 +372,7 @@ function inspectBoard(trailCells = []) {
       securedCells: capture.securedTrail.length,
       wouldFillCells: capture.filledCells.length,
       affectedObjectives: capture.affectedObjectiveIds,
+      ...(capture.affectedCombatIds ? { affectedCombatActors: capture.affectedCombatIds } : {}),
       components: capture.components.map((c) => ({
         id: c.id,
         cells: c.cells.length,
@@ -371,7 +390,7 @@ function inspectBoard(trailCells = []) {
       return li;
     }),
   );
-  $('play').disabled = !mission.modes.includes('solo');
+  $('play').disabled = !mission.modes.includes('solo') || !!mission.combat?.enabled;
   $('export-team').hidden = !mission.modes.includes('team');
   $('team-sequence-tools').hidden = !mission.modes.includes('team');
   const selectedTeamCampaign = $('team-test-campaign').value;
@@ -397,9 +416,11 @@ function inspectBoard(trailCells = []) {
   if ([...$('team-test-campaign').options].some((option) => option.value === selectedTeamCampaign))
     $('team-test-campaign').value = selectedTeamCampaign;
   $('team-test-help').hidden = !mission.modes.includes('team');
-  $('play').title = mission.modes.includes('solo')
-    ? ''
-    : 'This candidate has no Solo adapter. Team and paired-race gameplay remain separate.';
+  $('play').title = mission.combat?.enabled
+    ? 'Enabled combat preview awaits qualified actor/projectile presentation. Static inspection remains available.'
+    : mission.modes.includes('solo')
+      ? ''
+      : 'This candidate has no Solo adapter. Team and paired-race gameplay remain separate.';
 }
 function render(selected = $('mission').value) {
   inspections.invalidate();
@@ -678,6 +699,12 @@ $('pursuit-intercept').onclick = guarded(() => {
     null,
     2,
   );
+  sourceChanged = true;
+  inspectSource();
+});
+$('combat-study').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createCombatCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
