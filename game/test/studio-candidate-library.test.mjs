@@ -93,7 +93,15 @@ test('Sorting successor search preserves the paired Rover edition selector and I
   assert(visible()[0].querySelector('#rover-edition'));
 });
 
-test('all eighteen review routes keep explicit external-tab safety and distinct accessible labels', () => {
+test('outer-pocket search preserves the Shared windows edition selector beside its Inspect action', () => {
+  const { search, visible, $ } = setup();
+  search('contested outer pockets');
+  assert.equal(visible().length, 1);
+  assert.equal(visible()[0], $('team-timed-originals').closest('[data-library-entry]'));
+  assert.equal($('team-window-edition').closest('[data-library-entry]'), visible()[0]);
+});
+
+test('all nineteen review routes keep explicit external-tab safety and distinct accessible labels', () => {
   const { $ } = setup();
   const links = [...$('candidate-library').querySelectorAll('a')].filter(
     (link) => link.getAttribute('target') === '_blank',
@@ -112,6 +120,7 @@ test('all eighteen review routes keep explicit external-tab safety and distinct 
   expected.push(
     '../presentation/journey-actor-review.html',
     '../couch/relay-rescue.html?journey=team-timed-originals',
+    '../couch/relay-rescue.html?journey=team-window-spatial-1',
   );
   assert.deepEqual(links.map((link) => link.getAttribute('href')).toSorted(), expected.toSorted());
   const labels = links.map((link) => link.getAttribute('aria-label'));
@@ -124,7 +133,9 @@ test('all eighteen review routes keep explicit external-tab safety and distinct 
     if (edition && href.includes('relay-rescue')) {
       assert.equal(
         link.getAttribute('aria-label'),
-        'Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)',
+        edition === 'team-window-spatial-1'
+          ? 'Play bundled outer-pocket test (does not include draft edits) · team-window-spatial-1 (new tab)'
+          : 'Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)',
       );
     } else if (edition) {
       const mode = href.includes('/couch/') ? 'Versus' : 'Solo';

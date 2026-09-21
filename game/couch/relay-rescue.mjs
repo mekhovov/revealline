@@ -3707,9 +3707,14 @@ try {
     candidateEntry = await createTeamGreyboxEntry({
       artwork: journeyRequests[0] === 'team-originals',
     });
-  } else if (journeyRequests.length === 1 && journeyRequests[0] === 'team-timed-originals') {
+  } else if (
+    journeyRequests.length === 1 &&
+    ['team-timed-originals', 'team-window-spatial-1'].includes(journeyRequests[0])
+  ) {
     const { createTeamTimedEntry } = await import('../content-design/team-timed-entry.mjs');
-    candidateEntry = await createTeamTimedEntry();
+    candidateEntry = await createTeamTimedEntry({
+      spatial: journeyRequests[0] === 'team-window-spatial-1',
+    });
   }
   bootCoop(candidateEntry);
 } catch (error) {

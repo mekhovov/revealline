@@ -6,7 +6,10 @@ import { page } from './helpers/coop-host.mjs';
 import { waitFor, deferred } from './helpers/coop-presentation-fixture.mjs';
 import { createTeamTimedOriginalCandidates } from '../content-design/team-timed-originals.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
-import { TEAM_TIMED_PROFILE_KEY } from '../content-design/team-timed-entry.mjs';
+import {
+  TEAM_TIMED_PROFILE_KEY,
+  TEAM_WINDOW_SPATIAL_PROFILE_KEY,
+} from '../content-design/team-timed-entry.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 const source = createTeamTimedOriginalCandidates();
@@ -218,4 +221,72 @@ test('cancelling a Shared windows picture preparation keeps the finished source 
   assert.equal(f.$('coop-level').value, 'window-exchange');
   assert.equal(old.releases, 0);
   assert.equal(f.$('coop-next').disabled, false);
+});
+
+test('outer-pocket successor uses exact originals, direct Next/Skip and independent progress', async (t) => {
+  const memory = managedIndexedDB();
+  const oldBackend = createJourneyBackend({ ...memory, profileKey: TEAM_TIMED_PROFILE_KEY });
+  const before = await oldBackend.commit([
+    {
+      type: 'select',
+      mode: 'team',
+      missionId: 'candidate/shared-windows/depot-dash-study/depot-dash',
+    },
+  ]);
+  const f = await timedPage(t, {
+    memory,
+    href: 'http://localhost/game/couch/relay-rescue.html?journey=team-window-spatial-1',
+  });
+  assert.equal(f.$('coop-level').value, 'window-exchange');
+  assert.match(
+    f.$('coop-boot').textContent,
+    /original-art test · 3 missions · human validation pending/,
+  );
+  enter(f, f.$('coop-start'));
+  f.tick(2);
+  const row = (await read('team-window-spatial-routes')).rows.find(
+    (r) => r.difficulty === 'standard' && r.kind === 'cooperation',
+  );
+  let previous = [null, null],
+    frames = 1;
+  for (const segment of row.log) {
+    for (const [seat, direction] of [segment.a, segment.b].entries())
+      if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
+    previous = [segment.a, segment.b];
+    for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) {
+      f.tick();
+      frames++;
+    }
+    if (!f.$('coop-overlay').hidden) break;
+  }
+  assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
+  assert.equal(frames, row.checks[1].result.tick);
+  assert.equal(
+    f.drawImages.at(-1).sha256,
+    source.assets.find((a) => a.id === 'team-windows-window-exchange').sha256,
+  );
+  enter(f, f.$('coop-next'));
+  await waitFor(() => f.$('coop-overlay').hidden);
+  assert.equal(f.$('coop-level').value, 'coolant-crossing');
+  assert.equal(f.$('coop-menu').hidden, true);
+  enter(f, f.$('coop-journey-skip'));
+  assert.equal(f.$('coop-level').value, 'coolant-crossing');
+  enter(f, f.$('coop-journey-skip-confirm'));
+  await waitFor(() => f.$('coop-overlay').hidden);
+  assert.equal(f.$('coop-level').value, 'depot-dash');
+  assert.equal(f.$('coop-difficulty').value, 'standard');
+  await new Promise((resolve) => setImmediate(resolve));
+  const profile = await createJourneyBackend({
+    ...memory,
+    profileKey: TEAM_WINDOW_SPATIAL_PROFILE_KEY,
+  }).read();
+  assert.deepEqual(Object.keys(profile.clears.team), [
+    'candidate/shared-windows/window-exchange-study/window-exchange',
+  ]);
+  assert.deepEqual(profile.skipped.team, [
+    'candidate/shared-windows/coolant-crossing-study/coolant-crossing',
+  ]);
+  assert.equal(profile.cursors.team, 'candidate/shared-windows/depot-dash-study/depot-dash');
+  assert.deepEqual(await oldBackend.read(), before);
+  assert.deepEqual(f.visits, []);
 });

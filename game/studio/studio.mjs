@@ -37,6 +37,7 @@ import { createTeamSignalCandidates } from '../content-design/team-signal-candid
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 import { createTeamTimedCandidates } from '../content-design/team-timed-candidates.mjs';
 import { createTeamTimedOriginalCandidates } from '../content-design/team-timed-originals.mjs';
+import { createTeamWindowSpatialCandidates } from '../content-design/team-window-spatial-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
@@ -839,7 +840,13 @@ $('team-timed').onclick = guarded(() => {
 });
 $('team-timed-originals').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createTeamTimedOriginalCandidates(), null, 2);
+  $('source').value = JSON.stringify(
+    $('team-window-edition').value === 'window-spatial-1'
+      ? createTeamWindowSpatialCandidates({ artwork: true })
+      : createTeamTimedOriginalCandidates(),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });

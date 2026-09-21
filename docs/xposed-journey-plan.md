@@ -1,6 +1,12 @@
 # Xposed-led Journey — implementation contract
 
 Current checkpoint: [2026-09-22 item-by-item completion audit](verification/journey-completion-2026-09-22.md).
+The [Window Exchange outer-pocket successor](verification/journey-team-window-spatial.md)
+now qualifies ordinary, cooperative first-window taking and genuine relocation
+across all presets, preserving shared speeds, geometry and bonus timing. Its
+explicit Team player/Studio edition keeps old progress and content untouched.
+Short optimized clears, human/device evidence and coordinated public promotion
+remain open; this is not acceptance of P02/P14 or the complete plan.
 The [Studio candidate library](verification/journey-studio-candidate-library.md)
 keeps the map and current draft primary while making bundled sources searchable.
 Inspection and Apply remain separate. This bounded authoring increment does not
