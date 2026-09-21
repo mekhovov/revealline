@@ -13,6 +13,9 @@ coverage is383/498 after [Crosswind/Apex refinement](verification/journey-late-p
 investigate Relay/Fracture paths, short-clear spatial choices and objective tails.
 These are technical candidate
 checks, not human balance or public-deployment acceptance.
+Studio's [explicit pressure-edition inspection](verification/studio-pressure-inspection.md)
+now supports reviewing that successor before Apply, with Undo/Redo and native
+first-return verification; it does not change released editions or publication.
 That successor replaces the old balance assumptions; historical phase entries
 below remain provenance, not claims of current public delivery or human approval.
 

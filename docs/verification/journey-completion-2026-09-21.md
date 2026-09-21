@@ -46,6 +46,9 @@ separate gates. Older phase notes are provenance, not current release claims.
   45/83 complete six-case sets; every mission has at least one passing case.
   Short late clears and28 missing optional-goal cases remain explicit risks.
   [Late-Journey evidence](journey-late-pressure.md).
+- Studio now offers an explicit pressure-v2 inspection of the current draft;
+  Apply/Undo/Redo and a pictured native first return are verified. It does not
+  auto-enroll or publish content. [Studio evidence](studio-pressure-inspection.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
