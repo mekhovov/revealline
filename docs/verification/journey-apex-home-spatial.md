@@ -75,9 +75,10 @@ the preview was paused and closed back to the preserved draft.
 
 This is only launch/first-return/authoring evidence. It is not a native full
 clear, live roamer avoidance, dock traversal, touch/controller qualification or
-human playtest. Greybox preview reused existing scenery. Generic pause details
-still describe the boundary patrol and singular relay imprecisely; those remain
-readability work rather than a claimed accessibility pass.
+human playtest. Greybox preview reused existing scenery. At this checkpoint,
+generic pause details described the boundary patrol and singular relay imprecisely.
+The [shared guidance follow-up](journey-field-guidance.md) corrects those specific
+defects; it does not establish whole-game readability or an accessibility pass.
 
 ## Remaining gates and research interpretation
 

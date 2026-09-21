@@ -75,7 +75,7 @@ export const ENEMY_CATALOG = freeze([
     badge: 'lock',
     label: 'Relay sentinel',
     domain: 'Staged encounter',
-    risk: 'Requires its linked relay objective and a legitimate opening before release.',
+    risk: 'Requires every linked shield relay and a legitimate opening before release.',
     motion: 'Stationary linked core; encounter stages control its openings.',
     forms: ['Shielded relay', 'Sunflower keep', 'Core fortress', 'Policy vault'],
   },

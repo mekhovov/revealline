@@ -1,12 +1,16 @@
-const roles = {
-  bouncer: 'Field hunter',
-  'border-patrol': 'Border patrol',
-  'lane-boss': 'Lane emitter',
-  'relay-sentinel': 'Signal sentinel',
-  'contour-patrol': 'Boundary patrol',
-  'claimed-rover': 'Ground rover',
-  eroder: 'Territory eroder',
-};
+import { enemyCatalogRecord } from '../enemy-catalog.mjs';
+
+const roleName = (type) => enemyCatalogRecord(type)?.label || 'Unfamiliar enemy';
+const sentence = (text) => (/[.!?]$/.test(text) ? text : `${text}.`);
+const encounterClock = (phase) =>
+  ({
+    delay: 'Next lane warning',
+    rest: 'Next lane warning',
+    transition: 'Next vertical lane warning',
+    warning: 'Lane warning ends',
+    active: 'Active lane ends',
+    open: 'Core opening closes',
+  })[phase] || 'Current encounter phase';
 const seconds = (n) => (Number.isFinite(n) ? `${n.toFixed(1)}s remaining` : 'Timing unavailable');
 const section = (id, title, lines) => Object.freeze({ id, title, lines: Object.freeze(lines) });
 const group = (lines) => {
@@ -14,7 +18,20 @@ const group = (lines) => {
   for (const line of lines) counts.set(line, (counts.get(line) || 0) + 1);
   return [...counts].map(([line, count]) => (count > 1 ? `${count} × ${line}` : line));
 };
-const enemyState = (enemy) => {
+const enemyState = (enemy, snapshot) => {
+  if (enemy.type === 'relay-sentinel')
+    return snapshot.encounterLane?.id === enemy.id && snapshot.encounter
+      ? snapshot.encounter.instruction
+      : 'encounter guidance is unavailable; watch its visible shield and lane cues';
+  if (enemy.type === 'contour-patrol') {
+    const state =
+      {
+        patrolling: 'patrolling the changing frontier between unclaimed field and reclaimed ground',
+        rejoining: 'rejoining the changing frontier along reclaimed ground',
+        idle: 'holding position; captures may leave it inside reclaimed ground, away from the changing frontier',
+      }[enemy.mode] || 'watch the changing frontier';
+    return `${state}. A capture can change its route; check your next return before departing. ${enemy.frozen ? 'When freeze ends, contact with your craft or unfinished line becomes dangerous again' : 'Contact with your craft or unfinished line is still dangerous'}`;
+  }
   if (enemy.impactCarrier)
     return 'trail contact sends visible fronts along your unfinished line; close before they reach you. Body contact and a hit at your live endpoint are immediate dangers';
   if (enemy.pressure)
@@ -31,16 +48,12 @@ const enemyState = (enemy) => {
       dormant: 'waiting; revealing its position can wake it',
       warning: `${enemy.type === 'eroder' ? 'preparing to reopen marked ground' : 'preparing to move across revealed ground'} · ${seconds(enemy.seconds)}`,
       active: 'moving across revealed ground',
-      patrolling: 'patrolling captured boundaries',
-      rejoining: 'returning to a captured boundary',
-      idle: 'waiting',
     }[enemy.mode] ||
     {
       bouncer: 'threatens you and your unfinished line in hidden territory',
-      'border-patrol': 'patrols the outside border',
+      'border-patrol': `patrols the fixed outer perimeter, even after captures; leave before it reaches your craft. ${enemy.frozen ? 'When freeze ends, reclaimed ground does not protect you from contact' : 'Reclaimed ground does not protect you from contact'}`,
       'lane-boss':
         'stationary field anchor; watch the locked lane and secure any unfinished trail before it fires. Reclaimed ground shelters your craft from the lane, but enclosure does not disable this emitter',
-      'relay-sentinel': 'capture its relay to open the shield',
       eroder: 'can reopen captured ground',
     }[enemy.type] ||
     'Watch its movement in the field'
@@ -112,7 +125,7 @@ export function flightDetailsModel(information, context) {
             ? ' Movement slowed.'
             : '';
       threats.push(
-        `${enemy.impactCarrier ? 'Trail-impact carrier' : enemy.pressure?.mode === 'trail-pursuit' ? 'Trail pursuer' : enemy.pressure?.mode === 'head-intercept' ? 'Heading interceptor' : roles[enemy.type] || 'Unfamiliar enemy'}: ${enemyState(enemy)}.${effect}`,
+        `${enemy.impactCarrier ? 'Trail-impact carrier' : enemy.pressure?.mode === 'trail-pursuit' ? 'Trail pursuer' : enemy.pressure?.mode === 'head-intercept' ? 'Heading interceptor' : roleName(enemy.type)}: ${sentence(enemyState(enemy, s))}${effect}`,
       );
     }
     for (const mark of classic.erosion)
@@ -160,7 +173,7 @@ export function flightDetailsModel(information, context) {
       section(
         'field',
         'Field actors',
-        context.actorRoles.map((r) => `${r.count} × ${roles[r.type] || 'Unfamiliar enemy'}`),
+        context.actorRoles.map((r) => `${r.count} × ${roleName(r.type)}`),
       ),
     );
   if (s.laneBosses.length)
@@ -176,9 +189,23 @@ export function flightDetailsModel(information, context) {
     );
   if (s.encounter) {
     const e = s.encounter,
+      stage =
+        s.status === 'lost'
+          ? 'Flight ended'
+          : e.phase === 'defeated'
+            ? 'Core released'
+            : e.stage === 'shielded'
+              ? e.shields?.total > 1
+                ? 'Capture all remaining shield relays'
+                : 'Capture the shield relay'
+              : { transition: 'Shield opening', exposed: 'Release the core' }[e.stage] ||
+                'Encounter in progress',
       lines = [
         e.instruction,
-        `${{ shielded: 'Capture the shield relay', transition: 'Shield opening', exposed: 'Release the core' }[e.stage] || 'Encounter in progress'} · ${seconds(e.seconds)}.`,
+        `${stage}.`,
+        ...(s.status === 'lost' || e.phase === 'defeated'
+          ? []
+          : [`${encounterClock(e.phase)} · ${seconds(e.seconds)}.`]),
         `Current cut: ${e.cutCells} / ${e.min} required cells. ${e.remaining} unrevealed cells remain on the board.`,
         ...(e.isolated ? ['Core isolated.'] : []),
         ...(e.suppressed ? ['The lane attack is temporarily suppressed.'] : []),

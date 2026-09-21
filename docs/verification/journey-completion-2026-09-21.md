@@ -160,6 +160,14 @@ study is not automatically included in the combined source, publicly deployed,
 or counted as another mission. Wider adaptation, mastery meaning, human/device
 balance and release remain open.
 
+The [shared field-guidance follow-up](journey-field-guidance.md) corrects the
+observed patrol aliases, missing summary roles and singular-relay text. It keeps
+perimeter/frontier domains distinct, uses actual Sentinel instructions and labels
+attack-phase countdowns separately from objectives. The203-test cohort passes
+on both Node versions; native Home Signal and Crossing Complete paused details
+are checked. This is a specific presentation correction, not finale balance,
+physical-device/human acceptance, universal authoring-label migration or deployment.
+
 ## Latest requested additions
 
 The [combined spatial + pressure review](journey-whole-spatial-review.md) now
