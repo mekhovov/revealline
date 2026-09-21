@@ -1,0 +1,72 @@
+{
+  "base": "494429f223d7f61164d36e5a4d8702ef5a7af652",
+  "patchSha256": "8b8cbd084179a734680185eaccdc70ef88c8532a4c5e3dce8ee25cdbb45d22af",
+  "paths": [
+    {
+      "path": "game/app.mjs",
+      "sha256": "de27c4641de731eebc5a3b6f12aba4cc7008fd2488bf4efa3d264e9869dffef4",
+      "matchesPacket": true
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "sha256": "25e3110fbd420832776a184288e22c9886003216b80d6d07b4468883a590321c",
+      "matchesPacket": true
+    },
+    {
+      "path": "game/ui/look-preparation.mjs",
+      "sha256": "8c49ffae59931c2d58076fdb4f41810675969e445a4523e4505c450adb394d85",
+      "matchesPacket": true
+    },
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "sha256": "a8aedd9f60e44de6d790af2a166c28f55ac7050f973ebb48c22dc1d32c665c8d",
+      "matchesPacket": true
+    },
+    {
+      "path": "game/test/look-preparation.test.mjs",
+      "sha256": "4b2ec8f9786af63ea0d9a923a0a8fedcf23ccbed38424c2abd2cd8ffd41f8996",
+      "matchesPacket": true
+    },
+    {
+      "path": "game/test/required-look-host.test.mjs",
+      "sha256": "b76bca5ed713ad26803802866c7bd06b2428affce3330680870b3c9f5ef97268",
+      "matchesPacket": true
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "sha256": "32686f7ed18f568c2e88648415e38fab0f159a097984dbbe7b5926e13b0eb288",
+      "matchesPacket": true
+    },
+    {
+      "path": "scripts/test-field-kit-recipe-sources.mjs",
+      "sha256": "6b859f0e24971383c42f2f0d5fbda5b32e69f247bb3ef0ce6fc188ab63126c8f",
+      "matchesPacket": true
+    },
+    {
+      "path": "docs/required-look-readiness.md",
+      "sha256": "d9957d31fe9b9ebe86779bff2316abccec270d8ecb6498cdc33265fccccc6f9c",
+      "matchesPacket": false,
+      "addition": "Integrated evidence link and exact sparse-fixture prerequisites."
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "sha256": "60f2fb84bfdf6dd7e6e42170f99252b1f5e89dc884b8bb982fd8227dda09723e",
+      "matchesPacket": false
+    }
+  ],
+  "verification": {
+    "node20": "87/92 in full cohort; affected real-renderer5/5 after exact tracked source restoration;92 distinct cases covered",
+    "node22": "87/92 in full cohort; affected real-renderer5/5 after exact tracked source restoration;92 distinct cases covered",
+    "failuresRetained": "First run missing game/content-design/assets; second missing character PNGs; third4/5 missing FPV role source; final5/5. Restored exact tracked paths, no runtime/test changes to obtain pass.",
+    "format": "pass",
+    "lint": "pass",
+    "diffCheck": "pass",
+    "native": "Owner final browser run retained. All377 unique observed served file hashes match integrated source. Not a fresh physical/native run."
+  },
+  "production": {
+    "effects": "2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79",
+    "screens": "d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0",
+    "status": "Both differ from prior reviewed inputs. No approval hash/compiled/ledger changes in this delivery. Fresh review/adoption/reproduction required."
+  },
+  "release": "Held source only. PR211 and432110b5 remain untouched. No new version/PR/public acceptance."
+}

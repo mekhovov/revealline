@@ -370,6 +370,8 @@ export async function soloPage(
   console.error = (error) => errors.push(error);
   for (const key of [
     'setLook',
+    'prepareLook',
+    'requiredLookReady',
     'setLevel',
     'skipCelebration',
     'startCelebration',
@@ -385,7 +387,13 @@ export async function soloPage(
           rendering.onDraw?.({ painter: this, context, run, dt, options });
         }
       };
-    } else if (!rendering) BoardPainter.prototype[key] = () => {};
+    } else if (!rendering)
+      BoardPainter.prototype[key] =
+        key === 'prepareLook'
+          ? async () => ({ current: () => true, accept() {}, dispose() {} })
+          : key === 'requiredLookReady'
+            ? () => true
+            : () => {};
   }
   t.after(async () => {
     win.emit('pagehide', { persisted: false });

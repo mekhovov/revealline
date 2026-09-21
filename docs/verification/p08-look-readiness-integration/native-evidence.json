@@ -1,0 +1,76 @@
+{
+  "status": "scoped-local-browser-pass-not-public",
+  "base": "9076ada123551c2b65ae05638e19ebe828aedb68",
+  "runtime": {
+    "game/app.mjs": {
+      "bytes": 342657,
+      "sha256": "de27c4641de731eebc5a3b6f12aba4cc7008fd2488bf4efa3d264e9869dffef4"
+    },
+    "game/ui/render.mjs": {
+      "bytes": 38659,
+      "sha256": "25e3110fbd420832776a184288e22c9886003216b80d6d07b4468883a590321c"
+    },
+    "game/ui/look-preparation.mjs": {
+      "bytes": 3702,
+      "sha256": "8c49ffae59931c2d58076fdb4f41810675969e445a4523e4505c450adb394d85"
+    }
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "input": "ordinary keyboard activation and ArrowDown; no state injection",
+  "route": "http://127.0.0.1:56867/game/index.html?journey=opening",
+  "observations": [
+    {
+      "action": "Fresh title Start with Retro HTTP response held",
+      "result": "Preparing the selected craft and scene artwork\u2026; First return remained ready at0:00,0%,3lives,score0"
+    },
+    {
+      "action": "Cancel preparation",
+      "result": "Preparation cancelled; First return ready at0:00"
+    },
+    {
+      "action": "Visible briefing Start mission while same required source still held",
+      "result": "Selected-craft preparation visible; ready screen retained at0:00,0%,3lives,score0"
+    },
+    {
+      "action": "Release HTTP response",
+      "result": "Started automatically with focused canvas; running and picture-ready; no second Start required"
+    },
+    {
+      "action": "ArrowDown legal capture",
+      "result": "34.3%,8160points,0:10,3lives; earned Journey result visible; no stale Resume/preparation instruction"
+    },
+    {
+      "action": "Hold redundant Retro URL again; Enter Next once",
+      "result": "Old result/picture visible during successor picture preparation; direct play at65%target with0%reveal; no extra Ready action; flightState running,pictureState ready,empty preparation/craft statuses"
+    },
+    {
+      "action": "Escape",
+      "result": "Explicit paused panel with focused Resume"
+    }
+  ],
+  "consoleWarningsErrors": [],
+  "sourceDelayRequests": [
+    {
+      "event": "request",
+      "path": "authoring/motion-lab/assets/retro-craft.png",
+      "held": true,
+      "time": 1789972957.525813
+    }
+  ],
+  "artifacts": {
+    "sourceDelay": "bf55f08a607d01ae310d34f4c0daa8624d01f82a093dd559cdc7c9235bb659b1",
+    "servedSource": "9a59a8066fb4b20700eb76bf7c5aa449fa0a49599cffd4f519b20325885af4d1",
+    "server": "641d50d9ee6b6dfeb86012d0c7cf3804c2f8d21a232ba44c73795febcdf7c291"
+  },
+  "limits": [
+    "No physical touch/controller, screenreader, mobile orientation or offline claim.",
+    "Actual image identity and simulation checkpoint comparisons are separately covered by real-renderer finite-boundary tests.",
+    "No public deployment or whole-phase acceptance claim.",
+    "Earlier native5304 found stale success text; corrected only the needsLook success message in final de27.",
+    "Earlier second tab reused a saved-flight route; it was diagnostic and excluded from this fresh-origin qualification."
+  ],
+  "cleanup": "Owned tab closed; server stopped; no viewport override."
+}
