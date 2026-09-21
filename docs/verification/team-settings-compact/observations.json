@@ -1,0 +1,138 @@
+{
+  "source": "d166a45dca6d42585e385a765903dca826d60950",
+  "overrides": {
+    "game/couch/relay-rescue.css": "9103bb2c3e49f0281564bc59fe4369e326782d11d715ff470af88d306d8bac1d",
+    "game/couch/relay-rescue.html": "e865d0191c46d3614267a7085d298800869791d760a99784e2b9a73abe03cf2e"
+  },
+  "testFiles": [
+    "game/test/coop-shared-settings.test.mjs",
+    "game/test/coop-display-reflow.test.mjs",
+    "game/test/shared-settings-reading.test.mjs"
+  ],
+  "node20": "46/46",
+  "node22": "46/46",
+  "firstAttempt": "Aborted due sparse-checkout missing tracked game/couch/team-entry.js; original outputs retained. Restored exact tracked JS; no source/test change before rerun.",
+  "nativeEvidenceType": "Observed CUA browser interactions and DOM measurements; not physical touch/controller certification.",
+  "measurements": {
+    "baseline568x320": {
+      "backTopAfterFocusScroll": -356,
+      "tabsBottom": 365.28125,
+      "dialogBottom": 304,
+      "dialogScroll": 394
+    },
+    "fixed568x320PlainLarge": {
+      "back": [
+        429.5078125,
+        30,
+        104.4921875,
+        50
+      ],
+      "tabs": [
+        34,
+        84,
+        500,
+        54
+      ],
+      "panel": [
+        34,
+        146,
+        500,
+        144
+      ],
+      "dialogScroll": 0,
+      "panelScrollAfterReducedEffectsFocus": 418.5
+    },
+    "fixed320x480PlainLarge": {
+      "back": [
+        181.5078125,
+        30,
+        104.4921875,
+        50
+      ],
+      "tabs": [
+        34,
+        84,
+        252,
+        102
+      ],
+      "panel": [
+        34,
+        194,
+        252,
+        256
+      ],
+      "reducedEffectsLabel": [
+        42,
+        372.1875,
+        236,
+        44
+      ],
+      "dialogScroll": 0
+    },
+    "fixed568x320ThemeLarge": {
+      "back": [
+        430.2421875,
+        30,
+        103.7578125,
+        49.5
+      ],
+      "tabs": [
+        34,
+        83.5,
+        500,
+        54
+      ],
+      "panel": [
+        34,
+        145.5,
+        500,
+        144.5
+      ],
+      "dialogScroll": 0
+    },
+    "fixed390x844ThemeLarge": {
+      "dialog": [
+        16,
+        16,
+        358,
+        812
+      ],
+      "heading": [
+        38,
+        38,
+        314,
+        49.5
+      ],
+      "tabs": [
+        38,
+        99.5,
+        314,
+        136
+      ],
+      "panel": [
+        38,
+        255.5,
+        314,
+        550.5
+      ],
+      "dialogScroll": 0,
+      "horizontalOverflow": false
+    }
+  },
+  "journey": [
+    "Keyboard lobby Start \u2192 Pause \u2192 Settings",
+    "Native select popups set Plain/Large and Show both/D-pad/Large controls",
+    "Keyboard focus scrolls panel while Back/categories remain visible",
+    "Rotate through short landscape/portrait preserving focus",
+    "Game data Read details includes complete moved preference-scope explanation",
+    "Escape reading restores Read details; Escape settings restores Settings opener; simulation remains paused at 0:00",
+    "Explicit Resume via seven Shift-Tab presses and Enter returns canvas focus; clock advances only after Resume"
+  ],
+  "consoleWarningsErrors": [],
+  "limits": [
+    "Browser viewport emulation, not iPhone Safari or Steam Deck hardware.",
+    "No controller injection used in this native journey.",
+    "No screenshot files retained; measurements/interaction observations are the native evidence.",
+    "Source-only held follow-up; no release acceptance."
+  ]
+}
