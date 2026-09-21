@@ -14,6 +14,7 @@ import { createLivewireCandidates } from '../content-design/livewire-candidates.
 import { createRelayCandidates } from '../content-design/relay-candidates.mjs';
 import { createCrosswindCandidates } from '../content-design/crosswind-candidates.mjs';
 import { createSentinelCandidates } from '../content-design/sentinel-candidates.mjs';
+import { createSentinelSpatialCandidates } from '../content-design/sentinel-spatial-candidates.mjs';
 import { createApexCandidates } from '../content-design/apex-candidates.mjs';
 import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
@@ -762,6 +763,12 @@ $('sentinel').onclick = guarded(() => {
     null,
     2,
   );
+  sourceChanged = true;
+  inspectSource();
+});
+$('sentinel-spatial').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createSentinelSpatialCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
