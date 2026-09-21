@@ -1,0 +1,146 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "files": {
+    "game/content/packs/night-shift.json": {
+      "bytes": 8848,
+      "sha256": "b82d453a9c7a3feab9b88d960b3bf5cbeca8d5254dec3f259490c54b272acef4"
+    },
+    "authoring/examples/verify-foundation-pack.mjs": {
+      "bytes": 1855,
+      "sha256": "4bfb3ce2c93e89bd8c3cfa27bd38037b2b66f39ab91692f1320d32e2a67e6c6d"
+    },
+    "game/core/index.mjs": {
+      "bytes": 17691,
+      "sha256": "fa0d5e2affd2be15b6919f112fee84e0862c5c3bb7b95f2d3d604eb4ff352c5d"
+    },
+    "game/core/foundations.mjs": {
+      "bytes": 2463,
+      "sha256": "d5aa7b471790e3d3f8ed04fc26747665ac316ce201962fdd6cfcc31f6f84389c"
+    },
+    "game/core/registry.mjs": {
+      "bytes": 6661,
+      "sha256": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c"
+    },
+    "game/data-json.mjs": {
+      "bytes": 4920,
+      "sha256": "bcf8c3cb859473a39973cc93cee347085d3146164b0b92a02e81df57f6ffc823"
+    },
+    "game/content-design/map.mjs": {
+      "bytes": 7783,
+      "sha256": "93edb45d6af77738a3ba8ff42f3fb9d672bcecd9a00ccee20d259fe496b34c28"
+    },
+    "game/core/classic-step.mjs": {
+      "bytes": 16458,
+      "sha256": "e9c532a138bf5eede4f8c11e08bf7a3b966e292d65ba4a79c8e7b8cc8dda7695"
+    },
+    "game/core/enemy-pressure.mjs": {
+      "bytes": 11725,
+      "sha256": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb"
+    },
+    "game/core/classic-topology.mjs": {
+      "bytes": 6458,
+      "sha256": "e72c4c6e3d75be33d0c2995c7ced65a21c81eba34874e18737b05e8c011284b3"
+    },
+    "game/core/geometry.mjs": {
+      "bytes": 4005,
+      "sha256": "d7252d751c56f77cebffcdd5c3adc5b5db9c0f4f489a821591bb356f05c0af55"
+    },
+    "game/core/versions.mjs": {
+      "bytes": 3430,
+      "sha256": "2c782b83a7ceaa5765cf2d17fac3af06ca3ad596071cad10f4890601bc7079ce"
+    },
+    "game/core/movement.mjs": {
+      "bytes": 10912,
+      "sha256": "3f9ee5115eb94c001fe38595f39763b188ea276114ca21d1bc7a426be6e6922a"
+    },
+    "game/core/classic-motion.mjs": {
+      "bytes": 12271,
+      "sha256": "d593680e715467fd4ebfd50bf68bfdd2c3690e79ebbc579a64cdbab093c0a020"
+    },
+    "game/core/classic-contour.mjs": {
+      "bytes": 7465,
+      "sha256": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8"
+    },
+    "game/core/classic-state.mjs": {
+      "bytes": 2356,
+      "sha256": "2b328066188d54dc3010540384427fee18ac2f49f13c67f8c55f65539f61a500"
+    },
+    "game/core/encounter.mjs": {
+      "bytes": 8716,
+      "sha256": "7b98eb4ec29998ce902a62388b089a0a26b41675199bb9601e4b2a55f0df44ba"
+    },
+    "game/core/systems.mjs": {
+      "bytes": 4621,
+      "sha256": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6"
+    },
+    "game/core/arcade-actions.mjs": {
+      "bytes": 848,
+      "sha256": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726"
+    },
+    "game/core/abilities.mjs": {
+      "bytes": 3855,
+      "sha256": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde"
+    },
+    "game/core/contacts.mjs": {
+      "bytes": 5263,
+      "sha256": "d8c8294bf7141471a125dc325ab1202e2a705ca62ad7632d89129907c8072df4"
+    },
+    "game/core/capture.mjs": {
+      "bytes": 7160,
+      "sha256": "081572756599471e0c1811812f2d20576ad4e479157be390ed945c6b12de263b"
+    },
+    "game/core/capture-regions.mjs": {
+      "bytes": 4040,
+      "sha256": "57d7b36d8e82d4640bd8ae4b92b48924ccee42508963ab99142138e730d9b203"
+    },
+    "game/core/line-impact.mjs": {
+      "bytes": 9142,
+      "sha256": "e3a11756a9fb7272ad660dbf9a2c175095f89e26f889e3f3edb25865b2b7c5a0"
+    },
+    "game/core/level.mjs": {
+      "bytes": 14696,
+      "sha256": "e294005640e2834672feccaeb6f57a659923194be38237b6ff5dda3731e1e88c"
+    },
+    "game/core/classic-definition.mjs": {
+      "bytes": 8310,
+      "sha256": "af9a726d1a96f371122c4e308c8024ebe6ed0232f4fb3815c2a1e94df870e3bb"
+    },
+    "game/packs.mjs": {
+      "bytes": 21945,
+      "sha256": "36ef227cf63e5fd8438643f3a8c8e6db10d774d07f2079ddb3c3106d649fcfea"
+    },
+    "game/mastery.mjs": {
+      "bytes": 16941,
+      "sha256": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504"
+    },
+    "game/mastery-equipment.mjs": {
+      "bytes": 29233,
+      "sha256": "5d45dfb343754c728277ea83a6a32ff46547adf747da65eee5ec0aa30bd09d1a"
+    },
+    "game/mastery-catalog.mjs": {
+      "bytes": 13823,
+      "sha256": "6e91dee8471c950acef82ed45b418c9e5ebfff5fa36ce1f773207efdd745b29e"
+    },
+    "game/imports.mjs": {
+      "bytes": 4923,
+      "sha256": "439c5495d62b22dd3df3e1b0abb946c18301000018afc8d84a5a8b8ca7c3f51f"
+    },
+    "game/content.mjs": {
+      "bytes": 23401,
+      "sha256": "5270f582ec3b6f27e7252bda373bbb93bf5f199caceefca1580dfea13751b7d4"
+    },
+    "game/ui/music.mjs": {
+      "bytes": 7050,
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+    },
+    "game/platform.mjs": {
+      "bytes": 2524,
+      "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260"
+    },
+    "authoring/examples/create-foundation-pack.mjs": {
+      "bytes": 3316,
+      "sha256": "fcbd510840ddb21c528df7e044e1125aa89acbe2ee286c7faed928d0fbdab41b"
+    }
+  },
+  "scope": "Fresh directory containing the exact static authoring module closure and required procedural template, not a full release checkout."
+}

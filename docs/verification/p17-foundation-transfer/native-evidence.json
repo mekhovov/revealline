@@ -1,0 +1,61 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "origins": {
+    "source": {
+      "port": 52106,
+      "allExactGitBytes": true,
+      "log": "served-source.jsonl",
+      "uniqueServedFileRecords": 380,
+      "uniqueFileBytes": 8540013,
+      "countScope": "Identical response records are deduplicated; this is an exact file-binding inventory, not total requests or transferred network bytes."
+    },
+    "destination": {
+      "port": 52105,
+      "allExactGitBytes": true,
+      "log": "served-destination.jsonl",
+      "uniqueServedFileRecords": 380,
+      "uniqueFileBytes": 8540013,
+      "countScope": "Identical response records are deduplicated; this is an exact file-binding inventory, not total requests or transferred network bytes."
+    }
+  },
+  "browser": "Codex IAB Chromium",
+  "viewport": [
+    1280,
+    720
+  ],
+  "packSHA256": "81232e84fee5389f4566dffc489b498e1e3ea82de21f458f3ac85cc0a4c06611",
+  "downloadSHA256": "6ec2b4ec4f4c31e9d30f18d10e5223b2b45510d0cbac0fca4262f040a153d65b",
+  "checks": [
+    "Fresh source origin: Settings \u2192 Game data \u2192 Installed chapters \u2192 actual file picker installs the generated 5,270-byte pack.",
+    "Play Island connections closes Library and Settings, then focuses Start mission without starting automatically.",
+    "Explicit Start and Left secures 1.2%; a fresh Right completes the mission at 49.9%, 11,750 points, three lives, GOLD and 0:33.",
+    "Campaign results show 1/1 complete and Browse campaigns.",
+    "Export installed packs saves an actual 3,605-byte file, verified separately from the timed-out browser download observer.",
+    "Fresh destination origin begins without the installed foundation pack or earned pictures.",
+    "Importing the actual downloaded file through the picker restores Workshop \u00b7 Island connections 1.0.0; Play opens First bridge with a 20% target, three lives, zero score and explicit Start.",
+    "Destination Collection remains empty after content import.",
+    "Reload destination \u2192 Start First bridge \u2192 Left secures 1.2%, 290 points and three lives; Escape explicitly pauses at 0:13 with Resume focused.",
+    "The source retains its 49.9% / 11,750 result after export and shows its earned First bridge picture in Collection.",
+    "Neither origin logs console warnings or errors."
+  ],
+  "limits": [
+    "Native play used keyboard Immediate steering. Both turning policies have separate fixed-tick CLI reachability evidence.",
+    "The native winning route was Left then Right, distinct from the CLI Left \u2192 Right \u2192 Down route.",
+    "CLI execution used a fresh directory with the exact 35-file module closure; this was not a complete fresh repository build.",
+    "This covers procedural teaching content, not custom media, theme bundles, community branding, production challenge, physical hardware, all modes or complete P17.",
+    "Content transfer does not transfer player saves, achievements or earned pictures.",
+    "These are exact-source candidate observations, not public release acceptance."
+  ],
+  "cleanup": {
+    "tabsClosed": [
+      165,
+      166
+    ],
+    "serversStopped": [
+      56775,
+      56774
+    ],
+    "playerDataScope": "Two isolatedtemporarylocalhostorigins; publicoriginunchanged",
+    "downloadRetained": "/Users/oleksandr.mekhovov/Downloads/revealline-expansion-packs (2).json"
+  }
+}

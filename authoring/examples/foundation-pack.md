@@ -17,10 +17,10 @@ The verifier uses normal fixed-tick direction inputs. From the island, travel le
 
 1. Serve the game over HTTP using the repository’s usual development workflow.
 2. Open **Settings → Game data → Installed chapters → Install a pack file** and choose the generated JSON.
-3. Choose **Play Island connections**. Library and Settings close, **First bridge** appears, and **Start mission** receives focus. Start explicitly; selecting the chapter must not begin flight. The navigation correction is locally verified and awaits integration/public release.
+3. Choose **Play Island connections**. Library and Settings close, **First bridge** appears, and **Start mission** receives focus. Start explicitly; selecting the chapter must not begin flight. The exact-source transfer trial below verifies this local navigation; public acceptance is tracked separately.
 4. Tap Left. Releasing the key continues the cut; reaching the border closes it and stops the craft. Continue with fresh direction taps.
-5. Open Installed chapters and choose **Export installed packs**. Retain the actual downloaded file, not only a success notification.
-6. On a fresh local origin/profile, import that downloaded library through the same file picker. Verify Island connections 1.0.0 appears and First bridge opens with a 20% target and three lives.
+5. Open Installed chapters and choose **Export installed packs**. Retain the actual downloaded file, not only a success notification. Its suggested name is `revealline-expansion-packs.json`; your browser may add a number. This is a `xonix-pack-library.v1` collection containing the prepared pack, so it is not expected to have the same formatting or byte count as the source pack JSON.
+6. On a fresh local origin/profile, import that downloaded library through the same file picker. Verify Island connections 1.0.0 appears and First bridge opens with a 20% target, three lives and an explicit Start action. Check that Collection remains empty before playing: installed content must not fabricate the source player’s earned picture. Reload, then start the imported mission and make a capture to verify persistence and playability.
 
 This transfers pack content. Player achievements and unfinished flights have separate exports; a restored pack does not fabricate either. Keep originals for any later embedded artwork and use the real decoder. Uploaded MP3s and presentation bundles use their own binary backups.
 
@@ -46,3 +46,13 @@ both are legal wins. The native pass used Immediate turning and procedural artwo
 See [scoped evidence](../../docs/verification/library-launch-navigation/result.json)
 for exact source and pack hashes, navigation steps and remaining limits. It does not
 qualify production difficulty, custom media, physical controllers or public deployment.
+
+## Complete content-transfer trial
+
+The [fresh authoring and two-origin trial](../../docs/verification/p17-foundation-transfer/README.md) ran the unmodified example against source `8cffb36b29a38013eb9213845efd675c4864c9d8`. Node 20 and 22 generated the same 5,270-byte pack. Both turning policies completed the fixed-tick route with three lives.
+
+The actual browser installed that file and completed First bridge with direction taps: 49.9% captured, 11,750 points, three lives and GOLD. Export produced a real 3,605-byte installed-library file. Its bytes matched the expected prepared-library export exactly on both runtimes. Importing that same file on a fresh local origin restored the chapter without importing the earned picture; after reload, ordinary Start and Left made another legal capture. The original origin retained its own result and picture.
+
+This verifies the small procedural teaching workflow. New community artwork, Studio presentation bundles, original audio, Team maps, controller hardware and a complete release build have their own acceptance gates. Keep those assets and exports distinct when extending this example.
+
+Maintenance prompt: “Generate the unchanged foundation chapter in a fresh authoring directory, retain exact source and output hashes, install it through the real file picker, and complete a legal route. Export installed packs, locate the actual saved file and compare its prepared-library bytes. Import that exact file on a separate fresh origin, verify no player awards appear, reload and make a legal capture. Retain the source player’s original result. Distinguish CLI routes, browser actions, actual downloaded bytes and untested media/device requirements.”

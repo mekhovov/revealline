@@ -1,0 +1,100 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "packetSHA256": "5be9a8e55851669cba6f6fa9c00927fccb64b3f2d6c56119d86d20194699d779",
+  "verifiedInputs": 35,
+  "inputBytes": 315108,
+  "newExecution": [
+    {
+      "node": "20.19.5",
+      "commands": [
+        {
+          "argv": [
+            "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/source/authoring/examples/create-foundation-pack.mjs",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/pack-20.19.5.json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\"path\":\"/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/pack-20.19.5.json\",\"bytes\":5270,\"sha256\":\"81232e84fee5389f4566dffc489b498e1e3ea82de21f458f3ac85cc0a4c06611\",\"format\":\"xonix-pack.v6\",\"roundTrip\":\"passed\",\"scenarios\":[\"immediate\",\"grid-center\"],\"scope\":\"Data preparation and transfer only; play, image decoding and device gates are separate.\"}\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/source/authoring/examples/verify-foundation-pack.mjs",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/pack-20.19.5.json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"scope\": \"Legal-input reachability, not difficulty or device certification.\",\n  \"results\": [\n    {\n      \"turnPolicy\": \"immediate\",\n      \"segments\": [\n        {\n          \"direction\": \"left\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"right\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"down\",\n          \"ticks\": 210\n        }\n      ],\n      \"summary\": {\n        \"ruleset\": \"xonix-core.v6\",\n        \"levelId\": \"workshop-first-bridge\",\n        \"revision\": \"1\",\n        \"seed\": 1,\n        \"turnPolicy\": \"immediate\",\n        \"classId\": \"scout\",\n        \"activeClassId\": \"scout\",\n        \"rosterHash\": \"roster-v1-e159e435\",\n        \"classHistory\": [\n          {\n            \"classId\": \"scout\",\n            \"classRevision\": \"1\",\n            \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n            \"tick\": 0\n          }\n        ],\n        \"switches\": 0,\n        \"failureCause\": null,\n        \"classRevision\": \"1\",\n        \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n        \"status\": \"won\",\n        \"won\": true,\n        \"tick\": 978,\n        \"time\": 8.150000000000178,\n        \"lives\": 3,\n        \"livesLost\": 0,\n        \"score\": 5670,\n        \"coverage\": 0.24076433121019108,\n        \"claimedCount\": 567,\n        \"totalClaimable\": 2355,\n        \"medal\": \"gold\",\n        \"objectives\": {\n          \"captured\": 0,\n          \"total\": 0,\n          \"required\": 0\n        }\n      }\n    },\n    {\n      \"turnPolicy\": \"grid-center\",\n      \"segments\": [\n        {\n          \"direction\": \"left\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"right\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"down\",\n          \"ticks\": 210\n        }\n      ],\n      \"summary\": {\n        \"ruleset\": \"xonix-core.v6\",\n        \"levelId\": \"workshop-first-bridge\",\n        \"revision\": \"1\",\n        \"seed\": 1,\n        \"turnPolicy\": \"grid-center\",\n        \"classId\": \"scout\",\n        \"activeClassId\": \"scout\",\n        \"rosterHash\": \"roster-v1-e159e435\",\n        \"classHistory\": [\n          {\n            \"classId\": \"scout\",\n            \"classRevision\": \"1\",\n            \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n            \"tick\": 0\n          }\n        ],\n        \"switches\": 0,\n        \"failureCause\": null,\n        \"classRevision\": \"1\",\n        \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n        \"status\": \"won\",\n        \"won\": true,\n        \"tick\": 978,\n        \"time\": 8.150000000000178,\n        \"lives\": 3,\n        \"livesLost\": 0,\n        \"score\": 5670,\n        \"coverage\": 0.24076433121019108,\n        \"claimedCount\": 567,\n        \"totalClaimable\": 2355,\n        \"medal\": \"gold\",\n        \"objectives\": {\n          \"captured\": 0,\n          \"total\": 0,\n          \"required\": 0\n        }\n      }\n    }\n  ]\n}\n",
+          "stderr": ""
+        }
+      ],
+      "packSHA256": "81232e84fee5389f4566dffc489b498e1e3ea82de21f458f3ac85cc0a4c06611",
+      "actualDownloadCheck": {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/source/check-actual-download.mjs",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/pack-20.19.5.json",
+          "/Users/oleksandr.mekhovov/Downloads/revealline-expansion-packs (2).json"
+        ],
+        "exitCode": 0,
+        "stdout": "{\"exactPreparedLibrary\":true,\"importExportExact\":true,\"bytes\":3605}\n"
+      }
+    },
+    {
+      "node": "22.22.2",
+      "commands": [
+        {
+          "argv": [
+            "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/source/authoring/examples/create-foundation-pack.mjs",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/pack-22.22.2.json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\"path\":\"/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/pack-22.22.2.json\",\"bytes\":5270,\"sha256\":\"81232e84fee5389f4566dffc489b498e1e3ea82de21f458f3ac85cc0a4c06611\",\"format\":\"xonix-pack.v6\",\"roundTrip\":\"passed\",\"scenarios\":[\"immediate\",\"grid-center\"],\"scope\":\"Data preparation and transfer only; play, image decoding and device gates are separate.\"}\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/source/authoring/examples/verify-foundation-pack.mjs",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/pack-22.22.2.json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"scope\": \"Legal-input reachability, not difficulty or device certification.\",\n  \"results\": [\n    {\n      \"turnPolicy\": \"immediate\",\n      \"segments\": [\n        {\n          \"direction\": \"left\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"right\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"down\",\n          \"ticks\": 210\n        }\n      ],\n      \"summary\": {\n        \"ruleset\": \"xonix-core.v6\",\n        \"levelId\": \"workshop-first-bridge\",\n        \"revision\": \"1\",\n        \"seed\": 1,\n        \"turnPolicy\": \"immediate\",\n        \"classId\": \"scout\",\n        \"activeClassId\": \"scout\",\n        \"rosterHash\": \"roster-v1-e159e435\",\n        \"classHistory\": [\n          {\n            \"classId\": \"scout\",\n            \"classRevision\": \"1\",\n            \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n            \"tick\": 0\n          }\n        ],\n        \"switches\": 0,\n        \"failureCause\": null,\n        \"classRevision\": \"1\",\n        \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n        \"status\": \"won\",\n        \"won\": true,\n        \"tick\": 978,\n        \"time\": 8.150000000000178,\n        \"lives\": 3,\n        \"livesLost\": 0,\n        \"score\": 5670,\n        \"coverage\": 0.24076433121019108,\n        \"claimedCount\": 567,\n        \"totalClaimable\": 2355,\n        \"medal\": \"gold\",\n        \"objectives\": {\n          \"captured\": 0,\n          \"total\": 0,\n          \"required\": 0\n        }\n      }\n    },\n    {\n      \"turnPolicy\": \"grid-center\",\n      \"segments\": [\n        {\n          \"direction\": \"left\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"right\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"down\",\n          \"ticks\": 210\n        }\n      ],\n      \"summary\": {\n        \"ruleset\": \"xonix-core.v6\",\n        \"levelId\": \"workshop-first-bridge\",\n        \"revision\": \"1\",\n        \"seed\": 1,\n        \"turnPolicy\": \"grid-center\",\n        \"classId\": \"scout\",\n        \"activeClassId\": \"scout\",\n        \"rosterHash\": \"roster-v1-e159e435\",\n        \"classHistory\": [\n          {\n            \"classId\": \"scout\",\n            \"classRevision\": \"1\",\n            \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n            \"tick\": 0\n          }\n        ],\n        \"switches\": 0,\n        \"failureCause\": null,\n        \"classRevision\": \"1\",\n        \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n        \"status\": \"won\",\n        \"won\": true,\n        \"tick\": 978,\n        \"time\": 8.150000000000178,\n        \"lives\": 3,\n        \"livesLost\": 0,\n        \"score\": 5670,\n        \"coverage\": 0.24076433121019108,\n        \"claimedCount\": 567,\n        \"totalClaimable\": 2355,\n        \"medal\": \"gold\",\n        \"objectives\": {\n          \"captured\": 0,\n          \"total\": 0,\n          \"required\": 0\n        }\n      }\n    }\n  ]\n}\n",
+          "stderr": ""
+        }
+      ],
+      "packSHA256": "81232e84fee5389f4566dffc489b498e1e3ea82de21f458f3ac85cc0a4c06611",
+      "actualDownloadCheck": {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/source/check-actual-download.mjs",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/foundation-independent-review/pack-22.22.2.json",
+          "/Users/oleksandr.mekhovov/Downloads/revealline-expansion-packs (2).json"
+        ],
+        "exitCode": 0,
+        "stdout": "{\"exactPreparedLibrary\":true,\"importExportExact\":true,\"bytes\":3605}\n"
+      }
+    }
+  ],
+  "retainedBrowserEvidence": [
+    {
+      "origin": "source",
+      "uniqueServedBindings": 380,
+      "uniqueFileBytes": 8540013,
+      "logSHA256": "f0b19d72cfc13dcd9be725f3732dc59900619c6d9808f3fb975567f0b0b85b73"
+    },
+    {
+      "origin": "destination",
+      "uniqueServedBindings": 380,
+      "uniqueFileBytes": 8540013,
+      "logSHA256": "d3058ee960d9847d4f7c309f05c1182e56af891ed8918f71db311839e619e3c4"
+    }
+  ],
+  "actualDownload": {
+    "bytes": 3605,
+    "sha256": "6ec2b4ec4f4c31e9d30f18d10e5223b2b45510d0cbac0fca4262f040a153d65b",
+    "noFinalNewline": true
+  },
+  "boundary": "CLI generation/legal route/download byte roundtrip independently rerun; prior browser journey evidence inspected and bound, not rerun. No public, custom media, all-mode or physical-device acceptance."
+}
