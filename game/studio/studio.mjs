@@ -25,6 +25,7 @@ import { createWholeJourneyCandidates } from '../content-design/whole-journey-ca
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
+import { createTeamTimedCandidates } from '../content-design/team-timed-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
@@ -799,6 +800,12 @@ $('team-signal').onclick = guarded(() => {
 $('team-journey').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createTeamJourneyCandidates({ artwork: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('team-timed').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createTeamTimedCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });

@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after Team timed-bonus authoring/host integration. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after three purpose-built Team timed-route studies. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -80,8 +80,15 @@ per-pilot/shared effect expiry, captions and pause details. Eight new integratio
 tests and the combined761-test cohort pass on both Node versions; independent
 review passes after fixing a nested canvas-state recovery bug. Native Studio
 Apply/export and actual Team import/announcement pause/expiry are checked.
-**Purpose-built route studies, device/two-human qualification and release remain
-open.** No automatic enrollment, Team save/replay claim or fully accepted phase.
+The [purpose-built route studies](journey-team-timed-studies.md) now add three
+original shared-board greyboxes and Studio inspection. All72 base preset/seat/
+joint-cut pickup-free/taking cases clear without knockdowns;16 of36 extra
+timing/seed probes remain unqualified and are retained. Coolant full-neutralization
+and Depot both-rover mastery are still open. The904-test combined cohort passes
+on both Node versions, including assertions that faithfully reproduce failures.
+**This is partial route qualification, not three released missions.** Optimized
+short clears, later windows, device/two-human testing, original artwork and
+release remain open. No automatic enrollment, Team save/replay claim or accepted phase.
 
 ## Latest completed spatial unit
 
@@ -131,6 +138,13 @@ never retain territory; ordinary keepers do. Sentries communicate a fixed aim,
 then fire a craft-only shot. They do not silently home or change collision rules.
 These choices require human readability/retry testing; automatic restart and
 successful scripted routes are not evidence of fun or “addictiveness.”
+
+The Team studies also expose a difficulty inversion: some optimized Expert routes
+are shorter than Gentle despite faster keepers. The next balance pass must compare
+exposure, route decisions and actor interactions, not use clear time or lives alone
+as a difficulty score. [Valve's pacing presentation](https://cdn.akamai.steamstatic.com/apps/valve/2009/ai_systems_of_l4d_mike_booth.pdf)
+explicitly separates threat intensity from pacing; applying that distinction here
+is a design recommendation, not importing a hidden adaptive-difficulty system.
 
 ## Next implementation order
 
