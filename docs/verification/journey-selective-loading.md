@@ -86,11 +86,13 @@ not a full release/media assembly in this sparse worktree. The test-only loader
 hook is excluded from that distribution.
 
 Independent code review found no blocker. The broader 31-file host/content cohort
-is still running on both supported Node versions; this candidate commit is not
-promotion-ready until its final outcome is recorded. Its first Node 22 historical
-Solo campaign check already passes all 71 clears, 70 Next transitions and failed
-picture-preload recovery for `whole-originals-v3`; that single result is not the
-whole cohort. Controlled repeated browser measurements, Team startup,
+completed with 401 tests passing, zero failures, skips or cancellations, on each
+supported Node version (20.19.5: 1,791,133 ms; 22.22.2: 1,331,672 ms). Both existing
+processes ran to exit zero without restarting. This includes all 71 real Solo
+host clears and 70 Next transitions, failed picture-preload recovery, and equal
+Versus boards for each historical `whole-originals-v3` and `whole-originals-v4`
+edition. The regression gate for commit `e1cc6d4e` is now clear; release promotion
+remains coordinated separately. Controlled repeated browser measurements, Team startup,
 public/offline distribution, ten-mission timing, physical devices and human
 acceptance remain open. Original AI music generation remains paused.
 

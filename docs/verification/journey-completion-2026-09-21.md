@@ -83,7 +83,8 @@ the 18 focused checks pass independently on both Node versions. Native forced
 module-failure recovery, clear and one-action Next pass in Solo/Versus. The
 spatial entry graph has 26 fewer modules and approximately 220 kB less source;
 that is not a measured network or browser-speed improvement. Full integrated
-regression results are recorded in the linked evidence before promotion.
+regression results are now recorded: 401 tests pass on each supported Node version,
+with zero failures, skips or cancellations. Coordinated promotion remains separate.
 Next: controlled repeated startup measurements, then public, Team and device
 qualification. Ten-consecutive-mission timing, automatic recovery,
 win-to-Next availability and the remaining human gates stay open.
