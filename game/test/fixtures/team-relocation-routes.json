@@ -1,0 +1,712 @@
+{
+  "format": "TeamRelocationRouteEvidenceV1",
+  "missionId": "depot-dash",
+  "methodology": "Fresh public input only. First visible speed pickup expires; second appears at the other anchor and is collected before a no-loss Expert clear. Both seat assignments and joint settings. Not official Team replay.",
+  "limitations": [
+    "One Expert seed/start only; partner is not cutting at contact.",
+    "The identical log fails on Gentle and Standard, retained as negative probes, not qualified clears.",
+    "No human balance, device, art, release or enrollment qualification."
+  ],
+  "log": [
+    {
+      "a": "up",
+      "b": "up",
+      "ticks": 198
+    },
+    {
+      "a": "up",
+      "b": null,
+      "ticks": 6
+    },
+    {
+      "a": "right",
+      "b": null,
+      "ticks": 72
+    },
+    {
+      "a": "down",
+      "b": null,
+      "ticks": 408
+    },
+    {
+      "a": null,
+      "b": "up",
+      "ticks": 6
+    },
+    {
+      "a": null,
+      "b": "down",
+      "ticks": 144
+    },
+    {
+      "a": null,
+      "b": "left",
+      "ticks": 72
+    },
+    {
+      "a": null,
+      "b": "down",
+      "ticks": 270
+    },
+    {
+      "a": null,
+      "b": "down",
+      "ticks": 6
+    },
+    {
+      "a": null,
+      "b": "up",
+      "ticks": 264
+    },
+    {
+      "a": null,
+      "b": "left",
+      "ticks": 144
+    },
+    {
+      "a": null,
+      "b": "up",
+      "ticks": 144
+    },
+    {
+      "a": null,
+      "b": "up",
+      "ticks": 6
+    },
+    {
+      "a": null,
+      "b": "down",
+      "ticks": 36
+    },
+    {
+      "a": null,
+      "b": "left",
+      "ticks": 96
+    },
+    {
+      "a": null,
+      "b": "down",
+      "ticks": 24
+    },
+    {
+      "a": null,
+      "b": "down",
+      "ticks": 252
+    },
+    {
+      "a": null,
+      "b": "left",
+      "ticks": 198
+    },
+    {
+      "a": "down",
+      "b": null,
+      "ticks": 6
+    },
+    {
+      "a": "right",
+      "b": null,
+      "ticks": 324
+    },
+    {
+      "a": "up",
+      "b": null,
+      "ticks": 72
+    },
+    {
+      "a": "right",
+      "b": null,
+      "ticks": 114
+    }
+  ],
+  "runs": [
+    {
+      "difficulty": "expert",
+      "simulationIdentity": "42adce9665ef093a",
+      "options": {
+        "seed": 1,
+        "delayTicks": 0,
+        "swapped": false,
+        "jointCuts": false
+      },
+      "result": {
+        "status": "shared-no-loss-clear",
+        "tick": 2857,
+        "coverage": 0.8026565464895635,
+        "returns": [3, 4],
+        "firstDown": null,
+        "collected": [
+          {
+            "type": "powerup.collected",
+            "tick": 2836,
+            "time": 23.637000000000008,
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "players": [0],
+            "gain": null,
+            "activationTick": 2837,
+            "untilTick": 3437,
+            "x": 52.5,
+            "y": 29.5,
+            "reclaimedBeforeContactStep": false,
+            "partnerCutting": false
+          }
+        ],
+        "bonusEvents": [
+          {
+            "type": "bonus.announced",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 239,
+            "time": 1.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 359,
+            "time": 2.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.announced",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 839,
+            "time": 6.991666666666666,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 959,
+            "time": 7.991666666666666,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.expired",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 1559,
+            "time": 12.991666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.expired",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 2159,
+            "time": 17.991666666666667,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.announced",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 2519,
+            "time": 20.991666666666667,
+            "x": 52.5,
+            "y": 29.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 2639,
+            "time": 21.991666666666667,
+            "x": 52.5,
+            "y": 29.5
+          }
+        ],
+        "bothIdleTicks": 18,
+        "checkpoint": "224c3fc15bc3301643e69d9128ec90474be0ea5f9301d1a9cd485480087ab9f0"
+      }
+    },
+    {
+      "difficulty": "expert",
+      "simulationIdentity": "42adce9665ef093a",
+      "options": {
+        "seed": 1,
+        "delayTicks": 0,
+        "swapped": false,
+        "jointCuts": true
+      },
+      "result": {
+        "status": "shared-no-loss-clear",
+        "tick": 2857,
+        "coverage": 0.8026565464895635,
+        "returns": [3, 4],
+        "firstDown": null,
+        "collected": [
+          {
+            "type": "powerup.collected",
+            "tick": 2836,
+            "time": 23.637000000000008,
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "players": [0],
+            "gain": null,
+            "activationTick": 2837,
+            "untilTick": 3437,
+            "x": 52.5,
+            "y": 29.5,
+            "reclaimedBeforeContactStep": false,
+            "partnerCutting": false
+          }
+        ],
+        "bonusEvents": [
+          {
+            "type": "bonus.announced",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 239,
+            "time": 1.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 359,
+            "time": 2.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.announced",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 839,
+            "time": 6.991666666666666,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 959,
+            "time": 7.991666666666666,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.expired",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 1559,
+            "time": 12.991666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.expired",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 2159,
+            "time": 17.991666666666667,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.announced",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 2519,
+            "time": 20.991666666666667,
+            "x": 52.5,
+            "y": 29.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 2639,
+            "time": 21.991666666666667,
+            "x": 52.5,
+            "y": 29.5
+          }
+        ],
+        "bothIdleTicks": 18,
+        "checkpoint": "d5b0a1eb8f780784f5f9cf327887d7c3c2a39916829d67c1a9e7fe28cd7b54a9"
+      }
+    },
+    {
+      "difficulty": "expert",
+      "simulationIdentity": "42adce9665ef093a",
+      "options": {
+        "seed": 1,
+        "delayTicks": 0,
+        "swapped": true,
+        "jointCuts": false
+      },
+      "result": {
+        "status": "shared-no-loss-clear",
+        "tick": 2857,
+        "coverage": 0.8026565464895635,
+        "returns": [4, 3],
+        "firstDown": null,
+        "collected": [
+          {
+            "type": "powerup.collected",
+            "tick": 2836,
+            "time": 23.637000000000008,
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "players": [1],
+            "gain": null,
+            "activationTick": 2837,
+            "untilTick": 3437,
+            "x": 52.5,
+            "y": 29.5,
+            "reclaimedBeforeContactStep": false,
+            "partnerCutting": false
+          }
+        ],
+        "bonusEvents": [
+          {
+            "type": "bonus.announced",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 239,
+            "time": 1.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 359,
+            "time": 2.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.announced",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 839,
+            "time": 6.991666666666666,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 959,
+            "time": 7.991666666666666,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.expired",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 1559,
+            "time": 12.991666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.expired",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 2159,
+            "time": 17.991666666666667,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.announced",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 2519,
+            "time": 20.991666666666667,
+            "x": 52.5,
+            "y": 29.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 2639,
+            "time": 21.991666666666667,
+            "x": 52.5,
+            "y": 29.5
+          }
+        ],
+        "bothIdleTicks": 18,
+        "checkpoint": "b80a89964e6500640178573cf849f26c9ddf0f3452990353d65778ad41f965d8"
+      }
+    },
+    {
+      "difficulty": "expert",
+      "simulationIdentity": "42adce9665ef093a",
+      "options": {
+        "seed": 1,
+        "delayTicks": 0,
+        "swapped": true,
+        "jointCuts": true
+      },
+      "result": {
+        "status": "shared-no-loss-clear",
+        "tick": 2857,
+        "coverage": 0.8026565464895635,
+        "returns": [4, 3],
+        "firstDown": null,
+        "collected": [
+          {
+            "type": "powerup.collected",
+            "tick": 2836,
+            "time": 23.637000000000008,
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "players": [1],
+            "gain": null,
+            "activationTick": 2837,
+            "untilTick": 3437,
+            "x": 52.5,
+            "y": 29.5,
+            "reclaimedBeforeContactStep": false,
+            "partnerCutting": false
+          }
+        ],
+        "bonusEvents": [
+          {
+            "type": "bonus.announced",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 239,
+            "time": 1.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 359,
+            "time": 2.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.announced",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 839,
+            "time": 6.991666666666666,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 959,
+            "time": 7.991666666666666,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.expired",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 1559,
+            "time": 12.991666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.expired",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 2159,
+            "time": 17.991666666666667,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.announced",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 2519,
+            "time": 20.991666666666667,
+            "x": 52.5,
+            "y": 29.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 2639,
+            "time": 21.991666666666667,
+            "x": 52.5,
+            "y": 29.5
+          }
+        ],
+        "bothIdleTicks": 18,
+        "checkpoint": "ffc521071ea4b90c307fbb9a40b5db46f50f216bb45a922602059cb3cbf235e7"
+      }
+    },
+    {
+      "difficulty": "gentle",
+      "simulationIdentity": "e0c510c000d4cdb2",
+      "options": {
+        "seed": 1,
+        "delayTicks": 0,
+        "swapped": false,
+        "jointCuts": true
+      },
+      "result": {
+        "status": "first-knockdown",
+        "tick": 2076,
+        "coverage": 0.4824478178368121,
+        "returns": [2, 3],
+        "firstDown": {
+          "type": "player.downed",
+          "tick": 2075,
+          "time": 17.3,
+          "player": 1,
+          "cause": "enemy-trail",
+          "enemy": "north-keeper"
+        },
+        "collected": [],
+        "bonusEvents": [
+          {
+            "type": "bonus.announced",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 239,
+            "time": 1.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 359,
+            "time": 2.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.announced",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 839,
+            "time": 6.991666666666666,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 959,
+            "time": 7.991666666666666,
+            "x": 52.5,
+            "y": 7.5
+          },
+          {
+            "type": "bonus.expired",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 1559,
+            "time": 12.991666666666667,
+            "x": 19.5,
+            "y": 6.5
+          }
+        ],
+        "bothIdleTicks": 18,
+        "checkpoint": "55ef00adc3e2abffe0e1c355241f5ab3e6429c5cb756d1361c76024cbd9ed227"
+      }
+    },
+    {
+      "difficulty": "standard",
+      "simulationIdentity": "288d79b43a1fdb80",
+      "options": {
+        "seed": 1,
+        "delayTicks": 0,
+        "swapped": false,
+        "jointCuts": true
+      },
+      "result": {
+        "status": "first-knockdown",
+        "tick": 2169,
+        "coverage": 0.571157495256167,
+        "returns": [2, 3],
+        "firstDown": {
+          "type": "player.downed",
+          "tick": 2168,
+          "time": 18.072260367379172,
+          "player": 1,
+          "cause": "enemy-trail",
+          "enemy": "north-keeper"
+        },
+        "collected": [],
+        "bonusEvents": [
+          {
+            "type": "bonus.announced",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 239,
+            "time": 1.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 359,
+            "time": 2.9916666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.expired",
+            "id": "depot-speed",
+            "kind": "player-speed",
+            "tick": 1559,
+            "time": 12.991666666666667,
+            "x": 19.5,
+            "y": 6.5
+          },
+          {
+            "type": "bonus.announced",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 1799,
+            "time": 14.991666666666667,
+            "x": 19.5,
+            "y": 28.5
+          },
+          {
+            "type": "bonus.appeared",
+            "id": "depot-reserve",
+            "kind": "extra-life",
+            "tick": 1919,
+            "time": 15.991666666666667,
+            "x": 19.5,
+            "y": 28.5
+          }
+        ],
+        "bothIdleTicks": 18,
+        "checkpoint": "2ffb7fb11dab90cec279d719e6da830ac818eb7a866e9b36887203b54c6e2505"
+      }
+    }
+  ]
+}

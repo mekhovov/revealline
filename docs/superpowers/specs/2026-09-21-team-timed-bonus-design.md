@@ -208,3 +208,12 @@ cutting. Standard also proves a materialized bonus remains after enclosure and
 grants nothing until contact. Its later first eligible appearance must not be
 called a missed-visible-window relocation. That relocation-taking route, broader
 sampling, pacing, device/human, artwork and publication gates remain open.
+
+## First visible-miss/relocation route
+
+The [Expert Depot successor](../../verification/journey-team-relocation-routes.md)
+demonstrates speed expiry followed by the other anchor appearing, collection and
+a boosted clear in four seat/joint configurations. The partner is not cutting at
+contact; this is not concurrent-taking mastery. Two same-log preset failures are
+retained as negatives. Other presets/maps, reserve relocation, broader starts and
+the remaining human/device/art/release gates are still open.
