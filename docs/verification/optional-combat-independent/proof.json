@@ -1,0 +1,52 @@
+{
+  "source": "851a21005ba9bae3d2846a31b5edf31101c832bd",
+  "sourceBeforeCombat": "6ff7e3a3b4a883004280479a97afec9bfdc1f4b0",
+  "cohorts": {
+    "node20": {
+      "moduleReads": 165,
+      "uniqueBindings": 67,
+      "everyByteVerified": true
+    },
+    "node22": {
+      "moduleReads": 165,
+      "uniqueBindings": 67,
+      "everyByteVerified": true
+    },
+    "comparison": {
+      "moduleReads": 63,
+      "uniqueBindings": 63,
+      "everyByteVerified": true
+    }
+  },
+  "historical": {
+    "cases": 52,
+    "ticksPerEngine": 62400,
+    "statuses": {
+      "running": 48,
+      "respawning": 4
+    },
+    "eventCounts": {
+      "cut.started": 62,
+      "lineImpact.seeded": 20,
+      "lineImpact.ended": 12,
+      "pressure.warning": 8,
+      "lineImpact.arrived": 16,
+      "lineImpact.cleared": 16,
+      "player.failed": 28,
+      "pressure.cancelled": 8,
+      "player.respawned": 24,
+      "cut.closed": 20,
+      "cells.claimed": 20,
+      "capture.stopped": 2,
+      "boss.warning": 4,
+      "pressure.committed": 4,
+      "powerup.collected": 4,
+      "rover.warning": 4,
+      "rover.activated": 4,
+      "encounter.phaseChanged": 16
+    },
+    "comparisonRuntime": "22.22.2",
+    "actualGameplayOrDeviceEvidence": false
+  },
+  "initialHarnessFailure": "comparison loader did not resolve relative imports from the external harness; retained log; corrected only loader, no product change"
+}

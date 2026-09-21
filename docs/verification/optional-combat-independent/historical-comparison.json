@@ -1,0 +1,1586 @@
+{
+  "runtime": "v22.22.2",
+  "current": "851a2100",
+  "previous": "6ff7e3a3",
+  "scope": "Default scout; fixed authored input sequence; 1200 tick maximum; every event and 120-tick checkpoints compared; no claim of human balance or every historical map.",
+  "cases": [
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "orchard-crossing",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "lineImpact.seeded": 1,
+        "lineImpact.ended": 1,
+        "pressure.warning": 1,
+        "lineImpact.arrived": 1,
+        "lineImpact.cleared": 1,
+        "player.failed": 1,
+        "pressure.cancelled": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "121aa6f5b4946da1",
+        "000b36a06fb5af92",
+        "c7c1935e965c2b89",
+        "4e58b7a8fa4e3d76",
+        "3d53862b9a1c1403",
+        "1c03119e2ae26fee",
+        "6870ec6ff74dafc1",
+        "94a2ec2790d6bc0d",
+        "bd89f61d1f7ebc43",
+        "487fd09537690a0d"
+      ],
+      "finalHash": "a2bf4b5fe1b6b9a1"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "orchard-crossing",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "lineImpact.seeded": 1,
+        "lineImpact.ended": 1,
+        "pressure.warning": 1,
+        "lineImpact.arrived": 1,
+        "lineImpact.cleared": 1,
+        "player.failed": 1,
+        "pressure.cancelled": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "39d3e94a149221b6",
+        "2296a9792e4eeee9",
+        "d8c6d7e42c817fee",
+        "7af0fdea8df29679",
+        "45aab1fad0558f28",
+        "10ff4ff0c5065d79",
+        "302600706b8af2ca",
+        "19fe152ab3d8c686",
+        "895cbc879e941670",
+        "358876d47affcc66"
+      ],
+      "finalHash": "b6133ecb64be517e"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "orchard-crossing",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "lineImpact.seeded": 1,
+        "lineImpact.ended": 1,
+        "pressure.warning": 1,
+        "lineImpact.arrived": 1,
+        "lineImpact.cleared": 1,
+        "player.failed": 1,
+        "pressure.cancelled": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "ce2c7f1c3b316c78",
+        "25ccb1cc12671763",
+        "a493c500ae42d504",
+        "2844a7389da9a00b",
+        "c2114b047ec65442",
+        "3adf3f67e0bf8aa7",
+        "c753fa62d94a7ab0",
+        "b14bc7f9c994d01c",
+        "5eb9174756d29596",
+        "b80db08e1f827f3c"
+      ],
+      "finalHash": "049b835c4dfcde4c"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "orchard-crossing",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "lineImpact.seeded": 1,
+        "lineImpact.ended": 1,
+        "pressure.warning": 1,
+        "lineImpact.arrived": 1,
+        "lineImpact.cleared": 1,
+        "player.failed": 1,
+        "pressure.cancelled": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "1f85fa53d956d31d",
+        "4b5c85a5d127455a",
+        "24d2e6da6d7640f1",
+        "a91448ee74c29142",
+        "c2843075620f0cf3",
+        "d39e1f045ba6f29e",
+        "48360dd7ab38b329",
+        "3d04c666f47abb35",
+        "93d45165c6d4245b",
+        "b3d621805b3c3bd9"
+      ],
+      "finalHash": "e7323a23a6cf187d"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "courtyard-exits",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "respawning",
+      "coverage": 0.007352941176470588,
+      "score": 170,
+      "events": {
+        "cut.started": 3,
+        "lineImpact.seeded": 2,
+        "lineImpact.arrived": 2,
+        "lineImpact.cleared": 2,
+        "player.failed": 2,
+        "player.respawned": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1,
+        "capture.stopped": 1
+      },
+      "snapshots": [
+        "5e29264edeb2f734",
+        "fcf393f2534c37eb",
+        "2d34dd835cd7e69e",
+        "348e7315c08301c2",
+        "4a0dc22607b4549b",
+        "2e2b43db799b45f6",
+        "a0633f3f1c629b86",
+        "92f4cb8969fbf075",
+        "afe58cac87230599",
+        "721788fe01d1d854"
+      ],
+      "finalHash": "e98455074598b2df"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "courtyard-exits",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "respawning",
+      "coverage": 0.007352941176470588,
+      "score": 170,
+      "events": {
+        "cut.started": 3,
+        "lineImpact.seeded": 2,
+        "lineImpact.arrived": 2,
+        "lineImpact.cleared": 2,
+        "player.failed": 2,
+        "player.respawned": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1,
+        "capture.stopped": 1
+      },
+      "snapshots": [
+        "cc8139d0d06811b3",
+        "ba296c80c1d838d8",
+        "4e482741274d6079",
+        "64580f0a8ba61f45",
+        "341902d3cdad82e0",
+        "7f2e26d430c55549",
+        "ff8ba8a0805f94e1",
+        "2e606615d4cc164a",
+        "3df946811b0379ba",
+        "ae51205e54cb0e7b"
+      ],
+      "finalHash": "51e139f9f1a8c8c0"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "courtyard-exits",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "respawning",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 2,
+        "lineImpact.seeded": 2,
+        "lineImpact.arrived": 2,
+        "lineImpact.cleared": 2,
+        "player.failed": 2,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "07b8d1edf91d510d",
+        "4f76db4d98575ebe",
+        "858a995cc06f13de",
+        "982c03296c3de2e7",
+        "33f07c6cf9f1d2e2",
+        "0914e797350a3d13",
+        "53047510509369ad",
+        "93a02d37219a4bf9",
+        "d977aec8d1460f33",
+        "698022ad8d4cb63d"
+      ],
+      "finalHash": "f139080a61a65b8e"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "courtyard-exits",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "respawning",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 2,
+        "lineImpact.seeded": 2,
+        "lineImpact.arrived": 2,
+        "lineImpact.cleared": 2,
+        "player.failed": 2,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "bada41b15b0aa5d6",
+        "95f3fc0f2aacd8a5",
+        "1845f0b21f54c9d9",
+        "44afb95a87ce4db0",
+        "0d779a39949183b9",
+        "7304627290dbc860",
+        "8d2e65870c0aa62a",
+        "5d584861d69029b2",
+        "b4a2afd55fc74978",
+        "2043e081a6a05152"
+      ],
+      "finalHash": "2a0f2859c0b5aea9"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "night-crossfire",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "boss.warning": 1,
+        "cut.started": 1,
+        "lineImpact.seeded": 2,
+        "lineImpact.ended": 2,
+        "pressure.warning": 1,
+        "pressure.committed": 1,
+        "powerup.collected": 1,
+        "lineImpact.arrived": 1,
+        "lineImpact.cleared": 1,
+        "player.failed": 1,
+        "pressure.cancelled": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "6180cc677268c37c",
+        "6d0d653d57796f89",
+        "37a8d13090eb3a6d",
+        "2d0e27b30feeb170",
+        "98f9abf63e13eb12",
+        "b5c936108842d29b",
+        "d2c4d0452496ab3b",
+        "1c0ad4a6268eb702",
+        "d6492fee0f2981ac",
+        "cb71a0c21f1bc888"
+      ],
+      "finalHash": "089fb33a33832eed"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "night-crossfire",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "boss.warning": 1,
+        "cut.started": 1,
+        "lineImpact.seeded": 2,
+        "lineImpact.ended": 2,
+        "pressure.warning": 1,
+        "pressure.committed": 1,
+        "powerup.collected": 1,
+        "lineImpact.arrived": 1,
+        "lineImpact.cleared": 1,
+        "player.failed": 1,
+        "pressure.cancelled": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "092a8e947ab53252",
+        "2d2705777b3f6a7f",
+        "1230135916a1c407",
+        "54c5e4da1b6d0c3e",
+        "b99f42ff1c90301c",
+        "b63d4379c67979ad",
+        "dad47a45138bfee1",
+        "e1eca6af57eeb668",
+        "967f5559c0f47dd2",
+        "2c101bd669bf464a"
+      ],
+      "finalHash": "3700461057a1c783"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "night-crossfire",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "boss.warning": 1,
+        "cut.started": 1,
+        "lineImpact.seeded": 2,
+        "lineImpact.ended": 2,
+        "pressure.warning": 1,
+        "pressure.committed": 1,
+        "powerup.collected": 1,
+        "lineImpact.arrived": 1,
+        "lineImpact.cleared": 1,
+        "player.failed": 1,
+        "pressure.cancelled": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "7aa408b72635ff75",
+        "cbfaf338b1189c20",
+        "393829055fe68dc0",
+        "c3001e191ce9698d",
+        "add2690bf20b4d8b",
+        "fb7d3d8518a79b72",
+        "2190d83d6564635a",
+        "6bc639c36bd20d97",
+        "9badb20ddaecf39d",
+        "c9249602fc088fe1"
+      ],
+      "finalHash": "e831e08b39024130"
+    },
+    {
+      "pack": "fpv-arcade-r5",
+      "level": "night-crossfire",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "boss.warning": 1,
+        "cut.started": 1,
+        "lineImpact.seeded": 2,
+        "lineImpact.ended": 2,
+        "pressure.warning": 1,
+        "pressure.committed": 1,
+        "powerup.collected": 1,
+        "lineImpact.arrived": 1,
+        "lineImpact.cleared": 1,
+        "player.failed": 1,
+        "pressure.cancelled": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "50082aea21784be9",
+        "7b3e2e5bd33ac774",
+        "baa78a540ca756a4",
+        "2655ad8169501171",
+        "2d6b28e59fff8acf",
+        "4994df3acd663ace",
+        "c217f86d715fae86",
+        "c0db0e83a6043d6b",
+        "cd752e8ab8c8f7c9",
+        "7731ecdc604f0a9d"
+      ],
+      "finalHash": "f16543fee7a66014"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "four-pickups",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "b9dc02ad79b6b2c8",
+        "762b2592e4ab4dc5",
+        "d07386487df01b84",
+        "baa0240e8dbd98e9",
+        "8902621b4f2fab72",
+        "efda083df743c721",
+        "5ddad539cf1f692d",
+        "f00d2cc6bd46ba8e",
+        "962b0df6b3695eee",
+        "4919cdf9a634afcc"
+      ],
+      "finalHash": "c7a9e41d8f8f1b47"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "four-pickups",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "7e7149f50ecdbd5e",
+        "b70be5d30147b35b",
+        "db4160b0fe70d1de",
+        "cc7d24def86ab287",
+        "d2567ae23c6d6720",
+        "52f82abced3bd69f",
+        "577993f2fdb883c7",
+        "9aff744c3181c5fc",
+        "ed2fbce2f0c31548",
+        "64aeb0ada2b243f6"
+      ],
+      "finalHash": "5e328690dbdf8669"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "four-pickups",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "d94a3d62fd8603d2",
+        "b88cd28a96ce2ce2",
+        "40f4d091fb3338f2",
+        "15062879acc64c65",
+        "6acf54c5df8aac8e",
+        "76ccfcd66546d364",
+        "de63899f614c7418",
+        "f05cbfff4d7931b3",
+        "de359115706e7504",
+        "fbd898c4f3a2cf0a"
+      ],
+      "finalHash": "ee35ff48a815b38a"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "four-pickups",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "6e04fb19f08ef930",
+        "8adbce5b19f6789c",
+        "e0fe771db000dce0",
+        "b1bec33a7a0a528f",
+        "e632075d88257674",
+        "d6e3845a5869d46e",
+        "7bb193cd70f8634a",
+        "ba556eab978ad931",
+        "b9cfdcf1420ca306",
+        "2c7bbdda6bf43f98"
+      ],
+      "finalHash": "99e61fd9af8f3b94"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "field-pressure",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "2761749ffd83df44",
+        "0c17d77ec157f11b",
+        "9a7c26739002409a",
+        "f03328186473ae36",
+        "fde0aa374d600a14",
+        "5c8c31bc8541424b",
+        "89b0b71bd9e8cc1a",
+        "8ed2bfc2b8facdc4",
+        "f780d024a3b37ccc",
+        "274b2bf0f53060ee"
+      ],
+      "finalHash": "7294de870ee42f95"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "field-pressure",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "df3c6e65a4cc91c6",
+        "edb4254024bedc65",
+        "6403b8919e156c40",
+        "fc12072fb6009300",
+        "7edf521ee823af4e",
+        "8d6efcf929d6cc3d",
+        "051ba7503ac2a8dc",
+        "65ebd670283cc0ee",
+        "3a8bc752b1c29ece",
+        "b843e3612fdf672c"
+      ],
+      "finalHash": "634bd14681e90c13"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "field-pressure",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "e1ed6855a959e78e",
+        "009334ff4810e8d0",
+        "7f3c89edc5282798",
+        "0b84c4586c937ef6",
+        "39d0432a39ad34bc",
+        "720821f879c8d0a6",
+        "51539e2fef1af1f1",
+        "a45d48334d005e02",
+        "62f77a94bbc39886",
+        "cff050014d013451"
+      ],
+      "finalHash": "72995339c38d4130"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "field-pressure",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "8d40c974f6c2348f",
+        "320efba7f80072c1",
+        "ee94f77026aa874d",
+        "76d63eec067a4d9f",
+        "60c21e18113a4ad1",
+        "82bccea1df3f4b47",
+        "7756e0155266524c",
+        "8206212cc957d12b",
+        "c30f1d01af4c1c87",
+        "205118421e027188"
+      ],
+      "finalHash": "71593a8b19fdd2ad"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "contour-watch",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "5ca0b676f5dbbf56",
+        "4c8c8bca68be6f79",
+        "afaa01c6e4517fa4",
+        "a3cc94c720a999b9",
+        "828b9dfb245300eb",
+        "32ffe0fd84cc8015",
+        "b41b390aba78deb4",
+        "2d295e951a2b6e89",
+        "93feead9eaf29b7b",
+        "90bb9b28f29302ee"
+      ],
+      "finalHash": "7d3f58dafcce8589"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "contour-watch",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "1fd791585aaf8da1",
+        "be791e3d1afcf9de",
+        "61853e371ce6a47f",
+        "f51e79a76a99978a",
+        "0037079c41c0ae84",
+        "9fd0ed393f10ace6",
+        "826645e5c8ac96b7",
+        "4fa2cf71515b6f82",
+        "8403578e901deb8c",
+        "25d3e868c9b0fd31"
+      ],
+      "finalHash": "eeaed1a1116c57d6"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "contour-watch",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "e1322c70124c0955",
+        "8e2f57a1e9774563",
+        "41286e02671d132b",
+        "085b2c87c71da184",
+        "46c25329f064b766",
+        "bb6da6ad9e561b4d",
+        "93a98d053ac59bc0",
+        "53e2019b39b0f1fd",
+        "c32b5625ec0d6710",
+        "9699e138156efd53"
+      ],
+      "finalHash": "d1a9f49c11fa81a6"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "contour-watch",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "6211c191a0d68454",
+        "ccb71006f52716aa",
+        "430993fa0f650a4e",
+        "35eab8a1a3543b2d",
+        "92e26632bd1c15a3",
+        "8cdf0d95ea3c79d4",
+        "0a1ce805e07e6f65",
+        "17257d9a959a3994",
+        "299bf1ab7ffe73c9",
+        "1dd5cdc6f20be1be"
+      ],
+      "finalHash": "4c3b31b68be9c92b"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "claimed-ground",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1,
+        "rover.warning": 1,
+        "rover.activated": 1
+      },
+      "snapshots": [
+        "1994b2a9b8fdf5a9",
+        "0b79da123d3b6f0f",
+        "51d092512d497caa",
+        "6c5dbb71f185937d",
+        "e5ab9da2acc39eb2",
+        "0a73ada24af6baa2",
+        "3f928b4f98e6528a",
+        "5deb332f0bbcae38",
+        "9048f2f322fb31e5",
+        "5814c3829a47f141"
+      ],
+      "finalHash": "63cdbb30f430c6b7"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "claimed-ground",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1,
+        "rover.warning": 1,
+        "rover.activated": 1
+      },
+      "snapshots": [
+        "e27a54e929ce19f7",
+        "4e8a0bb5e913f1e9",
+        "0a7c9eaf80d25dc0",
+        "5376ad5881e8ec2f",
+        "c1f94b40b1cd07f0",
+        "4469223bc1335c68",
+        "136a261724cfe388",
+        "eaab2920bc6213e6",
+        "11480c15538b3e0b",
+        "66cb12f84fe5fdfb"
+      ],
+      "finalHash": "466ca8dde44ff30d"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "claimed-ground",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1,
+        "rover.warning": 1,
+        "rover.activated": 1
+      },
+      "snapshots": [
+        "d6fbbe55a7484a2d",
+        "85d2a95ec1935b4a",
+        "9ea7beebdc4b5d6a",
+        "bdc27b67c427bfd7",
+        "87027deb13e3b228",
+        "a3e32eb45a0b07a1",
+        "8fbc8812a3e2ca91",
+        "a889f6fe1deba787",
+        "6993528304a758e5",
+        "3de5d203578e8b09"
+      ],
+      "finalHash": "b1da3a39767a9518"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "claimed-ground",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1,
+        "rover.warning": 1,
+        "rover.activated": 1
+      },
+      "snapshots": [
+        "ec8ccaf5c6668d0f",
+        "e1f05a98b564c810",
+        "d80ce79634d9574c",
+        "135c8836679ecd29",
+        "789a4338cc2b13ce",
+        "408364da2887767b",
+        "e9b03ea4bd116013",
+        "9e4ce4f0205f2989",
+        "db63ef7c9bfcc71f",
+        "ce9c3c128feb5ba3"
+      ],
+      "finalHash": "f64774b0aa9bb6f2"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "erosion-window",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "21a5355c4d6ae7eb",
+        "87cab546c91bcb56",
+        "4004f9d06d88b0af",
+        "05826a4e1b2ad1ff",
+        "da0a3fbd798daf81",
+        "b7f147b2260d37f2",
+        "7ffc8e981bb118e0",
+        "15c1fc5efd15d7e2",
+        "cc4996dcf6be1114",
+        "e8f2ef9a8664ce14"
+      ],
+      "finalHash": "27f32092189c480e"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "erosion-window",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "ce75d720712d4479",
+        "902061576068d6c8",
+        "4cd84195e25c2855",
+        "c64e41e812ad9801",
+        "d39aea1681a377db",
+        "14f0922f0c8a4440",
+        "a30a10bd39b02642",
+        "7477b5c1ba5a3550",
+        "9538a5af159e9382",
+        "ef12ee50b7b54446"
+      ],
+      "finalHash": "01cc587edf35095c"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "erosion-window",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "915cf28cc248f124",
+        "0cf0cbb835b7d824",
+        "97bb668b0d7f2b34",
+        "a5c0d20ef623da92",
+        "da0f188491000bc2",
+        "656eec6b79e58d37",
+        "49e93a6d1b365192",
+        "dfa814246c9b6676",
+        "4ad288b90eb1570f",
+        "3778eebfc9410e33"
+      ],
+      "finalHash": "0f8195717e419de6"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "erosion-window",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.16806722689075632,
+      "score": 4000,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "0c090d181be3ed18",
+        "2b0364f3f994f3c4",
+        "928dcfccb27a9a34",
+        "43db422497a9f2b2",
+        "38d1a9c1ab4eebae",
+        "1f7b31ff7b8026f7",
+        "38aa9297d855ce3e",
+        "9386fc37821748a6",
+        "bc60640941051207",
+        "7ad5b6aace08b2b7"
+      ],
+      "finalHash": "449960aadc3ce9b6"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "terrain-reading",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.07063356164383562,
+      "score": 1650,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "9feda37e7548c62f",
+        "7ebb6d5f746fb296",
+        "46248adb3d30413e",
+        "f1e42c74c3d841fd",
+        "12837d2e9ce82724",
+        "2020b4aef7605080",
+        "a93e3dd7531689ca",
+        "cf2e8e99a5526e44",
+        "6509c382caf92189",
+        "eb22156a29ef0ba4"
+      ],
+      "finalHash": "2f395a114b84e21a"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "terrain-reading",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0.07063356164383562,
+      "score": 1650,
+      "events": {
+        "cut.started": 1,
+        "cut.closed": 1,
+        "cells.claimed": 1
+      },
+      "snapshots": [
+        "b63a76786c811ade",
+        "6c317d1846bf10f3",
+        "11191adc265d9087",
+        "50ebccfbc48a430c",
+        "dca6bde0b628d6f9",
+        "38fd4514e54cc96d",
+        "a7a22d1da99382bf",
+        "c9b8c7b0e6b1ad05",
+        "3bcdcb35539c9e44",
+        "3f6ac5814f11f4bd"
+      ],
+      "finalHash": "b26e8f0410a44d07"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "terrain-reading",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1
+      },
+      "snapshots": [
+        "eef2981ae684600c",
+        "a7979146dd3f26b0",
+        "e4f7c72ab789d55d",
+        "4ea30cb6ce5f4034",
+        "3184f72ac2ee9c45",
+        "5aa91cfcd5d403aa",
+        "1312478fe3e6e089",
+        "4175321fa3a3bb9a",
+        "1401d1cdb1478ff7",
+        "b94205d49aa877e5"
+      ],
+      "finalHash": "e84d0d9f19f58c6a"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "terrain-reading",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1
+      },
+      "snapshots": [
+        "8cd328570cdab0a6",
+        "9110f7e459c2375a",
+        "8a69502a0c983e67",
+        "4706aa279c1de14a",
+        "f0f4c7691d20d54f",
+        "371cdabf81115820",
+        "9966f26179f57407",
+        "721ac4dce6eb7924",
+        "a19921d5fcffe2bd",
+        "5a1b7e458030be7b"
+      ],
+      "finalHash": "471c7b4e6bbb159c"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-opening-space",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1
+      },
+      "snapshots": [
+        "71ebe22f847d2833",
+        "16893ce4c7cd07ef",
+        "aec5fda0ef6d0037",
+        "81324dfc03d6b3f1",
+        "e88460b833a1e36e",
+        "44ade478ef6d6067",
+        "04c8b3c60740f579",
+        "5849013c61e0a657",
+        "9458e7e3c9c418c7",
+        "35bc4ff30b460af1"
+      ],
+      "finalHash": "4529f0d714cff117"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-opening-space",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1
+      },
+      "snapshots": [
+        "9950d5df606164c4",
+        "9ac83c3d107c87e0",
+        "d5702b092b600fa0",
+        "fafa22a0462370d2",
+        "a64a57dd09abcb01",
+        "0745b1b3b51b5ee8",
+        "fa164fc5100bf7fa",
+        "ced1c19e37f49670",
+        "c736d012474bcccc",
+        "3213ad81888ebdca"
+      ],
+      "finalHash": "ac53578ae10f20ac"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-opening-space",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1
+      },
+      "snapshots": [
+        "9b11f26a7383ec0d",
+        "02b68f6c02cdb83b",
+        "c8bf67a0a5c6c0f0",
+        "e0145b91feeaeaaa",
+        "119284c00c2505d1",
+        "2a737e04f7561684",
+        "eacc0c973a78e2ab",
+        "9aefa9296fe3956d",
+        "e6de85b3b8e110c9",
+        "7fd167e7b4c3a9b3"
+      ],
+      "finalHash": "1459e5453b808795"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-opening-space",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1
+      },
+      "snapshots": [
+        "2abee5090b0688c4",
+        "78e225081291ed2a",
+        "2652f16356714181",
+        "77c27d1b9c5c1b0b",
+        "f6347661af88557c",
+        "26c59f0347dc1dad",
+        "1eaec0b25186e22e",
+        "dea5d51afc967f3c",
+        "9b26bf12545ef558",
+        "7dbe940816f4830e"
+      ],
+      "finalHash": "0506128e97411e1c"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-wall-slow-channels",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1
+      },
+      "snapshots": [
+        "55627b5725a976d4",
+        "2564c21dc99a0d96",
+        "b2025a28f50b4519",
+        "54aaa334edc35aba",
+        "98c0027687deca50",
+        "4b013b2b7159398c",
+        "63d823d46349a0cb",
+        "3fa4843645c4bb5b",
+        "154bfafbf6f2a74d",
+        "b2986400eea720fb"
+      ],
+      "finalHash": "da5774b365696187"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-wall-slow-channels",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1
+      },
+      "snapshots": [
+        "7d8461d053e0b1b9",
+        "e970d2c4d6d7dc6f",
+        "291b18dfa7e57140",
+        "43ef33f906a58513",
+        "e6f59471b8409c71",
+        "b3a9b259608de559",
+        "f710dddaed378772",
+        "cfb6c8e16d7d56c6",
+        "4c949b160ac04694",
+        "a24033ca5fd0496a"
+      ],
+      "finalHash": "920edaf35258caf6"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-wall-slow-channels",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1
+      },
+      "snapshots": [
+        "2154e4211f3d35da",
+        "343b609618b12946",
+        "bcf8eb2a452a0526",
+        "40c714103b7d73f1",
+        "1c476296be71c817",
+        "34bdda55c9c4d3cb",
+        "ca982a9cc999b4b9",
+        "e8f592f87b50e09a",
+        "88cdd770038abe80",
+        "362138628baddc6e"
+      ],
+      "finalHash": "befaad40b127faf3"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-wall-slow-channels",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1
+      },
+      "snapshots": [
+        "e484de723f92f8d1",
+        "9f691e01c4670f91",
+        "1ae0f398c1bd1e71",
+        "67c230597ab92f0e",
+        "3e8aa32602c08268",
+        "7187dd2a336d67a4",
+        "0006202df898bfaa",
+        "bdf4ec1e67b0d691",
+        "1d03c1fb0597d723",
+        "18ca09b427c86ac1"
+      ],
+      "finalHash": "7788306175ec1d60"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-bars-hollow-chambers",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "bebc5d732f60a43b",
+        "194d4b9ca4ca1a8b",
+        "0d2555720af5ee38",
+        "8b9baeadf2fa0e72",
+        "548e89c690708ddb",
+        "8482ef4f9a8b5d51",
+        "3d8a8592d0f65821",
+        "baf2d1301e1911d9",
+        "25c954239ed54b05",
+        "9073e91359c24992"
+      ],
+      "finalHash": "15c55fdd48baf957"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-bars-hollow-chambers",
+      "version": "xonix-level.v4",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "270ff18ee3493467",
+        "3c3bade108c57b03",
+        "2a8ed3ba5924e04c",
+        "f375abcc94e4b82a",
+        "c9e28edd5da7efbb",
+        "38f8758a93a9e1c5",
+        "19c8d499a3f6eb51",
+        "75fbda7b6c5eb415",
+        "1405a4a423ae7201",
+        "1febb21dfca2279e"
+      ],
+      "finalHash": "77bf76b0283427db"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-bars-hollow-chambers",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "126d4531fa365cc5",
+        "c7feeff3cb16fdd9",
+        "4e3368aaa77a4974",
+        "dfc02fef7d2e3a06",
+        "1f65fb281a262af3",
+        "a8e9b19cf91ad157",
+        "94c77d5b0a27e6c3",
+        "45797b64f5878283",
+        "b6df9da688f01590",
+        "34030be41285453b"
+      ],
+      "finalHash": "3bf3c732d9ee9dd3"
+    },
+    {
+      "pack": "classic-lab",
+      "level": "study-bars-hollow-chambers",
+      "version": "xonix-level.v4",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 1,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "b0533065d2268379",
+        "9c9eb12c07b5a5ad",
+        "38dcd4a4917bcad8",
+        "4378f02cd7ac75ce",
+        "f9aab4e3c2c7b2db",
+        "114b300cd0939ed3",
+        "24f9562d6547dccb",
+        "d97fb4340df1061f",
+        "bfecdb73f797aad0",
+        "74590109a1330157"
+      ],
+      "finalHash": "0cc700ef3e5520ab"
+    },
+    {
+      "pack": "sentinel-relay",
+      "level": "sentinel-relay-01",
+      "version": "xonix-level.v2",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 2,
+        "encounter.phaseChanged": 4,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "ed8d8eda6022b260",
+        "3535a6b32f619331",
+        "c59d1b7f897c5700",
+        "dff6b44d9906d689",
+        "66bdf19106d501b4",
+        "f6e732036a7fc56b",
+        "0743c25f88399831",
+        "ff6832afd0c7f192",
+        "fd206899dbd9c1d0",
+        "bd0e1be1bb349b1c"
+      ],
+      "finalHash": "61c487ddf7b38fd8"
+    },
+    {
+      "pack": "sentinel-relay",
+      "level": "sentinel-relay-01",
+      "version": "xonix-level.v2",
+      "turnPolicy": "immediate",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 2,
+        "encounter.phaseChanged": 4,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "8e235b6bc941457f",
+        "ea8b8ca58edc6496",
+        "8cef431431a3d73f",
+        "aabb4fa49636a75a",
+        "ae2a175bec2eb673",
+        "cba5fe1758cdc124",
+        "edcfcfce9fb664ca",
+        "540bd9b19108c581",
+        "d32ef404809740ff",
+        "bfd891fcd65f0e27"
+      ],
+      "finalHash": "c7a6544e3b90f557"
+    },
+    {
+      "pack": "sentinel-relay",
+      "level": "sentinel-relay-01",
+      "version": "xonix-level.v2",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 2,
+        "encounter.phaseChanged": 4,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "3dac5bef995b7608",
+        "94eef35dc7794d71",
+        "d0b09b74b15d6898",
+        "315c9956015a5100",
+        "e7df0efd5a4ecc52",
+        "4233eaf7e192469b",
+        "196289e6568b2fd5",
+        "ab392d565a254d32",
+        "2a71f675deb41134",
+        "c63c2e58db66017c"
+      ],
+      "finalHash": "79aa2fe8baec3697"
+    },
+    {
+      "pack": "sentinel-relay",
+      "level": "sentinel-relay-01",
+      "version": "xonix-level.v2",
+      "turnPolicy": "grid-center",
+      "seed": 7,
+      "ticks": 1200,
+      "status": "running",
+      "coverage": 0,
+      "score": 0,
+      "events": {
+        "cut.started": 2,
+        "encounter.phaseChanged": 4,
+        "player.failed": 1,
+        "player.respawned": 1
+      },
+      "snapshots": [
+        "9e06415b28e70b5d",
+        "5efe3bc1a0fa5604",
+        "b36530eb5d9f11f9",
+        "90e7d5845a6b7add",
+        "a0e9846af32accd7",
+        "f878b60b4f64ab92",
+        "1ec8d0f9d7f182e8",
+        "4658ced7890f4d43",
+        "0a72a0f2503c54dd",
+        "240432e65cf8a335"
+      ],
+      "finalHash": "3ec0173e788255c2"
+    }
+  ]
+}
