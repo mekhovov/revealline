@@ -30,6 +30,13 @@ call: relay/effect art is drawn above it. Keep raw draw records and separately a
 that the expected objective image is painted; never hide selected art to pass tests.
 
 For the shared handheld-control candidate, follow `docs/shared-device-play.md`.
+Capture loss may arrive after deliberate input cleanup. Require a live gesture
+and its matching pointer ID before treating a capture-loss/cancel event as a
+gameplay interruption. Retire the gesture before releasing capture; its cleanup
+must not pause a newer controller owner. Test numeric native-shaped pointer IDs
+and missing-ID synthetic events separately, plus genuine active cancellation.
+Do not hide this ownership error with a null controller-frame fallback or reuse
+of a stale sample. Keep the original failed CI and red/green evidence.
 Solo and couch seats must use `attachTouchSteering`; preserve independent fingers,
 capture-stop fresh input, held rescue, neutral controller gates and explicit Resume.
 Use the shared validated touch preference record without writing another mode's

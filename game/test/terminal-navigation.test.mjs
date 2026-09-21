@@ -364,30 +364,44 @@ test('campaign-complete replay choice opens the visible Missions dialog without 
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
 });
 
-test('native input modality follows fresh keyboard/touch/controller events without held-pad reclaim', async (t) => {
-  const page = await soloPage(t),
-    controls = controller(page, t);
-  assert.equal(page.doc.body.dataset.inputMode, 'controller');
-  key(page, 'ArrowDown');
-  assert.equal(page.doc.body.dataset.inputMode, 'keyboard');
-  page.$('start-button').focus();
-  key(page, 'Enter');
-  controls.frame();
-  controls.pad.buttons[15] = { pressed: true, value: 1 };
-  controls.frame();
-  assert.equal(page.doc.body.dataset.inputMode, 'controller');
-  page.$('game-canvas').emit('pointerdown', { pointerType: 'touch', button: 0, isPrimary: true });
-  assert.equal(page.doc.body.dataset.inputMode, 'touch');
-  for (let i = 0; i < 5; i++) controls.frame();
-  assert.equal(page.doc.body.dataset.inputMode, 'touch');
-  controls.pad.buttons[15] = { pressed: false, value: 0 };
-  controls.frame();
-  controls.pad.buttons[13] = { pressed: true, value: 1 };
-  controls.frame();
-  assert.equal(page.doc.body.dataset.inputMode, 'controller');
-  assert.equal(page.$('encounter-status').dataset.kind, 'classic');
-  assert.deepEqual(page.errors, []);
-});
+for (const pointerId of [41, undefined])
+  test(`native input modality follows fresh keyboard/touch/controller events without held-pad reclaim (${pointerId === undefined ? 'missing synthetic pointer ID' : 'captured pointer 41'})`, async (t) => {
+    const page = await soloPage(t),
+      controls = controller(page, t);
+    assert.equal(page.doc.body.dataset.inputMode, 'controller');
+    key(page, 'ArrowDown');
+    assert.equal(page.doc.body.dataset.inputMode, 'keyboard');
+    page.$('start-button').focus();
+    key(page, 'Enter');
+    controls.frame();
+    controls.pad.buttons[15] = { pressed: true, value: 1 };
+    controls.frame();
+    assert.equal(page.doc.body.dataset.inputMode, 'controller');
+    page.$('game-canvas').emit('pointerdown', {
+      pointerId,
+      clientX: 100,
+      clientY: 100,
+      pointerType: 'touch',
+      button: 0,
+      isPrimary: true,
+    });
+    assert.equal(page.doc.body.dataset.inputMode, 'touch');
+    for (let i = 0; i < 5; i++) controls.frame();
+    assert.equal(page.doc.body.dataset.inputMode, 'touch');
+    controls.pad.buttons[15] = { pressed: false, value: 0 };
+    controls.frame();
+    controls.pad.buttons[13] = { pressed: true, value: 1 };
+    controls.frame();
+    assert.equal(page.doc.body.dataset.inputMode, 'controller');
+    assert.equal(page.$('encounter-status').dataset.kind, 'classic');
+    assert.equal(
+      page.$('game-overlay').hidden,
+      true,
+      'Intentional controller handoff must not cancel and pause the active flight.',
+    );
+    assert.equal(page.rendered.run.status, 'running');
+    assert.deepEqual(page.errors, []);
+  });
 
 for (const mode of ['keyboard', 'controller']) {
   test(`${mode}: Pause → Main menu → Settings/Missions → return stays paused and preserves the live cut`, async (t) => {
