@@ -28,3 +28,19 @@ An early native Control size End-key interaction did not change the setting; it 
 Physical iPhone Safari, Home Screen lifecycle, safe-area notches, simultaneous fingers, Steam Deck A and one-seat controller handoff remain required. No resized desktop window certifies those devices. The separate presentation delivery is frozen; this follow-up needs its own production fingerprint review, source gates, version, PR and Pages verification after the release controller supplies an accepted base.
 
 [Apple game controls](https://developer.apple.com/design/human-interface-guidelines/game-controls) informs familiar contextual controls. [Steam compatibility requirements](https://partner.steamgames.com/doc/steamhardware/compat) require the full controller journey; a successful launch unit test alone is insufficient. Preserve native interaction evidence separately from device certification.
+
+## Breakpoint correction after 47dde74e
+
+Further native testing found a separate inherited desktop fallback at 501–600px
+landscape height. At 960×540, First Connection used a 236×118 board because the
+compact stylesheet declared grid rows without establishing a grid; its wrapper
+retained the desktop 240px cap. The shared handheld query now owns grid/slot/bitmap
+fitting across its complete range, including consistent stronghold text sizing.
+
+On the final stylesheet, First Connection at 960×540 with Plain Large text uses
+862×431. Relay Yard uses 807.20×403.60 at 960×540 and 927.20×463.60 at 1024×600.
+Native 500/501px boundary checks preserve smooth fitting. The earlier 568×320
+Relay result 363.20×181.60 and portrait 370×185 remain unchanged. All measured
+targets remain in view and at least 44px. See `breakpoint-summary.json` and its
+independently verified served-byte log. This is a further candidate correction,
+not public acceptance; original evidence above remains scoped to its original CSS.
