@@ -244,7 +244,10 @@ See the P02 and Studio-image evidence files for exact bounds and remaining gates
 Studio now exposes catalog-based enemy CRUD alongside geometry. Authors select
 roles, preset-resolved speed tiers and legal domain placements; arbitrary physics
 overrides remain unavailable. Every supported mode/preset compiles before adoption.
-Team retains its field-keeper-only qualification boundary. Native add/invalid edit/
+At that P02 checkpoint, Team retained its field-keeper-only qualification boundary.
+The later P14 TeamMissionV3 edition adds reclaimed roamers through the same
+Studio/compiler role qualifier; older Team editions still reject unsupported roles.
+Native add/invalid edit/
 direction change/Undo/reload and automated confirmation/failure tests are recorded
 in the P02 evidence; edited content is still unqualified until separately tested.
 Existing foundation/wall/terrain rectangles can also be reshaped or removed with

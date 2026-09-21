@@ -473,3 +473,26 @@ Departure and chooser-replacement warnings now distinguish unsaved territory in
 the current attempt from previously recorded mission clears. They no longer claim
 that all Team progress exists only on the current page. Eighteen exit/discovery/
 input cases pass on both Node versions, including candidate and legacy Stay paths.
+
+### Explain occupied regions at early Team closures
+
+The first authored four-mission Team learning arc now gets a short in-play capture
+caption. After an actual cells-claimed/closure event, the shared frozen capture
+inspector counts retained regions and identifies their field-enemy anchors. The
+caption explains that empty regions fill while occupied regions remain unclaimed,
+and reminds both players to choose a fresh direction. Joint-cut feedback preserves
+the explanation. It never pauses, opens a tutorial dialog or predicts a future cut.
+
+The explicit candidate entry supplies arc membership from the shared learning-arc
+registry. Same-ID imports, unowned rows, mismatched presets/editions, later arcs and
+legacy stronghold encounters do not acquire this teaching behavior. No simulation,
+event, manifest or progression bytes change. Existing danger/rescue messages can
+still take precedence in the event stream.
+
+Fifty capture/ground/roamer/chooser/search/full-Journey tests pass on both Node20
+and22. Public-input first-arc closures include line-only returns; before/after
+state serialization proves the inspector does not mutate them. An actual-host
+joint bridge earns under5% while both keeper regions remain represented in the
+caption, with no menu/pause interruption. Twenty-two additional legacy briefing/
+discovery/exit checks pass on Node20. Native caption readability and genuine player
+understanding remain separate evidence, not inferred from these scripted tests.
