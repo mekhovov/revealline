@@ -175,3 +175,16 @@ The761-test combined cohort passes on both supported Node versions. Independent
 review passes after a nested canvas-scope failure was fixed and pinned.
 Slices4–5 remain open: purpose-built optional-route studies, actual device/two-human
 qualification and coordinated publication. No automatic migration of old missions.
+
+## Purpose-built studies: partial slice4
+
+Three original Team maps now cover shared slow/opposite chambers, freeze/central
+return/terrain neutralization, and collector speed/roamer escape platforms.
+[Study evidence](../../verification/journey-team-timed-studies.md) records72 base
+no-loss shared clears and36 timing/seed probes,16 of which do not qualify.
+Coolant full neutralization, Depot both-rover mastery and adaptive alternate-anchor
+taking routes remain open. Studio can inspect/apply/export these labelled greyboxes;
+there is no automatic Journey enrollment, artwork or publication claim.
+The904-test combined gate passes on both Node versions; that includes expected
+failed-probe outcomes, not904 successful clears. Slice4 remains partial and slice5
+still requires device/two-human qualification and coordinated release.
