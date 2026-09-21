@@ -689,6 +689,14 @@ and bookmark reload are checked. Broader relocation/mastery, human/device balanc
 final integration and coordinated release remain unfinished; this is not P14
 acceptance or a new required content quota.
 
+The [Coolant relocation follow-up](verification/journey-coolant-relocation.md)
+qualifies all three presets at the live seed, retaining real captures between
+the first visible expiry and relocated collection. It also corrects Studio's
+wording: later appearances require another eligible field anchor and remaining
+appearance capacity. No schedule, geometry or difficulty edition changes.
+Remaining relocation work is Window, Depot Gentle/Standard and optional reserves;
+human/device and coordinated publication gates still apply.
+
 P03 frozen source9ee58177 passed all7280 hosted tests on Node20.19.6 in run35511526470;
 freeze=false deliberately produced no release snapshot. Integration, publication
 and human acceptance remain with the release owner. P04 separately prepares seven
