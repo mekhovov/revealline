@@ -152,6 +152,13 @@ failures have verified safe alternatives; they are not unavoidable spawn damage.
 No global easing or warning shortening to make old scripts pass, and no balance
 signoff from technical feasibility alone.
 
+Team now has its own [stronger-pressure route assessment](../../verification/journey-team-pressure.md):
+13/36 sets survive bounded historical reuse and four fresh opening routes extend
+that to17/36, with joint settings and seat-label symmetry checked separately.
+The19 remaining sets, short clears and one-player-idle patterns require further
+work. Team stores a seed but does not vary enemy movement with it; use real
+departure timing differences, not seed-count inflation. This is not P14 acceptance.
+
 Audit every map, not only its preset number. Measure first-safe-return travel time,
 enemy travel during that exposure, unavoidable spawn pressure, available alternate
 routes, mechanic combinations, objective/coverage cleanup and optimized clear time.
