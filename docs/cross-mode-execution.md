@@ -112,8 +112,10 @@ release controller sequences this candidate after the separate music PR209.
 The retained browser results remain observations of their exact original source,
 not a newly performed full-device or final integrated release qualification.
 
-**Separate landscape follow-up:** `codex/team-landscape-arena` at
-`39381478825a4739222c071f6f294c713f197faa` uses Solo-style corner touch overlays
+**Separate landscape follow-up:** the original `codex/team-landscape-arena` at
+`39381478825a4739222c071f6f294c713f197faa` is preserved. The current held branch is
+`codex/team-landscape-next` at `61af3634`, rebased onto the accepted v0.77 foundation.
+It uses Solo-style corner touch overlays
 instead of full-height side gutters, and fixes the Team compact-layout gap between
 501px and600px viewport height. Bounded actual-browser measurements with Large/Plain
 text include Relay Yard363.203×181.602 at568×320 and807.203×403.602 at960×540;
@@ -121,6 +123,35 @@ portrait retains the complete370×185 arena at390×844. Targets remain at least4
 Corner controls can cover corner artwork. This is committed and separately tested,
 but is not part of the held Team cutoff or the public release. Physical simultaneous
 fingers, Safari bars and controller hardware remain unverified.
+
+### Current follow-up register — not yet publicly delivered
+
+This register distinguishes committed corrections on the isolated
+`codex/team-presentation-test-fixtures` branch from reviewed candidate packets.
+Their tests support these named scopes; the full Team integration, browser build
+and public gate remain open.
+
+| Step | Status | Player-visible result and acceptance evidence | Next gate |
+|---|---|---|---|
+| P18-INPUT-RECONNECT | Source regression committed `33091473` | Both turning modes preserve a paused cut across disconnect/held reconnect; neutral does not resume; fresh A does. Complete host file14/14 per runtime. [Evidence](verification/controller-reconnect-host/README.md). | Final source composition and real controller/Steam Deck. |
+| P18-INPUT-CANCEL | Source fix committed `9ec6d7cb` | Cancelling an ignored extra D-pad finger no longer releases Solo steering or pauses both couch seats. Active-finger interruption still pauses. Couch/navigation113/113 and separate Solo/input66/66 per runtime. [Evidence](verification/shared-touch-cancel/README.md). | Rebase after PR209, shared-input/audio overlap, browser and physical multitouch. |
+| P16-STORAGE-REOPEN | Source fix committed `7058a84d` | Closed Journey storage reopens on the next explicit attempt while retaining pending progress; no automatic write replay.23/23 per runtime. [Evidence](verification/journey-storage-recovery/README.md). | Compose with Records/Backup and verify actual browser interruption/recovery. |
+| P16-RECORDS-REVIEW | Candidate reviewed; recovery follow-on open | Source and retained391-case/every-response evidence independently checked; read-only records retain historical identity and focus. [Review](verification/player-navigation-independent-review/README.md). | Collection parent, actionable Refresh recovery for ordinary Solo, final integration and device journeys. |
+| P16-GUIDE-INTENT | Candidate correction reviewed, not integrated | The separate successful-preparation fix closes all three root late-launch probes. Failure-only focus handling is insufficient. [Review](verification/player-navigation-independent-review/README.md). | Integrate both parent and follow-on, then final host/browser gates. |
+| P16-BACKUP-FEEDBACK | Candidate pair reviewed, not integrated | Root reproduced old Export success hiding a newer session-only Restore warning. The follow-on separates status ownership and passes root's27-case component composition with the new storage backend. [Failure and follow-on check](verification/backup-export-race-review/follow-on/README.md). | Accept parent and follow-on together; final complete source/native receipt and public gate. |
+| P03-FIRST-FLIGHT | Candidate pair reviewed, not integrated | Explicit Cancel returns to Learn; Read retires pending entry while preserving the reader. [Independent pair review](verification/recovery-packet-independent-review/README.md). Neither candidate is publicly delivered. | Keep cancellation and subsequent completion/failure ownership corrections together; final source/browser/device checks. |
+
+Fixture corrections `efd340d4` and `670e9a44` preserve required current artwork
+preparation and return assigned Canvas properties; they do not loosen runtime
+validation. The broader local Team source run was stopped for disk capacity,
+with its partial failures retained and only owned temporary hydration removed.
+It is not a full passing suite. [Run and cleanup record](verification/team-presentation-fixture-integration/README.md).
+
+PR209 remains the sole next release. Its final source changes overlap handheld CSS,
+so reconcile the landscape follow-up against the accepted result before its own
+qualification. No patch in this table closes an entire programme phase. Physical
+Safari bars/rotation/multitouch, Steam Deck default mapping, audible listening and
+human difficulty assessment remain explicit open gates.
 
 **Next delivery sequence:** finish the controller's separate music PR209 delivery →
 final Team source/native/build qualification and immutable release → separately

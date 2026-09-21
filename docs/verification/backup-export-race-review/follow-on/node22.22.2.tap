@@ -1,0 +1,172 @@
+TAP version 13
+# Subtest: Journey restore merges missing progress for every mode while current receipts and cursors win
+ok 1 - Journey restore merges missing progress for every mode while current receipts and cursors win
+  ---
+  duration_ms: 2.279875
+  type: 'test'
+  ...
+# Subtest: malformed, oversized, prototype and invented receipt backups cannot modify state
+ok 2 - malformed, oversized, prototype and invented receipt backups cannot modify state
+  ---
+  duration_ms: 1.511166
+  type: 'test'
+  ...
+# Subtest: restoration and live progress merge atomically across tabs in either transaction order
+ok 3 - restoration and live progress merge atomically across tabs in either transaction order
+  ---
+  duration_ms: 4.191417
+  type: 'test'
+  ...
+# Subtest: failed restore stays exportable in-session, retries and survives recreation without replacing saved history
+ok 4 - failed restore stays exportable in-session, retries and survives recreation without replacing saved history
+  ---
+  duration_ms: 1.997958
+  type: 'test'
+  ...
+# Subtest: corrupt durable data is not replaced by a valid imported backup
+ok 5 - corrupt durable data is not replaced by a valid imported backup
+  ---
+  duration_ms: 0.334458
+  type: 'test'
+  ...
+# Subtest: backup dialog inspects without mutation, restores only on Apply, and exports the resulting profile
+ok 6 - backup dialog inspects without mutation, restores only on Apply, and exports the resulting profile
+  ---
+  duration_ms: 2.681541
+  type: 'test'
+  ...
+# Subtest: closed dialogs and later file choices invalidate in-flight inspection; failed imports leave no Apply
+ok 7 - closed dialogs and later file choices invalidate in-flight inspection; failed imports leave no Apply
+  ---
+  duration_ms: 0.71925
+  type: 'test'
+  ...
+# Subtest: durable and idempotent Restore move owned disabled-Apply focus to Back without changing retained receipts
+ok 8 - durable and idempotent Restore move owned disabled-Apply focus to Back without changing retained receipts
+  ---
+  duration_ms: 2.725583
+  type: 'test'
+  ...
+# Subtest: session-only Restore keeps the accepted records and directs owned focus to Export without a second restore
+ok 9 - session-only Restore keeps the accepted records and directs owned focus to Export without a second restore
+  ---
+  duration_ms: 1.11575
+  type: 'test'
+  ...
+# Subtest: pre-adoption Restore rejection retains inspection and returns focus to a usable retry
+ok 10 - pre-adoption Restore rejection retains inspection and returns focus to a usable retry
+  ---
+  duration_ms: 1.502584
+  type: 'test'
+  ...
+# Subtest: an observer failure after adoption cannot rearm Restore or prevent persistence and owned Back focus
+ok 11 - an observer failure after adoption cannot rearm Restore or prevent persistence and owned Back focus
+  ---
+  duration_ms: 1.6
+  type: 'test'
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer focus
+ok 12 - accepted Restore retains its data but cannot reclaim focus after newer focus
+  ---
+  duration_ms: 1.155333
+  type: 'test'
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer pointer
+ok 13 - accepted Restore retains its data but cannot reclaim focus after newer pointer
+  ---
+  duration_ms: 1.008583
+  type: 'test'
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer keyboard
+ok 14 - accepted Restore retains its data but cannot reclaim focus after newer keyboard
+  ---
+  duration_ms: 0.86
+  type: 'test'
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer file choice
+ok 15 - accepted Restore retains its data but cannot reclaim focus after newer file choice
+  ---
+  duration_ms: 1.524583
+  type: 'test'
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer close and reopen
+ok 16 - accepted Restore retains its data but cannot reclaim focus after newer close and reopen
+  ---
+  duration_ms: 0.909958
+  type: 'test'
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer native close and reopen
+ok 17 - accepted Restore retains its data but cannot reclaim focus after newer native close and reopen
+  ---
+  duration_ms: 0.753208
+  type: 'test'
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer hidden then visible
+ok 18 - accepted Restore retains its data but cannot reclaim focus after newer hidden then visible
+  ---
+  duration_ms: 0.685209
+  type: 'test'
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer pagehide then pageshow
+ok 19 - accepted Restore retains its data but cannot reclaim focus after newer pagehide then pageshow
+  ---
+  duration_ms: 1.434959
+  type: 'test'
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer window blur
+ok 20 - accepted Restore retains its data but cannot reclaim focus after newer window blur
+  ---
+  duration_ms: 0.89975
+  type: 'test'
+  ...
+# Subtest: unfocused touch Restore accepts the inspected progress without moving focus to a successor
+ok 21 - unfocused touch Restore accepts the inspected progress without moving focus to a successor
+  ---
+  duration_ms: 0.689667
+  type: 'test'
+  ...
+# Subtest: a delayed native disabled-Apply blur remains owned until a held durable Restore completes
+ok 22 - a delayed native disabled-Apply blur remains owned until a held durable Restore completes
+  ---
+  duration_ms: 0.715958
+  type: 'test'
+  ...
+# Subtest: opening and closing another modal permanently retires held Restore completion focus
+ok 23 - opening and closing another modal permanently retires held Restore completion focus
+  ---
+  duration_ms: 1.239833
+  type: 'test'
+  ...
+# Subtest: a Restore observer may open a newer backup visit without old completion changing its status or focus
+ok 24 - a Restore observer may open a newer backup visit without old completion changing its status or focus
+  ---
+  duration_ms: 0.8125
+  type: 'test'
+  ...
+# Subtest: an injected flush exception after adoption keeps Export available and never rearms Restore
+ok 25 - an injected flush exception after adoption keeps Export available and never rearms Restore
+  ---
+  duration_ms: 1.047042
+  type: 'test'
+  ...
+# Subtest: a queued native close from the previous visit cannot discard a newly inspected backup
+ok 26 - a queued native close from the previous visit cannot discard a newly inspected backup
+  ---
+  duration_ms: 0.8575
+  type: 'test'
+  ...
+# Subtest: review: late earlier export must not replace session-only Restore warning
+ok 27 - review: late earlier export must not replace session-only Restore warning
+  ---
+  duration_ms: 1.194875
+  type: 'test'
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 165.8005

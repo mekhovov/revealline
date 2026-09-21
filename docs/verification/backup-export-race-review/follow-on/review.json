@@ -1,0 +1,24 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "requires": "dfaa14f6957dee37204e6ca9ee64077d6ba553a23af0f0b4e1062e92a07fe06c",
+  "patch": "57da46b14aad3ae897b562ef71aff151ae82908b03932e967f2a55eb95d28f85",
+  "backendSource": "7058a84d80d3cee465e00962871f2017afcb4ddb",
+  "sourceBindings": {
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/journey-backup.test.mjs": "e12932d9f58005a555a82ad09c0caa404414b77874c18fbe662f595c5f635afd",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/ui/journey-backup.mjs": "87e67d47f47f6aa96cd3572c00e95e362d9359e2037cdfd6d8a963b945fe0016",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/journey/profile.mjs": "7c3f0b88c6a66db3a99f77074b5c293a0de850923334eb457efae542b0b34626"
+  },
+  "runs": [
+    {
+      "node": "20.19.5",
+      "exitCode": 0,
+      "logSHA256": "6bcb6b3fcd83653b9fcb6aa20e86bc35c965eb513b435d6fced447f38f93f408"
+    },
+    {
+      "node": "22.22.2",
+      "exitCode": 0,
+      "logSHA256": "59f1253acaaf69a5e2ae89a28b9ec69a1d0263ab48a6f8d7b45ebfdd9fc87cf3"
+    }
+  ],
+  "scope": "Independent complete27-case prior reproduction/component file against candidate BackupUI and committed backend recovery; no fullapp/native/public acceptance."
+}
