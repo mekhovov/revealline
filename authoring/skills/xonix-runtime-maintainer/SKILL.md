@@ -1322,3 +1322,10 @@ When selected Team records add image slots, prepare every advertised anchor, eff
 Observe arena pictures by their full-arena draw geometry and exact decoded image identity, while retaining the raw draw log for decoration and ordering checks. Do not treat the last decorative icon as the background or delete stale-image/ownership assertions. Finite Canvas fixtures must return assigned style properties so contrast calculations see real colors. No fixture repair may bypass production preparation checks.
 
 Prompt example: “Run the complete Team host and painter cohort after a presentation successor. Distinguish original picture calls from later actors and effects, preserve required asset validation and prior snapshot ownership, and compare paused state and input journeys. Report finite Canvas evidence separately from real browser pixels and physical-device qualification.”
+
+
+### Journey database connection recovery
+
+A closed IndexedDB connection must not permanently poison Journey reads or saves. Retire only the current cached connection after unexpected close, version change or synchronous transaction `InvalidStateError`; retire only the owning open request on failure. Keep late events from retired owners harmless. Preserve the failed operation and pending progress for the next call; never replay a transaction automatically or convert a storage error into an empty success.
+
+Prompt example: “Close the Journey connection after loading, then attempt a save. Prove the clear remains available in memory, the failed operation performs no hidden retry, and explicit flush opens once and commits once. Cover late old close/error notifications, blocked and synchronous open failures, concurrent readers and quota refusal. Keep finite IndexedDB tests separate from native storage-interruption qualification.”

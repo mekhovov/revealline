@@ -140,39 +140,68 @@ export function applyJourneyEvent(source, event) {
 
 /** Each read/modify/write is one IndexedDB transaction, including across tabs. */
 export function createJourneyBackend({ indexedDB = globalThis.indexedDB } = {}) {
-  let opening;
+  let opening, connection;
+  const retire = (db) => {
+    // A delayed notification from an old connection cannot retire a newer one.
+    if (connection !== db) return;
+    connection = null;
+    opening = null;
+  };
   const open = () => {
     if (!indexedDB) return Promise.reject(new Error('Journey storage is unavailable.'));
-    return (opening ??= new Promise((resolve, reject) => {
+    if (opening) return opening;
+    let resolve, reject;
+    const pending = new Promise((yes, no) => {
+      resolve = yes;
+      reject = no;
+    });
+    opening = pending;
+    let failed = false;
+    const fail = (error) => {
+      failed = true;
+      if (opening === pending) opening = null;
+      reject(error || new Error('Journey storage could not open.'));
+    };
+    try {
       const request = indexedDB.open(JOURNEY_PROFILE_DATABASE, 1);
-      let failed = false;
-      const fail = (error) => {
-        failed = true;
-        opening = null;
-        reject(error || new Error('Journey storage could not open.'));
-      };
       request.onupgradeneeded = () => request.result.createObjectStore('profiles');
       request.onerror = () => fail(request.error);
       request.onblocked = () => fail(new Error('Close an older Journey tab to update storage.'));
       request.onsuccess = () => {
         const db = request.result;
-        if (failed) {
+        if (failed || opening !== pending) {
           db.close();
           return;
         }
+        connection = db;
         db.onversionchange = () => {
+          retire(db);
           db.close();
-          opening = null;
         };
+        db.onclose = () => retire(db);
         resolve(db);
       };
-    }));
+    } catch (error) {
+      fail(error);
+    }
+    return pending;
   };
   async function transaction(events) {
     const db = await open();
+    let tx;
+    try {
+      tx = db.transaction('profiles', events.length ? 'readwrite' : 'readonly');
+    } catch (error) {
+      if (error?.name === 'InvalidStateError') {
+        retire(db);
+        db.close();
+      }
+      // Preserve the failed operation. Only the next explicit call reopens;
+      // a write is never replayed implicitly by connection recovery.
+      throw error;
+    }
     return new Promise((resolve, reject) => {
-      const tx = db.transaction('profiles', events.length ? 'readwrite' : 'readonly'),
-        store = tx.objectStore('profiles'),
+      const store = tx.objectStore('profiles'),
         read = store.get('journey');
       let next, failure;
       read.onsuccess = () => {
