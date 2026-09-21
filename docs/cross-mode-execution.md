@@ -1,6 +1,6 @@
 # Reveal Line cross-mode execution register
 
-## Current delivery — v0.78.0 accepted; v0.79.0 device candidate qualifying
+## Current delivery — v0.78.0 accepted; v0.79.0 source merged; publication pending
 
 **Public default: [v0.78.0](https://mekhovov.github.io/revealline/releases/v0.78.0/site/game/).**
 Qualified game source `e9434d03feb30bf8767051b2832a4ab987b2fa41`, source PR209,
@@ -23,9 +23,26 @@ Team landscape fit, Solo caption space, ignored-finger cancellation, resize and
 fullscreen ownership. It retains all76 reviewed device postimages from `8c81c9b3`
 exactly on accepted main; only version files and release notes are added. Final
 [source qualification and freeze](https://github.com/mekhovov/revealline/actions/runs/35605558851)
-are in progress. The earlier source-only run35604260193 passed source checks and
-was deliberately superseded while full shards were running; it is not a full-test
-pass. No v0.79 release or physical-device acceptance is claimed.
+passed all source gates and four shards: **8,026 tests**, zero failures/skips.
+[Source PR214](https://github.com/mekhovov/revealline/pull/214) merged as
+`07d86936`, with the same tree as qualified `fc847b18`. The independently inspected
+original artifact passed run35612104747. The PR-family tests, immutable release,
+selector/Pages and deployed acceptance are still pending. Earlier source-only
+run35604260193 was superseded and is not a full-test pass.
+
+Fresh exact-source browser checks cover 844×390 Solo/Team/Versus with a **44px HUD
+row**, shared D-pad preferences, 52px direction targets and no horizontal overflow.
+Solo earned52.2%/8,160/3lives through keyboard and visible D-pad; Team and Versus
+entered, paused and resumed through keyboard menus. Team's390×844 pause panel
+fits with Resume focused. All422 served paths/19,722,257 bytes were rehashed.
+These are source-preview/browser observations, not public, multi-touch or physical
+Steam Deck acceptance. Corner controls can overlap cells.
+
+The bounded **v0.79.1 successor `9f4bc2da`** combines mission-card focus restoration
+with consistent Team terminal HUD/footer/Help text. Root checks passed81 mission
+and116 Team tests on each Node20/22 runtime; native originals are retained.
+Its final exact-source qualification follows v0.79 publication integration. Do not
+mark the patch or the full P03/P08 phase accepted yet.
 
 Later Team artwork, Studio, pack/Collection recovery and campaign candidates remain
 separate. See [shared-device implementation](shared-device-play.md) and the current
@@ -33,7 +50,7 @@ follow-up register below. Published v0.77.0 remains preserved through Archive41.
 
 | Priority | Programme work | Current boundary |
 |---|---|---|
-| 1 | Release shared handheld controls and compact layouts | v0.78.0 accepted; focused v0.79.0 final-source qualification/freeze in progress. Public device delivery and physical gates remain. |
+| 1 | Release shared handheld controls and compact layouts | v0.78.0 accepted; v0.79.0 source/8,026 tests/freeze/original inspection passed and PR214 merged. Public delivery and physical gates remain. |
 | 2 | Finish native navigation, shared readability and actor parity | Partial; all modes, complete input journeys, actual playing scale and responsive layouts remain. |
 | 3 | Action feedback, fair challenge and rewards | Partial; readable warnings/counters, loss causes, Retry/Next/stories and human playtests remain. |
 | 4 | Music, creation, discovery and campaign production | Partial; auditioned media, complete asset coverage, real installation/transfer/recovery and the revised XPOSED Journey programme remain. |
