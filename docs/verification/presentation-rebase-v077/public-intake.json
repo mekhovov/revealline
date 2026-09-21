@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "Independent receipt and complete retained HTTP-result intake; no duplicate HTTP requests or native-device acceptance",
+  "sourceArtifactId": 10628187205,
+  "workflowRun": 35576008746,
+  "controllerCommit": "6f851d1bce4cb7d5f257546ab6ffd3c68231f08a",
+  "source": "432110b51c570b838cdae390790b67dfa76f0785",
+  "receiptSha256": "b2b3d0cc1593159b8d00accdd8a1533356b22035be44e826547f653d3c9e8164",
+  "controllerReceiptMatchesFreshDownload": true,
+  "files": 4162,
+  "bytes": 864619510,
+  "failures": 0,
+  "allDirect200FirstAttempt": true,
+  "resultsSha256": "88ee756c09f4fd87e3bba858215984c01331e9b75bbf4e15731de3b6e721f450",
+  "attemptsSha256": "88ee756c09f4fd87e3bba858215984c01331e9b75bbf4e15731de3b6e721f450",
+  "limitations": [
+    "Result intake relies on controller HTTP observations; auditor code inspected",
+    "Public browser/offline owner acceptance pending",
+    "No physical touch/controller certification"
+  ]
+}
