@@ -36,12 +36,15 @@ and a native Solo clear, preference change and immediate Next pass. See
 `verification/journey-character-reactions.md`. Character artwork/materials,
 soundtrack, human reception and accepted-release integration remain separate gates.
 
-Actor-material follow-up has84 bounded code-native body studies (twelve material
+Actor-material follow-up has84 bounded code-native body recipes (twelve material
 treatments across seven existing roles), with a read-only native-size review sheet.
-Initial soft-edge rendering was corrected and the candidate viewed on light, dark
-and neutral surfaces. This is not runtime enrollment or final character art;
-explicit successor themes, shared-painter integration and live/human qualification
-remain required. See `verification/journey-actor-material-studies.md`.
+An explicit `whole-originals-v4` Solo/Versus candidate now uses twelve successor
+themes without changing498 resolved simulation identities, old editions, uploaded
+body precedence or the V3 suspended slot.95 checks pass on each supported Node;
+native opening clear/Next, Neon Solo/Versus rendering and Studio inspect-only flow
+pass within the documented scope. Team's separate prepared-sprite pipeline is not
+yet enrolled. Human recognition, final character art, newer-host integration and
+Pages publication remain open. See `verification/journey-actor-material-studies.md`.
 
 Team original-art source checkpoint: eleven new originals plus the existing Shared
 detour picture now bind all twelve candidate missions without changing36 resolved
