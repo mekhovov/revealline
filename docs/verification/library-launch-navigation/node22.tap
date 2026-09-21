@@ -1,0 +1,184 @@
+TAP version 13
+# Subtest: ready installed selection leaves Settings and Library without starting flight
+ok 1 - ready installed selection leaves Settings and Library without starting flight
+  ---
+  duration_ms: 409.096334
+  type: 'test'
+  ...
+# Subtest: ready challenge selection leaves Settings and Library without starting flight
+ok 2 - ready challenge selection leaves Settings and Library without starting flight
+  ---
+  duration_ms: 137.708541
+  type: 'test'
+  ...
+# Subtest: passive Library Back returns to Settings and preserves the paused cut
+ok 3 - passive Library Back returns to Settings and preserves the paused cut
+  ---
+  duration_ms: 380.221416
+  type: 'test'
+  ...
+# Subtest: actual installed launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+ok 4 - actual installed launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+  ---
+  duration_ms: 628.111291
+  type: 'test'
+  ...
+# Subtest: actual challenge launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+ok 5 - actual challenge launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+  ---
+  duration_ms: 474.725791
+  type: 'test'
+  ...
+# Subtest: actual picture launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+ok 6 - actual picture launch from workshop: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+  ---
+  duration_ms: 469.009875
+  type: 'test'
+  ...
+# Subtest: actual installed launch from settings: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+ok 7 - actual installed launch from settings: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+  ---
+  duration_ms: 615.435583
+  type: 'test'
+  ...
+# Subtest: actual challenge launch from settings: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+ok 8 - actual challenge launch from settings: Stay retains exact opener/cut; explicit Replace closes owned parents and prepares without Resume
+  ---
+  duration_ms: 466.411166
+  type: 'test'
+  ...
+# Subtest: installed same selection is inert while unfinished and while ready
+ok 9 - installed same selection is inert while unfinished and while ready
+  ---
+  duration_ms: 453.2715
+  type: 'test'
+  ...
+# Subtest: challenge same selection is inert while unfinished and while ready
+ok 10 - challenge same selection is inert while unfinished and while ready
+  ---
+  duration_ms: 298.862125
+  type: 'test'
+  ...
+# Subtest: challenge closed/reopened origin during retained-save waiting cannot adopt or close its successor
+ok 11 - challenge closed/reopened origin during retained-save waiting cannot adopt or close its successor
+  ---
+  duration_ms: 378.078583
+  type: 'test'
+  ...
+# Subtest: picture closed/reopened origin during retained-save waiting cannot adopt or close its successor
+ok 12 - picture closed/reopened origin during retained-save waiting cannot adopt or close its successor
+  ---
+  duration_ms: 359.756333
+  type: 'test'
+  ...
+# Subtest: changed saved slot after verification requires another deliberate Replace and preserves the newer bytes
+ok 13 - changed saved slot after verification requires another deliberate Replace and preserves the newer bytes
+  ---
+  duration_ms: 417.56425
+  type: 'test'
+  ...
+# Subtest: unavailable saving gives truthful loss decision; Stay retains current checkpoint
+ok 14 - unavailable saving gives truthful loss decision; Stay retains current checkpoint
+  ---
+  duration_ms: 378.889334
+  type: 'test'
+  ...
+# Subtest: button Stay cancels retained-save waiting; late work and other launch/setup owners stay inert
+ok 15 - button Stay cancels retained-save waiting; late work and other launch/setup owners stay inert
+  ---
+  duration_ms: 378.667375
+  type: 'test'
+  ...
+# Subtest: controller Stay cancels retained-save waiting; late work and other launch/setup owners stay inert
+ok 16 - controller Stay cancels retained-save waiting; late work and other launch/setup owners stay inert
+  ---
+  duration_ms: 397.743667
+  type: 'test'
+  ...
+# Subtest: picture Replay is explicitly fresh even for the same earned selection and keeps seed/difficulty
+ok 17 - picture Replay is explicitly fresh even for the same earned selection and keeps seed/difficulty
+  ---
+  duration_ms: 175.4
+  type: 'test'
+  ...
+# Subtest: practice challenge departure is session-only and never writes profile or suspended bytes
+ok 18 - practice challenge departure is session-only and never writes profile or suspended bytes
+  ---
+  duration_ms: 193.798625
+  type: 'test'
+  ...
+# Subtest: a failure after approved selection does not claim rollback and cannot retry the partially adopted selection
+ok 19 - a failure after approved selection does not claim rollback and cannot retry the partially adopted selection
+  ---
+  duration_ms: 397.350583
+  type: 'test'
+  ...
+# Subtest: unchanged player export and resume-save from workshop restore the saved cut after explicit Library selection
+ok 20 - unchanged player export and resume-save from workshop restore the saved cut after explicit Library selection
+  ---
+  duration_ms: 515.632042
+  type: 'test'
+  ...
+# Subtest: unchanged player export and import-save from workshop restore the saved cut after explicit Library selection
+ok 21 - unchanged player export and import-save from workshop restore the saved cut after explicit Library selection
+  ---
+  duration_ms: 479.792167
+  type: 'test'
+  ...
+# Subtest: unchanged player export and resume-save from settings restore the saved cut after explicit Library selection
+ok 22 - unchanged player export and resume-save from settings restore the saved cut after explicit Library selection
+  ---
+  duration_ms: 490.73675
+  type: 'test'
+  ...
+# Subtest: unchanged player export and import-save from settings restore the saved cut after explicit Library selection
+ok 23 - unchanged player export and import-save from settings restore the saved cut after explicit Library selection
+  ---
+  duration_ms: 489.933834
+  type: 'test'
+  ...
+# Subtest: challenge: blur retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 24 - challenge: blur retires a waiting launch without adoption or focus; a fresh foreground request works
+  ---
+  duration_ms: 400.412125
+  type: 'test'
+  ...
+# Subtest: challenge: hidden retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 25 - challenge: hidden retires a waiting launch without adoption or focus; a fresh foreground request works
+  ---
+  duration_ms: 409.734333
+  type: 'test'
+  ...
+# Subtest: challenge: pagehide retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 26 - challenge: pagehide retires a waiting launch without adoption or focus; a fresh foreground request works
+  ---
+  duration_ms: 397.598708
+  type: 'test'
+  ...
+# Subtest: picture: blur retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 27 - picture: blur retires a waiting launch without adoption or focus; a fresh foreground request works
+  ---
+  duration_ms: 398.688041
+  type: 'test'
+  ...
+# Subtest: picture: hidden retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 28 - picture: hidden retires a waiting launch without adoption or focus; a fresh foreground request works
+  ---
+  duration_ms: 398.379292
+  type: 'test'
+  ...
+# Subtest: picture: pagehide retires a waiting launch without adoption or focus; a fresh foreground request works
+ok 29 - picture: pagehide retires a waiting launch without adoption or focus; a fresh foreground request works
+  ---
+  duration_ms: 381.210875
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 69406.828459

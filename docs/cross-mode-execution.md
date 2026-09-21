@@ -1,5 +1,44 @@
 # Reveal Line cross-mode execution register
 
+## Current delivery — v0.76.0 publicly verified; v0.76.1 corrections in qualification
+
+**Public default: [v0.76.0](https://mekhovov.github.io/revealline/releases/v0.76.0/site/game/).**
+Frozen source `6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd`, source PR206 and
+publication PR207 are accepted. Pages run35543093816 / deployment6558712376 passed.
+The independent public audit matched **4,104 files / 864,133,226 bytes**, with zero
+retries or failures. Public boot, 776-file offline preparation, newest-32 historical
+profile discovery, release explorer and Archive39 v0.70 boot were verified by the
+release coordinator. These checks do not complete physical-device or enjoyment gates.
+
+**Next candidate: v0.76.1.** Three scoped corrections are integrated: Library selection
+and saved-flight restoration dismiss retained Settings only after successful owned
+transitions; the Team lobby keeps setup/preview/Start together and reveals the current
+focused action after rotation; non-running short-landscape telemetry fits the viewport.
+The verified foundation-pack authoring example and associated skills/evidence accompany
+the Library correction. Final integrated source, frozen artifacts and public acceptance
+are still pending. The running side-HUD/touch-rail prototype remains excluded.
+
+| Priority | Programme work | Current boundary |
+|---|---|---|
+| 1 | Release the scoped navigation/layout corrections | Integrated candidate; six source gates, production checks, build and public journeys pending. |
+| 2 | Finish native navigation, shared readability and actor parity | Partial; all modes, complete input journeys, actual playing scale and responsive layouts remain. |
+| 3 | Action feedback, fair challenge and rewards | Partial; readable warnings/counters, loss causes, Retry/Next/stories and human playtests remain. |
+| 4 | Music, creation, discovery and campaign production | Partial; auditioned media, complete asset coverage, real installation/transfer/recovery and the revised XPOSED Journey programme remain. |
+| 5 | Supporting workflows and reproducible authoring | Partial; full fresh-workspace examples, current skills and data-recovery acceptance remain. |
+| 6 | Full browser qualification | Partial; physical touch/controllers, listening, offline/lifecycle, ordinary-device performance and human assessment remain. |
+| Later | Native stores and network multiplayer | Separate deferred gates. |
+
+The approved [XPOSED Journey plan](xposed-journey-plan.md) supersedes the earlier
+132-mission allocation: 242 Solo candidates, 12 finale Remixes and 12 purpose-built
+Team missions are an authoring backlog, not delivered content or a minimum release
+count. Each mission still needs its own playability and quality acceptance.
+
+No complete programme phase is closed by these bounded corrections. Older reports
+below retain their observation time and are not the current public acceptance record.
+
+<details>
+<summary>Historical v0.69.3 / v0.70 integration checkpoint</summary>
+
 ## Current delivery — v0.69.3 publicly verified; music/navigation integration continues
 
 **Public default: [v0.69.3](https://mekhovov.github.io/revealline/releases/v0.69.3/site/game/).** Source PR193 and publisher PR199 are merged. Pages35523602476 / deployment6555180412 passed. All **3,867 files / 698,856,066 bytes** matched with zero failures/retries. Both complete source families passed **7,018 tests / 561 files on Node20.19.6**, not a two-runtime matrix.
@@ -19,6 +58,9 @@ Actual public story restore now focuses enabled Review, and Escape returns to it
 | Later | Native stores and network multiplayer | Separate deferred gates. |
 
 Archive37 preserves original v0.69.1 and v0.69.2 with their recorded scope limitations. No parent programme phase closes because of these patches. Later Journey chapter candidates are not accepted production content. Legacy Missions' selected-mission description can remain stale after a chapter change; record it as a navigation/presentation follow-up while the actual flight and save remain correct. Stable phase IDs and accepted history below are retained.
+
+
+</details>
 
 <details>
 <summary>Previous v0.69.2 accepted cutoff — retained history</summary>
