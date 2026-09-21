@@ -79,7 +79,8 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 - [ ] Ukrainian/FPV arcs with distinct route decisions, original assets, cultural
   attribution, playtests and enrollment.
   Eight shared-framework greyboxes and cultural attribution are implemented;
-  original final art, multi-seed/native/human qualification and enrollment remain.
+  desktop Studio/Expert launch checked; original final art, multi-seed/device/human
+  qualification and enrollment remain.
 - [ ] Authored pressure roles and optional non-retaining combat actors, settings,
   pixel effects, bounded decals and cross-mode fairness.
 - [ ] Full Studio recoverability/conflict/large-library usability acceptance with
