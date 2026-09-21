@@ -940,6 +940,79 @@ test('Couch music credits follow audible MP3 metadata without live position anno
   assert.ok(mounts.every((node) => node.hidden && node.children.length === 0));
 });
 
+test('Versus menu music source is reachable with Tab and controller without starting either board', async (t) => {
+  const a = audio(t),
+    db = memoryIndexedDB(),
+    imported = await fixture(),
+    value = structuredClone(imported.library);
+  value.tracks[0].rights.source = 'https://composer.example/album';
+  value.playlists[0].trackIds = [imported.track.id];
+  value.selection.playlistId = value.playlists[0].id;
+  const prepared = await prepareSoundtrackLibrary(value, imported.assets, {
+    probeMedia: structuralProbe,
+  });
+  const store = createManagedMediaStore({
+    indexedDB: db.indexedDB,
+    soundtrackCatalogue: true,
+  });
+  await store.commitDomain('audio', prepared, { expectedGeneration: 0 });
+  store.close();
+  const pad = {
+    index: 0,
+    id: 'Track credits controller',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  const page = await couchPage(t, {
+    storage: storage({ muted: false, volume: 0.5 }),
+    audio: a,
+    assetDatabase: db.indexedDB,
+    pads: [pad],
+  });
+  await settleUntil(() => page.$('race-music-status')?.dataset.state === 'ready');
+  page.join(0);
+  enter(page, 'race-options');
+  enter(page, 'race-settings-tab-audio');
+  enter(page, 'race-music-play');
+  await settleUntil(() => !a.media.paused && !page.$('race-music-menu-now-playing').hidden);
+  enter(page, 'race-options-back');
+  const credit = page.$('race-music-menu-now-playing'),
+    link = credit.querySelector('a'),
+    before = page.checkpoint();
+  assert.equal(credit.hidden, false);
+  assert.equal(link.getAttribute('href'), 'https://composer.example/album');
+  assert.equal(link.hidden, false);
+  assert.equal(link.tabIndex, 0);
+  assert.equal(link.closest('[hidden],[inert],[aria-hidden="true"]'), null);
+  assert.equal(link.closest('#race-music-now-playing, #race-music-menu-now-playing'), credit);
+  assert.ok(page.$('race-main').querySelectorAll('button,a[href],select,input').includes(link));
+  page.focus('race-help');
+  for (let n = 0; n < 30 && page.doc.activeElement !== link; n++) key(page, 'Tab');
+  assert.equal(
+    page.doc.activeElement,
+    link,
+    'Tab reaches the visible source from the menu actions.',
+  );
+  let activations = 0;
+  link.addEventListener('click', () => {
+    activations++;
+  });
+  page.focus('race-help');
+  for (let n = 0; n < 30 && page.doc.activeElement !== link; n++) page.pulse(0, 13);
+  assert.equal(page.doc.activeElement, link, 'D-pad navigation includes the same source link.');
+  page.pulse(0, 0);
+  assert.equal(activations, 1, 'Controller confirm activates the source, not Start.');
+  assert.equal(page.state(), 'ready');
+  assert.deepEqual(page.checkpoint(), before);
+  enter(page, 'race-quick-sound');
+  assert.equal(credit.hidden, true);
+  page.focus('race-help');
+  key(page, 'Tab');
+  assert.notEqual(page.doc.activeElement, link, 'Muted credits leave the navigation order.');
+});
+
 test('a failed music assignment replaces pending status with its actionable error', async (t) => {
   const doc = new Document(),
     a = audio(t),
