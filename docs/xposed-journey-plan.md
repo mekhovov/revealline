@@ -669,6 +669,16 @@ or human enjoyment claims. See the [item-by-item ledger](verification/journey-co
 
 ### Continuing source checkpoints (not phase completion)
 
+The [Team timed live-host follow-up](verification/journey-team-timed-host.md)
+qualifies collection at the unchanged production seed 17, rather than assuming
+the earlier seed 1/seed 2 direct-core recordings are identical UI transcripts.
+Nine imported keyboard paths cover all three existing greyboxes and presets;
+separate engine checkpoints, failed controls and a one-frame Depot return
+adjustment remain explicit. This is P02/P14 technical evidence, not new artwork,
+public enrollment, human balance or phase completion. Next Team gates are
+bonus-optional host play, wider relocation/mastery, two-person/device qualification
+and coordinated release.
+
 P03 frozen source9ee58177 passed all7280 hosted tests on Node20.19.6 in run35511526470;
 freeze=false deliberately produced no release snapshot. Integration, publication
 and human acceptance remain with the release owner. P04 separately prepares seven

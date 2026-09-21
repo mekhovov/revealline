@@ -183,6 +183,17 @@ This relocation follow-up is independently reviewed; all 994 combined tests pass
 on both Node versions. Passing regression assertions include the explicitly
 expected failed-route outcomes and must not be reported as 994 successful clears.
 
+The [live-seed Team host follow-up](journey-team-timed-host.md) now distinguishes
+seed 17 keyboard play from the earlier seed 1/seed 2 studies. It adds 36 exact
+direct-core collection/clear cases and actual imported-host collection routes
+for all three maps and presets, while retaining nine failed unadapted engine
+controls and one unfinished keyboard control. Host UI observations are separate
+from engine checkpoints; Depot/Standard has an explicit one-frame recording
+adjustment, not a physics change. Bonus-optional host paths, broader relocation,
+real controllers/two-human testing, art, release and human pacing remain open.
+The nine-file regression cohort passes 331 tests on each supported Node runtime;
+that count includes negative-outcome assertions, not 331 successful playthroughs.
+
 ## Latest completed spatial unit
 
 [Afterglow](journey-livewire-spatial.md) redirects its keeper with two walls;
