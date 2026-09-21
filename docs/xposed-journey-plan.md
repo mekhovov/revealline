@@ -648,9 +648,13 @@ The [P13/P15 timing observation](verification/journey-performance-observations.m
 adds bounded native Solo/Versus measurements to the completion ledger. It is not
 an optimization or full acceptance: local Continue/Next/reset readiness samples
 are within their targets, while the startup module payload remains substantial.
-The next technical performance task is a controlled repeated-run baseline and
-critical-module-graph reduction with historical route/runtime equivalence and
-normal compiler/artwork verification preserved. Team, physical devices, automatic
+The [selective-loading successor](verification/journey-selective-loading.md)
+now defers unselected candidate source families, preserving all ten historical
+route outputs and normal compiler/artwork verification. Spatial routes remove 26
+modules and approximately 220 kB from the measured source graph; no browser-speedup
+claim follows from source size alone. Native module-failure recovery and direct
+Solo/Versus continuation are checked. The next performance task is a controlled
+repeated-run browser baseline. Team, physical devices, automatic
 recovery, ten consecutive missions, public distribution and human gates remain.
 Keep single samples and mock-DOM regression counts separate from real performance
 or human enjoyment claims. See the [item-by-item ledger](verification/journey-completion-2026-09-21.md).

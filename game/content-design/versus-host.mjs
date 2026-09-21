@@ -5,7 +5,7 @@ import { boundedJSON, required } from '../data-json.mjs';
 import { createContentExecutionCatalog } from './execution.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { createMissionCard } from './mission-card.mjs';
-import { createCandidateSequence } from './route.mjs';
+import { createCandidateSequence } from './sequence.mjs';
 
 /** Uses the shared compiler in Versus mode. The real host still owns createDuel,
  * controllers, paired ticks and race results; no Solo run substitutes for them. */

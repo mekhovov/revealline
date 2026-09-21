@@ -1,4 +1,13 @@
-import { freezeDesign } from './catalogs.mjs';
+import {
+  WHOLE_JOURNEY_CHAPTERS,
+  WHOLE_JOURNEY_CORE_PACK_IDS,
+  WHOLE_JOURNEY_REMIX_PACK_IDS,
+} from './whole-journey-order.mjs';
+export {
+  WHOLE_JOURNEY_CHAPTERS,
+  WHOLE_JOURNEY_CORE_PACK_IDS,
+  WHOLE_JOURNEY_REMIX_PACK_IDS,
+} from './whole-journey-order.mjs';
 import { createOpeningCandidates } from './horizon-candidates.mjs';
 import { createBorderCandidates } from './border-candidates.mjs';
 import { createSignalCandidates } from './signal-candidates.mjs';
@@ -15,26 +24,20 @@ import { createApexCandidates } from './apex-candidates.mjs';
 import { withCampaignPresentation } from './campaign-presentation.mjs';
 import { withCampaignActorPresentation } from './campaign-actor-presentation.mjs';
 
-// Explicit review order, never inferred from titles or an imported "official" flag.
-const chapters = [
-  ['horizon', 'journey-opening', 'opening-remixes', createOpeningCandidates],
-  ['border', 'journey-border', 'border-remixes', createBorderCandidates],
-  ['signal', 'journey-signal', 'signal-remixes', createSignalCandidates],
-  ['neon', 'journey-neon', 'neon-remixes', createNeonCandidates],
-  ['rover', 'journey-rover', 'rover-remixes', createRoverCandidates],
-  ['fracture', 'journey-fracture', 'fracture-remixes', createFractureCandidates],
-  ['phase', 'journey-phase', 'phase-remixes', createPhaseCandidates],
-  ['livewire', 'journey-livewire', 'livewire-remixes', createLivewireCandidates],
-  ['relay', 'journey-relay', 'relay-remixes', createRelayCandidates],
-  ['crosswind', 'journey-crosswind', 'crosswind-remixes', createCrosswindCandidates],
-  ['sentinel', 'journey-sentinel', 'sentinel-remixes', createSentinelCandidates],
-  ['apex', 'journey-apex', 'apex-remixes', createApexCandidates],
-];
-export const WHOLE_JOURNEY_CHAPTERS = freezeDesign(
-  chapters.map(([id, corePackId, remixPackId]) => ({ id, corePackId, remixPackId })),
-);
-export const WHOLE_JOURNEY_CORE_PACK_IDS = freezeDesign(chapters.map((row) => row[1]));
-export const WHOLE_JOURNEY_REMIX_PACK_IDS = freezeDesign(chapters.map((row) => row[2]));
+const factories = {
+  horizon: createOpeningCandidates,
+  border: createBorderCandidates,
+  signal: createSignalCandidates,
+  neon: createNeonCandidates,
+  rover: createRoverCandidates,
+  fracture: createFractureCandidates,
+  phase: createPhaseCandidates,
+  livewire: createLivewireCandidates,
+  relay: createRelayCandidates,
+  crosswind: createCrosswindCandidates,
+  sentinel: createSentinelCandidates,
+  apex: createApexCandidates,
+};
 
 /** The one chapter selection used by composition and read-only evidence tools. */
 export function createWholeJourneyChapterSources({
@@ -43,7 +46,8 @@ export function createWholeJourneyChapterSources({
   campaignPresentation = false,
   campaignActors = false,
 } = {}) {
-  return chapters.map(([id, , , create]) => {
+  return WHOLE_JOURNEY_CHAPTERS.map(({ id }) => {
+    const create = factories[id];
     const source = (roverTeaching && id === 'rover' ? createRoverTeachingCandidates : create)({
       artwork,
     });

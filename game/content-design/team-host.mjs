@@ -1,6 +1,6 @@
 import { createContentExecutionCatalog } from './execution.mjs';
 import { createJourneyCatalog } from '../journey/catalog.mjs';
-import { createCandidateSequence } from './route.mjs';
+import { createCandidateSequence } from './sequence.mjs';
 import { createMissionCard } from './mission-card.mjs';
 import { freezeDesign } from './catalogs.mjs';
 
