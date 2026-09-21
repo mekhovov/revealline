@@ -34,6 +34,7 @@ import { withCampaignPresentation } from '../content-design/campaign-presentatio
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 import { createTeamTimedCandidates } from '../content-design/team-timed-candidates.mjs';
+import { createTeamTimedOriginalCandidates } from '../content-design/team-timed-originals.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
@@ -818,6 +819,12 @@ $('team-journey').onclick = guarded(() => {
 $('team-timed').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createTeamTimedCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('team-timed-originals').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createTeamTimedOriginalCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });

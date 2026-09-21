@@ -1,0 +1,910 @@
+{
+  "format": "TeamTimedOptionalHostEvidenceV1",
+  "methodology": "Eight unchanged pickup-free logs plus one new Coolant Expert legal-return route, all seed17 with one initial release/idle tick. Direct-core event hashes and keyboard UI outcomes are separate. Original failed Coolant route retained. This is deterministic feasibility, not human pacing, physical devices, or official replay.",
+  "rows": [
+    {
+      "missionId": "window-exchange",
+      "difficulty": "gentle",
+      "simulationIdentity": "ad81a9f80391d30e",
+      "source": "team-timed-routes.json",
+      "kind": "pickup-free",
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3025,
+            "coverage": 0.8136446886446886,
+            "returns": [3, 4],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "4fa932430d005312bf4649bdc983567ab176f44cfb793e8105dbd6e3d1c5a3b0"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3025,
+            "coverage": 0.8136446886446886,
+            "returns": [3, 4],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "7f151599af118a5f7f2ffd6608f03223eafdac0135f4917dc803988a7c4e49dc"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3025,
+            "coverage": 0.8136446886446886,
+            "returns": [4, 3],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "1d82cccbf496c24197267c6b1bc0ca3b4cf3f86ae5d0711a3a1933505808bdb7"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3025,
+            "coverage": 0.8136446886446886,
+            "returns": [4, 3],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "946c467fd37fe401cec145f46e67d28e3d2143cd079e8a8ed88c9946447d176d"
+          }
+        }
+      ],
+      "keyboard": {
+        "status": "won",
+        "tick": 3025,
+        "coverageText": "81.4%"
+      }
+    },
+    {
+      "missionId": "window-exchange",
+      "difficulty": "standard",
+      "simulationIdentity": "e6202ecf3c8c0d5a",
+      "source": "team-timed-routes.json",
+      "kind": "pickup-free",
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2245,
+            "coverage": 0.7536630036630036,
+            "returns": [3, 2],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "365043d2c7e24fcf5f8791a6826fb2e565799285f133acbc2267656bcba9e94e"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2245,
+            "coverage": 0.7536630036630036,
+            "returns": [3, 2],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "d21102fcf9c18eff91d9534d7f8741d7a504101580eb75173bde9b6e4260f99e"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2245,
+            "coverage": 0.7536630036630036,
+            "returns": [2, 3],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "492791b80b711472f742298c64c18cfeabb7109f36b2a03e431728c32b0d8d27"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2245,
+            "coverage": 0.7536630036630036,
+            "returns": [2, 3],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "13870cfcb2a500923fea4677a8b3e43968dfa9c05d2766fdf9e207ea7a300a13"
+          }
+        }
+      ],
+      "keyboard": {
+        "status": "won",
+        "tick": 2245,
+        "coverageText": "75.4%"
+      }
+    },
+    {
+      "missionId": "window-exchange",
+      "difficulty": "expert",
+      "simulationIdentity": "ee56985d3184322e",
+      "source": "team-timed-routes.json",
+      "kind": "pickup-free",
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 1369,
+            "coverage": 0.7678571428571429,
+            "returns": [2, 2],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "232384b350ad62bbca072466d051275f8c8ddf89075fb59d489cfc8aa0d555f5"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 1369,
+            "coverage": 0.7678571428571429,
+            "returns": [2, 2],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "df7b9fe51c6efae2467e299155b856bb63dcb9c864d171b7de5b43c6c21fdec3"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 1369,
+            "coverage": 0.7678571428571429,
+            "returns": [2, 2],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "346ec7279c2a762a1ed776fa6b7e3338d0405957dae60bada7d5eb5b5e6132f9"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 1369,
+            "coverage": 0.7678571428571429,
+            "returns": [2, 2],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "5e0e075e982b84b05610431aeed1221af0956e0f29fcce00ba76f43c6a16bb39"
+          }
+        }
+      ],
+      "keyboard": {
+        "status": "won",
+        "tick": 1369,
+        "coverageText": "76.8%"
+      }
+    },
+    {
+      "missionId": "coolant-crossing",
+      "difficulty": "gentle",
+      "simulationIdentity": "f1f3bd829987e9ab",
+      "source": "team-timed-routes.json",
+      "kind": "pickup-free",
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5287,
+            "coverage": 0.7869446962828649,
+            "returns": [4, 4],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "21dcd93004e5b26e53d16b402f78b6c827d59d9f413d00bc8cb07dce1df7b9ba"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5287,
+            "coverage": 0.7869446962828649,
+            "returns": [4, 4],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "cf3d1929203f2eed85abc99f12dce7c0d827d90985909698e5fbf3411c227ccf"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5287,
+            "coverage": 0.7869446962828649,
+            "returns": [4, 4],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "d12873321e3298f336ddf857383af2ad3b9cc00c8b615314d98a8e79be4c8ce2"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5287,
+            "coverage": 0.7869446962828649,
+            "returns": [4, 4],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "df53c6cdfb17a9a7bbf37b0eb3becf4400fdfce4bd6dde91f77a37ed38fd1a38"
+          }
+        }
+      ],
+      "keyboard": {
+        "status": "won",
+        "tick": 5287,
+        "coverageText": "78.7%"
+      }
+    },
+    {
+      "missionId": "coolant-crossing",
+      "difficulty": "standard",
+      "simulationIdentity": "dc492b31c1206801",
+      "source": "team-timed-routes.json",
+      "kind": "pickup-free",
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5731,
+            "coverage": 0.9437896645512239,
+            "returns": [5, 4],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "29e949f9b8c8db888dea2f2b34024fdf3feb950ed1cd90ed562a9a8a5af1612b"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5731,
+            "coverage": 0.9437896645512239,
+            "returns": [5, 4],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "9b70c15a6a00d8eda401048b235b0dac351a3d08fd8657a617acf0a992247fff"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5731,
+            "coverage": 0.9437896645512239,
+            "returns": [4, 5],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "0f0b369e92edd6d21e6135d401cefc321783aa269769d85299316fa5a356fb13"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5731,
+            "coverage": 0.9437896645512239,
+            "returns": [4, 5],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "9f5a38a0a25c82f12c64645fb263d05014eaaacf1af7eb26e1d97cdfeab6dae9"
+          }
+        }
+      ],
+      "keyboard": {
+        "status": "won",
+        "tick": 5731,
+        "coverageText": "94.4%"
+      }
+    },
+    {
+      "missionId": "coolant-crossing",
+      "difficulty": "expert",
+      "simulationIdentity": "86f9b18105f36dec",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 156
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 684
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 480
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 684
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 3
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 456
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 336
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 168
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 282
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4672,
+            "coverage": 0.8073436083408885,
+            "returns": [3, 3],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "2f95ddb316e0e6d1e8f0fae035e525477ed6de12b9b2c8c194170ea2ac6dedc8"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4672,
+            "coverage": 0.8073436083408885,
+            "returns": [3, 3],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "411bf40f8173bc9d23cc5ec39027dea0216106062d73fd58524a0ab1af3998c6"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4672,
+            "coverage": 0.8073436083408885,
+            "returns": [3, 3],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "ba39bb31081bef87f264cb9b6423e2e6174a9bc487f30454e0d4ad61ac6eb8ae"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4672,
+            "coverage": 0.8073436083408885,
+            "returns": [3, 3],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "694e7fefeb43cac3d76c8a5e95545b71b275e3c46724cde16de296804746728c"
+          }
+        }
+      ],
+      "keyboard": {
+        "status": "won",
+        "tick": 4672,
+        "coverageText": "80.7%"
+      },
+      "unadaptedProbe": {
+        "source": "team-timed-routes.json",
+        "kind": "pickup-free",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": false,
+          "jointCuts": true
+        },
+        "result": {
+          "status": "first-knockdown",
+          "tick": 3987,
+          "coverage": 0.6795104261106074,
+          "returns": [3, 3],
+          "collected": ["enemy-freeze"],
+          "initialReserves": 1,
+          "finalReserves": 1,
+          "checkpoint": "58d236fafe35f2d5e0899797d28eaabefc91b077b1b2f86aabde2c767947326c"
+        }
+      }
+    },
+    {
+      "missionId": "depot-dash",
+      "difficulty": "gentle",
+      "simulationIdentity": "e0c510c000d4cdb2",
+      "source": "team-timed-routes.json",
+      "kind": "pickup-free",
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2899,
+            "coverage": 0.8259013282732448,
+            "returns": [4, 4],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "a70d4f01bc2bf813a27a1f899e3a04939a285d96d7d69d240fd7b0bdd3bee289"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2899,
+            "coverage": 0.8259013282732448,
+            "returns": [4, 4],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "27191e60bed6882613b39d10f7c310eb96b3935435caf52b2a71c5f1f6695edf"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2899,
+            "coverage": 0.8259013282732448,
+            "returns": [4, 4],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "034e997558f01a9582394acf3c2ac1539a93a86d6d94f200395ce9ff8139b87b"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2899,
+            "coverage": 0.8259013282732448,
+            "returns": [4, 4],
+            "collected": [],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "checkpoint": "61abc6c3815d2f619dbf366255d5bd91fbb7a37fcf77d2127d86fde12f770ac0"
+          }
+        }
+      ],
+      "keyboard": {
+        "status": "won",
+        "tick": 2899,
+        "coverageText": "82.6%"
+      }
+    },
+    {
+      "missionId": "depot-dash",
+      "difficulty": "standard",
+      "simulationIdentity": "288d79b43a1fdb80",
+      "source": "team-timed-routes.json",
+      "kind": "pickup-free",
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3625,
+            "coverage": 0.818785578747628,
+            "returns": [3, 4],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "791bd16c75afcf295c21ee52f8b18581131bef2f9e8b80c1eada439361f27356"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3625,
+            "coverage": 0.818785578747628,
+            "returns": [3, 4],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "3cd08063106ec04a20ea0ec7da3fbf6956251409153dc4cb3c6fce84a5dfe9e3"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3625,
+            "coverage": 0.818785578747628,
+            "returns": [4, 3],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "dfd8ef826cdfee6a1d10893d9a98f14134a25aef701c2d7d853a18f23ad1d398"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3625,
+            "coverage": 0.818785578747628,
+            "returns": [4, 3],
+            "collected": [],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "checkpoint": "609b28bace1d3c1d138b26586e0fb6e5b9abe88aa4da619becb3465ddb9f8cc6"
+          }
+        }
+      ],
+      "keyboard": {
+        "status": "won",
+        "tick": 3625,
+        "coverageText": "81.9%"
+      }
+    },
+    {
+      "missionId": "depot-dash",
+      "difficulty": "expert",
+      "simulationIdentity": "42adce9665ef093a",
+      "source": "team-timed-routes.json",
+      "kind": "pickup-free",
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2899,
+            "coverage": 0.816888045540797,
+            "returns": [3, 4],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "9dffbfb3a4f6b1587863dadb4655cd681fc100105b70a8a0e017e2f44dc02f8f"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2899,
+            "coverage": 0.816888045540797,
+            "returns": [3, 4],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "26b9a6623e065e03fa78551d0a876bb81cd697780970341d48e2e8207990bbb7"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2899,
+            "coverage": 0.816888045540797,
+            "returns": [4, 3],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "08d32eb668306e3ac84f5bd0c71489df30bec12807db872cc70e38842e7a6c5a"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2899,
+            "coverage": 0.816888045540797,
+            "returns": [4, 3],
+            "collected": [],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "checkpoint": "e203d1971de9ca80c38efadaaa0b44c74bf75cd928afc21a8aa6ba935eb96723"
+          }
+        }
+      ],
+      "keyboard": {
+        "status": "won",
+        "tick": 2899,
+        "coverageText": "81.7%"
+      }
+    }
+  ]
+}

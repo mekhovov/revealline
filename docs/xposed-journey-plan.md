@@ -679,6 +679,16 @@ public enrollment, human balance or phase completion. Next Team gates are
 bonus-optional host play, wider relocation/mastery, two-person/device qualification
 and coordinated release.
 
+The [Shared windows pictured follow-up](verification/journey-team-timed-originals.md)
+now supplies the three originals and an explicit `team-timed-originals` route,
+with Studio Inspect/Apply, cross-campaign Next/Skip and isolated Team progress.
+The nine greybox gameplay identities stay unchanged. All nine production-seed
+bonus-free keyboard paths now clear; direct-core seat/joint variants and the
+prior failed Coolant control stay separately recorded. Native inspection, Skip
+and bookmark reload are checked. Broader relocation/mastery, human/device balance,
+final integration and coordinated release remain unfinished; this is not P14
+acceptance or a new required content quota.
+
 P03 frozen source9ee58177 passed all7280 hosted tests on Node20.19.6 in run35511526470;
 freeze=false deliberately produced no release snapshot. Integration, publication
 and human acceptance remain with the release owner. P04 separately prepares seven
