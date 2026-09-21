@@ -5,6 +5,12 @@ numbered Crossmode programme. **No claim of whole-plan completion.** Source,
 automated fixtures, native observations, human acceptance and deployment are
 separate gates. Older phase notes are provenance, not current release claims.
 
+Current pressure checkpoint: **446/498 preset/control cases verified;52 remain**.
+All six configurations are covered for65/83 Solo candidates. The phase table below
+lists implemented work and remaining acceptance separately. Stronger-pressure
+balance, optional combat, final cultural/workshop art, Team/device/human validation
+and reviewed public promotion are not complete.
+
 ## Public versus local
 
 - Release-owner report: public **v0.76.1**, source `17bd1965`, publisher `3e1c4ec8`,
@@ -61,8 +67,13 @@ separate gates. Older phase notes are provenance, not current release claims.
   verification. Human/native-full-play/pacing/release qualification remains open.
   [Study evidence](journey-fracture-spatial.md).
 - Native checking exposed and fixed stale closed-database retries in Studio;
- 20/20 storage/recovery tests pass on both Node versions, with normal saved-slot
+20/20 storage/recovery tests pass on both Node versions, with normal saved-slot
   restoration checked natively. [Storage evidence](studio-closed-storage-retry.md).
+- Horizon/Border now cover all102 pressure configurations:30 fresh routes plus72
+  preserved historical successes, with replay/equal races. Combined coverage is
+  **446/498,52 unresolved,65/83 complete six-case sets**. All six failed old first
+  departures have short no-wait alternatives; fast clears and unused landings
+  remain design-review flags. [Opening evidence](journey-opening-pressure.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
@@ -80,8 +91,8 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | Item | Implemented / evidence available | Remaining acceptance |
 |---|---|---|
 | P00 — plan/audit/flow/progress/teaching | Canonical plan;110 old Solo /64 files /48 numbered references audited; direct flow, stable receipts and teaching fixtures; scoped integration accepted | Exact public whole-flow audit; human capture understanding; latest release reconciliation |
-| P01 — foundations/Prologue/Horizon/Studio minimum | Foundation topology/runtime; ten opening candidates including Remix; original art; shared compiler/Studio; route/replay fixtures | Whole-set native/device/human balance; successor integration/Pages |
-| P02 — Border/bonuses/frontier/Studio CRUD/image | Seven candidates/art; contact bonuses; outer/frontier teaching; CRUD/manual image workflow; timed-schedule engine/editor and three-mission study; bonus-independent routes | Timed native/mode/release qualification; broader Studio usability/conflict tests; human/promotion gates |
+| P01 — foundations/Prologue/Horizon/Studio minimum | Foundation topology/runtime; ten opening candidates including Remix; original art; shared compiler/Studio; all60 stronger-pressure clear/replay/race cases and startup observations | Fast courtyard/outpost clears, island-bypass/Remix review; whole-set native/device/human balance; successor integration/Pages |
+| P02 — Border/bonuses/frontier/Studio CRUD/image | Seven candidates/art; contact bonuses; outer/frontier teaching; CRUD/manual image workflow; timed-schedule engine/editor and three-mission study; all42 stronger-pressure clear/replay/race cases | Short/unused-landing routes and Expert departure teaching; timed native/mode/release qualification; broader Studio usability/conflict tests; human/promotion gates |
 | P03 — Signal/terrain/catalogues/presentation/trace | Seven candidates/art; terrain contracts; actor catalogues; bounded trace benchmark; reactive captions | Whole-set native/human; final audio; public integration |
 | P04 — Neon | Seven candidates/art; frontier-shaping routes; Remix; replay/race/mastery/seed checks | Stronger-pressure retest, human pacing, public integration |
 | P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; route checks | Presentation/pressure successor, human balance, public integration |
@@ -92,7 +103,7 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; all42 pressure clear/replay/race cases | Short-clear/connector/optional-goal review; human precision/readability, public integration |
 | P11 — Sentinel | Four core + Remix/art; multi-relay encounter; replay/restoration; two explicit receiver-layout successors with12 clear/replay/race cases and native first returns | Optimized21–38second Twin clears remain pacing risks; successor full native/art/host adoption, human boss balance, public integration |
 | P12 — Apex | Four core + Remix/art; capstone combinations; all30 pressure clear/replay/race cases | Short optimized finales need rework; optional-goal routes, human mastery, public integration |
-| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22;498-case pressure audit plus five-chapter refinement | Resolve82 remaining pressure-route cases and flagged cleanup tails; human cuts, final reference dispositions, integrated Pages |
+| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22;498-case pressure audit plus seven-chapter refinement | Resolve52 remaining pressure-route cases and flagged spatial/cleanup issues; human cuts, final reference dispositions, integrated Pages |
 | P14 —12 Team missions | Three four-mission arcs; original art; joint cuts/seat swaps; Team flow/Skip/chooser/presets | Live two-player balance/controllers; material successor host adoption; new mechanic qualification; Pages |
 | P15 — final validation/Legacy/rollback | Immutable evidence records; compiler/CLI/Studio inspection; persistence/compatibility groundwork | Human sessions; full device/accessibility/performance; Legacy transition; public rollback proof; deployment |
 

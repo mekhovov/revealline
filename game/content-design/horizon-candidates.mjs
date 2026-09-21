@@ -22,6 +22,20 @@ export const OPENING_ARCS = freezeDesign([
   },
 ]);
 
+// Shared authored first-return observations, not a guarantee for every successor.
+export const HORIZON_FIRST_RETURNS = freezeDesign({
+  'first-return': 'down',
+  'choose-your-share': 'down',
+  'two-keepers': 'down',
+  'nearby-shore': 'down',
+  'island-outpost': 'left',
+  'stepping-stones': 'down',
+  'two-bays': 'left',
+  'courtyard-return': 'left',
+  'long-way-home': 'left',
+  'horizon-remix': 'left',
+});
+
 const keeper = (id, x, y, heading = [1, 1]) => ({
   id,
   role: 'field-keeper',
