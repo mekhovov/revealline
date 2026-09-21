@@ -90,6 +90,7 @@ try {
     releasePresentationPainter = null,
     pending = false,
     epoch = 0,
+    cancelFocusOwner = null,
     controller = null,
     lastFrame = 0,
     lastClass = null,
@@ -99,10 +100,45 @@ try {
     nativeUnsubscribe = null;
   const importStatus = createOperationStatus($('import-status'), { isCurrent: () => !disposed });
   let importDisplay = null;
+  const retireCancelFocus = () => {
+    cancelFocusOwner = null;
+  };
+  const trackCancelFocus = (event) => {
+    cancelFocusOwner = pending && event.target === $('cancel-load') ? epoch : null;
+  };
+  const outsideCancelInput = (event) => {
+    if (!$('cancel-load').contains(event.target)) retireCancelFocus();
+  };
+  const hideCancelFocus = () => {
+    if (document.hidden) retireCancelFocus();
+  };
+  document.addEventListener('focusin', trackCancelFocus);
+  document.addEventListener('pointerdown', outsideCancelInput, true);
+  document.addEventListener('keydown', outsideCancelInput, true);
+  document.addEventListener('visibilitychange', hideCancelFocus);
+  window.addEventListener('blur', retireCancelFocus);
+  const disposeCancelFocus = () => {
+    retireCancelFocus();
+    document.removeEventListener('focusin', trackCancelFocus);
+    document.removeEventListener('pointerdown', outsideCancelInput, true);
+    document.removeEventListener('keydown', outsideCancelInput, true);
+    document.removeEventListener('visibilitychange', hideCancelFocus);
+    window.removeEventListener('blur', retireCancelFocus);
+  };
   const chosenTheme = () => themes.find((theme) => theme.id === $('theme').value) || themes[0];
   const bodyFor = (theme, state) => theme.classBodies?.[state.activeClassId] || theme.player;
-  function updateControls() {
-    const previousFocus = document.activeElement;
+  function updateControls({ settledLoad = null } = {}) {
+    const previousFocus = document.activeElement,
+      focusEpoch = epoch;
+    const settledCancelControl =
+      !disposed &&
+      !pending &&
+      settledLoad !== null &&
+      cancelFocusOwner === settledLoad &&
+      previousFocus === $('cancel-load') &&
+      !document.hidden &&
+      document.hasFocus?.() !== false;
+    if (settledLoad !== null && cancelFocusOwner === settledLoad) retireCancelFocus();
     const completedControl =
       !disposed &&
       !pending &&
@@ -128,6 +164,33 @@ try {
     ) {
       $('restart').focus({ preventScroll: true });
       $('restart').scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+    // Settling a load hides Cancel. Only its current foreground focus owner
+    // receives a successor; newer editing, reading or replacement loads keep control.
+    if (
+      settledCancelControl &&
+      !disposed &&
+      !pending &&
+      epoch === focusEpoch &&
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      [previousFocus, document.body, null].includes(document.activeElement)
+    ) {
+      const target = !$('play-pause').disabled
+        ? $('play-pause')
+        : !$('restart').disabled
+          ? $('restart')
+          : $('load-example');
+      target.focus({ preventScroll: true });
+      if (
+        !disposed &&
+        !pending &&
+        epoch === focusEpoch &&
+        document.activeElement === target &&
+        !document.hidden &&
+        document.hasFocus?.() !== false
+      )
+        target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     }
   }
   function readouts() {
@@ -186,8 +249,9 @@ try {
     updateControls();
     readouts();
   }
-  function cancelLoad() {
+  function cancelLoad({ restoreFocus = true } = {}) {
     if (!pending) return;
+    const settledLoad = epoch;
     importDisplay?.finish({
       state: 'cancelled',
       message: 'Load cancelled. The previous recording is unchanged.',
@@ -196,12 +260,14 @@ try {
     controller?.abort();
     epoch++;
     pending = false;
-    updateControls();
+    if (!restoreFocus) retireCancelFocus();
+    updateControls({ settledLoad: restoreFocus ? settledLoad : null });
   }
   async function load(getSource, label) {
     if (disposed) return;
     controller?.abort();
     const ticket = ++epoch;
+    retireCancelFocus();
     const nextController = new AbortController();
     controller = nextController;
     pending = true;
@@ -278,7 +344,7 @@ try {
       if (ticket === epoch) {
         importDisplay = null;
         pending = false;
-        updateControls();
+        updateControls({ settledLoad: ticket });
       }
     }
   }
@@ -366,7 +432,9 @@ try {
   );
   const navigation = attachReplayNavigation({
     pending: () => pending,
-    cancelLoad,
+    // Back owns its explicit destination; lifecycle suspension must never
+    // repair focus using DOM foreground flags that the native bridge may retain.
+    cancelLoad: () => cancelLoad({ restoreFocus: false }),
     pause: () => {
       if (player?.phase === 'playing') consume(player.pause());
       lastFrame = 0;
@@ -375,10 +443,15 @@ try {
     step: () => safely(step),
     onInactive: () => {
       lastFrame = 0;
-      $('transport-status').textContent = 'Playback paused. Choose Play to continue.';
+      if (player?.phase === 'complete')
+        $('transport-status').textContent =
+          'Recording complete. The final state matches. Restart to watch again.';
+      else if (player?.phase === 'paused')
+        $('transport-status').textContent = 'Playback paused. Choose Play to continue.';
     },
     onDispose: () => {
       disposed = true;
+      disposeCancelFocus();
       importStatus.dispose();
       releasePresentationPainter?.();
       closeTheater();

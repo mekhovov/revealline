@@ -1299,3 +1299,7 @@ Prompt example: “Verify Team settings at 568×320, 320×480 and 390×844. Use 
 ### About catalogue independence
 
 Load optional software history independently of same-release mission choices. Preserve static launch routes, truthful pending/fallback status, selection, focus and the About navigation lifetime. Use the [About catalogue guide and prompt](../../../docs/about-catalog-loading.md); hold each request independently and verify native keyboard selection plus late completion, without progress writes. This is not a new campaign browser or request-timeout contract.
+
+### Replay load settlement and terminal advice
+
+When focused Cancel load is hidden, restore an enabled transport action only while that load still owns foreground focus. Preserve newer input, editor/reader focus, replacement loads and lifecycle suspension. Completed replays keep Restart advice; empty/error states must not claim Play is available. Verify native Cancel→retry→paused Play→complete→Restart with exact checkpoints, and keep lifecycle/physical-input evidence separate. Use [Replay Theater’s prompt](../../../docs/replay-theater.md#load-focus-and-completed-playback) and [integration evidence](../../../docs/verification/p16-replay-integration/README.md).

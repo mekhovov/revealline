@@ -1,0 +1,68 @@
+{
+  "base": "b6502bfc71d838ee1500de98f2103d7cfcc4ac49",
+  "runtimeSha256": "ddc3fb56aff29fa88025aa9599c588d494a2e0157d8b98ff721bf7aa0e61ce2b",
+  "url": "http://127.0.0.1:59772/game/replay-theater/",
+  "viewport": [
+    1280,
+    720
+  ],
+  "input": "Native keyboard only: Tab/Shift-Tab/Enter; Space/Down/Enter on Speed selector.",
+  "fixture": "Only bundled fieldcraft-01 replay HTTP held by owned local flag; all other resources served from exact b650 Git objects except pinned Replay app. No browser state injection.",
+  "observations": [
+    {
+      "step": "Four Tabs then Jump to playback",
+      "focus": "cancel-load",
+      "state": "Reading Copper Crossing example"
+    },
+    {
+      "step": "Enter Cancel",
+      "focus": "load-example",
+      "state": "Empty; load cancelled, previous recording unchanged"
+    },
+    {
+      "step": "Enter Load example; Shift-Tab to Jump; Enter",
+      "focus": "cancel-load",
+      "state": "Reading Fieldcraft example"
+    },
+    {
+      "step": "Release HTTP flag",
+      "focus": "play-pause",
+      "phase": "paused",
+      "tick": 0,
+      "totalTicks": 1305,
+      "state": "Verified and loaded, ready to watch"
+    },
+    {
+      "step": "Keyboard speed2x; Enter Play; normal completion",
+      "focus": "restart",
+      "phase": "complete",
+      "tick": 1305,
+      "checkpoint": "861a6de2ffd7e119",
+      "playDisabled": true,
+      "stepDisabled": true,
+      "restartRect": [
+        124.78125,
+        598.78125,
+        90.4609375,
+        44
+      ],
+      "status": "Recording complete. The final state matches. Restart to watch again.",
+      "progressAwarded": false
+    },
+    {
+      "step": "Enter Restart",
+      "focus": "restart",
+      "phase": "paused",
+      "tick": 0,
+      "playDisabled": false,
+      "status": "Restarted at tick zero. Choose Play when ready."
+    }
+  ],
+  "consoleWarningsErrors": [],
+  "limits": [
+    "Desktop browser only; no physical controller/touch/mobile certification.",
+    "Complete/error/empty lifecycle and late focus ownership are modeled host coverage; no native blur/background transition claimed.",
+    "No public/offline/screen-reader acceptance."
+  ],
+  "cleanup": "Owned browser tab155 closed and server99561 stopped; no viewport override."
+}
