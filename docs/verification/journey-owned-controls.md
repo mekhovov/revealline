@@ -22,6 +22,26 @@ is hidden, a directly delivered stale event cannot open the chooser, and no skip
 or clear is awarded. The separate final-mission test verifies Find missions,
 unchanged attempt identity and no fictitious skip receipt.
 
+## Verification
+
+On Node 20.19.5 and 22.22.2, all eleven Journey-host checks and the new ownership
+regression pass. This includes ten consecutive real-host clears with only Next,
+two-action Skip, session-only storage failure, automatic defeat recovery, cancelled
+cold loading, same-ID edited-content rejection and campaign-boundary failed-load
+recovery. The final expanded import/save-restore ownership check also passes
+separately on Node 20. Eight focused candidate-host cases pass on each version:
+final-core navigation, failed cross-pack Skip and retry, failed picture retention,
+all three preset boots, Skip with saved-media restoration, and result Retry.
+The five unrelated candidate cases were explicitly filtered, not counted as passes.
+ESLint, Prettier and `git diff --check` pass.
+
+Native local sampling used exact commit `91c41d8901e358d2952a340c33a927c2ce1e8db4`.
+Crossing complete correctly still offered Skip because it is not the last core
+mission. The optional chooser's Home signal search selected the actual last core
+mission; the running HUD offered Find missions, which opened the chooser while
+retaining the attempt. The imported/save-restored ownership evidence above is
+automated host evidence, not a claimed native import session or human test.
+
 This patch does not alter maps, physics, progress identities, Legacy completion
 copy or the other owner's completion/Next work. It is a local technical correction;
 accepted-source integration and public Pages verification remain required.
