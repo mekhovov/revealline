@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after three purpose-built Team timed-route studies. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after Team timed-route mastery/alternate-start qualification. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -83,11 +83,15 @@ Apply/export and actual Team import/announcement pause/expiry are checked.
 The [purpose-built route studies](journey-team-timed-studies.md) now add three
 original shared-board greyboxes and Studio inspection. All72 base preset/seat/
 joint-cut pickup-free/taking cases clear without knockdowns;16 of36 extra
-timing/seed probes remain unqualified and are retained. Coolant full-neutralization
-and Depot both-rover mastery are still open. The904-test combined cohort passes
-on both Node versions, including assertions that faithfully reproduce failures.
+timing/seed probes remain unqualified and are retained. A separate
+[qualification follow-up](journey-team-timed-qualification.md) adds 60 no-loss cases:
+base Coolant full-neutralization/Depot post-activation mastery and alternate-pickup
+taking clears with delayed starts. The 974-test combined cohort passes on both
+Node versions, including assertions
+that faithfully preserve failures; it does not turn those old routes into passes.
 **This is partial route qualification, not three released missions.** Optimized
-short clears, later windows, device/two-human testing, original artwork and
+short clears, alternate Expert mastery, later windows/reserve collection,
+device/two-human testing, original artwork and
 release remain open. No automatic enrollment, Team save/replay claim or accepted phase.
 
 ## Latest completed spatial unit
