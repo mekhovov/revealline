@@ -275,16 +275,31 @@ test('all 70 candidate registrations retain album, license and derivative proven
 async function candidateFixture(t) {
   const f = await fixture(t);
   // Import the unmodified real compiler under a temporary source root. It receives
-  // only reproducible coded-silence fixtures, never private originals or network input.
+  // only coded-silence MP3s and opaque source-provenance fixtures, never private
+  // originals or network input. This does not decode OGG or claim a real conversion.
   await f.put(
     `${licensedFolder}/build.mjs`,
     await readFile(path.join(source, licensedFolder, 'build.mjs')),
   );
   const bodies = new Map();
+  const originalBodies = new Map();
   const tracks = [];
   for (const [index, [license, licenseURL]] of licenses.entries()) {
     const bytes = Buffer.from(await (await audioFixture(`producer-${index}`)).blob.arrayBuffer());
-    const pin = { path: `originals/silence-${index}.mp3`, bytes: bytes.length, sha256: sha(bytes) };
+    const converted = index === 2;
+    const originalBytes = converted
+      ? Buffer.from('OggS synthetic opaque provenance fixture; not decoded or encoded audio.')
+      : bytes;
+    const original = {
+      path: `originals/silence-${index}.${converted ? 'ogg' : 'mp3'}`,
+      bytes: originalBytes.length,
+      sha256: sha(originalBytes),
+    };
+    const runtime = {
+      path: `${converted ? 'derivatives' : 'originals'}/silence-${index}.mp3`,
+      bytes: bytes.length,
+      sha256: sha(bytes),
+    };
     const track = {
       id: `qa.producer-track-${index}`,
       title: `Synthetic coded silence ${index}`,
@@ -294,15 +309,26 @@ async function candidateFixture(t) {
       credit: 'Synthetic MPEG frame fixture; not a musical recording approval.',
       license,
       licenseURL,
-      original: { ...pin },
-      runtime: { ...pin },
-      derivative: null,
+      original,
+      runtime,
+      derivative: converted
+        ? {
+            name: path.basename(runtime.path),
+            sourceName: path.basename(original.path),
+            sourceSha256: original.sha256,
+            sourceBytes: original.bytes,
+            sha256: runtime.sha256,
+            bytes: runtime.bytes,
+          }
+        : null,
       fileName: `Synthetic coded silence ${index}.mp3`,
       tags: { genres: ['chiptune'], role: 'any', energy: 3, themes: ['retro'] },
     };
     tracks.push(track);
     bodies.set(track.id, bytes);
-    await f.put(`${licensedFolder}/${pin.path}`, bytes);
+    originalBodies.set(track.id, originalBytes);
+    await f.put(`${licensedFolder}/${original.path}`, originalBytes);
+    if (converted) await f.put(`${licensedFolder}/${runtime.path}`, bytes);
   }
   const register = {
     format: 'revealline-licensed-audio-source.v1',
@@ -323,7 +349,13 @@ async function candidateFixture(t) {
   for (const name of ['derivatives', 'additional-derivatives', 'expansion-derivatives'])
     await f.put(
       `${licensedFolder}/provenance/${name}.json`,
-      JSON.stringify({ encoder: {}, tracks: [] }),
+      JSON.stringify({
+        encoder: {},
+        tracks:
+          name === 'additional-derivatives'
+            ? tracks.filter((track) => track.derivative).map((track) => track.derivative)
+            : [],
+      }),
     );
   await f.put(
     `${licensedFolder}/provenance/license-revalidation.json`,
@@ -336,12 +368,16 @@ async function candidateFixture(t) {
     }),
   );
   const producer = await import(pathToFileURL(path.join(f.root, licensedFolder, 'build.mjs')));
-  return { ...f, register, bodies, saveRegister: save, ...producer };
+  return { ...f, register, bodies, originalBodies, saveRegister: save, ...producer };
 }
 
 test('real candidate producer compiles every tiny fixture, verifies import bytes and preserves output boundaries', async (t) => {
   const f = await candidateFixture(t);
   const { buildSoundtrackAlbums, writeSoundtrackAlbums, register } = f;
+  const derivative = register.tracks.find((track) => track.derivative);
+  assert(derivative, 'The real compiler must exercise a distinct OGG-source/MP3-runtime case.');
+  assert.notEqual(derivative.original.path, derivative.runtime.path);
+  assert.notEqual(derivative.original.sha256, derivative.runtime.sha256);
   const result = await buildSoundtrackAlbums();
   const catalog = result.catalog;
   assert.equal(catalog.albums.length, register.albums.length);
@@ -394,18 +430,42 @@ test('real candidate producer compiles every tiny fixture, verifies import bytes
 test('real candidate producer refuses a changed final source body, false runtime hash and unassigned recording', async (t) => {
   const f = await candidateFixture(t);
   const track = f.register.tracks.at(-1);
-  const body = f.bodies.get(track.id);
+  const body = f.originalBodies.get(track.id);
   await f.put(`${licensedFolder}/${track.original.path}`, Buffer.alloc(body.length));
   await assert.rejects(f.buildSoundtrackAlbums(), /Audio original differs/);
   await f.put(`${licensedFolder}/${track.original.path}`, body);
-  const runtimeHash = track.runtime.sha256;
-  track.runtime.sha256 = '0'.repeat(64);
+  const directMP3 = f.register.tracks[0];
+  const runtimeHash = directMP3.runtime.sha256;
+  directMP3.runtime.sha256 = '0'.repeat(64);
   await f.saveRegister();
   await assert.rejects(f.buildSoundtrackAlbums(), /inspection differs/);
-  track.runtime.sha256 = runtimeHash;
+  directMP3.runtime.sha256 = runtimeHash;
   f.register.albums.pop();
   await f.saveRegister();
   await assert.rejects(f.buildSoundtrackAlbums(), /Source track has no album/);
+});
+
+test('real candidate producer refuses altered derivative provenance and changed runtime bytes', async (t) => {
+  const f = await candidateFixture(t);
+  const track = f.register.tracks.find((item) => item.derivative);
+  const receiptPath = `${licensedFolder}/provenance/additional-derivatives.json`;
+  await f.put(
+    receiptPath,
+    JSON.stringify({
+      encoder: {},
+      tracks: [{ ...track.derivative, bytes: track.derivative.bytes + 1 }],
+    }),
+  );
+  await assert.rejects(f.buildSoundtrackAlbums(), /Derivative path or retained provenance differs/);
+  await f.put(receiptPath, JSON.stringify({ encoder: {}, tracks: [track.derivative] }));
+  const changed = Buffer.from(f.bodies.get(track.id));
+  changed[changed.length - 1] ^= 1;
+  await f.put(`${licensedFolder}/${track.runtime.path}`, changed);
+  await assert.rejects(f.buildSoundtrackAlbums(), /Audio original differs: derivatives\//);
+  assert.deepEqual(
+    await readFile(path.join(f.root, licensedFolder, track.original.path)),
+    f.originalBodies.get(track.id),
+  );
 });
 
 test('approved original recordings are optional binaries while their catalogue remains offline metadata', async (t) => {
