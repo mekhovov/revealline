@@ -58,5 +58,20 @@
     "file": "final-input-node22.tap.gz",
     "originalBytes": 14292,
     "originalSha256": "9a948231fa7d25c96b180ae8183f2a95e960547cd0d5c6e53c334344f21817e0"
+  },
+  {
+    "file": "expanded-input-node22.tap.gz",
+    "originalBytes": 14550,
+    "originalSha256": "3825a3d3491e37006988f3924b81cfe5e0b89bbe22da75f5037be151466c88ef"
+  },
+  {
+    "file": "expanded-input-node20.tap.gz",
+    "originalBytes": 13656,
+    "originalSha256": "c0dee8abd241feaba629cc98e2859dd3519734a5a94db41b51ee03fb3ff037ef"
+  },
+  {
+    "file": "controller-missions-first.tap.gz",
+    "originalBytes": 384,
+    "originalSha256": "77b1e9d4c5d54e805b356cfd4351a60832d77fc49019f724ee4e29ef9e798461"
   }
 ]

@@ -107,3 +107,20 @@ Large current/target values share one 44px HUD cell; the complete board measured
 The release controller separately accepted public v0.76.1 (source17bd1965,
 source PR208, publication PR210, Pages35551436420). These new device changes are
 not included in that public release. Plan reconciliation is owned separately.
+
+## Third iteration: two-seat limits and launch journey
+
+Team's shared Regular/Large sizes are preferred sizes. Below 400px in portrait,
+they fit each seat's available width instead of stacking two control rows over
+the entire arena. At 320×480, Large resolves to 154px per pad and D-pad buttons
+measure 51.33px; the complete board remains 220.20×110.10 with Large text. At 568×320,
+both Large pads remain 192px. Shared gestures, stored preference and seat ownership
+are unchanged. Compact Team state labels now apply in landscape too. A native
+D-pad check caught duplicate catalogue/text arrows; only the replaceable catalogue
+arrow now renders when its presentation binding exists.
+
+The expanded shared-input cohort passes 61/61 on both Node 20 and Node 22, including
+controller-only Missions → Deploy → Pause → explicit Resume. This extends the
+modeled input evidence; it does not reproduce or certify the physical Steam Deck
+report. Short Versus, training, maximum counters, central hazard-caption clearance
+with two Large pads, real devices and exact-source release gates remain open.
