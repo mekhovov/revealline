@@ -1,0 +1,126 @@
+TAP version 13
+# Subtest: fullscreen control follows the browser state and exits through the same explicit control
+ok 1 - fullscreen control follows the browser state and exits through the same explicit control
+  ---
+  duration_ms: 1.0775
+  ...
+# Subtest: installed standalone PWAs report their display state without browser fullscreen
+ok 2 - installed standalone PWAs report their display state without browser fullscreen
+  ---
+  duration_ms: 0.461375
+  ...
+# Subtest: iOS Home Screen games report standalone display state
+ok 3 - iOS Home Screen games report standalone display state
+  ---
+  duration_ms: 0.109625
+  ...
+# Subtest: display-mode changes update state and detach releases the listener
+ok 4 - display-mode changes update state and detach releases the listener
+  ---
+  duration_ms: 0.0685
+  ...
+# Subtest: unsupported browsers retain their responsive game layout without an inoperable control
+ok 5 - unsupported browsers retain their responsive game layout without an inoperable control
+  ---
+  duration_ms: 0.117541
+  ...
+# Subtest: fullscreen retry clears a prior denial only after an accepted transition
+not ok 6 - fullscreen retry clears a prior denial only after an accepted transition
+  ---
+  duration_ms: 0.876042
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/fullscreen.test.mjs:142:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    An accepted retry must retire the old denial.
+    + actual - expected
+    
+    + 'Fullscreen is unavailable in this browser. The board fits the visible window.'
+    - ''
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: 'Fullscreen is unavailable in this browser. The board fits the visible window.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/fullscreen.test.mjs:154:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: repeated activation while fullscreen is pending sends one browser request
+not ok 7 - repeated activation while fullscreen is pending sends one browser request
+  ---
+  duration_ms: 0.461666
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/fullscreen.test.mjs:157:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Touch/controller repetition cannot queue competing transitions.
+    
+    2 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/fullscreen.test.mjs:166:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: retired fullscreen owner ignores a late resolve after replacement
+not ok 8 - retired fullscreen owner ignores a late resolve after replacement
+  ---
+  duration_ms: 0.232833
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/fullscreen.test.mjs:176:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'Enter fullscreen'
+    - 'Replacement control'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Replacement control'
+  actual: 'Enter fullscreen'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/fullscreen.test.mjs:190:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: retired fullscreen owner ignores a late reject after replacement
+not ok 9 - retired fullscreen owner ignores a late reject after replacement
+  ---
+  duration_ms: 0.243208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/fullscreen.test.mjs:176:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'Fullscreen is unavailable in this browser. The board fits the visible window.'
+    - 'Replacement owner'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Replacement owner'
+  actual: 'Fullscreen is unavailable in this browser. The board fits the visible window.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-test-fixtures/game/test/fullscreen.test.mjs:189:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 5
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 41.917334

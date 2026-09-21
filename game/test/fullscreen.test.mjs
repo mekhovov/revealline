@@ -132,3 +132,75 @@ test('unsupported browsers retain their responsive game layout without an inoper
   assert.equal(button.listeners.size, 0);
   detach();
 });
+
+function deferred() {
+  let resolve, reject;
+  const promise = new Promise((yes, no) => {
+    resolve = yes;
+    reject = no;
+  });
+  return { promise, resolve, reject };
+}
+
+test('fullscreen retry clears a prior denial only after an accepted transition', async (t) => {
+  const button = new Button();
+  const doc = fullscreenDocument();
+  const request = doc.documentElement.requestFullscreen;
+  doc.documentElement.requestFullscreen = async () => {
+    throw new Error('Gesture denied');
+  };
+  t.after(attachFullscreen(button, doc));
+  await button.emit('click');
+  assert.match(button.title, /unavailable/);
+  assert.equal(button.getAttribute('aria-pressed'), 'false');
+  doc.documentElement.requestFullscreen = request;
+  await button.emit('click');
+  assert.equal(button.getAttribute('aria-pressed'), 'true');
+  assert.equal(button.title, '', 'An accepted retry must retire the old denial.');
+});
+
+test('repeated activation while fullscreen is pending sends one browser request', async (t) => {
+  const button = new Button();
+  const doc = fullscreenDocument();
+  const gate = deferred();
+  let requests = 0;
+  doc.documentElement.requestFullscreen = () => {
+    requests++;
+    return gate.promise;
+  };
+  t.after(attachFullscreen(button, doc));
+  const first = button.emit('click');
+  const second = button.emit('click');
+  assert.equal(requests, 1, 'Touch/controller repetition cannot queue competing transitions.');
+  doc.fullscreenElement = doc.documentElement;
+  gate.resolve();
+  await Promise.all([first, second]);
+  assert.equal(button.getAttribute('aria-pressed'), 'true');
+  await button.emit('click');
+  assert.equal(
+    button.getAttribute('aria-pressed'),
+    'false',
+    'Next deliberate activation can exit.',
+  );
+});
+
+for (const outcome of ['resolve', 'reject']) {
+  test(`retired fullscreen owner ignores a late ${outcome} after replacement`, async () => {
+    const button = new Button();
+    const doc = fullscreenDocument();
+    const gate = deferred();
+    doc.documentElement.requestFullscreen = () => gate.promise;
+    const detach = attachFullscreen(button, doc);
+    const pending = button.emit('click');
+    detach();
+    button.title = 'Replacement owner';
+    button.setAttribute('aria-label', 'Replacement control');
+    if (outcome === 'reject') gate.reject(new Error('Late denial'));
+    else gate.resolve();
+    await pending;
+    assert.equal(button.title, 'Replacement owner');
+    assert.equal(button.getAttribute('aria-label'), 'Replacement control');
+    assert.equal(button.listeners.size, 0);
+    assert.equal(doc.listeners.size, 0);
+  });
+}

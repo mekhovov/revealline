@@ -1,0 +1,46 @@
+{
+  "baseline": {
+    "source": "7f68890f4242b125c1b073c3f28c8101d3ff41f6",
+    "tests": 9,
+    "pass": 5,
+    "fail": 4,
+    "logSha256": "657fc417253ec3363ef9d05e93249d2c64a7f280046f2029f7d93a4749a6dcf5",
+    "logBytes": 5404,
+    "rawLogWhitespace": "Preserved unmodified Node assertion whitespace; excluded only this TAP from source whitespace check."
+  },
+  "boundary": "Finite browser promise and display-mode API; no physical Safari/Steam Deck or new public-release claim",
+  "runs": [
+    {
+      "node": "20.19.5",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/fullscreen.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "final-node20.19.5.tap",
+      "sha256": "89d4f17c42f0ebf061b293a934fe8490dad325a542dd27cb7c63bce1cd1e2b53"
+    },
+    {
+      "node": "22.22.2",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/fullscreen.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "final-node22.22.2.tap",
+      "sha256": "320b348b8f893a5f5716fc9fa4a63447ccb4d8f346eef3db5bb01f277277e9dc"
+    }
+  ],
+  "files": {
+    "game/ui/fullscreen.mjs": {
+      "bytes": 2603,
+      "sha256": "7125d4550071beff4ff305b6cc7f76e0179e814a03a3e69d963e1833af364867"
+    },
+    "game/test/fullscreen.test.mjs": {
+      "bytes": 6874,
+      "sha256": "3574a14ec059f0b02b7a6eab068ca6ddee5ea1da6a7f644d42de6cdc3962624b"
+    }
+  }
+}
