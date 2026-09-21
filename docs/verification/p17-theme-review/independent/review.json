@@ -1,0 +1,133 @@
+{
+  "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "sourceFiles": 79,
+  "sourceBytes": 825111,
+  "localConfig": "package.json type:module only",
+  "bundle": {
+    "bytes": 7399336,
+    "sha256": "dd8d17b2227fef4d2e6b63a3f73253be1dbf4f870a4f74325fff24f7ce2371e3"
+  },
+  "results": [
+    {
+      "node": "20.19.5",
+      "validateOnly": {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "scripts/compile-presentation.mjs",
+          "--bundle",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-transfer-8cff-r1/compiled-cli.rltheme"
+        ],
+        "exit": 0,
+        "stdout": "{\"source\":\"field-kit\",\"revision\":41,\"slots\":299,\"files\":137,\"output\":null,\"qualification\":\"Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate.\"}\n",
+        "stderr": ""
+      },
+      "compile": {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "scripts/compile-presentation.mjs",
+          "--bundle",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-transfer-8cff-r1/compiled-cli.rltheme",
+          "--out",
+          ".cache/review-node20"
+        ],
+        "exit": 0,
+        "stdout": "{\"source\":\"field-kit\",\"revision\":41,\"slots\":299,\"files\":137,\"output\":\".cache/review-node20\",\"qualification\":\"Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate.\"}\n",
+        "stderr": ""
+      },
+      "existingOutput": {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "scripts/compile-presentation.mjs",
+          "--bundle",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-transfer-8cff-r1/compiled-cli.rltheme",
+          "--out",
+          ".cache/review-node20"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "EEXIST: file already exists, mkdir '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/theme-cli-independent/source/.cache/review-node20'\n"
+      },
+      "existingOutputUnchanged": true,
+      "invalidHeader": {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "scripts/compile-presentation.mjs",
+          "--bundle",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/theme-cli-independent/invalid-header.rltheme",
+          "--out",
+          ".cache/invalid-node20"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "Unsupported theme bundle.\n"
+      },
+      "invalidOutputAbsent": true,
+      "files": 137,
+      "bytes": 8293501,
+      "payloads": 133,
+      "exactGitPayloadsAndParsedDocuments": true
+    },
+    {
+      "node": "22.22.2",
+      "validateOnly": {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "scripts/compile-presentation.mjs",
+          "--bundle",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-transfer-8cff-r1/compiled-cli.rltheme"
+        ],
+        "exit": 0,
+        "stdout": "{\"source\":\"field-kit\",\"revision\":41,\"slots\":299,\"files\":137,\"output\":null,\"qualification\":\"Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate.\"}\n",
+        "stderr": ""
+      },
+      "compile": {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "scripts/compile-presentation.mjs",
+          "--bundle",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-transfer-8cff-r1/compiled-cli.rltheme",
+          "--out",
+          ".cache/review-node22"
+        ],
+        "exit": 0,
+        "stdout": "{\"source\":\"field-kit\",\"revision\":41,\"slots\":299,\"files\":137,\"output\":\".cache/review-node22\",\"qualification\":\"Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate.\"}\n",
+        "stderr": ""
+      },
+      "existingOutput": {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "scripts/compile-presentation.mjs",
+          "--bundle",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-transfer-8cff-r1/compiled-cli.rltheme",
+          "--out",
+          ".cache/review-node22"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "EEXIST: file already exists, mkdir '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/theme-cli-independent/source/.cache/review-node22'\n"
+      },
+      "existingOutputUnchanged": true,
+      "invalidHeader": {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "scripts/compile-presentation.mjs",
+          "--bundle",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/theme-cli-independent/invalid-header.rltheme",
+          "--out",
+          ".cache/invalid-node22"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "Unsupported theme bundle.\n"
+      },
+      "invalidOutputAbsent": true,
+      "files": 137,
+      "bytes": 8293501,
+      "payloads": 133,
+      "exactGitPayloadsAndParsedDocuments": true
+    }
+  ],
+  "crossRuntimeOutputsEqual": true,
+  "nativeInput": false,
+  "publicAcceptance": false
+}
