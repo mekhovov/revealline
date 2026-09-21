@@ -504,3 +504,22 @@ retained region containing north keeper and south keeper; the screenshot shows
 the bridge, remaining field and the explanation without an intervening dialog.
 The attempt was then paused at16seconds. This is a native partial-capture/control
 check, not a full native clear or evidence of human comprehension/enjoyment.
+
+### Original Team artwork source bindings
+
+Eleven new original compositions (30,437,143bytes,1774×887PNG) join the existing
+Shared detour original. The twelve-mission factory accepts explicit `artwork:true`;
+Studio Inspect uses it but still requires Apply. Greybox defaults, mission editions,
+geometry-only exports, simulation identities and official-progress eligibility
+remain unchanged. Full prompts and immutable pins are in
+`docs/research/team-original-art-prompts.json`.
+
+The15-case artwork/candidate/export/registry cohort passes on Node20 and22.
+It verifies all twelve original hashes and decoded-header dimensions,36 preset
+manifest pairs and64 two-seat route replays (joint cuts on/off), retaining historical
+checkpoints, clears, zero downs and contributions from both seats. Clear routes
+are not automatically mastery routes; each retains its previous mastery result.
+
+This checkpoint binds sources only. The current Team host and geometry exports
+do not yet deliver these candidate originals. A verified candidate-picture adapter,
+native picture checks, human/device qualification and release integration remain.
