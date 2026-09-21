@@ -945,6 +945,14 @@
       "recordSha256": "bcb80d79e9cb2ca545d5872e0b1dcf286711d7d6541bd3eb9bed90f69daa13da",
       "manifestSha256": "6f0713c6e86ea9e83e82665c2778fe5000dcb9e5b5b566b4fcba790d9b3452c8",
       "checksumSha256": "cecfd1f1b697c0d453024b25312a0d3a8de69e53bbdf62225baba61f54731019"
+    },
+    {
+      "version": "v0.79.1",
+      "sourceRevision": "9876f995bc155638cf9dcc62b5d6e1daec963b27",
+      "tagObject": "753c8ccd0cc73a7b93cb275c0b7283b367165c24",
+      "recordSha256": "1954ff10359e97130c34388ed4506366fb84e6bb93e65e8be4a22db15f8da614",
+      "manifestSha256": "754573487ee2391214b45facf220e97fe48b54789b6c93e7375f24618d71d797",
+      "checksumSha256": "90f289143466adb9dd46ff53384dd48f8c9a1ccfa953732c400cba81b8b8f293"
     }
   ]
 }
