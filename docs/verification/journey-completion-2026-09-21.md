@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after Team reserve-taking route qualification. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after the first Team visible-miss/relocation route. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -103,6 +103,18 @@ then being collected after relocation. That route and the broader gates above
 remain open; no new mission or public deployment is counted.
 The combined 987-test cohort passes on both Node versions; independent review
 verified the thirteen new checks and all twelve direct-engine routes.
+
+A further [Expert relocation route](journey-team-relocation-routes.md) now proves
+visible speed-pickup expiry, relocation to the other anchor, contact collection
+and a boosted return/clear in all four seat/joint configurations. The partner is
+not cutting at contact; this is not cooperation mastery. The same log's two
+Gentle/Standard knockdowns are retained as negative probes, not successful cases.
+Other presets/maps, reserve relocation, broader starts and human/device/release
+gates remain open.
+
+This relocation follow-up is independently reviewed; all 994 combined tests pass
+on both Node versions. Passing regression assertions include the explicitly
+expected failed-route outcomes and must not be reported as 994 successful clears.
 
 ## Latest completed spatial unit
 

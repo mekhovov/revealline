@@ -55,7 +55,9 @@ original 16 failed seed/timing probes remain unchanged and unqualified.
 
 ## Remaining
 
-- Visible expiry followed by a relocated pickup being collected and a full clear.
+- Broader visible-expiry/relocated-taking qualification. The
+  [Expert speed-pickup successor](journey-team-relocation-routes.md) now proves one
+  such route across seats/joint settings, not other presets or reserve relocation.
 - Broader starts, alternate Expert mastery, shortcut/pressure-inversion fixes and
   useful complementary two-human play.
 - Actual new-map host/device/controller/accessibility checks and original art.

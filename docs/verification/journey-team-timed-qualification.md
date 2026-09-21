@@ -85,7 +85,9 @@ read-only observations and do not alter engine state, events or existing hashes.
 1. Miss-then-relocate taking routes. The [reserve successor](journey-team-reserve-routes.md)
    now proves optional shared reserve contact across all presets/seats/joint
    settings, including a later first eligible window. It does not establish
-   visible expiry followed by relocated collection.
+   visible expiry followed by relocated collection. A further
+   [Expert relocation route](journey-team-relocation-routes.md) proves that
+   sequence for speed in four seat/joint cases; other presets/maps remain open.
 2. Broader delayed-start sampling; alternate Expert mastery and robustness.
    The 16 original failures remain useful evidence that replaying a fixed plan
    against a changed opportunity is not an adaptive strategy.
