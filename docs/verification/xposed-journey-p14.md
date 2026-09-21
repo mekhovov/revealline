@@ -492,7 +492,15 @@ still take precedence in the event stream.
 Fifty capture/ground/roamer/chooser/search/full-Journey tests pass on both Node20
 and22. Public-input first-arc closures include line-only returns; before/after
 state serialization proves the inspector does not mutate them. An actual-host
-joint bridge earns under5% while both keeper regions remain represented in the
+joint bridge earns under5% while both field keepers remain represented in the
 caption, with no menu/pause interruption. Twenty-two additional legacy briefing/
 discovery/exit checks pass on Node20. Native caption readability and genuine player
 understanding remain separate evidence, not inferred from these scripted tests.
+
+Native exact `ac6f8868` on local port8812: Start Twin landings, steer both craft
+toward each other with D/Left, then observe a joint bridge earning1.1%, two
+reserves and both craft stopped on reclaimed ground. The caption identifies one
+retained region containing north keeper and south keeper; the screenshot shows
+the bridge, remaining field and the explanation without an intervening dialog.
+The attempt was then paused at16seconds. This is a native partial-capture/control
+check, not a full native clear or evidence of human comprehension/enjoyment.
