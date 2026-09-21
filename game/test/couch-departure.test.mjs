@@ -246,3 +246,29 @@ for (const reader of [
     assert.equal(f.$('race-leave').emit('click').defaultPrevented, false);
     assert.equal(f.$('race-leave').getAttribute('href'), '../');
   });
+
+test('an authored departure cannot adopt a different Journey edition at confirmation', async (t) => {
+  let route = 'whole-originals-v3';
+  const f = await shellFixture(t, { getSoloJourneyRoute: () => route });
+  assert.equal(f.$('race-solo-return').getAttribute('href'), '../?journey=whole-originals-v3');
+  f.$('race-solo-return').click();
+  assert.equal(f.shell.scope(), 'leave');
+  route = 'opening';
+  assert.equal(f.$('race-leave').emit('click').defaultPrevented, true);
+  assert.equal(f.$('race-leave-panel').hidden, true);
+});
+
+for (const reader of [
+  () => 'https://example.com',
+  () => 'opening&redirect=bad',
+  () => {
+    throw Error('unavailable');
+  },
+])
+  test(`an invalid Journey reader cannot rewrite the fixed Solo destination: ${reader}`, async (t) => {
+    const f = await shellFixture(t, { getSoloJourneyRoute: reader });
+    assert.equal(f.$('race-solo-return').getAttribute('href'), '../');
+    f.$('race-solo-return').click();
+    assert.equal(f.$('race-leave').emit('click').defaultPrevented, false);
+    assert.equal(f.$('race-leave').getAttribute('href'), '../');
+  });

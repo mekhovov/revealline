@@ -4,6 +4,7 @@ import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
 import { createAuthoredJourneyRoute } from './content-design/route.mjs';
+import { authoredJourneyModeHref } from './content-design/mode-href.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
 import { DIFFICULTY_CATALOG, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
@@ -2369,7 +2370,20 @@ try {
     versus: 'couch/?return=solo',
   });
   const modeLabel = (kind) => (kind === 'versus' ? 'Versus' : 'Team');
+  const currentAuthoredModeRoute = () =>
+    candidateHost?.owns(activeEntry) ? authoredRoute.id : null;
+  const modeDestination = (ticket) =>
+    authoredJourneyModeHref(ticket.journeyRouteId, ticket.kind) || modeDestinations[ticket.kind];
+  function syncAuthoredModeLinks() {
+    const href =
+      authoredJourneyModeHref(currentAuthoredModeRoute(), 'versus') || modeDestinations.versus;
+    for (const id of ['shell-versus', 'shell-title-versus']) $(id).setAttribute('href', href);
+  }
   function prepareModeHint(ticket) {
+    // Authored progress and suspended attempts already have their own route.
+    // Do not write a Legacy selection bookmark for a candidate execution.
+    if (ticket.journeyRouteId)
+      return { token: null, href: new URL(modeDestination(ticket), location.href).href };
     return ticket.kind === 'versus'
       ? modeReturnV2.prepare({
           origin: 'solo-missions',
@@ -2416,6 +2430,7 @@ try {
       recorder !== ticket.recorder ||
       runId !== ticket.runId ||
       campaign !== ticket.campaign ||
+      currentAuthoredModeRoute() !== ticket.journeyRouteId ||
       libraryGeneration !== ticket.generation ||
       canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
     )
@@ -2430,7 +2445,7 @@ try {
         ? 'Your paused flight was saved and verified. Continue can restore it after returning.'
         : 'This current flight is session-only: it remains paused in this tab. Leaving may lose this attempt. This flight was not verified as safely saved.';
     $('mode-leave-status').textContent = `${flight} ${
-      ticket.origin === 'solo-title'
+      ticket.origin === 'solo-title' || ticket.journeyRouteId
         ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
         : ticket.fallback
           ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
@@ -2501,9 +2516,9 @@ try {
       return;
     event.preventDefault();
     if (!Object.hasOwn(modeDestinations, kind)) return;
-    if (candidateHost) {
+    if (currentAuthoredModeRoute() && kind === 'team') {
       warning(
-        'This flight stays in Solo. Open the separate authored Versus test route for paired-board play; Team uses its separate test imports.',
+        'Team uses separately authored shared-board missions. Your Solo flight stays here; open the Team test route separately.',
       );
       return;
     }
@@ -2542,6 +2557,7 @@ try {
       campaign,
       generation: libraryGeneration,
       selection: modeSelection(),
+      journeyRouteId: currentAuthoredModeRoute(),
       unfinished: unfinishedFlight(),
       savedRaw: null,
       fallback: false,
@@ -2551,7 +2567,7 @@ try {
     if (origin === 'solo-title' && !ticket.unfinished) {
       try {
         modeDepartureCurrent(ticket);
-        location.href = new URL(modeDestinations[kind], location.href).href;
+        location.href = new URL(modeDestination(ticket), location.href).href;
       } catch (error) {
         cancelModeDeparture({ restore: true });
         warning(`${modeLabel(kind)} could not open. Your flight remains here. ${error.message}`);
@@ -2643,7 +2659,7 @@ try {
           return;
         }
       }
-      let destination = new URL(modeDestinations[ticket.kind], location.href).href;
+      let destination = new URL(modeDestination(ticket), location.href).href;
       if (ticket.origin === 'solo-missions' && !ticket.fallback) {
         try {
           const prepared = prepareModeHint(ticket);
@@ -5513,6 +5529,7 @@ try {
     return overrides;
   }
   function setTheme() {
+    syncAuthoredModeLinks();
     if (library.preferences.matchClassAppearance) {
       const candidate = characterPresentations.recommendedBody(
         theme,
