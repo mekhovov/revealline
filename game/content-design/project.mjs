@@ -174,6 +174,7 @@ export function compileContentProject(source) {
         'actors',
         'objectives',
         'bonuses',
+        'timedBonuses',
         'coverage',
         'timeLimitSeconds',
         'design',
@@ -367,6 +368,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
       version: 'classic.v1',
       terrain: map.source.terrain ?? [],
       powerups: mission.bonuses,
+      ...(Object.hasOwn(mission, 'timedBonuses') ? { timedBonuses: mission.timedBonuses } : {}),
       ...(policy.arcadeActions ? { arcadeActions: policy.arcadeActions } : {}),
       ...(carriers.length
         ? {

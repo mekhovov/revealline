@@ -31,6 +31,7 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     mission.actors.every((actor) => teamRoleQualified(mission.team.format, actor.role)) &&
       mission.objectives.length === 0 &&
       mission.bonuses.length === 0 &&
+      !Object.hasOwn(mission, 'timedBonuses') &&
       mission.timeLimitSeconds === 0 &&
       (mission.team.format !== 'TeamMissionV1' || (map.source.terrain ?? []).length === 0),
     'Team candidates support only qualified actor roles and coverage, not unqualified terrain, bonuses, objectives or timers.',

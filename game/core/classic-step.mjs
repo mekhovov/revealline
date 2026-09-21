@@ -36,6 +36,11 @@ import {
 } from './classic-contour.mjs';
 import { planClassicPlayer, planClassicEnemy, applyClassicEnemy } from './classic-motion.mjs';
 import { initializeEnemyPressure, updateEnemyPressure } from './enemy-pressure.mjs';
+import {
+  updateTimedBonuses,
+  collectTimedBonus,
+  cancelHazardousTimedBonuses,
+} from './timed-bonuses.mjs';
 
 export function initializeClassicActors(state) {
   for (const enemy of state.enemies) {
@@ -187,7 +192,11 @@ function collect(state, hits, elapsed) {
       gain,
       activationTick,
       untilTick,
+      ...(state.classic.timedBonuses?.schedules.some((entry) => entry.id === item.id)
+        ? { x: item.x, y: item.y }
+        : {}),
     });
+    collectTimedBonus(state, item);
   }
 }
 
@@ -386,7 +395,10 @@ function world(state, input, hooks) {
         });
       }
     }
-    if (erosionDue(state)) commitClassicErosion(state);
+    if (erosionDue(state)) {
+      commitClassicErosion(state);
+      cancelHazardousTimedBonuses(state);
+    }
     updateActors(state);
     updateEnemyPressure(state);
     // Let the first zero-time hit keep historical capture/erosion/failure order.
@@ -450,6 +462,7 @@ export function stepClassic(state, input, hooks) {
   }
   updateActors(state);
   updateEnemyPressure(state);
+  updateTimedBonuses(state);
   const interrupted = world(state, input, hooks);
   if (state.status === 'won' || state.status === 'lost') return;
   state.time = endTime;

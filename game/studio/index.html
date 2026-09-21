@@ -52,6 +52,7 @@
         ><button id="export">Export backup</button>
         <button id="opening">Inspect opening candidates</button>
         <button id="border">Inspect Border Bloom candidates</button>
+        <button id="timed-border">Inspect timed bonus study</button>
         <button id="signal">Inspect Signal Gardens greyboxes</button>
         <button id="neon">Inspect Neon Contours picture candidates</button>
         <button id="rover">Inspect Rover Yard picture candidates</button>
@@ -393,6 +394,97 @@
                 <button id="bonus-submit" type="submit">Validate & add bonus</button>
                 <button id="bonus-remove" type="button" disabled>Remove selected bonus</button>
                 <p id="bonus-result" class="note" role="status"></p>
+              </fieldset>
+            </form>
+          </details>
+          <details id="timed-bonus-panel">
+            <summary>Schedule optional timed bonuses</summary>
+            <p class="note">
+              Numbered anchors are possible locations, not a live prediction. Missed pickups return
+              at a different eligible anchor. All required routes must work without them.
+            </p>
+            <form id="timed-bonus-form">
+              <fieldset id="timed-bonus-tools">
+                <legend>Timed contact pickups · finite rewards</legend>
+                <label>Schedule<select id="timed-bonus-select"></select></label>
+                <label
+                  >Stable schedule ID<input id="timed-bonus-id" maxlength="80" required
+                /></label>
+                <label>Effect<select id="timed-bonus-kind"></select></label>
+                <label
+                  >Anchors · X,Y pairs separated by semicolons<textarea
+                    id="timed-bonus-anchors"
+                    rows="3"
+                    maxlength="1024"
+                    placeholder="8.5, 12.5; 24.5, 22.5"
+                    required
+                  ></textarea>
+                </label>
+                <div class="pair">
+                  <label
+                    >Initial delay · seconds<input
+                      id="timed-bonus-delay"
+                      type="number"
+                      min="0"
+                      max="60"
+                      step="0.5"
+                      required
+                  /></label>
+                  <label
+                    >Announcement · seconds<input
+                      id="timed-bonus-announce"
+                      type="number"
+                      min="1"
+                      max="5"
+                      step="0.5"
+                      required
+                  /></label>
+                </div>
+                <div class="pair">
+                  <label
+                    >Available · seconds<input
+                      id="timed-bonus-available"
+                      type="number"
+                      min="2"
+                      max="20"
+                      step="0.5"
+                      required
+                  /></label>
+                  <label
+                    >Cooldown · seconds<input
+                      id="timed-bonus-cooldown"
+                      type="number"
+                      min="2"
+                      max="60"
+                      step="0.5"
+                      required
+                  /></label>
+                </div>
+                <div class="pair">
+                  <label
+                    >Maximum appearances<input
+                      id="timed-bonus-appearances"
+                      type="number"
+                      min="1"
+                      max="12"
+                      step="1"
+                      required
+                  /></label>
+                  <label
+                    >Maximum collections · life limit 1<input
+                      id="timed-bonus-collections"
+                      type="number"
+                      min="1"
+                      max="3"
+                      step="1"
+                      required
+                  /></label>
+                </div>
+                <button id="timed-bonus-submit" type="submit">Validate & add schedule</button>
+                <button id="timed-bonus-remove" type="button" disabled>
+                  Remove selected schedule
+                </button>
+                <p id="timed-bonus-result" class="note" role="status"></p>
               </fieldset>
             </form>
           </details>

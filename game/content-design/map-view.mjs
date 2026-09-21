@@ -85,6 +85,23 @@ export function paintContentMap(
     ctx.textBaseline = 'middle';
     ctx.fillText(bonusGlyphs[bonus.kind], x, y);
   }
+  for (const [scheduleIndex, schedule] of (
+    manifest.level.classic?.timedBonuses?.schedules ?? []
+  ).entries())
+    for (const [anchorIndex, anchor] of schedule.anchors.entries()) {
+      const x = anchor.x * size,
+        y = anchor.y * size;
+      ctx.save();
+      ctx.strokeStyle = '#d8ef92';
+      ctx.setLineDash([3, 2]);
+      ctx.strokeRect(x - size * 0.65, y - size * 0.65, size * 1.3, size * 1.3);
+      ctx.fillStyle = '#f5ffba';
+      ctx.font = `bold ${Math.max(10, size * 0.8)}px monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`${bonusGlyphs[schedule.kind]}${scheduleIndex + 1}.${anchorIndex + 1}`, x, y);
+      ctx.restore();
+    }
   for (const actor of overlay.actors) {
     const x = actor.x * size,
       y = actor.y * size,
