@@ -36,6 +36,13 @@ and a native Solo clear, preference change and immediate Next pass. See
 `verification/journey-character-reactions.md`. Character artwork/materials,
 soundtrack, human reception and accepted-release integration remain separate gates.
 
+Actor-material follow-up has84 bounded code-native body studies (twelve material
+treatments across seven existing roles), with a read-only native-size review sheet.
+Initial soft-edge rendering was corrected and the candidate viewed on light, dark
+and neutral surfaces. This is not runtime enrollment or final character art;
+explicit successor themes, shared-painter integration and live/human qualification
+remain required. See `verification/journey-actor-material-studies.md`.
+
 Team original-art source checkpoint: eleven new originals plus the existing Shared
 detour picture now bind all twelve candidate missions without changing36 resolved
 preset simulations. The15-case cohort on Node20/22 includes64 unchanged two-seat
