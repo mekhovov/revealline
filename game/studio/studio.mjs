@@ -4,6 +4,7 @@ import { createBorderCandidates } from '../content-design/border-candidates.mjs'
 import { createTimedBorderCandidates } from '../content-design/timed-border-candidates.mjs';
 import { createCulturalWorkshopCandidates } from '../content-design/cultural-workshop-candidates.mjs';
 import { createPursuitInterceptCandidates } from '../content-design/pursuit-intercept-candidates.mjs';
+import { createSpatialBalanceCandidates } from '../content-design/spatial-balance-candidates.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
 import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
 import { createRoverTeachingCandidates } from '../content-design/rover-teaching-candidates.mjs';
@@ -644,13 +645,25 @@ $('timed-border').onclick = guarded(() => {
 });
 $('cultural-workshop').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createCulturalWorkshopCandidates(), null, 2);
+  $('source').value = JSON.stringify(
+    $('spatial-edition').value === 'spatial-2'
+      ? createSpatialBalanceCandidates()
+      : createCulturalWorkshopCandidates(),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });
 $('pursuit-intercept').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createPursuitInterceptCandidates(), null, 2);
+  $('source').value = JSON.stringify(
+    $('spatial-edition').value === 'spatial-2'
+      ? createSpatialBalanceCandidates({ pressure: true })
+      : createPursuitInterceptCandidates(),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });

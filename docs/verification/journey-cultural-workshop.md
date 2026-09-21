@@ -55,6 +55,10 @@ these observations directly reject speed as the only measure of difficulty.
 Declared60–150second targets are unmeasured human targets, not achieved metrics.
 Do not enroll these maps as a uniformly rising campaign based on solver times.
 
+[Spatial revision2](journey-spatial-balance.md) now offers a separate comparison
+edition for Dnipro and Four motor landings, with improved but still provisional
+pacing evidence. This table and the original fixtures remain historical truth.
+
 ## Remaining gates
 
 - Native touch/controller/small-screen and full-route observations beyond the
