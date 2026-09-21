@@ -2,6 +2,7 @@ import { required, stableId } from '../data-json.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { createOpeningCandidates } from './horizon-candidates.mjs';
 import { createBorderCandidates } from './border-candidates.mjs';
+import { isAuthoredJourneyRouteId } from './mode-href.mjs';
 import {
   createWholeJourneyCandidates,
   WHOLE_JOURNEY_CORE_PACK_IDS,
@@ -11,6 +12,7 @@ import {
  * pack or execution identities, and optional Remixes never interrupt core play.
  * The frozen opening URL retains its previous library and suspended-flight slot. */
 export function createAuthoredJourneyRoute(id) {
+  if (!isAuthoredJourneyRouteId(id)) return null;
   // A separate explicit review URL and suspended-flight slot. Never expand the
   // historical routes or infer publication/qualification from having artwork.
   if (['whole-originals', 'whole-originals-v2', 'whole-originals-v3'].includes(id))

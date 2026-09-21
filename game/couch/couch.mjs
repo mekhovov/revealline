@@ -1384,6 +1384,8 @@ try {
     onLeaveRequest: pause,
     getSoloReturnToken: () =>
       readVersusSoloReturnToken({ href: location.href, storage: soloReturnStorage }),
+    getSoloJourneyRoute: () =>
+      candidateJourney?.owns(roundRecipe?.entry) ? authoredRoute.id : null,
     onTransition: ({ to, back = false } = {}) => {
       catalogue?.close();
       catalogue?.cancel();
