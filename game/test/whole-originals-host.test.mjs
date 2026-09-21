@@ -10,11 +10,15 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
-import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
+import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
-const route = createAuthoredJourneyRoute('whole-originals-v2');
-const historicalSignal = compileContentProject(createSignalCandidates());
+const route = createAuthoredJourneyRoute('whole-originals-v3');
+// Retain original route/checkpoint evidence. Theme editions change run identity
+// and result revision, not physics; never rewrite the frozen replay fixtures.
+const historicalProject = compileContentProject(
+  createWholeJourneyCandidates({ roverTeaching: true }),
+);
 const fixtures = [
   'horizon-greybox',
   'border-clear',
@@ -78,14 +82,14 @@ const running = (p, id) =>
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === id;
   });
 
-test('teaching edition:71 real Solo host clears retain originals across70 Next actions, a failed preload and all12 chapters', async (t) => {
+test('campaign presentation edition:71 real Solo host clears retain exact themes and originals across70 Next actions and a failed preload', async (t) => {
   assert.equal(rows.length, 71);
   const memory = managedIndexedDB(),
     storage = memoryStorage();
   const backend = createJourneyBackend(memory);
   let refuse = null;
   const p = await soloPage(t, {
-    search: '?journey=whole-originals-v2',
+    search: '?journey=whole-originals-v3',
     titleScreen: true,
     storage,
     journeyIndexedDB: memory.indexedDB,
@@ -101,16 +105,15 @@ test('teaching edition:71 real Solo host clears retain originals across70 Next a
   for (const [index, [id, , checkpoint, segments]] of rows.entries()) {
     assert.equal(p.rendered.run.levelId, id);
     const mission = route.source.missions.find((m) => m.id === id);
+    assert.equal(p.$('theme-select').value, mission.presentation.themeId, id);
     const asset = route.source.assets.find((a) => a.id === mission.presentation.backgroundAssetId);
     assert.equal(p.rendered.backdrop.image.sha256, asset.sha256, id);
     assert.equal(p.rendered.backdrop.image.width, asset.width, id);
     const reference = createRun(p.rendered.run.level, { seed: 1, classId: 'scout' });
-    // Signal's pictured edition deliberately has a new level revision. Retain
-    // the frozen historical replay proof without mistaking its identity hash
-    // for the later edition's hash, or rewriting a live level to make it match.
-    const historical = historicalSignal.missions.some((m) => m.id === id)
-      ? createRun(resolveMission(historicalSignal, id).level, { seed: 1, classId: 'scout' })
-      : null;
+    const historical = createRun(resolveMission(historicalProject, id).level, {
+      seed: 1,
+      classId: 'scout',
+    });
     for (const [direction, ticks] of segments) {
       if (direction !== null) {
         p.key(keys[direction]);
@@ -119,7 +122,7 @@ test('teaching edition:71 real Solo host clears retain originals across70 Next a
       let frames = 0;
       for (let tick = 0; tick < ticks; tick++) {
         stepRun(reference, { direction }, FIXED_DT);
-        if (historical) stepRun(historical, { direction }, FIXED_DT);
+        stepRun(historical, { direction }, FIXED_DT);
         frames++;
         const closure = reference.events.some((e) => e.type === 'capture.stopped');
         if (closure || frames === 12 || tick === ticks - 1) {
@@ -139,17 +142,13 @@ test('teaching edition:71 real Solo host clears retain originals across70 Next a
       authoritativeCheckpoint(reference).hash,
       id,
     );
-    assert.equal(authoritativeCheckpoint(historical ?? reference).hash, checkpoint, id);
-    if (historical) {
-      const oldSections = authoritativeCheckpoint(historical).sections;
-      const newSections = authoritativeCheckpoint(reference).sections;
-      for (const key of Object.keys(oldSections))
-        if (!['identity', 'result'].includes(key))
-          assert.equal(newSections[key], oldSections[key], `${id}/${key}`);
-      assert.equal(historical.result.revision, 'greybox-1');
-      assert.equal(reference.result.revision, 'greybox-2');
-      assert.deepEqual(reference.result, { ...historical.result, revision: 'greybox-2' });
-    }
+    assert.equal(authoritativeCheckpoint(historical).hash, checkpoint, id);
+    const oldSections = authoritativeCheckpoint(historical).sections;
+    const newSections = authoritativeCheckpoint(reference).sections;
+    for (const key of Object.keys(oldSections))
+      if (!['identity', 'result'].includes(key))
+        assert.equal(newSections[key], oldSections[key], `${id}/${key}`);
+    assert.deepEqual(reference.result, { ...historical.result, revision: mission.revision });
     assert.equal(p.$('game-overlay').dataset.kind, 'won', id);
     assert.equal(p.$('journey-chooser').open, false, id);
     if (index === rows.length - 1) break;
@@ -186,17 +185,19 @@ test('teaching edition:71 real Solo host clears retain originals across70 Next a
     'revealline.suspended.dev.v1',
     'revealline.suspended.journey-opening.v1',
     'revealline.suspended.journey-authored.v1',
+    'revealline.suspended.journey-whole-originals.v1',
+    'revealline.suspended.journey-whole-originals.v2',
   ])
     assert(!storage.writes.some(([written]) => written === key), key);
   assert.deepEqual(p.errors, []);
 });
 
-test('teaching edition:71 real Versus races keep equal boards and exact pictures through70 deliberate Next actions', async (t) => {
+test('campaign presentation edition:71 real Versus races keep equal boards, exact themes and pictures through70 deliberate Next actions', async (t) => {
   const memory = managedIndexedDB(),
     storage = memoryStorage();
   const backend = createJourneyBackend(memory);
   const p = await couchPage(t, {
-    href: 'http://localhost/game/couch/?journey=whole-originals-v2',
+    href: 'http://localhost/game/couch/?journey=whole-originals-v3',
     initialLevel: null,
     assetDatabase: memory.indexedDB,
     storage,
@@ -226,6 +227,7 @@ test('teaching edition:71 real Versus races keep equal boards and exact pictures
     assert.equal(p.renders[0].levelId, id);
     assert.equal(p.renders[1].levelId, id);
     const mission = route.source.missions.find((m) => m.id === id);
+    assert.equal(p.$('race-theme').value, mission.presentation.themeId, id);
     const asset = route.source.assets.find((a) => a.id === mission.presentation.backgroundAssetId);
     const picture = p.drawOptions[0].backdrop;
     assert.equal(picture, p.drawOptions[1].backdrop);

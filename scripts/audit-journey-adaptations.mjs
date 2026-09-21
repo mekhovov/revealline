@@ -10,13 +10,14 @@ const json = async (relative) => JSON.parse(await readFile(new URL(relative, roo
 /** Existing declarations only: no second mission registry, inferred matching by
  * name, edited historical observation, asset loading or publication. */
 export async function loadJourneyAdaptationInputs({ edition = 'greybox' } = {}) {
-  if (!['greybox', 'originals', 'teaching-originals'].includes(edition))
+  if (!['greybox', 'originals', 'teaching-originals', 'campaign-originals'].includes(edition))
     throw new Error('Unknown adaptation content edition.');
   const ledger = await json('docs/research/xposed-journey-ledger.json');
   const chapters = [];
   const selected = createWholeJourneyChapterSources({
     artwork: edition !== 'greybox',
-    roverTeaching: edition === 'teaching-originals',
+    roverTeaching: ['teaching-originals', 'campaign-originals'].includes(edition),
+    campaignPresentation: edition === 'campaign-originals',
   });
   for (const [index, chapter] of selected.entries()) {
     const module = await import(`../game/content-design/${chapter.id}-candidates.mjs`);

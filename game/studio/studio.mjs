@@ -686,7 +686,11 @@ $('apex').onclick = guarded(() => {
 $('whole-journey').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(
-    createWholeJourneyCandidates({ artwork: true, roverTeaching: true }),
+    createWholeJourneyCandidates({
+      artwork: true,
+      roverTeaching: true,
+      campaignPresentation: true,
+    }),
     null,
     2,
   );
