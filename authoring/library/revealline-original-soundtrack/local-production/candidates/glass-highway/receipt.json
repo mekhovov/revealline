@@ -1,0 +1,60 @@
+{
+  "format": "revealline-local-recording.v1",
+  "status": "candidate-unreviewed",
+  "title": "Glass Highway",
+  "id": "original.glass-highway",
+  "rendererVersion": "sample-free-renderer.1.1",
+  "rendererSha256": "96703b5995f30f3a73d36cdd3562cb707880fc0856ea12bbc18561b166bebc98",
+  "scoreSha256": "b9c4a69ba741e7484b9d4babd5e3cadba75be6abd4d90870ea0a7d3dc058a6ba",
+  "composerSha256": "4618eb0e11ec883c84180aaf8edaa5973697bf18fc6a268b1469f68500c8de23",
+  "seed": 9102,
+  "tools": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.18.0",
+    "pyloudnorm": "0.2.0",
+    "encoder": "lameenc 1.8.4",
+    "converter": "/usr/bin/afconvert"
+  },
+  "master": {
+    "path": "master.flac",
+    "bytes": 41210768,
+    "sha256": "76659fb58e5df10c8d62a8ecdc9ecbb4d33a28b60340621b5278f003fd011573",
+    "bitsPerSample": 24,
+    "pcm24Sha256": "9825fae759212b8153b3d2e9affcd8af126ea6a4d34df13f97eebe7b4dd4c4c3",
+    "losslessRoundTripVerified": true,
+    "integratedLufs": -16.016,
+    "estimatedTruePeakDbtp": -4.867,
+    "samplePeakDbfs": -4.878,
+    "durationSeconds": 205.63635,
+    "sampleRate": 48000,
+    "channels": 2,
+    "rmsDbfs": -17.913
+  },
+  "mp3": {
+    "path": "preview.mp3",
+    "bytes": 6581760,
+    "sha256": "56871ef695c86fa1bbc0015c7e0731c15de010e2e8530045693124988b14c4de",
+    "bitrateKbps": 256,
+    "integratedLufs": -16.033,
+    "estimatedTruePeakDbtp": -4.651,
+    "samplePeakDbfs": -4.712,
+    "durationSeconds": 205.68,
+    "sampleRate": 48000,
+    "channels": 2,
+    "rmsDbfs": -17.92
+  },
+  "measurementMethod": "pyloudnorm BS.1770 integrated loudness; scipy resample_poly 4x overlapping peak estimate, not a certified true-peak meter.",
+  "review": {
+    "fullListening": "pending",
+    "inGameMix": "pending",
+    "culturalAccuracy": "not-applicable",
+    "technical": "measured-pass",
+    "originality": "original authored score; independent review pending",
+    "publication": "not-approved"
+  },
+  "provenance": "Only authored score and local synthesis. No external recordings, samples, models or hosted generation.",
+  "productionBytes": 289337770,
+  "maximumResidentBytes": 1090928640,
+  "elapsedSeconds": 9.6
+}

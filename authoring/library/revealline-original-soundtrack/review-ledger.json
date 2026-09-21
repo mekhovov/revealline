@@ -1,0 +1,1734 @@
+{
+  "format": "revealline-original-review-ledger.v1",
+  "edition": "originals-1",
+  "tracks": [
+    {
+      "id": "original.idle-frequency",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.afterglow-savepoint",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.glass-highway",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.cobalt-cassette",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.quarter-credit",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.vector-rain",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.satellite-summer",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.pixel-tides",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.magnetic-orchard",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.woven-signal",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.overdrive-sunrise",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.last-coin-comet",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.embers-at-rest",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.cold-steel-lantern",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.furnace-heart",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.iron-switchback",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.blackglass-engine",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.storm-forge",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.concrete-seraph",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.redline-relay",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.voltage-crown",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.anvil-bloom",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.carpathian-arc",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.terminal-ignition",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.first-light",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.threads-of-the-dnipro",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.spring-circuit",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.highland-switchback",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.night-on-the-ridge",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.kobzars-horizon",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.evening-dance",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.city-of-light",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.reed-current",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.harvest-lines",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.steel-kolomyika",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    },
+    {
+      "id": "original.pulse-over-the-dnipro",
+      "status": "planned",
+      "attempts": [],
+      "reviews": {
+        "composition": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "originality": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "fullListening": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "technical": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "inGameMix": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "transitions": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "culturalAccuracy": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        },
+        "publicationRights": {
+          "status": "pending",
+          "reviewer": null,
+          "evidence": null
+        }
+      },
+      "acceptedAssets": []
+    }
+  ]
+}

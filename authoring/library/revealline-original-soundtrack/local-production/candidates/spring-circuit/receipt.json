@@ -1,0 +1,60 @@
+{
+  "format": "revealline-local-recording.v1",
+  "status": "candidate-unreviewed",
+  "title": "Spring Circuit / Весняне коло",
+  "id": "original.spring-circuit",
+  "rendererVersion": "sample-free-renderer.1.1",
+  "rendererSha256": "96703b5995f30f3a73d36cdd3562cb707880fc0856ea12bbc18561b166bebc98",
+  "scoreSha256": "f1b36b8a52a2b869eaea1c7acfd108e2c254b6dee1e746bb3ad425eb7825156b",
+  "composerSha256": "4618eb0e11ec883c84180aaf8edaa5973697bf18fc6a268b1469f68500c8de23",
+  "seed": 9106,
+  "tools": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.18.0",
+    "pyloudnorm": "0.2.0",
+    "encoder": "lameenc 1.8.4",
+    "converter": "/usr/bin/afconvert"
+  },
+  "master": {
+    "path": "master.flac",
+    "bytes": 42571585,
+    "sha256": "2020a23a43071c59ec158651016aff1111d6972bf990e04f913312b896f43e44",
+    "bitsPerSample": 24,
+    "pcm24Sha256": "d46724dbbf03933864b02aa8ca7bf9d0e520418be5962aa3705f46e33734cf11",
+    "losslessRoundTripVerified": true,
+    "integratedLufs": -16.018,
+    "estimatedTruePeakDbtp": -4.962,
+    "samplePeakDbfs": -5.095,
+    "durationSeconds": 210.69565,
+    "sampleRate": 48000,
+    "channels": 2,
+    "rmsDbfs": -17.982
+  },
+  "mp3": {
+    "path": "preview.mp3",
+    "bytes": 6743040,
+    "sha256": "3e630d8e1be8d3a2595bf95fd396fb00f2221bfc5c6126b3604fdcc5427389df",
+    "bitrateKbps": 256,
+    "integratedLufs": -16.037,
+    "estimatedTruePeakDbtp": -4.755,
+    "samplePeakDbfs": -4.961,
+    "durationSeconds": 210.72,
+    "sampleRate": 48000,
+    "channels": 2,
+    "rmsDbfs": -17.989
+  },
+  "measurementMethod": "pyloudnorm BS.1770 integrated loudness; scipy resample_poly 4x overlapping peak estimate, not a certified true-peak meter.",
+  "review": {
+    "fullListening": "pending",
+    "inGameMix": "pending",
+    "culturalAccuracy": "pending",
+    "technical": "measured-pass",
+    "originality": "original authored score; independent review pending",
+    "publication": "not-approved"
+  },
+  "provenance": "Only authored score and local synthesis. No external recordings, samples, models or hosted generation.",
+  "productionBytes": 292012622,
+  "maximumResidentBytes": 853901312,
+  "elapsedSeconds": 12.56
+}

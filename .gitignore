@@ -12,3 +12,13 @@ releases/
 coverage/
 *.log
 generated/
+# Unreviewed local production media are retained locally. Approved MP3 releases
+# go to the separately verified project soundtrack archive.
+/authoring/library/revealline-original-soundtrack/local-production/candidates/**/*.mp3
+/authoring/library/revealline-original-soundtrack/local-production/candidates/**/*.flac
+/authoring/library/revealline-original-soundtrack/local-production/candidates/**/*.wav
+/authoring/library/revealline-original-soundtrack/local-production/sketches/**/*.mp3
+/authoring/library/revealline-original-soundtrack/local-production/sketches/**/*.flac
+/authoring/library/revealline-original-soundtrack/local-production/sketches/**/*.wav
+/authoring/library/licensed-audio/originals/
+/authoring/library/licensed-audio/derivatives/

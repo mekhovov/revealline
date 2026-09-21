@@ -1,0 +1,443 @@
+{
+  "format": "revealline-ua-fpv-artist-alias-evidence.v1",
+  "automaticMerges": false,
+  "note": "Filename candidates are evidence to review, not confirmed aliases. Topic-channel suffixes and typography do not prove legal identity. Exact binary duplicates, not artist text, determine recording identity.",
+  "artists": [
+    {
+      "embeddedArtist": "414 Птахи Мадяра",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "414 Птахи Мадяра"
+      ],
+      "trackIds": [
+        "ua-reference.1b2bf1f95d104f09b7a8ff0c"
+      ]
+    },
+    {
+      "embeddedArtist": "A'm Ukrainian",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Родвін"
+      ],
+      "trackIds": [
+        "ua-reference.45812cca6e1bf70fbf5f1df5"
+      ]
+    },
+    {
+      "embeddedArtist": "AlexBust & Co - Topic",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "AlexBust & Co"
+      ],
+      "trackIds": [
+        "ua-reference.3935a1314f133f4b4e3029f2"
+      ]
+    },
+    {
+      "embeddedArtist": "DUSHEVNIY - Topic",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "DUSHEVNIY"
+      ],
+      "trackIds": [
+        "ua-reference.e3de791418e27e1b0414ff0f"
+      ]
+    },
+    {
+      "embeddedArtist": "Expert-Ukrainian hits",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Дрон пес"
+      ],
+      "trackIds": [
+        "ua-reference.00139528c586b94a332b2038"
+      ]
+    },
+    {
+      "embeddedArtist": "MaestroShadow777",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "MaestroShadow777"
+      ],
+      "trackIds": [
+        "ua-reference.cfaf70305e6f9356f89b3696"
+      ]
+    },
+    {
+      "embeddedArtist": "Neuronenko | Український метал",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Neuronenko"
+      ],
+      "trackIds": [
+        "ua-reference.bc0a38dfb8228dd25afd469c"
+      ]
+    },
+    {
+      "embeddedArtist": "PROBASS ∆ HARDI",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "PROBASS ∆ HARDI"
+      ],
+      "trackIds": [
+        "ua-reference.de54b41d16ff268fd61663a7"
+      ]
+    },
+    {
+      "embeddedArtist": "Postmen",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [],
+      "trackIds": [
+        "ua-reference.0ebf9e84567743acd38453df"
+      ]
+    },
+    {
+      "embeddedArtist": "Ribson",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Ribson"
+      ],
+      "trackIds": [
+        "ua-reference.17185c9266ed947e97ce9549",
+        "ua-reference.bd3c7a30c774c1265cc5a45b"
+      ]
+    },
+    {
+      "embeddedArtist": "Ruslan Nota - Topic",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [],
+      "trackIds": [
+        "ua-reference.e25a39ca1833313f09bc9bcb"
+      ]
+    },
+    {
+      "embeddedArtist": "SIVA",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "SIVA"
+      ],
+      "trackIds": [
+        "ua-reference.5f622aad63e879cfde758aaf"
+      ]
+    },
+    {
+      "embeddedArtist": "TARKO",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Tarko"
+      ],
+      "trackIds": [
+        "ua-reference.500f1c35200fa3f5e89d5125"
+      ]
+    },
+    {
+      "embeddedArtist": "TRENCH ORDERLY - Topic",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "TRENCH ORDERLY"
+      ],
+      "trackIds": [
+        "ua-reference.1d2614956debbbd54ce30bca",
+        "ua-reference.515f5806573a0737f3c609b4",
+        "ua-reference.5e7b33426088ade0a9345102",
+        "ua-reference.8ddb7eb4f274fa64e1ccc8f4",
+        "ua-reference.9d7e478a3682783da745f96b",
+        "ua-reference.9eef10e0b20b4ef35341fd9f",
+        "ua-reference.f8d1c2797031fdf2f673c798"
+      ]
+    },
+    {
+      "embeddedArtist": "Tarko - Topic",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Tarko"
+      ],
+      "trackIds": [
+        "ua-reference.4f70b5eccd5d055badc2a520"
+      ]
+    },
+    {
+      "embeddedArtist": "The Bloger UA",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "The Bloger UA"
+      ],
+      "trackIds": [
+        "ua-reference.28468f6e00c8cff1e8932cc3",
+        "ua-reference.328ef348415efca85f5323f3",
+        "ua-reference.49f1008bd27695434a717695",
+        "ua-reference.4a0d62a1a78201a923f112dc",
+        "ua-reference.561e17ea45775729d4c164f6",
+        "ua-reference.a108d139434b5cc6254cc257",
+        "ua-reference.bef1cece660fe28d3bcfcb0e",
+        "ua-reference.f12db6a6b9b12cfe55f47fd8"
+      ]
+    },
+    {
+      "embeddedArtist": "Ubrave - Topic",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [],
+      "trackIds": [
+        "ua-reference.22b22397afb79f27beb3af59"
+      ]
+    },
+    {
+      "embeddedArtist": "Ukrainian TIK TOK",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [],
+      "trackIds": [
+        "ua-reference.3d8d157da92cc88668f0c661"
+      ]
+    },
+    {
+      "embeddedArtist": "VITOLD UA",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "VITOLD Band Feat Black D"
+      ],
+      "trackIds": [
+        "ua-reference.ef37e31610e6fd4723c82319"
+      ]
+    },
+    {
+      "embeddedArtist": "Zababura",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Zababura"
+      ],
+      "trackIds": [
+        "ua-reference.222a3a770ba96401eab824e8"
+      ]
+    },
+    {
+      "embeddedArtist": "single_deck",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [],
+      "trackIds": [
+        "ua-reference.78d37bea0b64d2ee79a7818a",
+        "ua-reference.7d85028cd248b4b990f653d7",
+        "ua-reference.d4c98f81662ac285e0c51bac"
+      ]
+    },
+    {
+      "embeddedArtist": "Іван Ганзера",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Пісенька українського дрона"
+      ],
+      "trackIds": [
+        "ua-reference.0626ed39a955f1b35bf952e5",
+        "ua-reference.22541ce17827cf6ccc8a66ea",
+        "ua-reference.56ccb8cf806d141b891f1feb",
+        "ua-reference.62f5173604623a40dd6a489b",
+        "ua-reference.b34ca8d2be7c8fc4fb95558f"
+      ]
+    },
+    {
+      "embeddedArtist": "Андрій Мацевко",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Дрон"
+      ],
+      "trackIds": [
+        "ua-reference.7af03535606e776b446ba77d"
+      ]
+    },
+    {
+      "embeddedArtist": "ГУПАЧ",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "НЕЙРОННИЙ ГУПАЧ"
+      ],
+      "trackIds": [
+        "ua-reference.0e70cd808403487bce3b3898",
+        "ua-reference.7fc1d588e5027bd4a1df5f7f",
+        "ua-reference.a45cb366d97648fa810a535d",
+        "ua-reference.a7326eabe93d54a2d8606e97",
+        "ua-reference.bbc8d3e40202d66388cabc8c",
+        "ua-reference.c98d235cb99ff5d4fb471c2b"
+      ]
+    },
+    {
+      "embeddedArtist": "Гурт Дно",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "гурт дно, медовий полин, муха мухич"
+      ],
+      "trackIds": [
+        "ua-reference.46a99517674d545cb85ba540"
+      ]
+    },
+    {
+      "embeddedArtist": "Дядя Сірожа",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [],
+      "trackIds": [
+        "ua-reference.9555184abb2a5430227b4541"
+      ]
+    },
+    {
+      "embeddedArtist": "Забавка",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Забавка і Дмитрик"
+      ],
+      "trackIds": [
+        "ua-reference.1e8a3540686dd112920bb939"
+      ]
+    },
+    {
+      "embeddedArtist": "МАДЯР",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Bloger",
+        "Сталевий Птах"
+      ],
+      "trackIds": [
+        "ua-reference.0462b8ef82a8a9f86f20c2d3",
+        "ua-reference.48b4cfb0075837a93fd0703d",
+        "ua-reference.5069168cc6e90c16c7765afb",
+        "ua-reference.5d8e57ca42b50ab463504a68",
+        "ua-reference.6c8699e9cbf469c18e73031a",
+        "ua-reference.9cf9912bbd80d3e304e555f4"
+      ]
+    },
+    {
+      "embeddedArtist": "Мос",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Мос"
+      ],
+      "trackIds": [
+        "ua-reference.0093e7e90c9f7d771707c092"
+      ]
+    },
+    {
+      "embeddedArtist": "Ницо Потворно",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Ницо Потворно"
+      ],
+      "trackIds": [
+        "ua-reference.edad4597c38ca22d295658d4"
+      ]
+    },
+    {
+      "embeddedArtist": "ПРОКЛЯТИЙ ***",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "ПРОКЛЯТИЙ _, Третя Штурмова"
+      ],
+      "trackIds": [
+        "ua-reference.0b92127dd20223f0644b9b2b"
+      ]
+    },
+    {
+      "embeddedArtist": "Проєкт Гайs",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Гайs"
+      ],
+      "trackIds": [
+        "ua-reference.c73191d9e1a388fc8d0a4203",
+        "ua-reference.ed464d7cad5793b7c0197331"
+      ]
+    },
+    {
+      "embeddedArtist": "Північ",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Північ"
+      ],
+      "trackIds": [
+        "ua-reference.9641f728119b657b46d2e7b6"
+      ]
+    },
+    {
+      "embeddedArtist": "Пісня дня",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Бойовий P1-Sun",
+        "На крок попереду",
+        "Павутина_ Малюка",
+        "Рецепт Бавовни",
+        "Шоу Мадяра"
+      ],
+      "trackIds": [
+        "ua-reference.4befd36da5e444577da89a12",
+        "ua-reference.674925a9446876e6bd6a56e6",
+        "ua-reference.a9c490400466be36b6313324",
+        "ua-reference.bb25de89589df1a6623e80f7",
+        "ua-reference.c63b1118e49911fbf4a0091e"
+      ]
+    },
+    {
+      "embeddedArtist": "Сергій Притула",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [],
+      "trackIds": [
+        "ua-reference.3d981d479f4d5447a6806ed3"
+      ]
+    },
+    {
+      "embeddedArtist": "Суренж - Topic",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [],
+      "trackIds": [
+        "ua-reference.cdba5db44c8417af7271bec2"
+      ]
+    },
+    {
+      "embeddedArtist": "Телебачення Торонто",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Y2Mate.is",
+        "НИЦО ПОТВОРНО feat ТЕЛЕБАЧЕННЯ ТОРОНТО",
+        "Телебачення Торонто"
+      ],
+      "trackIds": [
+        "ua-reference.417eea94faf4114996886dbc",
+        "ua-reference.50869ac99f181aa46a0a8f0d"
+      ]
+    },
+    {
+      "embeddedArtist": "Українські пісні - Pisni.ua",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Пісня про дрон"
+      ],
+      "trackIds": [
+        "ua-reference.09bbee881a6e655ca2c6edb4"
+      ]
+    },
+    {
+      "embeddedArtist": "Хвостаті Ловеласи",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "MAGYAR",
+        "ДРОНИ БДЖОЛИ"
+      ],
+      "trackIds": [
+        "ua-reference.93ba351fb0cdafde13e33f30"
+      ]
+    },
+    {
+      "embeddedArtist": "Цибрр...",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [
+        "Кліп _RUSORIZ_"
+      ],
+      "trackIds": [
+        "ua-reference.b86f77c8d106596fcbc24e42"
+      ]
+    },
+    {
+      "embeddedArtist": "Юрій Громовий",
+      "identityStatus": "unverified embedded metadata; not established rights holder",
+      "filenameArtistCandidates": [],
+      "trackIds": [
+        "ua-reference.e2b921d96d021eb8199309a5"
+      ]
+    }
+  ]
+}
