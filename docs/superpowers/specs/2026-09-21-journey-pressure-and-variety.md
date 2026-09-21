@@ -154,7 +154,11 @@ signoff from technical feasibility alone.
 
 Team now has its own [stronger-pressure route assessment](../../verification/journey-team-pressure.md):
 13/36 sets survive bounded historical reuse and23 fresh routes extend that toall
-36/36, with joint settings and seat-label symmetry checked separately. Seventeen
+36/36, with joint settings and seat-label symmetry checked separately. The
+[changing-return study](../../verification/journey-team-roamer-spatial.md) now
+adds two explicit successors with earlier useful roamer pressure and inward-first
+opening alternatives; short clears, landing reuse and live cooperation remain
+unqualified. Seventeen
 optional-mastery misses, short clears, timing-sensitive routes and one-player-idle
 patterns require further work. Team stores a seed but does not vary enemy movement with it; use real
 departure timing differences, not seed-count inflation. This is not P14 acceptance.

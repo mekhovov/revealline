@@ -197,58 +197,66 @@ or substitutes for the remaining per-map human balance checks.
 ### Original shared requirements
 
 - [x] One enemy-seeded four-connected capture contract; intentional line-only
-  capture with retaining enemies on both sides.
+      capture with retaining enemies on both sides.
 - [x] Shared foundations and permanent non-scoring relay connectors; terrain
-  domains, erosion protection, interior spawns and diagnostics.
+      domains, erosion protection, interior spawns and diagnostics.
 - [x] Versioned compiler/registry/maps/campaigns/packs/actors/manifests shared by
-  Studio, CLI, previews and candidate hosts.
+      Studio, CLI, previews and candidate hosts.
 - [x] Direct Continue/Next/Skip/flat chooser and stable progress in scoped hosts;
-  no automatic assignment of post-Journey work.
+      no automatic assignment of post-Journey work.
 - [x] Reference audit and source hashes/evidence limits preserved.
 - [ ] Final disposition for each of48 numbered references:66 candidate links are
-  proposals, not48 final human-approved dispositions.
+      proposals, not48 final human-approved dispositions.
 - [ ] New all-level difficulty pass, including public legacy content and Team;
-  explicit successors, never silent old-edition edits.
+      explicit successors, never silent old-edition edits.
 - [x] Timed relocating bonus schema/engine/visualization/Studio/replay/save,
-  eligibility and bounded collection in explicit local Solo/Versus candidates.
+      eligibility and bounded collection in explicit local Solo/Versus candidates.
 - [ ] Timed bonus native/human/release qualification and Team semantics. See
-  [slice B evidence](journey-timed-bonuses.md); local implementation is not deployment.
+      [slice B evidence](journey-timed-bonuses.md); local implementation is not deployment.
 - [ ] Ukrainian/FPV arcs with distinct route decisions, original assets, cultural
-  attribution, playtests and enrollment.
-  Eight shared-framework greyboxes and cultural attribution are implemented;
-  desktop Studio/Expert launch checked; eight original pinned picture candidates
-  and two native partial reveals are available. Final asset acceptance, broader
-  timing/device/human qualification and enrollment remain.
+      attribution, playtests and enrollment.
+      Eight shared-framework greyboxes and cultural attribution are implemented;
+      desktop Studio/Expert launch checked; eight original pinned picture candidates
+      and two native partial reveals are available. Final asset acceptance, broader
+      timing/device/human qualification and enrollment remain.
 - [ ] Authored pressure roles and optional non-retaining combat actors, settings,
-  pixel effects, bounded decals and cross-mode fairness.
-  Trail-pursuer/heading-interceptor authoring and six encounter variants are now
-  implemented with36 clear/replays and36 equal races; native/human/release gates
-  remain. Optional combat D2a engine/transport is now implemented: separate seeded
-  scouts/sentries, readable attack deadlines, contact/capture removal, bounded
-  projectiles and strict replay/save authority;45 new tests and700 historical
-  regression cases verified on both Node versions. D2b catalogue/Studio authoring,
-  explicit editions, pressure/capture inspection and three original greyboxes are
-  now implemented and reviewed:219 tests per Node,42 on/off clear/replays and42
-  paired races. C1 pixel bodies, aim/projectile cues and scrap components now pass
-  315 tests per Node and scoped static native checks; live host integration/player
-  toggle/audio, Team semantics, native play/human and release gates remain.
-  Enabled live preview is intentionally
-  blocked until readable presentation exists. [D1 evidence](journey-pursuit-interception.md),
-  [D2a evidence](journey-optional-combat-runtime.md),
-  [D2b evidence and pacing limits](journey-optional-combat-authoring.md).
+      pixel effects, bounded decals and cross-mode fairness.
+      Trail-pursuer/heading-interceptor authoring and six encounter variants are now
+      implemented with36 clear/replays and36 equal races; native/human/release gates
+      remain. Optional combat D2a engine/transport is now implemented: separate seeded
+      scouts/sentries, readable attack deadlines, contact/capture removal, bounded
+      projectiles and strict replay/save authority;45 new tests and700 historical
+      regression cases verified on both Node versions. D2b catalogue/Studio authoring,
+      explicit editions, pressure/capture inspection and three original greyboxes are
+      now implemented and reviewed:219 tests per Node,42 on/off clear/replays and42
+      paired races. C1 pixel bodies, aim/projectile cues and scrap components now pass
+      315 tests per Node and scoped static native checks; live host integration/player
+      toggle/audio, Team semantics, native play/human and release gates remain.
+      Enabled live preview is intentionally
+      blocked until readable presentation exists. [D1 evidence](journey-pursuit-interception.md),
+      [D2a evidence](journey-optional-combat-runtime.md),
+      [D2b evidence and pacing limits](journey-optional-combat-authoring.md).
 - [ ] Full Studio recoverability/conflict/large-library usability acceptance with
-  real users, not inferred from automated checks.
+      real users, not inferred from automated checks.
 - [ ] Every released map readable picture/actors/audio in all display modes.
 - [ ] Measured45–150-second ordinary pacing, <15% timed content, no tedious quota
-  cleanup, nontrivial campaign transitions and complementary Team play.
+      cleanup, nontrivial campaign transitions and complementary Team play.
 - [ ] Physical keyboard/touch/controller/reconnect, reduced effects, muted audio,
-  captions/contrast/small-screen and performance-target evidence.
+      captions/contrast/small-screen and performance-target evidence.
 - [ ] Reviewed integrations, immutable releases and Pages test builds; retained
-  prior playable build and950 MiB guard.
+      prior playable build and950 MiB guard.
 - [ ] Human understanding/enjoyment/retry and final cuts. No fabricated signoff,
-  remote telemetry or manipulative retention systems.
+      remote telemetry or manipulative retention systems.
 
 ## Revised execution order
+
+P14 follow-up: [two changing-return successor maps](journey-team-roamer-spatial.md)
+now have24 no-down optional-mastery routes,24 inward-first openings and preserved
+old-route/timing failures. Shared native import/partial play also recorded a real
+reserve loss; it is not a no-loss playthrough. Western-only inner openings,
+limited partner-ground reuse, short clears and human/device/Pages gates remain.
+The original seventeen optional-mastery misses are not relabelled solved by these
+two separate candidates.
 
 See [pressure/variety specification](../superpowers/specs/2026-09-21-journey-pressure-and-variety.md).
 Catalogue/audit first; timed bonus integration second; spatial arcs/qualified roles
