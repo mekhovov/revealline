@@ -142,8 +142,8 @@ successor, including relevant public/human gates.
 | Optional running/shooting characters | D2a deterministic non-retaining scouts/sentries; D2b shared authoring/on-off editions and three greyboxes,42 on/off clear/replays and42 races | D2c pixel robots/attack cues/scrap/audio/player setting and native checks; D2d Team; human/release gates. No graphic dismemberment or nationality-based caricatures |
 | More varied decisions without menu friction |83 Solo candidates including12 Remixes,12 Team candidates; shared framework and direct-flow host checks | Final cuts, human pacing/mastery, controller/device validation and accepted-release deployment |
 
-The latest D2b code is `a22bbb16`. D2c presentation specification is now being
-reviewed; a specification is not completed rendering or gameplay integration.
+The latest D2b code is `a22bbb16`. D2c presentation specification has passed
+independent review; a specification is not completed rendering or gameplay integration.
 
 ### Original shared requirements
 
