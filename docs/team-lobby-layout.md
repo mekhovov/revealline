@@ -32,6 +32,23 @@ This does not certify physical controllers, touch hardware, narration, 200% zoom
 all Team actors/content, the complete navigation phase or public deployment. Run
 final integration/source gates and repeat affected public journeys before acceptance.
 
+## Integrated preview-test correction
+
+The full v0.76.1 qualification of `1cb0b3c67a39188d748ab3dd37557b5065fa504a`
+found six failures in `coop-lobby-preview.test.mjs`. Its shared assertion still
+required Preview and Start to have the same immediate parent. The compact layout
+intentionally groups Start with the objective and launch actions beside Preview.
+The corrected assertion verifies their common launch group, lobby ownership and
+preview-before-actions reading order. Existing exact-image reuse, mystery masking,
+retry, Pause, imported-pack and earned-victory assertions remain unchanged.
+
+The prior scoped cohort omitted this related file. Include it whenever changing
+Team lobby markup, then run the full integrated qualification before publishing.
+The failed run is retained as evidence; it is not a passing release gate. The
+[corrected preview and resize cohort](verification/team-compact-lobby/integrated-preview/result.json)
+passes 23/23 on Node 20.19.5 and 22.22.2. Final-source/public qualification remains
+required.
+
 ## Authoring prompt
 
 “Adjust the Team lobby while retaining all authored arena choices and warning text.
