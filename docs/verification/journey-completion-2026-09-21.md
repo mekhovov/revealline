@@ -139,7 +139,7 @@ successor, including relevant public/human gates.
 | Appearing/expiring/relocating bonuses | Versioned engine, shared Studio schedules, visual announcement/countdown, replay/save and three Border studies; desktop native observation | Bonus-taking multi-seed routes, stronger-pressure combination, Team/device/human checks and publication |
 | Ukrainian ornament/culture and FPV workshop maps | Eight distinct greyboxes, two arcs, cultural attribution;48 preset/control clear/replays and equal races; two successor geometry studies | Remaining short routes, original final pictures, cultural/playability review, mode qualification and enrollment |
 | Additional enemy behavior | Pursuer/interceptor catalogue and authoring, six variants,36 clear/replays and equal races; existing terrain/rover/erosion/relay/contour roles retained | Whole-Journey distribution/pacing, native/human/Team and public integration |
-| Optional running/shooting characters | D2a deterministic non-retaining scouts/sentries; D2b shared authoring/on-off editions and three greyboxes,42 on/off clear/replays and42 races | D2c pixel robots/attack cues/scrap/audio/player setting and native checks; D2d Team; human/release gates. No graphic dismemberment or nationality-based caricatures |
+| Optional running/shooting characters | D2a deterministic non-retaining scouts/sentries; D2b shared authoring/on-off editions and three greyboxes,42 on/off clear/replays and42 races; D2c/C1 pixel robots, attack cues and scrap components,315 tests per Node and static native inspection | C2 real-host drawing, audio, persistent player setting and native play; D2d Team; human/release gates. No graphic dismemberment or nationality-based caricatures |
 | More varied decisions without menu friction |83 Solo candidates including12 Remixes,12 Team candidates; shared framework and direct-flow host checks | Final cuts, human pacing/mastery, controller/device validation and accepted-release deployment |
 
 The latest D2b code is `a22bbb16`. D2c/C1 pixel presentation components and a
@@ -147,6 +147,26 @@ static review sheet are now implemented/reviewed:315 tests per Node,95,718
 projected route frames, native16/24/32px and narrow-layout observations. This is
 not live gameplay integration: C2 host/preferences/audio, Team, human balance and
 public deployment remain pending. [C1 evidence](journey-optional-combat-presentation.md).
+
+The release owner currently reserves the v0.78 candidate `e9434d03`/PR209 and
+has not supplied an accepted main baseline for this lane's C2 adoption. A held,
+additive BoardPainter patch may be prepared against that exact renderer;
+app/Versus preferences/receipts, Team host and preview enablement remain held.
+This coordination status is not a new public release claim.
+
+### Research-to-implementation check
+
+Primary sources rechecked2026-09-21: [Xposed Reloaded's official listing](https://store.playstation.com/en-us/concept/10002881/)
+supports picture revelation, compact controls and demanding content, but publishes
+no numeric enemy-speed or bonus-expiry rules. [AirXonix's developer rules](https://www.axysoft.com/airxonix/)
+distinguish field balls from filled-territory mines and describe collectible bonuses.
+[Mike Stout's attack-design article](https://www.gamedeveloper.com/design/enemy-attacks-and-telegraphing)
+emphasizes readable pre-attack communication. Our design inference is to raise
+movement/cadence pressure while preserving warning windows, and to use different
+movement domains and optional bonus opportunities for variety. The current speed
+factors and relocating-bonus timings remain our test hypotheses, not copied
+Reloaded rules or proven engagement targets. No source establishes addictiveness
+or substitutes for the remaining per-map human balance checks.
 
 ### Original shared requirements
 

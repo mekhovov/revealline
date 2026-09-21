@@ -1,7 +1,8 @@
 # D2c/C2a — held BoardPainter combat adapter
 
-Status: proposed for independent review. The user authorized automatic continuation;
-routine approval waits are waived, not technical review or release ownership.
+Status: approved by independent specification review on2026-09-21. The user
+authorized automatic continuation; routine approval waits are waived, not
+technical review or release ownership.
 
 ## Boundary and alternatives
 
