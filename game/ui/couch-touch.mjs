@@ -16,6 +16,8 @@ export function attachCouchTouch({
       pad.style.setProperty('--touch-opacity', settings.opacity);
       pad.querySelector('.race-cross').hidden = settings.mode !== 'dpad';
       pad.querySelector('.touch-surface').hidden = settings.mode === 'dpad';
+      pad.querySelector('.touch-instruction').textContent =
+        settings.mode === 'swipe' ? 'Swipe to steer' : 'Drag to steer';
     }
     for (const field of controls.querySelectorAll('[data-touch-setting]'))
       field.value = String(settings[field.dataset.touchSetting]);
@@ -31,13 +33,20 @@ export function attachCouchTouch({
   for (const pad of pads) {
     const surface = doc.createElement('div');
     surface.className = 'touch-surface';
+    surface.setAttribute('role', 'group');
+    const compass = doc.createElement('span');
+    compass.textContent = '✥';
+    compass.setAttribute('aria-hidden', 'true');
+    const instruction = doc.createElement('span');
+    instruction.className = 'touch-instruction';
+    surface.append(compass, instruction);
     surface.setAttribute('aria-label', `Player ${Number(pad.dataset.player) + 1} steering area`);
     const indicator = doc.createElement('span');
     indicator.className = 'touch-indicator';
     indicator.hidden = true;
     indicator.setAttribute('aria-hidden', 'true');
-    surface.append(indicator);
-    pad.append(surface, ...pad.children);
+    indicator.append(doc.createElement('i'));
+    pad.append(surface, ...pad.children, indicator);
   }
   const group = doc.createElement('fieldset');
   const legend = doc.createElement('legend');

@@ -1,44 +1,247 @@
 {
   "status": "candidate-in-progress",
   "base": "17bd1965a2979489f5a163de13dc23c47c5b538d",
-  "publicAcceptedVersion": "0.76.0",
+  "publicAcceptedVersion": "0.76.1",
   "tests": {
     "initialCrossMode": "47/48; old test pressed now-hidden D-pad while default became shared stick",
     "correctedCouchTouchJourney": "1/1 selected, 23 deselected; now exercises visible shared stick; cancellation still pauses",
     "node20TouchHosts": "24/24",
     "node22InputFullscreen": "54/54",
     "node20InputFullscreen": "49/49, excludes separately run five Solo host tests",
-    "lastSmallSharedUnit": "7/7"
+    "lastSmallSharedUnit": "7/7",
+    "iteration2": {
+      "sharedInputAndFullscreen": "60/60 on Node20 and Node22",
+      "couchHostsAndGeometry": "115/115 on each runtime",
+      "legacyDeviceAndBackupHosts": "15/15 on each runtime after correcting three regressions",
+      "scope": "Iteration cohorts; final source gates and publication not yet run. The final coverage-target DOM annotation followed these cohorts; no simulation changes.",
+      "finalTargetSourceNode22": "60/60 after final target annotation;10/10 shared preference/gesture checks after callback error-boundary cleanup",
+      "finalInputSource": "60/60 on Node20 and Node22; exact original TAP retained compressed with SHA256 receipts"
+    }
   },
   "nativeObservations": [
     {
-      "viewport": [844, 390],
+      "viewport": [
+        844,
+        390
+      ],
       "hudHeight": 44,
-      "soloLegacyArena": [445.328125, 333.9921875],
-      "document": [844, 390],
+      "soloLegacyArena": [
+        445.328125,
+        333.9921875
+      ],
+      "document": [
+        844,
+        390
+      ],
       "note": "earlier 48px header prototype; final header reserve increased to56px for focus outline"
     },
     {
-      "viewport": [320, 480],
+      "viewport": [
+        320,
+        480
+      ],
       "hudHeight": 44,
-      "soloLegacyArena": [282.6640625, 211.9921875],
-      "document": [320, 480],
+      "soloLegacyArena": [
+        282.6640625,
+        211.9921875
+      ],
+      "document": [
+        320,
+        480
+      ],
       "note": "before final8px outline clearance adjustment"
     },
     {
-      "viewport": [844, 390],
-      "teamArena": [520, 260],
+      "viewport": [
+        844,
+        390
+      ],
+      "teamArena": [
+        520,
+        260
+      ],
       "note": "initial stick/Boost overlap found; corrected grid placement requires final native recheck"
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "device": "desktop browser override, DPR1",
+      "mode": "Team",
+      "hudHeight": 44,
+      "arena": [
+        676,
+        338
+      ],
+      "touchSurfaces": [
+        156,
+        156
+      ],
+      "document": [
+        844,
+        390
+      ],
+      "note": "Both controls inside viewport; complete arena; one top strip. Pointer/touch emulation is not physical qualification."
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "mode": "Team",
+      "hudHeight": 44,
+      "arena": [
+        370,
+        185
+      ],
+      "document": [
+        390,
+        844
+      ],
+      "note": "Standard text, both touch seats."
+    },
+    {
+      "viewport": [
+        320,
+        480
+      ],
+      "mode": "Team",
+      "hudHeight": 74,
+      "arena": [
+        216.203125,
+        108.1015625
+      ],
+      "document": [
+        320,
+        480
+      ],
+      "note": "Large text; regular156 controls; long notice uses bounded scroll region. Critical rescue/Support labels retained. Large192 control pairing not accepted on short portrait."
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "mode": "Versus",
+      "hudHeight": 44,
+      "arenas": [
+        [
+          408,
+          204
+        ],
+        [
+          408,
+          204
+        ]
+      ],
+      "document": [
+        844,
+        390
+      ],
+      "note": "Corrected hidden-heading row collapse and obsolete first-seat side column; equal complete bitmaps."
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "mode": "Versus",
+      "hudHeight": 44,
+      "arenas": [
+        [
+          372,
+          186
+        ],
+        [
+          372,
+          186
+        ]
+      ],
+      "document": [
+        390,
+        844
+      ],
+      "note": "Tall portrait controls outside both boards, each156square. Large text separately visually inspected."
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "mode": "Authored Solo opening Journey",
+      "hudHeight": 44,
+      "arena": [
+        652,
+        326
+      ],
+      "document": [
+        844,
+        390
+      ],
+      "note": "Large text, regular156stick; Missions/Skip concealed during flight, restored at results. Actual one-tap Down produced34.3%win,3lives,8160points. This is not a difficulty/human-enjoyment gate; target suffix added afterward."
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "mode": "Authored Solo Choose your share",
+      "hudHeight": 44,
+      "arena": [
+        366,
+        183
+      ],
+      "document": [
+        390,
+        844
+      ],
+      "note": "Large text;target65%visible; explicitPause/rotate/Resume retained. Caption and decorative counter glyphs refined afterward."
+    },
+    {
+      "viewport": [
+        320,
+        480
+      ],
+      "mode": "Authored Solo Choose your share",
+      "hudHeight": 44,
+      "arena": [
+        296,
+        148
+      ],
+      "document": [
+        320,
+        480
+      ],
+      "note": "Large text; current/target stacked inside one HUD cell; numeric lives and clock clear. Regular156 control. Screenshot and DOM inspected, not physical iPhone."
+    },
+    {
+      "viewport": [
+        568,
+        320
+      ],
+      "mode": "Authored Solo Choose your share",
+      "hudHeight": 44,
+      "arena": [
+        512,
+        256
+      ],
+      "document": [
+        568,
+        320
+      ],
+      "touchSurfaces": [
+        156
+      ],
+      "note": "Large text. Corrected desktop labels/decorative glyph overlap and old top-position status override. Status now bottom294.60px, height23.40px; explicit Pause/Resume through rotation, no fullscreen dependency."
     }
   ],
   "pending": [
-    "Final native source verification incl compact wide authored Solo",
-    "Team stick/Boost clearance after correction",
-    "320/568 small Team and Versus including Large text",
-    "Unify exact shared touch target size/appearance and thumb-side presentation",
-    "First Flight/training layouts",
-    "Reproduce physical Steam Deck A failure; modeled ready-state A passes",
-    "Actual iPhone Safari browser bars/rotation/standalone and unsupported fullscreen",
-    "Whole source gates, version allocation, PR/release/public inventory"
+    "Maximum counters and long active warnings; narrow portrait/landscape corrected and inspected",
+    "568x320 and320x480 couch modes including Large192 controls and required hazards",
+    "First Flight/training and embedded Studio710/620px caption clearance",
+    "Controller Missions/Next/hybrid handoff matrix; cold standard-mapped A passes, physical Deck failure not reproduced",
+    "Physical iPhone Safari browser bars/rotation/standalone and controller/device testing",
+    "Exact final-source gates, version allocation, PR/release/public inventory"
   ]
 }

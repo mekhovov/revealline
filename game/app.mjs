@@ -5434,21 +5434,27 @@ try {
       saved = preferences({
         screenSteeringHand: requested,
         touchControls: {
-          ...resolveTouchControls(library.preferences.touchControls),
+          ...touchPreferences.snapshot(),
           side: requested,
         },
       });
-    touchPreferences.set({ ...touchPreferences.snapshot(), side: requested });
+    touchPreferences.set(
+      { ...touchPreferences.snapshot(), side: requested },
+      { persist: !practice && !courseEntry },
+    );
     syncAssistControls();
     const status = $('screen-steering-status');
-    status.textContent = saved.ok
-      ? 'Steering hand saved.'
-      : resolveTouchControls(library.preferences.touchControls).side === requested
-        ? `Steering hand selected for this session. ${saved.warning}`
-        : `Steering hand unchanged. ${saved.warning}`;
+    status.textContent =
+      touchPreferences.warning() ||
+      (saved.ok
+        ? 'Steering hand saved.'
+        : resolveTouchControls(library.preferences.touchControls).side === requested
+          ? `Steering hand selected for this session. ${saved.warning}`
+          : `Steering hand unchanged. ${saved.warning}`);
     status.hidden = false;
   };
   function refreshScreenSteeringHand() {
+    touchPreferences.adoptLegacy(library.preferences.touchControls);
     const hand = touchPreferences.snapshot().side;
     $('touch-side').value = hand;
     document.body.dataset.screenSteeringHand = hand;
@@ -5473,17 +5479,17 @@ try {
   for (const key of ['mode', 'size', 'opacity']) {
     $(`touch-${key}`).onchange = () => {
       clearInput();
-      preferences({
-        touchControls: {
-          ...resolveTouchControls(library.preferences.touchControls),
-          [key]: key === 'opacity' ? Number($(`touch-${key}`).value) : $(`touch-${key}`).value,
-        },
-      });
-      touchPreferences.set({
+      const next = {
         ...touchPreferences.snapshot(),
         [key]: key === 'opacity' ? Number($(`touch-${key}`).value) : $(`touch-${key}`).value,
-      });
+      };
+      preferences({ touchControls: next, screenSteeringHand: next.side });
+      touchPreferences.set(next, { persist: !practice && !courseEntry });
       syncAssistControls();
+      if (touchPreferences.warning()) {
+        $('screen-steering-status').textContent = touchPreferences.warning();
+        $('screen-steering-status').hidden = false;
+      }
     };
   }
   $('text-face').onchange = () => changeDisplay({ textFace: $('text-face').value });
@@ -6754,6 +6760,9 @@ try {
     $('coverage-bar').style.width = `${run.coverage * 100}%`;
     $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
     $('target').textContent = `TARGET ${Math.round(run.level.goal.coverage * 100)}%`;
+    $('coverage').dataset.target = Number.isFinite(run.level.goal.coverage)
+      ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
+      : '';
     $('lives').textContent =
       run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—';
     $('lives').setAttribute('aria-label', `${run.lives} lives`);

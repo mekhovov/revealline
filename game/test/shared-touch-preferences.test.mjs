@@ -65,3 +65,54 @@ test('external explicit choices notify once and terminal disposal stops observat
   events.dispatchEvent(event);
   assert.equal(changes.length, 1);
 });
+
+test('isolated practice can adjust this visit without writing the shared choice', () => {
+  const storage = memory();
+  const shared = { ...DEFAULT_TOUCH_CONTROLS, side: 'left' };
+  storage.setItem(TOUCH_PREFERENCES_KEY, JSON.stringify(shared));
+  const prefs = createTouchPreferences({ storage });
+  prefs.set({ ...shared, mode: 'dpad' }, { persist: false });
+  assert.equal(prefs.snapshot().mode, 'dpad');
+  assert.equal(storage.getItem(TOUCH_PREFERENCES_KEY), JSON.stringify(shared));
+  assert.deepEqual(createTouchPreferences({ storage }).snapshot(), shared);
+});
+
+test('legacy reconciliation applies before a shared choice, never over later explicit intent', () => {
+  const storage = memory(),
+    prefs = createTouchPreferences({ storage });
+  const legacy = { ...DEFAULT_TOUCH_CONTROLS, side: 'left' };
+  assert.equal(prefs.adoptLegacy(legacy), true);
+  assert.equal(prefs.snapshot().side, 'left');
+  assert.equal(storage.values.size, 0);
+  prefs.set({ ...legacy, mode: 'swipe' });
+  assert.equal(prefs.adoptLegacy(DEFAULT_TOUCH_CONTROLS), false);
+  assert.equal(prefs.snapshot().mode, 'swipe');
+  assert.equal(prefs.snapshot().side, 'left');
+});
+
+test('returning from a frozen page reads newer shared settings, but keeps isolated practice choices', () => {
+  const storage = memory(),
+    events = new EventTarget(),
+    changes = [];
+  const prefs = createTouchPreferences({
+    storage,
+    eventTarget: events,
+    onChange: (v) => changes.push(v),
+  });
+  prefs.set({ ...DEFAULT_TOUCH_CONTROLS, mode: 'dpad' });
+  storage.setItem(
+    TOUCH_PREFERENCES_KEY,
+    JSON.stringify({ ...DEFAULT_TOUCH_CONTROLS, mode: 'swipe' }),
+  );
+  const event = new Event('pageshow');
+  event.persisted = true;
+  events.dispatchEvent(event);
+  assert.equal(prefs.snapshot().mode, 'swipe');
+  const count = changes.length;
+  events.dispatchEvent(event);
+  assert.equal(changes.length, count, 'Duplicate restored state does not clear input twice');
+  prefs.set({ ...DEFAULT_TOUCH_CONTROLS, mode: 'dpad' }, { persist: false });
+  events.dispatchEvent(event);
+  assert.equal(prefs.snapshot().mode, 'dpad');
+  prefs.destroy();
+});

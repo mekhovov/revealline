@@ -1,0 +1,62 @@
+[
+  {
+    "file": "input-node20.tap.gz",
+    "originalBytes": 13390,
+    "originalSha256": "72704ff02a8d8397e77979a07040dbb2e4d9c5b46b3d435562f23c3d5bb45b0e"
+  },
+  {
+    "file": "input-node22.tap.gz",
+    "originalBytes": 14294,
+    "originalSha256": "dc2f180a21111d92198a0144413386d74570033adc48ce5e31c4903da60006c1"
+  },
+  {
+    "file": "couch-node20.tap.gz",
+    "originalBytes": 25861,
+    "originalSha256": "a9c5a0fdddbfecffd27d97ce880b93a9340a188db0149161d0f07dd9a41002be"
+  },
+  {
+    "file": "couch-node22.tap.gz",
+    "originalBytes": 27572,
+    "originalSha256": "e49250158bc94fa44e950288eef76a13b0a8dfeddf040800a93336fbe5e6b240"
+  },
+  {
+    "file": "legacy-host-node20.tap.gz",
+    "originalBytes": 3753,
+    "originalSha256": "e544dec57909927dfbe3b310d1db13c75b7dd495edee359890ae5dd47589c601"
+  },
+  {
+    "file": "legacy-host-node22.tap.gz",
+    "originalBytes": 3979,
+    "originalSha256": "61ebeec7ec8c918130addb43760f12bdb40ae56b208360c4e291e5ddc1f96e83"
+  },
+  {
+    "file": "legacy-before-correction.tap.gz",
+    "originalBytes": 7310,
+    "originalSha256": "98a46ff37248bbb77f0965a71a772691fe2914157c45fb5aa666434a481203d1"
+  },
+  {
+    "file": "cold-controller-oracle-before.tap.gz",
+    "originalBytes": 1068,
+    "originalSha256": "d3b0180646a70a5d5d3b35cc86be8ba732b42e87711cf74ef14b4bde0f056427"
+  },
+  {
+    "file": "final-target-input-node22.tap.gz",
+    "originalBytes": 14298,
+    "originalSha256": "2e5d2b4524858f83abb2d8f23f08c3827559f0ede5cb28cb88f66b974eebb73f"
+  },
+  {
+    "file": "final-preference-callback-node22.tap.gz",
+    "originalBytes": 2451,
+    "originalSha256": "a990c486448c19651619851ddffebf7b0b02afda6c59e41399ebb26104c58443"
+  },
+  {
+    "file": "final-input-node20.tap.gz",
+    "originalBytes": 13395,
+    "originalSha256": "73a4d820156040ecd44a6ef7d58556e2c8e6e40a761d69eb46341b1be3ecb063"
+  },
+  {
+    "file": "final-input-node22.tap.gz",
+    "originalBytes": 14292,
+    "originalSha256": "9a948231fa7d25c96b180ae8183f2a95e960547cd0d5c6e53c334344f21817e0"
+  }
+]
