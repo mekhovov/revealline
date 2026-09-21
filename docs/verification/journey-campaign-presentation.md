@@ -81,6 +81,14 @@ exact context fields and separately reviewed scene/energy hints. Genre hints
 never override an explicit genre, playlist or My Mix choice. No composition,
 listening approval, publication or Pages enrollment is established by metadata.
 
+The soundtrack owner reviewed source59416554 and accepted this metadata handoff,
+not a runtime merge or musical approval. Its integration must use a compact
+lookup, not import route/host review factories into playback. Preferred genres
+are Automatic ranking hints, never hard catalogue filters or saved assignments.
+Menu hints apply only to true title/campaign browsing, never Settings, Pause,
+results or quick retries. Explicit Ukrainian/other genres, Fusion, My Mix and
+playlist choices continue to win.
+
 The table is a creative brief, **not** installed recordings or saved assignments.
 Music implementation belongs to the soundtrack owner after accepted integration.
 Do not persist these briefs into player libraries or replace an explicit choice.
