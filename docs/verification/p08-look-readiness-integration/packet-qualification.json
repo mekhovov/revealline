@@ -1,0 +1,85 @@
+{
+  "status": "scoped-source-and-native-qualified-not-released",
+  "base": "9076ada123551c2b65ae05638e19ebe828aedb68",
+  "finalRuntime": {
+    "game/app.mjs": {
+      "bytes": 342657,
+      "sha256": "de27c4641de731eebc5a3b6f12aba4cc7008fd2488bf4efa3d264e9869dffef4"
+    },
+    "game/ui/render.mjs": {
+      "bytes": 38659,
+      "sha256": "25e3110fbd420832776a184288e22c9886003216b80d6d07b4468883a590321c"
+    },
+    "game/ui/look-preparation.mjs": {
+      "bytes": 3702,
+      "sha256": "8c49ffae59931c2d58076fdb4f41810675969e445a4523e4505c450adb394d85"
+    }
+  },
+  "checks": [
+    {
+      "log": "regression-node22-r1.log",
+      "passed": 61,
+      "failed": 0,
+      "app": "cedd5220",
+      "scope": "prior staged-result candidate before direct Start correction"
+    },
+    {
+      "log": "final-node20-r3.log",
+      "passed": 85,
+      "failed": 0,
+      "app": "53040b87",
+      "scope": "eight full source cohorts, including required-look units, renderer, Journey, exact saved media restore, picture readiness, continuation and first entry; predecessor differs from final only in new success message"
+    },
+    {
+      "log": "final-node22-r4.log",
+      "passed": 28,
+      "failed": 0,
+      "app": "de27c464",
+      "scope": "final required-look units, renderer and picture-ready status"
+    },
+    {
+      "log": "candidate-restore-node22-r4.log",
+      "passed": 4,
+      "failed": 0,
+      "app": "de27c464",
+      "scope": "selected actual host boot difficulty and exact saved paused-media restoration, normal stub renderer boundary"
+    },
+    {
+      "log": "fingerprint-node20.log",
+      "passed": 2,
+      "failed": 0,
+      "scope": "new helper drift/missing bytes reopen only effects fingerprint"
+    },
+    {
+      "log": "fingerprint-node22.log",
+      "passed": 2,
+      "failed": 0,
+      "scope": "same final fingerprint tests"
+    }
+  ],
+  "hostEvidence": {
+    "path": ".cache/p08-required-look-host-907-r1/ready.json",
+    "sha256": "d06dfc0cefc42b6c1b731ae65c5a3424150be8db33c229096331be3f1ec4be30",
+    "fullCohort": "5/5 each Node20/22 on5304; unchanged first4 retained",
+    "finalDelta": "1/1 focused de27 each Node20/22, with real paused queued-turn preservation and clean won status",
+    "directStartRed": "same final assertion fails old cedd runtime with tick24/running/source absent"
+  },
+  "native": {
+    "path": ".cache/p08-required-look-final-native-907-r2/native-final-evidence.json",
+    "sha256": "674b8a5ec67a5c0f52e7d97a4044b5b405e2950f071f30b68a6a19fcbf43c755",
+    "scope": "final de27;1280x720;ordinary keyboard;delayed Start/Cancel/direct Start/release/legal win/Next;console[]"
+  },
+  "review": "Two independent read-only code reviews found no concrete blocker; source only, not extra test/native evidence.",
+  "readInputs": 316,
+  "releaseRequirements": [
+    "Integrate after accepted main into fresh PR; do not widen current release211.",
+    "Run exact integrated six source gates, build/production reproduction and relevant browser checks.",
+    "Review final combined effects dependencies, regenerate approved production record and compile manifest; old approval digest is intentionally not updated here.",
+    "Assign next unused version, freeze immutable release, deploy and verify public play."
+  ],
+  "limits": [
+    "No whole-phase, cross-mode look readiness, full visual theme pins, physical device, screenreader, offline or production-quality content acceptance.",
+    "Legacy setLook fallback behavior and original picture identity remain their existing separate contracts.",
+    "Restored-image/run checkpoint host checks use existing stub renderer; native delayed checks cover fresh Start and Next, not cold saved restoration."
+  ]
+}
