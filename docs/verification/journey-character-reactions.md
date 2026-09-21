@@ -45,5 +45,27 @@ a Team mission and a Sentinel encounter through public input. They verify all fo
 speakers, no live-play caption, retained completion facts, independent settings,
 unchanged authoritative checkpoints and ordinary Next. The Sentinel route compares
 the entire resulting checkpoint with the same authored simulation without UI.
-Browser sampling and complete scoped regression results are recorded after their
-gates finish. This source is not a public release or human validation claim.
+
+Source checkpoint `2abf624ea2e2f0e5e32a6007490f85b614ba5158` passes80 unique
+relevant checks on each of Node20.19.5 and22.22.2: ten dedicated tests, four actual
+host tests,35 shared-settings/restoration checks and31 shell/display/course-pause
+regressions. Node20 ran the Sentinel host case separately after the48-case cohort;
+Node22 ran the combined49-case cohort. Repeated cohort executions are not counted
+twice. Three selected Node20 preset boot-smoke cases also pass; ten unrelated cases
+were explicitly filtered. Scoped ESLint, Prettier and diff checks pass.
+
+Native in-app-browser sampling served that exact commit read-only on port8814.
+Through normal chooser and keyboard input, First return completed at34.3%,8,160
+points,three lives and0:10. The Guide caption appeared below the existing result
+actions, with Next already available. Appearance & accessibility → Character
+reactions disabled it immediately; returning to the result retained all those
+facts and the same Next action. One click entered the next mission without a
+caption or intermediate screen. The next attempt was paused and the preference
+restored to its original enabled choice. The normal-viewport result screenshot
+was visually inspected. No game state or browser storage was injected.
+
+Native Team/Sentinel/Versus result sampling, small-screen/device qualification,
+independent accepted-tree review, human response and public deployment are not
+claimed by these checks. All four speakers are covered by actual automated hosts,
+not four native playthroughs. This source is not a public release or human
+validation claim.
