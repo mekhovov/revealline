@@ -63,6 +63,15 @@ originals. Assert the background by decoded-picture identity, not the final draw
 call: relay/effect art is drawn above it. Keep raw draw records and separately assert
 that the expected objective image is painted; never hide selected art to pass tests.
 
+For staged handheld missions, reserve separate stable bands for the live encounter
+instruction and independent event notice. Suppress only duplicate phase cues.
+Verify a real loss and recovery at 568×320, 844×390 and 320×480 with Large text;
+measure the full card, notice, drawable arena, HUD and returned touch controls.
+Check selector specificity: setting a new bottom offset is ineffective if an
+older card selector still wins. Keep 44px direction targets clear of the HUD.
+Record that recovery hides controls and that portrait retains its existing
+translucent arena overlay; do not claim simultaneous states from separate samples.
+
 For the shared handheld-control candidate, follow `docs/shared-device-play.md`.
 Classic-field live notices may use the already-reserved warning band only while
 the static classic summary is hidden. Keep full activation/loss text visible and
