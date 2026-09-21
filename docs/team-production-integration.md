@@ -69,3 +69,8 @@ available anchors and the complete field, responded to Q with Support cooldown,
 and paused with Escape. No console errors/warnings were observed. This verifies
 loading and the observed scene, not all animation states or physical devices.
 See `verification/team-presentation-integration/native-adopted-smoke.json`.
+
+Supporting help correction: include the music-recipe review linked by the Studio
+production guide in the runtime build. The recursive local-link packaging test
+passes on Node20/22; lint and format pass. This is a packaged documentation fix,
+not acceptance of the complete P16 workflow phase.
