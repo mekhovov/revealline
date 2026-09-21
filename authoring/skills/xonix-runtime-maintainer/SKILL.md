@@ -1276,3 +1276,7 @@ Focused verification must include the actual mounted Studio selecting an asset, 
 Keep Back and category tabs outside the selected settings panel’s scroll region in Team, as in Solo. Preserve the full preference-scope explanation through Game data’s existing keyboard-readable details. Do not add a new modal/focus owner or auto-resume when Settings closes. Verify short landscape and narrow portrait with Large/Plain and Theme font: focus-driven panel scrolling must leave Back/tabs visible, and reading exit must restore its opener before Settings exit restores the paused-game opener.
 
 Prompt example: “Verify Team settings at 568×320, 320×480 and 390×844. Use native keyboard select popups, keep touch targets usable, record visible navigation and focused-control rectangles, then prove explicit Resume. Separate emulated viewports from actual iPhone and Steam Deck acceptance.” See [compact settings evidence](../../../docs/verification/team-settings-compact/README.md).
+
+### About catalogue independence
+
+Load optional software history independently of same-release mission choices. Preserve static launch routes, truthful pending/fallback status, selection, focus and the About navigation lifetime. Use the [About catalogue guide and prompt](../../../docs/about-catalog-loading.md); hold each request independently and verify native keyboard selection plus late completion, without progress writes. This is not a new campaign browser or request-timeout contract.

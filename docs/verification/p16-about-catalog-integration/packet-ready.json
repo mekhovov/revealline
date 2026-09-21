@@ -1,0 +1,48 @@
+{
+  "base": "d166a45dca6d42585e385a765903dca826d60950",
+  "patch": {
+    "path": "source.patch",
+    "bytes": 9275,
+    "sha256": "899438b20935e0c574bf3bcde6385e3279c78133ceabd2152c41e4bb3e48d861"
+  },
+  "paths": [
+    {
+      "path": "site/landing.mjs",
+      "beforeSha256": "87e3daa9076e23bfc3c6ba10b3095c4a1e2fccd467d76c171ac040d3a95eb887",
+      "sha256": "5b8a2b0ba37d9e5fd7c8aaf82e9651e3c5e8b6f6fa87bf042ded96b21f81e4c6",
+      "bytes": 6353
+    },
+    {
+      "path": "site/about.html",
+      "beforeSha256": "80283d71db3793db95eab0b6ed7d29d37f9e602e81461baced97b071f4d142a1",
+      "sha256": "cddb55c7c71eb71fc35dbc4cfecad23cd6b8a1ee54a6c6913d83f88a9120b951",
+      "bytes": 28018
+    },
+    {
+      "path": "game/test/about-navigation-host.test.mjs",
+      "beforeSha256": "07880ef5108ff41bf57cbe887408e1481285592c7a90b40b9227d3fc1f97067e",
+      "sha256": "11cfe52ce536b87a5a6baff5191a2253f3d166de77f54a393acc58d1c4eca39b",
+      "bytes": 27746
+    },
+    {
+      "path": "docs/about-catalog-loading.md",
+      "beforeSha256": null,
+      "sha256": "62a64ec2d9a8b9dd9a9f3444d8da148125e09b5ecc6f6c9cf7eff902511c11ff",
+      "bytes": 1955
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "beforeSha256": "c53891aeba051b03e97a5150cc12d95a6ed170b901bddd52dda337c499dc09f7",
+      "sha256": "5cf0699473b6e8bd4a57c098a27cefbf306c827c24fa86b87f06187e7bba18c7",
+      "bytes": 320057
+    }
+  ],
+  "checks": {
+    "red": "Three new host regressions fail at baseline on Node22; retained red-node22.log.",
+    "final": "31/31 whole actual About host file on Node20.19.5 and22.22.2, zero failures/skips/cancellations.",
+    "static": "Canonical lint and format passed; static-checks.json.",
+    "patch": "Forward check/apply and reverse checked byte-for-byte in independent tiny repository.",
+    "native": "native-evidence.json; exact final runtime and HTML; source requests retained in sibling native packet."
+  },
+  "integration": "Apply these five explicit paths only after reviewing current sources. Runtime maintainer skill appends after Studio note and overlaps the separately handed-off required-look skill append; preserve both guidance sections when composing. Root owns exact-source six gates, version, commit, production impact, release and public checks. Not a public release or full phase closure."
+}

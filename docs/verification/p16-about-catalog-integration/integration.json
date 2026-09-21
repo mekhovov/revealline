@@ -1,0 +1,41 @@
+{
+  "base": "c7311a1c0f77501877d81307889ae322fb77cd95",
+  "patchSha256": "899438b20935e0c574bf3bcde6385e3279c78133ceabd2152c41e4bb3e48d861",
+  "paths": [
+    {
+      "path": "site/landing.mjs",
+      "sha256": "5b8a2b0ba37d9e5fd7c8aaf82e9651e3c5e8b6f6fa87bf042ded96b21f81e4c6",
+      "matchesPacket": true
+    },
+    {
+      "path": "site/about.html",
+      "sha256": "cddb55c7c71eb71fc35dbc4cfecad23cd6b8a1ee54a6c6913d83f88a9120b951",
+      "matchesPacket": true
+    },
+    {
+      "path": "game/test/about-navigation-host.test.mjs",
+      "sha256": "11cfe52ce536b87a5a6baff5191a2253f3d166de77f54a393acc58d1c4eca39b",
+      "matchesPacket": true
+    },
+    {
+      "path": "docs/about-catalog-loading.md",
+      "sha256": "62a64ec2d9a8b9dd9a9f3444d8da148125e09b5ecc6f6c9cf7eff902511c11ff",
+      "matchesPacket": true
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "sha256": "113f671a192a592a88fed5f360df4d28ab2167da70b15140434fd6b72682256e",
+      "matchesPacket": false
+    }
+  ],
+  "skillComposition": "Preserved Studio and compact-Team sections; appended About guidance independently after EOF context failed. No whole-file replacement.",
+  "tests": {
+    "node20": "31/31",
+    "node22": "31/31",
+    "format": "passed",
+    "lint": "passed",
+    "diffCheck": "passed"
+  },
+  "native": "Retained owner native run; all156 unique served bytes match current tracked/candidate inputs. Not a new browser run or physical-device qualification.",
+  "release": "Held source only; no version/PR/production/public gate closed."
+}

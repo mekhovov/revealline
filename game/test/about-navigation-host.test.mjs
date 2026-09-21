@@ -237,6 +237,9 @@ async function about(
       };
       resolveArchive(response);
     },
+    packs(payload = packCatalog) {
+      resolve(resolvePacks, payload);
+    },
     async finish(packPayload = null) {
       resolve(resolveArchive, releases);
       resolveBody(releases);
@@ -271,7 +274,7 @@ for (const [page, target] of [
   test(`controller Return is ready before catalogue completion and stays in the same build: ${page}`, async (t) => {
     const h = await about(t, page);
     await h.start();
-    assert.equal(h.requests.length, 1);
+    assert.equal(h.requests.length, 2);
     assert.equal(h.$('about-return').getAttribute('href'), '../game/');
     if (page.includes('/revealline-archive-21/'))
       assert.equal(h.requests[0].href, 'https://mekhovov.github.io/revealline/releases/index.json');
@@ -690,7 +693,11 @@ for (const page of [
       );
       assert.ok(links.indexOf(actions[0]) < links.indexOf(actions[1]));
       assert.ok(links.indexOf(actions[1]) < links.indexOf(actions[2]));
-      assert.equal(h.requests.length, 1, 'Mode entry does not wait for the remote catalogues.');
+      assert.equal(
+        h.requests.length,
+        2,
+        'Both catalogues are pending; mode entry waits for neither.',
+      );
       assert.equal(h.doc.activeElement, actions[2]);
       await h.finish(packCatalog);
       h.tick();
@@ -708,3 +715,42 @@ for (const page of [
     });
   }
 }
+
+test('mission choices settle while release history is still waiting, without moving focus or launching', async (t) => {
+  const h = await about(t);
+  await h.start();
+  h.$('about-return').focus();
+  h.packs();
+  await until(() => h.$('landing-pack-select').options.length > 1);
+  assert.match(h.$('version-status').textContent, /Loading preserved builds/);
+  assert.match(h.$('landing-pack-status').textContent, /ready to install and play/);
+  assert.equal(h.doc.activeElement, h.$('about-return'));
+  assert.deepEqual(h.navigations, []);
+  assert.deepEqual(h.writes, []);
+});
+
+test('release history settles while mission choices wait and their starter launch stays available', async (t) => {
+  const h = await about(t);
+  await h.start();
+  h.$('landing-pack-play').focus();
+  assert.match(h.$('landing-pack-status').textContent, /Loading mission choices/);
+  assert.match(h.$('landing-pack-play').href, /pack=fpv-arcade-r5/);
+  h.archive();
+  await until(() => /2 preserved builds/.test(h.$('version-status').textContent));
+  assert.match(h.$('landing-pack-status').textContent, /Loading mission choices/);
+  assert.equal(h.doc.activeElement, h.$('landing-pack-play'));
+  assert.deepEqual(h.navigations, []);
+});
+
+test('mission catalogue failure has its own fallback while release history is still waiting', async (t) => {
+  const h = await about(t);
+  await h.start();
+  h.$('about-return').focus();
+  h.packs(null);
+  await until(() => h.$('landing-pack-select').disabled);
+  assert.match(h.$('landing-pack-status').textContent, /Quick selector unavailable/);
+  assert.match(h.$('version-status').textContent, /Loading preserved builds/);
+  assert.match(h.$('landing-pack-play').href, /pack=fpv-arcade-r5/);
+  assert.equal(h.doc.activeElement, h.$('about-return'));
+  assert.deepEqual(h.navigations, []);
+});
