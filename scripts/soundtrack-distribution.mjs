@@ -2,6 +2,7 @@ import { readFile, lstat, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
+import { format, resolveConfig } from 'prettier';
 import { exactKeys, required, canonicalJSON } from '../game/data-json.mjs';
 import { applySoundtrackArchiveAdmissions } from './soundtrack-archive-admissions.mjs';
 
@@ -247,6 +248,11 @@ export function soundtrackCatalogueModule(catalogue, archives = []) {
 }
 export async function writePublishedSoundtrackMetadata(root) {
   const built = await compilePublishedSoundtracks(root);
+  const modulePath = path.join(root, 'game/content/soundtrack-catalogue.mjs');
+  const moduleSource = await format(soundtrackCatalogueModule(built.catalogue, built.archives), {
+    ...(await resolveConfig(modulePath)),
+    filepath: modulePath,
+  });
   await writeFile(
     path.join(root, 'game/content/soundtrack-catalogue.json'),
     JSON.stringify(built.catalogue, null, 2) + '\n',
@@ -255,10 +261,7 @@ export async function writePublishedSoundtrackMetadata(root) {
     path.join(root, 'game/content/optional-soundtracks.json'),
     JSON.stringify(built.albums, null, 2) + '\n',
   );
-  await writeFile(
-    path.join(root, 'game/content/soundtrack-catalogue.mjs'),
-    soundtrackCatalogueModule(built.catalogue, built.archives),
-  );
+  await writeFile(modulePath, moduleSource);
   return built;
 }
 async function readPublishedSoundtrackEntries(root, option) {
