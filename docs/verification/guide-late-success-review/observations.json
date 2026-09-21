@@ -14,7 +14,6 @@
   },
   "results": {
     "node20.tap": {
-      "sha256": "679018631e8ab5ce894cee836d19a88085b8e78819a61cc1c72a9b128b73cb00",
       "observations": [
         {
           "intent": "Read focus",
@@ -48,10 +47,12 @@
         }
       ],
       "assertionFailures": 3,
-      "scope": "Three selected diagnostic scenarios; not full-suite qualification."
+      "scope": "Three selected diagnostic scenarios; not full-suite qualification.",
+      "originalSha256": "679018631e8ab5ce894cee836d19a88085b8e78819a61cc1c72a9b128b73cb00",
+      "retainedSha256": "8b696703ce852d7f00b61080dba0fb8ac084e9c681d6b4500bc883e73f9afcbb",
+      "normalization": "Trailing whitespace removed from transcript; original raw bytes retained in root .cache/shared-device-r1/guide-success-review."
     },
     "node22-r2.tap": {
-      "sha256": "6c285f1484cf2eb37ff8d32410bccb5ebb5d04992f1dc708e031935a92e0c1d7",
       "observations": [
         {
           "intent": "Read focus",
@@ -85,7 +86,10 @@
         }
       ],
       "assertionFailures": 3,
-      "scope": "Three selected diagnostic scenarios; not full-suite qualification."
+      "scope": "Three selected diagnostic scenarios; not full-suite qualification.",
+      "originalSha256": "6c285f1484cf2eb37ff8d32410bccb5ebb5d04992f1dc708e031935a92e0c1d7",
+      "retainedSha256": "1e6178a7198ed7d6517829110e205baed43095e56261fe3f81e9aa3e97c8ff99",
+      "normalization": "Trailing whitespace removed from transcript; original raw bytes retained in root .cache/shared-device-r1/guide-success-review."
     }
   },
   "disposition": "Separate late-success gap sent to existing UX owner. Failure-focus fix remains scoped; do not claim lifecycle-success coverage.",

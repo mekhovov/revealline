@@ -173,7 +173,7 @@ not ok 34 - review: successful delayed practice preserves newer Read focus
   error: |-
     A completed request must not steal newer attention.
     + actual - expected ... Lines skipped
-    
+
     + <ref *16> SoloElement {
     - <ref *11> SoloElement {
         _rect: {
@@ -241,7 +241,7 @@ not ok 35 - review: successful delayed practice preserves newer hidden then visi
   error: |-
     A completed request must not steal newer attention.
     + actual - expected ... Lines skipped
-    
+
     + <ref *16> SoloElement {
     - <ref *3> Element {
         _rect: {
@@ -309,7 +309,7 @@ not ok 36 - review: successful delayed practice preserves newer pagehide then pa
   error: |-
     A completed request must not steal newer attention.
     + actual - expected ... Lines skipped
-    
+
     + <ref *16> SoloElement {
     - <ref *3> Element {
         _rect: {
