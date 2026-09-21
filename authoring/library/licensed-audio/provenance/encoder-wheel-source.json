@@ -1,0 +1,24 @@
+{
+  "comment_text": null,
+  "core-metadata": {
+    "sha256": "89bd492c3fba5a2a039dec52d9620a210eb9179df6488c1ae85a64548dfe3c6d"
+  },
+  "digests": {
+    "blake2b_256": "4bbdd64e49025090c1971eb085076a40d82f3fcd8339f2a2a4e1e224bd9aa482",
+    "md5": "47b2f68f264b4617c9b2879dd857313b",
+    "sha256": "fb0d5bb76b09d8bf4e27f4824a72e4acd659bd4ec8dac2879fd5744f3d6d88fc"
+  },
+  "downloads": -1,
+  "filename": "lameenc-1.8.4-cp312-cp312-macosx_11_0_arm64.whl",
+  "has_sig": false,
+  "md5_digest": "47b2f68f264b4617c9b2879dd857313b",
+  "packagetype": "bdist_wheel",
+  "python_version": "cp312",
+  "requires_python": ">=3.10",
+  "size": 178226,
+  "upload_time": "2026-06-27T15:02:59",
+  "upload_time_iso_8601": "2026-06-27T15:02:59.939195Z",
+  "url": "https://files.pythonhosted.org/packages/4b/bd/d64e49025090c1971eb085076a40d82f3fcd8339f2a2a4e1e224bd9aa482/lameenc-1.8.4-cp312-cp312-macosx_11_0_arm64.whl",
+  "yanked": false,
+  "yanked_reason": null
+}

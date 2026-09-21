@@ -1,0 +1,60 @@
+{
+  "format": "revealline-local-recording.v1",
+  "status": "candidate-unreviewed",
+  "title": "Embers at Rest",
+  "id": "original.embers-at-rest",
+  "rendererVersion": "sample-free-renderer.1.1",
+  "rendererSha256": "96703b5995f30f3a73d36cdd3562cb707880fc0856ea12bbc18561b166bebc98",
+  "scoreSha256": "17be0aab3742cb80bd5b5c93bc998083ae7231bb8bf10fa36421cc7908d02f2b",
+  "composerSha256": "4618eb0e11ec883c84180aaf8edaa5973697bf18fc6a268b1469f68500c8de23",
+  "seed": 9103,
+  "tools": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.18.0",
+    "pyloudnorm": "0.2.0",
+    "encoder": "lameenc 1.8.4",
+    "converter": "/usr/bin/afconvert"
+  },
+  "master": {
+    "path": "master.flac",
+    "bytes": 25174221,
+    "sha256": "a8224061f37490a1c48d7a182e27b3989a41c470620ec093328fc6f9a4200b03",
+    "bitsPerSample": 24,
+    "pcm24Sha256": "84a5bb8f54e0ac9309974afc7c9b486b51adcad14dba4d7c4bcc4014684bd21e",
+    "losslessRoundTripVerified": true,
+    "integratedLufs": -16.029,
+    "estimatedTruePeakDbtp": -4.246,
+    "samplePeakDbfs": -4.253,
+    "durationSeconds": 153.57894,
+    "sampleRate": 48000,
+    "channels": 2,
+    "rmsDbfs": -17.472
+  },
+  "mp3": {
+    "path": "preview.mp3",
+    "bytes": 4915968,
+    "sha256": "69a8682dbcf4eda3905b8f237e2de1f3975167046b09eb6461e3c4fdc44c8502",
+    "bitrateKbps": 256,
+    "integratedLufs": -16.024,
+    "estimatedTruePeakDbtp": -4.222,
+    "samplePeakDbfs": -4.239,
+    "durationSeconds": 153.624,
+    "sampleRate": 48000,
+    "channels": 2,
+    "rmsDbfs": -17.473
+  },
+  "measurementMethod": "pyloudnorm BS.1770 integrated loudness; scipy resample_poly 4x overlapping peak estimate, not a certified true-peak meter.",
+  "review": {
+    "fullListening": "pending",
+    "inGameMix": "pending",
+    "culturalAccuracy": "not-applicable",
+    "technical": "measured-pass",
+    "originality": "original authored score; independent review pending",
+    "publication": "not-approved"
+  },
+  "provenance": "Only authored score and local synthesis. No external recordings, samples, models or hosted generation.",
+  "productionBytes": 271635559,
+  "maximumResidentBytes": 877821952,
+  "elapsedSeconds": 11.24
+}
