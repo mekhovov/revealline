@@ -25,6 +25,25 @@ ESLint, formatting and diff checks pass. Native picture/gate-overlay observation
 broad-area/victory states, campaign actors/audio, devices, human qualification,
 accepted-source integration and release remain separate open gates.
 
+Native exact9ddaea55584f0a767de1b22dab291ac431ced25e on ownedlocalhost8813/tab38:
+explicit Inspect → Apply checkpoint2, then seven actual Standard Solo starts.
+All originals loaded; each first closure retained3lives, stopped the craft and
+opened one matching connector. Observed results: First link Down0.6%/630score,
+Relay1/1; Second approach Up0.6%/630; Three compounds Up0.3%/570;
+Spiral stores Left1.3%/740; Nested relays Up7.4%/1820; Watchpost exchange
+Down7.3%/2000; Switchback exchange Up0.3%/570. The latter six showRelay1/2.
+
+Opened connectors reveal original pixels and keep readable engine-owned numbers;
+the remaining closed gates retain patterned surfaces and matching triggers.
+Nested and Watchpost show larger partial regions; other observations cover narrow
+cuts and starting foundations. Three compounds/Remix roamers remain dormant.
+Remix lane-warning caption was observed, not a complete lane-state matrix.
+The opening explanation states that connectors are reclaimed ground, not earned
+coverage; denominator/scoring invariants are automated evidence, not proved solely
+by these screenshots. Every preview closes normally and restores Play focus.
+No injected state, forced visibility, complete native clear, gate traversal,
+victory/broad-area matrix, physical device, reduced/muted or human qualification.
+
 ## Explicit editions and capture contract
 
 `MapDesignV2` adds up to 32 named interior gate rectangles. `MissionDesignV2`
