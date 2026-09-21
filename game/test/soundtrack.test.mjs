@@ -30,6 +30,31 @@ test('mixed soundtrack owns metadata, references existing synth recipes, and fre
   assert.equal(BUILTIN_SOUNDTRACK_PLAYLISTS[0].trackIds.length, 5);
   assert.equal(SOUNDTRACK_LIMITS.managedBytes, 256 * 1024 * 1024);
 });
+test('owned immutable libraries can be reused while edited inputs are validated again', () => {
+  const value = clone(base.library),
+    resolved = resolveSoundtrackLibrary(value);
+  assert.equal(resolveSoundtrackLibrary(resolved), resolved);
+  assert.throws(() => resolved.playlists[0].trackIds.push('missing'), TypeError);
+  value.tracks[0].title = 'Edited draft';
+  const edited = resolveSoundtrackLibrary(value);
+  assert.notEqual(edited, resolved);
+  assert.equal(edited.tracks[0].title, 'Edited draft');
+  assert.equal(resolved.tracks[0].title, base.track.title);
+  value.selection.playlistId = 'missing';
+  assert.throws(() => resolveSoundtrackLibrary(value), /unavailable/);
+});
+test('freezing or copying library metadata cannot bypass ownership and reference checks', () => {
+  const resolved = resolveSoundtrackLibrary(base.library),
+    forged = Object.freeze({ ...resolved, selection: Object.freeze({ playlistId: 'missing' }) });
+  assert.throws(() => resolveSoundtrackLibrary(forged), /unavailable/);
+  const shallow = Object.freeze(clone(base.library));
+  resolveSoundtrackLibrary(shallow);
+  shallow.tracks[0].asset.sha256 = 'not-an-audio-hash';
+  assert.throws(() => resolveSoundtrackLibrary(shallow), /asset/);
+  const copied = clone(resolved);
+  copied.playlists[0].trackIds = ['missing'];
+  assert.throws(() => resolveSoundtrackLibrary(copied), /missing tracks/);
+});
 test('model rejects accessors, coercion, missing fields, reserved identities and unresolved references', () => {
   let reads = 0;
   const getter = {

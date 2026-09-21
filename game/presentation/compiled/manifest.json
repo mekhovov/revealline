@@ -1,6 +1,6 @@
 {
   "format": "revealline-presentation-build.v1",
-  "source": { "id": "field-kit", "revision": 52 },
+  "source": { "id": "field-kit", "revision": 54 },
   "files": [
     {
       "path": "assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
@@ -639,13 +639,13 @@
     },
     {
       "path": "runtime.json",
-      "bytes": 978318,
-      "sha256": "49d4ce0c6519d42b0a0d3b4ea0844a4dd01f878d29d39464cf6c87125d760c0a"
+      "bytes": 978694,
+      "sha256": "91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace"
     },
     {
       "path": "studio.json",
-      "bytes": 4092934,
-      "sha256": "b8ec5dd8a1383266c7ce959294b273e4573a974f2513451900d933a4ed46bed3"
+      "bytes": 4135922,
+      "sha256": "5af6ad34f2ad6d6bbf730e6e0fab52cb6330e90b368a6fd25cdf0fdb9752fa95"
     },
     {
       "path": "theme.css",

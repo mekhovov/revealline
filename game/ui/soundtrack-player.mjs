@@ -6,6 +6,7 @@ import {
   SOUNDTRACK_FORMAT,
   soundtrackFallbackSelection,
   emptySoundtrackLibrary,
+  resolveSoundtrackCatalogue,
   resolveSoundtrackLibrary,
   resolveSoundtrackSelection,
   soundtrackOrder,
@@ -75,6 +76,11 @@ export function createSoundtrackPlayer({
         typeof secondAudioElement.addEventListener === 'function'),
     'The second music deck must be a separate media element.',
   );
+  // Validate before acquiring media/master ownership. Only resolver-owned,
+  // immutable catalogues may share a selection between reads; raw adapters
+  // retain validation on every selection so permission changes remain live.
+  const cacheableCatalogue =
+    catalogue === null || resolveSoundtrackCatalogue(catalogue) === catalogue;
   const decks = [audioElement, secondAudioElement].filter(Boolean).map((media) => ({
     media,
     url: null,
@@ -137,18 +143,33 @@ export function createSoundtrackPlayer({
     pendingSeek = null;
   let failed = new Set(),
     fallbackUsed = false;
+  let baseSelection = null;
   const gainLeases = new Map();
   const tracks = () => [
     ...soundtrackTracks(library),
     ...(authored ? [authored] : []),
     ...(published ? [published] : []),
   ];
-  const resolve = () => {
+  const resolveBase = () => {
+    if (
+      cacheableCatalogue &&
+      baseSelection?.library === library &&
+      baseSelection.context === context &&
+      baseSelection.override === override
+    )
+      return baseSelection.selected;
     const selected = resolveSoundtrackSelection(
-      { ...library, selection: { playlistId: override } },
+      library.selection.playlistId === override
+        ? library
+        : { ...library, selection: { playlistId: override } },
       context,
       { catalogue: catalogue ?? undefined },
     );
+    if (cacheableCatalogue) baseSelection = { library, context, override, selected };
+    return selected;
+  };
+  const resolve = () => {
+    const selected = resolveBase();
     const defaultChoice =
       selected.source === 'default' ||
       (selected.source === 'catalogue-fallback' && library.listening?.mode === 'auto');
