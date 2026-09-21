@@ -247,7 +247,7 @@ body.candidate-journey .race-shell {
   flex-wrap: wrap;
   gap: 2px 12px;
   min-width: 0;
-  font-size: 0.75rem;
+  font-size: var(--fk-text-secondary, 0.875rem);
   line-height: 1.4;
   color: #bdcce0;
 }
@@ -262,7 +262,9 @@ body.candidate-journey .race-shell {
   white-space: nowrap;
 }
 #couch-app .couch-music-credit a {
-  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   padding: 2px 0;
 }
 .race-score {
