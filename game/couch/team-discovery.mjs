@@ -12,6 +12,7 @@ export function attachTeamDiscovery({
   back,
   cancel,
   getEntries,
+  presentCard = () => false,
   canOpen = () => true,
   activate,
   preparePreview,
@@ -160,14 +161,16 @@ export function attachTeamDiscovery({
       button.setAttribute('aria-label', `Play ${row.title} · ${row.packName} · ${row.sourceLabel}`);
       button.className = 'field-kit-primary team-discovery-play';
       button.onclick = () => play(owner, row, button);
-      card.append(pack, title, goal, button);
-      return { row, button, card };
+      card.append(pack, title, goal);
+      const hasDiagram = presentCard({ document, row, card }) === true;
+      card.append(button);
+      return { row, button, card, hasDiagram };
     });
     if (!owns(owner)) return;
     owner.cards = cards;
     list.replaceChildren(...cards.map(({ card }) => card));
     if (!owns(owner)) return;
-    pictures?.populate(cards);
+    pictures?.populate(cards.filter(({ hasDiagram }) => !hasDiagram));
     if (!owns(owner)) return;
     describe(
       owner,

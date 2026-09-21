@@ -387,3 +387,32 @@ Node20. Shared preference/restoration checks pass18/18 on both versions. Scoped
 Prettier, ESLint and diff checks pass. These are modeled DOM/storage/input tests;
 native preset qualification, chooser clarity, original art, human/device evidence
 and publication remain separate gates.
+
+Native exact `c07b9162` on local port8808 now verifies keyboard selection of
+Expert in the pre-game Challenge menu, Start with one reserve, two-activation
+Skip into Stepping exchange with one reserve, and same-origin reload restoring
+Stepping exchange plus Expert with a ready Start. This is native control and
+persistence evidence, not a human difficulty/pacing or physical-device verdict.
+
+### Exact Team mission cards, without substitute artwork claims
+
+The explicit review entry injects candidate card presentation into the existing
+flat Team chooser. All twelve cards use the shared engine-derived starting map,
+with numbered craft1/2, actual terrain/foundations and initial threat positions.
+Cards state the challenge band, selected preset, route decision and an optional
+goal explicitly marked not tracked. They never describe the diagram as a live
+capture prediction or an authored reward picture. Original artwork remains pending.
+
+The shared profile distinguishes an exact selected-edition clear, another preset's
+clear, an earlier edition's receipt, skipped and not-cleared missions. None gates
+Play. Same-ID imports cannot acquire owned candidate diagrams or progress labels.
+Legacy/imported cards retain their existing asynchronous picture preview pipeline;
+candidate cards have one direct Play action. Missing/lost Canvas retains route
+text and Play, not a misleading fallback artwork preview. Legacy entry does not
+gain a static dependency on the content compiler or Solo engine for this feature.
+
+All50 scoped card/discovery/picture/host/input cases pass on Node20 and22. They
+cover36 exact preset cards, both numbered craft, progress distinctions, same-ID
+imports, later-campaign direct launch, real Skip labels, legacy gallery lifecycle
+and failure recovery. Native diagram inspection and flat search/filter are still
+pending; this does not qualify artwork, visual accessibility or human enjoyment.

@@ -127,6 +127,9 @@
   object-fit: contain;
   image-rendering: pixelated;
 }
+.field-kit .team-discovery .team-mission-diagram canvas {
+  aspect-ratio: auto;
+}
 .field-kit .team-discovery .team-discovery-teaser-message {
   margin: 0;
   padding: 12px;
