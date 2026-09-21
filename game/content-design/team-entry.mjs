@@ -8,11 +8,14 @@ import { createTeamJourneyProgress } from './team-progress.mjs';
 import { createTeamMissionCardPresenter } from './team-mission-card.mjs';
 import { createTeamCaptureTeaching } from './team-capture-teaching.mjs';
 
-/** Explicit geometry-review entry only. No public enrollment, official awards,
- * artwork qualification or changes to legacy Team arena preferences.
+/** Explicit candidate-review entry only. Originals require a separate opt-in;
+ * neither variant grants public enrollment, official awards, artwork qualification
+ * or changes to legacy Team arena preferences.
  * Loading reads the shared progress store; only admitted play records events. */
-export async function createTeamGreyboxEntry() {
-  const source = createTeamJourneyCandidates();
+export async function createTeamGreyboxEntry({ artwork = false } = {}) {
+  const source = artwork
+    ? createTeamJourneyCandidates({ artwork: true })
+    : createTeamJourneyCandidates();
   const preferences = createJourneyPreferences({ window: globalThis.window ?? globalThis });
   const snapshot = preferences.snapshot();
   const candidateJourney = createCandidateTeamHost(source, {

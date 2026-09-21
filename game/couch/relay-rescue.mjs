@@ -23,6 +23,7 @@ import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCoopPresentation } from './coop-presentation.mjs';
+import { createCandidateTeamPictures } from './candidate-team-pictures.mjs';
 import {
   COOP_PICTURE_BINDINGS,
   COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
@@ -281,7 +282,7 @@ export function bootCoop({
         key: row.key,
         title: row.level.name,
         packName: row.pack.name,
-        sourceLabel: 'Team Journey · geometry test · not human validated',
+        sourceLabel: `Team Journey · ${row.background ? 'original-art candidate' : 'geometry test'} · not human validated`,
         goal: coopGoalText(row.level),
         levelId: row.level.id,
         level: row.level,
@@ -1159,7 +1160,7 @@ export function bootCoop({
       level = selection?.pack.levels.find((level) => level.id === selection.levelId),
       name = level?.name;
     $('coop-preview-caption').textContent =
-      level?.journeyDifficulty && !selection.artworkSource
+      level?.journeyDifficulty && !selection.artworkSource && !selection.journeyRow?.background
         ? `${name} geometry test. Preview scenery is not authored mission artwork. Win to reveal the full picture; scenery does not mark obstacles.`
         : name
           ? `${name} preview. Win to reveal the full picture. Scenery does not mark obstacles.`
@@ -1262,13 +1263,20 @@ export function bootCoop({
         attemptId: `team-${++pictureSequence}`,
         ...(artworkSource ? { artworkSource } : {}),
       },
-      lease: createCoopPresentation({
-        bindings: COOP_PICTURE_BINDINGS,
-        historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
-        getSnapshot: presentationPage.current,
-        readPicture: presentationPage.readPicture,
-        decodeImage: decodeCoopPicture,
-      }),
+      lease:
+        journeyRow?.background && !artworkSource
+          ? createCandidateTeamPictures({
+              row: journeyRow,
+              owns: candidateJourney.owns,
+              getSnapshot: presentationPage.current,
+            })
+          : createCoopPresentation({
+              bindings: COOP_PICTURE_BINDINGS,
+              historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+              getSnapshot: presentationPage.current,
+              readPicture: presentationPage.readPicture,
+              decodeImage: decodeCoopPicture,
+            }),
       binding: null,
       state: 'new',
     };
@@ -1910,7 +1918,7 @@ export function bootCoop({
       )
         throw aborted();
     };
-    const lease = createCoopPresentation({
+    const leaseOptions = {
       bindings: COOP_PICTURE_BINDINGS,
       historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
       getSnapshot() {
@@ -1922,7 +1930,15 @@ export function bootCoop({
       },
       readPicture: presentationPage.readPicture,
       decodeImage: decodeCoopPicture,
-    });
+    };
+    const lease =
+      row.journeyRow?.background && !row.artworkSource
+        ? createCandidateTeamPictures({
+            row: row.journeyRow,
+            owns: candidateJourney.owns,
+            getSnapshot: leaseOptions.getSnapshot,
+          })
+        : createCoopPresentation(leaseOptions);
     const release = () => {
       if (released) return;
       released = true;
@@ -3038,8 +3054,8 @@ export function bootCoop({
       : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
   }
   function showPackStatus() {
-    const candidate = candidateJourney?.rows.some((row) => row.pack === pack);
-    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}${candidate ? ' · Geometry test · not human validated' : ''}`;
+    const candidate = candidateJourney?.rows.find((row) => row.pack === pack);
+    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}${candidate ? ` · ${candidate.background ? 'Original-art candidate' : 'Geometry test'} · not human validated` : ''}`;
     packStatus.begin({ message: label }).finish({ message: label });
   }
   function showPack(next, preferred = next.levels[0].id, isCurrent = () => true) {
@@ -3599,7 +3615,7 @@ export function bootCoop({
   $('coop-start').textContent = 'Start together →';
   bootDisplay.finish({
     message: candidateJourney
-      ? `Team Journey geometry test · twelve missions · human validation and original artwork pending. ${candidatePreferences ? '' : candidateNotice}`.trim()
+      ? `Team Journey ${candidateJourney.rows.some((row) => row.background) ? 'original-art test · twelve missions · human validation pending.' : 'geometry test · twelve missions · human validation and original artwork pending.'} ${candidatePreferences ? '' : candidateNotice}`.trim()
       : 'Two players · one screen · a shared victory',
   });
   document.documentElement.dataset.toolState = 'ready';
@@ -3621,9 +3637,14 @@ try {
   window.addEventListener('blur', initialFocusLost);
   const journeyRequests = new URL(location.href).searchParams.getAll('journey');
   let candidateEntry;
-  if (journeyRequests.length === 1 && journeyRequests[0] === 'team-greybox') {
+  if (
+    journeyRequests.length === 1 &&
+    ['team-greybox', 'team-originals'].includes(journeyRequests[0])
+  ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
-    candidateEntry = await createTeamGreyboxEntry();
+    candidateEntry = await createTeamGreyboxEntry({
+      artwork: journeyRequests[0] === 'team-originals',
+    });
   }
   bootCoop(candidateEntry);
 } catch (error) {

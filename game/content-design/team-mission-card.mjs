@@ -47,16 +47,17 @@ export function createTeamMissionCardPresenter(journey, progress) {
     canvas.height = Math.round((288 * diagram.height) / diagram.width);
     canvas.setAttribute('aria-hidden', 'true');
     caption.className = 'team-discovery-teaser-message';
-    caption.textContent =
-      'Starting map · craft 1 + 2. Not a capture prediction. Original artwork pending.';
+    const artStatus = owned.background
+      ? 'Original-art test; visual qualification pending.'
+      : 'Original artwork pending.';
+    caption.textContent = `Starting map · craft 1 + 2. Not a capture prediction. ${artStatus}`;
     try {
       const context = canvas.getContext('2d');
       if (!context) throw new Error('Canvas unavailable');
       paintMissionThumbnail(context, diagram, canvas.width);
     } catch {
       canvas.hidden = true;
-      caption.textContent =
-        'Starting-map diagram unavailable. Route details and Play remain available. Original artwork pending.';
+      caption.textContent = `Starting-map diagram unavailable. Route details and Play remain available. ${artStatus}`;
     }
     figure.append(canvas, caption);
     card.append(detail, completion, figure, route, optional);
