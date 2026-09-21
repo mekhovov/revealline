@@ -11,7 +11,7 @@ are separate gates. All P00–P15 phases still have open acceptance items.
 | Item | Implemented / evidenced | Remaining |
 | --- | --- | --- |
 | Difficulty affects real challenge, not just lives | Explicit pressure-v2 presets change moving-enemy speed and attack rests through the shared compiler: Gentle ×1/×1.25, Standard ×1.4/×0.85, Expert ×1.75/×0.65. Player handling, warning lengths and exposed boss opportunity remain unchanged. All 498 ordinary Solo/Versus configurations and 36 Team mission/preset sets with four seat/control variants have feasible routes. | Map-specific short clears, bypasses, late threats, optional mastery and cleanup; broader starts and human balance; promotion of the explicit successor. This is not proof every level is challenging. |
-| Timed, relocating optional bonuses | Announce/available/expiry/cooldown, distinct cues, contact-only collection, bounded effects, alternate eligible anchors and pause/replay behavior. Three Border schedules in the combined Solo/Versus source; three purpose-built pictured Team missions in an isolated sequence. Pickup-free host clears pass. Coolant missed-window taking now qualifies all three presets. | Window relocation, Depot Gentle/Standard relocation, reserve relocation, broader timing/route temptation, controllers and two-human testing; release integration. Reappearance is conditional on another eligible field anchor and the appearance cap. |
+| Timed, relocating optional bonuses | Announce/available/expiry/cooldown, distinct cues, contact-only collection, bounded effects, alternate eligible anchors and pause/replay behavior. Three Border schedules in the combined Solo/Versus source; three purpose-built pictured Team missions in an isolated sequence. Coolant recovery qualifies all presets. Window's explicit actor-placement successor now qualifies pickup-free, concurrent-partner taking and real relocation across all presets/seats/joint settings, with Studio and direct Team integration. | Depot Gentle/Standard relocation, reserve relocation, broader timing/route temptation, short clears, controllers and two-human testing; coordinated public release. Reappearance is conditional on another eligible field anchor and the appearance cap. |
 | Ukrainian ornament and FPV workshop levels | Eight original-picture studies, two optional four-mission arcs, explicit 91-mission combined review source preserving 71 core + 12 Remixes; all 48 existing preset/control routes remain qualified. | Cultural/readability review, broader spatial/pacing refinement, further strong proposals where useful, Team adaptation and public promotion. No copied artefact coordinates or operational weapon instructions. |
 | More enemy behaviors | Domain-specific existing actors, pursuit/interception studies, erosion, trail impact, lane attacks and staged Sentinel encounters. Optional non-retaining scout/sentry robot gameplay, pixel impacts/scrap and bounded decals have versioned runtime/authoring/presentation evidence; C2 host integration is in a separate owner lane. | Integrate and qualify the actual optional on/off player flow, bespoke backgrounds, native/device/human balance; explicit Team semantics. No claim of completed realistic human dismemberment or nationality caricatures; this edition uses non-graphic fictional robots. |
 | Varied decisions with uninterrupted play | Foundations, material neutralization, frontier shaping, roamer escape, erosion priorities, permanent relays and directional fields; direct Next, reversible Skip and flat chooser. | Close trivial routes, weak shortcuts and quota tails; final mission cuts, whole-play timing and human voluntary-retry evidence. No manipulative retention systems. |
@@ -55,6 +55,13 @@ are provenance, not proof that later successors shipped.
 
 ## Latest bounded implementation
 
+[Window Exchange outer pockets](journey-team-window-spatial.md): two keeper
+placement/headings fix inward retention clustering without changing geometry,
+speed tiers or bonus timing. Nine route families yield 36 seat/control clears and
+nine exact keyboard-host clears. An explicit pictured Team route and Studio
+selector preserve old editions/progress. Native first returns, Skip and reload
+are checked; human balance and public promotion remain open.
+
 [Sorting Yard contested lanes](journey-rover-sorting-spatial.md): four baffles,
 two additional field keepers and active return-stub roamers, with unchanged shared
 physics and coverage goal. Twelve no-loss public-input clears qualify ordinary
@@ -71,12 +78,13 @@ not completion of P02/P13.
 
 ## Verified public state
 
-On September 22, GitHub's latest release and the public
-[release marker](https://mekhovov.github.io/revealline/release.json) both name
-**v0.80.0**, source `9dc3af75801517efe4a9f52266ffef6d37cb77e9`.
-[Publisher run 35647337761](https://github.com/mekhovov/revealline/actions/runs/35647337761)
-actually deployed Pages successfully on September 21. Its publishing-controller
-commit is distinct from the source archive revision. This is a marker/workflow
+On September 22, the public
+[release marker](https://mekhovov.github.io/revealline/release.json) names
+**v0.80.1**, source `b810521a53af7be145acb8dedce0a01a747339cf`, matching
+[the immutable release](https://github.com/mekhovov/revealline/releases/tag/v0.80.1).
+[Publisher run 35663262961](https://github.com/mekhovov/revealline/actions/runs/35663262961)
+deployed that revision successfully on September 21. That source does not contain
+the new Sorting or Window spatial factories. This is a marker/workflow
 check, not a new whole-site byte/browser audit or a claim these local successors
 are included. The active release owner has the source handoffs; concurrent
 handheld/music PRs are not this lane's release. Preserve the current/previous
