@@ -225,7 +225,10 @@ const recipes = new Map(
 );
 export function drawJourneyActorMaterial(ctx, frame, colors) {
   const material = journeyActorMaterial(frame?.journeyMaterial);
-  const pixels = material && recipes.get(`${material.id}/${frame.type}`);
+  // Team drifters share only the field-body drawing, never the Solo actor type,
+  // movement policy, counterplay, radius or functional badges.
+  const bodyType = frame?.type === 'drifter' ? 'bouncer' : frame?.type;
+  const pixels = material && recipes.get(`${material.id}/${bodyType}`);
   if (!pixels) return false;
   const palette = {
     outline: colors.dark,

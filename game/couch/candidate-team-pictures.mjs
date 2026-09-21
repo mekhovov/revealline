@@ -2,6 +2,7 @@ import { canonicalJSON, required, stableId } from '../data-json.mjs';
 import { compileAssetRevision } from '../content-design/assets.mjs';
 import { isCandidatePictureFor } from '../content-design/picture.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
+import { journeyActorThemeMaterial } from '../presentation/journey-actor-materials.mjs';
 
 const bindings = new WeakMap();
 const cancelled = () => new DOMException('Candidate Team picture cancelled.', 'AbortError');
@@ -19,6 +20,22 @@ export function candidateTeamPictureFrame(binding, level, snapshot) {
   )
     return null;
   return record.asset;
+}
+
+/** Read-only optional body selection. A serialized/copy binding, stale snapshot,
+ * different level, disposed picture or old edition has no material authority.
+ * This does not replace the prepared look lease or its exact FPV request. */
+export function candidateTeamActorMaterial(binding, level, snapshot) {
+  if (!candidateTeamPictureFrame(binding, level, snapshot)) return null;
+  const record = bindings.get(binding),
+    theme = snapshot?.resolved?.theme;
+  if (
+    !theme ||
+    canonicalJSON([theme.id, theme.revision, snapshot.resolved.collection ?? null]) !==
+      record.themeJSON
+  )
+    return null;
+  return journeyActorThemeMaterial(record.row.presentation?.themeId)?.id ?? null;
 }
 
 /** Candidate-only adapter. Historical Team bindings and imported envelopes keep
@@ -132,7 +149,7 @@ export function createCandidateTeamPictures({ row, owns, getSnapshot, acquire } 
         });
         current();
         const retire = staged.commit();
-        bindings.set(binding, { row, asset, picture: staged.picture });
+        bindings.set(binding, { row, asset, picture: staged.picture, themeJSON });
         accepted = binding;
         retire();
         return binding;
