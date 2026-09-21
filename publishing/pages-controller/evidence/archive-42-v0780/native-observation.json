@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "scope": "Scoped actual deployed archive navigation and legal keyboard Solo win; not complete device or offline acceptance.",
+  "recordedAt": "2026-09-21T14:59:11.791787+00:00",
+  "browser": {
+    "tool": "cua_repl",
+    "browser": "Codex in-app browser",
+    "tab": "170",
+    "closed": true
+  },
+  "source": "82aa7e6c07011e5e0745b9732bb48e0826c6f74e",
+  "sourceTree": "fc8dc36efc523c1559fd4e7c80d683f7160ec84a",
+  "deploymentId": 6571281474,
+  "routes": [
+    {
+      "name": "archive-root",
+      "url": "https://mekhovov.github.io/revealline-archive-42/",
+      "markers": [
+        "RevealLine archive 42",
+        "Play v0.78.0",
+        "Open the current release explorer"
+      ]
+    },
+    {
+      "name": "game-entry",
+      "url": "https://mekhovov.github.io/revealline-archive-42/releases/v0.78.0/site/game/",
+      "markers": [
+        "VERSION V0.78.0",
+        "Start"
+      ],
+      "actions": "Keyboard Return starts First Signal; one Down continues cut to legal win.",
+      "result": {
+        "coverage": 52.2,
+        "score": 8160,
+        "lives": 3,
+        "time": "0:07"
+      },
+      "consoleErrors": []
+    },
+    {
+      "name": "canonical-explorer",
+      "url": "https://mekhovov.github.io/revealline/releases/",
+      "observation": "Back to archive root, clicked current explorer link, actual Playable versions page reports current v0.78.0."
+    }
+  ],
+  "publicAudit": {
+    "status": "PASS",
+    "files": 884,
+    "bytes": 423009124,
+    "failedFiles": 0,
+    "reportSha256": "84581bc95b5ff620a90496c61ba798cbc9020ee1e5b8f7cde2aba91b1ed163f7"
+  },
+  "limits": [
+    "Screenshots visually inspected inline in tool transcript, not exported image files.",
+    "Physical iPhone, multitouch, controller, Steam Deck, offline and whole-game acceptance not established by this archive check."
+  ]
+}
