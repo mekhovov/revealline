@@ -43,7 +43,14 @@ export function createContentDraftBackend({
     Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 10000,
     'Invalid storage timeout.',
   );
-  let opening;
+  let opening,
+    connection = null;
+  function forgetConnection(db) {
+    // An old connection's delayed close event must not invalidate a newer open.
+    if (connection !== db) return;
+    connection = null;
+    opening = null;
+  }
   function open() {
     if (!indexedDB) return Promise.reject(new Error('Content draft storage is unavailable.'));
     if (opening) return opening;
@@ -75,8 +82,10 @@ export function createContentDraftBackend({
         }
         db.onversionchange = () => {
           db.close();
-          opening = null;
+          forgetConnection(db);
         };
+        db.onclose = () => forgetConnection(db);
+        connection = db;
         resolve(db);
       };
     }).catch((error) => {
@@ -90,10 +99,15 @@ export function createContentDraftBackend({
     const project = source === undefined ? null : ownDraft(source);
     const db = await open();
     return new Promise((resolve, reject) => {
-      const tx = db.transaction(
-        ['heads', 'revisions'],
-        action === 'save' ? 'readwrite' : 'readonly',
-      );
+      let tx;
+      try {
+        tx = db.transaction(['heads', 'revisions'], action === 'save' ? 'readwrite' : 'readonly');
+      } catch (error) {
+        // No transaction began. Preserve the failure for this request, but let
+        // an explicit retry reopen storage instead of reusing the dead handle.
+        if (error.name === 'InvalidStateError') forgetConnection(db);
+        throw error;
+      }
       const heads = tx.objectStore('heads'),
         revisions = tx.objectStore('revisions');
       let result = null,
