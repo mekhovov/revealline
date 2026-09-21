@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: stick: both seats steer independently, release persists, recovery clears stale fingers
+ok 1 - stick: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 3.367
+  ...
+# Subtest: swipe: both seats steer independently, release persists, recovery clears stale fingers
+ok 2 - swipe: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 1.439083
+  ...
+# Subtest: dpad: both seats steer independently, release persists, recovery clears stale fingers
+ok 3 - dpad: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 1.584792
+  ...
+# Subtest: stick: cancellation belongs to the captured finger and preserves the other seat
+ok 4 - stick: cancellation belongs to the captured finger and preserves the other seat
+  ---
+  duration_ms: 2.373708
+  ...
+# Subtest: swipe: cancellation belongs to the captured finger and preserves the other seat
+ok 5 - swipe: cancellation belongs to the captured finger and preserves the other seat
+  ---
+  duration_ms: 0.658625
+  ...
+# Subtest: dpad: cancellation belongs to the captured finger and preserves the other seat
+not ok 6 - dpad: cancellation belongs to the captured finger and preserves the other seat
+  ---
+  duration_ms: 1.713167
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/couch-shared-touch.test.mjs:102:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cancel of an ignored second finger cannot interrupt either seat.
+
+    1 !== 0
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/couch-shared-touch.test.mjs:122:12)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 5
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 164.054875

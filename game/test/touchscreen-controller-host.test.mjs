@@ -423,3 +423,51 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     );
     assert.deepEqual(page.errors, []);
   });
+
+test('actual host: ignored extra D-pad finger cannot release the active steering finger', async (t) => {
+  const page = await classicPage(t);
+  page.change('touch-mode', 'dpad');
+  page.change('screen-controls', 'always');
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  const surface = page.doc.querySelector('.direction-controls');
+  surface._rect = { x: 0, y: 0, width: 156, height: 156 };
+  surface.emit('pointerdown', {
+    pointerId: 11,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 145,
+    clientY: 78,
+  });
+  page.frame();
+  assert.equal(page.rendered.run.player.direction, 'right');
+  const extra = surface.querySelector('[data-move="left"]');
+  extra.emit('pointerdown', {
+    pointerId: 99,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 5,
+    clientY: 78,
+  });
+  extra.emit('pointercancel', { pointerId: 99, pointerType: 'touch' });
+  assert.equal(
+    surface.hasPointerCapture(11),
+    true,
+    'An ignored finger cannot release the active gesture.',
+  );
+  assert.equal(page.doc.body.dataset.flightState, 'running');
+  surface.emit('pointermove', { pointerId: 11, pointerType: 'touch', clientX: 78, clientY: 145 });
+  page.frame();
+  assert.equal(
+    page.rendered.run.player.direction,
+    'down',
+    'The same active finger can still turn.',
+  );
+  surface.emit('pointercancel', { pointerId: 11, pointerType: 'touch' });
+  assert.equal(
+    page.doc.body.dataset.flightState,
+    'paused',
+    'Real steering interruption still pauses.',
+  );
+  assert.deepEqual(page.errors, []);
+});

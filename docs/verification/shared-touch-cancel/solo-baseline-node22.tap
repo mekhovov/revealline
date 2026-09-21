@@ -1,0 +1,32 @@
+TAP version 13
+# Subtest: actual host: ignored extra D-pad finger cannot release the active steering finger
+not ok 1 - actual host: ignored extra D-pad finger cannot release the active steering finger
+  ---
+  duration_ms: 1121.390167
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/touchscreen-controller-host.test.mjs:428:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    An ignored finger cannot release the active gesture.
+
+    false !== true
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/touchscreen-controller-host.test.mjs:442:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1265.7685
