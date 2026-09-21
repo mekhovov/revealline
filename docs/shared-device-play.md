@@ -216,3 +216,36 @@ At 320×480 with Large text, title mode labels remain single-line in 85.33px car
 and do not overflow; descriptions wrap naturally. The full portrait title still
 scrolls, and its long online-artwork explanation remains a later entry-flow
 polish item. This observation does not close the complete native-menu gate.
+
+## Sixth iteration: reachable phone entry and authored controller launch
+
+At 320×480 with Large text, the title's long online-artwork note placed Play at
+722px, below the first screen. That note now follows the menu in the document;
+its complete wording and availability logic remain. Narrow titles use a compact
+single-line logo, retain chosen text sizes for controls, and omit decorative
+slogans. Operation feedback and Cancel stay beside their existing owner.
+
+Native browser overrides (not hardware): Continue is fully visible at y278–329
+on 320×480, y245–296 on 568×320, and y154–205 on 844×390. On320×480, four Tab presses
+from Continue reveal Workshop at y413–464; Enter opens it. Vertical scrolling
+remains available for secondary actions and the original offline explanation.
+
+47 title/continuation/candidate/input/boot tests passed on each supported Node
+runtime. The expanded complete Journey-entry file then passed 9/9 each, including
+two new opening/authored controller cases: held-A discovery cannot launch or grant
+progress; fresh A after neutral starts First return; Confirm cannot move the craft;
+Pause retains the tick and fresh A explicitly resumes. These cohorts overlap.
+They extend modeled coverage, not a reproduction of the physical Steam Deck issue.
+
+The actual Playground terrain preview was also checked at 1010×720 and 710×620.
+Its complete running arenas measured 592×296 and 392×196 respectively; all seven
+measured controls stayed inside the frame with a minimum 44×44 target. Explicit
+Pause worked; Return to Workshop restored the Playground opener. These taller
+layouts still reserve more HUD/control space than the phone landscape treatment;
+this is not a claim of optimal tablet layout, physical touch, or all Studio flows.
+
+New research reaffirms safe-area placement independent of browser fullscreen:
+[WebKit safe-area guidance](https://webkit.org/blog/7929/designing-websites-for-iphone-x/).
+The [Steam Deck recommendations](https://partner.steamgames.com/doc/steamhardware/recommendations)
+also explicitly identify mixed controller/mouse lockout and changing prompts as
+problems to test. Keep the hybrid input and physical-device gate open.

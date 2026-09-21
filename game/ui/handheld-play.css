@@ -1049,3 +1049,28 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
     display: none;
   }
 }
+
+/* Put mode selection and Play within the first phone viewport. The optional
+   tagline is decoration; operation status and offline guidance remain readable. */
+@media (max-width: 680px) {
+  body.field-kit.game-shell .shell-home[open] {
+    align-items: start;
+    padding: max(16px, var(--safe-top)) max(16px, var(--safe-right)) max(16px, var(--safe-bottom))
+      max(16px, var(--safe-left));
+  }
+  body.field-kit.game-shell #shell-title {
+    font-size: clamp(28px, 7.5vw, 48px);
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin: 8px 0 12px;
+  }
+  body.field-kit.game-shell #shell-title span {
+    display: inline;
+  }
+  body.field-kit.game-shell .home-content > :is(.home-copy, .home-hint) {
+    display: none;
+  }
+  body.field-kit.game-shell .home-actions {
+    margin-top: 12px;
+  }
+}
