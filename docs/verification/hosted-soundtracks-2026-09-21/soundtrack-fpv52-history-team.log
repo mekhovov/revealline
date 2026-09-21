@@ -1,0 +1,480 @@
+TAP version 13
+# Subtest: five approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+ok 1 - five approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+  ---
+  duration_ms: 12.05275
+  ...
+# Subtest: explicit Team roles reuse prepared slots without changing actual types or run state
+ok 2 - explicit Team roles reuse prepared slots without changing actual types or run state
+  ---
+  duration_ms: 3.730125
+  ...
+# Subtest: Team 240px hybrid source detail and CSS body size stay separate from contact radii
+ok 3 - Team 240px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.753833
+  ...
+# Subtest: Team 200px props source detail and CSS body size stay separate from contact radii
+ok 4 - Team 200px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.291875
+  ...
+# Subtest: Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+ok 5 - Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.188208
+  ...
+# Subtest: Team 479px hybrid source detail and CSS body size stay separate from contact radii
+ok 6 - Team 479px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 2.694292
+  ...
+# Subtest: Team 1152px microtile source detail and CSS body size stay separate from contact radii
+ok 7 - Team 1152px microtile source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.705458
+  ...
+# Subtest: Team 640px props source detail and CSS body size stay separate from contact radii
+ok 8 - Team 640px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.920875
+  ...
+# Subtest: real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+ok 9 - real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+  ---
+  duration_ms: 5.081084
+  ...
+# Subtest: heading follows observed movement even when stale enemy velocity points elsewhere
+ok 10 - heading follows observed movement even when stale enemy velocity points elsewhere
+  ---
+  duration_ms: 1.033
+  ...
+# Subtest: reduced motion and zero motion scale keep poses static while real movement still advances
+ok 11 - reduced motion and zero motion scale keep poses static while real movement still advances
+  ---
+  duration_ms: 3.705708
+  ...
+# Subtest: downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+ok 12 - downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+  ---
+  duration_ms: 0.88925
+  ...
+# Subtest: prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+ok 13 - prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+  ---
+  duration_ms: 1.837375
+  ...
+# Subtest: absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+ok 14 - absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+  ---
+  duration_ms: 1.347833
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues
+ok 15 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues
+  ---
+  duration_ms: 14.869375
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope
+ok 16 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope
+  ---
+  duration_ms: 3.747334
+  ...
+# Subtest: bright required picture stays exact beneath actors while painting and body detail never change gameplay
+ok 17 - bright required picture stays exact beneath actors while painting and body detail never change gameplay
+  ---
+  duration_ms: 28.27075
+  ...
+# Subtest: overlapping actor images cannot cover the final real enemy contact rings
+ok 18 - overlapping actor images cannot cover the final real enemy contact rings
+  ---
+  duration_ms: 3.039875
+  ...
+# Subtest: charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+ok 19 - charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+  ---
+  duration_ms: 1.8345
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art
+ok 20 - exposed and secured strongholds retain functional labels and anchors over stationary body art
+  ---
+  duration_ms: 4.245542
+  ...
+# Subtest: minimum authored Team radius stays exact in the sampled frame and final footprint
+ok 21 - minimum authored Team radius stays exact in the sampled frame and final footprint
+  ---
+  duration_ms: 1.452625
+  ...
+# Subtest: actual rescue of player 1 has a legible static role cue without a second progress gauge
+ok 22 - actual rescue of player 1 has a legible static role cue without a second progress gauge
+  ---
+  duration_ms: 74.031541
+  ...
+# Subtest: actual rescue of player 2 has a legible static role cue without a second progress gauge
+ok 23 - actual rescue of player 2 has a legible static role cue without a second progress gauge
+  ---
+  duration_ms: 47.945834
+  ...
+# Subtest: the versioned historical policy names only the exact reviewed FPV wide scene
+ok 24 - the versioned historical policy names only the exact reviewed FPV wide scene
+  ---
+  duration_ms: 0.994291
+  ...
+# Subtest: valid coverage and multi-core imports bind their complete content to the approved scene without changing it
+ok 25 - valid coverage and multi-core imports bind their complete content to the approved scene without changing it
+  ---
+  duration_ms: 36.709375
+  ...
+# Subtest: historical revision values retain their original type and full pack ownership
+ok 26 - historical revision values retain their original type and full pack ownership
+  ---
+  duration_ms: 93.129791
+  ...
+# Subtest: an exact binding table preserves historical string and integer level revisions without the generic policy
+ok 27 - an exact binding table preserves historical string and integer level revisions without the generic policy
+  ---
+  duration_ms: 20.198
+  ...
+# Subtest: the policy remains opt-in and malformed policy or historical input cannot introduce an image path
+ok 28 - the policy remains opt-in and malformed policy or historical input cannot introduce an image path
+  ---
+  duration_ms: 10.563042
+  ...
+# Subtest: the starter namespace stays strict even with no exact rows; known custom namespaces cannot borrow generic approval
+ok 29 - the starter namespace stays strict even with no exact rows; known custom namespaces cannot borrow generic approval
+  ---
+  duration_ms: 22.254167
+  ...
+# Subtest: missing, substituted, source-quality or cropped required scenery refuses before any original read
+ok 30 - missing, substituted, source-quality or cropped required scenery refuses before any original read
+  ---
+  duration_ms: 28.403209
+  ...
+# Subtest: generic read, original hash and decode errors never become procedural and explicit Retry retains its captured row
+ok 31 - generic read, original hash and decode errors never become procedural and explicit Retry retains its captured row
+  ---
+  duration_ms: 50.966291
+  ...
+# Subtest: a historical policy and authored pack are copied before callbacks can change their association
+ok 32 - a historical policy and authored pack are copied before callbacks can change their association
+  ---
+  duration_ms: 9.149875
+  ...
+# Subtest: generic Cancel and Retry release a late decoded image once without changing the newer accepted image
+ok 33 - generic Cancel and Retry release a late decoded image once without changing the newer accepted image
+  ---
+  duration_ms: 14.348333
+  ...
+# Subtest: failed generic replacement and snapshot drift preserve the old image and require a deliberate new attempt
+ok 34 - failed generic replacement and snapshot drift preserve the old image and require a deliberate new attempt
+  ---
+  duration_ms: 17.321584
+  ...
+# Subtest: the closed two-row authority is immutable and matches the complete authored starter pack
+ok 35 - the closed two-row authority is immutable and matches the complete authored starter pack
+  ---
+  duration_ms: 4.234208
+  ...
+# Subtest: First Connection verifies its real approved PNG and returns a full-frame contain/nearest lease
+ok 36 - First Connection verifies its real approved PNG and returns a full-frame contain/nearest lease
+  ---
+  duration_ms: 25.733166
+  ...
+# Subtest: Relay Yard verifies its real approved PNG and returns a full-frame contain/nearest lease
+ok 37 - Relay Yard verifies its real approved PNG and returns a full-frame contain/nearest lease
+  ---
+  duration_ms: 13.071458
+  ...
+# Subtest: same-ID pack rename has no picture authority before any reader or decoder
+ok 38 - same-ID pack rename has no picture authority before any reader or decoder
+  ---
+  duration_ms: 5.81625
+  ...
+# Subtest: same-ID selected level changed has no picture authority before any reader or decoder
+ok 39 - same-ID selected level changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 5.24975
+  ...
+# Subtest: same-ID other level changed has no picture authority before any reader or decoder
+ok 40 - same-ID other level changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 6.761417
+  ...
+# Subtest: pack revision changed has no picture authority before any reader or decoder
+ok 41 - pack revision changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 5.755458
+  ...
+# Subtest: level revision changed has no picture authority before any reader or decoder
+ok 42 - level revision changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 6.13525
+  ...
+# Subtest: unknown pack ID has no picture authority before any reader or decoder
+ok 43 - unknown pack ID has no picture authority before any reader or decoder
+  ---
+  duration_ms: 4.463958
+  ...
+# Subtest: theme revision cannot substitute a broader FPV asset or procedural fallback
+ok 44 - theme revision cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.166583
+  ...
+# Subtest: older theme revision cannot substitute a broader FPV asset or procedural fallback
+ok 45 - older theme revision cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 5.541042
+  ...
+# Subtest: different collection cannot substitute a broader FPV asset or procedural fallback
+ok 46 - different collection cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.596667
+  ...
+# Subtest: different theme cannot substitute a broader FPV asset or procedural fallback
+ok 47 - different theme cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.424458
+  ...
+# Subtest: asset ID cannot substitute a broader FPV asset or procedural fallback
+ok 48 - asset ID cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 6.542208
+  ...
+# Subtest: asset revision cannot substitute a broader FPV asset or procedural fallback
+ok 49 - asset revision cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.176917
+  ...
+# Subtest: asset hash cannot substitute a broader FPV asset or procedural fallback
+ok 50 - asset hash cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.539833
+  ...
+# Subtest: asset bytes cannot substitute a broader FPV asset or procedural fallback
+ok 51 - asset bytes cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 5.936375
+  ...
+# Subtest: asset MIME cannot substitute a broader FPV asset or procedural fallback
+ok 52 - asset MIME cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 5.853459
+  ...
+# Subtest: asset dimensions cannot substitute a broader FPV asset or procedural fallback
+ok 53 - asset dimensions cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 4.584
+  ...
+# Subtest: unreviewed asset cannot substitute a broader FPV asset or procedural fallback
+ok 54 - unreviewed asset cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 4.879792
+  ...
+# Subtest: cropped frame cannot substitute a broader FPV asset or procedural fallback
+ok 55 - cropped frame cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.82575
+  ...
+# Subtest: missing allowed slot cannot substitute a broader FPV asset or procedural fallback
+ok 56 - missing allowed slot cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.379167
+  ...
+# Subtest: a same-length changed original is rejected before decode and never becomes procedural
+ok 57 - a same-length changed original is rejected before decode and never becomes procedural
+  ---
+  duration_ms: 5.555042
+  ...
+# Subtest: exact injected pack/theme/asset and original bytes prepare once; Retry and confirm preserve the same decoded image
+ok 58 - exact injected pack/theme/asset and original bytes prepare once; Retry and confirm preserve the same decoded image
+  ---
+  duration_ms: 18.770958
+  ...
+# Subtest: explicit procedural registration has no picture IO; absent required binding never silently falls back
+ok 59 - explicit procedural registration has no picture IO; absent required binding never silently falls back
+  ---
+  duration_ms: 3.719625
+  ...
+# Subtest: same IDs and revisions do not let changed level or other pack content borrow built-in picture approval
+ok 60 - same IDs and revisions do not let changed level or other pack content borrow built-in picture approval
+  ---
+  duration_ms: 6.813
+  ...
+# Subtest: old strict game format rejects added image fields; binding tables reject URLs, duplicates and unbounded images
+ok 61 - old strict game format rejects added image fields; binding tables reject URLs, duplicates and unbounded images
+  ---
+  duration_ms: 1.843458
+  ...
+# Subtest: snapshot theme and collection revisions are exact and no unavailable snapshot is silently adopted
+ok 62 - snapshot theme and collection revisions are exact and no unavailable snapshot is silently adopted
+  ---
+  duration_ms: 7.288292
+  ...
+# Subtest: wrong selected asset revision, source-only quality or crop refuses before a reader is called
+ok 63 - wrong selected asset revision, source-only quality or crop refuses before a reader is called
+  ---
+  duration_ms: 8.78775
+  ...
+# Subtest: wrong returned asset, corrupted original or decode failure visibly fails without accepting or falling back
+ok 64 - wrong returned asset, corrupted original or decode failure visibly fails without accepting or falling back
+  ---
+  duration_ms: 8.882875
+  ...
+# Subtest: decoded dimensions must agree and a failed decode result releases its owned image
+ok 65 - decoded dimensions must agree and a failed decode result releases its owned image
+  ---
+  duration_ms: 4.317416
+  ...
+# Subtest: pack and binding metadata are captured before an injected status callback can mutate them
+ok 66 - pack and binding metadata are captured before an injected status callback can mutate them
+  ---
+  duration_ms: 4.768375
+  ...
+# Subtest: Retry cannot switch identity after failed acquisition; a new attempt may select the new snapshot
+ok 67 - Retry cannot switch identity after failed acquisition; a new attempt may select the new snapshot
+  ---
+  duration_ms: 7.220875
+  ...
+# Subtest: Cancel then Retry owns a new pending decode; a late old result only releases its own image
+ok 68 - Cancel then Retry owns a new pending decode; a late old result only releases its own image
+  ---
+  duration_ms: 5.493334
+  ...
+# Subtest: new attempt replacement is atomic and failed replacement preserves the previous decoded lease
+ok 69 - new attempt replacement is atomic and failed replacement preserves the previous decoded lease
+  ---
+  duration_ms: 7.09725
+  ...
+# Subtest: dispose while decoding rejects late completion and releases it exactly once
+ok 70 - dispose while decoding rejects late completion and releases it exactly once
+  ---
+  duration_ms: 2.794375
+  ...
+# Subtest: reentrant status selection cannot let the previous operation adopt or leak a picture
+ok 71 - reentrant status selection cannot let the previous operation adopt or leak a picture
+  ---
+  duration_ms: 5.735792
+  ...
+# Subtest: confirm rejects an interrupted gesture and mutable snapshot drift without reselecting or reading
+ok 72 - confirm rejects an interrupted gesture and mutable snapshot drift without reselecting or reading
+  ---
+  duration_ms: 4.403083
+  ...
+# Subtest: a ready-status cancellation preserves the prior working lease and releases only the new candidate
+ok 73 - a ready-status cancellation preserves the prior working lease and releases only the new candidate
+  ---
+  duration_ms: 5.973958
+  ...
+# Subtest: ready-status selection cannot release the prior picture before the newest candidate validates
+ok 74 - ready-status selection cannot release the prior picture before the newest candidate validates
+  ---
+  duration_ms: 8.02675
+  ...
+# Subtest: a ready-time snapshot reader cannot cancel and then let the candidate adopt
+ok 75 - a ready-time snapshot reader cannot cancel and then let the candidate adopt
+  ---
+  duration_ms: 5.175917
+  ...
+# Subtest: a ready-time snapshot reader cannot dispose and then let the candidate adopt
+ok 76 - a ready-time snapshot reader cannot dispose and then let the candidate adopt
+  ---
+  duration_ms: 4.299
+  ...
+# Subtest: an initial snapshot callback cannot cancel the request before pending ownership exists and still start reading
+ok 77 - an initial snapshot callback cannot cancel the request before pending ownership exists and still start reading
+  ---
+  duration_ms: 1.902666
+  ...
+# Subtest: confirm rechecks gesture cancellation after its injected snapshot reader returns
+ok 78 - confirm rechecks gesture cancellation after its injected snapshot reader returns
+  ---
+  duration_ms: 4.791708
+  ...
+# Subtest: previous-image cleanup can dispose the resolver without returning a released candidate
+ok 79 - previous-image cleanup can dispose the resolver without returning a released candidate
+  ---
+  duration_ms: 6.37
+  ...
+# Subtest: a throwing previous-image cleanup does not undo a successfully adopted picture
+ok 80 - a throwing previous-image cleanup does not undo a successfully adopted picture
+  ---
+  duration_ms: 7.641
+  ...
+# Subtest: matching metadata hashes still require the actual PNG header dimensions
+ok 81 - matching metadata hashes still require the actual PNG header dimensions
+  ---
+  duration_ms: 6.65825
+  ...
+# Subtest: pre-aborted requests and invalid native blob type do not acquire decoded resources
+ok 82 - pre-aborted requests and invalid native blob type do not acquire decoded resources
+  ---
+  duration_ms: 3.377334
+  ...
+# Subtest: P02 retains the published P01 history and appends audio7 under a new fpv24
+ok 83 - P02 retains the published P01 history and appends audio7 under a new fpv24
+  ---
+  duration_ms: 4954.439708
+  ...
+# Subtest: P03 retains the measured fpv25 source-stage checkpoint after published P02
+ok 84 - P03 retains the measured fpv25 source-stage checkpoint after published P02
+  ---
+  duration_ms: 1563.084875
+  ...
+# Subtest: current P03 reproduction retains its measured source stage before any review successor
+ok 85 - current P03 reproduction retains its measured source stage before any review successor
+  ---
+  duration_ms: 2344.995208
+  ...
+# Subtest: Journey music review retains fpv33 source evidence and every earlier immutable record
+ok 86 - Journey music review retains fpv33 source evidence and every earlier immutable record
+  ---
+  duration_ms: 1794.950417
+  ...
+# Subtest: unchanged production preserves its exact document and appends changed revisions
+ok 87 - unchanged production preserves its exact document and appends changed revisions
+  ---
+  duration_ms: 710.863709
+  ...
+# Subtest: review evidence gets an immutable successor and normal reproduction keeps the review
+ok 88 - review evidence gets an immutable successor and normal reproduction keeps the review
+  ---
+  duration_ms: 957.715625
+  ...
+# Subtest: production refuses silent slot contract mutation and can explicitly return to an old revision
+ok 89 - production refuses silent slot contract mutation and can explicitly return to an old revision
+  ---
+  duration_ms: 892.562792
+  ...
+# Subtest: Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
+ok 90 - Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
+  ---
+  duration_ms: 322.832083
+  ...
+# Subtest: soundtrack UI and audio bind only their reviewed current inputs
+ok 91 - soundtrack UI and audio bind only their reviewed current inputs
+  ---
+  duration_ms: 210.291041
+  ...
+# Subtest: soundtrack screen and P08-A motion reviews bind only the inspected current inputs
+ok 92 - soundtrack screen and P08-A motion reviews bind only the inspected current inputs
+  ---
+  duration_ms: 214.839208
+  ...
+# Subtest: changed recipe inputs reopen only their own reviewed group
+ok 93 - changed recipe inputs reopen only their own reviewed group
+  ---
+  duration_ms: 9526.918917
+  ...
+# Subtest: the whole production collection has capacity for immutable review successors
+ok 94 - the whole production collection has capacity for immutable review successors
+  ---
+  duration_ms: 21581.281416
+  ...
+1..94
+# tests 94
+# suites 0
+# pass 94
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 45169.085709

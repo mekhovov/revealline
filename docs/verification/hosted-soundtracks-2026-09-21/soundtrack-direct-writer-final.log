@@ -1,0 +1,120 @@
+TAP version 13
+# Subtest: 70 exact hosted recordings and15 albums compile reproducibly without local MP3s
+ok 1 - 70 exact hosted recordings and15 albums compile reproducibly without local MP3s
+  ---
+  duration_ms: 98.263375
+  ...
+# Subtest: hosted admission rejects invented listening approval
+ok 2 - hosted admission rejects invented listening approval
+  ---
+  duration_ms: 12.604166
+  ...
+# Subtest: hosted admission rejects changed hash
+ok 3 - hosted admission rejects changed hash
+  ---
+  duration_ms: 28.0605
+  ...
+# Subtest: hosted admission rejects forged policy
+ok 4 - hosted admission rejects forged policy
+  ---
+  duration_ms: 25.718291
+  ...
+# Subtest: hosted admission rejects removed attribution
+ok 5 - hosted admission rejects removed attribution
+  ---
+  duration_ms: 30.5895
+  ...
+# Subtest: hosted admission rejects foreign URL
+ok 6 - hosted admission rejects foreign URL
+  ---
+  duration_ms: 28.90275
+  ...
+# Subtest: hosted admission rejects missing source evidence
+ok 7 - hosted admission rejects missing source evidence
+  ---
+  duration_ms: 14.780542
+  ...
+# Subtest: hosted admission rejects stale inventory
+ok 8 - hosted admission rejects stale inventory
+  ---
+  duration_ms: 27.772958
+  ...
+# Subtest: hosted admission rejects duplicate album membership
+ok 9 - hosted admission rejects duplicate album membership
+  ---
+  duration_ms: 34.127709
+  ...
+# Subtest: hosted admission rejects unapproved extra recording
+ok 10 - hosted admission rejects unapproved extra recording
+  ---
+  duration_ms: 25.237292
+  ...
+# Subtest: changed evidence bytes fail the pinned source check
+ok 11 - changed evidence bytes fail the pinned source check
+  ---
+  duration_ms: 15.245417
+  ...
+# Subtest: runtime includes hosted metadata while source production never fabricates absent audio
+ok 12 - runtime includes hosted metadata while source production never fabricates absent audio
+  ---
+  duration_ms: 55.347583
+  ...
+# Subtest: publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+ok 13 - publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+  ---
+  duration_ms: 70.524542
+  ...
+# Subtest: real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies
+ok 14 - real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies
+  ---
+  duration_ms: 334.145458
+  ...
+# Subtest: absent album opt-in preserves output bytes and does not read the audio producer
+ok 15 - absent album opt-in preserves output bytes and does not read the audio producer
+  ---
+  duration_ms: 93.974833
+  ...
+# Subtest: opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+ok 16 - opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+  ---
+  duration_ms: 61.987542
+  ...
+# Subtest: incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+ok 17 - incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+  ---
+  duration_ms: 67.199583
+  ...
+# Subtest: all 70 hosted registrations retain provenance without inventing listening approval
+ok 18 - all 70 hosted registrations retain provenance without inventing listening approval
+  ---
+  duration_ms: 4.498125
+  ...
+# Subtest: real candidate producer compiles every tiny fixture, verifies import bytes and preserves output boundaries
+ok 19 - real candidate producer compiles every tiny fixture, verifies import bytes and preserves output boundaries
+  ---
+  duration_ms: 50.160416
+  ...
+# Subtest: real candidate producer refuses a changed final source body, false runtime hash and unassigned recording
+ok 20 - real candidate producer refuses a changed final source body, false runtime hash and unassigned recording
+  ---
+  duration_ms: 28.419
+  ...
+# Subtest: real candidate producer refuses altered derivative provenance and changed runtime bytes
+ok 21 - real candidate producer refuses altered derivative provenance and changed runtime bytes
+  ---
+  duration_ms: 18.830625
+  ...
+# Subtest: approved original recordings are optional binaries while their catalogue remains offline metadata
+ok 22 - approved original recordings are optional binaries while their catalogue remains offline metadata
+  ---
+  duration_ms: 58.269292
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 850.912584
