@@ -1,0 +1,68 @@
+{
+  "records": [
+    {
+      "runtime": "v20.19.5",
+      "commands": [
+        {
+          "argv": [
+            "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-foundation-transfer-8cff-r1/source/authoring/examples/create-foundation-pack.mjs",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-foundation-transfer-8cff-r1/qualification-pack-node20.json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\"path\":\"/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-foundation-transfer-8cff-r1/qualification-pack-node20.json\",\"bytes\":5270,\"sha256\":\"81232e84fee5389f4566dffc489b498e1e3ea82de21f458f3ac85cc0a4c06611\",\"format\":\"xonix-pack.v6\",\"roundTrip\":\"passed\",\"scenarios\":[\"immediate\",\"grid-center\"],\"scope\":\"Data preparation and transfer only; play, image decoding and device gates are separate.\"}\n",
+          "stdoutSHA256": "6a1a64b86e5320e23d2012e8017c5bdd3a1c3fe00e14681244be35844cccc4f1",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-foundation-transfer-8cff-r1/source/authoring/examples/verify-foundation-pack.mjs",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-foundation-transfer-8cff-r1/qualification-pack-node20.json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"scope\": \"Legal-input reachability, not difficulty or device certification.\",\n  \"results\": [\n    {\n      \"turnPolicy\": \"immediate\",\n      \"segments\": [\n        {\n          \"direction\": \"left\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"right\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"down\",\n          \"ticks\": 210\n        }\n      ],\n      \"summary\": {\n        \"ruleset\": \"xonix-core.v6\",\n        \"levelId\": \"workshop-first-bridge\",\n        \"revision\": \"1\",\n        \"seed\": 1,\n        \"turnPolicy\": \"immediate\",\n        \"classId\": \"scout\",\n        \"activeClassId\": \"scout\",\n        \"rosterHash\": \"roster-v1-e159e435\",\n        \"classHistory\": [\n          {\n            \"classId\": \"scout\",\n            \"classRevision\": \"1\",\n            \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n            \"tick\": 0\n          }\n        ],\n        \"switches\": 0,\n        \"failureCause\": null,\n        \"classRevision\": \"1\",\n        \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n        \"status\": \"won\",\n        \"won\": true,\n        \"tick\": 978,\n        \"time\": 8.150000000000178,\n        \"lives\": 3,\n        \"livesLost\": 0,\n        \"score\": 5670,\n        \"coverage\": 0.24076433121019108,\n        \"claimedCount\": 567,\n        \"totalClaimable\": 2355,\n        \"medal\": \"gold\",\n        \"objectives\": {\n          \"captured\": 0,\n          \"total\": 0,\n          \"required\": 0\n        }\n      }\n    },\n    {\n      \"turnPolicy\": \"grid-center\",\n      \"segments\": [\n        {\n          \"direction\": \"left\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"right\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"down\",\n          \"ticks\": 210\n        }\n      ],\n      \"summary\": {\n        \"ruleset\": \"xonix-core.v6\",\n        \"levelId\": \"workshop-first-bridge\",\n        \"revision\": \"1\",\n        \"seed\": 1,\n        \"turnPolicy\": \"grid-center\",\n        \"classId\": \"scout\",\n        \"activeClassId\": \"scout\",\n        \"rosterHash\": \"roster-v1-e159e435\",\n        \"classHistory\": [\n          {\n            \"classId\": \"scout\",\n            \"classRevision\": \"1\",\n            \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n            \"tick\": 0\n          }\n        ],\n        \"switches\": 0,\n        \"failureCause\": null,\n        \"classRevision\": \"1\",\n        \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n        \"status\": \"won\",\n        \"won\": true,\n        \"tick\": 978,\n        \"time\": 8.150000000000178,\n        \"lives\": 3,\n        \"livesLost\": 0,\n        \"score\": 5670,\n        \"coverage\": 0.24076433121019108,\n        \"claimedCount\": 567,\n        \"totalClaimable\": 2355,\n        \"medal\": \"gold\",\n        \"objectives\": {\n          \"captured\": 0,\n          \"total\": 0,\n          \"required\": 0\n        }\n      }\n    }\n  ]\n}\n",
+          "stdoutSHA256": "3982752befa8268661e053daec66b341c8af83bb61020ace50a55c8769b45f97",
+          "stderr": ""
+        }
+      ],
+      "inputPackSHA256": "81232e84fee5389f4566dffc489b498e1e3ea82de21f458f3ac85cc0a4c06611",
+      "sourceManifestSHA256": "38d58c52ba8ab055a1893d741f68c34063ee03941b83e1c412ee3bd62f0dce6b"
+    },
+    {
+      "runtime": "v22.22.2",
+      "commands": [
+        {
+          "argv": [
+            "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-foundation-transfer-8cff-r1/source/authoring/examples/create-foundation-pack.mjs",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-foundation-transfer-8cff-r1/qualification-pack-node22.json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\"path\":\"/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-foundation-transfer-8cff-r1/qualification-pack-node22.json\",\"bytes\":5270,\"sha256\":\"81232e84fee5389f4566dffc489b498e1e3ea82de21f458f3ac85cc0a4c06611\",\"format\":\"xonix-pack.v6\",\"roundTrip\":\"passed\",\"scenarios\":[\"immediate\",\"grid-center\"],\"scope\":\"Data preparation and transfer only; play, image decoding and device gates are separate.\"}\n",
+          "stdoutSHA256": "f579bef387d72141189ee8497ee070797d33a72800b95903df6bb8ed1c37c943",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-foundation-transfer-8cff-r1/source/authoring/examples/verify-foundation-pack.mjs",
+            "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-foundation-transfer-8cff-r1/qualification-pack-node22.json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"scope\": \"Legal-input reachability, not difficulty or device certification.\",\n  \"results\": [\n    {\n      \"turnPolicy\": \"immediate\",\n      \"segments\": [\n        {\n          \"direction\": \"left\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"right\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"down\",\n          \"ticks\": 210\n        }\n      ],\n      \"summary\": {\n        \"ruleset\": \"xonix-core.v6\",\n        \"levelId\": \"workshop-first-bridge\",\n        \"revision\": \"1\",\n        \"seed\": 1,\n        \"turnPolicy\": \"immediate\",\n        \"classId\": \"scout\",\n        \"activeClassId\": \"scout\",\n        \"rosterHash\": \"roster-v1-e159e435\",\n        \"classHistory\": [\n          {\n            \"classId\": \"scout\",\n            \"classRevision\": \"1\",\n            \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n            \"tick\": 0\n          }\n        ],\n        \"switches\": 0,\n        \"failureCause\": null,\n        \"classRevision\": \"1\",\n        \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n        \"status\": \"won\",\n        \"won\": true,\n        \"tick\": 978,\n        \"time\": 8.150000000000178,\n        \"lives\": 3,\n        \"livesLost\": 0,\n        \"score\": 5670,\n        \"coverage\": 0.24076433121019108,\n        \"claimedCount\": 567,\n        \"totalClaimable\": 2355,\n        \"medal\": \"gold\",\n        \"objectives\": {\n          \"captured\": 0,\n          \"total\": 0,\n          \"required\": 0\n        }\n      }\n    },\n    {\n      \"turnPolicy\": \"grid-center\",\n      \"segments\": [\n        {\n          \"direction\": \"left\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"right\",\n          \"ticks\": 384\n        },\n        {\n          \"direction\": \"down\",\n          \"ticks\": 210\n        }\n      ],\n      \"summary\": {\n        \"ruleset\": \"xonix-core.v6\",\n        \"levelId\": \"workshop-first-bridge\",\n        \"revision\": \"1\",\n        \"seed\": 1,\n        \"turnPolicy\": \"grid-center\",\n        \"classId\": \"scout\",\n        \"activeClassId\": \"scout\",\n        \"rosterHash\": \"roster-v1-e159e435\",\n        \"classHistory\": [\n          {\n            \"classId\": \"scout\",\n            \"classRevision\": \"1\",\n            \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n            \"tick\": 0\n          }\n        ],\n        \"switches\": 0,\n        \"failureCause\": null,\n        \"classRevision\": \"1\",\n        \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n        \"status\": \"won\",\n        \"won\": true,\n        \"tick\": 978,\n        \"time\": 8.150000000000178,\n        \"lives\": 3,\n        \"livesLost\": 0,\n        \"score\": 5670,\n        \"coverage\": 0.24076433121019108,\n        \"claimedCount\": 567,\n        \"totalClaimable\": 2355,\n        \"medal\": \"gold\",\n        \"objectives\": {\n          \"captured\": 0,\n          \"total\": 0,\n          \"required\": 0\n        }\n      }\n    }\n  ]\n}\n",
+          "stdoutSHA256": "3982752befa8268661e053daec66b341c8af83bb61020ace50a55c8769b45f97",
+          "stderr": ""
+        }
+      ],
+      "inputPackSHA256": "81232e84fee5389f4566dffc489b498e1e3ea82de21f458f3ac85cc0a4c06611",
+      "sourceManifestSHA256": "38d58c52ba8ab055a1893d741f68c34063ee03941b83e1c412ee3bd62f0dce6b"
+    }
+  ],
+  "sourceInputsVerifiedAfterExecution": true,
+  "localPackageConfiguration": {
+    "path": "source/package.json",
+    "content": "{\"type\":\"module\"}\n",
+    "origin": "Local authoring workspace configuration, not a Git-original input"
+  }
+}
