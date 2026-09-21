@@ -1,3 +1,4 @@
+import { createTouchPreferences } from './touch-preferences.mjs';
 import { createCharacterPresentations } from './character-presentations.mjs';
 import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs';
 import { createJourneyAuthority } from './journey/authority.mjs';
@@ -1551,6 +1552,13 @@ try {
   applyDisplayPreferences(displayPreferences.snapshot());
   $('tap-steering').checked =
     library.preferences.tapSteering ?? matchMedia('(pointer: coarse)').matches;
+  const touchPreferences = createTouchPreferences({
+    legacy: library.preferences.touchControls,
+    onChange: () => {
+      clearInput();
+      syncAssistControls();
+    },
+  });
   syncAssistControls();
   refreshTextSize();
   $('music-select').value = library.preferences.musicGenre;
@@ -1794,7 +1802,7 @@ try {
     arena: $('game-canvas'),
     onPause: (force) => pause(force),
     continuousSteering: () => true,
-    getTouchSettings: () => resolveTouchControls(library.preferences.touchControls),
+    getTouchSettings: () => touchPreferences.snapshot(),
     touchEnabled: () => library.preferences.screenControls !== 'off',
     tapMode: () => $('tap-steering').checked,
     active: () =>
@@ -2027,6 +2035,7 @@ try {
     persistenceReady = false;
     controllerPreview?.clear();
     if (!event.persisted) {
+      touchPreferences.destroy();
       flightDetails.dispose();
       flightInformation.dispose();
       soundtrackDisposed = true;
@@ -5429,6 +5438,7 @@ try {
           side: requested,
         },
       });
+    touchPreferences.set({ ...touchPreferences.snapshot(), side: requested });
     syncAssistControls();
     const status = $('screen-steering-status');
     status.textContent = saved.ok
@@ -5439,7 +5449,7 @@ try {
     status.hidden = false;
   };
   function refreshScreenSteeringHand() {
-    const hand = resolveTouchControls(library.preferences.touchControls).side;
+    const hand = touchPreferences.snapshot().side;
     $('touch-side').value = hand;
     document.body.dataset.screenSteeringHand = hand;
     document.body.dataset.touchSide = hand;
@@ -5468,6 +5478,10 @@ try {
           ...resolveTouchControls(library.preferences.touchControls),
           [key]: key === 'opacity' ? Number($(`touch-${key}`).value) : $(`touch-${key}`).value,
         },
+      });
+      touchPreferences.set({
+        ...touchPreferences.snapshot(),
+        [key]: key === 'opacity' ? Number($(`touch-${key}`).value) : $(`touch-${key}`).value,
       });
       syncAssistControls();
     };
@@ -5510,7 +5524,7 @@ try {
     $('settings-reduced-effects').checked = $('reduced-effects').checked;
     $('settings-tap-steering').checked = $('tap-steering').checked;
     $('screen-controls').value = library.preferences.screenControls;
-    const touch = resolveTouchControls(library.preferences.touchControls);
+    const touch = touchPreferences.snapshot();
     for (const key of ['mode', 'size', 'opacity']) $(`touch-${key}`).value = touch[key];
     document.body.dataset.touchMode = touch.mode;
     document.body.dataset.touchSide = touch.side;
@@ -6743,6 +6757,7 @@ try {
     $('lives').textContent =
       run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—';
     $('lives').setAttribute('aria-label', `${run.lives} lives`);
+    $('lives').dataset.compactValue = `♥ ${run.lives}`;
     $('time').textContent = timeLabel(run.time);
     $('score').textContent = String(run.score).padStart(5, '0');
     const required = run.objectives.filter((o) => o.required),

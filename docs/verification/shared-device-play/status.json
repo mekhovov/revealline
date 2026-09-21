@@ -1,0 +1,44 @@
+{
+  "status": "candidate-in-progress",
+  "base": "17bd1965a2979489f5a163de13dc23c47c5b538d",
+  "publicAcceptedVersion": "0.76.0",
+  "tests": {
+    "initialCrossMode": "47/48; old test pressed now-hidden D-pad while default became shared stick",
+    "correctedCouchTouchJourney": "1/1 selected, 23 deselected; now exercises visible shared stick; cancellation still pauses",
+    "node20TouchHosts": "24/24",
+    "node22InputFullscreen": "54/54",
+    "node20InputFullscreen": "49/49, excludes separately run five Solo host tests",
+    "lastSmallSharedUnit": "7/7"
+  },
+  "nativeObservations": [
+    {
+      "viewport": [844, 390],
+      "hudHeight": 44,
+      "soloLegacyArena": [445.328125, 333.9921875],
+      "document": [844, 390],
+      "note": "earlier 48px header prototype; final header reserve increased to56px for focus outline"
+    },
+    {
+      "viewport": [320, 480],
+      "hudHeight": 44,
+      "soloLegacyArena": [282.6640625, 211.9921875],
+      "document": [320, 480],
+      "note": "before final8px outline clearance adjustment"
+    },
+    {
+      "viewport": [844, 390],
+      "teamArena": [520, 260],
+      "note": "initial stick/Boost overlap found; corrected grid placement requires final native recheck"
+    }
+  ],
+  "pending": [
+    "Final native source verification incl compact wide authored Solo",
+    "Team stick/Boost clearance after correction",
+    "320/568 small Team and Versus including Large text",
+    "Unify exact shared touch target size/appearance and thumb-side presentation",
+    "First Flight/training layouts",
+    "Reproduce physical Steam Deck A failure; modeled ready-state A passes",
+    "Actual iPhone Safari browser bars/rotation/standalone and unsupported fullscreen",
+    "Whole source gates, version allocation, PR/release/public inventory"
+  ]
+}

@@ -67,7 +67,7 @@ async function setup(t) {
   };
   async function start() {
     release();
-    page.$('start-button').click();
+    press(0);
     await settle(() => page.doc.body.dataset.flightState === 'running', 'Flight starts');
     release();
   }

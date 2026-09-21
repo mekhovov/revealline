@@ -1,0 +1,6 @@
+{
+  "originalBytes": 13101,
+  "originalSha256": "0867c5b6a263071c9b6b0878e298a44d559a859ca0f2d69b19d3cf1ef46ed0d4",
+  "compressedSha256": "d439652d8570414c94d7d429582831e7ca0f2b133abe810bde59232fa2e1d4bf",
+  "reason": "Retain unmodified Node diagnostics including trailing whitespace; old hidden D-pad fixture failed after default became shared stick."
+}
