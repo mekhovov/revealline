@@ -467,8 +467,8 @@
     gap: 0;
     line-height: 1.1;
   }
-  /* The same controls as Solo overlay the lower corners. Do not reserve
-     full-height columns for floating pads: the complete bitmap fits the arena. */
+  /* Floating controls use the lower corners. The arena reserves their width
+     below so neither player has to steer through a control overlay. */
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1018,6 +1018,18 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot {
     padding-inline: 2px;
     padding-bottom: calc(var(--team-message-space) + 8px);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(
+      .control-card:first-child[data-touch-visible='true']
+    )
+    .coop-board-slot {
+    padding-left: calc(var(--team-pad-size) + 8px);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(
+      .control-card:last-child[data-touch-visible='true']
+    )
+    .coop-board-slot {
+    padding-right: calc(var(--team-pad-size) + 8px);
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .control-card {
     bottom: calc(var(--team-message-space) + 12px + env(safe-area-inset-bottom));
