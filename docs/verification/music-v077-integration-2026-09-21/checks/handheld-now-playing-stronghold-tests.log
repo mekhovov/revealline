@@ -1,0 +1,243 @@
+TAP version 13
+# Subtest: the actual game has a static dark guard before resources and a single caught module entry
+ok 1 - the actual game has a static dark guard before resources and a single caught module entry
+  ---
+  duration_ms: 6.378291
+  ...
+# Subtest: native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+ok 2 - native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+  ---
+  duration_ms: 12.841041
+  ...
+# Subtest: build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+ok 3 - build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+  ---
+  duration_ms: 1044.162292
+  ...
+# Subtest: Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+    # Subtest: actual Versus controls
+    ok 1 - actual Versus controls
+      ---
+      duration_ms: 2108.182042
+      ...
+# Team picture preparation failed. TypeError: No exact Team picture binding; this arena has not been prepared for this theme.
+#     at required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/data-json.mjs:103:25)
+#     at choose (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:364:5)
+#     at async prepare (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:375:7)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/relay-rescue.mjs?audio-host=1:1330:25
+    # Subtest: fresh Team receives settings, not music or progress
+    not ok 2 - fresh Team receives settings, not music or progress
+      ---
+      duration_ms: 5060.934041
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:253:11'
+      failureType: 'testCodeFailure'
+      error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/wait-for.mjs:15:12)
+        async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/coop-presentation-fixture.mjs:36:5)
+        async teamPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:215:3)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:255:14)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:253:3)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: fresh Versus restores without context creation or playing
+    ok 3 - fresh Versus restores without context creation or playing
+      ---
+      duration_ms: 1536.636375
+      ...
+    1..3
+not ok 4 - Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+  ---
+  duration_ms: 8706.691958
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:230:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+ok 5 - Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+  ---
+  duration_ms: 2207.144625
+  ...
+# Subtest: Versus controller edits the actual master slider without starting either board
+ok 6 - Versus controller edits the actual master slider without starting either board
+  ---
+  duration_ms: 1584.984875
+  ...
+# Team picture preparation failed. TypeError: No exact Team picture binding; this arena has not been prepared for this theme.
+#     at required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/data-json.mjs:103:25)
+#     at choose (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:364:5)
+#     at async prepare (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:375:7)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/relay-rescue.mjs?audio-host=2:1330:25
+# Subtest: Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+not ok 7 - Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+  ---
+  duration_ms: 5027.541875
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:347:1'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/coop-presentation-fixture.mjs:36:5)
+    async teamPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:215:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:349:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Team picture preparation failed. TypeError: No exact Team picture binding; this arena has not been prepared for this theme.
+#     at required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/data-json.mjs:103:25)
+#     at choose (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:364:5)
+#     at async prepare (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:375:7)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/relay-rescue.mjs?audio-host=3:1330:25
+# Subtest: Team keeps its sound explanation through saved edits, storage failure and recovery without starting play
+not ok 8 - Team keeps its sound explanation through saved edits, storage failure and recovery without starting play
+  ---
+  duration_ms: 5041.482958
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:383:1'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/coop-presentation-fixture.mjs:36:5)
+    async teamPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:215:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:394:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Versus sound edits survive paused Help pan and keyboard return without replacing audio feedback
+ok 9 - Versus sound edits survive paused Help pan and keyboard return without replacing audio feedback
+  ---
+  duration_ms: 2825.703334
+  ...
+# Team picture preparation failed. TypeError: No exact Team picture binding; this arena has not been prepared for this theme.
+#     at required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/data-json.mjs:103:25)
+#     at choose (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:364:5)
+#     at async prepare (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:375:7)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/relay-rescue.mjs?audio-host=4:1330:25
+# Subtest: Team sound edits survive paused Help pan and keyboard return without replacing audio feedback
+not ok 10 - Team sound edits survive paused Help pan and keyboard return without replacing audio feedback
+  ---
+  duration_ms: 5030.705333
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:450:3'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/coop-presentation-fixture.mjs:36:5)
+    async teamPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:215:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:460:21)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Team picture preparation failed. TypeError: No exact Team picture binding; this arena has not been prepared for this theme.
+#     at required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/data-json.mjs:103:25)
+#     at choose (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:364:5)
+#     at async prepare (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:375:7)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/relay-rescue.mjs?audio-host=5:1330:25
+# Subtest: Team: actual music library returns through Audio Settings and Pause survives first Start
+not ok 11 - Team: actual music library returns through Audio Settings and Pause survives first Start
+  ---
+  duration_ms: 5038.160833
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:571:3'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/coop-presentation-fixture.mjs:36:5)
+    async teamPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:215:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:577:11)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Team picture preparation failed. TypeError: No exact Team picture binding; this arena has not been prepared for this theme.
+#     at required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/data-json.mjs:103:25)
+#     at choose (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:364:5)
+#     at async prepare (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:375:7)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/relay-rescue.mjs?audio-host=6:1330:25
+# Subtest: Team: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+not ok 12 - Team: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+  ---
+  duration_ms: 5036.953166
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:610:3'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/coop-presentation-fixture.mjs:36:5)
+    async teamPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:215:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:616:11)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Versus: actual music library returns through Audio Settings and Pause survives first Start
+ok 13 - Versus: actual music library returns through Audio Settings and Pause survives first Start
+  ---
+  duration_ms: 1552.16575
+  ...
+# Subtest: Versus: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+ok 14 - Versus: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+  ---
+  duration_ms: 1595.2875
+  ...
+# Team picture preparation failed. TypeError: No exact Team picture binding; this arena has not been prepared for this theme.
+#     at required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/data-json.mjs:103:25)
+#     at choose (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:364:5)
+#     at async prepare (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:375:7)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/relay-rescue.mjs?audio-host=7:1330:25
+# Subtest: Team: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+not ok 15 - Team: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+  ---
+  duration_ms: 5050.587625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:638:3'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/coop-presentation-fixture.mjs:36:5)
+    async teamPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:215:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-audio-master.test.mjs:659:11)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Team picture preparation failed. TypeError: No exact Team picture binding; this arena has not been prepared for this theme.
+#     at required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/data-json.mjs:103:25)
+#     at choose (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:364:5)
+#     at async prepare (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-presentation.mjs:375:7)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/relay-rescue.mjs?audio-host=8:1330:25

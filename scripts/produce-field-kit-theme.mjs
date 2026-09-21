@@ -29,7 +29,7 @@ const sources = {
   effects:
     'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs',
   audio:
-    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs',
+    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/soundtrack-albums.mjs',
 };
 
 // A recipe stays unreviewed whenever one of its source inputs changes. These
@@ -38,27 +38,27 @@ const sources = {
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: '18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7',
+    sha256: '1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845',
     evidence: [
-      'Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.',
-      'The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.',
-      'This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged.',
+      'Scoped soundtrack screen source review: docs/verification/soundtrack-v3-framework-2026-09-21/ui-screen-review/review.json sha256:29b58017d3a3e1bf33347606695e522830cb170fb595c907310f9fd5c244fae0; screen recipe inputs sha256:1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845. The changed compiled CSS reserves 44px only for visible running-landscape music credits in both board placement and height-derived width. Existing effective 8px bottom reserve and narrow Standard/Large header precedence remain intact.',
+      'Independent source arithmetic covers 12 compact cases; 12 focused credit/navigation/board tests pass. Earlier evolving-source native Solo and Team 844x390 observations are attributed in the review, not certified as final-byte screenshots. Unchanged screen inputs retain their historical source reviews in the immutable ledger.',
+      'Bounded functional layout approval only. Native smaller landscape/safe-area/First Flight checks, full screen coverage, physical devices, forced colours, offline, art and release acceptance remain separate. No recording is approved. Source-stage fpv39/fpv40 revisions and all original payloads remain preserved before the scoped reviewed successor.',
     ],
   },
   ui: {
-    sha256: 'fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6',
+    sha256: '28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e',
     evidence: [
-      'Scoped v0.76 UI source review: docs/verification/xposed-journey-v076-integration.md; UI recipe inputs sha256:fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6. Shared DOM ownership, exact manifest pins and operation-status ownership were reviewed on the composed source; component CSS bytes remain unchanged.',
-      'Independent Node20/Node22 cohorts cover equal-value layers, both release orders, stale external overrides, partial rollback, cancellation, decoded-resource lifetime, CSS/attribute cleanup and generation fences. Earlier UI approvals and all immutable production history remain preserved.',
-      'Functional source approval only. Complete native/forced-colour/screen-reader/device, art, offline, human and public acceptance remain separate. Any UI recipe input change reopens this group.',
+      'Scoped soundtrack UI source review: docs/verification/soundtrack-v3-framework-2026-09-21/ui-screen-review/review.json sha256:29b58017d3a3e1bf33347606695e522830cb170fb595c907310f9fd5c244fae0; UI recipe inputs sha256:28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e. Only the compiled CSS input changes from accepted main; shared DOM ownership, component and operation-status inputs remain byte-identical.',
+      'The independent review checks visible/hidden Solo credits, explicit non-running grid placement, Couch credits and source-link navigation, Large text and compact reserve arithmetic. The 12 focused tests and separately attributed earlier native observations have the scope stated in the review; no final-byte browser claim is inferred.',
+      'Functional source approval only. Complete native, forced-colour, screen-reader, physical-device, art, offline, human and public acceptance remain separate. Any UI recipe input change reopens this group. Earlier source approvals and all immutable history remain retained.',
     ],
   },
   audio: {
-    sha256: 'b07a0865c1ff94faf7d1b45ccd7db1a9c0f4b417e366da9ddb1a5e7849beecba',
+    sha256: '5d8df2e346074b8f7b3b7a33f5f102620f221c5d39a54dd7761b84d9733ee948',
     evidence: [
-      'Scoped Journey P02 music source review (functional): docs/verification/journey-p02-music-recipe.md. Inputs sha256:b07a0865c1ff94faf7d1b45ccd7db1a9c0f4b417e366da9ddb1a5e7849beecba. Only published-audio adds default-compatible cues opt-out for Team; other inputs and recipes unchanged.',
-      'Seven published-audio tests cover lazy/verified music, default cues, mute, cancellation, music-only ownership and late readiness/disposal. Preserve fpv33 and all127 original payloads; exact Team picture pins are verified separately.',
-      'Adapter review only, not Team cue parity, listening, physical-device, whole-phase or public acceptance. Prior measurements remain historical; final integrated qualification is required.',
+      'Scoped licensed-preview discovery review: docs/verification/music-v077-integration-2026-09-21/panel-review.json sha256:53b663c1eb2551c0991ff35c693ae221c14ceb009aa8da0b26bba05e076c9040. Eleven ordered audio inputs have fingerprint sha256:5d8df2e346074b8f7b3b7a33f5f102620f221c5d39a54dd7761b84d9733ee948. Only the shared soundtrack panel changes: a fixed external preview link, manual-import explanation and empty-album status. The independent panel cohort passes 91/91; no automatic asset request, catalogue admission, saved-library or playback mutation is introduced.',
+      'Ten unchanged inputs retain their prior scoped reviews: docs/verification/music-expansion-2026-09-21/review.json sha256:b7897ae961e67504eab17991193840d0764164690345cb012ec7d7ef8723c780; album follow-up: docs/verification/music-expansion-2026-09-21/album-review.json sha256:fc767799091324d0f975586ddf6a1fb907dea8a5db92961b4659337b68cae2b8. Historical genre/recovery 203/203 and album/offload/compatibility 28/28 cohorts keep their original scopes. Reviewed fpv48 and source-stage fpv49 remain immutable; this reviewed successor does not approve the separately changing handheld CSS or requalify native host lifecycle.',
+      'Functional source approval only. No recording, composition, art, Ukrainian authenticity, physical-device, frozen-offline or public-release approval is granted. Native development-preview observations and technical codec checks have separately stated limits. Original payloads and all earlier scoped evidence remain preserved in the production ledger.',
     ],
   },
   motion: {

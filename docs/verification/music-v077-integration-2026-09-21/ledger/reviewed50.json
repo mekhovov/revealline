@@ -1,0 +1,169 @@
+{
+  "format": "revealline-field-kit-successor-evidence.v1",
+  "stage": "reviewed",
+  "revision": 50,
+  "raw": {
+    "path": "authoring/library/fpv-field-kit/production.rltheme",
+    "bytes": 7563551,
+    "sha256": "9c3331266e37fc43bca4d2965eb33f386624660313a71fa639e68cbcc404505b"
+  },
+  "source49ReconstructedExactly": {
+    "bytes": 7538627,
+    "sha256": "a019454d7c7902a79ae3d1374021c78145a5af2e8eb77dd9d9a3abb5f7ea97d6"
+  },
+  "base48Preserved": {
+    "bytes": 7525495,
+    "sha256": "aa99636e167e71ec778aacc76cf542c2ba1d76be8315eefa9ae4b3e5eb32c61a",
+    "allImmutableGroups": true
+  },
+  "added": [
+    {
+      "id": "audio.focus.field-kit",
+      "revision": 21,
+      "parent": {
+        "id": "audio.focus.field-kit",
+        "revision": 20
+      },
+      "stage": "reviewed"
+    },
+    {
+      "id": "audio.confirm.field-kit",
+      "revision": 21,
+      "parent": {
+        "id": "audio.confirm.field-kit",
+        "revision": 20
+      },
+      "stage": "reviewed"
+    },
+    {
+      "id": "audio.cancel.field-kit",
+      "revision": 21,
+      "parent": {
+        "id": "audio.cancel.field-kit",
+        "revision": 20
+      },
+      "stage": "reviewed"
+    },
+    {
+      "id": "audio.capture.field-kit",
+      "revision": 21,
+      "parent": {
+        "id": "audio.capture.field-kit",
+        "revision": 20
+      },
+      "stage": "reviewed"
+    },
+    {
+      "id": "audio.failure.field-kit",
+      "revision": 21,
+      "parent": {
+        "id": "audio.failure.field-kit",
+        "revision": 20
+      },
+      "stage": "reviewed"
+    },
+    {
+      "id": "audio.victory.field-kit",
+      "revision": 21,
+      "parent": {
+        "id": "audio.victory.field-kit",
+        "revision": 20
+      },
+      "stage": "reviewed"
+    },
+    {
+      "id": "audio.pickup.field-kit",
+      "revision": 21,
+      "parent": {
+        "id": "audio.pickup.field-kit",
+        "revision": 20
+      },
+      "stage": "reviewed"
+    },
+    {
+      "id": "audio.music.field-kit",
+      "revision": 21,
+      "parent": {
+        "id": "audio.music.field-kit",
+        "revision": 20
+      },
+      "stage": "reviewed"
+    }
+  ],
+  "payloads": {
+    "count": 127,
+    "totalBytes": 4007816,
+    "allPreviousBytesIdentical": true
+  },
+  "pictureChecksBeforeThemePinUpdate": [
+    {
+      "slot": "scene.reveal.wide",
+      "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "bytes": 52720,
+      "assetId": "scene.reveal.wide.field-kit",
+      "assetRevision": 2,
+      "frame": {
+        "height": 576,
+        "width": 1152,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "slot": "picture.fpv.adf5c9eea274ba7f",
+      "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d",
+      "bytes": 38090,
+      "assetId": "picture.fpv.adf5c9eea274ba7f.field-kit",
+      "assetRevision": 2,
+      "frame": {
+        "height": 576,
+        "width": 1152,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "slot": "scene.reveal.wide",
+      "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "bytes": 52720,
+      "assetId": "scene.reveal.wide.field-kit",
+      "assetRevision": 2,
+      "frame": {
+        "height": 576,
+        "width": 1152,
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "readiness": {
+    "format": "revealline-production-readiness.v1",
+    "source": {
+      "id": "field-kit",
+      "revision": 50
+    },
+    "selection": {
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
+      "collection": null,
+      "theme": {
+        "id": "fpv",
+        "revision": 50
+      }
+    },
+    "requiredReviewed": 194,
+    "optionalSlots": 99,
+    "coverage": {
+      "missing": 0,
+      "source": 99,
+      "produced": 0,
+      "reviewed": 194
+    },
+    "declarationOnly": true,
+    "limitation": "Reviewed state and evidence declarations; no visual acceptance inferred."
+  },
+  "readinessLimitation": "In-memory declaration check only; committed CLI gate must run after root commits the exact ledger.",
+  "noRecordingApproval": true
+}

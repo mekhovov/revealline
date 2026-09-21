@@ -86,7 +86,11 @@ async function setup(
   const assets = managedIndexedDB();
   if (installed) await seedInstalled(assets, installedPacks);
   const media = managedIndexedDB();
-  const manager = createManagedMediaStore({ indexedDB: media.indexedDB, storyMedia: true });
+  const manager = createManagedMediaStore({
+    indexedDB: media.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const store = createStillMediaStore({
     managedStore: manager,
     decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),

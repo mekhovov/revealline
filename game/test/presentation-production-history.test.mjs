@@ -441,7 +441,7 @@ test('Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
   }
 });
 
-test('DOM ownership and Journey P02 audio bind only their reviewed current inputs', async () => {
+test('soundtrack UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
@@ -452,7 +452,7 @@ test('DOM ownership and Journey P02 audio bind only their reviewed current input
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6',
+          'sha256:28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e',
         ),
         slot.id,
       );
@@ -460,14 +460,36 @@ test('DOM ownership and Journey P02 audio bind only their reviewed current input
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
       assert.match(asset.provenance.source, /game\/presentation\/dom-ownership\.mjs/);
       assert.equal(
-        asset.quality.evidence.some((entry) => entry.includes('Scoped v0.76 UI source review')),
+        asset.quality.evidence.some((entry) =>
+          entry.includes('Scoped soundtrack UI source review'),
+        ),
         true,
       );
     } else {
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
+        asset.quality.evidence.some(
+          (entry) =>
+            entry.includes(
+              'docs/verification/music-expansion-2026-09-21/review.json sha256:b7897ae961e67504eab17991193840d0764164690345cb012ec7d7ef8723c780',
+            ) &&
+            entry.includes(
+              'docs/verification/music-expansion-2026-09-21/album-review.json sha256:fc767799091324d0f975586ddf6a1fb907dea8a5db92961b4659337b68cae2b8',
+            ),
+        ),
+        slot.id,
+      );
+      assert.ok(
+        asset.provenance.source.endsWith(
+          'sha256:5d8df2e346074b8f7b3b7a33f5f102620f221c5d39a54dd7761b84d9733ee948',
+        ),
+        slot.id,
+      );
+      assert.ok(
         asset.quality.evidence.some((entry) =>
-          entry.includes('Scoped Journey P02 music source review'),
+          entry.includes(
+            'docs/verification/music-v077-integration-2026-09-21/panel-review.json sha256:53b663c1eb2551c0991ff35c693ae221c14ceb009aa8da0b26bba05e076c9040',
+          ),
         ),
         slot.id,
       );
@@ -476,11 +498,11 @@ test('DOM ownership and Journey P02 audio bind only their reviewed current input
   }
 });
 
-test('P03 screen and P08-A motion reviews bind only the inspected current inputs', async () => {
+test('soundtrack screen and P08-A motion reviews bind only the inspected current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const fingerprints = {
-    screens: '18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7',
+    screens: '1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845',
     motion: 'b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4',
   };
   const reviewed = production.document.slots.filter(
@@ -494,7 +516,9 @@ test('P03 screen and P08-A motion reviews bind only the inspected current inputs
     assert.ok(
       asset.quality.evidence.some((entry) =>
         entry.includes(
-          slot.group === 'motion' ? 'Scoped P08-A source review' : 'Scoped P03 Pause source review',
+          slot.group === 'motion'
+            ? 'Scoped P08-A source review'
+            : 'Scoped soundtrack screen source review',
         ),
       ),
       slot.id,
@@ -525,48 +549,78 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
   const root = fileURLToPath(new URL('../../', import.meta.url));
   const fixture = await fs.mkdtemp(path.join(os.tmpdir(), 'recipe-source-invalidation-'));
   t.after(() => fs.rm(fixture, { recursive: true, force: true }));
+  const recoveryInputs = [
+    'soundtrack.mjs',
+    'soundtrack-rights.mjs',
+    'soundtrack-bundle.mjs',
+    'soundtrack-share.mjs',
+    'soundtrack-source.mjs',
+    'soundtrack-albums.mjs',
+    'ui/soundtrack-panel.mjs',
+  ];
   const inputs = new Map([
-    ['operation-status.css', 'ui'],
-    ['operation-status.mjs', 'ui'],
-    ['soundtrack-player.mjs', 'audio'],
-    ['audio-master.mjs', 'audio'],
-    ['field-kit-surfaces.css', 'screens'],
-    ['actor-presentation.mjs', 'motion'],
+    ['ui/operation-status.css', 'ui'],
+    ['ui/operation-status.mjs', 'ui'],
+    ['ui/soundtrack-player.mjs', 'audio'],
+    ['ui/audio-master.mjs', 'audio'],
+    ...recoveryInputs.map((input) => [input, 'audio']),
+    ['ui/field-kit-surfaces.css', 'screens'],
+    ['ui/actor-presentation.mjs', 'motion'],
   ]);
-  // Read unchanged inputs through links; only the named fixture files are writable.
+  // Game-relative keys cover both model and UI helpers. Only copied ordinary
+  // fixture files may be changed; links to the real project are read-only inputs.
   await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
   for (const entry of ['authoring', 'site'])
     await fs.symlink(path.join(root, entry), path.join(fixture, entry));
-  for (const entry of await fs.readdir(path.join(root, 'game')))
-    if (entry !== 'ui')
-      await fs.symlink(path.join(root, 'game', entry), path.join(fixture, 'game', entry));
-  for (const entry of await fs.readdir(path.join(root, 'game', 'ui'))) {
-    const source = path.join(root, 'game', 'ui', entry);
-    const target = path.join(fixture, 'game', 'ui', entry);
-    if (inputs.has(entry)) await fs.copyFile(source, target);
-    else await fs.symlink(source, target);
-  }
-  for (const [input, group] of inputs) {
-    const target = path.join(fixture, 'game', 'ui', input);
-    const original = await fs.readFile(target);
-    await fs.appendFile(target, '\n/* Unreviewed fixture change. */\n');
-    const changed = await createFieldKitProduction({ projectRoot: fixture });
-    const next = retainProductionHistory(changed.document, prior);
-    validateThemeBundle(next, { previous: prior });
-    const assets = resolvePresentation(next).assets;
-    for (const slot of reviewed) {
-      const affected = slot.group === group && assets[slot.id].kind === 'recipe';
-      assert.equal(assets[slot.id].quality.stage, affected ? 'source' : 'reviewed', slot.id);
-      if (affected) {
-        assert.notEqual(
-          assets[slot.id].provenance.source,
-          resolved.assets[slot.id].provenance.source,
-        );
-        assert.equal(assets[slot.id].revision, resolved.assets[slot.id].revision + 1);
-      } else assert.deepEqual(assets[slot.id], resolved.assets[slot.id]);
+  for (const directory of ['', 'ui'])
+    for (const entry of await fs.readdir(path.join(root, 'game', directory))) {
+      if (!directory && entry === 'ui') continue;
+      const input = directory ? `${directory}/${entry}` : entry;
+      const source = path.join(root, 'game', input);
+      const target = path.join(fixture, 'game', input);
+      if (inputs.has(input)) await fs.copyFile(source, target);
+      else await fs.symlink(source, target);
     }
-    assert.deepEqual(next.assets.slice(0, prior.assets.length), prior.assets);
-    await fs.writeFile(target, original);
+  for (const [input, group] of inputs) {
+    const target = path.join(fixture, 'game', input);
+    const stat = await fs.lstat(target);
+    assert(stat.isFile() && !stat.isSymbolicLink(), `Writable copy required: ${input}`);
+    const original = await fs.readFile(target);
+    try {
+      await fs.appendFile(target, '\n/* Unreviewed fixture change. */\n');
+      const changed = await createFieldKitProduction({ projectRoot: fixture });
+      const next = retainProductionHistory(changed.document, prior);
+      validateThemeBundle(next, { previous: prior });
+      const assets = resolvePresentation(next).assets;
+      for (const slot of reviewed) {
+        const affected = slot.group === group && assets[slot.id].kind === 'recipe';
+        assert.equal(assets[slot.id].quality.stage, affected ? 'source' : 'reviewed', slot.id);
+        if (affected) {
+          assert.notEqual(
+            assets[slot.id].provenance.source,
+            resolved.assets[slot.id].provenance.source,
+          );
+          assert.equal(assets[slot.id].revision, resolved.assets[slot.id].revision + 1);
+        } else assert.deepEqual(assets[slot.id], resolved.assets[slot.id]);
+      }
+      assert.deepEqual(next.assets.slice(0, prior.assets.length), prior.assets);
+    } finally {
+      await fs.writeFile(target, original);
+      assert.deepEqual(await fs.readFile(path.join(root, 'game', input)), original);
+    }
+    if (recoveryInputs.includes(input)) {
+      const retained = `${target}.missing-fixture`;
+      await fs.rename(target, retained);
+      try {
+        await assert.rejects(
+          createFieldKitProduction({ projectRoot: fixture }),
+          (error) => error.code === 'ENOENT' && error.path === target,
+          `Missing audio dependency must refuse production: ${input}`,
+        );
+      } finally {
+        await fs.rename(retained, target);
+      }
+    }
   }
 });
 

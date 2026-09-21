@@ -1,0 +1,38 @@
+{
+  "format": "revealline-bounded-validation.v1",
+  "head": "2248f7f35ac5ad75b8bdff5aaa66ca45417180be",
+  "workingTreeInputs": true,
+  "startedUTC": "2026-09-21T02:23:31.732010+00:00",
+  "completedUTC": "2026-09-21T02:23:38.757408+00:00",
+  "argv": ["npm", "run", "validate"],
+  "nodeVersion": "v20.19.5",
+  "exitCode": 0,
+  "result": {
+    "version": "0.76.1",
+    "files": 825,
+    "literalReferencesValid": true,
+    "navigationWarnings": [
+      "game/index.html \u2192 ../diagnostics/",
+      "site/about.html \u2192 ../releases/",
+      "site/about.html \u2192 ../privacy.html",
+      "site/about.html \u2192 ../credits.html"
+    ],
+    "campaign": "first-signal",
+    "levels": 12,
+    "themes": 4,
+    "classes": 7,
+    "packs": 12,
+    "packLevels": 35,
+    "packGoals": 6,
+    "coopPacks": 1,
+    "coopLevels": 2
+  },
+  "sourceManifest": "hydration.json",
+  "sourceManifestSha256": "19f270a8ddceba2f38e199be41c6c5fc72b3f437803c3dcfceca5b95828a7523",
+  "all833InputsMatchedHydrationManifestBeforeRun": true,
+  "changedFiles": [],
+  "log": "validate.log",
+  "logSha256": "852fe469dfddcd64bae57b8761bd4a5ae4416fa2c53022b3412c67e61e5e8891",
+  "logBytes": 510,
+  "freeAfterBytes": 9224818688
+}

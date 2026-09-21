@@ -383,7 +383,11 @@ class Picture {
 }
 async function pictureFixture(t) {
   const memory = memoryIndexedDB(),
-    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true });
+    manager = createManagedMediaStore({
+      indexedDB: memory.indexedDB,
+      storyMedia: true,
+      soundtrackCatalogue: true,
+    });
   const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url)));
   const campaign = read('../content/campaign.json'),
     themes = read('../content/themes.json').themes,

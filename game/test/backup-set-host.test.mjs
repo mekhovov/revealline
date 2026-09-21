@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Document } from './helpers/couch-dom.mjs';
 import { attachBackupSetPanel } from '../ui/backup-set-panel.mjs';
-import { backupSetFixture } from './helpers/backup-set-fixture.mjs';
+import { backupSetFixture, catalogueBackupAudio } from './helpers/backup-set-fixture.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { soloPage } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
@@ -58,6 +58,17 @@ async function panel() {
     busy: () => busy,
   };
 }
+
+test('restricted music remains visibly reference-only before and after native download activation', async () => {
+  const h = await panel();
+  await catalogueBackupAudio(h);
+  assert.equal(await h.$('prepare-backup-set').onclick(), true);
+  assert.match(h.$('backup-set-status').textContent, /without audio/);
+  h.$('download-backup-audio').emit('click');
+  assert.match(h.$('backup-set-status').textContent, /without audio/);
+  h.dialog.open = false;
+  h.dialog.emit('close');
+});
 
 test('explicit native links preserve retry URLs, distinguish requested from prepared, then close releases every URL', async () => {
   const h = await panel();

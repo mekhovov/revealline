@@ -203,7 +203,7 @@ test('actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and 
   assert.equal(preferences(page).musicEnabled, true, 'The explicit master control persists intent');
   assert.equal(musicMedia(page).muted, false);
   assert.equal(musicMedia(page).plays, 1);
-  page.$('soundtrack-next').click();
+  await page.$('soundtrack-next').onclick();
   await waitFor(
     () =>
       page.$('soundtrack-now').textContent.includes(BUILTIN_SOUNDTRACK_TRACKS[0].title) &&
@@ -378,7 +378,7 @@ test('actual audition hide/focus releases the preview and restores prior MP3 lis
     url = media.src;
   page.change('soundtrack-tracks', original.track.id);
   page.$('soundtrack-audition-track').click();
-  const preview = page.audioElements[1];
+  const preview = page.$('soundtrack-audition');
   await waitFor(
     () => preview.paused === false,
     'The actual panel starts a separate audition stream',
@@ -524,7 +524,11 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     1,
   );
   assert.equal(audio.revoked.includes(url), false);
-  const shared = createManagedMediaStore({ indexedDB: db.indexedDB, storyMedia: true });
+  const shared = createManagedMediaStore({
+    indexedDB: db.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const reader = createSoundtrackStore({ managedStore: shared });
   assert.equal(
     (await reader.read()).generation,

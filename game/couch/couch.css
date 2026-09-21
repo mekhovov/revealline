@@ -230,6 +230,7 @@ body.candidate-journey .race-shell {
 }
 .race-hud {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
@@ -238,6 +239,33 @@ body.candidate-journey .race-shell {
     max(12px, env(safe-area-inset-left));
   border-bottom: 1px solid #2b4364;
   background: #080e1e;
+}
+#couch-app .couch-music-credit {
+  flex: 1 0 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  min-width: 0;
+  font-size: var(--fk-text-secondary, 0.875rem);
+  line-height: 1.4;
+  color: #bdcce0;
+}
+#couch-app .couch-music-credit[hidden] {
+  display: none;
+}
+#couch-app .couch-music-credit span {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#couch-app .couch-music-credit a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 2px 0;
 }
 .race-score {
   display: flex;

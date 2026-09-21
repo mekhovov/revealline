@@ -1,0 +1,16 @@
+PASS holizna.retro-wave-1: 7 tracks, 52542382 bytes, hash and structural import + additive merge verified
+PASS holizna.retro-wave-2: 6 tracks, 41486225 bytes, hash and structural import + additive merge verified
+PASS licensed.rock-metal: 4 tracks, 24068899 bytes, hash and structural import + additive merge verified
+PASS 3xblast.pop-punk-chiptune: 7 tracks, 27159043 bytes, hash and structural import + additive merge verified
+PASS retro90s.tracker-fm: 4 tracks, 18791938 bytes, hash and structural import + additive merge verified
+PASS metal.extra-battles: 2 tracks, 7146593 bytes, hash and structural import + additive merge verified
+PASS preview.expansion-metal: 6 tracks, 39699722 bytes, hash and structural import + additive merge verified
+PASS preview.expansion-rock: 3 tracks, 25970595 bytes, hash and structural import + additive merge verified
+PASS preview.expansion-electronic: 10 tracks, 52325878 bytes, hash and structural import + additive merge verified
+PASS preview.expansion-synth90s: 4 tracks, 28217552 bytes, hash and structural import + additive merge verified
+PASS preview.expansion-synth90s-cues: 4 tracks, 7293302 bytes, hash and structural import + additive merge verified
+PASS preview.expansion-chiptune-cues: 7 tracks, 11568386 bytes, hash and structural import + additive merge verified
+PASS preview.expansion-chiptune: 4 tracks, 13345299 bytes, hash and structural import + additive merge verified
+PASS preview.expansion-ambient-cues: 1 tracks, 2862439 bytes, hash and structural import + additive merge verified
+PASS preview.expansion-electronic-cues: 1 tracks, 2575378 bytes, hash and structural import + additive merge verified
+{"albums":15,"tracks":70,"totalBundleBytes":355053631,"receipt":"/tmp/licensed-preview-albums-structural-import.json"}

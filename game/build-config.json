@@ -1,5 +1,5 @@
 {
-  "version": "0.77.0",
+  "version": "0.78.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -94,5 +94,10 @@
   "optionalArtwork": {
     "format": "revealline-optional-artwork.v1",
     "catalog": "game/content-design/journey-art.mjs"
+  },
+  "soundtrackAlbums": {
+    "format": "revealline-soundtrack-distribution.v2",
+    "catalog": "game/content/optional-soundtracks.json",
+    "originalCatalogue": "game/content/soundtrack-catalogue.json"
   }
 }

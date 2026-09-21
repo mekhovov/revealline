@@ -1,0 +1,325 @@
+TAP version 13
+# Subtest: confirmed Change setup reveals the offscreen focused Start after rendering its retained teaser
+ok 1 - confirmed Change setup reveals the offscreen focused Start after rendering its retained teaser
+  ---
+  duration_ms: 317.213
+  ...
+# Subtest: return to an already visible Start preserves the current viewport
+ok 2 - return to an already visible Start preserves the current viewport
+  ---
+  duration_ms: 212.28
+  ...
+# Subtest: a newer focus during the lobby focus handoff vetoes its reveal
+ok 3 - a newer focus during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 208.655
+  ...
+# Subtest: a newer focus-then-body during the lobby focus handoff vetoes its reveal
+ok 4 - a newer focus-then-body during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 209.970458
+  ...
+# Subtest: a newer settings during the lobby focus handoff vetoes its reveal
+ok 5 - a newer settings during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 229.321417
+  ...
+# Subtest: a newer start during the lobby focus handoff vetoes its reveal
+ok 6 - a newer start during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 243.610959
+  ...
+# Subtest: a newer blur-return during the lobby focus handoff vetoes its reveal
+ok 7 - a newer blur-return during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 204.555
+  ...
+# Subtest: a newer hidden-return during the lobby focus handoff vetoes its reveal
+ok 8 - a newer hidden-return during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 198.63925
+  ...
+# Subtest: a newer pagehide during the lobby focus handoff vetoes its reveal
+ok 9 - a newer pagehide during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 181.366709
+  ...
+# Subtest: a newer pointer-intent during the lobby focus handoff vetoes its reveal
+ok 10 - a newer pointer-intent during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 179.659666
+  ...
+# Subtest: a newer key-intent during the lobby focus handoff vetoes its reveal
+ok 11 - a newer key-intent during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 175.537584
+  ...
+# Subtest: a newer selection during layout prevents the lobby from taking focus back
+ok 12 - a newer selection during layout prevents the lobby from taking focus back
+  ---
+  duration_ms: 183.734708
+  ...
+# Subtest: an disabled lobby target is not revealed
+ok 13 - an disabled lobby target is not revealed
+  ---
+  duration_ms: 184.487875
+  ...
+# Subtest: an hidden lobby target is not revealed
+ok 14 - an hidden lobby target is not revealed
+  ---
+  duration_ms: 184.299042
+  ...
+# Subtest: an invalid-viewport lobby target is not revealed
+ok 15 - an invalid-viewport lobby target is not revealed
+  ---
+  duration_ms: 187.99475
+  ...
+# Subtest: Relay Yard preview and arena borrow one exact prepared image without preview reads or automatic Start
+ok 16 - Relay Yard preview and arena borrow one exact prepared image without preview reads or automatic Start
+  ---
+  duration_ms: 149.762208
+  ...
+# Subtest: First Connection preview and arena borrow one exact prepared image without preview reads or automatic Start
+ok 17 - First Connection preview and arena borrow one exact prepared image without preview reads or automatic Start
+  ---
+  duration_ms: 79.411542
+  ...
+# Subtest: relay-yard ready lobby hides the picture centre until an earned win
+ok 18 - relay-yard ready lobby hides the picture centre until an earned win
+  ---
+  duration_ms: 104.598833
+  ...
+# Subtest: first-connection ready lobby hides the picture centre until an earned win
+ok 19 - first-connection ready lobby hides the picture centre until an earned win
+  ---
+  duration_ms: 83.759167
+  ...
+# Subtest: selecting another arena immediately hides and clears old lobby art until its owned read finishes
+ok 20 - selecting another arena immediately hides and clears old lobby art until its owned read finishes
+  ---
+  duration_ms: 50.042041
+  ...
+# Subtest: held artwork completes behind Settings without reclaiming its selector or starting an arena
+ok 21 - held artwork completes behind Settings without reclaiming its selector or starting an arena
+  ---
+  duration_ms: 50.872917
+  ...
+# Subtest: late superseded read cannot draw or clear the newer arena preview or reclaim focus
+ok 22 - late superseded read cannot draw or clear the newer arena preview or reclaim focus
+  ---
+  duration_ms: 45.194833
+  ...
+# Subtest: cancelled decode clears preview; late completion cannot change a successful explicit Retry
+ok 23 - cancelled decode clears preview; late completion cannot change a successful explicit Retry
+  ---
+  duration_ms: 80.218167
+  ...
+# Team picture preparation failed. Error: Controlled required picture refusal
+#     at decode (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/coop-lobby-preview.test.mjs:319:27)
+#     at PictureImage.decode (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/helpers/coop-presentation-fixture.mjs:86:21)
+#     at async image.onload (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/coop-picture-image.mjs:42:11)
+# Subtest: required original decode failure shows no lobby art and Retry prepares the same exact slot
+ok 24 - required original decode failure shows no lobby art and Retry prepares the same exact slot
+  ---
+  duration_ms: 50.095833
+  ...
+# Subtest: Pause and confirmed Change setup leave preview in the lobby and reuse the accepted image without another read
+ok 25 - Pause and confirmed Change setup leave preview in the lobby and reuse the accepted image without another read
+  ---
+  duration_ms: 69.535167
+  ...
+# Subtest: historical import prepares shared artwork, loss keeps preview outside Results, and reset restores exact starter art
+ok 26 - historical import prepares shared artwork, loss keeps preview outside Results, and reset restores exact starter art
+  ---
+  duration_ms: 855.210625
+  ...
+# Subtest: persisted pagehide retains accepted preview; terminal cleanup clears it and late lifecycle events cannot redraw
+ok 27 - persisted pagehide retains accepted preview; terminal cleanup clears it and late lifecycle events cannot redraw
+  ---
+  duration_ms: 37.011875
+  ...
+# Subtest: lobby-only paint failure keeps Start ready and Retry preview repaints the same image without network, decode or focus theft
+ok 28 - lobby-only paint failure keeps Start ready and Retry preview repaints the same image without network, decode or focus theft
+  ---
+  duration_ms: 62.302334
+  ...
+# Subtest: missing preview Canvas context never blocks a fully prepared playable arena
+ok 29 - missing preview Canvas context never blocks a fully prepared playable arena
+  ---
+  duration_ms: 59.075125
+  ...
+# Subtest: fresh pointer intent during loading permits preview publication without adding a focus handoff
+ok 30 - fresh pointer intent during loading permits preview publication without adding a focus handoff
+  ---
+  duration_ms: 32.836625
+  ...
+# Subtest: earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease
+ok 31 - earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease
+  ---
+  duration_ms: 3954.102292
+  ...
+# Subtest: preview-only failure does not move Retry into play or Pause, and focused keyboard Retry returns to enabled Start
+ok 32 - preview-only failure does not move Retry into play or Pause, and focused keyboard Retry returns to enabled Start
+  ---
+  duration_ms: 80.574625
+  ...
+# Subtest: required read failure clears preview while a rejected starter import preserves the accepted arena
+ok 33 - required read failure clears preview while a rejected starter import preserves the accepted arena
+  ---
+  duration_ms: 58.520916
+  ...
+# Subtest: preview reset failure cannot block a newly prepared arena or interrupt terminal image disposal
+ok 34 - preview reset failure cannot block a newly prepared arena or interrupt terminal image disposal
+  ---
+  duration_ms: 78.230125
+  ...
+# Subtest: rotation reveals the focused Team lobby control without starting or refocusing
+ok 35 - rotation reveals the focused Team lobby control without starting or refocusing
+  ---
+  duration_ms: 83.697417
+  ...
+# Subtest: rotation leaves a fully visible Team lobby control alone
+ok 36 - rotation leaves a fully visible Team lobby control alone
+  ---
+  duration_ms: 39.895917
+  ...
+# Subtest: background rotation cannot scroll the Team lobby
+ok 37 - background rotation cannot scroll the Team lobby
+  ---
+  duration_ms: 33.443417
+  ...
+# Subtest: a newer focus during lobby measurement vetoes the old resize reveal
+ok 38 - a newer focus during lobby measurement vetoes the old resize reveal
+  ---
+  duration_ms: 33.658792
+  ...
+# Subtest: Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+    # Subtest: actual Versus controls
+    ok 1 - actual Versus controls
+      ---
+      duration_ms: 199.3745
+      ...
+    # Subtest: fresh Team receives settings, not music or progress
+    ok 2 - fresh Team receives settings, not music or progress
+      ---
+      duration_ms: 46.219542
+      ...
+    # Subtest: fresh Versus restores without context creation or playing
+    ok 3 - fresh Versus restores without context creation or playing
+      ---
+      duration_ms: 110.650291
+      ...
+    1..3
+ok 39 - Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+  ---
+  duration_ms: 356.936709
+  ...
+# Subtest: Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+ok 40 - Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+  ---
+  duration_ms: 667.017209
+  ...
+# Subtest: Versus controller edits the actual master slider without starting either board
+ok 41 - Versus controller edits the actual master slider without starting either board
+  ---
+  duration_ms: 232.417667
+  ...
+# Subtest: Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+ok 42 - Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+  ---
+  duration_ms: 317.630375
+  ...
+# Subtest: Team keeps its sound explanation through saved edits, storage failure and recovery without starting play
+ok 43 - Team keeps its sound explanation through saved edits, storage failure and recovery without starting play
+  ---
+  duration_ms: 183.0055
+  ...
+# Subtest: Versus sound edits survive paused Help pan and keyboard return without replacing audio feedback
+ok 44 - Versus sound edits survive paused Help pan and keyboard return without replacing audio feedback
+  ---
+  duration_ms: 875.170209
+  ...
+# Subtest: Team sound edits survive paused Help pan and keyboard return without replacing audio feedback
+ok 45 - Team sound edits survive paused Help pan and keyboard return without replacing audio feedback
+  ---
+  duration_ms: 212.715333
+  ...
+# Subtest: Team: actual music library returns through Audio Settings and Pause survives first Start
+ok 46 - Team: actual music library returns through Audio Settings and Pause survives first Start
+  ---
+  duration_ms: 73.469125
+  ...
+# Subtest: Team: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+ok 47 - Team: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+  ---
+  duration_ms: 53.221041
+  ...
+# Subtest: Versus: actual music library returns through Audio Settings and Pause survives first Start
+ok 48 - Versus: actual music library returns through Audio Settings and Pause survives first Start
+  ---
+  duration_ms: 169.069792
+  ...
+# Subtest: Versus: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+ok 49 - Versus: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+  ---
+  duration_ms: 129.410833
+  ...
+# Subtest: Team: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+ok 50 - Team: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+  ---
+  duration_ms: 80.96475
+  ...
+# Subtest: Team: modeled controller owns the nested music library and Back returns to its opener
+ok 51 - Team: modeled controller owns the nested music library and Back returns to its opener
+  ---
+  duration_ms: 196.025292
+  ...
+# Subtest: Versus: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+ok 52 - Versus: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+  ---
+  duration_ms: 189.83425
+  ...
+# Subtest: Versus: modeled controller owns the nested music library and Back returns to its opener
+ok 53 - Versus: modeled controller owns the nested music library and Back returns to its opener
+  ---
+  duration_ms: 1644.259042
+  ...
+# Subtest: Versus: Pause music before Start preserves actual cut sound effects without starting music
+ok 54 - Versus: Pause music before Start preserves actual cut sound effects without starting music
+  ---
+  duration_ms: 481.890083
+  ...
+# Subtest: Couch music credits follow audible MP3 metadata without live position announcements
+ok 55 - Couch music credits follow audible MP3 metadata without live position announcements
+  ---
+  duration_ms: 71.90875
+  ...
+# Subtest: Versus menu music source is reachable with Tab and controller without starting either board
+ok 56 - Versus menu music source is reachable with Tab and controller without starting either board
+  ---
+  duration_ms: 345.325167
+  ...
+# Subtest: a failed music assignment replaces pending status with its actionable error
+ok 57 - a failed music assignment replaces pending status with its actionable error
+  ---
+  duration_ms: 3.658416
+  ...
+# Subtest: Journey music library keeps keyboard Back, paused boards and chooser ownership
+ok 58 - Journey music library keeps keyboard Back, paused boards and chooser ownership
+  ---
+  duration_ms: 600.481625
+  ...
+# Subtest: Couch explicit scene keeps level music across inactive Pause, Settings, results and retry until setup
+ok 59 - Couch explicit scene keeps level music across inactive Pause, Settings, results and retry until setup
+  ---
+  duration_ms: 8.764917
+  ...
+1..59
+# tests 62
+# suites 0
+# pass 62
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10507.627708

@@ -53,7 +53,7 @@ export function createCouchStaticPictures({
   const currentPage = () => presentationPage?.current?.() ?? null;
   const mediaStore = () => {
     if (!store) {
-      manager = createManagedMediaStore({ indexedDB, storyMedia: true });
+      manager = createManagedMediaStore({ indexedDB, soundtrackCatalogue: true });
       store = createStillMediaStore({ managedStore: manager });
     }
     return store;

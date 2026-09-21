@@ -1,0 +1,49 @@
+{
+  "reviewSha256": "553f11bdc57b5406d5d343fc45ef493d09456b271e2447339192ebd413bfcb7c",
+  "unchangedReviewPins": 16,
+  "productionHistoryExpectedDigestUpdate": {
+    "path": "game/test/presentation-production-history.test.mjs",
+    "reviewedBeforeSha256": "c1ce531c34cfbb24b9ca31df4197b2e4a9aad2241197c730596909afe4a2d636",
+    "finalSha256": "9f2f85f5a364af4be4f4bd6c43e53d1453325dda30df2bc5140802b26045ff01",
+    "change": "Only expected approved audio digest updated after review pinning; invalidation assertions unchanged."
+  },
+  "fullProductionHistory": {
+    "tests": 12,
+    "pass": 12,
+    "fail": 0,
+    "skipped": 0
+  },
+  "logPins": [
+    {
+      "path": "production-history.tap",
+      "bytes": 2679,
+      "sha256": "98ad778372bcad944f67fe7cb10a552e4850ba4646272cde7ab707439dce1616"
+    },
+    {
+      "path": "generator-complete.tap",
+      "bytes": 1602,
+      "sha256": "2fe8eea81952ef3da0a07526cb100c999697b645bc94e5dc48a9a0172ad72636"
+    },
+    {
+      "path": "lint.log",
+      "bytes": 148,
+      "sha256": "cc3d59080e1db6786884574f494b72a6d2a96b9eea000a9dc2ad8194ff06574e"
+    },
+    {
+      "path": "format.log",
+      "bytes": 195,
+      "sha256": "d41dac14f2bf8a390b6a11750f4f9a5bf922230f5bfaf2029078713a6d0bb5a5"
+    },
+    {
+      "path": "format-native.log",
+      "bytes": 254,
+      "sha256": "beb0a7ff278d8d68bab88fc40e222a8cce5927cec0732af4509b3cb7b225ef78"
+    },
+    {
+      "path": "reproducibility.log",
+      "bytes": 245,
+      "sha256": "a39a25c104d57a5a63d352e5119deaf238b2003d4532814bd53bdf534735b54d"
+    }
+  ],
+  "limits": "Local focused source and metadata checks only; no recording or release acceptance."
+}

@@ -1,0 +1,1080 @@
+{
+  "format": "revealline-authored-mp3-derivatives.v1",
+  "at": "2026-09-21T03:38:42.157953+00:00",
+  "encoder": {
+    "package": "lameenc",
+    "version": "1.8.4",
+    "moduleSha256": "c7ed7ca6776e6c05cecd0cf90d347faa0a0781a7aacf7093300796090d526f4e",
+    "wheelSha256": "fb0d5bb76b09d8bf4e27f4824a72e4acd659bd4ec8dac2879fd5744f3d6d88fc",
+    "bitRateKbps": 256,
+    "quality": 2,
+    "sampleRate": "preserve original, recorded per track",
+    "channels": "preserve original",
+    "transform": "CoreAudio Vorbis decode to PCM16, LAME MP3 encode; full duration; no resampling, trim, gain, normalization, fade or remix. Lossy derivative; OGG original retained."
+  },
+  "tools": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "afconvertSha256": "7f7e15790bf80ad2496a2a67e3208b76fddb658e9bd5abaed04b8d080b53358e",
+    "afinfoSha256": "7e52737202c0b5692cfb9403b72767d8eac84ccb0e63e05c8faa3dc122250d2c",
+    "helperSha256": "d9500d3e7bbedd2a6a9c1b3abe20deedfe6a03eaaddcfe70f0404691b5d61fc1",
+    "wheelSource": {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "89bd492c3fba5a2a039dec52d9620a210eb9179df6488c1ae85a64548dfe3c6d"
+      },
+      "digests": {
+        "blake2b_256": "4bbdd64e49025090c1971eb085076a40d82f3fcd8339f2a2a4e1e224bd9aa482",
+        "md5": "47b2f68f264b4617c9b2879dd857313b",
+        "sha256": "fb0d5bb76b09d8bf4e27f4824a72e4acd659bd4ec8dac2879fd5744f3d6d88fc"
+      },
+      "downloads": -1,
+      "filename": "lameenc-1.8.4-cp312-cp312-macosx_11_0_arm64.whl",
+      "has_sig": false,
+      "md5_digest": "47b2f68f264b4617c9b2879dd857313b",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp312",
+      "requires_python": ">=3.10",
+      "size": 178226,
+      "upload_time": "2026-06-27T15:02:59",
+      "upload_time_iso_8601": "2026-06-27T15:02:59.939195Z",
+      "url": "https://files.pythonhosted.org/packages/4b/bd/d64e49025090c1971eb085076a40d82f3fcd8339f2a2a4e1e224bd9aa482/lameenc-1.8.4-cp312-cp312-macosx_11_0_arm64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  },
+  "intakeSha256": "262b61b1a0b3825a3f8c71675f5017efc17563ba93c870afd052529cdd42e5af",
+  "tracks": [
+    {
+      "id": "congusbongus.the-demon-king",
+      "name": "expansion-20260921-congusbongus.the-demon-king.mp3",
+      "sourceName": "the_demon_king.ogg",
+      "sourceBytes": 8198996,
+      "sourceSha256": "a2eec8319753e40f4a3a464147a8ba4ca3102d9401d6a19bef2912420af0aef5",
+      "sourceDecodedFrames": 10484611,
+      "sourceDecodedDurationSeconds": 237.74628117913832,
+      "bytes": 7609364,
+      "sha256": "8613eadc32ee33dc4889f138efc3c4e1865e61c853412adcb50b135e1515bc2e",
+      "mp3DecodedFrames": 10486656,
+      "mp3DecodedDurationSeconds": 237.79265306122448,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.super-scary-cave-dragon",
+      "name": "expansion-20260921-ragnar-random.super-scary-cave-dragon.mp3",
+      "sourceName": "26_-_super_scary_cave_dragon_sega-style_fm_synth_remix.ogg",
+      "sourceBytes": 921579,
+      "sourceSha256": "55183b25cac0394af185defd239d6bc575943b6dbf229a8466c025e20fb86442",
+      "sourceDecodedFrames": 2396288,
+      "sourceDecodedDurationSeconds": 54.337596371882086,
+      "bytes": 1740382,
+      "sha256": "8b46f7e941447e929c09cbe64921e963e4bc6ab3962332e42c070dc9de9c67e1",
+      "mp3DecodedFrames": 2398464,
+      "mp3DecodedDurationSeconds": 54.3869387755102,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.dinosaur-spirit-guide",
+      "name": "expansion-20260921-ragnar-random.dinosaur-spirit-guide.mp3",
+      "sourceName": "39_-_dinosaur_spirit_guide_sega-style_fm_synth_remix.ogg",
+      "sourceBytes": 1099772,
+      "sourceSha256": "9e6543c1ac9d43521257c826c10a2c2e58a8a4b70b039930a7d3516b1137adf8",
+      "sourceDecodedFrames": 3351599,
+      "sourceDecodedDurationSeconds": 75.99997732426304,
+      "bytes": 2433358,
+      "sha256": "4c78ecf889cf63e02243f030b1e25f1f0f352247d3c0f4dd4ce74cb2583117a5",
+      "mp3DecodedFrames": 3353472,
+      "mp3DecodedDurationSeconds": 76.04244897959184,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.helgi-the-hero-bold",
+      "name": "expansion-20260921-ragnar-random.helgi-the-hero-bold.mp3",
+      "sourceName": "48_-_helgi_the_hero_bold_sega-style_fm_synth_remix.ogg",
+      "sourceBytes": 957884,
+      "sourceSha256": "7375d4da9878abe4e250cf42fefe22f6374ed736bb304aa56a2b006281c6b9a9",
+      "sourceDecodedFrames": 2613849,
+      "sourceDecodedDurationSeconds": 59.27095238095238,
+      "bytes": 1897534,
+      "sha256": "e2e0f54a07a3c227f842f81b5a9d5711e29d505866530aa6d18316037b3a64a1",
+      "mp3DecodedFrames": 2615040,
+      "mp3DecodedDurationSeconds": 59.29795918367347,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.castle-of-the-goblin-queen",
+      "name": "expansion-20260921-ragnar-random.castle-of-the-goblin-queen.mp3",
+      "sourceName": "52_-_castle_of_the_goblin_queen_sega-style_fm_synth_remix.ogg",
+      "sourceBytes": 1641996,
+      "sourceSha256": "682051c7a787e0d61abd8bbdcc2859c92137ef79933f85a933b3dc2fb9f391bc",
+      "sourceDecodedFrames": 5570432,
+      "sourceDecodedDurationSeconds": 126.3136507936508,
+      "bytes": 4043337,
+      "sha256": "d6ed263bd431951a17010a3d31d60e514aece937bcf4bd51aca442cc09162142",
+      "mp3DecodedFrames": 5572224,
+      "mp3DecodedDurationSeconds": 126.35428571428571,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.hostile-planet",
+      "name": "expansion-20260921-ragnar-random.hostile-planet.mp3",
+      "sourceName": "31_-_hostile_planet.ogg",
+      "sourceBytes": 2362116,
+      "sourceSha256": "0f84144b56c46e4784425250506ab9de0527f942fa4935173e5d7845df6851d3",
+      "sourceDecodedFrames": 2351360,
+      "sourceDecodedDurationSeconds": 53.318820861678006,
+      "bytes": 1707781,
+      "sha256": "b629204a2617990696ed110d9177c43e99c2fc7b92d9b0cc9b28e1e7a8a443e3",
+      "mp3DecodedFrames": 2353536,
+      "mp3DecodedDurationSeconds": 53.36816326530612,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.the-creeper",
+      "name": "expansion-20260921-ragnar-random.the-creeper.mp3",
+      "sourceName": "35_-_the_creeper.ogg",
+      "sourceBytes": 5233454,
+      "sourceSha256": "dc2df66e3a167c1fabab3b1ef408b745866010043513a40ca8760da6ad7d045e",
+      "sourceDecodedFrames": 4010778,
+      "sourceDecodedDurationSeconds": 90.94734693877551,
+      "bytes": 2911503,
+      "sha256": "af00dced5a911446c2e6c3c5f42361b74bdaf252f5aea020ad49f682cda0b0c1",
+      "mp3DecodedFrames": 4012416,
+      "mp3DecodedDurationSeconds": 90.98448979591836,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.chick-with-weapon",
+      "name": "expansion-20260921-ragnar-random.chick-with-weapon.mp3",
+      "sourceName": "36_-_chick_with_weapon.ogg",
+      "sourceBytes": 7012150,
+      "sourceSha256": "cafebc92b20cb0c3999e6ed2c2464001218bcdb0ee0fa726a73d0c357b035dbf",
+      "sourceDecodedFrames": 4445280,
+      "sourceDecodedDurationSeconds": 100.8,
+      "bytes": 3226644,
+      "sha256": "4d3a746a85c475498a8f4426536d2a1fc3337e4904c55a687d827f386f50004a",
+      "mp3DecodedFrames": 4446720,
+      "mp3DecodedDurationSeconds": 100.83265306122449,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.reason-of-the-itch",
+      "name": "expansion-20260921-ragnar-random.reason-of-the-itch.mp3",
+      "sourceName": "37_-_reason_of_the_itch.ogg",
+      "sourceBytes": 2566202,
+      "sourceSha256": "46873f9e44a5b503612bb44a773d112c5549fcaa1252d8309b6f093ad7257dee",
+      "sourceDecodedFrames": 2017472,
+      "sourceDecodedDurationSeconds": 45.74766439909297,
+      "bytes": 1465364,
+      "sha256": "3a92a37aa184c85e0e38ca9116d3707ebb63c29d8e5fa77b645f3c9e7cd2f902",
+      "mp3DecodedFrames": 2019456,
+      "mp3DecodedDurationSeconds": 45.79265306122449,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.this-mad-gnosis",
+      "name": "expansion-20260921-ragnar-random.this-mad-gnosis.mp3",
+      "sourceName": "38_-_this_mad_gnosis.ogg",
+      "sourceBytes": 5421345,
+      "sourceSha256": "0cd85ffc322f3de028158c4f01447e1c55db23f7e092a678b19d863889554649",
+      "sourceDecodedFrames": 3969000,
+      "sourceDecodedDurationSeconds": 90.0,
+      "bytes": 2881410,
+      "sha256": "5ddd44a06548f11ec5bdfe81cc51e863ade55f753ccfede58d9848a4d154ba06",
+      "mp3DecodedFrames": 3970944,
+      "mp3DecodedDurationSeconds": 90.04408163265306,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.we-got-the-crud",
+      "name": "expansion-20260921-ragnar-random.we-got-the-crud.mp3",
+      "sourceName": "42_-_we_got_the_crud.ogg",
+      "sourceBytes": 4375180,
+      "sourceSha256": "f56ca85ae837db6cf9920be17d538349cb4bf64bd7bfbd939ffe98245e851b8b",
+      "sourceDecodedFrames": 2969387,
+      "sourceDecodedDurationSeconds": 67.33303854875284,
+      "bytes": 2155833,
+      "sha256": "2c26b4ed893f5b816fee12fa2f0bdb17a31d8560b7858d89ed6272a8866c9c8c",
+      "mp3DecodedFrames": 2971008,
+      "mp3DecodedDurationSeconds": 67.36979591836734,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.digestive-malady",
+      "name": "expansion-20260921-ragnar-random.digestive-malady.mp3",
+      "sourceName": "44_-_digestive_malady.ogg",
+      "sourceBytes": 3109775,
+      "sourceSha256": "3a895c6f81566426cb52654921161c8d8b87a7e3a325697c7cffdb271d5ccbc5",
+      "sourceDecodedFrames": 2822336,
+      "sourceDecodedDurationSeconds": 63.998548752834466,
+      "bytes": 2048835,
+      "sha256": "64066f4a06e7c7dd64033e31fa404da9ff3535bbbcb0b7e80399c552123d5b52",
+      "mp3DecodedFrames": 2823552,
+      "mp3DecodedDurationSeconds": 64.02612244897959,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.jonathan-livingston-sea-cucumber",
+      "name": "expansion-20260921-ragnar-random.jonathan-livingston-sea-cucumber.mp3",
+      "sourceName": "45_-_jonathan_livingston_sea_cucumber.ogg",
+      "sourceBytes": 2558511,
+      "sourceSha256": "023054eca4aafe1561467e57663ecea5f5aad14cda6b435ca88d9462dea649ab",
+      "sourceDecodedFrames": 1997440,
+      "sourceDecodedDurationSeconds": 45.29342403628118,
+      "bytes": 1450318,
+      "sha256": "abdd83e954c7ab59e1e5a1174e12e7e18c978367c15025572a54610e8211abae",
+      "mp3DecodedFrames": 1998720,
+      "mp3DecodedDurationSeconds": 45.32244897959184,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.cassette-culture",
+      "name": "expansion-20260921-ragnar-random.cassette-culture.mp3",
+      "sourceName": "47_-_cassette_culture.ogg",
+      "sourceBytes": 2127843,
+      "sourceSha256": "2b47cd8ba58d7fc226b96f506256c0cded1022c915c061e5b05753396da55166",
+      "sourceDecodedFrames": 2116736,
+      "sourceDecodedDurationSeconds": 47.998548752834466,
+      "bytes": 1537253,
+      "sha256": "a17902981d0ab1de0bc495be5d1656f9079ad43d76b94b5ef230bef07a702e1a",
+      "mp3DecodedFrames": 2118528,
+      "mp3DecodedDurationSeconds": 48.03918367346939,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "ragnar-random.viroid-planet",
+      "name": "expansion-20260921-ragnar-random.viroid-planet.mp3",
+      "sourceName": "53_-_viroid_planet.ogg",
+      "sourceBytes": 5126042,
+      "sourceSha256": "519a999a70b2594cc7de7383fa3a1fa4edf9cbf89d576f70cc6d9a4d3f97dc20",
+      "sourceDecodedFrames": 5954048,
+      "sourceDecodedDurationSeconds": 135.01242630385488,
+      "bytes": 4321698,
+      "sha256": "44b337d6ddf62e508c16207b0cc98679d2403c35db032430efc515852c33dacc",
+      "mp3DecodedFrames": 5955840,
+      "mp3DecodedDurationSeconds": 135.0530612244898,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "congusbongus.rhythm-garden",
+      "name": "expansion-20260921-congusbongus.rhythm-garden.mp3",
+      "sourceName": "rhythm_garden.ogg",
+      "sourceBytes": 7122087,
+      "sourceSha256": "c4800b0c891ce0c4cf670bd821d3d237d294f32bf0546276e56cd4e82bcecfb3",
+      "sourceDecodedFrames": 9135697,
+      "sourceDecodedDurationSeconds": 207.15866213151926,
+      "bytes": 6630504,
+      "sha256": "3e8b8926c561a6656ed6e4a0c4cc7cccec809007843056d37152ce00295a6981",
+      "mp3DecodedFrames": 9137664,
+      "mp3DecodedDurationSeconds": 207.20326530612246,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "congusbongus.second-cruise",
+      "name": "expansion-20260921-congusbongus.second-cruise.mp3",
+      "sourceName": "second_cruise.ogg",
+      "sourceBytes": 4410022,
+      "sourceSha256": "d5a22af0772059c26ae0661210572c341cd3308162eb4d103cab7d770250cdbf",
+      "sourceDecodedFrames": 12393883,
+      "sourceDecodedDurationSeconds": 281.0404308390023,
+      "bytes": 8994481,
+      "sha256": "a94a518bc895aac281a8f4b546c590dab313e6391de739b12fe6e32536072791",
+      "mp3DecodedFrames": 12395520,
+      "mp3DecodedDurationSeconds": 281.0775510204082,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "tricks-and-traps.experiment-g",
+      "name": "expansion-20260921-tricks-and-traps.experiment-g.mp3",
+      "sourceName": "Experiment G.ogg",
+      "sourceBytes": 6276285,
+      "sourceSha256": "6fd65c94679d6bcfe0fefc7d987a250888038108a35e33e6720651e12a310a21",
+      "sourceDecodedFrames": 4995309,
+      "sourceDecodedDurationSeconds": 113.27231292517007,
+      "bytes": 3626213,
+      "sha256": "76f7c2e5f50824961cc1b169dbe6096b1c44a934d2c8f4c49a724fc602406c35",
+      "mp3DecodedFrames": 4997376,
+      "mp3DecodedDurationSeconds": 113.31918367346938,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "tricks-and-traps.space-collisions",
+      "name": "expansion-20260921-tricks-and-traps.space-collisions.mp3",
+      "sourceName": "Space Collisions.ogg",
+      "sourceBytes": 7619425,
+      "sourceSha256": "c7da8afa181bee1cb7e9b3ac41a092b6d205946596c6972af8c5e347aaf4fa93",
+      "sourceDecodedFrames": 6009793,
+      "sourceDecodedDurationSeconds": 136.27648526077098,
+      "bytes": 4361822,
+      "sha256": "28931f058fe83769115217f8de4eb91fd8ec2001bf5b5fc9d56621061ff59d5c",
+      "mp3DecodedFrames": 6011136,
+      "mp3DecodedDurationSeconds": 136.3069387755102,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "tricks-and-traps.simulation-unknown",
+      "name": "expansion-20260921-tricks-and-traps.simulation-unknown.mp3",
+      "sourceName": "Simulation Unknown.ogg",
+      "sourceBytes": 8786302,
+      "sourceSha256": "b609e23db3beeca9ba64306d62ce046eadf3b1911a4586b10a37f4a265cd20fe",
+      "sourceDecodedFrames": 6880064,
+      "sourceDecodedDurationSeconds": 156.0105215419501,
+      "bytes": 4993776,
+      "sha256": "2f50bfab8dfe1a857a5ab35f0f07247f3c47ca5579eda3786a946c253c3317fb",
+      "mp3DecodedFrames": 6882048,
+      "mp3DecodedDurationSeconds": 156.05551020408163,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "tricks-and-traps.electric-stream",
+      "name": "expansion-20260921-tricks-and-traps.electric-stream.mp3",
+      "sourceName": "electric_stream_180bpm.ogg",
+      "sourceBytes": 4500064,
+      "sourceSha256": "4021eaa200b2611f6ee004e0c7896f3c2f9f0815a903b5a36d16296c696ce22a",
+      "sourceDecodedFrames": 3544997,
+      "sourceDecodedDurationSeconds": 80.38541950113378,
+      "bytes": 2573792,
+      "sha256": "53f4aabfa0b926af5c23af9a33c8d5c93b86780004d09cc2276bbad964d4c022",
+      "mp3DecodedFrames": 3547008,
+      "mp3DecodedDurationSeconds": 80.43102040816326,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    },
+    {
+      "id": "tricks-and-traps.new-factory",
+      "name": "expansion-20260921-tricks-and-traps.new-factory.mp3",
+      "sourceName": "new_factory_129bpm.ogg",
+      "sourceBytes": 7322355,
+      "sourceSha256": "3365dd3d25697a54e843678d75f49732cd0bc88bfd3ccb574b39f0ed65fa7291",
+      "sourceDecodedFrames": 5743469,
+      "sourceDecodedDurationSeconds": 130.23739229024943,
+      "bytes": 4168724,
+      "sha256": "d4ae034c6ad065a6f85b7924dd10a719231889a78bc0e90730157d91124dc8f2",
+      "mp3DecodedFrames": 5745024,
+      "mp3DecodedDurationSeconds": 130.2726530612245,
+      "sampleRate": 44100,
+      "channels": 2,
+      "encoderReceipt": "provenance/expansion-derivatives.json"
+    }
+  ],
+  "technicalEvidence": [
+    {
+      "id": "congusbongus.the-demon-king",
+      "sourcePath": "originals/expansion-20260921/congusbongus.the-demon-king/the_demon_king.ogg",
+      "runtimePath": "derivatives/expansion-20260921-congusbongus.the-demon-king.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/congusbongus.the-demon-king/the_demon_king.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 237.746281 sec\naudio bytes: 8104471\naudio packets: 20945\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 272709 bits per second\npacket size upper bound: 1050\nmaximum packet size: 1050\naudio data file offset: 4104\noptimized\naudio 10484611 valid frames + 128 priming + 829 remainder = 10485568\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.911
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.439
+      },
+      "inspection": {
+        "sha256": "8613eadc32ee33dc4889f138efc3c4e1865e61c853412adcb50b135e1515bc2e",
+        "bytes": 7609364,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 9103,
+        "durationSeconds": 237.79265306122448
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.0463718820861678
+    },
+    {
+      "id": "ragnar-random.super-scary-cave-dragon",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.super-scary-cave-dragon/26_-_super_scary_cave_dragon_sega-style_fm_synth_remix.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.super-scary-cave-dragon.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.super-scary-cave-dragon/26_-_super_scary_cave_dragon_sega-style_fm_synth_remix.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 54.339615 sec\naudio bytes: 905960\naudio packets: 3183\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 133377 bits per second\npacket size upper bound: 562\nmaximum packet size: 562\naudio data file offset: 4454\noptimized\naudio 2396377 valid frames + 128 priming + 39 remainder = 2396544\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.216
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.122
+      },
+      "inspection": {
+        "sha256": "8b46f7e941447e929c09cbe64921e963e4bc6ab3962332e42c070dc9de9c67e1",
+        "bytes": 1740382,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 2082,
+        "durationSeconds": 54.3869387755102
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.04934240362811791
+    },
+    {
+      "id": "ragnar-random.dinosaur-spirit-guide",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.dinosaur-spirit-guide/39_-_dinosaur_spirit_guide_sega-style_fm_synth_remix.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.dinosaur-spirit-guide.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.dinosaur-spirit-guide/39_-_dinosaur_spirit_guide_sega-style_fm_synth_remix.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 75.999977 sec\naudio bytes: 1081194\naudio packets: 4695\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 113809 bits per second\npacket size upper bound: 488\nmaximum packet size: 488\naudio data file offset: 4444\noptimized\naudio 3351599 valid frames + 128 priming + 401 remainder = 3352128\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.223
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.221
+      },
+      "inspection": {
+        "sha256": "4c78ecf889cf63e02243f030b1e25f1f0f352247d3c0f4dd4ce74cb2583117a5",
+        "bytes": 2433358,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 2911,
+        "durationSeconds": 76.04244897959184
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.04247165532879819
+    },
+    {
+      "id": "ragnar-random.helgi-the-hero-bold",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.helgi-the-hero-bold/48_-_helgi_the_hero_bold_sega-style_fm_synth_remix.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.helgi-the-hero-bold.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.helgi-the-hero-bold/48_-_helgi_the_hero_bold_sega-style_fm_synth_remix.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 59.270952 sec\naudio bytes: 941900\naudio packets: 3313\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 127131 bits per second\npacket size upper bound: 466\nmaximum packet size: 466\naudio data file offset: 4450\noptimized\naudio 2613849 valid frames + 128 priming + 359 remainder = 2614336\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.266
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.116
+      },
+      "inspection": {
+        "sha256": "e2e0f54a07a3c227f842f81b5a9d5711e29d505866530aa6d18316037b3a64a1",
+        "bytes": 1897534,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 2270,
+        "durationSeconds": 59.29795918367347
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.027006802721088435
+    },
+    {
+      "id": "ragnar-random.castle-of-the-goblin-queen",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.castle-of-the-goblin-queen/52_-_castle_of_the_goblin_queen_sega-style_fm_synth_remix.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.castle-of-the-goblin-queen.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.castle-of-the-goblin-queen/52_-_castle_of_the_goblin_queen_sega-style_fm_synth_remix.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 126.315782 sec\naudio bytes: 1616002\naudio packets: 8003\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 102346 bits per second\npacket size upper bound: 494\nmaximum packet size: 494\naudio data file offset: 4447\noptimized\naudio 5570526 valid frames + 128 priming + 34 remainder = 5570688\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.332
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.234
+      },
+      "inspection": {
+        "sha256": "d6ed263bd431951a17010a3d31d60e514aece937bcf4bd51aca442cc09162142",
+        "bytes": 4043337,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 4837,
+        "durationSeconds": 126.35428571428571
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.040634920634920635
+    },
+    {
+      "id": "ragnar-random.hostile-planet",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.hostile-planet/31_-_hostile_planet.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.hostile-planet.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.hostile-planet/31_-_hostile_planet.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 53.320000 sec\naudio bytes: 2332507\naudio packets: 5464\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 349963 bits per second\npacket size upper bound: 1281\nmaximum packet size: 1281\naudio data file offset: 4261\noptimized\naudio 2351412 valid frames + 128 priming + 76 remainder = 2351616\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.231
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.112
+      },
+      "inspection": {
+        "sha256": "b629204a2617990696ed110d9177c43e99c2fc7b92d9b0cc9b28e1e7a8a443e3",
+        "bytes": 1707781,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 2043,
+        "durationSeconds": 53.36816326530612
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.04934240362811791
+    },
+    {
+      "id": "ragnar-random.the-creeper",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.the-creeper/35_-_the_creeper.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.the-creeper.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.the-creeper/35_-_the_creeper.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 90.947347 sec\naudio bytes: 5173163\naudio packets: 15993\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 455046 bits per second\npacket size upper bound: 1339\nmaximum packet size: 1339\naudio data file offset: 4130\noptimized\naudio 4010778 valid frames + 128 priming + 678 remainder = 4011584\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.43
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.221
+      },
+      "inspection": {
+        "sha256": "af00dced5a911446c2e6c3c5f42361b74bdaf252f5aea020ad49f682cda0b0c1",
+        "bytes": 2911503,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 3483,
+        "durationSeconds": 90.98448979591836
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.037142857142857144
+    },
+    {
+      "id": "ragnar-random.chick-with-weapon",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.chick-with-weapon/36_-_chick_with_weapon.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.chick-with-weapon.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.chick-with-weapon/36_-_chick_with_weapon.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 100.800000 sec\naudio bytes: 6932166\naudio packets: 28424\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 550171 bits per second\npacket size upper bound: 1421\nmaximum packet size: 1421\naudio data file offset: 4126\noptimized\naudio 4445280 valid frames + 128 priming + 608 remainder = 4446016\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.44
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.219
+      },
+      "inspection": {
+        "sha256": "4d3a746a85c475498a8f4426536d2a1fc3337e4904c55a687d827f386f50004a",
+        "bytes": 3226644,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 3860,
+        "durationSeconds": 100.83265306122449
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.0326530612244898
+    },
+    {
+      "id": "ragnar-random.reason-of-the-itch",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.reason-of-the-itch/37_-_reason_of_the_itch.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.reason-of-the-itch.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.reason-of-the-itch/37_-_reason_of_the_itch.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 45.748481 sec\naudio bytes: 2535379\naudio packets: 5827\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 443359 bits per second\npacket size upper bound: 1474\nmaximum packet size: 1474\naudio data file offset: 4128\noptimized\naudio 2017508 valid frames + 128 priming + 92 remainder = 2017728\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.231
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.114
+      },
+      "inspection": {
+        "sha256": "3a92a37aa184c85e0e38ca9116d3707ebb63c29d8e5fa77b645f3c9e7cd2f902",
+        "bytes": 1465364,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 1753,
+        "durationSeconds": 45.79265306122449
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.04498866213151927
+    },
+    {
+      "id": "ragnar-random.this-mad-gnosis",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.this-mad-gnosis/38_-_this_mad_gnosis.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.this-mad-gnosis.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.this-mad-gnosis/38_-_this_mad_gnosis.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 90.000000 sec\naudio bytes: 5360520\naudio packets: 14304\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 476490 bits per second\npacket size upper bound: 1444\nmaximum packet size: 1444\naudio data file offset: 4125\noptimized\naudio 3969000 valid frames + 128 priming + 984 remainder = 3970112\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.437
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.223
+      },
+      "inspection": {
+        "sha256": "5ddd44a06548f11ec5bdfe81cc51e863ade55f753ccfede58d9848a4d154ba06",
+        "bytes": 2881410,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 3447,
+        "durationSeconds": 90.04408163265306
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.044081632653061226
+    },
+    {
+      "id": "ragnar-random.we-got-the-crud",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.we-got-the-crud/42_-_we_got_the_crud.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.we-got-the-crud.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.we-got-the-crud/42_-_we_got_the_crud.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 67.333039 sec\naudio bytes: 4327635\naudio packets: 9222\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 514176 bits per second\npacket size upper bound: 1549\nmaximum packet size: 1549\naudio data file offset: 4126\noptimized\naudio 2969387 valid frames + 128 priming + 661 remainder = 2970176\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.328
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.112
+      },
+      "inspection": {
+        "sha256": "2c26b4ed893f5b816fee12fa2f0bdb17a31d8560b7858d89ed6272a8866c9c8c",
+        "bytes": 2155833,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 2579,
+        "durationSeconds": 67.36979591836734
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.036757369614512474
+    },
+    {
+      "id": "ragnar-random.digestive-malady",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.digestive-malady/44_-_digestive_malady.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.digestive-malady.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.digestive-malady/44_-_digestive_malady.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 64.000000 sec\naudio bytes: 3072294\naudio packets: 7838\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 384036 bits per second\npacket size upper bound: 1371\nmaximum packet size: 1371\naudio data file offset: 4129\noptimized\naudio 2822400 valid frames + 128 priming + 64 remainder = 2822592\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.33
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.223
+      },
+      "inspection": {
+        "sha256": "64066f4a06e7c7dd64033e31fa404da9ff3535bbbcb0b7e80399c552123d5b52",
+        "bytes": 2048835,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 2451,
+        "durationSeconds": 64.02612244897959
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.027573696145124716
+    },
+    {
+      "id": "ragnar-random.jonathan-livingston-sea-cucumber",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.jonathan-livingston-sea-cucumber/45_-_jonathan_livingston_sea_cucumber.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.jonathan-livingston-sea-cucumber.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.jonathan-livingston-sea-cucumber/45_-_jonathan_livingston_sea_cucumber.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 45.294807 sec\naudio bytes: 2527247\naudio packets: 6808\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 446364 bits per second\npacket size upper bound: 1421\nmaximum packet size: 1421\naudio data file offset: 4127\noptimized\naudio 1997501 valid frames + 128 priming + 67 remainder = 1997696\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.336
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.115
+      },
+      "inspection": {
+        "sha256": "abdd83e954c7ab59e1e5a1174e12e7e18c978367c15025572a54610e8211abae",
+        "bytes": 1450318,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 1735,
+        "durationSeconds": 45.32244897959184
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.029024943310657598
+    },
+    {
+      "id": "ragnar-random.cassette-culture",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.cassette-culture/47_-_cassette_culture.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.cassette-culture.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.cassette-culture/47_-_cassette_culture.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 47.999977 sec\naudio bytes: 2100784\naudio packets: 5059\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 350130 bits per second\npacket size upper bound: 1348\nmaximum packet size: 1348\naudio data file offset: 4167\noptimized\naudio 2116799 valid frames + 128 priming + 65 remainder = 2116992\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.229
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.125
+      },
+      "inspection": {
+        "sha256": "a17902981d0ab1de0bc495be5d1656f9079ad43d76b94b5ef230bef07a702e1a",
+        "bytes": 1537253,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 1839,
+        "durationSeconds": 48.03918367346939
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.040634920634920635
+    },
+    {
+      "id": "ragnar-random.viroid-planet",
+      "sourcePath": "originals/expansion-20260921/ragnar-random.viroid-planet/53_-_viroid_planet.ogg",
+      "runtimePath": "derivatives/expansion-20260921-ragnar-random.viroid-planet.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/ragnar-random.viroid-planet/53_-_viroid_planet.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 135.014943 sec\naudio bytes: 5066639\naudio packets: 7437\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 300212 bits per second\npacket size upper bound: 1081\nmaximum packet size: 1081\naudio data file offset: 4131\noptimized\naudio 5954159 valid frames + 128 priming + 17 remainder = 5954304\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.44
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.221
+      },
+      "inspection": {
+        "sha256": "44b337d6ddf62e508c16207b0cc98679d2403c35db032430efc515852c33dacc",
+        "bytes": 4321698,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 5170,
+        "durationSeconds": 135.0530612244898
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.040634920634920635
+    },
+    {
+      "id": "congusbongus.rhythm-garden",
+      "sourcePath": "originals/expansion-20260921/congusbongus.rhythm-garden/rhythm_garden.ogg",
+      "runtimePath": "derivatives/expansion-20260921-congusbongus.rhythm-garden.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/congusbongus.rhythm-garden/rhythm_garden.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 207.158662 sec\naudio bytes: 7034496\naudio packets: 26224\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 271656 bits per second\npacket size upper bound: 958\nmaximum packet size: 958\naudio data file offset: 4116\noptimized\naudio 9135697 valid frames + 128 priming + 495 remainder = 9136320\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.656
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.345
+      },
+      "inspection": {
+        "sha256": "3e8b8926c561a6656ed6e4a0c4cc7cccec809007843056d37152ce00295a6981",
+        "bytes": 6630504,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 7932,
+        "durationSeconds": 207.20326530612246
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.0446031746031746
+    },
+    {
+      "id": "congusbongus.second-cruise",
+      "sourcePath": "originals/expansion-20260921/congusbongus.second-cruise/second_cruise.ogg",
+      "runtimePath": "derivatives/expansion-20260921-congusbongus.second-cruise.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/congusbongus.second-cruise/second_cruise.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 281.040431 sec\naudio bytes: 4346707\naudio packets: 21288\naudio packets split by non-audio data: 0, 0.0000%\nbit rate: 123731 bits per second\npacket size upper bound: 521\nmaximum packet size: 521\naudio data file offset: 4462\noptimized\naudio 12393883 valid frames + 128 priming + 933 remainder = 12394944\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.797
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.56
+      },
+      "inspection": {
+        "sha256": "a94a518bc895aac281a8f4b546c590dab313e6391de739b12fe6e32536072791",
+        "bytes": 8994481,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 10760,
+        "durationSeconds": 281.0775510204082
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.037120181405895694
+    },
+    {
+      "id": "tricks-and-traps.experiment-g",
+      "sourcePath": "originals/expansion-20260921/tricks-and-traps.experiment-g/Experiment G.ogg",
+      "runtimePath": "derivatives/expansion-20260921-tricks-and-traps.experiment-g.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/tricks-and-traps.experiment-g/Experiment G.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 113.272313 sec\naudio bytes: 6203349\naudio packets: 14284\naudio packets split by non-audio data: 876, 6.1327%\nbit rate: 438119 bits per second\npacket size upper bound: 2062\nmaximum packet size: 2062\naudio data file offset: 4179\noptimized\naudio 4995309 valid frames + 128 priming + 723 remainder = 4996160\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.439
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.231
+      },
+      "inspection": {
+        "sha256": "76f7c2e5f50824961cc1b169dbe6096b1c44a934d2c8f4c49a724fc602406c35",
+        "bytes": 3626213,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 4338,
+        "durationSeconds": 113.31918367346938
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.046870748299319726
+    },
+    {
+      "id": "tricks-and-traps.space-collisions",
+      "sourcePath": "originals/expansion-20260921/tricks-and-traps.space-collisions/Space Collisions.ogg",
+      "runtimePath": "derivatives/expansion-20260921-tricks-and-traps.space-collisions.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/tricks-and-traps.space-collisions/Space Collisions.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 136.276485 sec\naudio bytes: 7530795\naudio packets: 21398\naudio packets split by non-audio data: 887, 4.1452%\nbit rate: 442089 bits per second\npacket size upper bound: 2085\nmaximum packet size: 2085\naudio data file offset: 4250\noptimized\naudio 6009793 valid frames + 128 priming + 767 remainder = 6010688\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.666
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.232
+      },
+      "inspection": {
+        "sha256": "28931f058fe83769115217f8de4eb91fd8ec2001bf5b5fc9d56621061ff59d5c",
+        "bytes": 4361822,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 5218,
+        "durationSeconds": 136.3069387755102
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.030453514739229026
+    },
+    {
+      "id": "tricks-and-traps.simulation-unknown",
+      "sourcePath": "originals/expansion-20260921/tricks-and-traps.simulation-unknown/Simulation Unknown.ogg",
+      "runtimePath": "derivatives/expansion-20260921-tricks-and-traps.simulation-unknown.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/tricks-and-traps.simulation-unknown/Simulation Unknown.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 156.013401 sec\naudio bytes: 8683763\naudio packets: 27877\naudio packets split by non-audio data: 876, 3.1424%\nbit rate: 445282 bits per second\npacket size upper bound: 1542\nmaximum packet size: 1542\naudio data file offset: 4181\noptimized\naudio 6880191 valid frames + 128 priming + 1 remainder = 6880320\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.665
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.375
+      },
+      "inspection": {
+        "sha256": "2f50bfab8dfe1a857a5ab35f0f07247f3c47ca5579eda3786a946c253c3317fb",
+        "bytes": 4993776,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 5974,
+        "durationSeconds": 156.05551020408163
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.04498866213151927
+    },
+    {
+      "id": "tricks-and-traps.electric-stream",
+      "sourcePath": "originals/expansion-20260921/tricks-and-traps.electric-stream/electric_stream_180bpm.ogg",
+      "runtimePath": "derivatives/expansion-20260921-tricks-and-traps.electric-stream.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/tricks-and-traps.electric-stream/electric_stream_180bpm.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 80.385420 sec\naudio bytes: 4446838\naudio packets: 9805\naudio packets split by non-audio data: 657, 6.7007%\nbit rate: 442551 bits per second\npacket size upper bound: 1528\nmaximum packet size: 1528\naudio data file offset: 4178\noptimized\naudio 3544997 valid frames + 128 priming + 539 remainder = 3545664\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.578
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.237
+      },
+      "inspection": {
+        "sha256": "53f4aabfa0b926af5c23af9a33c8d5c93b86780004d09cc2276bbad964d4c022",
+        "bytes": 2573792,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 3079,
+        "durationSeconds": 80.43102040816326
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.04560090702947846
+    },
+    {
+      "id": "tricks-and-traps.new-factory",
+      "sourcePath": "originals/expansion-20260921/tricks-and-traps.new-factory/new_factory_129bpm.ogg",
+      "runtimePath": "derivatives/expansion-20260921-tricks-and-traps.new-factory.mp3",
+      "sourceAFInfo": "File:           /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/originals/expansion-20260921/tricks-and-traps.new-factory/new_factory_129bpm.ogg\nFile type ID:   Oggf\nNum Tracks:     1\n----\nData format:     2 ch,  44100 Hz, vorb (0x00000000) 0 bits/channel, 0 bytes/packet, 0 frames/packet, 0 bytes/frame\nChannel layout: Stereo (L R)\nestimated duration: 130.237392 sec\naudio bytes: 7236197\naudio packets: 22976\naudio packets split by non-audio data: 753, 3.2773%\nbit rate: 444492 bits per second\npacket size upper bound: 1645\nmaximum packet size: 1645\naudio data file offset: 4177\noptimized\naudio 5743469 valid frames + 128 priming + 467 remainder = 5744064\n----\n",
+      "sourceDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.555
+      },
+      "outputDecode": {
+        "exitCode": 0,
+        "stderr": "",
+        "stdout": "",
+        "seconds": 0.23
+      },
+      "inspection": {
+        "sha256": "d4ae034c6ad065a6f85b7924dd10a719231889a78bc0e90730157d91124dc8f2",
+        "bytes": 4168724,
+        "mime": "audio/mpeg",
+        "mpegVersion": "1",
+        "sampleRate": 44100,
+        "channels": 2,
+        "frames": 4987,
+        "durationSeconds": 130.2726530612245
+      },
+      "sourceUnchanged": true,
+      "paddingSeconds": 0.03526077097505669
+    }
+  ],
+  "resourceLimits": {
+    "scratchAndToolsBytes": 83886080,
+    "activeLibraryBytes": 681574400,
+    "freeReserveBytes": 1073741824,
+    "durationDifferenceSeconds": 0.2,
+    "pcmBlockFrames": 16384
+  },
+  "limits": "Complete source/output decode, MP3 structural inspection, exact pin and duration checks only; no listening, musical quality, mix, cultural, loop, browser, gameplay or publication approval.",
+  "resourceMeasurements": {
+    "maximumScratchAndToolBytes": 59143973,
+    "minimumFreeBytes": 3123589120,
+    "activeLibraryBytes": 519099832,
+    "finalScratchAndToolBytes": 563316,
+    "finalFreeBytes": 3155116032
+  },
+  "complete": true,
+  "allIntakeOriginalsUnchanged": true
+}

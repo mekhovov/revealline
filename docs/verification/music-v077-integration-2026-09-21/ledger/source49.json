@@ -1,0 +1,186 @@
+{
+  "format": "revealline-field-kit-successor-evidence.v1",
+  "stage": "source",
+  "revision": 49,
+  "sourceCommit": "6246f9ddaef5cf14344d93775ddfd024e4e9ec77",
+  "raw": {
+    "path": "authoring/library/fpv-field-kit/production.rltheme",
+    "bytes": 7538627,
+    "sha256": "a019454d7c7902a79ae3d1374021c78145a5af2e8eb77dd9d9a3abb5f7ea97d6"
+  },
+  "previous": {
+    "revision": 48,
+    "bytes": 7525495,
+    "sha256": "aa99636e167e71ec778aacc76cf542c2ba1d76be8315eefa9ae4b3e5eb32c61a"
+  },
+  "metadata": {
+    "format": "revealline-theme-bundle.v1",
+    "id": "field-kit",
+    "revision": 49,
+    "selection": {
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
+      "collection": null,
+      "theme": {
+        "id": "fpv",
+        "revision": 49
+      }
+    }
+  },
+  "groups": {
+    "assets": {
+      "count": 1437,
+      "sha256": "4dcd381e0847544a4be1c9b428856e6585bb0451de283b0d80ddbc3a1ffda341"
+    },
+    "themes": {
+      "count": 50,
+      "sha256": "c48b61c4769c18f6fd51c0b450edde85f954dca1a3dbe0df41d2aa2667bd04f9"
+    },
+    "slots": {
+      "count": 293,
+      "sha256": "75ceaae41400f20fced4bfb885d2c9175082eb4f5cbdcea30175191b56d93c68"
+    },
+    "collections": {
+      "count": 1,
+      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+    }
+  },
+  "preservedGroups": {
+    "assets": {
+      "count": 1429,
+      "sha256": "05567ff0e0d941963416b1bd306a2d4de5390ad786d56859707011e810d4dfd6"
+    },
+    "themes": {
+      "count": 49,
+      "sha256": "8d06a0ac42d034b27a8258ebfecd67365770a491d52cc9da05b2a36ab466d39e"
+    },
+    "slots": {
+      "count": 293,
+      "sha256": "75ceaae41400f20fced4bfb885d2c9175082eb4f5cbdcea30175191b56d93c68"
+    },
+    "collections": {
+      "count": 1,
+      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+    }
+  },
+  "payloads": {
+    "count": 127,
+    "totalBytes": 4007816,
+    "sha256": "8117060274f4e7525d8bc71d172ae915671e8aea610640b28084a14f59523bef",
+    "allPreviousBytesIdentical": true
+  },
+  "added": [
+    {
+      "id": "audio.focus.field-kit",
+      "revision": 20,
+      "parent": {
+        "id": "audio.focus.field-kit",
+        "revision": 19
+      },
+      "stage": "source"
+    },
+    {
+      "id": "audio.confirm.field-kit",
+      "revision": 20,
+      "parent": {
+        "id": "audio.confirm.field-kit",
+        "revision": 19
+      },
+      "stage": "source"
+    },
+    {
+      "id": "audio.cancel.field-kit",
+      "revision": 20,
+      "parent": {
+        "id": "audio.cancel.field-kit",
+        "revision": 19
+      },
+      "stage": "source"
+    },
+    {
+      "id": "audio.capture.field-kit",
+      "revision": 20,
+      "parent": {
+        "id": "audio.capture.field-kit",
+        "revision": 19
+      },
+      "stage": "source"
+    },
+    {
+      "id": "audio.failure.field-kit",
+      "revision": 20,
+      "parent": {
+        "id": "audio.failure.field-kit",
+        "revision": 19
+      },
+      "stage": "source"
+    },
+    {
+      "id": "audio.victory.field-kit",
+      "revision": 20,
+      "parent": {
+        "id": "audio.victory.field-kit",
+        "revision": 19
+      },
+      "stage": "source"
+    },
+    {
+      "id": "audio.pickup.field-kit",
+      "revision": 20,
+      "parent": {
+        "id": "audio.pickup.field-kit",
+        "revision": 19
+      },
+      "stage": "source"
+    },
+    {
+      "id": "audio.music.field-kit",
+      "revision": 20,
+      "parent": {
+        "id": "audio.music.field-kit",
+        "revision": 19
+      },
+      "stage": "source"
+    }
+  ],
+  "readiness": {
+    "expectedRefusal": true,
+    "unresolved": [
+      {
+        "slotId": "audio.focus",
+        "stage": "source"
+      },
+      {
+        "slotId": "audio.confirm",
+        "stage": "source"
+      },
+      {
+        "slotId": "audio.cancel",
+        "stage": "source"
+      },
+      {
+        "slotId": "audio.capture",
+        "stage": "source"
+      },
+      {
+        "slotId": "audio.failure",
+        "stage": "source"
+      },
+      {
+        "slotId": "audio.victory",
+        "stage": "source"
+      },
+      {
+        "slotId": "audio.pickup",
+        "stage": "source"
+      },
+      {
+        "slotId": "audio.music",
+        "stage": "source"
+      }
+    ]
+  },
+  "noRecordingApproval": true
+}

@@ -631,10 +631,38 @@ canvas {
 }
 .board-footer {
   display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   align-items: center;
   min-height: 66px;
   font-size: 0.8rem;
+}
+#coop-app .couch-music-credit {
+  flex: 1 0 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  min-width: 0;
+  font-size: var(--fk-text-secondary, 0.875rem);
+  line-height: 1.4;
+  color: var(--muted);
+}
+#coop-app .couch-music-credit[hidden] {
+  display: none;
+}
+#coop-app .couch-music-credit span {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#coop-app .couch-music-credit a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 2px 0;
 }
 .board-footer p {
   flex: 1;

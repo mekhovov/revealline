@@ -160,7 +160,10 @@ export function attachBackupSetPanel({
           presentFeedback();
           state.textContent = `Download requested · ${file.bytes} bytes`;
           showStatus(
-            'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.',
+            'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.' +
+              (result.coverage.musicRecoveryNotice
+                ? ` ${result.coverage.musicRecoveryNotice}`
+                : ''),
           );
           return true; // Native default action, no async or synthetic click.
         };
@@ -173,9 +176,11 @@ export function attachBackupSetPanel({
       }
       filenames.hidden = false;
       showStatus(
-        result.coverage.detachedStories.length
-          ? `Prepared an incomplete set: ${result.coverage.detachedStories.length} detached story original(s) are unavailable. Read the coverage report. No file has been saved to disk.`
-          : 'Prepared all four saved inventories and their coverage report. Download each file. No file has been saved to disk. Unsaved drafts are excluded.',
+        result.coverage.musicRecoveryNotice
+          ? `Prepared music recovery references. ${result.coverage.musicRecoveryNotice}${result.coverage.detachedStories.length ? ` ${result.coverage.detachedStories.length} detached story original(s) are also unavailable.` : ''} Read the coverage report. No file has been saved to disk.`
+          : result.coverage.detachedStories.length
+            ? `Prepared an incomplete set: ${result.coverage.detachedStories.length} detached story original(s) are unavailable. Read the coverage report. No file has been saved to disk.`
+            : 'Prepared all four saved inventories and their coverage report. Download each file. No file has been saved to disk. Unsaved drafts are excluded.',
       );
       const hadCancelFocus = finish(op);
       if (!document.hidden && document.hasFocus?.() !== false && hadCancelFocus)

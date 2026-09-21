@@ -1,0 +1,66 @@
+{
+  "format": "revealline-local-recording.v1",
+  "status": "sketch-unreviewed",
+  "title": "Direction A — Retro Drive",
+  "id": "sketch.direction-a-retro-drive",
+  "rendererVersion": "sample-free-direction-renderer.3",
+  "rendererSha256": "5be72a9e544dd01172f75ed139749650e1bab0e28c68d7e51497f6dd5815342c",
+  "scoreSha256": "c8b2c563bec8e382611ba361ac942a5bbe0e8269facef9b113c4eb6cc489185a",
+  "composerSha256": "279787be05d908b6ad798b741e6e395d921e8c4b605331551b7cc1bdab190844",
+  "seed": 12803,
+  "sources": {
+    "renderer": "render_directions.py",
+    "composer": "compose_directions.py",
+    "score": "sketch-scores/direction-a-retro-drive.json"
+  },
+  "tools": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.18.0",
+    "pyloudnorm": "0.2.0",
+    "encoder": "lameenc 1.8.4",
+    "converter": "/usr/bin/afconvert"
+  },
+  "master": {
+    "path": "master.flac",
+    "bytes": 7682321,
+    "sha256": "c9edee995b01d43951b1e231e404e7ef928984026a61eff97b8aefbf5f3ff87f",
+    "bitsPerSample": 24,
+    "pcm24Sha256": "eb84dcb22305c5c2df147d9f361b87d851035ca9a7d8ff79f8c0163e650b249f",
+    "losslessRoundTripVerified": true,
+    "integratedLufs": -16.031,
+    "estimatedTruePeakDbtp": -5.023,
+    "samplePeakDbfs": -5.265,
+    "durationSeconds": 38.7,
+    "sampleRate": 48000,
+    "channels": 2,
+    "rmsDbfs": -17.08
+  },
+  "mp3": {
+    "path": "preview.mp3",
+    "bytes": 1239552,
+    "sha256": "7bec9b063b93eaf4bb002a76eb40d1c53d63f5745f154980b283b662ae533715",
+    "bitrateKbps": 256,
+    "integratedLufs": -16.038,
+    "estimatedTruePeakDbtp": -4.622,
+    "samplePeakDbfs": -4.628,
+    "durationSeconds": 38.736,
+    "sampleRate": 48000,
+    "channels": 2,
+    "rmsDbfs": -17.087
+  },
+  "measurementMethod": "pyloudnorm BS.1770 integrated loudness; scipy resample_poly 4x overlapping peak estimate, not a certified true-peak meter.",
+  "compositionCountContribution": 0,
+  "review": {
+    "fullListening": "pending",
+    "inGameMix": "pending",
+    "culturalAccuracy": "not-applicable",
+    "technical": "measured-pass",
+    "originality": "original authored score; independent review pending",
+    "publication": "not-approved"
+  },
+  "provenance": "Only authored score and local synthesis. No external recordings, samples, models or hosted generation.",
+  "productionBytes": 339367792,
+  "maximumResidentBytes": 271253504,
+  "elapsedSeconds": 4.23
+}

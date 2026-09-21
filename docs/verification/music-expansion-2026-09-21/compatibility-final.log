@@ -1,0 +1,595 @@
+TAP version 13
+# Subtest: additional styles have distinct queues and mixes preserve explicit former genre choices
+ok 1 - additional styles have distinct queues and mixes preserve explicit former genre choices
+  ---
+  duration_ms: 47.387166
+  ...
+# Subtest: historical procedural identities retain their real rock, chiptune and ambient categories
+ok 2 - historical procedural identities retain their real rock, chiptune and ambient categories
+  ---
+  duration_ms: 1.001792
+  ...
+# Subtest: UA-FPV remains a dedicated selectable collection and participates in Ukrainian and mixed queues
+ok 3 - UA-FPV remains a dedicated selectable collection and participates in Ukrainian and mixed queues
+  ---
+  duration_ms: 3.50025
+  ...
+# Subtest: catalogue library v3 is opt-in and migration owns metadata without changing any legacy IDs or capacity
+ok 4 - catalogue library v3 is opt-in and migration owns metadata without changing any legacy IDs or capacity
+  ---
+  duration_ms: 33.639166
+  ...
+# Subtest: catalogue pins validate identity, role, provenance and confined paths without reading accessors
+ok 5 - catalogue pins validate identity, role, provenance and confined paths without reading accessors
+  ---
+  duration_ms: 2.640875
+  ...
+# Subtest: scene, genres, fusion, uploaded tags and explicit playlists resolve independently of simulation
+ok 6 - scene, genres, fusion, uploaded tags and explicit playlists resolve independently of simulation
+  ---
+  duration_ms: 13.139291
+  ...
+# Subtest: automatic theme preference chooses among scene-eligible recordings without suppressing available menu music
+ok 7 - automatic theme preference chooses among scene-eligible recordings without suppressing available menu music
+  ---
+  duration_ms: 2.612292
+  ...
+# Subtest: unavailable Ukrainian and fusion styles stay empty; installed-only never discards catalogue pins
+ok 8 - unavailable Ukrainian and fusion styles stay empty; installed-only never discards catalogue pins
+  ---
+  duration_ms: 3.415209
+  ...
+# Subtest: unavailable My Mix and explicit offline playlists never substitute unrelated families
+ok 9 - unavailable My Mix and explicit offline playlists never substitute unrelated families
+  ---
+  duration_ms: 2.687625
+  ...
+# Subtest: v2 generated playlists repeat with shuffle and avoid boundary repetition while old and custom ordering stays intact
+ok 10 - v2 generated playlists repeat with shuffle and avoid boundary repetition while old and custom ordering stays intact
+  ---
+  duration_ms: 2.786959
+  ...
+# Subtest: streamable catalogue pins do not require installed originals, but upload and installed ownership do
+ok 11 - streamable catalogue pins do not require installed originals, but upload and installed ownership do
+  ---
+  duration_ms: 14.252292
+  ...
+# Subtest: complete v2 backup installs all pinned originals on restore and still imports unchanged v1
+ok 12 - complete v2 backup installs all pinned originals on restore and still imports unchanged v1
+  ---
+  duration_ms: 18.323125
+  ...
+# Subtest: DB5 upgrade preserves v1 row and originals until explicit Save and rejects old-version readers
+ok 13 - DB5 upgrade preserves v1 row and originals until explicit Save and rejects old-version readers
+  ---
+  duration_ms: 14.354083
+  ...
+# Subtest: v2 commits require explicit DB5 and storage-only catalogue removal keeps mixed playlist references
+ok 14 - v2 commits require explicit DB5 and storage-only catalogue removal keeps mixed playlist references
+  ---
+  duration_ms: 16.857125
+  ...
+# Subtest: DB5 generation and shared staging budget refusals keep catalogue, uploads and other domains intact
+ok 15 - DB5 generation and shared staging budget refusals keep catalogue, uploads and other domains intact
+  ---
+  duration_ms: 14.376167
+  ...
+# Subtest: catalogue rejects conflicting facts for one recording and v2 backup rejects omitted originals
+ok 16 - catalogue rejects conflicting facts for one recording and v2 backup rejects omitted originals
+  ---
+  duration_ms: 1.370208
+  ...
+# Subtest: offloading catalogue aliases never reclaims the same original owned by an upload
+ok 17 - offloading catalogue aliases never reclaims the same original owned by an upload
+  ---
+  duration_ms: 9.402458
+  ...
+# Subtest: a native transaction failure rolls back new catalogue originals and metadata together
+ok 18 - a native transaction failure rolls back new catalogue originals and metadata together
+  ---
+  duration_ms: 10.786417
+  ...
+# Subtest: shared master immediately governs audition output while retaining local volume and transport
+ok 19 - shared master immediately governs audition output while retaining local volume and transport
+  ---
+  duration_ms: 24.762584
+  ...
+# Subtest: master controls remain available during loading and host save failure does not veto session mute
+ok 20 - master controls remain available during loading and host save failure does not veto session mute
+  ---
+  duration_ms: 2.509917
+  ...
+# Subtest: late audition and music Play completion cannot invoke the legacy master-enable callback
+ok 21 - late audition and music Play completion cannot invoke the legacy master-enable callback
+  ---
+  duration_ms: 10.369375
+  ...
+# Subtest: first Studio read restores displaced Close focus after successful loading
+ok 22 - first Studio read restores displaced Close focus after successful loading
+  ---
+  duration_ms: 3.998042
+  ...
+# Subtest: first Studio read restores displaced Close focus after a reported storage failure
+ok 23 - first Studio read restores displaced Close focus after a reported storage failure
+  ---
+  duration_ms: 1.11275
+  ...
+# Subtest: first Studio read preserves a deliberate transport focus chosen while loading
+ok 24 - first Studio read preserves a deliberate transport focus chosen while loading
+  ---
+  duration_ms: 3.991167
+  ...
+# Subtest: first Studio read relinquishes restoration after a later focus choice even if it blurs
+ok 25 - first Studio read relinquishes restoration after a later focus choice even if it blurs
+  ---
+  duration_ms: 1.359875
+  ...
+# Subtest: first Studio read does not refocus a dialog closed externally during loading
+ok 26 - first Studio read does not refocus a dialog closed externally during loading
+  ---
+  duration_ms: 1.374041
+  ...
+# Subtest: first Studio read does not refocus a disposed panel when its pending read settles
+ok 27 - first Studio read does not refocus a disposed panel when its pending read settles
+  ---
+  duration_ms: 2.299958
+  ...
+# Subtest: first Studio read does not pull focus into a hidden document
+ok 28 - first Studio read does not pull focus into a hidden document
+  ---
+  duration_ms: 3.037125
+  ...
+# Subtest: cached Studio reopening focuses Close without a second store read
+ok 29 - cached Studio reopening focuses Close without a second store read
+  ---
+  duration_ms: 2.986667
+  ...
+# Subtest: first Studio read restores Close when disabling blurs later during success
+ok 30 - first Studio read restores Close when disabling blurs later during success
+  ---
+  duration_ms: 1.156167
+  ...
+# Subtest: first Studio read restores Close when disabling blurs later during failure
+ok 31 - first Studio read restores Close when disabling blurs later during failure
+  ---
+  duration_ms: 1.021958
+  ...
+# Subtest: late first-read blur does not override a later deliberate focus choice that also blurs
+ok 32 - late first-read blur does not override a later deliberate focus choice that also blurs
+  ---
+  duration_ms: 2.117
+  ...
+# Subtest: real MP3 batch import is a draft; one atomic save stores originals and metadata without restarting transport
+ok 33 - real MP3 batch import is a draft; one atomic save stores originals and metadata without restarting transport
+  ---
+  duration_ms: 21.676292
+  ...
+# Subtest: a failing second file discards the whole batch while preserving an earlier unsaved draft
+ok 34 - a failing second file discards the whole batch while preserving an earlier unsaved draft
+  ---
+  duration_ms: 15.282166
+  ...
+# Subtest: clone built-in playlist, mix MP3, move entries, configure shuffle and exact map assignment
+ok 35 - clone built-in playlist, mix MP3, move entries, configure shuffle and exact map assignment
+  ---
+  duration_ms: 16.033041
+  ...
+# Subtest: removal checks playlist references and refuses deleting a playlist last entry
+ok 36 - removal checks playlist references and refuses deleting a playlist last entry
+  ---
+  duration_ms: 6.589625
+  ...
+# Subtest: binary download and replacement draft preserve exact original audio; Undo cancels replacement
+ok 37 - binary download and replacement draft preserve exact original audio; Undo cancels replacement
+  ---
+  duration_ms: 25.887541
+  ...
+# Subtest: concurrent writer conflict preserves a draft and never silently overwrites newer saved state
+ok 38 - concurrent writer conflict preserves a draft and never silently overwrites newer saved state
+  ---
+  duration_ms: 2.490708
+  ...
+# Subtest: cancellation during the browser probe leaves saved bytes and draft untouched
+ok 39 - cancellation during the browser probe leaves saved bytes and draft untouched
+  ---
+  duration_ms: 4.343042
+  ...
+# Subtest: MP3 audition pauses only music and restores previous intent; manual music playback ends the audition
+ok 40 - MP3 audition pauses only music and restores previous intent; manual music playback ends the audition
+  ---
+  duration_ms: 5.14975
+  ...
+# Subtest: transport seeking and music volume use the public player API, while unavailable storage can retry
+ok 41 - transport seeking and music volume use the public player API, while unavailable storage can retry
+  ---
+  duration_ms: 3.995625
+  ...
+# Subtest: cancel arriving after the native commit reports the completed save, never a false rollback
+ok 42 - cancel arriving after the native commit reports the completed save, never a false rollback
+  ---
+  duration_ms: 8.354459
+  ...
+# Subtest: shared managed-media budget failure retains the old library and a recoverable unsaved draft
+ok 43 - shared managed-media budget failure retains the old library and a recoverable unsaved draft
+  ---
+  duration_ms: 9.734042
+  ...
+# Subtest: a post-commit host refresh failure stays visible and does not falsely report an unsaved library
+ok 44 - a post-commit host refresh failure stays visible and does not falsely report an unsaved library
+  ---
+  duration_ms: 2.203291
+  ...
+# Subtest: user transport, volume and successful audition notify host persistence; periodic updates do not
+ok 45 - user transport, volume and successful audition notify host persistence; periodic updates do not
+  ---
+  duration_ms: 14.397375
+  ...
+# Subtest: hiding during audition restores remembered intent without starting hidden-page audio
+ok 46 - hiding during audition restores remembered intent without starting hidden-page audio
+  ---
+  duration_ms: 10.343959
+  ...
+# Subtest: beforeAudio is an explicit activation hook, never called from ordinary studio rendering
+ok 47 - beforeAudio is an explicit activation hook, never called from ordinary studio rendering
+  ---
+  duration_ms: 13.727458
+  ...
+# Subtest: New playlist uses the visibly selected library track rather than the separate append-track picker
+ok 48 - New playlist uses the visibly selected library track rather than the separate append-track picker
+  ---
+  duration_ms: 16.502709
+  ...
+# Subtest: ordinary audition transport controls pause/resume, seek and change only audition volume without rewriting music intent
+ok 49 - ordinary audition transport controls pause/resume, seek and change only audition volume without rewriting music intent
+  ---
+  duration_ms: 3.440334
+  ...
+# Subtest: preparing a visible native link is read-only and retains exact saved bytes for explicit retry
+ok 50 - preparing a visible native link is read-only and retains exact saved bytes for explicit retry
+  ---
+  duration_ms: 14.704125
+  ...
+# Subtest: prepared download participates in local keyboard focus and discard never changes saved music
+ok 51 - prepared download participates in local keyboard focus and discard never changes saved music
+  ---
+  duration_ms: 3.495625
+  ...
+# Subtest: adopted draft edits, Undo, import, save and reload invalidate a prepared copy without auto-downloading
+ok 52 - adopted draft edits, Undo, import, save and reload invalidate a prepared copy without auto-downloading
+  ---
+  duration_ms: 43.749667
+  ...
+# Subtest: cancellation and disposal during real binary preparation cannot expose a late download
+ok 53 - cancellation and disposal during real binary preparation cannot expose a late download
+  ---
+  duration_ms: 12.047
+  ...
+# Subtest: native adapter receives prepared bytes synchronously on explicit activation and can retry a refusal
+ok 54 - native adapter receives prepared bytes synchronously on explicit activation and can retry a refusal
+  ---
+  duration_ms: 10.834209
+  ...
+# Subtest: preparation announcements stay separate from the changing music clock
+ok 55 - preparation announcements stay separate from the changing music clock
+  ---
+  duration_ms: 1.03175
+  ...
+# Subtest: pending audition visibly prepares and late playback cannot repopulate a closed/reopened panel
+ok 56 - pending audition visibly prepares and late playback cannot repopulate a closed/reopened panel
+  ---
+  duration_ms: 4.678375
+  ...
+# Subtest: pending audition exposes feedback and Finish before playback settles (resolve)
+ok 57 - pending audition exposes feedback and Finish before playback settles (resolve)
+  ---
+  duration_ms: 5.044375
+  ...
+# Subtest: pending audition exposes feedback and Finish before playback settles (reject)
+ok 58 - pending audition exposes feedback and Finish before playback settles (reject)
+  ---
+  duration_ms: 3.274542
+  ...
+# Subtest: file picker cancellation preserves the Music draft and probe; dialog Escape retains its cancellation policy
+ok 59 - file picker cancellation preserves the Music draft and probe; dialog Escape retains its cancellation policy
+  ---
+  duration_ms: 13.529708
+  ...
+# Subtest: shared master during pending audition keeps P01 Finish and retired intent (Finish/resolve)
+ok 60 - shared master during pending audition keeps P01 Finish and retired intent (Finish/resolve)
+  ---
+  duration_ms: 3.934583
+  ...
+# Subtest: shared master during pending audition keeps P01 Finish and retired intent (Close/resolve)
+ok 61 - shared master during pending audition keeps P01 Finish and retired intent (Close/resolve)
+  ---
+  duration_ms: 6.434125
+  ...
+# Subtest: shared master during pending audition keeps P01 Finish and retired intent (hidden/resolve)
+ok 62 - shared master during pending audition keeps P01 Finish and retired intent (hidden/resolve)
+  ---
+  duration_ms: 4.979791
+  ...
+# Subtest: shared master during pending audition keeps P01 Finish and retired intent (dispose/resolve)
+ok 63 - shared master during pending audition keeps P01 Finish and retired intent (dispose/resolve)
+  ---
+  duration_ms: 3.683625
+  ...
+# Subtest: shared master during pending audition keeps P01 Finish and retired intent (Finish/reject)
+ok 64 - shared master during pending audition keeps P01 Finish and retired intent (Finish/reject)
+  ---
+  duration_ms: 7.121458
+  ...
+# Subtest: shared master during pending audition keeps P01 Finish and retired intent (Close/reject)
+ok 65 - shared master during pending audition keeps P01 Finish and retired intent (Close/reject)
+  ---
+  duration_ms: 6.569584
+  ...
+# Subtest: shared master during pending audition keeps P01 Finish and retired intent (hidden/reject)
+ok 66 - shared master during pending audition keeps P01 Finish and retired intent (hidden/reject)
+  ---
+  duration_ms: 5.652459
+  ...
+# Subtest: shared master during pending audition keeps P01 Finish and retired intent (dispose/reject)
+ok 67 - shared master during pending audition keeps P01 Finish and retired intent (dispose/reject)
+  ---
+  duration_ms: 4.900333
+  ...
+# Subtest: a host adoption hook owns metadata installation before panel notification
+ok 68 - a host adoption hook owns metadata installation before panel notification
+  ---
+  duration_ms: 2.827208
+  ...
+# Subtest: failed reload adoption retains the existing unsaved draft and player state
+ok 69 - failed reload adoption retains the existing unsaved draft and player state
+  ---
+  duration_ms: 2.1005
+  ...
+# Subtest: post-commit adoption failure records the durable save and blocks Save & use follow-on selection
+ok 70 - post-commit adoption failure records the durable save and blocks Save & use follow-on selection
+  ---
+  duration_ms: 6.098667
+  ...
+# Subtest: post-commit listening adoption failure preserves audition and cannot change the stale player
+ok 71 - post-commit listening adoption failure preserves audition and cannot change the stale player
+  ---
+  duration_ms: 49.345334
+  ...
+# Subtest: explicit panel Play/Pause route through the session while audition holds stay temporary
+ok 72 - explicit panel Play/Pause route through the session while audition holds stay temporary
+  ---
+  duration_ms: 27.4035
+  ...
+# Subtest: a disposed panel does not adopt a committed library or call the host afterward
+ok 73 - a disposed panel does not adopt a committed library or call the host afterward
+  ---
+  duration_ms: 9.578708
+  ...
+# Subtest: the supported panel handle exposes its exact modal and lifetime for host input ownership
+ok 74 - the supported panel handle exposes its exact modal and lifetime for host input ownership
+  ---
+  duration_ms: 0.989666
+  ...
+# Subtest: an asynchronous adoption rejection is awaited and cannot report a successful refresh
+ok 75 - an asynchronous adoption rejection is awaited and cannot report a successful refresh
+  ---
+  duration_ms: 18.148166
+  ...
+# Subtest: the real Couch owner/session compose with panel save, audition and explicit Pause
+ok 76 - the real Couch owner/session compose with panel save, audition and explicit Pause
+  ---
+  duration_ms: 56.565875
+  ...
+# Subtest: closing to a connected opener still notifies the host exactly once
+ok 77 - closing to a connected opener still notifies the host exactly once
+  ---
+  duration_ms: 0.949875
+  ...
+# Subtest: repeated Open retains its original opener and does not create another modal visit
+ok 78 - repeated Open retains its original opener and does not create another modal visit
+  ---
+  duration_ms: 0.701542
+  ...
+# Subtest: host focus ownership and hidden-page checks prevent stale opener restoration
+ok 79 - host focus ownership and hidden-page checks prevent stale opener restoration
+  ---
+  duration_ms: 0.903875
+  ...
+# Subtest: explicit terminal close retires auditions without restoring music or opener focus
+ok 80 - explicit terminal close retires auditions without restoring music or opener focus
+  ---
+  duration_ms: 4.491208
+  ...
+# Subtest: library task retains a keyboard owner after disabling its action (saved)
+ok 81 - library task retains a keyboard owner after disabling its action (saved)
+  ---
+  duration_ms: 2.444416
+  ...
+# Subtest: library task retains a keyboard owner after disabling its action (reload)
+ok 82 - library task retains a keyboard owner after disabling its action (reload)
+  ---
+  duration_ms: 2.563125
+  ...
+# Subtest: library task retains a keyboard owner after disabling its action (newer focus)
+ok 83 - library task retains a keyboard owner after disabling its action (newer focus)
+  ---
+  duration_ms: 12.412042
+  ...
+# Subtest: library task retains a keyboard owner after disabling its action (hidden)
+ok 84 - library task retains a keyboard owner after disabling its action (hidden)
+  ---
+  duration_ms: 2.33675
+  ...
+# Subtest: optional album additions preserve applied and unapplied drafts, playlist choice and playing transport
+ok 85 - optional album additions preserve applied and unapplied drafts, playlist choice and playing transport
+  ---
+  duration_ms: 62.362541
+  ...
+# Subtest: cancelled album download preserves an earlier draft and typed editor fields
+ok 86 - cancelled album download preserves an earlier draft and typed editor fields
+  ---
+  duration_ms: 13.024791
+  ...
+# Subtest: album completion restores owned disabled-control focus and respects deliberate navigation
+ok 87 - album completion restores owned disabled-control focus and respects deliberate navigation
+  ---
+  duration_ms: 14.731791
+  ...
+# Subtest: bonus album offload, undo and explicit download retain edited metadata, playlists and selection
+ok 88 - bonus album offload, undo and explicit download retain edited metadata, playlists and selection
+  ---
+  duration_ms: 73.392334
+  ...
+# Subtest: bonus offload retains exact audio bytes still required by a separate personal upload
+ok 89 - bonus offload retains exact audio bytes still required by a separate personal upload
+  ---
+  duration_ms: 44.000709
+  ...
+# Subtest: partially restored creator shares expose remaining offline audio and can be offloaded again
+ok 90 - partially restored creator shares expose remaining offline audio and can be offloaded again
+  ---
+  duration_ms: 59.76775
+  ...
+# Subtest: cancelled bonus re-download retains the offloaded save and unapplied editor values
+ok 91 - cancelled bonus re-download retains the offloaded save and unapplied editor values
+  ---
+  duration_ms: 42.939125
+  ...
+# Subtest: bonus offload save respects a newer writer and leaves saved bytes intact
+ok 92 - bonus offload save respects a newer writer and leaves saved bytes intact
+  ---
+  duration_ms: 33.796875
+  ...
+# Subtest: removing a bonus track from a draft also removes its obsolete album pin
+ok 93 - removing a bonus track from a draft also removes its obsolete album pin
+  ---
+  duration_ms: 44.544833
+  ...
+# Subtest: genre controls persist the actual checkbox selection without resuming intentional music pause
+ok 94 - genre controls persist the actual checkbox selection without resuming intentional music pause
+  ---
+  duration_ms: 10.560459
+  ...
+# Subtest: additional genre choices save a specific style or selected cross-style mix without autoplay
+ok 95 - additional genre choices save a specific style or selected cross-style mix without autoplay
+  ---
+  duration_ms: 11.6
+  ...
+# Subtest: catalogue volume download and removal preserve playlists and original upload bytes
+ok 96 - catalogue volume download and removal preserve playlists and original upload bytes
+  ---
+  duration_ms: 73.431459
+  ...
+# Subtest: creator tags and selected-playlist export preserve original bytes and additive import retains choices
+ok 97 - creator tags and selected-playlist export preserve original bytes and additive import retains choices
+  ---
+  duration_ms: 38.229791
+  ...
+# Subtest: unclassified uploads retain scene, energy and world tags after saving and reloading
+ok 98 - unclassified uploads retain scene, energy and world tags after saving and reloading
+  ---
+  duration_ms: 20.244833
+  ...
+# Subtest: album browsing retains unapplied music tags and genre checkbox edits
+ok 99 - album browsing retains unapplied music tags and genre checkbox edits
+  ---
+  duration_ms: 11.634875
+  ...
+# Subtest: uninstalled trusted catalogue tracks show online availability and can be auditioned
+ok 100 - uninstalled trusted catalogue tracks show online availability and can be auditioned
+  ---
+  duration_ms: 7.491917
+  ...
+# Subtest: oversized complete catalogue backup is refused before any original download
+ok 101 - oversized complete catalogue backup is refused before any original download
+  ---
+  duration_ms: 77.488792
+  ...
+# Subtest: v3 restricted music exposes source and recovery notice without exporting its audio
+ok 102 - v3 restricted music exposes source and recovery notice without exporting its audio
+  ---
+  duration_ms: 29.994292
+  ...
+# Subtest: recovery UI explains offline storage denied without requesting redistributable audio
+ok 103 - recovery UI explains offline storage denied without requesting redistributable audio
+  ---
+  duration_ms: 36.567125
+  ...
+# Subtest: recovery UI explains offline storage unknown without requesting redistributable audio
+ok 104 - recovery UI explains offline storage unknown without requesting redistributable audio
+  ---
+  duration_ms: 31.830584
+  ...
+# Subtest: restored reference-only UA-FPV music can install when offline rights allow it and remains excluded from export
+ok 105 - restored reference-only UA-FPV music can install when offline rights allow it and remains excluded from export
+  ---
+  duration_ms: 45.484958
+  ...
+# Subtest: original MP3 download is explicit and preserves exact bytes
+ok 106 - original MP3 download is explicit and preserves exact bytes
+  ---
+  duration_ms: 6.205625
+  ...
+# Subtest: cached restricted recordings cannot audition through either UI or direct handler
+ok 107 - cached restricted recordings cannot audition through either UI or direct handler
+  ---
+  duration_ms: 27.1085
+  ...
+# Subtest: opening a legacy saved library preserves the shipped catalogue in player and host adoption
+ok 108 - opening a legacy saved library preserves the shipped catalogue in player and host adoption
+  ---
+  duration_ms: 10.107875
+  ...
+# Subtest: additive creator albums preserve the applied choice and draft, are idempotent, and reject identity collisions
+ok 109 - additive creator albums preserve the applied choice and draft, are idempotent, and reject identity collisions
+  ---
+  duration_ms: 11.961917
+  ...
+# Subtest: sharing exports only the chosen playlist and requires declared recording permissions
+ok 110 - sharing exports only the chosen playlist and requires declared recording permissions
+  ---
+  duration_ms: 3.454166
+  ...
+# Subtest: acoustic playlist shares round-trip originals, tags and ordered entries into an eligible automatic queue
+ok 111 - acoustic playlist shares round-trip originals, tags and ordered entries into an eligible automatic queue
+  ---
+  duration_ms: 22.487417
+  ...
+# Subtest: chiptune playlist shares round-trip originals, tags and ordered entries into an eligible automatic queue
+ok 112 - chiptune playlist shares round-trip originals, tags and ordered entries into an eligible automatic queue
+  ---
+  duration_ms: 16.87375
+  ...
+# Subtest: v2 writers retain legacy genre choices and require v3 before writing expanded styles
+ok 113 - v2 writers retain legacy genre choices and require v3 before writing expanded styles
+  ---
+  duration_ms: 3.238208
+  ...
+# Subtest: frozen DB5/v2 readers reject a v3 row without touching shared metadata or audio
+ok 114 - frozen DB5/v2 readers reject a v3 row without touching shared metadata or audio
+  ---
+  duration_ms: 20.297334
+  ...
+# Subtest: an already-open frozen v2 audio writer cannot mutate any domain after concurrent v3 adoption
+ok 115 - an already-open frozen v2 audio writer cannot mutate any domain after concurrent v3 adoption
+  ---
+  duration_ms: 9.886
+  ...
+# Subtest: an already-open frozen v2 media writer cannot mutate any domain after concurrent v3 adoption
+ok 116 - an already-open frozen v2 media writer cannot mutate any domain after concurrent v3 adoption
+  ---
+  duration_ms: 10.130083
+  ...
+# Subtest: an already-open frozen v2 story writer cannot mutate any domain after concurrent v3 adoption
+ok 117 - an already-open frozen v2 story writer cannot mutate any domain after concurrent v3 adoption
+  ---
+  duration_ms: 11.731833
+  ...
+1..117
+# tests 117
+# suites 0
+# pass 117
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1590.485542
