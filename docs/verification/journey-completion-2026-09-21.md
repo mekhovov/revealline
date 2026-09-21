@@ -59,6 +59,15 @@ public-input regression cases preserve v1 and prove v2 rejection. The 401-test
 bonus and 65-test host/transport cohorts pass on both Node versions. Native
 Studio countdown/pause is checked. Team, human tuning and deployment remain open.
 
+The next Team slice has a reviewed
+[shared-bonus contract](../superpowers/specs/2026-09-21-team-timed-bonus-design.md)
+and a common geometry-opportunity primitive. Six new tests cover either active
+pilot, both actual live trails, seat permutation, obstacles/terrain, occupancy
+and continued unsupported-runtime rejection. With the existing bonus cohorts,
+407 tests pass on each Node version. **This does not enable Team pickups**:
+shared schedules, swept collection/effects, transport, UI and mode qualification
+remain implementation work.
+
 ## Latest completed spatial unit
 
 [Afterglow](journey-livewire-spatial.md) redirects its keeper with two walls;
