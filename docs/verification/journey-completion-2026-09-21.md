@@ -204,6 +204,17 @@ pickup visuals, Skip and cursor restoration. All 246 broader regression checks
 pass on each Node version; coordinated promotion remains open. This closes the earlier original-art and bonus-optional
 host gaps for these three studies, not human balance, public enrollment or P14.
 
+The [Coolant missed-window follow-up](journey-coolant-relocation.md) now proves
+expiry, relocated contact, effect-active return and no-loss clear on all three
+presets at live seed 17: twelve seat/joint core cases and three actual keyboard
+hosts. Useful captures continue during the missed window and recovery; no parked
+wait is required. Expert contact occurs on ground reclaimed after the pickup
+appears, not on still-exposed field. Studio's relocation promise is corrected
+to conditional eligibility/caps. Other-map/reserve relocation, human balance,
+device testing and promotion remain open. Independent review passes; the
+391-test regression cohort passes on both supported Node versions, including
+the retained expected failed-route assertions.
+
 ## Latest completed spatial unit
 
 [Afterglow](journey-livewire-spatial.md) redirects its keeper with two walls;

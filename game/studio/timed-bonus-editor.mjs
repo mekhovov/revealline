@@ -50,8 +50,8 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
     $('remove').disabled = !schedule;
     $('submit').textContent = schedule ? 'Validate & replace schedule' : 'Validate & add schedule';
     $('result').textContent = getMission()?.modes.includes('team')
-      ? 'Optional Team pickups. Apply creates a new Team bonus edition for this mission only; earlier editions stay unchanged. One shared pickup/grant; speed affects its collector, enemy effects and reserves are shared. Missed pickups relocate. Test both pilots and pickup-free routes.'
-      : 'Optional only. Applying upgrades this mission’s timed schedules to a trail-aware v2 revision; earlier editions stay unchanged. Contact before expiry; missed pickups move to a different eligible anchor. Preview does not guarantee live availability.';
+      ? 'Optional Team pickups. Apply creates a new Team bonus edition for this mission only; earlier editions stay unchanged. One shared pickup/grant; speed affects its collector, enemy effects and reserves are shared. Missed pickups may reappear at a different eligible field anchor, within the appearance limit. Test both pilots and pickup-free routes.'
+      : 'Optional only. Applying upgrades this mission’s timed schedules to a trail-aware v2 revision; earlier editions stay unchanged. Contact before expiry. Missed pickups may reappear at a different eligible field anchor, within the appearance limit. Preview does not guarantee live availability.';
   }
   function sync() {
     const mission = getMission();

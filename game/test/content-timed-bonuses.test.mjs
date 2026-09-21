@@ -302,3 +302,14 @@ test('Studio adds, replaces and confirms removal; invalid/stale fields never par
   assert.equal(f.source().missions[0].timedBonuses, undefined);
   assert.equal(f.source().missions[0].team.format, 'TeamMissionV4');
 });
+
+test('Studio explains bounded, conditional relocation consistently for Solo and Team', () => {
+  const f = uiFixture();
+  for (const source of [createStarterProject(), createTeamOpeningCandidates()]) {
+    f.update(source);
+    assert.match(f.node('result').textContent, /may reappear at a different eligible field anchor/);
+    assert.match(f.node('result').textContent, /within the appearance limit/);
+    assert.doesNotMatch(f.node('result').textContent, /Missed pickups relocate\./);
+    assert.deepEqual(f.source(), source);
+  }
+});

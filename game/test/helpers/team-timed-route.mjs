@@ -7,7 +7,7 @@ import { coopBonusActive } from '../../coop/timed-bonuses.mjs';
 export function assessTeamTimedRoute(
   level,
   segments,
-  { seed = 1, swapped = false, delayTicks = 0, jointCuts = true } = {},
+  { seed = 1, swapped = false, delayTicks = 0, jointCuts = true, observeBonusWindows = false } = {},
 ) {
   const directions = [null, 'left', 'right', 'up', 'down'];
   if (
@@ -27,7 +27,8 @@ export function assessTeamTimedRoute(
     ) ||
     segments.reduce((sum, s) => sum + s.ticks, delayTicks) > 36000 ||
     typeof swapped !== 'boolean' ||
-    typeof jointCuts !== 'boolean'
+    typeof jointCuts !== 'boolean' ||
+    typeof observeBonusWindows !== 'boolean'
   )
     throw new TypeError('Invalid bounded Team timed route.');
   const owned = structuredClone(level);
@@ -35,6 +36,7 @@ export function assessTeamTimedRoute(
   const run = startCoop(createCoop(owned, { seed, jointCuts }));
   const events = [],
     bonusEvents = [],
+    bonusWindows = [],
     initialReserves = run.team.reserves,
     returns = [0, 0],
     collected = [],
@@ -45,7 +47,9 @@ export function assessTeamTimedRoute(
   let firstDown = null,
     failure = null,
     simultaneousTicks = 0,
-    bothIdleTicks = 0;
+    bothIdleTicks = 0,
+    jointIdleStreak = 0,
+    longestJointIdleTicks = 0;
   const all = delayTicks ? [{ a: null, b: null, ticks: delayTicks }, ...segments] : segments;
   outer: for (const segment of all)
     for (let n = 0; n < segment.ticks; n++) {
@@ -56,6 +60,17 @@ export function assessTeamTimedRoute(
         break outer;
       }
       const cutting = run.players.map((p) => p.cutting),
+        coverageBefore = run.coverage,
+        anchorsBefore = observeBonusWindows
+          ? new Map(
+              (run.level.timedBonuses?.schedules ?? []).flatMap((schedule) =>
+                schedule.anchors.map((anchor) => [
+                  `${schedule.id}/${anchor.x}/${anchor.y}`,
+                  run.cells[Math.floor(anchor.y) * run.width + Math.floor(anchor.x)],
+                ]),
+              ),
+            )
+          : null,
         beforePositions = run.players.map((p) => [p.x, p.y]),
         beforeItems = new Map(
           run.bonuses.items.map((item) => [
@@ -77,11 +92,22 @@ export function assessTeamTimedRoute(
       if (run.players.every((p) => p.cutting)) simultaneousTicks++;
       if (
         run.players.every((p, i) => p.x === beforePositions[i][0] && p.y === beforePositions[i][1])
-      )
+      ) {
         bothIdleTicks++;
+        jointIdleStreak++;
+        longestJointIdleTicks = Math.max(longestJointIdleTicks, jointIdleStreak);
+      } else jointIdleStreak = 0;
       for (const event of run.events) {
         events.push(structuredClone(event));
         if (event.type.startsWith('bonus.')) bonusEvents.push(structuredClone(event));
+        if (observeBonusWindows && event.type.startsWith('bonus.'))
+          bonusWindows.push({
+            ...structuredClone(event),
+            coverageBefore,
+            coverageAfter: run.coverage,
+            anchorBefore: anchorsBefore.get(`${event.id}/${event.x}/${event.y}`),
+            anchorAfter: run.cells[Math.floor(event.y) * run.width + Math.floor(event.x)],
+          });
         if (event.type === 'player.downed') firstDown ??= structuredClone(event);
         if (event.type === 'cut.started') cutStarts.push(structuredClone(event));
         if (event.type === 'powerup.collected') {
@@ -143,6 +169,7 @@ export function assessTeamTimedRoute(
     firstDown,
     collected,
     bonusEvents,
+    bonusWindows,
     initialReserves,
     finalReserves: run.team.reserves,
     remainingBonuses: run.bonuses.items.map((item) => ({
@@ -156,6 +183,7 @@ export function assessTeamTimedRoute(
     neutralized,
     simultaneousTicks,
     bothIdleTicks,
+    longestJointIdleTicks,
     schedules: structuredClone(run.bonuses.timed.schedules),
     checkpoint: createHash('sha256').update(JSON.stringify({ run, events })).digest('hex'),
   };
