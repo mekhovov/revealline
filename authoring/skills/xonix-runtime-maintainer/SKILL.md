@@ -14,6 +14,10 @@ older card selector still wins. Keep 44px direction targets clear of the HUD.
 Record that recovery hides controls and that portrait retains its existing
 translucent arena overlay; do not claim simultaneous states from separate samples.
 
+When changing Studio guides, run `game/test/asset-studio-help-links.test.mjs`.
+Follow relative Markdown destinations through the real build allowlist and
+collected files; a guide existing in Git does not mean it ships with the app.
+
 For production Team artwork, use `scripts/field-kit-team-assets.mjs` and the real
 Field Kit producer. Preserve both anchor and all four feedback roles as complete
 families. Verify prepared manifests and PNGs against the original generators;
