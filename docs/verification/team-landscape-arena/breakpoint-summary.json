@@ -1,0 +1,70 @@
+{
+  "base": "47dde74e73ddb950806b31060e98bf33e247dc56",
+  "override": {
+    "game/ui/handheld-play.css": {
+      "bytes": 50680,
+      "sha256": "1b0b3c84c26992728e72d5fe3a2ae67049e035fb737b71eb2b675fc162adb795"
+    }
+  },
+  "servedFilesVerified": 252,
+  "before": {
+    "viewport": [960, 540],
+    "scene": "First Connection",
+    "text": "Theme Standard",
+    "board": [236, 118],
+    "reason": "coop-app and board slot display:block; arena-wrap retained desktop240px cap"
+  },
+  "final": {
+    "text": "Plain Large",
+    "controls": "Large D-pad; Show both players",
+    "measurements": [
+      {
+        "scene": "Relay Yard",
+        "viewport": [960, 540],
+        "board": [807.203125, 403.6015625],
+        "minTarget": 55.796875
+      },
+      {
+        "scene": "Relay Yard",
+        "viewport": [960, 500],
+        "board": [723.203125, 361.6015625],
+        "minTarget": 55.796875
+      },
+      {
+        "scene": "Relay Yard",
+        "viewport": [960, 501],
+        "board": [729.203125, 364.6015625],
+        "minTarget": 55.796875
+      },
+      {
+        "scene": "Relay Yard",
+        "viewport": [1024, 600],
+        "board": [927.203125, 463.6015625],
+        "minTarget": 55.796875
+      },
+      {
+        "scene": "Relay Yard",
+        "viewport": [568, 320],
+        "board": [363.203125, 181.6015625],
+        "minTarget": 44
+      },
+      {
+        "scene": "Relay Yard",
+        "viewport": [390, 844],
+        "board": [370, 185],
+        "minTarget": 62.03125
+      },
+      {
+        "scene": "First Connection",
+        "viewport": [960, 540],
+        "board": [862, 431]
+      }
+    ],
+    "allMeasuredTargetsInViewport": true,
+    "horizontalOverflow": false,
+    "consoleWarningsErrors": [],
+    "hudLandscape": 44,
+    "hudPortraitLarge": 74
+  },
+  "scope": "Native desktop browser measurements and settings/menu interaction, not physical touch or controller certification. No full build, release or gameplay outcome claim."
+}
