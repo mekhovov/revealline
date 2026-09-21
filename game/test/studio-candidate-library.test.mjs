@@ -66,6 +66,10 @@ test('closed library preserves every static Inspect action, paired edition contr
     assert.equal($(id).closest('form'), null);
   }
   assert.equal(
+    $('rover-edition').closest('[data-library-entry]'),
+    $('rover').closest('[data-library-entry]'),
+  );
+  assert.equal(
     $('spatial-edition').closest('[data-library-entry]'),
     $('pursuit-intercept').closest('[data-library-entry]'),
   );
@@ -79,6 +83,14 @@ test('closed library preserves every static Inspect action, paired edition contr
   assert.equal($('map-workbench').getAttribute('aria-label'), 'Map workbench');
   for (const group of ['journey', 'chapters', 'mechanics', 'team', 'players'])
     assert.equal($('candidate-group-' + group).tagName, 'H2');
+});
+
+test('Sorting successor search preserves the paired Rover edition selector and Inspect action', () => {
+  const { search, visible, $ } = setup();
+  search('sorting');
+  assert.equal(visible().length, 1);
+  assert.equal(visible()[0], $('rover').closest('[data-library-entry]'));
+  assert(visible()[0].querySelector('#rover-edition'));
 });
 
 test('all sixteen original review routes keep explicit external-tab safety and distinct accessible labels', () => {
