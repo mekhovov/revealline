@@ -133,7 +133,11 @@ function browserVideo(page) {
 }
 async function setup(t) {
   const memory = memoryIndexedDB(),
-    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true, soundtrackCatalogue: true }),
+    manager = createManagedMediaStore({
+      indexedDB: memory.indexedDB,
+      storyMedia: true,
+      soundtrackCatalogue: true,
+    }),
     decodeImage = async () => ({ naturalWidth: 1, naturalHeight: 1 }),
     still = createStillMediaStore({ managedStore: manager, decodeImage }),
     stories = createStoryMediaStore({ managedStore: manager, decodeImage });

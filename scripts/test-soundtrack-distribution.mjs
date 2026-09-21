@@ -12,12 +12,14 @@ import {
 } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
+import { check, resolveConfig } from 'prettier';
 import { buildProject } from './game-cli.mjs';
 import {
   readSoundtrackDistributionEntries,
   validateSoundtrackDistributionConfig,
+  writePublishedSoundtrackMetadata,
 } from './soundtrack-distribution.mjs';
 import { albumFixture, albumCatalog } from '../game/test/helpers/soundtrack-albums.mjs';
 import {
@@ -73,6 +75,57 @@ async function fixture(t) {
   await save();
   return { root, out, put, save, config, album };
 }
+test('publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript', async (t) => {
+  const f = await fixture(t);
+  const catalogue = {
+    format: 'revealline-soundtrack-catalogue.v1',
+    edition: 'writer-fixture',
+    tracks: [
+      {
+        ...f.album.track,
+        id: 'builtin.catalog.writer-fixture',
+        title: "Spring's echo — Весна",
+        edition: 'writer-fixture',
+        path: 'optional/soundtracks/writer-fixture.mp3',
+        tags: { genres: ['ukrainian'], role: 'menu', energy: 2, themes: ['ukraine'] },
+      },
+    ],
+  };
+  await f.put('.prettierrc.json', await readFile(path.join(source, '.prettierrc.json')));
+  await f.put(
+    'authoring/library/licensed-audio/publication.json',
+    JSON.stringify({
+      format: 'revealline-licensed-publication.v1',
+      approved: [],
+    }),
+  );
+  await f.put(
+    'authoring/library/licensed-audio/production-register.json',
+    JSON.stringify({ tracks: [] }),
+  );
+  await f.put(
+    'authoring/library/revealline-original-soundtrack/build.mjs',
+    `export async function buildOriginalSoundtrackCatalogue() { return { catalogue: ${JSON.stringify(catalogue)}, files: [] }; }`,
+  );
+  const built = await writePublishedSoundtrackMetadata(f.root);
+  const modulePath = path.join(f.root, 'game/content/soundtrack-catalogue.mjs');
+  const first = await readFile(modulePath, 'utf8');
+  assert.equal(
+    await check(first, { ...(await resolveConfig(modulePath)), filepath: modulePath }),
+    true,
+  );
+  const runtime = await import(pathToFileURL(modulePath));
+  assert.deepEqual(runtime.SOUNDTRACK_CATALOGUE, built.catalogue);
+  assert.deepEqual(runtime.SOUNDTRACK_CATALOGUE.tracks[0], catalogue.tracks[0]);
+  assert.deepEqual(runtime.SOUNDTRACK_ARCHIVES, built.archives);
+  const firstMetadata = await readFile(path.join(f.root, 'game/content/soundtrack-catalogue.json'));
+  await writePublishedSoundtrackMetadata(f.root);
+  assert.equal(await readFile(modulePath, 'utf8'), first);
+  assert.deepEqual(
+    await readFile(path.join(f.root, 'game/content/soundtrack-catalogue.json')),
+    firstMetadata,
+  );
+});
 test('absent album opt-in preserves output bytes and does not read the audio producer', async (t) => {
   const f = await fixture(t);
   await buildProject(f);

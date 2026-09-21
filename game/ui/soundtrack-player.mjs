@@ -151,7 +151,12 @@ export function createSoundtrackPlayer({
     const defaultChoice =
       selected.source === 'default' ||
       (selected.source === 'catalogue-fallback' && library.listening?.mode === 'auto');
-    if (context.scene !== 'menu' && defaultChoice && published?.allowed() && !failed.has(published.id))
+    if (
+      context.scene !== 'menu' &&
+      defaultChoice &&
+      published?.allowed() &&
+      !failed.has(published.id)
+    )
       return {
         source: 'published',
         playlist: {
