@@ -1,0 +1,149 @@
+{
+  "format": "revealline-music-license-review.v1",
+  "method": "Creator submission pages inspected in web tool, then HTTPS response hashed with normal certificate verification; links checked against selected license. No bulk media download.",
+  "sources": [
+    {
+      "source": "https://opengameart.org/content/retro-wave-collection",
+      "checkedAt": "2026-09-21T00:11:27.567826+00:00",
+      "responseBytes": 22653,
+      "responseSha256": "1dab2721482293605095f297f3ce5daf0aee9e877d7f3e5b3162179bca70a32a",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer."
+    },
+    {
+      "source": "https://opengameart.org/content/megasong",
+      "checkedAt": "2026-09-21T00:11:28.555511+00:00",
+      "responseBytes": 32973,
+      "responseSha256": "545c126b052787635c26330bdf316bd878c662e633664dc91ecae0aa42cf9353",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer."
+    },
+    {
+      "source": "https://opengameart.org/content/determination-anime-style-music",
+      "checkedAt": "2026-09-21T00:11:29.531077+00:00",
+      "responseBytes": 22586,
+      "responseSha256": "86145e5bcb21b41fb43a62bde7a4d4f76a193f3162aaf82d69a2e805ae272a54",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer."
+    },
+    {
+      "source": "https://opengameart.org/content/silver-bullet",
+      "checkedAt": "2026-09-21T00:11:30.514577+00:00",
+      "responseBytes": 23982,
+      "responseSha256": "97f9bbef3dd94c1013c63fbd85d55c41cb65687ce0c9990578324ca6ac9191ef",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer."
+    },
+    {
+      "source": "https://opengameart.org/content/devoted-guard",
+      "checkedAt": "2026-09-21T00:11:31.522015+00:00",
+      "responseBytes": 21878,
+      "responseSha256": "156b5dfb87c1a815d6a7ad34b9a53758d546ed39341ef120b4f0cfad5a75928f",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer."
+    },
+    {
+      "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+      "checkedAt": "2026-09-21T00:11:32.676621+00:00",
+      "responseBytes": 57032,
+      "responseSha256": "52b29a863c31e556ba5ad13eef0036d9a488e105171c35463aeb605d8b7ff92f",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer. 3xBlast historical extra restriction and creator correction are preserved separately."
+    },
+    {
+      "source": "https://opengameart.org/content/raspberry-jam",
+      "checkedAt": "2026-09-21T00:11:33.492049+00:00",
+      "responseBytes": 32575,
+      "responseSha256": "72fd766096e297765ccdeed439a51bb703d5e9c8a20a60c3f661bbc0f8dff8b7",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer."
+    },
+    {
+      "source": "https://opengameart.org/content/escalate",
+      "checkedAt": "2026-09-21T00:11:34.589651+00:00",
+      "responseBytes": 27322,
+      "responseSha256": "22f6d3dc5421eccacbfde8c8ef445566f2abd9fb85215e9e185b22df8f6e60de",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/licenses/by/3.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/licenses/by/3.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer."
+    },
+    {
+      "source": "https://opengameart.org/node/133854",
+      "checkedAt": "2026-09-21T00:11:35.850498+00:00",
+      "responseBytes": 58562,
+      "responseSha256": "34c8dfceda4d3d0258a3aacfaa1db187146aab21f07ea1858214cb4853698398",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer."
+    },
+    {
+      "source": "https://opengameart.org/content/heavy-battle-2",
+      "checkedAt": "2026-09-21T00:11:36.847028+00:00",
+      "responseBytes": 24043,
+      "responseSha256": "5953817ce49370f0c5cc2b2bb68ff622c8626fd502f0b09c84c183c78613a128",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer."
+    },
+    {
+      "source": "https://opengameart.org/content/untitled-metal-track",
+      "checkedAt": "2026-09-21T00:11:37.688672+00:00",
+      "responseBytes": 21725,
+      "responseSha256": "5b3a5ab6fd40b270322b92d05dd6ef67271c5efa83d19e19a18324dd35082b4a",
+      "licenseLinksOnCreatorSubmission": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "selectedLicenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "status": "primary creator submission license declaration verified",
+      "auditioned": false,
+      "note": "Submission license applies to listed files; not inferred from site footer."
+    }
+  ]
+}
