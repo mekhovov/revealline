@@ -1,5 +1,6 @@
 import { exactKeys, required, stableId } from '../data-json.mjs';
 import { CELL, FIXED_DT } from './registry.mjs';
+import { hasBonusOpportunity } from './bonus-opportunity.mjs';
 
 export const TIMED_BONUS_VERSION = 'timed-bonuses.v1';
 export const TIMED_BONUS_TRAIL_VERSION = 'timed-bonuses.v2';
@@ -117,7 +118,6 @@ function offset(seed, id, length) {
 
 /** Geometry-only opportunity check, never a prediction of moving enemy safety. */
 function eligible(state, definition, anchor) {
-  const index = indexOf(anchor, state.width);
   // V1 retains its historical comparison for exact old replay reconstruction.
   // Actual Solo trail entries are {x,y,index}, not numeric cell indices.
   const trail = new Set(
@@ -125,52 +125,15 @@ function eligible(state, definition, anchor) {
       ? state.trail.map((cell) => cell.index)
       : state.trail,
   );
-  if (state.cells[index] !== CELL.FIELD || state.classic.terrain[index] === 2 || trail.has(index))
-    return false;
-  if (
-    [{ ...state.player, radius: state.rules.playerRadius }, ...state.enemies].some(
-      (body) => Math.hypot(body.x - anchor.x, body.y - anchor.y) < 2 + (body.radius ?? 0),
-    )
-  )
-    return false;
-  if (
-    state.classic.powerups.some(
-      (item) => item.collectedTick === null && indexOf(item, state.width) === index,
-    )
-  )
-    return false;
-  const maxDistance = Math.floor(
-    (definition.availableTicks * FIXED_DT * state.rules.moveSpeed) / 2,
-  );
-  const start = indexOf(state.player, state.width);
-  const distance = new Int32Array(state.cells.length).fill(-1),
-    queue = [start];
-  distance[start] = 0;
-  for (let head = 0; head < queue.length; head++) {
-    const cell = queue[head];
-    if (cell === index) return true;
-    if (distance[cell] >= maxDistance) continue;
-    const x = cell % state.width,
-      y = Math.floor(cell / state.width);
-    for (const next of [
-      x > 0 ? cell - 1 : -1,
-      x + 1 < state.width ? cell + 1 : -1,
-      y > 0 ? cell - state.width : -1,
-      y + 1 < state.height ? cell + state.width : -1,
-    ]) {
-      if (
-        next < 0 ||
-        distance[next] !== -1 ||
-        state.cells[next] === CELL.WALL ||
-        (state.cells[next] === CELL.FIELD && state.classic.terrain[next] === 2) ||
-        trail.has(next)
-      )
-        continue;
-      distance[next] = distance[cell] + 1;
-      queue.push(next);
-    }
-  }
-  return false;
+  return hasBonusOpportunity(state, {
+    anchor,
+    trail,
+    bodies: [{ ...state.player, radius: state.rules.playerRadius }, ...state.enemies],
+    items: state.classic.powerups,
+    starts: [indexOf(state.player, state.width)],
+    maxDistance: Math.floor((definition.availableTicks * FIXED_DT * state.rules.moveSpeed) / 2),
+    terrain: state.classic.terrain,
+  });
 }
 
 function event(state, schedule, definition, type) {
