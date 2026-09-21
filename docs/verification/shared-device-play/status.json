@@ -46,6 +46,12 @@
     "iteration9": {
       "finalCohort": "40/40 each Node20/22",
       "scope": "Team board clearance and short portrait layout; actual Solo modeled controller win/Retry/win/Next; native geometry separate. Full device/production/release gates remain open."
+    },
+    "iteration10": {
+      "red": "2 failures and1 pass onNode20 before active-gesture guard",
+      "touchAndNavigation": "24/24 eachNode20/22",
+      "sharedInput": "104/104 eachNode20/22",
+      "scope": "Capture ownership correction for failedCI35559365314. Final hosted gates and physical devices remain open."
     }
   },
   "nativeObservations": [
@@ -324,5 +330,5 @@
     "Controller Retry/Next and physical Steam Deck A diagnosis; cold standard-mapped A passes",
     "Exact final-source gates, version allocation, release/public inventory"
   ],
-  "latestCorrection": "iteration-9: per-visible-seat Team landscape gutters; short portrait target cap and named actions; controller results journey"
+  "latestCorrection": "iteration-10: active touch ownership before capture-loss cancellation; no app-frame fallback"
 }
