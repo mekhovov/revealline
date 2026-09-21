@@ -1,5 +1,7 @@
 # Field Kit typography
 
+Research and source-original links below open the versioned repository online. They are reference evidence, separate from this release’s playable assets and offline help.
+
 Field Kit uses readable interface text over pixel artwork. Handjet is the chosen pixel display face; Exo 2 carries instructions and controls; IBM Plex Mono carries changing numeric readouts. Text remains real text so future Ukrainian localization does not require redrawing artwork.
 
 ## Font roles and sizes
@@ -22,7 +24,7 @@ Load `game/ui/field-kit-fonts.css`, `game/ui/field-kit-tokens.css`, then `game/u
 
 The game, landing pages and existing authoring tools now load this stack. Supporting pages add `field-kit-support` for readable paragraph sizes; the game keeps its existing shell layout. Generated credits and privacy pages use the same fonts, and the build rewrites their relative paths for root and versioned GitHub Pages routes. Canvas feedback uses the numeric/interface faces at 14px or larger and gives labels matching background plates.
 
-The original Solo Text size setting persists `standard` / `large` through `game/library.mjs`; the tokens consume `document.body.dataset.textSize`. The isolated [P05-A shared-display candidate](shared-display-preferences.md) keeps those same values in one origin-local display authority across Solo, Versus and Team, with explicit legacy Solo fallback. Do not add competing page-specific preferences or scale the simulation canvas to increase text size. Its native reflow and release acceptance remain pending.
+The original Solo Text size setting persists `standard` / `large` through `game/library.mjs`; the tokens consume `document.body.dataset.textSize`. The isolated [P05-A shared-display candidate](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/docs/shared-display-preferences.md) keeps those same values in one origin-local display authority across Solo, Versus and Team, with explicit legacy Solo fallback. Do not add competing page-specific preferences or scale the simulation canvas to increase text size. Its native reflow and release acceptance remain pending.
 
 New content uses `.field-kit-copy`, `.field-kit-secondary`, `.field-kit-display`, `.field-kit-counter`, `.field-kit-panel`, `.field-kit-control`, `.field-kit-primary`, and `.field-kit-status`. Legacy selectors are bridged for the title, dialog headings, HUD, controls and common supporting labels. Legacy `--pixel-font` resolves to the UI font; Handjet is assigned only to the explicit display roles.
 

@@ -1,0 +1,167 @@
+{
+  "base": "a5f5943d9dff69db2c36dce1f0f7ebdd607514cd",
+  "patchSha256": "ade020e0fd883e8b2706c9074b00b3402faac30d5560715397b6814b3d8b47b4",
+  "referenceClosure": 11,
+  "exactOnlineReferences": [
+    {
+      "from": "docs/fpv-redesign-design.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "docs/research/round-07-reloaded-ui-motion.md",
+      "blob": "545fc4e8fba88fc29455fa6840d0d950d02bec4f"
+    },
+    {
+      "from": "docs/fpv-redesign-design.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "docs/research/round-05-reloaded-stills.md",
+      "blob": "c940f2187b9d208700e0305f19ebe971c0bca0d3"
+    },
+    {
+      "from": "docs/fpv-typography.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "docs/shared-display-preferences.md",
+      "blob": "c5d6ef8559924c438f4ae87d8f988001df356f7e"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/fpv-arcade/backgrounds/orchard-window.png",
+      "blob": "41fad7640d5610bab1020e707289ac037a24bd88"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/homeward-skies/backgrounds/homeward-02.png",
+      "blob": "5090d116a23f63ee88e6c213478ffc517c47769c"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/fracture-lines-art/originals/frayed-causeway-fpv.png",
+      "blob": "6d7238af21650ca9e9820bf8384566e8140cbc3f"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/sentinel-circuit-art/originals/open-the-circuit.png",
+      "blob": "67dabd26dab6961ddee412e5fc2db83005926f0d"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/fpv-arcade/backgrounds/night-signal.png",
+      "blob": "88fbf1d4412d107a5ce2243933b92e8229a5e060"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-fpv.png",
+      "blob": "a9e1747ba8fcf3acff9200c8c684909c4ce5d30c"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/sentinel-circuit-art/originals/switchyard-gates.png",
+      "blob": "69425f59b3b5a11c7411c3f06f5b668caee64c3c"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/homeward-skies/backgrounds/homeward-01.png",
+      "blob": "dca275fa8654d30ed4ea09c2a506d7879f525ae6"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/homeward-skies/backgrounds/homeward-03.png",
+      "blob": "7304b5d455d17bb3b14ba171c6d937e693735317"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/fpv-pressure-art/originals/courtyard-exits.png",
+      "blob": "117de9480c90f425cc4aaa398408e414c05f5834"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/fpv-pressure-art/originals/night-crossfire.png",
+      "blob": "d66fc80323d9bc4fa7c3ceaa5eccc7862774a934"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/fpv-arcade/backgrounds/split-courtyard.png",
+      "blob": "49b90f89ca5ad550228c4f42b19e70a279d247ea"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/sentinel-circuit-art/originals/listening-court.png",
+      "blob": "7a6eca51834c03c3c11a3049426c55ec931c98cd"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-fpv.png",
+      "blob": "0a21c5ae0ba7e4971295eaa7a562b84859b9c0f3"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/fpv-pressure-art/originals/orchard-crossing.png",
+      "blob": "8cb6a745cf03a3b45641b7a0cbb13d7cfd177f24"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/fracture-lines-art/originals/split-ring-fpv.png",
+      "blob": "72b690d61f2ab9260b17d9ec0b8f34058ef79b46"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/fracture-lines-art/originals/fault-fan-fpv.png",
+      "blob": "9a7d4b18f7c2aa96bd1c2fd21e59e50075308ddd"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/challenge-chapter-art/originals/split-signal-foundry.png",
+      "blob": "35ec3d754394ab8421f5767e59e654f9816a4723"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/challenge-chapter-art/originals/crosswind-depot.png",
+      "blob": "9e38797a96ba41a8eb466283c66b5384428038a1"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/challenge-chapter-art/originals/signal-switchback.png",
+      "blob": "edf8d203055fbaeb6e352535ab583b451cbbbf9f"
+    },
+    {
+      "from": "docs/fpv-reveal-art-audit.md",
+      "revision": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-fpv.png",
+      "blob": "43482aa5e4dbfefca39848f9355b99c6ae4f1a70"
+    }
+  ],
+  "tests": [
+    {
+      "file": "node20.tap.gz",
+      "rawSha256": "686fc85c524212b83af781156a9701312f7ba487324375ec2ce58eb59fefb437",
+      "gzipSha256": "00fbb6c064a7216de8dcd405c986e8e3e59844d73ecec6e4f295ca2e4f4b4e55",
+      "passed": 1
+    },
+    {
+      "file": "node22.tap.gz",
+      "rawSha256": "f524fe9e90353cd0458e5acc2585adcf206799e86373c957306f7d7e0a49968b",
+      "gzipSha256": "05c24e80f8097b766a374a122325ed9ddcd484c23b44f5cd80d5c35d7ff0b5eb",
+      "passed": 1
+    }
+  ],
+  "scope": "Actual build allowlist traversal for five guide roots; same Git blob identities for pinned online source references. Online references are not offline content; no whole build, browser or public acceptance claim.",
+  "setup": "Earlier missing test/module/atlas files were sparse-checkout omissions, restored from this exact Git source. Original setup-failure logs retained in cache."
+}
