@@ -1,0 +1,430 @@
+TAP version 13
+# Subtest: preview staging preserves exact bytes and credits without requiring or changing listening approvals
+ok 1 - preview staging preserves exact bytes and credits without requiring or changing listening approvals
+  ---
+  duration_ms: 54.140042
+  ...
+# Subtest: identical MP3 aliases retain their metadata while storing one immutable object
+ok 2 - identical MP3 aliases retain their metadata while storing one immutable object
+  ---
+  duration_ms: 33.252709
+  ...
+# Subtest: documented conversion preserves original identity and explicit attribution changes
+ok 3 - documented conversion preserves original identity and explicit attribution changes
+  ---
+  duration_ms: 25.826208
+  ...
+# Subtest: a descriptive conversion statement remains separate from its exact encoder receipt
+ok 4 - a descriptive conversion statement remains separate from its exact encoder receipt
+  ---
+  duration_ms: 27.667792
+  ...
+# Subtest: refuses missing license evidence before creating output
+ok 5 - refuses missing license evidence before creating output
+  ---
+  duration_ms: 14.237042
+  ...
+# Subtest: refuses standalone redistribution denied before creating output
+ok 6 - refuses standalone redistribution denied before creating output
+  ---
+  duration_ms: 17.816959
+  ...
+# Subtest: refuses web permission unknown before creating output
+ok 7 - refuses web permission unknown before creating output
+  ---
+  duration_ms: 13.768334
+  ...
+# Subtest: refuses permission bound to another hash before creating output
+ok 8 - refuses permission bound to another hash before creating output
+  ---
+  duration_ms: 13.538459
+  ...
+# Subtest: refuses invented licensing approval before creating output
+ok 9 - refuses invented licensing approval before creating output
+  ---
+  duration_ms: 13.624042
+  ...
+# Subtest: refuses mismatched credits before creating output
+ok 10 - refuses mismatched credits before creating output
+  ---
+  duration_ms: 9.13975
+  ...
+# Subtest: refuses incorrect MP3 frame facts before creating output
+ok 11 - refuses incorrect MP3 frame facts before creating output
+  ---
+  duration_ms: 8.039209
+  ...
+# Subtest: refuses game admission flag before creating output
+ok 12 - refuses game admission flag before creating output
+  ---
+  duration_ms: 10.836
+  ...
+# Subtest: refuses listening approval flag before creating output
+ok 13 - refuses listening approval flag before creating output
+  ---
+  duration_ms: 10.647875
+  ...
+# Subtest: refuses source traversal before creating output
+ok 14 - refuses source traversal before creating output
+  ---
+  duration_ms: 11.425375
+  ...
+# Subtest: refuses missing album member before creating output
+ok 15 - refuses missing album member before creating output
+  ---
+  duration_ms: 13.2155
+  ...
+# Subtest: refuses stale authorization, changed originals and undeclared conversion receipts
+ok 16 - refuses stale authorization, changed originals and undeclared conversion receipts
+  ---
+  duration_ms: 33.379625
+  ...
+# Subtest: Zander Noriega attribution cannot omit or substitute the creator-requested URL
+ok 17 - Zander Noriega attribution cannot omit or substitute the creator-requested URL
+  ---
+  duration_ms: 21.829834
+  ...
+# Subtest: rejects input/output symlinks, occupied output and non-project archive URLs
+ok 18 - rejects input/output symlinks, occupied output and non-project archive URLs
+  ---
+  duration_ms: 12.73725
+  ...
+# Subtest: budget accounts for complete output, metadata and allocation overhead before the 1 GiB reserve
+ok 19 - budget accounts for complete output, metadata and allocation overhead before the 1 GiB reserve
+  ---
+  duration_ms: 0.255833
+  ...
+# Subtest: zero approved recordings creates no output directory or placeholder archive
+ok 20 - zero approved recordings creates no output directory or placeholder archive
+  ---
+  duration_ms: 28.20675
+  ...
+# Subtest: approved exact MP3 is staged once with pinned runtime inventory, reproducible catalogue candidate and credits
+ok 21 - approved exact MP3 is staged once with pinned runtime inventory, reproducible catalogue candidate and credits
+  ---
+  duration_ms: 53.249375
+  ...
+# Subtest: identical approved recording bytes are deduplicated while both track credits remain pinned
+ok 22 - identical approved recording bytes are deduplicated while both track credits remain pinned
+  ---
+  duration_ms: 33.947875
+  ...
+# Subtest: archive restaging reads approved source delivery after hosted admission removes the local runtime payload
+ok 23 - archive restaging reads approved source delivery after hosted admission removes the local runtime payload
+  ---
+  duration_ms: 46.740125
+  ...
+# Subtest: an allowed recording alias cannot stage audio narrowed by another trusted same-hash entry
+ok 24 - an allowed recording alias cannot stage audio narrowed by another trusted same-hash entry
+  ---
+  duration_ms: 19.740542
+  ...
+# Subtest: refuses unreviewed before copying any MP3
+ok 25 - refuses unreviewed before copying any MP3
+  ---
+  duration_ms: 16.2035
+  ...
+# Subtest: refuses restricted before copying any MP3
+ok 26 - refuses restricted before copying any MP3
+  ---
+  duration_ms: 15.192584
+  ...
+# Subtest: refuses changed bytes before copying any MP3
+ok 27 - refuses changed bytes before copying any MP3
+  ---
+  duration_ms: 12.38575
+  ...
+# Subtest: refuses wrong MP3 metadata before copying any MP3
+ok 28 - refuses wrong MP3 metadata before copying any MP3
+  ---
+  duration_ms: 12.636375
+  ...
+# Subtest: existing output is never replaced, even for an empty publication
+ok 29 - existing output is never replaced, even for an empty publication
+  ---
+  duration_ms: 10.906334
+  ...
+# Subtest: output rejects cache-root, traversal and symlink escapes
+ok 30 - output rejects cache-root, traversal and symlink escapes
+  ---
+  duration_ms: 11.473541
+  ...
+# Subtest: admission refuses non-project archive https://other.github.io/revealline-soundtracks-1/
+ok 31 - admission refuses non-project archive https://other.github.io/revealline-soundtracks-1/
+  ---
+  duration_ms: 9.311291
+  ...
+# Subtest: admission refuses non-project archive https://mekhovov.github.io/other-1/
+ok 32 - admission refuses non-project archive https://mekhovov.github.io/other-1/
+  ---
+  duration_ms: 8.423083
+  ...
+# Subtest: admission refuses non-project archive https://mekhovov.github.io/revealline-soundtracks-1/?q=x
+ok 33 - admission refuses non-project archive https://mekhovov.github.io/revealline-soundtracks-1/?q=x
+  ---
+  duration_ms: 9.202708
+  ...
+# Subtest: admission refuses non-project archive http://mekhovov.github.io/revealline-soundtracks-1/
+ok 34 - admission refuses non-project archive http://mekhovov.github.io/revealline-soundtracks-1/
+  ---
+  duration_ms: 9.627834
+  ...
+# Subtest: hard bounds include all payload files and reserve 1 GiB
+ok 35 - hard bounds include all payload files and reserve 1 GiB
+  ---
+  duration_ms: 0.194584
+  ...
+# Subtest: low free-space preflight creates no output
+ok 36 - low free-space preflight creates no output
+  ---
+  duration_ms: 14.669667
+  ...
+# Subtest: a failed write removes only its own new staging directory
+ok 37 - a failed write removes only its own new staging directory
+  ---
+  duration_ms: 25.067791
+  ...
+# Subtest: CLI help and empty-publication staging are read-only and never invoke publication
+ok 38 - CLI help and empty-publication staging are read-only and never invoke publication
+  ---
+  duration_ms: 126.63425
+  ...
+# Subtest: 70 exact hosted recordings and15 albums compile reproducibly without local MP3s
+ok 39 - 70 exact hosted recordings and15 albums compile reproducibly without local MP3s
+  ---
+  duration_ms: 131.0995
+  ...
+# Subtest: hosted admission rejects invented listening approval
+ok 40 - hosted admission rejects invented listening approval
+  ---
+  duration_ms: 18.476125
+  ...
+# Subtest: hosted admission rejects changed hash
+ok 41 - hosted admission rejects changed hash
+  ---
+  duration_ms: 39.560959
+  ...
+# Subtest: hosted admission rejects forged policy
+ok 42 - hosted admission rejects forged policy
+  ---
+  duration_ms: 32.85075
+  ...
+# Subtest: hosted admission rejects removed attribution
+ok 43 - hosted admission rejects removed attribution
+  ---
+  duration_ms: 33.127375
+  ...
+# Subtest: hosted admission rejects foreign URL
+ok 44 - hosted admission rejects foreign URL
+  ---
+  duration_ms: 35.37425
+  ...
+# Subtest: hosted admission rejects missing source evidence
+ok 45 - hosted admission rejects missing source evidence
+  ---
+  duration_ms: 14.112416
+  ...
+# Subtest: hosted admission rejects stale inventory
+ok 46 - hosted admission rejects stale inventory
+  ---
+  duration_ms: 38.283375
+  ...
+# Subtest: hosted admission rejects duplicate album membership
+ok 47 - hosted admission rejects duplicate album membership
+  ---
+  duration_ms: 35.614791
+  ...
+# Subtest: hosted admission rejects unapproved extra recording
+ok 48 - hosted admission rejects unapproved extra recording
+  ---
+  duration_ms: 27.487959
+  ...
+# Subtest: changed evidence bytes fail the pinned source check
+ok 49 - changed evidence bytes fail the pinned source check
+  ---
+  duration_ms: 14.543209
+  ...
+# Subtest: runtime includes hosted metadata while source production never fabricates absent audio
+ok 50 - runtime includes hosted metadata while source production never fabricates absent audio
+  ---
+  duration_ms: 57.10775
+  ...
+# Subtest: CC0 1.0 Universal compiles only with matching source evidence and preserves exact recording bytes and credit
+ok 51 - CC0 1.0 Universal compiles only with matching source evidence and preserves exact recording bytes and credit
+  ---
+  duration_ms: 29.493875
+  ...
+# Subtest: CC BY 3.0 Unported compiles only with matching source evidence and preserves exact recording bytes and credit
+ok 52 - CC BY 3.0 Unported compiles only with matching source evidence and preserves exact recording bytes and credit
+  ---
+  duration_ms: 20.822917
+  ...
+# Subtest: CC BY 4.0 International compiles only with matching source evidence and preserves exact recording bytes and credit
+ok 53 - CC BY 4.0 International compiles only with matching source evidence and preserves exact recording bytes and credit
+  ---
+  duration_ms: 21.71425
+  ...
+# Subtest: CC BY 4.0 still refuses missing, different-source, different-version and unverified license evidence
+ok 54 - CC BY 4.0 still refuses missing, different-source, different-version and unverified license evidence
+  ---
+  duration_ms: 21.466583
+  ...
+# Subtest: expansion derivatives require the same retained encoder settings as the prior CoreAudio batch
+ok 55 - expansion derivatives require the same retained encoder settings as the prior CoreAudio batch
+  ---
+  duration_ms: 12.240167
+  ...
+# Subtest: noncommercial, no-derivatives and ShareAlike labels do not enter the explicit license allowlist
+ok 56 - noncommercial, no-derivatives and ShareAlike labels do not enter the explicit license allowlist
+  ---
+  duration_ms: 23.0635
+  ...
+# Subtest: CC BY 4.0 cannot bypass source hashes, runtime pins, derivative provenance or album ownership
+ok 57 - CC BY 4.0 cannot bypass source hashes, runtime pins, derivative provenance or album ownership
+  ---
+  duration_ms: 27.11525
+  ...
+# Subtest: CC BY 4.0 cannot authorize linked source audio
+ok 58 - CC BY 4.0 cannot authorize linked source audio
+  ---
+  duration_ms: 14.297959
+  ...
+# Subtest: admitted exact hosted recordings are mapped to streaming objects and leave game payload
+ok 59 - admitted exact hosted recordings are mapped to streaming objects and leave game payload
+  ---
+  duration_ms: 18.925208
+  ...
+# Subtest: empty or absent admissions keep reviewed local delivery unchanged
+ok 60 - empty or absent admissions keep reviewed local delivery unchanged
+  ---
+  duration_ms: 17.63575
+  ...
+# Subtest: archive admission rejects wrong hosted hash
+ok 61 - archive admission rejects wrong hosted hash
+  ---
+  duration_ms: 14.947167
+  ...
+# Subtest: archive admission rejects unverified objects
+ok 62 - archive admission rejects unverified objects
+  ---
+  duration_ms: 16.109708
+  ...
+# Subtest: archive admission rejects unpublished identity
+ok 63 - archive admission rejects unpublished identity
+  ---
+  duration_ms: 13.849125
+  ...
+# Subtest: archive admission rejects restricted rights
+ok 64 - archive admission rejects restricted rights
+  ---
+  duration_ms: 9.672291
+  ...
+# Subtest: archive admission rejects changed inventory bytes
+ok 65 - archive admission rejects changed inventory bytes
+  ---
+  duration_ms: 11.79925
+  ...
+# Subtest: archive admission rejects remote host
+ok 66 - archive admission rejects remote host
+  ---
+  duration_ms: 15.479291
+  ...
+# Subtest: archive admission rejects repeated track identity
+ok 67 - archive admission rejects repeated track identity
+  ---
+  duration_ms: 12.112625
+  ...
+# Subtest: archive admission rejects evidence traversal
+ok 68 - archive admission rejects evidence traversal
+  ---
+  duration_ms: 10.35675
+  ...
+# Subtest: archive admission rejects extra objects even if inventory and verification agree
+ok 69 - archive admission rejects extra objects even if inventory and verification agree
+  ---
+  duration_ms: 8.94175
+  ...
+# Subtest: archive evidence cannot resolve through a symlink
+ok 70 - archive evidence cannot resolve through a symlink
+  ---
+  duration_ms: 11.970667
+  ...
+# Subtest: distinct archive IDs cannot remove local audio behind conflicting inventory pins at the same hosted URL
+ok 71 - distinct archive IDs cannot remove local audio behind conflicting inventory pins at the same hosted URL
+  ---
+  duration_ms: 13.4635
+  ...
+# Subtest: an allowed alias cannot bypass another trusted same-hash redistribute restriction
+ok 72 - an allowed alias cannot bypass another trusted same-hash redistribute restriction
+  ---
+  duration_ms: 10.526708
+  ...
+# Subtest: an allowed alias cannot bypass another trusted same-hash webPlayback restriction
+ok 73 - an allowed alias cannot bypass another trusted same-hash webPlayback restriction
+  ---
+  duration_ms: 7.950083
+  ...
+# Subtest: mapping one alias keeps shared local delivery needed by an unmapped alias
+ok 74 - mapping one alias keeps shared local delivery needed by an unmapped alias
+  ---
+  duration_ms: 12.090125
+  ...
+# Subtest: publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+ok 75 - publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+  ---
+  duration_ms: 106.100625
+  ...
+# Subtest: real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies
+ok 76 - real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies
+  ---
+  duration_ms: 366.192542
+  ...
+# Subtest: absent album opt-in preserves output bytes and does not read the audio producer
+ok 77 - absent album opt-in preserves output bytes and does not read the audio producer
+  ---
+  duration_ms: 88.223916
+  ...
+# Subtest: opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+ok 78 - opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+  ---
+  duration_ms: 53.930625
+  ...
+# Subtest: incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+ok 79 - incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+  ---
+  duration_ms: 76.306041
+  ...
+# Subtest: all 70 hosted registrations retain provenance without inventing listening approval
+ok 80 - all 70 hosted registrations retain provenance without inventing listening approval
+  ---
+  duration_ms: 7.039334
+  ...
+# Subtest: real candidate producer compiles every tiny fixture, verifies import bytes and preserves output boundaries
+ok 81 - real candidate producer compiles every tiny fixture, verifies import bytes and preserves output boundaries
+  ---
+  duration_ms: 49.982791
+  ...
+# Subtest: real candidate producer refuses a changed final source body, false runtime hash and unassigned recording
+ok 82 - real candidate producer refuses a changed final source body, false runtime hash and unassigned recording
+  ---
+  duration_ms: 23.452709
+  ...
+# Subtest: real candidate producer refuses altered derivative provenance and changed runtime bytes
+ok 83 - real candidate producer refuses altered derivative provenance and changed runtime bytes
+  ---
+  duration_ms: 19.295416
+  ...
+# Subtest: approved original recordings are optional binaries while their catalogue remains offline metadata
+ok 84 - approved original recordings are optional binaries while their catalogue remains offline metadata
+  ---
+  duration_ms: 54.599458
+  ...
+1..84
+# tests 84
+# suites 0
+# pass 84
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 918.073583
