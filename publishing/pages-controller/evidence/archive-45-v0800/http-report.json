@@ -1,0 +1,19 @@
+{
+  "format": "revealline-archive-http-admission.v1",
+  "status": "PASS",
+  "base": "https://mekhovov.github.io/revealline-archive-45/",
+  "files": 886,
+  "expectedFiles": 886,
+  "verifiedBytes": 423409020,
+  "expectedBytes": 423409020,
+  "failedFiles": 0,
+  "skipped": [],
+  "attempts": 886,
+  "retryCount": 0,
+  "expectedInventorySha256": "4789af1e6729823ba284d3b6c8de745fdea2535d3a8e50bda7dddccd93d54150",
+  "rawReport": {
+    "path": "http-report-original.json",
+    "sha256": "a8578d6c73de80c4742bb742909b187c1afd839dff385bfd1f8b7c18fc4712fd"
+  },
+  "scope": "Complete public HTTP byte/hash audit; browser and offline behavior are separate."
+}
