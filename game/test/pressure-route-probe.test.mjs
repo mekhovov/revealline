@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 
 const late = new URL('../../scripts/probe-late-journey-pressure.mjs', import.meta.url);
 const spatial = new URL('../../scripts/probe-relay-fracture-pressure.mjs', import.meta.url);
+const district = new URL('../../scripts/probe-fracture-spatial.mjs', import.meta.url);
 const fixture = new URL('./fixtures/late-journey-pressure-routes.json', import.meta.url);
 const run = (cli, ...args) =>
   spawnSync(process.execPath, [cli.pathname, ...args], {
@@ -41,6 +42,22 @@ test('shared offline probe resumes only a matching public-input/checkpoint prefi
     'segments',
   ])
     assert.deepEqual(actual[field], row[field], field);
+});
+
+test('targeted hazard probe never treats a completed ordinary prefix as mastery', () => {
+  const ordinary = new URL('./fixtures/fracture-spatial-clear-routes.json', import.meta.url);
+  const result = run(
+    district,
+    'two-districts',
+    'standard',
+    'immediate',
+    '--hazard-first',
+    `--resume=${ordinary.pathname}`,
+    '--max-ms=1000',
+  );
+  assert.equal(result.status, 1, result.stderr);
+  assert.equal(result.stdout, '');
+  assert.match(result.stderr, /Completed prefix does not meet the requested offline target/);
 });
 
 test('bounded pressure probes reject unsupported missions and invalid input domains', () => {

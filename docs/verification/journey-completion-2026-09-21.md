@@ -56,8 +56,10 @@ separate gates. Older phase notes are provenance, not current release claims.
   and connector bypasses remain redesign targets. [Evidence](journey-relay-fracture-pressure.md).
 - Two Districts now has a separate asymmetric spatial study with18 clear/replay/
   race samples and a native Expert first return. Its old fast paths no longer
-  clear, but0/18 new paths neutralize the lethal field for optional mastery;
-  **qualification remains open**. [Study evidence](journey-fracture-spatial.md).
+  clear. The18 ordinary paths leave the lethal field; six additional bent-cut
+  paths now meet optional mastery in all configurations, with replay/equal-race
+  verification. Human/native-full-play/pacing/release qualification remains open.
+  [Study evidence](journey-fracture-spatial.md).
 - Native checking exposed and fixed stale closed-database retries in Studio;
  20/20 storage/recovery tests pass on both Node versions, with normal saved-slot
   restoration checked natively. [Storage evidence](studio-closed-storage-retry.md).
@@ -83,7 +85,7 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | P03 — Signal/terrain/catalogues/presentation/trace | Seven candidates/art; terrain contracts; actor catalogues; bounded trace benchmark; reactive captions | Whole-set native/human; final audio; public integration |
 | P04 — Neon | Seven candidates/art; frontier-shaping routes; Remix; replay/race/mastery/seed checks | Stronger-pressure retest, human pacing, public integration |
 | P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; route checks | Presentation/pressure successor, human balance, public integration |
-| P06 — Fractured Grid | Seven candidates/art; erosion/anchors/repair; Remix; all42 pressure clear/replay/race cases; opening observations; Two Districts spatial study and18 clear samples | Successor mastery routes and35–40second optimized pacing; repair/roamer teaching, human pacing, public integration |
+| P06 — Fractured Grid | Seven candidates/art; erosion/anchors/repair; Remix; all42 pressure clear/replay/race cases; opening observations; Two Districts spatial study,18 ordinary samples and6 separate mastery routes |35–40second optimized ordinary pacing; discoverability of bent hazard enclosures; repair/roamer teaching, human pacing, public integration |
 | P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; route checks | Whole-set native hit explanations, human difficulty, public integration |
 | P08 — Livewire | Seven candidates/art; telegraphed lanes; Remix; all42 stronger-pressure clear/replay/race cases;32 optional goals | Short-clear spatial review;10 optional-goal cases; human warning overlap/ordering, public integration |
 | P09 — Relay | Seven candidates/art; permanent connectors; Studio links; Remix; all42 pressure clear/replay/race cases; opening observations | Connector bypass/long post-objective intervals, human shortcut usefulness, public integration |
