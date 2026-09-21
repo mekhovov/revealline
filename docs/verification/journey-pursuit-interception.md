@@ -71,8 +71,21 @@ Motor remains a clear speed/pacing inversion risk; an aggressive interceptor can
 become easier to isolate. Stitch is a short teaching candidate. These are not
 human timings and do not prove desired60–150second first-play pacing or enjoyment.
 
-Native exact-source Studio/one live encounter per role remains required, followed
-by multi-seed/counterplay variants, device/reduced-effect/muted checks, human
+Native warning/commit observation beyond the launch/role checks below remains
+required, followed by multi-seed/counterplay variants, device/reduced-effect/muted checks, human
 understanding, mastery usefulness and pacing redesign. New sprite/material/art
 approval and optional combat actors are separate work. Integration PR/version/
 Pages belong to the release owner; do not add this to frozen v0.77.0.
+
+## Native exact-source observation
+
+Commit`4963722a`, read-only port8817: explicitly inspected/applied the six-variant
+project. Actor editor showed Trail pursuer and Heading interceptor with standard
+4.48cells/s and exact1s/1.5s/2.55s warning/commit/recovery. Started both Stitch return
+and Motor feint, made two real cuts in each, observed persistent TRAIL/HEAD labels
+and correct compact briefing, then paused and read the distinct role names in Field
+details. No losses or console warnings/errors were observed during those short
+cuts. Native observed coverage11.7%/0.8% respectively; neither was a native clear.
+The transient warning/commit phases were not visually captured in these native
+checks; their present evidence is the real-input fixtures and renderer tests, not
+an invented browser observation. Physical devices and human balance stay pending.
