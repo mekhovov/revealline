@@ -25,7 +25,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reference = (asset) => ({ id: asset.id, revision: asset.revision });
 const sources = {
-  ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs',
+  ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs',
   screens:
     'game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css',
   motion: 'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs',
@@ -49,11 +49,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: 'fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6',
+    sha256: 'b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41',
     evidence: [
-      'Scoped v0.76 UI source review: docs/verification/xposed-journey-v076-integration.md; UI recipe inputs sha256:fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6. Shared DOM ownership, exact manifest pins and operation-status ownership were reviewed on the composed source; component CSS bytes remain unchanged.',
-      'Independent Node20/Node22 cohorts cover equal-value layers, both release orders, stale external overrides, partial rollback, cancellation, decoded-resource lifetime, CSS/attribute cleanup and generation fences. Earlier UI approvals and all immutable production history remain preserved.',
-      'Functional source approval only. Complete native/forced-colour/screen-reader/device, art, offline, human and public acceptance remain separate. Any UI recipe input change reopens this group.',
+      'Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.',
+      'Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.',
+      'Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable.',
     ],
   },
   audio: {
