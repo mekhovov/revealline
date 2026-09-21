@@ -33,7 +33,12 @@ export function createTeamMissionCardPresenter(journey, progress) {
     route.textContent = diagram.route;
     const mastery = document.createElement('p');
     mastery.className = 'team-mission-mastery';
-    mastery.textContent = `Optional goal (not tracked): ${diagram.mastery}`;
+    mastery.textContent = diagram.mastery;
+    const optional = document.createElement('details'),
+      summary = document.createElement('summary');
+    optional.className = 'team-mission-optional';
+    summary.textContent = 'Optional goal · not tracked';
+    optional.append(summary, mastery);
     const figure = document.createElement('figure'),
       canvas = document.createElement('canvas'),
       caption = document.createElement('figcaption');
@@ -43,7 +48,7 @@ export function createTeamMissionCardPresenter(journey, progress) {
     canvas.setAttribute('aria-hidden', 'true');
     caption.className = 'team-discovery-teaser-message';
     caption.textContent =
-      'Starting map · craft 1 and 2, reclaimed ground and threat positions. Not a capture prediction. Original artwork pending.';
+      'Starting map · craft 1 + 2. Not a capture prediction. Original artwork pending.';
     try {
       const context = canvas.getContext('2d');
       if (!context) throw new Error('Canvas unavailable');
@@ -54,7 +59,7 @@ export function createTeamMissionCardPresenter(journey, progress) {
         'Starting-map diagram unavailable. Route details and Play remain available. Original artwork pending.';
     }
     figure.append(canvas, caption);
-    card.append(detail, completion, figure, route, mastery);
+    card.append(detail, completion, figure, route, optional);
     return true;
   };
 }

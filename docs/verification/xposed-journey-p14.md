@@ -440,3 +440,25 @@ Legacy picture detail hides filter chrome and keeps its existing Back behavior.
 The combined89-case discovery/preview/input/difficulty/full-Journey cohort passes
 on both Node20 and22, including12 consecutive legal clears and reversible Skip.
 Scoped formatting/lint/diff checks pass. Native search remains a separate next check.
+
+Native exact `21d6f467` on local port8810 verifies Search lookout → one result,
+Enter staying in Search, one Play launching Shared lookout at0%/two reserves,
+Pause → Browse → Changing common ground filter showing4 of14 cards → Back to
+the unchanged four-second paused attempt. Focus returns to Browse Team arenas.
+
+### Journey terminology and optional card detail
+
+All explicit Journey Team editions now use reclaimed ground in the HUD, closure,
+independent-cut instructions, Support/rescue help and self-trail failure advice.
+The wording is edition-based, not dependent on whether a roamer happens to be
+present. Historical Team editions keep their established wording. No simulation,
+level, replay, coverage or receipt bytes change. The normal-viewport card review
+also led to an optional-goal disclosure: the route question and Play remain visible,
+while optional untracked mastery detail is available without crowding every card.
+
+The46-case terminology/card/briefing/recovery/material/roamer/search/host cohort
+passes on both Node20 and22. It covers all36 candidate presets, representative
+foundation/material/roamer host setups and untouched historical guidance. The
+full27-case Team Journey flow passes on Node22; the changed held-direction case
+also passes on Node20. Scoped format/lint/diff checks pass. Native compact-card
+and early-Journey wording inspection remain next, not human qualification.

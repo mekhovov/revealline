@@ -1,3 +1,5 @@
+import { coopGroundName } from './coop-ground.mjs';
+
 /** Describe observed failures without assigning blame or changing game state. */
 export function coopFailureFeedback(run, event) {
   if (event?.cause === 'lethal-terrain')
@@ -8,7 +10,7 @@ export function coopFailureFeedback(run, event) {
   if (event?.cause === 'self-trail')
     return {
       cause: 'An unfinished line crossed itself.',
-      advice: 'Close your loop on safe ground before crossing your own line.',
+      advice: `Close your loop on ${coopGroundName(run.level)} before crossing your own line.`,
     };
   if (event?.cause === 'line-impact')
     return {
