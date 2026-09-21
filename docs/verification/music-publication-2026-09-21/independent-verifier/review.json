@@ -1,0 +1,151 @@
+{
+  "format": "revealline-independent-preview-verification.v1",
+  "recordedAt": "2026-09-21T06:10:41.864Z",
+  "reviewer": "Codex independent verifier subagent; authored verifier/workflow templates, reviewed separate preview builder read-only",
+  "sourceContext": {
+    "commit": "6b0c3d0aac6789174964a2d4455d11e1a0daf15f",
+    "note": "Commit identifies authoring context; explicit source file hashes bind working bytes."
+  },
+  "previewRepository": {
+    "commit": "833bacbe2fa6a426053085fbd9c408d0a2cac21c",
+    "worktreeClean": true,
+    "path": ".cache/licensed-preview-archive-2026-09-21"
+  },
+  "scope": "Local exact-byte public preview integrity and bounded verifier refusal checks; no publication/deployment or listening certification.",
+  "finalRun": {
+    "executable": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "nodeVersion": "v20.19.5",
+    "argv": [
+      "authoring/library/licensed-audio/preview-site/verify.mjs",
+      "--root",
+      ".cache/licensed-preview-archive-2026-09-21"
+    ],
+    "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest",
+    "exitCode": 0,
+    "result": {
+      "verified": true,
+      "tracks": 70,
+      "audioBytes": 354986122,
+      "publicBytes": 355267348,
+      "manifestSha256": "5c4f28b184258e4980ab04ad698bab8b200134d73b717f06568a2768aa1a420f",
+      "staged": false
+    },
+    "output": "independent-final-verify.json"
+  },
+  "retainedOtherAgentEvidence": {
+    "file": "licensed-preview-builder-tests.log",
+    "tests": 38,
+    "pass": 38,
+    "fail": 0,
+    "note": "Original TAP log copied exactly from /tmp. Inspected summary; not rerun by this reviewer. Command not embedded in original log; colleague reported preview-builder plus existing archive suites."
+  },
+  "previousVerifierChecks": {
+    "evidenceKind": "Observed tool execution transcript; summary retained here. Original raw refusal-test script/output was not saved as a file.",
+    "verifierSha256": "355103f296882f3c007ff0ad3102781ec6dfc9fc9aac7bc97b173e2e90618800",
+    "metadataPositive": 1,
+    "metadataRefusalCases": [
+      "Wrong track count",
+      "Wrong total audio bytes",
+      "Duplicate declared public path",
+      "Traversal/non-hash object path",
+      "Missing CREDITS.md",
+      "File at 100 MB bound",
+      "Mismatched inventory hash",
+      "Game catalogue admission true",
+      "Listening approval claimed",
+      "Non-project archive URL",
+      "Mismatched archive inventory hash",
+      "Unsupported CC BY-NC license",
+      "Missing attribution",
+      "Credential-bearing source URL",
+      "Duplicate preview recording object"
+    ],
+    "filesystemRefusalCases": [
+      "Unexpected root file",
+      "Symlink even at excluded verifier path",
+      "Unexpected object filename",
+      "Missing declared objects"
+    ],
+    "staging": {
+      "manifestSha256": "4b83726bf805851276d72648c12a12e453f1ee5071cde041bc4c2379b544b2c7",
+      "publicBytes": 355261006,
+      "audioBytes": 354986122,
+      "tracks": 70,
+      "fullHashesBeforeAndAfter": true,
+      "privateFilesAbsent": true,
+      "hardlinkInodeChecked": true,
+      "existingDestinationRefused": true,
+      "ownTemporaryStageRemoved": true,
+      "note": "This end-to-end stage check preceded the final player error-clear change. Final payload was fully hashed independently, but staging was not repeated against the final manifest."
+    },
+    "syntaxCheckPassed": true,
+    "scopedESLintPassed": true,
+    "prettierPassed": true
+  },
+  "sourcePins": [
+    {
+      "path": "authoring/library/licensed-audio/preview-site/verify.mjs",
+      "bytes": 13391,
+      "sha256": "355103f296882f3c007ff0ad3102781ec6dfc9fc9aac7bc97b173e2e90618800"
+    },
+    {
+      "path": "authoring/library/licensed-audio/preview-site/pages.yml",
+      "bytes": 955,
+      "sha256": "25e0a86417a28b5749bc35aad6d461f1b19dc1ed0c5bfd2274c9d58df2627068"
+    },
+    {
+      "path": "scripts/build-licensed-preview-archive.mjs",
+      "bytes": 20696,
+      "sha256": "3ff1b3b761f5d560c00e1752d3e03e9dd7b9e726020e751a8c9fe5dc99b38f75"
+    },
+    {
+      "path": "scripts/test-build-licensed-preview-archive.mjs",
+      "bytes": 15533,
+      "sha256": "9e2c79a41a6281be2571fe03ff8e1da62e9916885350a0cb07b4b2ce20a34286"
+    },
+    {
+      "path": "scripts/test-build-soundtrack-archive.mjs",
+      "bytes": 16279,
+      "sha256": "b2ab6522499d4dbbe221580dd94c0da6d8421969a1ad9db275cb4f342aeabc6b"
+    },
+    {
+      "path": ".cache/licensed-preview-archive-2026-09-21/verify.mjs",
+      "bytes": 13391,
+      "sha256": "355103f296882f3c007ff0ad3102781ec6dfc9fc9aac7bc97b173e2e90618800"
+    },
+    {
+      "path": ".cache/licensed-preview-archive-2026-09-21/.github/workflows/pages.yml",
+      "bytes": 955,
+      "sha256": "25e0a86417a28b5749bc35aad6d461f1b19dc1ed0c5bfd2274c9d58df2627068"
+    },
+    {
+      "path": ".cache/licensed-preview-archive-2026-09-21/player.mjs",
+      "bytes": 3385,
+      "sha256": "9f9fb4ba8fcc837c48dbcbd531067c8627c3cc6d76d4ebc7833309bbac3c3c14"
+    },
+    {
+      "path": ".cache/licensed-preview-archive-2026-09-21/inventory.json",
+      "bytes": 15081,
+      "sha256": "2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd"
+    },
+    {
+      "path": ".cache/licensed-preview-archive-2026-09-21/preview-catalogue.json",
+      "bytes": 103709,
+      "sha256": "4d10e0cf9074c6d72c7896db9f6e1c9c8d132a34ac4eca0a7c5deeed6eb82950"
+    },
+    {
+      "path": ".cache/licensed-preview-archive-2026-09-21/deployment-manifest.json",
+      "bytes": 18089,
+      "sha256": "5c4f28b184258e4980ab04ad698bab8b200134d73b717f06568a2768aa1a420f"
+    }
+  ],
+  "limits": [
+    "No listening or musical quality approval",
+    "No game catalogue admission",
+    "No subjective Ukrainian cultural approval",
+    "No UA-FPV files included",
+    "No external publication or Pages deployment verified by this evidence",
+    "No full game tests or physical-device checks claimed",
+    "The final player behavior change is outside this integrity review; see separate site review"
+  ]
+}

@@ -1,0 +1,1 @@
+First public verification attempt stopped at .nojekyll: curl HTTP 404. This is the zero-byte deployment configuration marker. No 70-file success was claimed from that attempt. The corrected remote audit excludes only this known deployment-only marker and retains its 404 status. All MP3 and public metadata endpoints still require HTTP200, exact bytes and SHA-256.
