@@ -1,5 +1,14 @@
 # RevealLine: delivery plan and remaining work
 
+**Current implementation authority (21 September 2026):** the [whole-game plan](whole-game-ux-plan.md) retains phase requirements and sequencing, the [execution register](cross-mode-execution.md) records scoped evidence, and the approved [XPOSED Journey plan](xposed-journey-plan.md) supersedes the earlier 132-mission allocation. The phase mapping and content accounting below retain their historical scope; candidate missions are not delivered content.
+
+**Accepted public baseline: [v0.76.1](https://mekhovov.github.io/revealline/releases/v0.76.1/site/game/).** Exact source `17bd1965a2979489f5a163de13dc23c47c5b538d` was published by [PR210](https://github.com/mekhovov/revealline/pull/210), publisher commit `3e1c4ec8740a117f56dd91faa4f0dc4978282a19`. [Pages run35551436420](https://github.com/mekhovov/revealline/actions/runs/35551436420) deployed successfully as `6560099093`; the independent public inventory audit verified all 4,130 files / 864,317,088 bytes. This updates the public baseline, not whole-phase or physical-device acceptance.
+
+**Current source work:** later Team, Studio and navigation corrections retain their own source/native qualification and release gates. They are not included in public acceptance merely because they are prepared or integrated. Historical Motion/Settings publication blockers below describe the 17 September checkpoint, not the current delivery state.
+
+<details>
+<summary>Historical checkpoint — 17 September 2026</summary>
+
 **Current implementation authority (17 September 2026):** [whole-game execution plan](whole-game-ux-plan.md). Recovery v0.60.4 remains the accepted public baseline. Motion v0.60.5 source `a336f183` is qualified and frozen, and source PR #93 is merged; publication remains pending uploader recovery. Settings source `a506b060` is composed onto reviewed uploader utility `e4129b46` (PR #95), which descends from Motion merge `3f94acc6`. The uploader utility is not yet accepted on main, and source composition does not establish public acceptance of Settings or complete P03/P05. The whole-game plan controls sequencing; the preceding roadmap, evidence and content accounting below are retained requirements, not an alternative current order.
 
 Updated 17 September 2026. The [whole-game plan](whole-game-ux-plan.md) determines current implementation order; the [execution register](cross-mode-execution.md) retains phase evidence and acceptance records. The roadmap below preserves earlier phase mapping and outstanding requirements. Historical reports retain their original dates and scope.
@@ -9,6 +18,8 @@ Updated 17 September 2026. The [whole-game plan](whole-game-ux-plan.md) determin
 **Active delivery:** Motion v0.60.5 publication awaits uploader recovery; its source qualification, frozen artifact and merged PR #93 do not establish public acceptance. Settings v0.60.6 is composed on the reviewed utility ancestry and awaits fresh integrated qualification. The prepared Team artwork candidate remains separate: it must preserve the full picture as an earned reward, retain the exact selected artwork, and pass actual browser play and publication gates.
 
 **Settings qualification:** both required hosted runs for source `2330e5e6` completed on Node 20.19.6 with **5,573 tests: 5,569 passed and four known stale navigation-test failures per run**, zero skipped or cancelled. The corrections are in predecessor `c3fb3296` and its rebased successor `a506b060`. Fresh exact-source gates on the integrated result, followed by release and public verification, remain required.
+
+</details>
 
 ## Delivery order
 
