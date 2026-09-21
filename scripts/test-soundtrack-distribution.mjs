@@ -1,15 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {
-  mkdtemp,
-  mkdir,
-  readFile,
-  writeFile,
-  rm,
-  symlink,
-  realpath,
-  access,
-} from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, writeFile, rm, symlink, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -22,10 +13,11 @@ import {
   writePublishedSoundtrackMetadata,
 } from './soundtrack-distribution.mjs';
 import { albumFixture, albumCatalog } from '../game/test/helpers/soundtrack-albums.mjs';
+import { importSoundtrackBundle } from '../game/soundtrack-bundle.mjs';
 import {
-  buildSoundtrackAlbums,
-  writeSoundtrackAlbums,
-} from '../authoring/library/licensed-audio/build.mjs';
+  fixture as audioFixture,
+  structuralProbe,
+} from '../game/test/helpers/soundtrack-fixtures.mjs';
 
 const source = fileURLToPath(new URL('../', import.meta.url));
 const option = {
@@ -33,6 +25,13 @@ const option = {
   catalog: 'game/content/optional-soundtracks.json',
 };
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const licensedFolder = 'authoring/library/licensed-audio';
+const licenses = [
+  ['CC0 1.0 Universal', 'https://creativecommons.org/publicdomain/zero/1.0/'],
+  ['CC BY 3.0 Unported', 'https://creativecommons.org/licenses/by/3.0/'],
+  ['CC BY 4.0 International', 'https://creativecommons.org/licenses/by/4.0/'],
+];
+const licenseStatus = 'primary creator submission license declaration verified';
 async function fixture(t) {
   const dir = await realpath(await mkdtemp(path.join(os.tmpdir(), 'soundtrack-build-')));
   t.after(() => rm(dir, { recursive: true, force: true }));
@@ -197,51 +196,216 @@ test('incorrect compiled body, symbolic source or automatic binary inclusion ref
   await assert.rejects(buildProject(f), /outside automatic includes/);
   assert.deepEqual(await readFile(path.join(f.out, 'distribution.zip')), before);
 });
-test('candidate producer binds every admitted source and stays separate from published catalogue', async (t) => {
-  const register = JSON.parse(
-    await readFile(path.join(source, 'authoring/library/licensed-audio/sources.json')),
-  );
-  const available = await Promise.all(
-    register.tracks.flatMap((track) =>
-      [track.original.path, track.runtime.path].map(async (relative) => {
-        try {
-          await access(path.join(source, 'authoring/library/licensed-audio', relative));
-          return true;
-        } catch (error) {
-          if (error.code === 'ENOENT') return false;
-          throw error;
-        }
-      }),
-    ),
-  );
-  if (available.some((present) => !present)) {
-    t.skip(
-      'Local unreviewed creator recordings are not distributed in a source checkout; synthetic distribution and publication-refusal tests still run.',
+test('all 70 candidate registrations retain album, license and derivative provenance without publication admission', async () => {
+  // Metadata integrity only: private creator recordings are not needed or read here.
+  const load = async (name) =>
+    JSON.parse(await readFile(path.join(source, licensedFolder, name), 'utf8'));
+  const register = await load('sources.json');
+  const initial = await load('provenance/derivatives.json');
+  const additional = await load('provenance/additional-derivatives.json');
+  const expansion = await load('provenance/expansion-derivatives.json');
+  const evidence = await load('provenance/license-revalidation.json');
+  const derivatives = [...initial.tracks, ...additional.tracks, ...expansion.tracks];
+  assert.equal(register.format, 'revealline-licensed-audio-source.v1');
+  assert.equal(register.tracks.length, 70);
+  assert.equal(register.albums.length, 15);
+  assert.equal(new Set(register.tracks.map((track) => track.id)).size, 70);
+  assert.equal(new Set(register.albums.map((album) => album.id)).size, 15);
+  assert.deepEqual(register.encoder, initial.encoder);
+  assert.deepEqual(expansion.encoder, additional.encoder);
+  const assigned = register.albums.flatMap((album) => {
+    assert(album.trackIds.length > 0 && album.trackIds.length <= 128);
+    for (const id of album.trackIds)
+      assert(register.tracks.some((track) => track.id === id && track.albumId === album.id));
+    return album.trackIds;
+  });
+  assert.equal(assigned.length, 70);
+  assert.deepEqual(new Set(assigned), new Set(register.tracks.map((track) => track.id)));
+  for (const track of register.tracks) {
+    const licenseURL = licenses.find(([license]) => license === track.license)?.[1];
+    assert(licenseURL, track.id);
+    assert.equal(track.licenseURL, licenseURL);
+    assert(
+      evidence.sources.some(
+        (item) =>
+          item.source === track.source &&
+          item.selectedLicenseURL === licenseURL &&
+          item.status === licenseStatus,
+      ),
+      track.id,
     );
-    return;
+    for (const pin of [track.original, track.runtime]) {
+      assert(!path.isAbsolute(pin.path));
+      assert(pin.path.split('/').every((part) => part && part !== '.' && part !== '..'));
+      assert(Number.isSafeInteger(pin.bytes) && pin.bytes > 0 && pin.bytes <= 32 * 1024 * 1024);
+      assert.match(pin.sha256, /^[a-f0-9]{64}$/);
+    }
+    assert(track.runtime.path.endsWith('.mp3'));
+    if (track.original.path === track.runtime.path) {
+      assert.deepEqual(track.original, track.runtime);
+      assert.equal(track.derivative, null);
+    } else {
+      assert(track.original.path.endsWith(`/${track.derivative.sourceName}`));
+      assert(track.original.path.endsWith('.ogg'));
+      assert.equal(track.runtime.path, `derivatives/${track.derivative.name}`);
+      assert.equal(track.derivative.sourceSha256, track.original.sha256);
+      assert.equal(track.derivative.sourceBytes, track.original.bytes);
+      assert.equal(track.derivative.sha256, track.runtime.sha256);
+      assert.equal(track.derivative.bytes, track.runtime.bytes);
+      assert.deepEqual(
+        derivatives.find((item) => item.sha256 === track.runtime.sha256),
+        track.derivative,
+      );
+    }
   }
+  assert.equal(register.tracks.filter((track) => track.derivative !== null).length, 33);
+  assert.equal(derivatives.length, 33);
+  assert.deepEqual(await load('publication.json'), {
+    format: 'revealline-licensed-publication.v1',
+    approved: [],
+  });
+  const published = JSON.parse(await readFile(path.join(source, option.catalog), 'utf8'));
+  assert.deepEqual(published.albums, []);
+  const catalogue = JSON.parse(
+    await readFile(path.join(source, 'game/content/soundtrack-catalogue.json'), 'utf8'),
+  );
+  assert.deepEqual(catalogue.tracks, []);
+});
+
+async function candidateFixture(t) {
+  const f = await fixture(t);
+  // Import the unmodified real compiler under a temporary source root. It receives
+  // only reproducible coded-silence fixtures, never private originals or network input.
+  await f.put(
+    `${licensedFolder}/build.mjs`,
+    await readFile(path.join(source, licensedFolder, 'build.mjs')),
+  );
+  const bodies = new Map();
+  const tracks = [];
+  for (const [index, [license, licenseURL]] of licenses.entries()) {
+    const bytes = Buffer.from(await (await audioFixture(`producer-${index}`)).blob.arrayBuffer());
+    const pin = { path: `originals/silence-${index}.mp3`, bytes: bytes.length, sha256: sha(bytes) };
+    const track = {
+      id: `qa.producer-track-${index}`,
+      title: `Synthetic coded silence ${index}`,
+      artist: 'RevealLine tests',
+      albumId: index < 2 ? 'qa.producer-one' : 'qa.producer-two',
+      source: `https://example.test/synthetic-silence-${index}`,
+      credit: 'Synthetic MPEG frame fixture; not a musical recording approval.',
+      license,
+      licenseURL,
+      original: { ...pin },
+      runtime: { ...pin },
+      derivative: null,
+      fileName: `Synthetic coded silence ${index}.mp3`,
+      tags: { genres: ['chiptune'], role: 'any', energy: 3, themes: ['retro'] },
+    };
+    tracks.push(track);
+    bodies.set(track.id, bytes);
+    await f.put(`${licensedFolder}/${pin.path}`, bytes);
+  }
+  const register = {
+    format: 'revealline-licensed-audio-source.v1',
+    encoder: {},
+    tracks,
+    albums: ['qa.producer-one', 'qa.producer-two'].map((id) => ({
+      id,
+      title: `Synthetic album ${id}`,
+      genre: 'Chiptune',
+      description: 'Test-only coded silence; no production audio payload.',
+      credit: 'RevealLine tests',
+      source: 'https://example.test/synthetic-silence',
+      trackIds: tracks.filter((track) => track.albumId === id).map((track) => track.id),
+    })),
+  };
+  const save = () => f.put(`${licensedFolder}/sources.json`, JSON.stringify(register));
+  await save();
+  for (const name of ['derivatives', 'additional-derivatives', 'expansion-derivatives'])
+    await f.put(
+      `${licensedFolder}/provenance/${name}.json`,
+      JSON.stringify({ encoder: {}, tracks: [] }),
+    );
+  await f.put(
+    `${licensedFolder}/provenance/license-revalidation.json`,
+    JSON.stringify({
+      sources: tracks.map((track) => ({
+        source: track.source,
+        selectedLicenseURL: track.licenseURL,
+        status: licenseStatus,
+      })),
+    }),
+  );
+  const producer = await import(pathToFileURL(path.join(f.root, licensedFolder, 'build.mjs')));
+  return { ...f, register, bodies, saveRegister: save, ...producer };
+}
+
+test('real candidate producer compiles every tiny fixture, verifies import bytes and preserves output boundaries', async (t) => {
+  const f = await candidateFixture(t);
+  const { buildSoundtrackAlbums, writeSoundtrackAlbums, register } = f;
   const result = await buildSoundtrackAlbums();
   const catalog = result.catalog;
   assert.equal(catalog.albums.length, register.albums.length);
+  assert.equal(result.bundles.length, register.albums.length);
   assert.equal(
     new Set(catalog.albums.flatMap((a) => a.library.tracks.map((t) => t.id))).size,
     register.tracks.length,
   );
-  assert.equal(register.tracks.length, 70);
   for (const bundle of result.bundles) {
     const metadata = catalog.albums.find((album) => album.path === bundle.name);
     assert.equal(bundle.bytes.length, metadata.bytes);
     assert.equal(sha(bundle.bytes), metadata.sha256);
+    const restored = await importSoundtrackBundle(new Blob([bundle.bytes]), {
+      probeMedia: structuralProbe,
+    });
+    assert.deepEqual(restored.library, metadata.library);
+    for (const track of restored.library.tracks) {
+      const declared = register.tracks.find((item) => item.id === track.id);
+      assert.equal(track.asset.sha256, declared.runtime.sha256);
+      assert.equal(track.asset.bytes, declared.runtime.bytes);
+      assert.equal(track.fileName, declared.fileName);
+      assert.deepEqual(restored.library.tags[track.id], declared.tags);
+      assert.deepEqual(track.rights, {
+        kind: 'licensed',
+        credit: declared.credit,
+        license: declared.license,
+        source: declared.source,
+      });
+      const asset = restored.assets.find((item) => item.sha256 === track.asset.sha256);
+      assert.deepEqual(Buffer.from(await asset.blob.arrayBuffer()), f.bodies.get(track.id));
+    }
   }
   assert(result.bundles.every((body) => body.bytes.length <= 64 * 1024 * 1024));
-  await assert.rejects(writeSoundtrackAlbums(path.join(source, 'game')), /fresh source cache/);
-  await assert.rejects(writeSoundtrackAlbums(path.join(source, '.cache')), /fresh source cache/);
-  await mkdir(path.join(source, '.cache'), { recursive: true });
-  const held = await mkdtemp(path.join(source, '.cache', 'album-output-held-'));
-  t.after(() => rm(held, { recursive: true, force: true }));
+  await f.put(option.catalog, JSON.stringify(catalog));
+  assert.deepEqual(await readSoundtrackDistributionEntries(f.root, option), result.bundles);
+  const stale = structuredClone(catalog);
+  stale.albums[1].title = 'Stale candidate catalogue';
+  await f.put(option.catalog, JSON.stringify(stale));
+  await assert.rejects(readSoundtrackDistributionEntries(f.root, option), /catalog differs/);
+
+  await assert.rejects(writeSoundtrackAlbums(path.join(f.root, 'game')), /fresh source cache/);
+  await assert.rejects(writeSoundtrackAlbums(path.join(f.root, '.cache')), /fresh source cache/);
+  await mkdir(path.join(f.root, '.cache'));
+  const held = await mkdtemp(path.join(f.root, '.cache', 'album-output-held-'));
   await writeFile(path.join(held, 'preserve.txt'), 'existing output');
   await assert.rejects(writeSoundtrackAlbums(held), /already exists/);
   assert.equal(await readFile(path.join(held, 'preserve.txt'), 'utf8'), 'existing output');
+});
+
+test('real candidate producer refuses a changed final source body, false runtime hash and unassigned recording', async (t) => {
+  const f = await candidateFixture(t);
+  const track = f.register.tracks.at(-1);
+  const body = f.bodies.get(track.id);
+  await f.put(`${licensedFolder}/${track.original.path}`, Buffer.alloc(body.length));
+  await assert.rejects(f.buildSoundtrackAlbums(), /Audio original differs/);
+  await f.put(`${licensedFolder}/${track.original.path}`, body);
+  const runtimeHash = track.runtime.sha256;
+  track.runtime.sha256 = '0'.repeat(64);
+  await f.saveRegister();
+  await assert.rejects(f.buildSoundtrackAlbums(), /inspection differs/);
+  track.runtime.sha256 = runtimeHash;
+  f.register.albums.pop();
+  await f.saveRegister();
+  await assert.rejects(f.buildSoundtrackAlbums(), /Source track has no album/);
 });
 
 test('approved original recordings are optional binaries while their catalogue remains offline metadata', async (t) => {
