@@ -259,6 +259,11 @@ export function classicView(run) {
       let pressure;
       if (rawPressure !== undefined) {
         check(type === 'bouncer' && own(rawPressure, 'version') === 'enemy-pressure-state.v1');
+        const recipe = dense(own(own(definition, 'enemyPressure'), 'actors'), 8).find(
+          (entry) => identity(entry) === id,
+        );
+        const pressureMode = own(recipe, 'mode');
+        check(['trail-pursuit', 'head-intercept'].includes(pressureMode));
         const phase = own(rawPressure, 'phase');
         check(['patrol', 'warning', 'committed', 'cooldown'].includes(phase));
         const rawTarget = own(rawPressure, 'target');
@@ -273,6 +278,7 @@ export function classicView(run) {
         const deadline = deadlineKey ? own(rawPressure, deadlineKey) : null;
         check(deadline === null ? phase === 'patrol' : integer(deadline));
         pressure = {
+          mode: pressureMode,
           phase,
           target,
           seconds: deadline === null ? 0 : Math.max(0, deadline - actorTick) * FIXED_DT,
@@ -727,10 +733,17 @@ export function drawEnemyPressure(
   const unit = Math.min(4, Math.max(1, 1 / Math.max(0.1, screenScale)));
   for (const enemy of view.enemies) {
     const pressure = enemy.pressure;
-    if (!pressure || pressure.phase === 'patrol') continue;
+    if (!pressure) continue;
     const warning = pressure.phase === 'warning',
       cooldown = pressure.phase === 'cooldown',
-      color = cooldown ? palette.safe : warning ? '#ffd17a' : '#ff866e';
+      color =
+        pressure.phase === 'patrol'
+          ? '#b9d5dc'
+          : cooldown
+            ? palette.safe
+            : warning
+              ? '#ffd17a'
+              : '#ff866e';
     ctx.save();
     ctx.strokeStyle = color;
     ctx.lineWidth = unit;
@@ -765,7 +778,11 @@ export function drawEnemyPressure(
           ],
         ]);
     }
-    const label = cooldown ? 'REST' : warning ? 'AIM' : 'CHASE',
+    const role = pressure.mode === 'trail-pursuit' ? 'TRAIL' : 'HEAD';
+    const label =
+        pressure.phase === 'patrol'
+          ? role
+          : `${cooldown ? 'REST' : warning ? 'AIM' : 'CHASE'} ${role}`,
       textWidth = (label.length * 8.4 + 8) * unit,
       x = Math.max(0, Math.min(1152 - textWidth, enemy.x * SIZE - textWidth / 2)),
       y = Math.max(

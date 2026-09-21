@@ -1,6 +1,7 @@
 // Bounded omniscient route search: feasibility evidence only, not enjoyment,
 // human timing or an automatic reason to publish a map. Never writes fixtures.
 import { createCulturalWorkshopCandidates } from '../game/content-design/cultural-workshop-candidates.mjs';
+import { createPursuitInterceptCandidates } from '../game/content-design/pursuit-intercept-candidates.mjs';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import { createRun, stepRun, FIXED_DT, CELL, DIRECTIONS } from '../game/core/index.mjs';
 import {
@@ -11,7 +12,11 @@ import {
   verifyReplay,
 } from '../game/replay.mjs';
 
-const project = compileContentProject(createCulturalWorkshopCandidates());
+const project = compileContentProject(
+  process.argv[5] === 'pressure'
+    ? createPursuitInterceptCandidates()
+    : createCulturalWorkshopCandidates(),
+);
 const id = process.argv[2] ?? 'all',
   difficulty = process.argv[3] ?? 'standard',
   turnPolicy = process.argv[4] ?? 'immediate';
@@ -144,11 +149,16 @@ for (const mission of project.missions.filter((m) => id === 'all' || m.id === id
       options,
       'omniscient-feasibility-not-human-validation',
     );
+  const pressureEvents = {};
   for (const [direction, ticks] of segments)
     for (let n = 0; n < ticks; n++) {
       if (fresh.status !== 'running') throw new Error('Route input after completion');
       recordInput(recorder, { direction });
       stepRun(fresh, { direction }, FIXED_DT);
+      for (const event of fresh.events.filter((e) => e.type.startsWith('pressure.'))) {
+        const key = `${event.id}:${event.type}`;
+        pressureEvents[key] = (pressureEvents[key] ?? 0) + 1;
+      }
     }
   if (
     fresh.status !== 'won' ||
@@ -169,6 +179,7 @@ for (const mission of project.missions.filter((m) => id === 'all' || m.id === id
       status: 'won',
       seconds: fresh.time,
       cuts,
+      pressureEvents,
       simulationIdentity: manifest.simulationIdentity,
       checkpoint: authoritativeCheckpoint(fresh).hash,
       segments: compact,

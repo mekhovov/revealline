@@ -54,6 +54,13 @@ export function inspectPressureDifficulty(source) {
               retainsField: project.actors.roles[sourceActor.role].retainsField,
               speed,
               speedRelativeToCraft: speed / level.rules.moveSpeed,
+              ...(level.classic?.enemyPressure?.actors.some((entry) => entry.id === actor.id)
+                ? {
+                    pressureTiming: level.classic.enemyPressure.actors.find(
+                      (entry) => entry.id === actor.id,
+                    ),
+                  }
+                : {}),
               laneTiming:
                 actor.type === 'lane-boss'
                   ? {

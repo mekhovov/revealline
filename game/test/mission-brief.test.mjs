@@ -126,8 +126,8 @@ test('pressure brief explains locked commitment while preserving the full author
   const level = structuredClone(classicLab.campaigns[0].levels[0]);
   level.classic.enemyPressure = { version: 'enemy-pressure.v1', actors: [{ id: 'demo' }] };
   const result = missionBriefing(level);
-  assert.match(result.copy, /AIM locks a target/);
-  assert.match(result.copy, /Turn before CHASE/);
-  assert.match(result.status, /choose another exit/);
+  assert.match(result.copy, /AIM locks. Evade HEAD/);
+  assert.match(result.copy, /close before TRAIL catches up/);
+  assert.match(result.status, /turn away from a heading lock/);
   assert.equal(result.fullBrief, level.metadata.description);
 });

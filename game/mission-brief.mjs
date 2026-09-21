@@ -74,7 +74,7 @@ export function missionBriefing(
           ? 'Lanes lock, warn, then fire. Leave the lane and secure exposed trail.'
           : '',
         level.classic?.enemyPressure?.actors?.length
-          ? 'AIM locks a target. Turn before CHASE; REST returns it to patrol.'
+          ? 'AIM locks. Evade HEAD; close before TRAIL catches up.'
           : '',
         level.classic?.powerups?.length ? 'Touch pickups to collect their effects.' : '',
         level.classic?.timedBonuses
@@ -131,7 +131,7 @@ export function missionBriefing(
       : intro
         ? 'Your first route: fly down from the marked start to the opposite border.'
         : level.classic?.enemyPressure?.actors?.length
-          ? 'AIM → CHASE → REST. Bait a locked target, then choose another exit.'
+          ? 'AIM → CHASE → REST. Close to cancel pursuit; turn away from a heading lock.'
           : 'Choose your route. Open Missions → Mission brief for guidance.',
   });
 }

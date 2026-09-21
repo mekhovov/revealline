@@ -112,7 +112,7 @@ export function flightDetailsModel(information, context) {
             ? ' Movement slowed.'
             : '';
       threats.push(
-        `${enemy.impactCarrier ? 'Trail-impact carrier' : roles[enemy.type] || 'Unfamiliar enemy'}: ${enemyState(enemy)}.${effect}`,
+        `${enemy.impactCarrier ? 'Trail-impact carrier' : enemy.pressure?.mode === 'trail-pursuit' ? 'Trail pursuer' : enemy.pressure?.mode === 'head-intercept' ? 'Heading interceptor' : roles[enemy.type] || 'Unfamiliar enemy'}: ${enemyState(enemy)}.${effect}`,
       );
     }
     for (const mark of classic.erosion)
