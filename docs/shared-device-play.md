@@ -53,3 +53,57 @@ describes standalone display; installing is optional, and ordinary browser play 
 fit the visible viewport independently of Fullscreen API availability.
 
 See `docs/verification/shared-device-play/status.json` for scope and retained failures.
+
+## Second iteration: rendered layouts and compatibility
+
+The couch surfaces now match Solo's 156px Regular / 192px Large targets, compass,
+instruction and floating-ring feedback. Each seat still owns a separate finger.
+Landscape Team uses floating corner controls and a full-height complete arena.
+Tall portrait Versus docks each control below its own board; short layouts use
+translucent overlays. Standard Team counters occupy a 44px strip; Large portrait
+uses 74px so rescue and Support remain readable. Stronghold instructions retain
+an additional authored-objective row. These are presentation sizes, not hitboxes.
+
+Native checks caught and corrected a collapsed Versus arena row, an obsolete
+first-player side column, overlapping Team badges, duplicate short-portrait top
+padding, and Journey Missions/Skip buttons obscuring flight counters. Missions
+and Skip remain available after Pause. The compact Solo coverage value retains
+its target percentage. The result/header layout still needs its own narrow-screen
+review; an active-flight pass does not establish every menu state.
+
+The preference regression cohort also caught practice writing the shared record
+and legacy restore/reconciliation failing to apply its steering hand. Practice
+changes now stay in the visit. Before a shared choice exists, legacy profile
+reconciliation and backup Undo remain valid fallbacks. Once a shared choice exists,
+ordinary legacy imports do not override the choice made in another mode. An
+explicit Solo change mirrors the complete current shared choice into its legacy
+profile, without silently reverting the other fields. Denied shared writes show
+session-only feedback. BFCache return resamples a newer stored choice without
+writing or automatically resuming; unsaved/practice choices stay local.
+
+Retained checks: 60 shared-input/fullscreen checks, 115 couch checks and 15 legacy
+input/backup host checks on each of Node 20 and Node 22. An additional 60-test Node22 cohort passed after the target-label DOM annotation,
+and ten shared checks passed after the callback error-boundary cleanup. Whole-source
+qualification remains separate. Original failing
+logs remain in `docs/verification/shared-device-play/iteration-2/`. The cold-title
+A test initially assumed the default action was Missions; inspection confirmed it
+is Start. The corrected test verifies actual Start, neutral discovery and no input
+leak into flight; it is not evidence of a fixed physical Steam Deck defect.
+
+Open production gates include narrow Large-control pairing, authored objectives
+and encounters, all controller menu journeys, First Flight, embedded Studio and
+real iPhone/Steam Deck hardware. The preview browser dimensions and test counts
+must not be described as device certification. This remains an unversioned
+candidate, not an accepted or deployed release.
+
+The final short-landscape pass at 568×320 found desktop labels and catalogue
+icons overlapping the numeric HUD, plus a more-specific legacy rule pinning the
+status message above the arena. The compact rules now explicitly own these
+properties. Native recheck retained a 512×256 complete board, 44px top strip,
+156px control, and a bottom status message without document overflow. At 320×480,
+Large current/target values share one 44px HUD cell; the complete board measured
+296×148. Maximum counter values and long hazard messages still need stress checks.
+
+The release controller separately accepted public v0.76.1 (source17bd1965,
+source PR208, publication PR210, Pages35551436420). These new device changes are
+not included in that public release. Plan reconciliation is owned separately.

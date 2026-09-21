@@ -975,6 +975,16 @@ export function bootCoop() {
             : player.graceUntil > run.time
               ? 'Recovery shield · safe ground only'
               : 'On safe ground';
+      $('coop-state-' + player.id).dataset.compact =
+        player.status === 'downed'
+          ? run.team.reserves === 0
+            ? 'Free rescue'
+            : `Rescue ${Math.max(0, Math.ceil(player.downedUntil - run.time))}s`
+          : player.cutting
+            ? 'Exposed'
+            : player.graceUntil > run.time
+              ? 'Shielded'
+              : 'Safe';
       const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
       $('coop-charge-' + player.id).textContent =
         player.status === 'downed'
@@ -983,6 +993,14 @@ export function bootCoop() {
             ? 'Hold Support · rescuing'
             : recharge > 0
               ? `Support · ${recharge.toFixed(1)}s`
+              : 'Support ready';
+      $('coop-charge-' + player.id).dataset.compact =
+        player.status === 'downed'
+          ? 'Crawl to ally'
+          : player.rescue
+            ? 'Hold rescue'
+            : recharge > 0
+              ? `Support ${recharge.toFixed(1)}s`
               : 'Support ready';
       $('coop-support-' + player.id).textContent = player.rescue
         ? `Rescuing partner · ${Math.min(100, Math.floor((run.time - player.rescue.startedAt) * 100))}%`

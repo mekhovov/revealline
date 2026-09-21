@@ -6,51 +6,89 @@
   --handheld-value: 22px;
   --handheld-label: 18px;
 }
-/* One interaction vocabulary across Solo and both couch modes. */
+/* Couch seats use the same target sizes, compass, instructions and floating
+   feedback as Solo. The seat container only chooses where the controls live. */
+.race-pad {
+  --touch-size: 156px;
+  width: var(--touch-size);
+}
+.race-pad[data-touch-size='large'] {
+  --touch-size: 192px;
+}
 .race-pad .touch-surface {
   grid-column: 1 / -1;
   position: relative;
-  inline-size: 132px;
-  block-size: 132px;
+  inline-size: var(--touch-size);
+  block-size: var(--touch-size);
   border: 2px solid #a3dfffb3;
   border-radius: 50%;
   background: #0b1d3266;
+  color: #d4f6ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   opacity: var(--touch-opacity, 0.55);
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  font: 13px/1.4 var(--fk-font-ui, sans-serif);
 }
-.race-pad[data-touch-size='large'] .touch-surface {
-  inline-size: 156px;
-  block-size: 156px;
-}
-.race-pad .touch-surface::before {
-  content: '✥';
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font: 44px sans-serif;
-  color: #d4f6ff;
-  pointer-events: none;
+.race-pad .touch-surface > span:first-child {
+  font: 54px/1.3 var(--fk-font-ui, sans-serif);
 }
 .race-pad .touch-indicator {
   position: fixed;
   z-index: 20;
   pointer-events: none;
-  inline-size: 64px;
-  block-size: 64px;
-  margin: -32px;
+  inline-size: 112px;
+  block-size: 112px;
+  transform: translate(-50%, -50%);
   border-radius: 50%;
-  border: 2px solid #78dfff;
-  background: #12304088;
+  border: 2px solid #bdefff99;
+  background: #12354b33;
+}
+.race-pad .touch-indicator i {
+  position: absolute;
+  left: 36px;
+  top: 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #c4f3ff99;
+  border: 2px solid #ecfcff;
   transform: translate(var(--stick-x, 0px), var(--stick-y, 0px));
 }
 .race-pad .race-cross {
+  width: var(--touch-size);
+  height: var(--touch-size);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0;
   touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  border-radius: 30%;
+  background: #122e4355;
   opacity: var(--touch-opacity, 0.55);
 }
-.race-pad :is(.touch-surface, .race-cross)[hidden] {
+.field-kit .race-pad .race-cross button {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 2px solid #5386a8;
+  border-radius: 18%;
+  box-shadow: none;
+  background: #19364ab3;
+  color: #c4f3ff;
+  font: bold 25px/1 var(--fk-font-ui, sans-serif);
+}
+.race-pad :is(.touch-surface, .race-cross):active {
+  opacity: 0.85;
+}
+.race-pad :is(.touch-surface, .race-cross, .touch-indicator)[hidden] {
   display: none;
 }
 
@@ -106,14 +144,24 @@
   }
   body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
     .telemetry
-    :is(.meter, #target) {
+    :is(.meter, #target),
+  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
+    .telemetry
+    > div
+    > span {
     display: none;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .run-message {
+  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) #run-message {
     top: auto;
     bottom: max(2px, var(--safe-bottom));
     left: 24%;
     right: 24%;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    max-height: 2.6em;
+    line-height: 1.3;
+    background: var(--fk-bg);
     font-size: var(--handheld-label);
     pointer-events: none;
   }
@@ -229,7 +277,7 @@
     }
     body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .arena-panel {
       display: grid;
-      grid-template-rows: minmax(0, 1fr) 32px;
+      grid-template-rows: minmax(0, 1fr) auto;
       height: 100%;
       width: 100%;
       max-width: none;
@@ -318,7 +366,7 @@
       min-height: 0;
       font-size: var(--handheld-label);
       line-height: 1.3;
-      max-height: 32px;
+      max-height: 2.6em;
       overflow: auto;
     }
   }
@@ -381,5 +429,424 @@
   body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
     :is(.coop-board-slot, .control-card) {
     grid-row: 3;
+  }
+}
+
+/* Keep seat labels in the compact strip without the desktop absolute badges. */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 0 4px;
+    line-height: 1.1;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .player-number {
+    position: static;
+    grid-column: 1;
+    grid-row: 1 / 3;
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    margin: 0;
+    font-size: 14px;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span:not(.player-number) {
+    grid-column: 2;
+    margin: 0;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .team-status {
+    flex-direction: column;
+    gap: 0;
+    line-height: 1.1;
+  }
+  /* Floating corners leave the complete board its maximum height. The same
+     translucent controls as Solo are an overlay, never a second HUD row. */
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot {
+    grid-column: 1 / -1;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .control-card {
+    position: fixed;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    left: max(12px, env(safe-area-inset-left));
+    z-index: 9;
+    width: max-content;
+    pointer-events: none;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .control-card:last-child {
+    left: auto;
+    right: max(12px, env(safe-area-inset-right));
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .control-card .race-pad {
+    pointer-events: auto;
+  }
+}
+
+/* Portrait keeps the same compact counters, with thumb controls below the
+   complete wide board. Critical rescue/Support state remains visible. */
+@media (max-width: 680px) and (orientation: portrait) {
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
+    padding: max(48px, calc(48px + env(safe-area-inset-top))) max(4px, env(safe-area-inset-right))
+      max(4px, env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left));
+    min-height: 100dvh;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
+    position: fixed;
+    inset: env(safe-area-inset-top) max(48px, calc(48px + env(safe-area-inset-right))) auto
+      max(4px, env(safe-area-inset-left));
+    height: 44px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-areas: 'one team two';
+    gap: 4px;
+    align-items: center;
+    border: 0;
+    padding: 0;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud > .sunflower {
+    grid-area: one;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud > .skyline {
+    grid-area: two;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud > .team-status {
+    grid-area: team;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    border: 0;
+    font-size: var(--handheld-label);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    gap: 0 2px;
+    padding: 0;
+    line-height: 1.15;
+    font-size: var(--handheld-label);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .player-number {
+    position: static;
+    grid-column: 1;
+    grid-row: 1;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    margin: 0;
+    font-size: 12px;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span:not(.player-number) {
+    margin: 0;
+    font-size: 0;
+    grid-column: 2;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > .charge-state {
+    grid-column: 1 / -1 !important;
+    white-space: nowrap;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud [data-compact]::after {
+    content: attr(data-compact) / '';
+    font-size: var(--handheld-label);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden])
+    .hud
+    :is(.identity strong, .team-status > span:first-child, progress),
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-objective:not([data-kind='stronghold']),
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-clock {
+    display: none;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-coverage {
+    font-size: var(--handheld-value);
+    line-height: 1.1;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-coverage::after {
+    content: attr(data-target);
+    font-size: var(--handheld-label);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-pause {
+    position: fixed;
+    top: env(safe-area-inset-top);
+    right: max(0px, env(safe-area-inset-right));
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    font-size: 14px;
+    z-index: 12;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    padding-top: 8px;
+    border: 0;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .control-card h2 {
+    display: none;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .board-footer {
+    min-height: 0;
+    padding: 4px;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-message {
+    margin: 0;
+    font-size: var(--handheld-label);
+    line-height: 1.25;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .arena-wrap {
+    margin: 4px;
+  }
+}
+/* Two Large controls do not fit side by side on a narrow phone. Keep their
+   selected target size and expose both seats in separate rows. */
+@media (max-width: 399px) and (orientation: portrait) {
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-controls:has([data-touch-size='large']) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 680px) and (orientation: portrait) {
+  body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]) #coop-app {
+    padding-top: calc(78px + env(safe-area-inset-top));
+  }
+  body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]) .hud {
+    height: 74px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: 'team team' 'one two';
+  }
+  body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]) .hud > .team-status {
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center;
+  }
+}
+
+/* Give each Versus bitmap an explicit flexible row. Hiding desktop headings
+   must not move the arena into the old auto-sized heading row. */
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.race-focus .race-hud {
+    height: 44px;
+    min-height: 44px;
+    padding-block: 0;
+  }
+  body.field-kit.race-focus .race-hud button {
+    min-height: 44px;
+    height: 44px;
+    padding-block: 0;
+  }
+  body.field-kit.race-focus #race-clock {
+    font-size: var(--handheld-value);
+  }
+  body.field-kit.race-focus .race-boards {
+    gap: 8px;
+    padding: 8px max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
+  }
+  body.field-kit.race-focus .racer[data-player] {
+    position: relative;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto auto;
+    gap: 4px;
+  }
+  body.field-kit.race-focus .racer[data-player] > :not(.race-pad) {
+    grid-column: 1;
+  }
+  body.field-kit.race-focus :is(.racer-heading, .racer-input) {
+    display: none;
+  }
+  body.field-kit.race-focus .racer[data-player] .race-arena {
+    grid-row: 1;
+  }
+  body.field-kit.race-focus .racer[data-player] .racer-stats {
+    grid-row: 2;
+    margin: 0;
+    font-size: var(--handheld-label);
+  }
+  body.field-kit.race-focus .racer[data-player] .racer-encounter {
+    grid-row: 3;
+  }
+  body.field-kit.race-focus .racer[data-player] .race-pad {
+    position: absolute;
+    inset: auto auto 28px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    grid-row: auto;
+    grid-column: auto;
+    z-index: 5;
+  }
+  body.field-kit.race-focus .racer[data-player='1'] .race-pad {
+    left: auto;
+    right: 4px;
+  }
+  body.field-kit.race-focus .race-pad .touch-surface {
+    flex-shrink: 0;
+  }
+}
+
+/* A tall phone can put each seat's controls below its board, avoiding thumb
+   occlusion. Short phones keep the same floating surface and complete bitmap. */
+@media (max-width: 680px) and (min-height: 700px) and (orientation: portrait) {
+  body.field-kit.race-focus .racer[data-player]:has(.race-pad:not([hidden])) {
+    grid-template-rows: minmax(0, 1fr) auto auto auto;
+  }
+  body.field-kit.race-focus .racer[data-player] .race-pad {
+    position: static;
+    grid-column: 1;
+    grid-row: 4;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+  body.field-kit.race-focus .racer[data-player='1'] .race-pad {
+    flex-direction: row-reverse;
+  }
+}
+
+/* On short portrait screens, fit the whole board into the space left by the
+   actual status and control rows; neither bitmap cropping nor page scrolling. */
+@media (max-width: 680px) and (max-height: 700px) and (orientation: portrait) {
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 44px minmax(0, 1fr) auto auto;
+    gap: 4px;
+    height: 100dvh;
+    min-height: 0;
+    padding: env(safe-area-inset-top) max(4px, env(safe-area-inset-right))
+      max(4px, env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left));
+  }
+  body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]) #coop-app {
+    grid-template-rows: 74px minmax(0, 1fr) auto auto;
+    padding-top: env(safe-area-inset-top);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-play {
+    display: contents;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot {
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    place-items: center;
+    min-height: 0;
+    min-width: 0;
+    padding: 3px;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot > .arena-wrap {
+    display: contents;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-canvas {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: auto;
+    object-fit: contain;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .board-footer {
+    grid-row: 3;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-controls {
+    grid-row: 4;
+    padding-top: 0;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-message {
+    max-height: 2.5em;
+    overflow: auto;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    #coop-app {
+    grid-template-rows: 44px auto minmax(0, 1fr) auto auto;
+  }
+  body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]):has(
+      #coop-objective[data-kind='stronghold']
+    )
+    #coop-app {
+    grid-template-rows: 74px auto minmax(0, 1fr) auto auto;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-objective[data-kind='stronghold'] {
+    grid-row: 2;
+    margin: 0;
+    font-size: var(--handheld-label);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    .coop-board-slot {
+    grid-row: 3;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    .board-footer {
+    grid-row: 4;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    #coop-controls {
+    grid-row: 5;
+  }
+}
+
+/* Journey selection and Skip remain available after explicit Pause. During
+   flight they must not overlap the compact telemetry and system controls. */
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-flight-state='running']
+    .shell-bar
+    :is(#shell-packs, #journey-skip) {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
+    #coverage::after {
+    content: attr(data-target);
+    font-size: var(--handheld-label);
+  }
+}
+
+/* Narrow portrait keeps the current/target pair inside one 44px HUD cell.
+   Stacking this pair leaves room for earned lives and longer clocks without
+   shrinking Large text or moving counters into the arena. */
+@media (max-width: 399px) and (orientation: portrait) {
+  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
+    .telemetry
+    :is(#coverage, #time)::before {
+    display: none;
+  }
+  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) #coverage {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    width: 5ch;
+    line-height: 1;
+  }
+  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
+    #coverage
+    small {
+    font-size: inherit;
+  }
+  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
+    #coverage::after {
+    flex-basis: 100%;
+    text-align: center;
+    line-height: 1;
+  }
+}
+
+/* Catalogue HUD glyphs are decorative; numeric values and life identity remain
+   readable without extra icons in the single compact strip. */
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
+    .telemetry
+    :is(#coverage, #time, #score)::before {
+    display: none;
   }
 }

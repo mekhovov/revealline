@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
+import { soloPage, settle, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
 import { verifyReplay } from '../replay.mjs';
+import { TOUCH_PREFERENCES_KEY } from '../touch-preferences.mjs';
 
 const classic = JSON.parse(
   readFileSync(new URL('../content/packs/classic-lab.json', import.meta.url)),
@@ -161,3 +162,76 @@ for (const mode of ['stick', 'swipe', 'dpad']) {
     assert.deepEqual(page.errors, []);
   });
 }
+
+test('cold Steam Deck-style discovery: fresh A starts the selected flight after neutral input', async (t) => {
+  t.mock.method(SoloElement.prototype, 'getContext', () => null);
+  const pad = controller();
+  pad.id = 'Steam Deck Controller';
+  let connected = false;
+  const page = await soloPage(t, { titleScreen: true, readPads: () => (connected ? [pad] : []) });
+  const release = () => {
+    pad.buttons.forEach((b) => {
+      b.pressed = false;
+      b.value = 0;
+    });
+    pad.axes.fill(0);
+    page.frame();
+    page.frame();
+  };
+  const press = (index) => {
+    release();
+    pad.buttons[index].pressed = true;
+    pad.buttons[index].value = 1;
+    page.frame();
+  };
+  assert.equal(page.$('shell-home').open, true);
+  connected = true;
+  pad.buttons[0].pressed = true;
+  page.frame();
+  assert.equal(page.$('shell-home').open, true, 'Discovery press cannot accidentally launch');
+  release();
+  press(0);
+  await settle(() => {
+    page.frame(0);
+    return page.doc.body.dataset.flightState === 'running';
+  });
+  assert.equal(page.$('shell-home').open, false);
+  assert.equal(page.rendered.run.player.speed, 0, 'The title Confirm is not a flight command');
+  release();
+  assert.deepEqual(page.errors, []);
+});
+
+test('Solo adopts the shared couch choice and editing opacity preserves its other fields', async (t) => {
+  const shared = { mode: 'swipe', side: 'left', size: 'large', opacity: 0.7 };
+  const storage = memoryStorage({ [TOUCH_PREFERENCES_KEY]: JSON.stringify(shared) });
+  const page = await soloPage(t, { titleScreen: true, storage });
+  page.$('shell-options').click();
+  page.$('settings-tab-controls').click();
+  assert.equal(page.$('touch-mode').value, 'swipe');
+  assert.equal(page.$('touch-side').value, 'left');
+  assert.equal(page.$('touch-size').value, 'large');
+  page.change('touch-opacity', '0.8');
+  assert.deepEqual(JSON.parse(storage.getItem(TOUCH_PREFERENCES_KEY)), { ...shared, opacity: 0.8 });
+  assert.equal(page.$('touch-mode').value, 'swipe');
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
+
+test('Solo reports a denied shared save while retaining the current touch choice', async (t) => {
+  const storage = memoryStorage(),
+    setItem = storage.setItem.bind(storage);
+  storage.setItem = (key, value) => {
+    if (key === TOUCH_PREFERENCES_KEY) throw new DOMException('Full', 'QuotaExceededError');
+    setItem(key, value);
+  };
+  const page = await soloPage(t, { titleScreen: true, storage });
+  page.$('shell-options').click();
+  page.$('settings-tab-controls').click();
+  page.change('touch-mode', 'swipe');
+  assert.equal(page.$('touch-mode').value, 'swipe');
+  assert.equal(page.$('screen-steering-status').hidden, false);
+  assert.match(page.$('screen-steering-status').textContent, /for this visit/);
+  assert.equal(storage.getItem(TOUCH_PREFERENCES_KEY), null);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
