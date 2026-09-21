@@ -39,10 +39,31 @@ Focused real-host checks cover all five authored Solo links, authored Versus lin
 modified activation, checked cut retention, explicit Stay/Leave, scoped storage,
 deliberate return/Continue, refused saving and the Legacy-backed `journey=1` preview.
 Adversarial shell checks cover changed and invalid edition readers. Existing
-Title-departure, Legacy return, Couch departure and shell suites are being run on
-Node 20.19.5 and 22.22.2 before promotion.
+Title-departure, Legacy return, Couch departure, route and shell suites pass on
+Node 20.19.5 and 22.22.2: 129 existing regression checks, 13 navigation checks
+(including two round-trip subtests), and 20 Couch departure checks. ESLint,
+Prettier and `git diff --check` pass. The final token-read preservation change
+also passes the combined 33 navigation/departure checks on Node 22.
 
 An initial test expected the fixture's pre-departure URL without its query; the
 fixture correctly retained `?journey=opening`. That assertion was corrected; the
-observed save-failure warning and paused attempt were already correct. Native
-browser evidence and accepted-release integration remain separate gates.
+observed save-failure warning and paused attempt were already correct.
+
+## Native browser sample
+
+The read-only local server served exact source `53780e2fcb53a35fe1074948f5fc8dfeed21f038`.
+Actual title-link activation retained `journey=whole-originals-v3` in Versus.
+The prior independent Versus selection remained Neon Contours / Folded corner,
+while Solo had Apex Aurora / Crossing complete selected. Starting and pausing
+the race, selecting Solo and deliberately discarding the race returned to the
+same Solo edition and its unchanged independent selection. It did not auto-play.
+Deliberate Continue resumed Solo. Game menu → Versus then displayed the native
+“saved and verified” departure dialog; Stay returned focus to the initiating
+Versus link and kept Solo paused. No injected application state was used.
+
+One browser wait used `Start race` instead of the actual `Start race ↗` accessible
+name; the current accessibility tree supplied the correct native action. This was
+an automation-selector mismatch, not a failed application transition.
+
+This is local technical evidence, not physical-controller, human-enjoyment or
+public-release acceptance. Accepted-release integration and Pages remain pending.
