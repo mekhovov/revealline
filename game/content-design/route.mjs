@@ -2,11 +2,25 @@ import { required, stableId } from '../data-json.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { createOpeningCandidates } from './horizon-candidates.mjs';
 import { createBorderCandidates } from './border-candidates.mjs';
+import {
+  createWholeJourneyCandidates,
+  WHOLE_JOURNEY_CORE_PACK_IDS,
+} from './whole-journey-candidates.mjs';
 
 /** Explicit staged library. Appending a campaign never rewrites existing mission,
  * pack or execution identities, and optional Remixes never interrupt core play.
  * The frozen opening URL retains its previous library and suspended-flight slot. */
 export function createAuthoredJourneyRoute(id) {
+  // A separate explicit review URL and suspended-flight slot. Never expand the
+  // historical routes or infer publication/qualification from having artwork.
+  if (id === 'whole-originals')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey original-picture review',
+      sessionKey: 'revealline.suspended.journey-whole-originals.v1',
+      source: createWholeJourneyCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+    });
   if (!['opening', 'authored'].includes(id)) return null;
   const source = createOpeningCandidates({ artwork: true });
   const corePackIds = ['journey-opening'];
