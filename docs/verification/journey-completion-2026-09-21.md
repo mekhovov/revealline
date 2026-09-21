@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after the Home Signal contested-return study. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after the Home Signal ordinary-field alternative. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -41,7 +41,7 @@ are separate gates; percentages would conceal those distinctions.
 | P09   | Seven Relay candidates, permanent connectors/Studio links and 42 pressure cases                                                                                                                                              | Shortcut bypasses and post-objective cleanup, human usefulness, release                                                                                |
 | P10   | Seven Crosswind candidates, directional fields without drift and 42 pressure cases                                                                                                                                           | Precision/readability, optional goals, short-clear geometry, human review, release                                                                     |
 | P11   | Five Sentinel candidates and 30 pressure cases; two receiver-layout successors and native first returns                                                                                                                      | Fast Twin routes, shield mastery, full successor adoption/art/native/human balance, release                                                            |
-| P12   | Five Apex candidates and 30 pressure cases; explicit Home Signal contested-return study with eleven replay/race clears and preserved failed controls                                                                         | Short finale pacing remains unresolved; optional mastery, human capstone testing, release                                                              |
+| P12   | Five Apex candidates and 30 pressure cases; boss-return study with eleven replay/race clears; ordinary-field alternative with eight clears, two far-wing mastery passes and preserved failed controls                        | Short finale pacing, waits, quota tails, adapted starts and broader mastery remain unresolved; human capstone testing and release                      |
 | P13   | 83-candidate library, 12 Remixes, flat chooser, boundaries and save isolation; all 498 ordinary Solo/Versus preset/control cases pass                                                                                        | Spatial/teaching/cleanup fixes, multi-seed/mastery/human balance, final cuts, full host enrollment and Pages                                           |
 | P14   | 12 Team candidates; joint cuts/seat swaps, flow/Skip/chooser; all 36 mission/preset sets × four seat/control configurations pass; two roamer spatial successors tested                                                       | 17 base optional-mastery misses, genuine complementary cooperation/pacing, new mechanics, live controllers/two-player tests, host enrollment and Pages |
 | P15   | Compatibility/persistence groundwork, immutable records, validation tools                                                                                                                                                    | Human sessions, complete accessibility/device/performance qualification, Legacy transition, public rollback proof and final deployment                 |
@@ -169,6 +169,17 @@ are checked. This is a specific presentation correction, not finale balance,
 physical-device/human acceptance, universal authoring-label migration or deployment.
 
 ## Latest requested additions
+
+The [Home Signal ordinary-field alternative](journey-apex-field-finale.md) now
+offers a separate Studio study: two moving field keepers and four ordinary signal
+objectives replace the staged boss, using unchanged engine/capture contracts.
+Eight no-loss clear/replay/equal-race samples cover all six preset/control pairs,
+different objective orders and two tightened far-wing mastery passes. Both an
+inferior right-pocket layout and six failed delayed probes remain reproducible.
+Native Inspect/Apply and a real first return are checked. Observed 28.75–63.05-second
+clears, idle windows, quota tails and late activation mean **P12 balance is still
+pending**. The study is not a new mission count, default enrollment, human approval
+or public deployment; the original boss remains available for comparison.
 
 The [combined spatial + pressure review](journey-whole-spatial-review.md) now
 offers nine reviewed spatial successors within one explicit 83-candidate

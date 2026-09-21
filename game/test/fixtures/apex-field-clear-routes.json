@@ -1,0 +1,5077 @@
+{
+  "format": "ApexFieldFeasibilityV1",
+  "revision": "home-field-2",
+  "status": "balance-pending",
+  "delayedProbes": [
+    {
+      "route": "ordinary",
+      "seed": 2,
+      "delay": 30,
+      "metrics": {
+        "status": "life-lost",
+        "ticks": 1074,
+        "seconds": 8.950000000000133,
+        "coverage": 0.020822488287350338,
+        "losses": 1,
+        "firstCutTick": 960,
+        "cuts": 1,
+        "exposureTicks": 354,
+        "maxExposureTicks": 264,
+        "firstCoverageMetTick": null,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": null,
+        "collectedBonusIds": [],
+        "checkpoint": "0e058f922fecd1df"
+      }
+    },
+    {
+      "route": "ordinary",
+      "seed": 2,
+      "delay": 60,
+      "metrics": {
+        "status": "life-lost",
+        "ticks": 1074,
+        "seconds": 8.950000000000133,
+        "coverage": 0.020822488287350338,
+        "losses": 1,
+        "firstCutTick": 990,
+        "cuts": 1,
+        "exposureTicks": 324,
+        "maxExposureTicks": 264,
+        "firstCoverageMetTick": null,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": null,
+        "collectedBonusIds": [],
+        "checkpoint": "bde0b246b6ac1a6d"
+      }
+    },
+    {
+      "route": "ordinary",
+      "seed": 2,
+      "delay": 120,
+      "metrics": {
+        "status": "life-lost",
+        "ticks": 1003,
+        "seconds": 8.3583333333335,
+        "coverage": 0,
+        "losses": 1,
+        "firstCutTick": null,
+        "cuts": 0,
+        "exposureTicks": 217,
+        "maxExposureTicks": 217,
+        "firstCoverageMetTick": null,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": null,
+        "collectedBonusIds": [],
+        "checkpoint": "13111e6bd1f2f3e7"
+      }
+    },
+    {
+      "route": "dock-first",
+      "seed": 2,
+      "delay": 30,
+      "metrics": {
+        "status": "life-lost",
+        "ticks": 2867,
+        "seconds": 23.89166666666595,
+        "coverage": 0.7017178552837064,
+        "losses": 1,
+        "firstCutTick": 252,
+        "cuts": 5,
+        "exposureTicks": 1427,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": null,
+        "allRequiredCapturedTick": 2472,
+        "ticksAfterRequiredObjectives": 395,
+        "ticksAfterFirstCoverage": null,
+        "collectedBonusIds": [],
+        "checkpoint": "37283c59fd7c2504"
+      }
+    },
+    {
+      "route": "dock-first",
+      "seed": 2,
+      "delay": 60,
+      "metrics": {
+        "status": "life-lost",
+        "ticks": 2867,
+        "seconds": 23.89166666666595,
+        "coverage": 0.7017178552837064,
+        "losses": 1,
+        "firstCutTick": 282,
+        "cuts": 5,
+        "exposureTicks": 1397,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": null,
+        "allRequiredCapturedTick": 2502,
+        "ticksAfterRequiredObjectives": 365,
+        "ticksAfterFirstCoverage": null,
+        "collectedBonusIds": [],
+        "checkpoint": "1750f523e6ef5a73"
+      }
+    },
+    {
+      "route": "dock-first",
+      "seed": 2,
+      "delay": 120,
+      "metrics": {
+        "status": "life-lost",
+        "ticks": 2887,
+        "seconds": 24.05833333333261,
+        "coverage": 0.7017178552837064,
+        "losses": 1,
+        "firstCutTick": 342,
+        "cuts": 5,
+        "exposureTicks": 1357,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": null,
+        "allRequiredCapturedTick": 2562,
+        "ticksAfterRequiredObjectives": 325,
+        "ticksAfterFirstCoverage": null,
+        "collectedBonusIds": [],
+        "checkpoint": "81255372fae2c2e9"
+      }
+    }
+  ],
+  "rows": [
+    {
+      "id": "home-signal",
+      "route": "ordinary",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "simulationIdentity": "f7dd4de26e50eaf0",
+      "checkpoint": "87fd33a49ee242c8",
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 102
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "right",
+          "ticks": 672
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        }
+      ],
+      "evidence": {
+        "ticks": 5082,
+        "coverage": 0.9729307652264445,
+        "lives": 2,
+        "checkpoint": "87fd33a49ee242c8",
+        "denominator": 1921,
+        "closures": [
+          {
+            "tick": 1290,
+            "coverage": 0.020822488287350338,
+            "player": [21.499999999999925, 9.000000000000007],
+            "regions": [
+              {
+                "cells": 1881,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 24.42587117057233,
+                "y": 8.425871170572329,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 62.574128829428425,
+                "y": 26.57412882942767,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 1542,
+            "coverage": 0.06090577824049974,
+            "player": [22.000000000000068, 2.5000000000000115],
+            "regions": [
+              {
+                "cells": 1773,
+                "enemyIds": ["south-keeper"]
+              },
+              {
+                "cells": 31,
+                "enemyIds": ["north-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.83744701936238,
+                "y": 7.837447019362379,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 56.33744701936224,
+                "y": 20.33744701936238,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2082,
+            "coverage": 0.12129099427381572,
+            "player": [10.000000000000103, 17.500000000000032],
+            "regions": [
+              {
+                "cells": 1657,
+                "enemyIds": ["south-keeper"]
+              },
+              {
+                "cells": 31,
+                "enemyIds": ["north-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 24.026871145063247,
+                "y": 8.026871145063247,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 47.52687114506184,
+                "y": 11.526871145063247,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 4458,
+            "coverage": 0.7766788131181677,
+            "player": [56.50000000000062, 34.999999999999915],
+            "regions": [
+              {
+                "cells": 398,
+                "enemyIds": ["south-keeper"]
+              },
+              {
+                "cells": 31,
+                "enemyIds": ["north-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.829871068536,
+                "y": 6.829871068536001,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 58.17012893146411,
+                "y": 22.170128931464,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "warning"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 5082,
+            "coverage": 0.9729307652264445,
+            "player": [57.00000000000063, 26.500000000000075],
+            "regions": [
+              {
+                "cells": 31,
+                "enemyIds": ["north-keeper"]
+              },
+              {
+                "cells": 21,
+                "enemyIds": ["south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.27308316964988,
+                "y": 7.273083169649876,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 58.77308316965004,
+                "y": 22.77308316964988,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 10.716666666666793,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 22,
+                "y": 7.8700000000001245,
+                "mode": "patrolling"
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          [1290, "north-relay"],
+          [4458, "dock-relay"],
+          [4458, "south-relay"],
+          [5082, "east-relay"]
+        ],
+        "roverEvents": [
+          [4458, "rover.warning"],
+          [4578, "rover.activated"]
+        ],
+        "dockCrossings": [],
+        "allRequiredCapturedTick": 5082,
+        "firstQuotaTick": 5082,
+        "ticksAfterRequiredObjectives": 0,
+        "ticksAfterQuota": 0,
+        "exposureTicks": 1416,
+        "postObjectiveExposureTicks": 0,
+        "maxExposureTicks": 408,
+        "closestActiveRoamer": {
+          "tick": 4896,
+          "distance": 14.417230817478856,
+          "cutting": false
+        },
+        "collectedBonusIds": [],
+        "mastery": false,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0, 2],
+        "used": []
+      }
+    },
+    {
+      "id": "home-signal",
+      "route": "ordinary",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "simulationIdentity": "963b1bc3405e14e7",
+      "checkpoint": "d74c7c88e032488d",
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 138
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 150
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 180
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "left",
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 312
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 108
+        },
+        {
+          "direction": "left",
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 672
+        },
+        {
+          "direction": "up",
+          "ticks": 114
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 192
+        },
+        {
+          "direction": "left",
+          "ticks": 264
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 156
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "up",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 30
+        },
+        {
+          "direction": "right",
+          "ticks": 450
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 378
+        }
+      ],
+      "evidence": {
+        "ticks": 7518,
+        "coverage": 0.8573659552316502,
+        "lives": 3,
+        "checkpoint": "d74c7c88e032488d",
+        "denominator": 1921,
+        "closures": [
+          {
+            "tick": 930,
+            "coverage": 0.020822488287350338,
+            "player": [21.499999999999925, 9.000000000000007],
+            "regions": [
+              {
+                "cells": 1881,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.586939417902844,
+                "y": 7.58693941790284,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 51.41306058209716,
+                "y": 15.413060582097158,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 1050,
+            "coverage": 0.05830296720458095,
+            "player": [26.000000000000014, 9.50000000000001],
+            "regions": [
+              {
+                "cells": 1809,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.288939366883934,
+                "y": 7.28893936688393,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 53.78893936688394,
+                "y": 17.788939366883938,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 1338,
+            "coverage": 0.092660072878709,
+            "player": [34.5, 19.00000000000001],
+            "regions": [
+              {
+                "cells": 1743,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.991048450372187,
+                "y": 6.991048450372183,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 59.49104845037222,
+                "y": 23.491048450372205,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 1830,
+            "coverage": 0.16762103071317022,
+            "player": [35.00000000000001, 10.500000000000801],
+            "regions": [
+              {
+                "cells": 1599,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.732151467997763,
+                "y": 7.732151467997757,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 58.267848532002205,
+                "y": 22.26784853200219,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2622,
+            "coverage": 0.18636127017178553,
+            "player": [51.00000000000046, 17.500000000000817],
+            "regions": [
+              {
+                "cells": 1563,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.087048552409588,
+                "y": 7.087048552409581,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 59.91295144759053,
+                "y": 23.912951447590515,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2910,
+            "coverage": 0.22384174908901613,
+            "player": [59.5000000000007, 18.000000000000817],
+            "regions": [
+              {
+                "cells": 1491,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.384939468921115,
+                "y": 7.384939468921108,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 61.884939468921246,
+                "y": 25.884939468921218,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 3210,
+            "coverage": 0.26132222800624677,
+            "player": [51.00000000000046, 10.500000000000796],
+            "regions": [
+              {
+                "cells": 1419,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.445242506954198,
+                "y": 7.445242506954192,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 62.945242506954365,
+                "y": 26.94524250695433,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 3750,
+            "coverage": 0.3133784487246226,
+            "player": [44.50000000000028, 19.00000000000079],
+            "regions": [
+              {
+                "cells": 1319,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.74621202458626,
+                "y": 6.746212024586252,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 61.24621202458638,
+                "y": 25.246212024586335,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "warning"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 4614,
+            "coverage": 0.3737636647579386,
+            "player": [10.000000000000187, 17.500000000000806],
+            "regions": [
+              {
+                "cells": 1203,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.647460724948846,
+                "y": 6.647460724948838,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 63.14746072494874,
+                "y": 27.147460724948715,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 11.90666666666707,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 5742,
+            "coverage": 0.6574700676730869,
+            "player": [56.5000000000007, 26.00000000000008],
+            "regions": [
+              {
+                "cells": 658,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.185799852046973,
+                "y": 7.185799852046967,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 61.81420014795294,
+                "y": 25.81420014795291,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 18.53733333333164,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 6618,
+            "coverage": 0.735033836543467,
+            "player": [33.49999999999931, 1.0000000000001723],
+            "regions": [
+              {
+                "cells": 509,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.529714980990015,
+                "y": 6.529714980990007,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 62.029714980990164,
+                "y": 26.029714980990132,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 18.31466666666805,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 23.3539999999999,
+                "y": 8,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 7098,
+            "coverage": 0.7928162415408642,
+            "player": [70.99999999999979, 3.500000000000174],
+            "regions": [
+              {
+                "cells": 398,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.033230120137304,
+                "y": 7.033230120137297,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 62.96676987986283,
+                "y": 26.966769879862806,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 27.274666666668764,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.726000000000354,
+                "y": 5,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 7518,
+            "coverage": 0.8573659552316502,
+            "player": [67.50000000000013, 34.999999999997634],
+            "regions": [
+              {
+                "cells": 274,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.3488058668904,
+                "y": 6.348805866890394,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 61.65119413310975,
+                "y": 25.651194133109716,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 35.11466666666883,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 35.54600000000002,
+                "y": 4,
+                "mode": "patrolling"
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          [930, "north-relay"],
+          [1338, "dock-relay"],
+          [2622, "east-relay"],
+          [5742, "south-relay"]
+        ],
+        "roverEvents": [
+          [3750, "rover.warning"],
+          [3870, "rover.activated"]
+        ],
+        "dockCrossings": [],
+        "allRequiredCapturedTick": 5742,
+        "firstQuotaTick": 7518,
+        "ticksAfterRequiredObjectives": 1776,
+        "ticksAfterQuota": 0,
+        "exposureTicks": 3636,
+        "postObjectiveExposureTicks": 996,
+        "maxExposureTicks": 468,
+        "closestActiveRoamer": {
+          "tick": 6111,
+          "distance": 1.176208787208443,
+          "cutting": false
+        },
+        "collectedBonusIds": [],
+        "mastery": false,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0, 2, 5],
+        "used": []
+      }
+    },
+    {
+      "id": "home-signal",
+      "route": "ordinary",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "simulationIdentity": "587ffb66a4d5b08c",
+      "checkpoint": "2395b67b34571aae",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 156
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 444
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 108
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 288
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "left",
+          "ticks": 36
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 318
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 36
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 30
+        }
+      ],
+      "evidence": {
+        "ticks": 4386,
+        "coverage": 0.9031754294638209,
+        "lives": 5,
+        "checkpoint": "2395b67b34571aae",
+        "denominator": 1921,
+        "closures": [
+          {
+            "tick": 102,
+            "coverage": 0.0026028110359187923,
+            "player": [15.5, 9.000000000000309],
+            "regions": [
+              {
+                "cells": 1916,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.942497833620646,
+                "y": 7.942497833620465,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 56.05750216637971,
+                "y": 20.057502166379354,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 10,
+                "y": 20.03,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 282,
+            "coverage": 0.008849557522123894,
+            "player": [20.49999999999994, 1.0000000000000115],
+            "regions": [
+              {
+                "cells": 1904,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.011917754108104,
+                "y": 7.011917754108032,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 53.51191775410852,
+                "y": 17.511917754107536,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 10.730000000000103,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 858,
+            "coverage": 0.025507548152004164,
+            "player": [34.49999999999985, 1.0000000000005942],
+            "regions": [
+              {
+                "cells": 1872,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.86604763483948,
+                "y": 5.866047634839544,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 45.366047634841024,
+                "y": 9.366047634838862,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.37000000000009,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 2214,
+            "coverage": 0.05361790733992712,
+            "player": [44.5, 35.000000000000014],
+            "regions": [
+              {
+                "cells": 1818,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.68931172906139,
+                "y": 7.689311729061211,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 63.1893117290619,
+                "y": 27.18931172906334,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2454,
+            "coverage": 0.41644976574700676,
+            "player": [37, 23.500000000000405],
+            "regions": [
+              {
+                "cells": 1121,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.20480082063406,
+                "y": 6.20480082063407,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 59.79519917936704,
+                "y": 23.795199179367636,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 3282,
+            "coverage": 0.6059344091618949,
+            "player": [58.499999999999915, 1.0000000000014113],
+            "regions": [
+              {
+                "cells": 757,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.585510882917397,
+                "y": 6.585510882917364,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 48.08551088291992,
+                "y": 12.085510882918102,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 20,
+                "y": 17.3299999999999,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 4218,
+            "coverage": 0.8011452368558043,
+            "player": [57.99999999999965, 17.499999999999414],
+            "regions": [
+              {
+                "cells": 180,
+                "enemyIds": ["north-keeper"]
+              },
+              {
+                "cells": 202,
+                "enemyIds": ["south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.348471939106204,
+                "y": 7.34847193910608,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 55.65152806088972,
+                "y": 19.651528060889298,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 17.710000000000065,
+                "y": 9,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 4386,
+            "coverage": 0.9031754294638209,
+            "player": [58.000000000000014, 23.49999999999933],
+            "regions": [
+              {
+                "cells": 180,
+                "enemyIds": ["north-keeper"]
+              },
+              {
+                "cells": 6,
+                "enemyIds": ["south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.527406845680442,
+                "y": 5.52740684568055,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 57.47259315431502,
+                "y": 21.47259315431506,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "warning"
+              },
+              {
+                "id": "frontier",
+                "x": 18,
+                "y": 11.230000000000047,
+                "mode": "patrolling"
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          [282, "north-relay"],
+          [858, "dock-relay"],
+          [2214, "south-relay"],
+          [3282, "east-relay"]
+        ],
+        "roverEvents": [[4386, "rover.warning"]],
+        "dockCrossings": [],
+        "allRequiredCapturedTick": 3282,
+        "firstQuotaTick": 4386,
+        "ticksAfterRequiredObjectives": 1104,
+        "ticksAfterQuota": 0,
+        "exposureTicks": 1932,
+        "postObjectiveExposureTicks": 492,
+        "maxExposureTicks": 408,
+        "closestActiveRoamer": null,
+        "collectedBonusIds": [],
+        "mastery": false,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0, 1, 5],
+        "used": []
+      }
+    },
+    {
+      "id": "home-signal",
+      "route": "ordinary",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "simulationIdentity": "587ffb66a4d5b08c",
+      "checkpoint": "666e1462fa79e810",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 138
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 138
+        },
+        {
+          "direction": "right",
+          "ticks": 138
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 192
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 306
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 210
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 288
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "down",
+          "ticks": 66
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 402
+        },
+        {
+          "direction": "down",
+          "ticks": 54
+        },
+        {
+          "direction": "right",
+          "ticks": 156
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 84
+        },
+        {
+          "direction": "down",
+          "ticks": 132
+        },
+        {
+          "direction": "right",
+          "ticks": 216
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 132
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 54
+        },
+        {
+          "direction": "down",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "up",
+          "ticks": 120
+        },
+        {
+          "direction": "left",
+          "ticks": 162
+        },
+        {
+          "direction": "right",
+          "ticks": 114
+        },
+        {
+          "direction": "up",
+          "ticks": 288
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "left",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 30
+        },
+        {
+          "direction": "left",
+          "ticks": 366
+        }
+      ],
+      "evidence": {
+        "ticks": 7122,
+        "coverage": 0.8839146277980219,
+        "lives": 5,
+        "checkpoint": "666e1462fa79e810",
+        "denominator": 1921,
+        "closures": [
+          {
+            "tick": 318,
+            "coverage": 0.011452368558042686,
+            "player": [20.499999999999943, 8.99999999999967],
+            "regions": [
+              {
+                "cells": 1899,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.502800871653847,
+                "y": 6.502800871653839,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 53.00280087165439,
+                "y": 17.002800871653278,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 11.27000000000001,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 462,
+            "coverage": 0.05778240499739719,
+            "player": [26.000000000000014, 9.499999999999996],
+            "regions": [
+              {
+                "cells": 1810,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.033666658163316,
+                "y": 6.033666658163364,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 50.966333341837434,
+                "y": 14.966333341835954,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 13.430000000000092,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 726,
+            "coverage": 0.08849557522123894,
+            "player": [34.49999999999937, 18.999999999999382],
+            "regions": [
+              {
+                "cells": 1751,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.732809537172145,
+                "y": 7.732809537171979,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 47.23280953717323,
+                "y": 11.232809537171297,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 17.390000000000015,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 1170,
+            "coverage": 0.14471629359708485,
+            "player": [35.000000000000455, 10.499999999999996],
+            "regions": [
+              {
+                "cells": 1643,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 24.453701320236085,
+                "y": 8.453701320235819,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 49.54629867976216,
+                "y": 13.546298679760511,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 24.05000000000004,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 1914,
+            "coverage": 0.22488287350338365,
+            "player": [37, 19.499999999999986],
+            "regions": [
+              {
+                "cells": 1489,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.568047583819528,
+                "y": 5.568047583819614,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 60.06804758381629,
+                "y": 24.068047583816952,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2154,
+            "coverage": 0.25299323269130664,
+            "player": [45.500000000000085, 20.00000000000007],
+            "regions": [
+              {
+                "cells": 1435,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 24.53783986648539,
+                "y": 8.537839866485102,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 63.46216013351114,
+                "y": 27.46216013351266,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "warning"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 3222,
+            "coverage": 0.27225403435710566,
+            "player": [40, 29.499999999999936],
+            "regions": [
+              {
+                "cells": 1398,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.434039020341057,
+                "y": 7.434039020340913,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 63.565960979656616,
+                "y": 27.565960979658165,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 10.65333333333276,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 3270,
+            "coverage": 0.30921395106715255,
+            "player": [40.500000000000014, 26.000000000000043],
+            "regions": [
+              {
+                "cells": 1327,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.755216510401905,
+                "y": 6.755216510401846,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 63.255216510401205,
+                "y": 27.255216510402683,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 11.293333333332775,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.029999999999973,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 3642,
+            "coverage": 0.3482561166059344,
+            "player": [16.50000000000022, 22.00000000000007],
+            "regions": [
+              {
+                "cells": 1252,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 24.4943420583744,
+                "y": 8.494342058374128,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 58.50565794162583,
+                "y": 22.505657941626115,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 16.253333333332808,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 4302,
+            "coverage": 0.5242061426340447,
+            "player": [7.500000000000798, 1.0000000000014357],
+            "regions": [
+              {
+                "cells": 914,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.160532546712275,
+                "y": 6.160532546712299,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 59.660532546710336,
+                "y": 23.6605325467109,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 25.05333333333152,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 30.150000000000006,
+                "y": 28,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 5358,
+            "coverage": 0.6605934409161894,
+            "player": [57.499999999999524, 30.000000000000032],
+            "regions": [
+              {
+                "cells": 652,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.273562671946515,
+                "y": 5.2735626719466575,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 60.773562671949065,
+                "y": 24.773562671949907,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 20.366666666670504,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 41.99000000000004,
+                "y": 30,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 5874,
+            "coverage": 0.7157730348776679,
+            "player": [58.00000000000055, 25.500000000000405],
+            "regions": [
+              {
+                "cells": 546,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.57090465379125,
+                "y": 5.5709046537913665,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 59.42909534620397,
+                "y": 23.42909534620449,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 13.486666666671175,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 42,
+                "y": 22.269999999999953,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 6318,
+            "coverage": 0.7657470067673087,
+            "player": [70.99999999999973, 1.5000000000013531],
+            "regions": [
+              {
+                "cells": 450,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.6499871292724,
+                "y": 5.649987129272515,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 58.35001287073216,
+                "y": 22.350012870732414,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 12.933333333328722,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 46.390000000000015,
+                "y": 20,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 6726,
+            "coverage": 0.8178032274856846,
+            "player": [51.50000000000061, 1.0000000000019829],
+            "regions": [
+              {
+                "cells": 350,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.87999579479068,
+                "y": 6.879995794790654,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 59.12000420521455,
+                "y": 23.120004205214986,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 18.373333333328336,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 52.51000000000002,
+                "y": 20,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 7122,
+            "coverage": 0.8839146277980219,
+            "player": [21.000000000001464, 3.5000000000019846],
+            "regions": [
+              {
+                "cells": 223,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 24.279710087782078,
+                "y": 8.27971008778188,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 59.7202899122122,
+                "y": 23.720289912212774,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 23.65333333332757,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 58.45000000000002,
+                "y": 20,
+                "mode": "patrolling"
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          [318, "north-relay"],
+          [726, "dock-relay"],
+          [1914, "east-relay"],
+          [3222, "south-relay"]
+        ],
+        "roverEvents": [
+          [2154, "rover.warning"],
+          [2274, "rover.activated"]
+        ],
+        "dockCrossings": [
+          [4770, "enter"],
+          [4830, "exit"]
+        ],
+        "allRequiredCapturedTick": 3222,
+        "firstQuotaTick": 7122,
+        "ticksAfterRequiredObjectives": 3900,
+        "ticksAfterQuota": 0,
+        "exposureTicks": 4272,
+        "postObjectiveExposureTicks": 2076,
+        "maxExposureTicks": 588,
+        "closestActiveRoamer": {
+          "tick": 2461,
+          "distance": 3.0000074073983476,
+          "cutting": false
+        },
+        "collectedBonusIds": [],
+        "mastery": false,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0, 2, 3, 1, 5],
+        "used": [["home-dock", 4770]]
+      }
+    },
+    {
+      "id": "home-signal",
+      "route": "ordinary",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "simulationIdentity": "963b1bc3405e14e7",
+      "checkpoint": "59882ac5c1c0427d",
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 198
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 138
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 150
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 180
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "left",
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 312
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 102
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 210
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 348
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 30
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 390
+        },
+        {
+          "direction": "down",
+          "ticks": 342
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 534
+        }
+      ],
+      "evidence": {
+        "ticks": 7566,
+        "coverage": 0.8646538261322227,
+        "lives": 3,
+        "checkpoint": "59882ac5c1c0427d",
+        "denominator": 1921,
+        "closures": [
+          {
+            "tick": 930,
+            "coverage": 0.020822488287350338,
+            "player": [21.499999999999925, 8.999999999999993],
+            "regions": [
+              {
+                "cells": 1881,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.586939417902844,
+                "y": 7.58693941790284,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 51.41306058209716,
+                "y": 15.413060582097158,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 1050,
+            "coverage": 0.05830296720458095,
+            "player": [26.000000000000014, 9.5],
+            "regions": [
+              {
+                "cells": 1809,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.288939366883934,
+                "y": 7.28893936688393,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 53.78893936688394,
+                "y": 17.788939366883938,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 1350,
+            "coverage": 0.092660072878709,
+            "player": [34.49999999999999, 18.99999999999996],
+            "regions": [
+              {
+                "cells": 1743,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.228636328850865,
+                "y": 7.228636328850861,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 59.7286363288509,
+                "y": 23.728636328850882,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 1842,
+            "coverage": 0.16762103071317022,
+            "player": [35, 10.50000000000079],
+            "regions": [
+              {
+                "cells": 1599,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.530260653523577,
+                "y": 7.530260653523568,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 58.03026065352353,
+                "y": 22.030260653523516,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2646,
+            "coverage": 0.18636127017178553,
+            "player": [51, 17.499999999999982],
+            "regions": [
+              {
+                "cells": 1563,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.611872795452225,
+                "y": 6.611872795452219,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 60.38812720454789,
+                "y": 24.388127204547867,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2946,
+            "coverage": 0.22384174908901613,
+            "player": [59.5, 18.0000000000001],
+            "regions": [
+              {
+                "cells": 1491,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.672175833485095,
+                "y": 6.672175833485089,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 61.17217583348521,
+                "y": 25.172175833485188,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 3258,
+            "coverage": 0.26132222800624677,
+            "player": [51, 10.5],
+            "regions": [
+              {
+                "cells": 1419,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.494890993039505,
+                "y": 6.494890993039498,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 61.99489099303961,
+                "y": 25.994890993039604,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 3810,
+            "coverage": 0.3133784487246226,
+            "player": [44.5, 19.00000000000008],
+            "regions": [
+              {
+                "cells": 1319,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.565848583020383,
+                "y": 7.565848583020376,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 62.43415141697975,
+                "y": 26.434151416979745,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "warning"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 4686,
+            "coverage": 0.3737636647579386,
+            "player": [10, 17.499999999999982],
+            "regions": [
+              {
+                "cells": 1203,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.27806654592328,
+                "y": 7.278066545923274,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 61.72193345407661,
+                "y": 25.721933454076606,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 12.130666666667059,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 5742,
+            "coverage": 0.6861009890681936,
+            "player": [64.49999999999999, 32],
+            "regions": [
+              {
+                "cells": 603,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.18579985204708,
+                "y": 7.185799852047073,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 61.81420014795281,
+                "y": 25.814200147952807,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 19.65733333333174,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 6222,
+            "coverage": 0.7600208224882874,
+            "player": [67.49999999999982, 1.000000000000918],
+            "regions": [
+              {
+                "cells": 461,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.689314991194202,
+                "y": 7.6893149911941965,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 62.310685008805706,
+                "y": 26.3106850088057,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 10.697333333331704,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.5,
+                "y": 12.169999999999819,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 7566,
+            "coverage": 0.8646538261322227,
+            "player": [22.000000000001272, 2.5000000000001066],
+            "regions": [
+              {
+                "cells": 208,
+                "enemyIds": ["north-keeper"]
+              },
+              {
+                "cells": 52,
+                "enemyIds": ["south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.29915738080585,
+                "y": 7.2991573808058465,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 61.799157380805724,
+                "y": 25.79915738080572,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 34.89066666666907,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 16.445999999999945,
+                "y": 9,
+                "mode": "rejoining"
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          [930, "north-relay"],
+          [1350, "dock-relay"],
+          [2646, "east-relay"],
+          [5742, "south-relay"]
+        ],
+        "roverEvents": [
+          [3810, "rover.warning"],
+          [3930, "rover.activated"]
+        ],
+        "dockCrossings": [
+          [5047, "enter"],
+          [5107, "exit"]
+        ],
+        "allRequiredCapturedTick": 5742,
+        "firstQuotaTick": 7566,
+        "ticksAfterRequiredObjectives": 1824,
+        "ticksAfterQuota": 0,
+        "exposureTicks": 3888,
+        "postObjectiveExposureTicks": 1092,
+        "maxExposureTicks": 660,
+        "closestActiveRoamer": {
+          "tick": 5245,
+          "distance": 4.167398815675755,
+          "cutting": false
+        },
+        "collectedBonusIds": [],
+        "mastery": true,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0, 2, 5, 8],
+        "used": [["home-dock", 5047]]
+      }
+    },
+    {
+      "id": "home-signal",
+      "route": "ordinary",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "simulationIdentity": "f7dd4de26e50eaf0",
+      "checkpoint": "9582681e0107c1de",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 222
+        },
+        {
+          "direction": "up",
+          "ticks": 234
+        },
+        {
+          "direction": "right",
+          "ticks": 444
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "left",
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 336
+        },
+        {
+          "direction": "up",
+          "ticks": 420
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 288
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 198
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": "left",
+          "ticks": 306
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 216
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 90
+        },
+        {
+          "direction": "left",
+          "ticks": 54
+        },
+        {
+          "direction": "down",
+          "ticks": 126
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "right",
+          "ticks": 66
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 228
+        },
+        {
+          "direction": "left",
+          "ticks": 540
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 30
+        }
+      ],
+      "evidence": {
+        "ticks": 6342,
+        "coverage": 0.9791775117126497,
+        "lives": 2,
+        "checkpoint": "9582681e0107c1de",
+        "denominator": 1921,
+        "closures": [
+          {
+            "tick": 102,
+            "coverage": 0.0026028110359187923,
+            "player": [15.5, 9],
+            "regions": [
+              {
+                "cells": 1916,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 24.47562879116405,
+                "y": 8.475628791164048,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 54.97562879116369,
+                "y": 18.97562879116405,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 10,
+                "y": 21.1775000000001,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 342,
+            "coverage": 0.008849557522123894,
+            "player": [20.499999999999947, 1.0000000000000115],
+            "regions": [
+              {
+                "cells": 1904,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 18.535931829197104,
+                "y": 2.535931829197077,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 49.0359318291959,
+                "y": 13.035931829197104,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 15.477499999999969,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 762,
+            "coverage": 0.12805830296720458,
+            "player": [34.49999999999986, 18.99999999999996],
+            "regions": [
+              {
+                "cells": 1675,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 18.14146214575495,
+                "y": 2.141462145754917,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 51.85853785424427,
+                "y": 15.85853785424505,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2334,
+            "coverage": 0.15616866215512754,
+            "player": [43.5, 35.000000000000014],
+            "regions": [
+              {
+                "cells": 1621,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 19.23644704487165,
+                "y": 3.236447044871637,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 53.763552955127835,
+                "y": 17.76355295512835,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 3690,
+            "coverage": 0.1905257678292556,
+            "player": [62.50000000000035, 8.000000000000057],
+            "regions": [
+              {
+                "cells": 1555,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 18.82284079024159,
+                "y": 2.8228407902415715,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 50.322840790240576,
+                "y": 14.322840790241589,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 4206,
+            "coverage": 0.44195731389901094,
+            "player": [37, 19.499999999999954],
+            "regions": [
+              {
+                "cells": 1072,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 17.906810741529483,
+                "y": 1.9068107415294517,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 63.09318925847134,
+                "y": 27.093189258470517,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 4458,
+            "coverage": 0.47006767308693387,
+            "player": [45.5, 20.00000000000007],
+            "regions": [
+              {
+                "cells": 1018,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 17.82987106853581,
+                "y": 1.8298710685357764,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 58.170128931464305,
+                "y": 22.17012893146419,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "warning"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 4854,
+            "coverage": 0.5200416449765747,
+            "player": [70.99999999999963, 24.499999999999947],
+            "regions": [
+              {
+                "cells": 922,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 17.630371055781268,
+                "y": 1.6303710557812332,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 63.369628944219585,
+                "y": 27.369628944218732,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 16.03666666666664,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 5034,
+            "coverage": 0.540864133263925,
+            "player": [67.50000000000018, 34.99999999999993],
+            "regions": [
+              {
+                "cells": 882,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 17.414856222743524,
+                "y": 1.4148562227434875,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 58.91485622274374,
+                "y": 22.914856222743524,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 11.836666666666623,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 5298,
+            "coverage": 0.5783446121811556,
+            "player": [52.00000000000003, 29.500000000000036],
+            "regions": [
+              {
+                "cells": 810,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 18.618810435420116,
+                "y": 2.6188104354200967,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 60.1188104354205,
+                "y": 24.118810435420116,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 12.823333333333402,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 5490,
+            "coverage": 0.6272774596564289,
+            "player": [62.000000000000014, 24.500000000000107],
+            "regions": [
+              {
+                "cells": 682,
+                "enemyIds": ["north-keeper"]
+              },
+              {
+                "cells": 34,
+                "enemyIds": ["south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 18.37056800499367,
+                "y": 2.370568004993648,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 62.62943199500707,
+                "y": 26.62943199500633,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 17.30333333333342,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 6342,
+            "coverage": 0.9791775117126497,
+            "player": [19.99999999999998, 1.5000000000001745],
+            "regions": [
+              {
+                "cells": 6,
+                "enemyIds": ["north-keeper"]
+              },
+              {
+                "cells": 34,
+                "enemyIds": ["south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 19.456492219976198,
+                "y": 3.4564922199761936,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 61.543507780024356,
+                "y": 25.543507780023802,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 14.31666666666662,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          [342, "north-relay"],
+          [762, "dock-relay"],
+          [2334, "south-relay"],
+          [3690, "east-relay"]
+        ],
+        "roverEvents": [
+          [4458, "rover.warning"],
+          [4578, "rover.activated"]
+        ],
+        "dockCrossings": [],
+        "allRequiredCapturedTick": 3690,
+        "firstQuotaTick": 6342,
+        "ticksAfterRequiredObjectives": 2652,
+        "ticksAfterQuota": 0,
+        "exposureTicks": 2208,
+        "postObjectiveExposureTicks": 1032,
+        "maxExposureTicks": 528,
+        "closestActiveRoamer": {
+          "tick": 4578,
+          "distance": 10.91377773479214,
+          "cutting": false
+        },
+        "collectedBonusIds": [],
+        "mastery": true,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0, 1, 5, 6, 8],
+        "used": []
+      }
+    },
+    {
+      "id": "home-signal",
+      "route": "up-first",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "simulationIdentity": "963b1bc3405e14e7",
+      "checkpoint": "fbd24710e80d81d3",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 156
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 444
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 78
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 78
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 108
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 288
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "left",
+          "ticks": 36
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 324
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 30
+        }
+      ],
+      "evidence": {
+        "ticks": 5190,
+        "coverage": 0.9031754294638209,
+        "lives": 3,
+        "checkpoint": "fbd24710e80d81d3",
+        "denominator": 1921,
+        "closures": [
+          {
+            "tick": 102,
+            "coverage": 0.0026028110359187923,
+            "player": [15.5, 9],
+            "regions": [
+              {
+                "cells": 1916,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 24.51949696706876,
+                "y": 8.519496967068761,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 55.48050303293124,
+                "y": 19.48050303293124,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 10,
+                "y": 20.64200000000008,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 270,
+            "coverage": 0.008849557522123894,
+            "player": [20.49999999999994, 1.0000000000000115],
+            "regions": [
+              {
+                "cells": 1904,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.65427273422975,
+                "y": 5.654272734229748,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 52.15427273422975,
+                "y": 16.15427273422975,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 12.170000000000215,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 834,
+            "coverage": 0.025507548152004164,
+            "player": [34.49999999999985, 1.0000000000000115],
+            "regions": [
+              {
+                "cells": 1872,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 24.48764244573227,
+                "y": 8.487642445732268,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 49.51235755426773,
+                "y": 13.512357554267728,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 19.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2178,
+            "coverage": 0.05361790733992712,
+            "player": [44.499999999999986, 35.000000000000085],
+            "regions": [
+              {
+                "cells": 1818,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.622199943879455,
+                "y": 7.622199943879455,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 51.37780005612054,
+                "y": 15.377800056120545,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2418,
+            "coverage": 0.41644976574700676,
+            "player": [37, 23.500000000000117],
+            "regions": [
+              {
+                "cells": 1121,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.373957513453004,
+                "y": 5.373957513453004,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 46.626042486546986,
+                "y": 10.626042486546995,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 4194,
+            "coverage": 0.6059344091618949,
+            "player": [58.5000000000006, 1.0000000000033298],
+            "regions": [
+              {
+                "cells": 757,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.536963528296017,
+                "y": 5.536963528296015,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 48.463036471703965,
+                "y": 12.463036471703983,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 24.54600000000002,
+                "y": 13,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 5058,
+            "coverage": 0.8011452368558043,
+            "player": [58.00000000000072, 17.500000000003354],
+            "regions": [
+              {
+                "cells": 180,
+                "enemyIds": ["north-keeper"]
+              },
+              {
+                "cells": 202,
+                "enemyIds": ["south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 24.643290778760818,
+                "y": 8.643290778760816,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 56.35670922123918,
+                "y": 20.356709221239175,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 21,
+                "y": 1.309999999999575,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 5190,
+            "coverage": 0.9031754294638209,
+            "player": [53.50000000000059, 18.00000000000533],
+            "regions": [
+              {
+                "cells": 180,
+                "enemyIds": ["north-keeper"]
+              },
+              {
+                "cells": 6,
+                "enemyIds": ["south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.243242557974202,
+                "y": 6.2432425579742,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 54.75675744202581,
+                "y": 18.756757442025798,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "warning"
+              },
+              {
+                "id": "frontier",
+                "x": 23.462000000000018,
+                "y": 1,
+                "mode": "patrolling"
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          [270, "north-relay"],
+          [834, "dock-relay"],
+          [2178, "south-relay"],
+          [4194, "east-relay"]
+        ],
+        "roverEvents": [[5190, "rover.warning"]],
+        "dockCrossings": [],
+        "allRequiredCapturedTick": 4194,
+        "firstQuotaTick": 5190,
+        "ticksAfterRequiredObjectives": 996,
+        "ticksAfterQuota": 0,
+        "exposureTicks": 1932,
+        "postObjectiveExposureTicks": 492,
+        "maxExposureTicks": 408,
+        "closestActiveRoamer": null,
+        "collectedBonusIds": [],
+        "mastery": false,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0, 1],
+        "used": []
+      }
+    },
+    {
+      "id": "home-signal",
+      "route": "dock-first",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "simulationIdentity": "963b1bc3405e14e7",
+      "checkpoint": "f62b975eccf0e600",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 132
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 456
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 138
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 282
+        },
+        {
+          "direction": "left",
+          "ticks": 6
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 450
+        }
+      ],
+      "evidence": {
+        "ticks": 3450,
+        "coverage": 0.8656949505465903,
+        "lives": 3,
+        "checkpoint": "f62b975eccf0e600",
+        "denominator": 1921,
+        "closures": [
+          {
+            "tick": 222,
+            "coverage": 0.02654867256637168,
+            "player": [26.000000000000014, 12.499999999999996],
+            "regions": [
+              {
+                "cells": 1870,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.604624248144457,
+                "y": 6.604624248144457,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 53.10462424814446,
+                "y": 17.104624248144457,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 11.162000000000177,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 498,
+            "coverage": 0.055700156168662154,
+            "player": [34.5, 19.000000000000007],
+            "regions": [
+              {
+                "cells": 1814,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 17.359896956865132,
+                "y": 1.359896956865124,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 47.640103043134864,
+                "y": 11.640103043134868,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 16.958000000000396,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 918,
+            "coverage": 0.05986465382613222,
+            "player": [20.50000000000016, 1.0000000000000115],
+            "regions": [
+              {
+                "cells": 1806,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 23.824527296381522,
+                "y": 7.824527296381518,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 51.17547270361849,
+                "y": 15.17547270361848,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 25.778000000000333,
+                "y": 22,
+                "mode": "patrolling"
+              }
+            ]
+          },
+          {
+            "tick": 2046,
+            "coverage": 0.2493492972410203,
+            "player": [58.500000000000746, 34.999999999999915],
+            "regions": [
+              {
+                "cells": 1442,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.49126671938583,
+                "y": 6.491266719385827,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 53.99126671938582,
+                "y": 17.991266719385806,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2442,
+            "coverage": 0.7017178552837064,
+            "player": [37.000000000000135, 23.500000000000114],
+            "regions": [
+              {
+                "cells": 573,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.65086672958947,
+                "y": 5.650866729589467,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 46.15086672958944,
+                "y": 10.150866729589438,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "dormant"
+              },
+              {
+                "id": "frontier",
+                "x": 27.75,
+                "y": 22,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 2838,
+            "coverage": 0.769390942217595,
+            "player": [57.99999999999992, 17.50000000000019],
+            "regions": [
+              {
+                "cells": 443,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 21.68953326020671,
+                "y": 5.689533260206712,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 52.189533260206744,
+                "y": 16.18953326020675,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 22.5,
+                "mode": "warning"
+              },
+              {
+                "id": "frontier",
+                "x": 32.566000000000116,
+                "y": 19,
+                "mode": "rejoining"
+              }
+            ]
+          },
+          {
+            "tick": 3450,
+            "coverage": 0.8656949505465903,
+            "player": [21.000000000001425, 5.500000000000163],
+            "regions": [
+              {
+                "cells": 258,
+                "enemyIds": ["north-keeper", "south-keeper"]
+              }
+            ],
+            "enemies": [
+              {
+                "id": "north-keeper",
+                "x": 22.693484937381093,
+                "y": 6.693484937381095,
+                "mode": null
+              },
+              {
+                "id": "south-keeper",
+                "x": 49.30651506261892,
+                "y": 13.306515062618944,
+                "mode": null
+              },
+              {
+                "id": "roamer",
+                "x": 42.5,
+                "y": 21.20266666666704,
+                "mode": "active"
+              },
+              {
+                "id": "frontier",
+                "x": 35,
+                "y": 8.581999999999796,
+                "mode": "patrolling"
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          [498, "dock-relay"],
+          [918, "north-relay"],
+          [2046, "east-relay"],
+          [2442, "south-relay"]
+        ],
+        "roverEvents": [
+          [2838, "rover.warning"],
+          [2958, "rover.activated"]
+        ],
+        "dockCrossings": [],
+        "allRequiredCapturedTick": 2442,
+        "firstQuotaTick": 3450,
+        "ticksAfterRequiredObjectives": 1008,
+        "ticksAfterQuota": 0,
+        "exposureTicks": 1872,
+        "postObjectiveExposureTicks": 720,
+        "maxExposureTicks": 444,
+        "closestActiveRoamer": {
+          "tick": 3224,
+          "distance": 12.308345425405413,
+          "cutting": true
+        },
+        "collectedBonusIds": [],
+        "mastery": false,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0, 5, 2],
+        "used": []
+      }
+    }
+  ]
+}

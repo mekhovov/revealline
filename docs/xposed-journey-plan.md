@@ -1,6 +1,11 @@
 # Xposed-led Journey — implementation contract
 
 Current checkpoint: [2026-09-21 item-by-item completion audit](verification/journey-completion-2026-09-21.md).
+The latest [Home Signal field-finale alternative](verification/journey-apex-field-finale.md)
+tests ordinary capture instead of a Sentinel encounter, preserving old editions.
+Eight replay/race clears include all presets/controls and two far-wing mastery
+cases; short routes, quota tails and adapted starts remain unresolved. This is an
+explicit Studio study, not automatic enrollment or final balance acceptance.
 The user's difficulty/bonus/Ukrainian-and-FPV/enemy-variety extension is specified in
 [the pressure and variety successor](superpowers/specs/2026-09-21-journey-pressure-and-variety.md).
 
