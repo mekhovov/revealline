@@ -22,6 +22,12 @@ native local checks; Team remains separately authored. Legacy navigation is not
 reinterpreted. See `verification/journey-mode-navigation.md`; accepted-release
 integration and Pages publication are still required.
 
+The mixed Legacy/Journey Skip affordance now follows actual mission ownership.
+Imported and restored Legacy attempts cannot expose or activate Journey Skip;
+owned selections restore it, and the last core mission offers Find missions.
+Both-node host regressions retain ten-clear continuity and failed-load recovery.
+See `verification/journey-owned-controls.md` for the red-to-green and native scope.
+
 Team original-art source checkpoint: eleven new originals plus the existing Shared
 detour picture now bind all twelve candidate missions without changing36 resolved
 preset simulations. The15-case cohort on Node20/22 includes64 unchanged two-seat
