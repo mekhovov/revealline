@@ -3,6 +3,18 @@
   "status": "eleven-new-original-candidates-existing-shared-detour-preserved",
   "tool": "built-in-imagegen",
   "useCase": "stylized-concept",
+  "nativeCheckpoint": {
+    "source": "9a775e3ad4b5ca905754e379ea39086524baed04",
+    "kind": "assistant-native-keyboard-observation-not-human-playtest",
+    "route": "localhost8813/game/couch/relay-rescue.html?journey=team-originals",
+    "scope": "Standard, Full teamwork, muted audio, normal tall viewport. Three partial-capture observations only; no full native clear or all-twelve native qualification.",
+    "observations": [
+      "Twin landings: D/Left joint bridge1.1%; W/Down outer returns2.5%;2reserves, stopped craft, one/two retained-region teaching and original picture fragments.",
+      "Changing courtyard: direct chooser replacement, D/Left center links1.6%;2reserves, distinct original, brick walls, lethal crosses, slow dashes and dormant-roamer labels.",
+      "Last rendezvous: two-activation Skip starts different dusk original directly; W/Down outer returns0.5%;2reserves, no forward Skip on final mission; left paused at41seconds."
+    ],
+    "remaining": "Other nine native originals, broad-area/victory, full threat-state matrix, physical devices, performance, human validation and publication remain pending."
+  },
   "assets": [
     {
       "missionId": "twin-landings",
