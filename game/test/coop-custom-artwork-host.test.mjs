@@ -116,7 +116,7 @@ function selectNative(f, file) {
   return input.onchange();
 }
 const preview = (f) => f.previewDrawImages.at(-1);
-const image = (f) => f.drawImages.at(-1);
+const image = (f) => f.drawImages.findLast((image) => f.artwork.calls.decodes.includes(image));
 const status = (f) => f.$('coop-pack-status').textContent;
 const localStatus = (f) => `${status(f)} ${f.$('coop-picture-status').textContent}`;
 const flush = () => new Promise((resolve) => setImmediate(resolve));

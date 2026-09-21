@@ -23,7 +23,7 @@ const hud = (f) =>
     'coop-state-0',
     'coop-state-1',
   ].map((id) => f.$(id).textContent);
-const lastImage = (f) => f.drawImages.at(-1);
+const lastImage = (f) => f.drawImages.findLast((image) => f.artwork.calls.decodes.includes(image));
 const options = { nativeFocus: true, nativeVisibility: true, capturePaint: true };
 function start(f) {
   f.$('coop-start').focus();
@@ -64,6 +64,12 @@ test('initial exact Relay Yard preparation exposes Cancel, then Ready and only e
   assert.equal(f.artwork.calls.reads.length, 1);
   start(f);
   assert.equal(lastImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+  const anchor = f.artwork.snapshot.resolved.assets['team.anchor.available'];
+  if (anchor?.kind === 'image')
+    assert.ok(
+      f.drawImages.some((image) => image.sha256 === anchor.file.sha256),
+      'Relay Yard also paints the exact adopted anchor artwork.',
+    );
   assert.equal(f.$('coop-stage').textContent, 'RELAY YARD');
 });
 

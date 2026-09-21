@@ -1,0 +1,55 @@
+{
+  "base": "8cfa5572c018f145e4b56c544543aaa15c96a159",
+  "beforeSha256": "30b4fc7265a1861e30eb7c11682214ff7fadc03335f20da394d7ba15a967255d",
+  "afterSha256": "4cbc8073c280988bb9c8ead5f1b5fb4a8ebc185476773236b2412a455f7b52b7",
+  "runtimeSha256": "9a9c4e1d16d440204e9d05e62912f226c536fa448ed0a17318e86c22db19dc4a",
+  "preservedOriginals": 127,
+  "addedOriginals": 6,
+  "counts": {
+    "assets": {
+      "before": 1287,
+      "after": 1317
+    },
+    "themes": {
+      "before": 39,
+      "after": 40
+    },
+    "collections": {
+      "before": 1,
+      "after": 1
+    },
+    "slots": {
+      "before": 293,
+      "after": 299
+    }
+  },
+  "readiness": {
+    "format": "revealline-production-readiness.v1",
+    "source": {
+      "id": "field-kit",
+      "revision": 39
+    },
+    "selection": {
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
+      "collection": null,
+      "theme": {
+        "id": "fpv",
+        "revision": 39
+      }
+    },
+    "requiredReviewed": 200,
+    "optionalSlots": 99,
+    "coverage": {
+      "missing": 0,
+      "source": 99,
+      "produced": 0,
+      "reviewed": 200
+    },
+    "declarationOnly": true,
+    "limitation": "Reviewed state and evidence declarations; no visual acceptance inferred."
+  },
+  "boundary": "Structural immutable history and original-byte verification; no native or public qualification."
+}

@@ -1,0 +1,28 @@
+{
+  "tests": [
+    {
+      "runtime": "20",
+      "passed": 81,
+      "file": "compiled-adoption-node20.tap.gz",
+      "rawSha256": "8290c21a69f0f903018810d49cb2873730be28d821866271ce7ba1d02ce15f8b",
+      "compressedSha256": "28a04ac6211d103e42d45f0cd1fe1e06417ee0a53f88c1192fdce986f5eade34"
+    },
+    {
+      "runtime": "22",
+      "passed": 81,
+      "file": "compiled-adoption-node22.tap.gz",
+      "rawSha256": "1fdcef4a2b1e4d13e56bdb70ea912098c3d398dedf2919d9b88f205520b1aa44",
+      "compressedSha256": "b215e8b9dc52219997771a94983d83d63dca03d6195f37183929adba8dac0d4e"
+    }
+  ],
+  "sources": {
+    "game/couch/coop-picture-bindings.mjs": "c1b3740dbb2dd34d212f205d7a939a4ee6bfc15fbc3432cd5b4c0a15c34da30f",
+    "game/couch/coop-retained-presentation.mjs": "7b4d303e0744253d0f3c475303fcc5638b2035ac154ea8b44cf4e64c327d5d10",
+    "game/test/helpers/coop-presentation-fixture.mjs": "e756d574a5ff8a60c8949110c95d0d11759fbeb8c2492db4b2cc6fcacfae767e",
+    "game/test/helpers/coop-win.mjs": "800d7dafd95fdf1b0dff3a1bf28f4c3f722af522fa267e6e2fc0f400bcf2b7ab",
+    "game/test/coop-picture-host.test.mjs": "6e8b0678b1db0761a0d5e3fe04f96be53757e3bd6792a94e902784cd28ffee8e",
+    "game/test/coop-custom-artwork-host.test.mjs": "d6139547a187c5d3401de658ec44bb377627da022def92894e1e7679ac4c4367",
+    "game/presentation/compiled/runtime.json": "9a9c4e1d16d440204e9d05e62912f226c536fa448ed0a17318e86c22db19dc4a"
+  },
+  "scope": "Real compiled candidate with finite DOM/canvas/decoder. Original SHA and ownership asserted. No native/device/public acceptance."
+}

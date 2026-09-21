@@ -27,7 +27,8 @@ export const teamHud = (f) =>
     'coop-state-0',
     'coop-state-1',
   ].map((id) => f.$(id).textContent);
-export const teamImage = (f) => f.drawImages.at(-1);
+export const teamImage = (f) =>
+  f.drawImages.findLast((image) => f.artwork.calls.decodes.includes(image));
 
 export function teamTabTo(f, id) {
   for (let n = 0; n < 30 && f.doc.activeElement.id !== id; n++) f.tap('Tab');

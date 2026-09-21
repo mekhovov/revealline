@@ -32263,6 +32263,844 @@
       },
       "recipe": { "id": "effect.feedback.v1" },
       "revision": 8
+    },
+    {
+      "description": "Panel frame: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.panel.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.panel.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit panel frame for slot ui.panel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.panel.v1" },
+      "revision": 14
+    },
+    {
+      "description": "Dialog frame: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.dialog.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.dialog.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit dialog frame for slot ui.dialog. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.panel.v1" },
+      "revision": 14
+    },
+    {
+      "description": "Tooltip frame: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.tooltip.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.tooltip.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit tooltip frame for slot ui.tooltip. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.panel.v1" },
+      "revision": 14
+    },
+    {
+      "description": "Status message frame: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.toast.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.toast.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit status message frame for slot ui.toast. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.panel.v1" },
+      "revision": 14
+    },
+    {
+      "description": "primary button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.primary.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.primary.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit primary button for slot ui.button.primary. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 14
+    },
+    {
+      "description": "secondary button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.secondary.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.secondary.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit secondary button for slot ui.button.secondary. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 14
+    },
+    {
+      "description": "danger button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.danger.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.danger.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit danger button for slot ui.button.danger. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 14
+    },
+    {
+      "description": "icon button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.icon.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.icon.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit icon button for slot ui.button.icon. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 14
+    },
+    {
+      "description": "tab button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.tab.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.tab.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit tab button for slot ui.button.tab. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 14
+    },
+    {
+      "description": "chip button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.chip.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.chip.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit chip button for slot ui.button.chip. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 14
+    },
+    {
+      "description": "checkbox control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.checkbox.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.checkbox.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit checkbox control for slot ui.input.checkbox. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 14
+    },
+    {
+      "description": "radio control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.radio.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.radio.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit radio control for slot ui.input.radio. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 14
+    },
+    {
+      "description": "toggle control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.toggle.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.toggle.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit toggle control for slot ui.input.toggle. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 14
+    },
+    {
+      "description": "slider control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.slider.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.slider.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit slider control for slot ui.input.slider. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 14
+    },
+    {
+      "description": "select control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.select.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.select.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit select control for slot ui.input.select. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 14
+    },
+    {
+      "description": "text control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.text.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.text.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit text control for slot ui.input.text. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 14
+    },
+    {
+      "description": "scrollbar control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.scrollbar.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.scrollbar.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit scrollbar control for slot ui.input.scrollbar. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 14
+    },
+    {
+      "description": "coverage meter: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.meter.coverage.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.meter.coverage.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit coverage meter for slot ui.meter.coverage. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.meter.v1" },
+      "revision": 14
+    },
+    {
+      "description": "progress meter: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.meter.progress.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.meter.progress.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit progress meter for slot ui.meter.progress. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.meter.v1" },
+      "revision": 14
+    },
+    {
+      "description": "time meter: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.meter.time.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.meter.time.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit time meter for slot ui.meter.time. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.meter.v1" },
+      "revision": 14
+    },
+    {
+      "description": "ability meter: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.meter.ability.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.meter.ability.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit ability meter for slot ui.meter.ability. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.meter.v1" },
+      "revision": 14
+    },
+    {
+      "description": "volume meter: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.meter.volume.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.meter.volume.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit volume meter for slot ui.meter.volume. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.meter.v1" },
+      "revision": 14
+    },
+    {
+      "description": "Focus brackets: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.focus.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.focus.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit focus brackets for slot ui.focus. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.focus.v1" },
+      "revision": 14
+    },
+    {
+      "description": "Selection cursor: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.cursor.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.cursor.field-kit", "revision": 13 },
+        "prompt": "Create one original FPV Field Kit selection cursor for slot ui.cursor. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 16 by 16 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs; game/presentation/manifest-path.mjs; game/presentation/team-actor-slots.mjs; game/presentation/team-anchor-slots.mjs; game/presentation/team-effect-slots.mjs; game/presentation/team-threat-slots.mjs; game/presentation/team-event-slots.mjs sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Team loader source review: docs/verification/team-presentation-integration/ui-recipe-review.md. UI recipe sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41 includes the retained-manifest path helper and all five Team role registries, so changes reopen review. Existing component CSS, status ownership and DOM ownership are unchanged.",
+          "Actual presentation host, dependency inventory and visual-lease cohorts pass 39/39 on Node20.19.5 and Node22.22.2. Registered Team images enter normal verified decode/crop lifetime; retained loads require the same exact manifest pin and a code-owned hash filename, with no current-release fallback. Missing, altered, cancelled or failed replacements preserve the accepted owner.",
+          "Functional source review only. Compiled adoption, all-theme/state visuals, physical devices, screen readers, full offline journeys, human playtests and public acceptance remain separate. Earlier reviewed recipe and historical presentation records remain immutable."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.cursor.v1" },
+      "revision": 14
+    },
+    {
+      "description": "The same radio receiver with two separated amber connector jaws.",
+      "file": {
+        "bytes": 194,
+        "height": 24,
+        "mime": "image/png",
+        "sha256": "e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353",
+        "width": 24
+      },
+      "format": "revealline-asset-revision.v1",
+      "geometry": {
+        "frame": { "height": 24, "width": 24, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": {
+          "height": 0.8333333333333334,
+          "width": 0.6666666666666666,
+          "x": 0.16666666666666666,
+          "y": 0.08333333333333333
+        },
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "id": "team.anchor.available.field-kit",
+      "kind": "image",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "parent": null,
+        "prompt": "Create an original team relay anchor: available marker for Reveal Line's resolved theme. Export a 24 by 24 transparent PNG with crisp pixel clusters, centred pivot and no text, blur, baked glow or background. Keep a silhouette distinct from pickups, Support and Scan. Preserve objective semantics and review available/captured as one pair at actual Team playing sizes. Retain original, prepared derivative, provenance and alpha/dimension validation. Artwork never changes capture geometry or gameplay.\nMATCHED FAMILY: Field Kit relay radio v1. Preserve two upright receiver ears, central mast, pale case rim and two feet. Available uses two separated connector jaws; captured uses one closed linked frame and a joined centre. Retain this non-colour distinction. Never bake anchor letters, checks, capture perimeter or progress into either image. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62. Verify both states together at 24 CSS pixels over concealment and light/dark terrain; review in Relay Yard and an imported multi-stronghold map.",
+        "source": "authoring/library/team-anchor-field-kit-v1/source.mjs sha256:ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped six-image decision: docs/verification/team-presentation-integration/six-art-review/FINDINGS.md; exact PNG, source, manifest, producer and slot-contract pins in adjacent audit.json.",
+          "Original Studio uploads, available/captured and Support/slowed/rescue/recovery scenes, native-size/grayscale/light inspections and exact round-trips were independently examined. Original prepared manifests remain produced and unchanged.",
+          "Artwork semantics and demonstrated contexts only. Keep authoritative labels, targets and timing; omit crowded decoration. Full adopted build, arbitrary maps, normal-motion performance, physical hardware, offline and public qualification remain separate.",
+          "Exact adopted PNG SHA-256 e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": null,
+      "revision": 1
+    },
+    {
+      "description": "Braced radio receiver with a closed cyan connector and joined pale centre.",
+      "file": {
+        "bytes": 192,
+        "height": 24,
+        "mime": "image/png",
+        "sha256": "fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6",
+        "width": 24
+      },
+      "format": "revealline-asset-revision.v1",
+      "geometry": {
+        "frame": { "height": 24, "width": 24, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": {
+          "height": 0.8333333333333334,
+          "width": 0.6666666666666666,
+          "x": 0.16666666666666666,
+          "y": 0.08333333333333333
+        },
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "id": "team.anchor.captured.field-kit",
+      "kind": "image",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "parent": null,
+        "prompt": "Create an original team relay anchor: captured marker for Reveal Line's resolved theme. Export a 24 by 24 transparent PNG with crisp pixel clusters, centred pivot and no text, blur, baked glow or background. Keep a silhouette distinct from pickups, Support and Scan. Preserve objective semantics and review available/captured as one pair at actual Team playing sizes. Retain original, prepared derivative, provenance and alpha/dimension validation. Artwork never changes capture geometry or gameplay.\nMATCHED FAMILY: Field Kit relay radio v1. Preserve two upright receiver ears, central mast, pale case rim and two feet. Available uses two separated connector jaws; captured uses one closed linked frame and a joined centre. Retain this non-colour distinction. Never bake anchor letters, checks, capture perimeter or progress into either image. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62. Verify both states together at 24 CSS pixels over concealment and light/dark terrain; review in Relay Yard and an imported multi-stronghold map.",
+        "source": "authoring/library/team-anchor-field-kit-v1/source.mjs sha256:ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped six-image decision: docs/verification/team-presentation-integration/six-art-review/FINDINGS.md; exact PNG, source, manifest, producer and slot-contract pins in adjacent audit.json.",
+          "Original Studio uploads, available/captured and Support/slowed/rescue/recovery scenes, native-size/grayscale/light inspections and exact round-trips were independently examined. Original prepared manifests remain produced and unchanged.",
+          "Artwork semantics and demonstrated contexts only. Keep authoritative labels, targets and timing; omit crowded decoration. Full adopted build, arbitrary maps, normal-motion performance, physical hardware, offline and public qualification remain separate.",
+          "Exact adopted PNG SHA-256 fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": null,
+      "revision": 1
+    },
+    {
+      "description": "Short field-radio pulse: upright transmitter and disconnected stepped side signals, with no scanning circle or attack shape.",
+      "file": {
+        "bytes": 271,
+        "height": 32,
+        "mime": "image/png",
+        "sha256": "a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def",
+        "width": 32
+      },
+      "format": "revealline-asset-revision.v1",
+      "geometry": {
+        "frame": { "height": 32, "width": 32, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": { "height": 0.71875, "width": 0.84375, "x": 0.09375, "y": 0.1875 },
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "id": "team.effect.support.field-kit",
+      "kind": "image",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "parent": null,
+        "prompt": "Create an original team feedback: support badge for Reveal Line's resolved theme. Support pulse at its actual origin, lasting 0.3 seconds; not damage, Scan or proof that an enemy was slowed. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.\nMATCHED FAMILY: Field Kit Team feedback v1. Preserve four different silhouettes: radio pulse, hourglass, round/diamond rescue links, tapered craft-grace badge. Selected design: Short field-radio pulse: upright transmitter and disconnected stepped side signals, with no scanning circle or attack shape. Use a one-pixel dark outline for separation on light artwork. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62, #9dbb7a. No letters, player number, embedded countdown/progress, damage, range, Scan sweep or reward. Runtime retains exact active-state timing and can suppress decoration when crowded. Review at native 32 and runtime 24 CSS pixels, including grayscale, actual earned scenes and reduced effects. Return source and derivative with provenance.",
+        "source": "authoring/library/team-feedback-field-kit-v1/source.mjs sha256:4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped six-image decision: docs/verification/team-presentation-integration/six-art-review/FINDINGS.md; exact PNG, source, manifest, producer and slot-contract pins in adjacent audit.json.",
+          "Original Studio uploads, available/captured and Support/slowed/rescue/recovery scenes, native-size/grayscale/light inspections and exact round-trips were independently examined. Original prepared manifests remain produced and unchanged.",
+          "Artwork semantics and demonstrated contexts only. Keep authoritative labels, targets and timing; omit crowded decoration. Full adopted build, arbitrary maps, normal-motion performance, physical hardware, offline and public qualification remain separate.",
+          "Exact adopted PNG SHA-256 a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": null,
+      "revision": 1
+    },
+    {
+      "description": "Braced hourglass with a narrow waist and descending sand: temporary slowdown, never a pause or stun command.",
+      "file": {
+        "bytes": 220,
+        "height": 32,
+        "mime": "image/png",
+        "sha256": "4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf",
+        "width": 32
+      },
+      "format": "revealline-asset-revision.v1",
+      "geometry": {
+        "frame": { "height": 32, "width": 32, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": { "height": 0.78125, "width": 0.625, "x": 0.1875, "y": 0.125 },
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "id": "team.effect.slowed.field-kit",
+      "kind": "image",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "parent": null,
+        "prompt": "Create an original team feedback: slowed badge for Reveal Line's resolved theme. Temporary enemy slowdown, following the affected active enemy; distinct from the shorter Support pulse. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.\nMATCHED FAMILY: Field Kit Team feedback v1. Preserve four different silhouettes: radio pulse, hourglass, round/diamond rescue links, tapered craft-grace badge. Selected design: Braced hourglass with a narrow waist and descending sand: temporary slowdown, never a pause or stun command. Use a one-pixel dark outline for separation on light artwork. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62, #9dbb7a. No letters, player number, embedded countdown/progress, damage, range, Scan sweep or reward. Runtime retains exact active-state timing and can suppress decoration when crowded. Review at native 32 and runtime 24 CSS pixels, including grayscale, actual earned scenes and reduced effects. Return source and derivative with provenance.",
+        "source": "authoring/library/team-feedback-field-kit-v1/source.mjs sha256:4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped six-image decision: docs/verification/team-presentation-integration/six-art-review/FINDINGS.md; exact PNG, source, manifest, producer and slot-contract pins in adjacent audit.json.",
+          "Original Studio uploads, available/captured and Support/slowed/rescue/recovery scenes, native-size/grayscale/light inspections and exact round-trips were independently examined. Original prepared manifests remain produced and unchanged.",
+          "Artwork semantics and demonstrated contexts only. Keep authoritative labels, targets and timing; omit crowded decoration. Full adopted build, arbitrary maps, normal-motion performance, physical hardware, offline and public qualification remain separate.",
+          "Exact adopted PNG SHA-256 4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": null,
+      "revision": 1
+    },
+    {
+      "description": "Round and diamond partner links joined by a pale diagonal coupling: held contact rescue, not a reward or extra reserve.",
+      "file": {
+        "bytes": 266,
+        "height": 32,
+        "mime": "image/png",
+        "sha256": "0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c",
+        "width": 32
+      },
+      "format": "revealline-asset-revision.v1",
+      "geometry": {
+        "frame": { "height": 32, "width": 32, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": { "height": 0.78125, "width": 0.84375, "x": 0.09375, "y": 0.09375 },
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "id": "team.effect.rescue.field-kit",
+      "kind": "image",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "parent": null,
+        "prompt": "Create an original team feedback: rescue badge for Reveal Line's resolved theme. Held rescue by the active helper of a downed teammate; target number and progress remain runtime-owned. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.\nMATCHED FAMILY: Field Kit Team feedback v1. Preserve four different silhouettes: radio pulse, hourglass, round/diamond rescue links, tapered craft-grace badge. Selected design: Round and diamond partner links joined by a pale diagonal coupling: held contact rescue, not a reward or extra reserve. Use a one-pixel dark outline for separation on light artwork. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62, #9dbb7a. No letters, player number, embedded countdown/progress, damage, range, Scan sweep or reward. Runtime retains exact active-state timing and can suppress decoration when crowded. Review at native 32 and runtime 24 CSS pixels, including grayscale, actual earned scenes and reduced effects. Return source and derivative with provenance.",
+        "source": "authoring/library/team-feedback-field-kit-v1/source.mjs sha256:4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped six-image decision: docs/verification/team-presentation-integration/six-art-review/FINDINGS.md; exact PNG, source, manifest, producer and slot-contract pins in adjacent audit.json.",
+          "Original Studio uploads, available/captured and Support/slowed/rescue/recovery scenes, native-size/grayscale/light inspections and exact round-trips were independently examined. Original prepared manifests remain produced and unchanged.",
+          "Artwork semantics and demonstrated contexts only. Keep authoritative labels, targets and timing; omit crowded decoration. Full adopted build, arbitrary maps, normal-motion performance, physical hardware, offline and public qualification remain separate.",
+          "Exact adopted PNG SHA-256 0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": null,
+      "revision": 1
+    },
+    {
+      "description": "Small four-arm craft inside a tapered protective badge: revived-player grace, distinct from the hexagonal relay shield.",
+      "file": {
+        "bytes": 289,
+        "height": 32,
+        "mime": "image/png",
+        "sha256": "53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408",
+        "width": 32
+      },
+      "format": "revealline-asset-revision.v1",
+      "geometry": {
+        "frame": { "height": 32, "width": 32, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": { "height": 0.75, "width": 0.75, "x": 0.125, "y": 0.125 },
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "id": "team.effect.recovery.field-kit",
+      "kind": "image",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "parent": null,
+        "prompt": "Create an original team feedback: recovery badge for Reveal Line's resolved theme. Revived player grace, following that player; never the hunter recovery phase. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.\nMATCHED FAMILY: Field Kit Team feedback v1. Preserve four different silhouettes: radio pulse, hourglass, round/diamond rescue links, tapered craft-grace badge. Selected design: Small four-arm craft inside a tapered protective badge: revived-player grace, distinct from the hexagonal relay shield. Use a one-pixel dark outline for separation on light artwork. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62, #9dbb7a. No letters, player number, embedded countdown/progress, damage, range, Scan sweep or reward. Runtime retains exact active-state timing and can suppress decoration when crowded. Review at native 32 and runtime 24 CSS pixels, including grayscale, actual earned scenes and reduced effects. Return source and derivative with provenance.",
+        "source": "authoring/library/team-feedback-field-kit-v1/source.mjs sha256:4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped six-image decision: docs/verification/team-presentation-integration/six-art-review/FINDINGS.md; exact PNG, source, manifest, producer and slot-contract pins in adjacent audit.json.",
+          "Original Studio uploads, available/captured and Support/slowed/rescue/recovery scenes, native-size/grayscale/light inspections and exact round-trips were independently examined. Original prepared manifests remain produced and unchanged.",
+          "Artwork semantics and demonstrated contexts only. Keep authoritative labels, targets and timing; omit crowded decoration. Full adopted build, arbitrary maps, normal-motion performance, physical hardware, offline and public qualification remain separate.",
+          "Exact adopted PNG SHA-256 53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": null,
+      "revision": 1
     }
   ],
   "collections": [
@@ -33238,11 +34076,11 @@
   ],
   "format": "revealline-theme-bundle.v1",
   "id": "field-kit",
-  "revision": 38,
+  "revision": 39,
   "selection": {
     "base": { "id": "base", "revision": 1 },
     "collection": null,
-    "theme": { "id": "fpv", "revision": 38 }
+    "theme": { "id": "fpv", "revision": 39 }
   },
   "slots": [
     {
@@ -47234,6 +48072,210 @@
       "sampling": "nearest",
       "screens": ["flight", "picture", "collection", "studio"],
       "states": ["default"]
+    },
+    {
+      "alpha": "required",
+      "budget": { "maxBytes": 131072 },
+      "dependencies": [],
+      "dimensions": { "height": 24, "width": 24 },
+      "format": "revealline-asset-slot.v1",
+      "geometry": {
+        "frame": { "height": 24, "width": 24, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": null,
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "group": "objectives",
+      "id": "team.anchor.available",
+      "kinds": ["recipe", "image"],
+      "label": "Team relay anchor: available",
+      "owner": null,
+      "palette": ["#070b12", "#101923", "#f3f0db", "#78dce8", "#f4bf62", "#f07879", "#9dbb7a"],
+      "prompt": "Create an original team relay anchor: available marker for Reveal Line's resolved theme. Export a 24 by 24 transparent PNG with crisp pixel clusters, centred pivot and no text, blur, baked glow or background. Keep a silhouette distinct from pickups, Support and Scan. Preserve objective semantics and review available/captured as one pair at actual Team playing sizes. Retain original, prepared derivative, provenance and alpha/dimension validation. Artwork never changes capture geometry or gameplay.",
+      "recipes": ["team.anchor.v1"],
+      "required": false,
+      "requirements": [
+        "Relay anchor available; this is a stronghold objective, never an ordinary pickup or Support/Scan icon.",
+        "Runtime places the anchor letter or captured check beside the artwork. No text or progress may be baked into the artwork.",
+        "Cosmetic 24×24 transparent pixel artwork. Cosmetic display has a 24 CSS-pixel minimum; the runtime keeps the exact capture marker, label, border, state and timing.",
+        "Review both states together in Relay Yard and imported multi-stronghold maps, over light/dark art and black concealment.",
+        "First Connection has no relay anchors; its preview must report this role as inactive rather than inventing an objective."
+      ],
+      "revision": 1,
+      "sampling": "nearest",
+      "screens": ["couch", "studio"],
+      "states": ["default"]
+    },
+    {
+      "alpha": "required",
+      "budget": { "maxBytes": 131072 },
+      "dependencies": [],
+      "dimensions": { "height": 24, "width": 24 },
+      "format": "revealline-asset-slot.v1",
+      "geometry": {
+        "frame": { "height": 24, "width": 24, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": null,
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "group": "objectives",
+      "id": "team.anchor.captured",
+      "kinds": ["recipe", "image"],
+      "label": "Team relay anchor: captured",
+      "owner": null,
+      "palette": ["#070b12", "#101923", "#f3f0db", "#78dce8", "#f4bf62", "#f07879", "#9dbb7a"],
+      "prompt": "Create an original team relay anchor: captured marker for Reveal Line's resolved theme. Export a 24 by 24 transparent PNG with crisp pixel clusters, centred pivot and no text, blur, baked glow or background. Keep a silhouette distinct from pickups, Support and Scan. Preserve objective semantics and review available/captured as one pair at actual Team playing sizes. Retain original, prepared derivative, provenance and alpha/dimension validation. Artwork never changes capture geometry or gameplay.",
+      "recipes": ["team.anchor.v1"],
+      "required": false,
+      "requirements": [
+        "Relay anchor captured; this is a stronghold objective, never an ordinary pickup or Support/Scan icon.",
+        "Runtime places the anchor letter or captured check beside the artwork. No text or progress may be baked into the artwork.",
+        "Cosmetic 24×24 transparent pixel artwork. Cosmetic display has a 24 CSS-pixel minimum; the runtime keeps the exact capture marker, label, border, state and timing.",
+        "Review both states together in Relay Yard and imported multi-stronghold maps, over light/dark art and black concealment.",
+        "First Connection has no relay anchors; its preview must report this role as inactive rather than inventing an objective."
+      ],
+      "revision": 1,
+      "sampling": "nearest",
+      "screens": ["couch", "studio"],
+      "states": ["default"]
+    },
+    {
+      "alpha": "required",
+      "budget": { "maxBytes": 131072 },
+      "dependencies": [],
+      "dimensions": { "height": 32, "width": 32 },
+      "format": "revealline-asset-slot.v1",
+      "geometry": {
+        "frame": { "height": 32, "width": 32, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": null,
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "group": "effects",
+      "id": "team.effect.support",
+      "kinds": ["recipe", "image"],
+      "label": "Team feedback: support",
+      "owner": null,
+      "palette": ["#070b12", "#101923", "#f3f0db", "#78dce8", "#f4bf62", "#f07879", "#9dbb7a"],
+      "prompt": "Create an original team feedback: support badge for Reveal Line's resolved theme. Support pulse at its actual origin, lasting 0.3 seconds; not damage, Scan or proof that an enemy was slowed. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.",
+      "recipes": ["team.effect.v1"],
+      "required": false,
+      "requirements": [
+        "Support pulse at its actual origin, lasting 0.3 seconds; not damage, Scan or proof that an enemy was slowed.",
+        "A cosmetic 32×32 transparent pixel badge supplements the existing authoritative cue. Runtime labels, ranges, countdowns and contact points stay visible.",
+        "No text, player number, progress bar, damage, Scan sweep or simulated range may be baked into this badge.",
+        "Inspect the matching earned scene in Field context → Couch Team with normal and reduced effects; inactive states must remain inactive.",
+        "Art may be suppressed when no clear nearby placement fits. It never replaces the functional cue or changes gameplay timing."
+      ],
+      "revision": 1,
+      "sampling": "nearest",
+      "screens": ["couch", "studio"],
+      "states": ["default"]
+    },
+    {
+      "alpha": "required",
+      "budget": { "maxBytes": 131072 },
+      "dependencies": [],
+      "dimensions": { "height": 32, "width": 32 },
+      "format": "revealline-asset-slot.v1",
+      "geometry": {
+        "frame": { "height": 32, "width": 32, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": null,
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "group": "effects",
+      "id": "team.effect.slowed",
+      "kinds": ["recipe", "image"],
+      "label": "Team feedback: slowed",
+      "owner": null,
+      "palette": ["#070b12", "#101923", "#f3f0db", "#78dce8", "#f4bf62", "#f07879", "#9dbb7a"],
+      "prompt": "Create an original team feedback: slowed badge for Reveal Line's resolved theme. Temporary enemy slowdown, following the affected active enemy; distinct from the shorter Support pulse. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.",
+      "recipes": ["team.effect.v1"],
+      "required": false,
+      "requirements": [
+        "Temporary enemy slowdown, following the affected active enemy; distinct from the shorter Support pulse.",
+        "A cosmetic 32×32 transparent pixel badge supplements the existing authoritative cue. Runtime labels, ranges, countdowns and contact points stay visible.",
+        "No text, player number, progress bar, damage, Scan sweep or simulated range may be baked into this badge.",
+        "Inspect the matching earned scene in Field context → Couch Team with normal and reduced effects; inactive states must remain inactive.",
+        "Art may be suppressed when no clear nearby placement fits. It never replaces the functional cue or changes gameplay timing."
+      ],
+      "revision": 1,
+      "sampling": "nearest",
+      "screens": ["couch", "studio"],
+      "states": ["default"]
+    },
+    {
+      "alpha": "required",
+      "budget": { "maxBytes": 131072 },
+      "dependencies": [],
+      "dimensions": { "height": 32, "width": 32 },
+      "format": "revealline-asset-slot.v1",
+      "geometry": {
+        "frame": { "height": 32, "width": 32, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": null,
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "group": "effects",
+      "id": "team.effect.rescue",
+      "kinds": ["recipe", "image"],
+      "label": "Team feedback: rescue",
+      "owner": null,
+      "palette": ["#070b12", "#101923", "#f3f0db", "#78dce8", "#f4bf62", "#f07879", "#9dbb7a"],
+      "prompt": "Create an original team feedback: rescue badge for Reveal Line's resolved theme. Held rescue by the active helper of a downed teammate; target number and progress remain runtime-owned. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.",
+      "recipes": ["team.effect.v1"],
+      "required": false,
+      "requirements": [
+        "Held rescue by the active helper of a downed teammate; target number and progress remain runtime-owned.",
+        "A cosmetic 32×32 transparent pixel badge supplements the existing authoritative cue. Runtime labels, ranges, countdowns and contact points stay visible.",
+        "No text, player number, progress bar, damage, Scan sweep or simulated range may be baked into this badge.",
+        "Inspect the matching earned scene in Field context → Couch Team with normal and reduced effects; inactive states must remain inactive.",
+        "Art may be suppressed when no clear nearby placement fits. It never replaces the functional cue or changes gameplay timing."
+      ],
+      "revision": 1,
+      "sampling": "nearest",
+      "screens": ["couch", "studio"],
+      "states": ["default"]
+    },
+    {
+      "alpha": "required",
+      "budget": { "maxBytes": 131072 },
+      "dependencies": [],
+      "dimensions": { "height": 32, "width": 32 },
+      "format": "revealline-asset-slot.v1",
+      "geometry": {
+        "frame": { "height": 32, "width": 32, "x": 0, "y": 0 },
+        "nineSlice": null,
+        "occupiedBounds": null,
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "rotorAnchors": []
+      },
+      "group": "effects",
+      "id": "team.effect.recovery",
+      "kinds": ["recipe", "image"],
+      "label": "Team feedback: recovery",
+      "owner": null,
+      "palette": ["#070b12", "#101923", "#f3f0db", "#78dce8", "#f4bf62", "#f07879", "#9dbb7a"],
+      "prompt": "Create an original team feedback: recovery badge for Reveal Line's resolved theme. Revived player grace, following that player; never the hunter recovery phase. Export exactly 32 by 32 transparent PNG with crisp pixel clusters, centered pivot, binary transparency and the resolved palette. No text, number, progress, blur, baked glow, background, Scan sweep or damage claim. This cosmetic badge supplements runtime warnings, labels and progress. Distinguish all four feedback roles by shape. Inspect at 24 CSS pixels in both starter arenas over dark/light artwork with reduced effects. Preserve source, derivative and provenance; validate dimensions, alpha, frame and pivot. Never alter the simulation, duration or effect radius.",
+      "recipes": ["team.effect.v1"],
+      "required": false,
+      "requirements": [
+        "Revived player grace, following that player; never the hunter recovery phase.",
+        "A cosmetic 32×32 transparent pixel badge supplements the existing authoritative cue. Runtime labels, ranges, countdowns and contact points stay visible.",
+        "No text, player number, progress bar, damage, Scan sweep or simulated range may be baked into this badge.",
+        "Inspect the matching earned scene in Field context → Couch Team with normal and reduced effects; inactive states must remain inactive.",
+        "Art may be suppressed when no clear nearby placement fits. It never replaces the functional cue or changes gameplay timing."
+      ],
+      "revision": 1,
+      "sampling": "nearest",
+      "screens": ["couch", "studio"],
+      "states": ["default"]
     }
   ],
   "themes": [
@@ -50677,6 +51719,46 @@
       "name": "FPV Field Kit",
       "parent": { "id": "fpv", "revision": 37 },
       "revision": 38,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "team.anchor.available": { "id": "team.anchor.available.field-kit", "revision": 1 },
+        "team.anchor.captured": { "id": "team.anchor.captured.field-kit", "revision": 1 },
+        "team.effect.recovery": { "id": "team.effect.recovery.field-kit", "revision": 1 },
+        "team.effect.rescue": { "id": "team.effect.rescue.field-kit", "revision": 1 },
+        "team.effect.slowed": { "id": "team.effect.slowed.field-kit", "revision": 1 },
+        "team.effect.support": { "id": "team.effect.support.field-kit", "revision": 1 },
+        "ui.button.chip": { "id": "ui.button.chip.field-kit", "revision": 14 },
+        "ui.button.danger": { "id": "ui.button.danger.field-kit", "revision": 14 },
+        "ui.button.icon": { "id": "ui.button.icon.field-kit", "revision": 14 },
+        "ui.button.primary": { "id": "ui.button.primary.field-kit", "revision": 14 },
+        "ui.button.secondary": { "id": "ui.button.secondary.field-kit", "revision": 14 },
+        "ui.button.tab": { "id": "ui.button.tab.field-kit", "revision": 14 },
+        "ui.cursor": { "id": "ui.cursor.field-kit", "revision": 14 },
+        "ui.dialog": { "id": "ui.dialog.field-kit", "revision": 14 },
+        "ui.focus": { "id": "ui.focus.field-kit", "revision": 14 },
+        "ui.input.checkbox": { "id": "ui.input.checkbox.field-kit", "revision": 14 },
+        "ui.input.radio": { "id": "ui.input.radio.field-kit", "revision": 14 },
+        "ui.input.scrollbar": { "id": "ui.input.scrollbar.field-kit", "revision": 14 },
+        "ui.input.select": { "id": "ui.input.select.field-kit", "revision": 14 },
+        "ui.input.slider": { "id": "ui.input.slider.field-kit", "revision": 14 },
+        "ui.input.text": { "id": "ui.input.text.field-kit", "revision": 14 },
+        "ui.input.toggle": { "id": "ui.input.toggle.field-kit", "revision": 14 },
+        "ui.meter.ability": { "id": "ui.meter.ability.field-kit", "revision": 14 },
+        "ui.meter.coverage": { "id": "ui.meter.coverage.field-kit", "revision": 14 },
+        "ui.meter.progress": { "id": "ui.meter.progress.field-kit", "revision": 14 },
+        "ui.meter.time": { "id": "ui.meter.time.field-kit", "revision": 14 },
+        "ui.meter.volume": { "id": "ui.meter.volume.field-kit", "revision": 14 },
+        "ui.panel": { "id": "ui.panel.field-kit", "revision": 14 },
+        "ui.toast": { "id": "ui.toast.field-kit", "revision": 14 },
+        "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 14 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 38 },
+      "revision": 39,
       "tokens": {}
     }
   ]
