@@ -68,6 +68,35 @@ test('staged route appends Border without changing prior execution or progress i
   }
 });
 
+test('teaching review has an independent slot and exactly two explicit successor encounters', () => {
+  const previous = createAuthoredJourneyRoute('whole-originals');
+  const current = createAuthoredJourneyRoute('whole-originals-v2');
+  assert.deepEqual(
+    current.source,
+    createWholeJourneyCandidates({ artwork: true, roverTeaching: true }),
+  );
+  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-originals.v2');
+  assert.notEqual(current.sessionKey, previous.sessionKey);
+  assert.equal(current.source.revision, 'teaching-review-1');
+  assert.deepEqual(current.source.maps, previous.source.maps);
+  assert.deepEqual(current.source.assets, previous.source.assets);
+  const revised = ['wake-the-yard', 'split-berths'];
+  for (const mission of current.source.missions) {
+    const prior = previous.source.missions.find((m) => m.id === mission.id);
+    if (revised.includes(mission.id)) {
+      assert.equal(mission.revision, 'teaching-1');
+      assert.notDeepEqual(mission.actors, prior.actors);
+    } else assert.deepEqual(mission, prior);
+  }
+  for (const createHost of [createCandidateSoloHost, createCandidateVersusHost]) {
+    const host = createHost(current.source, { themes, corePackIds: current.corePackIds });
+    let count = 0;
+    for (let mission = host.catalog.missions[0]; mission; mission = host.next(mission.id)) count++;
+    assert.equal(count, 71);
+    assert.equal(host.catalog.missions.length, 83);
+  }
+});
+
 test('one shared core sequence skips optional packs, ends deliberately and validates membership', () => {
   const route = createAuthoredJourneyRoute('authored');
   let sequence;

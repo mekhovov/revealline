@@ -3,7 +3,7 @@ import { createOpeningCandidates } from '../content-design/horizon-candidates.mj
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
 import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
-import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
+import { createRoverTeachingCandidates } from '../content-design/rover-teaching-candidates.mjs';
 import { createFractureCandidates } from '../content-design/fracture-candidates.mjs';
 import { createPhaseCandidates } from '../content-design/phase-candidates.mjs';
 import { createLivewireCandidates } from '../content-design/livewire-candidates.mjs';
@@ -625,7 +625,7 @@ $('neon').onclick = guarded(() => {
 });
 $('rover').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createRoverCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(createRoverTeachingCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });
@@ -685,7 +685,11 @@ $('apex').onclick = guarded(() => {
 });
 $('whole-journey').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createWholeJourneyCandidates({ artwork: true }), null, 2);
+  $('source').value = JSON.stringify(
+    createWholeJourneyCandidates({ artwork: true, roverTeaching: true }),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });

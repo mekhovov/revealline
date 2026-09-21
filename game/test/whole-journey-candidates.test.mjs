@@ -166,7 +166,9 @@ test('whole-library Studio action inspects a candidate source and does not bypas
     /\$\('whole-journey'\)\.onclick = guarded\(\(\) => \{([\s\S]*?)\n\}\);/,
   )[1];
   assert.match(handler, /discardSource\(\)/);
-  assert.match(handler, /createWholeJourneyCandidates\(\{ artwork: true \}\)/);
+  assert.match(handler, /createWholeJourneyCandidates\(\{ artwork: true, roverTeaching: true \}\)/);
+  assert.match(html, /href="\.\.\/\?journey=whole-originals-v2"/);
+  assert.match(html, /href="\.\.\/couch\/\?journey=whole-originals-v2"/);
   assert.match(handler, /inspectSource\(\)/);
   assert.doesNotMatch(handler, /session\.(?:apply|replace|transact)|location\.|publish/i);
 });

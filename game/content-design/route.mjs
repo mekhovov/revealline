@@ -13,12 +13,18 @@ import {
 export function createAuthoredJourneyRoute(id) {
   // A separate explicit review URL and suspended-flight slot. Never expand the
   // historical routes or infer publication/qualification from having artwork.
-  if (id === 'whole-originals')
+  if (['whole-originals', 'whole-originals-v2'].includes(id))
     return freezeDesign({
       id,
-      label: 'Whole Journey original-picture review',
-      sessionKey: 'revealline.suspended.journey-whole-originals.v1',
-      source: createWholeJourneyCandidates({ artwork: true }),
+      label:
+        id === 'whole-originals-v2'
+          ? 'Whole Journey first-capture teaching review'
+          : 'Whole Journey original-picture review',
+      sessionKey: `revealline.suspended.journey-whole-originals.${id === 'whole-originals-v2' ? 'v2' : 'v1'}`,
+      source: createWholeJourneyCandidates({
+        artwork: true,
+        roverTeaching: id === 'whole-originals-v2',
+      }),
       corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
     });
   if (!['opening', 'authored'].includes(id)) return null;

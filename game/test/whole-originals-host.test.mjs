@@ -13,7 +13,7 @@ import { waitFor } from './helpers/wait-for.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
-const route = createAuthoredJourneyRoute('whole-originals');
+const route = createAuthoredJourneyRoute('whole-originals-v2');
 const historicalSignal = compileContentProject(createSignalCandidates());
 const fixtures = [
   'horizon-greybox',
@@ -44,6 +44,14 @@ const rows = (
     }),
   )
 ).flat();
+const teaching = JSON.parse(
+  await readFile(new URL('./fixtures/rover-teaching-routes.json', import.meta.url)),
+).rows.filter((r) => r.difficulty === 'standard' && r.turnPolicy === 'immediate');
+for (const row of teaching) {
+  const index = rows.findIndex((r) => r[0] === row.missionId);
+  assert(index >= 0);
+  rows[index] = [row.missionId, row.simulationIdentity, row.checkpoint, row.segments];
+}
 const keys = { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' };
 
 // Finite decoder model reads actual hashed PNG bytes and dimensions. This is
@@ -70,14 +78,14 @@ const running = (p, id) =>
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === id;
   });
 
-test('71 real Solo host clears retain originals across70 Next actions, a failed preload and all12 chapters', async (t) => {
+test('teaching edition:71 real Solo host clears retain originals across70 Next actions, a failed preload and all12 chapters', async (t) => {
   assert.equal(rows.length, 71);
   const memory = managedIndexedDB(),
     storage = memoryStorage();
   const backend = createJourneyBackend(memory);
   let refuse = null;
   const p = await soloPage(t, {
-    search: '?journey=whole-originals',
+    search: '?journey=whole-originals-v2',
     titleScreen: true,
     storage,
     journeyIndexedDB: memory.indexedDB,
@@ -183,12 +191,12 @@ test('71 real Solo host clears retain originals across70 Next actions, a failed 
   assert.deepEqual(p.errors, []);
 });
 
-test('71 real Versus races keep equal boards and exact pictures through70 deliberate Next actions', async (t) => {
+test('teaching edition:71 real Versus races keep equal boards and exact pictures through70 deliberate Next actions', async (t) => {
   const memory = managedIndexedDB(),
     storage = memoryStorage();
   const backend = createJourneyBackend(memory);
   const p = await couchPage(t, {
-    href: 'http://localhost/game/couch/?journey=whole-originals',
+    href: 'http://localhost/game/couch/?journey=whole-originals-v2',
     initialLevel: null,
     assetDatabase: memory.indexedDB,
     storage,

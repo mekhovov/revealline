@@ -4,6 +4,7 @@ import { createBorderCandidates } from './border-candidates.mjs';
 import { createSignalCandidates } from './signal-candidates.mjs';
 import { createNeonCandidates } from './neon-candidates.mjs';
 import { createRoverCandidates } from './rover-candidates.mjs';
+import { createRoverTeachingCandidates } from './rover-teaching-candidates.mjs';
 import { createFractureCandidates } from './fracture-candidates.mjs';
 import { createPhaseCandidates } from './phase-candidates.mjs';
 import { createLivewireCandidates } from './livewire-candidates.mjs';
@@ -37,9 +38,13 @@ export const WHOLE_JOURNEY_REMIX_PACK_IDS = freezeDesign(chapters.map((row) => r
  * callers retain greyboxes; explicit artwork selects each chapter's already
  * authored picture edition (including Signal's distinct theme revision). Neither
  * variant enrolls public content, retunes physics, migrates saves or awards official
- * progress. Independent drafts cannot mutate another chapter. */
-export function createWholeJourneyCandidates({ artwork = false } = {}) {
-  const sources = chapters.map(([, , , create]) => create({ artwork }));
+ * progress. Independent drafts cannot mutate another chapter. The opt-in Rover
+ * teaching successor has a distinct project revision; default editions remain
+ * frozen, including the previous pictured source and its suspended-game route. */
+export function createWholeJourneyCandidates({ artwork = false, roverTeaching = false } = {}) {
+  const sources = chapters.map(([id, , , create]) =>
+    (roverTeaching && id === 'rover' ? createRoverTeachingCandidates : create)({ artwork }),
+  );
   const source = {
     ...sources[0],
     id: artwork ? 'whole-journey-original-review' : 'whole-journey-greybox-review',
@@ -49,6 +54,13 @@ export function createWholeJourneyCandidates({ artwork = false } = {}) {
       : 'Whole Journey · unvalidated greybox review',
     actorCatalogId: 'journey-actors-v6',
   };
+  if (roverTeaching) {
+    source.id = artwork
+      ? 'whole-journey-teaching-original-review'
+      : 'whole-journey-teaching-review';
+    source.revision = 'teaching-review-1';
+    source.name = 'Whole Journey · unvalidated first-capture teaching review';
+  }
   for (const key of ['maps', 'missions', 'campaigns', 'packs', 'assets'])
     source[key] = sources.flatMap((chapter) => chapter[key] ?? []);
   const byPack = new Map(source.packs.map((pack) => [pack.id, pack]));
