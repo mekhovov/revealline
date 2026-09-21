@@ -88,3 +88,11 @@ selector specificity in the actual browser: modeled DOM tests do not apply CSS.
 Keep the original Pause handler and keyboard/controller scope. Exit Audio to the
 paused owner, then require explicit Resume. Qualify uploaded MP3 details and
 physical touch/controllers separately before claiming the whole device phase.”
+
+Stronghold composition prompt: “Combine the reviewed corner-pad layout with the
+compact track caption in an isolated preview. Enable both player pads and
+Large/Plain text, inspect568×320,844×390,960×540 and390×844. Keep required objective
+text visible and record the complete arena aspect ratio,44px target floor and
+corner occlusion honestly. Do not treat the absent music row as permission to
+hide objectives. Test both independent directions and explicit paused return;
+separate actual pointer navigation from simultaneous physical multitouch.”

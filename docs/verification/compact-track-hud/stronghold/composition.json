@@ -1,0 +1,9 @@
+{
+  "baseCssSha256": "a796d00d10616495a6909eecb548178e6f1f5a593ffe2a1aee16f74222cf60b3",
+  "priorCompositionSha256": "2319eac31296c3fdfb5878116a0c83b3a7c017c6326ce1933aacc4c65070f8d6",
+  "captionCommit": "855f9981",
+  "final": {
+    "bytes": 58171,
+    "sha256": "f057930bfe1cd2e845e8c808f3eae17bc606f83ce7bbb1be372b9785d01b1df3"
+  }
+}
