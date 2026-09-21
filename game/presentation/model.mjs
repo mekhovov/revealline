@@ -26,6 +26,10 @@ export const LIMITS = Object.freeze({
   imagePixels: 2073600,
 });
 export const RECIPE_IDS = Object.freeze([
+  'team.anchor.v1',
+  'team.effect.v1',
+  'team.threat.v1',
+  'team.event.v1',
   'ui.panel.v1',
   'ui.button.v1',
   'ui.input.v1',

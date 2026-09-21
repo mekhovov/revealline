@@ -1,3 +1,4 @@
+import { coopCuePalette } from '../../game/couch/coop-cue-palette.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { bindAudioMasterMedia } from '../../game/ui/audio-master.mjs';
 import { createCurrentArtPreview } from '../../game/presentation/current-art.mjs';
@@ -75,6 +76,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     'enemies',
     'terrain',
     'pickups',
+    'objectives',
     'effects',
     'pictures',
   ].includes(slot.group);
@@ -222,6 +224,16 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       }
       return;
     }
+    if (slot.id.startsWith('team.event.') && mode === 'context' && fieldMode !== 'team')
+      throw new Error(
+        'Team events are Team-only. Choose Couch Team and an earned Joint capture or Team reserve recovery scene.',
+      );
+    if (slot.id.startsWith('team.threat.') && mode === 'context' && fieldMode !== 'team')
+      throw new Error('Team threat overlays are Team-only. Choose Couch Team and Relay Yard.');
+    if (slot.id.startsWith('team.effect.') && mode === 'context' && fieldMode !== 'team')
+      throw new Error('Team feedback is Team-only. Choose Couch Team and a matching earned scene.');
+    if (slot.id.startsWith('team.anchor.') && mode === 'context' && fieldMode !== 'team')
+      throw new Error('Relay anchors are Team-only objectives. Choose Couch Team and Relay Yard.');
     const palette = canvasPresentation(resolved).palette;
     if (mode === 'context' && fieldMode === 'team' && fieldSlot) {
       if (asset.kind === 'recipe' && slot.group === 'pictures')
@@ -311,6 +323,66 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         if (!isCurrent()) return;
       }
       await boardContextPreview(surface, slot, asset, resolved, blobs, options, own);
+      return;
+    }
+    if (asset.kind === 'recipe' && asset.recipe.id === 'team.event.v1') {
+      surface.append(
+        text(
+          'p',
+          `${slot.label}: the existing status message. Inspect Field context → Couch Team → Joint capture, or Relay Yard → Team reserve recovery. Upload a centered transparent 32×32 status icon; it never changes rewards, reserves, grace or gameplay.`,
+          'bounded-label',
+        ),
+      );
+      return;
+    }
+    if (asset.kind === 'recipe' && asset.recipe.id === 'team.threat.v1') {
+      surface.append(
+        text(
+          'p',
+          `${slot.label}: existing procedural cue. Inspect Field context → Couch Team → Relay Yard in the matching scene. A centered transparent overlay supplements the exact runtime marker; it cannot change collision, range or timing.`,
+          'bounded-label',
+        ),
+      );
+      return;
+    }
+    if (asset.kind === 'recipe' && asset.recipe.id === 'team.effect.v1') {
+      surface.append(
+        text(
+          'p',
+          `${slot.label}: existing procedural feedback. Inspect Field context → Couch Team in the matching earned scene. Upload a 32×32 badge to supplement it; functional labels, radius and timing remain unchanged.`,
+          'bounded-label',
+        ),
+      );
+      return;
+    }
+    if (asset.kind === 'recipe' && asset.recipe.id === 'team.anchor.v1') {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 24;
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute(
+        'aria-label',
+        `${slot.label}: procedural plate; live label and border are runtime-owned`,
+      );
+      const ctx = canvas.getContext('2d');
+      const cues = coopCuePalette(palette);
+      ctx.fillStyle = cues.back;
+      ctx.fillRect(2, 2, 20, 20);
+      ctx.strokeStyle = slot.id.endsWith('.captured') ? cues.anchorCaptured : cues.anchorReady;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(2, 2, 20, 20);
+      if (mode === 'native') {
+        canvas.style.width = '24px';
+        canvas.style.maxWidth = 'none';
+      }
+      surface.append(
+        canvas,
+        text(
+          'small',
+          'Procedural anchor plate. Runtime supplies letter/check, contrasting border and exact capture position; inspect Field context → Couch Team for its real placement.',
+          'bounded-label',
+          'secondary',
+        ),
+      );
       return;
     }
     if (asset.kind === 'recipe' && slot.id.startsWith('player.')) {

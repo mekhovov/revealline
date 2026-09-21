@@ -1,5 +1,25 @@
+import {
+  TEAM_EVENT_SLOTS,
+  prepareTeamEventSlots,
+} from '../../game/presentation/team-event-slots.mjs';
 globalThis.RevealLineToolLaunch?.attached();
+import {
+  TEAM_THREAT_SLOTS,
+  prepareTeamThreatSlots,
+} from '../../game/presentation/team-threat-slots.mjs';
+import {
+  TEAM_EFFECT_SLOTS,
+  prepareTeamEffectSlots,
+} from '../../game/presentation/team-effect-slots.mjs';
+import {
+  TEAM_ANCHOR_SLOTS,
+  prepareTeamAnchorSlots,
+} from '../../game/presentation/team-anchor-slots.mjs';
 import { createDefaultThemeBundle } from '../../game/presentation/catalog.mjs';
+import {
+  prepareTeamActorSlots,
+  TEAM_ACTOR_SLOTS,
+} from '../../game/presentation/team-actor-slots.mjs';
 import {
   FORMATS,
   LIMITS,
@@ -27,6 +47,7 @@ import { loadPublishedStudio } from '../../game/presentation/published-studio.mj
 import { inspectImageDataUrl } from '../../game/content.mjs';
 import { centerCrop, checkedCrop, pixelBounds, matchingSlots } from './helpers.mjs';
 import { drawAssetPreview } from './preview.mjs';
+import { teamPreviewScenarios } from './team-preview-fixture.mjs';
 import { mountSpritePanel } from './sprite-panel.mjs';
 import { createStudioOperations } from './operation.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
@@ -83,10 +104,21 @@ const operations = createStudioOperations({
       !value &&
       document.hasFocus() &&
       [document.body, $('cancel-studio-operation')].includes(document.activeElement) &&
-      operationFocus?.isConnected &&
-      !operationFocus.disabled
-    )
-      operationFocus.focus();
+      operationFocus?.isConnected
+    ) {
+      if (
+        [
+          'prepare-team-actors',
+          'prepare-team-anchors',
+          'prepare-team-effects',
+          'prepare-team-threats',
+          'prepare-team-events',
+        ].includes(operationFocus.id) &&
+        operationFocus.disabled
+      )
+        $('asset-list').querySelector('button[aria-pressed="true"]')?.focus();
+      else if (!operationFocus.disabled) operationFocus.focus();
+    }
   },
 });
 const status = (message, kind = '') => operations.message(message, kind);
@@ -232,6 +264,10 @@ function updateCollectionCount() {
   $('collection-count').textContent = `${collectionSlots.size} slots selected`;
 }
 function refresh() {
+  const validSlots = new Set(working.document.slots.map((slot) => slot.id));
+  for (const id of collectionSlots) if (!validSlots.has(id)) collectionSlots.delete(id);
+  if (!working.document.slots.some((slot) => slot.id === selected))
+    selected = working.document.slots[0].id;
   const view = resolved();
   const themes = [...new Map(working.document.themes.map((theme) => [theme.id, theme])).values()];
   $('filter-theme').replaceChildren(
@@ -247,6 +283,11 @@ function refresh() {
   $('undo-draft').disabled = !undo.length;
   $('redo-draft').disabled = !redo.length;
   $('reset-draft').disabled = working === saved;
+  $('prepare-team-events').disabled = TEAM_EVENT_SLOTS.every((row) => view.assets[row.id]);
+  $('prepare-team-threats').disabled = TEAM_THREAT_SLOTS.every((row) => view.assets[row.id]);
+  $('prepare-team-effects').disabled = TEAM_EFFECT_SLOTS.every((row) => view.assets[row.id]);
+  $('prepare-team-anchors').disabled = TEAM_ANCHOR_SLOTS.every((row) => view.assets[row.id]);
+  $('prepare-team-actors').disabled = TEAM_ACTOR_SLOTS.every((row) => view.assets[row.id]);
   refreshInventory();
   refreshInspector();
   refreshTokens();
@@ -340,13 +381,10 @@ async function refreshPreviews() {
   $('preview-field-mode').disabled = !fieldContext;
   $('preview-team-arena').disabled = !teamContext;
   $('preview-team-scenario').disabled = !teamContext;
-  const firstConnection = $('preview-team-arena').value === 'first-connection',
-    scenario = $('preview-team-scenario'),
-    firstConnectionScenes = ['initial', 'cutting', 'warning', 'charge', 'capture', 'victory'];
-  for (const option of scenario.options)
-    option.disabled = firstConnection && !firstConnectionScenes.includes(option.value);
-  if (firstConnection && !firstConnectionScenes.includes(scenario.value))
-    scenario.value = 'initial';
+  const scenario = $('preview-team-scenario'),
+    available = teamPreviewScenarios($('preview-team-arena').value).map((item) => item.id);
+  for (const option of scenario.options) option.disabled = !available.includes(option.value);
+  if (!available.includes(scenario.value)) scenario.value = 'initial';
   const requestedPreview = ++previewGeneration;
   const slot = currentSlot(),
     current = resolvePresentation(saved.document),
@@ -981,6 +1019,85 @@ $('apply-geometry').onclick = () =>
   operation('Checking preview geometry…', (task) => validatePending(true, task));
 $('stage-asset').onclick = () =>
   operation('Validating replacement…', (task) => validatePending(false, task));
+$('prepare-team-events').onclick = () =>
+  operation('Preparing Team event slots…', () => {
+    requireSettled();
+    const next = prepareTeamEventSlots(working.document);
+    if (next.revision === working.document.revision) return;
+    selected = TEAM_EVENT_SLOTS[0].id;
+    $('filter-search').value = 'team.event.';
+    $('filter-screen').value = 'couch';
+    for (const id of ['filter-state', 'filter-kind', 'filter-quality']) $(id).value = '';
+    stage(
+      next,
+      working.assets,
+      'Both Team event slots staged with the existing status messages. Inspect Joint capture or Team reserve recovery; upload icons beside the caption. This draft is not a reviewed publication.',
+    );
+  });
+$('prepare-team-threats').onclick = () =>
+  operation('Preparing Team threat slots…', () => {
+    requireSettled();
+    const next = prepareTeamThreatSlots(working.document);
+    if (next.revision === working.document.revision) return;
+    selected = TEAM_THREAT_SLOTS[0].id;
+    $('filter-search').value = 'team.threat.';
+    $('filter-screen').value = 'couch';
+    for (const id of ['filter-state', 'filter-kind', 'filter-quality']) $(id).value = '';
+    stage(
+      next,
+      working.assets,
+      'Three Team threat states staged with the existing procedural appearance. Upload centered overlays or edit theme tokens; inspect Relay Yard warning, spark and shield scenes. This local draft is not a reviewed publication.',
+    );
+  });
+$('prepare-team-effects').onclick = () =>
+  operation('Preparing Team effect slots…', () => {
+    requireSettled();
+    const next = prepareTeamEffectSlots(working.document);
+    if (next.revision === working.document.revision) return;
+    selected = TEAM_EFFECT_SLOTS[0].id;
+    $('filter-search').value = 'team.effect.';
+    $('filter-screen').value = 'couch';
+    for (const id of ['filter-state', 'filter-kind', 'filter-quality']) $(id).value = '';
+    stage(
+      next,
+      working.assets,
+      'Four Team feedback states staged with the existing procedural appearance. Upload distinct feedback badges or edit theme tokens; inspect their earned Team scenes. This local draft is not a reviewed publication.',
+    );
+  });
+$('prepare-team-anchors').onclick = () =>
+  operation('Preparing Team anchor slots…', () => {
+    requireSettled();
+    const next = prepareTeamAnchorSlots(working.document);
+    if (next.revision === working.document.revision) return;
+    selected = TEAM_ANCHOR_SLOTS[0].id;
+    $('filter-search').value = 'team.anchor.';
+    $('filter-screen').value = 'couch';
+    for (const id of ['filter-state', 'filter-kind', 'filter-quality']) $(id).value = '';
+    stage(
+      next,
+      working.assets,
+      'Both Team anchor states staged with the existing procedural appearance. Upload a matched pair or edit theme tokens; inspect Relay Yard. This local draft is not a reviewed publication.',
+    );
+  });
+$('prepare-team-actors').onclick = () =>
+  operation('Preparing Team actor slots…', () => {
+    requireSettled();
+    const current = resolved();
+    const count = TEAM_ACTOR_SLOTS.filter((row) => !current.assets[row.id]).length;
+    const next = prepareTeamActorSlots(working.document);
+    if (next.revision === working.document.revision) return;
+    selected = TEAM_ACTOR_SLOTS[0].id;
+    $('filter-search').value = 'team.';
+    $('filter-screen').value = 'couch';
+    $('filter-state').value = '';
+    $('filter-kind').value = '';
+    $('filter-quality').value = '';
+    stage(
+      next,
+      working.assets,
+      `${count} Team body slots staged from your current artwork. Edit and inspect each state; these templates are not a reviewed Team collection. Player saves and the public game are unchanged.`,
+    );
+  });
 $('discard-asset').onclick = () => {
   discardPreparation();
   refreshInspector();

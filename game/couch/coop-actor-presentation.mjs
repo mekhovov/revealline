@@ -4,6 +4,7 @@ import {
   drawPresentedActor,
 } from '../ui/actor-presentation.mjs';
 import { drawPresentationImage } from '../ui/presentation-draw-image.mjs';
+import { TEAM_ACTOR_SLOTS, teamActorSlotId } from '../presentation/team-actor-slots.mjs';
 
 import { coopPilotBodyOffset } from './coop-actor-layout.mjs';
 
@@ -105,6 +106,14 @@ export function createCoopActorPresentation() {
         if (sprite?.image && sprite.geometry) prepared.set(slot, sprite);
       }
     }
+    for (const { id } of TEAM_ACTOR_SLOTS) {
+      const declared = next?.resolved?.assets?.[id];
+      if (!declared) continue;
+      const sprite = typeof next?.image === 'function' ? next.image(id) : null;
+      if (declared.kind !== 'image' || !sprite?.image || !sprite.geometry)
+        throw new TypeError(`Team actor state needs its prepared image: ${id}.`);
+      prepared.set(id, sprite);
+    }
     snapshot = next;
     sprites = prepared;
     reset();
@@ -146,6 +155,8 @@ export function createCoopActorPresentation() {
         player,
         radius: player.radius,
         slot: `${COOP_ACTOR_ROLES.pilot.slot}.${treatment}`,
+        kind: 'pilot',
+        actor: player,
       });
       if (player.status === 'downed') frozen.push({ id, frozen: true, stunned: true });
     }
@@ -161,12 +172,22 @@ export function createCoopActorPresentation() {
         vy: enemy.vy,
         radius: enemy.radius,
       });
-      descriptions.set(id, { ...COOP_ACTOR_ROLES[enemy.type], radius: enemy.radius });
+      descriptions.set(id, {
+        ...COOP_ACTOR_ROLES[enemy.type],
+        radius: enemy.radius,
+        kind: 'enemy',
+        actor: enemy,
+      });
     }
     for (const stronghold of run.strongholds || []) {
       const id = key('core', stronghold.id);
       actors.push({ id, type: 'team-stronghold', x: stronghold.core.x, y: stronghold.core.y });
-      descriptions.set(id, { ...COOP_ACTOR_ROLES.core, secured: stronghold.defeated });
+      descriptions.set(id, {
+        ...COOP_ACTOR_ROLES.core,
+        secured: stronghold.defeated,
+        kind: 'core',
+        actor: stronghold,
+      });
       frozen.push({ id, frozen: true });
     }
     const frames = sampler.sample(actors, {
@@ -200,7 +221,12 @@ export function createCoopActorPresentation() {
         // Geometry must use the final heading, including pivot and rotor bounds.
         frame = { ...sampled, ...result.pose };
       }
-      const sprite = sprites.get(description.slot) ?? null;
+      const stateSlot = teamActorSlotId(description.kind, description.actor, {
+        state: frame.pilotState,
+        treatment,
+      });
+      const selectedSlot = stateSlot && sprites.has(stateSlot) ? stateSlot : description.slot;
+      const sprite = sprites.get(selectedSlot) ?? null;
       const bodyOffset =
         description.role === COOP_ACTOR_ROLES.pilot.role && sprite
           ? coopPilotBodyOffset(
@@ -217,7 +243,7 @@ export function createCoopActorPresentation() {
         frame: Object.freeze({
           ...frame,
           role: description.role,
-          sourceSlot: description.slot,
+          sourceSlot: selectedSlot,
           bodyOffset,
           // The shared sampler bounds cosmetic data; Team owns the real footprint.
           radius: core ? 0 : description.radius * CELL,

@@ -207,7 +207,7 @@ test('local multi-core victory → distinct coverage artwork → Retry retains t
   start(f);
   const firstImage = image(f);
   const route = playImportedRoute(f);
-  assert.ok(route.objectives.some((text) => /1 \/ 2 secured/.test(text)));
+  assert.ok(route.objectives.some((text) => /Relays 1 \/ 2 · Relay 3/.test(text)));
   assert.equal(f.$('coop-objective').textContent, 'Strongholds secured together');
   await next(f);
   assert.equal(f.$('coop-stage').textContent, 'IMPORTED COVERAGE');

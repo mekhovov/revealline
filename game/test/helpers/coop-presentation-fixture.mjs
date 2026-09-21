@@ -6,9 +6,11 @@ import { canvasPresentation, presentationCSSVariables } from '../../presentation
 import { mountPresentationPage } from '../../presentation/page.mjs';
 import { COOP_PICTURE_BINDINGS } from '../../couch/coop-picture-bindings.mjs';
 
-const compiled = validateCompiledPresentation(
-  JSON.parse(await readFile(new URL('../../presentation/compiled/runtime.json', import.meta.url))),
+const runtimeBytes = await readFile(
+  new URL('../../presentation/compiled/runtime.json', import.meta.url),
 );
+const compiled = validateCompiledPresentation(JSON.parse(runtimeBytes));
+const manifestSha256 = createHash('sha256').update(runtimeBytes).digest('hex');
 const originals = new Map(
   await Promise.all(
     COOP_PICTURE_BINDINGS.map(async (row) => [
@@ -45,6 +47,8 @@ export async function waitFor(check, diagnostic = () => '') {
 export function installCoopPresentation({ doc, win, install, read, decode, load } = {}) {
   const css = presentationCSSVariables(compiled.resolved);
   const snapshot = {
+    source: compiled.source,
+    manifestSha256,
     resolved: structuredClone(compiled.resolved),
     canvas: canvasPresentation(compiled.resolved),
     fonts: { ui: css['--fk-font-ui'], numeric: css['--fk-font-mono'] },

@@ -287,7 +287,7 @@ for (const textFace of ['plain', 'pixel'])
         );
     }
     for (const call of v.calls.filter(
-      (c) => c.name === 'fillRect' && c.state.fillStyle === '#07111c',
+      (c) => c.name === 'fillRect' && c.state.fillStyle === palette.paper,
     )) {
       const rect = bounds(call, call.args);
       for (const key of ['left', 'right', 'top', 'bottom']) rect[key] *= 362 / 1152;
