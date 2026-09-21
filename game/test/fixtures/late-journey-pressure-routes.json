@@ -1,0 +1,6532 @@
+{
+  "format": "LateJourneyPressureRefinementV1",
+  "projectRevision": "pressure-v2-629ea4ba0500d271",
+  "scope": "New seed1 inputs for the36 Crosswind/Apex cases unresolved by historical retiming. Old successful rows remain authoritative; comparisonRows do not replace faster old evidence. No map/physics edits or human acceptance.",
+  "rows": [
+    {
+      "id": "apex-remix",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "217c77f29fb4ce94",
+      "ticks": 2814,
+      "lives": 3,
+      "coverage": 0.8661087866108786,
+      "cuts": 6,
+      "searchSteps": 6,
+      "checkpoint": "c6078c144f66bf37",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 2814,
+        "seconds": 23.44999999999931,
+        "coverage": 0.8661087866108786,
+        "losses": 0,
+        "firstCutTick": 222,
+        "cuts": 6,
+        "exposureTicks": 744,
+        "maxExposureTicks": 168,
+        "firstCoverageMetTick": 2814,
+        "allRequiredCapturedTick": 774,
+        "ticksAfterRequiredObjectives": 2040,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "c6078c144f66bf37"
+      },
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 2, 4, 3],
+        "used": [
+          ["east-corner", 1231],
+          ["west-corner", 2587]
+        ]
+      },
+      "events": [
+        [222, "cut.closed", null],
+        [774, "cut.closed", null],
+        [774, "objective.captured", "west-relay"],
+        [774, "objective.captured", "east-relay"],
+        [774, "relay.opened", "east-corner"],
+        [774, "relay.opened", "west-corner"],
+        [966, "cut.closed", null],
+        [1410, "cut.closed", null],
+        [1842, "cut.closed", null],
+        [2814, "cut.closed", null]
+      ],
+      "closures": [
+        [222, 0.007322175732217573],
+        [774, 0.35355648535564854],
+        [966, 0.36035564853556484],
+        [1410, 0.4932008368200837],
+        [1842, 0.6077405857740585],
+        [2814, 0.8661087866108786]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 222
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 294
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 366
+        },
+        {
+          "direction": "left",
+          "ticks": 174
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 54
+        },
+        {
+          "direction": "down",
+          "ticks": 366
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 54
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 114
+        },
+        {
+          "direction": "left",
+          "ticks": 618
+        }
+      ]
+    },
+    {
+      "id": "apex-remix",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "217c77f29fb4ce94",
+      "ticks": 4146,
+      "lives": 3,
+      "coverage": 0.8629707112970711,
+      "cuts": 8,
+      "searchSteps": 8,
+      "checkpoint": "07fd5adb89d180e0",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4146,
+        "seconds": 34.54999999999868,
+        "coverage": 0.8629707112970711,
+        "losses": 0,
+        "firstCutTick": 222,
+        "cuts": 8,
+        "exposureTicks": 1080,
+        "maxExposureTicks": 180,
+        "firstCoverageMetTick": 4146,
+        "allRequiredCapturedTick": 762,
+        "ticksAfterRequiredObjectives": 3384,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "07fd5adb89d180e0"
+      },
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 4, 2],
+        "used": [
+          ["east-corner", 1219],
+          ["west-corner", 2970]
+        ]
+      },
+      "events": [
+        [222, "cut.closed", null],
+        [762, "cut.closed", null],
+        [762, "objective.captured", "west-relay"],
+        [762, "objective.captured", "east-relay"],
+        [762, "relay.opened", "east-corner"],
+        [762, "relay.opened", "west-corner"],
+        [954, "cut.closed", null],
+        [1374, "cut.closed", null],
+        [2466, "cut.closed", null],
+        [2970, "cut.closed", null],
+        [3114, "cut.closed", null],
+        [4146, "cut.closed", null]
+      ],
+      "closures": [
+        [222, 0.007322175732217573],
+        [762, 0.35355648535564854],
+        [954, 0.36035564853556484],
+        [1374, 0.48901673640167365],
+        [2466, 0.6835774058577406],
+        [2970, 0.7787656903765691],
+        [3114, 0.7934100418410042],
+        [4146, 0.8629707112970711]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 222
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 282
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 372
+        },
+        {
+          "direction": "left",
+          "ticks": 168
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 54
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 660
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 168
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "down",
+          "ticks": 54
+        },
+        {
+          "direction": "up",
+          "ticks": 186
+        },
+        {
+          "direction": "right",
+          "ticks": 660
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        }
+      ]
+    },
+    {
+      "id": "compass-array",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "083e556cb1e0fa98",
+      "ticks": 4991,
+      "lives": 2,
+      "coverage": 0.8933074684772065,
+      "cuts": 9,
+      "searchSteps": 9,
+      "checkpoint": "2edd151e0651aae1",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4991,
+        "seconds": 41.58999999999829,
+        "coverage": 0.8933074684772065,
+        "losses": 0,
+        "firstCutTick": 258,
+        "cuts": 9,
+        "exposureTicks": 2381,
+        "maxExposureTicks": 456,
+        "firstCoverageMetTick": 4991,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "2edd151e0651aae1"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["north-neck", "upper-west", "upper-east"],
+        "connected": [0, 1, 3, 4],
+        "visits": [0, 3],
+        "used": []
+      },
+      "events": [
+        [258, "cut.closed", null],
+        [534, "cut.closed", null],
+        [834, "cut.closed", null],
+        [1026, "cut.closed", null],
+        [1494, "cut.closed", null],
+        [2406, "cut.closed", null],
+        [3066, "cut.closed", null],
+        [3906, "cut.closed", null],
+        [4991, "cut.closed", null]
+      ],
+      "closures": [
+        [258, 0.008244422890397672],
+        [534, 0.03297769156159069],
+        [834, 0.049466537342386034],
+        [1026, 0.05625606207565471],
+        [1494, 0.2827352085354025],
+        [2406, 0.4917555771096023],
+        [3066, 0.7672162948593598],
+        [3906, 0.8225024248302619],
+        [4991, 0.8933074684772065]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 210
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 210
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 174
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 234
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 468
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 222
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 210
+        },
+        {
+          "direction": "down",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 462
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 474
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "left",
+          "ticks": 383
+        }
+      ]
+    },
+    {
+      "id": "compass-array",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "b4f2ac63cb30acd6",
+      "ticks": 7175,
+      "lives": 3,
+      "coverage": 0.8574199806013579,
+      "cuts": 16,
+      "searchSteps": 16,
+      "checkpoint": "bb1abc00104737b2",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 7175,
+        "seconds": 59.791666666663914,
+        "coverage": 0.8574199806013579,
+        "losses": 0,
+        "firstCutTick": 258,
+        "cuts": 16,
+        "exposureTicks": 3929,
+        "maxExposureTicks": 749,
+        "firstCoverageMetTick": 7175,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "bb1abc00104737b2"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["south-neck"],
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 3, 4, 2],
+        "used": []
+      },
+      "events": [
+        [258, "cut.closed", null],
+        [534, "cut.closed", null],
+        [1362, "cut.closed", null],
+        [1626, "cut.closed", null],
+        [1758, "cut.closed", null],
+        [2130, "cut.closed", null],
+        [2550, "cut.closed", null],
+        [2694, "cut.closed", null],
+        [3330, "cut.closed", null],
+        [3618, "cut.closed", null],
+        [3978, "cut.closed", null],
+        [4979, "cut.closed", null],
+        [5339, "cut.closed", null],
+        [5615, "cut.closed", null],
+        [5975, "cut.closed", null],
+        [7175, "cut.closed", null]
+      ],
+      "closures": [
+        [258, 0.008244422890397672],
+        [534, 0.03297769156159069],
+        [1362, 0.07080504364694472],
+        [1626, 0.1037827352085354],
+        [1758, 0.1081474296799224],
+        [2130, 0.15906886517943744],
+        [2550, 0.19398642095053345],
+        [2694, 0.20562560620756548],
+        [3330, 0.22696411251212414],
+        [3618, 0.2405431619786615],
+        [3978, 0.2507274490785645],
+        [4979, 0.5834141610087293],
+        [5339, 0.6503394762366634],
+        [5615, 0.7555771096023278],
+        [5975, 0.8064985451018428],
+        [7175, 0.8574199806013579]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 210
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 540
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 210
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 114
+        },
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "left",
+          "ticks": 180
+        },
+        {
+          "direction": "down",
+          "ticks": 90
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 180
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 114
+        },
+        {
+          "direction": "down",
+          "ticks": 42
+        },
+        {
+          "direction": "right",
+          "ticks": 108
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 534
+        },
+        {
+          "direction": "right",
+          "ticks": 114
+        },
+        {
+          "direction": "down",
+          "ticks": 174
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 761
+        },
+        {
+          "direction": "left",
+          "ticks": 72
+        },
+        {
+          "direction": "down",
+          "ticks": 282
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 54
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 768
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 282
+        }
+      ]
+    },
+    {
+      "id": "compass-array",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "b4f2ac63cb30acd6",
+      "ticks": 4494,
+      "lives": 3,
+      "coverage": 0.8748787584869059,
+      "cuts": 12,
+      "searchSteps": 12,
+      "checkpoint": "eaeaf87ff612b283",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4494,
+        "seconds": 37.44999999999852,
+        "coverage": 0.8748787584869059,
+        "losses": 0,
+        "firstCutTick": 258,
+        "cuts": 12,
+        "exposureTicks": 2472,
+        "maxExposureTicks": 528,
+        "firstCoverageMetTick": 4494,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "eaeaf87ff612b283"
+      },
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "reclaimed": ["north-neck", "south-neck", "upper-west", "upper-east"],
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 3, 4, 2],
+        "used": []
+      },
+      "events": [
+        [258, "cut.closed", null],
+        [522, "cut.closed", null],
+        [1338, "cut.closed", null],
+        [1602, "cut.closed", null],
+        [1722, "cut.closed", null],
+        [2082, "cut.closed", null],
+        [2490, "cut.closed", null],
+        [2622, "cut.closed", null],
+        [3258, "cut.closed", null],
+        [3534, "cut.closed", null],
+        [3846, "cut.closed", null],
+        [4494, "cut.closed", null]
+      ],
+      "closures": [
+        [258, 0.008244422890397672],
+        [522, 0.03297769156159069],
+        [1338, 0.07080504364694472],
+        [1602, 0.1037827352085354],
+        [1722, 0.1081474296799224],
+        [2082, 0.15906886517943744],
+        [2490, 0.19398642095053345],
+        [2622, 0.20562560620756548],
+        [3258, 0.22696411251212414],
+        [3534, 0.2405431619786615],
+        [3846, 0.24733268671193018],
+        [4494, 0.8748787584869059]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 210
+        },
+        {
+          "direction": "left",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 540
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 210
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 114
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "left",
+          "ticks": 180
+        },
+        {
+          "direction": "down",
+          "ticks": 90
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "right",
+          "ticks": 180
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 114
+        },
+        {
+          "direction": "down",
+          "ticks": 30
+        },
+        {
+          "direction": "right",
+          "ticks": 108
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 534
+        },
+        {
+          "direction": "right",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 174
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 180
+        },
+        {
+          "direction": "right",
+          "ticks": 480
+        },
+        {
+          "direction": "up",
+          "ticks": 162
+        }
+      ]
+    },
+    {
+      "id": "crossing-complete",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "92c031d9752c5670",
+      "ticks": 8154,
+      "lives": 2,
+      "coverage": 0.8653492647058824,
+      "cuts": 9,
+      "searchSteps": 9,
+      "checkpoint": "2d54490711b1de97",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 8154,
+        "seconds": 67.95000000000014,
+        "coverage": 0.8653492647058824,
+        "losses": 0,
+        "firstCutTick": 846,
+        "cuts": 9,
+        "exposureTicks": 4116,
+        "maxExposureTicks": 768,
+        "firstCoverageMetTick": 8154,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "2d54490711b1de97"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3],
+        "visits": [0],
+        "used": []
+      },
+      "events": [
+        [846, "cut.closed", null],
+        [2610, "cut.closed", null],
+        [3102, "cut.closed", null],
+        [3618, "cut.closed", null],
+        [4914, "cut.closed", null],
+        [5766, "cut.closed", null],
+        [6438, "cut.closed", null],
+        [6810, "cut.closed", null],
+        [8154, "cut.closed", null]
+      ],
+      "closures": [
+        [846, 0.09375],
+        [2610, 0.18198529411764705],
+        [3102, 0.22472426470588236],
+        [3618, 0.26746323529411764],
+        [4914, 0.3474264705882353],
+        [5766, 0.3740808823529412],
+        [6438, 0.5560661764705882],
+        [6810, 0.6870404411764706],
+        [8154, 0.8653492647058824]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 486
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 390
+        },
+        {
+          "direction": "left",
+          "ticks": 774
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 450
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 36
+        },
+        {
+          "direction": "up",
+          "ticks": 450
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 354
+        },
+        {
+          "direction": "right",
+          "ticks": 702
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 120
+        },
+        {
+          "direction": "left",
+          "ticks": 702
+        },
+        {
+          "direction": "right",
+          "ticks": 450
+        },
+        {
+          "direction": "up",
+          "ticks": 222
+        },
+        {
+          "direction": "down",
+          "ticks": 234
+        },
+        {
+          "direction": "left",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 114
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 126
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 156
+        },
+        {
+          "direction": "left",
+          "ticks": 438
+        }
+      ]
+    },
+    {
+      "id": "crossing-complete",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "92c031d9752c5670",
+      "ticks": 9582,
+      "lives": 2,
+      "coverage": 0.8975183823529411,
+      "cuts": 11,
+      "searchSteps": 11,
+      "checkpoint": "0e35e3288b963d17",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 9582,
+        "seconds": 79.85000000000962,
+        "coverage": 0.8975183823529411,
+        "losses": 0,
+        "firstCutTick": 846,
+        "cuts": 11,
+        "exposureTicks": 5112,
+        "maxExposureTicks": 768,
+        "firstCoverageMetTick": 9582,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "0e35e3288b963d17"
+      },
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3],
+        "visits": [3],
+        "used": []
+      },
+      "events": [
+        [846, "cut.closed", null],
+        [2598, "cut.closed", null],
+        [3078, "cut.closed", null],
+        [3570, "cut.closed", null],
+        [5214, "cut.closed", null],
+        [5958, "cut.closed", null],
+        [7086, "cut.closed", null],
+        [7890, "cut.closed", null],
+        [8466, "cut.closed", null],
+        [8802, "cut.closed", null],
+        [9582, "cut.closed", null]
+      ],
+      "closures": [
+        [846, 0.09375],
+        [2598, 0.18198529411764705],
+        [3078, 0.22472426470588236],
+        [3570, 0.26746323529411764],
+        [5214, 0.3474264705882353],
+        [5958, 0.3805147058823529],
+        [7086, 0.4338235294117647],
+        [7890, 0.46047794117647056],
+        [8466, 0.6576286764705882],
+        [8802, 0.7881433823529411],
+        [9582, 0.8975183823529411]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 486
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 378
+        },
+        {
+          "direction": "left",
+          "ticks": 774
+        },
+        {
+          "direction": "right",
+          "ticks": 30
+        },
+        {
+          "direction": "down",
+          "ticks": 456
+        },
+        {
+          "direction": "right",
+          "ticks": 36
+        },
+        {
+          "direction": "up",
+          "ticks": 450
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 342
+        },
+        {
+          "direction": "right",
+          "ticks": 708
+        },
+        {
+          "direction": "left",
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 402
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 288
+        },
+        {
+          "direction": "right",
+          "ticks": 708
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 702
+        },
+        {
+          "direction": "right",
+          "ticks": 390
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 312
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 480
+        },
+        {
+          "direction": "up",
+          "ticks": 126
+        }
+      ]
+    },
+    {
+      "id": "crossing-complete",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "bf995f3519c9b370",
+      "ticks": 7674,
+      "lives": 3,
+      "coverage": 0.8754595588235294,
+      "cuts": 9,
+      "searchSteps": 9,
+      "checkpoint": "b5742eca60c3a574",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 7674,
+        "seconds": 63.94999999999701,
+        "coverage": 0.8754595588235294,
+        "losses": 0,
+        "firstCutTick": 846,
+        "cuts": 9,
+        "exposureTicks": 4116,
+        "maxExposureTicks": 768,
+        "firstCoverageMetTick": 7674,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "b5742eca60c3a574"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3],
+        "visits": [],
+        "used": []
+      },
+      "events": [
+        [846, "cut.closed", null],
+        [2010, "cut.closed", null],
+        [2502, "cut.closed", null],
+        [3018, "cut.closed", null],
+        [4674, "cut.closed", null],
+        [5526, "cut.closed", null],
+        [6198, "cut.closed", null],
+        [6570, "cut.closed", null],
+        [7674, "cut.closed", null]
+      ],
+      "closures": [
+        [846, 0.09375],
+        [2010, 0.18198529411764705],
+        [2502, 0.22472426470588236],
+        [3018, 0.26746323529411764],
+        [4674, 0.3474264705882353],
+        [5526, 0.3740808823529412],
+        [6198, 0.5560661764705882],
+        [6570, 0.6870404411764706],
+        [7674, 0.8754595588235294]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 486
+        },
+        {
+          "direction": "up",
+          "ticks": 390
+        },
+        {
+          "direction": "left",
+          "ticks": 774
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 450
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 36
+        },
+        {
+          "direction": "up",
+          "ticks": 450
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 354
+        },
+        {
+          "direction": "right",
+          "ticks": 702
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 120
+        },
+        {
+          "direction": "left",
+          "ticks": 702
+        },
+        {
+          "direction": "right",
+          "ticks": 450
+        },
+        {
+          "direction": "up",
+          "ticks": 222
+        },
+        {
+          "direction": "down",
+          "ticks": 234
+        },
+        {
+          "direction": "left",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 114
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 126
+        },
+        {
+          "direction": "left",
+          "ticks": 420
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "right",
+          "ticks": 270
+        }
+      ]
+    },
+    {
+      "id": "crosswind-remix",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "8fab064c9364abc4",
+      "ticks": 4262,
+      "lives": 2,
+      "coverage": 0.8400735294117647,
+      "cuts": 7,
+      "searchSteps": 7,
+      "checkpoint": "0344807ecbcf79dd",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4262,
+        "seconds": 35.516666666665294,
+        "coverage": 0.8400735294117647,
+        "losses": 0,
+        "firstCutTick": 134,
+        "cuts": 7,
+        "exposureTicks": 2216,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4262,
+        "allRequiredCapturedTick": 134,
+        "ticksAfterRequiredObjectives": 4128,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "0344807ecbcf79dd"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["first-current", "west-current"],
+        "connected": [0, 1, 2],
+        "visits": [0],
+        "used": []
+      },
+      "events": [
+        [134, "cut.closed", null],
+        [134, "objective.captured", "return-relay"],
+        [134, "relay.opened", "protected-return"],
+        [241, "boss.warning", "emitter"],
+        [801, "boss.warning", "emitter"],
+        [938, "cut.closed", null],
+        [1361, "boss.warning", "emitter"],
+        [1430, "cut.closed", null],
+        [1921, "boss.warning", "emitter"],
+        [2481, "boss.warning", "emitter"],
+        [2630, "cut.closed", null],
+        [3002, "cut.closed", null],
+        [3041, "boss.warning", "emitter"],
+        [3601, "boss.warning", "emitter"],
+        [3626, "cut.closed", null],
+        [4161, "boss.warning", "emitter"],
+        [4262, "cut.closed", null]
+      ],
+      "closures": [
+        [134, 0.0059742647058823525],
+        [938, 0.2545955882352941],
+        [1430, 0.3170955882352941],
+        [2630, 0.6415441176470589],
+        [3002, 0.7077205882352942],
+        [3626, 0.7513786764705882],
+        [4262, 0.8400735294117647]
+      ],
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 140
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 216
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 426
+        },
+        {
+          "direction": "right",
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 294
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 300
+        },
+        {
+          "direction": "left",
+          "ticks": 294
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 102
+        },
+        {
+          "direction": "up",
+          "ticks": 294
+        }
+      ]
+    },
+    {
+      "id": "crosswind-remix",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "8fab064c9364abc4",
+      "ticks": 4826,
+      "lives": 2,
+      "coverage": 0.8432904411764706,
+      "cuts": 7,
+      "searchSteps": 7,
+      "checkpoint": "0775894f02858e50",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4826,
+        "seconds": 40.21666666666503,
+        "coverage": 0.8432904411764706,
+        "losses": 0,
+        "firstCutTick": 134,
+        "cuts": 7,
+        "exposureTicks": 2132,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4826,
+        "allRequiredCapturedTick": 134,
+        "ticksAfterRequiredObjectives": 4692,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "0775894f02858e50"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["first-current", "west-current"],
+        "connected": [0, 1, 2],
+        "visits": [0],
+        "used": []
+      },
+      "events": [
+        [134, "cut.closed", null],
+        [134, "objective.captured", "return-relay"],
+        [134, "relay.opened", "protected-return"],
+        [241, "boss.warning", "emitter"],
+        [801, "boss.warning", "emitter"],
+        [938, "cut.closed", null],
+        [1361, "boss.warning", "emitter"],
+        [1921, "boss.warning", "emitter"],
+        [2481, "boss.warning", "emitter"],
+        [2654, "cut.closed", null],
+        [3041, "boss.warning", "emitter"],
+        [3158, "cut.closed", null],
+        [3458, "cut.closed", null],
+        [3601, "boss.warning", "emitter"],
+        [4161, "boss.warning", "emitter"],
+        [4322, "cut.closed", null],
+        [4721, "boss.warning", "emitter"],
+        [4826, "cut.closed", null]
+      ],
+      "closures": [
+        [134, 0.0059742647058823525],
+        [938, 0.2545955882352941],
+        [2654, 0.6102941176470589],
+        [3158, 0.7040441176470589],
+        [3458, 0.7403492647058824],
+        [4322, 0.8092830882352942],
+        [4826, 0.8432904411764706]
+      ],
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 140
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 216
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 324
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 246
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 372
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 372
+        },
+        {
+          "direction": "up",
+          "ticks": 312
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        }
+      ]
+    },
+    {
+      "id": "crosswind-remix",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "64332fe7bce57187",
+      "ticks": 4034,
+      "lives": 3,
+      "coverage": 0.8598345588235294,
+      "cuts": 6,
+      "searchSteps": 6,
+      "checkpoint": "48544a3ab8f612c6",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4034,
+        "seconds": 33.6166666666654,
+        "coverage": 0.8598345588235294,
+        "losses": 0,
+        "firstCutTick": 134,
+        "cuts": 6,
+        "exposureTicks": 1580,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4034,
+        "allRequiredCapturedTick": 134,
+        "ticksAfterRequiredObjectives": 3900,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "48544a3ab8f612c6"
+      },
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "reclaimed": ["west-current", "east-current"],
+        "connected": [0, 1, 2, 3],
+        "visits": [0],
+        "used": ["protected-return"]
+      },
+      "events": [
+        [134, "cut.closed", null],
+        [134, "objective.captured", "return-relay"],
+        [134, "relay.opened", "protected-return"],
+        [241, "boss.warning", "emitter"],
+        [698, "cut.closed", null],
+        [893, "boss.warning", "emitter"],
+        [1058, "cut.closed", null],
+        [1545, "boss.warning", "emitter"],
+        [2197, "boss.warning", "emitter"],
+        [2849, "boss.warning", "emitter"],
+        [2870, "cut.closed", null],
+        [3098, "cut.closed", null],
+        [3501, "boss.warning", "emitter"],
+        [4034, "cut.closed", null]
+      ],
+      "closures": [
+        [134, 0.0059742647058823525],
+        [698, 0.29733455882352944],
+        [1058, 0.39338235294117646],
+        [2870, 0.7205882352941176],
+        [3098, 0.7536764705882353],
+        [4034, 0.8598345588235294]
+      ],
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 134
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 402
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 174
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 408
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 150
+        },
+        {
+          "direction": "left",
+          "ticks": 162
+        },
+        {
+          "direction": "down",
+          "ticks": 348
+        },
+        {
+          "direction": "right",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 342
+        }
+      ]
+    },
+    {
+      "id": "crosswind-remix",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "64332fe7bce57187",
+      "ticks": 4730,
+      "lives": 3,
+      "coverage": 0.8901654411764706,
+      "cuts": 7,
+      "searchSteps": 7,
+      "checkpoint": "79f16b5217f9046e",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4730,
+        "seconds": 39.41666666666507,
+        "coverage": 0.8901654411764706,
+        "losses": 0,
+        "firstCutTick": 134,
+        "cuts": 7,
+        "exposureTicks": 2000,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4730,
+        "allRequiredCapturedTick": 134,
+        "ticksAfterRequiredObjectives": 4596,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "79f16b5217f9046e"
+      },
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "reclaimed": ["west-current", "east-current"],
+        "connected": [0, 1, 2, 3],
+        "visits": [0],
+        "used": ["protected-return"]
+      },
+      "events": [
+        [134, "cut.closed", null],
+        [134, "objective.captured", "return-relay"],
+        [134, "relay.opened", "protected-return"],
+        [241, "boss.warning", "emitter"],
+        [698, "cut.closed", null],
+        [893, "boss.warning", "emitter"],
+        [1058, "cut.closed", null],
+        [1545, "boss.warning", "emitter"],
+        [2197, "boss.warning", "emitter"],
+        [2849, "boss.warning", "emitter"],
+        [2918, "cut.closed", null],
+        [3494, "cut.closed", null],
+        [3501, "boss.warning", "emitter"],
+        [4153, "boss.warning", "emitter"],
+        [4310, "cut.closed", null],
+        [4730, "cut.closed", null]
+      ],
+      "closures": [
+        [134, 0.0059742647058823525],
+        [698, 0.29733455882352944],
+        [1058, 0.39338235294117646],
+        [2918, 0.6424632352941176],
+        [3494, 0.7513786764705882],
+        [4310, 0.8074448529411765],
+        [4730, 0.8901654411764706]
+      ],
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 134
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 408
+        },
+        {
+          "direction": "left",
+          "ticks": 180
+        },
+        {
+          "direction": "down",
+          "ticks": 174
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 468
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 84
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "right",
+          "ticks": 384
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 378
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 276
+        },
+        {
+          "direction": "right",
+          "ticks": 126
+        }
+      ]
+    },
+    {
+      "id": "final-broadcast",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "d492e94514c15483",
+      "ticks": 2946,
+      "lives": 2,
+      "coverage": 0.9336935166994106,
+      "cuts": 5,
+      "searchSteps": 5,
+      "checkpoint": "2f6c8e9ce5ac2401",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 2946,
+        "seconds": 24.549999999999248,
+        "coverage": 0.9336935166994106,
+        "losses": 0,
+        "firstCutTick": 426,
+        "cuts": 5,
+        "exposureTicks": 1224,
+        "maxExposureTicks": 372,
+        "firstCoverageMetTick": 2946,
+        "allRequiredCapturedTick": 2682,
+        "ticksAfterRequiredObjectives": 264,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "2f6c8e9ce5ac2401"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "visits": [0, 2, 1],
+        "used": []
+      },
+      "events": [
+        [426, "cut.closed", null],
+        [1542, "cut.closed", null],
+        [1542, "objective.captured", "lower-anchor"],
+        [1542, "relay.opened", "lower-link"],
+        [2418, "cut.closed", null],
+        [2682, "cut.closed", null],
+        [2682, "objective.captured", "upper-anchor"],
+        [2682, "relay.opened", "upper-link"],
+        [2946, "cut.closed", null]
+      ],
+      "closures": [
+        [426, 0.015225933202357564],
+        [1542, 0.5],
+        [2418, 0.7396856581532416],
+        [2682, 0.7475442043222004],
+        [2946, 0.9336935166994106]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 426
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "left",
+          "ticks": 390
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 462
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 228
+        },
+        {
+          "direction": "right",
+          "ticks": 432
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 114
+        }
+      ]
+    },
+    {
+      "id": "final-broadcast",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "d492e94514c15483",
+      "ticks": 4674,
+      "lives": 2,
+      "coverage": 0.8423379174852652,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "07c7b1347668bc11",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4674,
+        "seconds": 38.94999999999843,
+        "coverage": 0.8423379174852652,
+        "losses": 0,
+        "firstCutTick": 426,
+        "cuts": 4,
+        "exposureTicks": 1356,
+        "maxExposureTicks": 432,
+        "firstCoverageMetTick": 4674,
+        "allRequiredCapturedTick": 3066,
+        "ticksAfterRequiredObjectives": 1608,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "07c7b1347668bc11"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "visits": [0],
+        "used": []
+      },
+      "events": [
+        [426, "cut.closed", null],
+        [1050, "cut.closed", null],
+        [1050, "objective.captured", "lower-anchor"],
+        [1050, "relay.opened", "lower-link"],
+        [3066, "cut.closed", null],
+        [3066, "objective.captured", "upper-anchor"],
+        [3066, "relay.opened", "upper-link"],
+        [4674, "cut.closed", null]
+      ],
+      "closures": [
+        [426, 0.015225933202357564],
+        [1050, 0.25196463654223966],
+        [3066, 0.7367387033398821],
+        [4674, 0.8423379174852652]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 432
+        },
+        {
+          "direction": "left",
+          "ticks": 384
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 444
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 378
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 66
+        },
+        {
+          "direction": "down",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 438
+        }
+      ]
+    },
+    {
+      "id": "final-broadcast",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "0c9dc576de51afcf",
+      "ticks": 3630,
+      "lives": 3,
+      "coverage": 0.888015717092338,
+      "cuts": 6,
+      "searchSteps": 6,
+      "checkpoint": "58448a3760f2419f",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 3630,
+        "seconds": 30.249999999998924,
+        "coverage": 0.888015717092338,
+        "losses": 0,
+        "firstCutTick": 426,
+        "cuts": 6,
+        "exposureTicks": 1404,
+        "maxExposureTicks": 372,
+        "firstCoverageMetTick": 3630,
+        "allRequiredCapturedTick": 2490,
+        "ticksAfterRequiredObjectives": 1140,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "58448a3760f2419f"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "visits": [0, 10, 8, 7],
+        "used": [["lower-link", 2694]]
+      },
+      "events": [
+        [426, "cut.closed", null],
+        [1302, "cut.closed", null],
+        [1302, "objective.captured", "upper-anchor"],
+        [1302, "relay.opened", "upper-link"],
+        [1662, "cut.closed", null],
+        [2490, "cut.closed", null],
+        [2490, "objective.captured", "lower-anchor"],
+        [2490, "relay.opened", "lower-link"],
+        [2958, "cut.closed", null],
+        [3630, "cut.closed", null]
+      ],
+      "closures": [
+        [426, 0.015225933202357564],
+        [1302, 0.5304518664047151],
+        [1662, 0.5962671905697446],
+        [2490, 0.6026522593320236],
+        [2958, 0.7912573673870335],
+        [3630, 0.888015717092338]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 426
+        },
+        {
+          "direction": "left",
+          "ticks": 390
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 462
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 114
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": "up",
+          "ticks": 222
+        },
+        {
+          "direction": "right",
+          "ticks": 396
+        },
+        {
+          "direction": "down",
+          "ticks": 210
+        },
+        {
+          "direction": "up",
+          "ticks": 162
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 192
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        }
+      ]
+    },
+    {
+      "id": "home-signal",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "31a0064b5e87d844",
+      "ticks": 3738,
+      "lives": 2,
+      "coverage": 1,
+      "cuts": 7,
+      "searchSteps": 7,
+      "checkpoint": "d1af229a0d81dbbc",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 3738,
+        "seconds": 31.149999999998872,
+        "coverage": 1,
+        "losses": 0,
+        "firstCutTick": 414,
+        "cuts": 7,
+        "exposureTicks": 1332,
+        "maxExposureTicks": 348,
+        "firstCoverageMetTick": 2862,
+        "allRequiredCapturedTick": 3738,
+        "ticksAfterRequiredObjectives": 0,
+        "ticksAfterFirstCoverage": 876,
+        "collectedBonusIds": [],
+        "checkpoint": "d1af229a0d81dbbc"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0, 6],
+        "used": []
+      },
+      "events": [
+        [414, "cut.closed", null],
+        [1122, "cut.closed", null],
+        [1890, "cut.closed", null],
+        [1890, "objective.captured", "south-shield"],
+        [2178, "cut.closed", null],
+        [2178, "objective.captured", "east-shield"],
+        [2862, "cut.closed", null],
+        [3018, "cut.closed", null],
+        [3018, "objective.captured", "west-shield"],
+        [3018, "relay.opened", "home-dock"],
+        [3018, "encounter.stageChanged", "sentinel"],
+        [3199, "encounter.stageChanged", "sentinel"],
+        [3738, "cut.closed", null],
+        [3738, "objective.captured", "core"],
+        [3738, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [414, 0.014471057884231538],
+        [1122, 0.3063872255489022],
+        [1890, 0.47704590818363274],
+        [2178, 0.48303393213572854],
+        [2862, 0.9670658682634731],
+        [3018, 0.9850299401197605],
+        [3738, 1]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 414
+        },
+        {
+          "direction": "right",
+          "ticks": 498
+        },
+        {
+          "direction": "down",
+          "ticks": 210
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 174
+        },
+        {
+          "direction": "right",
+          "ticks": 354
+        },
+        {
+          "direction": "left",
+          "ticks": 138
+        },
+        {
+          "direction": "up",
+          "ticks": 150
+        },
+        {
+          "direction": "down",
+          "ticks": 162
+        },
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 228
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "down",
+          "ticks": 66
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        }
+      ]
+    },
+    {
+      "id": "home-signal",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "1dabe33c85f0d468",
+      "ticks": 3330,
+      "lives": 3,
+      "coverage": 1,
+      "cuts": 6,
+      "searchSteps": 6,
+      "checkpoint": "2d1315347ccebd91",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 3330,
+        "seconds": 27.749999999999066,
+        "coverage": 1,
+        "losses": 0,
+        "firstCutTick": 414,
+        "cuts": 6,
+        "exposureTicks": 1236,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 2418,
+        "allRequiredCapturedTick": 3330,
+        "ticksAfterRequiredObjectives": 0,
+        "ticksAfterFirstCoverage": 912,
+        "collectedBonusIds": [],
+        "checkpoint": "2d1315347ccebd91"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0],
+        "used": []
+      },
+      "events": [
+        [414, "cut.closed", null],
+        [1758, "cut.closed", null],
+        [1758, "objective.captured", "east-shield"],
+        [2130, "cut.closed", null],
+        [2418, "cut.closed", null],
+        [2418, "objective.captured", "south-shield"],
+        [2610, "cut.closed", null],
+        [2610, "objective.captured", "west-shield"],
+        [2610, "relay.opened", "home-dock"],
+        [2610, "encounter.stageChanged", "sentinel"],
+        [2791, "encounter.stageChanged", "sentinel"],
+        [3330, "cut.closed", null],
+        [3330, "objective.captured", "core"],
+        [3330, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [414, 0.014471057884231538],
+        [1758, 0.22005988023952097],
+        [2130, 0.593812375249501],
+        [2418, 0.9745508982035929],
+        [2610, 0.9925149700598802],
+        [3330, 1]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 414
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 684
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 66
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        }
+      ]
+    },
+    {
+      "id": "home-signal",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "1dabe33c85f0d468",
+      "ticks": 3270,
+      "lives": 3,
+      "coverage": 1,
+      "cuts": 6,
+      "searchSteps": 6,
+      "checkpoint": "321f2a73d9200cb1",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 3270,
+        "seconds": 27.249999999999094,
+        "coverage": 1,
+        "losses": 0,
+        "firstCutTick": 414,
+        "cuts": 6,
+        "exposureTicks": 1236,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 2382,
+        "allRequiredCapturedTick": 3270,
+        "ticksAfterRequiredObjectives": 0,
+        "ticksAfterFirstCoverage": 888,
+        "collectedBonusIds": [],
+        "checkpoint": "321f2a73d9200cb1"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0],
+        "used": []
+      },
+      "events": [
+        [414, "cut.closed", null],
+        [1746, "cut.closed", null],
+        [1746, "objective.captured", "east-shield"],
+        [2106, "cut.closed", null],
+        [2382, "cut.closed", null],
+        [2382, "objective.captured", "south-shield"],
+        [2574, "cut.closed", null],
+        [2574, "objective.captured", "west-shield"],
+        [2574, "relay.opened", "home-dock"],
+        [2574, "encounter.stageChanged", "sentinel"],
+        [2755, "encounter.stageChanged", "sentinel"],
+        [3270, "cut.closed", null],
+        [3270, "objective.captured", "core"],
+        [3270, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [414, 0.014471057884231538],
+        [1746, 0.22005988023952097],
+        [2106, 0.593812375249501],
+        [2382, 0.9745508982035929],
+        [2574, 0.9925149700598802],
+        [3270, 1]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 414
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 684
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 174
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 66
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        }
+      ]
+    },
+    {
+      "id": "long-wave",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "489c8f69ef1799a2",
+      "ticks": 12162,
+      "lives": 2,
+      "coverage": 0.9076576576576577,
+      "cuts": 12,
+      "searchSteps": 12,
+      "checkpoint": "3d9a6eedf2537835",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 12162,
+        "seconds": 101.35000000002672,
+        "coverage": 0.9076576576576577,
+        "losses": 0,
+        "firstCutTick": 1434,
+        "cuts": 12,
+        "exposureTicks": 4716,
+        "maxExposureTicks": 672,
+        "firstCoverageMetTick": 12162,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "3d9a6eedf2537835"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["middle-down"],
+        "connected": [0, 1, 2, 3],
+        "visits": [0, 3, 2],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [801, "boss.warning", "emitter"],
+        [1361, "boss.warning", "emitter"],
+        [1434, "cut.closed", null],
+        [1921, "boss.warning", "emitter"],
+        [2481, "boss.warning", "emitter"],
+        [3041, "boss.warning", "emitter"],
+        [3198, "cut.closed", null],
+        [3601, "boss.warning", "emitter"],
+        [4161, "boss.warning", "emitter"],
+        [4314, "cut.closed", null],
+        [4721, "boss.warning", "emitter"],
+        [5281, "boss.warning", "emitter"],
+        [5841, "boss.warning", "emitter"],
+        [6006, "cut.closed", null],
+        [6401, "boss.warning", "emitter"],
+        [6961, "boss.warning", "emitter"],
+        [7521, "boss.warning", "emitter"],
+        [7554, "cut.closed", null],
+        [8081, "boss.warning", "emitter"],
+        [8178, "cut.closed", null],
+        [8298, "cut.closed", null],
+        [8478, "cut.closed", null],
+        [8641, "boss.warning", "emitter"],
+        [9201, "boss.warning", "emitter"],
+        [9761, "boss.warning", "emitter"],
+        [9918, "cut.closed", null],
+        [10321, "boss.warning", "emitter"],
+        [10662, "cut.closed", null],
+        [10881, "boss.warning", "emitter"],
+        [11441, "boss.warning", "emitter"],
+        [11562, "cut.closed", null],
+        [12001, "boss.warning", "emitter"],
+        [12162, "cut.closed", null]
+      ],
+      "closures": [
+        [1434, 0.15315315315315314],
+        [3198, 0.21441441441441442],
+        [4314, 0.3153153153153153],
+        [6006, 0.41621621621621624],
+        [7554, 0.46306306306306305],
+        [8178, 0.48243243243243245],
+        [8298, 0.6063063063063063],
+        [8478, 0.6234234234234234],
+        [9918, 0.6702702702702703],
+        [10662, 0.7117117117117117],
+        [11562, 0.7454954954954955],
+        [12162, 0.9076576576576577]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 420
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "right",
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 426
+        },
+        {
+          "direction": "right",
+          "ticks": 684
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 378
+        },
+        {
+          "direction": "left",
+          "ticks": 678
+        },
+        {
+          "direction": "right",
+          "ticks": 690
+        },
+        {
+          "direction": "up",
+          "ticks": 324
+        },
+        {
+          "direction": "left",
+          "ticks": 678
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 324
+        },
+        {
+          "direction": "right",
+          "ticks": 636
+        },
+        {
+          "direction": "up",
+          "ticks": 318
+        },
+        {
+          "direction": "down",
+          "ticks": 102
+        },
+        {
+          "direction": "left",
+          "ticks": 522
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        },
+        {
+          "direction": "left",
+          "ticks": 102
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 642
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 630
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 354
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 282
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 630
+        },
+        {
+          "direction": "right",
+          "ticks": 474
+        },
+        {
+          "direction": "down",
+          "ticks": 126
+        }
+      ]
+    },
+    {
+      "id": "long-wave",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "489c8f69ef1799a2",
+      "ticks": 6378,
+      "lives": 2,
+      "coverage": 0.8495495495495495,
+      "cuts": 6,
+      "searchSteps": 6,
+      "checkpoint": "41fb751766f2e606",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 6378,
+        "seconds": 53.149999999997625,
+        "coverage": 0.8495495495495495,
+        "losses": 0,
+        "firstCutTick": 1434,
+        "cuts": 6,
+        "exposureTicks": 2136,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 6378,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "41fb751766f2e606"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["middle-down", "east-up"],
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [801, "boss.warning", "emitter"],
+        [1361, "boss.warning", "emitter"],
+        [1434, "cut.closed", null],
+        [1921, "boss.warning", "emitter"],
+        [2481, "boss.warning", "emitter"],
+        [3041, "boss.warning", "emitter"],
+        [3186, "cut.closed", null],
+        [3601, "boss.warning", "emitter"],
+        [3726, "cut.closed", null],
+        [4161, "boss.warning", "emitter"],
+        [4314, "cut.closed", null],
+        [4721, "boss.warning", "emitter"],
+        [5281, "boss.warning", "emitter"],
+        [5430, "cut.closed", null],
+        [5841, "boss.warning", "emitter"],
+        [6378, "cut.closed", null]
+      ],
+      "closures": [
+        [1434, 0.15315315315315314],
+        [3186, 0.21441441441441442],
+        [3726, 0.22972972972972974],
+        [4314, 0.41711711711711713],
+        [5430, 0.7666666666666667],
+        [6378, 0.8495495495495495]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 420
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "right",
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "right",
+          "ticks": 684
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 108
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "left",
+          "ticks": 168
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "left",
+          "ticks": 288
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "right",
+          "ticks": 456
+        },
+        {
+          "direction": "down",
+          "ticks": 264
+        },
+        {
+          "direction": "right",
+          "ticks": 102
+        }
+      ]
+    },
+    {
+      "id": "long-wave",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "a9747380069205d5",
+      "ticks": 8610,
+      "lives": 5,
+      "coverage": 0.8693693693693694,
+      "cuts": 10,
+      "searchSteps": 10,
+      "checkpoint": "87a04aadfcc4d2e5",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 8610,
+        "seconds": 71.75000000000317,
+        "coverage": 0.8693693693693694,
+        "losses": 0,
+        "firstCutTick": 1014,
+        "cuts": 10,
+        "exposureTicks": 4188,
+        "maxExposureTicks": 780,
+        "firstCoverageMetTick": 8610,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "87a04aadfcc4d2e5"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["middle-down"],
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [2],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [1014, "cut.closed", null],
+        [1075, "boss.warning", "emitter"],
+        [1902, "cut.closed", null],
+        [1909, "boss.warning", "emitter"],
+        [2586, "cut.closed", null],
+        [2743, "boss.warning", "emitter"],
+        [3546, "cut.closed", null],
+        [3577, "boss.warning", "emitter"],
+        [4074, "cut.closed", null],
+        [4411, "boss.warning", "emitter"],
+        [5010, "cut.closed", null],
+        [5245, "boss.warning", "emitter"],
+        [5262, "cut.closed", null],
+        [6079, "boss.warning", "emitter"],
+        [6162, "cut.closed", null],
+        [6738, "cut.closed", null],
+        [6913, "boss.warning", "emitter"],
+        [7747, "boss.warning", "emitter"],
+        [8581, "boss.warning", "emitter"],
+        [8610, "cut.closed", null]
+      ],
+      "closures": [
+        [1014, 0.07657657657657657],
+        [1902, 0.16441441441441443],
+        [2586, 0.23423423423423423],
+        [3546, 0.5855855855855856],
+        [4074, 0.6315315315315315],
+        [5010, 0.69009009009009],
+        [5262, 0.7063063063063063],
+        [6162, 0.7292792792792793],
+        [6738, 0.7698198198198198],
+        [8610, 0.8693693693693694]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "left",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 42
+        },
+        {
+          "direction": "right",
+          "ticks": 786
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "left",
+          "ticks": 66
+        },
+        {
+          "direction": "up",
+          "ticks": 378
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 174
+        },
+        {
+          "direction": "left",
+          "ticks": 726
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 78
+        },
+        {
+          "direction": "down",
+          "ticks": 210
+        },
+        {
+          "direction": "up",
+          "ticks": 222
+        },
+        {
+          "direction": "right",
+          "ticks": 336
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 318
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 42
+        },
+        {
+          "direction": "left",
+          "ticks": 618
+        },
+        {
+          "direction": "right",
+          "ticks": 546
+        },
+        {
+          "direction": "down",
+          "ticks": 30
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 42
+        },
+        {
+          "direction": "left",
+          "ticks": 540
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 618
+        }
+      ]
+    },
+    {
+      "id": "long-wave",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "a9747380069205d5",
+      "ticks": 6990,
+      "lives": 5,
+      "coverage": 0.9297297297297298,
+      "cuts": 10,
+      "searchSteps": 10,
+      "checkpoint": "1bcd6158452bf0a5",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 6990,
+        "seconds": 58.249999999997335,
+        "coverage": 0.9297297297297298,
+        "losses": 0,
+        "firstCutTick": 1014,
+        "cuts": 10,
+        "exposureTicks": 4008,
+        "maxExposureTicks": 780,
+        "firstCoverageMetTick": 6990,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "1bcd6158452bf0a5"
+      },
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "reclaimed": ["west-up", "middle-down", "east-up"],
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [1014, "cut.closed", null],
+        [1075, "boss.warning", "emitter"],
+        [1890, "cut.closed", null],
+        [1909, "boss.warning", "emitter"],
+        [2562, "cut.closed", null],
+        [2743, "boss.warning", "emitter"],
+        [3577, "boss.warning", "emitter"],
+        [3594, "cut.closed", null],
+        [4194, "cut.closed", null],
+        [4411, "boss.warning", "emitter"],
+        [5010, "cut.closed", null],
+        [5226, "cut.closed", null],
+        [5245, "boss.warning", "emitter"],
+        [5778, "cut.closed", null],
+        [6079, "boss.warning", "emitter"],
+        [6102, "cut.closed", null],
+        [6913, "boss.warning", "emitter"],
+        [6990, "cut.closed", null]
+      ],
+      "closures": [
+        [1014, 0.07657657657657657],
+        [1890, 0.16441441441441443],
+        [2562, 0.22027027027027027],
+        [3594, 0.35765765765765767],
+        [4194, 0.4045045045045045],
+        [5010, 0.4423423423423423],
+        [5226, 0.4626126126126126],
+        [5778, 0.5004504504504504],
+        [6102, 0.5099099099099099],
+        [6990, 0.9297297297297298]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "left",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 30
+        },
+        {
+          "direction": "right",
+          "ticks": 786
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 378
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 54
+        },
+        {
+          "direction": "left",
+          "ticks": 738
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 324
+        },
+        {
+          "direction": "up",
+          "ticks": 300
+        },
+        {
+          "direction": "right",
+          "ticks": 576
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 114
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 264
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 258
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 540
+        },
+        {
+          "direction": "down",
+          "ticks": 294
+        }
+      ]
+    },
+    {
+      "id": "long-wave",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "556b73c83918ce11",
+      "ticks": 10590,
+      "lives": 3,
+      "coverage": 0.8391891891891892,
+      "cuts": 13,
+      "searchSteps": 13,
+      "checkpoint": "bede6a9970072034",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 10590,
+        "seconds": 88.2500000000163,
+        "coverage": 0.8391891891891892,
+        "losses": 0,
+        "firstCutTick": 1590,
+        "cuts": 13,
+        "exposureTicks": 5184,
+        "maxExposureTicks": 756,
+        "firstCoverageMetTick": 10590,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "bede6a9970072034"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["middle-down"],
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [2],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [893, "boss.warning", "emitter"],
+        [1545, "boss.warning", "emitter"],
+        [1590, "cut.closed", null],
+        [2197, "boss.warning", "emitter"],
+        [2849, "boss.warning", "emitter"],
+        [3018, "cut.closed", null],
+        [3486, "cut.closed", null],
+        [3501, "boss.warning", "emitter"],
+        [4146, "cut.closed", null],
+        [4153, "boss.warning", "emitter"],
+        [4782, "cut.closed", null],
+        [4805, "boss.warning", "emitter"],
+        [5457, "boss.warning", "emitter"],
+        [5490, "cut.closed", null],
+        [6109, "boss.warning", "emitter"],
+        [6198, "cut.closed", null],
+        [6761, "boss.warning", "emitter"],
+        [6774, "cut.closed", null],
+        [6858, "cut.closed", null],
+        [7026, "cut.closed", null],
+        [7413, "boss.warning", "emitter"],
+        [8065, "boss.warning", "emitter"],
+        [8178, "cut.closed", null],
+        [8717, "boss.warning", "emitter"],
+        [9210, "cut.closed", null],
+        [9369, "boss.warning", "emitter"],
+        [10021, "boss.warning", "emitter"],
+        [10590, "cut.closed", null]
+      ],
+      "closures": [
+        [1590, 0.10720720720720721],
+        [3018, 0.2490990990990991],
+        [3486, 0.3013513513513513],
+        [4146, 0.34054054054054056],
+        [4782, 0.3536036036036036],
+        [5490, 0.42792792792792794],
+        [6198, 0.4527027027027027],
+        [6774, 0.5103603603603604],
+        [6858, 0.55],
+        [7026, 0.5581081081081081],
+        [8178, 0.754054054054054],
+        [9210, 0.8081081081081081],
+        [10590, 0.8391891891891892]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 432
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 66
+        },
+        {
+          "direction": "left",
+          "ticks": 762
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 54
+        },
+        {
+          "direction": "down",
+          "ticks": 354
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 36
+        },
+        {
+          "direction": "up",
+          "ticks": 354
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 354
+        },
+        {
+          "direction": "up",
+          "ticks": 42
+        },
+        {
+          "direction": "right",
+          "ticks": 672
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 666
+        },
+        {
+          "direction": "right",
+          "ticks": 78
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 456
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 108
+        },
+        {
+          "direction": "up",
+          "ticks": 30
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 36
+        },
+        {
+          "direction": "up",
+          "ticks": 180
+        },
+        {
+          "direction": "left",
+          "ticks": 666
+        },
+        {
+          "direction": "right",
+          "ticks": 678
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 294
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 378
+        }
+      ]
+    },
+    {
+      "id": "long-wave",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "556b73c83918ce11",
+      "ticks": 12146,
+      "lives": 3,
+      "coverage": 0.9175675675675675,
+      "cuts": 13,
+      "searchSteps": 13,
+      "checkpoint": "277fe43747cf0a2d",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 12146,
+        "seconds": 101.21000000002662,
+        "coverage": 0.9175675675675675,
+        "losses": 0,
+        "firstCutTick": 1590,
+        "cuts": 13,
+        "exposureTicks": 5588,
+        "maxExposureTicks": 756,
+        "firstCoverageMetTick": 12146,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "277fe43747cf0a2d"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["middle-down"],
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 3, 4],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [893, "boss.warning", "emitter"],
+        [1545, "boss.warning", "emitter"],
+        [1590, "cut.closed", null],
+        [2197, "boss.warning", "emitter"],
+        [2849, "boss.warning", "emitter"],
+        [3006, "cut.closed", null],
+        [3462, "cut.closed", null],
+        [3501, "boss.warning", "emitter"],
+        [4153, "boss.warning", "emitter"],
+        [4218, "cut.closed", null],
+        [4805, "boss.warning", "emitter"],
+        [4938, "cut.closed", null],
+        [5457, "boss.warning", "emitter"],
+        [6102, "cut.closed", null],
+        [6109, "boss.warning", "emitter"],
+        [6761, "boss.warning", "emitter"],
+        [6822, "cut.closed", null],
+        [7413, "boss.warning", "emitter"],
+        [8034, "cut.closed", null],
+        [8065, "boss.warning", "emitter"],
+        [8717, "boss.warning", "emitter"],
+        [9369, "boss.warning", "emitter"],
+        [9402, "cut.closed", null],
+        [10002, "cut.closed", null],
+        [10021, "boss.warning", "emitter"],
+        [10578, "cut.closed", null],
+        [10673, "boss.warning", "emitter"],
+        [11325, "boss.warning", "emitter"],
+        [11478, "cut.closed", null],
+        [11977, "boss.warning", "emitter"],
+        [12146, "cut.closed", null]
+      ],
+      "closures": [
+        [1590, 0.10720720720720721],
+        [3006, 0.2490990990990991],
+        [3462, 0.3013513513513513],
+        [4218, 0.34054054054054056],
+        [4938, 0.41621621621621624],
+        [6102, 0.4756756756756757],
+        [6822, 0.5576576576576576],
+        [8034, 0.5990990990990991],
+        [9402, 0.6225225225225225],
+        [10002, 0.6657657657657657],
+        [10578, 0.7378378378378379],
+        [11478, 0.7612612612612613],
+        [12146, 0.9175675675675675]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 432
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 54
+        },
+        {
+          "direction": "left",
+          "ticks": 762
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 360
+        },
+        {
+          "direction": "up",
+          "ticks": 360
+        },
+        {
+          "direction": "right",
+          "ticks": 36
+        },
+        {
+          "direction": "down",
+          "ticks": 360
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 678
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 324
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 594
+        },
+        {
+          "direction": "right",
+          "ticks": 138
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 534
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 636
+        },
+        {
+          "direction": "down",
+          "ticks": 282
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "right",
+          "ticks": 636
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 630
+        },
+        {
+          "direction": "right",
+          "ticks": 570
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 450
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 108
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 636
+        },
+        {
+          "direction": "left",
+          "ticks": 588
+        },
+        {
+          "direction": "up",
+          "ticks": 74
+        }
+      ]
+    },
+    {
+      "id": "outer-loop",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "7a349e0367981c88",
+      "ticks": 2214,
+      "lives": 2,
+      "coverage": 0.8752676659528907,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "3bccc5275fe6fad7",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 2214,
+        "seconds": 18.449999999999594,
+        "coverage": 0.8752676659528907,
+        "losses": 0,
+        "firstCutTick": 606,
+        "cuts": 4,
+        "exposureTicks": 780,
+        "maxExposureTicks": 216,
+        "firstCoverageMetTick": 2214,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "3bccc5275fe6fad7"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["inner-east", "middle-west"],
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 1],
+        "used": []
+      },
+      "events": [
+        [606, "cut.closed", null],
+        [1410, "cut.closed", null],
+        [1818, "cut.closed", null],
+        [2214, "cut.closed", null]
+      ],
+      "closures": [
+        [606, 0.1948608137044968],
+        [1410, 0.41862955032119914],
+        [1818, 0.4271948608137045],
+        [2214, 0.8752676659528907]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "right",
+          "ticks": 276
+        },
+        {
+          "direction": "down",
+          "ticks": 222
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 222
+        },
+        {
+          "direction": "right",
+          "ticks": 300
+        },
+        {
+          "direction": "down",
+          "ticks": 222
+        },
+        {
+          "direction": "up",
+          "ticks": 210
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "down",
+          "ticks": 228
+        },
+        {
+          "direction": "left",
+          "ticks": 162
+        }
+      ]
+    },
+    {
+      "id": "read-the-arrows",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "6762b0ab8a1f2ef6",
+      "ticks": 2442,
+      "lives": 2,
+      "coverage": 0.8559544658493871,
+      "cuts": 2,
+      "searchSteps": 2,
+      "checkpoint": "b104b4453dfbcded",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 2442,
+        "seconds": 20.349999999999486,
+        "coverage": 0.8559544658493871,
+        "losses": 0,
+        "firstCutTick": 810,
+        "cuts": 2,
+        "exposureTicks": 972,
+        "maxExposureTicks": 564,
+        "firstCoverageMetTick": 2442,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "b104b4453dfbcded"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["southbound"],
+        "connected": [0, 1, 2],
+        "visits": [],
+        "used": []
+      },
+      "events": [
+        [810, "cut.closed", null],
+        [2442, "cut.closed", null]
+      ],
+      "closures": [
+        [810, 0.3318739054290718],
+        [2442, 0.8559544658493871]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 156
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "left",
+          "ticks": 570
+        }
+      ]
+    },
+    {
+      "id": "read-the-arrows",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "6762b0ab8a1f2ef6",
+      "ticks": 2430,
+      "lives": 2,
+      "coverage": 0.8559544658493871,
+      "cuts": 2,
+      "searchSteps": 2,
+      "checkpoint": "aeaa1fd676544600",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 2430,
+        "seconds": 20.249999999999492,
+        "coverage": 0.8559544658493871,
+        "losses": 0,
+        "firstCutTick": 810,
+        "cuts": 2,
+        "exposureTicks": 972,
+        "maxExposureTicks": 564,
+        "firstCoverageMetTick": 2430,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "aeaa1fd676544600"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": ["southbound"],
+        "connected": [0, 1, 2],
+        "visits": [],
+        "used": []
+      },
+      "events": [
+        [810, "cut.closed", null],
+        [2430, "cut.closed", null]
+      ],
+      "closures": [
+        [810, 0.3318739054290718],
+        [2430, 0.8559544658493871]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 156
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "left",
+          "ticks": 570
+        }
+      ]
+    },
+    {
+      "id": "read-the-arrows",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "547660877c3ca86c",
+      "ticks": 3374,
+      "lives": 3,
+      "coverage": 0.8274956217162872,
+      "cuts": 3,
+      "searchSteps": 3,
+      "checkpoint": "6f614bff43883183",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 3374,
+        "seconds": 28.11666666666571,
+        "coverage": 0.8274956217162872,
+        "losses": 0,
+        "firstCutTick": 690,
+        "cuts": 3,
+        "exposureTicks": 1196,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 3374,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "6f614bff43883183"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": [],
+        "connected": [0, 1, 2],
+        "visits": [],
+        "used": []
+      },
+      "events": [
+        [690, "cut.closed", null],
+        [1406, "cut.closed", null],
+        [3374, "cut.closed", null]
+      ],
+      "closures": [
+        [690, 0.2574430823117338],
+        [1406, 0.6637478108581436],
+        [3374, 0.8274956217162872]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 216
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 386
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "down",
+          "ticks": 426
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "read-the-arrows",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "547660877c3ca86c",
+      "ticks": 3350,
+      "lives": 3,
+      "coverage": 0.8274956217162872,
+      "cuts": 3,
+      "searchSteps": 3,
+      "checkpoint": "97c2234ba4ccf9a7",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 3350,
+        "seconds": 27.916666666665723,
+        "coverage": 0.8274956217162872,
+        "losses": 0,
+        "firstCutTick": 690,
+        "cuts": 3,
+        "exposureTicks": 1196,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 3350,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "97c2234ba4ccf9a7"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "reclaimed": [],
+        "connected": [0, 1, 2],
+        "visits": [],
+        "used": []
+      },
+      "events": [
+        [690, "cut.closed", null],
+        [1394, "cut.closed", null],
+        [3350, "cut.closed", null]
+      ],
+      "closures": [
+        [690, 0.2574430823117338],
+        [1394, 0.6637478108581436],
+        [3350, 0.8274956217162872]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 216
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 386
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "returning-light",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "d313e6c5635f4648",
+      "ticks": 8190,
+      "lives": 2,
+      "coverage": 0.948300622307324,
+      "cuts": 14,
+      "searchSteps": 14,
+      "checkpoint": "9a888c1e5a2074bc",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 8190,
+        "seconds": 68.25000000000038,
+        "coverage": 0.948300622307324,
+        "losses": 0,
+        "firstCutTick": 270,
+        "cuts": 14,
+        "exposureTicks": 3732,
+        "maxExposureTicks": 492,
+        "firstCoverageMetTick": 8190,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "9a888c1e5a2074bc"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 2, 3],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [270, "cut.closed", null],
+        [801, "boss.warning", "emitter"],
+        [882, "cut.closed", null],
+        [1361, "boss.warning", "emitter"],
+        [1518, "cut.closed", null],
+        [1686, "cut.closed", null],
+        [1921, "boss.warning", "emitter"],
+        [2481, "boss.warning", "emitter"],
+        [2646, "cut.closed", null],
+        [3041, "boss.warning", "emitter"],
+        [3090, "cut.closed", null],
+        [3601, "boss.warning", "emitter"],
+        [3750, "cut.closed", null],
+        [4161, "boss.warning", "emitter"],
+        [4362, "cut.closed", null],
+        [4721, "boss.warning", "emitter"],
+        [5281, "boss.warning", "emitter"],
+        [5442, "cut.closed", null],
+        [5730, "cut.closed", null],
+        [5841, "boss.warning", "emitter"],
+        [6114, "cut.closed", null],
+        [6401, "boss.warning", "emitter"],
+        [6846, "cut.closed", null],
+        [6961, "boss.warning", "emitter"],
+        [7386, "cut.closed", null],
+        [7521, "boss.warning", "emitter"],
+        [8081, "boss.warning", "emitter"],
+        [8190, "cut.closed", null]
+      ],
+      "closures": [
+        [270, 0.011967448539971278],
+        [882, 0.04786979415988511],
+        [1518, 0.06749640976543801],
+        [1686, 0.10914313068453806],
+        [2646, 0.18764959310674964],
+        [3090, 0.19530876017233126],
+        [3750, 0.4241263762565821],
+        [4362, 0.5533748204882719],
+        [5442, 0.6845380564863571],
+        [5730, 0.7113451412158928],
+        [6114, 0.77501196744854],
+        [6846, 0.8180947821924366],
+        [7386, 0.8324557204404021],
+        [8190, 0.948300622307324]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 270
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 306
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 504
+        },
+        {
+          "direction": "left",
+          "ticks": 132
+        },
+        {
+          "direction": "up",
+          "ticks": 30
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 42
+        },
+        {
+          "direction": "right",
+          "ticks": 132
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 498
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 198
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 348
+        },
+        {
+          "direction": "down",
+          "ticks": 282
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 456
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 636
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 54
+        },
+        {
+          "direction": "left",
+          "ticks": 174
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 234
+        },
+        {
+          "direction": "up",
+          "ticks": 246
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 426
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 366
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 36
+        },
+        {
+          "direction": "down",
+          "ticks": 288
+        },
+        {
+          "direction": "left",
+          "ticks": 372
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        }
+      ]
+    },
+    {
+      "id": "returning-light",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "d313e6c5635f4648",
+      "ticks": 4098,
+      "lives": 2,
+      "coverage": 0.8774533269506941,
+      "cuts": 7,
+      "searchSteps": 7,
+      "checkpoint": "94fc9b16394aa8ce",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4098,
+        "seconds": 34.149999999998705,
+        "coverage": 0.8774533269506941,
+        "losses": 0,
+        "firstCutTick": 270,
+        "cuts": 7,
+        "exposureTicks": 1860,
+        "maxExposureTicks": 372,
+        "firstCoverageMetTick": 4098,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "94fc9b16394aa8ce"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 2],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [270, "cut.closed", null],
+        [801, "boss.warning", "emitter"],
+        [918, "cut.closed", null],
+        [1122, "cut.closed", null],
+        [1361, "boss.warning", "emitter"],
+        [1806, "cut.closed", null],
+        [1921, "boss.warning", "emitter"],
+        [2466, "cut.closed", null],
+        [2481, "boss.warning", "emitter"],
+        [3041, "boss.warning", "emitter"],
+        [3090, "cut.closed", null],
+        [3601, "boss.warning", "emitter"],
+        [4098, "cut.closed", null]
+      ],
+      "closures": [
+        [270, 0.011967448539971278],
+        [918, 0.03590234561991384],
+        [1122, 0.0430828147438966],
+        [1806, 0.22307324078506463],
+        [2466, 0.40114887505983726],
+        [3090, 0.47534705600765914],
+        [4098, 0.8774533269506941]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 276
+        },
+        {
+          "direction": "left",
+          "ticks": 312
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 312
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 366
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 198
+        },
+        {
+          "direction": "left",
+          "ticks": 222
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "left",
+          "ticks": 462
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "up",
+          "ticks": 156
+        },
+        {
+          "direction": "right",
+          "ticks": 612
+        },
+        {
+          "direction": "up",
+          "ticks": 198
+        }
+      ]
+    },
+    {
+      "id": "returning-light",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "1395370f2ac0cb97",
+      "ticks": 9114,
+      "lives": 5,
+      "coverage": 0.9885112494016276,
+      "cuts": 14,
+      "searchSteps": 14,
+      "checkpoint": "c194e0f6aade0b29",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 9114,
+        "seconds": 75.95000000000651,
+        "coverage": 0.9885112494016276,
+        "losses": 0,
+        "firstCutTick": 270,
+        "cuts": 14,
+        "exposureTicks": 3756,
+        "maxExposureTicks": 576,
+        "firstCoverageMetTick": 9114,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "c194e0f6aade0b29"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 2, 4, 1],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [270, "cut.closed", null],
+        [1075, "boss.warning", "emitter"],
+        [1182, "cut.closed", null],
+        [1542, "cut.closed", null],
+        [1909, "boss.warning", "emitter"],
+        [1950, "cut.closed", null],
+        [2154, "cut.closed", null],
+        [2743, "boss.warning", "emitter"],
+        [3042, "cut.closed", null],
+        [3354, "cut.closed", null],
+        [3577, "boss.warning", "emitter"],
+        [4110, "cut.closed", null],
+        [4411, "boss.warning", "emitter"],
+        [4902, "cut.closed", null],
+        [5178, "cut.closed", null],
+        [5245, "boss.warning", "emitter"],
+        [6079, "boss.warning", "emitter"],
+        [6882, "cut.closed", null],
+        [6913, "boss.warning", "emitter"],
+        [7614, "cut.closed", null],
+        [7747, "boss.warning", "emitter"],
+        [8454, "cut.closed", null],
+        [8581, "boss.warning", "emitter"],
+        [9114, "cut.closed", null]
+      ],
+      "closures": [
+        [270, 0.011967448539971278],
+        [1182, 0.03733843944471039],
+        [1542, 0.0794638583054093],
+        [1950, 0.10339875538535184],
+        [2154, 0.1105792245093346],
+        [3042, 0.44901866921972233],
+        [3354, 0.5064624222115844],
+        [4110, 0.5715653422690282],
+        [4902, 0.6505505026328386],
+        [5178, 0.6864528482527525],
+        [6882, 0.7668741024413595],
+        [7614, 0.7836285303973193],
+        [8454, 0.8113930110100527],
+        [9114, 0.9885112494016276]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 270
+        },
+        {
+          "direction": "left",
+          "ticks": 318
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 582
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 246
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 378
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": "up",
+          "ticks": 234
+        },
+        {
+          "direction": "right",
+          "ticks": 468
+        },
+        {
+          "direction": "up",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 192
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 576
+        },
+        {
+          "direction": "up",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 516
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 510
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 264
+        },
+        {
+          "direction": "right",
+          "ticks": 438
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "left",
+          "ticks": 438
+        },
+        {
+          "direction": "right",
+          "ticks": 114
+        },
+        {
+          "direction": "up",
+          "ticks": 156
+        },
+        {
+          "direction": "right",
+          "ticks": 288
+        },
+        {
+          "direction": "up",
+          "ticks": 102
+        }
+      ]
+    },
+    {
+      "id": "returning-light",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "1395370f2ac0cb97",
+      "ticks": 5982,
+      "lives": 5,
+      "coverage": 0.8544758257539492,
+      "cuts": 12,
+      "searchSteps": 12,
+      "checkpoint": "39a0eb4a30b63965",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 5982,
+        "seconds": 49.84999999999781,
+        "coverage": 0.8544758257539492,
+        "losses": 0,
+        "firstCutTick": 270,
+        "cuts": 12,
+        "exposureTicks": 3000,
+        "maxExposureTicks": 576,
+        "firstCoverageMetTick": 5982,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "39a0eb4a30b63965"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 2, 4, 3],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [270, "cut.closed", null],
+        [1075, "boss.warning", "emitter"],
+        [1182, "cut.closed", null],
+        [1542, "cut.closed", null],
+        [1909, "boss.warning", "emitter"],
+        [1938, "cut.closed", null],
+        [2130, "cut.closed", null],
+        [2743, "boss.warning", "emitter"],
+        [3006, "cut.closed", null],
+        [3306, "cut.closed", null],
+        [3577, "boss.warning", "emitter"],
+        [4062, "cut.closed", null],
+        [4411, "boss.warning", "emitter"],
+        [5022, "cut.closed", null],
+        [5245, "boss.warning", "emitter"],
+        [5394, "cut.closed", null],
+        [5514, "cut.closed", null],
+        [5982, "cut.closed", null]
+      ],
+      "closures": [
+        [270, 0.011967448539971278],
+        [1182, 0.03733843944471039],
+        [1542, 0.0794638583054093],
+        [1938, 0.10339875538535184],
+        [2130, 0.1105792245093346],
+        [3006, 0.44901866921972233],
+        [3306, 0.5064624222115844],
+        [4062, 0.5715653422690282],
+        [5022, 0.6792723791287697],
+        [5394, 0.691239827668741],
+        [5514, 0.8013403542364768],
+        [5982, 0.8544758257539492]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 276
+        },
+        {
+          "direction": "left",
+          "ticks": 312
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 582
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 246
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 378
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": "up",
+          "ticks": 222
+        },
+        {
+          "direction": "right",
+          "ticks": 468
+        },
+        {
+          "direction": "up",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 192
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 528
+        },
+        {
+          "direction": "up",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 312
+        },
+        {
+          "direction": "down",
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 216
+        },
+        {
+          "direction": "up",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 162
+        }
+      ]
+    },
+    {
+      "id": "returning-light",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "e1af77c1c982a1de",
+      "ticks": 4962,
+      "lives": 3,
+      "coverage": 0.8908568693154619,
+      "cuts": 9,
+      "searchSteps": 9,
+      "checkpoint": "f2b07c0d16292a74",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4962,
+        "seconds": 41.349999999998296,
+        "coverage": 0.8908568693154619,
+        "losses": 0,
+        "firstCutTick": 270,
+        "cuts": 9,
+        "exposureTicks": 2244,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4962,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "f2b07c0d16292a74"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 2],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [270, "cut.closed", null],
+        [893, "boss.warning", "emitter"],
+        [918, "cut.closed", null],
+        [1122, "cut.closed", null],
+        [1545, "boss.warning", "emitter"],
+        [1938, "cut.closed", null],
+        [2197, "boss.warning", "emitter"],
+        [2370, "cut.closed", null],
+        [2849, "boss.warning", "emitter"],
+        [2910, "cut.closed", null],
+        [3450, "cut.closed", null],
+        [3501, "boss.warning", "emitter"],
+        [4153, "boss.warning", "emitter"],
+        [4194, "cut.closed", null],
+        [4805, "boss.warning", "emitter"],
+        [4962, "cut.closed", null]
+      ],
+      "closures": [
+        [270, 0.011967448539971278],
+        [918, 0.03590234561991384],
+        [1122, 0.0430828147438966],
+        [1938, 0.22307324078506463],
+        [2370, 0.40114887505983726],
+        [2910, 0.5160363810435615],
+        [3450, 0.5351842987075156],
+        [4194, 0.5840114887505984],
+        [4962, 0.8908568693154619]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 270
+        },
+        {
+          "direction": "left",
+          "ticks": 318
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 306
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 366
+        },
+        {
+          "direction": "down",
+          "ticks": 210
+        },
+        {
+          "direction": "left",
+          "ticks": 222
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 378
+        },
+        {
+          "direction": "right",
+          "ticks": 306
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        },
+        {
+          "direction": "left",
+          "ticks": 252
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 540
+        },
+        {
+          "direction": "down",
+          "ticks": 198
+        }
+      ]
+    },
+    {
+      "id": "returning-light",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "e1af77c1c982a1de",
+      "ticks": 9426,
+      "lives": 3,
+      "coverage": 0.9770224988032551,
+      "cuts": 13,
+      "searchSteps": 13,
+      "checkpoint": "48ca1b1a526bb1f1",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 9426,
+        "seconds": 78.55000000000858,
+        "coverage": 0.9770224988032551,
+        "losses": 0,
+        "firstCutTick": 270,
+        "cuts": 13,
+        "exposureTicks": 3504,
+        "maxExposureTicks": 588,
+        "firstCoverageMetTick": 9426,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "48ca1b1a526bb1f1"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 2],
+        "used": []
+      },
+      "events": [
+        [241, "boss.warning", "emitter"],
+        [270, "cut.closed", null],
+        [893, "boss.warning", "emitter"],
+        [918, "cut.closed", null],
+        [1122, "cut.closed", null],
+        [1545, "boss.warning", "emitter"],
+        [2046, "cut.closed", null],
+        [2197, "boss.warning", "emitter"],
+        [2706, "cut.closed", null],
+        [2849, "boss.warning", "emitter"],
+        [3174, "cut.closed", null],
+        [3501, "boss.warning", "emitter"],
+        [3582, "cut.closed", null],
+        [4153, "boss.warning", "emitter"],
+        [4805, "boss.warning", "emitter"],
+        [5457, "boss.warning", "emitter"],
+        [5634, "cut.closed", null],
+        [6109, "boss.warning", "emitter"],
+        [6761, "boss.warning", "emitter"],
+        [6798, "cut.closed", null],
+        [7278, "cut.closed", null],
+        [7413, "boss.warning", "emitter"],
+        [8065, "boss.warning", "emitter"],
+        [8142, "cut.closed", null],
+        [8717, "boss.warning", "emitter"],
+        [8730, "cut.closed", null],
+        [9369, "boss.warning", "emitter"],
+        [9426, "cut.closed", null]
+      ],
+      "closures": [
+        [270, 0.011967448539971278],
+        [918, 0.03590234561991384],
+        [1122, 0.0430828147438966],
+        [2046, 0.22307324078506463],
+        [2706, 0.40114887505983726],
+        [3174, 0.45859262805169937],
+        [3582, 0.511249401627573],
+        [5634, 0.7290569650550502],
+        [6798, 0.7616084250837721],
+        [7278, 0.7865007180469124],
+        [8142, 0.8209669698420297],
+        [8730, 0.8353279080899952],
+        [9426, 0.9770224988032551]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 276
+        },
+        {
+          "direction": "left",
+          "ticks": 312
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 312
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 366
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 198
+        },
+        {
+          "direction": "left",
+          "ticks": 222
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 378
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 162
+        },
+        {
+          "direction": "down",
+          "ticks": 126
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "up",
+          "ticks": 210
+        },
+        {
+          "direction": "left",
+          "ticks": 168
+        },
+        {
+          "direction": "up",
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 660
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "right",
+          "ticks": 228
+        },
+        {
+          "direction": "up",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 162
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 162
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 228
+        },
+        {
+          "direction": "left",
+          "ticks": 216
+        },
+        {
+          "direction": "up",
+          "ticks": 366
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        }
+      ]
+    },
+    {
+      "id": "windbreak-weave",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "a2c5248b588bf8c3",
+      "ticks": 7492,
+      "lives": 2,
+      "coverage": 0.8241182078169685,
+      "cuts": 12,
+      "searchSteps": 12,
+      "checkpoint": "8e616b7f5f42882a",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 7492,
+        "seconds": 62.43333333333043,
+        "coverage": 0.8241182078169685,
+        "losses": 0,
+        "firstCutTick": 244,
+        "cuts": 12,
+        "exposureTicks": 4234,
+        "maxExposureTicks": 780,
+        "firstCoverageMetTick": 7492,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "8e616b7f5f42882a"
+      },
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "reclaimed": ["north", "east", "west"],
+        "connected": [0, 1, 2, 3, 4],
+        "visits": [0, 2, 4],
+        "used": []
+      },
+      "events": [
+        [244, "cut.closed", null],
+        [568, "cut.closed", null],
+        [916, "cut.closed", null],
+        [1612, "cut.closed", null],
+        [2308, "cut.closed", null],
+        [3268, "cut.closed", null],
+        [3388, "cut.closed", null],
+        [3868, "cut.closed", null],
+        [4360, "cut.closed", null],
+        [5140, "cut.closed", null],
+        [5824, "cut.closed", null],
+        [7492, "cut.closed", null]
+      ],
+      "closures": [
+        [244, 0.010009532888465206],
+        [568, 0.04003813155386082],
+        [916, 0.06005719733079123],
+        [1612, 0.08341277407054337],
+        [2308, 0.1873212583412774],
+        [3268, 0.21591992373689228],
+        [3388, 0.28789323164918973],
+        [3868, 0.451858913250715],
+        [4360, 0.5734032411820782],
+        [5140, 0.6544327931363203],
+        [5824, 0.7001906577693041],
+        [7492, 0.8241182078169685]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 244
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 594
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 726
+        },
+        {
+          "direction": "left",
+          "ticks": 102
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "left",
+          "ticks": 180
+        },
+        {
+          "direction": "up",
+          "ticks": 150
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 312
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "up",
+          "ticks": 156
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 426
+        },
+        {
+          "direction": "right",
+          "ticks": 108
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 156
+        },
+        {
+          "direction": "left",
+          "ticks": 108
+        },
+        {
+          "direction": "down",
+          "ticks": 372
+        },
+        {
+          "direction": "right",
+          "ticks": 786
+        }
+      ]
+    }
+  ],
+  "comparisonRows": [
+    {
+      "id": "home-signal",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "31a0064b5e87d844",
+      "ticks": 3510,
+      "lives": 2,
+      "coverage": 1,
+      "cuts": 7,
+      "searchSteps": 7,
+      "checkpoint": "83d0813407c709c7",
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 3510,
+        "seconds": 29.24999999999898,
+        "coverage": 1,
+        "losses": 0,
+        "firstCutTick": 414,
+        "cuts": 7,
+        "exposureTicks": 1332,
+        "maxExposureTicks": 348,
+        "firstCoverageMetTick": 2586,
+        "allRequiredCapturedTick": 3510,
+        "ticksAfterRequiredObjectives": 0,
+        "ticksAfterFirstCoverage": 924,
+        "collectedBonusIds": [],
+        "checkpoint": "83d0813407c709c7"
+      },
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "lethalReclaimed": true,
+        "connected": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "visits": [0],
+        "used": []
+      },
+      "events": [
+        [414, "cut.closed", null],
+        [1110, "cut.closed", null],
+        [1626, "cut.closed", null],
+        [1626, "objective.captured", "south-shield"],
+        [1914, "cut.closed", null],
+        [1914, "objective.captured", "east-shield"],
+        [2586, "cut.closed", null],
+        [2742, "cut.closed", null],
+        [2742, "objective.captured", "west-shield"],
+        [2742, "relay.opened", "home-dock"],
+        [2742, "encounter.stageChanged", "sentinel"],
+        [2923, "encounter.stageChanged", "sentinel"],
+        [3510, "cut.closed", null],
+        [3510, "objective.captured", "core"],
+        [3510, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [414, 0.014471057884231538],
+        [1110, 0.3063872255489022],
+        [1626, 0.47704590818363274],
+        [1914, 0.48303393213572854],
+        [2586, 0.9670658682634731],
+        [2742, 0.9850299401197605],
+        [3510, 1]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 414
+        },
+        {
+          "direction": "right",
+          "ticks": 486
+        },
+        {
+          "direction": "down",
+          "ticks": 210
+        },
+        {
+          "direction": "up",
+          "ticks": 162
+        },
+        {
+          "direction": "right",
+          "ticks": 360
+        },
+        {
+          "direction": "left",
+          "ticks": 132
+        },
+        {
+          "direction": "up",
+          "ticks": 150
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": "left",
+          "ticks": 228
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 228
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "down",
+          "ticks": 66
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 66
+        }
+      ]
+    }
+  ]
+}

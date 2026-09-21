@@ -41,6 +41,11 @@ separate gates. Older phase notes are provenance, not current release claims.
   unchanged stronger-pressure editions, with42 replays/equal races and no pickups.
   Combined audit coverage is347/498,151 unresolved,34/83 complete six-case sets.
   Short17–35second routes still need pacing review. [Livewire evidence](journey-livewire-pressure.md).
+- Crosswind/Apex now cover all72 pressure configurations:36 fresh clears plus36
+  preserved historical successes. Combined coverage is383/498,115 unresolved,
+  45/83 complete six-case sets; every mission has at least one passing case.
+  Short late clears and28 missing optional-goal cases remain explicit risks.
+  [Late-Journey evidence](journey-late-pressure.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
@@ -67,10 +72,10 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; route checks | Whole-set native hit explanations, human difficulty, public integration |
 | P08 — Livewire | Seven candidates/art; telegraphed lanes; Remix; all42 stronger-pressure clear/replay/race cases;32 optional goals | Short-clear spatial review;10 optional-goal cases; human warning overlap/ordering, public integration |
 | P09 — Relay | Seven candidates/art; permanent connectors; Studio links; Remix; route checks | Pressure/replay checks, human shortcut usefulness, public integration |
-| P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; route checks | Human precision/readability, pressure retest, public integration |
+| P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; all42 pressure clear/replay/race cases | Short-clear/connector/optional-goal review; human precision/readability, public integration |
 | P11 — Sentinel | Four core + Remix/art; multi-relay encounter; replay/restoration; two explicit receiver-layout successors with12 clear/replay/race cases and native first returns | Optimized21–38second Twin clears remain pacing risks; successor full native/art/host adoption, human boss balance, public integration |
-| P12 — Apex | Four core + Remix/art; capstone combinations; replay/race checks | Short optimized finales need rework; human mastery, public integration |
-| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22;498-case pressure audit plus Livewire refinement | Resolve151 remaining pressure-route cases and flagged cleanup tails; human cuts, final reference dispositions, integrated Pages |
+| P12 — Apex | Four core + Remix/art; capstone combinations; all30 pressure clear/replay/race cases | Short optimized finales need rework; optional-goal routes, human mastery, public integration |
+| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22;498-case pressure audit plus Livewire/Crosswind/Apex refinement | Resolve115 remaining pressure-route cases and flagged cleanup tails; human cuts, final reference dispositions, integrated Pages |
 | P14 —12 Team missions | Three four-mission arcs; original art; joint cuts/seat swaps; Team flow/Skip/chooser/presets | Live two-player balance/controllers; material successor host adoption; new mechanic qualification; Pages |
 | P15 — final validation/Legacy/rollback | Immutable evidence records; compiler/CLI/Studio inspection; persistence/compatibility groundwork | Human sessions; full device/accessibility/performance; Legacy transition; public rollback proof; deployment |
 
