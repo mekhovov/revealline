@@ -1,0 +1,35 @@
+{
+  "format": "revealline-rebase-evidence.v1",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2179,
+      "sha256": "68311214c2f485f6729ee4f0dfaa8778f96f257365b11e81fefaa5c3c8ff69b5"
+    },
+    {
+      "path": "source.json",
+      "bytes": 3723,
+      "sha256": "f67ffcb6271e8cca336312ef3556eb23dce191e4a117863c670292016013aa93"
+    },
+    {
+      "path": "superseded-run-after-cancel.json",
+      "bytes": 14259,
+      "sha256": "9a59a522c6c5abde9d0521924b3ca042461422e02892509f37f171bed62b00e8"
+    },
+    {
+      "path": "superseded-run-before-cancel.json",
+      "bytes": 13614,
+      "sha256": "d7540b449cebb187946d37418db08aca05ccab515b84025fc67442b1fe54e07b"
+    },
+    {
+      "path": "ui-review.json",
+      "bytes": 6153,
+      "sha256": "e694ee12f19992fd80d92625944f0ae6e914b7c75b7fa96d8c60d61c655b09c7"
+    },
+    {
+      "path": "ui-tests.tap",
+      "bytes": 14557,
+      "sha256": "4d8ebd10270f9aefb00df36b29b1157bf11bc236c3a82e88196e5cca3b3b70b3"
+    }
+  ]
+}

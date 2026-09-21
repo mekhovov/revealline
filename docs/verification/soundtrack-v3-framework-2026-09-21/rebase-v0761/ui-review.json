@@ -1,0 +1,152 @@
+{
+  "format": "revealline-soundtrack-rebase-ui-source-review.v1",
+  "source": "2b23545a5ae51a25f59bee0a1f036e8b9fed5918",
+  "acceptedMain": "d70f3a586f3692a9bef58a87d8181714b62798f5",
+  "priorSource": "2744416d8e74464cc03202a9ebc324991f3f5557",
+  "findings": [],
+  "result": "No concrete source-level blocker identified in this bounded rebase review.",
+  "checks": [
+    "Removing exactly the two Now Playing mounts yields accepted-main Team HTML byte-for-byte (excluding final newline). The menu mount is within menu-copy after coop-lobby-tools, outside the guidance disclosure; the gameplay mount remains in board-footer.",
+    "Team module equals accepted main plus only getScene callback. Existing tool/mode reparenting moves their own nodes, not the menu credit. Team navigation accepts visible anchors; resize checks preserve focus/attempt/dialog ownership and include source links.",
+    "Team CSS equals previous soundtrack CSS plus the exact accepted-main appended compact-lobby rules. Credits retain wrapping, ellipsis, explicit hidden state and 44px source target. Global hidden !important prevents the new lobby display rule exposing a hidden menu.",
+    "Solo app equals previous soundtrack app plus exactly the accepted-main settings-dialog close in focusMission. Music context, guide/settings ownership and trusted-gesture logic are otherwise unchanged.",
+    "Device-controls CSS is exactly accepted main. Its new 521–680px short-landscape telemetry rule excludes running state, scopes the viewport-width centering to telemetry, and does not select Now Playing. Existing running music reserve and nonrunning music grid area remain unchanged.",
+    "All 14 recipe input entries (13 unique files) in historical UI/screens/audio groups retain identical Git blob IDs."
+  ],
+  "recipes": {
+    "ui": [
+      {
+        "path": "game/ui/field-kit-components.css",
+        "blob": "c03b9825b58e2510049d4a7bfa07674c41e4366e",
+        "unchanged": true
+      },
+      {
+        "path": "game/ui/field-kit-compiled.css",
+        "blob": "eaf445aae144cfa56ea8b313f4896ea42988ebda",
+        "unchanged": true
+      },
+      {
+        "path": "game/presentation/host.mjs",
+        "blob": "4b0b6e43673af679e22b7edbacd8753e8f7548f3",
+        "unchanged": true
+      },
+      {
+        "path": "game/ui/operation-status.css",
+        "blob": "0fb541e1e5e2211fde429784eeffa1c91df57d1b",
+        "unchanged": true
+      },
+      {
+        "path": "game/ui/operation-status.mjs",
+        "blob": "f1aed1bda7ae9c32cfaaaa2869774fb2c1bde757",
+        "unchanged": true
+      },
+      {
+        "path": "game/presentation/dom-ownership.mjs",
+        "blob": "e2167c4ca23151d806ef743036c146cfde42633c",
+        "unchanged": true
+      }
+    ],
+    "screens": [
+      {
+        "path": "game/ui/field-kit-flow.css",
+        "blob": "52545071191639f65c7d0e740f9c2065af8e8f76",
+        "unchanged": true
+      },
+      {
+        "path": "game/ui/field-kit-surfaces.css",
+        "blob": "fce9cf31e800d3cf62a6d614b27e156de10a61cb",
+        "unchanged": true
+      },
+      {
+        "path": "game/ui/field-kit-compiled.css",
+        "blob": "eaf445aae144cfa56ea8b313f4896ea42988ebda",
+        "unchanged": true
+      },
+      {
+        "path": "site/release-catalog.css",
+        "blob": "8ef4e7e91d3f1ebbea0f86c67214ea053b2799b2",
+        "unchanged": true
+      }
+    ],
+    "audio": [
+      {
+        "path": "game/ui/audio.mjs",
+        "blob": "f628b370371d6752ce0b13cfeecf151658d49201",
+        "unchanged": true
+      },
+      {
+        "path": "game/ui/published-audio.mjs",
+        "blob": "64e15e67bfa3bca4dce33da59848566fb2e05b22",
+        "unchanged": true
+      },
+      {
+        "path": "game/ui/soundtrack-player.mjs",
+        "blob": "a929ab8e0430e7cb236cff08b6115330973e4e24",
+        "unchanged": true
+      },
+      {
+        "path": "game/ui/audio-master.mjs",
+        "blob": "184b754536c35e850b690d88b3aea3496e018011",
+        "unchanged": true
+      }
+    ]
+  },
+  "pins": [
+    {
+      "path": "game/app.mjs",
+      "blob": "affa130d8848d5db88a4b35012020840246a6e23"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "blob": "0e32f1e94485cd0b5fd1222410af0877d3688ef4"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "blob": "28bf390a0aa41cde9d9dc72f3f3dc9591269dc73"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "blob": "04c1bdd1b27638285afcac4bb9958e9da9b61f09"
+    },
+    {
+      "path": "game/ui/device-controls.css",
+      "blob": "d59a817fb4bfb60a70520f32da1b77d7e1005c6c"
+    },
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "blob": "891e0de8bf845ff54e7c53b522111ef2d584ed12"
+    },
+    {
+      "path": "game/test/coop-lobby-preview.test.mjs",
+      "blob": "745410f79e9f96ef2a64ec06b20e2acc08a0550b"
+    },
+    {
+      "path": "game/test/coop-lobby-resize.test.mjs",
+      "blob": "7e9aaf93c2b3775275e824f24e7245e92c9433c1"
+    },
+    {
+      "path": "game/test/coop-lobby-focus.test.mjs",
+      "blob": "25ca1153f332224b9e8aeff42deb7f33754bb6e3"
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "blob": "37de9d5b35ce005f1134b3157b3a3ce82ad051c4"
+    }
+  ],
+  "tests": {
+    "command": "node --test --test-concurrency=2 game/test/coop-lobby-preview.test.mjs game/test/coop-lobby-resize.test.mjs game/test/coop-lobby-focus.test.mjs game/test/couch-audio-master.test.mjs",
+    "pass": 62,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "log": "/tmp/soundtrack-rebase-2b23545a-ui-tests.tap",
+    "logBytes": 14557,
+    "logSha256": "4d8ebd10270f9aefb00df36b29b1157bf11bc236c3a82e88196e5cca3b3b70b3"
+  },
+  "limitations": [
+    "Source/finite-DOM review only; no native browser, layout measurement, audio audition, physical input, offline or public deployment was performed.",
+    "Native compact Team lobby with audible credits, open/closed guidance, standard/Large text and resize remains the exact integration follow-up; prior native receipts do not certify this rebased DOM.",
+    "No tracked files, dependencies, ledger, media, build artifacts or sparse checkout exclusions were changed."
+  ],
+  "availableDiskBytes": 829263872
+}
