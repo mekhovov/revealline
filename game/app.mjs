@@ -3732,7 +3732,26 @@ try {
     classRegistry = selected.classRecipes;
     progress = progressFor(library, campaign);
   }
+  function failureDifficultyAvailable() {
+    return (
+      run?.status === 'lost' &&
+      $('game-overlay').dataset.kind === 'lost' &&
+      !practice &&
+      !scenario &&
+      !courseSession &&
+      !courseBlocked() &&
+      !candidateHost?.owns(activeEntry) &&
+      !!activeEntry.baseCampaign &&
+      ['standard', 'gentle'].includes(activeEntry.difficulty) &&
+      !(journeyEnabled && journeyMission())
+    );
+  }
   function refreshDifficulty() {
+    const lossAvailable = failureDifficultyAvailable();
+    show('loss-difficulty-field', lossAvailable);
+    $('loss-difficulty-select').value = library.preferences.campaignDifficulty;
+    $('loss-difficulty-select').disabled =
+      !lossAvailable || contentSwitchBusy || backupBusy || sessionBusy || !!courseEntry;
     if (candidateHost?.owns(activeEntry)) {
       const next = journeyPreferences.snapshot();
       $('difficulty-select').replaceChildren(
@@ -5270,12 +5289,37 @@ try {
       return;
     }
     const mode = resolveCampaignDifficulty($('difficulty-select').value);
-    clearInput();
-    preferences({ campaignDifficulty: mode });
+    saveNextLegacyDifficulty(mode);
     // Saving may merge a newer preference from another writer; use the actual
     // adopted library. A setting-only change never touches the suspended slot.
     if (!started && !sessionBusy) prepare();
     else refreshDifficulty();
+  };
+  function saveNextLegacyDifficulty(mode) {
+    clearInput();
+    return preferences({ campaignDifficulty: mode });
+  }
+  let lossDifficultyEpoch = 0;
+  $('loss-difficulty-select').onchange = () => {
+    if (!failureDifficultyAvailable() || $('loss-difficulty-select').disabled) return;
+    const mode = resolveCampaignDifficulty($('loss-difficulty-select').value),
+      failedRun = run,
+      entry = activeEntry,
+      pictures = flightPictures,
+      epoch = ++lossDifficultyEpoch;
+    cancelResultAttempt();
+    // Cancelling a pending Retry can synchronously hand ownership elsewhere.
+    if (
+      lossDifficultyEpoch !== epoch ||
+      run !== failedRun ||
+      activeEntry !== entry ||
+      flightPictures !== pictures ||
+      !failureDifficultyAvailable()
+    )
+      return;
+    saveNextLegacyDifficulty(mode);
+    // This control changes intent only. Retry owns the prepared replacement.
+    refreshDifficulty();
   };
   $('save-attempt-button').onclick = () => {
     pause(true);
