@@ -1,0 +1,42 @@
+{
+  "base": "9c2920b91d533fa5693d2fed8930840cef85eeff",
+  "node": "v20.19.5",
+  "inputs": [
+    {
+      "path": "game/soundtrack.mjs",
+      "bytes": 38693,
+      "sha256": "0cfb15e62f0cf65b182bd77164f5cca8be239deebbde08b8c21cd412f179ba3f"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 36260,
+      "sha256": "64b1bc7663ecc0a80eb73e68cb39e9760ba78631a673cc236da3ed7627c761ce"
+    },
+    {
+      "path": "game/test/soundtrack.test.mjs",
+      "bytes": 12735,
+      "sha256": "2afde5c2de68ececd70bffe375d7740e6099139c7817834f239635f88bc7feb7"
+    },
+    {
+      "path": "game/test/soundtrack-player.test.mjs",
+      "bytes": 44361,
+      "sha256": "89269d07c26245309f8f1d7721f76cb660a9506a18422e2279fb300a082927b1"
+    }
+  ],
+  "exitCode": 0,
+  "counts": {
+    "tests": 453,
+    "pass": 453,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "inputsUnchangedAfterTests": true,
+  "command": "node --test game/test/soundtrack*.test.mjs game/test/couch-music*.test.mjs game/test/couch-menu-music.test.mjs game/test/couch-audio-master.test.mjs game/test/couch-static-picture-host.test.mjs",
+  "log": {
+    "path": ".cache/v080-qualification/repair-9c2920b9/optimized-audio-hosts-final.log",
+    "bytes": 107252,
+    "sha256": "8db467cbadeb2e56984b5d65ce3ee80a87467f44047a83ac530d02b247f52be4"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "format": "revealline-soundtrack-selection-optimization-final.v1",
+  "status": "focused-tests-pass",
+  "authorship": "Player optimization and regressions implemented by soundtrack_references; parent owns the immutable model fast path; audio_architecture independently identified constructor refusal cleanup and is reviewing final bytes.",
+  "priorEvidence": {
+    "path": ".cache/v080-qualification/preliminary-14a965f2/failures/menu-startup-profile/optimized/review.json",
+    "bytes": 6215,
+    "sha256": "413ff0449720999713f03a3e7fc8ae9bcc807fe4218eb026a4478a36009ca73f"
+  },
+  "ownedFiles": [
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 36260,
+      "sha256": "64b1bc7663ecc0a80eb73e68cb39e9760ba78631a673cc236da3ed7627c761ce"
+    },
+    {
+      "path": "game/test/soundtrack-player.test.mjs",
+      "bytes": 44361,
+      "sha256": "89269d07c26245309f8f1d7721f76cb660a9506a18422e2279fb300a082927b1"
+    }
+  ],
+  "modelInput": {
+    "path": "game/soundtrack.mjs",
+    "bytes": 38693,
+    "sha256": "0cfb15e62f0cf65b182bd77164f5cca8be239deebbde08b8c21cd412f179ba3f"
+  },
+  "menuTestUnchanged": {
+    "path": "game/test/couch-menu-music.test.mjs",
+    "bytes": 7341,
+    "sha256": "793040d3c45748d682883859e2f593a5a4d4908f29202eb155f43abf9a024049"
+  },
+  "constructorCorrection": {
+    "finding": "Eager catalogue validation after master binding leaked ownership on invalid input.",
+    "fix": "Validate cache eligibility before deck/master resource setup.",
+    "regression": "Invalid raw catalogue leaves zero master subscriptions and unchanged media volume; a valid player can reuse the same media and fully release both subscriptions.",
+    "redCommand": "node --test --test-name-pattern='invalid catalogue construction' game/test/soundtrack-player.test.mjs",
+    "redTests": {
+      "fail": 1,
+      "filtered": 50
+    },
+    "redLog": {
+      "path": "/tmp/soundtrack-selection-construction-before.log",
+      "bytes": 14734,
+      "sha256": "560b49e7650fa3a79ad18479414eae7a12bf5c9fa2b26f2273e35089b6151579"
+    }
+  },
+  "finalQualification": {
+    "command": "node --test game/test/soundtrack-player.test.mjs game/test/couch-menu-music.test.mjs",
+    "tests": 58,
+    "pass": 58,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 396.237291,
+    "log": {
+      "path": "/tmp/soundtrack-selection-cache-final-v2.log",
+      "bytes": 13587,
+      "sha256": "baf95fb41bb2c8b81c1daa4b6c65a238b28eb0e31dd815c2b86d2b4d9e337acf"
+    },
+    "lint": {
+      "path": "/tmp/soundtrack-selection-cache-lint-v2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "format": {
+      "path": "/tmp/soundtrack-selection-cache-format-v2.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    "diffCheck": "pass"
+  },
+  "benchmarkScope": "Prior retained bounded benchmark and profile used the same valid-host selection logic, before only relocating constructor validation. Their exact earlier source hashes remain in the prior receipts; not silently relabelled as measurements of these final bytes. The complete final player/menu cohort reran after relocation.",
+  "limitations": [
+    "No timeout increases or behavior assertion removal.",
+    "No new native browser, audible listening, physical-device or hosted-shard qualification.",
+    "No ledger/version/catalogue/source media changes by this task.",
+    "Performance values are bounded local diagnostics, not hardware-independent guarantees."
+  ]
+}

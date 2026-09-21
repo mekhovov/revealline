@@ -208,7 +208,11 @@ export function emptySoundtrackLibrary({ catalogue = false, version = 3 } = {}) 
     selection: { playlistId: null },
   });
 }
+const resolvedLibraries = new WeakSet();
 export function resolveSoundtrackLibrary(value) {
+  // Only this resolver's owned, deeply frozen output can bypass validation.
+  // Imported, edited and merely frozen objects must still pass every check.
+  if (resolvedLibraries.has(value)) return value;
   const library = copy(value);
   const modern = library.format === SOUNDTRACK_FORMAT_V3;
   const catalogue = modern || library.format === SOUNDTRACK_FORMAT_V2;
@@ -399,7 +403,9 @@ export function resolveSoundtrackLibrary(value) {
     library.selection.playlistId === null || playlistIds.has(library.selection.playlistId),
     'Selected playlist is unavailable.',
   );
-  return freezeSoundtrack(library);
+  freezeSoundtrack(library);
+  resolvedLibraries.add(library);
+  return library;
 }
 export function resolveSoundtrackSelection(value, context = {}, { catalogue } = {}) {
   const trusted = catalogue === undefined ? undefined : resolveSoundtrackCatalogue(catalogue);
