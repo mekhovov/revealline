@@ -1,0 +1,83 @@
+{
+  "base": "1a941f05919d7293164751e2ea7918f63dc03363",
+  "acceptedMainTreeEquivalentTo": "e9434d03",
+  "sourceOnly": true,
+  "patches": [
+    {
+      "commit": "33091473",
+      "sha256": "7b46aa16a1cfc3bca0acd94778dfe52000d82b469bb16ce5d544f419ce6a065d",
+      "paths": [
+        "game/test/touchscreen-controller-host.test.mjs"
+      ]
+    },
+    {
+      "commit": "9ec6d7cb",
+      "sha256": "43f7406351c59c61625ab10ef52296a0b4381b863b2ecf76a16109a9b79e856a",
+      "paths": [
+        "game/couch/couch-input.mjs",
+        "game/test/couch-shared-touch.test.mjs",
+        "game/test/touchscreen-controller-host.test.mjs",
+        "game/ui/input.mjs"
+      ]
+    },
+    {
+      "commit": "433171fe",
+      "sha256": "231b31e65d0fddd8d8a247b1ac1ae188559d097422e05cbff0e0e729b030c2e8",
+      "paths": [
+        "game/test/fullscreen.test.mjs",
+        "game/ui/fullscreen.mjs"
+      ]
+    },
+    {
+      "commit": "96a8512b",
+      "sha256": "4659cbaccf11976e5809856f7cc1ced78af9c31a16845bbd16dcab52a4973d3e",
+      "paths": [
+        "game/couch/couch-input.mjs",
+        "game/test/couch-shared-touch.test.mjs",
+        "game/test/touchscreen-controller-host.test.mjs",
+        "game/ui/input.mjs",
+        "game/ui/touch-steering.mjs"
+      ]
+    }
+  ],
+  "postimages": {
+    "game/couch/couch-input.mjs": {
+      "bytes": 18942,
+      "sha256": "cfbc198523b46436a6bd616222518f234986e375b65722f8eca3279e4e3b6375"
+    },
+    "game/test/couch-shared-touch.test.mjs": {
+      "bytes": 7030,
+      "sha256": "33f7df09f1b255260f452fc1d697d0ad90723d2cfcccdd8f5c85bf5d451778fc"
+    },
+    "game/test/fullscreen.test.mjs": {
+      "bytes": 6874,
+      "sha256": "3574a14ec059f0b02b7a6eab068ca6ddee5ea1da6a7f644d42de6cdc3962624b"
+    },
+    "game/test/touchscreen-controller-host.test.mjs": {
+      "bytes": 19304,
+      "sha256": "010821228fb0c39d3f24da7f8cce595516932a698ca2bc30047aad4c0cb73fe4"
+    },
+    "game/ui/fullscreen.mjs": {
+      "bytes": 2603,
+      "sha256": "7125d4550071beff4ff305b6cc7f76e0179e814a03a3e69d963e1833af364867"
+    },
+    "game/ui/handheld-play.css": {
+      "bytes": 59078,
+      "sha256": "f70e0df926015bac1c9f3cc85caf9b31aed215c0210a66600c92b04ca66322f2"
+    },
+    "game/ui/input.mjs": {
+      "bytes": 18284,
+      "sha256": "93071b464fad1df0d2c5c604ba83d9bdaac87870b6d1c03acd12cac9f58c8254"
+    },
+    "game/ui/touch-steering.mjs": {
+      "bytes": 4109,
+      "sha256": "4a129cd0bf2cf09746b69190c07755481b5d1b4b338c28bab20792a80d8a23d9"
+    }
+  },
+  "integrationCorrections": [
+    {
+      "path": "game/test/touchscreen-controller-host.test.mjs",
+      "reason": "33091473 assumed the existing authoritativeCheckpoint import from its ancestry. Import explicitly on the accepted-music-derived base. Runtime unchanged."
+    }
+  ]
+}

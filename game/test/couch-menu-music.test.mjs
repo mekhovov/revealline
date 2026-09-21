@@ -50,6 +50,10 @@ async function setup(t, { prefix = 'coop', muted = false, volume = 0.65, ready =
     Object.setPrototypeOf(media, Object.getPrototypeOf(element));
     return media;
   };
+  const pause = doc.createElement('button');
+  pause.id = `${prefix}-pause`;
+  pause.textContent = 'Pause';
+  doc.body.append(pause);
   const host = attachCouchMusicHost({
     document: doc,
     root: doc.body,
@@ -157,3 +161,27 @@ test('gesture during library loading schedules no late autoplay; disposal remove
   f.gesture();
   assert.equal(f.audio.media.plays, 0);
 });
+
+for (const prefix of ['race', 'coop'])
+  test(`${prefix}: compact caption and Audio credits follow actual playback without changing transport intent`, async (t) => {
+    const f = await setup(t, { prefix });
+    const pause = f.doc.getElementById(`${prefix}-pause`),
+      details = f.doc.getElementById(`${prefix}-music-details`);
+    pause.focus();
+    f.gesture('keydown', { key: 'Enter' });
+    await settleUntil(() => f.host.player.snapshot().playing);
+    assert.equal(pause.getAttribute('data-track-caption'), `♪ ${recording.track.title}`);
+    assert.match(details.textContent, /RevealLine tests/);
+    assert.match(details.textContent, /File:/);
+    const plays = f.audio.media.plays,
+      state = f.host.session.snapshot().transportChoice;
+    f.master.setMuted(true);
+    assert.equal(pause.getAttribute('data-track-caption'), `Muted: ${recording.track.title}`);
+    assert.equal(f.host.session.snapshot().transportChoice, state);
+    assert.equal(f.audio.media.plays, plays);
+    assert.equal(f.doc.activeElement, pause);
+    f.master.setMuted(false);
+    await f.doc.getElementById(`${prefix}-music-pause`).onclick();
+    assert.equal(pause.getAttribute('data-track-caption'), `Paused: ${recording.track.title}`);
+    assert.equal(f.doc.activeElement, pause);
+  });

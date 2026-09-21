@@ -1,3 +1,4 @@
+import { attachMusicCredit } from './ui/music-credit.mjs';
 import { createTouchPreferences } from './touch-preferences.mjs';
 import { createCharacterPresentations } from './character-presentations.mjs';
 import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs';
@@ -40,6 +41,7 @@ import {
   nextInputModality,
   showScreenControls,
   hasCompactArcadeArena,
+  hasFieldWarningBand,
 } from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
@@ -846,11 +848,18 @@ try {
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
   // The shared authority owns master attenuation; local music and effects keep their faders.
   sound.configure({ master: 1 });
+  const compactCredit = attachMusicCredit({
+    document,
+    root: $('settings-panel-audio'),
+    pauseButton: $('pause-button'),
+    prefix: 'solo',
+  });
   let musicPreviewState = null,
     musicPreviewRequest = 0;
   function renderMusicPreview() {
     if (!musicPreviewState) return;
     const track = musicPreviewState.track;
+    compactCredit.render(musicPreviewState, audioMaster.snapshot());
     const audible =
       musicPreviewState.playing &&
       !audioMaster.snapshot().muted &&
@@ -1935,6 +1944,9 @@ try {
   function refreshInputPresentation() {
     const chrome = hasCompactArcadeArena(run?.level) ? 'compact' : 'full';
     if (document.body.dataset.arenaChrome !== chrome) document.body.dataset.arenaChrome = chrome;
+    const captions = hasFieldWarningBand(run?.level) ? 'warnings' : 'notices';
+    if (document.body.dataset.fieldCaptions !== captions)
+      document.body.dataset.fieldCaptions = captions;
     const visible = showScreenControls({
       preference: library.preferences.screenControls,
       modality: document.body.dataset.inputMode,
@@ -2137,6 +2149,7 @@ try {
       soundtrackPanel?.dispose();
       stopMasterView();
       stopDisplayView();
+      compactCredit.dispose();
       audioRestoration.dispose();
       displayRestoration.dispose();
       displayPreferences.dispose();

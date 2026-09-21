@@ -1,0 +1,41 @@
+{
+  "arena": {
+    "h": 209.1953125,
+    "w": 278.9296875,
+    "x": 144.53515625,
+    "y": 55.99609375
+  },
+  "consoleScope": "separate final browser read",
+  "notice": {
+    "bottom": 316,
+    "clientHeight": 47,
+    "h": 46.796875,
+    "maxHeight": "none",
+    "overflow": "visible",
+    "pointerEvents": "auto",
+    "scrollHeight": 47,
+    "text": "Your first route: fly down from the marked start to the opposite border.",
+    "y": 269.203125
+  },
+  "state": {
+    "arenaChrome": "full",
+    "effects": "full",
+    "fieldCaptions": "notices",
+    "flightState": "running",
+    "inputMode": "keyboard",
+    "menuOrnaments": "subtle",
+    "menuPalette": "ukrainian",
+    "pictureState": "ready",
+    "screenControls": "shown",
+    "screenSteeringHand": "right",
+    "textFace": "plain",
+    "textSize": "large",
+    "touchMode": "dpad",
+    "touchSide": "right",
+    "touchSize": "large"
+  },
+  "viewport": {
+    "h": 320,
+    "w": 568
+  }
+}
