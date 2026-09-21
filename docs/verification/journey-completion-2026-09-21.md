@@ -32,6 +32,10 @@ separate gates. Older phase notes are provenance, not current release claims.
   312 no-loss clear/replay/equal-race cases,303 without collecting pickups;27
   missions cover all six configurations.186 cases remain unresolved, with concrete
   capstone/window/cleanup review priorities. [Per-mission results](journey-pressure-route-assessment.md).
+- Two Sentinel receiver-layout successors now reproduce all12 preset/steering
+  no-loss clears/replays/equal races while defeating the recorded old shortcuts.
+  Shared encounter timings/rules remain unchanged; optimized21–38second Twin
+  routes remain a human pacing concern. [Successor evidence](journey-sentinel-spatial.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
@@ -59,9 +63,9 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | P08 — Livewire | Seven candidates/art; telegraphed lanes; Remix; route checks | Difficulty-sensitive rest cadence, human warning overlap/ordering, public integration |
 | P09 — Relay | Seven candidates/art; permanent connectors; Studio links; Remix; route checks | Pressure/replay checks, human shortcut usefulness, public integration |
 | P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; route checks | Human precision/readability, pressure retest, public integration |
-| P11 — Sentinel | Four core + Remix/art; multi-relay encounter; replay/restoration | Short optimized clears remain pacing risks; human boss balance, public integration |
+| P11 — Sentinel | Four core + Remix/art; multi-relay encounter; replay/restoration; two explicit receiver-layout successors with12 clear/replay/race cases | Optimized21–38second Twin clears remain pacing risks; successor native/art/host adoption, human boss balance, public integration |
 | P12 — Apex | Four core + Remix/art; capstone combinations; replay/race checks | Short optimized finales need rework; human mastery, public integration |
-| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22 | All-map pressure/cleanup audit, human cuts, final reference dispositions, integrated Pages |
+| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22;498-case pressure audit | Resolve186 pressure-route cases and flagged cleanup tails; human cuts, final reference dispositions, integrated Pages |
 | P14 —12 Team missions | Three four-mission arcs; original art; joint cuts/seat swaps; Team flow/Skip/chooser/presets | Live two-player balance/controllers; material successor host adoption; new mechanic qualification; Pages |
 | P15 — final validation/Legacy/rollback | Immutable evidence records; compiler/CLI/Studio inspection; persistence/compatibility groundwork | Human sessions; full device/accessibility/performance; Legacy transition; public rollback proof; deployment |
 

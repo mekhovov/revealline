@@ -1,5 +1,9 @@
 # Sentinel spatial successor — shortcut repair
 
+Independent specification review: Approved2026-09-21; no implementation-blocking
+gaps. The review confirmed sole-anchor/isolation compatibility, edition boundaries,
+shortcut controls and separate acceptance for each map.
+
 Scope: explicit copy-on-write geometry/placement successors for Twin Receivers
 and Relay Perimeter. No changes to the engine, capture contract, boss recipe,
 control policy, warning lengths, release window, lives, earned-coverage target,
