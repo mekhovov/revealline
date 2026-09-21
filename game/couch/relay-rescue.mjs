@@ -32,7 +32,12 @@ import {
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 import { createCoopPresentationImport } from './coop-import-source.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
-import { coopFailureFeedback, coopRetryFeedback, coopRoamerCaption } from './coop-feedback.mjs';
+import {
+  coopFailureFeedback,
+  coopRetryFeedback,
+  coopRoamerCaption,
+  coopFoundationReturnCaption,
+} from './coop-feedback.mjs';
 import { coopArenaGuidance } from './coop-briefing.mjs';
 import {
   coopBonusView,
@@ -255,6 +260,7 @@ export function bootCoop({
     nextOperation = null,
     startPermitted = true;
   let automaticRetry = null;
+  let foundationMessage = null;
   let journeySkip = null;
   const journeyReactions = attachJourneyReactions({ prefix: 'coop-' });
   let candidatePresetIntent = 0;
@@ -933,7 +939,17 @@ export function bootCoop({
   earnedDialog.addEventListener('close', earnedClosed);
   earnedDialog.addEventListener('cancel', earnedCancelled);
   earnedDialog.addEventListener('keydown', settingsKeydown);
-  function message(text) {
+  function message(text, { foundationPlayers = [] } = {}) {
+    foundationMessage = foundationPlayers.length
+      ? {
+          run,
+          positions: foundationPlayers.map((id) => ({
+            id,
+            x: run.players[id].x,
+            y: run.players[id].y,
+          })),
+        }
+      : null;
     if ($('coop-message').textContent !== text) $('coop-message').textContent = text;
   }
   function overlay({ focus = true } = {}) {
@@ -2860,17 +2876,36 @@ export function bootCoop({
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
+    // Only this owned instructional cue expires on movement. A later threat,
+    // bonus, rescue or menu message revokes ownership in message() above.
+    if (
+      foundationMessage?.run === run &&
+      foundationMessage.positions.some(
+        ({ id, x, y }) => run.players[id].x !== x || run.players[id].y !== y,
+      )
+    )
+      message('Choose your next route. Close cuts on reclaimed ground.');
     const captureTeaching = candidateCaptureTeaching?.(
       acceptedPicture?.journeyRow,
       run,
       run.events,
     );
+    const foundationCaption = coopFoundationReturnCaption(run);
+    const foundationPlayers = run.events
+      .filter((event) => coopFoundationReturnCaption(run, [event]))
+      .map((event) => event.player);
+    const captureCaption = [
+      captureTeaching,
+      foundationCaption,
+      ...run.events
+        .filter((event) => event.type === 'cells.claimed')
+        .map((event) => terrainTransitionCaption(run, event)),
+    ]
+      .filter(Boolean)
+      .join(' ');
     for (const event of run.events) {
-      if (event.type === 'cells.claimed' && captureTeaching) message(captureTeaching);
-      if (event.type === 'cells.claimed' && run.terrain) {
-        const caption = terrainTransitionCaption(run, event);
-        if (caption) message(caption);
-      }
+      if (event.type === 'cells.claimed' && captureCaption)
+        message(captureCaption, { foundationPlayers });
       if (event.type === 'cut.closed') {
         input.clearPlayer(event.player);
         batch.release(event.player);

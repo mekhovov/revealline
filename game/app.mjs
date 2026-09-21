@@ -53,6 +53,7 @@ import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui
 import { encounterView } from './ui/encounter-view.mjs';
 import { foundationCompatibleView as classicView } from './ui/foundation-view.mjs';
 import { terrainTransitionCaption } from './ui/terrain-feedback.mjs';
+import { foundationReturnCaption } from './ui/foundation-feedback.mjs';
 import { laneWarningCaption } from './ui/lane-presentation.mjs';
 import { attachFlightInformation } from './ui/flight-information-host.mjs';
 import { attachFlightDetails } from './ui/flight-information-details.mjs';
@@ -6866,6 +6867,7 @@ try {
     };
     const openedGates = events.filter((event) => event.type === 'relay.opened').length;
     const captureTerrain = [
+      foundationReturnCaption(run, events),
       ...events
         .filter((event) => event.type === 'cells.claimed')
         .map((event) => terrainTransitionCaption(run, event)),
