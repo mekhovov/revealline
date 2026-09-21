@@ -73,6 +73,12 @@ delays: **all six lose a life**. Their exact negative outcomes remain fixtures;
 players can choose different routes, so this does not establish impossibility.
 Broader adapted-start qualification is still needed.
 
+The [adapted-start follow-up](journey-apex-adapted-routes.md) now adds six seed-2
+clear/replay/race samples, one per preset/control, with no waiting beyond their
+declared initial delays. The six failed original recordings remain unchanged.
+This proves alternatives exist at those sampled starts, not general robustness
+or repaired finale pacing.
+
 ## Studio and native evidence
 
 Studio offers `Inspect Home Signal field-finale study · balance pending`.

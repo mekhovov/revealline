@@ -6,6 +6,10 @@ tests ordinary capture instead of a Sentinel encounter, preserving old editions.
 Eight replay/race clears include all presets/controls and two far-wing mastery
 cases; short routes, quota tails and adapted starts remain unresolved. This is an
 explicit Studio study, not automatic enrollment or final balance acceptance.
+An [adapted-start follow-up](verification/journey-apex-adapted-routes.md) adds six
+further preset/control samples without added waiting and makes Studio's applied
+enemy-speed factors visible in its difficulty selector. Historical failed routes,
+remaining balance concerns and human/release gates stay explicit.
 The user's difficulty/bonus/Ukrainian-and-FPV/enemy-variety extension is specified in
 [the pressure and variety successor](superpowers/specs/2026-09-21-journey-pressure-and-variety.md).
 
