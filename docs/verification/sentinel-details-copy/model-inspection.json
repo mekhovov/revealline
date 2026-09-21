@@ -1,0 +1,37 @@
+{
+  "node": "v20.19.5",
+  "rows": [
+    {
+      "label": "single",
+      "encounterVersion": "xonix-encounter.v1",
+      "shields": null,
+      "encounter": [
+        "Capture the shield relay. Return every line to safe ground.",
+        "Capture every shield relay · 2.0s remaining.",
+        "Current cut: 0 / 8 required cells. 1564 unrevealed cells remain on the board."
+      ],
+      "simulationUnchanged": true
+    },
+    {
+      "label": "multiple",
+      "encounterVersion": "xonix-encounter.v2",
+      "shields": {
+        "total": 2,
+        "captured": 0,
+        "remainingIds": [
+          "west",
+          "east"
+        ]
+      },
+      "threats": [
+        "Signal sentinel: capture every shield relay to open the shield."
+      ],
+      "encounter": [
+        "Shield relays 0 / 2. Capture every remaining relay. Return every line to reclaimed ground.",
+        "Capture every shield relay · 2.0s remaining.",
+        "Current cut: 0 / 8 required cells. 2355 unrevealed cells remain on the board."
+      ],
+      "simulationUnchanged": true
+    }
+  ]
+}

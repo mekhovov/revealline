@@ -40,7 +40,7 @@ const enemyState = (enemy) => {
       'border-patrol': 'patrols the outside border',
       'lane-boss':
         'stationary field anchor; watch the locked lane and secure any unfinished trail before it fires. Reclaimed ground shelters your craft from the lane, but enclosure does not disable this emitter',
-      'relay-sentinel': 'capture its relay to open the shield',
+      'relay-sentinel': 'capture every shield relay to open the shield',
       eroder: 'can reopen captured ground',
     }[enemy.type] ||
     'Watch its movement in the field'
@@ -162,7 +162,7 @@ export function flightDetailsModel(information, context) {
     const e = s.encounter,
       lines = [
         e.instruction,
-        `${{ shielded: 'Capture the shield relay', transition: 'Shield opening', exposed: 'Release the core' }[e.stage] || 'Encounter in progress'} · ${seconds(e.seconds)}.`,
+        `${{ shielded: 'Capture every shield relay', transition: 'Shield opening', exposed: 'Release the core' }[e.stage] || 'Encounter in progress'} · ${seconds(e.seconds)}.`,
         `Current cut: ${e.cutCells} / ${e.min} required cells. ${e.remaining} unrevealed cells remain on the board.`,
         ...(e.isolated ? ['Core isolated.'] : []),
         ...(e.suppressed ? ['The lane attack is temporarily suppressed.'] : []),
