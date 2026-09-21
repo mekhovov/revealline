@@ -1,0 +1,48 @@
+{
+  "format": "revealline-scoped-native-verification.v1",
+  "observedAt": "2026-09-21T00:22:26.153995+00:00",
+  "source": "6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd",
+  "override": {
+    "path": "game/ui/device-controls.css",
+    "bytes": 33738,
+    "sha256": "c90b860621aa747f7036264b8b5e89191c005a3a0012af6e8f3feb60f963bffa"
+  },
+  "browser": "Codex in-app browser",
+  "viewport": [320, 568],
+  "preferences": "Large/Plain, large left touch pad",
+  "checks": [
+    "Actual Continue restored existing50%11900points2lives flight after explicit action.",
+    "All four direction buttons, all HUD counters, Pause and Game menu visible.",
+    "Pointer Left then Down steering accepted with physical release between inputs.",
+    "Escape paused at0:18 and focused Resume; no accidental resume observed."
+  ],
+  "geometry": {
+    "documentWidth": 320,
+    "arenaSlot": {
+      "x": 12,
+      "y": 195.1875,
+      "width": 296,
+      "height": 94.015625
+    },
+    "canvas": {
+      "x": 65.984375,
+      "y": 195.1875,
+      "width": 188.03125,
+      "height": 94.015625
+    },
+    "aspect": 2
+  },
+  "warningsAndErrors": [],
+  "screenshot": "Inspected inline; no screenshot artifact claimed.",
+  "cleanup": {
+    "tab133": "closed",
+    "viewport": "reset",
+    "server18814": "stopped with exit130"
+  },
+  "limits": [
+    "Local source override, not integrated/frozen/public release.",
+    "The50% capture was earned during earlier portrait check; this check establishes final CSS continued-flight/pause behavior, not a fresh win.",
+    "No physical phone/controller acceptance.",
+    "FirstFlight warnings/Tactical and remaining breakpoint/font/control-size matrix still pending."
+  ]
+}
