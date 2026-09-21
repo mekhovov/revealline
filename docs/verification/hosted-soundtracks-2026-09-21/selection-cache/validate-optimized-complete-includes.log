@@ -1,0 +1,20 @@
+{
+  "version": "0.80.0",
+  "files": 830,
+  "literalReferencesValid": true,
+  "navigationWarnings": [
+    "game/index.html → ../diagnostics/",
+    "site/about.html → ../releases/",
+    "site/about.html → ../privacy.html",
+    "site/about.html → ../credits.html"
+  ],
+  "campaign": "first-signal",
+  "levels": 12,
+  "themes": 4,
+  "classes": 7,
+  "packs": 12,
+  "packLevels": 35,
+  "packGoals": 6,
+  "coopPacks": 1,
+  "coopLevels": 2
+}
