@@ -1,0 +1,191 @@
+TAP version 13
+# (node:63573) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: full Solo: removing row-b returns to row-c after actual rows are rebuilt
+ok 1 - full Solo: removing row-b returns to row-c after actual rows are rebuilt
+  ---
+  duration_ms: 4298.319375
+  type: 'test'
+  ...
+# Subtest: full Solo: removing row-b returns to row-a after actual rows are rebuilt
+ok 2 - full Solo: removing row-b returns to row-a after actual rows are rebuilt
+  ---
+  duration_ms: 562.042833
+  type: 'test'
+  ...
+# Subtest: full Solo: removing row-b returns to Expansion packs after actual rows are rebuilt
+ok 3 - full Solo: removing row-b returns to Expansion packs after actual rows are rebuilt
+  ---
+  duration_ms: 500.459583
+  type: 'test'
+  ...
+# Subtest: full Solo: rejected durable write recreates the same-version Remove and preserves its stored pack
+ok 4 - full Solo: rejected durable write recreates the same-version Remove and preserves its stored pack
+  ---
+  duration_ms: 488.429208
+  type: 'test'
+  ...
+# Subtest: full Solo: pending durable Remove does not take focus after foreign-focus
+ok 5 - full Solo: pending durable Remove does not take focus after foreign-focus
+  ---
+  duration_ms: 550.498417
+  type: 'test'
+  ...
+# Subtest: full Solo: pending durable Remove does not take focus after blur-return
+ok 6 - full Solo: pending durable Remove does not take focus after blur-return
+  ---
+  duration_ms: 536.761333
+  type: 'test'
+  ...
+# Subtest: full Solo: pending durable Remove does not take focus after hidden-return
+ok 7 - full Solo: pending durable Remove does not take focus after hidden-return
+  ---
+  duration_ms: 536.160667
+  type: 'test'
+  ...
+# Subtest: full Solo: pending durable Remove does not take focus after close-reopen
+ok 8 - full Solo: pending durable Remove does not take focus after close-reopen
+  ---
+  duration_ms: 509.003083
+  type: 'test'
+  ...
+# Subtest: full Solo: pending durable Remove does not take focus after new-dialog
+ok 9 - full Solo: pending durable Remove does not take focus after new-dialog
+  ---
+  duration_ms: 495.097333
+  type: 'test'
+  ...
+# Subtest: full Solo: pending durable Remove does not take focus after stop-waiting
+ok 10 - full Solo: pending durable Remove does not take focus after stop-waiting
+  ---
+  duration_ms: 490.712541
+  type: 'test'
+  ...
+# Subtest: Library panel model: same ID newer version uses only a valid captured neighbor or Packs tab
+ok 11 - Library panel model: same ID newer version uses only a valid captured neighbor or Packs tab
+  ---
+  duration_ms: 30.670417
+  type: 'test'
+  ...
+# Subtest: Library panel model: next captured row disappeared uses only a valid captured neighbor or Packs tab
+ok 12 - Library panel model: next captured row disappeared uses only a valid captured neighbor or Packs tab
+  ---
+  duration_ms: 25.611916
+  type: 'test'
+  ...
+# Subtest: Library panel model: next changed version and previous disappeared uses only a valid captured neighbor or Packs tab
+ok 13 - Library panel model: next changed version and previous disappeared uses only a valid captured neighbor or Packs tab
+  ---
+  duration_ms: 26.498
+  type: 'test'
+  ...
+# Subtest: Library panel model: new unrelated row cannot replace captured neighbors uses only a valid captured neighbor or Packs tab
+ok 14 - Library panel model: new unrelated row cannot replace captured neighbors uses only a valid captured neighbor or Packs tab
+  ---
+  duration_ms: 26.126959
+  type: 'test'
+  ...
+# Subtest: Library panel model: a section change while finishing vetoes a recreated row target
+ok 15 - Library panel model: a section change while finishing vetoes a recreated row target
+  ---
+  duration_ms: 30.023625
+  type: 'test'
+  ...
+# Subtest: Library panel model: a changed model followed by rejection resolves from the actual surviving rows
+ok 16 - Library panel model: a changed model followed by rejection resolves from the actual surviving rows
+  ---
+  duration_ms: 21.573542
+  type: 'test'
+  ...
+# Subtest: logical helper: resolved foreign-root cannot bypass final ownership checks
+ok 17 - logical helper: resolved foreign-root cannot bypass final ownership checks
+  ---
+  duration_ms: 27.024833
+  type: 'test'
+  ...
+# Subtest: logical helper: resolved disconnected cannot bypass final ownership checks
+ok 18 - logical helper: resolved disconnected cannot bypass final ownership checks
+  ---
+  duration_ms: 27.343959
+  type: 'test'
+  ...
+# Subtest: logical helper: resolved hidden cannot bypass final ownership checks
+ok 19 - logical helper: resolved hidden cannot bypass final ownership checks
+  ---
+  duration_ms: 27.546792
+  type: 'test'
+  ...
+# Subtest: logical helper: resolved throws cannot bypass final ownership checks
+ok 20 - logical helper: resolved throws cannot bypass final ownership checks
+  ---
+  duration_ms: 27.412292
+  type: 'test'
+  ...
+# Subtest: logical helper: resolved focus-then-body cannot bypass final ownership checks
+ok 21 - logical helper: resolved focus-then-body cannot bypass final ownership checks
+  ---
+  duration_ms: 29.660667
+  type: 'test'
+  ...
+# Subtest: logical helper: resolved blur-return cannot bypass final ownership checks
+ok 22 - logical helper: resolved blur-return cannot bypass final ownership checks
+  ---
+  duration_ms: 26.68625
+  type: 'test'
+  ...
+# Subtest: logical helper: resolved recursive-restore cannot bypass final ownership checks
+ok 23 - logical helper: resolved recursive-restore cannot bypass final ownership checks
+  ---
+  duration_ms: 36.9365
+  type: 'test'
+  ...
+# Subtest: full Solo: removing an unrelated pack preserves the paused installed flight and its stored checkpoint
+ok 24 - full Solo: removing an unrelated pack preserves the paused installed flight and its stored checkpoint
+  ---
+  duration_ms: 1724.347792
+  type: 'test'
+  ...
+# {"sameRun":true,"sameCheckpoint":true,"sameProfileBytes":true,"sameSessionBytes":true,"before":{"tick":30,"cutting":true,"levelId":"row-a-level"},"after":{"tick":30,"cutting":true,"levelId":"row-a-level"}}
+# (node:70960) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/pack-retention-review/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual Solo: removing the active installed pack selects the base campaign
+ok 25 - actual Solo: removing the active installed pack selects the base campaign
+  ---
+  duration_ms: 5166.833625
+  type: 'test'
+  ...
+# Subtest: actual Solo: importing a library with active pack newer version prepares its new level
+ok 26 - actual Solo: importing a library with active pack newer version prepares its new level
+  ---
+  duration_ms: 1750.567416
+  type: 'test'
+  ...
+# Subtest: actual Solo: importing a library with active pack same ID and version with changed content prepares its new level
+ok 27 - actual Solo: importing a library with active pack same ID and version with changed content prepares its new level
+  ---
+  duration_ms: 1730.480083
+  type: 'test'
+  ...
+# Subtest: actual Solo: importing an unrelated pack preserves the exact paused installed flight
+ok 28 - actual Solo: importing an unrelated pack preserves the exact paused installed flight
+  ---
+  duration_ms: 1573.486167
+  type: 'test'
+  ...
+# Subtest: actual Solo: rejected unrelated pack removal preserves the paused flight and stored packs
+ok 29 - actual Solo: rejected unrelated pack removal preserves the paused flight and stored packs
+  ---
+  duration_ms: 1493.512
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 28029.926083
