@@ -124,6 +124,43 @@ and diff checks pass. The finite IndexedDB model proves transaction semantics,
 not real browser disk behavior, deployed Pages rollback, cache switching or an
 unreleased future schema. Those remain separate required gates.
 
+## Whole-reference implementation coverage
+
+The central ledger still described every proposal as unimplemented despite later
+campaign declarations. Its status now points to a read-only live audit, while all64
+complete source/observation/proposal records remain unchanged. Historical null
+implementation placeholders are explicitly distinguished from current projections.
+
+`node scripts/audit-journey-adaptations.mjs` derives its chapter order from the
+existing whole-Journey registry. It reads the three early JSON crosswalks and nine
+later exported adaptation lists, then resolves actual missions using the shared
+compiler. Current result: all48 numbered references have66 explicit adaptation
+links across the83-candidate Solo review library; no unknown or uncovered numbered
+references. Multiple adaptations and original missions without a screenshot source
+are legitimate, not a quota. This does not increase released content.
+
+Every link includes source hash, candidate/map revision, design rationale and all
+six Solo/Versus preset identities. Early recorded simulation and reference pins
+must match; duplicate links, missing missions, empty rationales and inferred final
+approval fail. Later live declarations establish current compilation only, not that
+an earlier route log qualifies a changed edition. Incomplete coverage remains
+explicit and makes the CLI exit nonzero. There is no publication action.
+
+Three audit tests pass on Node20.19.5 and22.22.2, including full coverage, invalid
+link/pin/final-claim rejection, CLI/library parity and unchanged ledger bytes across
+inspection. A separate comparison confirms all64 records are structurally identical
+to the pre-edit ledger. Scoped code lint/format/diff checks pass; the source ledger's
+pre-existing whole-file formatting is retained rather than mechanically rewriting
+historical research. Logs: `.cache/journey-p15-adaptations-node{20,22}-r1.tap`.
+
+All64 supplied originals were streamed again from the user-provided reference
+directory and matched their stored byte counts and SHA-256 values:393,404,508bytes,
+including48 numbered layouts. This is original-byte verification, **not** a new
+visual inspection, reference-game behavior claim or human playtest. All48 final
+dispositions remain open, with human/art/release qualification separate from this
+coverage audit. The machine-readable local report is
+`.cache/journey-p15-adaptations-r1.json` and can be regenerated without changing data.
+
 This is infrastructure for honest qualification, not a substitute for playing the
 game. Genuine human sessions, physical devices, complete accessibility/performance
 checks, Legacy transition, rollback proof, original pending artwork, accepted
