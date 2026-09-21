@@ -100,6 +100,28 @@ retry and expose export. Distinguish technical-ready from human-validated conten
 
 ## Delivery tracker
 
+### Current publication handoff — September 21
+
+This notice supersedes the historical draft/release statuses and provisional
+version allocations in the phase snapshots below. v0.76.0 is published: source
+`6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd`, controller merge
+`14298758fee0f7af08dd87376187568ada531d0a`. The public `release.json` and
+`current-entry-routing.json` were independently checked and agree on that source
+and version. This scoped marker check does not repeat the release owner's complete
+byte audit. See the [v0.76.0 release record](https://github.com/mekhovov/revealline/releases/tag/v0.76.0).
+
+That release includes P03–P08 **Studio candidates**, not their public Journey
+enrollment or full phase acceptance. Signal/Neon/Rover have art candidates;
+Fracture/Phase/Livewire art and broader human/device qualification remain pending.
+P09–P15 remain isolated local successors. No v0.77.0 allocation is confirmed.
+The active release owner is qualifying PR208/v0.76.1 and prioritizing the user's
+shared touch, compact mobile HUD and Steam Deck launch corrections. Reconcile
+against the resulting accepted main and agreed phase order before opening a new
+phase PR; preserve accepted UX, Studio and controller changes. Do not race a
+live release or duplicate its builds. Independent bounded local work continues.
+
+### Historical phase snapshots
+
 The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0
 publisher 7b898a7b through integration b5193ca1; the public Team/Studio acceptance
 is scoped, not whole-phase or physical-device validation. Preserve the user's dirty
@@ -131,6 +153,7 @@ P01–P15 therefore shift one further minor, as above; these later allocations r
 provisional. Preserve both features through reviewed integration and new exact-source
 gates. Journey must not race the current publication owner or replace its selector.
 Independent source correction, tests and content preparation continue during that wait.
+The September 21 handoff above now governs publication and version assignment.
 
 Latest continuation instruction explicitly allows independent P01 implementation
 while P00 publication waits. The local `codex/xposed-journey-p01` branch is stacked
