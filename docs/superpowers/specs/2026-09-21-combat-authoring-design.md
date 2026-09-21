@@ -1,6 +1,6 @@
 # Optional combat D2b — shared authoring and inspection
 
-Status: proposed, independent review pending. Continues the approved
+Status: approved by independent specification review, no blocking findings. Continues the approved
 [D2 contract](2026-09-21-optional-combat-design.md) after verified runtime commit
 `851a2100`. User-authorized automatic continuation replaces routine approval
 pauses, not review or release gates. AI soundtrack remains paused.
