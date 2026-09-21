@@ -9,6 +9,7 @@ import { createSignalCandidates } from '../content-design/signal-candidates.mjs'
 import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
 import { createRoverTeachingCandidates } from '../content-design/rover-teaching-candidates.mjs';
 import { createFractureCandidates } from '../content-design/fracture-candidates.mjs';
+import { createFractureSpatialCandidates } from '../content-design/fracture-spatial-candidates.mjs';
 import { createPhaseCandidates } from '../content-design/phase-candidates.mjs';
 import { createLivewireCandidates } from '../content-design/livewire-candidates.mjs';
 import { createRelayCandidates } from '../content-design/relay-candidates.mjs';
@@ -712,6 +713,12 @@ $('fracture').onclick = guarded(() => {
     null,
     2,
   );
+  sourceChanged = true;
+  inspectSource();
+});
+$('fracture-spatial').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createFractureSpatialCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
