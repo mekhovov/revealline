@@ -15,7 +15,7 @@ export function createStudioOperations({
     if (active !== owner) return;
     active = null;
     cancelButton.hidden = true;
-    setBusy(false);
+    setBusy(false, { restoreFocus: !owner.detached && !disposed });
   }
   function message(text, kind = '') {
     const result = { message: text, state: kind === 'error' ? 'error' : 'ready' };

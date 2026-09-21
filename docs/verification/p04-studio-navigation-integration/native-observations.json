@@ -1,0 +1,28 @@
+{
+  "browser": "Codex in-app browser",
+  "origin": "http://127.0.0.1:18826",
+  "sourceBase": "9076ada123551c2b65ae05638e19ebe828aedb68",
+  "overrides": [
+    "authoring/asset-studio/studio.mjs",
+    "authoring/asset-studio/operation.mjs",
+    "authoring/asset-studio/operation-focus.mjs",
+    "authoring/asset-studio/inventory-history.mjs"
+  ],
+  "steps": [
+    "Search player: 25 / 299; select player.scout.detailed",
+    "Switch FPV Field Kit to Field Kit: document r40 unsaved",
+    "Keyboard final Undo: FPV Field Kit r39, local save none, focus redo-draft",
+    "Keyboard Redo: Field Kit r40 unsaved, focus undo-draft",
+    "Keyboard Undo: FPV Field Kit r39, local save none, focus redo-draft",
+    "Actual Skip inventory anchor Enter: inspector focused; URL unchanged with no fragment",
+    "Tab: preview-mode focused",
+    "Actual Return to game Enter: /game/",
+    "Browser Back: loading registry observed, then same player query, 25 / 299, player.scout.detailed and FPV Field Kit r39 local save none; no control focus restored"
+  ],
+  "consoleWarningsErrors": [],
+  "limits": [
+    "Not physical controller or touch evidence",
+    "Not assistive technology, responsive layout, full build or public release qualification",
+    "Native request logger incorrectly labels all override flags false; actual four working module overrides are explicitly pinned in receipts; all remaining bytes came from exact source Git objects"
+  ]
+}
