@@ -30,7 +30,7 @@ ledger, compiled manifests, new picture bindings and review hashes must agree.
 
 Validation: the independent capsule cohort reports236/236 on each Node20/22;
 its bounded integration evidence is separate from this new producer. The final
-producer cohort passes 8/8 on each runtime, covering actual assembly, exact bytes,
+producer cohort passes 9/9 on each runtime, covering actual assembly, exact bytes,
 compile/export/import, preserved old selections, idempotent history and rejection
 of changed sources/manifests/images or missing files, revoked review after source
 drift, and swapped role images. Original six-test receipts remain historical; the
@@ -39,7 +39,7 @@ passes. These counts overlap earlier cohorts and are not a whole-repository resu
 
 Before release:
 
-1. Reconcile recipe-input review evidence with the actual final source hashes.
+1. Scoped UI loader input review is recorded in `verification/team-presentation-integration/ui-recipe-review.md`;39/39 host checks pass on both runtimes. Recheck final-source fingerprints after any further integration.
 2. Adopt a fresh ledger through the guarded producer, retaining exactfpv38 and
    every authenticated dependency. Attach scoped six-image review to new immutable
    asset revisions; keep the original prepared manifests unchanged.
