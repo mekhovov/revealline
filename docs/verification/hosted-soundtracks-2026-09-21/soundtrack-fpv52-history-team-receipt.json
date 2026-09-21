@@ -1,0 +1,76 @@
+{
+  "format": "revealline-scoped-test-receipt.v1",
+  "sourceHead": "5d0e14a626076128245b76fe91585c4dad3be810",
+  "audioFingerprint": "e1bd9c13f39d0b00bd370532c3c77cac3aee78ae1738ae940ca8e80127269f6b",
+  "ownedFiles": [
+    {
+      "path": "game/test/presentation-production-history.test.mjs",
+      "bytes": 30923,
+      "sha256": "18af123807c1043c0feebd422d3038457c15de9c6244ffd7e0f1baaca2bbb2be"
+    },
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "bytes": 2643,
+      "sha256": "eed614ad2804c0412da0abaf09efd3b70f45b65ade92dec6f964937bd2460dc1"
+    },
+    {
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "bytes": 8897,
+      "sha256": "71d367c7d8100b56b0688615e1ec46d5f2db3800e974821382216d88e30dbb12"
+    },
+    {
+      "path": "game/test/coop-historical-import-picture.test.mjs",
+      "bytes": 16371,
+      "sha256": "daf8fa5165a2e40841c2e861952185686b54115dcc30bf1d5c8cbc419de18b8d"
+    },
+    {
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "bytes": 25402,
+      "sha256": "49e5867f6d11c96e7a47cec288b78ad7addea6e71b039c8dda50513a7624a2fd"
+    }
+  ],
+  "ledgerProof": {
+    "path": "/tmp/soundtrack-fpv52-ledger-independent-review.json",
+    "bytes": 4872,
+    "sha256": "f68a7b0308e6856c27b508e46784a0db9b1b53d3fb2f3234f718e989c9a6b173"
+  },
+  "reviewEvidence": {
+    "path": "docs/verification/hosted-soundtracks-2026-09-21/review.json",
+    "bytes": 10597,
+    "sha256": "0fb98b0cde3157ea26d24888bbf68bd8d84563f03f73b148c339b7dad2bf5917"
+  },
+  "checks": [
+    {
+      "command": "node --test game/test/presentation-production-history.test.mjs game/test/coop-picture-bindings.test.mjs game/test/coop-historical-import-picture.test.mjs game/test/coop-actor-presentation.test.mjs game/test/coop-presentation.test.mjs",
+      "exitCode": 0,
+      "counts": {
+        "tests": 94,
+        "suites": 0,
+        "pass": 94,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "durationMs": 45169.085709,
+      "log": {
+        "path": "/tmp/soundtrack-fpv52-history-team.log",
+        "bytes": 21662,
+        "sha256": "b870d64fcbbaf7d7492b832c6f921d3c40bf25334b5147281594a3dcb2883259"
+      }
+    },
+    {
+      "command": "node node_modules/prettier/bin/prettier.cjs --write game/test/presentation-production-history.test.mjs game/couch/coop-picture-bindings.mjs game/test/coop-picture-bindings.test.mjs game/test/coop-historical-import-picture.test.mjs game/test/coop-actor-presentation.test.mjs",
+      "result": "All unchanged: repository formatting already correct."
+    },
+    {
+      "command": "node node_modules/eslint/bin/eslint.js game/test/presentation-production-history.test.mjs game/couch/coop-picture-bindings.mjs game/test/coop-picture-bindings.test.mjs game/test/coop-historical-import-picture.test.mjs game/test/coop-actor-presentation.test.mjs --max-warnings 0",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check -- game/test/presentation-production-history.test.mjs game/couch/coop-picture-bindings.mjs game/test/coop-picture-bindings.test.mjs game/test/coop-historical-import-picture.test.mjs game/test/coop-actor-presentation.test.mjs",
+      "exitCode": 0
+    }
+  ],
+  "scope": "Production-history and exact Team metadata successor source verification only. No listening, art, physical-device, frozen-offline or release approval."
+}

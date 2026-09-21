@@ -29,7 +29,7 @@ const sources = {
   effects:
     'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs',
   audio:
-    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/soundtrack-albums.mjs',
+    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs',
 };
 
 // A recipe stays unreviewed whenever one of its source inputs changes. These
@@ -54,11 +54,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '5d8df2e346074b8f7b3b7a33f5f102620f221c5d39a54dd7761b84d9733ee948',
+    sha256: '8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768',
     evidence: [
-      'Scoped licensed-preview discovery review: docs/verification/music-v077-integration-2026-09-21/panel-review.json sha256:53b663c1eb2551c0991ff35c693ae221c14ceb009aa8da0b26bba05e076c9040. Eleven ordered audio inputs have fingerprint sha256:5d8df2e346074b8f7b3b7a33f5f102620f221c5d39a54dd7761b84d9733ee948. Only the shared soundtrack panel changes: a fixed external preview link, manual-import explanation and empty-album status. The independent panel cohort passes 91/91; no automatic asset request, catalogue admission, saved-library or playback mutation is introduced.',
-      'Ten unchanged inputs retain their prior scoped reviews: docs/verification/music-expansion-2026-09-21/review.json sha256:b7897ae961e67504eab17991193840d0764164690345cb012ec7d7ef8723c780; album follow-up: docs/verification/music-expansion-2026-09-21/album-review.json sha256:fc767799091324d0f975586ddf6a1fb907dea8a5db92961b4659337b68cae2b8. Historical genre/recovery 203/203 and album/offload/compatibility 28/28 cohorts keep their original scopes. Reviewed fpv48 and source-stage fpv49 remain immutable; this reviewed successor does not approve the separately changing handheld CSS or requalify native host lifecycle.',
-      'Functional source approval only. No recording, composition, art, Ukrainian authenticity, physical-device, frozen-offline or public-release approval is granted. Native development-preview observations and technical codec checks have separately stated limits. Original payloads and all earlier scoped evidence remain preserved in the production ledger.',
+      'Scoped direct soundtrack functional review: docs/verification/hosted-soundtracks-2026-09-21/selection-cache/review.json sha256:6551c31a71e749e3f2d42fd6bd4d5fe33b6e2e99c619f1c819b5b277b8361e45. Thirteen ordered audio inputs have fingerprint sha256:8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768. Independent source review verifies private immutable library identity reuse and one bounded base-selection cache; dynamic rights, raw catalogue changes, failed tracks and playback intent remain live. Invalid constructor input is rejected before acquiring media ownership.',
+      'The final complete soundtrack and Couch audio cohort passed 453/453 with exact changed source/test pins and zero failures, cancellations, skips or todos. The original menu tests and deadlines remain unchanged. Four independent incremental probes pass. Prior direct-integration review remains immutable for the eleven unchanged audio inputs. Both failed preliminary hosted runs are retained with exact raw logs; local performance measurements are scoped diagnostics, not device or release qualification.',
+      'Functional source approval only. The 70 CC0/CC BY recordings retain audited rights and pending musical review; no recording, composition, Ukrainian authenticity, physical-device, frozen-offline or public-release approval is granted. Content ID remains unknown. Reviewed fpv52 and source-stage fpv53 remain immutable before this reviewed successor; all 127 original payloads and their bytes are preserved. Frozen and coordinated latest-main qualification remain required.',
     ],
   },
   motion: {

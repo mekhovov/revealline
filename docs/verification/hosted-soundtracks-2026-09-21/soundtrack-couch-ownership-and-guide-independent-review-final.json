@@ -1,0 +1,220 @@
+{
+  "format": "revealline-scoped-functional-review.v1",
+  "reviewer": "independent audio architecture agent",
+  "sourceHead": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+  "reviewedUncommittedInputs": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 83940,
+      "sha256": "93956c5fff74e307a51feb54b845008b5af5c11311bb66aef78948744d8c2ad9"
+    },
+    {
+      "path": "game/test/couch-static-picture-host.test.mjs",
+      "bytes": 45266,
+      "sha256": "6fd9206c428e981885f1341d9c6185057886bd15d1c7593c6eb17beafcaf43f7"
+    },
+    {
+      "path": "docs/hosted-soundtracks.md",
+      "bytes": 5090,
+      "sha256": "350947a5109d9cea86f7ebbf8d172b371a651289e848e1ed3997d01856999da9"
+    },
+    {
+      "path": "docs/music-library-upload-guide.md",
+      "bytes": 21717,
+      "sha256": "9dd6816317bcbc9a91efa5bd9f3b536e59b60aa842c66d586df577e8939be9cc"
+    },
+    {
+      "path": "docs/ua-fpv-upload-guide.md",
+      "bytes": 15838,
+      "sha256": "ffa10157f01cf7a8d400aa4fbff86b4e4cf6253330c39b75ab0eedd4cf9f4c37"
+    },
+    {
+      "path": "docs/soundtrack-studio.md",
+      "bytes": 17320,
+      "sha256": "4c369c0c6c4b2a5dc65d186a7cf5fb2173bc02d296f804d3c4b9890cb4e06fa7"
+    }
+  ],
+  "result": "No remaining blocker found in the scoped Couch repair or four guide deltas.",
+  "sourceFindings": [
+    {
+      "file": "game/couch/couch.mjs",
+      "line": 692,
+      "result": "sound.reset remains before assignment; persistentMusic reset stops preview/SFX and clears tension/events, preserving music cursor/ownership."
+    },
+    {
+      "file": "game/couch/couch.mjs",
+      "line": 693,
+      "result": "Exactly one track authority: soundtrack player receives authored metadata when present; direct Soundscape.setTrack remains only as the no-player fallback. map/campaign/theme context paths remain unchanged."
+    },
+    {
+      "file": "game/test/couch-static-picture-host.test.mjs",
+      "line": 1081,
+      "result": "Tests scope Math.random=()=>0 with automatic mock restoration and assert selected fallback differs from Signal Afterglow; all original Results, mute, cursor, media, preference, focus, retry and zero-write assertions remain."
+    }
+  ],
+  "tests": {
+    "reviewerRanDuplicateHostTests": false,
+    "preFix": {
+      "command": "node --import 'data:text/javascript,Math.random=()=>0;' --test --test-name-pattern='muted music and completed Results' game/test/couch-static-picture-host.test.mjs",
+      "counts": {
+        "tests": 36,
+        "suites": 0,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 34,
+        "todo": 0
+      },
+      "log": {
+        "path": "/tmp/couch-static-music-fixed-shuffle-repro.log",
+        "bytes": 12919,
+        "sha256": "ee358d48c8455913f8854c523c3d3689aca17a4749a6b56625c67d5a7d0ff264"
+      },
+      "meaning": "Both targeted cases fail on pendingTrack:Signal Afterglow instead ofnull.34 filtered skips; this was a reproduction, not qualification."
+    },
+    "firstCompleteCohort": {
+      "command": "node --test game/test/couch-static-picture-host.test.mjs game/test/couch-audio-master.test.mjs game/test/couch-music-session.test.mjs game/test/couch-music-context.test.mjs game/test/couch-menu-music.test.mjs",
+      "counts": {
+        "tests": 98,
+        "suites": 0,
+        "pass": 96,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": {
+        "path": "/tmp/couch-music-ownership-final.log",
+        "bytes": 25690,
+        "sha256": "f14b454814c73332ff9476f4534be0c4ba2dccec6ca03d3df8df52e06143a18b"
+      },
+      "failures": "Two picture cases used missing sparse optional fpv-arcade-r5 fixture, selecting narrow base art or no authored fallback; all62 other host tests and both ownership regressions passed."
+    },
+    "exactFixture": {
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "bytes": 11708176,
+      "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+    },
+    "completeAffectedFileRetry": {
+      "command": "node --test game/test/couch-static-picture-host.test.mjs",
+      "counts": {
+        "tests": 36,
+        "suites": 0,
+        "pass": 36,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": {
+        "path": "/tmp/couch-music-ownership-picture-retry.log",
+        "bytes": 9368,
+        "sha256": "93eb317e6ba349f8cfed02278b34ccda08197767978775bb4da45eb074c373c4"
+      }
+    },
+    "qualifiedUniqueTests": 98,
+    "qualificationBasis": "62 unaffected ownership/context/menu tests from first complete run plus all36 picture-host tests on exact restored HEAD fixture. This is not a claim that the first98-test command passed."
+  },
+  "production": {
+    "groups": {
+      "ui": {
+        "fingerprint": "28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e",
+        "matchesHead": true,
+        "containsChangedCouchModule": false
+      },
+      "screens": {
+        "fingerprint": "1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845",
+        "matchesHead": true,
+        "containsChangedCouchModule": false
+      },
+      "motion": {
+        "fingerprint": "b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4",
+        "matchesHead": true,
+        "containsChangedCouchModule": false
+      },
+      "effects": {
+        "fingerprint": "7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13",
+        "matchesHead": true,
+        "containsChangedCouchModule": false
+      },
+      "audio": {
+        "fingerprint": "e1bd9c13f39d0b00bd370532c3c77cac3aee78ae1738ae940ca8e80127269f6b",
+        "matchesHead": true,
+        "containsChangedCouchModule": false
+      }
+    },
+    "requiredLedgerAction": "None: all5 explicit producer fingerprint groups unchanged. Keep fpv52 and its pinned approval evidence immutable; retain this host/source review separately.",
+    "requiredReleaseAction": "Repair changes source bytes, requiring fresh exact-source CI and frozen artifact qualification."
+  },
+  "documentation": {
+    "result": "No blocking incorrect version, capacity, transport or listening-approval claim found.",
+    "checkedBoundaries": [
+      "v0.77.0 bundle module admits RLSTB1 only; v0.78.0 admitsRLSTB3.",
+      "Accepted 9f4bc2da identifies 0.79.1, has empty shipped catalogue and no generated queue hash dedup.",
+      "Current 0.80 generated genre/mix/Automatic queues deduplicate hashes; authored custom sequences retain repeated IDs.",
+      "Current DB5 physical boundary differs from library/bundlev3; custom capacities of 123 tracks and 26 playlists remain separate.",
+      "Two media decks with sequential fallback when independent media gain cannot be applied; persistent playback intent independent of master mute.",
+      "70 licensed records remain technically admitted but zero listening approval; UA-FPV remains private and AI originals paused."
+    ],
+    "clarityNote": "Final guide now explicitly requires a distinct admitted base URL or path prefix for future immutable inventories, preserving the existing inventory.json and MP3 objects for old editions."
+  },
+  "limits": [
+    "This review performs no source edits, duplicate host runs, builds, downloads or network requests; only /tmp receipts are written. Earlier own archive fixture implementation and verification are explicitly separated.",
+    "I authored historical UA guide sections, but not the four newly reviewed guide deltas or this Couch repair.",
+    "No recording/listening/art/physical-device/native-browser/offline/public-release approval."
+  ],
+  "supersedesReceipt": {
+    "path": "/tmp/soundtrack-couch-ownership-and-guide-independent-review.json",
+    "bytes": 7530,
+    "sha256": "3bb996e9ab7fd9578b9432289066e7f8591ead825abf0343f8b539dcf76e9b16"
+  },
+  "archiveFixtureRepair": {
+    "authorship": "Implemented by this reviewer; this section is implementation and verification, not independent review. Parent separately reported independently reviewing the six-line fixture diff and84/84 cohort.",
+    "file": {
+      "path": "scripts/test-build-soundtrack-archive.mjs",
+      "bytes": 16713,
+      "sha256": "815b424ad0780ec793d7a0a8aca0ea2c7be8009029c4520ce1fe70a6bdb24a10"
+    },
+    "change": "Adds an isolated empty generated module exporting catalogue, archives and collections for the copied soundtrack model. Existing assertions are unchanged; production catalogue permissions and runtime code are not modified.",
+    "before": {
+      "command": "node --test scripts/test-build-soundtrack-archive.mjs",
+      "counts": {
+        "tests": 19,
+        "suites": 0,
+        "pass": 7,
+        "fail": 12,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": {
+        "path": "/tmp/soundtrack-archive-fixture-before.log",
+        "bytes": 20560,
+        "sha256": "8d802407283198e1e6d48eaa9415487a8c9ada1f2fd60b6bfd93d4eb24ddc7f0"
+      }
+    },
+    "after": {
+      "command": "node --test scripts/test-build-soundtrack-archive.mjs scripts/test-soundtrack-distribution.mjs scripts/test-licensed-audio-build.mjs scripts/test-build-licensed-preview-archive.mjs scripts/test-soundtrack-archive-admissions.mjs scripts/test-hosted-soundtrack-publication.mjs",
+      "counts": {
+        "tests": 84,
+        "suites": 0,
+        "pass": 84,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": {
+        "path": "/tmp/soundtrack-archive-fixture-after.log",
+        "bytes": 16762,
+        "sha256": "ba04da2de0b5913a987cab68b8527e4e380aa94dba0b1d6ee78579bc5c5348d9"
+      }
+    },
+    "formatLintDiffChecksPassed": true
+  },
+  "authorship": {
+    "independentReview": "Couch runtime/test repair authored by soundtrack_references; four guide deltas authored by parent. This reviewer inspected both final byte sets and retained test evidence.",
+    "ownImplementation": "Archive fixture repair was authored and verified by this reviewer and independently inspected by parent.",
+    "historicalDocumentation": "This reviewer previously authored UA guide sections but did not author the four new documentation deltas."
+  }
+}

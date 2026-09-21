@@ -1,0 +1,117 @@
+{
+  "status": "SCOPED_LOCAL_NATIVE_COMBINED_PRESENTATION_PASS",
+  "base": "fc847b18817e1cebb1439b3391e1f3d8aa7361fd",
+  "hostOverrideSha256": "7e5c1dd116c788b1738872038b7270d431fdb284a5dd0ac66aed3229748d58b1",
+  "page": "http://127.0.0.1:58352/game/couch/relay-rescue.html",
+  "fixture": {
+    "packId": "qa-team-terminal-hud",
+    "revision": 1,
+    "difficulty": "Expert",
+    "teamworkPolicy": "Full",
+    "purpose": "Ordinary imported QA-only 72x36 arenas expose recovery/loss and fast empty-arena victory; no production-content or fairness claim."
+  },
+  "observations": {
+    "loss": {
+      "active": "coop-retry",
+      "clock": "0:08",
+      "footer": {
+        "live": "polite",
+        "role": "status",
+        "text": "Team attempt ended. Choose Retry or Change setup."
+      },
+      "players": [
+        {
+          "charge": "Results ready",
+          "compactCharge": "Results",
+          "compactState": "Ended",
+          "help": "Sunflower: Attempt ended. Choose Retry or Change setup.",
+          "state": "Attempt ended"
+        },
+        {
+          "charge": "Results ready",
+          "compactCharge": "Results",
+          "compactState": "Ended",
+          "help": "Skyline: Attempt ended. Choose Retry or Change setup.",
+          "state": "Attempt ended"
+        }
+      ]
+    },
+    "win": {
+      "active": "coop-discovery-paused",
+      "clock": "0:03",
+      "footer": {
+        "live": "polite",
+        "role": "status",
+        "text": "Team objective complete. Your shared result is ready."
+      },
+      "players": [
+        {
+          "charge": "Results ready",
+          "compactCharge": "Results",
+          "compactState": "Complete",
+          "help": "Sunflower: Objective complete. Choose another arena or Retry.",
+          "state": "Objective complete"
+        },
+        {
+          "charge": "Results ready",
+          "compactCharge": "Results",
+          "compactState": "Complete",
+          "help": "Skyline: Objective complete. Choose another arena or Retry.",
+          "state": "Objective complete"
+        }
+      ]
+    },
+    "compact": {
+      "footer": "Team objective complete. Your shared result is ready.",
+      "players": [
+        {
+          "charge": "Results",
+          "state": "Complete"
+        },
+        {
+          "charge": "Results",
+          "state": "Complete"
+        }
+      ],
+      "scrollWidth": 568,
+      "width": 568
+    },
+    "activeRecovery": "active-recovery.txt records both players safe/Support-ready, zero reserves and the reserve-use footer.",
+    "lossRetry": "Return on focused Retry; retry.txt shows 0:00, one reserve, active HUD/footer and canvas focus.",
+    "victoryHelp": "win-help.txt records both named terminal player summaries advising another arena or Retry.",
+    "winRetry": "Pointer Retry; win-retry.txt shows 0:00, one reserve, active HUD/footer and canvas focus.",
+    "console": []
+  },
+  "evidenceAuthority": {
+    "nativeInputJourney": "Parent coordinator ordinary pointer/keyboard browser operations.",
+    "independentPackaging": "Screenshot/text/JSON inspection, exact served-source rehash, evidence hashes, and documentation patch postimage checks."
+  },
+  "limits": [
+    "The results panel obscures HUD/footer in the 568x320 screenshot; compact visual readability is unproven.",
+    "Compact DOM attributes and scrollWidth=viewportWidth establish only their recorded values/no horizontal overflow.",
+    "Polite live-status DOM semantics do not prove screen-reader announcements.",
+    "Only this combined candidate console was captured.",
+    "No physical controller, Steam Deck, touch, zoom, offline, deployed-byte or full P08 acceptance.",
+    "No new browser runs or runtime tests were performed while packaging.",
+    "Manual timings differ between attempts; no simulation-equivalence or production-balance inference."
+  ],
+  "diagnostics": {
+    "priorReceipt": "baseline-hud-only-receipt.json",
+    "oldSetupRestart": "The earlier corrected-setup-restart.json is a Lobby restart after a second Escape, not direct Retry.",
+    "oldBlockedArenaChoice": "Earlier Arena selection while discard dialog was open failed; explicit discard then selection succeeded.",
+    "oldFooter": "HUD-only evidence retained stale terminal footer. Combined screenshots visibly contain corrected footer guidance."
+  },
+  "cleanup": {
+    "tab": 186,
+    "serverPid": 11534,
+    "tabClosed": true,
+    "serverStopped": true,
+    "temporaryViewportReset": true,
+    "authority": "Reported by parent coordinator; no process/browser inspection performed by packager."
+  },
+  "remaining": [
+    "Coordinator adoption with source change",
+    "Exact committed-source release gates",
+    "Applicable public and physical-input qualification"
+  ]
+}

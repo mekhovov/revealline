@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
+import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_COLLECTIONS } from '../content/soundtrack-catalogue.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import {
   emptySoundtrackLibrary,
@@ -2513,7 +2514,8 @@ test('oversized complete catalogue backup is refused before any original downloa
       },
     },
   });
-  await app.click('apply-listening');
+  app.node('selection').value = 'builtin.playlist.mix';
+  await app.click('use-selection');
   await app.click('export-bundle');
   assert.equal(reads, 0);
   assert.match(app.node('status').textContent, /exceeds 256.0 MiB/);
@@ -2794,4 +2796,270 @@ test('opening a legacy saved library preserves the shipped catalogue in player a
   assert.equal(app.notices[0][1].library.format, raw.library.format);
   assert.equal((await app.store.read()).generation, 1);
   assert.equal((await app.store.read()).library.format, raw.library.format);
+});
+
+test('published catalogue albums are visible and selectable without downloads or custom slots', async (t) => {
+  assert(SOUNDTRACK_COLLECTIONS.length > 0);
+  let reads = 0;
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: SOUNDTRACK_CATALOGUE,
+      readAsset: async () => {
+        reads++;
+        throw new Error('Viewing and selecting albums must not install audio.');
+      },
+    },
+  });
+  app.state.playing = false;
+  app.state.desired = false;
+  for (const collection of SOUNDTRACK_COLLECTIONS) {
+    assert(app.node('selection').children.some((item) => item.value === collection.id));
+    assert.equal(
+      app.node(`select-album-${collection.id.slice('builtin.album.'.length)}`).textContent,
+      'Save & use album',
+    );
+  }
+  assert.equal(
+    app.node('tracks').children.length,
+    BUILTIN_SOUNDTRACK_TRACKS.length + SOUNDTRACK_CATALOGUE.tracks.length,
+  );
+  assert.equal(
+    (await app.store.read()).generation,
+    0,
+    'Opening only adopts catalogue metadata in memory.',
+  );
+  const album = SOUNDTRACK_COLLECTIONS[0];
+  await app.click(`select-album-${album.id.slice('builtin.album.'.length)}`);
+  const saved = await app.store.read();
+  assert.equal(saved.library.selection.playlistId, album.id);
+  assert.equal(saved.library.tracks.length, 0);
+  assert.equal(saved.library.playlists.length, 0);
+  assert.equal(saved.library.catalogTracks.length, SOUNDTRACK_CATALOGUE.tracks.length);
+  assert.deepEqual(saved.library.installedTrackIds, []);
+  assert.deepEqual(saved.assets, []);
+  assert.equal(reads, 0);
+  assert.deepEqual(
+    app.calls.filter(([name]) => name === 'select'),
+    [['select', album.id]],
+  );
+  assert(!app.calls.some(([name]) => name === 'play'));
+  assert.match(app.node('original-status').textContent, /downloaded and checked individually/);
+  assert.match(app.node('licensed-previews-info').textContent, /Choose a built-in album/);
+  await app.click('play');
+  assert(
+    app.calls.some(([name]) => name === 'play'),
+    'Starting music remains a separate explicit gesture.',
+  );
+});
+
+async function smallHostedAlbums() {
+  const first = SOUNDTRACK_COLLECTIONS[0],
+    second = SOUNDTRACK_COLLECTIONS[1];
+  assert(first?.trackIds.length > 1 && second?.trackIds.length);
+  const recordings = await Promise.all(
+    [...first.trackIds.slice(0, 2), second.trackIds[0]].map(async (id, i) => {
+      const raw = await fixture(`hosted-small-${i}`);
+      return {
+        raw,
+        track: resolveCatalogueTrack({
+          ...raw.track,
+          id,
+          edition: 'test-hosted',
+          path: `objects/${raw.track.asset.sha256}.mp3`,
+          archiveId: 'test-hosted',
+          tags: { genres: ['synth90s'], role: 'any', energy: 3, themes: [] },
+          policy: {
+            id,
+            sha256: raw.track.asset.sha256,
+            webPlayback: 'allowed',
+            offlineCache: 'allowed',
+            redistribute: 'allowed',
+            modify: 'allowed',
+            gameplayVideo: 'allowed',
+            contentId: 'unknown',
+          },
+        }),
+      };
+    }),
+  );
+  return {
+    first,
+    second,
+    recordings,
+    catalogue: {
+      format: 'revealline-soundtrack-catalogue.v2',
+      edition: 'test-hosted',
+      tracks: recordings.map((item) => item.track),
+    },
+  };
+}
+
+test('offline album download stages only its recordings and removal preserves its built-in selection', async (t) => {
+  const { first, recordings, catalogue } = await smallHostedAlbums();
+  const reads = [];
+  const app = await setup(t, {
+    callbacks: {
+      catalogue,
+      readAsset: async (hash, options) => {
+        assert.equal(options.purpose, 'offline');
+        reads.push(hash);
+        return recordings.find((item) => item.track.asset.sha256 === hash).raw.blob;
+      },
+    },
+  });
+  const suffix = `album-${first.id.slice('builtin.album.'.length)}`;
+  await app.click(`select-${suffix}`);
+  await app.click(`download-${suffix}`);
+  assert.deepEqual(
+    reads,
+    recordings.slice(0, 2).map((item) => item.track.asset.sha256),
+  );
+  assert.equal((await app.store.read()).assets.length, 0, 'An explicit save owns persistence.');
+  assert.match(app.node(`availability-${suffix}`).textContent, /2 of 2.*in the draft/);
+  await app.click('save');
+  let saved = await app.store.read();
+  assert.equal(saved.assets.length, 2);
+  assert.equal(saved.library.tracks.length, 0);
+  assert.equal(saved.library.playlists.length, 0);
+  assert.equal(saved.library.selection.playlistId, first.id);
+  await app.click(`offload-${suffix}`);
+  assert.equal((await app.store.read()).assets.length, 2);
+  await app.click('save');
+  saved = await app.store.read();
+  assert.deepEqual(saved.assets, []);
+  assert.deepEqual(saved.library.installedTrackIds, []);
+  assert.equal(saved.library.catalogTracks.length, 3);
+  assert.equal(saved.library.selection.playlistId, first.id);
+  assert.equal(app.node(`download-${suffix}`).disabled, false);
+  assert.equal(app.node(`offload-${suffix}`).disabled, true);
+  assert.match(app.node(`availability-${suffix}`).textContent, /available online/);
+});
+
+test('a competing library save prevents album selection from replacing newer data or player intent', async (t) => {
+  const { first, catalogue } = await smallHostedAlbums();
+  const app = await setup(t, { callbacks: { catalogue } });
+  const newer = await fixture('competing-owner');
+  await app.store.commit(newer.prepared, { expectedGeneration: 0 });
+  await app.click(`select-album-${first.id.slice('builtin.album.'.length)}`);
+  assert.deepEqual((await app.store.read()).library, newer.library);
+  assert(!app.calls.some(([name]) => name === 'select'));
+  assert.match(app.node('status').textContent, /changed|generation|reload/i);
+});
+
+test('Recording mode blocks uncertain catalogue auditions and same-hash upload aliases before reading bytes', async (t) => {
+  const { recordings, catalogue } = await smallHostedAlbums();
+  const initial = recordings[0].raw;
+  let reads = 0;
+  const app = await setup(t, {
+    initial,
+    callbacks: {
+      catalogue,
+      readAsset: async () => {
+        reads++;
+        return initial.blob;
+      },
+    },
+  });
+  app.node('recording-mode').checked = true;
+  await app.click('apply-listening');
+  for (const id of [recordings[0].track.id, initial.track.id]) {
+    app.choose('tracks', id);
+    assert.equal(app.node('audition-track').disabled, true);
+    assert.match(app.node('track-info').textContent, /Recording mode excludes this audition/);
+    await app.node('audition-track').onclick();
+    assert.match(app.node('status').textContent, /Recording mode excludes this audition/);
+  }
+  assert.equal(reads, 0);
+  assert.equal(app.urls.size, 0);
+  assert.match(app.node('recording-status').textContent, /3 catalogue recordings excluded/);
+  app.node('recording-mode').checked = false;
+  await app.click('apply-listening');
+  app.choose('tracks', recordings[0].track.id);
+  assert.equal(app.node('audition-track').disabled, false);
+});
+
+test('saved Automatic catalogue discovery backs up without downloading unused online recordings', async (t) => {
+  let reads = 0;
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: SOUNDTRACK_CATALOGUE,
+      readAsset: async () => {
+        reads++;
+        throw new Error('Unused online discovery must not request backup audio.');
+      },
+    },
+  });
+  await app.click('apply-listening');
+  assert.equal(
+    (await app.store.read()).library.catalogTracks.length,
+    SOUNDTRACK_CATALOGUE.tracks.length,
+  );
+  await app.click('export-bundle');
+  assert.equal(reads, 0);
+  assert.equal(app.node('download-prepared').disabled, false);
+  assert.match(
+    app.node('backup-info').textContent,
+    /70 unused online catalogue recordings are not included/,
+  );
+  await app.click('download-prepared');
+  const restored = await importSoundtrackBundle(app.downloads[0].blob, {
+    catalogue: SOUNDTRACK_CATALOGUE,
+    probeMedia: structuralProbe,
+  });
+  assert.deepEqual(restored.library.catalogTracks, []);
+  assert.deepEqual(restored.library.referenceOnlyTrackIds, []);
+  assert.deepEqual(restored.assets, []);
+  assert.equal(
+    (await app.store.read()).library.catalogTracks.length,
+    SOUNDTRACK_CATALOGUE.tracks.length,
+    'Read-only preparation preserves the live catalogue.',
+  );
+});
+
+test('saved built-in album backup contains that album originals and excludes unrelated online discovery', async (t) => {
+  const { first, recordings, catalogue } = await smallHostedAlbums();
+  const reads = [];
+  const app = await setup(t, {
+    callbacks: {
+      catalogue,
+      readAsset: async (hash, options) => {
+        assert.equal(options.purpose, 'export');
+        reads.push(hash);
+        return recordings.find((item) => item.track.asset.sha256 === hash).raw.blob;
+      },
+    },
+  });
+  await app.click(`select-album-${first.id.slice('builtin.album.'.length)}`);
+  await app.click('export-bundle');
+  assert.deepEqual(
+    reads.sort(),
+    recordings
+      .slice(0, 2)
+      .map((item) => item.track.asset.sha256)
+      .sort(),
+  );
+  assert.match(app.node('backup-info').textContent, /1 unused online catalogue recording/);
+  await app.click('download-prepared');
+  const restored = await importSoundtrackBundle(app.downloads[0].blob, {
+    catalogue,
+    probeMedia: structuralProbe,
+  });
+  assert.equal(restored.library.selection.playlistId, first.id);
+  assert.deepEqual(
+    restored.library.catalogTracks.map((track) => track.id),
+    first.trackIds.slice(0, 2),
+  );
+  assert.equal(restored.assets.length, 2);
+  for (const recording of recordings.slice(0, 2)) {
+    const asset = restored.assets.find((item) => item.sha256 === recording.track.asset.sha256);
+    assert.deepEqual(
+      new Uint8Array(await asset.blob.arrayBuffer()),
+      new Uint8Array(await recording.raw.blob.arrayBuffer()),
+    );
+  }
+  assert.equal(
+    (await app.store.read()).assets.length,
+    0,
+    'Export does not silently install online originals.',
+  );
 });

@@ -63,6 +63,33 @@ test('offline listening does not fetch; an explicit download can fetch; stored o
   assert.equal(requests, 1);
 });
 
+test('local-only preparation returns a local original or absence without granting archive or recording requests', async () => {
+  let requests = 0;
+  const local = new Map();
+  const source = createSoundtrackSource({
+    catalogue,
+    readLocal: (hash) => local.get(hash) ?? null,
+    fetch: async (url) => {
+      requests++;
+      return responseFor(body, url);
+    },
+  });
+  assert.equal(await source.readAsset(track.asset.sha256, { localOnly: true }), null);
+  assert.equal(await source.readAsset('0'.repeat(64), { localOnly: true }), null);
+  assert.equal(requests, 0);
+  local.set(track.asset.sha256, body);
+  assert.equal(await source.readAsset(track.asset.sha256, { localOnly: true }), body);
+  assert.equal(requests, 0);
+  await assert.rejects(source.readAsset(track.asset.sha256, { localOnly: 'yes' }), /Invalid local/);
+  const cancelled = new AbortController();
+  cancelled.abort();
+  await assert.rejects(
+    source.readAsset(track.asset.sha256, { localOnly: true, signal: cancelled.signal }),
+    { name: 'AbortError' },
+  );
+  assert.equal(requests, 0);
+});
+
 for (const offlineCache of ['denied', 'unknown'])
   test(`standalone export remains allowed when offline storage is ${offlineCache}`, async () => {
     const restricted = resolveCatalogueTrack({

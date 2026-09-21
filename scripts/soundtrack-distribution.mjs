@@ -4,6 +4,7 @@ import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { exactKeys, required, canonicalJSON } from '../game/data-json.mjs';
 import { applySoundtrackArchiveAdmissions } from './soundtrack-archive-admissions.mjs';
+import { compileHostedSoundtracks } from './hosted-soundtrack-publication.mjs';
 
 export function validateSoundtrackDistributionConfig(value) {
   exactKeys(value, ['format', 'catalog', 'originalCatalogue'], 'Soundtrack distribution config');
@@ -240,27 +241,64 @@ export async function compilePublishedSoundtracks(root, { delivery = 'runtime' }
     albums: { format: 'revealline-soundtrack-albums.v1', albums: [] },
     archives: [],
   };
-  return delivery === 'source' ? built : applySoundtrackArchiveAdmissions(root, built);
+  // Source delivery contains recordings produced by this repository. Already
+  // published hosted assets have their own exact source/archive history.
+  if (delivery === 'source') return { ...built, collections: [] };
+  const delivered = await applySoundtrackArchiveAdmissions(root, built);
+  const hosted = await compileHostedSoundtracks(root, originals.catalogue.edition);
+  required(
+    !hosted.archives.some((archive) =>
+      delivered.archives.some(
+        (other) => other.id === archive.id || other.baseURL === archive.baseURL,
+      ),
+    ),
+    'Hosted soundtrack archive conflicts with another delivery admission.',
+  );
+  const combined = resolveSoundtrackCatalogue({
+    ...delivered.catalogue,
+    tracks: [...delivered.catalogue.tracks, ...hosted.tracks],
+  });
+  required(
+    combined.tracks.every((track) => {
+      const rights = soundtrackRights(track, { catalogue: combined });
+      return rights.webPlayback === 'allowed' && rights.redistribute === 'allowed';
+    }),
+    'Hosted delivery cannot override a restrictive recording hash alias.',
+  );
+  return {
+    ...delivered,
+    catalogue: combined,
+    archives: [...delivered.archives, ...hosted.archives],
+    collections: hosted.collections,
+  };
 }
-export function soundtrackCatalogueModule(catalogue, archives = []) {
-  return `// Generated from reviewed soundtrack publication metadata.\nexport const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue, null, 2)};\nexport const SOUNDTRACK_ARCHIVES = ${JSON.stringify(archives)};\n`;
+export function soundtrackCatalogueModule(catalogue, archives = [], collections = []) {
+  return `// Generated from pinned soundtrack publication metadata; listening status stays in source evidence.\nexport const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue, null, 2)};\nexport const SOUNDTRACK_ARCHIVES = ${JSON.stringify(archives)};\nexport const SOUNDTRACK_COLLECTIONS = ${JSON.stringify(collections)};\n`;
 }
 export async function writePublishedSoundtrackMetadata(root) {
   const { format, resolveConfig } = await import('prettier');
   const built = await compilePublishedSoundtracks(root);
   const modulePath = path.join(root, 'game/content/soundtrack-catalogue.mjs');
-  const moduleSource = await format(soundtrackCatalogueModule(built.catalogue, built.archives), {
-    ...(await resolveConfig(modulePath)),
-    filepath: modulePath,
-  });
-  await writeFile(
-    path.join(root, 'game/content/soundtrack-catalogue.json'),
-    JSON.stringify(built.catalogue, null, 2) + '\n',
+  const moduleSource = await format(
+    soundtrackCatalogueModule(built.catalogue, built.archives, built.collections),
+    {
+      ...(await resolveConfig(modulePath)),
+      filepath: modulePath,
+    },
   );
-  await writeFile(
-    path.join(root, 'game/content/optional-soundtracks.json'),
-    JSON.stringify(built.albums, null, 2) + '\n',
-  );
+  for (const [name, value] of [
+    ['soundtrack-catalogue.json', built.catalogue],
+    ['optional-soundtracks.json', built.albums],
+  ]) {
+    const filepath = path.join(root, 'game/content', name);
+    await writeFile(
+      filepath,
+      await format(JSON.stringify(value), {
+        ...(await resolveConfig(filepath)),
+        filepath,
+      }),
+    );
+  }
   await writeFile(modulePath, moduleSource);
   return built;
 }
@@ -277,12 +315,15 @@ async function readPublishedSoundtrackEntries(root, option) {
       'Published soundtrack metadata differs from reviewed production.',
     );
   }
-  const runtime = await import(
-    pathToFileURL(await ordinary(root, 'game/content/soundtrack-catalogue.mjs'))
-  );
+  const modulePath = await ordinary(root, 'game/content/soundtrack-catalogue.mjs');
+  const moduleHash = createHash('sha256')
+    .update(await readFile(modulePath))
+    .digest('hex');
+  const runtime = await import(`${pathToFileURL(modulePath).href}?sha256=${moduleHash}`);
   required(
     canonicalJSON(runtime.SOUNDTRACK_CATALOGUE) === canonicalJSON(built.catalogue) &&
-      canonicalJSON(runtime.SOUNDTRACK_ARCHIVES) === canonicalJSON(built.archives),
+      canonicalJSON(runtime.SOUNDTRACK_ARCHIVES) === canonicalJSON(built.archives) &&
+      canonicalJSON(runtime.SOUNDTRACK_COLLECTIONS ?? []) === canonicalJSON(built.collections),
     'Code-owned soundtrack catalogue differs from reviewed production.',
   );
   return built.files.map(({ name, bytes }) => ({ name, bytes: Buffer.from(bytes) }));
