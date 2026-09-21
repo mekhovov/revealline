@@ -161,7 +161,7 @@
   /* Team keeps identity, health/Support, shared coverage and Pause in one strip. */
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
     block-size: 100dvh;
-    grid-template-rows: 44px minmax(0, 1fr);
+    grid-template-rows: calc(44px + var(--handheld-music-space, 0px)) minmax(0, 1fr);
     padding-block: env(safe-area-inset-top) env(safe-area-inset-bottom);
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
@@ -256,8 +256,9 @@
     }
     body.field-kit.game-shell[data-flight-state='running'] main {
       position: fixed;
-      inset: calc(56px + var(--safe-top)) max(12px, var(--safe-right))
-        calc(var(--handheld-controls) + var(--safe-bottom)) max(12px, var(--safe-left));
+      inset: calc(56px + var(--safe-top) + var(--handheld-music-space, 0px))
+        max(12px, var(--safe-right)) calc(var(--handheld-controls) + var(--safe-bottom))
+        max(12px, var(--safe-left));
       height: auto;
       padding: 0;
     }
@@ -348,10 +349,22 @@
 
 @media (max-width: 680px) and (orientation: portrait) {
   body.field-kit.game-shell[data-flight-state='running'] .shell-bar {
+    /* The fixed full-chrome arena must not intercept Menu/Pause. Keep the
+       header itself transparent to the telemetry between those buttons. */
+    position: fixed;
+    top: var(--safe-top);
+    left: 0;
+    right: 0;
+    z-index: 9;
     min-height: 44px;
     height: 44px;
     padding-block: 0;
     border: 0;
+    background: transparent;
+    pointer-events: none;
+  }
+  body.field-kit.game-shell[data-flight-state='running'] .shell-bar > button {
+    pointer-events: auto;
   }
   body.field-kit.game-shell[data-flight-state='running'] #shell-menu .brand-mark {
     display: none;
@@ -385,7 +398,7 @@
   }
   body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
     #coop-app {
-    grid-template-rows: 44px auto minmax(0, 1fr);
+    grid-template-rows: calc(44px + var(--handheld-music-space, 0px)) auto minmax(0, 1fr);
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-objective[data-kind='stronghold'] {
     display: block;
@@ -606,8 +619,8 @@
 @media (max-width: 680px) and (orientation: portrait),
   (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
   body.field-kit.race-focus .race-hud {
-    height: 44px;
-    min-height: 44px;
+    height: calc(44px + var(--handheld-music-space, 0px));
+    min-height: calc(44px + var(--handheld-music-space, 0px));
     padding-block: 0;
   }
   body.field-kit.race-focus .race-hud button {
@@ -841,7 +854,7 @@
     display: none;
   }
   body.field-kit.race-focus.candidate-journey #couch-app {
-    grid-template-rows: auto 44px minmax(0, 1fr);
+    grid-template-rows: auto calc(44px + var(--handheld-music-space, 0px)) minmax(0, 1fr);
     grid-template-areas: 'save' 'hud' 'boards';
   }
   body.field-kit.race-focus #race-clock {
@@ -957,7 +970,8 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
       132px,
       calc(
         100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 140px -
-          var(--team-message-space)
+          var(--team-message-space) - var(--handheld-music-space, 0px) -
+          var(--team-music-objective-space, 0px)
       )
     );
   }
@@ -1295,7 +1309,8 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
     ) {
     --solo-warning-space: calc(var(--handheld-label) * 5.2 + 20px);
     --solo-field-space: calc(
-      100dvh - 56px - var(--solo-warning-space) - var(--safe-top) - var(--safe-bottom)
+      100dvh - 56px - var(--handheld-music-space, 0px) - var(--solo-warning-space) -
+        var(--safe-top) - var(--safe-bottom)
     );
   }
   body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
@@ -1320,7 +1335,9 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
     > .arena-shell {
     position: fixed;
     left: calc(var(--safe-left) + (100% - var(--safe-left) - var(--safe-right)) / 2);
-    top: calc(var(--safe-top) + 56px + var(--solo-field-space) / 2);
+    top: calc(
+      var(--safe-top) + 56px + var(--handheld-music-space, 0px) + var(--solo-field-space) / 2
+    );
     transform: translate(-50%, -50%);
     width: min(
       calc(100% - 24px - var(--safe-left) - var(--safe-right)),
@@ -1458,5 +1475,98 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .board-footer {
     padding: 0;
+  }
+}
+
+/* A visible music credit owns one explicit band; it cannot become an implicit
+   grid row or cover the accepted HUD, warning bands, arena or touch targets.
+   Menus and paused views retain their ordinary, scrollable credit layout. */
+@media (max-width: 680px) and (orientation: portrait) {
+  body.field-kit.game-shell[data-flight-state='running']:has(#game-now-playing:not([hidden])) {
+    --handheld-music-space: 44px;
+  }
+  body.field-kit.game-shell[data-flight-state='running'] #game-now-playing {
+    position: fixed;
+    top: calc(var(--safe-top) + 56px);
+    left: max(12px, var(--safe-left));
+    right: max(12px, var(--safe-right));
+    z-index: 6;
+    height: 44px;
+    margin: 0;
+    flex-wrap: nowrap;
+    background: var(--fk-bg);
+    font-size: var(--handheld-label);
+  }
+  body.field-kit.game-shell[data-flight-state='running'] #game-now-playing-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  body.field-kit.game-shell[data-flight-state='running'] #game-now-playing-source {
+    flex-shrink: 0;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.race-focus:has(#race-music-now-playing:not([hidden])) {
+    --handheld-music-space: 44px;
+  }
+  body.field-kit.race-focus:has(#race-music-now-playing:not([hidden])) .race-hud {
+    row-gap: 0;
+  }
+  body.field-kit.race-focus #race-music-now-playing:not([hidden]),
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-music-now-playing:not([hidden]) {
+    display: grid;
+    grid-template: repeat(2, minmax(0, 1fr)) / minmax(0, 1fr) auto;
+    column-gap: 8px;
+    row-gap: 0;
+    height: 44px;
+    min-height: 44px;
+    margin: 0;
+    font-size: var(--handheld-label);
+    line-height: 1.2;
+  }
+  body.field-kit.race-focus #race-music-now-playing .couch-music-credit-title,
+  body.field-kit.playing:has(#coop-overlay[hidden])
+    #coop-music-now-playing
+    .couch-music-credit-title {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  body.field-kit.race-focus #race-music-now-playing .couch-music-credit-file,
+  body.field-kit.playing:has(#coop-overlay[hidden])
+    #coop-music-now-playing
+    .couch-music-credit-file {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  body.field-kit.race-focus #race-music-now-playing a,
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-music-now-playing a {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    min-height: 44px;
+    padding-block: 0;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-music-now-playing:not([hidden])) {
+    --handheld-music-space: 44px;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-music-now-playing:not([hidden])):has(
+      #coop-objective[data-kind='stronghold']
+    ) {
+    /* The objective keeps its own reading strip above either steering pad. */
+    --team-music-objective-space: calc(var(--handheld-label) * 2.6 + 8px);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-music-now-playing {
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 44px);
+    left: max(12px, env(safe-area-inset-left));
+    right: max(12px, env(safe-area-inset-right));
+    z-index: 10;
+    background: var(--fk-bg);
   }
 }

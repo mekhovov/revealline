@@ -481,7 +481,15 @@ test('soundtrack UI and audio bind only their reviewed current inputs', async ()
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:407ed87024f42f215eeedaab51ad34e8643bb39c7fd6d406cd7145d2e1c98fe0',
+          'sha256:5d8df2e346074b8f7b3b7a33f5f102620f221c5d39a54dd7761b84d9733ee948',
+        ),
+        slot.id,
+      );
+      assert.ok(
+        asset.quality.evidence.some((entry) =>
+          entry.includes(
+            'docs/verification/music-v077-integration-2026-09-21/panel-review.json sha256:53b663c1eb2551c0991ff35c693ae221c14ceb009aa8da0b26bba05e076c9040',
+          ),
         ),
         slot.id,
       );

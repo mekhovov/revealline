@@ -1,0 +1,360 @@
+TAP version 13
+# Subtest: Countercurrent appends twelve exact picture cells and three proposed families without approving quality
+ok 1 - Countercurrent appends twelve exact picture cells and three proposed families without approving quality
+  ---
+  duration_ms: 87.811292
+  ...
+# Subtest: finite data adapters authenticate twelve distinct Countercurrent originals and all retained source bodies
+ok 2 - finite data adapters authenticate twelve distinct Countercurrent originals and all retained source bodies
+  ---
+  duration_ms: 1405.799834
+  ...
+# Subtest: the uniform adapter rejects borrowed source IDs, same-body wrong paths and invented dimensions
+ok 3 - the uniform adapter rejects borrowed source IDs, same-body wrong paths and invented dimensions
+  ---
+  duration_ms: 1534.827167
+  ...
+# Subtest: crossed theme or mission bindings do not borrow an exact original from a different owner
+ok 4 - crossed theme or mission bindings do not borrow an exact original from a different owner
+  ---
+  duration_ms: 67.513542
+  ...
+# Subtest: coherently edited register owner and layout still must match the authored descriptor
+ok 5 - coherently edited register owner and layout still must match the authored descriptor
+  ---
+  duration_ms: 187.835125
+  ...
+# Subtest: freshly pinned authority cannot redirect an FPV original to another source path
+ok 6 - freshly pinned authority cannot redirect an FPV original to another source path
+  ---
+  duration_ms: 284.69825
+  ...
+# Subtest: freshly pinned theme descriptor cannot relabel an original as another mission
+ok 7 - freshly pinned theme descriptor cannot relabel an original as another mission
+  ---
+  duration_ms: 171.138459
+  ...
+# Subtest: old register history stays immutable and a Countercurrent family cannot count twice
+ok 8 - old register history stays immutable and a Countercurrent family cannot count twice
+  ---
+  duration_ms: 73.120333
+  ...
+# Subtest: freshly pinned art manifest cannot invent dimensions beside unchanged provenance
+ok 9 - freshly pinned art manifest cannot invent dimensions beside unchanged provenance
+  ---
+  duration_ms: 112.844167
+  ...
+# Subtest: freshly pinned cohort cannot duplicate a theme and hide another exact edition
+ok 10 - freshly pinned cohort cannot duplicate a theme and hide another exact edition
+  ---
+  duration_ms: 119.424291
+  ...
+# Subtest: Fracture appends twelve exact picture cells and three proposed families without approving quality
+ok 11 - Fracture appends twelve exact picture cells and three proposed families without approving quality
+  ---
+  duration_ms: 101.305917
+  ...
+# Subtest: finite data adapters authenticate twelve distinct Fracture originals and all retained source bodies
+ok 12 - finite data adapters authenticate twelve distinct Fracture originals and all retained source bodies
+  ---
+  duration_ms: 997.917
+  ...
+# Subtest: both adapters reject borrowed source IDs, same-body wrong paths and invented dimensions
+ok 13 - both adapters reject borrowed source IDs, same-body wrong paths and invented dimensions
+  ---
+  duration_ms: 748.878166
+  ...
+# Subtest: crossed theme or mission bindings do not borrow an exact original from a different owner
+ok 14 - crossed theme or mission bindings do not borrow an exact original from a different owner
+  ---
+  duration_ms: 25.504708
+  ...
+# Subtest: coherently edited register owner and layout still must match the authored descriptor
+ok 15 - coherently edited register owner and layout still must match the authored descriptor
+  ---
+  duration_ms: 157.433292
+  ...
+# Subtest: freshly pinned authority cannot redirect an FPV original to another source path
+ok 16 - freshly pinned authority cannot redirect an FPV original to another source path
+  ---
+  duration_ms: 209.55625
+  ...
+# Subtest: freshly pinned theme descriptor cannot relabel an original as another mission
+ok 17 - freshly pinned theme descriptor cannot relabel an original as another mission
+  ---
+  duration_ms: 299.848375
+  ...
+# Subtest: old register history stays immutable and a Fracture family cannot count twice
+ok 18 - old register history stays immutable and a Fracture family cannot count twice
+  ---
+  duration_ms: 116.26425
+  ...
+# Subtest: the immutable Fracture register authenticates historical presets after runtime appearance expansion
+ok 19 - the immutable Fracture register authenticates historical presets after runtime appearance expansion
+  ---
+  duration_ms: 195.530333
+  ...
+# Subtest: an old checkout without history uses exact current metadata; missing snapshot never silently uses different runtime presets
+ok 20 - an old checkout without history uses exact current metadata; missing snapshot never silently uses different runtime presets
+  ---
+  duration_ms: 399.912125
+  ...
+# Subtest: changed or symlinked historical snapshots reject; an unrelated mapping cannot redirect a declared pin
+ok 21 - changed or symlinked historical snapshots reject; an unrelated mapping cannot redirect a declared pin
+  ---
+  duration_ms: 503.390792
+  ...
+# Subtest: history admits only finite complete JSON identities, with no arbitrary snapshot path or duplicate entry
+ok 22 - history admits only finite complete JSON identities, with no arbitrary snapshot path or duplicate entry
+  ---
+  duration_ms: 210.325041
+  ...
+# Subtest: the preserved FPV preset revision remains exact after a later runtime change
+ok 23 - the preserved FPV preset revision remains exact after a later runtime change
+  ---
+  duration_ms: 348.308334
+  ...
+# Subtest: a newly declared unarchived preset revision reads the current file and still refuses changed current bytes
+ok 24 - a newly declared unarchived preset revision reads the current file and still refuses changed current bytes
+  ---
+  duration_ms: 296.015167
+  ...
+# Subtest: v2 preserves the exact prior renderer as inert source bytes and v1 still accepts JSON-only history
+ok 25 - v2 preserves the exact prior renderer as inert source bytes and v1 still accepts JSON-only history
+  ---
+  duration_ms: 252.702875
+  ...
+# Subtest: v2 module history refuses absent, changed and symlinked snapshots without reading the changed live renderer
+ok 26 - v2 module history refuses absent, changed and symlinked snapshots without reading the changed live renderer
+  ---
+  duration_ms: 632.01025
+  ...
+# Subtest: a private exact module snapshot is authenticated as bytes and never executed
+ok 27 - a private exact module snapshot is authenticated as bytes and never executed
+  ---
+  duration_ms: 279.850584
+  ...
+# Subtest: one pure inventory preserves exact inspection and filters missing Sentinel themes without inflating rigs
+ok 28 - one pure inventory preserves exact inspection and filters missing Sentinel themes without inflating rigs
+  ---
+  duration_ms: 24.1415
+  ...
+# Subtest: actual panel uses metadata only; native filters and Back retain focus, source text stays inert
+ok 29 - actual panel uses metadata only; native filters and Back retain focus, source text stays inert
+  ---
+  duration_ms: 28.816125
+  ...
+# Subtest: explicit preview cancellation prevents late row completion, disposes URLs and never steals focus
+ok 30 - explicit preview cancellation prevents late row completion, disposes URLs and never steals focus
+  ---
+  duration_ms: 62.651958
+  ...
+# Subtest: preview failure is visible; filter, reload and lifecycle cancel current requests without approvals
+ok 31 - preview failure is visible; filter, reload and lifecycle cancel current requests without approvals
+  ---
+  duration_ms: 71.27425
+  ...
+# Subtest: late reload and invalid register preserve the current valid view and active filter
+ok 32 - late reload and invalid register preserve the current valid view and active filter
+  ---
+  duration_ms: 20.063375
+  ...
+# Subtest: preview source URL rejects unsafe or remote roots before any body fetch
+ok 33 - preview source URL rejects unsafe or remote roots before any body fetch
+  ---
+  duration_ms: 0.593958
+  ...
+# Subtest: real PNG byte identity admits native decode once; mismatch and decode failure cannot leave a URL
+ok 34 - real PNG byte identity admits native decode once; mismatch and decode failure cannot leave a URL
+  ---
+  duration_ms: 78.694292
+  ...
+# Subtest: bounded reader rejects redirect/oversized stream and cancellation before decode disposes its URL
+ok 35 - bounded reader rejects redirect/oversized stream and cancellation before decode disposes its URL
+  ---
+  duration_ms: 14.550541
+  ...
+# Subtest: shared project workflow reaches all fourteen skills without duplicating or executing intake templates
+ok 36 - shared project workflow reaches all fourteen skills without duplicating or executing intake templates
+  ---
+  duration_ms: 25.971875
+  ...
+# Subtest: inspected reserves use their terminal checklist and reused production pictures stay excluded from spare totals
+ok 37 - inspected reserves use their terminal checklist and reused production pictures stay excluded from spare totals
+  ---
+  duration_ms: 28.806416
+  ...
+# Subtest: register timeout stops activity even when the underlying reader settles late
+ok 38 - register timeout stops activity even when the underlying reader settles late
+  ---
+  duration_ms: 11.218542
+  ...
+# Subtest: real source cohort has 27 unique originals in nine proposed layout families, not 15 new external works
+ok 39 - real source cohort has 27 unique originals in nine proposed layout families, not 15 new external works
+  ---
+  duration_ms: 22.991833
+  ...
+# Subtest: finite adapters validate all real original identities without rerunning producers or decoding
+ok 40 - finite adapters validate all real original identities without rerunning producers or decoding
+  ---
+  duration_ms: 542.071917
+  ...
+# Subtest: pure browser module runs from a data URL without Node, DOM or source imports
+ok 41 - pure browser module runs from a data URL without Node, DOM or source imports
+  ---
+  duration_ms: 23.767083
+  ...
+# Subtest: strict metadata rejects unknown fields, unsafe paths, duplicate identities and invalid target basis
+ok 42 - strict metadata rejects unknown fields, unsafe paths, duplicate identities and invalid target basis
+  ---
+  duration_ms: 14.917125
+  ...
+# Subtest: a distinct edition or explicitly declared variant cannot fill a second map slot
+ok 43 - a distinct edition or explicitly declared variant cannot fill a second map slot
+  ---
+  duration_ms: 3.111625
+  ...
+# Subtest: picture owner is constrained to the actual planned layout and work, including theme
+ok 44 - picture owner is constrained to the actual planned layout and work, including theme
+  ---
+  duration_ms: 7.941917
+  ...
+# Subtest: replacement preserves A history and reviews but B cannot inherit them or skip its own stages
+ok 45 - replacement preserves A history and reviews but B cannot inherit them or skip its own stages
+  ---
+  duration_ms: 40.849958
+  ...
+# Subtest: append-only revision comparison refuses identity edits and removed history
+ok 46 - append-only revision comparison refuses identity edits and removed history
+  ---
+  duration_ms: 69.613875
+  ...
+# Subtest: an unresolved failure blocks stage promotion even when another pass exists
+ok 47 - an unresolved failure blocks stage promotion even when another pass exists
+  ---
+  duration_ms: 9.38725
+  ...
+# Subtest: shared original bytes and recompressed derivatives cannot inflate selected/reserve totals
+ok 48 - shared original bytes and recompressed derivatives cannot inflate selected/reserve totals
+  ---
+  duration_ms: 113.316458
+  ...
+# Subtest: metadata remains inspectable when originals are missing; byte verification reports unavailable
+ok 49 - metadata remains inspectable when originals are missing; byte verification reports unavailable
+  ---
+  duration_ms: 305.987375
+  ...
+# Subtest: changed metadata, forged ownership and symlinked sources refuse without executing a module
+ok 50 - changed metadata, forged ownership and symlinked sources refuse without executing a module
+  ---
+  duration_ms: 378.069958
+  ...
+# Subtest: CLI produces one exclusive proposal, preserves input, and refuses overwrites and stale revisions
+ok 51 - CLI produces one exclusive proposal, preserves input, and refuses overwrites and stale revisions
+  ---
+  duration_ms: 257.367292
+  ...
+# Subtest: CLI report reads metadata only; traversal and wrong options never create output
+ok 52 - CLI report reads metadata only; traversal and wrong options never create output
+  ---
+  duration_ms: 168.88975
+  ...
+# Subtest: renamed shared recipes and another segment of one movie do not inflate unique works
+ok 53 - renamed shared recipes and another segment of one movie do not inflate unique works
+  ---
+  duration_ms: 18.042792
+  ...
+# Subtest: movie facts and original dimensions cannot be changed under the same source identity
+ok 54 - movie facts and original dimensions cannot be changed under the same source identity
+  ---
+  duration_ms: 161.976875
+  ...
+# Subtest: CLI previous-register comparison preserves exact prior work identity
+ok 55 - CLI previous-register comparison preserves exact prior work identity
+  ---
+  duration_ms: 382.31325
+  ...
+# Subtest: existing produced raster manifest works without a second media store and preserves derivative parent
+ok 56 - existing produced raster manifest works without a second media store and preserves derivative parent
+  ---
+  duration_ms: 215.316708
+  ...
+# Subtest: historical originals with conflicting identities at one path reject before inventory dedupe
+ok 57 - historical originals with conflicting identities at one path reject before inventory dedupe
+  ---
+  duration_ms: 332.790375
+  ...
+# Subtest: nine Sentinel themes append exact owners without changing old works, reviews or geometry totals
+ok 58 - nine Sentinel themes append exact owners without changing old works, reviews or geometry totals
+  ---
+  duration_ms: 43.926875
+  ...
+# Subtest: new finite adapter verifies all exact originals without executing a game or producer
+ok 59 - new finite adapter verifies all exact originals without executing a game or producer
+  ---
+  duration_ms: 721.551125
+  ...
+# Subtest: a new theme cannot borrow another poster or original by changing only its declared source handle
+ok 60 - a new theme cannot borrow another poster or original by changing only its declared source handle
+  ---
+  duration_ms: 226.225833
+  ...
+# Subtest: different-theme and different-mission owners cannot fill the intended slot
+ok 61 - different-theme and different-mission owners cannot fill the intended slot
+  ---
+  duration_ms: 11.480625
+  ...
+# Subtest: register expansion preserves immutable history and cannot count reused layouts twice
+ok 62 - register expansion preserves immutable history and cannot count reused layouts twice
+  ---
+  duration_ms: 20.827583
+  ...
+# Subtest: baseline remains readable and a new picture still has every production check open
+ok 63 - baseline remains readable and a new picture still has every production check open
+  ---
+  duration_ms: 97.753542
+  ...
+# Subtest: retained source bodies authenticate exact immutable recipe pins without approving production
+ok 64 - retained source bodies authenticate exact immutable recipe pins without approving production
+  ---
+  duration_ms: 199.037167
+  ...
+# Subtest: old source checkouts remain valid without the optional source index; changed current bytes refuse
+ok 65 - old source checkouts remain valid without the optional source index; changed current bytes refuse
+  ---
+  duration_ms: 419.061333
+  ...
+# Subtest: missing, modified or symlinked source snapshots fail instead of using the current recipe
+ok 66 - missing, modified or symlinked source snapshots fail instead of using the current recipe
+  ---
+  duration_ms: 408.809667
+  ...
+# Subtest: source history has finite exact identities and cannot choose arbitrary source or snapshot paths
+ok 67 - source history has finite exact identities and cannot choose arbitrary source or snapshot paths
+  ---
+  duration_ms: 308.892
+  ...
+# Subtest: a new source pin reads current bytes while the retained old pin remains immutable
+ok 68 - a new source pin reads current bytes while the retained old pin remains immutable
+  ---
+  duration_ms: 474.332625
+  ...
+# Subtest: archived source bytes are authenticated but never imported or executed
+ok 69 - archived source bytes are authenticated but never imported or executed
+  ---
+  duration_ms: 660.110083
+  ...
+# Subtest: overlapping history identities require both exact snapshots without fallback to the other copy or live source
+ok 70 - overlapping history identities require both exact snapshots without fallback to the other copy or live source
+  ---
+  duration_ms: 1018.660667
+  ...
+1..70
+# tests 70
+# suites 0
+# pass 70
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4372.09225

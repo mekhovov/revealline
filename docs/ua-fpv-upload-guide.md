@@ -6,9 +6,9 @@ These are personal local imports, not publicly downloadable licensed albums. The
 
 ## Compatibility: packs need the new soundtrack framework
 
-These four files use **RLSTB3 / soundtrack library v3** and require the framework introduced in **PR #209** or a later release containing it. The published **v0.76.1 accepted base (`d70f3a58`)** accepts **RLSTB1 only**. It cannot import these four packs, and renaming the files or changing their header will not convert them. The release number alone is not enough: in Music Studio, **Add album file to draft** and **Music selection → My mix** identify the new workflow described below. The older studio has **Complete soundtrack backup (.rlsound)** and only replacement-backup import.
+These four files use **RLSTB3 / soundtrack library v3** and require the framework introduced in **PR #209** or a later release containing it. The accepted **v0.77.0** source (`432110b51c570b838cdae390790b67dfa76f0785`), like the earlier v0.76.1 base, accepts **RLSTB1 only**. It cannot import these four packs, and renaming the files or changing their header will not convert them. The release number alone is not enough: in Music Studio, **Add album file to draft** and **Music selection → My mix** identify the new workflow described below. The older studio has **Complete soundtrack backup (.rlsound)** and only replacement-backup import.
 
-### Play the source MP3s in the published v0.76.1 edition
+### Play the source MP3s in v0.77.0 or v0.76.1
 
 You can use the original MP3 files directly without creating another audio copy or waiting for the new pack importer:
 
@@ -18,7 +18,7 @@ You can use the original MP3 files directly without creating another audio copy 
 4. Select an imported song in **Tracks**, then click **New playlist with selected track**. Set a title, choose **Shuffle without repeats until every entry played** and **Repeat all**, then **Apply playlist details to draft**. Add the remaining songs through **Track to add → Add selected track** and **Save all changes**. The playlist can hold all 80 entries; use the index's 77 `queued: true` filenames if you want each distinct recording only once.
 5. Choose that custom playlist in **Playback playlist**, click **Save & use playlist**, use **Unmute master sound** if muted, and press **Play music**. **Next** advances through the playlist. To mix styles on this older edition, manually add other imported tracks or built-in synth tracks to the same custom playlist.
 
-The old edition does not have genre-wide **Ukrainian**, **My mix**, **Installed only**, **Recording mode**, additive pack import, or the new menu/transition behavior. Its **128 total track / 32 total playlist** limits include the five built-in tracks and six built-in playlists, leaving **123 custom tracks and 26 custom playlists**. Its 256 MiB shared budget still applies. All 80 files fit only if the existing library and other managed media leave enough room. Native decoding on the particular browser/device is still required; raw import is not listening or rights approval.
+These older editions do not have genre-wide **Ukrainian**, **My mix**, **Installed only**, **Recording mode**, additive pack import, or the new menu/transition behavior. Their **128 total track / 32 total playlist** limits include the five built-in tracks and six built-in playlists, leaving **123 custom tracks and 26 custom playlists**. The 256 MiB shared budget still applies. All 80 files fit only if the existing library and other managed media leave enough room. Native decoding on the particular browser/device is still required; raw import is not listening or rights approval.
 
 A v1 saved-library backup from the old edition can be imported by the new framework. A v3 backup is not backward-compatible with that old reader. The new framework also uses a newer shared storage boundary: use a separate origin/profile for a preview and keep your old backup before adopting a newer release rather than switching an upgraded store back to the old edition.
 
@@ -91,3 +91,9 @@ Browser verification is a separate check: the isolated native UI pass additively
 Technical decoding and browser transport checks do **not** approve musical quality, subjective listening, ownership, lyrics, artwork rights, or recording-safe use.
 
 The source set has three duplicate pairs with conflicting filename descriptions. Those aliases are preserved as supplied, not treated as independently verified song titles or artist credits. Distinct recordings with similar names remain distinct by SHA-256.
+
+## Source follow-up — 21 September 2026
+
+The user supplied [the Телебачення Торонто video with Ницо Потворно](https://www.youtube.com/watch?v=5tgI33haI4w). Its title, credited channel and approximate duration identify a candidate for **one of 77 recordings**, represented by **two of 80 filename rows**. Embedded metadata does not authenticate the local audio against the video; no source URL or video ID is embedded, and the tag year differs from the video's publication year. The local aliases and original bytes remain unchanged.
+
+The expanded description and channel About review found no Creative Commons label or express game-use/public-MP3 permission. The license remains **unverified**; missing visible licensing information does not establish a confirmed Standard YouTube license. No redistribution grant is inferred, and the other 76 recordings need their own evidence. The retained source check and unsent Ukrainian permission-request draft are local in `.cache/ua-fpv-source-review-2026-09-21/`. No message was sent and no audio was downloaded for that review. See the [publication follow-up](verification/music-publication-2026-09-21/publication.md#ua-fpv-source-follow-up--21-september-2026).

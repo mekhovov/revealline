@@ -28,6 +28,14 @@ Local validation, lint and both repository formatting checks passed; their logs 
 
 [Browser evidence](browser-check.json) separates local numeric media checks from public accessible-control checks. Local MP3 excerpts played, paused, resumed without resetting position and advanced within a genre. The live Pages index filtered 12 retro recordings; Raspberry Jam played, pause/resume worked and Next advanced to Escalate. The public player was left paused. Numeric public media inspection timed out; accessible controls showed playback state. An earlier browser-native audio-widget automation crash is retained as a limitation; explicit page controls passed. No full-track listening, physical iPhone, offline game or frozen-build qualification is inferred.
 
-## Game release sequencing
+## Game release sequencing at archive publication
 
 PR #209 remains draft with no new version allocated. The game release controller holds soundtrack rebase/version work behind the accepted PR #211 UI release. Rebase, exact source CI, frozen-build/offline qualification, merge and game Pages deployment remain separate work. The public MP3 archive is already deployed independently.
+
+## UA-FPV source follow-up — 21 September 2026
+
+After the archive publication and its original rights audit, the user supplied [a specific YouTube video](https://www.youtube.com/watch?v=5tgI33haI4w), published by **Телебачення Торонто** on 10 December 2023 and crediting **Ницо Потворно** for vocals. The displayed title, artist metadata and approximate duration identify a candidate for **one of the 77 local recordings**, with **two of the 80 filename aliases**. The two local files share SHA-256 `417eea94faf4114996886dbcad58e158667df0dd94c497d847eabaf5fc64a9ba` and remain in private volume 02. No embedded URL/video ID authenticates those audio bytes against the remote video; the tag year also differs from the video's publication year.
+
+The retained review inspected the expanded video description and channel About. Neither reviewed surface supplied a Creative Commons label or an express grant covering game use and standalone public MP3 redistribution. **Permission remains unverified.** Absence of a visible license is not proof of a confirmed Standard YouTube license. The recording remains private, the remaining 76 recordings require their own evidence, and no UA-FPV bytes have been added to the 70-track archive. The original audit and publication receipts remain unchanged.
+
+The source check and a Ukrainian permission-request draft are retained locally in `.cache/ua-fpv-source-review-2026-09-21/`; the draft has not been sent. This follow-up makes no new download, listening, ownership, recording-safe or publication approval claim. The [updated import guide](../../ua-fpv-upload-guide.md) preserves the playable local path and now identifies accepted v0.77.0's continuing RLSTB1-only compatibility.
