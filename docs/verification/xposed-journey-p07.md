@@ -217,3 +217,34 @@ ready card contained the new carrier-only warning. Close restored Play focus.
 Visual capture subsequently reported zero width, so no screenshot or device
 layout acceptance is inferred. These scoped checks are not a production recipe
 review, full-source hosted qualification, immutable release or Pages deployment.
+
+## First original reveal-art candidate
+
+The isolated continuation adds one original for A return in reserve: an empty
+stone landing, short bridge and suspended brass instrument in an observatory.
+The built-in image tool generated the composition, then a targeted edit removed
+an unintended vehicle, banner symbols, wall diagram and floor markings. Exact
+generation/edit prompts and assistant-only review limitations are preserved in
+`docs/research/phase-original-art-prompts.json`. The unchanged final PNG is
+1774×887,2,105,440bytes,SHA256
+`3759447c5d88634d7de4e075183faeb3836f11996adb68997831ad917301692d`, at
+`game/content-design/assets/phase-observatory-r1/return-in-reserve.png`.
+
+`createPhaseCandidates({artwork:true})` binds this one immutable candidate through
+the shared registry, compiler and verified preview. Six missing compositions stay
+null; the default factory remains the historical greybox. Studio's existing
+Inspect → Apply → Play flow opts into the pictured draft without publication or
+awards. No simulation, historical receipt or earned-coverage rule changes.
+
+The28-test art/candidate/catalogue/Border/whole-library cohort passes on
+Node20.19.5 and22.22.2. Exact bytes/PNG dimensions/prompt pins, preview fail-closed
+behavior, six Solo/Versus preset identities, all42 Phase clear checkpoints and
+all498 composed manifests remain verified. Scoped lint/format/diff checks pass.
+The first test invocation named a nonexistent phase-preview test and exited
+before running; the corrected cohort above uses the actual candidate/catalogue
+tests and is the reported result.
+
+This is one composition, not complete Phaseworks art. Brass railings/reflections
+still need native reveal/overlay contrast checks; all six other originals,
+campaign-specific actor presentation/audio, full visual/device/human qualification,
+accepted-source integration, aggregate offline budget and release/Pages remain.

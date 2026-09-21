@@ -1,0 +1,34 @@
+{
+  "campaign": "Phaseworks",
+  "status": "one-original-candidate-six-compositions-pending",
+  "tool": "built-in-imagegen",
+  "useCase": "stylized-concept",
+  "assets": [
+    {
+      "missionId": "return-in-reserve",
+      "path": "game/content-design/assets/phase-observatory-r1/return-in-reserve.png",
+      "sha256": "3759447c5d88634d7de4e075183faeb3836f11996adb68997831ad917301692d",
+      "bytes": 2105440,
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for the Xonix-style game Reveal Line, Phaseworks campaign, introductory mission A return in reserve. One opaque full-bleed wide 2:1 landscape illustration. Scene: a quiet precision-signal workshop inside a spacious old observatory, where a small robust maintenance landing sits beside a large suspended brass oscillation mechanism. The instrument has a few clean nested mechanical rings and a ceramic counterweight, not a magical portal. A short solid access bridge connects the landing to the workshop gallery; distant open arches reveal pale evening sky. The small nearby landing and the much larger machine beyond evoke a short return versus ambitious reach without depicting playable geometry. Composition: natural oblique perspective, large readable shapes, generous calm areas of matte flooring and softly shadowed walls, interesting focal discoveries spread across the width rather than all at center. Style: crafted environmental illustration with grouped pixel-art-inspired textures, muted graphite, warm brass and pale ceramic, restrained soft amber reflections; no harsh neon or glare. This decorative picture will be progressively uncovered behind bright gameplay symbols, so avoid competing thin glowing lines and excessive microdetail. Entirely original art, no supplied game screenshot. No people, characters, enemies, grid, game board, UI, labels, text, numbers, logos, arrows, collectible or hazard symbols, frames, watermark, transparent background.",
+      "editPrompt": "Use case: precise-object-edit. Edit the displayed Phaseworks observatory illustration only to remove misleading decorative and vehicle elements: remove the small spacecraft-like maintenance vehicle from the left landing, leaving a clear empty stone landing; remove all symbols and markings from the hanging banners, leaving plain dark fabric; remove the diagram poster on the far left wall, leaving matching plain masonry; remove the thin golden circular markings on the foreground floor, leaving ordinary stone tiles. Preserve everything else: exact 2:1 image size and framing, the large brass mechanical rings and ceramic counterweight, access bridge, railings, shelves, architectural arches, landscape, warm evening light, colors, textures, perspective and all remaining objects. Add no new objects, text, symbols, UI, grid, characters or luminous lines.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A short access bridge joins an empty stone landing to a suspended brass instrument in a spacious observatory.",
+          "Targeted edit removed an unintended vehicle, banner markings, poster diagram and floor markings while preserving the composition.",
+          "The scene is a detailed stylized illustration rather than strict low-resolution pixel art; brass railings and reflections require in-game contrast review."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Six remaining distinct mission compositions",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    }
+  ]
+}

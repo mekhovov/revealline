@@ -637,7 +637,7 @@ $('fracture').onclick = guarded(() => {
 });
 $('phase').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createPhaseCandidates(), null, 2);
+  $('source').value = JSON.stringify(createPhaseCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });
