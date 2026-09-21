@@ -1,0 +1,61 @@
+{
+  "format": "revealline-handheld-integration-rehearsal.v1",
+  "source": {
+    "base": "432110b51c570b838cdae390790b67dfa76f0785",
+    "landscape": "61af3634cc3fd4419d741b1d809a03c4e394d896",
+    "music": "8ee3bbe5b01529648cff8054536a269d2c11c3a1"
+  },
+  "method": "git merge-file -p landscape.css base.css music.css; no tracked runtime changes or branch rebase",
+  "mergeExit": 0,
+  "pins": {
+    "base": {
+      "bytes": 50231,
+      "sha256": "62a224a01f9741c4f4f16cca32e832c7528d956879122b2a0d8242858ed46f66"
+    },
+    "landscape": {
+      "bytes": 50680,
+      "sha256": "1b0b3c84c26992728e72d5fe3a2ae67049e035fb737b71eb2b675fc162adb795"
+    },
+    "music": {
+      "bytes": 54449,
+      "sha256": "a796d00d10616495a6909eecb548178e6f1f5a593ffe2a1aee16f74222cf60b3"
+    },
+    "composed": {
+      "bytes": 54898,
+      "sha256": "2319eac31296c3fdfb5878116a0c83b3a7c017c6326ce1933aacc4c65070f8d6"
+    }
+  },
+  "musicLeavesInputRuntimeUnchanged": {
+    "game/ui/input.mjs": true,
+    "game/couch/couch-input.mjs": true,
+    "game/ui/touch-steering.mjs": true,
+    "game/ui/fullscreen.mjs": true
+  },
+  "review": [
+    "Retain music-aware Team grid rows while establishing grid for 501\u2013600px height.",
+    "Retain music/objective subtraction in pad sizing while removing full-height touch gutters.",
+    "Preserve music portrait header hit-testing fix.",
+    "Visible credits still reserve 44px: one-row gameplay HUD remains an unclosed product target."
+  ],
+  "browser": {
+    "source": "8ee3bbe5b01529648cff8054536a269d2c11c3a1",
+    "override": "only composed handheld-play.css",
+    "url": "http://127.0.0.1:53310/game/couch/relay-rescue.html",
+    "viewport": [568, 320],
+    "observed": "Loaded Team title; enabled Start together button focused and within viewport; no inert ancestor; no warning/error log. Enter and locator click did not advance.",
+    "startRect": {
+      "x": 40,
+      "y": 260.171875,
+      "width": 488,
+      "height": 44
+    },
+    "outcome": "inconclusive-activation",
+    "nativeGameplayGeometryAccepted": false,
+    "physicalDevice": false,
+    "uniqueServedBindings": 239,
+    "uniqueServedBytes": 2993908,
+    "allBindingsVerified": true,
+    "requestCountNotRecorded": true
+  },
+  "publication": "held after PR209; no version, merge or deployment acceptance"
+}
