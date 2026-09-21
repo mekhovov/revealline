@@ -400,7 +400,12 @@ export function normalizedLevel(level) {
       'xonix-level.v8',
     ].includes(level.version)
   )
-    for (const item of [...level.classic.terrain, ...level.classic.powerups]) ids.add(item.id);
+    for (const item of [
+      ...level.classic.terrain,
+      ...level.classic.powerups,
+      ...(level.classic.timedBonuses?.schedules ?? []),
+    ])
+      ids.add(item.id);
   let homeId = 'home-hangar';
   for (let n = 1; ids.has(homeId); n++) homeId = `home-hangar-${n}`;
   return {

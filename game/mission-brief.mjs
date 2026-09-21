@@ -77,6 +77,9 @@ export function missionBriefing(
           ? 'AIM locks a target. Turn before CHASE; REST returns it to patrol.'
           : '',
         level.classic?.powerups?.length ? 'Touch pickups to collect their effects.' : '',
+        level.classic?.timedBonuses
+          ? 'Timed pickups: wait for the solid symbol, then touch before its ring expires. Missed pickups may return elsewhere; enclosure alone does not collect them.'
+          : '',
         level.classic?.terrain?.some((tile) => tile.kind === 'lethal')
           ? 'Red crosshatched fields damage on contact; enclose them before crossing.'
           : level.classic?.terrain?.some((tile) => tile.kind === 'slow')

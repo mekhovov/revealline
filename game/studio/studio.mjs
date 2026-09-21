@@ -1,6 +1,7 @@
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
+import { createTimedBorderCandidates } from '../content-design/timed-border-candidates.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
 import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
 import { createRoverTeachingCandidates } from '../content-design/rover-teaching-candidates.mjs';
@@ -39,6 +40,7 @@ import { createTeamTestPack, createTeamCampaignTestPack } from '../content-desig
 import { createActorEditor } from './actor-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
+import { createTimedBonusEditor } from './timed-bonus-editor.mjs';
 import { createObjectiveEditor } from './objective-editor.mjs';
 import { createRelayEditor } from './relay-editor.mjs';
 import { createDirectionalEditor } from './directional-editor.mjs';
@@ -121,6 +123,18 @@ const geometryEditor = createGeometryEditor({
   },
 });
 const bonusEditor = createBonusEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const timedBonusEditor = createTimedBonusEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
@@ -260,6 +274,7 @@ function inspectBoard(trailCells = []) {
   actorEditor.sync();
   geometryEditor.sync();
   bonusEditor.sync();
+  timedBonusEditor.sync();
   objectiveEditor.sync();
   relayEditor.sync();
   directionalEditor.sync();
@@ -299,6 +314,8 @@ function inspectBoard(trailCells = []) {
     `${manifest.level.rules.lives ?? preset.lives} ${manifest.mode === 'team' ? 'shared team lives' : 'lives'} · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'} · ${session.current().difficultyCatalogId}: ${preset.description} Player handling and attack warning lengths are unchanged between presets.`;
   $('geometry').textContent =
     `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${contentActorDescription(manifest.level, actor)} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
+  $('geometry').textContent +=
+    ` Timed optional pickups: ${(mission.timedBonuses?.schedules ?? []).map((schedule) => `${schedule.id}: ${schedule.anchors.length} possible anchors, ${schedule.announcementTicks / 120}s announcement / ${schedule.availableTicks / 120}s available / ${schedule.cooldownTicks / 120}s cooldown, at most ${schedule.maxCollections} collections`).join('; ') || 'none'}.`;
   $('geometry').textContent +=
     ` Capture objectives: ${mission.objectives.map((objective) => `${objective.id}: ${objective.required ? 'required' : 'optional'}, ${objective.hidden ? 'hidden initially' : 'visible'}, at (${objective.x}, ${objective.y})`).join('; ') || 'none'}.`;
   if (mission.relayLinks)
@@ -610,6 +627,16 @@ $('opening').onclick = guarded(() => {
 $('border').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createBorderCandidates({ artwork: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('timed-border').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(
+    withCampaignPresentation(createTimedBorderCandidates({ artwork: true }), 'border'),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });

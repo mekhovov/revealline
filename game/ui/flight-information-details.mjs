@@ -135,7 +135,23 @@ export function flightDetailsModel(information, context) {
           'pickups',
           'Contact pickups',
           group(
-            classic.powerups.map((p) => `${p.label}: collect its symbol to activate the bonus.`),
+            classic.powerups.map((p) =>
+              p.timed
+                ? `${p.label}: touch before the ring expires (${seconds(p.seconds)}). Enclosure does not collect it; missed pickups may return elsewhere.`
+                : `${p.label}: collect its symbol to activate the bonus.`,
+            ),
+          ),
+        ),
+      );
+    const upcoming = classic.timedBonuses?.filter((p) => p.phase === 'announce') ?? [];
+    if (upcoming.length)
+      parts.push(
+        section(
+          'timed-pickups',
+          'Upcoming optional pickups',
+          upcoming.map(
+            (p) =>
+              `${p.label}: solid symbol appears in ${seconds(p.seconds)}. Hollow symbols cannot be collected.`,
           ),
         ),
       );

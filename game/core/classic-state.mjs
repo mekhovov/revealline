@@ -1,5 +1,6 @@
 import { CELL } from './registry.mjs';
 import { isClassicRuleset } from './versions.mjs';
+import { createTimedBonusState } from './timed-bonuses.mjs';
 
 export const CLASSIC_MATERIAL = Object.freeze({ normal: 0, slow: 1, lethal: 2 });
 export const CLASSIC_EFFECTS = Object.freeze({
@@ -31,6 +32,9 @@ export function createClassicState(level, cells) {
     anchors: [],
     departure: null,
     tickClaims: [],
+    ...(level.classic.timedBonuses
+      ? { timedBonuses: createTimedBonusState(level.classic.timedBonuses) }
+      : {}),
     ...(level.classic.lineImpact
       ? {
           lineImpact: {

@@ -38,7 +38,7 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 |---|---|---|
 | P00 — plan/audit/flow/progress/teaching | Canonical plan;110 old Solo /64 files /48 numbered references audited; direct flow, stable receipts and teaching fixtures; scoped integration accepted | Exact public whole-flow audit; human capture understanding; latest release reconciliation |
 | P01 — foundations/Prologue/Horizon/Studio minimum | Foundation topology/runtime; ten opening candidates including Remix; original art; shared compiler/Studio; route/replay fixtures | Whole-set native/device/human balance; successor integration/Pages |
-| P02 — Border/bonuses/frontier/Studio CRUD/image | Seven candidates/art; contact bonuses; outer/frontier teaching; CRUD/manual image workflow; bonus-independent routes | New timed schedules; broader Studio usability/conflict tests; human/promotion gates |
+| P02 — Border/bonuses/frontier/Studio CRUD/image | Seven candidates/art; contact bonuses; outer/frontier teaching; CRUD/manual image workflow; timed-schedule engine/editor and three-mission study; bonus-independent routes | Timed native/mode/release qualification; broader Studio usability/conflict tests; human/promotion gates |
 | P03 — Signal/terrain/catalogues/presentation/trace | Seven candidates/art; terrain contracts; actor catalogues; bounded trace benchmark; reactive captions | Whole-set native/human; final audio; public integration |
 | P04 — Neon | Seven candidates/art; frontier-shaping routes; Remix; replay/race/mastery/seed checks | Stronger-pressure retest, human pacing, public integration |
 | P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; route checks | Presentation/pressure successor, human balance, public integration |
@@ -49,7 +49,7 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; route checks | Human precision/readability, pressure retest, public integration |
 | P11 — Sentinel | Four core + Remix/art; multi-relay encounter; replay/restoration | Short optimized clears remain pacing risks; human boss balance, public integration |
 | P12 — Apex | Four core + Remix/art; capstone combinations; replay/race checks | Short optimized finales need rework; human mastery, public integration |
-| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; prior V3 full-host routes; V4 full-host checks running | All-map pressure/cleanup audit, human cuts, final reference dispositions, integrated Pages |
+| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22 | All-map pressure/cleanup audit, human cuts, final reference dispositions, integrated Pages |
 | P14 —12 Team missions | Three four-mission arcs; original art; joint cuts/seat swaps; Team flow/Skip/chooser/presets | Live two-player balance/controllers; material successor host adoption; new mechanic qualification; Pages |
 | P15 — final validation/Legacy/rollback | Immutable evidence records; compiler/CLI/Studio inspection; persistence/compatibility groundwork | Human sessions; full device/accessibility/performance; Legacy transition; public rollback proof; deployment |
 
@@ -68,8 +68,10 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
   proposals, not48 final human-approved dispositions.
 - [ ] New all-level difficulty pass, including public legacy content and Team;
   explicit successors, never silent old-edition edits.
-- [ ] Timed relocating bonuses: schema, engine, visualization, Studio, replay/save,
-  eligibility, bounded collection and mode qualification.
+- [x] Timed relocating bonus schema/engine/visualization/Studio/replay/save,
+  eligibility and bounded collection in explicit local Solo/Versus candidates.
+- [ ] Timed bonus native/human/release qualification and Team semantics. See
+  [slice B evidence](journey-timed-bonuses.md); local implementation is not deployment.
 - [ ] Ukrainian/FPV arcs with distinct route decisions, original assets, cultural
   attribution, playtests and enrollment.
 - [ ] Authored pressure roles and optional non-retaining combat actors, settings,

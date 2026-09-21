@@ -113,7 +113,10 @@ export function classicView(run) {
     const active = (kind) =>
       effects.some((effect) => effect.kind === kind && effect.phase === 'active');
     const powerups = [];
-    for (const item of dense(own(state, 'powerups'), 64)) {
+    for (const item of dense(
+      own(state, 'powerups'),
+      own(state, 'timedBonuses') === undefined ? 64 : 72,
+    )) {
       const kind = own(item, 'kind'),
         collectedTick = own(item, 'collectedTick');
       check(
@@ -146,6 +149,63 @@ export function classicView(run) {
     }
     const level = own(run, 'level');
     const definition = level == null ? null : own(level, 'classic');
+    const timedState = own(state, 'timedBonuses');
+    const timedBonuses = [];
+    if (timedState !== undefined) {
+      check(own(timedState, 'version') === 'timed-bonus-state.v1');
+      const clock = own(timedState, 'clock');
+      check(integer(clock) && clock <= tick);
+      const timedDefinition = own(definition, 'timedBonuses');
+      check(own(timedDefinition, 'version') === 'timed-bonuses.v1');
+      const definitions = dense(own(timedDefinition, 'schedules'), 8);
+      const schedules = dense(own(timedState, 'schedules'), 8);
+      check(definitions.length > 0 && definitions.length === schedules.length);
+      const ids = new Set();
+      for (const schedule of schedules) {
+        const id = identity(schedule),
+          phase = own(schedule, 'phase');
+        check(!ids.has(id) && ['cooldown', 'announce', 'available', 'exhausted'].includes(phase));
+        ids.add(id);
+        const recipe = definitions.find((entry) => identity(entry) === id);
+        check(!!recipe);
+        const kind = own(recipe, 'kind'),
+          deadline = own(schedule, 'deadline');
+        check(
+          KINDS.includes(kind) && (phase === 'exhausted' ? deadline === null : integer(deadline)),
+        );
+        const current = own(schedule, 'currentAnchor');
+        if (!['announce', 'available'].includes(phase)) {
+          check(current === null);
+          continue;
+        }
+        const anchors = dense(own(recipe, 'anchors'), 16);
+        check(integer(current) && current < anchors.length && deadline > clock);
+        const point = position(anchors[current]);
+        const duration = own(recipe, phase === 'announce' ? 'announcementTicks' : 'availableTicks');
+        check(
+          integer(duration) && duration > 0 && duration <= 2400 && deadline - clock <= duration,
+        );
+        const visual = {
+          id,
+          kind,
+          label: LABELS[kind],
+          ...point,
+          timed: true,
+          phase,
+          seconds: (deadline - clock) * FIXED_DT,
+          remainingFraction: (deadline - clock) / duration,
+        };
+        const pickup = powerups.find((item) => item.id === id);
+        if (phase === 'available') {
+          check(!!pickup && pickup.kind === kind && pickup.x === point.x && pickup.y === point.y);
+          Object.assign(pickup, visual);
+        } else check(!pickup);
+        if (!['won', 'lost'].includes(status)) timedBonuses.push(visual);
+      }
+      if (['won', 'lost'].includes(status))
+        for (let i = powerups.length - 1; i >= 0; i--)
+          if (ids.has(powerups[i].id)) powerups.splice(i, 1);
+    }
     const impactDefinition = definition == null ? null : own(definition, 'lineImpact');
     const carrierIds = new Set();
     if (impactDefinition && own(impactDefinition, 'version') === 'line-impact.v2') {
@@ -251,6 +311,7 @@ export function classicView(run) {
       lineImpacts,
       terrain,
       powerups,
+      ...(timedState === undefined ? {} : { timedBonuses }),
       effects,
       enemies,
       erosion,
@@ -264,6 +325,10 @@ export function classicView(run) {
         ...(powerups.length
           ? [`${powerups.length} contact pickup${powerups.length === 1 ? '' : 's'}`]
           : []),
+        ...timedBonuses.map(
+          (item) =>
+            `${item.label} ${item.phase === 'announce' ? 'appears' : 'expires'} in ${item.seconds.toFixed(1)}s`,
+        ),
         ...enemies
           .filter((enemy) => enemy.mode === 'warning')
           .map(
@@ -374,17 +439,32 @@ export function drawClassicTerrain(ctx, view, palette, images = {}) {
 
 export function drawClassicPickups(ctx, view, palette, images = {}, options = {}) {
   if (!view) return;
-  for (const item of view.powerups) {
+  for (const item of [
+    ...view.powerups,
+    ...(view.timedBonuses ?? []).filter((bonus) => bonus.phase === 'announce'),
+  ]) {
     const diameter = pickupDiameter(options),
       color = PICKUP_COLORS[item.kind];
     ctx.save();
     ctx.translate(item.x * SIZE, item.y * SIZE);
     ctx.scale(diameter / 24, diameter / 24);
     ctx.fillStyle = '#0c1423';
-    ctx.fillRect(-12, -12, 24, 24);
+    if (item.phase !== 'announce') ctx.fillRect(-12, -12, 24, 24);
     ctx.strokeStyle = color;
     ctx.lineWidth = 2;
+    if (item.phase === 'announce') ctx.setLineDash([3, 3]);
     ctx.strokeRect(-11, -11, 22, 22);
+    if (item.timed) {
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.arc(0, 0, 16, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * item.remainingFraction);
+      ctx.stroke();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 10px monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(`${item.phase === 'announce' ? '+' : ''}${Math.ceil(item.seconds)}s`, 0, -18);
+    }
     const role = {
       'extra-life': 'lifePickup',
       'player-speed': 'speedPickup',
