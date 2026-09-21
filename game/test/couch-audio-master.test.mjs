@@ -654,6 +654,7 @@ for (const mode of ['Team', 'Versus']) {
     const imported = await fixture();
     const library = structuredClone(imported.library);
     library.playlists[0].trackIds = [imported.track.id];
+    library.selection = { playlistId: library.playlists[0].id };
     library.assignments = [{ scope: 'global', key: null, playlistId: library.playlists[0].id }];
     const prepared = await prepareSoundtrackLibrary(library, imported.assets, {
       probeMedia: structuralProbe,
@@ -1127,6 +1128,12 @@ test('Couch explicit scene keeps level music across inactive Pause, Settings, re
     else delete globalThis.indexedDB;
   });
   await settleUntil(() => doc.getElementById('scene-music-status').dataset.state === 'ready');
+  await host.player.selectListening({
+    mode: 'auto',
+    genres: ['synth90s', 'metal', 'ukrainian'],
+    installedOnly: false,
+    recordingMode: false,
+  });
   host.player.setAuthoredTrack(DEFAULT_TRACKS[1]);
   host.update(false, { family: 'fpv' });
   assert.equal(host.player.snapshot().source, 'catalogue');

@@ -700,7 +700,7 @@ test('clone built-in playlist, mix MP3, move entries, configure shuffle and exac
     { scope: 'map', key: 'edition@3/campaign@1/map-a', playlistId: id },
   ]);
   assert.equal(saved.library.selection.playlistId, id);
-  assert.deepEqual(app.calls.at(-1), ['select', id]);
+  assert.deepEqual(app.calls.slice(-2), [['select', id], ['play']]);
   await app.click('delete-playlist');
   assert.match(app.node('status').textContent, /remove assignments before deleting/);
 });
@@ -1080,6 +1080,7 @@ test('preparing a visible native link is read-only and retains exact saved bytes
 
 test('prepared download participates in local keyboard focus and discard never changes saved music', async (t) => {
   const app = await setup(t, { callbacks: { download: undefined } });
+  await app.click('advanced-backup-toggle');
   await app.click('export-bundle');
   const link = app.node('download-prepared'),
     url = link.getAttribute('href');
@@ -1243,6 +1244,7 @@ for (const ending of ['resolve', 'reject']) {
       initial,
       callbacks: { onAudioEnabled: () => enabled++ },
     });
+    await app.click('advanced-library-toggle');
     app.choose('tracks', initial.track.id);
     const media = app.node('audition'),
       status = app.node('audition-status'),
@@ -1374,6 +1376,8 @@ for (const settlement of ['resolve', 'reject'])
           },
         },
       });
+      await app.click('advanced-library-toggle');
+      await app.click('advanced-sound-toggle');
       app.choose('tracks', initial.track.id);
       const media = app.node('audition'),
         status = app.node('audition-status'),
@@ -1683,8 +1687,8 @@ test('the real Couch owner/session compose with panel save, audition and explici
   app.choose('selection', 'qa.mix');
   await app.click('use-selection');
   assert.equal(owner.snapshot().generation, 2);
-  assert.equal(player.snapshot().desired, false);
-  assert.equal(await session.start(), false);
+  assert.equal(player.snapshot().desired, true);
+  assert.equal(await session.start(), true);
   assert.equal(owner.readAsset(initial.track.asset.sha256).size, initial.blob.size);
 });
 
@@ -1832,6 +1836,7 @@ test('licensed preview discovery opens separately without fetching or admitting 
       },
     },
   });
+  await app.click('advanced-community-toggle');
   const link = app.node('licensed-previews');
   assert.equal(link.tagName, 'A');
   assert.equal(link.getAttribute('href'), 'https://mekhovov.github.io/revealline-soundtracks-01/');
@@ -2320,6 +2325,41 @@ test('additional genre choices save a specific style or selected cross-style mix
     'ambient',
   ]);
   assert(!app.calls.some(([name]) => name === 'play'));
+});
+
+test('player-first controls start a style, playlist or every genre while advanced tools stay collapsed', async (t) => {
+  const app = await setup(t, { callbacks: { catalogue: emptyCatalogue } });
+  for (const id of [
+    'advanced-listening-body',
+    'advanced-library-body',
+    'advanced-playlists-body',
+    'advanced-backup-body',
+  ])
+    assert.equal(app.node(id).hidden, true);
+  await app.click('advanced-listening-toggle');
+  assert.equal(app.node('advanced-listening-body').hidden, false);
+
+  app.state.playing = false;
+  app.state.desired = false;
+  app.choose('quick-style', 'metal');
+  await app.click('play-style');
+  assert.equal((await app.store.read()).library.listening.mode, 'metal');
+  assert.deepEqual(
+    app.calls.slice(-2).map(([kind]) => kind),
+    ['listening', 'play'],
+  );
+  assert.match(app.node('quick-status').textContent, /Selected style: Metal/);
+
+  await app.click('play-all');
+  const all = await app.store.read();
+  assert.equal(all.library.listening.mode, 'mix');
+  assert.deepEqual(all.library.listening.genres, SOUNDTRACK_GENRES);
+  assert.match(app.node('quick-status').textContent, /Selected style: All styles/);
+
+  app.choose('selection', 'builtin.genre.synthwave');
+  await app.click('use-selection');
+  assert.equal((await app.store.read()).library.selection.playlistId, 'builtin.genre.synthwave');
+  assert.match(app.node('quick-status').textContent, /Selected playlist: Synthwave/);
 });
 
 test('catalogue volume download and removal preserve playlists and original upload bytes', async (t) => {

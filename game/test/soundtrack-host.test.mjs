@@ -497,6 +497,22 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   sample([]);
   // A neutral sample connects automatically; Confirm is now a real menu action.
   sample([]);
+  for (
+    let i = 0;
+    page.doc.activeElement !== page.$('soundtrack-advanced-backup-toggle') && i < 100;
+    i++
+  ) {
+    sample([13]);
+    sample([]);
+  }
+  assert.equal(
+    page.doc.activeElement,
+    page.$('soundtrack-advanced-backup-toggle'),
+    'Controller reaches the collapsed backup tools.',
+  );
+  sample([0]);
+  sample([]);
+  assert.equal(page.$('soundtrack-advanced-backup-body').hidden, false);
   for (let i = 0; page.doc.activeElement !== page.$('soundtrack-export-bundle') && i < 100; i++) {
     sample([13]);
     sample([]);

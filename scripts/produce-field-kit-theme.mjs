@@ -29,7 +29,7 @@ const sources = {
   effects:
     'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs',
   audio:
-    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs',
+    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs',
 };
 
 // A recipe stays unreviewed whenever one of its source inputs changes. These
@@ -54,11 +54,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768',
+    sha256: '11e785a62e5246014c77ccdf6e0c72d5133d8c62aed40da3a3ca551132ad4653',
     evidence: [
-      'Scoped direct soundtrack functional review: docs/verification/hosted-soundtracks-2026-09-21/selection-cache/review.json sha256:6551c31a71e749e3f2d42fd6bd4d5fe33b6e2e99c619f1c819b5b277b8361e45. Thirteen ordered audio inputs have fingerprint sha256:8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768. Independent source review verifies private immutable library identity reuse and one bounded base-selection cache; dynamic rights, raw catalogue changes, failed tracks and playback intent remain live. Invalid constructor input is rejected before acquiring media ownership.',
-      'The final complete soundtrack and Couch audio cohort passed 453/453 with exact changed source/test pins and zero failures, cancellations, skips or todos. The original menu tests and deadlines remain unchanged. Four independent incremental probes pass. Prior direct-integration review remains immutable for the eleven unchanged audio inputs. Both failed preliminary hosted runs are retained with exact raw logs; local performance measurements are scoped diagnostics, not device or release qualification.',
-      'Functional source approval only. The 70 CC0/CC BY recordings retain audited rights and pending musical review; no recording, composition, Ukrainian authenticity, physical-device, frozen-offline or public-release approval is granted. Content ID remains unknown. Reviewed fpv52 and source-stage fpv53 remain immutable before this reviewed successor; all 127 original payloads and their bytes are preserved. Frozen and coordinated latest-main qualification remain required.',
+      'Scoped soundtrack-player source and browser review: docs/verification/soundtrack-player-ux-2026-09-21/review.json sha256:ccb7d9f09511af14db0debdbc2710f9c382c0f58e1a1df57bfd79baba76813da. Fourteen ordered audio inputs have fingerprint sha256:11e785a62e5246014c77ccdf6e0c72d5133d8c62aed40da3a3ca551132ad4653; soundtrack-panel.css is now an explicit input. Fresh v3 libraries select 90s Synth while saved libraries keep their explicit mode.',
+      'The focused catalogue, player, panel, host, v3 compatibility, Couch-audio and modal-navigation cohort passed 273/273. Browser review covered desktop and 390x844 layouts, style playback, all-style shuffle, visible credits/source links and seven closed advanced sections. The verified hosted synth object returned HTTP 200, CORS *, and its declared 1,740,382-byte length.',
+      'Functional player approval only. The 70 CC0/CC BY recordings retain audited rights and pending musical review; no recording, composition, Ukrainian authenticity, physical-device, frozen-offline or public-release approval is granted. UA-FPV remains excluded without redistribution permission. All earlier production history remains immutable before this reviewed successor.',
     ],
   },
   motion: {
