@@ -99,11 +99,11 @@
 /* Active play only: menus retain their readable, scrollable layout. Browser
    fullscreen is optional; dvh follows the usable browser viewport on phones. */
 @media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) {
+  body.field-kit.game-shell[data-flight-state='running'] {
     --fk-flight-header: 56px;
     --fk-flight-bottom: 8px;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .telemetry {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry {
     position: fixed;
     top: var(--safe-top);
     left: calc(var(--safe-left) + 52px);
@@ -122,9 +122,7 @@
     border-radius: 0;
     background: var(--fk-bg, #070b12);
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    .telemetry
-    > div {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry > div {
     display: flex;
     align-items: baseline;
     flex: 0 1 auto;
@@ -133,29 +131,20 @@
     border: 0;
     min-width: 0;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    .telemetry
-    strong {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry strong {
     font-size: var(--handheld-value);
     line-height: 1.15;
     margin: 0;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    .telemetry
-    span {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry span {
     font-size: var(--handheld-label);
     line-height: 1.15;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    .telemetry
-    :is(.meter, #target),
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    .telemetry
-    > div
-    > span {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry :is(.meter, #target),
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry > div > span {
     display: none;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) #run-message {
+  body.field-kit.game-shell[data-flight-state='running'] #run-message {
     top: auto;
     bottom: max(2px, var(--safe-bottom));
     left: 24%;
@@ -249,37 +238,33 @@
   }
 }
 @media (max-width: 700px) and (orientation: landscape) and (max-height: 600px) {
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    .telemetry
-    > div:last-child {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry > div:last-child {
     display: none;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .telemetry {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry {
     gap: 8px;
   }
 }
 
 @supports (width: 1cqh) {
   @media (max-width: 680px) and (orientation: portrait) {
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) {
+    body.field-kit.game-shell[data-flight-state='running'] {
       --handheld-controls: 0px;
     }
-    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown']:not(
-        .first-flight-session
-      ) {
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'] {
       --handheld-controls: calc(var(--touch-size) + 24px);
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) main {
+    body.field-kit.game-shell[data-flight-state='running'] main {
       position: fixed;
       inset: calc(56px + var(--safe-top)) max(12px, var(--safe-right))
         calc(var(--handheld-controls) + var(--safe-bottom)) max(12px, var(--safe-left));
       height: auto;
       padding: 0;
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .game-layout {
+    body.field-kit.game-shell[data-flight-state='running'] .game-layout {
       height: 100%;
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .arena-panel {
+    body.field-kit.game-shell[data-flight-state='running'][data-text-size] .arena-panel {
       display: grid;
       grid-template-rows: minmax(0, 1fr) auto;
       height: 100%;
@@ -287,7 +272,7 @@
       max-width: none;
       gap: 8px;
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .telemetry {
+    body.field-kit.game-shell[data-flight-state='running'] .telemetry {
       position: fixed;
       inset: var(--safe-top) calc(var(--safe-right) + 52px) auto calc(var(--safe-left) + 52px);
       width: auto;
@@ -302,46 +287,31 @@
       transform: none;
       background: var(--fk-bg);
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-      .telemetry
-      > div {
+    body.field-kit.game-shell[data-flight-state='running'] .telemetry > div {
       padding: 0;
       border: 0;
       min-width: 0;
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-      .telemetry
-      strong {
+    body.field-kit.game-shell[data-flight-state='running'] .telemetry strong {
       font-size: var(--handheld-value);
       margin: 0;
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-      .telemetry
-      :is(span, em, .meter),
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-      .telemetry
-      > div:last-child,
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-      #shell-fullscreen,
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-      .flight-status {
+    body.field-kit.game-shell[data-flight-state='running'] .telemetry :is(span, em, .meter),
+    body.field-kit.game-shell[data-flight-state='running'] .telemetry > div:last-child,
+    body.field-kit.game-shell[data-flight-state='running'] #shell-fullscreen,
+    body.field-kit.game-shell[data-flight-state='running'] .flight-status {
       display: none;
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) #shell-menu {
+    body.field-kit.game-shell[data-flight-state='running'] #shell-menu {
       width: 44px;
       min-width: 44px;
       padding: 4px;
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-      #shell-menu
-      :not(.brand-mark),
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-      #shell-menu::after {
+    body.field-kit.game-shell[data-flight-state='running'] #shell-menu :not(.brand-mark),
+    body.field-kit.game-shell[data-flight-state='running'] #shell-menu::after {
       display: none;
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-      .arena-panel
-      > .arena-shell {
+    body.field-kit.game-shell[data-flight-state='running'] .arena-panel > .arena-shell {
       grid-row: 1;
       container-type: size;
       display: grid;
@@ -357,12 +327,12 @@
       background: none;
       margin: 0;
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) #game-canvas {
+    body.field-kit.game-shell[data-flight-state='running'] #game-canvas {
       width: min(100cqw, calc(100cqh * var(--board-aspect, 1.333333)));
       height: auto;
       aspect-ratio: var(--board-ratio, 4 / 3);
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) #run-message {
+    body.field-kit.game-shell[data-flight-state='running'] #run-message {
       grid-row: 2;
       position: static;
       width: 100%;
@@ -377,41 +347,33 @@
 }
 
 @media (max-width: 680px) and (orientation: portrait) {
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .shell-bar {
+  body.field-kit.game-shell[data-flight-state='running'] .shell-bar {
     min-height: 44px;
     height: 44px;
     padding-block: 0;
     border: 0;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    #shell-menu
-    .brand-mark {
+  body.field-kit.game-shell[data-flight-state='running'] #shell-menu .brand-mark {
     display: none;
   }
 }
 
 @media (max-width: 680px) and (orientation: portrait),
   (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    .telemetry
-    #lives {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry #lives {
     font-size: 0;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    .telemetry
-    #lives::before {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry #lives::before {
     display: none;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    .telemetry
-    #lives::after {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry #lives::after {
     content: attr(data-compact-value);
     font-size: var(--handheld-value);
   }
 }
 
 @media (max-width: 680px) and (orientation: portrait) {
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) #shell-menu {
+  body.field-kit.game-shell[data-flight-state='running'] #shell-menu {
     font-size: 0;
   }
 }
@@ -817,8 +779,7 @@
 
 @media (max-width: 680px) and (orientation: portrait),
   (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    #coverage::after {
+  body.field-kit.game-shell[data-flight-state='running'] #coverage::after {
     content: attr(data-target);
     font-size: var(--handheld-label);
   }
@@ -828,12 +789,10 @@
    Stacking this pair leaves room for earned lives and longer clocks without
    shrinking Large text or moving counters into the arena. */
 @media (max-width: 399px) and (orientation: portrait) {
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    .telemetry
-    :is(#coverage, #time)::before {
+  body.field-kit.game-shell[data-flight-state='running'] .telemetry :is(#coverage, #time)::before {
     display: none;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) #coverage {
+  body.field-kit.game-shell[data-flight-state='running'] #coverage {
     display: inline-flex;
     flex-wrap: wrap;
     align-content: center;
@@ -841,13 +800,10 @@
     width: 5ch;
     line-height: 1;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    #coverage
-    small {
+  body.field-kit.game-shell[data-flight-state='running'] #coverage small {
     font-size: inherit;
   }
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
-    #coverage::after {
+  body.field-kit.game-shell[data-flight-state='running'] #coverage::after {
     flex-basis: 100%;
     text-align: center;
     line-height: 1;
@@ -858,7 +814,7 @@
    readable without extra icons in the single compact strip. */
 @media (max-width: 680px) and (orientation: portrait),
   (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
-  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session)
+  body.field-kit.game-shell[data-flight-state='running']
     .telemetry
     :is(#coverage, #time, #score)::before {
     display: none;
@@ -872,5 +828,116 @@
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span[data-compact]::after {
     content: attr(data-compact) / '';
     font-size: var(--handheld-label);
+  }
+}
+
+/* Journey navigation belongs to Pause on handhelds. The optional save warning
+   retains its own row, while the flight HUD stays the only normal top strip. */
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.race-focus.candidate-journey #race-journey-controls {
+    display: none;
+  }
+  body.field-kit.race-focus.candidate-journey #couch-app {
+    grid-template-rows: auto 44px minmax(0, 1fr);
+    grid-template-areas: 'save' 'hud' 'boards';
+  }
+  body.field-kit.race-focus #race-clock {
+    min-width: 24px;
+    font-size: 0;
+  }
+  body.field-kit.race-focus #race-clock::before {
+    display: none;
+  }
+  body.field-kit.race-focus #race-clock::after {
+    content: attr(data-compact) / '';
+    font-size: var(--handheld-value);
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.race-focus .race-boards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr);
+  }
+}
+
+/* Short portrait seats share the viewport vertically. Bound the preferred pad
+   to its own seat so a Large D-pad cannot cover the shared Pause control. */
+@supports (height: 1cqh) {
+  @media (max-width: 680px) and (max-height: 699px) and (orientation: portrait) {
+    body.field-kit.race-focus .racer[data-player] {
+      container-type: size;
+    }
+    body.field-kit.race-focus .racer[data-player] .race-pad {
+      --touch-size: min(156px, max(132px, calc(100cqh - 36px)));
+    }
+    body.field-kit.race-focus .racer[data-player] .race-pad[data-touch-size='large'] {
+      --touch-size: min(192px, max(132px, calc(100cqh - 36px)));
+    }
+  }
+}
+body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
+  display: none;
+}
+
+/* Training uses the same flight viewport. Keep the current task beside the
+   arena; lesson selection returns on Pause instead of consuming flying space. */
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell.first-flight-session[data-flight-state] .arena-panel {
+    max-width: 100%;
+  }
+  body.field-kit.game-shell.first-flight-session[data-flight-state='running'] .first-flight-panel {
+    display: none;
+  }
+  body.field-kit.game-shell.first-flight-session[data-flight-state='running'] .first-flight-task {
+    font-size: var(--handheld-label);
+    line-height: 1.3;
+    margin: 0;
+    background: var(--fk-bg);
+  }
+}
+@media (max-width: 680px) and (orientation: portrait) {
+  body.field-kit.game-shell.first-flight-session[data-flight-state='running'] .arena-panel {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'task' 'arena' 'message';
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  body.field-kit.game-shell.first-flight-session[data-flight-state='running'] .first-flight-task {
+    grid-area: task;
+  }
+  body.field-kit.game-shell.first-flight-session[data-flight-state='running'] .arena-shell {
+    grid-area: arena;
+  }
+  body.field-kit.game-shell.first-flight-session[data-flight-state='running'] #run-message {
+    grid-area: message;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-flight-state='running'][data-text-size] {
+    --fk-flight-header: 56px;
+  }
+  body.field-kit.game-shell.first-flight-session[data-flight-state='running'],
+  body.field-kit.game-shell.first-flight-session[data-flight-state='running'][data-text-size='large'] {
+    --fk-flight-header: 104px;
+  }
+  body.field-kit.game-shell.first-flight-session[data-flight-state='running'] .first-flight-task {
+    position: fixed;
+    top: calc(48px + var(--safe-top));
+    left: max(12px, var(--safe-left));
+    right: max(12px, var(--safe-right));
+    z-index: 6;
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls][data-touch-mode]
+    .arena-panel
+    > .arena-shell,
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls][data-touch-mode]
+    .arena-panel:has(> .encounter-status:not([hidden]))
+    > .arena-shell {
+    max-width: none;
+    left: calc(var(--safe-left) + (100% - var(--safe-left) - var(--safe-right)) / 2);
   }
 }

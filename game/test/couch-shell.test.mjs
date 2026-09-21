@@ -246,7 +246,22 @@ test('Always supports independent pointer players; Off wins over coarse and late
   assert.equal(pads[1].hidden, false);
   f.$('race-canvas-0').emit('pointerdown', { pointerType: 'touch', pointerId: 70 });
   assert.equal(pads[0].hidden, true);
-  touch(f, 1, 'left').emit('pointerdown', { pointerType: 'mouse', pointerId: 71, button: 0 });
+  const steering = pads[1].querySelector('.touch-surface');
+  steering.getBoundingClientRect = () => ({ left: 0, top: 0, width: 156, height: 156 });
+  steering.emit('pointerdown', {
+    pointerType: 'touch',
+    pointerId: 71,
+    button: 0,
+    clientX: 78,
+    clientY: 78,
+  });
+  steering.emit('pointermove', {
+    pointerType: 'touch',
+    pointerId: 71,
+    button: 0,
+    clientX: 12,
+    clientY: 78,
+  });
   f.frames(6);
   assert.ok(f.renders[1].player.x < f.renders[1].level.spawn.x);
   assert.equal(f.renders[0].player.x, f.renders[0].level.spawn.x);
@@ -542,4 +557,16 @@ test('accepted-input observer is optional and observer failures cannot reject or
   input.clearPhysical();
   input.poll();
   assert.equal(events.length, 2, 'held controller blocked by clearPhysical is not accepted');
+});
+
+test('Couch timed clock retains accessible meaning in its compact display', async (t) => {
+  const f = await couchPage(t, { seconds: '30' });
+  await f.$('race-start').onclick();
+  f.frame(0);
+  assert.equal(f.$('race-clock').textContent, '0:30');
+  assert.equal(f.$('race-clock').dataset.compact, '0:30');
+  const before = f.checkpoint();
+  f.$('race-pause').click();
+  assert.deepEqual(f.checkpoint(), before);
+  assert.equal(f.$('race-clock').textContent, '0:30');
 });
