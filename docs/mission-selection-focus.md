@@ -1,0 +1,15 @@
+# Mission selection focus
+
+Clicking the artwork or status label inside a completed mission card can rebuild the card before its gallery listener receives the bubbling event. The detached label no longer has a button ancestor, so the old listener cannot return focus and a native browser can leave focus on BODY. The same code is present in accepted source `595fdadddf3cf5c4240c430b78d27772915df83d`.
+
+The gallery now captures the actual card before host selection mutates it. A paired bubbling listener queues restoration only after the target handler has run, using the captured event and card rather than looking up the detached artwork. This ordering matters: native event dispatch can perform a microtask checkpoint between listener callbacks. The existing operation-focus lease restores the connected selected card for that mission after synchronization. Selection still stays in Missions, and Deploy remains explicit. A newer focus choice, another dialog, closing/reopening Missions, page backgrounding or destroying the picker revokes the pending return. The gallery never obtains focus authority from an unrelated repaint or a bare BODY state. Shared input and focus helpers, the app's selection/replacement gate, simulation and progress remain unchanged.
+
+The production gallery is attached by Mission Picker and activated in the open Missions dialog. A standalone non-dialog preview can still synchronize artwork but cannot gain modal focus ownership through this lease. No new fallback to global focus or default button was added.
+
+## Qualification contract
+
+The first capture-only candidate passed the synchronous DOM harness but failed the actual browser. That candidate and its evidence are retained. The corrected focused host tests explicitly flush real microtasks between modeled native listener callbacks; they use two legally completed core missions. A test-local DOM boundary models focus loss on removal and native modal inertness; keyboard defaults and standard gamepad samples are modeled, not physical-device evidence. The nested status click reproduces the BODY failure against the unchanged accepted gallery. Root-button activation by itself does not reproduce that failure.
+
+Cover pointer nested status/artwork activation, keyboard, modeled controller, newer control, background/hidden page, Back, a reopened visit and destroy cleanup. Run the existing mission picker, mission thumbnail, field-kit flow and replacement/Stay tests against the same gallery bytes. Keep native baseline/corrected observations separate from these finite-DOM checks. Verify deployed source/input identity before any release acceptance claim.
+
+The controller case continues from the retained selected card using D-pad traversal to enabled Deploy, releases direction input, and presses South/A to start the actual flight. The test supplies the finite DOM's missing readiness-attribute MutationObserver notification to the real shell callback; it never assigns Deploy state or invokes its handler directly. This establishes modeled standard-controller selection and launch, not physical Steam Deck behavior.
