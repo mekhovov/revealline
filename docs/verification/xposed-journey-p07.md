@@ -248,3 +248,16 @@ This is one composition, not complete Phaseworks art. Brass railings/reflections
 still need native reveal/overlay contrast checks; all six other originals,
 campaign-specific actor presentation/audio, full visual/device/human qualification,
 accepted-source integration, aggregate offline budget and release/Pages remain.
+
+Native exact538fef0410bfbee38be95425093f2fff0243905c, owned server8813/tab38:
+Inspect → Apply retained seven missions and saved checkpoint2 with the explicit
+candidate-art warning. The ready card distinguished bolt-carried sparks from
+instant ordinary trail hits. Start plus fresh Down reached the central landing
+at0.6%,3lives,score130; fresh Left later returned to the perimeter at2.0%,3lives,
+score470. Screenshots showed the original through foundations, border and thin
+captured trails with distinct bolt/circle/patrol symbols. A paused state was
+observed after the second closure; Resume retained those values and the stopped
+craft. Its cause was not established, so this is not an input/focus acceptance
+claim. Close preview returned focus to Play with the draft intact. These small
+fragments do not qualify broad-area contrast, victory, other presets/modes or
+physical devices, and are not a human playtest.

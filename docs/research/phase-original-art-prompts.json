@@ -21,7 +21,7 @@
           "The scene is a detailed stylized illustration rather than strict low-resolution pixel art; brass railings and reflections require in-game contrast review."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Broad-area and victory overlay checks; early0.6%/2.0% Standard Solo native reveal recorded at source538fef04 in docs/verification/xposed-journey-p07.md",
           "Six remaining distinct mission compositions",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
