@@ -45,7 +45,13 @@ import {
 import { createStudioStore } from '../../game/presentation/studio-store.mjs';
 import { loadPublishedStudio } from '../../game/presentation/published-studio.mjs';
 import { inspectImageDataUrl } from '../../game/content.mjs';
-import { centerCrop, checkedCrop, pixelBounds, matchingSlots } from './helpers.mjs';
+import {
+  centerCrop,
+  checkedCrop,
+  pixelBounds,
+  matchingSlots,
+  studioThemeOptions,
+} from './helpers.mjs';
 import {
   createStudioInventoryHistory,
   normalizeStudioInventoryView,
@@ -329,10 +335,10 @@ function refresh() {
   if (!working.document.slots.some((slot) => slot.id === selected))
     selected = working.document.slots[0].id;
   const view = resolved();
-  const themes = [...new Map(working.document.themes.map((theme) => [theme.id, theme])).values()];
+  const themes = studioThemeOptions(working.document.themes);
   $('filter-theme').replaceChildren(
     ...themes.map((theme) => {
-      const option = node('option', theme.name);
+      const option = node('option', theme.label);
       option.value = theme.id;
       return option;
     }),
@@ -1213,7 +1219,7 @@ $('filter-theme').onchange = () =>
       requireSettled();
       const previous = working.document,
         next = structuredClone(previous),
-        theme = next.themes.filter((t) => t.id === $('filter-theme').value).at(-1);
+        theme = studioThemeOptions(next.themes).find((t) => t.id === $('filter-theme').value);
       next.selection.theme = ref(theme);
       next.selection.collection = null;
       next.revision++;
