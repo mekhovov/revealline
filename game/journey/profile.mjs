@@ -4,9 +4,41 @@ import { JOURNEY_MODES } from './catalog.mjs';
 export const JOURNEY_PROFILE_VERSION = 'revealline-journey-profile.v1';
 export const JOURNEY_PROFILE_DATABASE = 'revealline-journey-v1';
 export const JOURNEY_BACKUP_VERSION = 'revealline-journey-backup.v1';
+export const JOURNEY_SCOPED_BACKUP_VERSION = 'revealline-journey-backup.v2';
 const emptyModes = (make) => Object.fromEntries(JOURNEY_MODES.map((mode) => [mode, make()]));
 const text = (value) => typeof value === 'string' && value.length > 0 && value.length <= 1024;
 const own = (object, key) => Object.hasOwn(object, key);
+function validateProfileKey(key) {
+  if (typeof key !== 'string' || !/^[a-z][a-z0-9-]{0,79}$/.test(key))
+    throw new TypeError('Journey storage needs a stable profile key.');
+}
+
+function inspectProfileBackup(source, profileKey) {
+  if (profileKey === 'journey') {
+    const backup = inspectJourneyBackup(source);
+    return { backup, normalized: backup };
+  }
+  const backup = boundedJSON(source, {
+    maxBytes: 8 * 1024 * 1024,
+    maxNodes: 100012,
+    maxDepth: 12,
+    maxArray: 4096,
+    maxString: 1024,
+  });
+  if (backup?.format !== JOURNEY_SCOPED_BACKUP_VERSION || backup.profileKey !== profileKey)
+    throw new TypeError(
+      'This backup belongs to a different Journey edition. Progress is unchanged.',
+    );
+  exactKeys(backup, ['format', 'profileKey', 'profile'], 'Scoped Journey backup');
+  const normalized = {
+    format: JOURNEY_BACKUP_VERSION,
+    profile: validateJourneyProfile(backup.profile),
+  };
+  return {
+    backup: { format: JOURNEY_SCOPED_BACKUP_VERSION, profileKey, profile: normalized.profile },
+    normalized,
+  };
+}
 
 export function emptyJourneyProfile() {
   return {
@@ -139,7 +171,13 @@ export function applyJourneyEvent(source, event) {
 }
 
 /** Each read/modify/write is one IndexedDB transaction, including across tabs. */
-export function createJourneyBackend({ indexedDB = globalThis.indexedDB } = {}) {
+export function createJourneyBackend({
+  indexedDB = globalThis.indexedDB,
+  profileKey = 'journey',
+} = {}) {
+  // Content-review editions may isolate progress without changing the database
+  // or historical default record. Never derive this key from a release version.
+  validateProfileKey(profileKey);
   let opening;
   const open = () => {
     if (!indexedDB) return Promise.reject(new Error('Journey storage is unavailable.'));
@@ -173,14 +211,14 @@ export function createJourneyBackend({ indexedDB = globalThis.indexedDB } = {}) 
     return new Promise((resolve, reject) => {
       const tx = db.transaction('profiles', events.length ? 'readwrite' : 'readonly'),
         store = tx.objectStore('profiles'),
-        read = store.get('journey');
+        read = store.get(profileKey);
       let next, failure;
       read.onsuccess = () => {
         try {
           next =
             read.result === undefined ? emptyJourneyProfile() : validateJourneyProfile(read.result);
           for (const event of events) next = applyJourneyEvent(next, event);
-          if (events.length) store.put(next, 'journey');
+          if (events.length) store.put(next, profileKey);
         } catch (error) {
           failure = error;
           tx.abort();
@@ -191,15 +229,20 @@ export function createJourneyBackend({ indexedDB = globalThis.indexedDB } = {}) 
         reject(failure || tx.error || new Error('Journey save failed.'));
     });
   }
-  return { read: () => transaction([]), commit: transaction };
+  return { profileKey, read: () => transaction([]), commit: transaction };
 }
 
 /** In-memory adoption is immediate; persistence failure never prevents Next. */
 export function createJourneyProfileStore({
-  backend = createJourneyBackend(),
+  backend,
+  profileKey = backend?.profileKey ?? 'journey',
   onStatus = () => {},
   operationTimeoutMs = 1500,
 } = {}) {
+  validateProfileKey(profileKey);
+  backend ??= createJourneyBackend({ profileKey });
+  if (backend.profileKey !== undefined && backend.profileKey !== profileKey)
+    throw new TypeError('Journey backend and profile edition must agree.');
   if (!Number.isFinite(operationTimeoutMs) || operationTimeoutMs <= 0)
     throw new TypeError('Journey storage needs a positive operation timeout.');
   const bounded = (operation) =>
@@ -282,8 +325,19 @@ export function createJourneyProfileStore({
     snapshot,
     status,
     flush,
+    backupFilename:
+      profileKey === 'journey'
+        ? 'revealline-journey-progress.json'
+        : `revealline-${profileKey}-progress.json`,
+    inspectBackup(source) {
+      const { backup, normalized } = inspectProfileBackup(source, profileKey);
+      return { backup, merged: mergeJourneyBackup(snapshot(), normalized) };
+    },
     restore(source) {
-      const owned = { type: 'restore', backup: inspectJourneyBackup(source) };
+      const owned = {
+        type: 'restore',
+        backup: inspectProfileBackup(source, profileKey).normalized,
+      };
       profile = applyJourneyEvent(profile, owned);
       pending.push(owned);
       durable = false;
@@ -296,7 +350,13 @@ export function createJourneyProfileStore({
     },
     recordMany: recordEvents,
     export() {
-      return JSON.stringify({ format: JOURNEY_BACKUP_VERSION, profile: snapshot() }, null, 2);
+      return JSON.stringify(
+        profileKey === 'journey'
+          ? { format: JOURNEY_BACKUP_VERSION, profile: snapshot() }
+          : { format: JOURNEY_SCOPED_BACKUP_VERSION, profileKey, profile: snapshot() },
+        null,
+        2,
+      );
     },
   };
 }

@@ -4,11 +4,14 @@ import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
 import { createAuthoredJourneyRoute } from './content-design/route.mjs';
-import { authoredJourneyModeHref } from './content-design/mode-href.mjs';
+import {
+  authoredJourneyModeHref,
+  authoredJourneyUsesActorMaterials,
+} from './content-design/mode-href.mjs';
 import { attachJourneyReactions } from './ui/journey-reactions.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
 import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';
-import { DIFFICULTY_CATALOG, journeyPreset } from './content-design/catalogs.mjs';
+import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
 import { attachJourneyChooser } from './ui/journey-chooser.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
@@ -323,10 +326,9 @@ try {
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? createCandidateSoloHost(authoredRoute.source, {
-        themes:
-          authoredRoute.id === 'whole-originals-v4'
-            ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes)
-            : (await getJSON('content-design/themes.json')).themes,
+        themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
+          ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes)
+          : (await getJSON('content-design/themes.json')).themes,
         buildVersion,
         corePackIds: authoredRoute.corePackIds,
       })
@@ -350,6 +352,7 @@ try {
     journeyFromPackCatalog(baseCampaign, preparePackCatalog(packCatalogSource));
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
+        profileKey: authoredRoute?.profileKey,
         onStatus({ ready, durable, error }) {
           show('journey-save-status', ready && !durable && !!error);
           $('journey-save-message').textContent = error
@@ -3723,18 +3726,19 @@ try {
   function refreshDifficulty() {
     if (candidateHost?.owns(activeEntry)) {
       const next = journeyPreferences.snapshot();
+      const catalogId = authoredRoute.source.difficultyCatalogId;
       $('difficulty-select').replaceChildren(
-        ...Object.keys(DIFFICULTY_CATALOG.presets).map(
+        ...Object.keys(journeyDifficultyCatalog(catalogId).presets).map(
           (id) => new Option(id[0].toUpperCase() + id.slice(1), id),
         ),
       );
       $('difficulty-select').value = next.difficulty;
       $('difficulty-select').disabled = contentSwitchBusy || backupBusy || sessionBusy;
       $('difficulty-note').textContent =
-        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${journeyPreset(next.difficulty).description} Resume and Load preserve this flight. ${next.error}`;
+        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${journeyPreset(next.difficulty, catalogId).description} Resume and Load preserve this flight. ${next.error}`;
       show('difficulty-details', false);
       $('overlay-difficulty').textContent =
-        `Journey ${activeEntry.difficulty}. ${journeyPreset(activeEntry.difficulty).description}`;
+        `Journey ${activeEntry.difficulty}. ${journeyPreset(activeEntry.difficulty, catalogId).description}`;
       show('overlay-difficulty', true);
       return;
     }
@@ -4083,8 +4087,11 @@ try {
     if (courseSession || courseEntry)
       throw new Error('End First Flight before selecting a campaign.');
     if (!entry) throw new Error('This campaign is not installed.');
-    if (difficulty !== undefined)
-      (candidateHost?.owns(entry) ? journeyPreset : resolveCampaignDifficulty)(difficulty);
+    if (difficulty !== undefined) {
+      if (candidateHost?.owns(entry))
+        journeyPreset(difficulty, authoredRoute.source.difficultyCatalogId);
+      else resolveCampaignDifficulty(difficulty);
+    }
     if (selectedSeed !== undefined) {
       if (!Number.isInteger(selectedSeed) || selectedSeed < 0 || selectedSeed > 0xffffffff)
         throw new Error('Picture seed is invalid.');
@@ -8017,7 +8024,7 @@ try {
     $('journey-save-retry').onclick = () => void journeyProfile.flush();
     $('journey-save-export').onclick = async () => {
       try {
-        await downloadJSON(JSON.parse(journeyProfile.export()), 'revealline-journey-progress.json');
+        await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
       } catch (error) {
         $('journey-save-message').textContent =
           `Export failed: ${error.message}. Your session progress is still here.`;

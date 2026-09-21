@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after the Island Outpost spatial successor. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after the combined spatial/pressure review integration. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -150,6 +150,16 @@ does not claim universally harder presets, human pacing, full native qualificati
 or publication; the other nine inherited mission runtimes remain unchanged.
 
 ## Latest requested additions
+
+The [combined spatial + pressure review](journey-whole-spatial-review.md) now
+offers nine reviewed spatial successors within one explicit 83-candidate
+Solo/Versus/Studio source, with the existing 71-core/12-Remix sequence. Scoped
+progress and backups prevent historical clears leaking into revised encounters;
+actual difficulty descriptions follow the selected pressure policy. The
+87-test integrated cohort passes on both Node versions, and native Studio/first
+Solo clear/Next are checked. This advances P13 integration, **not full content
+enrollment, human balance or deployment**. Cold construction remains slow and
+performance acceptance is explicitly open; historical routes are unchanged.
 
 | Addition                             | Current result                                                                                                                                                                                                                   | Remaining                                                                                                                             |
 | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |

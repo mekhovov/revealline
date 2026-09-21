@@ -11,8 +11,9 @@ import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { authoredJourneyUsesActorMaterials } from '../content-design/mode-href.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
-import { DIFFICULTY_CATALOG } from '../content-design/catalogs.mjs';
+import { journeyDifficultyCatalog, journeyPreset } from '../content-design/catalogs.mjs';
 import { createJourneyProfileStore } from '../journey/profile.mjs';
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 import { dataIdentity } from '../data-json.mjs';
@@ -243,10 +244,9 @@ try {
   if (authoredJourney) {
     document.body.classList.add('candidate-journey');
     candidateJourney = createCandidateVersusHost(authoredRoute.source, {
-      themes:
-        authoredRoute.id === 'whole-originals-v4'
-          ? journeyActorThemeCandidates((await json('../content-design/themes.json')).themes)
-          : (await json('../content-design/themes.json')).themes,
+      themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
+        ? journeyActorThemeCandidates((await json('../content-design/themes.json')).themes)
+        : (await json('../content-design/themes.json')).themes,
       corePackIds: authoredRoute.corePackIds,
     });
     journeyPreferences = createJourneyPreferences({ window });
@@ -255,12 +255,13 @@ try {
       `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
-      ...Object.keys(DIFFICULTY_CATALOG.presets).map(
-        (id) => new Option(id[0].toUpperCase() + id.slice(1), id),
-      ),
+      ...Object.keys(
+        journeyDifficultyCatalog(authoredRoute.source.difficultyCatalogId).presets,
+      ).map((id) => new Option(id[0].toUpperCase() + id.slice(1), id)),
     );
     $('race-journey-difficulty').value = journeyPreferences.snapshot().difficulty;
     journeyProfile = createJourneyProfileStore({
+      profileKey: authoredRoute.profileKey,
       onStatus({ ready, durable, error }) {
         $('race-journey-save').hidden = !ready || durable || !error;
         $('race-journey-save-message').textContent = error
@@ -1265,7 +1266,7 @@ try {
       }
       $('race-journey-difficulty').value = snapshot.difficulty;
       $('race-journey-difficulty-note').textContent =
-        `Next fresh race: ${snapshot.difficulty}. Both current boards keep their rules.`;
+        `Next fresh race: ${snapshot.difficulty}. ${journeyPreset(snapshot.difficulty, authoredRoute.source.difficultyCatalogId).description} Both current boards keep their rules.`;
       preferenceExportSequence++;
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
       $('race-journey-preferences-message').textContent = snapshot.error;
@@ -1354,7 +1355,7 @@ try {
     $('race-journey-save-retry').onclick = () => void journeyProfile.flush();
     $('race-journey-save-export').onclick = async () => {
       try {
-        await downloadJSON(JSON.parse(journeyProfile.export()), 'revealline-journey-progress.json');
+        await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
       } catch (error) {
         $('race-journey-save-message').textContent =
           `Export failed: ${error.message}. Your session progress is still here.`;
