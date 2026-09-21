@@ -4,8 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
-import { authoritativeCheckpoint } from '../replay.mjs';
-import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { playKeyboardRoute } from './helpers/keyboard-route.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 
 class Picture {
@@ -33,62 +32,6 @@ const row = fixture.rows.find(
   (item) => item.difficulty === 'standard' && item.turnPolicy === 'immediate',
 );
 
-function playKeyboardRoute(p, runs, controls) {
-  const reference = createRun(runs()[0].level, {
-    seed: row.seed,
-    classId: 'scout',
-    turnPolicy: row.turnPolicy,
-  });
-  for (const run of runs())
-    assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(reference));
-  let previous = null;
-  let freshCaptureGestures = 0;
-  for (const { direction, ticks } of row.segments) {
-    const end = reference.tick + ticks;
-    while (reference.tick < end) {
-      // Raw per-tick engine input is not a held-key gesture. Derive exact capture
-      // boundaries independently, then rearm through actual UI events. Never
-      // write host state or let a frame run beyond a required fresh gesture.
-      let captured = false;
-      do {
-        assert.equal(
-          reference.status,
-          'running',
-          'The recorded route cannot end before its next gesture',
-        );
-        stepRun(reference, { direction }, FIXED_DT);
-        captured = reference.events.some((event) => event.type === 'capture.stopped');
-      } while (reference.tick < end && !captured);
-      for (const keys of controls) {
-        if (previous) p.key(keys[previous], false);
-        if (direction) p.key(keys[direction]);
-      }
-      const target = reference.tick;
-      const remaining = target - runs()[0].tick;
-      for (let frames = 0; runs()[0].tick < target && frames <= remaining; frames++)
-        p.frame((Math.min(6, target - runs()[0].tick) * 1000) / 120);
-      for (const run of runs()) {
-        assert.equal(run.tick, target);
-        assert.equal(run.classic.livesLost, 0);
-        assert.deepEqual(
-          authoritativeCheckpoint(run),
-          authoritativeCheckpoint(reference),
-          `After ${direction}/${target}`,
-        );
-        if (captured) assert.equal(run.player.speed, 0);
-      }
-      if (captured && target < end) freshCaptureGestures++;
-      previous = direction;
-    }
-  }
-  assert(freshCaptureGestures > 0, 'Exercise fresh presses inside original engine-log segments');
-  for (const keys of controls) if (previous) p.key(keys[previous], false);
-  for (const run of runs()) {
-    assert.equal(run.status, 'won');
-    assert.equal(authoritativeCheckpoint(run).hash, row.checkpoint);
-  }
-}
-
 test('actual Solo field-finale chooser, clear and voluntary ending retain the exact reviewed run', async (t) => {
   const disk = managedIndexedDB();
   const backend = createJourneyBackend({ ...disk, profileKey: 'journey-whole-spatial-v2' });
@@ -115,7 +58,7 @@ test('actual Solo field-finale chooser, clear and voluntary ending retain the ex
   assert.equal(p.rendered.run.level.revision, 'home-field-2');
   assert.equal(p.$('theme-select').value, 'apex-aurora-actors-v1');
   assert.equal(p.rendered.run.tick, 0);
-  playKeyboardRoute(p, () => [p.rendered.run], [directions]);
+  assert(playKeyboardRoute(p, () => [p.rendered.run], [directions], row).freshCaptureGestures > 0);
   let persisted = false;
   await settle(() => {
     void backend.read().then((profile) => {
@@ -161,7 +104,7 @@ test('actual Versus finale clears on equal independent boards and offers Rematch
   assert.notEqual(p.renders[0].cells, p.renders[1].cells);
   assert.equal(p.renders[0].encounter, null);
   assert.equal(p.$('race-theme').value, 'apex-aurora-actors-v1');
-  playKeyboardRoute(p, () => p.renders, [wasd, directions]);
+  assert(playKeyboardRoute(p, () => p.renders, [wasd, directions], row).freshCaptureGestures > 0);
   assert.equal(p.$('race-journey-next').hidden, true);
   assert.match(p.$('race-start').textContent, /Rematch: Home signal/);
   assert.match(p.$('race-message').textContent, /End of this test route/);

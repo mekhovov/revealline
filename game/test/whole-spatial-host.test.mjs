@@ -30,7 +30,7 @@ const running = (p, levelId) =>
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
   });
 
-for (const revision of ['v1', 'v2']) {
+for (const revision of ['v1', 'v2', 'v3']) {
   const routeId = `whole-spatial-${revision}`;
   const profileKey = `journey-whole-spatial-${revision}`;
   const sessionKey = `revealline.suspended.journey-whole-spatial.${revision}`;

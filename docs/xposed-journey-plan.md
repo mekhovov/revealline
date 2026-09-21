@@ -19,6 +19,12 @@ human/device qualification and coordinated publication are still open.
 The user's difficulty/bonus/Ukrainian-and-FPV/enemy-variety extension is specified in
 [the pressure and variety successor](superpowers/specs/2026-09-21-journey-pressure-and-variety.md).
 
+The [combined timed-bonus integration](verification/journey-whole-timed-review.md)
+extends that source at `whole-spatial-v3` with the three reviewed trail-aware
+Border schedules. Other80 missions/maps/pictures and historical editions remain
+unchanged. Shared Studio Inspect/Apply, Solo/Versus direct continuation and exact
+bonus saves are qualified separately from human balance and public promotion.
+
 Current follow-up evidence: [two Sentinel receiver-layout successors](verification/journey-sentinel-spatial.md)
 preserve encounter rules while removing the recorded10–14second shortcuts;
 [new Livewire pressure paths](verification/journey-livewire-pressure.md) cover all42
