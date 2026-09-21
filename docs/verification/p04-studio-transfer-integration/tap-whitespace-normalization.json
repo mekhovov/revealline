@@ -1,0 +1,27 @@
+{
+  "node22.tap": {
+    "rawSHA256": "be7ade36ebcdcb8e8aa72413fcdb75d2ab3e85eec2bf602924c9e4821c6fb26b",
+    "normalizedSHA256": "be7ade36ebcdcb8e8aa72413fcdb75d2ab3e85eec2bf602924c9e4821c6fb26b",
+    "change": "trim trailing whitespace only; original retained in root cache"
+  },
+  "node20.tap": {
+    "rawSHA256": "181291b6690df29e37dd3a9da7138e7ca334228d23923992dd6f9e530cd8e4e7",
+    "normalizedSHA256": "181291b6690df29e37dd3a9da7138e7ca334228d23923992dd6f9e530cd8e4e7",
+    "change": "trim trailing whitespace only; original retained in root cache"
+  },
+  "production-history-baseline-node20.tap": {
+    "rawSHA256": "7a57092214be539444295d1265e6087cf1427819bc3ba2b9f9c2ebf924c3bf42",
+    "normalizedSHA256": "fe7756cfc1cf2bf75a8ef92669af45267800883d017d669f4f563f6eec08b097",
+    "change": "trim trailing whitespace only; original retained in root cache"
+  },
+  "production-history-node20-r2.tap": {
+    "rawSHA256": "fd887a9f6414c14d32730f8e202c41bf463ff5b9eba62e7cb3d2471ac8efe4f1",
+    "normalizedSHA256": "def181fa57e7c36de414465d4d1c792b44752fd3d401bef1e7a85d277c763e30",
+    "change": "trim trailing whitespace only; original retained in root cache"
+  },
+  "production-history-node22-r2.tap": {
+    "rawSHA256": "ba204ba5d4c21baac138e1ea61c1e261278cfafe441c36c0d723778a422b71e9",
+    "normalizedSHA256": "2969b2d2875f0afd4077aa13ccea97635003b1ad2cbfcf79e4348669ee3f6e34",
+    "change": "trim trailing whitespace only; original retained in root cache"
+  }
+}

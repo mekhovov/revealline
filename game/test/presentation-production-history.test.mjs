@@ -410,7 +410,7 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
-test('Livewire feedback dependencies bind only the reviewed v0.76 effects inputs', async () => {
+test('Livewire and required-look feedback bind only the reviewed current effects inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   for (const slotId of [
@@ -429,13 +429,15 @@ test('Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
     assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(
       asset.provenance.source.endsWith(
-        'sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13',
+        'sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79',
       ),
     );
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
     assert.match(asset.provenance.source, /game\/content-design\/actor-marker\.mjs/);
     assert.equal(
-      asset.quality.evidence.some((entry) => entry.includes('Scoped v0.76 effects source review')),
+      asset.quality.evidence.some((entry) =>
+        entry.includes('Scoped required-look readiness source review'),
+      ),
       true,
     );
   }
@@ -452,7 +454,7 @@ test('DOM ownership and Journey P02 audio bind only their reviewed current input
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6',
+          'sha256:b31e970f9ca0b27a5229af8de276938bfc9c08f6954de1a6f4ac29b39a1d8b41',
         ),
         slot.id,
       );
@@ -460,7 +462,7 @@ test('DOM ownership and Journey P02 audio bind only their reviewed current input
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
       assert.match(asset.provenance.source, /game\/presentation\/dom-ownership\.mjs/);
       assert.equal(
-        asset.quality.evidence.some((entry) => entry.includes('Scoped v0.76 UI source review')),
+        asset.quality.evidence.some((entry) => entry.includes('Scoped Team loader source review')),
         true,
       );
     } else {
@@ -480,7 +482,7 @@ test('P03 screen and P08-A motion reviews bind only the inspected current inputs
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const fingerprints = {
-    screens: '18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7',
+    screens: 'd7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0',
     motion: 'b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4',
   };
   const reviewed = production.document.slots.filter(
@@ -494,7 +496,9 @@ test('P03 screen and P08-A motion reviews bind only the inspected current inputs
     assert.ok(
       asset.quality.evidence.some((entry) =>
         entry.includes(
-          slot.group === 'motion' ? 'Scoped P08-A source review' : 'Scoped P03 Pause source review',
+          slot.group === 'motion'
+            ? 'Scoped P08-A source review'
+            : 'Scoped short-landscape loss source review',
         ),
       ),
       slot.id,
@@ -641,4 +645,38 @@ test('the whole production collection has capacity for immutable review successo
     reexport.size >= portable.size,
     'collection history is retained within existing bounds',
   );
+});
+
+test('follow-up review retains the exact measured fpv40 source ledger and all original payloads', async () => {
+  const oracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-team-followup-source-fpv40.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const current = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const stage = await reconstructPinnedProduction(oracle, current);
+  assert.equal(stage.document.revision, 40);
+  assert.ok(current.document.revision > stage.document.revision);
+  const before = resolvePresentation(stage.document),
+    after = resolvePresentation(current.document);
+  for (const slot of current.document.slots) {
+    if (['screens', 'effects'].includes(slot.group) && before.assets[slot.id]?.kind === 'recipe') {
+      assert.equal(before.assets[slot.id].quality.stage, 'source', slot.id);
+      assert.equal(after.assets[slot.id].quality.stage, 'reviewed', slot.id);
+      assert.deepEqual(after.assets[slot.id].recipe, before.assets[slot.id].recipe);
+      assert.equal(
+        after.assets[slot.id].provenance.source,
+        before.assets[slot.id].provenance.source,
+      );
+    } else assert.deepEqual(after.assets[slot.id], before.assets[slot.id], slot.id);
+  }
+  assert.equal(current.assets.size, stage.assets.size);
 });

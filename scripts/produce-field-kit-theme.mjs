@@ -41,11 +41,11 @@ const sources = {
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: '18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7',
+    sha256: 'd7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0',
     evidence: [
-      'Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.',
-      'The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.',
-      'This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged.',
+      'Scoped short-landscape loss source review: docs/verification/presentation-followup-review/source-review.md. Screens sha256:d7b27aa169ea52615d451e8a05207a2d972fab3895cf6c0f538e9e51bb46b3a0. Only Lost layouts at landscape heights up to500px receive separate detail/action scrollports and retained reading controls; other overlay states are unchanged.',
+      'Exact CSS sha256:a1e83e6bc757fbe5c524b73831b389ea8b02e7645e0b4b1cc3bfa74601ce3a1d matches retained p07-loss-difficulty-integration native evidence: legal loss at568x320 Large/Plain, positive125.625px reader,47px Retry,45.5px selector, keyboard difficulty change and explicit Retry; clean console.',
+      'Scoped layout acceptance only. Earlier approvals and measured source-stage fpv40 remain immutable. All-screen, physical-device, offline, human playtest and public qualification stay separate.',
     ],
   },
   ui: {
@@ -73,11 +73,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   effects: {
-    sha256: '7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13',
+    sha256: '2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79',
     evidence: [
-      'Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.',
-      'Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.',
-      'Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group.',
+      'Scoped required-look readiness source review: docs/verification/presentation-followup-review/source-review.md. Effects sha256:2614da4d54ada1b63ed78a9361bdfcf2355457f58577ea205ab6427d14a67f79 includes the exact required-look helper; earlier lane, marker, classic and event feedback inputs remain unchanged.',
+      'The retained p08-look-readiness-integration cohort establishes92 distinct scoped Node20/22 cases, with sparse reruns recorded separately. Actual app/core/painter checks exercise legal capture/Next, held/error/cancelled images, direct Start after Cancel, both compiled variants and queued-turn Pause/Resume. Native retained keyboard journey has377 exact served hashes.',
+      'Review verifies decode deadline/disposal, borrowed image lifetime, owner-token adoption and explicit override precedence. Prior recipes and measured source-stage fpv40 are retained. This is functional readiness review, not new all-art/state visuals, physical-device, offline, human fairness or public acceptance.',
     ],
   },
 };
