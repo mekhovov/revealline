@@ -1,0 +1,83 @@
+{
+  "scope": "Pure slot-migration rehearsal; not combined recipe production or release acceptance",
+  "music": {
+    "bytes": 7563551,
+    "sha256": "9c3331266e37fc43bca4d2965eb33f386624660313a71fa639e68cbcc404505b",
+    "revision": 50,
+    "selection": {
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
+      "collection": null,
+      "theme": {
+        "id": "fpv",
+        "revision": 50
+      }
+    }
+  },
+  "team": {
+    "bytes": 7399336,
+    "sha256": "dd8d17b2227fef4d2e6b63a3f73253be1dbf4f870a4f74325fff24f7ce2371e3",
+    "revision": 41,
+    "selection": {
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
+      "collection": null,
+      "theme": {
+        "id": "fpv",
+        "revision": 41
+      }
+    }
+  },
+  "collisions": {
+    "assets": [
+      "ui.panel.field-kit@14",
+      "ui.dialog.field-kit@14",
+      "ui.tooltip.field-kit@14",
+      "ui.toast.field-kit@14",
+      "ui.button.primary.field-kit@14",
+      "ui.button.secondary.field-kit@14",
+      "ui.button.danger.field-kit@14",
+      "ui.button.icon.field-kit@14",
+      "ui.button.tab.field-kit@14",
+      "ui.button.chip.field-kit@14",
+      "ui.input.checkbox.field-kit@14",
+      "ui.input.radio.field-kit@14",
+      "ui.input.toggle.field-kit@14",
+      "ui.input.slider.field-kit@14",
+      "ui.input.select.field-kit@14",
+      "ui.input.text.field-kit@14",
+      "ui.input.scrollbar.field-kit@14",
+      "ui.meter.coverage.field-kit@14",
+      "ui.meter.progress.field-kit@14",
+      "ui.meter.time.field-kit@14",
+      "ui.meter.ability.field-kit@14",
+      "ui.meter.volume.field-kit@14",
+      "ui.focus.field-kit@14",
+      "ui.cursor.field-kit@14",
+      "screen.missions.background.field-kit@18",
+      "screen.hangar.background.field-kit@18",
+      "screen.results.background.field-kit@18",
+      "screen.collection.background.field-kit@18",
+      "screen.settings.background.field-kit@18",
+      "screen.couch.background.field-kit@18",
+      "screen.studio.background.field-kit@18",
+      "screen.missions.background.field-kit@19",
+      "screen.hangar.background.field-kit@19",
+      "screen.results.background.field-kit@19",
+      "screen.collection.background.field-kit@19",
+      "screen.settings.background.field-kit@19",
+      "screen.couch.background.field-kit@19",
+      "screen.studio.background.field-kit@19"
+    ],
+    "themes": [
+      "fpv@39",
+      "fpv@40",
+      "fpv@41"
+    ],
+    "collections": []
+  }
+}

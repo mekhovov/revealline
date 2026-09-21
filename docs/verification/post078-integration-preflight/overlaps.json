@@ -1,0 +1,348 @@
+{
+  "heads": {
+    "base": "6f851d1bce4cb7d5f257546ab6ffd3c68231f08a",
+    "music": "e9434d03feb30bf8767051b2832a4ab987b2fa41",
+    "team": "8cffb36b29a38013eb9213845efd675c4864c9d8"
+  },
+  "scope": "Read-only three-way file rehearsal. No source checkout, ref, index, producer or release mutation.",
+  "overlap": [
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "inputs": {
+        "base": {
+          "bytes": 7237522,
+          "sha256": "30b4fc7265a1861e30eb7c11682214ff7fadc03335f20da394d7ba15a967255d"
+        },
+        "music": {
+          "bytes": 7563551,
+          "sha256": "9c3331266e37fc43bca4d2965eb33f386624660313a71fa639e68cbcc404505b"
+        },
+        "team": {
+          "bytes": 7399336,
+          "sha256": "dd8d17b2227fef4d2e6b63a3f73253be1dbf4f870a4f74325fff24f7ce2371e3"
+        }
+      },
+      "disposition": "generated/binary identity; reconstruct from combined producer, do not text-merge"
+    },
+    {
+      "path": "game/app.mjs",
+      "inputs": {
+        "base": {
+          "bytes": 333586,
+          "sha256": "4e8caee7220ee58c6d699e9ba7b72d292b8ba20622448e4d38d3971e865e9ca3"
+        },
+        "music": {
+          "bytes": 337581,
+          "sha256": "2a470e9f6f04f3e898befcadb3e37542f5d198e6e4cd7715c3d8a63befb3eb04"
+        },
+        "team": {
+          "bytes": 342657,
+          "sha256": "de27c4641de731eebc5a3b6f12aba4cc7008fd2488bf4efa3d264e9869dffef4"
+        }
+      },
+      "conflicts": 0,
+      "previewSHA256": "971b11de58ae43d5d64eb8080084e580f65e77ab8da831bfaee56de526aa32fc"
+    },
+    {
+      "path": "game/build-config.json",
+      "inputs": {
+        "base": {
+          "bytes": 5603,
+          "sha256": "38c7b2f3d02afae9a89db3d871ea7548ec2ac186228e6506dfc63e6f2d7aa829"
+        },
+        "music": {
+          "bytes": 5810,
+          "sha256": "7a6f231a4eda7d795481ee2aba601defcb3cf77367ff43091ebc093df10bc325"
+        },
+        "team": {
+          "bytes": 5656,
+          "sha256": "9107a13198a290a5027d066847c1f914c38c520c0c42db320da3be94d9cb286b"
+        }
+      },
+      "conflicts": 0,
+      "previewSHA256": "27860e7db3f5b64a5419348cb25b37c79df3bb6d2088156ac8e7a8143d4dcff2"
+    },
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "inputs": {
+        "base": {
+          "bytes": 2642,
+          "sha256": "33fe7aa24fc85d2664799e2e5f8b402d39b0f8bca0e3e4db155e12779c2734eb"
+        },
+        "music": {
+          "bytes": 2643,
+          "sha256": "b530d6a35760fe92d21d75fb20661c0b7045fa258e8bbcf4442d336902c4d066"
+        },
+        "team": {
+          "bytes": 2749,
+          "sha256": "8baa5aad9de155bbd951221a9ce650158f3d664f9ea5052ffc00acf6e5970d86"
+        }
+      },
+      "conflicts": 4,
+      "previewSHA256": "7a7f74ef7778868038d1a7f10be022bdd08a33bf729bea415a17c83e74226a3a"
+    },
+    {
+      "path": "game/couch/index.html",
+      "inputs": {
+        "base": {
+          "bytes": 23447,
+          "sha256": "44cf632fb1408ae3b728cfb6c2581922f9f4345b9381e702bf6e491f48dc9075"
+        },
+        "music": {
+          "bytes": 23780,
+          "sha256": "feab1b87dae5e8fbbb1eb7d68e2343ef28e9d981a8e2d4f7965617d76f7ee575"
+        },
+        "team": {
+          "bytes": 23549,
+          "sha256": "c6fa52a5bc824442b736036f4894b2256435d3737a92bc91c8307652ba82f92a"
+        }
+      },
+      "conflicts": 0,
+      "previewSHA256": "e4248644ce496a7677cb5cc09cae0cbe738b4594a3d8c79886c7e3dd6c1a1fdf"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "inputs": {
+        "base": {
+          "bytes": 32731,
+          "sha256": "b47c2f68cd2261e3d727189cc519358c565a2b39bd45110a2e5414bea9a3a99c"
+        },
+        "music": {
+          "bytes": 33310,
+          "sha256": "d0ae7dcbc99ee14793be5cc0e226aa03399ffe699bc04e89c01f66434de9a4ae"
+        },
+        "team": {
+          "bytes": 34382,
+          "sha256": "9103bb2c3e49f0281564bc59fe4369e326782d11d715ff470af88d306d8bac1d"
+        }
+      },
+      "conflicts": 0,
+      "previewSHA256": "b59909f6bab94e55a00b76f2705d220519e2ef2fd2993e420c446822d86e534d"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "inputs": {
+        "base": {
+          "bytes": 25917,
+          "sha256": "0072224ea46d2e39c1a327043a8d72dfb4968b6cd5e9f3a304fab614a289790f"
+        },
+        "music": {
+          "bytes": 26262,
+          "sha256": "02d9c1a1a9f0c375cd324abcb64718e1a700a31841d40aa3e534f978e71e2b03"
+        },
+        "team": {
+          "bytes": 26219,
+          "sha256": "e865d0191c46d3614267a7085d298800869791d760a99784e2b9a73abe03cf2e"
+        }
+      },
+      "conflicts": 0,
+      "previewSHA256": "a9092b93df71296be03ba96225aa2233f4c2e4bc4a8dfd49944c766da4504774"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "inputs": {
+        "base": {
+          "bytes": 126024,
+          "sha256": "56917c1123ca031fa781931959d2b6cf3d1e30eca3b6bf3c32d6ef0c1be5ca6b"
+        },
+        "music": {
+          "bytes": 126073,
+          "sha256": "6e0699a97c3b92949e6e1c36709676652a83fee377ee9c05e86db68fd93335b3"
+        },
+        "team": {
+          "bytes": 128468,
+          "sha256": "d800b83279a8d1c2f16840d8a855039e731646c31af2fa04fdc47455017c8e6b"
+        }
+      },
+      "conflicts": 0,
+      "previewSHA256": "d11cda1069464f6ab9c0c3e93fa04521fbbbc893150213365b69650db2d5259f"
+    },
+    {
+      "path": "game/index.html",
+      "inputs": {
+        "base": {
+          "bytes": 75829,
+          "sha256": "505e9680dbbd9b827a0072b0f8c4f04e1d8691b9af48025c5903ddd53fbfb795"
+        },
+        "music": {
+          "bytes": 76436,
+          "sha256": "5d8960c06c7c2abbcfeafeb95d7f6553aca219df1e18dbedae671dfcd873ff55"
+        },
+        "team": {
+          "bytes": 76688,
+          "sha256": "d180b4e73e8ed3f227c5a24d98875df1826dd3f33590a329d42b469b72692294"
+        }
+      },
+      "conflicts": 0,
+      "previewSHA256": "8f2982ae4f5394ad11bdcb31d3102d7b49e71650457c1791dac87553c267a14c"
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "inputs": {
+        "base": {
+          "bytes": 27214,
+          "sha256": "b4f30cb1865de29e549edb8f5d89068005f0f48eb44b6a18fd207728faca3c38"
+        },
+        "music": {
+          "bytes": 27214,
+          "sha256": "8fecd8b84307f8a5595fe22a1fbb98cfa373cb1b30d2eb26dddd9381b3099a5f"
+        },
+        "team": {
+          "bytes": 29111,
+          "sha256": "77c4ce7059c1fdb74dde65fc01cada07d37e446d65545a95e258ad3d9ea6e8d7"
+        }
+      },
+      "disposition": "generated/binary identity; reconstruct from combined producer, do not text-merge"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "inputs": {
+        "base": {
+          "bytes": 968465,
+          "sha256": "a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584"
+        },
+        "music": {
+          "bytes": 977958,
+          "sha256": "29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed"
+        },
+        "team": {
+          "bytes": 997220,
+          "sha256": "e56e5d5182513ffb4fe41a2ca2a821c856cdc40c63a6f700effd5399367bc7da"
+        }
+      },
+      "disposition": "generated/binary identity; reconstruct from combined producer, do not text-merge"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "inputs": {
+        "base": {
+          "bytes": 3689025,
+          "sha256": "f4b243ce9b1ee963391d4801978a5545f2e6027e416f9e150a9c40595b883939"
+        },
+        "music": {
+          "bytes": 4050322,
+          "sha256": "b5e630c6ffc5ebdc44385c7543c755075482532391de68e2a2ab937bb756b1a0"
+        },
+        "team": {
+          "bytes": 3866697,
+          "sha256": "c0840c5c7677e1493f429dcb58173e2ae38dd26ee52d6c32d840c2539d093a1f"
+        }
+      },
+      "disposition": "generated/binary identity; reconstruct from combined producer, do not text-merge"
+    },
+    {
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "inputs": {
+        "base": {
+          "bytes": 25402,
+          "sha256": "a693006ac9d5bfb7b385e187c5d4d566c23904721b5b1057644c3ea0038c1b91"
+        },
+        "music": {
+          "bytes": 25402,
+          "sha256": "3399bbb16e484354ff1112d959a75035ab1cc392cbc1705c642b749fd50fefed"
+        },
+        "team": {
+          "bytes": 25408,
+          "sha256": "dee02a5b11737cf47926c071896ac864dddac105ac9ad9874f62df66cf0bbb59"
+        }
+      },
+      "conflicts": 0,
+      "previewSHA256": "1320059bf6a072fa33b0006b7cda5044f6668d2f05dd63fa351253250cd940f4"
+    },
+    {
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "inputs": {
+        "base": {
+          "bytes": 8897,
+          "sha256": "b91a9a64662e9976cb420c424ba34a7621736285d7c0b82642d7bcbbcb21e43f"
+        },
+        "music": {
+          "bytes": 8897,
+          "sha256": "0842e37fcbed18680216c1ee4560f23c7357b3597cb8b17680fdfc79d545a8b8"
+        },
+        "team": {
+          "bytes": 8897,
+          "sha256": "5f3ba1db27c866511187f5fd0508d1bcffbafa5abaa9e9d45e636b7577027648"
+        }
+      },
+      "conflicts": 1,
+      "previewSHA256": "37806635ab3dab5541a0d1e36be670e98a1a2afbd5cca4395829fabb9e6c5992"
+    },
+    {
+      "path": "game/test/presentation-production-history.test.mjs",
+      "inputs": {
+        "base": {
+          "bytes": 28995,
+          "sha256": "79400cf4ac959d9b7a23861ed6beaa3c90556035b2942517fcbf62ca1b62f1bf"
+        },
+        "music": {
+          "bytes": 30955,
+          "sha256": "d063fc4666502abcf7f84013fe887aa79568dd20519427ad1667dc8d962eef55"
+        },
+        "team": {
+          "bytes": 30520,
+          "sha256": "07f9d054a1ef0ef6f01d03f5bed89b18fba862a9be7f7b14bf63027c9f54a316"
+        }
+      },
+      "conflicts": 4,
+      "previewSHA256": "4da4b4a6bdedffaca4e666de90fc6ba2bf2ea562f54527493af9914c7c3ab8f9"
+    },
+    {
+      "path": "game/test/solo-result-continuation-host.test.mjs",
+      "inputs": {
+        "base": {
+          "bytes": 17672,
+          "sha256": "c50ef3915e3ca38816e61e1e16ff9eecf840f152b9fe1412fec92c9363143543"
+        },
+        "music": {
+          "bytes": 17714,
+          "sha256": "d2876acdb9579a4b221fa9ba29b7cb42a46d6248d566f29a30f6637ad9a9f7df"
+        },
+        "team": {
+          "bytes": 22335,
+          "sha256": "1966fc5f68161051900c675158beaaabda5c6ace857efbdef965d29724f980f0"
+        }
+      },
+      "conflicts": 0,
+      "previewSHA256": "fc71702f249119f98018e3b5a92bfd920d864e3084e2e7cc3646a83a3afbb668"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "inputs": {
+        "base": {
+          "bytes": 62443,
+          "sha256": "1fa9bcfbcd3964fa8c9872c6f84a0c6215193adebaab6f4e5174f579a52d676b"
+        },
+        "music": {
+          "bytes": 63326,
+          "sha256": "14e36d47bf63d502cea7bd3832ce32eadd7fd55bf3ac24f9d532f56376319f1e"
+        },
+        "team": {
+          "bytes": 63182,
+          "sha256": "9a49695954546412e19a68b3ab53589da42720354bd6a25d20b5109333743bfa"
+        }
+      },
+      "conflicts": 2,
+      "previewSHA256": "b0f91fd172d4792ae765f5497ccda2b47fd81608b9f98127a5c925ccd98e332d"
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "inputs": {
+        "base": {
+          "bytes": 21652,
+          "sha256": "4bce5821ef6a56083ae94d16b04f97e08eee3dbfb9fc48fcc6e7a2b122dade32"
+        },
+        "music": {
+          "bytes": 22317,
+          "sha256": "b4cc4e2dba0d722356c34fd56970659708077d0c3a7198e1ec6a278dd82d7f6a"
+        },
+        "team": {
+          "bytes": 21212,
+          "sha256": "1caf8fe2e49cde1d52f85d83669f864db2559fd1f8ba59aec26d970f1665b038"
+        }
+      },
+      "conflicts": 4,
+      "previewSHA256": "98d16b115b66ff18e7cb770642a776f9fde1a0ce4b0090cefc135d660634d78d"
+    }
+  ]
+}
