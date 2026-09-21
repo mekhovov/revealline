@@ -1,0 +1,44 @@
+{
+  "packetSHA256": "b1aa7391024d3d2b72c09db7447284a01c8a38d8f0f290ad2a8174ba2774677e",
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "kind": "Independent source and retained evidence review, not a new test or browser run",
+  "runs": [
+    {
+      "node": "22.22.2",
+      "tests": 410,
+      "processes": 15,
+      "verifiedReads": 2574,
+      "uniqueFiles": 290,
+      "logSHA256": "b57033fa9980212a9f4b8a8a21dc94bbe13b678774b6dc0407aa540d7e6f9a6b"
+    },
+    {
+      "node": "20.19.5",
+      "tests": 410,
+      "processes": 15,
+      "verifiedReads": 2574,
+      "uniqueFiles": 290,
+      "logSHA256": "52d87bab5cf87b046b0b3c8ca6ee4b3eb910d2b8e30116c3875eeff021b0b7d7"
+    }
+  ],
+  "native": {
+    "receiptSHA256": "4967ea55466f74e2f4b711acb9d8eb62aea3ec0d089b26f6ebdd3603c43dd889",
+    "verifiedResponses": 382,
+    "verifiedBytes": 6637631,
+    "qaFixture": [
+      {
+        "path": "native/records-storage.html",
+        "bytes": 2110,
+        "sha256": "095ac000e59097dc71c27cc3535669b629ad34d66205b126ef7f6f27d28be50d",
+        "origin": "candidate"
+      }
+    ]
+  },
+  "sourceReview": "Two runtime files: host declares actual recovery capability; rendering acquires current pager focus immediately before disabling. Read-only snapshot authority and newer intent vetoes retained. No additional blocker found.",
+  "limitations": [
+    "Deliberate local QA profile fault is not a naturally occurring storage corruption claim",
+    "Closed connection recovery, delayed shrinking pager and exact saved/checkpoint bytes are modeled evidence",
+    "Long error text extends below short-landscape viewport and remains in scrollable dialog; no entire-message-on-one-screen claim",
+    "No physical device/controller, screen-reader, Large/Plain/200% zoom or full P16 qualification",
+    "No public deployment claim"
+  ]
+}
