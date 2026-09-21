@@ -58,6 +58,14 @@ are separate gates; percentages would conceal those distinctions.
 No phase is labelled fully accepted while its required human or public gate is open.
 Ordinary route completion proves feasibility, not enjoyment or sufficient difficulty.
 
+The [foundation-use audit correction](journey-foundation-observation-correction.md)
+now distinguishes accepted edge contacts from raw point containment without
+altering gameplay or old evidence. All 30 historical checkpoints remain exact;
+four visited-foundation sets change, while the recorded Nearby shore/Second
+landing/Remix bypass findings persist. Nearby shore also has a no-wait island-first
+route, so its next task is clearer non-modal return teaching, not a compulsory
+island gate. Later-level pressure/geometry and human balance remain open.
+
 ## Latest native performance unit
 
 The [transition observation report](journey-performance-observations.md) records

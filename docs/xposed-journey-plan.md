@@ -1,6 +1,12 @@
 # Xposed-led Journey — implementation contract
 
 Current checkpoint: [2026-09-21 item-by-item completion audit](verification/journey-completion-2026-09-21.md).
+The [foundation-use diagnostic correction](verification/journey-foundation-observation-correction.md)
+now preserves engine ownership at exact landing edges. All 30 historical route
+checkpoints stay unchanged; four visited-foundation sets are corrected. Nearby
+shore has a qualified no-wait island-first route, while native first-return
+feedback remains generic. Next add a non-modal foundation-return explanation;
+this does not replace later-level pressure, geometry, human or release gates.
 The latest [Home Signal field-finale alternative](verification/journey-apex-field-finale.md)
 tests ordinary capture instead of a Sentinel encounter, preserving old editions.
 Eight replay/race clears include all presets/controls and two far-wing mastery
