@@ -113,7 +113,72 @@ very short Expert clears are pacing/inversion flags, not proof Expert is easier
 for humans or that the new multipliers are balanced. Separate route choices and
 enemy positions change how much territory each closure earns.
 
-Pending: remaining19 fresh-route sets, broader timing alternatives, optional
+## Fresh foundation routes
+
+Five additional routes now fill Stepping Exchange Standard/Expert, Divided
+Workshop Standard/Expert and Switchback Partners Standard. All20 base joint/seat
+configurations clear without knockdowns. Exact fresh runs match on both Node
+versions;42 dedicated tests also pass independent review. The combined assessment,
+opening, foundation and historical regression cohort passes253 tests per Node.
+The bounded search took
+20.795 seconds total, at most4.960 seconds per case, below its45-second per-variant
+and six-minute aggregate caps. It did not alter game state or recipes.
+
+| Mission             | Preset   | Base clear seconds | Self-return counts | Optional mastery |
+| ------------------- | -------- | -----------------: | ------------------ | ---------------- |
+| Stepping Exchange   | Standard |              26.54 | 2 +4               | Not met          |
+| Stepping Exchange   | Expert   |              29.65 | 3 +3               | Not met          |
+| Divided Workshop    | Standard |              20.93 | 4 +1               | Met              |
+| Divided Workshop    | Expert   |              24.65 | 5 +1               | Met              |
+| Switchback Partners | Standard |              23.88 | 2 +3               | Not met          |
+
+Additional30-tick departure probes pass16/20 configurations. Divided Workshop
+Standard fails all four: keeper-2 hits a trail at event tick1741, completed step 1742. The failed timing trace remains in the fixture and test, not silently
+retimed or classified as a clear. This is a route-timing sensitivity, not proof of
+unavoidable spawn pressure. Both Stepping routes leave one intermediate island
+unconnected; Switchback misses the optional connected-platform visit.
+
+Current total: **22/36 ordinary sets,88/144 configurations**, plus32 successful
+additional delayed configurations from the nine fresh routes. All twelve sets in
+the first four-mission learning arc now have evidence. The14 remaining sets are
+Standard and Expert in each of: Crossed Gardens, Split Orchards, Weaver Crossing,
+Shared Lookout, Twin Depots, Changing Courtyard and Last Rendezvous.
+
+These foundation paths still alternate active seats. Divided Workshop's second
+craft contributes one early return while its partner does most later work. This
+demonstrates neither equal workload nor compelling cooperation; forcing exactly
+equal work is also not a substitute for human testing. All five short optimized
+clears remain pacing flags. No joint-cut event or Support use is claimed.
+
+## Scoped native authoring and first return
+
+Exact-source local preview at commit`3c040da15822ad16504e7c5d4a8dfb7b7c9096b3`,
+port8824: served Studio HTML/JavaScript, compiler, catalogs, Team candidate factory
+and Team core matched the pinned Git bytes. The real Team HTML, entry script,
+host, view and shared couch input also matched that commit. This source already contains the
+unchanged pressure runtime; later verification commits do not modify it.
+
+Using the normal file chooser, imported the pressure Team project, inspected it
+while the previous artwork draft remained active, then explicitly applied it to
+the separate`team-journey-greybox-review` slot. Studio showed5 packs,5 campaigns,
+12 missions and Expert's effective keeper velocities±4.2 against craft10.
+The Solo preview stayed disabled for Team-only content and the Team export/player
+route remained available. Its generic preset copy mentions attack-rest scaling;
+these particular Team roles have no attack cycle, as the effective manifest shows.
+
+A shared-compiler-generated Expert Twin Landings test pack was imported through
+the real Team player's normal chooser. Explicit Start showed one reserve and60%
+quota. Keyboard A and Right produced both outer return lanes:1.5% reclaimed,
+both craft on reclaimed ground and the reserve unchanged. Pause/Resume preserved
+that board and requested fresh directions. Captured warning/error console logs
+were empty. The attempt was left paused.
+
+This is a desktop, muted, partial-play observation only. The generic scenery in
+the Team test pack is explicitly not the authored mission picture. Tool latency
+and the displayed30-second time are not pacing evidence. No full clear, physical
+controller, touch, two-human or release validation is inferred.
+
+Pending: remaining14 fresh-route sets, broader timing alternatives, optional
 mastery, spatial/role redesign, native whole-mission play, two human players,
 controller/reconnect, new Team bonus/combat semantics, accepted host integration,
 reviewed release and GitHub Pages. No claim of P14 completion.
