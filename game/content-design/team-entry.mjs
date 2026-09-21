@@ -1,8 +1,12 @@
-import { createTeamJourneyCandidates } from './team-journey-candidates.mjs';
+import {
+  createTeamJourneyCandidates,
+  TEAM_JOURNEY_LEARNING_ARCS,
+} from './team-journey-candidates.mjs';
 import { createCandidateTeamHost } from './team-host.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
 import { createTeamJourneyProgress } from './team-progress.mjs';
 import { createTeamMissionCardPresenter } from './team-mission-card.mjs';
+import { createTeamCaptureTeaching } from './team-capture-teaching.mjs';
 
 /** Explicit geometry-review entry only. No public enrollment, official awards,
  * artwork qualification or changes to legacy Team arena preferences.
@@ -21,6 +25,10 @@ export async function createTeamGreyboxEntry() {
     candidateProgress,
     candidatePreferences: preferences,
     candidateCardPresenter: createTeamMissionCardPresenter(candidateJourney, candidateProgress),
+    candidateCaptureTeaching: createTeamCaptureTeaching(
+      candidateJourney,
+      TEAM_JOURNEY_LEARNING_ARCS[0].missionIds,
+    ),
     candidateDifficulty: snapshot.difficulty,
     candidateNotice: snapshot.durable ? '' : snapshot.error,
   });

@@ -98,6 +98,7 @@ export function bootCoop({
   candidateProgress = null,
   candidatePreferences = null,
   candidateCardPresenter = undefined,
+  candidateCaptureTeaching = null,
   candidateDifficulty = 'standard',
   candidateNotice = '',
 } = {}) {
@@ -2819,7 +2820,13 @@ export function bootCoop({
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
+    const captureTeaching = candidateCaptureTeaching?.(
+      acceptedPicture?.journeyRow,
+      run,
+      run.events,
+    );
     for (const event of run.events) {
+      if (event.type === 'cells.claimed' && captureTeaching) message(captureTeaching);
       if (event.type === 'cells.claimed' && run.terrain) {
         const caption = terrainTransitionCaption(run, event);
         if (caption) message(caption);
@@ -2831,7 +2838,11 @@ export function bootCoop({
       const roamerCaption = coopRoamerCaption(event);
       if (roamerCaption) message(roamerCaption);
       if (event.type === 'cut.joint')
-        message('Joint Cut! Both lines are safe. Choose your next route together.');
+        message(
+          captureTeaching
+            ? `Joint Cut! ${captureTeaching}`
+            : 'Joint Cut! Both lines are banked. Choose your next route together.',
+        );
       if (event.type === 'player.downed') {
         knockdowns[event.player] = event;
         input.clearPlayer(event.player);
