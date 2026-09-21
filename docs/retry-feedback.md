@@ -37,3 +37,35 @@ node --test game/test/retry-view.test.mjs game/test/retry-integration.test.mjs
 ```
 
 Six projection tests check owned data, status suppression and context without duplicating every string. Twenty-six integration tests include all seven causes in both steering modes, real replay/checkpoint verification, restoration during recovery, eventual wins with retained causes, terminal-session rejection, prior collection preservation and original frozen route expectations. Fixtures use normal fixed-tick commands; they are not manual play or new historical oracles. The [source browser checks](verification/round-24/source-browser.md) cover five measured viewports, consequence visibility, native and configured controller reading, held Retry Confirm and retained collection rewards. The [frozen offline check](verification/round-24/frozen-browser.md) verifies 127 files / 20,519,745 bytes, then reopens with the server stopped: ordinary loss → Read/Done → explicit Retry → an 8,160-point win, with one golden picture and a 3.75-second score retained after another reload. A separately imported staged boss practice scenario also resets correctly after offline Retry at 320 × 640. See the [accepted plan](round-24-retry-plan.md); these observations do not establish human comprehension, physical hardware compatibility or enjoyment.
+
+## Direct-contact HUD feedback
+
+During an unfinished Solo attempt, `player.failed` with cause `enemy-player`
+uses direct-contact wording. The event's `actorId` selects the short rover
+explanation when that actor is a `claimed-rover`; another or unavailable actor
+uses the generic enemy-contact caption. The separate activation warning and
+Field Guide explain why reclaimed ground can still contain a moving threat.
+Enemy-trail failures keep the existing caught-line explanation.
+
+Do not infer the contact type from `player.cutting` after failure: recovery has
+already cleared it. Keep the core cause, timing, actor IDs, retained territory,
+replay data and cue ownership unchanged. This HUD correction does not change
+terminal Retry explanations or retune the teaching missions.
+
+Maintainer prompt:
+
+> Update a loss caption from the actual `player.failed` cause and actor identity.
+> Keep the message short enough for Large text in landscape layouts. Reproduce
+> the event through legal input in the mounted HUD, retain generic direct-contact
+> and caught-line coverage, and verify the saved replay. Never fabricate a live
+> failure event, rewrite the core cause, or infer the event from post-recovery
+> cutting state. Check the native caption separately from modeled DOM evidence.
+
+Focused checks also include `game/test/hud-status-cues.test.mjs`; its finite rover
+fixture earns capture, activation and contact through ordinary input. It is not
+native verification of the Wake the yard or Split berths teaching missions.
+
+The [Xbox guidance on additional cue channels](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/103)
+recommends combining readable text with other signals for important gameplay
+events. This correction makes the existing loss caption accurate; it does not
+establish complete audio, narration, haptic or human-comprehension acceptance.

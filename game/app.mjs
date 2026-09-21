@@ -6905,6 +6905,10 @@ try {
             warning(
               {
                 'self-contact': 'Your line crossed itself. Choose a new route.',
+                'enemy-player':
+                  run.enemies.find((actor) => actor.id === event.actorId)?.type === 'claimed-rover'
+                    ? 'A rover hit your craft on reclaimed ground. Your revealed territory is kept.'
+                    : 'An enemy hit your craft. Your revealed territory is kept.',
                 'mission-timeout': 'The mission clock ran out. Try a faster route.',
                 'cut-timeout': 'Your live line stayed open too long. Make a shorter cut.',
                 'cable-limit': 'Your cable budget ran out. Close a shorter line.',
