@@ -1,0 +1,24 @@
+{
+  "base": "fac78c03cbfeb9b195541be0ba61034593f6f24c",
+  "workingOverrides": {
+    "game/app.mjs": "642e62c82d922cafe9d731c1c683ed341714247b2cf8694671410073fc577cc7",
+    "game/ui/game-shell.mjs": "4991238269225d3d243fcd98c083cc361568f18c21dc8a273b9ac04427ac3c22"
+  },
+  "fixtureSha256": "074e0a7a3aea1995f01acf043201e9de9d0075060068e309df8c6ae9503d8070",
+  "method": "Native browser UI; installed owned two-level navigation fixture; legal keyboard cuts; no injected game state. Server used exact base Git objects except the two listed working runtime overrides. Request log override flag was incorrectly always false; script dispatch and hashes identify actual overrides.",
+  "observations": [
+    "Two legal wins: 13.0% coverage, 2040 points, three lives each. Next starts second attempt directly.",
+    "Final result names Campaign complete and 2/2 missions. Browse opens installed Legacy chapter picker; Escape retains result and next-button focus.",
+    "View picture then Results retains final result and returns focus to view-picture.",
+    "568x320 Large/Plain: keyboard Read details and Retry reachable; Retry starts final mission directly; Pause remains available.",
+    "Journey-enabled URL with a restored Legacy attempt: legal win, Browse opens Legacy picker; Escape retains Campaign complete result with next-button focus, 13.0%, 2040 points, three lives, 0:13.",
+    "Final compact DOM: width568 height320, no horizontal document overflow. Console warnings/errors empty."
+  ],
+  "limitations": [
+    "Owned easy fixture verifies navigation, not production difficulty or content.",
+    "No physical controller, iPhone/Safari, touch hardware, offline, assistive technology or public deployment acceptance.",
+    "No new native exact stored-byte/checkpoint comparison; modeled tests cover those assertions.",
+    "An earlier picker visit announced cut1 while cut2 was selected; sent to UX owner as a separate issue.",
+    "Existing Journey Skip can remain visible for Legacy until separately proposed ownership patch is integrated."
+  ]
+}

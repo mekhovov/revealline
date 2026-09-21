@@ -5923,8 +5923,15 @@ try {
       $('overlay-footnote').textContent = '';
     }
     if (kind === 'won') {
-      $('overlay-title').textContent = 'A little more light.';
+      const completion =
+        !(journeyEnabled && journeyMission()) && !practice && !scenario ? currentSelection() : null;
+      $('overlay-title').textContent = completion?.complete
+        ? 'Campaign complete.'
+        : 'A little more light.';
       $('overlay-copy').textContent =
+        (completion?.complete
+          ? `${campaign.title || campaign.name || campaign.id}: ${completion.completed} / ${completion.total} missions complete. `
+          : '') +
         `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? 'Authored test clear recorded in Journey progress. No Legacy collection awards.' : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : 'Picture collected for this session. Export your library to keep it.')}`;
       $('result-medals').textContent = '★'.repeat(
         run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
@@ -5935,9 +5942,11 @@ try {
           ? nextJourneyMission(journeyMission().id)
             ? 'Next mission →'
             : 'Journey complete · replay or exit'
-          : currentSelection().complete
-            ? 'Campaign complete →'
-            : 'Next uncleared mission →';
+          : completion?.complete
+            ? 'Browse campaigns →'
+            : currentSelection().complete
+              ? 'Campaign complete →'
+              : 'Next uncleared mission →';
       $('overlay-footnote').textContent = practice
         ? 'Demonstrations and imported maps do not grant unlocks.'
         : run.medal === 'gold'
@@ -7628,6 +7637,12 @@ try {
     } else {
       if (run?.status !== 'won') return;
       const selection = currentSelection();
+      if (!(journeyEnabled && journeyMission()) && !scenario && selection.complete) {
+        cancelResultAttempt();
+        // Browse is a child of this earned result, not a new campaign overview.
+        gameShell?.openMissions({ opener: $('next-button'), legacy: true });
+        return;
+      }
       if (!selection.overview && !scenario && run?.status === 'won') {
         void prepareResultAttempt('next', selection.levelIndex);
         return;
