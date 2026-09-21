@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after the optional ornament/workshop integration. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after optional ornament/workshop integration and native transition measurements. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -14,8 +14,10 @@ are separate gates; percentages would conceal those distinctions.
 - Newer release-owner work is separate from this lane: GitHub lists v0.79.1
   (focus recovery/Team outcome guidance) and v0.80.0 (licensed music albums).
   The v0.80 tag-triggered run35644878096 and frozen-assembly run35646945850
-  succeeded but **skipped deployment**; publisher run35647337761 was still
-  in progress at this integration's check. Do not mistake those successful
+  succeeded but **skipped deployment**. Publisher run35647337761 subsequently
+  completed actual artifact upload and GitHub Pages deployment successfully at
+  2026-09-21T19:55:21Z. This is a verified workflow deployment, not a new complete
+  public byte/browser audit by this lane. Do not mistake those successful
   workflow conclusions, or matching version numbers, for P00–P15 acceptance.
   The v0.78 byte audit above is the last complete public audit retained in this
   lane, not a claim that no newer release exists. No publisher, accepted music
@@ -55,6 +57,20 @@ are separate gates; percentages would conceal those distinctions.
 
 No phase is labelled fully accepted while its required human or public gate is open.
 Ordinary route completion proves feasibility, not enjoyment or sufficient difficulty.
+
+## Latest native performance unit
+
+The [transition observation report](journey-performance-observations.md) records
+actual browser Continue, clear/Next, confirmed Skip and restart without injected
+engine state. Solo observed Continue 1171 ms, Next 596 ms and confirmed restart 387 ms;
+Versus Next 292 ms. These are instrumented DOM readiness samples, not physical input
+latency, medians, public CDN results or completed P15. Initial menu readiness was
+2.31 s Solo/2.12 s Versus; observed module payloads exceed the local generic budgets.
+Thirteen measurement-boundary tests and independent review pass on both Node
+versions. No production game or release version is changed by this evidence unit.
+Next: controlled startup baseline and module-graph reduction, then repeat public,
+Team and device measurements. Ten-consecutive-mission timing, automatic recovery,
+win-to-Next availability and the remaining human gates stay open.
 
 ## Latest timed-bonus correction
 
