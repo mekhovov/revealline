@@ -6,7 +6,7 @@ version, change compiled defaults or claim phase completion.
 
 The source integration carries the previously reviewed Team actor/anchor/effect
 registries, Studio states, presentation lifetime, exact historical picture ownership,
-terminal feedback and result-focus correction.118 capsule paths initially matched
+terminal feedback and result-focus correction. 118 capsule paths initially matched
 SHA-256 records exactly; the maintainer guide was merged to preserve newer device
 instructions. Device CSS is unchanged. Original source identities are retained in
 `verification/team-presentation-integration/integration-source.json`.
@@ -19,16 +19,22 @@ contracts are appended explicitly; old asset/theme/collection records and select
 remain immutable. A real-producer test caught and fixed an attempted mutation of
 the frozen default catalogue. The assembler now owns a separate copy.
 
-New art remains **produced**. Generation cannot grant its own visual approval.
+Original prepared art remains **produced**. Generation cannot grant its own visual approval.
+The separate `reviewed-team-art.mjs` adoption step now carries the retained six-image
+review, bound to all fourteen source/contract/producer inputs and each exact role’s
+PNG bytes and dimensions. Any input drift or swapped role keeps the family produced.
+This grants only the documented artwork review; it does not accept a compiled build.
 The source fixtures called revision39 are not accepted production and must never
 be copied as final output or reused as its identity. The actual generator, previous
 ledger, compiled manifests, new picture bindings and review hashes must agree.
 
 Validation: the independent capsule cohort reports236/236 on each Node20/22;
 its bounded integration evidence is separate from this new producer. The final
-producer cohort passes6/6 on each runtime, covering actual assembly, exact bytes,
+producer cohort passes 8/8 on each runtime, covering actual assembly, exact bytes,
 compile/export/import, preserved old selections, idempotent history and rejection
-of changed sources/manifests/images or missing files. Related-source lint/format
+of changed sources/manifests/images or missing files, revoked review after source
+drift, and swapped role images. Original six-test receipts remain historical; the
+new review-adoption receipts identify this cohort separately. Related-source lint/format
 passes. These counts overlap earlier cohorts and are not a whole-repository result.
 
 Before release:

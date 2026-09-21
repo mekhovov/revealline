@@ -21,6 +21,9 @@ append the exact optional slot contracts through the immutable history writer.
 Clone frozen defaults before extending them. Run the real-producer regression in
 `game/test/field-kit-team-production.test.mjs`, not just helper tests. Generation
 keeps quality at produced; attach scoped visual evidence to a new reviewed revision.
+Review adoption uses `scripts/reviewed-team-art.mjs`: bind each role to its exact
+PNG and all inspected source/contract/producer hashes. Drift must revoke approval
+without mutating the original produced manifests; test swapped role images too.
 Neither provisional revision39 fixture is a reusable production identity. Follow
 `docs/team-production-integration.md` before compiled adoption or a release.
 

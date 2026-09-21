@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "runtime": "20",
+      "passed": 8,
+      "rawSha256": "b33acf7a43ff4c0268d7a3779cef9ecc84d6e7d0d45bb54e3f5d2afb4da9eff3",
+      "file": "review-adoption-node20.tap.gz",
+      "compressedSha256": "ff9c470e2a4b9f3a848257a4e4ef4c13912910378d1684cdb96b2617afdf5ff5"
+    },
+    {
+      "runtime": "22",
+      "passed": 8,
+      "rawSha256": "15ddd8fd287e38298fe275791c343b3bae2b2561997c00fdc9535c3f48aa3ba5",
+      "file": "review-adoption-node22.tap.gz",
+      "compressedSha256": "38444a92451046812be352218ddc1440f72e920f9b19f466d3bdad436b232d71"
+    }
+  ],
+  "sources": {
+    "scripts/reviewed-team-art.mjs": "60033757b8834a9e2dfc5b20475b6a0ea050805610276a6db8d0deef7921d358",
+    "scripts/produce-field-kit-theme.mjs": "fe27c49af75128d814c07e268dfef6954d85414c3bdc80e3450812e4a679bbf9",
+    "game/test/field-kit-team-production.test.mjs": "e384b2060fb1dc8b98469b3b6bc3a6f7066fd5ec676934fe33aa32e9d58fa14a"
+  },
+  "scope": "Exact six-image scoped review adoption; no compiled default adoption, full-source, physical device, offline or public release acceptance."
+}

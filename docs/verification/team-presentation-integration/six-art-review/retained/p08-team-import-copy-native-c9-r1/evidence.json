@@ -1,0 +1,45 @@
+{
+  "scope": "Local native browser correction verification, not a public release or physical-device certification",
+  "baseline": "f2e05d349954aa0b2f5afc788c96264108336252",
+  "hostSHA256": "d1e1963932a556a8f9a5955f9885d1e3cb8086ea8c0ba394d2e4fdf027dde8dc",
+  "patchSHA256": "cb1d6ca81da1249b805ed9b7a3beb1f0bb313bd80531a272f4084332921b6aee",
+  "pinsSHA256": "edc98f6e14109abb240c7b9c876b4c226b542d248376f9e7ca992b86c7d1907f",
+  "viewport": [
+    1280,
+    720
+  ],
+  "input": "Ordinary file chooser and pointer actions, Enter to start, Escape to pause",
+  "checks": [
+    {
+      "case": "historical coverage import",
+      "observed": "Native historical coverage \u00b7 1 level; 72.4% goal; Start enabled"
+    },
+    {
+      "case": "historical multi-stronghold import",
+      "observed": "Imported multi-core \u00b7 2 levels; two required strongholds"
+    },
+    {
+      "case": "multi-stronghold start",
+      "observed": "Relays 0 / 2 \u00b7 Relay 2 \u00b7 Anchors 0 / 2 \u2014 capture anchors; clock 0:00"
+    },
+    {
+      "case": "pause/change setup",
+      "observed": "Explicit Resume and discard confirmation; returning to setup does not start play"
+    },
+    {
+      "case": "malformed required artwork and Retry",
+      "observed": "Pack unchanged: Team artwork bytes do not match their hash. Retry pack or choose another file.; Retry focused; accepted multi-core remains selected and Start enabled"
+    },
+    {
+      "case": "start after failed import",
+      "observed": "Previously accepted two-core map starts at 0:00 with same objective, then explicit pause"
+    }
+  ],
+  "consoleWarningsAndErrors": [],
+  "limits": [
+    "No native earned victory or full playthrough in this correction check",
+    "No native cancel/stale race claim",
+    "No physical controller, touch-only, phone, offline, public deployment, or performance certification",
+    "Candidate includes provisional six-image presentation; not adopted production output"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "scope": "Native in-app browser, local Asset Studio, provisional six-image collection; no public or production acceptance",
+  "fallback": "f2e05d349954aa0b2f5afc788c96264108336252",
+  "sourcePinsSHA256": "a83d72f4fb8bd670ce90caa77dcaf37c5b4d77a850ca0f68cc07d83e7cc34193",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "renderedBoardCSS": {
+    "width": 380,
+    "height": 190
+  },
+  "sourceCanvas": {
+    "width": 1152,
+    "height": 576
+  },
+  "input": "Native combobox selection and pointer/scroll; no keyboard-only/touch/controller qualification",
+  "readyScenes": {
+    "Relay Yard": [
+      "Initial field",
+      "Active cuts",
+      "Hunter warning",
+      "Hunter charge",
+      "Hunter recovery",
+      "Support pulse",
+      "Slowed enemies",
+      "Emitter warning",
+      "Travelling spark",
+      "Joint capture",
+      "Anchors captured",
+      "Relay core exposed",
+      "Completed field",
+      "Player 1 downed",
+      "Player 1 crawling",
+      "Rescuing Player 1",
+      "Player 1 recovered",
+      "Player 2 downed",
+      "Player 2 crawling",
+      "Rescuing Player 2",
+      "Player 2 recovered",
+      "Team reserve recovery"
+    ],
+    "First Connection": [
+      "Initial field",
+      "Active cuts",
+      "Hunter warning",
+      "Hunter charge",
+      "Hunter recovery",
+      "Support pulse",
+      "Slowed enemies",
+      "Joint capture",
+      "Completed field"
+    ]
+  },
+  "visualChecks": [
+    "Relay Yard rescue P1: P1 downed, P2 rescuing50%,4%coverage,reserves3; round1/diamond2 identities,RESCUE1 cue visible",
+    "Relay Yard Support pulse: both player identities,shield,anchorletters,lockandSLOWED cues visible",
+    "First Connection completed65% showsfullorchardart; Relay Yard completed31% showsfullindustrialart",
+    "First Connection reduced-effects Support retainsnumberedplayeridentities,lockandSLOWED cues",
+    "Relay Yard reduced-effects recoveredP2 showsbothactive,4%,reserves3, recoverybadge/identityseparation"
+  ],
+  "statusChecks": [
+    "All31 applicable selections reached Saved preview ready; actualpainterpictureidentity displayed",
+    "Unavailable First Connection rescue/recovery/emitter/anchor/core scenes staydisabled",
+    "Switching scenes displaysdecodeoperationandStopwaiting",
+    "Selectedrescuebadge inactiveoutsideactualrescuestate,activeforbothrescuingstates",
+    "Reserve-recovery state reportsreserves2afteroneused"
+  ],
+  "warningsErrors": [],
+  "finding": "Completed arena retains last Joint Cut instruction Choose your next route together; isolated terminal-status correction underway",
+  "limitations": [
+    "Bounded deterministic Studio scenes, not human gameplaythrough31scenes",
+    "Selected screenshots inspected in tool output; no independently saved screenshot artifacts",
+    "No native offline/public/device/zoom/listening or comprehensive motion/performance claims",
+    "No production/default/source root edits or savedStudiochanges"
+  ]
+}
