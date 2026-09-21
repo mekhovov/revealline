@@ -1,0 +1,31 @@
+{
+  "base": "d166a45dca6d42585e385a765903dca826d60950",
+  "pins": {
+    "site/landing.mjs": {
+      "bytes": 6353,
+      "sha256": "5b8a2b0ba37d9e5fd7c8aaf82e9651e3c5e8b6f6fa87bf042ded96b21f81e4c6"
+    },
+    "site/about.html": {
+      "bytes": 28018,
+      "sha256": "cddb55c7c71eb71fc35dbc4cfecad23cd6b8a1ee54a6c6913d83f88a9120b951"
+    }
+  },
+  "url": "http://127.0.0.1:58139/site/about.html#packs",
+  "viewport": [
+    1280,
+    720
+  ],
+  "input": "ordinary keyboard using Space, ArrowDown, Enter on native Pack select",
+  "networkFixture": "Only releases/index.json held by local HTTP server; returned empty valid software history after explicit release. Mission catalog and all modules/assets are exact Git or pinned candidate bytes.",
+  "observations": [
+    "Eight packs loaded while version status remained Loading preserved builds.",
+    "Keyboard chose Frontier Lines; launch href named fpv-pressure-frontier, campaign fpv-pressure-frontier, level copper-switchyard, play=1.",
+    "History completion (0 preserved builds) retained selected pack, exact launch href and landing-pack-select focus.",
+    "Campaign footer says Return to game to browse campaigns.",
+    "Console warning/error list empty."
+  ],
+  "limits": [
+    "Local desktop browser only; no physical controller/touch, offline, public release or completed mission claim."
+  ],
+  "cleanup": "Both owned About tabs closed; HTTP servers terminated separately."
+}
