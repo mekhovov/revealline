@@ -1,0 +1,26 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "cohorts": {
+    "20": {
+      "tests": 45,
+      "pass": 45,
+      "fail": 0,
+      "skip": 0,
+      "processes": 6,
+      "reads": 348,
+      "uniqueBindings": 169,
+      "pids": ["12077", "12078", "15043", "16111", "16126", "16274"]
+    },
+    "22": {
+      "tests": 45,
+      "pass": 45,
+      "fail": 0,
+      "skip": 0,
+      "processes": 6,
+      "reads": 348,
+      "uniqueBindings": 169,
+      "pids": ["10051", "11121", "11136", "11310", "7103", "7104"]
+    }
+  },
+  "allReadBytesVerified": true
+}
