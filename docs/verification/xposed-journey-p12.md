@@ -4,6 +4,29 @@ Status: local implementation in progress, not a released or human-qualified phas
 Source follows the local P11 technical checkpoint `c74d89ac`; it is not an
 accepted release baseline. The release coordinator retains publication ownership.
 
+## Original polar artwork continuation
+
+All five missions now have independent original1774×887 opaque backgrounds,
+12,248,056bytes total. Terraced glacial crossings, a communications inlet,
+winter-garden lighthouse approach, homeward observatory dock and dawn tidal
+circuit distinguish the capstone reveals. Complete built-in prompts and exact
+pins are in `../research/apex-original-art-prompts.json`. These are detailed
+stylized illustrations, not strict low-resolution pixel art or collision maps.
+
+The default factory stays greybox. Explicit artwork opt-in and Studio
+Inspect → Apply use the shared immutable registry without changing runtime,
+map geometry, replay identity or progression authority. The five-file art/
+candidate/lifecycle/registry/whole-library cohort passes24/24 on Node20.19.5 and
+22.22.2, preserving30 historical clear checkpoints and498 library manifests.
+Scoped lint, formatting and diff checks pass. Native initial picture/capture,
+broad-area/victory, complete threat-state matrix, actor/audio, device/human and
+release qualification remain pending. DevicePR211 retains delivery priority;
+no version, phase integration, publisher change or public promotion is made.
+
+The five source images add12,248,056bytes beyond both the35-image capacity
+forecast and the five Sentinel originals. Keep the950,000,000-byte guard and
+immutable source images unchanged; packaging remains an accepted-source gate.
+
 ## Candidate scope
 
 Four band-twelve core missions and one optional Remix combine established rules.

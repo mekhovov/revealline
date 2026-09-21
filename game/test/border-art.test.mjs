@@ -12,6 +12,7 @@ import { LIVEWIRE_ART_CANDIDATES } from '../content-design/livewire-art.mjs';
 import { RELAY_ART_CANDIDATES } from '../content-design/relay-art.mjs';
 import { CROSSWIND_ART_CANDIDATES } from '../content-design/crosswind-art.mjs';
 import { SENTINEL_ART_CANDIDATES } from '../content-design/sentinel-art.mjs';
+import { APEX_ART_CANDIDATES } from '../content-design/apex-art.mjs';
 import { JOURNEY_ART_CANDIDATES } from '../content-design/journey-art.mjs';
 import {
   SIGNAL_ILLUSTRATED_ART_CANDIDATES,
@@ -46,7 +47,8 @@ test('all seven Border compositions are unique original pinned bytes, paired wit
     LIVEWIRE_ART_CANDIDATES.length +
     RELAY_ART_CANDIDATES.length +
     CROSSWIND_ART_CANDIDATES.length +
-    SENTINEL_ART_CANDIDATES.length;
+    SENTINEL_ART_CANDIDATES.length +
+    APEX_ART_CANDIDATES.length;
   assert.equal(JOURNEY_ART_CANDIDATES.length, expectedCount);
   assert.equal(new Set(JOURNEY_ART_CANDIDATES.map((row) => row.sha256)).size, expectedCount);
   for (const asset of BORDER_ART_CANDIDATES) {

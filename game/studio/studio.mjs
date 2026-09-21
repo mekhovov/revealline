@@ -679,7 +679,7 @@ $('sentinel').onclick = guarded(() => {
 });
 $('apex').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createApexCandidates(), null, 2);
+  $('source').value = JSON.stringify(createApexCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

@@ -1,0 +1,133 @@
+{
+  "campaign": "Apex Aurora",
+  "status": "five-original-candidates-not-final-visual-or-human-qualification",
+  "tool": "built-in-imagegen",
+  "useCase": "stylized-concept",
+  "assets": [
+    {
+      "missionId": "crossing-complete",
+      "path": "game/content-design/assets/apex-polar-r1/crossing-complete.png",
+      "bytes": 2404305,
+      "sha256": "62b2848abf7b7a92c3db60dd62c2eab9d86a86a47c4dfad18e19f46421fcc2ad",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Apex Aurora campaign, Crossing complete. Create one opaque full-bleed wide 2:1 landscape. Scene: Across a deep glacial inlet, three broad terraced footbridges connect low polar research pavilions at different heights. Bands of sea mist separate the levels, while distant mountain ice catches the last violet light of an aurora. A sheltered instrument cabin and an empty observation deck offer distinct discoveries across the scene. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable masses and restrained detail. Muted slate blue, frosted silver, dark blue water, weathered timber and soft amber windows; aurora subtle and diffuse, not bright trails. Quiet areas and low glare for gameplay overlays. Natural oblique perspective, never top-down or a diagram. Original composition, discoveries spread across its width for progressive revelation. Decorative picture only, not collision geometry. No people, characters, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "Terraced footbridges connect polar research pavilions above a misty glacial inlet beneath a subdued violet aurora.",
+          "Original independently generated composition, not copied artwork or collision geometry.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Terrain, relay, arrow and encounter-state visual matrix",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "final-broadcast",
+      "path": "game/content-design/assets/apex-polar-r1/final-broadcast.png",
+      "bytes": 2244903,
+      "sha256": "a83d3758eb52d5ce7bb9ed2a9e901ed7688df8c69795c75cda63a74cdd7696b0",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Apex Aurora campaign, Final broadcast. Create one opaque full-bleed wide 2:1 landscape. Scene: A polar communications station is built on four rocky shelves around a sheltered inlet. Two broad lowered bridges and two enclosed service galleries link asymmetric cabins. A tall folded antenna lattice rises beyond them under a soft fading aurora; warm shaded interior windows contrast with dark water. No transmitted beams or signals drawn. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable masses and restrained detail. Muted slate blue, frosted silver, dark blue water, weathered timber and soft amber windows; aurora subtle and diffuse, not bright trails. Quiet areas and low glare for gameplay overlays. Natural oblique perspective, never top-down or a diagram. Original composition, discoveries spread across its width for progressive revelation. Decorative picture only, not collision geometry. No people, characters, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "An antenna lattice rises over warm-windowed polar cabins and broad bridges above dark reflective water.",
+          "Original independently generated composition, not copied artwork or collision geometry.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Terrain, relay, arrow and encounter-state visual matrix",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "returning-light",
+      "path": "game/content-design/assets/apex-polar-r1/returning-light.png",
+      "bytes": 2558586,
+      "sha256": "0003bef93ed01610fdd6fa0cd6b31f6e1cbc290d166780fa9598a21d37a68c3c",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Apex Aurora campaign, Returning light. Create one opaque full-bleed wide 2:1 landscape. Scene: A chain of broad observation terraces steps across a quiet polar fjord toward a low lighthouse-like research tower whose lamp is off. A covered glass winter garden shelters hardy plants on the nearer shore, while a long steel footbridge and small lower tide platform give multiple depths of discovery beneath pale lavender dawn. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable masses and restrained detail. Muted slate blue, frosted silver, dark blue water, weathered timber and soft amber windows; aurora subtle and diffuse, not bright trails. Quiet areas and low glare for gameplay overlays. Natural oblique perspective, never top-down or a diagram. Original composition, discoveries spread across its width for progressive revelation. Decorative picture only, not collision geometry. No people, characters, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A glass winter garden and stepped observation terraces face an unlit research lighthouse across a quiet fjord at lavender dawn.",
+          "Original independently generated composition, not copied artwork or collision geometry.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Terrain, relay, arrow and encounter-state visual matrix",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "home-signal",
+      "path": "game/content-design/assets/apex-polar-r1/home-signal.png",
+      "bytes": 2427343,
+      "sha256": "2a2fa8d166816a6b826cf766283c6a4e77b4e189e34b9fbaf40cd8e77ccebfef",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Apex Aurora campaign, Home signal. Create one opaque full-bleed wide 2:1 landscape. Scene: A welcoming remote polar station seen from its broad central arrival dock, with two branching enclosed glass walkways leading toward low warm-windowed lodges on rocky islands. Beyond the dock a closed circular observatory dome faces the last stars. Muted aurora dissolves into a pale peach horizon, suggesting arrival rather than a battle or prize screen. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable masses and restrained detail. Muted slate blue, frosted silver, dark blue water, weathered timber and soft amber windows; aurora subtle and diffuse, not bright trails. Quiet areas and low glare for gameplay overlays. Natural oblique perspective, never top-down or a diagram. Original composition, discoveries spread across its width for progressive revelation. Decorative picture only, not collision geometry. No people, characters, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A broad arrival dock leads to a closed observatory dome between branching glass walkways and warm island lodges at dawn.",
+          "Original independently generated composition, not copied artwork or collision geometry.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Terrain, relay, arrow and encounter-state visual matrix",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "apex-remix",
+      "path": "game/content-design/assets/apex-polar-r1/apex-remix.png",
+      "bytes": 2612919,
+      "sha256": "e85baca009c66e9ee23f57d42bd1d8259af01b8f60a191d159051a083dc488c3",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Apex Aurora campaign, Dawn circuit. Create one opaque full-bleed wide 2:1 landscape. Scene: A wide circular polar boardwalk surrounds a tidal research basin with two lowered bridge sections, a small central weather pavilion and a sheltered maintenance alcove. The first low sun glows behind jagged distant ice peaks as the final wisps of aurora fade into a slate sky. Warm window reflections and tiny hardy plants reward discovering the edges. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable masses and restrained detail. Muted slate blue, frosted silver, dark blue water, weathered timber and soft amber windows; aurora subtle and diffuse, not bright trails. Quiet areas and low glare for gameplay overlays. Natural oblique perspective, never top-down or a diagram. Original composition, discoveries spread across its width for progressive revelation. Decorative picture only, not collision geometry. No people, characters, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A circular polar boardwalk and two lowered bridges surround a tidal pavilion as sunrise overtakes the fading aurora.",
+          "Original independently generated composition, not copied artwork or collision geometry.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native partial-reveal, broad-area and victory overlay checks",
+          "Terrain, relay, arrow and encounter-state visual matrix",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    }
+  ]
+}

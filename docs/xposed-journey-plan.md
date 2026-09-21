@@ -188,6 +188,13 @@ see P11 and `docs/research/sentinel-original-art-prompts.json`.
 
 ### Historical phase snapshots
 
+Apex Aurora now has five original polar compositions (12,248,056bytes), immutable
+pins and explicit Studio opt-in. The24-test art/candidate/lifecycle/registry/
+library cohort passes Node20/22 with30 unchanged historical clears. Native,
+complete presentation/device/human and release qualification remain open.
+See P12 and `docs/research/apex-original-art-prompts.json`. These bytes are also
+additional to the capacity forecast; no budget or release authority changes.
+
 The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0
 publisher 7b898a7b through integration b5193ca1; the public Team/Studio acceptance
 is scoped, not whole-phase or physical-device validation. Preserve the user's dirty
