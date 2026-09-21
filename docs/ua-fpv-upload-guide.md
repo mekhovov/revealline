@@ -12,7 +12,7 @@ These four files use **RLSTB3 / soundtrack library v3** and work with **v0.78.0 
 
 You can use the original MP3 files directly without creating another audio copy or waiting for the new pack importer:
 
-1. Open **Settings → Music library & playlists**. If there is existing music, prepare and download its saved-library `.rlsound` backup first.
+1. Open **Settings → Audio → Music library & playlists**. If there is existing music, prepare and download its saved-library `.rlsound` backup first.
 2. In **Add MP3 files**, select the original files from the main checkout's `/Users/oleksandr.mekhovov/work/my_projects/go_test/docs/research/dah-soundtracks/` folder, outside this isolated soundtrack worktree. Choose **Import selected MP3s**, wait for inspection, and **Save all changes**. You may use smaller batches and Save after each. Import each filename once: this older path creates new track IDs on every import, so repeating a batch creates duplicate library rows.
 3. Leave **Source declaration** as **Personal local upload**. The old importer uses the original filename for **Track title** (up to 120 characters) and keeps the complete filename in **Source / provenance**. It has no separate preserved-filename field; retain the source folder and index before editing provenance. MP3 bytes and embedded tags remain unchanged, and identical audio shares one stored hash.
 4. Select an imported song in **Tracks**, then click **New playlist with selected track**. Set a title, choose **Shuffle without repeats until every entry played** and **Repeat all**, then **Apply playlist details to draft**. Add the remaining songs through **Track to add → Add selected track** and **Save all changes**. The playlist can hold all 80 entries; use the index's 77 `queued: true` filenames if you want each distinct recording only once.
@@ -52,7 +52,7 @@ Every volume is below the **64 MiB** optional-album target, including its manife
 
 The remaining pack and genre instructions require **v0.78.0 or later**, as described above. Use it on the browser profile or native host where you want the music saved. Browser profiles, private windows, origins, and native apps may have separate local libraries.
 
-1. Open **Settings → Music library & playlists** in Solo, or the **Music library** from the Couch audio controls.
+1. Open **Settings → Audio → Music library & playlists** in Solo, or the **Music library** from the Couch audio controls.
 2. If you already have music, use **Prepare saved-library backup (.rlsound)**, then **Download prepared backup**. Save any current draft first if you want it included. Keep the source MP3 folder separately too.
 3. In **Soundtrack recovery or album file (.rlsound)**, choose one volume.
 4. Click **Add album file to draft** and wait for validation. This adds tracks and its playlist while preserving the current selection and assignments. **Review backup as replacement draft** is for replacing a library, so do not use it to add these volumes.
