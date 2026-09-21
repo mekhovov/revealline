@@ -1,0 +1,237 @@
+{
+  "format": "RoverTeachingRoutesV1",
+  "scope": "Deterministic feasibility, not human qualification.",
+  "input": {
+    "path": "game/test/fixtures/rover-clear-routes.json",
+    "sha256": "a5d310c9e654b7786d1229abcd0631c2e46b54c6e8f2f0033d07be1b64fcc173"
+  },
+  "rows": [
+    {
+      "missionId": "wake-the-yard",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "simulationIdentity": "aca74b4b81ff55f2",
+      "checkpoint": "ac5be06d92bceb47",
+      "segments": [
+        ["down", 144],
+        ["right", 48],
+        ["down", 72],
+        ["right", 420],
+        ["up", 216],
+        ["left", 576],
+        ["down", 414],
+        ["up", 42],
+        ["right", 576],
+        ["left", 132],
+        ["up", 150]
+      ]
+    },
+    {
+      "missionId": "split-berths",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "simulationIdentity": "6d5e58ebc2c86dcb",
+      "checkpoint": "5c89790baf2875a0",
+      "segments": [
+        ["down", 120],
+        ["up", 120],
+        ["left", 72],
+        ["down", 414],
+        ["up", 150],
+        ["right", 708],
+        ["up", 96],
+        ["left", 582]
+      ]
+    },
+    {
+      "missionId": "wake-the-yard",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "simulationIdentity": "aca74b4b81ff55f2",
+      "checkpoint": "e9701e533a0927dc",
+      "segments": [
+        ["down", 144],
+        ["right", 48],
+        ["down", 72],
+        ["right", 414],
+        ["left", 18],
+        ["up", 216],
+        ["left", 516],
+        ["down", 414],
+        ["up", 186],
+        ["right", 522],
+        ["left", 198],
+        ["down", 174]
+      ]
+    },
+    {
+      "missionId": "split-berths",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "simulationIdentity": "6d5e58ebc2c86dcb",
+      "checkpoint": "68318b066abb5c93",
+      "segments": [
+        ["down", 120],
+        ["up", 120],
+        ["left", 72],
+        ["down", 414],
+        ["up", 150],
+        ["right", 708],
+        ["up", 96],
+        ["left", 582],
+        ["up", 12]
+      ]
+    },
+    {
+      "missionId": "wake-the-yard",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "simulationIdentity": "144aaefe826b33ed",
+      "checkpoint": "5a87fce5b12de843",
+      "segments": [
+        ["down", 144],
+        ["right", 468],
+        ["up", 144],
+        ["left", 540],
+        ["down", 414],
+        ["up", 102],
+        ["right", 540],
+        ["left", 492],
+        ["up", 78]
+      ]
+    },
+    {
+      "missionId": "split-berths",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "simulationIdentity": "8aa5f16429755905",
+      "checkpoint": "583f8d20185f1206",
+      "segments": [
+        ["down", 120],
+        ["up", 120],
+        ["left", 72],
+        ["down", 414],
+        ["up", 6],
+        ["down", 12],
+        ["right", 708],
+        ["up", 192],
+        ["left", 702],
+        ["right", 198],
+        ["down", 186]
+      ]
+    },
+    {
+      "missionId": "wake-the-yard",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "simulationIdentity": "144aaefe826b33ed",
+      "checkpoint": "0acfa317f649b17d",
+      "segments": [
+        ["down", 144],
+        ["right", 462],
+        ["left", 18],
+        ["right", 12],
+        ["down", 120],
+        ["left", 846],
+        ["right", 258],
+        ["up", 258]
+      ]
+    },
+    {
+      "missionId": "split-berths",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "simulationIdentity": "8aa5f16429755905",
+      "checkpoint": "b004db2ed9beb0a0",
+      "segments": [
+        ["down", 120],
+        ["up", 120],
+        ["left", 72],
+        ["down", 414],
+        ["up", 6],
+        ["down", 12],
+        ["right", 708],
+        ["up", 192],
+        ["left", 702],
+        ["right", 198],
+        ["down", 186]
+      ]
+    },
+    {
+      "missionId": "wake-the-yard",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "simulationIdentity": "c54591a63e3312b4",
+      "checkpoint": "bdccff4bad43d72f",
+      "segments": [
+        ["down", 144],
+        ["right", 468],
+        ["left", 228],
+        ["down", 270],
+        ["up", 162],
+        ["left", 618],
+        ["right", 6],
+        ["left", 12],
+        ["up", 60],
+        ["right", 342]
+      ]
+    },
+    {
+      "missionId": "split-berths",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "simulationIdentity": "3b13611de98d5915",
+      "checkpoint": "6d8bffd62d61279f",
+      "segments": [
+        ["down", 120],
+        ["up", 120],
+        ["right", 636],
+        ["down", 216],
+        ["left", 846],
+        ["right", 6],
+        ["left", 12],
+        ["down", 204],
+        ["right", 360],
+        ["up", 198]
+      ]
+    },
+    {
+      "missionId": "wake-the-yard",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "simulationIdentity": "c54591a63e3312b4",
+      "checkpoint": "103464a9f83de24e",
+      "segments": [
+        ["down", 144],
+        ["right", 462],
+        ["left", 246],
+        ["down", 270],
+        ["up", 18],
+        ["down", 12],
+        ["left", 360],
+        ["up", 414],
+        ["down", 246],
+        ["right", 354]
+      ]
+    },
+    {
+      "missionId": "split-berths",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "simulationIdentity": "3b13611de98d5915",
+      "checkpoint": "c5a0f89eb15fecbb",
+      "segments": [
+        ["down", 120],
+        ["up", 120],
+        ["right", 636],
+        ["down", 216],
+        ["left", 846],
+        ["right", 18],
+        ["left", 12],
+        ["down", 204],
+        ["right", 360],
+        ["up", 198]
+      ]
+    }
+  ]
+}

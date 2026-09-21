@@ -205,6 +205,15 @@ additional to the capacity forecast; no budget or release authority changes.
 
 ### Historical phase snapshots
 
+Local learning-order follow-up: an explicit `teaching-1` successor brings the
+first Rover warning onto the first small island capture and preserves both
+escape directions. Twelve clear and twelve unchanged optional-goal routes are
+pinned;180 sampled first returns check warning/activation/escape behavior. Studio
+and the separate `whole-originals-v2` review route select it without rewriting
+the earlier review or its suspension slot. Whole-host/native verification is in
+progress; the two Signal learning-order warnings, human and publication gates
+remain open. See [Rover teaching review](verification/rover-first-capture-teaching.md).
+
 Local whole-library continuation now has an explicit `whole-originals` review URL
 in Solo and Versus, separate from the unchanged opening/authored routes and their
 save slots. It exposes71 core missions with12 optional Remixes and original pins,
