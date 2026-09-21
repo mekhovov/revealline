@@ -106,7 +106,9 @@ export function adoptStudioBundle(source, incomingSource) {
   const presentation = resolvePresentation(incoming);
   const next = structuredClone(previous);
   next.slots = structuredClone(mergeTeamActorSlotContracts(previous, incoming));
-  const used = new Set([...next.assets, ...next.collections].map((record) => record.id));
+  const used = new Set(
+    [...next.assets, ...next.themes, ...next.collections].map((record) => record.id),
+  );
   const prefix = `import-${next.revision + 1}`;
   let namespace = prefix;
   for (
@@ -139,6 +141,88 @@ export function adoptStudioBundle(source, incomingSource) {
     return result;
   };
   for (const asset of incoming.assets) adopt(asset);
+  // Retain each incoming theme family and its exact parent/binding history.
+  // Whole identical families reuse local identities. Foreign families receive
+  // one namespaced ID and a contiguous revision sequence, not one menu entry
+  // per revision. Explicit reference maps also handle sparse imported histories.
+  const mapBindings = (bindings) =>
+    Object.fromEntries(Object.entries(bindings).map(([slot, target]) => [slot, adopt(target)]));
+  const families = (records) => {
+    const result = new Map();
+    for (const item of records) {
+      if (!result.has(item.id)) result.set(item.id, []);
+      result.get(item.id).push(item);
+    }
+    for (const rows of result.values()) rows.sort((a, b) => a.revision - b.revision);
+    return result;
+  };
+  const themeFamilies = families(incoming.themes);
+  const localThemes = new Map(previous.themes.map((theme) => [key(theme), theme]));
+  const sharedThemes = new Set();
+  for (const [id, rows] of themeFamilies)
+    if (
+      rows.every((theme) => {
+        const existing = localThemes.get(key(theme));
+        return (
+          existing &&
+          canonicalJSON(existing) ===
+            canonicalJSON({ ...theme, bindings: mapBindings(theme.bindings) }) &&
+          (theme.parent !== null || same(theme, next.selection.base))
+        );
+      })
+    )
+      sharedThemes.add(id);
+  // A reused child must point at the same reused parent, including when an
+  // imported family inherits another family that conflicts with local records.
+  let changed;
+  do {
+    changed = false;
+    for (const id of sharedThemes)
+      if (
+        themeFamilies.get(id).some((theme) => theme.parent && !sharedThemes.has(theme.parent.id))
+      ) {
+        sharedThemes.delete(id);
+        changed = true;
+      }
+  } while (changed);
+  const importedThemes = new Map();
+  for (const [index, [id, rows]] of [...themeFamilies].entries())
+    for (const [revision, theme] of rows.entries())
+      importedThemes.set(
+        key(theme),
+        sharedThemes.has(id)
+          ? reference(theme)
+          : { id: `${namespace}-theme-${index}`, revision: revision + 1 },
+      );
+  for (const theme of incoming.themes) {
+    if (sharedThemes.has(theme.id)) continue;
+    next.themes.push({
+      ...structuredClone(theme),
+      ...importedThemes.get(key(theme)),
+      bindings: mapBindings(theme.bindings),
+      // Foreign roots remain selectable under this workspace's base; their
+      // original tokens/bindings override that base without rewriting it.
+      parent: theme.parent ? importedThemes.get(key(theme.parent)) : reference(next.selection.base),
+    });
+  }
+  const localCollections = new Map(previous.collections.map((item) => [key(item), item]));
+  for (const [index, [, rows]] of [...families(incoming.collections)].entries()) {
+    const mapped = rows.map((item) => ({
+      ...structuredClone(item),
+      themeId: importedThemes.get(key(themeFamilies.get(item.themeId).at(-1))).id,
+      bindings: mapBindings(item.bindings),
+    }));
+    if (
+      mapped.every((item) => canonicalJSON(localCollections.get(key(item))) === canonicalJSON(item))
+    )
+      continue;
+    for (const [revision, item] of mapped.entries())
+      next.collections.push({
+        ...item,
+        id: `${namespace}-collection-${index}`,
+        revision: revision + 1,
+      });
+  }
   const current = next.themes.find((theme) => same(theme, next.selection.theme));
   const theme = {
     ...structuredClone(current),
@@ -154,7 +238,9 @@ export function adoptStudioBundle(source, incomingSource) {
     format: FORMATS.collection,
     id: namespace,
     revision: 1,
-    name: presentation.theme.name,
+    name:
+      incoming.collections.find((item) => same(item, incoming.selection.collection || {}))?.name ||
+      presentation.theme.name,
     themeId: theme.id,
     requiredSlots: next.slots.filter((slot) => slot.required).map((slot) => slot.id),
     bindings: Object.fromEntries(

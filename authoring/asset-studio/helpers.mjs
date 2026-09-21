@@ -83,3 +83,17 @@ export function rgbHex(channels) {
       .join('')
   );
 }
+
+/** One choice per immutable theme family; duplicate names retain exact identity. */
+export function studioThemeOptions(themes) {
+  const latest = new Map();
+  for (const theme of themes)
+    if (!latest.has(theme.id) || latest.get(theme.id).revision < theme.revision)
+      latest.set(theme.id, theme);
+  const names = new Map();
+  for (const theme of latest.values()) names.set(theme.name, (names.get(theme.name) || 0) + 1);
+  return [...latest.values()].map((theme) => ({
+    ...theme,
+    label: names.get(theme.name) > 1 ? `${theme.name} (${theme.id})` : theme.name,
+  }));
+}

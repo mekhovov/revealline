@@ -1,0 +1,29 @@
+{
+  "input": {
+    "bytes": 7338585,
+    "sha256": "96528ef2a401d5ff6284e826bf31900feaf073b5da4b001cc9064d854d4bea34"
+  },
+  "output": {
+    "path": "/Users/oleksandr.mekhovov/Downloads/revealline-import-40-theme-1-r42.rltheme",
+    "bytes": 7495596,
+    "sha256": "9051e35e7c9be5e030353a8adff1fc19d7d9a38ad5d0f197a2864f8167c81e41"
+  },
+  "assetRecords": 1321,
+  "payloadCount": 135,
+  "everyOriginalByteRetained": true,
+  "selection": {
+    "base": {
+      "id": "base",
+      "revision": 1
+    },
+    "collection": null,
+    "theme": {
+      "id": "import-40-theme-1",
+      "revision": 42
+    }
+  },
+  "selectedAsset": {
+    "id": "import-40-1318",
+    "revision": 1
+  }
+}

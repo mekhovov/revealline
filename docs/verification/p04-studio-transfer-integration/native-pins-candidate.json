@@ -1,0 +1,18 @@
+{
+  "game/presentation/studio-session.mjs": {
+    "bytes": 16642,
+    "sha256": "ffb87f41b51414d3e4314ca2251a106ea4b4c4428f930d7c3439af310ef41a10"
+  },
+  "game/presentation/model.mjs": {
+    "bytes": 27188,
+    "sha256": "5404c14aa3e9ed3c306164e9784ea2da4ce746f5055bf70db03d01b2f5ef9120"
+  },
+  "authoring/asset-studio/studio.mjs": {
+    "bytes": 55326,
+    "sha256": "d566368cad4c85436f528b050661dbc33653240cabd2e745c93a9a1fb099ce11"
+  },
+  "authoring/asset-studio/helpers.mjs": {
+    "bytes": 3396,
+    "sha256": "162b1a5cf018d0597b3a240604ab27766e16e042264467040b5722203d591c5f"
+  }
+}
