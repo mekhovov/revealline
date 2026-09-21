@@ -369,6 +369,13 @@
       "versions": [
         "v0.78.0"
       ]
+    },
+    {
+      "id": "archive-43",
+      "repository": "mekhovov/revealline-archive-43",
+      "versions": [
+        "v0.79.0"
+      ]
     }
   ]
 }
