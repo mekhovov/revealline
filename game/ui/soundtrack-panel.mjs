@@ -446,6 +446,8 @@ export function attachSoundtrackPanel({
     volume.field,
   );
   transport.classList.add('soundtrack-now-card');
+  // Hosts without the catalogue still expose built-in and imported playlists.
+  if (!catalogue) transport.append(selection.field, useSelection);
   const tracksSelect = input('tracks', 'Tracks', { tag: 'select', size: '7' });
   const fileInput = input('mp3-files', 'Add MP3 files', {
     type: 'file',
@@ -1757,7 +1759,10 @@ export function attachSoundtrackPanel({
     );
     options(
       selection.element,
-      [['', 'Use selected style'], ...playlists().map((item) => [item.id, item.title])],
+      [
+        ['', catalogue ? 'Use selected style' : 'Automatic — follow map / campaign / theme'],
+        ...playlists().map((item) => [item.id, item.title]),
+      ],
       draft.selection.playlistId ?? '',
     );
     for (const control of columns.querySelectorAll('button,input,select'))
