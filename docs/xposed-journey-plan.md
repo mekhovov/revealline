@@ -205,6 +205,21 @@ additional to the capacity forecast; no budget or release authority changes.
 
 ### Historical phase snapshots
 
+Latest presentation continuation: `whole-originals-v3` introduces explicit
+campaign-theme successors for59 later missions, preserving all498 simulation
+identities and83 original assets against the teaching review. Twelve themes now
+resolve consistently through Solo, Versus, whole/individual Studio inspection
+and the `campaign-originals` adaptation audit. Earlier routes stay exact.
+Both Nodes pass71 Solo clears and71 equal races with70 Next each, checking
+actual theme controls as well as pictures. Those checks found and fixed a stale
+Versus theme selector after cross-campaign continuation; failed preparation
+continues to preserve prior boards and controls. Native Solo/Studio/Versus checks
+and61+56 scoped regression tests are recorded in
+[campaign presentation evidence](verification/journey-campaign-presentation.md).
+This is not complete character/material/music/human qualification or a deployment.
+The soundtrack brief and minimal host correction are handed to their owners;
+devicePR211 and accepted-source release integration keep priority.
+
 Local learning-order follow-up: an explicit `teaching-1` successor brings the
 first Rover warning onto the first small island capture and preserves both
 escape directions. Twelve clear and twelve unchanged optional-goal routes are

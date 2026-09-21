@@ -229,3 +229,29 @@ The four audit tests pass on Node20.19.5 and22.22.2, including exact v2 route/CL
 parity and rejection of unknown editions. Wake is explicitly an original mission
 without a numbered-reference link; Split's existing adaptation carries the new
 revision. No synthetic reference link was added to make that distinction disappear.
+
+## Campaign presentation successor
+
+The explicit `whole-originals-v3` review binds all twelve campaign identities
+consistently through the shared source factory, runtime hosts, whole/individual
+Studio inspections and adaptation audit. Nine later campaigns previously inherited
+Horizon. Fifty-nine mission presentation revisions now change intentionally;
+all498 Solo/Versus simulation identities, maps, designs and original asset pins
+remain exact against the teaching edition. Older routes and suspension slots
+are preserved. See [campaign presentation evidence](journey-campaign-presentation.md).
+
+Both supported Node versions pass all71 Solo clears/70 Next and71 equal Versus
+races/70 Next with exact theme selectors, original images, separate receipts and
+deliberate route end. The strengthened check exposed and repaired an older
+Versus continuation-selector bug; failed picture preparation keeps prior controls.
+The61-test presentation/source/Studio/route/readability coverage and56-test
+Versus picture/preparation cohort pass both Nodes. Scoped native Solo, Studio
+and Versus observations confirm exact theme binding without claiming full visual
+or human acceptance.
+
+This closes theme identity and consistency work, not the entire campaign
+presentation program. Campaign character art/materials, optional personality
+reactions, music qualification, physical devices, human readability/pacing,
+Legacy transition and accepted-source release/Pages integration remain open.
+The soundtrack owner has the25-campaign/12-theme music brief; no player music
+preferences, public recordings or procedural fallback were changed.

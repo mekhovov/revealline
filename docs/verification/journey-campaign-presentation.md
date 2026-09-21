@@ -131,7 +131,24 @@ cancelled and stale preparation must keep previous controls. A focused real-host
 regression first reproduced the stale Horizon value; after the fix it passes,
 including an intentionally failed Border picture, preservation of both prior
 boards/picture/theme options, and successful retry into the exact Border theme.
-Full71-race and existing picture/preparation regression reruns are in progress.
+After the fix, all71 equal Versus races and70 deliberate Next transitions pass
+with exact theme-selector and original-picture checks on Node22 (123s) and
+Node20 (174s). Both modes retain their separate71 completion receipts and
+end deliberately before optional Remixes. The56-test candidate-host/static-picture/
+lease cohort also passes both Nodes, covering cancellation, stale acquisitions,
+failed/retried Next, interrupted focus, mode return and retained muted music.
+The injected artwork/decode refusal traces in these tests are expected negatives.
+
+Native exact `67aaaab8` on the same owned port/tab confirms active Horizon
+race → chooser → Behind the patrol adopts only Border Bloom in the theme selector.
+The paused summary agrees. A subsequent chooser transition to Folded corner
+adopts only Neon Contours; a live screenshot shows equal paired boards, the same
+original picture and3 lives each. The final state is paused. This verifies
+native chooser continuation, not native completion of all71 races or a
+physical two-controller session.
+
+All local test processes for this batch completed. Scoped ESLint, formatting and
+diff checks pass; no full accepted-tree CI pass is inferred.
 The UX owner confirmed no overlap; integrate this small hunk into accepted
 `prepareNext`, never replace the root owner's complete couch host.
 
