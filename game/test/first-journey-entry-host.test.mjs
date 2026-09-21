@@ -173,3 +173,24 @@ for (const route of ['opening', 'authored'])
     assert.equal(p.rendered.run.levelId, 'first-return');
     assert.deepEqual(p.errors, []);
   });
+
+test('reveal progress retains explicit percent units and updates after a real capture', async (t) => {
+  const { p } = await setup(t);
+  await activate(p, 'shell-featured', 'first-return');
+  const meter = p.$('coverage');
+  assert.equal(meter.getAttribute('role'), 'progressbar');
+  assert.equal(meter.getAttribute('aria-label'), 'Picture revealed');
+  assert.equal(meter.getAttribute('aria-valuemin'), '0');
+  assert.equal(meter.getAttribute('aria-valuemax'), '100');
+  assert.equal(Number(meter.getAttribute('aria-valuenow')), 0);
+  assert.match(meter.getAttribute('aria-valuetext'), /0\.0 percent revealed; target \d+ percent/);
+  p.key('ArrowDown');
+  p.key('ArrowDown', false);
+  for (let frame = 0; frame < 600 && p.rendered.run.coverage === 0; frame++) p.frame();
+  assert.ok(p.rendered.run.coverage > 0, 'The real command closes a cut');
+  const revealed = (p.rendered.run.coverage * 100).toFixed(1);
+  assert.equal(meter.getAttribute('aria-valuenow'), revealed);
+  assert.ok(meter.getAttribute('aria-valuetext').startsWith(`${revealed} percent revealed;`));
+  assert.equal(meter.textContent, `${revealed}%`);
+  assert.deepEqual(p.errors, []);
+});

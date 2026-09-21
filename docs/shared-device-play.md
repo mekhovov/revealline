@@ -294,3 +294,48 @@ safe-area insets instead of depending on a fullscreen grant: [MDN lengths](https
 and [MDN environment insets](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/env).
 [Steamworks recommendations](https://partner.steamgames.com/doc/steamhardware/recommendations)
 explicitly call out hybrid-input lockout; that motivates the new handoff cases.
+
+## Eighth iteration: portrait encounter space and real exposed-phase presentation
+
+A real attempt on the unchanged Sentinel Relay lost a life to a lane attack;
+there is no claim that its difficulty or complete win was qualified. A repeatable
+layout probe was then authored through Playground: only spawn became (12.5, 0.5)
+and moveSpeed became 16. A single Down command completed a legal 26.1% capture,
+kept three lives and 4,580 points, captured the shield and reached stage 2. No
+simulation state was injected and no campaign awards were granted. This is phase
+presentation evidence, not acceptance of the original map's challenge.
+
+The actual CORE OPEN instruction remained visible, but rotating the captured
+probe into 320×480 exposed a separate portrait defect: touch-pad space and long
+captions left an approximately 82×61 arena. Warning-capable portrait play now
+uses floating controls and a stable authored instruction reservation. The full
+arena measures 296×222 at 320×480 and 366×274.5 at 390×844. The selected Large text
+remains; the top HUD is 44px and its current/target cell is 40px. Below400px the
+current number and percent unit share one explicit grid row, with the target below;
+this prevents 26.1% from wrapping into a third row while retaining both units. Short portrait bounds a
+preferred Large pad to132px, retaining44px direction targets; tall portrait
+retains192px. Preference bytes and the simulation are unchanged.
+
+At568×320 the longer exposed-phase warning formerly touched the canvas border.
+An additional8px reservation now leaves7.81px between the complete229.33×171.99
+arena and its544×80.20 caption. The full four-line instruction stays in view;
+phase duplicates are suppressed in portrait as well as landscape. Rotation
+retains explicit Pause/Resume; visible captured coverage/lives/score were retained.
+
+Six initial boot/build and authored-capability tests passed on each Node20/22 runtime.
+The final cohort, including actual Journey entry and accessible capture progress,
+passes16/16 on both runtimes.
+The CSS bytes are covered by the reproducible build test; layout evidence comes
+from actual browser screenshots and DOM/text bounds, not those unit assertions.
+See iteration-8/native-observations.json for exact scope and source fingerprints.
+Physical Safari/Deck, real safe-area/browser-bar behavior, long independent event
+notices and full production/publication gates remain open.
+
+The percentage also has an explicit accessible progress role, a label, range and
+current/target percent text, updated after each real capture. The final visible
+26.1% /75% pair fits79.20×40px; the current percent glyph remains visible at22px.
+The [W3C pattern guidance](https://www.w3.org/WAI/ARIA/apg/patterns/meter/) distinguishes
+bounded measurements from task progress; picture-reveal progress uses `progressbar`.
+The actual opening Journey host verifies zero and a real capture, not only static
+markup. The initial test incorrectly read an unsupported DOM-harness HTML getter;
+its corrected assertion reads the visible text that the harness actually exposes.

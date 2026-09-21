@@ -29,6 +29,15 @@ touch → finger release → fresh-controller handoff in stick/swipe/D-pad modes
 verify interruption plus explicit Resume against the saved replay. Never convert
 modeled handoff tests into hardware certification.
 
+Verify warning-capable portrait maps separately from compact Arcade. Long captions
+plus a reserved full-height touch pad can collapse the arena even when each control
+fits. Test real stage transitions at320×480/390×844, including a nonzero percentage
+and wrapped core instruction. Keep current and target percent units explicit,
+and expose reveal progress with a labelled range/current value and complete
+current/target percent text. Bound short-screen pads without rewriting the chosen
+preference; retain44px targets. A layout probe that changes spawn or speed must
+record those changes and cannot qualify the original campaign's difficulty or win.
+
 For shared touch changes, preserve the session-only practice option and legacy
 profile fallback until a shared choice exists. Mirror the complete shared choice
 on explicit Solo edits, report failed shared writes, and resample a persisted
