@@ -682,6 +682,7 @@ export async function buildProject({
         ).readOptionalArtwork(root, config.optionalArtwork, files);
   await assertOutput(root, out, config.include);
   await validateBuildReferences(root, files);
+  const { contentSnapshots = [] } = await validateContentSnapshots(root, files);
   if (files.includes('game/coop/library.mjs')) await validateCoopContent(root);
   if (files.includes('game/content/campaign.json')) await validateLevels(root);
   if (files.includes('game/content/themes.json')) await validateThemes(root);
@@ -724,6 +725,15 @@ export async function buildProject({
     const entries = [];
     for (const name of files)
       entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
+    for (const snapshot of contentSnapshots) {
+      const entry = entries.find((candidate) => candidate.name === snapshot.file);
+      if (
+        !entry ||
+        entry.bytes.length !== snapshot.bytes ||
+        sha256(entry.bytes) !== snapshot.sha256
+      )
+        fail('Spatial snapshot changed after validation; rebuild from stable source');
+    }
     entries.push(...optionalEntries, ...externalEntries);
     const info = { formatVersion: FORMAT_VERSION, version, sourceRevision, entry: config.entry };
     const replace = (name, bytes) => {
@@ -1160,11 +1170,13 @@ export async function main(argv = process.argv.slice(2)) {
     const config = await readBuildConfig();
     const files = await collectBuildFiles(PROJECT_ROOT, config);
     const references = await validateBuildReferences(PROJECT_ROOT, files);
+    const contentSnapshots = await validateContentSnapshots(PROJECT_ROOT, files);
     process.stdout.write(
       json({
         version: config.version,
         files: files.length,
         ...references,
+        ...contentSnapshots,
         ...(await validateLevels()),
         ...(await validateThemes()),
         ...(await validateClasses()),
@@ -1189,6 +1201,26 @@ export async function main(argv = process.argv.slice(2)) {
     await fs.writeFile(target, json(level), { flag: 'wx' });
     process.stdout.write(json({ out: target, seed: options.seed, id: level.id }));
   }
+}
+
+/** Check generated authored snapshots with the selected source tree's tooling.
+ * Historical roots without snapshots remain buildable; never regenerate during
+ * validation or substitute this checkout's composer for another revision. */
+export async function validateContentSnapshots(root, files) {
+  if (!files.includes('game/content-design/whole-spatial-data.mjs')) return {};
+  const tool = await import(
+    pathToFileURL(path.join(root, 'scripts/generate-whole-spatial.mjs')).href
+  );
+  if (typeof tool.generateWholeSpatial !== 'function') fail('Missing spatial snapshot checker');
+  const snapshot = await tool.generateWholeSpatial({ root, write: false });
+  if (
+    snapshot?.file !== 'game/content-design/whole-spatial-data.mjs' ||
+    !Number.isSafeInteger(snapshot.bytes) ||
+    snapshot.bytes <= 0 ||
+    !/^[a-f0-9]{64}$/.test(snapshot.sha256)
+  )
+    fail('Invalid spatial snapshot integrity record');
+  return { contentSnapshots: [snapshot] };
 }
 
 async function coreValidator(root = PROJECT_ROOT) {

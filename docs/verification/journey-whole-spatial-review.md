@@ -103,10 +103,11 @@ mission with zero earned score and three lives. The test flight was left paused.
 This is a bounded native keyboard observation, not the full device matrix
 or a human duration/enjoyment estimate.
 
-Cold source construction is still expensive: approximately 4.5–5.4 seconds in
-observed Node runs before host preparation. Native Studio Inspect exceeded one
-browser-control command timeout despite completing successfully. No performance
-target is marked passed. Precompilation/loading responsiveness, warm transition
+Before the [source-loading follow-up](journey-spatial-source-performance.md), cold
+construction took approximately 4.5–5.4 seconds and native Studio Inspect exceeded
+one browser-control command timeout despite completing successfully. The follow-up
+removes repeated composition while retaining validation; no full performance
+target is marked passed. Loading responsiveness, warm transition
 measurements, full device/controller/accessibility qualification, wider seed/
 mastery/pacing review and genuine human sessions remain open. Original assets are
 reused; this integration is not a new artwork approval.
