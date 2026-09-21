@@ -15,6 +15,13 @@ energy gates, streak penalties, hidden adaptive difficulty or mandatory reward s
 
 ## Invariants
 
+Authored mode-navigation continuation: explicit Solo and Versus links retain their
+Journey edition while progress and suspended attempts remain mode-specific. The
+checked-save departure and deliberate return/Continue flows pass automated and
+native local checks; Team remains separately authored. Legacy navigation is not
+reinterpreted. See `verification/journey-mode-navigation.md`; accepted-release
+integration and Pages publication are still required.
+
 Team original-art source checkpoint: eleven new originals plus the existing Shared
 detour picture now bind all twelve candidate missions without changing36 resolved
 preset simulations. The15-case cohort on Node20/22 includes64 unchanged two-seat
