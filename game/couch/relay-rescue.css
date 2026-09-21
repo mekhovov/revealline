@@ -1218,9 +1218,16 @@ kbd {
   color: var(--fk-text);
 }
 
-/* A short running arena gets the space left by its actual text and controls.
-   No fixed chrome-height estimate, transformed bitmap or hidden live status. */
-@media (orientation: landscape) and (max-height: 500px) {
+/* Running landscape arenas reserve actual text and complete controls first.
+   Wide touch layouts share this fit: large pads include Boost and Support,
+   without a fixed chrome-height estimate, stretched bitmap or hidden status. */
+@media (orientation: landscape) {
+  body.playing:has(#coop-overlay[hidden]) #coop-app {
+    --coop-touch-column: 156px;
+  }
+  body.playing:has(#coop-overlay[hidden]) #coop-app:has(.race-pad[data-touch-size='large']) {
+    --coop-touch-column: 192px;
+  }
   body.playing:has(#coop-overlay[hidden]) #coop-app {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -1248,6 +1255,7 @@ kbd {
   }
   body.playing:has(#coop-overlay[hidden]) .hud > .skyline {
     grid-area: two;
+    justify-self: end;
   }
   body.playing:has(#coop-overlay[hidden]) .hud > .team-status {
     grid-area: team;
@@ -1305,7 +1313,7 @@ kbd {
     padding: var(--fk-space-1) var(--fk-space-2);
   }
   body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden]) #coop-app {
-    grid-template-columns: 140px minmax(0, 1fr) 140px;
+    grid-template-columns: var(--coop-touch-column) minmax(0, 1fr) var(--coop-touch-column);
   }
   body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden]) .coop-board-slot {
     grid-column: 2;
@@ -1326,7 +1334,7 @@ kbd {
   }
   body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
     #coop-app:has(.control-card:first-child[data-touch-visible='false']) {
-    grid-template-columns: minmax(0, 1fr) 140px;
+    grid-template-columns: minmax(0, 1fr) var(--coop-touch-column);
   }
   body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
     #coop-app:has(.control-card:first-child[data-touch-visible='false'])
@@ -1340,7 +1348,7 @@ kbd {
   }
   body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
     #coop-app:has(.control-card:last-child[data-touch-visible='false']) {
-    grid-template-columns: 140px minmax(0, 1fr);
+    grid-template-columns: var(--coop-touch-column) minmax(0, 1fr);
   }
 }
 
