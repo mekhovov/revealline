@@ -64,10 +64,27 @@ isolate, so duration must not be treated as a monotonically increasing preset sc
   steering modes. Motor's preset inversion remains an explicit review concern.
 - Check whether outer-perimeter travel or late captures become tedious cleanup.
   Longer routes are not intrinsically better.
-- Native exact-edition inspection/start checks, followed by broader seed/delay,
-  physical-device, accessibility and genuine human route-choice/retry evidence.
+- Broader seed/delay, physical-device, accessibility and genuine human
+  route-choice/retry evidence beyond the native observation below.
 - Human comparison against the original editions before selecting final layouts.
   Keep both available; do not automatically replace published maps.
 - Original final art after greybox acceptance; AI soundtrack work stays paused.
 - Reviewed integration, immutable versioned release and exact GitHub Pages proof
   remain with the release owner. This study does not alter the frozen release.
+
+## Exact-source native observation
+
+Source `8c0f00e1`, read-only port8818, in-app desktop browser. The edition selector
+defaulted to Original. Selecting revision2 and Inspect left the active starter
+mission unchanged until Apply. Applied the eight-map edition, then visually
+inspected Dnipro's staggered platforms/breakwaters and the motor's offset pads and
+open frame arms. Frozen capture inspection reported one retained region and zero
+would-fill cells; Dnipro listed all three field anchors.
+
+Applied the separate pressure edition and launched Motor feint on Expert. The
+playable preview showed two lives,70% target, the revised board and persistent
+HEAD identifier. A real Down input connected the top landing, stopped on capture,
+and displayed0.3% earned coverage with both lives intact; paused at0:10. No warning
+or error console entries were observed. This is launch/first-cut/readability
+evidence, not a native full clear, transient AIM/CHASE observation, physical
+controller test, human acceptance or deployment.
