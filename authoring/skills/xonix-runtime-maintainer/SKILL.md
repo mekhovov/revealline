@@ -1269,3 +1269,13 @@ Keep the loss-only difficulty control aligned with the preparation preference th
 ## Mission selection feedback
 
 Tag successful selection feedback with campaign and mission revision identity. Retire it only after a different prepared mission is accepted; pending, cancelled or failed preparation and unrelated warnings keep their own feedback. Preserve same-mission Retry notices. Follow `docs/solo-result-continuation.md` and verify legal Next, Browse/Back, stale work and storage authority before acceptance.
+
+### Studio inventory history
+
+Keep cold Back navigation as a bounded, versioned view hint in the current history entry: selected slot and inventory filters only. Merge unrelated plain history state, never push extra entries or persist asset/workspace/player data. Validate restoration against the actually loaded document; preserve valid filtered-out inspection and fall back only for missing selections. BFCache retains live drafts and selection instead of replaying the hint. A retired startup or newer view must not adopt stale restoration or take focus. Follow [Studio inventory return](../../../docs/asset-studio.md#returning-to-the-inventory), including actual browser Back, history denial, published-only slots and unsaved BFCache qualification.
+
+### Studio skip navigation and cold return
+
+Keep ordinary **Skip inventory** activation as a same-entry focus jump to the existing `#inspector` target. Its native href remains the fallback for no-script/direct-fragment use and modified or other-target activation. Do not add a fragment entry solely to move focus: a new entry has no inventory hint and can reset selection after Return to game → cold Back. Preserve workspace/upload/pixel drafts, the existing per-entry hint and other history keys; add no generic traversal listeners or pagehide writes for this focus action.
+
+Focused verification must include the actual mounted Studio selecting an asset, changing theme then Undo, activating the shipped anchor, leaving and cold-returning to the same selection/filter. Check native focus/scroll and subsequent Tab separately, plus unchanged URL/history depth and preserved modifier/default-prevented behavior. Prompt example: “Fix Studio skip navigation without creating browser history entries; preserve native link fallbacks, dirty drafts and selected inventory view. Test cold Back and inspect real keyboard focus/scroll before acceptance.”

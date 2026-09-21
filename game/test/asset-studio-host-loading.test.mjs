@@ -135,6 +135,14 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
       this.style.getPropertyValue = (name) => this.style[name] || '';
       this.style.removeProperty = (name) => delete this.style[name];
     }
+    set inert(value) {
+      this._inert = value;
+      if (value && this.contains(this.ownerDocument.activeElement))
+        this.ownerDocument.activeElement = this.ownerDocument.body;
+    }
+    get inert() {
+      return this._inert;
+    }
     remove() {
       // Real browsers return focus to the body when a focused subtree is removed.
       const lostFocus = this.isConnected && this.contains(this.ownerDocument.activeElement);
@@ -445,6 +453,60 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
       .querySelectorAll('button')
       .find((button) => button.querySelector('small')?.textContent.startsWith(`${slotId} ·`));
   const originalSlot = $('slot-id').textContent;
+  const openAncestors = (control) => {
+    for (let node = control.parentElement; node; node = node.parentElement)
+      if (node.tagName === 'DETAILS') node.open = true;
+  };
+  const initialSummary = $('workspace-summary').textContent;
+  const themeControl = $('filter-theme'),
+    initialTheme = themeControl.value;
+  const otherTheme = [...themeControl.options].find(
+    (option) => option.value !== initialTheme,
+  )?.value;
+  assert.ok(otherTheme, 'Real theme selection can stage an isolated workspace change');
+  themeControl.focus();
+  themeControl.value = otherTheme;
+  await themeControl.onchange();
+  assert.equal($('undo-draft').disabled, false);
+  $('undo-draft').focus();
+  await $('undo-draft').onclick();
+  assert.equal($('undo-draft').disabled, true);
+  assert.equal(doc.activeElement, $('redo-draft'), 'Final Undo returns to enabled Redo');
+  assert.equal($('workspace-summary').textContent, initialSummary);
+  $('redo-draft').focus();
+  await $('redo-draft').onclick();
+  assert.equal($('redo-draft').disabled, true);
+  assert.equal(doc.activeElement, $('undo-draft'), 'Final Redo returns to enabled Undo');
+  $('reset-draft').focus();
+  await $('reset-draft').onclick();
+  assert.equal(
+    doc.activeElement,
+    inventoryButton(originalSlot),
+    'Reset returns to the selected visible asset',
+  );
+  assert.equal($('workspace-summary').textContent, initialSummary);
+  $('filter-search').value = 'font.';
+  $('filter-search').emit('input');
+  assert.equal(inventoryButton(originalSlot), undefined, 'The inspector selection is filtered out');
+  themeControl.focus();
+  themeControl.value = otherTheme;
+  await themeControl.onchange();
+  $('reset-draft').focus();
+  await $('reset-draft').onclick();
+  assert.equal(
+    doc.activeElement,
+    $('filter-search'),
+    'Reset uses Search when selection is absent from inventory',
+  );
+  assert.equal($('workspace-summary').textContent, initialSummary);
+  assert.equal(
+    await createStudioStore({ indexedDB: db.indexedDB }).load(),
+    null,
+    'Draft focus returns never save',
+  );
+  $('filter-search').value = '';
+  $('filter-search').emit('input');
+
   // Actual host wiring: a visible focus change is not a hidden document.
   inventoryButton('audio.capture').click();
   await flush();
@@ -865,7 +927,15 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   assert.match(message(), /Derivative prepared/);
   // The following real stage/save/restore byte assertion also proves that the
   // prepared asset survived the return, rather than only its visible labels.
+  openAncestors($('stage-asset'));
+  $('stage-asset').focus();
   await $('stage-asset').onclick();
+  assert.equal($('stage-asset').disabled, true);
+  assert.equal(
+    doc.activeElement,
+    inventoryButton(originalSlot),
+    'Successful Stage returns from its disabled trigger',
+  );
   assert.match(message(), /validated and staged/);
   assert.match($('workspace-summary').textContent, /unsaved changes/);
   const historyRow = (id, revision) =>
@@ -913,7 +983,16 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     null,
     'Staging never saves.',
   );
-  await bindButton(approved.id, 2).onclick();
+  const historicalTrigger = bindButton(approved.id, 2);
+  openAncestors(historicalTrigger);
+  historicalTrigger.focus();
+  await historicalTrigger.onclick();
+  assert.equal(historicalTrigger.isConnected, false);
+  assert.equal(
+    doc.activeElement,
+    inventoryButton(originalSlot),
+    'Binding returns from the removed history button',
+  );
   assert.equal(currentBinding(), `${approved.id}@2`);
   assert.deepEqual(await customPreviewBytes('draft-preview'), Buffer.from(publishedBytes));
   assert.equal(bindButton(approved.id, 2).disabled, true);
@@ -967,6 +1046,24 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     saved.document,
   );
   assert.deepEqual(new Set(opened), new Set([STUDIO_DATABASE]));
+  const beforeDiscard = $('workspace-summary').textContent;
+  await $('edit-geometry').onclick();
+  assert.equal($('discard-asset').disabled, false);
+  openAncestors($('discard-asset'));
+  $('discard-asset').focus();
+  await $('discard-asset').onclick();
+  assert.equal($('discard-asset').disabled, true);
+  assert.equal(
+    doc.activeElement,
+    inventoryButton(originalSlot),
+    'Discard returns from its disabled preparation action',
+  );
+  assert.equal($('workspace-summary').textContent, beforeDiscard);
+  assert.equal(currentBinding(), `${customId}@1`);
+  assert.deepEqual(
+    (await createStudioStore({ indexedDB: db.indexedDB }).load()).document,
+    saved.document,
+  );
   // Reusing approved raster bytes does not approve changed placement metadata.
   await bindButton(approved.id, 2).onclick();
   await $('edit-geometry').onclick();
