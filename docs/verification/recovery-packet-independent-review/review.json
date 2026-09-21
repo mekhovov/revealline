@@ -1,0 +1,81 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "reviewedAt": "2026-09-21T10:12:57.025329+00:00",
+  "packets": [
+    {
+      "packet": "p16-backup-feedback-followon-8cff-r1",
+      "sourcePatchSHA256": "57da46b14aad3ae897b562ef71aff151ae82908b03932e967f2a55eb95d28f85",
+      "requires": "dfaa14f6957dee37204e6ca9ee64077d6ba553a23af0f0b4e1062e92a07fe06c",
+      "tests": [
+        {
+          "node": "22.22.2",
+          "pass": 86,
+          "fail": 0,
+          "skipped": 0,
+          "processes": 4,
+          "verifiedReads": 889,
+          "uniqueFiles": 273,
+          "logSHA256": "0512bebdf35095ff8fbf57d017163a3aee8b23ceeb02a0c9fbb7134f02449b31"
+        },
+        {
+          "node": "20.19.5",
+          "pass": 86,
+          "fail": 0,
+          "skipped": 0,
+          "processes": 4,
+          "verifiedReads": 889,
+          "uniqueFiles": 273,
+          "logSHA256": "94f0137dbdc6e949b00a61715b3d1e126444103438f856e0c8a62386d65af8ab"
+        }
+      ],
+      "native": {
+        "evidenceSHA256": "f4e5cb80ed730df94f66b2d5964de53b1d557f6715fc493796d1e82f3957a944",
+        "verifiedResponses": 378,
+        "verifiedBytes": 6605995,
+        "separateQAHelperResponses": []
+      },
+      "scope": "Independent source/log/retained response verification; not a new full test or native browser run."
+    },
+    {
+      "packet": "p16-first-flight-failure-owner-8cff-r1",
+      "sourcePatchSHA256": "fcddda623d33ccb71c6c47c4bbdb5169461c8ab9228b9914cf1d5921999ca0d3",
+      "requires": "eca4fd82ac39be93b0b0afdb8d13a95cdaad0619b3716f54eb35d40e22155172",
+      "tests": [
+        {
+          "node": "22.22.2",
+          "pass": 80,
+          "fail": 0,
+          "skipped": 0,
+          "processes": 5,
+          "verifiedReads": 623,
+          "uniqueFiles": 271,
+          "logSHA256": "1f0621914b9c9364200b91ead97a2576b516199a09a12229d64d4744e4cf6918"
+        },
+        {
+          "node": "20.19.5",
+          "pass": 80,
+          "fail": 0,
+          "skipped": 0,
+          "processes": 5,
+          "verifiedReads": 623,
+          "uniqueFiles": 271,
+          "logSHA256": "11a00ff8bf2bb301cbb720d407ad69109be91153de0c4c08d2f4c2c2851f8a76"
+        }
+      ],
+      "native": {
+        "evidenceSHA256": "f439e6d673f6eff3d21618b50d353f3785459a64f5e487f97e36c073017bd3ec",
+        "verifiedResponses": 378,
+        "verifiedBytes": 6603750,
+        "separateQAHelperResponses": [
+          {
+            "path": "native/hold-backup-lock.html",
+            "bytes": 937,
+            "sha256": "631b8c5403c2efd022ef1a0b20d8e6eeb5ede49efa4e510b3ba016c2b062e892"
+          }
+        ]
+      },
+      "scope": "Independent source/log/retained response verification; not a new full test or native browser run."
+    }
+  ],
+  "verificationNote": "First-flight native QA helper is served from explicit overrides, not candidate game files; verified separately using the server own exact-path resolution."
+}
