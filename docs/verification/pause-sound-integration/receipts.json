@@ -1,0 +1,63 @@
+{
+  "base": "91baa8aa9b0f991732626b3863c5d073e1dfb4fe",
+  "status": "integrated candidate; not frozen or released",
+  "patches": [
+    {
+      "path": ".cache/p02-solo-pause-sound-9ef-r1/candidate.patch",
+      "sha256": "f5a04edef0a66fce5fff782f991c37f196b8897d3c0749d5b2ee6bbfe2ebc711"
+    },
+    {
+      "path": ".cache/p02-sound-accessible-name-d62-r1/candidate.patch",
+      "sha256": "837ba2c30a640aab14453c392c0b04070e802e5a4981595477df96984fb6d66f"
+    }
+  ],
+  "sourcePins": {
+    "game/app.mjs": "dd8b6d6fb2aafd8fc6557ac6ae6e0d24789966b11ebeb8b6bc21d26d3579f7a2",
+    "game/index.html": "f689b6263ed6c6859cf65f3b9ce7cb3a309680a389032f4cef7910f1be291f56",
+    "game/couch/index.html": "c6fa52a5bc824442b736036f4894b2256435d3737a92bc91c8307652ba82f92a",
+    "game/couch/relay-rescue.html": "ac829e9ce8f277ef9b006d672d84f6fadef795a6239da212456f3889a8fffb2e",
+    "game/test/shared-settings-solo.test.mjs": "d30685016b27482df5ac6d55e3af901727ed87ad5bd4657d2d3de7500397fcd7",
+    "game/test/touchscreen-controller-host.test.mjs": "4045d8c177beaa155cb72b62a6de6540f7c079dd864fce14b478f8c40473f0b3"
+  },
+  "tests": [
+    {
+      "file": "node20-final.tap.gz",
+      "passed": 77,
+      "failed": 0,
+      "rawSha256": "f118a3d2bcd0a9249cf2e1efee038f0ce25776e56d913973e3b8bc0b387aa899",
+      "gzipSha256": "359e4b79a4d278510fcc95b529d1af84fd95d6a4fcaa5c801fc452eb1acbe819"
+    },
+    {
+      "file": "node22-final.tap.gz",
+      "passed": 77,
+      "failed": 0,
+      "rawSha256": "f293f5aa8add09c0431954d7dce7d49a78a3d7c855cf974a810b7f993a94a77a",
+      "gzipSha256": "ab13869fa74479d83d924a5a6786a0cd8ab59a7dc5dfa141a1be42536d555b4a"
+    }
+  ],
+  "cohort": [
+    "game/test/shared-settings-solo.test.mjs",
+    "game/test/pause-menu-host.test.mjs",
+    "game/test/pause-layout-contract.test.mjs",
+    "game/test/soundtrack-master-keyboard-host.test.mjs",
+    "game/test/audio-master.test.mjs",
+    "game/test/audio-preferences.test.mjs",
+    "game/test/soundtrack-master.test.mjs",
+    "game/test/course-pause-host.test.mjs",
+    "game/test/touchscreen-controller-host.test.mjs"
+  ],
+  "additionalVerification": "Modeled controller navigates Missions, Deploy, Pause, Sound and Resume without pointer activation. Held A changes Sound once and retains focus, paused flight and authoritative checkpoint.",
+  "setupFailures": "Initial sparse checkout lacked motion-lab modules, CSS and audio fixture; second attempt lacked presets.json. Restored exact tracked dependency files, then ordinary source tests passed. Original logs remain in .cache/team-pause-sound-integration-r1/.",
+  "nativeEvidence": {
+    "file": "candidate-native-observations.json",
+    "sha256": "995f959f28486d139d4283d9a6b120a68e6c340d9758f2cb568e9bad82ca044f",
+    "scope": "Prior 9ef-based candidate review, not a browser rerun of this integrated source. Four viewport sizes and keyboard/pointer reachability; short landscape Large text requires focus-revealed scrolling.",
+    "originalSourceSha256": "377b2862ce86edcb0694340961d394997c456bddfb3a5f63de8ff7dc9ac81625"
+  },
+  "limits": [
+    "No physical iPhone, Steam Deck or controller qualification",
+    "No actual listening or new soundtrack content",
+    "No final frozen artifact, complete source qualification or public deployment",
+    "Separate held integration; not included in PR211 device cutoff"
+  ]
+}

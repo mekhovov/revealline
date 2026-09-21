@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { soloPage, settle, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
-import { verifyReplay } from '../replay.mjs';
+import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { TOUCH_PREFERENCES_KEY } from '../touch-preferences.mjs';
 
 const classic = JSON.parse(
@@ -283,6 +283,20 @@ test('modeled controller: Missions selection, Deploy, Pause and explicit Resume 
   release();
   page.frame();
   assert.equal(page.rendered.run.tick, checkpoint);
+  const pausedState = authoritativeCheckpoint(page.rendered.run);
+  navigate('overlay-sound');
+  const sound = page.$('overlay-sound');
+  const priorSound = sound.getAttribute('aria-pressed');
+  press(0);
+  assert.notEqual(sound.getAttribute('aria-pressed'), priorSound);
+  assert.equal(sound.getAttribute('aria-label'), 'Sound');
+  const selectedSound = sound.getAttribute('aria-pressed');
+  for (let n = 0; n < 20; n++) page.frame();
+  assert.equal(sound.getAttribute('aria-pressed'), selectedSound, 'Held A toggles only once.');
+  assert.equal(page.doc.activeElement, sound);
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), pausedState);
+  navigate('start-button');
   press(0);
   await settle(() => {
     page.frame(0);
