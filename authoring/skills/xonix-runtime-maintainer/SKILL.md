@@ -1343,3 +1343,10 @@ Prompt example: “Start and steer through sampled controller edges, disconnect 
 Shared steering owns its captured pointer at the pad/surface. Legacy child-button handlers may cancel only their own tracked captures; an ignored additional finger must not pause both couch players or clear the real steering fingers. Cancellation of the actual steering pointer must still pause the shared game and retire both physical gestures while retaining permitted continuation directions. Late capture-loss events cannot trigger another pause or reclaim a seat. Solo legacy child-button handlers must likewise defer to the attached shared steering adapter; verify the original captured finger can still turn after an ignored finger cancels.
 
 Prompt example: “Steer both couch seats with different fingers in stick, swipe and D-pad modes. Add a second finger to an occupied pad, cancel only that ignored finger, and verify no pause or lost steering. Then cancel the captured steering finger and prove exactly one pause, retired captures for both seats, no stale movement after interruption and independent fresh input after Resume. Exercise bubbling through D-pad child buttons and retain legacy equipment cancellation coverage.”
+
+
+### Fullscreen request lifetime
+
+Fullscreen is optional browser presentation. Keep one pending browser transition per attached control, preserve focus, and retire all late UI writes when the control owner detaches. A successful explicit retry clears a previous denial; an unsuccessful request must leave ordinary fitted play usable. Do not automatically retry or advertise unavailable document fullscreen. Retain standalone display recognition and real fullscreen-change handling.
+
+Prompt example: “Hold a fullscreen promise and activate twice, then test both settlement outcomes after teardown. Verify one request, harmless retired completion, successful retry/exit, and unchanged responsive play. Use docs/verification/fullscreen-request-ownership/README.md and distinguish finite API tests from actual iPhone Safari and Steam Deck qualification.”
