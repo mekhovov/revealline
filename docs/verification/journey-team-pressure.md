@@ -6,6 +6,11 @@ editions are unchanged. The source is the explicit pressure-v2 projection of
 `createTeamJourneyCandidates()`: twelve missions in five actual campaigns/packs,
 grouped into three editorial learning arcs.
 
+Current ordinary feasibility: **36/36 mission/preset sets,144/144 joint/seat
+configurations**. Later sections preserve each earlier bounded-search checkpoint;
+their unresolved counts are historical, not remaining ordinary route failures.
+There are still major pacing, optional mastery, live two-player and delivery gaps.
+
 ## What is stronger
 
 | Preset   | Keeper cells/s | Reclaimed roamer cells/s | Shared reserves |
@@ -138,7 +143,7 @@ retimed or classified as a clear. This is a route-timing sensitivity, not proof 
 unavoidable spawn pressure. Both Stepping routes leave one intermediate island
 unconnected; Switchback misses the optional connected-platform visit.
 
-Current total: **22/36 ordinary sets,88/144 configurations**, plus32 successful
+At this foundation checkpoint: **22/36 ordinary sets,88/144 configurations**, plus32 successful
 additional delayed configurations from the nine fresh routes. All twelve sets in
 the first four-mission learning arc now have evidence. The14 remaining sets are
 Standard and Expert in each of: Crossed Gardens, Split Orchards, Weaver Crossing,
@@ -178,7 +183,54 @@ the Team test pack is explicitly not the authored mission picture. Tool latency
 and the displayed30-second time are not pacing evidence. No full clear, physical
 controller, touch, two-human or release validation is inferred.
 
-Pending: remaining14 fresh-route sets, broader timing alternatives, optional
+## Remaining material and roamer routes
+
+All fourteen formerly unresolved Standard/Expert sets now have fresh routes and
+exact four-way joint/seat checks:56 additional ordinary clears. The six material
+sets required32.506 seconds of bounded offline search (maximum7.014 per set);
+the eight roamer sets required35.519 seconds (maximum7.112). All accepted inputs
+were played from fresh public runs on Node20 and Node22; no content, warning,
+speed, quota, state or published edition was changed to secure a pass.
+
+| Mission            | Standard seconds | Expert seconds | Optional mastery in these base routes |
+| ------------------ | ---------------: | -------------: | ------------------------------------- |
+| Crossed Gardens    |            36.33 |          37.20 | Expert only                           |
+| Split Orchards     |            19.63 |          27.65 | Standard only                         |
+| Weaver Crossing    |            32.72 |          32.06 | Neither                               |
+| Shared Lookout     |            24.17 |          36.88 | Standard only                         |
+| Twin Depots        |            18.28 |          16.18 | Neither                               |
+| Changing Courtyard |            26.79 |          38.22 | Neither                               |
+| Last Rendezvous    |            25.78 |          33.71 | Neither                               |
+
+Additional30-tick departure probes pass44/56 configurations; twelve failures
+remain pinned in all four joint/seat variants:
+
+- Split Orchards Standard: keeper-1 trail impact, event1062/completed step1063.
+- Weaver Crossing Expert: keeper-3 trail impact, event2135/completed step2136.
+- Twin Depots Expert: keeper-1 trail impact, event1949/completed step1950.
+
+Combined with earlier fresh routes,76/92 extra delayed configurations pass and16
+fail. This is additional timing evidence, not a player win rate or proof that the
+four timing-sensitive mission/preset routes are impossible after a late start.
+The48 initial failed Standard reuse probes remain separate historical evidence.
+
+All36 ordinary sets now pass, but only19 selected base routes meet their existing
+optional mastery. Seven of the eight newly solved roamer sets miss that goal:
+Shared Lookout Expert and Changing Courtyard Expert activate no roamers; other
+misses activate only one of two or omit a required connection. This is a concrete
+teaching/bypass review target. Every newly solved base route still has zero joint
+events and zero Support use. Short optimized clears and alternating-seat patterns
+remain flags, not evidence of human enjoyment or reasons to add quota padding.
+
+The complete assessment/fresh-route/compiler/export/historical regression cohort
+now passes **368/368 tests on Node20.19.5 and368/368 on Node22.22.2**. Independent
+cross-review (a different reviewer from each route author) approved material and
+roamer fixtures and their shared115-test suite; selected review runs reproduced
+the base, delayed-failure and mastery distinctions. Changed code passes ESLint,
+Prettier and whitespace checks. No application code changed in this verification
+increment, so there is no new game version or public deployment claim.
+
+Pending: broader timing alternatives, optional
 mastery, spatial/role redesign, native whole-mission play, two human players,
 controller/reconnect, new Team bonus/combat semantics, accepted host integration,
 reviewed release and GitHub Pages. No claim of P14 completion.
