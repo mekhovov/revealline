@@ -1045,3 +1045,12 @@ For every registered standalone Workshop tool, keep the static same-edition game
 ### Complete visual-theme identity boundary
 
 Use `game/presentation/visual-theme-catalogue.mjs` only for declared compatibility and exact compiler/theme/collection identities. Supply accepted authored owners and canonical level hashes before difficulty transforms; keep numeric and legacy string revisions exact. A compatible declaration is not art approval or byte validation. Compare loader-verified declarations against authoritative required slots, preserve historical catalogue entries, and keep unsupported content distinct from unavailable revisions. Do not expose Settings choices or change retained picture/story pins until the complete two-collection benchmark and staged-host integration pass. Follow the prompt in `docs/visual-theme-catalogue.md`.
+
+For two-seat narrow portrait layouts, fit preferred touch sizes to each seat's
+usable width instead of stacking both pads over the board. Verify at least 44px
+actual D-pad targets, preserve stored size and independent pointers, and keep
+Solo/couch gesture vocabulary identical. Catalogue-bound arrows must not render
+their text fallback twice. Inspect long captions between Large landscape pads;
+a fitting canvas alone does not establish unobscured action feedback. Extend
+controller checks through Missions/Deploy/Pause/Resume without pointer clicks,
+while keeping modeled and physical Steam Deck evidence separate.

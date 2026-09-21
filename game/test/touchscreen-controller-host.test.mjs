@@ -235,3 +235,58 @@ test('Solo reports a denied shared save while retaining the current touch choice
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(page.errors, []);
 });
+
+test('modeled controller: Missions selection, Deploy, Pause and explicit Resume need no pointer click', async (t) => {
+  t.mock.method(SoloElement.prototype, 'getContext', () => null);
+  const pad = controller();
+  const page = await soloPage(t, { titleScreen: true, readPads: () => [pad] });
+  const release = () => {
+    pad.buttons.forEach((b) => {
+      b.pressed = false;
+      b.value = 0;
+    });
+    pad.axes.fill(0);
+    page.frame();
+    page.frame();
+  };
+  const press = (index) => {
+    release();
+    pad.buttons[index].pressed = true;
+    pad.buttons[index].value = 1;
+    page.frame();
+  };
+  const navigate = (id) => {
+    const visited = [];
+    for (let count = 0; count < 40 && page.doc.activeElement?.id !== id; count++) {
+      visited.push(page.doc.activeElement?.id || page.doc.activeElement?.className);
+      press(13);
+    }
+    assert.equal(page.doc.activeElement?.id, id, `Controller focus path: ${visited.join(' → ')}`);
+  };
+  release();
+  navigate('shell-play');
+  press(0);
+  assert.equal(page.$('shell-missions').open, true);
+  navigate('shell-deploy');
+  assert.equal(page.$('shell-deploy').disabled, false);
+  press(0);
+  await settle(() => {
+    page.frame(0);
+    return page.doc.body.dataset.flightState === 'running';
+  });
+  release();
+  assert.equal(page.$('shell-missions').open, false);
+  assert.equal(page.rendered.run.player.speed, 0);
+  press(9);
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  const checkpoint = page.rendered.run.tick;
+  release();
+  page.frame();
+  assert.equal(page.rendered.run.tick, checkpoint);
+  press(0);
+  await settle(() => {
+    page.frame(0);
+    return page.doc.body.dataset.flightState === 'running';
+  });
+  assert.deepEqual(page.errors, []);
+});

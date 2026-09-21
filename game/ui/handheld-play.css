@@ -85,6 +85,10 @@
   color: #c4f3ff;
   font: bold 25px/1 var(--fk-font-ui, sans-serif);
 }
+/* Keep the replaceable catalogue arrow without repeating its text fallback. */
+.field-kit .race-pad .race-cross button[data-presentation-control][aria-label] {
+  font-size: 0;
+}
 .race-pad :is(.touch-surface, .race-cross):active {
   opacity: 0.85;
 }
@@ -601,11 +605,21 @@
     margin: 4px;
   }
 }
-/* Two Large controls do not fit side by side on a narrow phone. Keep their
-   selected target size and expose both seats in separate rows. */
+/* A two-seat phone shares its usable width. Large is a preferred size, bounded
+   by the space for each seat; keeping two rows would consume the entire arena.
+   At the 320px minimum, each D-pad cell remains above the 44px target floor. */
 @media (max-width: 399px) and (orientation: portrait) {
-  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-controls:has([data-touch-size='large']) {
-    grid-template-columns: minmax(0, 1fr);
+  body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad {
+    --touch-size: min(
+      156px,
+      calc((100dvw - 12px - env(safe-area-inset-left) - env(safe-area-inset-right)) / 2)
+    );
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad[data-touch-size='large'] {
+    --touch-size: min(
+      192px,
+      calc((100dvw - 12px - env(safe-area-inset-left) - env(safe-area-inset-right)) / 2)
+    );
   }
 }
 
@@ -848,5 +862,15 @@
     .telemetry
     :is(#coverage, #time, #score)::before {
     display: none;
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span[data-compact] {
+    font-size: 0;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span[data-compact]::after {
+    content: attr(data-compact) / '';
+    font-size: var(--handheld-label);
   }
 }
