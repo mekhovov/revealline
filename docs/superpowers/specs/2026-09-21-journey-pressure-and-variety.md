@@ -140,12 +140,17 @@ agree on gameplay configuration; Team needs explicit simultaneous-event rules.
 
 ## Whole-library balancing and acceptance
 
-The [498-case route assessment](../../verification/journey-pressure-route-assessment.md)
-prioritizes the next balance work: first the persistent Twin Receivers/Relay
-Perimeter short-clear geometry, then Livewire approach/attack-window failures,
-Crosswind/Apex return paths and flagged post-objective tails.312 passing cases
-are technical feasibility, not balance signoff;186 need new routes or explicit
-redesign. No global easing or warning shortening to make old scripts pass.
+The original [498-case route assessment](../../verification/journey-pressure-route-assessment.md)
+recorded312 passing cases and186 unresolved paths. Five additive refinements now
+cover all498 ordinary seed1 configurations, preserving historical identities;
+see the [final five-chapter evidence](../../verification/journey-middle-pressure.md).
+Separate Twin Receivers/Relay Perimeter and Two Districts geometry studies remove
+recorded shortcuts but retain human pacing concerns. Next review Return in Reserve's
+10.55–12.35second impact-free clears, short/late-activating Rover paths, opening
+island usefulness, optional goals and post-objective tails. Six old Phase opening
+failures have verified safe alternatives; they are not unavoidable spawn damage.
+No global easing or warning shortening to make old scripts pass, and no balance
+signoff from technical feasibility alone.
 
 Audit every map, not only its preset number. Measure first-safe-return travel time,
 enemy travel during that exposure, unavoidable spawn pressure, available alternate

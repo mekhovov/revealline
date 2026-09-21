@@ -9,6 +9,13 @@ This is a broader successor to the83-route Standard-only comparison, not a
 replacement for its historical evidence. No maps, physics, published editions,
 save identities, assets or release pins were changed by this assessment.
 
+Current follow-up: [five additive refinement packets now cover498/498 ordinary
+cases](journey-middle-pressure.md), preserving the312 successes below and adding
+new paths for every previously unresolved identity. The tables and186 unresolved
+count below describe the **original bounded reuse search**, not current route
+coverage. Short clears, optional goals, teaching, Team and human balance remain
+open; the original failures are retained as evidence rather than erased.
+
 ## Method and limits
 
 `node --import ./.cache/read-source-git.mjs scripts/assess-journey-pressure.mjs [chapter|all]`
