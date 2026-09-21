@@ -642,6 +642,19 @@ uses a native modal with an explicit return path, guided by the
 
 ## Research sources
 
+### Native transition checkpoint (2026-09-21)
+
+The [P13/P15 timing observation](verification/journey-performance-observations.md)
+adds bounded native Solo/Versus measurements to the completion ledger. It is not
+an optimization or full acceptance: local Continue/Next/reset readiness samples
+are within their targets, while the startup module payload remains substantial.
+The next technical performance task is a controlled repeated-run baseline and
+critical-module-graph reduction with historical route/runtime equivalence and
+normal compiler/artwork verification preserved. Team, physical devices, automatic
+recovery, ten consecutive missions, public distribution and human gates remain.
+Keep single samples and mock-DOM regression counts separate from real performance
+or human enjoyment claims. See the [item-by-item ledger](verification/journey-completion-2026-09-21.md).
+
 ### Continuing source checkpoints (not phase completion)
 
 P03 frozen source9ee58177 passed all7280 hosted tests on Node20.19.6 in run35511526470;

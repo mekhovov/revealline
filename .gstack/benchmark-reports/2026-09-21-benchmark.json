@@ -1,0 +1,91 @@
+{
+  "format": "journey-local-observation.v1",
+  "status": "DONE_WITH_CONCERNS",
+  "timestamp": "2026-09-21T20:12:57Z",
+  "sourceCommit": "3581a85212b946ec86b6ea2e3592ab67b16534a8",
+  "branch": "codex/journey-livewire-spatial",
+  "url": "http://127.0.0.1:8845/docs/verification/journey-performance.html",
+  "route": "whole-spatial-v4",
+  "driver": "Codex in-app browser, actual UI clicks and keyboard",
+  "comparisonBaseline": null,
+  "gameCodeChanged": false,
+  "measurement": "Activation to two consecutive animation-frame DOM-readiness observations",
+  "physicalInputLatencyProven": false,
+  "server": "localhost, no-store, exact 7d1f99dd sparse-media fallback",
+  "viewport": { "width": 1280, "height": 561, "dpr": 2 },
+  "resourceInventory": "Entries returned at menu readiness; 250-entry buffer may be saturated. Byte sums are lower bounds, not a full inventory.",
+  "pages": {
+    "/game/?journey=whole-spatial-v4": {
+      "dom_content_loaded_ms": 117.90000003576279,
+      "fcp_ms": 44,
+      "lcp_ms": null,
+      "ttfb_ms": null,
+      "full_load_ms": null,
+      "menu_ready_ms": 2312.199999988079,
+      "observed_requests": 250,
+      "observed_transfer_bytes": 4703876,
+      "observed_js_decoded_bytes": 4270474,
+      "observed_css_decoded_bytes": 217661,
+      "zero_transfer_entries": 0,
+      "samples": [
+        {
+          "action": "Continue",
+          "mission": "first-return",
+          "ms": 1171.4000000357628,
+          "trustedActivation": true
+        },
+        {
+          "action": "Next",
+          "mission": "choose-your-share",
+          "ms": 595.9000000357628,
+          "trustedActivation": true
+        },
+        {
+          "action": "Confirmed skip",
+          "mission": "two-keepers",
+          "ms": 560.6000000238419,
+          "trustedActivation": true
+        },
+        {
+          "action": "Confirmed restart",
+          "mission": "two-keepers",
+          "ms": 386.89999997615814,
+          "trustedActivation": false
+        }
+      ]
+    },
+    "/game/couch/?journey=whole-spatial-v4": {
+      "dom_content_loaded_ms": 22.5,
+      "fcp_ms": null,
+      "lcp_ms": null,
+      "ttfb_ms": null,
+      "full_load_ms": null,
+      "menu_ready_ms": 2123.399999976158,
+      "observed_requests": 250,
+      "observed_transfer_bytes": 6888686,
+      "observed_js_decoded_bytes": 2612068,
+      "observed_css_decoded_bytes": 171949,
+      "zero_transfer_entries": 0,
+      "samples": [
+        {
+          "action": "Start/rematch",
+          "mission": "candidate/journey-opening/prologue/first-return",
+          "ms": 17.099999964237213,
+          "trustedActivation": true
+        },
+        {
+          "action": "Next",
+          "mission": "candidate/journey-opening/prologue/choose-your-share",
+          "ms": 292.0999999642372,
+          "trustedActivation": true
+        },
+        {
+          "action": "Confirmed skip",
+          "mission": "candidate/journey-opening/prologue/two-keepers",
+          "ms": 254.20000004768372,
+          "trustedActivation": true
+        }
+      ]
+    }
+  }
+}
