@@ -1,0 +1,162 @@
+TAP version 13
+# Subtest: Journey restore merges missing progress for every mode while current receipts and cursors win
+ok 1 - Journey restore merges missing progress for every mode while current receipts and cursors win # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.328
+  ...
+# Subtest: malformed, oversized, prototype and invented receipt backups cannot modify state
+ok 2 - malformed, oversized, prototype and invented receipt backups cannot modify state # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043875
+  ...
+# Subtest: restoration and live progress merge atomically across tabs in either transaction order
+ok 3 - restoration and live progress merge atomically across tabs in either transaction order # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03475
+  ...
+# Subtest: failed restore stays exportable in-session, retries and survives recreation without replacing saved history
+ok 4 - failed restore stays exportable in-session, retries and survives recreation without replacing saved history # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029167
+  ...
+# Subtest: corrupt durable data is not replaced by a valid imported backup
+ok 5 - corrupt durable data is not replaced by a valid imported backup # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027375
+  ...
+# Subtest: backup dialog inspects without mutation, restores only on Apply, and exports the resulting profile
+ok 6 - backup dialog inspects without mutation, restores only on Apply, and exports the resulting profile # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0245
+  ...
+# Subtest: closed dialogs and later file choices invalidate in-flight inspection; failed imports leave no Apply
+ok 7 - closed dialogs and later file choices invalidate in-flight inspection; failed imports leave no Apply # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028959
+  ...
+# Subtest: durable and idempotent Restore move owned disabled-Apply focus to Back without changing retained receipts
+ok 8 - durable and idempotent Restore move owned disabled-Apply focus to Back without changing retained receipts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026875
+  ...
+# Subtest: session-only Restore keeps the accepted records and directs owned focus to Export without a second restore
+ok 9 - session-only Restore keeps the accepted records and directs owned focus to Export without a second restore # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.073208
+  ...
+# Subtest: pre-adoption Restore rejection retains inspection and returns focus to a usable retry
+ok 10 - pre-adoption Restore rejection retains inspection and returns focus to a usable retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.072084
+  ...
+# Subtest: an observer failure after adoption cannot rearm Restore or prevent persistence and owned Back focus
+ok 11 - an observer failure after adoption cannot rearm Restore or prevent persistence and owned Back focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030125
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer focus
+ok 12 - accepted Restore retains its data but cannot reclaim focus after newer focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027375
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer pointer
+ok 13 - accepted Restore retains its data but cannot reclaim focus after newer pointer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024625
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer keyboard
+ok 14 - accepted Restore retains its data but cannot reclaim focus after newer keyboard # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.081041
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer file choice
+ok 15 - accepted Restore retains its data but cannot reclaim focus after newer file choice # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027917
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer close and reopen
+ok 16 - accepted Restore retains its data but cannot reclaim focus after newer close and reopen # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024625
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer native close and reopen
+ok 17 - accepted Restore retains its data but cannot reclaim focus after newer native close and reopen # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025084
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer hidden then visible
+ok 18 - accepted Restore retains its data but cannot reclaim focus after newer hidden then visible # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.117333
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer pagehide then pageshow
+ok 19 - accepted Restore retains its data but cannot reclaim focus after newer pagehide then pageshow # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032292
+  ...
+# Subtest: accepted Restore retains its data but cannot reclaim focus after newer window blur
+ok 20 - accepted Restore retains its data but cannot reclaim focus after newer window blur # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025292
+  ...
+# Subtest: unfocused touch Restore accepts the inspected progress without moving focus to a successor
+ok 21 - unfocused touch Restore accepts the inspected progress without moving focus to a successor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.078083
+  ...
+# Subtest: a delayed native disabled-Apply blur remains owned until a held durable Restore completes
+ok 22 - a delayed native disabled-Apply blur remains owned until a held durable Restore completes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0225
+  ...
+# Subtest: opening and closing another modal permanently retires held Restore completion focus
+ok 23 - opening and closing another modal permanently retires held Restore completion focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019916
+  ...
+# Subtest: a Restore observer may open a newer backup visit without old completion changing its status or focus
+ok 24 - a Restore observer may open a newer backup visit without old completion changing its status or focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019042
+  ...
+# Subtest: an injected flush exception after adoption keeps Export available and never rearms Restore
+ok 25 - an injected flush exception after adoption keeps Export available and never rearms Restore # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02125
+  ...
+# Subtest: a queued native close from the previous visit cannot discard a newly inspected backup
+ok 26 - a queued native close from the previous visit cannot discard a newly inspected backup # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019167
+  ...
+# Subtest: review: late earlier export must not replace session-only Restore warning
+not ok 27 - review: late earlier export must not replace session-only Restore warning
+  ---
+  duration_ms: 4.809792
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/journey-backup.test.mjs:693:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Earlier export contains no restored records and cannot replace their recovery warning.
+    + actual - expected
+
+    + 'Old backup exported successfully.'
+    - 'Merged in this session only. Storage failed; export now or use Retry save. This attempt is unchanged.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Merged in this session only. Storage failed; export now or use Retry save. This attempt is unchanged.'
+  actual: 'Old backup exported successfully.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/journey-backup.test.mjs:708:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 26
+# todo 0
+# duration_ms 126.505042

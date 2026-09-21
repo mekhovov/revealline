@@ -1,0 +1,24 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "candidatePatchSHA256": "dfaa14f6957dee37204e6ca9ee64077d6ba553a23af0f0b4e1062e92a07fe06c",
+  "runtimeSHA256": "757f245777bff815c45a2ec3ef0e45ebdf50f43d38472ad8e367560c9e84e956",
+  "probeSHA256": "e12932d9f58005a555a82ad09c0caa404414b77874c18fbe662f595c5f635afd",
+  "runs": [
+    {
+      "node": "20.19.5",
+      "selected": 1,
+      "fail": 1,
+      "unselectedSkips": 26,
+      "originalSHA256": "4f2e89c7dfc8466db84fa253fe09a9bfa9fd7ec45403f58e62ba4707be4f879b",
+      "retainedSHA256": "ee265ebc5d55a6a2f6d4647ce2780b7fca30f51011a1d9ace14e0bddd4e5bd6c"
+    },
+    {
+      "node": "22.22.2",
+      "selected": 1,
+      "fail": 1,
+      "unselectedSkips": 0,
+      "originalSHA256": "336f05bd5d2f512c5064e1aad83d4bd1c711975c7b5c7bf9df5a37959b288fc2",
+      "retainedSHA256": "d18038ffafcabd9c69b9beaf29a7561f55c1a6cbd86cbc11c8b8dc1595f281d6"
+    }
+  ]
+}
