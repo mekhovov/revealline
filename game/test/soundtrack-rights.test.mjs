@@ -408,6 +408,7 @@ test('full 256 catalogue + 123 uploads + 26 playlists stays within bounded metad
   let value = setCatalogueTracks(emptySoundtrackLibrary(), tracks);
   value = resolveSoundtrackLibrary({
     ...value,
+    installedTrackIds: tracks.map((track) => track.id),
     tracks: Array.from({ length: 123 }, (_, index) => ({ ...free.track, id: `upload.${index}` })),
     playlists: Array.from({ length: 26 }, (_, index) => ({
       id: `list.${index}`,

@@ -15,6 +15,7 @@ import {
   createZip,
   generateLevel,
   parseArguments,
+  PUBLIC_SECURITY_HEADERS,
   readBuildConfig,
   readTarEntries,
   releaseSnapshot,
@@ -739,6 +740,15 @@ test('public package has local entry, accurate storage notices and enforced prev
   assert.equal(source.headers['content-security-policy'], undefined);
   assert.match(release.headers['content-security-policy'], /script-src 'self'/);
   assert.doesNotMatch(release.headers['content-security-policy'], /unsafe-eval/);
+  assert.equal(
+    release.headers['content-security-policy']
+      .split(';')
+      .find((value) => value.trim().startsWith('connect-src'))
+      .trim(),
+    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks-01/",
+    'Local preview fetches may reach only the code-admitted soundtrack archive path.',
+  );
+  assert.match(PUBLIC_SECURITY_HEADERS['Content-Security-Policy'], /connect-src 'self';/);
   assert.equal(release.headers['referrer-policy'], 'no-referrer');
   assert.equal(release.headers['cache-control'], 'no-cache');
   const entry = await getRaw(releaseServer.url, '/');
@@ -747,7 +757,9 @@ test('public package has local entry, accurate storage notices and enforced prev
   assert.match(entry.body, /\.\/game\/index.html/);
   assert.match((await getRaw(releaseServer.url, '/privacy.html')).body, /does not upload/);
   assert.match((await getRaw(releaseServer.url, '/credits.html')).body, /PHASER-LICENSE/);
-  assert.match(await fs.readFile(path.join(out, '_headers'), 'utf8'), /Content-Security-Policy/);
+  const publishedHeaders = await fs.readFile(path.join(out, '_headers'), 'utf8');
+  assert.match(publishedHeaders, /Content-Security-Policy/);
+  assert.doesNotMatch(publishedHeaders, /revealline-soundtracks-01/);
   const missing = await getRaw(releaseServer.url, '/missing.mjs');
   assert.equal(missing.status, 404);
   assert.match(missing.headers['content-type'], /text\/plain/);

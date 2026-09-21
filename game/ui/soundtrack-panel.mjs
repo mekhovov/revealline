@@ -7,15 +7,17 @@ import {
   SOUNDTRACK_GENRE_LABELS,
   emptySoundtrackLibrary,
   resolveSoundtrackLibrary,
+  resolveSoundtrackCatalogue,
   upgradeSoundtrackLibrary,
   setCatalogueTracks,
   soundtrackTracks,
   soundtrackPlaylists,
+  soundtrackAlbumPlaylists,
   soundtrackStoredTracks,
   soundtrackOffloadedBonusTrackIds,
   soundtrackRights,
-  soundtrackRecoveryPlan,
 } from '../soundtrack.mjs';
+import { soundtrackPortableRecoveryPlan } from '../soundtrack-portable.mjs';
 import { inspectMP3, prepareMP3Import, probeMP3Media, throwIfSoundtrackAborted } from '../mp3.mjs';
 import {
   exportSoundtrackBundle,
@@ -77,6 +79,7 @@ export function attachSoundtrackPanel({
     (typeof musicSession.play !== 'function' || typeof musicSession.pause !== 'function')
   )
     throw new TypeError('Soundtrack music session requires Play and Pause controls.');
+  catalogue = catalogue ? resolveSoundtrackCatalogue(catalogue) : null;
   const bindings = [];
   const adopt = (library) =>
     catalogue ? setCatalogueTracks(upgradeSoundtrackLibrary(library), catalogue.tracks) : library;
@@ -249,8 +252,7 @@ export function attachSoundtrackPanel({
   masterVolume.element.oninput = masterVolume.element.onchange = () =>
     changeMaster('volume', Number(masterVolume.element.value));
   if (audioMaster) bindings.push(audioMaster.subscribe(updateMaster));
-  const useSelection = button('use-selection', 'Save & use playlist', () => {
-    const chosen = selection.element.value || null;
+  function usePlaylist(chosen) {
     return task('Saving your playlist choice…', async (signal) => {
       edit((value) => {
         value.selection.playlistId = chosen;
@@ -263,7 +265,10 @@ export function attachSoundtrackPanel({
       await notifyPlayback();
       setStatus(committed.warning || 'Playlist selected. Choose Play music if it is paused.');
     });
-  });
+  }
+  const useSelection = button('use-selection', 'Save & use playlist', () =>
+    usePlaylist(selection.element.value || null),
+  );
   const genreNames = Object.entries(SOUNDTRACK_GENRE_LABELS);
   const listeningMode = input('listening-mode', 'Music selection', { tag: 'select' });
   options(listeningMode.element, [
@@ -284,6 +289,7 @@ export function attachSoundtrackPanel({
     'Recording mode — verified gameplay-video permissions',
     { type: 'checkbox' },
   );
+  const recordingStatus = node('p', 'recording-status', '', { class: 'micro-note' });
   const applyListening = button('apply-listening', 'Save & use music selection', () => {
     const chosen = {
       mode: listeningMode.element.value,
@@ -314,6 +320,7 @@ export function attachSoundtrackPanel({
     row(...mixGenres.map(({ field }) => field)),
     installedOnly.field,
     recordingMode.field,
+    recordingStatus,
     applyListening,
   );
   listeningSection.hidden = !catalogue;
@@ -924,7 +931,7 @@ export function attachSoundtrackPanel({
     node(
       'p',
       null,
-      'This separate soundtrack file contains permitted original MP3 bytes and explicitly lists any songs requiring online restoration. A normal game JSON backup does not include this audio. Local storage availability is not a guarantee that this browser retains files indefinitely.',
+      'This separate soundtrack file contains permitted personal, installed and explicitly referenced MP3 originals, and lists songs requiring online restoration. Unused online catalogue recordings are rediscovered from the game catalogue without downloading their audio for backup. A normal game JSON backup does not include this audio. Local storage availability is not a guarantee that this browser retains files indefinitely.',
       { class: 'micro-note' },
     ),
     row(bundleExport),
@@ -965,7 +972,9 @@ export function attachSoundtrackPanel({
     node(
       'p',
       'licensed-previews-info',
-      'The separate archive has 70 creator-licensed previews with credits and license notices. Download selected MP3s, then import them through Add MP3 files. They are not installed automatically; musical suitability has not been reviewed.',
+      catalogue?.tracks.some((track) => track.archiveId)
+        ? 'The separate archive hosts these licensed recordings and their creator credits. Choose a built-in album or music style here to listen online. MP3 and album-file downloads remain available for manual import. Full musical suitability review is still pending.'
+        : 'The separate archive has 70 creator-licensed previews with credits and license notices. Download selected MP3s, then import them through Add MP3 files. They are not installed automatically; musical suitability has not been reviewed.',
       { class: 'micro-note' },
     ),
     albumBrowse,
@@ -978,13 +987,16 @@ export function attachSoundtrackPanel({
       'p',
       'original-status',
       catalogue?.tracks.length
-        ? `${catalogue.tracks.length} published recordings. Listen online or download a volume for offline play.`
+        ? `${catalogue.tracks.length} recordings available. Choose an album or music style, then Play music. Songs are downloaded and checked individually before playback; offline downloads are optional.`
         : 'No online recordings are published in this edition. Import MP3s or an album file to build your playlist.',
       { class: 'micro-note' },
     ),
     originalAlbums,
   );
   originalSection.hidden = !catalogue;
+  const builtInAlbums = catalogue ? soundtrackAlbumPlaylists(draft) : [];
+  const albumTrackIds = new Set(builtInAlbums.flatMap((album) => album.trackIds));
+  const catalogueControls = [];
   const collections = [
     ...genreNames.map(([genre, title]) => ({
       id: genre,
@@ -998,24 +1010,41 @@ export function attachSoundtrackPanel({
       accepts: (track) => track.id.startsWith('builtin.catalog.ua-fpv.'),
     },
   ];
-  const volumes = collections.flatMap(({ id, title, accepts }) => {
-    const list = (catalogue?.tracks ?? []).filter(
-      (track) =>
-        accepts(track) && soundtrackRights(track, { catalogue }).offlineCache === 'allowed',
-    );
-    return Array.from({ length: Math.ceil(list.length / 6) }, (_, i) => ({
-      id: `${id}-${i + 1}`,
-      title: `${title} · Volume ${i + 1}`,
-      tracks: list.slice(i * 6, (i + 1) * 6),
-    }));
-  });
+  const volumes = [
+    ...builtInAlbums.map((album) => ({
+      id: `album-${album.id.slice('builtin.album.'.length)}`,
+      title: album.title,
+      playlistId: album.id,
+      tracks: album.trackIds.map((id) => catalogue.tracks.find((track) => track.id === id)),
+    })),
+    ...collections.flatMap(({ id, title, accepts }) => {
+      const list = (catalogue?.tracks ?? []).filter(
+        (track) =>
+          !albumTrackIds.has(track.id) &&
+          accepts(track) &&
+          soundtrackRights(track, { catalogue }).offlineCache === 'allowed',
+      );
+      return Array.from({ length: Math.ceil(list.length / 6) }, (_, i) => ({
+        id: `${id}-${i + 1}`,
+        title: `${title} · Volume ${i + 1}`,
+        tracks: list.slice(i * 6, (i + 1) * 6),
+      }));
+    }),
+  ];
   for (const volume of volumes) {
-    const ids = new Set(volume.tracks.map((track) => track.id));
+    const offlineTracks = volume.tracks.filter(
+      (track) => soundtrackRights(track, { catalogue }).offlineCache === 'allowed',
+    );
+    const ids = new Set(offlineTracks.map((track) => track.id));
+    const availability = node('p', `availability-${volume.id}`, '', { class: 'micro-note' });
+    const select = volume.playlistId
+      ? button(`select-${volume.id}`, 'Save & use album', () => usePlaylist(volume.playlistId))
+      : null;
     const install = button(`download-${volume.id}`, 'Download for offline', () =>
       task('Downloading recordings into the draft…', async (signal) => {
         if (!readAsset) throw new Error('Recording downloads are unavailable.');
         if (
-          volume.tracks.reduce((sum, track) => sum + track.asset.bytes, 0) >
+          offlineTracks.reduce((sum, track) => sum + track.asset.bytes, 0) >
           SOUNDTRACK_LIMITS.optionalBundleTargetBytes
         )
           throw new Error(
@@ -1023,7 +1052,7 @@ export function attachSoundtrackPanel({
           );
         const additions = new Map(assets.map((asset) => [asset.sha256, asset]));
         const expected = new Map(assets.map((asset) => [asset.sha256, asset.blob.size]));
-        for (const track of volume.tracks) expected.set(track.asset.sha256, track.asset.bytes);
+        for (const track of offlineTracks) expected.set(track.asset.sha256, track.asset.bytes);
         if (
           [...expected.values()].reduce((sum, size) => sum + size, 0) >
           SOUNDTRACK_LIMITS.managedBytes
@@ -1031,7 +1060,7 @@ export function attachSoundtrackPanel({
           throw new Error(
             'This download exceeds the 256 MiB audio budget. Remove an offline volume first.',
           );
-        for (const track of volume.tracks) {
+        for (const track of offlineTracks) {
           if (!additions.has(track.asset.sha256))
             additions.set(track.asset.sha256, {
               sha256: track.asset.sha256,
@@ -1080,9 +1109,35 @@ export function attachSoundtrackPanel({
           null,
           `${volume.tracks.length} tracks · ${bytes(volume.tracks.reduce((sum, track) => sum + track.asset.bytes, 0))}`,
         ),
-        row(install, remove),
+        availability,
+        ...(select
+          ? [
+              node(
+                'p',
+                null,
+                'Album selection saves your draft and keeps paused music paused. Use Play music to start listening.',
+                { class: 'micro-note' },
+              ),
+            ]
+          : []),
+        row(...(select ? [select] : []), install, remove),
       ),
     );
+    catalogueControls.push({ volume, offlineTracks, ids, availability, install, remove });
+  }
+  function refreshCatalogueControls() {
+    const present = new Set(assets.map((asset) => asset.sha256));
+    for (const { volume, offlineTracks, ids, availability, install, remove } of catalogueControls) {
+      const local = volume.tracks.filter((track) => present.has(track.asset.sha256)).length;
+      availability.textContent = `${local} of ${volume.tracks.length} recordings available locally${dirty ? ' in the draft' : ''}. ${local === volume.tracks.length ? 'Ready for offline listening.' : draft.listening.installedOnly ? 'Installed only is on; other recordings stay silent until downloaded.' : 'Other recordings are available online without installing this album.'}${offlineTracks.length !== volume.tracks.length ? ' Some recordings do not allow offline storage.' : ''}`;
+      install.disabled =
+        busy ||
+        !saved ||
+        !readAsset ||
+        !offlineTracks.length ||
+        offlineTracks.every((track) => present.has(track.asset.sha256));
+      remove.disabled = busy || !saved || !draft.installedTrackIds.some((id) => ids.has(id));
+    }
   }
   const columns = node('div', null, null, { class: 'soundtrack-columns' });
   columns.append(
@@ -1363,7 +1418,7 @@ export function attachSoundtrackPanel({
     assets = assets.filter((asset) => needed.has(asset.sha256));
   }
   async function originalsFor(library, available, signal, limit = SOUNDTRACK_LIMITS.bundleBytes) {
-    const { requiredTracks: tracks } = soundtrackRecoveryPlan(library, {
+    const { requiredTracks: tracks } = soundtrackPortableRecoveryPlan(library, {
       catalogue: catalogue ?? undefined,
     });
     const declared = new Map(tracks.map((track) => [track.asset.sha256, track.asset.bytes]));
@@ -1413,8 +1468,14 @@ export function attachSoundtrackPanel({
     backupReady.hidden = true;
   }
   function recoveryNotice(library) {
-    const plan = soundtrackRecoveryPlan(library, { catalogue: catalogue ?? undefined });
-    if (!plan.referenceOnlyTrackIds.length) return 'Contains every permitted referenced recording.';
+    const plan = soundtrackPortableRecoveryPlan(library, { catalogue: catalogue ?? undefined });
+    if (!plan.referenceOnlyTrackIds.length)
+      return [
+        'Contains every permitted personal, installed and explicitly referenced recording.',
+        plan.notice,
+      ]
+        .filter(Boolean)
+        .join(' ');
     const names = new Map(soundtrackTracks(library).map((track) => [track.id, track.title]));
     return `Requires online restoration for listed music: ${plan.referenceOnlyTrackIds.map((id) => names.get(id) ?? id).join(', ')}. ${plan.notice}`;
   }
@@ -1439,6 +1500,10 @@ export function attachSoundtrackPanel({
       else bundleDownload.setAttribute('href', preparedBackup.url);
       bundleDownload.setAttribute('download', preparedBackup.filename);
     }
+  }
+  function recordingAllowed(track) {
+    const policy = soundtrackRights(track, { catalogue: catalogue ?? undefined });
+    return policy.gameplayVideo === 'allowed' && policy.contentId === 'not-registered';
   }
   function renderTrack() {
     const track = tracks().find((item) => item.id === tracksSelect.element.value);
@@ -1475,7 +1540,8 @@ export function attachSoundtrackPanel({
       busy ||
       !saved ||
       track?.kind !== 'mp3' ||
-      soundtrackRights(track, { catalogue: catalogue ?? undefined }).webPlayback !== 'allowed';
+      soundtrackRights(track, { catalogue: catalogue ?? undefined }).webPlayback !== 'allowed' ||
+      (draft.listening?.recordingMode && !recordingAllowed(track));
     const policy =
       track?.kind === 'mp3' ? soundtrackRights(track, { catalogue: catalogue ?? undefined }) : null;
     downloadTrack.disabled = busy || !saved || policy?.redistribute !== 'allowed';
@@ -1491,6 +1557,9 @@ export function attachSoundtrackPanel({
       trackInfo.textContent += ' · Standalone download is not permitted.';
     if (policy && policy.offlineCache !== 'allowed')
       trackInfo.textContent += ' · Offline installation is not permitted.';
+    if (policy && draft.listening?.recordingMode && !recordingAllowed(track))
+      trackInfo.textContent +=
+        ' · Recording mode excludes this audition: gameplay-video permission or Content ID status is not verified.';
   }
   function renderPlaylist(entryIndex) {
     const item = playlists().find((entry) => entry.id === playlistsSelect.element.value);
@@ -1586,6 +1655,10 @@ export function attachSoundtrackPanel({
       listeningMode.element.value = draft.listening.mode;
       installedOnly.element.checked = draft.listening.installedOnly;
       recordingMode.element.checked = draft.listening.recordingMode;
+      const excluded = (catalogue.tracks ?? []).filter((track) => !recordingAllowed(track)).length;
+      recordingStatus.textContent = draft.listening.recordingMode
+        ? `Recording mode is on. ${excluded} catalogue recording${excluded === 1 ? '' : 's'} excluded until gameplay-video permission and unregistered Content ID are verified. The same filter applies to auditions.`
+        : 'Recording mode also filters auditions. Unknown gameplay-video or Content ID status is excluded; a game-use license alone is not recording clearance.';
       for (const { id, element } of mixGenres)
         element.checked = draft.listening.genres.includes(id);
       for (const control of listeningSection.querySelectorAll('button,input,select'))
@@ -1598,6 +1671,7 @@ export function attachSoundtrackPanel({
     renderPlaylist();
     renderAssignments();
     refreshAlbumControls();
+    refreshCatalogueControls();
     renderBackup();
     dirtyState();
     update();
@@ -1834,6 +1908,10 @@ export function attachSoundtrackPanel({
   async function startAudition() {
     const track = tracks().find((item) => item.id === tracksSelect.element.value);
     if (track?.kind !== 'mp3') throw new Error('Choose an MP3 to audition.');
+    if (draft.listening?.recordingMode && !recordingAllowed(track))
+      throw new Error(
+        'Recording mode excludes this audition until gameplay-video permission and unregistered Content ID are verified.',
+      );
     if (soundtrackRights(track, { catalogue: catalogue ?? undefined }).webPlayback !== 'allowed')
       throw new Error('This recording is not approved for playback in this edition.');
     if (soundtrackOffloadedBonusTrackIds(draft).includes(track.id))

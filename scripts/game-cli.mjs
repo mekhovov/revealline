@@ -26,6 +26,15 @@ export const PUBLIC_SECURITY_HEADERS = Object.freeze({
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
   'Cache-Control': 'no-cache',
 });
+// Public Pages and the soundtrack archive share an origin. Local packaged
+// previews need only this code-admitted archive path added for verified fetches.
+const PREVIEW_SECURITY_HEADERS = Object.freeze({
+  ...PUBLIC_SECURITY_HEADERS,
+  'Content-Security-Policy': PUBLIC_SECURITY_HEADERS['Content-Security-Policy'].replace(
+    "connect-src 'self';",
+    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks-01/;",
+  ),
+});
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -807,7 +816,7 @@ export async function startServer({ root = PROJECT_ROOT, port = 8768, host = '12
   try {
     const ownership = JSON.parse(await fs.readFile(path.join(root, MARKER), 'utf8'));
     if (ownership.tool === 'xonix-game-cli' && ownership.formatVersion === FORMAT_VERSION)
-      publicHeaders = PUBLIC_SECURITY_HEADERS;
+      publicHeaders = PREVIEW_SECURITY_HEADERS;
   } catch {}
   const server = createServer(async (req, res) => {
     const respond = (status, body) => {

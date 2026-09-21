@@ -8,6 +8,7 @@ import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
+import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
@@ -41,7 +42,10 @@ async function waitFor(predicate, label) {
   }
   assert.ok(predicate(), label);
 }
-async function setup(t, { filePlayback = true, audioPreferences = {} } = {}) {
+async function setup(
+  t,
+  { filePlayback = true, audioPreferences = {}, emptyMusic = false, fetchResponse } = {},
+) {
   const original = await fixture(),
     db = memoryIndexedDB(),
     store = createSoundtrackStore({ indexedDB: db.indexedDB });
@@ -58,7 +62,7 @@ async function setup(t, { filePlayback = true, audioPreferences = {} } = {}) {
   const prepared = await prepareSoundtrackLibrary(library, original.assets, {
     probeMedia: structuralProbe,
   });
-  await store.commit(prepared, { expectedGeneration: 0 });
+  if (!emptyMusic) await store.commit(prepared, { expectedGeneration: 0 });
   store.close();
   const audio = {
     ...audioHarness(),
@@ -71,11 +75,39 @@ async function setup(t, { filePlayback = true, audioPreferences = {} } = {}) {
     profileKey,
     updatePreferences(emptyLibrary(), { musicEnabled: false, ...audioPreferences }),
   );
-  const page = await soloPage(t, { campaign, storage, audio, soundtrackIndexedDB: db.indexedDB });
+  const page = await soloPage(t, {
+    campaign,
+    storage,
+    audio,
+    soundtrackIndexedDB: db.indexedDB,
+    fetchResponse,
+  });
   if (filePlayback)
     await settle(() => !page.$('soundtrack-open').disabled, 'Real soundtrack host initialized');
   return { page, audio, db, original };
 }
+
+test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play', async (t) => {
+  assert(
+    SOUNDTRACK_CATALOGUE.tracks.some((track) => track.archiveId),
+    'This edition has admitted online music.',
+  );
+  const requests = [];
+  const { page } = await setup(t, {
+    emptyMusic: true,
+    fetchResponse: async (url) => {
+      if (String(url).includes('revealline-soundtracks-')) requests.push(String(url));
+    },
+  });
+  await waitFor(
+    () => !page.$('soundtrack-summary').textContent.includes('Loading music library'),
+    'Silent library preparation settles',
+  );
+  await openStudio(page);
+  assert.deepEqual(requests, []);
+  assert(page.audioElements.every((media) => media.plays === 0));
+  assert.deepEqual(page.errors, []);
+});
 async function openStudio(page) {
   page.$('settings-button').click();
   assert.equal(page.$('settings-dialog').open, true);

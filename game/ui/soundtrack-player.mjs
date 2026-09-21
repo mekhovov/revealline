@@ -127,6 +127,7 @@ export function createSoundtrackPlayer({
   let status = 'idle',
     error = null,
     desired = false,
+    intentionallyPaused = false,
     disposed = false,
     suspended = false,
     volume = soundscape.getSettings().music,
@@ -327,7 +328,7 @@ export function createSoundtrackPlayer({
     deck.media.addEventListener(type, fn);
     deck.listeners.push([type, fn]);
   }
-  async function loadDeck(deck, track, signal, token = null) {
+  async function loadDeck(deck, track, signal, token = null, { localOnly = false } = {}) {
     if (token !== null) {
       preparation = {
         generation: token,
@@ -336,11 +337,13 @@ export function createSoundtrackPlayer({
       };
       emit();
     }
-    const blob =
+    const original =
       track.kind === 'published'
         ? await track.readBlob({ signal })
-        : ownSoundtrackBlob(await readAsset(track.asset.sha256, { signal, purpose: 'playback' }));
+        : await readAsset(track.asset.sha256, { signal, purpose: 'playback', localOnly });
     throwIfSoundtrackAborted(signal);
+    if (localOnly && original == null) return false;
+    const blob = track.kind === 'published' ? original : ownSoundtrackBlob(original);
     if (track.kind === 'published') {
       required(
         blob instanceof Blob &&
@@ -367,6 +370,7 @@ export function createSoundtrackPlayer({
     throwIfSoundtrackAborted(signal);
     if (disposed) throw new DOMException('Music player disposed.', 'AbortError');
     installDeckURL(deck, track, URLImpl.createObjectURL(blob));
+    return true;
   }
   function installDeckURL(deck, track, ownedURL) {
     clearDeck(deck);
@@ -426,6 +430,7 @@ export function createSoundtrackPlayer({
       disposed ||
       suspended ||
       !desired ||
+      audioMaster?.snapshot().muted ||
       status !== 'playing' ||
       current?.kind !== 'mp3' ||
       decks.length < 2 ||
@@ -519,7 +524,7 @@ export function createSoundtrackPlayer({
       await wait(fadeMs / 4, signal);
     }
   }
-  async function startAt(at, { fading = false, overlapMs = fadeMs } = {}) {
+  async function startAt(at, { fading = false, overlapMs = fadeMs, localOnly = !desired } = {}) {
     if (disposed || suspended) return false;
     const nextTrack = tracks().find((t) => t.id === queue[at]) ?? null;
     const prepared = preloaded?.track.id === nextTrack?.id ? preloaded : null;
@@ -644,7 +649,21 @@ export function createSoundtrackPlayer({
         } else {
           if (prepared && prepared.deck !== activeDeck)
             transferDeck(prepared.deck, activeDeck, current);
-          else if (!prepared) await loadDeck(activeDeck, current, controller.signal, token);
+          else if (!prepared) {
+            const loaded = await loadDeck(activeDeck, current, controller.signal, token, {
+              localOnly,
+            });
+            throwIfSoundtrackAborted(controller.signal);
+            if (token !== generation || disposed) return false;
+            if (!loaded) {
+              // An online recording stays selected for a later explicit Play.
+              // Absence during local preparation is not a failed recording.
+              error = null;
+              status = 'paused';
+              emit();
+              return false;
+            }
+          }
           throwIfSoundtrackAborted(controller.signal);
           if (token !== generation || disposed) return false;
           if (desired) {
@@ -865,6 +884,7 @@ export function createSoundtrackPlayer({
   }
   async function play() {
     if (disposed || suspended) return false;
+    intentionallyPaused = false;
     desired = true;
     notice = null;
     failed = new Set();
@@ -940,14 +960,18 @@ export function createSoundtrackPlayer({
   }
   /**
    * Prepare the selected track without playing it. Hosts use this after local
-   * storage is ready so a later tap can call HTMLMediaElement.play() directly
-   * instead of waiting for IndexedDB, validation, or an object URL first.
+   * storage is ready so a later tap can call HTMLMediaElement.play() directly.
+   * Online acquisition needs a separate, explicit host opt-in; ordinary silent
+   * preparation and intentionally paused selections use local originals only.
    */
-  async function prepare() {
+  async function prepare({ allowNetwork = false } = {}) {
+    required(typeof allowNetwork === 'boolean', 'Invalid soundtrack preparation policy.');
     if (disposed || suspended || desired || status === 'playing' || status === 'loading')
       return false;
     if (!playlist || dirty || status === 'ended' || status === 'error') install(resolve());
-    return startAt(Math.max(0, index));
+    return startAt(Math.max(0, index), {
+      localOnly: !allowNetwork || intentionallyPaused || Boolean(audioMaster?.snapshot().muted),
+    });
   }
   /**
    * Clear a lifecycle suspension in the same event turn as a user gesture.
@@ -967,12 +991,14 @@ export function createSoundtrackPlayer({
       'Restore listening intent only while music is inactive.',
     );
     desired = value;
+    intentionallyPaused = !value;
     emit();
     return snapshot();
   }
   function pause() {
     if (disposed) return;
     desired = false;
+    intentionallyPaused = true;
     cancel();
     soundscape.pauseMusic();
     activeDeck.media.pause();
@@ -1046,6 +1072,7 @@ export function createSoundtrackPlayer({
   function dispose() {
     if (disposed) return;
     disposed = true;
+    unsubscribeMaster?.();
     desired = false;
     cancel();
     soundscape.setSongEndHandler(null);
@@ -1061,6 +1088,10 @@ export function createSoundtrackPlayer({
   soundscape.pauseMusic();
   soundscape.setSongEndHandler(() => {
     if (!disposed && desired && !suspended && current?.kind === 'synth') void advance(true);
+  });
+  const unsubscribeMaster = audioMaster?.subscribe((state) => {
+    if (state.muted) cancelPreload();
+    else prepareNext();
   });
   return Object.freeze({
     setLibrary,

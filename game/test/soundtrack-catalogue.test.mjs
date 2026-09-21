@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { SOUNDTRACK_COLLECTIONS } from '../content/soundtrack-catalogue.mjs';
 import {
   SOUNDTRACK_FORMAT_V2,
   SOUNDTRACK_FORMAT_V3,
@@ -16,6 +17,8 @@ import {
   soundtrackOrder,
   soundtrackTracks,
   soundtrackPlaylists,
+  soundtrackAlbumPlaylists,
+  resolveSoundtrackCollections,
   soundtrackStoredTracks,
 } from '../soundtrack.mjs';
 import {
@@ -28,7 +31,9 @@ import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { fixture, structuralProbe, memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 
 const upload = await fixture('upload'),
-  recording = await fixture('catalogue');
+  recording = await fixture('catalogue'),
+  secondRecording = await fixture('catalogue-second'),
+  thirdRecording = await fixture('catalogue-third');
 const tags = { genres: ['ukrainian'], role: 'gameplay', energy: 4, themes: ['atlas'] };
 const catalogueTrack = resolveCatalogueTrack({
   ...recording.track,
@@ -53,9 +58,10 @@ const prepare = (library, assets) =>
   prepareSoundtrackLibrary(library, assets, { probeMedia: structuralProbe });
 
 test('additional styles have distinct queues and mixes preserve explicit former genre choices', () => {
-  const recordings = SOUNDTRACK_GENRES.map((genre) => ({
+  const recordings = SOUNDTRACK_GENRES.map((genre, index) => ({
     ...catalogueTrack,
     id: `builtin.catalog.style.${genre}`,
+    asset: { ...catalogueTrack.asset, sha256: String(index + 1).padStart(64, '0') },
     tags: { genres: [genre], role: 'any', energy: 3, themes: [] },
   }));
   const library = setCatalogueTracks(emptySoundtrackLibrary({ catalogue: true }), recordings);
@@ -103,7 +109,11 @@ test('historical procedural identities retain their real rock, chiptune and ambi
 });
 
 test('UA-FPV remains a dedicated selectable collection and participates in Ukrainian and mixed queues', () => {
-  const track = { ...catalogueTrack, id: 'builtin.catalog.ua-fpv.verified' };
+  const track = {
+    ...catalogueTrack,
+    id: 'builtin.catalog.ua-fpv.verified',
+    asset: secondRecording.track.asset,
+  };
   const library = setCatalogueTracks(upgradeSoundtrackLibrary(upload.library), [
     catalogueTrack,
     track,
@@ -195,10 +205,16 @@ test('catalogue pins validate identity, role, provenance and confined paths with
 
 test('scene, genres, fusion, uploaded tags and explicit playlists resolve independently of simulation', () => {
   let value = withCatalogue();
-  const menu = { ...catalogueTrack, id: 'builtin.catalog.menu', tags: { ...tags, role: 'menu' } };
+  const menu = {
+    ...catalogueTrack,
+    id: 'builtin.catalog.menu',
+    asset: secondRecording.track.asset,
+    tags: { ...tags, role: 'menu' },
+  };
   const fusion = {
     ...catalogueTrack,
     id: 'builtin.catalog.fusion',
+    asset: thirdRecording.track.asset,
     tags: { ...tags, genres: ['ukrainian', 'metal'] },
   };
   value = setCatalogueTracks(value, [menu, fusion]);
@@ -338,7 +354,11 @@ test('unavailable My Mix and explicit offline playlists never substitute unrelat
 });
 
 test('v2 generated playlists repeat with shuffle and avoid boundary repetition while old and custom ordering stays intact', () => {
-  const another = { ...catalogueTrack, id: 'builtin.catalog.second' };
+  const another = {
+    ...catalogueTrack,
+    id: 'builtin.catalog.second',
+    asset: secondRecording.track.asset,
+  };
   const library = setCatalogueTracks(withCatalogue(), [another]);
   const selection = resolveSoundtrackSelection({
     ...library,
@@ -595,4 +615,163 @@ test('a native transaction failure rolls back new catalogue originals and metada
   assert.deepEqual(await manager.readDomain('audio'), before);
   assert(!memory.contents().get('audio').has(catalogueTrack.asset.sha256));
   manager.close();
+});
+
+test('code-owned album definitions reject duplicates, unbounded entries and network authority', () => {
+  const album = {
+    id: 'builtin.album.test',
+    title: 'Test album',
+    description: 'Synthetic collection metadata.',
+    genre: 'synth90s',
+    trackIds: ['builtin.catalog.test'],
+    order: 'shuffle',
+    repeat: 'all',
+  };
+  assert.deepEqual(resolveSoundtrackCollections([album]), [album]);
+  for (const changed of [
+    { ...album, id: 'personal.album' },
+    { ...album, trackIds: ['user.upload'] },
+    { ...album, trackIds: ['builtin.catalog.test', 'builtin.catalog.test'] },
+    { ...album, trackIds: Array.from({ length: 257 }, (_, i) => `builtin.catalog.test.${i}`) },
+    { ...album, genre: 'invented' },
+    { ...album, order: 'ordered' },
+    { ...album, url: 'https://untrusted.example/music.mp3' },
+  ])
+    assert.throws(() => resolveSoundtrackCollections([changed]));
+  assert.throws(() => resolveSoundtrackCollections([album, album]));
+  assert.throws(() =>
+    resolveSoundtrackCollections(
+      Array.from({ length: 33 }, (_, i) => ({ ...album, id: `builtin.album.test.${i}` })),
+    ),
+  );
+});
+
+test('shipped albums select adopted catalogue recordings without consuming custom capacity', () => {
+  assert(SOUNDTRACK_COLLECTIONS.length > 0, 'This edition declares its built-in albums.');
+  const album = SOUNDTRACK_COLLECTIONS[0];
+  const recordings = album.trackIds.map((id, index) => ({
+    ...catalogueTrack,
+    id,
+    asset: { ...catalogueTrack.asset, sha256: String(index + 1).padStart(64, '0') },
+  }));
+  const adopted = setCatalogueTracks(emptySoundtrackLibrary({ catalogue: true }), recordings);
+  const library = resolveSoundtrackLibrary({
+    ...adopted,
+    tracks: Array.from({ length: SOUNDTRACK_LIMITS.customTracks }, (_, i) => ({
+      ...upload.track,
+      id: `upload.capacity.${i}`,
+    })),
+    playlists: Array.from({ length: SOUNDTRACK_LIMITS.customPlaylists }, (_, i) => ({
+      id: `playlist.capacity.${i}`,
+      title: `Custom ${i}`,
+      trackIds: ['upload.capacity.0'],
+      order: 'ordered',
+      repeat: 'all',
+    })),
+    selection: { playlistId: album.id },
+  });
+  const selected = resolveSoundtrackSelection(library);
+  assert.equal(selected.source, 'explicit');
+  assert.deepEqual(selected.playlist.trackIds, album.trackIds);
+  assert.equal(selected.playlist.order, 'shuffle');
+  assert.equal(selected.playlist.repeat, 'all');
+  assert.equal(library.tracks.length, 123);
+  assert.equal(library.playlists.length, 26);
+  assert.equal(library.installedTrackIds.length, 0);
+  assert.equal(soundtrackAlbumPlaylists(library)[0].id, album.id);
+  assert.throws(() =>
+    resolveSoundtrackLibrary({
+      ...library,
+      playlists: [...library.playlists, { ...library.playlists[0], id: 'playlist.overflow' }],
+    }),
+  );
+  assert.throws(() =>
+    resolveSoundtrackLibrary({
+      ...library,
+      tracks: [...library.tracks, { ...upload.track, id: 'upload.overflow' }],
+    }),
+  );
+  assert.throws(
+    () =>
+      resolveSoundtrackLibrary({ ...library, selection: { playlistId: 'builtin.album.unknown' } }),
+    /Selected playlist is unavailable/,
+  );
+});
+
+test('album membership survives offline removal and filters missing or unrecordable recordings', () => {
+  const album = SOUNDTRACK_COLLECTIONS[0];
+  assert(album?.trackIds.length > 1);
+  const recordings = album.trackIds.map((id, index) => ({
+    ...catalogueTrack,
+    id,
+    asset: { ...catalogueTrack.asset, sha256: String(index + 1).padStart(64, '0') },
+  }));
+  const library = setCatalogueTracks(emptySoundtrackLibrary({ catalogue: true }), recordings);
+  const chosen = { ...library, selection: { playlistId: album.id } };
+  const installed = {
+    ...chosen,
+    installedTrackIds: [recordings[0].id],
+    listening: { ...library.listening, installedOnly: true },
+  };
+  assert.deepEqual(resolveSoundtrackSelection(installed).playlist.trackIds, [recordings[0].id]);
+  assert.deepEqual(
+    resolveSoundtrackSelection({ ...installed, installedTrackIds: [] }).playlist.trackIds,
+    [],
+  );
+  assert.deepEqual(
+    soundtrackAlbumPlaylists({ ...installed, installedTrackIds: [] })[0].trackIds,
+    album.trackIds,
+  );
+  assert.deepEqual(
+    resolveSoundtrackSelection({
+      ...chosen,
+      listening: { ...library.listening, recordingMode: true },
+    }).playlist.trackIds,
+    [],
+  );
+  const partial = setCatalogueTracks(
+    emptySoundtrackLibrary({ catalogue: true }),
+    recordings.slice(0, 1),
+  );
+  assert.deepEqual(soundtrackAlbumPlaylists(partial)[0].trackIds, [recordings[0].id]);
+  assert.deepEqual(soundtrackAlbumPlaylists(emptySoundtrackLibrary({ catalogue: true })), []);
+  assert.throws(() => asV2(chosen), /Selected playlist is unavailable/);
+});
+
+test('generated mixes play identical imported and catalogue bytes once while authored repeats remain exact', () => {
+  const alias = { ...catalogueTrack, asset: upload.track.asset };
+  const adopted = setCatalogueTracks(upgradeSoundtrackLibrary(upload.library), [alias]);
+  const library = resolveSoundtrackLibrary({
+    ...adopted,
+    tags: { [upload.track.id]: tags },
+    listening: { ...adopted.listening, mode: 'mix' },
+  });
+  assert.deepEqual(resolveSoundtrackSelection(library).playlist.trackIds, [alias.id]);
+  assert.deepEqual(
+    soundtrackPlaylists(library).find((p) => p.id === 'builtin.playlist.ukrainian').trackIds,
+    [alias.id],
+  );
+  const authored = {
+    id: 'playlist.repeats',
+    title: 'Intentional repeats',
+    trackIds: [upload.track.id, alias.id, upload.track.id],
+    order: 'ordered',
+    repeat: 'all',
+  };
+  const explicit = resolveSoundtrackSelection({
+    ...library,
+    playlists: [authored],
+    selection: { playlistId: authored.id },
+  });
+  assert.deepEqual(explicit.playlist, authored);
+});
+
+test('Recording mode explains why automatic catalogue selection falls back when recording permission is unknown', () => {
+  const library = setCatalogueTracks(emptySoundtrackLibrary({ catalogue: true }), [catalogueTrack]);
+  const selection = resolveSoundtrackSelection({
+    ...library,
+    listening: { ...library.listening, recordingMode: true },
+  });
+  assert(!selection.playlist.trackIds.includes(catalogueTrack.id));
+  assert.match(selection.notice, /Recording mode excludes.*gameplay-video.*Content ID/);
 });

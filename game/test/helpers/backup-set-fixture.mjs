@@ -129,7 +129,12 @@ export async function catalogueBackupAudio(f, { restricted = true, modern = true
       tracks,
     }),
     library = modern
-      ? setCatalogueTracks(emptySoundtrackLibrary(), tracks)
+      ? resolveSoundtrackLibrary({
+          ...setCatalogueTracks(emptySoundtrackLibrary(), tracks),
+          // These recovery tests model a deliberately selected offloaded album,
+          // not the automatically adopted, unused online discovery catalogue.
+          selection: { playlistId: 'builtin.playlist.mix' },
+        })
       : resolveSoundtrackLibrary({
           ...emptySoundtrackLibrary({ catalogue: true, version: 2 }),
           catalogTracks: tracks,
