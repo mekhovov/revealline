@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after the combined timed-bonus integration. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after the optional ornament/workshop integration. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -11,8 +11,15 @@ are separate gates; percentages would conceal those distinctions.
   and PR213. Last verified public v0.78.0 uses source `e9434d03`; final Pages run
   `35603591639` passed. Release-owner public audit records 4,206 files /
   866,183,041 bytes. The prior v0.76.1 audit is superseded, not a current claim.
-- The separate v0.79 device candidate is release-owner work; no newer successful public promotion is asserted here. No C2 version,
-  publisher, accepted music revision 50, or release assets are changed here.
+- Newer release-owner work is separate from this lane: GitHub lists v0.79.1
+  (focus recovery/Team outcome guidance) and v0.80.0 (licensed music albums).
+  The v0.80 tag-triggered run35644878096 and frozen-assembly run35646945850
+  succeeded but **skipped deployment**; publisher run35647337761 was still
+  in progress at this integration's check. Do not mistake those successful
+  workflow conclusions, or matching version numbers, for P00–P15 acceptance.
+  The v0.78 byte audit above is the last complete public audit retained in this
+  lane, not a claim that no newer release exists. No publisher, accepted music
+  revision50 or release assets are changed here.
 - The broad content/evidence lane at `7d1f99dda110090de447d37e7bd5560137ad7c58`
   contains 83 Solo candidates (71 core, 12 Remixes), 12 Team candidates and
   additional cultural/workshop and spatial studies. These are **not all enrolled
@@ -50,6 +57,18 @@ No phase is labelled fully accepted while its required human or public gate is o
 Ordinary route completion proves feasibility, not enjoyment or sufficient difficulty.
 
 ## Latest timed-bonus correction
+
+The subsequent [ornament/workshop successor](journey-whole-variety-review.md)
+integrates eight existing pictured studies into the explicit91-mission
+`whole-spatial-v4` Solo/Versus/Studio source. It preserves71core and12Remixes and
+adds two optional four-mission sequences, with owner-scoped Next/Skip and separate
+review progress. All48 existing preset/control routes retain no-loss clear,
+replay and equal-race outcomes. Real keyboard hosts exercise both full optional
+arcs and native checks cover Studio Apply and first returns. All335 combined
+tests pass on each Node version; independent review found no remaining blockers.
+Detailed results are recorded in that evidence note; human balance,
+cultural/device qualification and coordinated release remain open. This does not
+turn the83-candidate historical audit into91 fully released or accepted missions.
 
 The [combined timed-bonus successor](journey-whole-timed-review.md) now places
 the three reviewed trail-aware Border schedules inside the full Solo/Versus

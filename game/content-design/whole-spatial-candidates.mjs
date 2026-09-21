@@ -5,6 +5,7 @@ import {
   WHOLE_SPATIAL_ORIGINAL_JSON,
   WHOLE_SPATIAL_FIELD_FINALE_JSON,
   WHOLE_SPATIAL_TIMED_BORDER_JSON,
+  WHOLE_SPATIAL_CULTURAL_WORKSHOP_JSON,
 } from './whole-spatial-data.mjs';
 
 export const WHOLE_SPATIAL_SELECTIONS = freezeDesign(JSON.parse(WHOLE_SPATIAL_SELECTIONS_JSON));
@@ -49,6 +50,19 @@ export function createWholeTimedCandidates({ artwork = false } = {}) {
   source.id = artwork ? 'whole-timed-original-review' : 'whole-timed-greybox-review';
   source.revision = 'timed-border-review-1';
   source.name = 'Whole Journey · unvalidated timed-bonus review';
+  for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
+  return source;
+}
+
+/** Eight explicit optional missions. Older Journey editions are not expanded. */
+export function createWholeVarietyCandidates({ artwork = false } = {}) {
+  const source = createWholeTimedCandidates({ artwork });
+  const delta = JSON.parse(WHOLE_SPATIAL_CULTURAL_WORKSHOP_JSON)[artwork ? 'original' : 'greybox'];
+  for (const key of ['maps', 'missions', 'campaigns', 'packs', 'assets'])
+    source[key].push(...delta[key]);
+  source.id = artwork ? 'whole-variety-original-review' : 'whole-variety-greybox-review';
+  source.revision = 'cultural-workshop-review-1';
+  source.name = 'Whole Journey · unvalidated ornament and workshop review';
   for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
   return source;
 }

@@ -327,10 +327,13 @@ try {
   const candidateHost = authoredJourney
     ? createCandidateSoloHost(authoredRoute.source, {
         themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
-          ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes)
+          ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes, {
+              includeOriginals: authoredRoute.preserveOriginalThemes === true,
+            })
           : (await getJSON('content-design/themes.json')).themes,
         buildVersion,
         corePackIds: authoredRoute.corePackIds,
+        optionalCampaignIds: authoredRoute.optionalCampaignIds,
       })
     : null;
   const journeyPreferences = authoredJourney ? createJourneyPreferences({ window }) : null;
@@ -5925,7 +5928,9 @@ try {
         : journeyEnabled && journeyMission()
           ? nextJourneyMission(journeyMission().id)
             ? 'Next mission →'
-            : 'Journey complete · replay or exit'
+            : candidateHost?.isOptionalSequence(journeyMission().id)
+              ? 'End of sequence · find missions'
+              : 'Journey complete · replay or exit'
           : currentSelection().complete
             ? 'Campaign complete →'
             : 'Next uncleared mission →';

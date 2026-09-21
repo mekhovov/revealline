@@ -149,8 +149,9 @@ export function createJourneyActorTheme(theme) {
 }
 
 /** Explicit route catalog preparation; old callers keep their original array. */
-export function journeyActorThemeCandidates(themes) {
-  return themes.map((theme) => createJourneyActorTheme(theme));
+export function journeyActorThemeCandidates(themes, { includeOriginals = false } = {}) {
+  const candidates = themes.map((theme) => createJourneyActorTheme(theme));
+  return includeOriginals ? [...candidates, ...structuredClone(themes)] : candidates;
 }
 
 // Role topology stays recognizable across all materials: diamond keeper, long

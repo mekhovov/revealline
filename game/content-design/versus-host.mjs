@@ -11,7 +11,7 @@ import { createCandidateSequence } from './route.mjs';
  * controllers, paired ticks and race results; no Solo run substitutes for them. */
 export function createCandidateVersusHost(
   source,
-  { themes, corePackIds = ['journey-opening'] } = {},
+  { themes, corePackIds = ['journey-opening'], optionalCampaignIds = [] } = {},
 ) {
   const executions = createContentExecutionCatalog(source, { mode: 'versus' });
   const ownedThemes = boundedJSON(themes, { maxBytes: 262144, maxNodes: 8192, maxDepth: 12 });
@@ -35,7 +35,7 @@ export function createCandidateVersusHost(
       })),
     })),
   );
-  const sequence = createCandidateSequence(catalog, corePackIds);
+  const sequence = createCandidateSequence(catalog, corePackIds, optionalCampaignIds);
   const rawEntries = new WeakMap();
   const rows = executions.entries.flatMap((entry) =>
     entry.manifests.map((manifest, index) => {

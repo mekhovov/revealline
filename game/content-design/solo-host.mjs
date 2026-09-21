@@ -9,7 +9,7 @@ import { createCandidateSequence } from './route.mjs';
  * controls this host path. Legacy catalogs and published media stay separate. */
 export function createCandidateSoloHost(
   source,
-  { themes, buildVersion, corePackIds = ['journey-opening'] } = {},
+  { themes, buildVersion, corePackIds = ['journey-opening'], optionalCampaignIds = [] } = {},
 ) {
   const preparer = createContentAttemptPreparer(source, { themes, buildVersion });
   const entries = preparer.catalog.entries.map((entry) =>
@@ -44,7 +44,7 @@ export function createCandidateSoloHost(
       })),
     })),
   );
-  const sequence = createCandidateSequence(catalog, corePackIds);
+  const sequence = createCandidateSequence(catalog, corePackIds, optionalCampaignIds);
   return Object.freeze({
     entries: Object.freeze(entries),
     catalog,
