@@ -691,6 +691,21 @@ test('couch pause retains both logical commands while held menu actions stay gat
   assert.equal(f.pauses, 1);
 });
 
+test('couch P pauses an active shared flight once and preserves both selected directions', (t) => {
+  const f = couchFixture(t);
+  f.key('KeyD');
+  f.key('ArrowDown');
+  f.up('KeyD');
+  f.up('ArrowDown');
+  const pause = f.key('KeyP');
+  assert.equal(pause.defaultPrevented, true);
+  assert.equal(f.pauses, 1);
+  assert.equal(f.input.snapshotDirection(0), 'right');
+  assert.equal(f.input.snapshotDirection(1), 'down');
+  f.key('KeyP', { repeat: true });
+  assert.equal(f.pauses, 1, 'holding P cannot emit repeated pause commands');
+});
+
 test('couch held native Enter cannot turn into player two action after focus/context transfer', (t) => {
   const f = couchFixture(t),
     menu = new Target(f.win);
