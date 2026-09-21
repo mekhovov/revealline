@@ -18,8 +18,19 @@ Inspect → Apply use the shared immutable registry without changing runtime,
 map geometry, replay identity or progression authority. The five-file art/
 candidate/lifecycle/registry/whole-library cohort passes24/24 on Node20.19.5 and
 22.22.2, preserving30 historical clear checkpoints and498 library manifests.
-Scoped lint, formatting and diff checks pass. Native initial picture/capture,
-broad-area/victory, complete threat-state matrix, actor/audio, device/human and
+Scoped lint, formatting and diff checks pass. All five initial native pictured
+captures use exact1f7a6d125d021785834256b238eb30540bcbe20a, explicit Studio
+Inspect → Apply and Standard Solo normal input. Crossing complete Down0.3%/60;
+Final broadcast Up0.7%/150; Returning light Right1.2%/250; Home signal Up0.6%/130;
+Dawn circuit Up0.4%/70. All3lives and stopped craft. Original fragments load;
+terrain/pickup/actor/gate symbols remain distinct. Returning light and Remix lose
+arrows only on the captured strip. Home signal's horizontal striped warning
+crosses pictured ground, but its lower encounter caption is clipped at the
+observed Studio height (the shared UX issue, full text in AX). No relay/shield
+was collected. Every preview closes with Play focus restored.
+
+These are initial keyboard observations, not full clears or human qualification.
+Broad-area/victory, complete threat-state matrix, actor/audio, device/human and
 release qualification remain pending. DevicePR211 retains delivery priority;
 no version, phase integration, publisher change or public promotion is made.
 
