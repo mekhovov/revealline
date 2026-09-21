@@ -144,8 +144,10 @@ the P07 verification record and `docs/research/phase-original-art-prompts.json`.
 Livewire Foundry now also has seven local original compositions (17,247,834bytes),
 with exact pins, opt-in factory/Studio binding and unchanged42 clear checkpoints.
 The38-test art/catalogue/candidate/presentation/library cohort passes on Node20/22.
-Native artwork/attack overlays, broad-area/victory presentation, devices, human
-qualification and accepted-source release remain open. See the P08 record and
+All seven have initial native picture/first-return checks at8eda2234; scoped dashed
+and active lane overlays are observed. Broad-area/victory presentation, the full
+attack/device matrix, human qualification and accepted-source release remain open.
+See the P08 record and
 `docs/research/livewire-original-art-prompts.json`. No new version is allocated.
 
 ### Historical phase snapshots
