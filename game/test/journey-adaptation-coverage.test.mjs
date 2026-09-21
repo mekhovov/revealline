@@ -8,8 +8,53 @@ import {
   auditJourneyAdaptations,
 } from '../../scripts/audit-journey-adaptations.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 
 const inputs = await loadJourneyAdaptationInputs();
+test('explicit teaching audit resolves the same editions as the playable shared route', async () => {
+  const route = createAuthoredJourneyRoute('whole-originals-v2');
+  const project = compileContentProject(route.source);
+  const report = await auditJourneyAdaptations({ edition: 'teaching-originals' });
+  assert.equal(report.contentEdition, 'teaching-originals');
+  assert.equal(report.counts.coveredReferences, 48);
+  assert.equal(report.counts.authoredSoloCandidates, 83);
+  assert.equal(report.counts.finalDispositions, 0);
+  const links = report.references.flatMap((r) => r.adaptations);
+  assert(
+    links.some(
+      (link) => link.missionId === 'split-berths' && link.missionRevision === 'teaching-1',
+    ),
+  );
+  assert(
+    report.originalMissionsWithoutReference.some(
+      (mission) =>
+        mission.missionId === 'wake-the-yard' && mission.missionRevision === 'teaching-1',
+    ),
+  );
+  for (const link of links)
+    for (const { mode, difficulty, simulationIdentity } of link.editions) {
+      assert.equal(
+        resolveMission(project, link.missionId, { mode, difficulty }).simulationIdentity,
+        simulationIdentity,
+      );
+      assert.equal(
+        link.missionRevision,
+        route.source.missions.find((m) => m.id === link.missionId).revision,
+      );
+    }
+  const cli = spawnSync(
+    process.execPath,
+    [
+      new URL('../../scripts/audit-journey-adaptations.mjs', import.meta.url).pathname,
+      '--edition',
+      'teaching-originals',
+    ],
+    { encoding: 'utf8', maxBuffer: 1024 * 1024 },
+  );
+  assert.equal(cli.status, 0, cli.stderr);
+  assert.deepEqual(JSON.parse(cli.stdout), report);
+  await assert.rejects(() => auditJourneyAdaptations({ edition: 'latest' }), /Unknown.*edition/);
+});
 test('all 48 numbered sources have explicit current adaptations without rewriting observations or pretending final disposition', () => {
   const before = JSON.stringify(inputs),
     report = inspectJourneyAdaptations(inputs);

@@ -36,6 +36,8 @@ export function createRoverTeachingCandidates(options = {}) {
   opening.design.memorableMoment =
     'Your first thin connection wakes a threat on the very ground you just reclaimed; the broad landing gives room to choose a way out.';
   const practice = source.missions.find((m) => m.id === 'split-berths');
+  practice.design.routeDecision =
+    'Connect the near sleeper’s corridor now, or establish a side return before joining the far berths?';
   practice.design.counterplay =
     'The near sleeper wakes behind your first return. Leave its narrow connection for the broad berth; choose when to connect the far sleeper’s separate network.';
   return source;

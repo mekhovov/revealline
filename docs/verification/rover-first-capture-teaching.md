@@ -70,7 +70,38 @@ The whole-library opt-in is `roverTeaching: true`; default factory calls preserv
 prior editions. Exactly two mission definitions change; the83 originals, all
 map geometry, the other81 missions and twelve optional Remixes remain intact.
 
-Full71-mission real-host tests and native warning/escape review are in progress.
+The21-case source/route/art/Studio cohort passes on Node20.19.5 and22.22.2;
+historical Rover art/clear/mastery regressions also pass. A further exact-manifest
+check verifies that486 whole-review preset/mode manifests stay unchanged and
+only the12 projections of the two successor missions differ.
+
+Native source8c36f85e at owned localhost8813: Solo direct chooser launch, first
+Down closure and warning were observed for both missions (Wake0.5%/110points,
+Split0.4%/90points, three lives). Pausing on the actual DOM coverage signal
+retained the warning; Wake's optional Field details showed no unfinished line and
+0.8s before rover activation. Resume+Left visibly departed Wake's platform;
+Resume+Right and immediate pause departed Split with lives intact. Original art,
+reclaimed connection, marked warning actor and still-covered field were visible.
+
+Negative native observations remain: prolonged idle inspection of Wake lost a
+life, and letting its leftward departure run unattended afterward also lost one.
+These were not clean full clears or precise reaction-time measurements. A failed
+observation selector initially used the AX spacing rather than actual DOM text;
+the subsequent bounded check used the observed `0.5%` text. Ground-rover body
+contact also exposed a generic line-caught caption, handed to the UI owner for
+a cause-specific fix. Human readability and loss-copy verification remain open.
+
+Native Studio inspection compiled83 missions without changing the one-mission
+workbench until explicit Apply. Apply created the teaching review draft with
+24packs/25campaigns/83missions; selecting Wake showed the sleeper32.5,7.5,
+two field keepers,64 permanent interior cells and no outer patrol. Candidate-art
+and disconnected-foundation warnings remain visible. The two Signal pacing
+warnings are retained with a [separate scaffolding review](signal-practice-scaffolding.md).
+
+Node22's full71-mission Solo real-host clear/70Next/failure-retry test and all71
+equal Versus races/70Next pass (504s and96s respectively). These finite host tests
+decode real PNG headers/hashes but do not replace native decoding or human play.
+The final Node20 whole-host recheck is in progress.
 Accepted-tree integration, human prediction/failure-understanding evidence,
 physical-device qualification, release packaging and GitHub Pages publication
 remain required. This record does not declare P13/P15 or the full plan complete.

@@ -2,23 +2,25 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
-import { WHOLE_JOURNEY_CHAPTERS } from '../game/content-design/whole-journey-candidates.mjs';
+import { createWholeJourneyChapterSources } from '../game/content-design/whole-journey-candidates.mjs';
 
 const root = new URL('../', import.meta.url);
 const json = async (relative) => JSON.parse(await readFile(new URL(relative, root), 'utf8'));
 
 /** Existing declarations only: no second mission registry, inferred matching by
  * name, edited historical observation, asset loading or publication. */
-export async function loadJourneyAdaptationInputs() {
+export async function loadJourneyAdaptationInputs({ edition = 'greybox' } = {}) {
+  if (!['greybox', 'originals', 'teaching-originals'].includes(edition))
+    throw new Error('Unknown adaptation content edition.');
   const ledger = await json('docs/research/xposed-journey-ledger.json');
   const chapters = [];
-  for (const [index, chapter] of WHOLE_JOURNEY_CHAPTERS.entries()) {
+  const selected = createWholeJourneyChapterSources({
+    artwork: edition !== 'greybox',
+    roverTeaching: edition === 'teaching-originals',
+  });
+  for (const [index, chapter] of selected.entries()) {
     const module = await import(`../game/content-design/${chapter.id}-candidates.mjs`);
-    const factory =
-      chapter.id === 'horizon'
-        ? 'createOpeningCandidates'
-        : `create${chapter.id[0].toUpperCase()}${chapter.id.slice(1)}Candidates`;
-    const source = module[factory]();
+    const source = chapter.source;
     const phase = `P${String(index + 1).padStart(2, '0')}`;
     let declarations, evidenceSource;
     if (['horizon', 'border', 'signal'].includes(chapter.id)) {
@@ -45,12 +47,16 @@ export async function loadJourneyAdaptationInputs() {
     }
     chapters.push({ id: chapter.id, phase, source, evidenceSource, declarations });
   }
-  return { ledger, chapters };
+  return { ledger, chapters, contentEdition: edition };
 }
 
 /** Qualification stays open. Resolved identities prove a declaration has current
  * executable geometry; they do not prove that routes were played or enjoyed. */
-export function inspectJourneyAdaptations({ ledger, chapters }) {
+export function inspectJourneyAdaptations({
+  ledger,
+  chapters,
+  contentEdition = 'caller-supplied',
+}) {
   const references = ledger.references.filter((row) => row.kind === 'mission-layout-reference');
   const byKey = new Map(references.map((row) => [row.designKey, row]));
   if (byKey.size !== references.length) throw new Error('Duplicate numbered reference.');
@@ -60,7 +66,13 @@ export function inspectJourneyAdaptations({ ledger, chapters }) {
   for (const chapter of chapters) {
     const project = compileContentProject(chapter.source);
     authoredMissions.push(
-      ...project.missions.map((mission) => ({ chapter: chapter.id, missionId: mission.id })),
+      ...project.missions.map((mission) => ({
+        chapter: chapter.id,
+        missionId: mission.id,
+        missionRevision: mission.revision,
+        projectId: project.source.id,
+        map: mission.map,
+      })),
     );
     for (const declaration of chapter.declarations) {
       const reference = byKey.get(declaration.reference);
@@ -127,6 +139,7 @@ export function inspectJourneyAdaptations({ ledger, chapters }) {
   );
   return {
     format: 'JourneyAdaptationCoverageV1',
+    contentEdition,
     counts: {
       sourceFiles: ledger.references.length,
       numberedReferences: references.length,
@@ -153,14 +166,17 @@ export function inspectJourneyAdaptations({ ledger, chapters }) {
   };
 }
 
-export async function auditJourneyAdaptations() {
-  return inspectJourneyAdaptations(await loadJourneyAdaptationInputs());
+export async function auditJourneyAdaptations(options) {
+  return inspectJourneyAdaptations(await loadJourneyAdaptationInputs(options));
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
-    if (process.argv.length > 2)
-      throw new Error('Usage: node scripts/audit-journey-adaptations.mjs');
-    const report = await auditJourneyAdaptations();
+    const args = process.argv.slice(2);
+    if (args.length && (args.length !== 2 || args[0] !== '--edition'))
+      throw new Error(
+        'Usage: node scripts/audit-journey-adaptations.mjs [--edition greybox|originals|teaching-originals]',
+      );
+    const report = await auditJourneyAdaptations(args.length ? { edition: args[1] } : undefined);
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
     if (report.unlinkedReferences.length) process.exitCode = 1;
   } catch (error) {

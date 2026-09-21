@@ -210,9 +210,12 @@ first Rover warning onto the first small island capture and preserves both
 escape directions. Twelve clear and twelve unchanged optional-goal routes are
 pinned;180 sampled first returns check warning/activation/escape behavior. Studio
 and the separate `whole-originals-v2` review route select it without rewriting
-the earlier review or its suspension slot. Whole-host/native verification is in
-progress; the two Signal learning-order warnings, human and publication gates
-remain open. See [Rover teaching review](verification/rover-first-capture-teaching.md).
+the earlier review or its suspension slot. Native first warnings and Node22's
+71 Solo clears/71 equal races with70 Next each pass; Node20 is being rechecked.
+The two Signal warnings remain visible after180 protected-start checks, pending
+human readability/pacing evidence. The read-only reference audit can select the
+same teaching edition. Human and publication gates remain open. See
+[Rover teaching review](verification/rover-first-capture-teaching.md).
 
 Local whole-library continuation now has an explicit `whole-originals` review URL
 in Solo and Versus, separate from the unchanged opening/authored routes and their
