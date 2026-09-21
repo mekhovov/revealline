@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after the combined spatial/pressure review integration. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after the Home Signal contested-return study. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -41,7 +41,7 @@ are separate gates; percentages would conceal those distinctions.
 | P09   | Seven Relay candidates, permanent connectors/Studio links and 42 pressure cases                                                                                                                                              | Shortcut bypasses and post-objective cleanup, human usefulness, release                                                                                |
 | P10   | Seven Crosswind candidates, directional fields without drift and 42 pressure cases                                                                                                                                           | Precision/readability, optional goals, short-clear geometry, human review, release                                                                     |
 | P11   | Five Sentinel candidates and 30 pressure cases; two receiver-layout successors and native first returns                                                                                                                      | Fast Twin routes, shield mastery, full successor adoption/art/native/human balance, release                                                            |
-| P12   | Five Apex candidates and 30 pressure cases                                                                                                                                                                                   | Short finale redesign, optional mastery, human capstone testing, release                                                                               |
+| P12   | Five Apex candidates and 30 pressure cases; explicit Home Signal contested-return study with eleven replay/race clears and preserved failed controls                                                                         | Short finale pacing remains unresolved; optional mastery, human capstone testing, release                                                              |
 | P13   | 83-candidate library, 12 Remixes, flat chooser, boundaries and save isolation; all 498 ordinary Solo/Versus preset/control cases pass                                                                                        | Spatial/teaching/cleanup fixes, multi-seed/mastery/human balance, final cuts, full host enrollment and Pages                                           |
 | P14   | 12 Team candidates; joint cuts/seat swaps, flow/Skip/chooser; all 36 mission/preset sets × four seat/control configurations pass; two roamer spatial successors tested                                                       | 17 base optional-mastery misses, genuine complementary cooperation/pacing, new mechanics, live controllers/two-player tests, host enrollment and Pages |
 | P15   | Compatibility/persistence groundwork, immutable records, validation tools                                                                                                                                                    | Human sessions, complete accessibility/device/performance qualification, Legacy transition, public rollback proof and final deployment                 |
@@ -148,6 +148,17 @@ two-perimeter-side mastery checks; the combined165-test cohort passes on both
 Node versions. Native Studio import and the western bridge are checked. This
 does not claim universally harder presets, human pacing, full native qualification
 or publication; the other nine inherited mission runtimes remain unchanged.
+
+The [Home Signal contested-return study](journey-apex-home-spatial.md) adds an
+explicit Apex successor with open baffles and a repositioned existing roamer.
+Eleven clear/replay/equal-race cases include all presets/controls, distinct returns,
+pre-transition dock traversal, delayed starts and a retained fast isolation route.
+All132 regression tests pass on both Node versions; native Studio and the first
+return are checked. Twelve extra delay probes retain eight wins and four losses.
+Optimized clears remain15.05–21.75seconds: **finale pacing is not fixed**. This
+study is not automatically included in the combined source, publicly deployed,
+or counted as another mission. Wider adaptation, mastery meaning, human/device
+balance and release remain open.
 
 ## Latest requested additions
 
