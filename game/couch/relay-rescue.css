@@ -1440,3 +1440,47 @@ kbd {
     display: none;
   }
 }
+
+/* Team keeps navigation outside the selected category's scroll region, like Solo.
+   The complete preference-scope explanation remains in the Game data reader. */
+#coop-options[open] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#coop-options > :is(.shared-settings-heading, .field-kit-settings-tabs) {
+  flex-shrink: 0;
+}
+#coop-options > .field-kit-settings-panel {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow: auto;
+  padding-inline: 8px;
+  scroll-padding-block: 8px;
+  overscroll-behavior: contain;
+}
+@media (max-height: 500px) {
+  #coop-options.shared-settings {
+    padding: 12px 16px;
+  }
+  #coop-options .shared-settings-heading {
+    gap: 8px;
+  }
+  #coop-options .shared-settings-heading h2 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+  #coop-options .field-kit-settings-tabs {
+    margin-block: 4px 8px;
+    padding-block: 4px;
+    gap: 4px;
+  }
+  #coop-options .field-kit-settings-tabs > button {
+    padding: 4px 6px;
+  }
+}
+@media (min-width: 520px) and (max-height: 500px) {
+  #coop-options .field-kit-settings-tabs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
