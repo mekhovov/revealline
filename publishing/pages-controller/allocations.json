@@ -345,7 +345,8 @@
       "id": "archive-39",
       "repository": "mekhovov/revealline-archive-39",
       "versions": [
-        "v0.70.0"
+        "v0.70.0",
+        "v0.76.0"
       ]
     }
   ]
