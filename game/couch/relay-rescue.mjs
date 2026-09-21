@@ -1,3 +1,4 @@
+import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
@@ -521,7 +522,12 @@ export function bootCoop() {
       target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
     };
   };
+  const couchTouch = attachCouchTouch({
+    controls: $('coop-touch').parentElement,
+    clear: () => input?.clearPhysical(),
+  });
   input = attachCouchInput({
+    getTouchSettings: () => couchTouch.snapshot(),
     ...COOP_INPUT_CAPABILITIES,
     arena: $('coop-canvas'),
     active: running,
@@ -943,12 +949,16 @@ export function bootCoop() {
     });
     const coverage = run.coverage * 100;
     $('coop-coverage').textContent = `${coverage.toFixed(1)}%`;
+    $('coop-coverage').dataset.target = run.level.goal.coverage
+      ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
+      : '';
     $('coop-progress').value = coverage;
     $('coop-reserves').textContent =
       `${run.team.reserves} reserve${run.team.reserves === 1 ? '' : 's'}`;
     $('coop-clock').textContent = clock(run.time);
     const strongholds = run.strongholds.filter((item) => run.level.goal.cores?.includes(item.id));
     const stronghold = strongholds.find((item) => !item.defeated);
+    $('coop-objective').dataset.kind = stronghold ? 'stronghold' : 'coverage';
     $('coop-objective').textContent = stronghold
       ? `${strongholds.length > 1 ? `${strongholds.filter((item) => item.defeated).length} / ${strongholds.length} secured · Relay ${run.strongholds.indexOf(stronghold) + 1} · ` : ''}${stronghold.shielded ? `Capture the shield anchors · ${stronghold.anchors.filter((anchor) => anchor.captured).length} / 2 secured` : 'Shield down · capture the exposed core in a new cut'}`
       : strongholds.length
@@ -965,6 +975,16 @@ export function bootCoop() {
             : player.graceUntil > run.time
               ? 'Recovery shield · safe ground only'
               : 'On safe ground';
+      $('coop-state-' + player.id).dataset.compact =
+        player.status === 'downed'
+          ? run.team.reserves === 0
+            ? 'Free rescue'
+            : `Rescue ${Math.max(0, Math.ceil(player.downedUntil - run.time))}s`
+          : player.cutting
+            ? 'Exposed'
+            : player.graceUntil > run.time
+              ? 'Shielded'
+              : 'Safe';
       const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
       $('coop-charge-' + player.id).textContent =
         player.status === 'downed'
@@ -973,6 +993,14 @@ export function bootCoop() {
             ? 'Hold Support · rescuing'
             : recharge > 0
               ? `Support · ${recharge.toFixed(1)}s`
+              : 'Support ready';
+      $('coop-charge-' + player.id).dataset.compact =
+        player.status === 'downed'
+          ? 'Crawl to ally'
+          : player.rescue
+            ? 'Hold rescue'
+            : recharge > 0
+              ? `Support ${recharge.toFixed(1)}s`
               : 'Support ready';
       $('coop-support-' + player.id).textContent = player.rescue
         ? `Rescuing partner · ${Math.min(100, Math.floor((run.time - player.rescue.startedAt) * 100))}%`
@@ -3247,6 +3275,7 @@ export function bootCoop() {
     packPicker.removeEventListener('toggle', pickerToggled);
     cancelAnimationFrame(frame);
     clear();
+    couchTouch.destroy();
     input.destroy();
     router.destroy();
     reading.destroy();

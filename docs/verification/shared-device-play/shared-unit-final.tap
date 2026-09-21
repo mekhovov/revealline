@@ -1,0 +1,45 @@
+TAP version 13
+# Subtest: stick: both seats steer independently, release persists, recovery clears stale fingers
+ok 1 - stick: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 4.092167
+  ...
+# Subtest: swipe: both seats steer independently, release persists, recovery clears stale fingers
+ok 2 - swipe: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 0.567209
+  ...
+# Subtest: dpad: both seats steer independently, release persists, recovery clears stale fingers
+ok 3 - dpad: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 0.672459
+  ...
+# Subtest: Solo choices are read unchanged by each new mode; no profile is written
+ok 4 - Solo choices are read unchanged by each new mode; no profile is written
+  ---
+  duration_ms: 0.87775
+  ...
+# Subtest: invalid storage is preserved; valid legacy touch settings are used until explicit change
+ok 5 - invalid storage is preserved; valid legacy touch settings are used until explicit change
+  ---
+  duration_ms: 0.301208
+  ...
+# Subtest: denied writes retain session choice and expose truthful feedback
+ok 6 - denied writes retain session choice and expose truthful feedback
+  ---
+  duration_ms: 0.956459
+  ...
+# Subtest: external explicit choices notify once and terminal disposal stops observation
+ok 7 - external explicit choices notify once and terminal disposal stops observation
+  ---
+  duration_ms: 0.3
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 187.544375
