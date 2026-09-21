@@ -1,0 +1,39 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "reviewedAt": "2026-09-21T09:40:41.515666+00:00",
+  "scope": "Read-only independent source/log/response integrity and implementation review, not a new test run or release acceptance.",
+  "tests": [
+    {
+      "node": "22.22.2",
+      "passed": 391,
+      "skipped": 0,
+      "verifiedProcesses": 14,
+      "verifiedReads": 2568,
+      "uniqueFiles": 289,
+      "logSha256": "ce124e5a290caefbf545c77bbe9b0c1c2400c0e2b519c7b1e0a8735e64ed6d15"
+    },
+    {
+      "node": "20.19.5",
+      "passed": 391,
+      "skipped": 0,
+      "verifiedProcesses": 14,
+      "verifiedReads": 2568,
+      "uniqueFiles": 289,
+      "logSha256": "08a169c533ec96717ad01e86ed7a691ac9e4c6f399b752ebe4b784b85535d922"
+    }
+  ],
+  "native": {
+    "retainedEvidenceSHA256": "25be015341f76cca478839036f92a06af037f47dae264c85f75cc8a6c1927a9d",
+    "verifiedResponses": 379,
+    "verifiedBytes": 6592131,
+    "method": "Compared every retained response to exact candidate pins or Git base; no new network/browser run."
+  },
+  "findings": [
+    "No score or progress-write authority is granted to Records.",
+    "Current catalogue labels are distinct from historical receipt identity.",
+    "Existing score API remains bound to Flight scores.",
+    "Row focus and expansion survive compatible refresh; missing row returns to Search while newer outside focus wins.",
+    "Journey backend dead-connection recovery is an adjacent source correction7058a84d; its final integration must requalify this consumer.",
+    "Physical input, Large/Plain/zoom and complete recovery acceptance remain open."
+  ]
+}
