@@ -53,3 +53,11 @@ Browser review should cover all four examples, keyboard/controller pause/resume/
 Renderer artwork warnings use a persistent polite, atomic status region. Keep its empty state in the accessibility tree; remove only its margins, never hide it with `display: none`, `hidden` or `aria-hidden`. Artwork failure and recovery update this region without moving focus, starting playback or changing the verified recording. Loading progress remains a separate status.
 
 Maintainer prompt: “Verify Replay Theater with a delayed or failed craft image and then a successfully loaded theme. Confirm the complete artwork warning is exposed as a polite status, the empty region stays mounted, and the current focus, playback state and recorded checkpoint stay unchanged. Record browser semantics separately from an actual screen-reader listening check.”
+
+## Load focus and completed playback
+
+When Cancel load still owns foreground focus, cancellation or load settlement returns focus to an enabled Play, Restart for a completed recording, or Load example when no recording exists. The handoff does not start playback. A newer editing/reading action, backgrounding or replacement load retires that focus ownership. Escape/Back keeps its existing cancellation and return behavior.
+
+Completed playback keeps its Restart guidance after blur, hidden-page return, a persisted page return or controller loss. Play and Step remain disabled, and the final recorded checkpoint stays unchanged until the player deliberately restarts.
+
+Maintainer prompt: exercise the actual Theater entry with a delayed file read or artwork load. Focus Cancel, then cancel, succeed or fail; assert a visible enabled successor without advancing the recording. Repeat after newer editor focus, a pointer action on nonfocusable text, backgrounding and a replacement load, without taking their focus. Complete a real replay, leave and return through lifecycle/controller boundaries, and verify Restart guidance, disabled Play/Step and the exact final checkpoint. Keep modeled host coverage separate from native layout, picker and physical-device acceptance.
