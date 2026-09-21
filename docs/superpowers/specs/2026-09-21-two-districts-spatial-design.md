@@ -76,7 +76,11 @@ Both districts must remain materially different routes, not mirrored chores.
    seed1/180tick-delayed clear samples. Successful alternate routes may differ;
    failed samples remain explicit review gates, not silently dropped.
 5. Inspect the new layout and actual first returns in native Studio/game. Confirm
-   old project state is untouched until Apply; Undo restores it. Run old Fracture,
+   old project state is untouched until Apply. Cross-project Apply opens a separate
+   saved slot (the existing host calls setSession), not a cross-project Undo entry.
+   Verify the earlier slot can be inspected/restored, and separately verify Undo
+   restores a within-study edit. Do not change the editor's project-local history
+   semantics as part of this map study. Run old Fracture,
    shared capture/foundation/pressure and Studio regression cohorts Node20/22.
 6. Publish comparison evidence and remaining human/native/device/art/host/release
    gates. Do not equate slower automated clears with enjoyment or require a
