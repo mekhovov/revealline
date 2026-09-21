@@ -1,0 +1,35 @@
+{
+  "campaign": "Fractured Grid",
+  "status": "one-of-seven-original-candidates-not-final-visual-or-human-qualification",
+  "tool": "built-in-imagegen",
+  "useCase": "stylized-concept",
+  "assets": [
+    {
+      "missionId": "first-fracture",
+      "path": "game/content-design/assets/fracture-coastal-r1/first-fracture.png",
+      "sha256": "5dbd2da2a014f43842a7e04c4652d158a3a7aa254129bf49ec3991cdca7478e6",
+      "bytes": 2369540,
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for the Xonix-style game Reveal Line, campaign Fractured Grid, mission First fracture. Create one wide landscape composition, approximately 2:1 aspect ratio. Scene: a weathered coastal flood-control station where a broad, intact stone landing projects into a calm tidal basin; a small broken section of an older embankment exposes layered stone and water beyond. Subject: the contrast between a dependable landing and repairable surrounding ground, with a brass survey instrument and a quiet repair crane as secondary discoveries, no people. Style: crafted contemporary pixel-art-inspired environment illustration with clearly grouped forms, restrained detail, tactile stone and oxidized metal, not a screenshot or a game board. Palette: blue-grey stone and muted sea-green water with small warm copper and cream accents. Lighting: soft early morning haze, readable silhouettes and gentle contrast. Composition: a distinct station focal structure away from the exact center, interesting small discoveries on both sides for progressive picture revelation, open low-frequency water and paving around the focal forms so a bright trail and enemy silhouettes remain readable when the game overlays them. Full bleed, opaque background. Constraints: original composition, no copied reference-game artwork; no grid, HUD, UI, labels, text, numbers, logos, borders, arrows, collectible symbols, characters, enemy sprites, neon lines, or artificial hazard indicators. Architectural lines should be natural perspective, not aligned to a collision grid. This is decorative art only and must not depict playable collision geometry.",
+      "editPrompt": "Use case: precise-object-edit. This is the edit target for the First fracture reveal-background in Reveal Line. Change only the circular emblem on the cloth banner hanging from the central station: remove the emblem, leaving that banner as plain weathered blue fabric with natural shading and no markings. Preserve everything else exactly: landscape framing, image dimensions and 2:1 aspect ratio, station architecture, crane, water, stone embankment, palette, lighting, texture, all objects and their locations. No new symbols, text, logos, UI or borders.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "The edited image removes the circular banner emblem from the generated first pass.",
+          "An intact stone landing and broken embankment express permanence versus repair without authoring collision.",
+          "The scene is a detailed stylized illustration rather than strict low-resolution pixel art.",
+          "Crane, station, foreground ruins and distant structures distribute discoveries across the composition. Water and sky provide quieter regions.",
+          "No copied reference artwork, interface, visible text, grid or enemy sprites were supplied or requested."
+        ],
+        "pending": [
+          "Partial-reveal and gameplay-overlay legibility across modes and presets",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Six other mission compositions",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    }
+  ]
+}
