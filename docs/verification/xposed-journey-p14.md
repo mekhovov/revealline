@@ -554,3 +554,24 @@ initial image failure and explicit Retry, and one-action chooser launch. The fin
 theme-identity hardening and painter checks were re-run separately:19/19 on both
 runtimes. Scoped lint, format and diff checks pass. These use real runtime/host
 commands and finite browser/decode models, not native performance or human evidence.
+
+Native exact9a775e3ad4b5ca905754e379ea39086524baed04, localhost8813,
+`?journey=team-originals`: Standard, Full teamwork, sound off, normal tall viewport.
+Twin landings starts deliberately after verified readiness; D/Left joins a bridge
+for1.1%, then W/Down establishes outer returns for2.5%, with2reserves and both
+craft stopped. The live caption distinguishes one retained region from two and
+names the responsible keepers. The screenshot shows the original through the
+foundations/border/cuts without changing the opaque unclaimed field.
+
+Paused Browse→Changing courtyard→Replace & play starts directly with0%,2reserves.
+D/Left connects each side to the middle for1.6%, retaining both reserves. Original
+courtyard fragments, brick walls, lethal crosses, slow dashes and two DORMANT
+roamer labels remain distinct. Skip then Confirm skip starts Last rendezvous
+directly at0% with its different dusk original. W/Down earns0.5% through opposite
+outer returns, still2reserves. The final mission offers no forward Skip. It was
+left paused at41seconds. No clear was awarded by these partial checks.
+
+Scope remains narrow: three native originals/partial-capture states, keyboard,
+muted audio and normal viewport. No native whole-board victory, all-twelve native
+pass, roamer awakening/active contrast, physical-device/performance qualification
+or human understanding/enjoyment is inferred. Candidate cards still use diagrams.
