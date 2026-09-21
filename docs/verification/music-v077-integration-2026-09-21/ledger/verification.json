@@ -1,0 +1,155 @@
+{
+  "format": "revealline-field-kit-50-verification.v1",
+  "recordedAt": "2026-09-21T08:42:51.170Z",
+  "nodeVersion": "v20.19.5",
+  "sourceContext": "6246f9ddaef5cf14344d93775ddfd024e4e9ec77 plus the explicitly pinned working bytes",
+  "scope": "Append-only source49/reviewed50 audio recipe succession and exact Team theme pins; no recording approval.",
+  "review": {
+    "path": "docs/verification/music-v077-integration-2026-09-21/panel-review.json",
+    "bytes": 7855,
+    "sha256": "53b663c1eb2551c0991ff35c693ae221c14ceb009aa8da0b26bba05e076c9040"
+  },
+  "recipeFingerprints": {
+    "ui": "28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e",
+    "screens": "1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845",
+    "motion": "b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4",
+    "effects": "7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13",
+    "audio": "5d8df2e346074b8f7b3b7a33f5f102620f221c5d39a54dd7761b84d9733ee948"
+  },
+  "checks": [
+    {
+      "command": "node scripts/produce-field-kit-theme.mjs --write",
+      "result": "passed",
+      "stage": 49,
+      "log": "source49-generation.log"
+    },
+    {
+      "command": "node scripts/produce-field-kit-theme.mjs --check",
+      "result": "passed",
+      "stage": 49,
+      "log": "source49-check.log"
+    },
+    {
+      "command": "node scripts/produce-field-kit-theme.mjs --write",
+      "result": "passed",
+      "stage": 50,
+      "log": "reviewed50-generation.log"
+    },
+    {
+      "command": "node scripts/produce-field-kit-theme.mjs --check",
+      "result": "passed",
+      "stage": 50,
+      "log": "reviewed50-check.log"
+    },
+    {
+      "command": "node --test scripts/test-field-kit-recipe-sources.mjs game/test/presentation-production-history.test.mjs game/test/coop-picture-bindings.test.mjs game/test/coop-actor-presentation.test.mjs game/test/coop-historical-import-picture.test.mjs game/test/coop-picture-host.test.mjs",
+      "result": "passed",
+      "tests": 90,
+      "passed": 90,
+      "failed": 0,
+      "exitCode": 0,
+      "log": "tests-after-expectation-fix.tap",
+      "previousAttempt": {
+        "passed": 89,
+        "failed": 1,
+        "exitCode": 1,
+        "log": "tests-before-expectation-fix.tap",
+        "cause": "The second historical Team policy assertion still expected48 after the exact policy advanced to50. Updated that owned expected version; no runtime source changed between attempts."
+      }
+    },
+    {
+      "command": "node_modules/.bin/eslint scripts/produce-field-kit-theme.mjs game/test/presentation-production-history.test.mjs game/couch/coop-picture-bindings.mjs game/test/coop-actor-presentation.test.mjs game/test/coop-historical-import-picture.test.mjs game/test/coop-picture-bindings.test.mjs --max-warnings 0",
+      "result": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "node_modules/.bin/prettier --check scripts/produce-field-kit-theme.mjs game/test/presentation-production-history.test.mjs game/couch/coop-picture-bindings.mjs game/test/coop-actor-presentation.test.mjs game/test/coop-historical-import-picture.test.mjs game/test/coop-picture-bindings.test.mjs",
+      "result": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check (ten owned paths)",
+      "result": "passed",
+      "exitCode": 0
+    }
+  ],
+  "history": {
+    "base48Preserved": true,
+    "source49ReconstructedByteExactly": true,
+    "all127OriginalsPreserved": true,
+    "originalBytes": 4007816,
+    "newAudioRecords": 16,
+    "newThemes": [
+      49,
+      50
+    ],
+    "ledgerGrowthBytes": 38056
+  },
+  "readiness": {
+    "inMemoryRequiredReviewed": 194,
+    "source49ExpectedRefusal": 8,
+    "committedCLIPending": true,
+    "requiredAfterRootCommit": "node scripts/produce-field-kit-theme.mjs --check && node scripts/check-field-kit-readiness.mjs",
+    "limitation": "Readiness checks committed declarations; the producer check separately verifies current recipe reproducibility."
+  },
+  "finalPins": [
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "bytes": 22317,
+      "sha256": "b4cc4e2dba0d722356c34fd56970659708077d0c3a7198e1ec6a278dd82d7f6a"
+    },
+    {
+      "path": "game/test/presentation-production-history.test.mjs",
+      "bytes": 30955,
+      "sha256": "d063fc4666502abcf7f84013fe887aa79568dd20519427ad1667dc8d962eef55"
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 7563551,
+      "sha256": "9c3331266e37fc43bca4d2965eb33f386624660313a71fa639e68cbcc404505b"
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "bytes": 27214,
+      "sha256": "8fecd8b84307f8a5595fe22a1fbb98cfa373cb1b30d2eb26dddd9381b3099a5f"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 977958,
+      "sha256": "29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "bytes": 4050322,
+      "sha256": "b5e630c6ffc5ebdc44385c7543c755075482532391de68e2a2ab937bb756b1a0"
+    },
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "bytes": 2643,
+      "sha256": "b530d6a35760fe92d21d75fb20661c0b7045fa258e8bbcf4442d336902c4d066"
+    },
+    {
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "bytes": 25402,
+      "sha256": "3399bbb16e484354ff1112d959a75035ab1cc392cbc1705c642b749fd50fefed"
+    },
+    {
+      "path": "game/test/coop-historical-import-picture.test.mjs",
+      "bytes": 16371,
+      "sha256": "4cd3380093035178012bf10d0291847de83971ea67c4f2c3e603459e35b885ac"
+    },
+    {
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "bytes": 8897,
+      "sha256": "0842e37fcbed18680216c1ee4560f23c7357b3597cb8b17680fdfc79d545a8b8"
+    }
+  ],
+  "freeBytesAtReceipt": 3363295232,
+  "limitations": [
+    "No whole-source or release gate claimed",
+    "No physical-device/native result owned by this task",
+    "Handheld CSS review and native layout belong to root and its CSS author",
+    "No recording, listening, game catalogue or publication approval",
+    "No commits performed"
+  ]
+}

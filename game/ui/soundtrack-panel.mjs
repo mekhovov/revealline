@@ -944,7 +944,7 @@ export function attachSoundtrackPanel({
       setStatus(
         catalog.albums.length
           ? `${catalog.albums.length} optional albums. Review an addition before saving; your current song and draft are kept.`
-          : 'Creator recordings are awaiting publication review. You can import your own MP3s and album files now.',
+          : 'No optional albums are published for installation in this edition. You can import MP3s and album files now.',
       );
     }),
   );
@@ -954,6 +954,18 @@ export function attachSoundtrackPanel({
       'p',
       null,
       'Browse albums and credits, then Add to draft to download and preview individual tracks. Remove offline download keeps track details and playlists; Download again restores the album. Save all changes confirms the draft. Your current playlist stays selected.',
+      { class: 'micro-note' },
+    ),
+    node('a', 'licensed-previews', 'Browse licensed MP3 previews (opens a new tab)', {
+      href: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      class: 'button secondary',
+    }),
+    node(
+      'p',
+      'licensed-previews-info',
+      'The separate archive has 70 creator-licensed previews with credits and license notices. Download selected MP3s, then import them through Add MP3 files. They are not installed automatically; musical suitability has not been reviewed.',
       { class: 'micro-note' },
     ),
     albumBrowse,

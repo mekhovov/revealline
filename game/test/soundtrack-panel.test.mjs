@@ -1815,6 +1815,47 @@ for (const ending of ['saved', 'reload', 'newer focus', 'hidden']) {
   });
 }
 
+test('licensed preview discovery opens separately without fetching or admitting catalogue tracks', async (t) => {
+  const requests = [];
+  const app = await setup(t, {
+    callbacks: {
+      albumDownload: {
+        fetch: async (url) => {
+          requests.push(url);
+          throw new Error('Preview discovery must not fetch albums or audio.');
+        },
+      },
+      readAsset: async (hash) => {
+        requests.push(hash);
+        throw new Error('Preview discovery must not read audio.');
+      },
+    },
+  });
+  const link = app.node('licensed-previews');
+  assert.equal(link.tagName, 'A');
+  assert.equal(link.getAttribute('href'), 'https://mekhovov.github.io/revealline-soundtracks-01/');
+  assert.equal(link.getAttribute('target'), '_blank');
+  assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
+  assert.match(link.textContent, /opens a new tab/);
+  assert.match(app.node('licensed-previews-info').textContent, /70 creator-licensed previews/);
+  assert.match(app.node('licensed-previews-info').textContent, /not installed automatically/);
+  const before = await app.store.read();
+  const calls = [...app.calls],
+    state = { ...app.state };
+  link.focus();
+  const navigation = app.node('dialog').emit('keydown', { key: 'ArrowDown', target: link });
+  assert.equal(navigation.defaultPrevented, true);
+  assert.equal(app.doc.activeElement, app.node('browse-albums'));
+  await app.click('licensed-previews');
+  assert.deepEqual(requests, []);
+  assert.deepEqual(app.calls, calls);
+  assert.deepEqual(app.state, state);
+  assert.deepEqual(await app.store.read(), before);
+  assert.match(app.node('original-status').textContent, /No online recordings/);
+  assert.equal(app.doc.nativeDownloads.at(-1).href, link.getAttribute('href'));
+  assert.equal(app.doc.nativeDownloads.at(-1).filename, null);
+});
+
 test('optional album additions preserve applied and unapplied drafts, playlist choice and playing transport', async (t) => {
   const a = await albumFixture('qa.first'),
     b = await albumFixture('qa.second');
