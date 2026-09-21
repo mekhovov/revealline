@@ -182,6 +182,7 @@
                 <p class="eyebrow" id="coop-overlay-kicker">PAUSED</p>
                 <h2 id="coop-overlay-title" class="field-kit-display">Both players paused</h2>
                 <p id="coop-overlay-copy">Release your controls, then choose Resume together.</p>
+                <p id="coop-journey-reactions" class="micro-note" hidden></p>
                 <p id="coop-next-status" role="status" aria-live="polite" hidden></p>
                 <div class="overlay-actions">
                   <button id="coop-next" class="primary field-kit-primary" type="button" hidden>
@@ -563,6 +564,21 @@
           <label><input id="coop-reduced" type="checkbox" /> Reduce effects</label>
           <p id="coop-system-reduction" class="setting-note"></p>
           <p id="coop-display-status" class="setting-note" role="status"></p>
+          <label
+            ><input
+              id="coop-journey-reactions-enabled"
+              type="checkbox"
+              aria-describedby="coop-journey-reactions-help"
+            />
+            Character reactions</label
+          >
+          <p id="coop-journey-reactions-help" class="micro-note">
+            Optional captions after completed Journey missions. No voice or animation.
+          </p>
+          <p id="coop-journey-reactions-status" class="micro-note" role="status" hidden></p>
+          <button id="coop-journey-reactions-retry" type="button" hidden>
+            Retry saving reactions
+          </button>
         </section>
         <section
           id="coop-settings-panel-data"

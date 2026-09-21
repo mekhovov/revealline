@@ -1,5 +1,6 @@
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
+import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { createBoardFootprints } from './board-footprint.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
@@ -480,6 +481,7 @@ try {
   const preparationStatus = createOperationStatus($('race-preparation'), {
     isCurrent: () => !disposed,
   });
+  const journeyReactions = attachJourneyReactions({ prefix: 'race-' });
   let preparationDisplay = null;
   let menuRouter, navigation, shell, reading;
   let readingModality = 'pointer';
@@ -1703,6 +1705,18 @@ try {
   }
   function updateMenu() {
     if (!match || disposed) return;
+    const completedBoards = match.runs.filter((run) => run.status === 'won').length;
+    journeyReactions.present({
+      owned: !!candidateJourney?.owns(roundRecipe?.entry),
+      mode: 'versus',
+      outcome:
+        match.status === 'finished' && completedBoards
+          ? completedBoards === 2
+            ? 'draw'
+            : 'won'
+          : null,
+      missionId: roundRecipe?.entry?.mission?.id,
+    });
     const running = match.status === 'running';
     if (candidateJourney) {
       $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
@@ -1975,6 +1989,7 @@ try {
     contentController?.abort();
     disposed = true;
     preparationStatus.dispose();
+    journeyReactions.dispose();
     input.destroy();
     menuRouter.destroy();
     reading.destroy();

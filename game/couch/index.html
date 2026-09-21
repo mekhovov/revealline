@@ -185,6 +185,7 @@
             One race. Choose First to two in Race setup for a longer match. Couch races do not
             change your solo progress.
           </p>
+          <p id="race-journey-reactions" class="race-footnote" hidden></p>
         </section>
         <section
           id="race-setup"
@@ -384,6 +385,21 @@
             >
             <p id="race-system-reduction" class="setting-note"></p>
             <p id="race-display-status" class="setting-note" role="status"></p>
+            <label
+              ><input
+                id="race-journey-reactions-enabled"
+                type="checkbox"
+                aria-describedby="race-journey-reactions-help"
+              />
+              Character reactions</label
+            >
+            <p id="race-journey-reactions-help" class="race-footnote">
+              Optional captions after completed Journey missions. No voice or animation.
+            </p>
+            <p id="race-journey-reactions-status" class="race-footnote" role="status" hidden></p>
+            <button id="race-journey-reactions-retry" type="button" hidden>
+              Retry saving reactions
+            </button>
           </section>
           <section
             id="race-settings-panel-data"
