@@ -96,7 +96,9 @@ export function attachTouchSteering({
     listen(element, 'pointermove', move);
     for (const type of ['pointerup', 'pointercancel', 'lostpointercapture'])
       listen(element, type, (event) => {
-        if (gesture?.id === event.pointerId) {
+        // A deliberate clear releases capture after retiring its gesture.
+        // Late or incomplete capture-loss events cannot cancel the new owner.
+        if (gesture && gesture.id === event.pointerId) {
           clear();
           if (type !== 'pointerup') onCancel();
         }
