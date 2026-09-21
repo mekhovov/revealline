@@ -1,0 +1,257 @@
+TAP version 13
+# Subtest: actual Versus signal-01 shares one exact approved picture and fit through Start and paused continuation
+ok 1 - actual Versus signal-01 shares one exact approved picture and fit through Start and paused continuation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.667209
+  ...
+# Subtest: actual Versus orchard-crossing shares one exact approved picture and fit through Start and paused continuation
+ok 2 - actual Versus orchard-crossing shares one exact approved picture and fit through Start and paused continuation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.052417
+  ...
+# Subtest: required decode failure blocks Start; Retry retains the same attempt and chosen original
+ok 3 - required decode failure blocks Start; Retry retains the same attempt and chosen original # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04075
+  ...
+# Subtest: pending Retry owns Cancel and respects ready
+ok 4 - pending Retry owns Cancel and respects ready # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.109833
+  ...
+# Subtest: pending Retry owns Cancel and respects error
+ok 5 - pending Retry owns Cancel and respects error # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039958
+  ...
+# Subtest: pending Retry owns Cancel and respects deliberate focus
+ok 6 - pending Retry owns Cancel and respects deliberate focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042083
+  ...
+# Subtest: pending Retry owns Cancel and respects background return
+ok 7 - pending Retry owns Cancel and respects background return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032334
+  ...
+# Subtest: pending Retry owns Cancel and respects scope return
+ok 8 - pending Retry owns Cancel and respects scope return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037791
+  ...
+# Subtest: interrupted async Next stays ready after blur and return until a fresh Start
+ok 9 - interrupted async Next stays ready after blur and return until a fresh Start # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.080709
+  ...
+# Subtest: failed Next retains the completed round and its displayed original
+ok 10 - failed Next retains the completed round and its displayed original # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.09525
+  ...
+# Subtest: whole optional snapshot failure retains explicit authored fallback with a visible notice
+ok 11 - whole optional snapshot failure retains explicit authored fallback with a visible notice # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.046125
+  ...
+# Subtest: Back cancels a pending required picture and late completion cannot resume or replace the accepted attempt
+ok 12 - Back cancels a pending required picture and late completion cannot resume or replace the accepted attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03425
+  ...
+# Subtest: page disposal releases the owned picture URL once and preserves the original bytes
+ok 13 - page disposal releases the owned picture URL once and preserves the original bytes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029666
+  ...
+# Subtest: initial required-picture loading leaves the actual lobby Cancel keyboard reachable
+ok 14 - initial required-picture loading leaves the actual lobby Cancel keyboard reachable # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.077625
+  ...
+# Subtest: combined ready focus after a required picture respects untouched
+ok 15 - combined ready focus after a required picture respects untouched # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034083
+  ...
+# Subtest: combined ready focus after a required picture respects deliberate mode link
+ok 16 - combined ready focus after a required picture respects deliberate mode link # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.099791
+  ...
+# Subtest: combined ready focus after a required picture respects blur and return
+ok 17 - combined ready focus after a required picture respects blur and return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036417
+  ...
+# Subtest: combined ready focus after a required picture respects decode failure
+ok 18 - combined ready focus after a required picture respects decode failure # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.126375
+  ...
+# Subtest: failed Next original read keeps Results and keyboard View, then retry adopts one new round
+ok 19 - failed Next original read keeps Results and keyboard View, then retry adopts one new round # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.052
+  ...
+# Subtest: pending completed Next preserves Results through Cancel
+ok 20 - pending completed Next preserves Results through Cancel # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.072875
+  ...
+# Subtest: pending completed Next preserves Results through Help
+ok 21 - pending completed Next preserves Results through Help # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.083
+  ...
+# Subtest: pending completed Next preserves Results through View
+ok 22 - pending completed Next preserves Results through View # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.046291
+  ...
+# Subtest: pending completed Next preserves Results through Setup confirmation
+ok 23 - pending completed Next preserves Results through Setup confirmation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.098792
+  ...
+# Subtest: pending completed Next preserves Results through dispose
+ok 24 - pending completed Next preserves Results through dispose # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043458
+  ...
+# Subtest: successful Next retires its original only after the new duel and picture are published
+ok 25 - successful Next retires its original only after the new duel and picture are published # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032291
+  ...
+# Subtest: completed match wins reset only when an explicitly retried Next commits
+ok 26 - completed match wins reset only when an explicitly retried Next commits # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.07425
+  ...
+# Subtest: default One race win settles once, retains Review and ignores a hidden format draft
+ok 27 - default One race win settles once, retains Review and ignores a hidden format draft # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0995
+  ...
+# Subtest: default One race draw settles once, retains Review and ignores a hidden format draft
+ok 28 - default One race draw settles once, retains Review and ignores a hidden format draft # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04025
+  ...
+# Subtest: a direct Rematch click from BODY focus owns preparation without an extra Start
+ok 29 - a direct Rematch click from BODY focus owns preparation without an extra Start # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041291
+  ...
+# Subtest: a direct Rematch click from race-help focus owns preparation without an extra Start
+ok 30 - a direct Rematch click from race-help focus owns preparation without an extra Start # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03
+  ...
+# Subtest: controller format draft can cancel or commit while preserving selector focus and never starting a round
+ok 31 - controller format draft can cancel or commit while preserving selector focus and never starting a round # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026417
+  ...
+# Subtest: pending Next respects a newer deliberate action focus when its picture completes
+ok 32 - pending Next respects a newer deliberate action focus when its picture completes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.125417
+  ...
+# Subtest: Next restoration cannot revive its intent after a queued newer focus choice returns to BODY
+ok 33 - Next restoration cannot revive its intent after a queued newer focus choice returns to BODY # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.120666
+  ...
+# Subtest: confirmed new setup owns a fresh race after a cancelled Next decoder settles late
+ok 34 - confirmed new setup owns a fresh race after a cancelled Next decoder settles late # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035875
+  ...
+# Subtest: muted music and completed Results survive Next cancel, Help reading and a fresh retry
+ok 35 - muted music and completed Results survive Next cancel, Help reading and a fresh retry
+  ---
+  duration_ms: 12250.778208
+  ...
+# Subtest: muted music and completed Results survive Next decode refusal, Help reading and a fresh retry
+not ok 36 - muted music and completed Results survive Next decode refusal, Help reading and a fresh retry
+  ---
+  duration_ms: 11841.29625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:1080:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected ... Lines skipped
+    
+      {
+        active: true,
+        gameplayPaused: true,
+    +   pendingTrack: {
+    +     genre: 'synthwave',
+    +     id: 'signal-afterglow',
+    +     name: 'Signal Afterglow',
+    +     root: 48,
+    +     scale: 'minor',
+    +     tempo: 108
+    +   },
+    -   pendingTrack: null,
+        persistent: true,
+    ...
+          tempo: 132
+        }
+      }
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    persistent: true
+    active: true
+    suspended: false
+    gameplayPaused: true
+    track:
+      id: 'pocket-constellation'
+      name: 'Pocket Constellation'
+      genre: 'chiptune'
+      tempo: 132
+      root: 60
+      scale: 'major'
+    pendingTrack: ~
+    step: 1
+    songSteps: 512
+  actual:
+    persistent: true
+    active: true
+    suspended: false
+    gameplayPaused: true
+    track:
+      id: 'pocket-constellation'
+      name: 'Pocket Constellation'
+      genre: 'chiptune'
+      tempo: 132
+      root: 60
+      scale: 'major'
+    pendingTrack:
+      id: 'signal-afterglow'
+      name: 'Signal Afterglow'
+      genre: 'synthwave'
+      tempo: 108
+      root: 48
+      scale: 'minor'
+    step: 1
+    songSteps: 512
+  operator: 'deepStrictEqual'
+  stack: |-
+    expectRetainedAudio (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:1171:14)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:1255:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..36
+# tests 36
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 34
+# todo 0
+# duration_ms 24163.534916

@@ -1,0 +1,140 @@
+TAP version 13
+# Subtest: actual classic entry gives file-URL guidance before module/storage access
+ok 1 - actual classic entry gives file-URL guidance before module/storage access
+  ---
+  duration_ms: 4.076833
+  ...
+# Subtest: actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+ok 2 - actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+  ---
+  duration_ms: 101.426875
+  ...
+# Subtest: cold workshop Escape restores the invoker blurred by its disabled loading state
+ok 3 - cold workshop Escape restores the invoker blurred by its disabled loading state
+  ---
+  duration_ms: 20.291708
+  ...
+# Subtest: closing a pending workshop read restores the invoker before settling and preserves later focus
+ok 4 - closing a pending workshop read restores the invoker before settling and preserves later focus
+  ---
+  duration_ms: 12.022917
+  ...
+# Subtest: v1 MP3 bytes remain exact through shared v5 upgrade and explicit native backup preparation
+ok 5 - v1 MP3 bytes remain exact through shared v5 upgrade and explicit native backup preparation
+  ---
+  duration_ms: 72.301792
+  ...
+# Subtest: actual host omits unused trusted online pins from an importable backup without fetching or changing storage
+ok 6 - actual host omits unused trusted online pins from an importable backup without fetching or changing storage
+  ---
+  duration_ms: 76.316875
+  ...
+# Subtest: actual host preserves installed permitted originals and their metadata byte-for-byte
+ok 7 - actual host preserves installed permitted originals and their metadata byte-for-byte
+  ---
+  duration_ms: 11.322125
+  ...
+# Subtest: actual host names restricted references before preparing and retains that notice through download
+ok 8 - actual host names restricted references before preparing and retains that notice through download
+  ---
+  duration_ms: 8.771042
+  ...
+# Subtest: missing permitted music stops preparation visibly and discards the earlier prepared URL
+ok 9 - missing permitted music stops preparation visibly and discards the earlier prepared URL
+  ---
+  duration_ms: 10.577083
+  ...
+# Subtest: closing pending audio recovery prevents late status, notices or download ownership
+ok 10 - closing pending audio recovery prevents late status, notices or download ownership
+  ---
+  duration_ms: 10.148458
+  ...
+# Subtest: file URL and cancelled late source load do not open or upgrade media
+ok 11 - file URL and cancelled late source load do not open or upgrade media
+  ---
+  duration_ms: 20.204625
+  ...
+# Subtest: rejected shared-store access remains visible and cannot become an empty media save
+ok 12 - rejected shared-store access remains visible and cannot become an empty media save
+  ---
+  duration_ms: 11.933084
+  ...
+# Subtest: persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+ok 13 - persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+  ---
+  duration_ms: 14.211417
+  ...
+# Subtest: existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+ok 14 - existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+  ---
+  duration_ms: 23.391083
+  ...
+# Subtest: actual shared router prevents held Confirm across modal close and native pointer handoff
+ok 15 - actual shared router prevents held Confirm across modal close and native pointer handoff
+  ---
+  duration_ms: 25.914792
+  ...
+# Subtest: opening announces the held catalogue read and Close fences its late failure
+ok 16 - opening announces the held catalogue read and Close fences its late failure
+  ---
+  duration_ms: 10.150208
+  ...
+# Subtest: classic picture workshop exposes loading and Back before storage explanation
+ok 17 - classic picture workshop exposes loading and Back before storage explanation
+  ---
+  duration_ms: 0.429166
+  ...
+# Subtest: successful in-dialog reload reconciles the failed host opening without moving focus or writing media
+ok 18 - successful in-dialog reload reconciles the failed host opening without moving focus or writing media
+  ---
+  duration_ms: 17.878167
+  ...
+# Subtest: failed in-dialog reload retains the host failure and the current panel error
+ok 19 - failed in-dialog reload retains the host failure and the current panel error
+  ---
+  duration_ms: 12.690375
+  ...
+# Subtest: cancelled reload after hide cannot reconcile a late read as success
+ok 20 - cancelled reload after hide cannot reconcile a late read as success
+  ---
+  duration_ms: 14.054667
+  ...
+# Subtest: cancelled reload after close cannot reconcile a late read as success
+ok 21 - cancelled reload after close cannot reconcile a late read as success
+  ---
+  duration_ms: 14.174458
+  ...
+# Subtest: successful reload cannot overwrite a newer host status owner
+ok 22 - successful reload cannot overwrite a newer host status owner
+  ---
+  duration_ms: 14.40625
+  ...
+# Subtest: retired reload cannot change a newer successful opening
+ok 23 - retired reload cannot change a newer successful opening
+  ---
+  duration_ms: 14.781292
+  ...
+# Subtest: retired reload cannot change a newer failed opening
+ok 24 - retired reload cannot change a newer failed opening
+  ---
+  duration_ms: 15.398125
+  ...
+# Subtest: workshop initial successful load and reopen restore Reload after native disabled blur
+ok 25 - workshop initial successful load and reopen restore Reload after native disabled blur
+  ---
+  duration_ms: 16.390917
+  ...
+# Subtest: workshop initial failed load and reopen restore Reload after native disabled blur
+ok 26 - workshop initial failed load and reopen restore Reload after native disabled blur
+  ---
+  duration_ms: 13.579292
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 647.0655

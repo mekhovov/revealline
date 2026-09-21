@@ -1,0 +1,6 @@
+
+> revealline@0.80.0 format:native:check
+> prettier --check "platforms/desktop/*.mjs" "platforms/desktop/test/*.mjs" "platforms/ios/{bridge,scripts,test,diagnostics}/*.{mjs,js,html,css}"
+
+Checking formatting...
+All matched files use Prettier code style!

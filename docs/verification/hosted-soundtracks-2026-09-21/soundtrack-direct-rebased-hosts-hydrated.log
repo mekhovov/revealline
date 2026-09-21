@@ -1,0 +1,306 @@
+TAP version 13
+# Subtest: Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+    # Subtest: actual Versus controls
+    ok 1 - actual Versus controls
+      ---
+      duration_ms: 355.404041
+      ...
+    # Subtest: fresh Team receives settings, not music or progress
+    ok 2 - fresh Team receives settings, not music or progress
+      ---
+      duration_ms: 44.890583
+      ...
+    # Subtest: fresh Versus restores without context creation or playing
+    ok 3 - fresh Versus restores without context creation or playing
+      ---
+      duration_ms: 248.213125
+      ...
+    1..3
+ok 1 - Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+  ---
+  duration_ms: 649.197166
+  ...
+# Subtest: Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+ok 2 - Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+  ---
+  duration_ms: 1148.642709
+  ...
+# Subtest: Versus controller edits the actual master slider without starting either board
+ok 3 - Versus controller edits the actual master slider without starting either board
+  ---
+  duration_ms: 228.547666
+  ...
+# Subtest: Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+ok 4 - Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+  ---
+  duration_ms: 426.743084
+  ...
+# Subtest: Team keeps its sound explanation through saved edits, storage failure and recovery without starting play
+ok 5 - Team keeps its sound explanation through saved edits, storage failure and recovery without starting play
+  ---
+  duration_ms: 200.742875
+  ...
+# Subtest: Versus sound edits survive paused Help pan and keyboard return without replacing audio feedback
+ok 6 - Versus sound edits survive paused Help pan and keyboard return without replacing audio feedback
+  ---
+  duration_ms: 1335.088208
+  ...
+# Subtest: Team sound edits survive paused Help pan and keyboard return without replacing audio feedback
+ok 7 - Team sound edits survive paused Help pan and keyboard return without replacing audio feedback
+  ---
+  duration_ms: 215.320292
+  ...
+# Subtest: Team: actual music library returns through Audio Settings and Pause survives first Start
+ok 8 - Team: actual music library returns through Audio Settings and Pause survives first Start
+  ---
+  duration_ms: 1633.239417
+  ...
+# Subtest: Team: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+ok 9 - Team: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+  ---
+  duration_ms: 3131.722708
+  ...
+# Subtest: Versus: actual music library returns through Audio Settings and Pause survives first Start
+ok 10 - Versus: actual music library returns through Audio Settings and Pause survives first Start
+  ---
+  duration_ms: 2132.231834
+  ...
+# Subtest: Versus: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+ok 11 - Versus: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+  ---
+  duration_ms: 3790.015792
+  ...
+# Subtest: Team: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+ok 12 - Team: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+  ---
+  duration_ms: 2370.392834
+  ...
+# Subtest: Team: modeled controller owns the nested music library and Back returns to its opener
+ok 13 - Team: modeled controller owns the nested music library and Back returns to its opener
+  ---
+  duration_ms: 5421.113334
+  ...
+# Subtest: Versus: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+ok 14 - Versus: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+  ---
+  duration_ms: 2972.002541
+  ...
+# Subtest: Versus: modeled controller owns the nested music library and Back returns to its opener
+ok 15 - Versus: modeled controller owns the nested music library and Back returns to its opener
+  ---
+  duration_ms: 7884.88575
+  ...
+# Subtest: Versus: Pause music before Start preserves actual cut sound effects without starting music
+ok 16 - Versus: Pause music before Start preserves actual cut sound effects without starting music
+  ---
+  duration_ms: 1826.840084
+  ...
+# Subtest: Couch music credits follow audible MP3 metadata without live position announcements
+ok 17 - Couch music credits follow audible MP3 metadata without live position announcements
+  ---
+  duration_ms: 6840.397209
+  ...
+# Subtest: Versus menu music source is reachable with Tab and controller without starting either board
+ok 18 - Versus menu music source is reachable with Tab and controller without starting either board
+  ---
+  duration_ms: 3119.858542
+  ...
+# Subtest: a failed music assignment replaces pending status with its actionable error
+ok 19 - a failed music assignment replaces pending status with its actionable error
+  ---
+  duration_ms: 644.484
+  ...
+# Subtest: Journey music library keeps keyboard Back, paused boards and chooser ownership
+ok 20 - Journey music library keeps keyboard Back, paused boards and chooser ownership
+  ---
+  duration_ms: 2507.637666
+  ...
+# Subtest: Couch explicit scene keeps level music across inactive Pause, Settings, results and retry until setup
+ok 21 - Couch explicit scene keeps level music across inactive Pause, Settings, results and retry until setup
+  ---
+  duration_ms: 1134.522958
+  ...
+# Subtest: loading prepares accepted MP3 silently; a ready first Start plays in its gesture turn
+ok 22 - loading prepares accepted MP3 silently; a ready first Start plays in its gesture turn
+  ---
+  duration_ms: 7.49725
+  ...
+# Subtest: explicit Pause before first Start survives preparation, Retry and Resume
+ok 23 - explicit Pause before first Start survives preparation, Retry and Resume
+  ---
+  duration_ms: 2.273417
+  ...
+# Subtest: slow library readiness never blocks Start or performs a late autoplay
+ok 24 - slow library readiness never blocks Start or performs a late autoplay
+  ---
+  duration_ms: 2.411708
+  ...
+# Subtest: Pause during a pending load clears deferred Play intent
+ok 25 - Pause during a pending load clears deferred Play intent
+  ---
+  duration_ms: 1.661375
+  ...
+# Subtest: gameplay Pause, Retry and accepted context change retain the MP3 node, position and listening choice
+ok 26 - gameplay Pause, Retry and accepted context change retain the MP3 node, position and listening choice
+  ---
+  duration_ms: 2.52175
+  ...
+# Subtest: lifecycle return restores prior listening but cannot request gameplay Resume
+ok 27 - lifecycle return restores prior listening but cannot request gameplay Resume
+  ---
+  duration_ms: 2.916292
+  ...
+# Subtest: blocked browser Play is reported from its actual promise and keeps master muted
+ok 28 - blocked browser Play is reported from its actual promise and keeps master muted
+  ---
+  duration_ms: 2.105708
+  ...
+# Subtest: session music volume is independent of shared master and never uses profile storage
+ok 29 - session music volume is independent of shared master and never uses profile storage
+  ---
+  duration_ms: 0.901125
+  ...
+# Subtest: storage denial leaves a visible error and permits a deliberate built-in music start
+ok 30 - storage denial leaves a visible error and permits a deliberate built-in music start
+  ---
+  duration_ms: 0.858125
+  ...
+# Subtest: inactive menu update still pumps the existing player; suspension/disposal gate the pump
+ok 31 - inactive menu update still pumps the existing player; suspension/disposal gate the pump
+  ---
+  duration_ms: 0.185167
+  ...
+# Subtest: disposal fences a late library completion without closing borrowed owners
+ok 32 - disposal fences a late library completion without closing borrowed owners
+  ---
+  duration_ms: 0.732083
+  ...
+# Subtest: library save updates accepted bytes without requesting playback
+ok 33 - library save updates accepted bytes without requesting playback
+  ---
+  duration_ms: 1.982125
+  ...
+# Subtest: a playing session remains ready across a slow library refresh without another Play request
+ok 34 - a playing session remains ready across a slow library refresh without another Play request
+  ---
+  duration_ms: 1.590583
+  ...
+# Subtest: repeated Start during a delayed browser play promise makes one request and waits for reality
+ok 35 - repeated Start during a delayed browser play promise makes one request and waits for reality
+  ---
+  duration_ms: 1.86725
+  ...
+# Subtest: Pause wins against a delayed browser play resolution and cannot regain listening intent
+ok 36 - Pause wins against a delayed browser play resolution and cannot regain listening intent
+  ---
+  duration_ms: 1.633208
+  ...
+# Subtest: repeated foreground notifications coalesce resume permission and do not restart settled playback
+ok 37 - repeated foreground notifications coalesce resume permission and do not restart settled playback
+  ---
+  duration_ms: 1.747458
+  ...
+# Subtest: an accepted paused track can resume while a new library refresh is still pending
+ok 38 - an accepted paused track can resume while a new library refresh is still pending
+  ---
+  duration_ms: 2.09925
+  ...
+# Subtest: muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play
+ok 39 - muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play
+  ---
+  duration_ms: 1171.989459
+  ...
+# Subtest: Settings music text follows master immediately and remains coherent after transport notifications
+ok 40 - Settings music text follows master immediately and remains coherent after transport notifications
+  ---
+  duration_ms: 1647.10125
+  ...
+# Subtest: late Settings Play cancellation cannot replace a newer Library Pause label
+ok 41 - late Settings Play cancellation cannot replace a newer Library Pause label
+  ---
+  duration_ms: 1377.914709
+  ...
+# Subtest: blocked Settings Play feedback survives master edits until a real transport retry
+ok 42 - blocked Settings Play feedback survives master edits until a real transport retry
+  ---
+  duration_ms: 1522.729625
+  ...
+# Subtest: actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+ok 43 - actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+  ---
+  duration_ms: 4360.957
+  ...
+# Subtest: actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection
+ok 44 - actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection
+  ---
+  duration_ms: 16640.41775
+  ...
+# Subtest: actual master, music and SFX controls remain independent and the studio fader persists to game settings
+ok 45 - actual master, music and SFX controls remain independent and the studio fader persists to game settings
+  ---
+  duration_ms: 1421.257167
+  ...
+# Subtest: Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight
+ok 46 - Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight
+  ---
+  duration_ms: 1317.802167
+  ...
+# Subtest: actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+ok 47 - actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+  ---
+  duration_ms: 2240.946125
+  ...
+# Subtest: missing file-audio API disables Studio and leaves the original synth fallback usable
+ok 48 - missing file-audio API disables Studio and leaves the original synth fallback usable
+  ---
+  duration_ms: 311.765709
+  ...
+# Subtest: actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight
+ok 49 - actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight
+  ---
+  duration_ms: 1357.245208
+  ...
+# Subtest: a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+ok 50 - a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+  ---
+  duration_ms: 1752.607292
+  ...
+# Subtest: actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight
+ok 51 - actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight
+  ---
+  duration_ms: 5780.630583
+  ...
+# Subtest: closing Studio during pending Play respects play with saved audio disabled when flight starts
+ok 52 - closing Studio during pending Play respects play with saved audio disabled when flight starts
+  ---
+  duration_ms: 1542.218542
+  ...
+# Subtest: closing Studio during pending Play respects pause with saved audio disabled when flight starts
+ok 53 - closing Studio during pending Play respects pause with saved audio disabled when flight starts
+  ---
+  duration_ms: 1532.665875
+  ...
+# Subtest: closing Studio during pending Play respects pause with saved audio enabled when flight starts
+ok 54 - closing Studio during pending Play respects pause with saved audio enabled when flight starts
+  ---
+  duration_ms: 1550.115667
+  ...
+# Subtest: closing Studio during pending Play respects mute with saved audio enabled when flight starts
+ok 55 - closing Studio during pending Play respects mute with saved audio enabled when flight starts
+  ---
+  duration_ms: 1604.628
+  ...
+# Subtest: Solo Audio exposes full current credits while compact Pause remains an ordinary Pause owner
+ok 56 - Solo Audio exposes full current credits while compact Pause remains an ordinary Pause owner
+  ---
+  duration_ms: 1283.426291
+  ...
+1..56
+# tests 59
+# suites 0
+# pass 59
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 50000.944458
