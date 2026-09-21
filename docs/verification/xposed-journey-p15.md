@@ -161,6 +161,40 @@ dispositions remain open, with human/art/release qualification separate from thi
 coverage audit. The machine-readable local report is
 `.cache/journey-p15-adaptations-r1.json` and can be regenerated without changing data.
 
+## Learning-order review for edited campaigns
+
+The shared pacing inspector now checks exact authored lesson order as well as
+difficulty bands. It advises when a selected route declares practice without an
+introduction, combines a lesson without an earlier introduction, or combines it
+before an earlier practice after that introduction. This automatically reaches
+both the existing CLI and Studio inspector; no parallel registry or new workflow
+is introduced. Excluded, archived and mode-incompatible missions cannot silently
+supply missing preparation. A same-mission introduction/practice is not an earlier
+learning step, and an out-of-order practice is not retroactively qualified.
+
+Only exact labels with an explicit introduction somewhere in the project are
+checked. Actor names are not guessed to be lesson aliases, and labels without an
+authored introduction are not silently invented. This does not inspect actual
+encounters or prove safe exposure, learned skills, route quality or human mastery.
+Selected late campaigns may deliberately assume prior learning; warnings remain
+advisory and never reorder, rewrite, reject or publish content.
+
+The current71-mission core yields four specific review findings: Dry spine and
+Garden refuges combine their terrain lesson on its first declared practice;
+Wake the yard combines the roamer lesson on introduction, and Split berths on
+its first declared practice. These are open design-review findings, not confirmed
+playability defects. Existing published mission editions and their simulation
+identities are preserved. The next accepted content revision must assess safe
+exposure and practice before treating these findings as resolved, rather than
+merely deleting declarations to silence warnings.
+
+The13-test pacing/Studio/CLI/whole-library cohort passes on Node20.19.5 and22.22.2,
+including unchanged498 Solo/Versus manifests and execution identities, all core
+boundaries, exclusions, archive/mode filtering, same-mission declarations and
+out-of-order practice. Studio warning text is checked against the shared report;
+CLI JSON remains identical. Scoped ESLint, formatting and diff checks pass. These
+are local technical checks, not a new native playtest or a publication gate pass.
+
 This is infrastructure for honest qualification, not a substitute for playing the
 game. Genuine human sessions, physical devices, complete accessibility/performance
 checks, Legacy transition, rollback proof, original pending artwork, accepted
