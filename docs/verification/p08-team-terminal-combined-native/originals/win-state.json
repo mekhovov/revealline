@@ -1,0 +1,25 @@
+{
+  "active": "coop-discovery-paused",
+  "clock": "0:03",
+  "footer": {
+    "live": "polite",
+    "role": "status",
+    "text": "Team objective complete. Your shared result is ready."
+  },
+  "players": [
+    {
+      "charge": "Results ready",
+      "compactCharge": "Results",
+      "compactState": "Complete",
+      "help": "Sunflower: Objective complete. Choose another arena or Retry.",
+      "state": "Objective complete"
+    },
+    {
+      "charge": "Results ready",
+      "compactCharge": "Results",
+      "compactState": "Complete",
+      "help": "Skyline: Objective complete. Choose another arena or Retry.",
+      "state": "Objective complete"
+    }
+  ]
+}

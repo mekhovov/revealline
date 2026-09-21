@@ -1,0 +1,50 @@
+{
+  "phase": "P03 mission-card focus",
+  "source": "595fdadddf3cf5c4240c430b78d27772915df83d",
+  "candidate": "cc3f928980d3bd54d32f0a98a630855d5a185407afb0ab515cfd96a172795ed5",
+  "origin": "http://127.0.0.1:58348/game/index.html",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "observations": [
+    {
+      "step": "Home Start; Down to close First Signal cut",
+      "result": "Won 52.2%, 8160 points, 3 lives, 0:07; ordinary native input."
+    },
+    {
+      "step": "Missions; click completed First Signal artwork status child",
+      "result": "Connected selected BUTTON data-level0 retains focus; Deploy enabled."
+    },
+    {
+      "step": "Enter on selected First Signal card",
+      "result": "Connected selected BUTTON data-level0 retains focus after rebuild; Deploy enabled."
+    },
+    {
+      "step": "Seven ordinary Tab presses to Deploy, Enter",
+      "result": "Flight starts at 0%, 3 lives, 0 score, 0:00; Missions closes; canvas focused."
+    },
+    {
+      "step": "Escape pauses; Missions then Escape",
+      "result": "Pause remains at 0:05, focus returns to actual shell-packs opener; explicit Resume remains available."
+    }
+  ],
+  "consoleErrors": [],
+  "retainedFailures": [
+    "Accepted baseline nested status click lost focus to BODY.",
+    "Capture-only r1 passed synchronous modeled tests but failed native pointer and Enter.",
+    "Initial r2 HTTP request refused with 500 at <256 MiB free; after owned cleanup reload succeeded.",
+    "Wait for Main menu timed out while win celebration was still showing; screenshot/AX showed real win and Missions entry was used."
+  ],
+  "limitations": [
+    "Native desktop pointer and keyboard only.",
+    "No physical controller/Steam Deck or touch verification.",
+    "No responsive/Large/Plain/200% zoom qualification for this patch.",
+    "Not public release evidence; final integrated source and deployed journey still required."
+  ],
+  "cleanup": {
+    "tab182": "closed",
+    "serverPID96342": "terminated",
+    "viewportOverride": "none set"
+  }
+}
