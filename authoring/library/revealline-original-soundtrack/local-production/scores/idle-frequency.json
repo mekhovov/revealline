@@ -1,0 +1,8271 @@
+{
+  "format": "revealline-local-score.v1",
+  "version": "gpt-authored-pilots.1",
+  "slug": "idle-frequency",
+  "title": "Idle Frequency",
+  "genre": "synth90s",
+  "role": "menu",
+  "seed": 9101,
+  "bpm": 88,
+  "meter": "4/4",
+  "beatsPerBar": 4,
+  "bars": 56,
+  "tailSeconds": 2.0,
+  "sampleRate": 48000,
+  "status": "candidate-unreviewed",
+  "sections": [
+    {
+      "name": "intro",
+      "startBar": 0,
+      "bars": 4,
+      "theme": "A",
+      "texture": 0.45,
+      "startSeconds": 0.0
+    },
+    {
+      "name": "A",
+      "startBar": 4,
+      "bars": 12,
+      "theme": "A",
+      "texture": 0.8,
+      "startSeconds": 10.909
+    },
+    {
+      "name": "B",
+      "startBar": 16,
+      "bars": 12,
+      "theme": "B",
+      "texture": 0.88,
+      "startSeconds": 43.636
+    },
+    {
+      "name": "pedal bridge",
+      "startBar": 28,
+      "bars": 8,
+      "theme": "C",
+      "texture": 0.36,
+      "startSeconds": 76.364
+    },
+    {
+      "name": "A return",
+      "startBar": 36,
+      "bars": 16,
+      "theme": "A",
+      "texture": 0.85,
+      "startSeconds": 98.182
+    },
+    {
+      "name": "outro",
+      "startBar": 52,
+      "bars": 4,
+      "theme": "C",
+      "texture": 0.38,
+      "startSeconds": 141.818
+    }
+  ],
+  "events": [
+    {
+      "instrument": "bass",
+      "beat": 0,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.0855,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 0.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0585,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 0.0,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0189,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 0.022,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0189,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 0.044,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0189,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 0.066,
+      "pitch": 76,
+      "durationBeats": 7.7,
+      "gain": 0.0189,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 1.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0456,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 3.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.0585,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 4,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.0855,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 4.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0585,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 5.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0456,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 7.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.0585,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 8,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.0855,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 8.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0585,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 8,
+      "pitch": 74,
+      "durationBeats": 1,
+      "gain": 0.104,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 8.0,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.0189,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 8.022,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0189,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 8.044,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0189,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 8.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0189,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 9.5,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.104,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 9.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0456,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 10.5,
+      "pitch": 76,
+      "durationBeats": 1,
+      "gain": 0.104,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 11.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0585,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 12,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.0855,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 12.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0585,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 12,
+      "pitch": 73,
+      "durationBeats": 0.7,
+      "gain": 0.104,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 13,
+      "pitch": 69,
+      "durationBeats": 1,
+      "gain": 0.104,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 13.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0456,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 15,
+      "pitch": 71,
+      "durationBeats": 0.75,
+      "gain": 0.104,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 15.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.0585,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 16,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 16.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 16,
+      "pitch": 74,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 16.0,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 16,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 16.022,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 16.044,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 16.066,
+      "pitch": 76,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 16.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 16.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 17.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 17,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 17.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 17.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 18.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 18,
+      "pitch": 81,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 18,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 18.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 18.518,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 19.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 19,
+      "pitch": 76,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 19.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 19.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 20,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 20.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 20.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 20.5,
+      "pitch": 76,
+      "durationBeats": 2.2,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 20.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 21.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 21.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 21.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 22.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 22,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 22.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 22.518,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 23.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 23,
+      "pitch": 73,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 23.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 23.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 24,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 24.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 24,
+      "pitch": 74,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 24.0,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 24,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 24.022,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 24.044,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 24.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 24.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 24.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 25.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 25.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 25.5,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 25.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 26.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 26,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 26.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 26.5,
+      "pitch": 76,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 26.518,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 27.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 27.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 27.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 28,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 28.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 28,
+      "pitch": 73,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 28.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 28.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 29,
+      "pitch": 69,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 29.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 29.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 29.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 30.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 30,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 30.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 30.518,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 31,
+      "pitch": 71,
+      "durationBeats": 0.75,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 31.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 31.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 31.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 32,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 32.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 32,
+      "pitch": 74,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 32.0,
+      "pitch": 55,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 32,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 32.022,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 32.044,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 32.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 32.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 32.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 33.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 33,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 33.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 33.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 34.0,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 34,
+      "pitch": 81,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 34,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 34.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 34.518,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 35.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 35,
+      "pitch": 76,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 35.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 35.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 36,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 36.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 36.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 36.5,
+      "pitch": 76,
+      "durationBeats": 2.2,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 36.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 37.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 37.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 37.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 38.0,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 38,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 38.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 38.518,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 39.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 39,
+      "pitch": 73,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 39.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 39.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 40,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 40.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 40,
+      "pitch": 74,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 40.0,
+      "pitch": 57,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 40,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 40.022,
+      "pitch": 61,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 40.044,
+      "pitch": 64,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 40.066,
+      "pitch": 71,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 40.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 40.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 41.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 41.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 41.5,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 41.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 42.0,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 42,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 42.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 42.5,
+      "pitch": 76,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 42.518,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 43.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 43.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 43.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 44,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 44.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 44,
+      "pitch": 73,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 44.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 44.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 45,
+      "pitch": 69,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 45.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 45.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 45.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 46.0,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 46,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 46.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 46.518,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 47,
+      "pitch": 71,
+      "durationBeats": 0.75,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 47.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 47.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 47.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 48,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 48.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 48,
+      "pitch": 74,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 48.0,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 48,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 48.022,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 48.044,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 48.066,
+      "pitch": 76,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 48.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 48.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 49.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 49,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 49.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 49.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 50.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 50,
+      "pitch": 81,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 50,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 50.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 50.518,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 51.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 51,
+      "pitch": 76,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 51.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 51.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 52,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 52.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 52.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 52.5,
+      "pitch": 76,
+      "durationBeats": 2.2,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 52.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 53.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 53.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 53.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 54.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 54,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 54.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 54.518,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 55.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 55,
+      "pitch": 73,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 55.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 55.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 56,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 56.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 56,
+      "pitch": 74,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 56.0,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 56,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 56.022,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 56.044,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 56.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0336,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 56.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 56.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 57.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 57.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 57.5,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 57.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 58.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 58,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 58.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 58.5,
+      "pitch": 76,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 58.518,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 59.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 59.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 59.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 60,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.152,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 60.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 60,
+      "pitch": 73,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 60.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 60.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 61,
+      "pitch": 69,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 61.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 61.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 61.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 62.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 62,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 62.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 62.518,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 63,
+      "pitch": 71,
+      "durationBeats": 0.75,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 63.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.104,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 63.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 63.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0811,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 64,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 64.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 64,
+      "pitch": 81,
+      "durationBeats": 1.3,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 64.0,
+      "pitch": 55,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 64,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 64.022,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 64.044,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 64.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 64.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 64.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 65.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 65.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 65.5,
+      "pitch": 83,
+      "durationBeats": 0.4,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 65.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 66.0,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 66,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 66.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 66.5,
+      "pitch": 78,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 66.518,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 67.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 67.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 67.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 68,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 68.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 68,
+      "pitch": 76,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 68.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 68.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 69.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 69.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 69.5,
+      "pitch": 78,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 69.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 70.0,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 70,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 70.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 70.518,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 71.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 71,
+      "pitch": 74,
+      "durationBeats": 0.6,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 71.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 71.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 72,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 72.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 72.0,
+      "pitch": 57,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 72,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 72.022,
+      "pitch": 61,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 72.044,
+      "pitch": 64,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 72.066,
+      "pitch": 71,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 72.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 72.5,
+      "pitch": 73,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 72.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 73.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 73.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 73.5,
+      "pitch": 76,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 73.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 74.0,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 74,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 74.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 74.5,
+      "pitch": 81,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 74.518,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 75.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 75.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 75.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 76,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 76.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 76,
+      "pitch": 78,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 76.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 76.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 77.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 77.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 77.5,
+      "pitch": 76,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 77.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 78.0,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 78,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 78.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 78.5,
+      "pitch": 73,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 78.518,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 79.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 79.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 79.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 80,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 80.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 80,
+      "pitch": 81,
+      "durationBeats": 1.3,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 80.0,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 80,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 80.022,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 80.044,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 80.066,
+      "pitch": 76,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 80.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 80.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 81.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 81.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 81.5,
+      "pitch": 83,
+      "durationBeats": 0.4,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 81.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 82.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 82,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 82.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 82.5,
+      "pitch": 78,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 82.518,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 83.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 83.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 83.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 84,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 84.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 84,
+      "pitch": 76,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 84.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 84.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 85.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 85.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 85.5,
+      "pitch": 78,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 85.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 86.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 86,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 86.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 86.518,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 87.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 87,
+      "pitch": 74,
+      "durationBeats": 0.6,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 87.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 87.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 88,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 88.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 88.0,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 88,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 88.022,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 88.044,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 88.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 88.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 88.5,
+      "pitch": 73,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 88.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 89.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 89.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 89.5,
+      "pitch": 76,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 89.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 90.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 90,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 90.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 90.5,
+      "pitch": 81,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 90.518,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 91.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 91.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 91.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 92,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 92.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 92,
+      "pitch": 78,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 92.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 92.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 93.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 93.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 93.5,
+      "pitch": 76,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 93.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 94.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 94,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 94.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 94.5,
+      "pitch": 73,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 94.518,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 95.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 95.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 95.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 96,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 96.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 96,
+      "pitch": 81,
+      "durationBeats": 1.3,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 96.0,
+      "pitch": 55,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 96,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 96.022,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 96.044,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 96.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 96.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 96.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 97.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 97.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 97.5,
+      "pitch": 83,
+      "durationBeats": 0.4,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 97.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 98.0,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 98,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 98.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 98.5,
+      "pitch": 78,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 98.518,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 99.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 99.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 99.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 100,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 100.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 100,
+      "pitch": 76,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 100.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 100.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 101.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 101.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 101.5,
+      "pitch": 78,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 101.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 102.0,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 102,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 102.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 102.518,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 103.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 103,
+      "pitch": 74,
+      "durationBeats": 0.6,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 103.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 103.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 104,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 104.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 104.0,
+      "pitch": 57,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 104,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 104.022,
+      "pitch": 61,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 104.044,
+      "pitch": 64,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 104.066,
+      "pitch": 71,
+      "durationBeats": 7.7,
+      "gain": 0.037,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 104.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 104.5,
+      "pitch": 73,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 104.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 105.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 105.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 105.5,
+      "pitch": 76,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 105.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 106.0,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 106,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 106.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 106.5,
+      "pitch": 81,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 106.518,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 107.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 107.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 107.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 108,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.1672,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 108.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 108,
+      "pitch": 78,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 108.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 108.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 109.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 109.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 109.5,
+      "pitch": 76,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 109.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 110.0,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 110,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 110.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 110.5,
+      "pitch": 73,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 110.518,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 111.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1144,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 111.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 111.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0892,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 112,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.0684,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 112.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 112.0,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 112.022,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 112.044,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 112.066,
+      "pitch": 76,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 112.5,
+      "pitch": 62,
+      "durationBeats": 1.5,
+      "gain": 0.0896,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 113.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0365,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 114.5,
+      "pitch": 66,
+      "durationBeats": 1,
+      "gain": 0.0896,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 115.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 116,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.0684,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 116.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 117.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0365,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 119.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 120,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.0684,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 120.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 120,
+      "pitch": 69,
+      "durationBeats": 2,
+      "gain": 0.0896,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 120.0,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 120.022,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 120.044,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 120.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 121.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0365,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 122.5,
+      "pitch": 64,
+      "durationBeats": 1,
+      "gain": 0.0896,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 123.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 124,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.0684,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 124.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 125,
+      "pitch": 61,
+      "durationBeats": 2,
+      "gain": 0.0896,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 125.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0365,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 127.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 128,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.0684,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 128.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 128.0,
+      "pitch": 55,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 128.022,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 128.044,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 128.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 128.5,
+      "pitch": 62,
+      "durationBeats": 1.5,
+      "gain": 0.0896,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 129.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0365,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 130.5,
+      "pitch": 66,
+      "durationBeats": 1,
+      "gain": 0.0896,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 131.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 132,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.0684,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 132.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 133.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0365,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 135.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 136,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.0684,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 136.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 136,
+      "pitch": 69,
+      "durationBeats": 2,
+      "gain": 0.0896,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 136.0,
+      "pitch": 57,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 136.022,
+      "pitch": 61,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 136.044,
+      "pitch": 64,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 136.066,
+      "pitch": 71,
+      "durationBeats": 7.7,
+      "gain": 0.0151,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 137.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0365,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 138.5,
+      "pitch": 64,
+      "durationBeats": 1,
+      "gain": 0.0896,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 139.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 140,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.0684,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 140.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 141,
+      "pitch": 61,
+      "durationBeats": 2,
+      "gain": 0.0896,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 141.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0365,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 143.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.0468,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 144,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 144.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 144,
+      "pitch": 74,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 144.0,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 144,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 144.022,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 144.044,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 144.066,
+      "pitch": 76,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 144.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 144.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 145.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 145,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 145.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 145.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 146.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 146,
+      "pitch": 81,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 146,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 146.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 146.518,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 147.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 147,
+      "pitch": 76,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 147.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 147.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 148,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 148.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 148.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 148.5,
+      "pitch": 76,
+      "durationBeats": 2.2,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 148.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 148.66,
+      "pitch": 64,
+      "durationBeats": 1.54,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 149.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 149.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 149.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 150.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 150,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 150.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 150.518,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 151.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 151,
+      "pitch": 73,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 151.16,
+      "pitch": 61,
+      "durationBeats": 0.35,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 151.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 151.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 152,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 152.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 152,
+      "pitch": 74,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 152.0,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 152,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 152.022,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 152.044,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 152.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 152.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 152.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 153.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 153.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 153.5,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 153.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 154.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 154,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 154.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 154.5,
+      "pitch": 76,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 154.518,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 155.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 155.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 155.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 156,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 156.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 156,
+      "pitch": 73,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 156.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 156.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 157,
+      "pitch": 69,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 157.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 157.16,
+      "pitch": 57,
+      "durationBeats": 0.7,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 157.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 157.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 158.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 158,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 158.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 158.518,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 159,
+      "pitch": 71,
+      "durationBeats": 0.75,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 159.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 159.16,
+      "pitch": 59,
+      "durationBeats": 0.5249999999999999,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 159.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 159.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 160,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 160.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 160,
+      "pitch": 86,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 160.0,
+      "pitch": 55,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 160,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 160.022,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 160.044,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 160.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 160.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 160.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 161.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 161,
+      "pitch": 90,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 161.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 161.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 162.0,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 162,
+      "pitch": 93,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 162,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 162.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 162.518,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 163.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 163,
+      "pitch": 88,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 163.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 163.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 164,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 164.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 164.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 164.5,
+      "pitch": 88,
+      "durationBeats": 2.2,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 164.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 164.66,
+      "pitch": 64,
+      "durationBeats": 1.54,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 165.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 165.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 165.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 166.0,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 166,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 166.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 166.518,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 167.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 167,
+      "pitch": 85,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 167.16,
+      "pitch": 61,
+      "durationBeats": 0.35,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 167.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 167.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 168,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 168.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 168,
+      "pitch": 74,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 168.0,
+      "pitch": 57,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 168,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 168.022,
+      "pitch": 61,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 168.044,
+      "pitch": 64,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 168.066,
+      "pitch": 71,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 168.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 168.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 169.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 169.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 169.5,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 169.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 170.0,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 170,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 170.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 170.5,
+      "pitch": 76,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 170.518,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 171.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 171.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 171.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 172,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 172.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 172,
+      "pitch": 73,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 172.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 172.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 173,
+      "pitch": 69,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 173.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 173.16,
+      "pitch": 57,
+      "durationBeats": 0.7,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 173.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 173.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 174.0,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 174,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 174.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 174.518,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 175,
+      "pitch": 71,
+      "durationBeats": 0.75,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 175.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 175.16,
+      "pitch": 59,
+      "durationBeats": 0.5249999999999999,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 175.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 175.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 176,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 176.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 176,
+      "pitch": 74,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 176.0,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 176,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 176.022,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 176.044,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 176.066,
+      "pitch": 76,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 176.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 176.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 177.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 177,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 177.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 177.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 178.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 178,
+      "pitch": 81,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 178,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 178.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 178.518,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 179.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 179,
+      "pitch": 76,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 179.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 179.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 180,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 180.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 180.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 180.5,
+      "pitch": 76,
+      "durationBeats": 2.2,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 180.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 180.66,
+      "pitch": 64,
+      "durationBeats": 1.54,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 181.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 181.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 181.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 182.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 182,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 182.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 182.518,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 183.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 183,
+      "pitch": 73,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 183.16,
+      "pitch": 61,
+      "durationBeats": 0.35,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 183.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 183.518,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 184,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 184.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 184,
+      "pitch": 74,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 184.0,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 184,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 184.022,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 184.044,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 184.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 184.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 184.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 185.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 185.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 185.5,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 185.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 186.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 186,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 186.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 186.5,
+      "pitch": 76,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 186.518,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 187.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 187.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 187.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 188,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 188.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 188,
+      "pitch": 73,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 188.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 188.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 189,
+      "pitch": 69,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 189.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 189.16,
+      "pitch": 57,
+      "durationBeats": 0.7,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 189.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 189.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 190.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 190,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 190.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 190.518,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 191,
+      "pitch": 71,
+      "durationBeats": 0.75,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 191.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 191.16,
+      "pitch": 59,
+      "durationBeats": 0.5249999999999999,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 191.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 191.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 192,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 192.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 192,
+      "pitch": 86,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 192.0,
+      "pitch": 55,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 192,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 192.022,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 192.044,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 192.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 192.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 192.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 193.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 193,
+      "pitch": 90,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 193.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 193.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 194.0,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 194,
+      "pitch": 93,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 194,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 194.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 194.518,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 195.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 195,
+      "pitch": 88,
+      "durationBeats": 0.8,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 195.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 195.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 196,
+      "pitch": 31,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 196.0,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 196.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 196.5,
+      "pitch": 88,
+      "durationBeats": 2.2,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 196.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 196.66,
+      "pitch": 64,
+      "durationBeats": 1.54,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 197.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 197.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 197.518,
+      "pitch": 59,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 198.0,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 198,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 198.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 198.518,
+      "pitch": 43,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 199.0,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 199,
+      "pitch": 85,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 199.16,
+      "pitch": 61,
+      "durationBeats": 0.35,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 199.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 199.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 200,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 200.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 200,
+      "pitch": 74,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 200.0,
+      "pitch": 57,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "tom",
+      "beat": 200,
+      "pitch": 45,
+      "durationBeats": 0.6,
+      "gain": 0.085,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 200.022,
+      "pitch": 61,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 200.044,
+      "pitch": 64,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 200.066,
+      "pitch": 71,
+      "durationBeats": 7.7,
+      "gain": 0.0357,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 200.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 200.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 201.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 201.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 201.5,
+      "pitch": 78,
+      "durationBeats": 0.5,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 201.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 202.0,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 202,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 202.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 202.5,
+      "pitch": 76,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 202.518,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 203.0,
+      "pitch": 71,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 203.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 203.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 204,
+      "pitch": 33,
+      "durationBeats": 3.65,
+      "gain": 0.1615,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 204.0,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 204,
+      "pitch": 73,
+      "durationBeats": 0.7,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 204.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 204.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 205,
+      "pitch": 69,
+      "durationBeats": 1,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 205.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 205.16,
+      "pitch": 57,
+      "durationBeats": 0.7,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 205.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 205.518,
+      "pitch": 61,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 206.0,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "rim",
+      "beat": 206,
+      "pitch": 60,
+      "durationBeats": 0.2,
+      "gain": 0.052,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 206.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 206.518,
+      "pitch": 45,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 207,
+      "pitch": 71,
+      "durationBeats": 0.75,
+      "gain": 0.16,
+      "pan": 0.08,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 207.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.1105,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 207.16,
+      "pitch": 59,
+      "durationBeats": 0.5249999999999999,
+      "gain": 0.075,
+      "pan": -0.45,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "hat",
+      "beat": 207.5,
+      "pitch": 60,
+      "durationBeats": 0.1,
+      "gain": 0.025,
+      "pan": 0.35,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 207.518,
+      "pitch": 64,
+      "durationBeats": 1.35,
+      "gain": 0.0862,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 208,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.0722,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 208.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0494,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 208.0,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.016,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 208.022,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.016,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 208.044,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.016,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 208.066,
+      "pitch": 76,
+      "durationBeats": 7.7,
+      "gain": 0.016,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 209.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0385,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 211.0,
+      "pitch": 76,
+      "durationBeats": 1.35,
+      "gain": 0.0494,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 212,
+      "pitch": 38,
+      "durationBeats": 3.65,
+      "gain": 0.0722,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 212.0,
+      "pitch": 50,
+      "durationBeats": 1.35,
+      "gain": 0.0494,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 213.518,
+      "pitch": 66,
+      "durationBeats": 1.35,
+      "gain": 0.0385,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 215.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.0494,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 216,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.0722,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 216.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0494,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 216.0,
+      "pitch": 59,
+      "durationBeats": 7.7,
+      "gain": 0.016,
+      "pan": -0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 216.022,
+      "pitch": 62,
+      "durationBeats": 7.7,
+      "gain": 0.016,
+      "pan": -0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 216.044,
+      "pitch": 66,
+      "durationBeats": 7.7,
+      "gain": 0.016,
+      "pan": 0.12,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "pad",
+      "beat": 216.066,
+      "pitch": 69,
+      "durationBeats": 7.7,
+      "gain": 0.016,
+      "pan": 0.36,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 217.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0385,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 219.0,
+      "pitch": 69,
+      "durationBeats": 1.35,
+      "gain": 0.0494,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "bass",
+      "beat": 220,
+      "pitch": 35,
+      "durationBeats": 3.65,
+      "gain": 0.0722,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 220.0,
+      "pitch": 47,
+      "durationBeats": 1.35,
+      "gain": 0.0494,
+      "pan": -0.32,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 221,
+      "pitch": 50,
+      "durationBeats": 2.7,
+      "gain": 0.11,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 221,
+      "pitch": 57,
+      "durationBeats": 2.7,
+      "gain": 0.11,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 221,
+      "pitch": 62,
+      "durationBeats": 2.7,
+      "gain": 0.11,
+      "pan": 0,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 221.518,
+      "pitch": 62,
+      "durationBeats": 1.35,
+      "gain": 0.0385,
+      "pan": 0.28,
+      "articulation": "normal"
+    },
+    {
+      "instrument": "keys",
+      "beat": 223.0,
+      "pitch": 73,
+      "durationBeats": 1.35,
+      "gain": 0.0494,
+      "pan": -0.32,
+      "articulation": "normal"
+    }
+  ],
+  "provenance": "Original GPT-authored notes and arrangement; deterministic sample-free local DSP.",
+  "instrumentDisclosure": "All voices synthesized. No recorded guitar, drums, bandura, sopilka or folk performance.",
+  "listeningReview": "pending",
+  "culturalReview": "not-applicable"
+}

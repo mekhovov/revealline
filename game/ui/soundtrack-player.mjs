@@ -1,7 +1,10 @@
 import { boundedJSON, canonicalJSON, required } from '../data-json.mjs';
 import {
-  BUILTIN_SOUNDTRACK_TRACKS,
-  BUILTIN_SOUNDTRACK_PLAYLISTS,
+  soundtrackTracks,
+  soundtrackPlaylists,
+  upgradeSoundtrackLibrary,
+  SOUNDTRACK_FORMAT,
+  soundtrackFallbackSelection,
   emptySoundtrackLibrary,
   resolveSoundtrackLibrary,
   resolveSoundtrackSelection,
@@ -29,12 +32,14 @@ const wait = (ms, signal) =>
 export function createSoundtrackPlayer({
   soundscape,
   audioElement = globalThis.document?.createElement('audio'),
+  secondAudioElement = globalThis.document?.createElement('audio'),
   readAsset,
   onChange = () => {},
   random = Math.random,
   URLImpl = globalThis.URL,
-  fadeMs = 120,
+  fadeMs = 1500,
   audioMaster,
+  catalogue = null,
 } = {}) {
   required(
     soundscape?.persistentMusic === true &&
@@ -60,14 +65,54 @@ export function createSoundtrackPlayer({
     'Soundtrack player requires media, storage and callback adapters.',
   );
   required(
-    Number.isInteger(fadeMs) && fadeMs >= 0 && fadeMs <= 250,
+    Number.isInteger(fadeMs) && fadeMs >= 0 && fadeMs <= 10000,
     'Invalid music transition duration.',
   );
-  const media = audioElement;
+  required(
+    !secondAudioElement ||
+      (secondAudioElement !== audioElement &&
+        typeof secondAudioElement.play === 'function' &&
+        typeof secondAudioElement.addEventListener === 'function'),
+    'The second music deck must be a separate media element.',
+  );
+  const decks = [audioElement, secondAudioElement].filter(Boolean).map((media) => ({
+    media,
+    url: null,
+    listeners: [],
+    resource: 0,
+    weight: 0,
+  }));
+  let activeDeck = decks[0];
+  activeDeck.weight = 1;
+  let preloaded = null,
+    preloadOperation = null,
+    transition = null,
+    overlapDisabled = false,
+    pendingDeck = null;
+  // Some mobile engines expose volume but cannot apply it to media elements.
+  // Detect that while both decks are silent and use the sequential path there.
+  for (const deck of decks) {
+    const before = deck.media.volume;
+    try {
+      deck.media.volume = 0.375;
+      if (Math.abs(deck.media.volume - 0.375) > 0.001) overlapDisabled = true;
+    } catch {
+      overlapDisabled = true;
+    } finally {
+      deck.media.volume = before;
+    }
+  }
+
+  for (const deck of decks)
+    deck.masterMedia = audioMaster
+      ? bindAudioMasterMedia({ audioMaster, element: deck.media, volume: 0 })
+      : null;
+
   let library = emptySoundtrackLibrary(),
     context = {},
     override = null,
     playlist = null,
+    playlistSource = null,
     queue = [],
     index = -1,
     current = null,
@@ -76,8 +121,8 @@ export function createSoundtrackPlayer({
   let published = null,
     authored = null,
     lastPositionSecond = -1,
-    resourceGeneration = 0,
-    notice = null;
+    notice = null,
+    selectionNotice = null;
   let preparation = null;
   let status = 'idle',
     error = null,
@@ -86,20 +131,14 @@ export function createSoundtrackPlayer({
     suspended = false,
     volume = soundscape.getSettings().music,
     fade = 1,
-    url = null,
     generation = 0,
     operation = null,
     pendingSeek = null;
   let failed = new Set(),
-    fallbackUsed = false,
-    listeners = [];
+    fallbackUsed = false;
   const gainLeases = new Map();
-  const masterMedia = audioMaster
-    ? bindAudioMasterMedia({ audioMaster, element: media, volume: 0 })
-    : null;
   const tracks = () => [
-    ...BUILTIN_SOUNDTRACK_TRACKS,
-    ...library.tracks,
+    ...soundtrackTracks(library),
     ...(authored ? [authored] : []),
     ...(published ? [published] : []),
   ];
@@ -107,8 +146,18 @@ export function createSoundtrackPlayer({
     const selected = resolveSoundtrackSelection(
       { ...library, selection: { playlistId: override } },
       context,
+      { catalogue: catalogue ?? undefined },
     );
-    if (selected.source === 'default' && published?.allowed())
+    const defaultChoice =
+      selected.source === 'default' ||
+      (selected.source === 'catalogue-fallback' && library.listening?.mode === 'auto');
+    if (
+      context.scene !== 'menu' &&
+      defaultChoice &&
+      !library.listening?.recordingMode &&
+      published?.allowed() &&
+      !failed.has(published.id)
+    )
       return {
         source: 'published',
         playlist: {
@@ -119,7 +168,7 @@ export function createSoundtrackPlayer({
           repeat: 'all',
         },
       };
-    if (selected.source === 'default' && authored)
+    if (context.scene !== 'menu' && defaultChoice && authored)
       return {
         source: 'authored',
         playlist: {
@@ -141,15 +190,15 @@ export function createSoundtrackPlayer({
     }
     const durationSeconds =
       current.kind === 'published'
-        ? Number.isFinite(media.duration)
-          ? Math.max(0, media.duration)
+        ? Number.isFinite(activeDeck.media.duration)
+          ? Math.max(0, activeDeck.media.duration)
           : 0
         : current.asset.durationSeconds;
     return {
       positionSeconds:
         pendingSeek ??
-        (Number.isFinite(media.currentTime)
-          ? Math.max(0, Math.min(media.currentTime, durationSeconds))
+        (Number.isFinite(activeDeck.media.currentTime)
+          ? Math.max(0, Math.min(activeDeck.media.currentTime, durationSeconds))
           : 0),
       durationSeconds,
     };
@@ -169,6 +218,9 @@ export function createSoundtrackPlayer({
             title: current.title,
             artist: current.artist,
             kind: current.kind,
+            fileName: current.fileName ?? null,
+            websites: current.websites ?? [],
+            rights: current.rights ?? null,
           })
         : null,
       playlistId: playlist?.id ?? null,
@@ -179,7 +231,9 @@ export function createSoundtrackPlayer({
       queueIndex: index,
       volume,
       error,
-      notice,
+      notice: selectionNotice ?? notice,
+      preloadedTrackId: preloaded?.track.id ?? null,
+      transitioning: transition !== null,
       ...position(),
     });
   }
@@ -195,9 +249,11 @@ export function createSoundtrackPlayer({
     let factor = 1;
     for (const value of gainLeases.values()) factor = Math.min(factor, value);
     soundscape.configure({ music: volume * fade * factor });
-    const localVolume = Math.max(0, Math.min(1, master * volume * fade * factor));
-    if (masterMedia) masterMedia.setLocal({ volume: localVolume });
-    else media.volume = localVolume;
+    for (const deck of decks) {
+      const localVolume = Math.max(0, Math.min(1, master * volume * fade * factor * deck.weight));
+      if (deck.masterMedia) deck.masterMedia.setLocal({ volume: localVolume });
+      else deck.media.volume = localVolume;
+    }
   }
   /** Temporary attenuation only; the player remains the owner of base volume/intent.
    * Overlapping owners use the lowest factor. Each owner releases only its lease.
@@ -226,33 +282,209 @@ export function createSoundtrackPlayer({
       },
     });
   }
-  function cancel() {
+  function clearDeck(deck) {
+    deck.resource++;
+    for (const [type, fn] of deck.listeners) deck.media.removeEventListener(type, fn);
+    deck.listeners = [];
+    deck.media.pause();
+    deck.media.removeAttribute('src');
+    try {
+      deck.media.load();
+    } catch {}
+    if (deck.url !== null) {
+      try {
+        URLImpl.revokeObjectURL(deck.url);
+      } catch {}
+      deck.url = null;
+    }
+  }
+  function cancelPreload(keep = null) {
+    preloadOperation?.abort();
+    preloadOperation = null;
+    pendingDeck?.controller.abort();
+    pendingDeck = null;
+    preloaded = null;
+    if (transition) {
+      transition.controller.abort();
+      clearDeck(transition.outgoing);
+      transition.outgoing.weight = 0;
+      transition = null;
+      activeDeck.weight = 1;
+      gains();
+    }
+    for (const deck of decks) if (deck !== activeDeck && deck !== keep) clearDeck(deck);
+  }
+  function cancel(keep = null) {
     generation++;
     operation?.abort();
     operation = null;
+    cancelPreload(keep);
   }
   function clearMedia() {
-    resourceGeneration++;
-    for (const [type, fn] of listeners) media.removeEventListener(type, fn);
-    listeners = [];
-    media.pause();
-    media.removeAttribute('src');
-    try {
-      media.load();
-    } catch {}
-    if (url !== null) {
-      try {
-        URLImpl.revokeObjectURL(url);
-      } catch {}
-      url = null;
-    }
+    clearDeck(activeDeck);
   }
-  function bind(type, fn) {
-    media.addEventListener(type, fn);
-    listeners.push([type, fn]);
+  function bind(deck, type, fn) {
+    deck.media.addEventListener(type, fn);
+    deck.listeners.push([type, fn]);
+  }
+  async function loadDeck(deck, track, signal, token = null) {
+    if (token !== null) {
+      preparation = {
+        generation: token,
+        stage: 'reading',
+        message: 'Reading the selected audio original…',
+      };
+      emit();
+    }
+    const blob =
+      track.kind === 'published'
+        ? await track.readBlob({ signal })
+        : ownSoundtrackBlob(await readAsset(track.asset.sha256, { signal, purpose: 'playback' }));
+    throwIfSoundtrackAborted(signal);
+    if (track.kind === 'published') {
+      required(
+        blob instanceof Blob &&
+          blob.size > 0 &&
+          blob.size <= 4 * 1024 * 1024 &&
+          ['audio/wav', 'audio/ogg', 'audio/mpeg'].includes(blob.type),
+        'Published audio is unavailable.',
+      );
+    } else {
+      if (token !== null && token === generation) {
+        preparation = {
+          generation: token,
+          stage: 'verifying',
+          message: 'Verifying the audio original…',
+        };
+        emit();
+      }
+      const actual = await inspectMP3(blob, { signal });
+      required(
+        canonicalJSON(actual) === canonicalJSON(track.asset),
+        'Stored audio bytes do not match this track.',
+      );
+    }
+    throwIfSoundtrackAborted(signal);
+    if (disposed) throw new DOMException('Music player disposed.', 'AbortError');
+    installDeckURL(deck, track, URLImpl.createObjectURL(blob));
+  }
+  function installDeckURL(deck, track, ownedURL) {
+    clearDeck(deck);
+    deck.url = ownedURL;
+    const resource = deck.resource,
+      expectedURL = deck.url;
+    const valid = () =>
+      !disposed &&
+      deck === activeDeck &&
+      resource === deck.resource &&
+      deck.url === expectedURL &&
+      (!deck.media.currentSrc || deck.media.currentSrc === expectedURL);
+    bind(deck, 'ended', () => {
+      if (valid() && desired && !suspended) void advance(true);
+    });
+    bind(deck, 'error', () => {
+      if (valid()) void failedTrack('This track could not be played.', generation);
+      else if (preloaded?.deck === deck) {
+        failed.add(track.id);
+        notice = 'The next track could not be played.';
+        cancelPreload();
+        emit();
+      }
+    });
+    bind(deck, 'timeupdate', () => {
+      if (valid()) {
+        maybeTransition();
+        emit();
+      }
+    });
+    bind(deck, 'loadedmetadata', () => {
+      if (valid() && pendingSeek !== null) {
+        try {
+          deck.media.currentTime = pendingSeek;
+        } catch {}
+        pendingSeek = null;
+      }
+      if (valid()) emit();
+    });
+    deck.media.preload = 'auto';
+    deck.media.loop = false;
+    deck.media.src = deck.url;
+    deck.media.load();
+    gains();
+  }
+  function transferDeck(from, to, track) {
+    const ownedURL = from.url;
+    required(ownedURL !== null, 'Prepared audio is no longer available.');
+    // Keep the object URL while moving playback to an already permitted element.
+    from.url = null;
+    clearDeck(from);
+    from.weight = 0;
+    installDeckURL(to, track, ownedURL);
+  }
+  function prepareNext() {
+    if (
+      disposed ||
+      suspended ||
+      !desired ||
+      status !== 'playing' ||
+      current?.kind !== 'mp3' ||
+      decks.length < 2 ||
+      dirty ||
+      pending ||
+      preloaded ||
+      preloadOperation ||
+      transition
+    )
+      return;
+    const at = playableIndex(nextIndex(true));
+    const track = tracks().find((t) => t.id === queue[at]);
+    if (!track || track.kind !== 'mp3') return;
+    const deck = decks.find((d) => d !== activeDeck),
+      controller = new AbortController();
+    preloadOperation = controller;
+    deck.weight = 0;
+    void loadDeck(deck, track, controller.signal)
+      .then(() => {
+        if (controller.signal.aborted || disposed) return;
+        preloadOperation = null;
+        preloaded = { deck, track, at };
+        emit();
+        maybeTransition();
+      })
+      .catch((failure) => {
+        if (controller.signal.aborted || disposed || failure?.name === 'AbortError') return;
+        preloadOperation = null;
+        clearDeck(deck);
+        failed.add(track.id);
+        notice = failure?.message || 'The next track is unavailable.';
+        emit();
+        prepareNext();
+      });
+  }
+  function maybeTransition() {
+    if (
+      transition ||
+      !preloaded ||
+      !desired ||
+      suspended ||
+      status !== 'playing' ||
+      current?.kind !== 'mp3' ||
+      dirty ||
+      pending ||
+      fadeMs === 0 ||
+      overlapDisabled
+    )
+      return;
+    const remaining = position().durationSeconds - position().positionSeconds;
+    // The ended event owns the hard boundary if the decoder is too late to overlap.
+    const windowMs = Math.min(fadeMs, position().durationSeconds * 500);
+    if (remaining > 0 && remaining <= windowMs / 1000)
+      void startAt(preloaded.at, { fading: true, overlapMs: Math.min(windowMs, remaining * 1000) });
   }
   function install(selection, { after = null } = {}) {
     playlist = selection.playlist;
+    playlistSource = selection.source;
+    selectionNotice = selection.notice ?? null;
     queue = [...soundtrackOrder(playlist, { random, previousTrackId: after })];
     index = -1;
     if (after && playlist.order === 'ordered') {
@@ -287,133 +519,166 @@ export function createSoundtrackPlayer({
       await wait(fadeMs / 4, signal);
     }
   }
-  async function startAt(at, { fading = false } = {}) {
+  async function startAt(at, { fading = false, overlapMs = fadeMs } = {}) {
     if (disposed || suspended) return false;
-    cancel();
+    const nextTrack = tracks().find((t) => t.id === queue[at]) ?? null;
+    const prepared = preloaded?.track.id === nextTrack?.id ? preloaded : null;
+    if (prepared) preloaded = null;
+    const overlap =
+      fading &&
+      fadeMs > 0 &&
+      !overlapDisabled &&
+      decks.length === 2 &&
+      desired &&
+      status === 'playing' &&
+      current?.kind === 'mp3' &&
+      nextTrack?.kind === 'mp3';
+    cancel(prepared?.deck);
     const token = generation,
       controller = new AbortController();
     operation = controller;
     preparation = { generation: token, stage: 'preparing', message: 'Preparing selected music…' };
     emit();
+    let incoming =
+      (!overlapDisabled && prepared?.deck) ||
+      (overlap ? decks.find((d) => d !== activeDeck) : activeDeck);
     try {
-      if (fading) await fadeOut(controller.signal);
-      if (token !== generation) return false;
-      soundscape.pauseMusic();
-      clearMedia();
-      index = at;
-      current = tracks().find((t) => t.id === queue[index]) ?? null;
-      pendingSeek = null;
-      if (!current) return failedTrack('Track is unavailable.', token);
-      status = desired ? 'loading' : 'paused';
-      fade = 1;
-      gains();
-      emit();
-      if (current.kind === 'synth') {
-        soundscape.setTrack(current.recipe);
-        soundscape.resetMusic();
-        if (desired) {
-          const allowed = await soundscape.enable();
-          if (token !== generation || disposed) return false;
-          if (!allowed) {
-            status = 'blocked';
-            error = 'Enable audio to play music.';
-            emit();
-            return false;
-          }
-          if (pendingSeek !== null) {
-            soundscape.seekMusic(pendingSeek);
-            pendingSeek = null;
-          }
-          soundscape.resumeMusic();
+      if (!nextTrack) {
+        soundscape.pauseMusic();
+        clearMedia();
+        current = null;
+        index = -1;
+        status = 'idle';
+        selectionNotice = resolve().notice || 'No tracks are available for this selection.';
+        emit();
+        return false;
+      }
+      if (overlap) {
+        pendingDeck = { deck: incoming, controller };
+        incoming.weight = 0;
+        if (!prepared) await loadDeck(incoming, nextTrack, controller.signal, token);
+        throwIfSoundtrackAborted(controller.signal);
+        gains();
+        try {
+          await incoming.media.play();
+        } catch (failure) {
+          // Browsers which disallow concurrent media get a sequential transition.
+          if (failure?.name !== 'NotAllowedError') throw failure;
+          overlapDisabled = true;
+          incoming.media.pause();
+          await fadeOut(controller.signal);
+          throwIfSoundtrackAborted(controller.signal);
+          // Permission can be tied to the element, so retry on the deck which
+          // already played under the user's gesture rather than the denied one.
+          index = at;
+          current = nextTrack;
+          pendingSeek = null;
+          status = 'loading';
+          transferDeck(incoming, activeDeck, nextTrack);
+          incoming = activeDeck;
+          activeDeck.weight = 1;
+          fade = 1;
+          gains();
+          await activeDeck.media.play();
+        }
+        throwIfSoundtrackAborted(controller.signal);
+        if (token !== generation || disposed || !desired) return false;
+        pendingDeck = null;
+        if (activeDeck !== incoming) {
+          const outgoing = activeDeck;
+          activeDeck = incoming;
+          index = at;
+          current = nextTrack;
+          pendingSeek = null;
+          transition = { outgoing, controller };
           status = 'playing';
+          error = null;
+          emit();
+          const steps = Math.max(4, Math.ceil(overlapMs / 40));
+          for (let step = 1; step <= steps; step++) {
+            throwIfSoundtrackAborted(controller.signal);
+            activeDeck.weight = step / steps;
+            outgoing.weight = 1 - step / steps;
+            gains();
+            await wait(overlapMs / steps, controller.signal);
+          }
+          clearDeck(outgoing);
+          outgoing.weight = 0;
+          transition = null;
         }
       } else {
-        preparation = {
-          generation: token,
-          stage: 'reading',
-          message: 'Reading the selected audio original…',
-        };
+        if (fading) await fadeOut(controller.signal);
+        if (token !== generation) return false;
+        soundscape.pauseMusic();
+        clearMedia();
+        activeDeck.weight = 0;
+        activeDeck = incoming;
+        activeDeck.weight = 1;
+        index = at;
+        current = nextTrack;
+        pendingSeek = null;
+        status = desired ? 'loading' : 'paused';
+        fade = 1;
+        gains();
         emit();
         throwIfSoundtrackAborted(controller.signal);
-        if (token !== generation || disposed) return false;
-        const blob =
-          current.kind === 'published'
-            ? await current.readBlob({ signal: controller.signal })
-            : ownSoundtrackBlob(
-                await readAsset(current.asset.sha256, { signal: controller.signal }),
-              );
-        throwIfSoundtrackAborted(controller.signal);
-        if (current.kind === 'published') {
-          required(
-            blob instanceof Blob &&
-              blob.size > 0 &&
-              blob.size <= 4 * 1024 * 1024 &&
-              ['audio/wav', 'audio/ogg', 'audio/mpeg'].includes(blob.type),
-            'Published audio is unavailable.',
-          );
-        } else {
-          preparation = {
-            generation: token,
-            stage: 'verifying',
-            message: 'Verifying the audio original…',
-          };
-          emit();
-          const actual = await inspectMP3(blob, { signal: controller.signal });
-          required(
-            canonicalJSON(actual) === canonicalJSON(current.asset),
-            'Stored audio bytes do not match this track.',
-          );
-        }
-        if (token !== generation || disposed) return false;
-        url = URLImpl.createObjectURL(blob);
-        const expectedURL = url,
-          resource = resourceGeneration;
-        const valid = () =>
-          resource === resourceGeneration &&
-          !disposed &&
-          url === expectedURL &&
-          (!media.currentSrc || media.currentSrc === expectedURL);
-        bind('ended', () => {
-          if (valid() && desired && !suspended) void advance(true);
-        });
-        bind('error', () => {
-          if (valid()) void failedTrack('This track could not be played.', generation);
-        });
-        bind('timeupdate', () => {
-          if (valid()) emit();
-        });
-        bind('loadedmetadata', () => {
-          if (valid() && pendingSeek !== null) {
-            try {
-              media.currentTime = pendingSeek;
-            } catch {}
-            pendingSeek = null;
+        if (current.kind === 'synth') {
+          soundscape.setTrack(current.recipe);
+          soundscape.resetMusic();
+          if (desired) {
+            const allowed = await soundscape.enable();
+            if (token !== generation || disposed) return false;
+            if (!allowed) {
+              status = 'blocked';
+              error = 'Enable audio to play music.';
+              emit();
+              return false;
+            }
+            if (pendingSeek !== null) {
+              soundscape.seekMusic(pendingSeek);
+              pendingSeek = null;
+            }
+            soundscape.resumeMusic();
+            status = 'playing';
           }
-          if (valid()) emit();
-        });
-        media.preload = 'metadata';
-        media.loop = false;
-        media.src = url;
-        media.load();
-        gains();
-        if (desired) {
-          const enabled = soundscape.enable();
-          if (
-            current.kind === 'published' &&
-            (!(await enabled) || token !== generation || disposed || !desired)
-          )
-            return false;
-          await media.play();
-          await enabled;
-          if (token !== generation || disposed || !desired) return false;
-          status = 'playing';
+        } else {
+          if (prepared && prepared.deck !== activeDeck)
+            transferDeck(prepared.deck, activeDeck, current);
+          else if (!prepared) await loadDeck(activeDeck, current, controller.signal, token);
+          throwIfSoundtrackAborted(controller.signal);
+          if (token !== generation || disposed) return false;
+          if (desired) {
+            const enabled = soundscape.enable();
+            if (
+              current.kind === 'published' &&
+              (!(await enabled) || token !== generation || disposed || !desired)
+            )
+              return false;
+            await activeDeck.media.play();
+            await enabled;
+            if (token !== generation || disposed || !desired) return false;
+            status = 'playing';
+          }
         }
       }
       error = null;
+      status = desired ? 'playing' : 'paused';
       emit();
+      prepareNext();
       return status === 'playing';
     } catch (failure) {
-      if (token !== generation || disposed || failure?.name === 'AbortError') return false;
+      if (token !== generation || disposed || failure?.name === 'AbortError') {
+        return false;
+      }
+      if (pendingDeck?.controller === controller) pendingDeck = null;
+      if (incoming !== activeDeck) {
+        clearDeck(incoming);
+        failed.add(nextTrack.id);
+        notice = failure?.message || 'The next track could not be played.';
+        emit();
+        prepareNext();
+        return false;
+      }
       if (failure?.name === 'NotAllowedError') {
         status = 'blocked';
         error = 'Your browser needs an audio play action.';
@@ -437,9 +702,20 @@ export function createSoundtrackPlayer({
     let at = playableIndex(
       index + 1 < queue.length ? index + 1 : playlist?.repeat === 'all' ? 0 : -1,
     );
-    if (at < 0 && !fallbackUsed) {
+    if (
+      at < 0 &&
+      !fallbackUsed &&
+      (library.format === SOUNDTRACK_FORMAT ||
+        ['catalogue', 'catalogue-fallback', 'unavailable', 'published'].includes(playlistSource))
+    ) {
       fallbackUsed = true;
-      install(resolveSoundtrackSelection(emptySoundtrackLibrary()));
+      install(
+        playlistSource === 'published'
+          ? resolve()
+          : library.format === SOUNDTRACK_FORMAT
+            ? resolveSoundtrackSelection(emptySoundtrackLibrary())
+            : soundtrackFallbackSelection(library.listening.mode, library.listening.genres),
+      );
       at = playableIndex(0);
     }
     if (at < 0) {
@@ -467,7 +743,7 @@ export function createSoundtrackPlayer({
       desired = false;
       status = 'ended';
       soundscape.pauseMusic();
-      media.pause();
+      activeDeck.media.pause();
       emit();
       return false;
     }
@@ -540,11 +816,9 @@ export function createSoundtrackPlayer({
   function setLibrary(value) {
     const next = resolveSoundtrackLibrary(value),
       previousStored = library.selection.playlistId;
+    cancelPreload();
     library = next;
-    if (
-      override !== null &&
-      ![...next.playlists, ...BUILTIN_SOUNDTRACK_PLAYLISTS].some((p) => p.id === override)
-    )
+    if (override !== null && !soundtrackPlaylists(next).some((p) => p.id === override))
       override = null;
     if (!current || next.selection.playlistId !== previousStored)
       override = next.selection.playlistId;
@@ -556,26 +830,43 @@ export function createSoundtrackPlayer({
     return snapshot();
   }
   function setContext(value) {
-    const owned = boundedJSON(value, { maxBytes: 4096, maxNodes: 20, maxDepth: 2, maxString: 512 });
+    const owned = boundedJSON(value, {
+      maxBytes: 32768,
+      maxNodes: 1000,
+      maxDepth: 3,
+      maxString: 512,
+    });
     resolveSoundtrackSelection({ ...library, selection: { playlistId: override } }, owned);
+    cancelPreload();
+    const sceneChanged = (context.scene ?? 'gameplay') !== (owned.scene ?? 'gameplay');
     context = owned;
     const next = resolve();
-    if (next.playlist.id !== playlist?.id) pending = next;
+    if (canonicalJSON(next.playlist) !== canonicalJSON(playlist)) pending = next;
     else if (!dirty) pending = null;
+    if (sceneChanged && current && !next.playlist.trackIds.includes(current.id)) {
+      install(next);
+      void startAt(0, { fading: true });
+    }
     emit();
     return snapshot();
   }
   async function selectPlaylist(id) {
     resolveSoundtrackSelection({ ...library, selection: { playlistId: id } }, context);
     override = id;
+    notice = null;
     failed = new Set();
     fallbackUsed = false;
     install(resolve());
     return startAt(0, { fading: true });
   }
+  async function selectListening(listening) {
+    setLibrary({ ...upgradeSoundtrackLibrary(library), listening });
+    return selectPlaylist(null);
+  }
   async function play() {
     if (disposed || suspended) return false;
     desired = true;
+    notice = null;
     failed = new Set();
     fallbackUsed = false;
     if (
@@ -584,7 +875,7 @@ export function createSoundtrackPlayer({
       queue[index] === current.id &&
       status !== 'ended' &&
       status !== 'error' &&
-      (current.kind === 'synth' || url !== null)
+      (current.kind === 'synth' || activeDeck.url !== null)
     ) {
       const token = generation;
       const preparing = {
@@ -618,7 +909,7 @@ export function createSoundtrackPlayer({
             (!(await enabled) || token !== generation || disposed || !desired)
           )
             return false;
-          await media.play();
+          await activeDeck.media.play();
           await enabled;
         }
         if (token !== generation || !desired) return false;
@@ -626,6 +917,7 @@ export function createSoundtrackPlayer({
         error = null;
         gains();
         emit();
+        prepareNext();
         return true;
       } catch (failure) {
         if (token !== generation) return false;
@@ -683,7 +975,7 @@ export function createSoundtrackPlayer({
     desired = false;
     cancel();
     soundscape.pauseMusic();
-    media.pause();
+    activeDeck.media.pause();
     fade = 1;
     gains();
     status = 'paused';
@@ -694,8 +986,10 @@ export function createSoundtrackPlayer({
       Number.isFinite(seconds) && seconds >= 0 && current && seconds <= position().durationSeconds,
       'Invalid music seek position.',
     );
+    cancelPreload();
+    gains();
     if (current.kind === 'synth') pendingSeek = soundscape.seekMusic(seconds) ? null : seconds;
-    else if (media.readyState >= 1) media.currentTime = seconds;
+    else if (activeDeck.media.readyState >= 1) activeDeck.media.currentTime = seconds;
     else pendingSeek = seconds;
     emit();
   }
@@ -719,6 +1013,7 @@ export function createSoundtrackPlayer({
     if (disposed) return;
     gains();
     soundscape.update(active, theme, state);
+    maybeTransition();
     if (current?.kind === 'synth' && status === 'playing') {
       const second = Math.floor(position().positionSeconds);
       if (second !== lastPositionSecond) {
@@ -731,7 +1026,7 @@ export function createSoundtrackPlayer({
     if (disposed) return;
     cancel();
     suspended = true;
-    media.pause();
+    activeDeck.media.pause();
     soundscape.suspend();
     status = 'suspended';
     emit();
@@ -760,7 +1055,7 @@ export function createSoundtrackPlayer({
     gainLeases.clear();
     gains();
     status = 'disposed';
-    masterMedia?.dispose();
+    for (const deck of decks) deck.masterMedia?.dispose();
     emit();
   }
   soundscape.pauseMusic();
@@ -773,6 +1068,7 @@ export function createSoundtrackPlayer({
     setAuthoredTrack,
     setPublishedTrack,
     selectPlaylist,
+    selectListening,
     prepare,
     wake,
     play,

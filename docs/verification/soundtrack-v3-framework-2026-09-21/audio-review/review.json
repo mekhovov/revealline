@@ -1,0 +1,1773 @@
+{
+  "format": "revealline-functional-audio-review.v1",
+  "recordedAt": "2026-09-21T01:13:18.511704+00:00",
+  "baseRevision": "14298758fee0f7af08dd87376187568ada531d0a",
+  "headAtRecording": "283685e050219af03ed221d8cce3c8e2c46a8077",
+  "sourceIdentity": "HEAD plus explicitly hashed working-tree files; not an immutable release artifact.",
+  "reviewer": {
+    "agent": "audio_architecture",
+    "independence": "Separate functional review pass. This agent previously authored core storage/model and Couch changes, and authored the correction below; not an independent-author signoff for those modules. A separate Ukrainian_research reviewer is recording its own review."
+  },
+  "audioRecipe": {
+    "algorithm": "SHA-256 of concatenated file bytes in listed order, matching fieldKitRecipeSources(readFile).audio",
+    "files": [
+      "game/ui/audio.mjs",
+      "game/ui/published-audio.mjs",
+      "game/ui/soundtrack-player.mjs",
+      "game/ui/audio-master.mjs"
+    ],
+    "sha256": "42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98"
+  },
+  "conclusion": {
+    "functionalAudioSource": "No unresolved defect identified in the bounded audio source review after the Recording mode correction; current/next ownership, cancellation, master policy, selection and recovery covered by listed focused tests.",
+    "hostIntegration": "Pending corrected Team picture-binding successor and fresh host cohort; failed mixed-source run is retained.",
+    "musicApproval": false,
+    "recordingApproval": false,
+    "releaseApproval": false
+  },
+  "inspectedAreas": [
+    "Two-deck current/next streaming, owned object URL lifecycle, cancellation and sequential permission fallback.",
+    "Explicit music Pause versus master mute/volume and lifecycle suspend/resume; shared page ownership.",
+    "Solo/Couch menu activation, deferred library readiness and no autoplay from stale completion.",
+    "Genre/scene/theme/energy selection, unavailable genre behavior and recording-permission filters.",
+    "Trusted catalogue/hash source authority; permitted-byte completeness, restricted reference recovery, shared-hash aliases and DB5 conflict/downgrade boundaries."
+  ],
+  "findings": [
+    {
+      "id": "AUDIO-01",
+      "severity": "P1",
+      "status": "fixed-and-retested",
+      "file": "game/ui/soundtrack-player.mjs",
+      "line": 154,
+      "problem": "Recording mode filtered catalogue entries but Automatic fallback could still select and play published theme audio with no gameplay-video or Content ID authority.",
+      "observedBefore": {
+        "recordingMode": true,
+        "source": "published",
+        "playing": true,
+        "publishedReads": 1,
+        "rights": null
+      },
+      "reproduction": "Create a v3 Automatic library with recordingMode:true, gameplay scene, and setPublishedTrack({ allowed:()=>true, readBlob:()=>modeled WAV Blob }); play(). Before correction snapshot source was published and readBlob ran once. This uses modeled media and is not a listening test.",
+      "correction": "Require !library.listening?.recordingMode before published fallback. Authored procedural fallback remains available.",
+      "regressions": [
+        "Recording mode excludes published music without video and Content ID authority",
+        "enabling Recording mode retires current published audio and preserves paused intent"
+      ],
+      "tests": "game/test/soundtrack-v3-playback-recovery.test.mjs"
+    },
+    {
+      "id": "AUDIO-02",
+      "severity": "P2-test",
+      "status": "fixture-corrected-and-retested",
+      "file": "game/test/practice-media-v3-host.test.mjs",
+      "line": 127,
+      "problem": "Current host regression asserted DB4 after the intentional DB5 capability upgrade.",
+      "correction": "Expected current host version/name updated to DB5; v1/v2/v3 migration seed versions and zero-write/exact-byte assertions remain unchanged.",
+      "result": "Complete five-case file passes."
+    },
+    {
+      "id": "INTEGRATION-01",
+      "severity": "integration-gate",
+      "status": "pending-separate-binding-regeneration",
+      "problem": "All nine nonpasses in mixed-host cohort came from Team picture preparation refusing an inexact binding. Root confirmed binding themeRevision38 versus ledger40 during concurrent production regeneration.",
+      "result": "Picture guards are unchanged. No claim that the mixed host cohort passes; rerun after successor41."
+    }
+  ],
+  "checks": [
+    {
+      "id": "initial-core",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/soundtrack-player.test.mjs",
+        "game/test/soundtrack-v3-playback-recovery.test.mjs",
+        "game/test/soundtrack-reference-recovery.test.mjs",
+        "game/test/soundtrack-rights.test.mjs",
+        "game/test/soundtrack-catalogue.test.mjs",
+        "game/test/soundtrack-source.test.mjs",
+        "game/test/soundtrack-archive.test.mjs",
+        "game/test/soundtrack-share.test.mjs",
+        "game/test/soundtrack-bonus-offload.test.mjs",
+        "game/test/soundtrack-v3-compatibility.test.mjs",
+        "game/test/soundtrack-store.test.mjs",
+        "game/test/managed-media-store.test.mjs",
+        "game/test/managed-media-connection.test.mjs",
+        "game/test/couch-music-library.test.mjs",
+        "game/test/couch-music-context.test.mjs",
+        "game/test/couch-music-session.test.mjs",
+        "game/test/couch-menu-music.test.mjs",
+        "game/test/audio-master.test.mjs",
+        "game/test/audio-preferences.test.mjs"
+      ],
+      "startedAt": "2026-09-21T01:08:55.047869+00:00",
+      "finishedAt": "2026-09-21T01:08:59.727456+00:00",
+      "headAtStart": "ed039c08b68c7b2a59824a9e78f38ee5734308ef",
+      "node": "v20.19.5",
+      "exitCode": 0,
+      "durationSeconds": 4.325,
+      "summary": {
+        "tests": 261,
+        "suites": 0,
+        "pass": 261,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": "initial-core.tap.txt",
+      "logSha256": "371ead994a0f52399372326a3c0edf52dfdc63b68d7b0d2c520674503a341fb9",
+      "changedRecordedInputs": [],
+      "recordedInputsBefore": {
+        "game/app.mjs": {
+          "sha256": "ac515e6107d999468617006d1750c18f6b689d012bd1dbcc775d8f033ad9938b",
+          "bytes": 336295
+        },
+        "game/audio-preferences.mjs": {
+          "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239",
+          "bytes": 5918
+        },
+        "game/content/optional-soundtracks.json": {
+          "sha256": "5d47f66fd832d4a2d2a032175b7fe29ac476492fc29af0dca9e4f9c50f6ae571",
+          "bytes": 66
+        },
+        "game/content/soundtrack-catalogue.json": {
+          "sha256": "d77d6a1e9775f5bc8056148183936054eae01ef72efb68fe05b101f9f0cef128",
+          "bytes": 97
+        },
+        "game/content/soundtrack-catalogue.mjs": {
+          "sha256": "521b829645b3574d124bdbb49273e5b85a57f50ce9bb9643450076da69186995",
+          "bytes": 228
+        },
+        "game/couch/couch-music-context.mjs": {
+          "sha256": "a447bb96044f28cd8bf3b0f04a623e1fb4c0c8ec0f347776eddc5f081a58cfb7",
+          "bytes": 2640
+        },
+        "game/couch/couch-music-host.mjs": {
+          "sha256": "0a88e5f5e3b49e36a4b182d3283b0ad4fcd69ce06016b8c492f32a213f5a4adb",
+          "bytes": 13236
+        },
+        "game/couch/couch-music-library.mjs": {
+          "sha256": "030a76a886d925e98e2726d33b5f832c25fdb2032b1fc08269c7387c50adef20",
+          "bytes": 7886
+        },
+        "game/couch/couch-music-session.mjs": {
+          "sha256": "cabc51a7250c93ba17aa20d7cb3421fab745cfe63f6b78a7b9375c857bb45eaf",
+          "bytes": 4977
+        },
+        "game/couch/couch.mjs": {
+          "sha256": "70c686ed07d2bc436969a4cb2e9603ae30fb730eee924370d24a3d532399d223",
+          "bytes": 83545
+        },
+        "game/couch/relay-rescue.mjs": {
+          "sha256": "86725d283838d4d636ed6d805d103a0cc0c374d695d363358873653bbe244fc0",
+          "bytes": 124853
+        },
+        "game/managed-media-store.mjs": {
+          "sha256": "1051aebfc257aaa1596f67b45e15dbccfa6fad36ee58ee47a09ade507bc01500",
+          "bytes": 39202
+        },
+        "game/mp3.mjs": {
+          "sha256": "d4f36f5f7760fc8d6482c716f944ff2e4df931a74e8c3f6f1684b90b7410d92a",
+          "bytes": 8979
+        },
+        "game/soundtrack-album-download.mjs": {
+          "sha256": "fc4d942f71ea10c9a89e4ff83ddc6058d1813012be0459cf4c88f84b6fe37b40",
+          "bytes": 8412
+        },
+        "game/soundtrack-albums.mjs": {
+          "sha256": "b47b837041318f8561577af7d189eabff9d678edf62f4b933a42f7225c5a66da",
+          "bytes": 10932
+        },
+        "game/soundtrack-archive.mjs": {
+          "sha256": "f463131be133e57e2c7bc23a14cd9e16b310d9b714006ea47c5d44cbe1b6cebf",
+          "bytes": 5240
+        },
+        "game/soundtrack-bundle.mjs": {
+          "sha256": "1bdd70af4a316ea5333135f0f07ccd0e74b64e179397801c92bf809c2cd66fea",
+          "bytes": 11884
+        },
+        "game/soundtrack-rights.mjs": {
+          "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04",
+          "bytes": 3755
+        },
+        "game/soundtrack-share.mjs": {
+          "sha256": "44cc5e9bb5b5c7008fa48c87c1089da64a2ca1333de6a2b137bd10f7080b5c07",
+          "bytes": 5593
+        },
+        "game/soundtrack-source.mjs": {
+          "sha256": "b1a1fd56262bacca1a75ac9c88b7106bc43f2c91eb34cad4ca80591dd4dff3f7",
+          "bytes": 3895
+        },
+        "game/soundtrack-store-legacy.mjs": {
+          "sha256": "9a575c14632a5d566d6cd2402d1e3f909a694fd0cf504ddb3669d991b681e37d",
+          "bytes": 9377
+        },
+        "game/soundtrack-store.mjs": {
+          "sha256": "24377cdeda0a2755f964153f89cfe6a9bcb3eeb14218c12cf11da3f35ada5eda",
+          "bytes": 1317
+        },
+        "game/soundtrack.mjs": {
+          "sha256": "6f844028e0473cd438ed584a59dc9c2fb7cbbe85dbb4eed40d75f28815e7127f",
+          "bytes": 33938
+        },
+        "game/test/audio-master.test.mjs": {
+          "sha256": "29b24158d719f7ca972922ae2a6b6a90c773863b2fefcec8047c39d93d270672",
+          "bytes": 9813
+        },
+        "game/test/audio-preferences.test.mjs": {
+          "sha256": "6d46a1abb184d31485bf9d20daa9e2dcd260ad9850a4e2faf3f15a7cc5e711bf",
+          "bytes": 16218
+        },
+        "game/test/couch-menu-music.test.mjs": {
+          "sha256": "4dffa84ac4aebcea9d8c17b287f0f045a808fb8d9c97e816814276d0d8307735",
+          "bytes": 5924
+        },
+        "game/test/couch-music-context.test.mjs": {
+          "sha256": "8d2c8df6d58bec6b707fe572eb8a83a9f25da84fd6ca36444d8b0c85cedc280b",
+          "bytes": 4303
+        },
+        "game/test/couch-music-library.test.mjs": {
+          "sha256": "32c5d7c4f22c5f82de05fb975aa9b00ac64edeb970686eae31791d9af1909a84",
+          "bytes": 21586
+        },
+        "game/test/couch-music-session.test.mjs": {
+          "sha256": "b98267ca2e1552bc07d0812dcbf24b4b97d204e6099533a9fc7a5be3ad0f37a4",
+          "bytes": 13445
+        },
+        "game/test/helpers/soundtrack-albums.mjs": {
+          "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+          "bytes": 1805
+        },
+        "game/test/helpers/soundtrack-audio.mjs": {
+          "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+          "bytes": 3039
+        },
+        "game/test/helpers/soundtrack-fixtures.mjs": {
+          "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+          "bytes": 2032
+        },
+        "game/test/managed-media-connection.test.mjs": {
+          "sha256": "2db3f507bf541784f77ace096946e790f3386d19e15ccb95b8bc64639f97fded",
+          "bytes": 12816
+        },
+        "game/test/managed-media-store.test.mjs": {
+          "sha256": "459fa67dcb452781d68e1be5889bde582426d467cd28cb0ce479a24675fcdd41",
+          "bytes": 20553
+        },
+        "game/test/soundtrack-archive.test.mjs": {
+          "sha256": "b23d90a6d451438f31fd2509649a46836fc04e9b8441fc6c941bf640e4be991a",
+          "bytes": 5479
+        },
+        "game/test/soundtrack-bonus-offload.test.mjs": {
+          "sha256": "b5227f51e92e5a5e3e48f37e39ec59bbdf802123689d7e11eb7112dff9897704",
+          "bytes": 14267
+        },
+        "game/test/soundtrack-catalogue.test.mjs": {
+          "sha256": "bbf422f63f71d497a91dc215d6f5861af9deaaa72f58398394388ff9ea840fae",
+          "bytes": 21210
+        },
+        "game/test/soundtrack-player.test.mjs": {
+          "sha256": "8f4f4e945d258a238d7010d5a3fff40c8c5edade8da21bab4f2b0243a33c44dd",
+          "bytes": 36460
+        },
+        "game/test/soundtrack-reference-recovery.test.mjs": {
+          "sha256": "fad2eb706ae62f26b3a362733d21bc9880a46d38be9611978eeef92bd5b27016",
+          "bytes": 9351
+        },
+        "game/test/soundtrack-rights.test.mjs": {
+          "sha256": "6916f9c6dbf0ab45a7af0166505361d2a0c35018449014c4f5381ebfb8477a1c",
+          "bytes": 16441
+        },
+        "game/test/soundtrack-share.test.mjs": {
+          "sha256": "ce067c0069b9eada3a8fdcfdda1906e56d1b2238991b2b174f00013e4857e9f3",
+          "bytes": 2552
+        },
+        "game/test/soundtrack-source.test.mjs": {
+          "sha256": "25e55e7662d0d3af02376808ce426cd573ff40816785a04aedb29d404c49c6ba",
+          "bytes": 3447
+        },
+        "game/test/soundtrack-store.test.mjs": {
+          "sha256": "d19c676208d2ba9a6628ef64f0136288bdbcae0c08a0c4f2dbaddafeaaa899aa",
+          "bytes": 8207
+        },
+        "game/test/soundtrack-v3-compatibility.test.mjs": {
+          "sha256": "0c578773930e19fa2de94b2f56f79d125739143e8f68d655ed74325c74aa2cc2",
+          "bytes": 4187
+        },
+        "game/test/soundtrack-v3-playback-recovery.test.mjs": {
+          "sha256": "61e9dd4787a7a798196552b6723e1a2d4c779373bdb4923e3f80921567b4995c",
+          "bytes": 2514
+        },
+        "game/ui/audio-master.mjs": {
+          "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+          "bytes": 5277
+        },
+        "game/ui/audio.mjs": {
+          "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+          "bytes": 26731
+        },
+        "game/ui/music.mjs": {
+          "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda",
+          "bytes": 7050
+        },
+        "game/ui/published-audio.mjs": {
+          "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72",
+          "bytes": 5773
+        },
+        "game/ui/soundtrack-panel.mjs": {
+          "sha256": "1d0386e7193f2d79f0263fbeddd3c424109e9844a0ce3b7f81337a4c25b0ae82",
+          "bytes": 83656
+        },
+        "game/ui/soundtrack-player.mjs": {
+          "sha256": "5c33cc643378a0a159a5ce0b3d8b948f7e01e805d84bbbbee8c2b21a2604622d",
+          "bytes": 34010
+        }
+      },
+      "recordedInputsAfter": {
+        "game/app.mjs": {
+          "sha256": "ac515e6107d999468617006d1750c18f6b689d012bd1dbcc775d8f033ad9938b",
+          "bytes": 336295
+        },
+        "game/audio-preferences.mjs": {
+          "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239",
+          "bytes": 5918
+        },
+        "game/content/optional-soundtracks.json": {
+          "sha256": "5d47f66fd832d4a2d2a032175b7fe29ac476492fc29af0dca9e4f9c50f6ae571",
+          "bytes": 66
+        },
+        "game/content/soundtrack-catalogue.json": {
+          "sha256": "d77d6a1e9775f5bc8056148183936054eae01ef72efb68fe05b101f9f0cef128",
+          "bytes": 97
+        },
+        "game/content/soundtrack-catalogue.mjs": {
+          "sha256": "521b829645b3574d124bdbb49273e5b85a57f50ce9bb9643450076da69186995",
+          "bytes": 228
+        },
+        "game/couch/couch-music-context.mjs": {
+          "sha256": "a447bb96044f28cd8bf3b0f04a623e1fb4c0c8ec0f347776eddc5f081a58cfb7",
+          "bytes": 2640
+        },
+        "game/couch/couch-music-host.mjs": {
+          "sha256": "0a88e5f5e3b49e36a4b182d3283b0ad4fcd69ce06016b8c492f32a213f5a4adb",
+          "bytes": 13236
+        },
+        "game/couch/couch-music-library.mjs": {
+          "sha256": "030a76a886d925e98e2726d33b5f832c25fdb2032b1fc08269c7387c50adef20",
+          "bytes": 7886
+        },
+        "game/couch/couch-music-session.mjs": {
+          "sha256": "cabc51a7250c93ba17aa20d7cb3421fab745cfe63f6b78a7b9375c857bb45eaf",
+          "bytes": 4977
+        },
+        "game/couch/couch.mjs": {
+          "sha256": "70c686ed07d2bc436969a4cb2e9603ae30fb730eee924370d24a3d532399d223",
+          "bytes": 83545
+        },
+        "game/couch/relay-rescue.mjs": {
+          "sha256": "86725d283838d4d636ed6d805d103a0cc0c374d695d363358873653bbe244fc0",
+          "bytes": 124853
+        },
+        "game/managed-media-store.mjs": {
+          "sha256": "1051aebfc257aaa1596f67b45e15dbccfa6fad36ee58ee47a09ade507bc01500",
+          "bytes": 39202
+        },
+        "game/mp3.mjs": {
+          "sha256": "d4f36f5f7760fc8d6482c716f944ff2e4df931a74e8c3f6f1684b90b7410d92a",
+          "bytes": 8979
+        },
+        "game/soundtrack-album-download.mjs": {
+          "sha256": "fc4d942f71ea10c9a89e4ff83ddc6058d1813012be0459cf4c88f84b6fe37b40",
+          "bytes": 8412
+        },
+        "game/soundtrack-albums.mjs": {
+          "sha256": "b47b837041318f8561577af7d189eabff9d678edf62f4b933a42f7225c5a66da",
+          "bytes": 10932
+        },
+        "game/soundtrack-archive.mjs": {
+          "sha256": "f463131be133e57e2c7bc23a14cd9e16b310d9b714006ea47c5d44cbe1b6cebf",
+          "bytes": 5240
+        },
+        "game/soundtrack-bundle.mjs": {
+          "sha256": "1bdd70af4a316ea5333135f0f07ccd0e74b64e179397801c92bf809c2cd66fea",
+          "bytes": 11884
+        },
+        "game/soundtrack-rights.mjs": {
+          "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04",
+          "bytes": 3755
+        },
+        "game/soundtrack-share.mjs": {
+          "sha256": "44cc5e9bb5b5c7008fa48c87c1089da64a2ca1333de6a2b137bd10f7080b5c07",
+          "bytes": 5593
+        },
+        "game/soundtrack-source.mjs": {
+          "sha256": "b1a1fd56262bacca1a75ac9c88b7106bc43f2c91eb34cad4ca80591dd4dff3f7",
+          "bytes": 3895
+        },
+        "game/soundtrack-store-legacy.mjs": {
+          "sha256": "9a575c14632a5d566d6cd2402d1e3f909a694fd0cf504ddb3669d991b681e37d",
+          "bytes": 9377
+        },
+        "game/soundtrack-store.mjs": {
+          "sha256": "24377cdeda0a2755f964153f89cfe6a9bcb3eeb14218c12cf11da3f35ada5eda",
+          "bytes": 1317
+        },
+        "game/soundtrack.mjs": {
+          "sha256": "6f844028e0473cd438ed584a59dc9c2fb7cbbe85dbb4eed40d75f28815e7127f",
+          "bytes": 33938
+        },
+        "game/test/audio-master.test.mjs": {
+          "sha256": "29b24158d719f7ca972922ae2a6b6a90c773863b2fefcec8047c39d93d270672",
+          "bytes": 9813
+        },
+        "game/test/audio-preferences.test.mjs": {
+          "sha256": "6d46a1abb184d31485bf9d20daa9e2dcd260ad9850a4e2faf3f15a7cc5e711bf",
+          "bytes": 16218
+        },
+        "game/test/couch-menu-music.test.mjs": {
+          "sha256": "4dffa84ac4aebcea9d8c17b287f0f045a808fb8d9c97e816814276d0d8307735",
+          "bytes": 5924
+        },
+        "game/test/couch-music-context.test.mjs": {
+          "sha256": "8d2c8df6d58bec6b707fe572eb8a83a9f25da84fd6ca36444d8b0c85cedc280b",
+          "bytes": 4303
+        },
+        "game/test/couch-music-library.test.mjs": {
+          "sha256": "32c5d7c4f22c5f82de05fb975aa9b00ac64edeb970686eae31791d9af1909a84",
+          "bytes": 21586
+        },
+        "game/test/couch-music-session.test.mjs": {
+          "sha256": "b98267ca2e1552bc07d0812dcbf24b4b97d204e6099533a9fc7a5be3ad0f37a4",
+          "bytes": 13445
+        },
+        "game/test/helpers/soundtrack-albums.mjs": {
+          "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+          "bytes": 1805
+        },
+        "game/test/helpers/soundtrack-audio.mjs": {
+          "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+          "bytes": 3039
+        },
+        "game/test/helpers/soundtrack-fixtures.mjs": {
+          "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+          "bytes": 2032
+        },
+        "game/test/managed-media-connection.test.mjs": {
+          "sha256": "2db3f507bf541784f77ace096946e790f3386d19e15ccb95b8bc64639f97fded",
+          "bytes": 12816
+        },
+        "game/test/managed-media-store.test.mjs": {
+          "sha256": "459fa67dcb452781d68e1be5889bde582426d467cd28cb0ce479a24675fcdd41",
+          "bytes": 20553
+        },
+        "game/test/soundtrack-archive.test.mjs": {
+          "sha256": "b23d90a6d451438f31fd2509649a46836fc04e9b8441fc6c941bf640e4be991a",
+          "bytes": 5479
+        },
+        "game/test/soundtrack-bonus-offload.test.mjs": {
+          "sha256": "b5227f51e92e5a5e3e48f37e39ec59bbdf802123689d7e11eb7112dff9897704",
+          "bytes": 14267
+        },
+        "game/test/soundtrack-catalogue.test.mjs": {
+          "sha256": "bbf422f63f71d497a91dc215d6f5861af9deaaa72f58398394388ff9ea840fae",
+          "bytes": 21210
+        },
+        "game/test/soundtrack-player.test.mjs": {
+          "sha256": "8f4f4e945d258a238d7010d5a3fff40c8c5edade8da21bab4f2b0243a33c44dd",
+          "bytes": 36460
+        },
+        "game/test/soundtrack-reference-recovery.test.mjs": {
+          "sha256": "fad2eb706ae62f26b3a362733d21bc9880a46d38be9611978eeef92bd5b27016",
+          "bytes": 9351
+        },
+        "game/test/soundtrack-rights.test.mjs": {
+          "sha256": "6916f9c6dbf0ab45a7af0166505361d2a0c35018449014c4f5381ebfb8477a1c",
+          "bytes": 16441
+        },
+        "game/test/soundtrack-share.test.mjs": {
+          "sha256": "ce067c0069b9eada3a8fdcfdda1906e56d1b2238991b2b174f00013e4857e9f3",
+          "bytes": 2552
+        },
+        "game/test/soundtrack-source.test.mjs": {
+          "sha256": "25e55e7662d0d3af02376808ce426cd573ff40816785a04aedb29d404c49c6ba",
+          "bytes": 3447
+        },
+        "game/test/soundtrack-store.test.mjs": {
+          "sha256": "d19c676208d2ba9a6628ef64f0136288bdbcae0c08a0c4f2dbaddafeaaa899aa",
+          "bytes": 8207
+        },
+        "game/test/soundtrack-v3-compatibility.test.mjs": {
+          "sha256": "0c578773930e19fa2de94b2f56f79d125739143e8f68d655ed74325c74aa2cc2",
+          "bytes": 4187
+        },
+        "game/test/soundtrack-v3-playback-recovery.test.mjs": {
+          "sha256": "61e9dd4787a7a798196552b6723e1a2d4c779373bdb4923e3f80921567b4995c",
+          "bytes": 2514
+        },
+        "game/ui/audio-master.mjs": {
+          "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+          "bytes": 5277
+        },
+        "game/ui/audio.mjs": {
+          "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+          "bytes": 26731
+        },
+        "game/ui/music.mjs": {
+          "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda",
+          "bytes": 7050
+        },
+        "game/ui/published-audio.mjs": {
+          "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72",
+          "bytes": 5773
+        },
+        "game/ui/soundtrack-panel.mjs": {
+          "sha256": "1d0386e7193f2d79f0263fbeddd3c424109e9844a0ce3b7f81337a4c25b0ae82",
+          "bytes": 83656
+        },
+        "game/ui/soundtrack-player.mjs": {
+          "sha256": "5c33cc643378a0a159a5ce0b3d8b948f7e01e805d84bbbbee8c2b21a2604622d",
+          "bytes": 34010
+        }
+      }
+    },
+    {
+      "id": "mixed-host",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/soundtrack-panel.test.mjs"
+      ],
+      "startedAt": "2026-09-21T01:09:58.275252+00:00",
+      "finishedAt": "2026-09-21T01:11:23.321015+00:00",
+      "headAtStart": "283685e050219af03ed221d8cce3c8e2c46a8077",
+      "node": "v20.19.5",
+      "exitCode": 1,
+      "durationSeconds": 85.012,
+      "summary": {
+        "tests": 127,
+        "suites": 0,
+        "pass": 118,
+        "fail": 9,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": "mixed-host.tap.txt",
+      "logSha256": "a4b830e90af89ec649caf840ba367336208b22c7f3a0251330c92eff1fdefe00",
+      "changedRecordedInputs": [
+        "game/test/soundtrack-v3-playback-recovery.test.mjs",
+        "game/ui/soundtrack-player.mjs"
+      ],
+      "recordedInputsBefore": {
+        "game/app.mjs": {
+          "sha256": "ac515e6107d999468617006d1750c18f6b689d012bd1dbcc775d8f033ad9938b",
+          "bytes": 336295
+        },
+        "game/audio-preferences.mjs": {
+          "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239",
+          "bytes": 5918
+        },
+        "game/content/optional-soundtracks.json": {
+          "sha256": "5d47f66fd832d4a2d2a032175b7fe29ac476492fc29af0dca9e4f9c50f6ae571",
+          "bytes": 66
+        },
+        "game/content/soundtrack-catalogue.json": {
+          "sha256": "d77d6a1e9775f5bc8056148183936054eae01ef72efb68fe05b101f9f0cef128",
+          "bytes": 97
+        },
+        "game/content/soundtrack-catalogue.mjs": {
+          "sha256": "521b829645b3574d124bdbb49273e5b85a57f50ce9bb9643450076da69186995",
+          "bytes": 228
+        },
+        "game/couch/couch-music-context.mjs": {
+          "sha256": "a447bb96044f28cd8bf3b0f04a623e1fb4c0c8ec0f347776eddc5f081a58cfb7",
+          "bytes": 2640
+        },
+        "game/couch/couch-music-host.mjs": {
+          "sha256": "0a88e5f5e3b49e36a4b182d3283b0ad4fcd69ce06016b8c492f32a213f5a4adb",
+          "bytes": 13236
+        },
+        "game/couch/couch-music-library.mjs": {
+          "sha256": "030a76a886d925e98e2726d33b5f832c25fdb2032b1fc08269c7387c50adef20",
+          "bytes": 7886
+        },
+        "game/couch/couch-music-session.mjs": {
+          "sha256": "cabc51a7250c93ba17aa20d7cb3421fab745cfe63f6b78a7b9375c857bb45eaf",
+          "bytes": 4977
+        },
+        "game/couch/couch.mjs": {
+          "sha256": "70c686ed07d2bc436969a4cb2e9603ae30fb730eee924370d24a3d532399d223",
+          "bytes": 83545
+        },
+        "game/couch/relay-rescue.mjs": {
+          "sha256": "86725d283838d4d636ed6d805d103a0cc0c374d695d363358873653bbe244fc0",
+          "bytes": 124853
+        },
+        "game/managed-media-store.mjs": {
+          "sha256": "1051aebfc257aaa1596f67b45e15dbccfa6fad36ee58ee47a09ade507bc01500",
+          "bytes": 39202
+        },
+        "game/mp3.mjs": {
+          "sha256": "d4f36f5f7760fc8d6482c716f944ff2e4df931a74e8c3f6f1684b90b7410d92a",
+          "bytes": 8979
+        },
+        "game/soundtrack-album-download.mjs": {
+          "sha256": "fc4d942f71ea10c9a89e4ff83ddc6058d1813012be0459cf4c88f84b6fe37b40",
+          "bytes": 8412
+        },
+        "game/soundtrack-albums.mjs": {
+          "sha256": "b47b837041318f8561577af7d189eabff9d678edf62f4b933a42f7225c5a66da",
+          "bytes": 10932
+        },
+        "game/soundtrack-archive.mjs": {
+          "sha256": "f463131be133e57e2c7bc23a14cd9e16b310d9b714006ea47c5d44cbe1b6cebf",
+          "bytes": 5240
+        },
+        "game/soundtrack-bundle.mjs": {
+          "sha256": "1bdd70af4a316ea5333135f0f07ccd0e74b64e179397801c92bf809c2cd66fea",
+          "bytes": 11884
+        },
+        "game/soundtrack-rights.mjs": {
+          "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04",
+          "bytes": 3755
+        },
+        "game/soundtrack-share.mjs": {
+          "sha256": "44cc5e9bb5b5c7008fa48c87c1089da64a2ca1333de6a2b137bd10f7080b5c07",
+          "bytes": 5593
+        },
+        "game/soundtrack-source.mjs": {
+          "sha256": "b1a1fd56262bacca1a75ac9c88b7106bc43f2c91eb34cad4ca80591dd4dff3f7",
+          "bytes": 3895
+        },
+        "game/soundtrack-store-legacy.mjs": {
+          "sha256": "9a575c14632a5d566d6cd2402d1e3f909a694fd0cf504ddb3669d991b681e37d",
+          "bytes": 9377
+        },
+        "game/soundtrack-store.mjs": {
+          "sha256": "24377cdeda0a2755f964153f89cfe6a9bcb3eeb14218c12cf11da3f35ada5eda",
+          "bytes": 1317
+        },
+        "game/soundtrack.mjs": {
+          "sha256": "6f844028e0473cd438ed584a59dc9c2fb7cbbe85dbb4eed40d75f28815e7127f",
+          "bytes": 33938
+        },
+        "game/test/audio-master.test.mjs": {
+          "sha256": "29b24158d719f7ca972922ae2a6b6a90c773863b2fefcec8047c39d93d270672",
+          "bytes": 9813
+        },
+        "game/test/audio-preferences.test.mjs": {
+          "sha256": "6d46a1abb184d31485bf9d20daa9e2dcd260ad9850a4e2faf3f15a7cc5e711bf",
+          "bytes": 16218
+        },
+        "game/test/couch-audio-master.test.mjs": {
+          "sha256": "99a3c05f0b305f53ac145a39a2d657ce8d6cb759f2af08f3dc1131069ed53092",
+          "bytes": 46366
+        },
+        "game/test/couch-menu-music.test.mjs": {
+          "sha256": "4dffa84ac4aebcea9d8c17b287f0f045a808fb8d9c97e816814276d0d8307735",
+          "bytes": 5924
+        },
+        "game/test/couch-music-context.test.mjs": {
+          "sha256": "8d2c8df6d58bec6b707fe572eb8a83a9f25da84fd6ca36444d8b0c85cedc280b",
+          "bytes": 4303
+        },
+        "game/test/couch-music-library.test.mjs": {
+          "sha256": "32c5d7c4f22c5f82de05fb975aa9b00ac64edeb970686eae31791d9af1909a84",
+          "bytes": 21586
+        },
+        "game/test/couch-music-session.test.mjs": {
+          "sha256": "b98267ca2e1552bc07d0812dcbf24b4b97d204e6099533a9fc7a5be3ad0f37a4",
+          "bytes": 13445
+        },
+        "game/test/helpers/couch-host.mjs": {
+          "sha256": "a303cdbebe136840400132293c06d0c8839efdabac447cfbe27e506611682901",
+          "bytes": 10064
+        },
+        "game/test/helpers/soundtrack-albums.mjs": {
+          "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+          "bytes": 1805
+        },
+        "game/test/helpers/soundtrack-audio.mjs": {
+          "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+          "bytes": 3039
+        },
+        "game/test/helpers/soundtrack-fixtures.mjs": {
+          "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+          "bytes": 2032
+        },
+        "game/test/managed-media-connection.test.mjs": {
+          "sha256": "2db3f507bf541784f77ace096946e790f3386d19e15ccb95b8bc64639f97fded",
+          "bytes": 12816
+        },
+        "game/test/managed-media-store.test.mjs": {
+          "sha256": "459fa67dcb452781d68e1be5889bde582426d467cd28cb0ce479a24675fcdd41",
+          "bytes": 20553
+        },
+        "game/test/soundtrack-archive.test.mjs": {
+          "sha256": "b23d90a6d451438f31fd2509649a46836fc04e9b8441fc6c941bf640e4be991a",
+          "bytes": 5479
+        },
+        "game/test/soundtrack-bonus-offload.test.mjs": {
+          "sha256": "b5227f51e92e5a5e3e48f37e39ec59bbdf802123689d7e11eb7112dff9897704",
+          "bytes": 14267
+        },
+        "game/test/soundtrack-catalogue.test.mjs": {
+          "sha256": "bbf422f63f71d497a91dc215d6f5861af9deaaa72f58398394388ff9ea840fae",
+          "bytes": 21210
+        },
+        "game/test/soundtrack-host.test.mjs": {
+          "sha256": "38c2e5a6043175fced57a011d102265a7f15c93a0a790a3c447bd7585f3f7ee5",
+          "bytes": 23997
+        },
+        "game/test/soundtrack-panel.test.mjs": {
+          "sha256": "e70219a1eeb165f77b8453aadb517b48c362c77e325f2e7cdddacd839febbea9",
+          "bytes": 99157
+        },
+        "game/test/soundtrack-player.test.mjs": {
+          "sha256": "8f4f4e945d258a238d7010d5a3fff40c8c5edade8da21bab4f2b0243a33c44dd",
+          "bytes": 36460
+        },
+        "game/test/soundtrack-reference-recovery.test.mjs": {
+          "sha256": "fad2eb706ae62f26b3a362733d21bc9880a46d38be9611978eeef92bd5b27016",
+          "bytes": 9351
+        },
+        "game/test/soundtrack-rights.test.mjs": {
+          "sha256": "6916f9c6dbf0ab45a7af0166505361d2a0c35018449014c4f5381ebfb8477a1c",
+          "bytes": 16441
+        },
+        "game/test/soundtrack-share.test.mjs": {
+          "sha256": "ce067c0069b9eada3a8fdcfdda1906e56d1b2238991b2b174f00013e4857e9f3",
+          "bytes": 2552
+        },
+        "game/test/soundtrack-source.test.mjs": {
+          "sha256": "25e55e7662d0d3af02376808ce426cd573ff40816785a04aedb29d404c49c6ba",
+          "bytes": 3447
+        },
+        "game/test/soundtrack-store.test.mjs": {
+          "sha256": "d19c676208d2ba9a6628ef64f0136288bdbcae0c08a0c4f2dbaddafeaaa899aa",
+          "bytes": 8207
+        },
+        "game/test/soundtrack-v3-compatibility.test.mjs": {
+          "sha256": "0c578773930e19fa2de94b2f56f79d125739143e8f68d655ed74325c74aa2cc2",
+          "bytes": 4187
+        },
+        "game/test/soundtrack-v3-playback-recovery.test.mjs": {
+          "sha256": "61e9dd4787a7a798196552b6723e1a2d4c779373bdb4923e3f80921567b4995c",
+          "bytes": 2514
+        },
+        "game/ui/audio-master.mjs": {
+          "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+          "bytes": 5277
+        },
+        "game/ui/audio.mjs": {
+          "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+          "bytes": 26731
+        },
+        "game/ui/music.mjs": {
+          "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda",
+          "bytes": 7050
+        },
+        "game/ui/published-audio.mjs": {
+          "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72",
+          "bytes": 5773
+        },
+        "game/ui/soundtrack-panel.mjs": {
+          "sha256": "1d0386e7193f2d79f0263fbeddd3c424109e9844a0ce3b7f81337a4c25b0ae82",
+          "bytes": 83656
+        },
+        "game/ui/soundtrack-player.mjs": {
+          "sha256": "5c33cc643378a0a159a5ce0b3d8b948f7e01e805d84bbbbee8c2b21a2604622d",
+          "bytes": 34010
+        }
+      },
+      "recordedInputsAfter": {
+        "game/app.mjs": {
+          "sha256": "ac515e6107d999468617006d1750c18f6b689d012bd1dbcc775d8f033ad9938b",
+          "bytes": 336295
+        },
+        "game/audio-preferences.mjs": {
+          "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239",
+          "bytes": 5918
+        },
+        "game/content/optional-soundtracks.json": {
+          "sha256": "5d47f66fd832d4a2d2a032175b7fe29ac476492fc29af0dca9e4f9c50f6ae571",
+          "bytes": 66
+        },
+        "game/content/soundtrack-catalogue.json": {
+          "sha256": "d77d6a1e9775f5bc8056148183936054eae01ef72efb68fe05b101f9f0cef128",
+          "bytes": 97
+        },
+        "game/content/soundtrack-catalogue.mjs": {
+          "sha256": "521b829645b3574d124bdbb49273e5b85a57f50ce9bb9643450076da69186995",
+          "bytes": 228
+        },
+        "game/couch/couch-music-context.mjs": {
+          "sha256": "a447bb96044f28cd8bf3b0f04a623e1fb4c0c8ec0f347776eddc5f081a58cfb7",
+          "bytes": 2640
+        },
+        "game/couch/couch-music-host.mjs": {
+          "sha256": "0a88e5f5e3b49e36a4b182d3283b0ad4fcd69ce06016b8c492f32a213f5a4adb",
+          "bytes": 13236
+        },
+        "game/couch/couch-music-library.mjs": {
+          "sha256": "030a76a886d925e98e2726d33b5f832c25fdb2032b1fc08269c7387c50adef20",
+          "bytes": 7886
+        },
+        "game/couch/couch-music-session.mjs": {
+          "sha256": "cabc51a7250c93ba17aa20d7cb3421fab745cfe63f6b78a7b9375c857bb45eaf",
+          "bytes": 4977
+        },
+        "game/couch/couch.mjs": {
+          "sha256": "70c686ed07d2bc436969a4cb2e9603ae30fb730eee924370d24a3d532399d223",
+          "bytes": 83545
+        },
+        "game/couch/relay-rescue.mjs": {
+          "sha256": "86725d283838d4d636ed6d805d103a0cc0c374d695d363358873653bbe244fc0",
+          "bytes": 124853
+        },
+        "game/managed-media-store.mjs": {
+          "sha256": "1051aebfc257aaa1596f67b45e15dbccfa6fad36ee58ee47a09ade507bc01500",
+          "bytes": 39202
+        },
+        "game/mp3.mjs": {
+          "sha256": "d4f36f5f7760fc8d6482c716f944ff2e4df931a74e8c3f6f1684b90b7410d92a",
+          "bytes": 8979
+        },
+        "game/soundtrack-album-download.mjs": {
+          "sha256": "fc4d942f71ea10c9a89e4ff83ddc6058d1813012be0459cf4c88f84b6fe37b40",
+          "bytes": 8412
+        },
+        "game/soundtrack-albums.mjs": {
+          "sha256": "b47b837041318f8561577af7d189eabff9d678edf62f4b933a42f7225c5a66da",
+          "bytes": 10932
+        },
+        "game/soundtrack-archive.mjs": {
+          "sha256": "f463131be133e57e2c7bc23a14cd9e16b310d9b714006ea47c5d44cbe1b6cebf",
+          "bytes": 5240
+        },
+        "game/soundtrack-bundle.mjs": {
+          "sha256": "1bdd70af4a316ea5333135f0f07ccd0e74b64e179397801c92bf809c2cd66fea",
+          "bytes": 11884
+        },
+        "game/soundtrack-rights.mjs": {
+          "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04",
+          "bytes": 3755
+        },
+        "game/soundtrack-share.mjs": {
+          "sha256": "44cc5e9bb5b5c7008fa48c87c1089da64a2ca1333de6a2b137bd10f7080b5c07",
+          "bytes": 5593
+        },
+        "game/soundtrack-source.mjs": {
+          "sha256": "b1a1fd56262bacca1a75ac9c88b7106bc43f2c91eb34cad4ca80591dd4dff3f7",
+          "bytes": 3895
+        },
+        "game/soundtrack-store-legacy.mjs": {
+          "sha256": "9a575c14632a5d566d6cd2402d1e3f909a694fd0cf504ddb3669d991b681e37d",
+          "bytes": 9377
+        },
+        "game/soundtrack-store.mjs": {
+          "sha256": "24377cdeda0a2755f964153f89cfe6a9bcb3eeb14218c12cf11da3f35ada5eda",
+          "bytes": 1317
+        },
+        "game/soundtrack.mjs": {
+          "sha256": "6f844028e0473cd438ed584a59dc9c2fb7cbbe85dbb4eed40d75f28815e7127f",
+          "bytes": 33938
+        },
+        "game/test/audio-master.test.mjs": {
+          "sha256": "29b24158d719f7ca972922ae2a6b6a90c773863b2fefcec8047c39d93d270672",
+          "bytes": 9813
+        },
+        "game/test/audio-preferences.test.mjs": {
+          "sha256": "6d46a1abb184d31485bf9d20daa9e2dcd260ad9850a4e2faf3f15a7cc5e711bf",
+          "bytes": 16218
+        },
+        "game/test/couch-audio-master.test.mjs": {
+          "sha256": "99a3c05f0b305f53ac145a39a2d657ce8d6cb759f2af08f3dc1131069ed53092",
+          "bytes": 46366
+        },
+        "game/test/couch-menu-music.test.mjs": {
+          "sha256": "4dffa84ac4aebcea9d8c17b287f0f045a808fb8d9c97e816814276d0d8307735",
+          "bytes": 5924
+        },
+        "game/test/couch-music-context.test.mjs": {
+          "sha256": "8d2c8df6d58bec6b707fe572eb8a83a9f25da84fd6ca36444d8b0c85cedc280b",
+          "bytes": 4303
+        },
+        "game/test/couch-music-library.test.mjs": {
+          "sha256": "32c5d7c4f22c5f82de05fb975aa9b00ac64edeb970686eae31791d9af1909a84",
+          "bytes": 21586
+        },
+        "game/test/couch-music-session.test.mjs": {
+          "sha256": "b98267ca2e1552bc07d0812dcbf24b4b97d204e6099533a9fc7a5be3ad0f37a4",
+          "bytes": 13445
+        },
+        "game/test/helpers/couch-host.mjs": {
+          "sha256": "a303cdbebe136840400132293c06d0c8839efdabac447cfbe27e506611682901",
+          "bytes": 10064
+        },
+        "game/test/helpers/soundtrack-albums.mjs": {
+          "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+          "bytes": 1805
+        },
+        "game/test/helpers/soundtrack-audio.mjs": {
+          "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+          "bytes": 3039
+        },
+        "game/test/helpers/soundtrack-fixtures.mjs": {
+          "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+          "bytes": 2032
+        },
+        "game/test/managed-media-connection.test.mjs": {
+          "sha256": "2db3f507bf541784f77ace096946e790f3386d19e15ccb95b8bc64639f97fded",
+          "bytes": 12816
+        },
+        "game/test/managed-media-store.test.mjs": {
+          "sha256": "459fa67dcb452781d68e1be5889bde582426d467cd28cb0ce479a24675fcdd41",
+          "bytes": 20553
+        },
+        "game/test/soundtrack-archive.test.mjs": {
+          "sha256": "b23d90a6d451438f31fd2509649a46836fc04e9b8441fc6c941bf640e4be991a",
+          "bytes": 5479
+        },
+        "game/test/soundtrack-bonus-offload.test.mjs": {
+          "sha256": "b5227f51e92e5a5e3e48f37e39ec59bbdf802123689d7e11eb7112dff9897704",
+          "bytes": 14267
+        },
+        "game/test/soundtrack-catalogue.test.mjs": {
+          "sha256": "bbf422f63f71d497a91dc215d6f5861af9deaaa72f58398394388ff9ea840fae",
+          "bytes": 21210
+        },
+        "game/test/soundtrack-host.test.mjs": {
+          "sha256": "38c2e5a6043175fced57a011d102265a7f15c93a0a790a3c447bd7585f3f7ee5",
+          "bytes": 23997
+        },
+        "game/test/soundtrack-panel.test.mjs": {
+          "sha256": "e70219a1eeb165f77b8453aadb517b48c362c77e325f2e7cdddacd839febbea9",
+          "bytes": 99157
+        },
+        "game/test/soundtrack-player.test.mjs": {
+          "sha256": "8f4f4e945d258a238d7010d5a3fff40c8c5edade8da21bab4f2b0243a33c44dd",
+          "bytes": 36460
+        },
+        "game/test/soundtrack-reference-recovery.test.mjs": {
+          "sha256": "fad2eb706ae62f26b3a362733d21bc9880a46d38be9611978eeef92bd5b27016",
+          "bytes": 9351
+        },
+        "game/test/soundtrack-rights.test.mjs": {
+          "sha256": "6916f9c6dbf0ab45a7af0166505361d2a0c35018449014c4f5381ebfb8477a1c",
+          "bytes": 16441
+        },
+        "game/test/soundtrack-share.test.mjs": {
+          "sha256": "ce067c0069b9eada3a8fdcfdda1906e56d1b2238991b2b174f00013e4857e9f3",
+          "bytes": 2552
+        },
+        "game/test/soundtrack-source.test.mjs": {
+          "sha256": "25e55e7662d0d3af02376808ce426cd573ff40816785a04aedb29d404c49c6ba",
+          "bytes": 3447
+        },
+        "game/test/soundtrack-store.test.mjs": {
+          "sha256": "d19c676208d2ba9a6628ef64f0136288bdbcae0c08a0c4f2dbaddafeaaa899aa",
+          "bytes": 8207
+        },
+        "game/test/soundtrack-v3-compatibility.test.mjs": {
+          "sha256": "0c578773930e19fa2de94b2f56f79d125739143e8f68d655ed74325c74aa2cc2",
+          "bytes": 4187
+        },
+        "game/test/soundtrack-v3-playback-recovery.test.mjs": {
+          "sha256": "c66c0617bfdf6eb826770cba8acb67083150d3c98a2ca2409322f48e1e892951",
+          "bytes": 5063
+        },
+        "game/ui/audio-master.mjs": {
+          "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+          "bytes": 5277
+        },
+        "game/ui/audio.mjs": {
+          "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+          "bytes": 26731
+        },
+        "game/ui/music.mjs": {
+          "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda",
+          "bytes": 7050
+        },
+        "game/ui/published-audio.mjs": {
+          "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72",
+          "bytes": 5773
+        },
+        "game/ui/soundtrack-panel.mjs": {
+          "sha256": "1d0386e7193f2d79f0263fbeddd3c424109e9844a0ce3b7f81337a4c25b0ae82",
+          "bytes": 83656
+        },
+        "game/ui/soundtrack-player.mjs": {
+          "sha256": "91c268ded6fd212a6ab285a8d7f9443f8a4af582824339031469f4238436e244",
+          "bytes": 34053
+        }
+      }
+    },
+    {
+      "id": "corrected-core",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/soundtrack-player.test.mjs",
+        "game/test/soundtrack-v3-playback-recovery.test.mjs",
+        "game/test/soundtrack-reference-recovery.test.mjs",
+        "game/test/soundtrack-rights.test.mjs",
+        "game/test/soundtrack-catalogue.test.mjs",
+        "game/test/soundtrack-source.test.mjs",
+        "game/test/soundtrack-archive.test.mjs",
+        "game/test/soundtrack-share.test.mjs",
+        "game/test/soundtrack-bonus-offload.test.mjs",
+        "game/test/soundtrack-v3-compatibility.test.mjs",
+        "game/test/soundtrack-store.test.mjs",
+        "game/test/managed-media-store.test.mjs",
+        "game/test/managed-media-connection.test.mjs",
+        "game/test/couch-music-library.test.mjs",
+        "game/test/couch-music-context.test.mjs",
+        "game/test/couch-music-session.test.mjs",
+        "game/test/couch-menu-music.test.mjs",
+        "game/test/audio-master.test.mjs",
+        "game/test/audio-preferences.test.mjs"
+      ],
+      "startedAt": "2026-09-21T01:11:24.045953+00:00",
+      "finishedAt": "2026-09-21T01:11:27.856964+00:00",
+      "headAtStart": "283685e050219af03ed221d8cce3c8e2c46a8077",
+      "node": "v20.19.5",
+      "exitCode": 0,
+      "durationSeconds": 3.778,
+      "summary": {
+        "tests": 263,
+        "suites": 0,
+        "pass": 263,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": "corrected-core.tap.txt",
+      "logSha256": "8d2c301e4774130f0e47b20f4595c9aebdbeb14513b4acc1fdd16c66db67fddf",
+      "changedRecordedInputs": [],
+      "recordedInputsBefore": {
+        "game/app.mjs": {
+          "sha256": "ac515e6107d999468617006d1750c18f6b689d012bd1dbcc775d8f033ad9938b",
+          "bytes": 336295
+        },
+        "game/audio-preferences.mjs": {
+          "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239",
+          "bytes": 5918
+        },
+        "game/content/optional-soundtracks.json": {
+          "sha256": "5d47f66fd832d4a2d2a032175b7fe29ac476492fc29af0dca9e4f9c50f6ae571",
+          "bytes": 66
+        },
+        "game/content/soundtrack-catalogue.json": {
+          "sha256": "d77d6a1e9775f5bc8056148183936054eae01ef72efb68fe05b101f9f0cef128",
+          "bytes": 97
+        },
+        "game/content/soundtrack-catalogue.mjs": {
+          "sha256": "521b829645b3574d124bdbb49273e5b85a57f50ce9bb9643450076da69186995",
+          "bytes": 228
+        },
+        "game/couch/couch-music-context.mjs": {
+          "sha256": "a447bb96044f28cd8bf3b0f04a623e1fb4c0c8ec0f347776eddc5f081a58cfb7",
+          "bytes": 2640
+        },
+        "game/couch/couch-music-host.mjs": {
+          "sha256": "0a88e5f5e3b49e36a4b182d3283b0ad4fcd69ce06016b8c492f32a213f5a4adb",
+          "bytes": 13236
+        },
+        "game/couch/couch-music-library.mjs": {
+          "sha256": "030a76a886d925e98e2726d33b5f832c25fdb2032b1fc08269c7387c50adef20",
+          "bytes": 7886
+        },
+        "game/couch/couch-music-session.mjs": {
+          "sha256": "cabc51a7250c93ba17aa20d7cb3421fab745cfe63f6b78a7b9375c857bb45eaf",
+          "bytes": 4977
+        },
+        "game/couch/couch.mjs": {
+          "sha256": "70c686ed07d2bc436969a4cb2e9603ae30fb730eee924370d24a3d532399d223",
+          "bytes": 83545
+        },
+        "game/couch/relay-rescue.mjs": {
+          "sha256": "86725d283838d4d636ed6d805d103a0cc0c374d695d363358873653bbe244fc0",
+          "bytes": 124853
+        },
+        "game/managed-media-store.mjs": {
+          "sha256": "1051aebfc257aaa1596f67b45e15dbccfa6fad36ee58ee47a09ade507bc01500",
+          "bytes": 39202
+        },
+        "game/mp3.mjs": {
+          "sha256": "d4f36f5f7760fc8d6482c716f944ff2e4df931a74e8c3f6f1684b90b7410d92a",
+          "bytes": 8979
+        },
+        "game/soundtrack-album-download.mjs": {
+          "sha256": "fc4d942f71ea10c9a89e4ff83ddc6058d1813012be0459cf4c88f84b6fe37b40",
+          "bytes": 8412
+        },
+        "game/soundtrack-albums.mjs": {
+          "sha256": "b47b837041318f8561577af7d189eabff9d678edf62f4b933a42f7225c5a66da",
+          "bytes": 10932
+        },
+        "game/soundtrack-archive.mjs": {
+          "sha256": "f463131be133e57e2c7bc23a14cd9e16b310d9b714006ea47c5d44cbe1b6cebf",
+          "bytes": 5240
+        },
+        "game/soundtrack-bundle.mjs": {
+          "sha256": "1bdd70af4a316ea5333135f0f07ccd0e74b64e179397801c92bf809c2cd66fea",
+          "bytes": 11884
+        },
+        "game/soundtrack-rights.mjs": {
+          "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04",
+          "bytes": 3755
+        },
+        "game/soundtrack-share.mjs": {
+          "sha256": "44cc5e9bb5b5c7008fa48c87c1089da64a2ca1333de6a2b137bd10f7080b5c07",
+          "bytes": 5593
+        },
+        "game/soundtrack-source.mjs": {
+          "sha256": "b1a1fd56262bacca1a75ac9c88b7106bc43f2c91eb34cad4ca80591dd4dff3f7",
+          "bytes": 3895
+        },
+        "game/soundtrack-store-legacy.mjs": {
+          "sha256": "9a575c14632a5d566d6cd2402d1e3f909a694fd0cf504ddb3669d991b681e37d",
+          "bytes": 9377
+        },
+        "game/soundtrack-store.mjs": {
+          "sha256": "24377cdeda0a2755f964153f89cfe6a9bcb3eeb14218c12cf11da3f35ada5eda",
+          "bytes": 1317
+        },
+        "game/soundtrack.mjs": {
+          "sha256": "6f844028e0473cd438ed584a59dc9c2fb7cbbe85dbb4eed40d75f28815e7127f",
+          "bytes": 33938
+        },
+        "game/test/audio-master.test.mjs": {
+          "sha256": "29b24158d719f7ca972922ae2a6b6a90c773863b2fefcec8047c39d93d270672",
+          "bytes": 9813
+        },
+        "game/test/audio-preferences.test.mjs": {
+          "sha256": "6d46a1abb184d31485bf9d20daa9e2dcd260ad9850a4e2faf3f15a7cc5e711bf",
+          "bytes": 16218
+        },
+        "game/test/couch-menu-music.test.mjs": {
+          "sha256": "4dffa84ac4aebcea9d8c17b287f0f045a808fb8d9c97e816814276d0d8307735",
+          "bytes": 5924
+        },
+        "game/test/couch-music-context.test.mjs": {
+          "sha256": "8d2c8df6d58bec6b707fe572eb8a83a9f25da84fd6ca36444d8b0c85cedc280b",
+          "bytes": 4303
+        },
+        "game/test/couch-music-library.test.mjs": {
+          "sha256": "32c5d7c4f22c5f82de05fb975aa9b00ac64edeb970686eae31791d9af1909a84",
+          "bytes": 21586
+        },
+        "game/test/couch-music-session.test.mjs": {
+          "sha256": "b98267ca2e1552bc07d0812dcbf24b4b97d204e6099533a9fc7a5be3ad0f37a4",
+          "bytes": 13445
+        },
+        "game/test/helpers/soundtrack-albums.mjs": {
+          "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+          "bytes": 1805
+        },
+        "game/test/helpers/soundtrack-audio.mjs": {
+          "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+          "bytes": 3039
+        },
+        "game/test/helpers/soundtrack-fixtures.mjs": {
+          "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+          "bytes": 2032
+        },
+        "game/test/managed-media-connection.test.mjs": {
+          "sha256": "2db3f507bf541784f77ace096946e790f3386d19e15ccb95b8bc64639f97fded",
+          "bytes": 12816
+        },
+        "game/test/managed-media-store.test.mjs": {
+          "sha256": "459fa67dcb452781d68e1be5889bde582426d467cd28cb0ce479a24675fcdd41",
+          "bytes": 20553
+        },
+        "game/test/soundtrack-archive.test.mjs": {
+          "sha256": "b23d90a6d451438f31fd2509649a46836fc04e9b8441fc6c941bf640e4be991a",
+          "bytes": 5479
+        },
+        "game/test/soundtrack-bonus-offload.test.mjs": {
+          "sha256": "b5227f51e92e5a5e3e48f37e39ec59bbdf802123689d7e11eb7112dff9897704",
+          "bytes": 14267
+        },
+        "game/test/soundtrack-catalogue.test.mjs": {
+          "sha256": "bbf422f63f71d497a91dc215d6f5861af9deaaa72f58398394388ff9ea840fae",
+          "bytes": 21210
+        },
+        "game/test/soundtrack-player.test.mjs": {
+          "sha256": "8f4f4e945d258a238d7010d5a3fff40c8c5edade8da21bab4f2b0243a33c44dd",
+          "bytes": 36460
+        },
+        "game/test/soundtrack-reference-recovery.test.mjs": {
+          "sha256": "fad2eb706ae62f26b3a362733d21bc9880a46d38be9611978eeef92bd5b27016",
+          "bytes": 9351
+        },
+        "game/test/soundtrack-rights.test.mjs": {
+          "sha256": "6916f9c6dbf0ab45a7af0166505361d2a0c35018449014c4f5381ebfb8477a1c",
+          "bytes": 16441
+        },
+        "game/test/soundtrack-share.test.mjs": {
+          "sha256": "ce067c0069b9eada3a8fdcfdda1906e56d1b2238991b2b174f00013e4857e9f3",
+          "bytes": 2552
+        },
+        "game/test/soundtrack-source.test.mjs": {
+          "sha256": "25e55e7662d0d3af02376808ce426cd573ff40816785a04aedb29d404c49c6ba",
+          "bytes": 3447
+        },
+        "game/test/soundtrack-store.test.mjs": {
+          "sha256": "d19c676208d2ba9a6628ef64f0136288bdbcae0c08a0c4f2dbaddafeaaa899aa",
+          "bytes": 8207
+        },
+        "game/test/soundtrack-v3-compatibility.test.mjs": {
+          "sha256": "0c578773930e19fa2de94b2f56f79d125739143e8f68d655ed74325c74aa2cc2",
+          "bytes": 4187
+        },
+        "game/test/soundtrack-v3-playback-recovery.test.mjs": {
+          "sha256": "c66c0617bfdf6eb826770cba8acb67083150d3c98a2ca2409322f48e1e892951",
+          "bytes": 5063
+        },
+        "game/ui/audio-master.mjs": {
+          "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+          "bytes": 5277
+        },
+        "game/ui/audio.mjs": {
+          "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+          "bytes": 26731
+        },
+        "game/ui/music.mjs": {
+          "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda",
+          "bytes": 7050
+        },
+        "game/ui/published-audio.mjs": {
+          "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72",
+          "bytes": 5773
+        },
+        "game/ui/soundtrack-panel.mjs": {
+          "sha256": "1d0386e7193f2d79f0263fbeddd3c424109e9844a0ce3b7f81337a4c25b0ae82",
+          "bytes": 83656
+        },
+        "game/ui/soundtrack-player.mjs": {
+          "sha256": "91c268ded6fd212a6ab285a8d7f9443f8a4af582824339031469f4238436e244",
+          "bytes": 34053
+        }
+      },
+      "recordedInputsAfter": {
+        "game/app.mjs": {
+          "sha256": "ac515e6107d999468617006d1750c18f6b689d012bd1dbcc775d8f033ad9938b",
+          "bytes": 336295
+        },
+        "game/audio-preferences.mjs": {
+          "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239",
+          "bytes": 5918
+        },
+        "game/content/optional-soundtracks.json": {
+          "sha256": "5d47f66fd832d4a2d2a032175b7fe29ac476492fc29af0dca9e4f9c50f6ae571",
+          "bytes": 66
+        },
+        "game/content/soundtrack-catalogue.json": {
+          "sha256": "d77d6a1e9775f5bc8056148183936054eae01ef72efb68fe05b101f9f0cef128",
+          "bytes": 97
+        },
+        "game/content/soundtrack-catalogue.mjs": {
+          "sha256": "521b829645b3574d124bdbb49273e5b85a57f50ce9bb9643450076da69186995",
+          "bytes": 228
+        },
+        "game/couch/couch-music-context.mjs": {
+          "sha256": "a447bb96044f28cd8bf3b0f04a623e1fb4c0c8ec0f347776eddc5f081a58cfb7",
+          "bytes": 2640
+        },
+        "game/couch/couch-music-host.mjs": {
+          "sha256": "0a88e5f5e3b49e36a4b182d3283b0ad4fcd69ce06016b8c492f32a213f5a4adb",
+          "bytes": 13236
+        },
+        "game/couch/couch-music-library.mjs": {
+          "sha256": "030a76a886d925e98e2726d33b5f832c25fdb2032b1fc08269c7387c50adef20",
+          "bytes": 7886
+        },
+        "game/couch/couch-music-session.mjs": {
+          "sha256": "cabc51a7250c93ba17aa20d7cb3421fab745cfe63f6b78a7b9375c857bb45eaf",
+          "bytes": 4977
+        },
+        "game/couch/couch.mjs": {
+          "sha256": "70c686ed07d2bc436969a4cb2e9603ae30fb730eee924370d24a3d532399d223",
+          "bytes": 83545
+        },
+        "game/couch/relay-rescue.mjs": {
+          "sha256": "86725d283838d4d636ed6d805d103a0cc0c374d695d363358873653bbe244fc0",
+          "bytes": 124853
+        },
+        "game/managed-media-store.mjs": {
+          "sha256": "1051aebfc257aaa1596f67b45e15dbccfa6fad36ee58ee47a09ade507bc01500",
+          "bytes": 39202
+        },
+        "game/mp3.mjs": {
+          "sha256": "d4f36f5f7760fc8d6482c716f944ff2e4df931a74e8c3f6f1684b90b7410d92a",
+          "bytes": 8979
+        },
+        "game/soundtrack-album-download.mjs": {
+          "sha256": "fc4d942f71ea10c9a89e4ff83ddc6058d1813012be0459cf4c88f84b6fe37b40",
+          "bytes": 8412
+        },
+        "game/soundtrack-albums.mjs": {
+          "sha256": "b47b837041318f8561577af7d189eabff9d678edf62f4b933a42f7225c5a66da",
+          "bytes": 10932
+        },
+        "game/soundtrack-archive.mjs": {
+          "sha256": "f463131be133e57e2c7bc23a14cd9e16b310d9b714006ea47c5d44cbe1b6cebf",
+          "bytes": 5240
+        },
+        "game/soundtrack-bundle.mjs": {
+          "sha256": "1bdd70af4a316ea5333135f0f07ccd0e74b64e179397801c92bf809c2cd66fea",
+          "bytes": 11884
+        },
+        "game/soundtrack-rights.mjs": {
+          "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04",
+          "bytes": 3755
+        },
+        "game/soundtrack-share.mjs": {
+          "sha256": "44cc5e9bb5b5c7008fa48c87c1089da64a2ca1333de6a2b137bd10f7080b5c07",
+          "bytes": 5593
+        },
+        "game/soundtrack-source.mjs": {
+          "sha256": "b1a1fd56262bacca1a75ac9c88b7106bc43f2c91eb34cad4ca80591dd4dff3f7",
+          "bytes": 3895
+        },
+        "game/soundtrack-store-legacy.mjs": {
+          "sha256": "9a575c14632a5d566d6cd2402d1e3f909a694fd0cf504ddb3669d991b681e37d",
+          "bytes": 9377
+        },
+        "game/soundtrack-store.mjs": {
+          "sha256": "24377cdeda0a2755f964153f89cfe6a9bcb3eeb14218c12cf11da3f35ada5eda",
+          "bytes": 1317
+        },
+        "game/soundtrack.mjs": {
+          "sha256": "6f844028e0473cd438ed584a59dc9c2fb7cbbe85dbb4eed40d75f28815e7127f",
+          "bytes": 33938
+        },
+        "game/test/audio-master.test.mjs": {
+          "sha256": "29b24158d719f7ca972922ae2a6b6a90c773863b2fefcec8047c39d93d270672",
+          "bytes": 9813
+        },
+        "game/test/audio-preferences.test.mjs": {
+          "sha256": "6d46a1abb184d31485bf9d20daa9e2dcd260ad9850a4e2faf3f15a7cc5e711bf",
+          "bytes": 16218
+        },
+        "game/test/couch-menu-music.test.mjs": {
+          "sha256": "4dffa84ac4aebcea9d8c17b287f0f045a808fb8d9c97e816814276d0d8307735",
+          "bytes": 5924
+        },
+        "game/test/couch-music-context.test.mjs": {
+          "sha256": "8d2c8df6d58bec6b707fe572eb8a83a9f25da84fd6ca36444d8b0c85cedc280b",
+          "bytes": 4303
+        },
+        "game/test/couch-music-library.test.mjs": {
+          "sha256": "32c5d7c4f22c5f82de05fb975aa9b00ac64edeb970686eae31791d9af1909a84",
+          "bytes": 21586
+        },
+        "game/test/couch-music-session.test.mjs": {
+          "sha256": "b98267ca2e1552bc07d0812dcbf24b4b97d204e6099533a9fc7a5be3ad0f37a4",
+          "bytes": 13445
+        },
+        "game/test/helpers/soundtrack-albums.mjs": {
+          "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+          "bytes": 1805
+        },
+        "game/test/helpers/soundtrack-audio.mjs": {
+          "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+          "bytes": 3039
+        },
+        "game/test/helpers/soundtrack-fixtures.mjs": {
+          "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+          "bytes": 2032
+        },
+        "game/test/managed-media-connection.test.mjs": {
+          "sha256": "2db3f507bf541784f77ace096946e790f3386d19e15ccb95b8bc64639f97fded",
+          "bytes": 12816
+        },
+        "game/test/managed-media-store.test.mjs": {
+          "sha256": "459fa67dcb452781d68e1be5889bde582426d467cd28cb0ce479a24675fcdd41",
+          "bytes": 20553
+        },
+        "game/test/soundtrack-archive.test.mjs": {
+          "sha256": "b23d90a6d451438f31fd2509649a46836fc04e9b8441fc6c941bf640e4be991a",
+          "bytes": 5479
+        },
+        "game/test/soundtrack-bonus-offload.test.mjs": {
+          "sha256": "b5227f51e92e5a5e3e48f37e39ec59bbdf802123689d7e11eb7112dff9897704",
+          "bytes": 14267
+        },
+        "game/test/soundtrack-catalogue.test.mjs": {
+          "sha256": "bbf422f63f71d497a91dc215d6f5861af9deaaa72f58398394388ff9ea840fae",
+          "bytes": 21210
+        },
+        "game/test/soundtrack-player.test.mjs": {
+          "sha256": "8f4f4e945d258a238d7010d5a3fff40c8c5edade8da21bab4f2b0243a33c44dd",
+          "bytes": 36460
+        },
+        "game/test/soundtrack-reference-recovery.test.mjs": {
+          "sha256": "fad2eb706ae62f26b3a362733d21bc9880a46d38be9611978eeef92bd5b27016",
+          "bytes": 9351
+        },
+        "game/test/soundtrack-rights.test.mjs": {
+          "sha256": "6916f9c6dbf0ab45a7af0166505361d2a0c35018449014c4f5381ebfb8477a1c",
+          "bytes": 16441
+        },
+        "game/test/soundtrack-share.test.mjs": {
+          "sha256": "ce067c0069b9eada3a8fdcfdda1906e56d1b2238991b2b174f00013e4857e9f3",
+          "bytes": 2552
+        },
+        "game/test/soundtrack-source.test.mjs": {
+          "sha256": "25e55e7662d0d3af02376808ce426cd573ff40816785a04aedb29d404c49c6ba",
+          "bytes": 3447
+        },
+        "game/test/soundtrack-store.test.mjs": {
+          "sha256": "d19c676208d2ba9a6628ef64f0136288bdbcae0c08a0c4f2dbaddafeaaa899aa",
+          "bytes": 8207
+        },
+        "game/test/soundtrack-v3-compatibility.test.mjs": {
+          "sha256": "0c578773930e19fa2de94b2f56f79d125739143e8f68d655ed74325c74aa2cc2",
+          "bytes": 4187
+        },
+        "game/test/soundtrack-v3-playback-recovery.test.mjs": {
+          "sha256": "c66c0617bfdf6eb826770cba8acb67083150d3c98a2ca2409322f48e1e892951",
+          "bytes": 5063
+        },
+        "game/ui/audio-master.mjs": {
+          "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+          "bytes": 5277
+        },
+        "game/ui/audio.mjs": {
+          "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+          "bytes": 26731
+        },
+        "game/ui/music.mjs": {
+          "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda",
+          "bytes": 7050
+        },
+        "game/ui/published-audio.mjs": {
+          "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72",
+          "bytes": 5773
+        },
+        "game/ui/soundtrack-panel.mjs": {
+          "sha256": "1d0386e7193f2d79f0263fbeddd3c424109e9844a0ce3b7f81337a4c25b0ae82",
+          "bytes": 83656
+        },
+        "game/ui/soundtrack-player.mjs": {
+          "sha256": "91c268ded6fd212a6ab285a8d7f9443f8a4af582824339031469f4238436e244",
+          "bytes": 34053
+        }
+      }
+    },
+    {
+      "id": "recording-fix",
+      "command": [
+        "node",
+        "--test",
+        "game/test/soundtrack-v3-playback-recovery.test.mjs",
+        "game/test/soundtrack-player.test.mjs"
+      ],
+      "node": "v20.19.5",
+      "exitCode": 0,
+      "summary": {
+        "tests": 50,
+        "suites": 0,
+        "pass": 50,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": "recording-fix.tap.txt",
+      "logSha256": "d6d79654859e909f4bf2faec487eebd810db46241ec4a71d271b6d2cad722a6a",
+      "timingNote": "Command completed successfully through shell && formatter/lint gate; precise start/end timestamps were not retained."
+    },
+    {
+      "id": "practice-corrected",
+      "command": [
+        "node",
+        "--test",
+        "game/test/practice-media-v3-host.test.mjs"
+      ],
+      "node": "v20.19.5",
+      "exitCode": 0,
+      "summary": {
+        "tests": 5,
+        "suites": 0,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": "practice-corrected.tap.txt",
+      "logSha256": "cf6aca860e8c8f3505b087a9a0584eb5032ce49e51c40545af41878997e80113",
+      "timingNote": "Command completed successfully through shell && formatter/lint gate; precise start/end timestamps were not retained."
+    }
+  ],
+  "formatAndLint": {
+    "exitCode": 0,
+    "commands": [
+      [
+        "./node_modules/.bin/prettier",
+        "--write",
+        "game/ui/soundtrack-player.mjs",
+        "game/test/soundtrack-v3-playback-recovery.test.mjs"
+      ],
+      [
+        "./node_modules/.bin/eslint",
+        "game/ui/soundtrack-player.mjs",
+        "game/test/soundtrack-v3-playback-recovery.test.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      [
+        "./node_modules/.bin/prettier",
+        "--write",
+        "game/test/practice-media-v3-host.test.mjs"
+      ],
+      [
+        "./node_modules/.bin/eslint",
+        "game/test/practice-media-v3-host.test.mjs",
+        "--max-warnings",
+        "0"
+      ]
+    ],
+    "formatterResult": "All three edited files reported unchanged."
+  },
+  "currentFileHashes": {
+    "game/app.mjs": {
+      "sha256": "ac515e6107d999468617006d1750c18f6b689d012bd1dbcc775d8f033ad9938b",
+      "bytes": 336295
+    },
+    "game/audio-preferences.mjs": {
+      "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239",
+      "bytes": 5918
+    },
+    "game/content/optional-soundtracks.json": {
+      "sha256": "5d47f66fd832d4a2d2a032175b7fe29ac476492fc29af0dca9e4f9c50f6ae571",
+      "bytes": 66
+    },
+    "game/content/soundtrack-catalogue.json": {
+      "sha256": "d77d6a1e9775f5bc8056148183936054eae01ef72efb68fe05b101f9f0cef128",
+      "bytes": 97
+    },
+    "game/content/soundtrack-catalogue.mjs": {
+      "sha256": "521b829645b3574d124bdbb49273e5b85a57f50ce9bb9643450076da69186995",
+      "bytes": 228
+    },
+    "game/couch/couch-music-context.mjs": {
+      "sha256": "a447bb96044f28cd8bf3b0f04a623e1fb4c0c8ec0f347776eddc5f081a58cfb7",
+      "bytes": 2640
+    },
+    "game/couch/couch-music-host.mjs": {
+      "sha256": "0a88e5f5e3b49e36a4b182d3283b0ad4fcd69ce06016b8c492f32a213f5a4adb",
+      "bytes": 13236
+    },
+    "game/couch/couch-music-library.mjs": {
+      "sha256": "030a76a886d925e98e2726d33b5f832c25fdb2032b1fc08269c7387c50adef20",
+      "bytes": 7886
+    },
+    "game/couch/couch-music-session.mjs": {
+      "sha256": "cabc51a7250c93ba17aa20d7cb3421fab745cfe63f6b78a7b9375c857bb45eaf",
+      "bytes": 4977
+    },
+    "game/couch/couch.mjs": {
+      "sha256": "70c686ed07d2bc436969a4cb2e9603ae30fb730eee924370d24a3d532399d223",
+      "bytes": 83545
+    },
+    "game/couch/relay-rescue.mjs": {
+      "sha256": "86725d283838d4d636ed6d805d103a0cc0c374d695d363358873653bbe244fc0",
+      "bytes": 124853
+    },
+    "game/managed-media-store.mjs": {
+      "sha256": "1051aebfc257aaa1596f67b45e15dbccfa6fad36ee58ee47a09ade507bc01500",
+      "bytes": 39202
+    },
+    "game/mp3.mjs": {
+      "sha256": "d4f36f5f7760fc8d6482c716f944ff2e4df931a74e8c3f6f1684b90b7410d92a",
+      "bytes": 8979
+    },
+    "game/soundtrack-album-download.mjs": {
+      "sha256": "fc4d942f71ea10c9a89e4ff83ddc6058d1813012be0459cf4c88f84b6fe37b40",
+      "bytes": 8412
+    },
+    "game/soundtrack-albums.mjs": {
+      "sha256": "b47b837041318f8561577af7d189eabff9d678edf62f4b933a42f7225c5a66da",
+      "bytes": 10932
+    },
+    "game/soundtrack-archive.mjs": {
+      "sha256": "f463131be133e57e2c7bc23a14cd9e16b310d9b714006ea47c5d44cbe1b6cebf",
+      "bytes": 5240
+    },
+    "game/soundtrack-bundle.mjs": {
+      "sha256": "1bdd70af4a316ea5333135f0f07ccd0e74b64e179397801c92bf809c2cd66fea",
+      "bytes": 11884
+    },
+    "game/soundtrack-rights.mjs": {
+      "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04",
+      "bytes": 3755
+    },
+    "game/soundtrack-share.mjs": {
+      "sha256": "44cc5e9bb5b5c7008fa48c87c1089da64a2ca1333de6a2b137bd10f7080b5c07",
+      "bytes": 5593
+    },
+    "game/soundtrack-source.mjs": {
+      "sha256": "b1a1fd56262bacca1a75ac9c88b7106bc43f2c91eb34cad4ca80591dd4dff3f7",
+      "bytes": 3895
+    },
+    "game/soundtrack-store-legacy.mjs": {
+      "sha256": "9a575c14632a5d566d6cd2402d1e3f909a694fd0cf504ddb3669d991b681e37d",
+      "bytes": 9377
+    },
+    "game/soundtrack-store.mjs": {
+      "sha256": "24377cdeda0a2755f964153f89cfe6a9bcb3eeb14218c12cf11da3f35ada5eda",
+      "bytes": 1317
+    },
+    "game/soundtrack.mjs": {
+      "sha256": "6f844028e0473cd438ed584a59dc9c2fb7cbbe85dbb4eed40d75f28815e7127f",
+      "bytes": 33938
+    },
+    "game/test/audio-master.test.mjs": {
+      "sha256": "29b24158d719f7ca972922ae2a6b6a90c773863b2fefcec8047c39d93d270672",
+      "bytes": 9813
+    },
+    "game/test/audio-preferences.test.mjs": {
+      "sha256": "6d46a1abb184d31485bf9d20daa9e2dcd260ad9850a4e2faf3f15a7cc5e711bf",
+      "bytes": 16218
+    },
+    "game/test/couch-menu-music.test.mjs": {
+      "sha256": "4dffa84ac4aebcea9d8c17b287f0f045a808fb8d9c97e816814276d0d8307735",
+      "bytes": 5924
+    },
+    "game/test/couch-music-context.test.mjs": {
+      "sha256": "8d2c8df6d58bec6b707fe572eb8a83a9f25da84fd6ca36444d8b0c85cedc280b",
+      "bytes": 4303
+    },
+    "game/test/couch-music-library.test.mjs": {
+      "sha256": "32c5d7c4f22c5f82de05fb975aa9b00ac64edeb970686eae31791d9af1909a84",
+      "bytes": 21586
+    },
+    "game/test/couch-music-session.test.mjs": {
+      "sha256": "b98267ca2e1552bc07d0812dcbf24b4b97d204e6099533a9fc7a5be3ad0f37a4",
+      "bytes": 13445
+    },
+    "game/test/helpers/soundtrack-albums.mjs": {
+      "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+      "bytes": 1805
+    },
+    "game/test/helpers/soundtrack-audio.mjs": {
+      "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+      "bytes": 3039
+    },
+    "game/test/helpers/soundtrack-fixtures.mjs": {
+      "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+      "bytes": 2032
+    },
+    "game/test/managed-media-connection.test.mjs": {
+      "sha256": "2db3f507bf541784f77ace096946e790f3386d19e15ccb95b8bc64639f97fded",
+      "bytes": 12816
+    },
+    "game/test/managed-media-store.test.mjs": {
+      "sha256": "459fa67dcb452781d68e1be5889bde582426d467cd28cb0ce479a24675fcdd41",
+      "bytes": 20553
+    },
+    "game/test/soundtrack-archive.test.mjs": {
+      "sha256": "b23d90a6d451438f31fd2509649a46836fc04e9b8441fc6c941bf640e4be991a",
+      "bytes": 5479
+    },
+    "game/test/soundtrack-bonus-offload.test.mjs": {
+      "sha256": "b5227f51e92e5a5e3e48f37e39ec59bbdf802123689d7e11eb7112dff9897704",
+      "bytes": 14267
+    },
+    "game/test/soundtrack-catalogue.test.mjs": {
+      "sha256": "bbf422f63f71d497a91dc215d6f5861af9deaaa72f58398394388ff9ea840fae",
+      "bytes": 21210
+    },
+    "game/test/soundtrack-player.test.mjs": {
+      "sha256": "8f4f4e945d258a238d7010d5a3fff40c8c5edade8da21bab4f2b0243a33c44dd",
+      "bytes": 36460
+    },
+    "game/test/soundtrack-reference-recovery.test.mjs": {
+      "sha256": "fad2eb706ae62f26b3a362733d21bc9880a46d38be9611978eeef92bd5b27016",
+      "bytes": 9351
+    },
+    "game/test/soundtrack-rights.test.mjs": {
+      "sha256": "6916f9c6dbf0ab45a7af0166505361d2a0c35018449014c4f5381ebfb8477a1c",
+      "bytes": 16441
+    },
+    "game/test/soundtrack-share.test.mjs": {
+      "sha256": "ce067c0069b9eada3a8fdcfdda1906e56d1b2238991b2b174f00013e4857e9f3",
+      "bytes": 2552
+    },
+    "game/test/soundtrack-source.test.mjs": {
+      "sha256": "25e55e7662d0d3af02376808ce426cd573ff40816785a04aedb29d404c49c6ba",
+      "bytes": 3447
+    },
+    "game/test/soundtrack-store.test.mjs": {
+      "sha256": "d19c676208d2ba9a6628ef64f0136288bdbcae0c08a0c4f2dbaddafeaaa899aa",
+      "bytes": 8207
+    },
+    "game/test/soundtrack-v3-compatibility.test.mjs": {
+      "sha256": "0c578773930e19fa2de94b2f56f79d125739143e8f68d655ed74325c74aa2cc2",
+      "bytes": 4187
+    },
+    "game/test/soundtrack-v3-playback-recovery.test.mjs": {
+      "sha256": "c66c0617bfdf6eb826770cba8acb67083150d3c98a2ca2409322f48e1e892951",
+      "bytes": 5063
+    },
+    "game/ui/audio-master.mjs": {
+      "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+      "bytes": 5277
+    },
+    "game/ui/audio.mjs": {
+      "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+      "bytes": 26731
+    },
+    "game/ui/music.mjs": {
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda",
+      "bytes": 7050
+    },
+    "game/ui/published-audio.mjs": {
+      "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72",
+      "bytes": 5773
+    },
+    "game/ui/soundtrack-panel.mjs": {
+      "sha256": "1d0386e7193f2d79f0263fbeddd3c424109e9844a0ce3b7f81337a4c25b0ae82",
+      "bytes": 83656
+    },
+    "game/ui/soundtrack-player.mjs": {
+      "sha256": "91c268ded6fd212a6ab285a8d7f9443f8a4af582824339031469f4238436e244",
+      "bytes": 34053
+    },
+    "game/test/practice-media-v3-host.test.mjs": {
+      "sha256": "e05ef397231b1024c5c27accd4e79484d6d399ddb8887490d6cfea8f89f704bc",
+      "bytes": 6724
+    },
+    "game/test/soundtrack-host.test.mjs": {
+      "sha256": "38c2e5a6043175fced57a011d102265a7f15c93a0a790a3c447bd7585f3f7ee5",
+      "bytes": 23997
+    },
+    "game/test/couch-audio-master.test.mjs": {
+      "sha256": "99a3c05f0b305f53ac145a39a2d657ce8d6cb759f2af08f3dc1131069ed53092",
+      "bytes": 46366
+    },
+    "game/test/soundtrack-panel.test.mjs": {
+      "sha256": "e70219a1eeb165f77b8453aadb517b48c362c77e325f2e7cdddacd839febbea9",
+      "bytes": 99157
+    }
+  },
+  "limits": [
+    "No audio was auditioned. No musical, cultural, loudness, composition, artist-rights or recording approval is granted.",
+    "No browser, physical device, speaker, codec or offline listening qualification was performed by this review.",
+    "No full suite or Pages build was run. Existing interrupted full-suite and native persistence ambiguity remain separate historical evidence.",
+    "Focused tests use modeled media/storage adapters and structural fixtures. They establish sequencing, ownership and validation, not browser retention or audible output.",
+    "Recorded before/after hashes cover listed sources/tests/helpers, not every transitive fixture. The failed mixed host run also overlapped root production-ledger/generated-artifact changes.",
+    "Policy changes adopted through ordinary setLibrary retain the existing song-boundary behavior; explicit Save & use selection uses selectListening and is covered here."
+  ]
+}

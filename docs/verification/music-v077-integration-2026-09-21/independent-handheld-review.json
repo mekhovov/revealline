@@ -1,0 +1,176 @@
+{
+  "format": "revealline-independent-handheld-music-css-review.v1",
+  "reviewedAt": "2026-09-21T08:40:52.725Z",
+  "source": {
+    "baselineCommit": "6246f9ddaef5cf14344d93775ddfd024e4e9ec77",
+    "headAtReview": "6246f9ddaef5cf14344d93775ddfd024e4e9ec77",
+    "scope": "Uncommitted handheld-play.css delta against baseline; exact current context pinned below.",
+    "baselineCSS": {
+      "path": "game/ui/handheld-play.css",
+      "bytes": 50231,
+      "sha256": "62a224a01f9741c4f4f16cca32e832c7528d956879122b2a0d8242858ed46f66"
+    },
+    "diff": {
+      "bytes": 8172,
+      "sha256": "54179a37e9939c22af2f16ecb2c50e7cfe76579b9979fc8cdf88ddfe3c1a6c88"
+    },
+    "pins": [
+      {
+        "path": "game/ui/handheld-play.css",
+        "bytes": 54449,
+        "sha256": "a796d00d10616495a6909eecb548178e6f1f5a593ffe2a1aee16f74222cf60b3"
+      },
+      {
+        "path": "game/style.css",
+        "bytes": 46228,
+        "sha256": "75636e293d2452a0f2b8dd8ec59a4ab52d35dc7ddcb883c6b670512fa617f5ac"
+      },
+      {
+        "path": "game/ui/game-shell.css",
+        "bytes": 12750,
+        "sha256": "0cb26b492d50dbd132b7cc287e9ef80b4092293df14cd36b86016a7b6daa19c5"
+      },
+      {
+        "path": "game/ui/device-controls.css",
+        "bytes": 22506,
+        "sha256": "adbe7fde99590f1bfcc07d955d61be842ade4cd419b26dbba60f30dbfe5caccb"
+      },
+      {
+        "path": "game/ui/field-kit-compiled.css",
+        "bytes": 23542,
+        "sha256": "9a9c6e0ab846b623c73fa811f43df1d39a0ba43bbdc567e93f3d5d30d70cc731"
+      },
+      {
+        "path": "game/index.html",
+        "bytes": 76436,
+        "sha256": "5d8960c06c7c2abbcfeafeb95d7f6553aca219df1e18dbedae671dfcd873ff55"
+      },
+      {
+        "path": "game/couch/index.html",
+        "bytes": 23780,
+        "sha256": "feab1b87dae5e8fbbb1eb7d68e2343ef28e9d981a8e2d4f7965617d76f7ee575"
+      },
+      {
+        "path": "game/couch/couch.css",
+        "bytes": 11726,
+        "sha256": "f99b37b274b3997c0a4a13f8fce9e8b73ba993b1e01294e85de77372b2c731fb"
+      },
+      {
+        "path": "game/couch/relay-rescue.html",
+        "bytes": 26262,
+        "sha256": "02d9c1a1a9f0c375cd324abcb64718e1a700a31841d40aa3e534f978e71e2b03"
+      },
+      {
+        "path": "game/couch/relay-rescue.css",
+        "bytes": 33310,
+        "sha256": "d0ae7dcbc99ee14793be5cc0e226aa03399ffe699bc04e89c01f66434de9a4ae"
+      },
+      {
+        "path": "game/couch/couch-music-host.mjs",
+        "bytes": 13236,
+        "sha256": "0a88e5f5e3b49e36a4b182d3283b0ad4fcd69ce06016b8c492f32a213f5a4adb"
+      }
+    ]
+  },
+  "reviewer": "/root/soundtrack_references",
+  "method": "Read-only diff, full relevant media-query cascade, document stylesheet order, hidden-state rules, credit mounts and direct header-button inspection. No browser, rendering, source mutation, music playback or publication performed by this reviewer.",
+  "findings": [],
+  "conclusion": "No concrete source-level blocker identified in the reviewed delta. This is scoped independent CSS review, not measured layout or native approval.",
+  "checks": [
+    {
+      "id": "cascade-order",
+      "result": "pass-source-review",
+      "detail": "Solo, Versus and Team load handheld-play.css after their base and compiled theme styles, so final active-state overrides apply in the intended order."
+    },
+    {
+      "id": "hidden-credits",
+      "result": "pass-source-review",
+      "detail": "Solo/Team global [hidden] and Versus #couch-app [hidden] remain display:none!important. Credit display:grid rules explicitly require not([hidden]). Music reservation variables are set only by visible-credit :has selectors and consumed with zero fallback."
+    },
+    {
+      "id": "solo-portrait",
+      "result": "pass-source-review",
+      "detail": "A visible running credit owns 44px below the 56px header. Both the container-query main inset and full-chrome arena height/center include the same reservation. Full-chrome selectors continue to exclude first-flight-session."
+    },
+    {
+      "id": "header-hit-testing",
+      "result": "pass-source-review",
+      "detail": "The portrait running shell header now has fixed positioning and z-index9, above the full-viewport arena. pointer-events:none on the header is restored to auto for its direct buttons, including Menu, Pause and Fullscreen. Existing display:none for portrait Fullscreen and hidden/inert semantics remain unchanged; no fullscreen permission/request handler changes."
+    },
+    {
+      "id": "training",
+      "result": "pass-source-review",
+      "detail": "Portrait Training retains its task/arena/message grid within the main inset shifted below a visible credit. Landscape Training retains its 104px header and task at 48px; existing compiled --fk-flight-music reserves the music rail separately. No new Training native execution is claimed."
+    },
+    {
+      "id": "versus-compact",
+      "result": "pass-source-review",
+      "detail": "The race HUD and candidate-Journey explicit HUD row both increase from 44 to 88px only with a visible credit. The 44px two-line credit uses a minmax(0,1fr) text column with inherited ellipsis and a separate source-link column spanning both rows with 44px minimum height."
+    },
+    {
+      "id": "team-orientations",
+      "result": "pass-source-review",
+      "detail": "Landscape Team expands the first grid row for the fixed 44px credit, keeping stronghold objective in the next explicit row. Portrait Team does not set the landscape reservation and retains the credit in its flow-based footer, before touch controls."
+    },
+    {
+      "id": "conditional-stronghold-pad-allowance",
+      "result": "pass-source-review",
+      "detail": "--team-music-objective-space is set only for landscape viewports with width <= 1024px and height <= 600px, active Team overlay hidden, visible music credit and stronghold objective. The pad limit subtracts it and the music reservation with zero fallbacks; the existing 132px floor remains, preserving 44px direction cells. Exact 600x400 Large geometry requires the separately owned native retest."
+    },
+    {
+      "id": "menus-and-paused-views",
+      "result": "pass-source-review",
+      "detail": "New Solo rules require running; new Versus rules require race-focus; new Team rules require playing and hidden overlay. Menu-credit mounts have different IDs and retain ordinary wrapping/scrollable styles; no menu transition, controller handler or audio ownership changes appear in this CSS delta."
+    }
+  ],
+  "verification": {
+    "sourceEditsByReviewer": false,
+    "testsRunByReviewer": [],
+    "nativeBrowserRunByReviewer": false,
+    "authorReportedHashConfirmed": true,
+    "ownerFocusedTests": {
+      "executor": "/root/audio_architecture",
+      "executedByThisReviewer": false,
+      "reportedFiles": [
+        "game/test/boot-build.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-shared-touch.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/touchscreen-controller-host.test.mjs"
+      ],
+      "log": {
+        "path": "/tmp/handheld-now-playing-stage50-tests.log",
+        "bytes": 14437,
+        "sha256": "118fb26ec08c05f261ec3231844a2918c1cf7c26e24605573f2a5ea028738a8a"
+      },
+      "actualTAPSummaryIndependentlyRead": true,
+      "counts": {
+        "tests": 63,
+        "pass": 63,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "scope": "Owner reported execution after stable ledger50. This reviewer verified the retained full log hash and TAP summary; no new browser geometry proof or independent rerun is inferred."
+    },
+    "rootNativeEvidence": "Root reported Solo 390px portrait, Versus 390px portrait / 844px landscape and Team 390px portrait / 844px landscape observations separately. Final 600x400 Stronghold Large retest was pending when this source review was written.",
+    "sourceChecksRunByReviewer": [
+      {
+        "command": "node node_modules/prettier/bin/prettier.cjs --check game/ui/handheld-play.css",
+        "exitCode": 0,
+        "result": "pass"
+      },
+      {
+        "command": "git diff --check",
+        "exitCode": 0,
+        "result": "pass"
+      }
+    ]
+  },
+  "limits": [
+    "No measured geometry, screenshots, computed styles, hit tests or physical-device evidence was produced by this reviewer.",
+    "No full responsive, fullscreen-platform, accessibility, Training playthrough, whole-release, music listening or publication approval is inferred.",
+    "This receipt pins the CSS delta and relevant context, not the concurrent production ledger or final committed release identity."
+  ]
+}

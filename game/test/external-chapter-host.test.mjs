@@ -65,6 +65,7 @@ async function setup(t, options = {}) {
   const manager = createManagedMediaStore({
     indexedDB: media.indexedDB,
     storyMedia: true,
+    soundtrackCatalogue: true,
     estimate: async () => ({ quota, usage: 0 }),
   });
   const still = createStillMediaStore({ managedStore: manager, decodeImage });
@@ -370,9 +371,10 @@ test('changed pointer, index or backup marker invalidates single-use reviewed wr
 test('actual selected Blob corruption refuses readiness even with intact validated metadata', async (t) => {
   const h = await setup(t);
   await h.host.install(pilot.prepared);
-  const db = await new Promise((resolve) => {
-    const r = h.media.indexedDB.open('revealline-soundtrack-v1', 4);
+  const db = await new Promise((resolve, reject) => {
+    const r = h.media.indexedDB.open('revealline-soundtrack-v1', 5);
     r.onsuccess = () => resolve(r.result);
+    r.onerror = () => reject(r.error);
   });
   const hash = pilot.descriptor.originals[0].sha256;
   await new Promise((resolve, reject) => {
@@ -479,9 +481,10 @@ test('failed native ordinary CAS is atomic and consumed review cannot be retried
 test('missing native Blob retains exact authored metadata but refuses both readiness and authored selection', async (t) => {
   const h = await setup(t);
   await h.host.install(pilot.prepared);
-  const db = await new Promise((resolve) => {
-    const r = h.media.indexedDB.open('revealline-soundtrack-v1', 4);
+  const db = await new Promise((resolve, reject) => {
+    const r = h.media.indexedDB.open('revealline-soundtrack-v1', 5);
     r.onsuccess = () => resolve(r.result);
+    r.onerror = () => reject(r.error);
   });
   await new Promise((resolve, reject) => {
     const tx = db.transaction('mediaBlobs', 'readwrite');

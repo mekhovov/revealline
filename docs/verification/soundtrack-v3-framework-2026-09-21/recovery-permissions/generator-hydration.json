@@ -1,0 +1,15 @@
+{
+  "head": "2248f7f35ac5ad75b8bdff5aaa66ca45417180be",
+  "files": [
+    {
+      "path": "authoring/library/licensed-audio/build.mjs",
+      "bytes": 9250,
+      "sha256": "5e1b797f5ff440b2e40d844a8406483727e10c0de673231e3a174f42d5c474a9"
+    },
+    {
+      "path": "authoring/library/licensed-audio/sources.json",
+      "bytes": 35027,
+      "sha256": "f25ec1638b750f75b19328a761e667259f8591fd562d4098e3cd4919e106693a"
+    }
+  ]
+}

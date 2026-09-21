@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: functional helper changes invalidate only their explicit recipe group
+ok 1 - functional helper changes invalidate only their explicit recipe group
+  ---
+  duration_ms: 1.9395
+  ...
+# Subtest: missing helper bytes cannot produce a supposedly valid fingerprint
+ok 2 - missing helper bytes cannot produce a supposedly valid fingerprint
+  ---
+  duration_ms: 0.333917
+  ...
+# Subtest: the immutable Fracture register authenticates historical presets after runtime appearance expansion
+ok 3 - the immutable Fracture register authenticates historical presets after runtime appearance expansion
+  ---
+  duration_ms: 252.867334
+  ...
+# Subtest: an old checkout without history uses exact current metadata; missing snapshot never silently uses different runtime presets
+ok 4 - an old checkout without history uses exact current metadata; missing snapshot never silently uses different runtime presets
+  ---
+  duration_ms: 445.166708
+  ...
+# Subtest: changed or symlinked historical snapshots reject; an unrelated mapping cannot redirect a declared pin
+ok 5 - changed or symlinked historical snapshots reject; an unrelated mapping cannot redirect a declared pin
+  ---
+  duration_ms: 226.771875
+  ...
+# Subtest: history admits only finite complete JSON identities, with no arbitrary snapshot path or duplicate entry
+ok 6 - history admits only finite complete JSON identities, with no arbitrary snapshot path or duplicate entry
+  ---
+  duration_ms: 213.767458
+  ...
+# Subtest: the preserved FPV preset revision remains exact after a later runtime change
+ok 7 - the preserved FPV preset revision remains exact after a later runtime change
+  ---
+  duration_ms: 253.76825
+  ...
+# Subtest: a newly declared unarchived preset revision reads the current file and still refuses changed current bytes
+ok 8 - a newly declared unarchived preset revision reads the current file and still refuses changed current bytes
+  ---
+  duration_ms: 227.067875
+  ...
+# Subtest: v2 preserves the exact prior renderer as inert source bytes and v1 still accepts JSON-only history
+ok 9 - v2 preserves the exact prior renderer as inert source bytes and v1 still accepts JSON-only history
+  ---
+  duration_ms: 156.319333
+  ...
+# Subtest: v2 module history refuses absent, changed and symlinked snapshots without reading the changed live renderer
+ok 10 - v2 module history refuses absent, changed and symlinked snapshots without reading the changed live renderer
+  ---
+  duration_ms: 191.938
+  ...
+# Subtest: a private exact module snapshot is authenticated as bytes and never executed
+ok 11 - a private exact module snapshot is authenticated as bytes and never executed
+  ---
+  duration_ms: 130.941416
+  ...
+# Subtest: retained source bodies authenticate exact immutable recipe pins without approving production
+ok 12 - retained source bodies authenticate exact immutable recipe pins without approving production
+  ---
+  duration_ms: 322.6655
+  ...
+# Subtest: old source checkouts remain valid without the optional source index; changed current bytes refuse
+ok 13 - old source checkouts remain valid without the optional source index; changed current bytes refuse
+  ---
+  duration_ms: 341.335375
+  ...
+# Subtest: missing, modified or symlinked source snapshots fail instead of using the current recipe
+ok 14 - missing, modified or symlinked source snapshots fail instead of using the current recipe
+  ---
+  duration_ms: 249.142833
+  ...
+# Subtest: source history has finite exact identities and cannot choose arbitrary source or snapshot paths
+ok 15 - source history has finite exact identities and cannot choose arbitrary source or snapshot paths
+  ---
+  duration_ms: 269.714916
+  ...
+# Subtest: a new source pin reads current bytes while the retained old pin remains immutable
+ok 16 - a new source pin reads current bytes while the retained old pin remains immutable
+  ---
+  duration_ms: 326.701875
+  ...
+# Subtest: archived source bytes are authenticated but never imported or executed
+ok 17 - archived source bytes are authenticated but never imported or executed
+  ---
+  duration_ms: 240.148916
+  ...
+# Subtest: overlapping history identities require both exact snapshots without fallback to the other copy or live source
+ok 18 - overlapping history identities require both exact snapshots without fallback to the other copy or live source
+  ---
+  duration_ms: 660.6285
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2749.991291

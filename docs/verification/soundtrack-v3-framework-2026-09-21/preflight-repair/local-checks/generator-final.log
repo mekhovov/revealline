@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+ok 1 - publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+  ---
+  duration_ms: 58.674417
+  ...
+# Subtest: absent album opt-in preserves output bytes and does not read the audio producer
+ok 2 - absent album opt-in preserves output bytes and does not read the audio producer
+  ---
+  duration_ms: 93.91925
+  ...
+# Subtest: opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+ok 3 - opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+  ---
+  duration_ms: 53.414583
+  ...
+# Subtest: incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+ok 4 - incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+  ---
+  duration_ms: 62.400541
+  ...
+# Subtest: candidate producer binds every admitted source and stays separate from published catalogue
+ok 5 - candidate producer binds every admitted source and stays separate from published catalogue
+  ---
+  duration_ms: 615.687083
+  ...
+# Subtest: approved original recordings are optional binaries while their catalogue remains offline metadata
+ok 6 - approved original recordings are optional binaries while their catalogue remains offline metadata
+  ---
+  duration_ms: 62.977833
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1016.628583

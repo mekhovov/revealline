@@ -1,28 +1,34 @@
 import { canonicalJSON, required } from '../data-json.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { ownSoundtrackBlob, throwIfSoundtrackAborted } from '../mp3.mjs';
-import { resolveSoundtrackLibrary, SOUNDTRACK_LIMITS } from '../soundtrack.mjs';
+import {
+  resolveSoundtrackLibrary,
+  soundtrackStoredTracks,
+  setCatalogueTracks,
+  SOUNDTRACK_LIMITS,
+} from '../soundtrack.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 
 /** Shared audio-domain owner; no profile, gameplay or transport-intent writes.
  * Construct the player with readAsset: (hash) => owner.readAsset(hash), then
  * construct this owner before loading or requesting playback. Dispose the
- * player before closing the owner. A supplied v4 manager remains borrowed.
+ * player before closing the owner. A supplied catalogue-aware DB5 manager remains borrowed.
  */
 export function createCouchMusicLibrary({
   player,
   managedStore,
   indexedDB = globalThis.indexedDB,
   estimate,
+  catalogue,
 } = {}) {
   required(typeof player?.setLibrary === 'function', 'Couch music requires a soundtrack player.');
   required(
-    !managedStore || managedStore.storyMedia === true,
-    'Couch music requires the shared story/v4 media store.',
+    !managedStore || managedStore.soundtrackCatalogue === true,
+    'Couch music requires the shared catalogue/DB5 media store.',
   );
   const ownsManager = !managedStore;
   const manager =
-    managedStore ?? createManagedMediaStore({ indexedDB, estimate, storyMedia: true });
+    managedStore ?? createManagedMediaStore({ indexedDB, estimate, soundtrackCatalogue: true });
   const store = createSoundtrackStore({ managedStore: manager });
   const operations = new Set();
   let accepted = null,
@@ -73,7 +79,7 @@ export function createCouchMusicLibrary({
       return false;
     }
     const expected = new Map(
-      library.tracks.map((track) => [track.asset.sha256, track.asset.bytes]),
+      soundtrackStoredTracks(library).map((track) => [track.asset.sha256, track.asset.bytes]),
     );
     required(
       Array.isArray(value.assets) && value.assets.length === expected.size,
@@ -103,7 +109,7 @@ export function createCouchMusicLibrary({
     const previous = assets;
     assets = next;
     try {
-      player.setLibrary(library);
+      player.setLibrary(catalogue ? setCatalogueTracks(library, catalogue.tracks) : library);
       if (closed)
         throw new DOMException('Couch music library closed during adoption.', 'AbortError');
     } catch (cause) {
@@ -208,9 +214,11 @@ export function createCouchMusicLibrary({
     commit,
     adoptVerifiedSnapshot,
     snapshot,
-    readAsset(hash) {
+    readAsset(hash, { allowMissing = false, signal } = {}) {
       check();
+      throwIfSoundtrackAborted(signal);
       const blob = assets.get(hash);
+      if (!blob && allowMissing) return null;
       required(blob, 'This music original is unavailable. Reload or restore the library.');
       return blob;
     },
