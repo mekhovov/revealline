@@ -712,3 +712,198 @@ test('Classic replay import stays paused and controller completion checks the ex
   assert.deepEqual(h.snapshots.at(-1).checkpoint, source.checkpoint);
   assert.equal(h.snapshots.at(-1).run.ruleset, 'xonix-core.v5');
 });
+
+function modelHiddenControlFocus(h, node) {
+  identifyFocusTargets(h.doc);
+  let hidden = node.hidden;
+  Object.defineProperty(node, 'hidden', {
+    configurable: true,
+    get: () => hidden,
+    set(value) {
+      hidden = value;
+      // Native hiding removes the focused Cancel control from keyboard navigation.
+      if (value && h.doc.activeElement === node) h.doc.body.focus();
+    },
+  });
+}
+async function holdReplayFile(h, name = 'held-focus.json') {
+  let finish;
+  h.$('replay-file').files = [
+    { name, size: 100, text: () => new Promise((resolve) => (finish = resolve)) },
+  ];
+  h.$('replay-file').emit('change');
+  await until(() => finish, 'the ordinary file reader is held');
+  return finish;
+}
+
+for (const outcome of ['cancel', 'success', 'failure', 'completed', 'empty'])
+  test(`settled Cancel focus: ${outcome} hands off to a usable control without starting playback`, async (t) => {
+    const h =
+      outcome === 'empty'
+        ? await harness(t, { version: 'wrong' }, { expectLoadFailure: true })
+        : await harness(t);
+    const { $, doc, tick, key } = h;
+    modelHiddenControlFocus(h, $('cancel-load'));
+    if (outcome === 'completed') {
+      key($('play-pause'), 'Enter');
+      for (let i = 0; i < 15; i++) tick(100);
+      assert.equal($('playback-phase').textContent, 'complete');
+    } else if (outcome !== 'empty') key($('board'), 'ArrowRight');
+    const before = tick()?.checkpoint,
+      name = $('recording-name').textContent;
+    const finish = await holdReplayFile(h);
+    jumpToPlayback(h);
+    await delay(0);
+    assert.equal(doc.activeElement, $('cancel-load'));
+    if (['cancel', 'completed', 'empty'].includes(outcome)) key($('cancel-load'), 'Enter');
+    else
+      finish(
+        JSON.stringify(
+          outcome === 'success' ? recording('grid-center', true) : { version: 'wrong' },
+        ),
+      );
+    await until(() => $('cancel-load').hidden, 'load settled');
+    const expected =
+      outcome === 'completed' ? 'restart' : outcome === 'empty' ? 'load-example' : 'play-pause';
+    assert.equal(doc.activeElement, $(expected));
+    assert.equal($(expected).disabled, false);
+    assert.ok($(expected).scrolled);
+    if (['cancel', 'completed', 'empty'].includes(outcome)) {
+      finish(JSON.stringify(recording('grid-center', true)));
+      for (let i = 0; i < 5; i++) await setImmediate();
+      assert.equal($('import-status').dataset.state, 'cancelled');
+    }
+    if (outcome === 'success') {
+      assert.equal($('recording-name').textContent, 'Classic recording');
+      assert.equal($('playback-phase').textContent, 'paused');
+      assert.equal(tick(100).tick, 0);
+    } else {
+      assert.equal($('recording-name').textContent, name);
+      tick(100);
+      assert.deepEqual(h.snapshots.at(-1)?.checkpoint, before);
+    }
+  });
+
+for (const departure of ['editor', 'pointer', 'background', 'foreground-suspend', 'new-load'])
+  test(`settled Cancel focus yields to ${departure} ownership`, async (t) => {
+    const h = await harness(t),
+      { $, doc, win, tick } = h;
+    modelHiddenControlFocus(h, $('cancel-load'));
+    const before = tick().checkpoint;
+    const finish = await holdReplayFile(h);
+    $('cancel-load').focus();
+    let newer;
+    if (departure === 'editor') {
+      $('replay-text').closest('details').open = true;
+      $('replay-text').value = 'Keep this draft';
+      $('replay-text').focus();
+    } else if (departure === 'pointer') {
+      // Reading nonfocusable text is a newer intent even while Cancel still has focus.
+      $('recording-name').emit('pointerdown');
+    } else if (departure === 'background') {
+      doc.focused = false;
+      win.emit('blur');
+    } else if (departure === 'foreground-suspend') {
+      assert.equal(doc.hidden, false);
+      assert.equal(doc.hasFocus(), true);
+      win.emit('pagehide', { persisted: true });
+    } else newer = await holdReplayFile(h, 'newer.json');
+    finish(JSON.stringify({ version: 'wrong' }));
+    if (departure === 'new-load') {
+      for (let i = 0; i < 5; i++) await setImmediate();
+      assert.equal($('import-status').dataset.state, 'busy');
+      assert.equal($('cancel-load').hidden, false);
+      assert.equal(doc.activeElement, $('cancel-load'));
+      newer(JSON.stringify({ version: 'wrong' }));
+    }
+    await until(() => $('cancel-load').hidden, 'current load settled');
+    assert.equal(doc.activeElement, departure === 'editor' ? $('replay-text') : doc.body);
+    if (departure === 'editor') assert.equal($('replay-text').value, 'Keep this draft');
+    if (departure === 'background') {
+      doc.focused = true;
+      win.emit('focus');
+    }
+    if (departure === 'foreground-suspend') win.emit('pageshow', { persisted: true });
+    assert.deepEqual(tick(100).checkpoint, before);
+    assert.equal($('playback-phase').textContent, 'paused');
+  });
+
+for (const departure of ['blur', 'hidden', 'persisted', 'controller-loss'])
+  test(`complete replay keeps Restart guidance through ${departure}`, async (t) => {
+    const h = await harness(t),
+      { $, doc, win, key, tick } = h;
+    key($('play-pause'), 'Enter');
+    for (let i = 0; i < 15; i++) tick(100);
+    assert.equal($('playback-phase').textContent, 'complete');
+    const message = $('transport-status').textContent;
+    assert.match(message, /Restart to watch again/);
+    const before = tick().checkpoint;
+    if (departure === 'blur') {
+      doc.focused = false;
+      win.emit('blur');
+      doc.focused = true;
+      win.emit('focus');
+    }
+    if (departure === 'hidden') {
+      doc.hidden = true;
+      doc.emit('visibilitychange');
+      doc.hidden = false;
+      doc.emit('visibilitychange');
+    }
+    if (departure === 'persisted') {
+      win.emit('pagehide', { persisted: true });
+      win.emit('pageshow', { persisted: true });
+    }
+    if (departure === 'controller-loss') {
+      h.pad();
+      h.press(0);
+      h.unplug();
+    }
+    assert.equal($('transport-status').textContent, message);
+    assert.equal($('play-pause').disabled, true);
+    assert.equal($('step').disabled, true);
+    assert.equal($('restart').disabled, false);
+    assert.equal($('playback-phase').textContent, 'complete');
+    assert.deepEqual(tick(100).checkpoint, before);
+    key($('restart'), 'Enter');
+    assert.equal(tick().tick, 0);
+    assert.equal($('playback-phase').textContent, 'paused');
+    assert.equal($('play-pause').disabled, false);
+  });
+
+test('a rejected first load keeps its recovery status through lifecycle return without advertising Play', async (t) => {
+  const h = await harness(t, { version: 'wrong' }, { expectLoadFailure: true });
+  const { $, win, tick } = h;
+  const status = $('transport-status').textContent,
+    failure = $('import-status').textContent;
+  win.emit('pagehide', { persisted: true });
+  win.emit('pageshow', { persisted: true });
+  assert.equal($('transport-status').textContent, status);
+  assert.equal($('import-status').textContent, failure);
+  assert.equal($('play-pause').disabled, true);
+  assert.equal($('step').disabled, true);
+  tick();
+  assert.equal(h.snapshots.length, 0);
+});
+
+test('a playback checkpoint failure keeps its error through lifecycle return', async (t) => {
+  const h = await harness(t),
+    { $, win, key, tick } = h;
+  // Inject a read-model corruption at the renderer boundary. The real player
+  // must reject the final checkpoint; this is not an imported fixture bypass.
+  tick().run.score++;
+  key($('play-pause'), 'Enter');
+  for (let i = 0; i < 15; i++) tick(100);
+  assert.equal($('playback-phase').textContent, 'error');
+  const message = $('transport-status').textContent,
+    checkpoint = $('checkpoint').textContent;
+  assert.ok(message);
+  assert.doesNotMatch(message, /Choose Play/);
+  win.emit('pagehide', { persisted: true });
+  win.emit('pageshow', { persisted: true });
+  assert.equal($('transport-status').textContent, message);
+  assert.equal($('checkpoint').textContent, checkpoint);
+  assert.equal($('play-pause').disabled, true);
+  assert.equal($('step').disabled, true);
+  assert.equal($('restart').disabled, false);
+});

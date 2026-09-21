@@ -1,0 +1,30 @@
+{
+  "base": "d166a45dca6d42585e385a765903dca826d60950",
+  "initialEvidence": {
+    "path": "evidence.json",
+    "sha256": "cd2013e7fd70cf43f240b69d5a9dc59635f92fca5e42553a08379e155324e2fe",
+    "unchanged": true
+  },
+  "patch": {
+    "path": "source.patch",
+    "sha256": "c3e24e50b410fe10ec48bf7028cbd1b8836561a126d0867f902871fee40874ae",
+    "changedPaths": [
+      "game/replay-theater/app.mjs",
+      "game/test/replay-theater-navigation.test.mjs",
+      "docs/replay-theater.md"
+    ]
+  },
+  "parentNativeReceipt": {
+    "path": ".cache/p16-replay-final-native-d166-r1/native-evidence.json",
+    "sha256": "d9fa506eeda4da4844cdd631f44c74d0f8b52eea5b399aaf78f14ad857d4f63e",
+    "runtimePinMatches": true
+  },
+  "nativeScope": "Parent independently qualified ordinary keyboard held-load cancellation and successful settlement focus at 1280x720, then completed the actual bundled recording at 2x: tick1305, checkpoint861a6de2ffd7e119, focused visible44px Restart, no console warnings/errors.",
+  "nativeLimit": "No observable inactive state was delivered by the blank-tab attempt; no native lifecycle pass. Complete/error/empty lifecycle evidence remains modeled host tests only. No physical controller, touch/mobile, screen-reader, offline, public or whole-P16 acceptance.",
+  "qualification": {
+    "node20": "52/52",
+    "node22": "52/52",
+    "runtimeAndThreePostimagesUnchanged": true
+  },
+  "integration": "Exactly three paths; docs/replay-theater.md is an appended contract and maintainer prompt. No skill edit or sibling-source changes. Integrator should preserve any independently added guide EOF sections."
+}
