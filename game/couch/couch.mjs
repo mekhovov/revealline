@@ -1371,7 +1371,7 @@ try {
     onPads: (count, nextSlots) => {
       assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
       slots = [...nextSlots];
-      const message = `${count} standard controller${count === 1 ? '' : 's'} assigned · ${slots.map((slot, i) => `Player ${i + 1}: ${slot === null ? 'keyboard/touch' : `pad slot ${slot}`}`).join(' · ')}. Keyboard and touch remain available. Escape pauses both boards.`;
+      const message = `${count} standard controller${count === 1 ? '' : 's'} assigned · ${slots.map((slot, i) => `Player ${i + 1}: ${slot === null ? 'keyboard/touch' : `pad slot ${slot}`}`).join(' · ')}. Keyboard and touch remain available. Esc / P pauses both boards.`;
       if ($('race-pad-status').textContent !== message) $('race-pad-status').textContent = message;
     },
   });

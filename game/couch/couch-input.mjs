@@ -284,6 +284,11 @@ export function attachCouchInput({
       if (freshKey(e)) pause();
       return;
     }
+    if (e.code === 'KeyP' && !editing(e.target) && active() && !destroyed) {
+      e.preventDefault();
+      if (freshKey(e)) pause();
+      return;
+    }
     if (editing(e.target) || !active() || destroyed) return;
     // Clicking Music must not strand the other keyboard player. Buttons/links
     // retain their native activation, while ordinary movement keys keep working.
