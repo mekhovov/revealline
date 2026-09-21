@@ -444,7 +444,8 @@ test('Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
 test('soundtrack UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const audioReviewPath = 'docs/verification/hosted-soundtracks-2026-09-21/review.json';
+  const audioReviewPath =
+    'docs/verification/hosted-soundtracks-2026-09-21/selection-cache/review.json';
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
     .digest('hex');
@@ -479,7 +480,7 @@ test('soundtrack UI and audio bind only their reviewed current inputs', async ()
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:e1bd9c13f39d0b00bd370532c3c77cac3aee78ae1738ae940ca8e80127269f6b',
+          'sha256:8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768',
         ),
         slot.id,
       );
