@@ -1,4 +1,46 @@
-# Shared handheld play — implementation checkpoint
+# Shared handheld play
+
+## Current authority
+
+The shared-control and compact-HUD scope is publicly accepted in
+[v0.77.0](https://mekhovov.github.io/revealline/releases/v0.77.0/site/game/).
+Use the [execution register](cross-mode-execution.md) for current release evidence,
+phase status and queue. Later Team landscape enlargement is an isolated candidate;
+it is not included in v0.77.0. Real iPhone and Steam Deck acceptance remains open.
+
+The numbered iterations below are historical implementation observations. Their
+“candidate”, “current” and “next” wording describes their own point in development,
+not the current publication state. Preserve those scopes when citing their evidence.
+
+## Physical-device acceptance still required
+
+Record model, OS/browser, actual viewport, DPR and input mapping for each result.
+Do not infer these results from resizing a desktop browser.
+
+- iPhone Safari: open cold with bars visible, rotate both ways, expand/collapse browser
+  bars and return from another app. Check the full arena, all required notices and
+  reachable Pause/touch controls throughout; focus return must stay paused.
+- Installed Home Screen app: repeat the same journey in standalone mode and preserve
+  progress/audio interruption behavior. Installation is optional for ordinary play.
+- Touch: both couch seats use simultaneous independent fingers; release and pointer
+  cancellation cannot take control of the other seat. Test all three steering choices,
+  Regular/Large controls, handedness, rescue, capture stop and explicit fresh input.
+- Steam Deck: cold Start with fresh A, mission selection, Retry/Next, Pause/Settings/
+  Back/Resume and text-entry workflows must work using the default controller mapping.
+  Test mouse/touch handoff and reconnect without stale held input or wrong prompts.
+- At every step retain readable objectives and Large/Plain options. A compact HUD
+  may use an extra row for required objective text; hiding a threat is not a fit fix.
+
+WebKit documents `dvh` as the dynamic viewport, distinct from smallest/largest
+viewport sizes. This supports fitting browser play independently of fullscreen;
+it does not replace the Safari bar/rotation tests above.
+[WebKit viewport guidance](https://webkit.org/blog/12445/new-webkit-features-in-safari-15-4/).
+Steam requires access to content with the default controller configuration and
+input-appropriate prompts. Its physical-device review remains separate from our
+modeled input tests.
+[Steam compatibility checklist](https://partner.steamgames.com/doc/steamhardware/compat).
+
+## Historical initial implementation checkpoint
 
 The September 21 device feedback is the immediate priority. This candidate is based
 on source `17bd1965`, outside the frozen v0.76.1 correction. It is not a public release
