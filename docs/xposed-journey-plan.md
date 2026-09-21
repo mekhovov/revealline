@@ -177,14 +177,16 @@ the existing guard by65,952,424bytes before other costs. This is conditional on
 unchanged packaging, not a failure of accepted v0.76.1. Packaging review is an
 explicit integration gate; do not delete originals or raise the guard.
 
-### Historical phase snapshots
-
 Sentinel Crown now has five local original citadel compositions (12,975,848bytes),
 immutable pins and explicit Studio opt-in. Its35-test art/core/project/candidate/
 registry/library cohort passes Node20/22 with30 unchanged historical clears.
-Native full encounter-state presentation, device/human and release qualification
+All five initial native pictured closures at82c8a0b3 retain3lives; warning stripes
+remain visible over pictured strips. Studio lower encounter captions can be clipped
+at the observed preview height. Full encounter-state, device/human and release qualification
 remain open. These five assets are additional to the capacity forecast above;
 see P11 and `docs/research/sentinel-original-art-prompts.json`.
+
+### Historical phase snapshots
 
 The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0
 publisher 7b898a7b through integration b5193ca1; the public Team/Studio acceptance

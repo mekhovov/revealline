@@ -21,8 +21,22 @@ project/registry/whole-library cohort passes35/35 on Node20.19.5 and22.22.2,
 preserving all30 exact Sentinel clear checkpoints and498 library manifests.
 Scoped ESLint, formatting and diff checks pass.
 
-Native picture/capture and the full shield-warning/attack/open/release presentation
-matrix, actor/audio treatment, device/human evidence and publication remain open.
+All five initial native picture/capture checks now use exact source
+82c8a0b31b412e36e1fb2f9a01bb0dedfd70439a, explicit Studio Inspect → Apply and
+normal Standard Solo input. First relay Down0.6%/130points; Twin receivers
+Up0.5%/110; Relay perimeter Down0.3%/60; Crown audience Up0.4%/80; Rings of return
+Up0.3%/70. All target85%, retain3lives and stop on closure. No shield is collected
+in these first returns. Original fragments load; horizontal striped warnings cross
+pictured strips in First relay, Twin receivers and Remix. The Remix captured
+strip loses arrows; adjacent marked cells keep them. Gates remain closed and
+roamers dormant. Every preview closes with focus restored to Play.
+
+The fixed-height Studio preview clips lower encounter-status content at the
+observed viewport; full text remains in AX, not proof of adequate visible captions.
+Keep this shared UX issue open. These are scoped keyboard observations, not
+shield collection, exposed-core/release, broad-area/victory, full accessibility,
+device or human acceptance. The remaining encounter-state matrix, actor/audio
+treatment and publication remain open.
 DevicePR211 owns the next delivery. No phase/version allocation or publisher edit
 is made here. The existing Pages guard and source originals remain unchanged;
 the five new images add12,975,848bytes beyond the35-image capacity forecast in
