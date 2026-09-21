@@ -661,7 +661,7 @@ $('team-signal').onclick = guarded(() => {
 });
 $('team-journey').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createTeamJourneyCandidates(), null, 2);
+  $('source').value = JSON.stringify(createTeamJourneyCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

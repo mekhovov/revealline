@@ -15,6 +15,12 @@ energy gates, streak penalties, hidden adaptive difficulty or mandatory reward s
 
 ## Invariants
 
+Team original-art source checkpoint: eleven new originals plus the existing Shared
+detour picture now bind all twelve candidate missions without changing36 resolved
+preset simulations. The15-case cohort on Node20/22 includes64 unchanged two-seat
+route outcomes. This is not Team picture delivery or P14 acceptance: the verified
+host adapter, native/human/device checks and publication remain pending.
+
 - Enemy-seeded four-connected capture: closure secures the trail, then fills field
   regions containing no field-retaining enemy. Occupied regions on both sides may
   yield line-only capture. Teach this visibly; do not guess Reloaded's algorithm.

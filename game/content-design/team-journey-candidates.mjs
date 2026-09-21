@@ -3,6 +3,8 @@ import { createTeamSignalCandidates } from './team-signal-candidates.mjs';
 import { createTeamMaterialPracticeCandidates } from './team-material-candidates.mjs';
 import { createTeamRoamerCandidates } from './team-roamer-candidates.mjs';
 import { freezeDesign } from './catalogs.mjs';
+import { TEAM_ART_CANDIDATES } from './team-art.mjs';
+import { SIGNAL_TEAM_ART_CANDIDATES } from './signal-art.mjs';
 
 // Separate cooperative decisions, not mirrored Solo maps. No new runtime rule
 // or upgraded historical edition: these use qualified Team foundations only.
@@ -209,7 +211,7 @@ export function createTeamFoundationPracticeCandidates() {
 
 /** Local review sequence. Historical Team V1/V2 missions stay byte-for-byte
  * unchanged in separate campaigns; no public enrollment or award authority. */
-export function createTeamJourneyCandidates() {
+export function createTeamJourneyCandidates({ artwork = false } = {}) {
   const chapters = [
     createTeamOpeningCandidates(),
     createTeamFoundationPracticeCandidates(),
@@ -226,5 +228,15 @@ export function createTeamJourneyCandidates() {
   };
   for (const key of ['maps', 'missions', 'campaigns', 'packs', 'assets'])
     source[key] = chapters.flatMap((chapter) => chapter[key] ?? []);
+  if (artwork) {
+    // Presentation-only opt-in: retain each historical Team edition, theme and
+    // recipe. Runtime delivery still requires the authenticated picture path.
+    source.assets = structuredClone([...TEAM_ART_CANDIDATES, ...SIGNAL_TEAM_ART_CANDIDATES]);
+    for (const mission of source.missions)
+      mission.presentation.backgroundAssetId =
+        mission.id === 'shared-detour'
+          ? SIGNAL_TEAM_ART_CANDIDATES[0].id
+          : 'team-partners-' + mission.id;
+  }
   return source;
 }
