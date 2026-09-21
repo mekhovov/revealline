@@ -728,6 +728,46 @@
               <ol id="pacing-sequence"></ol>
             </details>
           </details>
+          <details id="acceptance-panel">
+            <summary>Review mission acceptance evidence</summary>
+            <p class="note">
+              Read-only review of the applied mission. Automated, native-browser and genuine human
+              observations remain separate. Imported records are unverified claims, not proof of
+              testing. No report publishes content or approves a release. Whole-Journey flow,
+              performance, storage rollback and deployment need separate qualification.
+            </p>
+            <p id="acceptance-selection" class="note"></p>
+            <label>Review mode<select id="acceptance-mode"></select></label>
+            <label
+              >Exact tested source commit
+              <input
+                id="acceptance-commit"
+                type="text"
+                maxlength="40"
+                spellcheck="false"
+                autocomplete="off"
+                placeholder="40-character lowercase Git commit"
+              />
+            </label>
+            <p class="note">
+              Supply the actual tested commit, not a branch name. Studio cannot verify that this
+              draft or the served build belongs to that commit. Simulation and presentation pins
+              partition records; they are not security signatures.
+            </p>
+            <label
+              >Optional local evidence ledger (JSON, at most 8 MiB)
+              <input id="acceptance-file" type="file" accept="application/json,.json" />
+            </label>
+            <p id="acceptance-ledger-status" class="note" role="status"></p>
+            <button id="acceptance-clear" type="button">Clear session evidence</button>
+            <button id="acceptance-inspect" type="button">Inspect applied mission evidence</button>
+            <p id="acceptance-summary" class="note" role="status"></p>
+            <ul id="acceptance-checks" aria-label="Mission evidence checks"></ul>
+            <details>
+              <summary>Exact target, observations and limitations</summary>
+              <pre id="acceptance-report"></pre>
+            </details>
+          </details>
           <details id="structure-editor">
             <summary>Organize missions, campaigns & packs</summary>
             <p class="note">
