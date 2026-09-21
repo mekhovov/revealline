@@ -54,10 +54,10 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '11e785a62e5246014c77ccdf6e0c72d5133d8c62aed40da3a3ca551132ad4653',
+    sha256: '1128ede72e1d687690a3832d84b240bd8013be643bb9a21b430fe6875adcac94',
     evidence: [
-      'Scoped soundtrack-player source and browser review: docs/verification/soundtrack-player-ux-2026-09-21/review.json sha256:ccb7d9f09511af14db0debdbc2710f9c382c0f58e1a1df57bfd79baba76813da. Fourteen ordered audio inputs have fingerprint sha256:11e785a62e5246014c77ccdf6e0c72d5133d8c62aed40da3a3ca551132ad4653; soundtrack-panel.css is now an explicit input. Fresh v3 libraries select 90s Synth while saved libraries keep their explicit mode.',
-      'The focused catalogue, player, panel, host, v3 compatibility, Couch-audio and modal-navigation cohort passed 273/273. Browser review covered desktop and 390x844 layouts, style playback, all-style shuffle, visible credits/source links and seven closed advanced sections. The verified hosted synth object returned HTTP 200, CORS *, and its declared 1,740,382-byte length.',
+      'Scoped soundtrack-player source and browser review: docs/verification/soundtrack-player-ux-2026-09-21/review.json sha256:b35df30b1583a691852caaf5869e4b1f54a3656037057f156655e9b1f51adc3f. Fourteen ordered audio inputs have fingerprint sha256:1128ede72e1d687690a3832d84b240bd8013be643bb9a21b430fe6875adcac94; soundtrack-panel.css is now an explicit input. Fresh v3 libraries select 90s Synth while saved libraries keep their explicit mode.',
+      'The focused catalogue, player, panel, host, v3 compatibility, Couch-audio and modal-navigation cohort passed 274/274; the panel-only compatibility cohort passed 99/99. Browser review covered desktop and 390x844 layouts, style playback, all-style shuffle, visible credits/source links and seven closed advanced sections. Hosts without a catalogue retain visible playlist playback. The verified hosted synth object returned HTTP 200, CORS *, and its declared 1,740,382-byte length.',
       'Functional player approval only. The 70 CC0/CC BY recordings retain audited rights and pending musical review; no recording, composition, Ukrainian authenticity, physical-device, frozen-offline or public-release approval is granted. UA-FPV remains excluded without redistribution permission. All earlier production history remains immutable before this reviewed successor.',
     ],
   },

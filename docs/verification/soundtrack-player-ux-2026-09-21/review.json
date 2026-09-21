@@ -2,21 +2,22 @@
   "format": "revealline-soundtrack-player-review.v1",
   "reviewedAt": "2026-09-21T20:27:02Z",
   "scope": {
-    "audioRecipeSha256": "11e785a62e5246014c77ccdf6e0c72d5133d8c62aed40da3a3ca551132ad4653",
+    "audioRecipeSha256": "1128ede72e1d687690a3832d84b240bd8013be643bb9a21b430fe6875adcac94",
     "priorAudioRecipeSha256": "8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768",
     "changes": [
       "Fresh soundtrack-library v3 catalogues select 90s Synth by default while migrated libraries retain their saved mode.",
       "The player presents Now Playing, Shuffle all music, style selection and playlist selection before advanced tools.",
       "Sound, custom filters, offline albums, MP3 editing, playlist authoring, assignments, backups and community downloads start collapsed and remain keyboard/controller reachable.",
-      "The Field Kit audio recipe now fingerprints soundtrack-panel.css as well as soundtrack-panel.mjs so future player presentation changes reopen review."
+      "The Field Kit audio recipe now fingerprints soundtrack-panel.css as well as soundtrack-panel.mjs so future player presentation changes reopen review.",
+      "Hosts without a published catalogue keep the built-in and imported playlist selector in the visible Now Playing card, with automatic map/campaign/theme fallback wording."
     ]
   },
   "automatedReview": {
     "focusedTests": {
       "path": "focused-tests.log",
-      "sha256": "eeeca3a797eda2df1348235325e68c20e67198dc05803accbfa22539d1ed5d6a",
-      "tests": 273,
-      "passed": 273,
+      "sha256": "e0ee45abf8d2d9d968bf6e4e961a9d2146bc8ff952144dfdc15dddbbbb7d0932",
+      "tests": 274,
+      "passed": 274,
       "failed": 0
     },
     "playerTests": {
@@ -31,6 +32,13 @@
       "passed": 7619,
       "failed": 139,
       "explanation": "Failures require intentionally absent large optional authoring, picture, video and chapter fixtures in the low-storage checkout. Changed soundtrack and navigation cohorts pass separately. Hosted qualification must use a complete checkout."
+    },
+    "panelCompatibilityTests": {
+      "path": "panel-compatibility-tests.log",
+      "sha256": "45c5054c1a5467397121f359130072e0cb3761d16c828f68ceaf3bcf81777b26",
+      "tests": 99,
+      "passed": 99,
+      "failed": 0
     }
   },
   "browserReview": {
