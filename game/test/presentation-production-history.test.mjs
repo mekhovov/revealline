@@ -444,8 +444,7 @@ test('Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
 test('soundtrack UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const audioReviewPath =
-    'docs/verification/hosted-soundtracks-2026-09-21/selection-cache/review.json';
+  const audioReviewPath = 'docs/verification/soundtrack-player-ux-2026-09-21/review.json';
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
     .digest('hex');
@@ -480,11 +479,12 @@ test('soundtrack UI and audio bind only their reviewed current inputs', async ()
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768',
+          'sha256:11e785a62e5246014c77ccdf6e0c72d5133d8c62aed40da3a3ca551132ad4653',
         ),
         slot.id,
       );
       assert.match(asset.provenance.source, /game\/ui\/audio-master\.mjs/);
+      assert.match(asset.provenance.source, /game\/ui\/soundtrack-panel\.css/);
       assert.match(asset.provenance.source, /game\/soundtrack-portable\.mjs/);
       assert.match(asset.provenance.source, /game\/content\/soundtrack-catalogue\.mjs/);
     }
