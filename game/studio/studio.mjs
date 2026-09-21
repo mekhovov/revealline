@@ -11,6 +11,7 @@ import { createRoverTeachingCandidates } from '../content-design/rover-teaching-
 import { createFractureCandidates } from '../content-design/fracture-candidates.mjs';
 import { createFractureSpatialCandidates } from '../content-design/fracture-spatial-candidates.mjs';
 import { createPhaseCandidates } from '../content-design/phase-candidates.mjs';
+import { createPhaseSpatialCandidates } from '../content-design/phase-spatial-candidates.mjs';
 import { createLivewireCandidates } from '../content-design/livewire-candidates.mjs';
 import { createRelayCandidates } from '../content-design/relay-candidates.mjs';
 import { createCrosswindCandidates } from '../content-design/crosswind-candidates.mjs';
@@ -729,6 +730,12 @@ $('phase').onclick = guarded(() => {
     null,
     2,
   );
+  sourceChanged = true;
+  inspectSource();
+});
+$('phase-spatial').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createPhaseSpatialCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });

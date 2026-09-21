@@ -1,7 +1,7 @@
 # Return in Reserve: pressure-aware teaching and spatial successor
 
-Status: proposed implementation specification; independent skill-required review
-pending. The user requested automatic continuation; routine confirmation pauses
+Status: independent skill-required specification review approved2026-09-21,
+with no blocking gaps. The user requested automatic continuation; routine confirmation pauses
 are replaced by documented decisions and independent review. No human balance,
 native acceptance or publication is implied.
 
