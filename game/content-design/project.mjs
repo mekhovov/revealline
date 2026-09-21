@@ -9,7 +9,7 @@ import { CONTENT_PROJECT_JSON_LIMITS, CONTENT_PROJECT_ITEM_LIMITS } from './limi
 import {
   journeyPolicy,
   journeyActors,
-  DIFFICULTY_CATALOG,
+  journeyDifficultyCatalog,
   compileActor,
   compileJourneyEncounter,
   journeyPreset,
@@ -138,9 +138,10 @@ export function compileContentProject(source) {
   );
   const actors = journeyActors(project.actorCatalogId);
   required(
-    project.difficultyCatalogId === DIFFICULTY_CATALOG.id,
-    'Project must pin registered policy and catalogs.',
+    stableId(project.difficultyCatalogId),
+    'Project must pin a registered difficulty catalog.',
   );
+  const difficultyCatalog = journeyDifficultyCatalog(project.difficultyCatalogId);
   required(
     Array.isArray(project.maps) && project.maps.length <= CONTENT_PROJECT_ITEM_LIMITS.maps,
     'Map revision budget exceeded.',
@@ -281,14 +282,14 @@ export function compileContentProject(source) {
     packs: project.packs,
     policy,
     actors,
-    difficulty: DIFFICULTY_CATALOG,
+    difficulty: difficultyCatalog,
     assets,
   });
   compiledProjects.add(resolved);
   resolvedMissions.set(resolved, new Map());
   try {
     for (const mission of project.missions)
-      for (const difficulty of Object.keys(DIFFICULTY_CATALOG.presets))
+      for (const difficulty of Object.keys(difficultyCatalog.presets))
         for (const mode of mission.modes)
           resolveMission(resolved, mission.id, { difficulty, mode });
   } catch (error) {
@@ -303,7 +304,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   required(compiledProjects.has(project), 'Compile the source project before resolving a mission.');
   const mission = project.missions.find((candidate) => candidate.id === id);
   required(mission && mission.modes.includes(mode), 'Mission does not support this mode.');
-  const preset = journeyPreset(difficulty);
+  const preset = journeyPreset(difficulty, project.difficulty.id);
   const cache = resolvedMissions.get(project);
   const key = JSON.stringify([id, mode, difficulty]);
   if (cache.has(key)) return cache.get(key);
@@ -354,7 +355,14 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     ...(directional
       ? { directionalFields: { version: 'directional-fields.v1', zones: map.source.speedZones } }
       : {}),
-    encounter: sentinel ? compileJourneyEncounter(mission.encounter, project.actors.id) : null,
+    encounter: sentinel
+      ? compileJourneyEncounter(
+          mission.encounter,
+          project.actors.id,
+          difficulty,
+          project.difficulty.id,
+        )
+      : null,
     classic: {
       version: 'classic.v1',
       terrain: map.source.terrain ?? [],
@@ -370,7 +378,9 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
           }
         : {}),
     },
-    enemies: mission.actors.map((actor) => compileActor(actor, difficulty, project.actors.id)),
+    enemies: mission.actors.map((actor) =>
+      compileActor(actor, difficulty, project.actors.id, project.difficulty.id),
+    ),
     objectives: mission.objectives,
     supplies: [],
     rules: {

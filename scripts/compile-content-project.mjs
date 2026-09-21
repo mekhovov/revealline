@@ -4,6 +4,10 @@ import { compileContentProject, resolveMission } from '../game/content-design/pr
 import { resolveContentJourney } from '../game/content-design/journey.mjs';
 import { inspectContentPacing } from '../game/content-design/pacing.mjs';
 import {
+  inspectPressureDifficulty,
+  withPressureDifficulty,
+} from '../game/content-design/pressure-candidates.mjs';
+import {
   inspectMissionAcceptance,
   readPlaytestLedger,
 } from '../game/content-design/acceptance-evidence.mjs';
@@ -29,13 +33,15 @@ async function main() {
   const [path, ...args] = process.argv.slice(2);
   if (!path)
     throw new Error(
-      'Usage: compile-content-project.mjs <project.json|-> [--check | --mission ID | --journey | --pacing | --acceptance --mission ID --source-commit SHA] [--pack ID] [--mode solo|versus|team] [--difficulty gentle|standard|expert] [--exclude-campaigns ID,ID (pacing only)] [--evidence-ledger FILE (acceptance only)]',
+      'Usage: compile-content-project.mjs <project.json|-> [--check | --mission ID | --journey | --pacing | --pressure | --pressure-candidate | --acceptance --mission ID --source-commit SHA] [--pack ID] [--mode solo|versus|team] [--difficulty gentle|standard|expert] [--exclude-campaigns ID,ID (pacing only)] [--evidence-ledger FILE (acceptance only)]',
     );
   const options = {},
     seen = new Set();
   let check = false,
     journey = false,
     pacing = false,
+    pressure = false,
+    pressureCandidate = false,
     acceptance = false,
     evidencePath,
     sourceCommit,
@@ -46,6 +52,11 @@ async function main() {
     const arg = args[i];
     if (seen.has(arg)) throw new Error(`Duplicate option: ${arg}`);
     seen.add(arg);
+    if (arg === '--pressure' || arg === '--pressure-candidate') {
+      if (arg === '--pressure') pressure = true;
+      else pressureCandidate = true;
+      continue;
+    }
     if (arg === '--check') {
       check = true;
       continue;
@@ -83,6 +94,14 @@ async function main() {
     else if (arg === '--source-commit') sourceCommit = value;
     else if (arg === '--evidence-ledger') evidencePath = value;
     else options[arg.slice(2)] = value;
+  }
+  if (pressure || pressureCandidate) {
+    if (seen.size !== 1)
+      throw new Error('Pressure reports/exports cover the entire project; do not combine options.');
+    const source = await input(path);
+    const result = pressure ? inspectPressureDifficulty(source) : withPressureDifficulty(source);
+    process.stdout.write(JSON.stringify(result, null, 2) + '\n');
+    return;
   }
   if (
     acceptance &&

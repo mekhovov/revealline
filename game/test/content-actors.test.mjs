@@ -200,6 +200,25 @@ function editorFixture({ deferredSource = false } = {}) {
   };
 }
 const submit = (f) => f.node('form').onsubmit({ preventDefault() {} });
+test('Studio reads the pinned difficulty catalog for effective movement and attack rests', () => {
+  const f = editorFixture();
+  const next = structuredClone(f.source());
+  next.difficultyCatalogId = 'journey-difficulty-v2';
+  next.actorCatalogId = 'journey-actors-v5';
+  f.update(next);
+  assert.match(f.node('tier').children[0].textContent, /3.36 cells\/s/);
+  f.node('role').value = 'lane-emitter';
+  f.node('role').onchange();
+  assert.match(
+    f.node('tier').children[0].textContent,
+    /1.5s warning \/ 0.7s active \/ 5.4333s cycle/,
+  );
+  f.preset('expert');
+  assert.match(f.node('tier').children[0].textContent, /4.2 cells\/s/);
+  f.node('role').value = 'lane-emitter';
+  f.node('role').onchange();
+  assert.match(f.node('tier').children[0].textContent, /4.6667s cycle/);
+});
 test('Studio emitter controls use shared cadence and an explicit axis without motion overrides', () => {
   const f = editorFixture();
   assert(!f.node('role').children.some((row) => row.value === 'lane-emitter'));
