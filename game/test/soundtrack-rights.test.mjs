@@ -341,7 +341,8 @@ test('Recording mode requires verified gameplay-video rights and unregistered Co
 test('automatic selection applies explicit energy preference after scene and theme; authored playlist order survives', () => {
   const calm = { ...permissive, tags: { ...permissive.tags, role: 'menu', energy: 1 } };
   const intense = { ...limited, tags: { ...limited.tags, role: 'gameplay', energy: 5 } };
-  const value = setCatalogueTracks(emptySoundtrackLibrary(), [calm, intense]);
+  const automatic = setCatalogueTracks(emptySoundtrackLibrary(), [calm, intense]);
+  const value = { ...automatic, listening: { ...automatic.listening, mode: 'auto' } };
   const trusted = catalog(calm, intense);
   assert.deepEqual(
     resolveSoundtrackSelection(
@@ -352,7 +353,8 @@ test('automatic selection applies explicit energy preference after scene and the
     [calm.id],
   );
   const any = { ...intense, tags: { ...intense.tags, role: 'any' } };
-  const both = setCatalogueTracks(emptySoundtrackLibrary(), [calm, any]);
+  const mixed = setCatalogueTracks(emptySoundtrackLibrary(), [calm, any]);
+  const both = { ...mixed, listening: { ...mixed.listening, mode: 'auto' } };
   assert.deepEqual(
     resolveSoundtrackSelection(
       both,
