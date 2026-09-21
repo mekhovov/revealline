@@ -685,7 +685,7 @@ $('apex').onclick = guarded(() => {
 });
 $('whole-journey').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createWholeJourneyCandidates(), null, 2);
+  $('source').value = JSON.stringify(createWholeJourneyCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

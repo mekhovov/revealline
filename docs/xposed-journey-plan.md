@@ -205,6 +205,13 @@ additional to the capacity forecast; no budget or release authority changes.
 
 ### Historical phase snapshots
 
+The whole-library Studio inspection now explicitly selects an original-picture
+review draft:83 unique mission originals, all498 Solo/Versus preset manifests and
+execution keys matching standalone pictured editions, and unchanged simulation
+identities against greyboxes. Eleven composition tests pass on Node20/22. Default
+greybox callers and the existing public opening/authored routes remain unchanged;
+no full-library enrollment or publication is implied. See P13 for exact scope.
+
 The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0
 publisher 7b898a7b through integration b5193ca1; the public Team/Studio acceptance
 is scoped, not whole-phase or physical-device validation. Preserve the user's dirty

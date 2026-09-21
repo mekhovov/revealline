@@ -33,17 +33,20 @@ export const WHOLE_JOURNEY_CHAPTERS = freezeDesign(
 export const WHOLE_JOURNEY_CORE_PACK_IDS = freezeDesign(chapters.map((row) => row[1]));
 export const WHOLE_JOURNEY_REMIX_PACK_IDS = freezeDesign(chapters.map((row) => row[2]));
 
-/** A greybox review source for the existing compiler/Studio/execution adapters.
- * Does not enroll public content, bind unqualified art, upgrade mission/map
- * editions, retune physics, migrate saves or award official progress. All source
- * factories return independent drafts; edits cannot mutate another chapter. */
-export function createWholeJourneyCandidates() {
-  const sources = chapters.map(([, , , create]) => create());
+/** Review source for the existing compiler/Studio/execution adapters. Historical
+ * callers retain greyboxes; explicit artwork selects each chapter's already
+ * authored picture edition (including Signal's distinct theme revision). Neither
+ * variant enrolls public content, retunes physics, migrates saves or awards official
+ * progress. Independent drafts cannot mutate another chapter. */
+export function createWholeJourneyCandidates({ artwork = false } = {}) {
+  const sources = chapters.map(([, , , create]) => create({ artwork }));
   const source = {
     ...sources[0],
-    id: 'whole-journey-greybox-review',
-    revision: 'greybox-review-1',
-    name: 'Whole Journey · unvalidated greybox review',
+    id: artwork ? 'whole-journey-original-review' : 'whole-journey-greybox-review',
+    revision: artwork ? 'original-review-1' : 'greybox-review-1',
+    name: artwork
+      ? 'Whole Journey · unvalidated original-picture review'
+      : 'Whole Journey · unvalidated greybox review',
     actorCatalogId: 'journey-actors-v6',
   };
   for (const key of ['maps', 'missions', 'campaigns', 'packs', 'assets'])

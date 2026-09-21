@@ -161,12 +161,12 @@ test('declared progression has practice-sized arcs, no band reset and fewer than
 test('whole-library Studio action inspects a candidate source and does not bypass explicit Apply', async () => {
   const studio = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
-  assert.match(html, /id="whole-journey">Inspect whole Journey greyboxes/);
+  assert.match(html, /id="whole-journey">Inspect whole Journey picture candidates/);
   const handler = studio.match(
     /\$\('whole-journey'\)\.onclick = guarded\(\(\) => \{([\s\S]*?)\n\}\);/,
   )[1];
   assert.match(handler, /discardSource\(\)/);
-  assert.match(handler, /createWholeJourneyCandidates\(\)/);
+  assert.match(handler, /createWholeJourneyCandidates\(\{ artwork: true \}\)/);
   assert.match(handler, /inspectSource\(\)/);
   assert.doesNotMatch(handler, /session\.(?:apply|replace|transact)|location\.|publish/i);
 });

@@ -97,3 +97,31 @@ device checks; human pacing and content-cut decisions;
 all twelve Remix retention decisions; original assets and offline aggregate budget;
 separate Team qualification; versioned PR/review/release and Pages verification.
 No previously open P01–P12 art, human, Team or publication gate is waived.
+
+## Complete original-picture source assembly
+
+The explicit `createWholeJourneyCandidates({ artwork:true })` source now combines
+all83 Solo/Versus mission originals (208,346,140pinned bytes;223,153bytes of compact
+source JSON) through the same compiler and registry. It has a separate draft ID
+and revision. Default calls still produce the historical unillustrated review.
+Each chapter retains its existing picture edition: Signal specifically uses its
+already-authored `signal-gardens`/greybox-2 presentation, not a silent upgrade to
+the old greybox edition. No public Journey route is added or expanded.
+
+Studio's existing whole-library button is explicitly relabelled **Inspect whole
+Journey picture candidates**. Inspection still leaves the active project untouched
+until Apply. Existing individual-chapter and published opening/authored routes
+remain independent. Originals are not inlined, repacked, compressed or repinned.
+
+Eleven whole-library/art tests pass on Node20 and22. All498 pictured preset/mode
+manifests and all campaign execution/base keys match their standalone picture
+editions. Another498 comparisons preserve the greyboxes' simulation identities.
+Every original has one consumer and exact shared-registry membership; source
+clones are independent. The71-core/12-Remix sequence and defaultgreybox tests
+remain intact. These are composition checks, not fresh native decoding or human
+qualification of every picture, and not whole-library real-host delivery.
+
+Original source coverage is now complete for this83-candidate set. Native Studio
+composition, full presentation/device checks, pacing/cut decisions, accepted-tree
+integration and guarded release packaging remain open. Preserve the current
+capacity forecast and950,000,000byte guard; this assembly does not establish fit.
