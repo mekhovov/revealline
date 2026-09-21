@@ -264,7 +264,11 @@ test('automatic theme preference chooses among scene-eligible recordings without
     id: 'builtin.catalog.themedmenu',
     tags: { ...menu.tags, themes: ['atlas'] },
   };
-  const base = setCatalogueTracks(emptySoundtrackLibrary(), [catalogueTrack, menu]);
+  const discovered = setCatalogueTracks(emptySoundtrackLibrary(), [catalogueTrack, menu]);
+  const base = {
+    ...discovered,
+    listening: { ...discovered.listening, mode: 'auto' },
+  };
   const selection = resolveSoundtrackSelection(base, { scene: 'menu', themeId: 'atlas' });
   assert.equal(selection.source, 'catalogue');
   assert.deepEqual(selection.playlist.trackIds, [menu.id]);
@@ -770,7 +774,7 @@ test('Recording mode explains why automatic catalogue selection falls back when 
   const library = setCatalogueTracks(emptySoundtrackLibrary({ catalogue: true }), [catalogueTrack]);
   const selection = resolveSoundtrackSelection({
     ...library,
-    listening: { ...library.listening, recordingMode: true },
+    listening: { ...library.listening, mode: 'auto', recordingMode: true },
   });
   assert(!selection.playlist.trackIds.includes(catalogueTrack.id));
   assert.match(selection.notice, /Recording mode excludes.*gameplay-video.*Content ID/);
