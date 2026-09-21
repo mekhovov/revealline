@@ -1,6 +1,14 @@
 # Xposed-led Journey — implementation contract
 
 Current checkpoint: [2026-09-22 item-by-item completion audit](verification/journey-completion-2026-09-22.md).
+The [Depot inner-lane successor](verification/journey-team-depot-spatial.md)
+addresses a demonstrated difficulty inversion: a corner circuit cleared Expert
+in eight seconds while earning only18.8% on the other presets. Two keeper
+headings preserve contested inner ground without changing rules or speed tiers.
+New relocation qualification requires a nonterminal boosted foundation return
+and a fresh subsequent cut, not merely a pickup immediately before victory.
+Keep this paired-preset retention check in all remaining map reviews. Wider
+pacing, cooperation/mastery, human/device and coordinated release gates remain.
 The [Window Exchange outer-pocket successor](verification/journey-team-window-spatial.md)
 now qualifies ordinary, cooperative first-window taking and genuine relocation
 across all presets, preserving shared speeds, geometry and bonus timing. Its
