@@ -3,6 +3,7 @@ import { freezeDesign } from './catalogs.mjs';
 import { createOpeningCandidates } from './horizon-candidates.mjs';
 import { createBorderCandidates } from './border-candidates.mjs';
 import { isAuthoredJourneyRouteId } from './mode-href.mjs';
+import { createWholeSpatialCandidates } from './whole-spatial-candidates.mjs';
 import {
   createWholeJourneyCandidates,
   WHOLE_JOURNEY_CORE_PACK_IDS,
@@ -13,6 +14,15 @@ import {
  * The frozen opening URL retains its previous library and suspended-flight slot. */
 export function createAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v1')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey spatial and pressure review',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v1',
+      profileKey: 'journey-whole-spatial-v1',
+      source: createWholeSpatialCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+    });
   // A separate explicit review URL and suspended-flight slot. Never expand the
   // historical routes or infer publication/qualification from having artwork.
   if (

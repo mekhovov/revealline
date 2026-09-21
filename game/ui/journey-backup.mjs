@@ -1,4 +1,3 @@
-import { inspectJourneyBackup, mergeJourneyBackup } from '../journey/profile.mjs';
 import { JOURNEY_MODES } from '../journey/catalog.mjs';
 import { exportJSONFile } from '../platform.mjs';
 
@@ -76,10 +75,9 @@ export function attachJourneyBackup({
     try {
       if (file.size > 8 * 1024 * 1024) throw new Error('Backup exceeds the 8 MiB file limit.');
       status.textContent = 'Inspecting the local backup…';
-      const backup = inspectJourneyBackup(await file.text());
+      const { backup, merged } = profile.inspectBackup(await file.text());
       if (ticket !== revision) return;
-      const current = profile.snapshot(),
-        merged = mergeJourneyBackup(current, backup);
+      const current = profile.snapshot();
       const counts = JOURNEY_MODES.map((mode) => {
         const added =
           Object.keys(merged.clears[mode]).length - Object.keys(current.clears[mode]).length;
@@ -123,10 +121,7 @@ export function attachJourneyBackup({
   exportButton.onclick = async () => {
     const ticket = revision;
     try {
-      const result = await exportFile(
-        JSON.parse(profile.export()),
-        'revealline-journey-progress.json',
-      );
+      const result = await exportFile(JSON.parse(profile.export()), profile.backupFilename);
       if (ticket === revision) status.textContent = result.message;
     } catch (error) {
       if (ticket === revision)

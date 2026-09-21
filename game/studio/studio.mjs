@@ -22,6 +22,7 @@ import { createSentinelSpatialCandidates } from '../content-design/sentinel-spat
 import { withPressureDifficulty } from '../content-design/pressure-candidates.mjs';
 import { createApexCandidates } from '../content-design/apex-candidates.mjs';
 import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
+import { createWholeSpatialCandidates } from '../content-design/whole-spatial-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
@@ -871,6 +872,12 @@ $('whole-journey-actors').onclick = guarded(() => {
     null,
     2,
   );
+  sourceChanged = true;
+  inspectSource();
+});
+$('whole-spatial').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createWholeSpatialCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });
