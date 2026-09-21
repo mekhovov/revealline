@@ -1,0 +1,29 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-42",
+  "infrastructureCommit": "82aa7e6c07011e5e0745b9732bb48e0826c6f74e",
+  "deploymentId": 6571281474,
+  "versions": [
+    "v0.78.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-42-v0780/native-observation.json",
+      "sha256": "9e5cbc57176f08c7ad7c1988801432ec9b7e4dbe71a16df9a63bd98ac1f9d6df"
+    },
+    {
+      "path": "evidence/archive-42-v0780/terminal-run.json",
+      "sha256": "e9b3e97c6f4c79022cceae1e3308e61ac9bf4fd411d48acf4a8d00cd1c37a44c"
+    },
+    {
+      "path": "evidence/archive-42-v0780/deployments.json",
+      "sha256": "897e6f0aed44f8bbbb699e2a9505e1f904f78b8b90fe04c86f61578760746135"
+    },
+    {
+      "path": "evidence/archive-42-v0780/deployment-statuses.json",
+      "sha256": "d47b41c19555bdf74e1cf2a36e9baf362e72ce470770e73d6813b4b08d1ccde8"
+    }
+  ],
+  "scope": "Exact original v0.78.0 bytes: 884 paths and423009124bytes; actual archive root/game launch and keyboard legal52.2percent/8160/3lives win, canonical explorer. Physical hardware and full offline/game acceptance remain separate; no historical rebuild."
+}
