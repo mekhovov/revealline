@@ -30,8 +30,14 @@ export function createSoundtrackSource({
     catalogue: trusted,
     async readAsset(
       hash,
-      { signal, download = false, purpose = download ? 'offline' : 'playback' } = {},
+      {
+        signal,
+        download = false,
+        purpose = download ? 'offline' : 'playback',
+        localOnly = false,
+      } = {},
     ) {
+      required(typeof localOnly === 'boolean', 'Invalid local soundtrack acquisition policy.');
       required(
         ['playback', 'offline', 'export'].includes(purpose),
         'Unknown soundtrack byte purpose.',
@@ -51,6 +57,9 @@ export function createSoundtrackSource({
       const local = await readLocal(hash, { signal });
       throwIfSoundtrackAborted(signal);
       if (local) return local;
+      // Silent preparation may verify an owned original, but never authorizes
+      // an archive inventory or recording request merely by opening a page.
+      if (localOnly) return null;
       required(track, 'This recording is missing locally. Restore its complete soundtrack backup.');
       required(
         purpose !== 'playback' || !installedOnly(),

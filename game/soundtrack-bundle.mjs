@@ -17,6 +17,7 @@ import {
   throwIfSoundtrackAborted,
   verifyMP3Media,
 } from './mp3.mjs';
+import { soundtrackPortableRecoveryPlan } from './soundtrack-portable.mjs';
 
 export const SOUNDTRACK_BUNDLE_FORMAT = 'revealline-soundtrack-bundle.v1';
 export const SOUNDTRACK_BUNDLE_FORMAT_V2 = 'revealline-soundtrack-bundle.v2';
@@ -134,11 +135,12 @@ export async function prepareSoundtrackLibrary(
   return prepared;
 }
 export const isPreparedSoundtrackLibrary = (value) => preparedLibraries.has(value);
-/** Recovery export: every permitted original plus explicit restricted references in v3.
+/** Recovery export: every owned/referenced permitted original plus restricted references.
+ * Unused exact trusted online catalogue pins need no original in a v3 backup.
  * Audio payloads remain exact original bytes, never base64 or decoded PCM. */
 export async function exportSoundtrackBundle(value, sourceAssets, { signal, catalogue } = {}) {
-  const initial = resolveSoundtrackLibrary(value);
-  const plan = soundtrackRecoveryPlan(initial, { catalogue });
+  const plan = soundtrackPortableRecoveryPlan(value, { catalogue });
+  const initial = plan.library;
   const library = plan.referenceOnlyTrackIds.length ? upgradeSoundtrackLibrary(initial) : initial;
   const excluded = new Set(
     soundtrackReferencedTracks(library)
