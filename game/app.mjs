@@ -41,6 +41,7 @@ import {
   nextInputModality,
   showScreenControls,
   hasCompactArcadeArena,
+  hasFieldWarningBand,
 } from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
@@ -1943,6 +1944,9 @@ try {
   function refreshInputPresentation() {
     const chrome = hasCompactArcadeArena(run?.level) ? 'compact' : 'full';
     if (document.body.dataset.arenaChrome !== chrome) document.body.dataset.arenaChrome = chrome;
+    const captions = hasFieldWarningBand(run?.level) ? 'warnings' : 'notices';
+    if (document.body.dataset.fieldCaptions !== captions)
+      document.body.dataset.fieldCaptions = captions;
     const visible = showScreenControls({
       preference: library.preferences.screenControls,
       modality: document.body.dataset.inputMode,

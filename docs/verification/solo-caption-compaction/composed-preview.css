@@ -158,11 +158,37 @@
     font-size: var(--handheld-label);
     pointer-events: none;
   }
-  /* Team keeps identity, health/Support, shared coverage and Pause in one strip. */
+  /* Own the complete handheld fit up to 600px. The older desktop stylesheet
+     only supplies grid sizing below 500px; relying on it collapses 501–600px. */
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
+    display: grid;
+    gap: 4px 8px;
+    max-inline-size: none;
     block-size: 100dvh;
     grid-template-rows: calc(44px + var(--handheld-music-space, 0px)) minmax(0, 1fr);
     padding-block: env(safe-area-inset-top) env(safe-area-inset-bottom);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) :is(#coop-play, #coop-controls) {
+    display: contents;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot {
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    place-items: center;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot > .arena-wrap {
+    display: contents;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-canvas {
+    inline-size: auto;
+    block-size: auto;
+    max-inline-size: 100%;
+    max-block-size: 100%;
+    aspect-ratio: auto;
+    object-fit: contain;
+    box-shadow: 0 0 0 var(--fk-border-width) var(--fk-line);
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
     grid-column: 1 / -1;
@@ -404,6 +430,8 @@
     display: block;
     grid-row: 2;
     margin: 0;
+    font-size: var(--handheld-label);
+    line-height: 1.3;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
     :is(.coop-board-slot, .control-card) {
@@ -439,8 +467,8 @@
     gap: 0;
     line-height: 1.1;
   }
-  /* The same controls as Solo float beside the board. Their measured-size
-     gutters below keep all playable cells clear without adding a HUD row. */
+  /* The same controls as Solo overlay the lower corners. Do not reserve
+     full-height columns for floating pads: the complete bitmap fits the arena. */
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -964,8 +992,6 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   body.field-kit.playing:has(#coop-overlay[hidden]) {
     --team-message-space: calc(var(--handheld-label) * 2.5 + 8px);
     --team-pad-size: min(156px, var(--team-pad-limit));
-    --team-left-gutter: 2px;
-    --team-right-gutter: 2px;
     --team-pad-limit: max(
       132px,
       calc(
@@ -978,18 +1004,8 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   body.field-kit.playing:has(#coop-overlay[hidden]):has(.race-pad[data-touch-size='large']) {
     --team-pad-size: min(192px, var(--team-pad-limit));
   }
-  body.field-kit.playing:has(#coop-overlay[hidden]):has(
-      .control-card.sunflower[data-touch-visible='true']
-    ) {
-    --team-left-gutter: calc(var(--team-pad-size) + 8px);
-  }
-  body.field-kit.playing:has(#coop-overlay[hidden]):has(
-      .control-card.skyline[data-touch-visible='true']
-    ) {
-    --team-right-gutter: calc(var(--team-pad-size) + 8px);
-  }
-  /* A controller may hide only one seat. Retire the older fixed-width grid in
-     that case too; the actual visible seat alone owns its side clearance. */
+  /* A controller may hide only one seat. Retire the older fixed-width grid
+     in that case too, keeping the board stable as input devices change. */
   body.field-kit.playing:has(#coop-overlay[hidden])
     #coop-app:has(.control-card[data-touch-visible='false']) {
     grid-template-columns: minmax(0, 1fr);
@@ -1000,7 +1016,7 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
     grid-column: 1 / -1;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot {
-    padding-inline: var(--team-left-gutter) var(--team-right-gutter);
+    padding-inline: 2px;
     padding-bottom: calc(var(--team-message-space) + 8px);
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .control-card {
@@ -1576,26 +1592,6 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
 .music-credit-details p {
   overflow-wrap: anywhere;
 }
-
-/* Equipment and warning cards are independent. A manual-action mission with
-   only ordinary field/line enemies needs the event band, not an empty warning
-   card. Authored capability keeps the arena stable across deaths and phases. */
-@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
-  body.field-kit.game-shell[data-arena-chrome='full'][data-field-captions='notices'][data-flight-state='running']:not(
-      .first-flight-session
-    ) {
-    --fk-flight-bottom: calc(var(--handheld-label) * 2.6 + 8px);
-  }
-  body.field-kit.game-shell[data-arena-chrome='full'][data-field-captions='notices'][data-flight-state='running']:not(
-      .first-flight-session
-    ):has(#encounter-status[data-kind='classic'])
-    #run-message {
-    bottom: max(4px, var(--safe-bottom));
-    max-height: calc(var(--fk-flight-bottom) - 8px);
-    overflow: auto;
-    pointer-events: auto;
-  }
-}
 .compact-track-pause::after {
   display: none;
 }
@@ -1668,5 +1664,25 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
     right: max(96px, calc(96px + env(safe-area-inset-right)));
     margin-inline-end: 0;
+  }
+}
+
+/* Equipment and warning cards are independent. A manual-action mission with
+   only ordinary field/line enemies needs the event band, not an empty warning
+   card. Authored capability keeps the arena stable across deaths and phases. */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-arena-chrome='full'][data-field-captions='notices'][data-flight-state='running']:not(
+      .first-flight-session
+    ) {
+    --fk-flight-bottom: calc(var(--handheld-label) * 2.6 + 8px);
+  }
+  body.field-kit.game-shell[data-arena-chrome='full'][data-field-captions='notices'][data-flight-state='running']:not(
+      .first-flight-session
+    ):has(#encounter-status[data-kind='classic'])
+    #run-message {
+    bottom: max(4px, var(--safe-bottom));
+    max-height: calc(var(--fk-flight-bottom) - 8px);
+    overflow: auto;
+    pointer-events: auto;
   }
 }
