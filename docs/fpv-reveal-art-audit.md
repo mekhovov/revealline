@@ -1,5 +1,7 @@
 # FPV reveal artwork audit
 
+Research and source-original links below open the versioned repository online. They are reference evidence, separate from this release’s playable assets and offline help.
+
 This is a design assessment of the existing source artwork against the approved restrained Field Kit pixel direction. It does not change an asset, picture pin, campaign, save, source license, or quality stage. Open the [source review atlas](../authoring/design-atlas/reveal-audit.html) from a source checkout. It loads originals by their existing paths, and renders procedural scenes with the actual `createSceneArt` helper at preview seed 0. No original image is copied into the atlas or production directory.
 
 ## Verified inventory
@@ -31,7 +33,7 @@ The procedural baseline has a larger identity gap. All 17 use the same dawn-vill
 
 ### 01 · Orchard gate at sunset
 
-[Original](../authoring/library/fpv-arcade/backgrounds/orchard-window.png) · 1774×887 · 5 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/fpv-arcade/backgrounds/orchard-window.png) · 1774×887 · 5 owners · **needs replacement**.
 
 Keep the blue gate, blossom frame, distant village and open path. Dense floral microtexture, many highlight colors and the baked flying quad compete with the restrained new scene language.
 
@@ -45,7 +47,7 @@ Keep the blue gate, blossom frame, distant village and open path. Dense floral m
 
 ### 02 · River railway at sunset
 
-[Original](../authoring/library/homeward-skies/backgrounds/homeward-02.png) · 1448×1086 · 2 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/homeward-skies/backgrounds/homeward-02.png) · 1448×1086 · 2 owners · **needs replacement**.
 
 Keep the railway crossing, river bend and station as this reward’s identity. Reduce bloom, sparkling water and foreground sunflower texture; separately compose the 4:3 and 2:1 frames.
 
@@ -56,7 +58,7 @@ Keep the railway crossing, river bend and station as this reward’s identity. R
 
 ### 03 · Broken island causeway
 
-[Original](../authoring/library/fracture-lines-art/originals/frayed-causeway-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/fracture-lines-art/originals/frayed-causeway-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep the broken crossing and three island structures. The large foreground quad, realistic rock texture and dense reflections dominate the small gameplay actors.
 
@@ -66,7 +68,7 @@ Keep the broken crossing and three island structures. The large foreground quad,
 
 ### 04 · Mountain radar station
 
-[Original](../authoring/library/sentinel-circuit-art/originals/open-the-circuit.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/sentinel-circuit-art/originals/open-the-circuit.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep the large off-center dish and mountain ridge. Simplify metallic detail, scattered lamps and sky glow; separate any narrative aircraft from active gameplay cues.
 
@@ -76,7 +78,7 @@ Keep the large off-center dish and mountain ridge. Simplify metallic detail, sca
 
 ### 05 · Night observatory
 
-[Original](../authoring/library/fpv-arcade/backgrounds/night-signal.png) · 1774×887 · 5 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/fpv-arcade/backgrounds/night-signal.png) · 1774×887 · 5 owners · **needs replacement**.
 
 Keep the observatory dome, quiet mountain horizon and aurora. Reduce bright stars and glow around the baked quad; reserve the clearest cyan/amber accents for gameplay.
 
@@ -90,7 +92,7 @@ Keep the observatory dome, quiet mountain horizon and aurora. Reduce bright star
 
 ### 06 · Offset lake docks
 
-[Original](../authoring/library/countercurrent-art/originals/offset-docks-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/countercurrent-art/originals/offset-docks-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep opposed docks and broad water space. Replace irregular wood and water microtexture with larger clusters; the left/right silhouette is a valuable distinctive composition.
 
@@ -100,7 +102,7 @@ Keep opposed docks and broad water space. Replace irregular wood and water micro
 
 ### 07 · Industrial switchyard
 
-[Original](../authoring/library/sentinel-circuit-art/originals/switchyard-gates.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/sentinel-circuit-art/originals/switchyard-gates.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep the rail gantries and converging gates. Simplify rail reflections and foreground equipment; avoid a prominent static quad that resembles the playable craft.
 
@@ -110,7 +112,7 @@ Keep the rail gantries and converging gates. Simplify rail reflections and foreg
 
 ### 08 · Homeward village
 
-[Original](../authoring/library/homeward-skies/backgrounds/homeward-01.png) · 1448×1086 · 2 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/homeward-skies/backgrounds/homeward-01.png) · 1448×1086 · 2 owners · **needs replacement**.
 
 Keep the hillside cottages, apple tree and distant river. This is strong Ukrainian place imagery, but its dense illustrative highlights and broad palette need a new restrained pixel treatment.
 
@@ -121,7 +123,7 @@ Keep the hillside cottages, apple tree and distant river. This is strong Ukraini
 
 ### 09 · Night beacon hill
 
-[Original](../authoring/library/homeward-skies/backgrounds/homeward-03.png) · 1448×1086 · 2 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/homeward-skies/backgrounds/homeward-03.png) · 1448×1086 · 2 owners · **needs replacement**.
 
 Keep the beacon, winding river and distant town. This is a strong quiet composition; reduce moon bloom, glitter and detailed foreground embroidery for consistent pixel scale.
 
@@ -132,7 +134,7 @@ Keep the beacon, winding river and distant town. This is a strong quiet composit
 
 ### 10 · Sunlit courtyard exits
 
-[Original](../authoring/library/fpv-pressure-art/originals/courtyard-exits.png) · 1774×887 · 2 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/fpv-pressure-art/originals/courtyard-exits.png) · 1774×887 · 2 owners · **needs replacement**.
 
 Keep the mill arches and open exits. Replace tiny brick and flower texture, glowing reflections and the conspicuous flying quad with larger readable forms.
 
@@ -143,7 +145,7 @@ Keep the mill arches and open exits. Replace tiny brick and flower texture, glow
 
 ### 11 · Night industrial waterway
 
-[Original](../authoring/library/fpv-pressure-art/originals/night-crossfire.png) · 1774×887 · 2 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/fpv-pressure-art/originals/night-crossfire.png) · 1774×887 · 2 owners · **needs replacement**.
 
 Keep the blue lock basin, bridge and warm window rhythm. Reduce luminous microdetail and the flying quad so cable and threat silhouettes remain dominant.
 
@@ -154,7 +156,7 @@ Keep the blue lock basin, bridge and warm window rhythm. Reduce luminous microde
 
 ### 12 · Rainy split courtyard
 
-[Original](../authoring/library/fpv-arcade/backgrounds/split-courtyard.png) · 1774×887 · 5 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/fpv-arcade/backgrounds/split-courtyard.png) · 1774×887 · 5 owners · **needs replacement**.
 
 Keep the paired gateways, split building masses and rainy mood. Dense wet reflections and a center quad need a calmer new treatment; do not lose the recognizable split silhouette.
 
@@ -168,7 +170,7 @@ Keep the paired gateways, split building masses and rainy mood. Dense wet reflec
 
 ### 13 · Listening relay court
 
-[Original](../authoring/library/sentinel-circuit-art/originals/listening-court.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/sentinel-circuit-art/originals/listening-court.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep the low walled court, relay masts and off-center service van. Replace finely shaded foliage, mud and hardware with deliberate clusters; distinguish this from the radar-dish scene.
 
@@ -178,7 +180,7 @@ Keep the low walled court, relay masts and off-center service van. Replace finel
 
 ### 14 · Moonlit crossing watch
 
-[Original](../authoring/library/countercurrent-art/originals/crossing-watch-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/countercurrent-art/originals/crossing-watch-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep the beacon on the left and workshop on the right framing water. Quiet center composition fits the hierarchy; realistic moonlight/reflection texture still needs the new pixel treatment.
 
@@ -188,7 +190,7 @@ Keep the beacon on the left and workshop on the right framing water. Quiet cente
 
 ### 15 · Orchard water crossing
 
-[Original](../authoring/library/fpv-pressure-art/originals/orchard-crossing.png) · 1774×887 · 2 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/fpv-pressure-art/originals/orchard-crossing.png) · 1774×887 · 2 owners · **needs replacement**.
 
 Keep diagonal orchard rows, the arch crossing and poplar silhouettes. Simplify leaves, masonry and mist; remove the prominent foreground quad from the gameplay reading area.
 
@@ -199,7 +201,7 @@ Keep diagonal orchard rows, the arch crossing and poplar silhouettes. Simplify l
 
 ### 16 · Circular silo yard
 
-[Original](../authoring/library/fracture-lines-art/originals/split-ring-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/fracture-lines-art/originals/split-ring-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep the round silo landmark and split track. Reduce realistic metal/mud texture and large foreground drone; retain the circular silhouette so it differs from other depot scenes.
 
@@ -209,7 +211,7 @@ Keep the round silo landmark and split track. Reduce realistic metal/mud texture
 
 ### 17 · Forked factory yard
 
-[Original](../authoring/library/fracture-lines-art/originals/fault-fan-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/fracture-lines-art/originals/fault-fan-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep the fan of rails and two workshop masses. Simplify pipes, wet tracks and scattered lamps; this must remain a rail-fan composition rather than a recolored depot.
 
@@ -219,7 +221,7 @@ Keep the fan of rails and two workshop masses. Simplify pipes, wet tracks and sc
 
 ### 18 · Signal foundry
 
-[Original](../authoring/library/challenge-chapter-art/originals/split-signal-foundry.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/challenge-chapter-art/originals/split-signal-foundry.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep tall brick foundry, lower workshop and signal mast. Reduce tiny rail/brick reflections and foreground quad detail; use a distinct narrow central opening.
 
@@ -229,7 +231,7 @@ Keep tall brick foundry, lower workshop and signal mast. Reduce tiny rail/brick 
 
 ### 19 · Crosswind field depot
 
-[Original](../authoring/library/challenge-chapter-art/originals/crosswind-depot.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/challenge-chapter-art/originals/crosswind-depot.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep the farm sheds framing a windy field. Reduce dense leaves, sunflowers and muddy detail; the off-center shed silhouettes and open horizon are worth preserving.
 
@@ -239,7 +241,7 @@ Keep the farm sheds framing a windy field. Reduce dense leaves, sunflowers and m
 
 ### 20 · Winter signal switchback
 
-[Original](../authoring/library/challenge-chapter-art/originals/signal-switchback.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/challenge-chapter-art/originals/signal-switchback.png) · 1774×887 · 1 owners · **needs replacement**.
 
 Keep snow, winding hillside road and relay mast. Preserve the only winter biome; replace photographic snow/branch texture and the foreground quad with crisp clustered masses.
 
@@ -249,7 +251,7 @@ Keep snow, winding hillside road and relay mast. Preserve the only winter biome;
 
 ### 21 · Braided sandbar delta
 
-[Original](../authoring/library/countercurrent-art/originals/sandbar-braid-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
+[Original](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/authoring/library/countercurrent-art/originals/sandbar-braid-fpv.png) · 1774×887 · 1 owners · **needs replacement**.
 
 The strongest negative-space reference: preserve broad channels and offset sandbars. Simplify surface sparkle, haze, tiny reeds and aircraft into restrained clusters while retaining the unique delta layout.
 
