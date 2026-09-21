@@ -30,6 +30,7 @@ import {
   createWholeFieldCandidates,
   createWholeTimedCandidates,
   createWholeVarietyCandidates,
+  createWholeSortingCandidates,
 } from '../content-design/whole-spatial-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
@@ -939,7 +940,11 @@ $('whole-timed').onclick = guarded(() => {
 });
 $('whole-variety').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createWholeVarietyCandidates({ artwork: true }), null, 2);
+  const create =
+    $('whole-variety-edition').value === 'sorting-lanes-1'
+      ? createWholeSortingCandidates
+      : createWholeVarietyCandidates;
+  $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

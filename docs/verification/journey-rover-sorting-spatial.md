@@ -77,13 +77,15 @@ small screens, full human runs and public deployment are still pending.
 
 ## Scope distinction and next gate
 
+Follow-up: [whole-spatial-v5 integration](journey-whole-sorting.md) adds the reviewed
+map to normal Solo/Versus sequential play. Historical v4 remains unchanged.
+
 The older middle-pressure report used a pre-teaching Split Berths source. Current
 whole-variety already contains its earlier first-capture teaching successor;
 do not redesign it based solely on that stale activation report. Its geometry is
-unchanged here. Sorting remains an explicit Studio study, not silently substituted
-into `whole-spatial-v4` or historical replays. Next integrate a reviewed successor
-into the shared whole-Journey player route and qualify navigation/persistence,
-then publish through the existing release owner with candidate labeling.
+unchanged here. Sorting is never silently substituted into `whole-spatial-v4` or
+historical replays. Publish the explicit successor through the existing release
+owner with candidate labeling, after navigation/persistence and technical gates.
 
 Focused tests live in `game/test/rover-spatial-candidates.test.mjs`; public-input
 fixtures are `rover-sorting-spatial-routes.json` and `rover-sorting-mastery-routes.json`.

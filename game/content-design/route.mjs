@@ -5,6 +5,7 @@ import {
   createWholeFieldCandidates,
   createWholeTimedCandidates,
   createWholeVarietyCandidates,
+  createWholeSortingCandidates,
 } from './whole-spatial-candidates.mjs';
 import { createWholeJourneyCandidates } from './whole-journey-candidates.mjs';
 
@@ -22,5 +23,6 @@ export function createAuthoredJourneyRoute(id) {
     createWholeFieldCandidates,
     createWholeTimedCandidates,
     createWholeVarietyCandidates,
+    createWholeSortingCandidates,
   });
 }

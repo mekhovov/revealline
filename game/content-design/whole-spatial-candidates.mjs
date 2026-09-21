@@ -6,6 +6,7 @@ import {
   WHOLE_SPATIAL_FIELD_FINALE_JSON,
   WHOLE_SPATIAL_TIMED_BORDER_JSON,
   WHOLE_SPATIAL_CULTURAL_WORKSHOP_JSON,
+  WHOLE_SPATIAL_SORTING_LANES_JSON,
 } from './whole-spatial-data.mjs';
 
 export const WHOLE_SPATIAL_SELECTIONS = freezeDesign(JSON.parse(WHOLE_SPATIAL_SELECTIONS_JSON));
@@ -63,6 +64,26 @@ export function createWholeVarietyCandidates({ artwork = false } = {}) {
   source.id = artwork ? 'whole-variety-original-review' : 'whole-variety-greybox-review';
   source.revision = 'cultural-workshop-review-1';
   source.name = 'Whole Journey · unvalidated ornament and workshop review';
+  for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
+  return source;
+}
+
+/** Explicit one-map successor; historical libraries and progress remain frozen. */
+export function createWholeSortingCandidates({ artwork = false } = {}) {
+  const source = createWholeVarietyCandidates({ artwork });
+  const { mission, map } = JSON.parse(WHOLE_SPATIAL_SORTING_LANES_JSON);
+  const index = source.missions.findIndex((item) => item.id === mission.id);
+  const prior = source.missions[index];
+  source.missions[index] = { ...mission, presentation: prior.presentation };
+  const sameMap = (a, b) => a.id === b.id && a.revision === b.revision;
+  source.maps = source.maps.filter(
+    (item) =>
+      !sameMap(item, prior.map) || source.missions.some((other) => sameMap(other.map, item)),
+  );
+  source.maps.push(map);
+  source.id = artwork ? 'whole-sorting-original-review' : 'whole-sorting-greybox-review';
+  source.revision = 'sorting-lanes-review-1';
+  source.name = 'Whole Journey · unvalidated contested sorting lanes review';
   for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
   return source;
 }

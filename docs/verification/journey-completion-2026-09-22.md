@@ -37,7 +37,7 @@ or pickup timings, and none proves a feature guarantees popularity.
 | P02 | Border, bonuses/frontiers, Studio CRUD/image workflow; timed bonus Solo/Versus/Team successors | Remaining relocation/mastery, pacing, authoring usability and promotion |
 | P03 | Signal, terrain rules, actor catalogue, tracing benchmark and presentation | Neutralization/optional-objective pacing and whole-set human/device/audio review |
 | P04 | Neon + Remix, originals and preset routes | Frontier/mouth decisions, short routes and human pacing |
-| P05 | Rover + Remix, originals and preset routes; explicit Sorting Yard baffle/retainer/active-return successor with all-preset ordinary and mastery routes | Whole-route successor integration, remaining map-specific activation/escape issues, cleanup and human balance |
+| P05 | Rover + Remix, originals and preset routes; Sorting Yard baffle/retainer/active-return successor with all-preset ordinary/mastery routes and explicit whole-Journey v5 integration | Public promotion, remaining map-specific activation/escape issues, cleanup and human balance |
 | P06 | Fracture/erosion/anchors + Remix; Two Districts successor | Repair priorities, enclosure discovery, optimized pacing |
 | P07 | Phaseworks + Remix, safe returns; Reserve successor | Impact readability, explanations and short-route balance |
 | P08 | Livewire + Remix; pressure/routing successors | Ten original optional-goal cases, delayed mastery, warning overlap and route pacing |
@@ -59,7 +59,9 @@ are provenance, not proof that later successors shipped.
 two additional field keepers and active return-stub roamers, with unchanged shared
 physics and coverage goal. Twelve no-loss public-input clears qualify ordinary
 and optional-mastery routes; native Studio Inspect → Apply → exact first cut is
-checked. Whole-Journey enrollment, public release and human balance remain open.
+checked. [Whole-Journey v5 integration](journey-whole-sorting.md) now provides
+ordinary sequential Solo/Versus play, cross-campaign Next/Skip, unchanged old
+editions and isolated progress. Public release and human balance remain open.
 
 [Studio candidate library](journey-studio-candidate-library.md): one closed,
 searchable/filterable library replaces the long candidate wall; original actions
