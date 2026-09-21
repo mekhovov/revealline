@@ -77,7 +77,20 @@ passes40/40 on both Node20.19.5 and22.22.2, including physical-kind restrictions
 physics/artwork pin changes, explicit correction rules and existing compiler,
 Studio, Journey and Team regressions. Results are in
 `.cache/journey-p15-acceptance-node{20,22}-r1.tap`. Scoped ESLint, formatting and
-diff checks pass. Native inspection remains pending at this source checkpoint.
+diff checks pass.
+
+Native browser inspection of exact source
+`51cc6b97d398a2b7d7a56ed9cf1fe95f0ab56416` on the read-only port8813 preview
+verified the real Studio panel. Nearby shore/Standard/Solo displayed16 missing
+checks; switching to Expert cleared that report before another explicit inspection.
+Versus/Expert displayed17 checks including equal race conditions, with the exact
+source and preset in its detailed target. Entering `HEAD` rejected inspection and
+left no old check list. Inspecting then applying the Team review draft changed the
+panel to Twin landings/Expert and Team-only mode; its17 missing checks included
+human coordination instead of Versus parity. A normal-viewport screenshot confirms
+the form, boundaries, readable results and collapsed detailed report. No ledger
+upload, physical device, small-screen, full gameplay or human observation was
+claimed by this native panel check. Those remain separately qualified work.
 
 This is infrastructure for honest qualification, not a substitute for playing the
 game. Genuine human sessions, physical devices, complete accessibility/performance
