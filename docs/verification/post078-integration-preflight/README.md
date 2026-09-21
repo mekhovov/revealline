@@ -43,8 +43,9 @@ qualification.
 
 The compact music HUD (`855f9981`) and landscape/input candidates remain held
 until accepted post-v0.78 main. Their browser and modeled-input evidence cannot
-qualify a different composition. In particular, the older Solo568px landscape
-rule still requests two telemetry rows; a one-row Solo audit remains required.
+qualify a different composition. In particular, older Solo568px landscape
+rules still reserve space for two telemetry rows, despite a later flex override;
+the effective header and music space need an actual computed-layout audit.
 
 For iPhone, reserve safe-area insets and fit the browser viewport without
 requiring fullscreen. Browser chrome and installed mode must be tested
