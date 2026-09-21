@@ -861,6 +861,8 @@ try {
     $('settings-master-mute').textContent = muted ? 'Unmute sound' : 'Mute sound';
     $('shell-sound').textContent = muted ? 'Sound: off' : 'Sound: on';
     $('shell-sound').setAttribute('aria-pressed', String(!muted));
+    $('overlay-sound').textContent = muted ? 'Sound: off' : 'Sound: on';
+    $('overlay-sound').setAttribute('aria-pressed', String(!muted));
     renderMusicPreview();
   };
   const stopMasterView = audioMaster.subscribe(renderMasterPreferences);
@@ -5873,6 +5875,7 @@ try {
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
     show('overlay-restart', kind === 'pause');
+    show('overlay-sound', kind === 'pause');
     show('overlay-field-details', kind === 'pause');
     show('overlay-brief', !courseSession && (kind === 'ready' || kind === 'pause'));
     show('result-medals', kind === 'won');
@@ -7658,6 +7661,7 @@ try {
   $('sound-button').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   $('settings-master-mute').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   $('shell-sound').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
+  $('overlay-sound').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   for (const id of ['tap-steering', 'settings-tap-steering']) {
     $(id).onchange = () => {
       clearInput();

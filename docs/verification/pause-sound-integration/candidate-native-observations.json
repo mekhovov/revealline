@@ -1,0 +1,53 @@
+{
+  "base": "9ef816b6801689f5490c9e822a0bfe0a8ecba9ef",
+  "patch": "../p02-solo-pause-sound-9ef-r1/candidate.patch",
+  "patchSHA256": "f5a04edef0a66fce5fff782f991c37f196b8897d3c0749d5b2ee6bbfe2ebc711",
+  "browser": "Codex in-app browser, local exact-source preview",
+  "runtimePins": "native-pins-candidate.json",
+  "requests": "native-served-candidate.jsonl",
+  "journey": [
+    "Keyboard Start, Down, Escape: Pause at 0:05, 3 lives, 0% revealed.",
+    "Four Tabs from Resume reach Sound; Enter enables, Space disables, focus retained; timer/lives unchanged.",
+    "Pointer activation enables Sound without resuming; Main menu correctly shows Sound on.",
+    "Settings selects Plain/Large via native select; return restores Settings opener.",
+    "Continue then Escape restores Pause; Sound toggles via keyboard without advancing timer."
+  ],
+  "layouts": [
+    {
+      "size": [844, 390],
+      "text": "Standard/theme",
+      "soundSize": [166, 67.1875],
+      "allActionsInViewport": true
+    },
+    {
+      "size": [390, 844],
+      "text": "Standard/theme",
+      "soundSize": [320, 45.59375],
+      "allActionsInViewport": true
+    },
+    {
+      "size": [568, 320],
+      "text": "Large/Plain",
+      "soundSize": [166, 78],
+      "allActionsInViewport": false,
+      "reachability": "Pause scrolls; keyboard focus brings Sound and Main menu fully into view."
+    },
+    {
+      "size": [320, 568],
+      "text": "Large/Plain",
+      "soundSize": [250, 51],
+      "allActionsInViewport": true
+    }
+  ],
+  "horizontalOverflow": false,
+  "consoleWarningsAndErrors": [],
+  "limitations": [
+    "Pointer clicks are not physical touch qualification.",
+    "No physical controller, audible listening, public release, or offline qualification.",
+    "Short landscape Large text requires scrolling, verified through keyboard focus.",
+    "Initial rich-API label selection found no match; native AX/keyboard selects worked."
+  ],
+  "status": "native-reviewed-candidate-not-released",
+  "native-pins-candidate.jsonSHA256": "1e5dc62c8c2273ef7b9d0c36e956bd6ed529ed9f1fe15a00f924049eba2d9eee",
+  "native-served-candidate.jsonlSHA256": "bc27de29bfa8546bb1b0db94d8606ae06ea35a004b43404c6cefff52279496da"
+}
