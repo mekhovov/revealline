@@ -1,0 +1,5 @@
+{
+  "initialResult": "assertion failed on byte comparison of runtime.json",
+  "finding": "Git release files are formatted; standalone compiler emits compact canonical JSON and CSS. Parsed runtime/studio documents are identical; original asset payloads are identical. The acceptance check now verifies payload bytes, compiled manifest hashes, semantic runtime/studio identity and cross-runtime compiler byte identity separately.",
+  "failedOutputRetained": "source/.cache/qualified-node22"
+}

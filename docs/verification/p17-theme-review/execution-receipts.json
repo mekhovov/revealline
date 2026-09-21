@@ -1,0 +1,62 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "sourceFiles": 79,
+  "sourceBytes": 825111,
+  "bundle": {
+    "bytes": 7399336,
+    "sha256": "dd8d17b2227fef4d2e6b63a3f73253be1dbf4f870a4f74325fff24f7ce2371e3"
+  },
+  "results": [
+    {
+      "runtime": "v22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-compiler-8cff-r1/source/scripts/compile-presentation.mjs",
+        "--bundle",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-transfer-8cff-r1/compiled-cli.rltheme",
+        "--out",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-compiler-8cff-r1/source/.cache/qualified-r2-node22"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"source\":\"field-kit\",\"revision\":41,\"slots\":299,\"files\":137,\"output\":\"/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-compiler-8cff-r1/source/.cache/qualified-r2-node22\",\"qualification\":\"Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate.\"}\n",
+      "existingOutputRetry": {
+        "exitCode": 1,
+        "stderr": "EEXIST: file already exists, mkdir '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-compiler-8cff-r1/source/.cache/qualified-r2-node22'\n",
+        "outputUnchanged": true
+      },
+      "files": 137,
+      "payloadFiles": 133,
+      "bytes": 8293501,
+      "manifestSha256": "521599d8bb1af87a3061cb9b8fa9176c4097f016b89f3cf326bea2208a88b393",
+      "exactGitAssetBytes": true,
+      "parsedRuntimeAndStudioMatch": true,
+      "formattedReleaseIsNotByteIdenticalToCompactCompilerOutput": true
+    },
+    {
+      "runtime": "v20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-compiler-8cff-r1/source/scripts/compile-presentation.mjs",
+        "--bundle",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-transfer-8cff-r1/compiled-cli.rltheme",
+        "--out",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-compiler-8cff-r1/source/.cache/qualified-r2-node20"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"source\":\"field-kit\",\"revision\":41,\"slots\":299,\"files\":137,\"output\":\"/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-compiler-8cff-r1/source/.cache/qualified-r2-node20\",\"qualification\":\"Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate.\"}\n",
+      "existingOutputRetry": {
+        "exitCode": 1,
+        "stderr": "EEXIST: file already exists, mkdir '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-compiler-8cff-r1/source/.cache/qualified-r2-node20'\n",
+        "outputUnchanged": true
+      },
+      "files": 137,
+      "payloadFiles": 133,
+      "bytes": 8293501,
+      "manifestSha256": "521599d8bb1af87a3061cb9b8fa9176c4097f016b89f3cf326bea2208a88b393",
+      "exactGitAssetBytes": true,
+      "parsedRuntimeAndStudioMatch": true,
+      "formattedReleaseIsNotByteIdenticalToCompactCompilerOutput": true
+    }
+  ],
+  "crossRuntimeOutputIdentity": true
+}

@@ -85,6 +85,8 @@ The three copyable AI briefs cover a new variation, editing an attached current 
 
 ## Release verification
 
+Use the [portable-theme review workflow](../authoring/examples/theme-review.md) for exact CLI commands, a new isolated output directory, original-byte checks and the separate fresh-Studio recovery/adoption gates.
+
 Unit tests in `game/test/asset-studio-helpers.test.mjs` exercise crop bounds, normalized occupied-pixel measurement, and combined inventory/readiness filtering. `game/test/asset-studio-fixture.test.mjs` verifies every enemy role resolves to a normalized built-in mission, selected terrain/pickup fixtures remain valid, and preview runs are isolated and leave source packs unchanged. Core model, bundle, session, persistence, and sprite behavior have independent tests in `game/test/`. Browser release checks should cover upload → crop → stage → save → reload → export → import, geometry rejection/recovery, all pixel tools, keyboard focus, portrait and short-landscape layouts, unavailable storage, and a stale save from two tabs. Do not mark a source recipe or candidate as fully reviewed solely because these technical checks pass.
 
 The phase source check exercised a new 64×64 sprite, pixel undo/redo, invalid-pivot rejection and recovery, staging, draft undo/redo, atomic local save, reload, restoring the original through history, and the Export action in the in-app browser. The single-pixel QA fixture remains historical data in that local test workspace and is not a production asset. Unit coverage verifies corrupt imports, byte round trips and stale saves. Native file-dialog upload/download acceptance and physical touch/controller checks remain separate release checks.
