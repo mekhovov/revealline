@@ -99,7 +99,49 @@ This is not a native full-route replay, physical controller or two-human test.
 
 ## Research interpretation and next gates
 
-Final twelve-file regression cohort: **369/369 passed on both Node20.19.5 and
+### Follow-up: relocated reserve and complementary work
+
+The same unchanged `depot-spatial-1` runtime now has a bounded reserve recovery
+route on each preset. The first reserve appears at tick959 and expires at2159
+while players continue capturing. Its second window appears at3239 at the other
+authored anchor,52.5,7.5. Pilot0 collects it in unclaimed field at3396 while
+pilot1 is actively cutting. One shared reserve is granted; enclosing the area
+does not grant a second pickup. Pilot0 returns at3458 and pilot1 at3525, with
+only59.5351% earned, leaving substantial play after collection.
+
+| Preset   | Final clear         | Shared reserve | Maximum joint idle |
+| -------- | ------------------- | -------------- | ------------------ |
+| Gentle   | 4740ticks /87.9507% | 4→5            | 6ticks             |
+| Standard | 3852ticks /78.8899% | 2→3            | 6ticks             |
+| Expert   | 4668ticks /88.6622% | 1→2            | 6ticks             |
+
+All twelve seat/joint-cut combinations clear without knockdowns; three actual
+keyboard-host routes match their exact clear tick, percentage and grant timing.
+Each pilot contributes at least five returns. This demonstrates complementary
+work at contact, not mandatory cooperation, Support or joint-closure mastery.
+Only the east rover activates. Both-rover pressure and human desirability remain
+open. No artificial neutral braking, injected positions, grants or runtime
+physics changes are used.
+
+The Standard finishing route hits the south keeper's trail collision on Gentle
+at3835 and Expert at3767. These remain explicit negative controls, not a claim
+that one script must work at every speed. Separate successful endings are
+recorded in `team-depot-reserve-relocation.json`. Oversized idle-ended detours
+were rejected before qualification; committed routes have no both-neutral
+command segments.
+This closes the bounded reserve-relocation feasibility gap, not universal
+timing tolerance, human balance, native/controller testing or public promotion.
+
+Follow-up cohort: **80/80 on Node20.19.5 and22.22.2**, covering
+`team-depot-reserve-relocation`, `team-depot-spatial`, `team-reserve-routes`
+and `coop-timed-bonuses`. The17 new checks include12 public-input variants,
+three keyboard-host clears, inventory and retained negative controls. Changed
+JavaScript passes ESLint; fixture/docs pass formatting and diff checks. This is
+an evidence-only follow-up; no runtime/assets or build graph were changed.
+Independent review found no substantive blocker; wording corrections distinguish
+parked-pilot commands and the prior regression cohort from this new evidence.
+
+Prior implementation's twelve-file regression cohort: **369/369 passed on both Node20.19.5 and
 22.22.2**. Includes the six Depot keyboard-host clears, all24 direct route
 configurations, earlier Window/timed/bonus/Studio regressions, original-picture
 pins, Next/Skip and original/Window profile preservation. All13 snapshot/boot
