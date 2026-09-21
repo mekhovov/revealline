@@ -35,3 +35,5 @@ The [composition rehearsal](verification/handheld-music-integration-rehearsal/RE
 ## Browser-input limitation revalidation
 
 A second temporary preview on exact PR209 source and the composed stylesheet was opened with the browser visible. Artwork preparation settled and Start was enabled/focused. Enter, accessibility Start activation and the exposed Help Expand action did not advance the page. No console errors were observed. Hidden-browser presentation is therefore not a sufficient workaround; this is neither a proven game defect nor successful native input. The tab was closed afterward. Further identical input attempts should wait for changed tooling/browser state.
+
+A later [bounded Team browser recheck](verification/handheld-music-integration-rehearsal/recovered-input/README.md) recovered native input without product changes. The earlier no-op result remains historical. First Connection geometry and both pad actions are now observed on the composed preview; the full MP3-credit and compact-track replacement still require their own checks.

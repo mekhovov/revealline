@@ -1,0 +1,34 @@
+{
+  "scope": "Team First Connection composed-preview recovered-input check",
+  "source": "8ee3bbe5b01529648cff8054536a269d2c11c3a1",
+  "runtimeChanges": false,
+  "physicalDeviceAcceptance": false,
+  "publicAcceptance": false,
+  "screenshots": [
+    {
+      "path": "team-390x844-large-dpad.png",
+      "bytes": 31154,
+      "sha256": "7a5ee4f1b86332a64304ddb2f18ba165267a377c59e2f5f965fa11506fe91a26"
+    },
+    {
+      "path": "team-568x320-large-dpad.png",
+      "bytes": 28157,
+      "sha256": "0dff43b8e72ec8ce9209d82fbc9357cb92425c6ba3a10db9fc08db2b0341842b"
+    },
+    {
+      "path": "team-568x320-regular.png",
+      "bytes": 26778,
+      "sha256": "b045e119b7d1cbc060510dc4c489e97c150605374ed0a26dd6c1fe15ba475377"
+    },
+    {
+      "path": "team-844x390-large-dpad.png",
+      "bytes": 37080,
+      "sha256": "cdf62e6979b2110c8788ddb19c10c4670f58f203a1d2cdd69ba7a9524a325207"
+    },
+    {
+      "path": "team-844x390-regular.png",
+      "bytes": 37259,
+      "sha256": "d31f583ee558bf775aa1b4e5e5fc702ad6617f1540688283491dc6e37ce26025"
+    }
+  ]
+}

@@ -61,3 +61,7 @@ supports treating browser-fit layout and Home Screen presentation independently.
 [Steam's compatibility requirements](https://partner.steamgames.com/doc/steamhardware/compat)
 require the complete controller journey; modeled A-button tests do not establish
 physical Steam Deck readiness.
+
+## Later bounded browser recheck
+
+[Recovered input and measured Team layouts](recovered-input/README.md) records a later successful Start/Pause/Settings/Back/Resume journey, both D-pad cuts and an actual rescue event. It supersedes the earlier activation limitation only for that exact preview. It does not establish music-credit geometry, final release or physical-device acceptance.
