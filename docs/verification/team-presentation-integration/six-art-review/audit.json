@@ -1,0 +1,133 @@
+{
+  "capsuleBase": "6ab355a5862d0f6af6c83b267d6cb46c99ed21a7",
+  "sixAssets": [
+    {
+      "slot": "team.anchor.available",
+      "sha256": "e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353",
+      "bytes": 194,
+      "width": 24,
+      "height": 24,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "quality": "produced",
+      "sourceSha256": "ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e",
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/available.png"
+    },
+    {
+      "slot": "team.anchor.captured",
+      "sha256": "fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6",
+      "bytes": 192,
+      "width": 24,
+      "height": 24,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "quality": "produced",
+      "sourceSha256": "ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e",
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/captured.png"
+    },
+    {
+      "slot": "team.effect.support",
+      "sha256": "a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def",
+      "bytes": 271,
+      "width": 32,
+      "height": 32,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "quality": "produced",
+      "sourceSha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/support.png"
+    },
+    {
+      "slot": "team.effect.slowed",
+      "sha256": "4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf",
+      "bytes": 220,
+      "width": 32,
+      "height": 32,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "quality": "produced",
+      "sourceSha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/slowed.png"
+    },
+    {
+      "slot": "team.effect.rescue",
+      "sha256": "0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c",
+      "bytes": 266,
+      "width": 32,
+      "height": 32,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "quality": "produced",
+      "sourceSha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/rescue.png"
+    },
+    {
+      "slot": "team.effect.recovery",
+      "sha256": "53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408",
+      "bytes": 289,
+      "width": 32,
+      "height": 32,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "quality": "produced",
+      "sourceSha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/recovery.png"
+    }
+  ],
+  "sourcePins": {
+    "authoring/library/team-anchor-field-kit-v1/source.mjs": "ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e",
+    "authoring/library/team-anchor-field-kit-v1/prepared/manifest.json": "c915eb29bc70307318c72757af604d1625a8eef38f73fbd2590e5e2a629a4778",
+    "authoring/library/team-anchor-field-kit-v1/prepared/available.png": "e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353",
+    "authoring/library/team-anchor-field-kit-v1/prepared/captured.png": "fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6",
+    "authoring/library/team-feedback-field-kit-v1/source.mjs": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+    "authoring/library/team-feedback-field-kit-v1/prepared/manifest.json": "3b05352f5a59474edeb2dc4da330f183885585512d204b2376f760c65fe994af",
+    "authoring/library/team-feedback-field-kit-v1/prepared/support.png": "a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def",
+    "authoring/library/team-feedback-field-kit-v1/prepared/slowed.png": "4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf",
+    "authoring/library/team-feedback-field-kit-v1/prepared/rescue.png": "0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c",
+    "authoring/library/team-feedback-field-kit-v1/prepared/recovery.png": "53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408",
+    "game/presentation/team-anchor-slots.mjs": "2dee100af12eec8e5d60eff5bd2e0c2d431d55c6db7c800427bde937e391eb8f",
+    "game/presentation/team-effect-slots.mjs": "82328525ddb631d33ae70ff24e28dc509356015a2c6d5df69545a60e866ec936",
+    "scripts/produce-team-anchor-art.mjs": "8e0e2fad42d7fae3974b2230b3c91d595357e291c1c24cc3c81988204f3fadb3",
+    "scripts/produce-team-feedback-art.mjs": "020ec01cd02fad02f24058abe5f9ab458bc9305a3a6578ea1ac12a87fccc884a"
+  },
+  "identicalToPreviouslyReviewed": [
+    "authoring/library/team-anchor-field-kit-v1/source.mjs",
+    "authoring/library/team-anchor-field-kit-v1/prepared/manifest.json",
+    "authoring/library/team-anchor-field-kit-v1/prepared/available.png",
+    "authoring/library/team-anchor-field-kit-v1/prepared/captured.png",
+    "authoring/library/team-feedback-field-kit-v1/source.mjs",
+    "authoring/library/team-feedback-field-kit-v1/prepared/manifest.json",
+    "authoring/library/team-feedback-field-kit-v1/prepared/support.png",
+    "authoring/library/team-feedback-field-kit-v1/prepared/slowed.png",
+    "authoring/library/team-feedback-field-kit-v1/prepared/rescue.png",
+    "authoring/library/team-feedback-field-kit-v1/prepared/recovery.png",
+    "game/presentation/team-anchor-slots.mjs",
+    "game/presentation/team-effect-slots.mjs",
+    "scripts/produce-team-anchor-art.mjs",
+    "scripts/produce-team-feedback-art.mjs"
+  ],
+  "evidencePins": {
+    "p08-team-anchor-art-peer-r1/FINDINGS.md": "2b4ceb50465fc58b976c21356dd365c3b5aa8c2504c5326d20c2a44df70b1ad3",
+    "p08-team-feedback-art-peer-r1/FINDINGS.md": "4c0799bf4c0f2e05fb9970feb6359ff01ccbd5f9a8ecd0c0a2fed328b8cc68ac",
+    "p08-team-anchor-art-17bd1965-r1/evidence.md": "87afcadb5bd85378645b10e34a50d5d8d266a40a612e3ed64c12baaf56c26acb",
+    "p08-team-feedback-art-17bd1965-r1/evidence.md": "3bef96aeebeb2286b2867af3a3c4470474669f6387f64f03676eba52753155c1",
+    "p08-team-optional-objectives-17bd1965-r1/evidence.md": "b14b05cfe6040dc4a3f0f047b7e50064e1b4b20b74613fb8fe41ff29e0855ab2",
+    "p08-team-owned-native-run-c9-r1/native-evidence.json": "3178a496b6630a1f9eab651b988b1bf6baa86305a840239c0c36074caecd9bd6",
+    "p08-team-studio-native-states-c9-r1/before-correction-evidence.json": "33b937012fda456c1d8153a7202d1cc4193e41e3565c97b472c7fdfcef9fddca",
+    "p08-team-studio-native-terminal-c9-r1/evidence.json": "ae6d4dcd9a7e87acde62983836a687ed06d245c16a21f195a48ca465906b302b",
+    "p08-team-import-copy-native-c9-r1/evidence.json": "92add0909740ab1266ce15269c5c8c34352846c0b63a035eb91fa79e8b0d7fee"
+  },
+  "scope": "Read-only exact-byte continuity and attributed review-evidence audit; no producer/runtime/quality/default/root/release changes, no fresh native session or reproduction run."
+}

@@ -1,0 +1,70 @@
+{
+  "scope": "Local native browser qualification of Studio terminal caption correction; provisional collection, no production adoption",
+  "parentEvidence": "../p08-team-studio-native-states-c9-r1/before-correction-evidence.json",
+  "parentEvidenceSHA256": "33b937012fda456c1d8153a7202d1cc4193e41e3565c97b472c7fdfcef9fddca",
+  "sourcePinsSHA256": "73ba1a67050cef92def60e1852788dd2893c93ce819f3aeef00cd79b328ef3c8",
+  "correctedRuntimeSHA256": "707dc42bbadbd35867c6265c0802bad1bfef5ef530d3f3aa7d0e1c98eb4ca3bf",
+  "fallback": "f2e05d349954aa0b2f5afc788c96264108336252",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "checks": [
+    {
+      "arena": "First Connection",
+      "motion": "Paused",
+      "completionCaption": true,
+      "staleContinuation": false
+    },
+    {
+      "arena": "First Connection",
+      "motion": "Play preview",
+      "completionCaption": true,
+      "staleContinuation": false
+    },
+    {
+      "arena": "First Connection",
+      "motion": "Reduced effects",
+      "completionCaption": true,
+      "staleContinuation": false
+    },
+    {
+      "arena": "Relay Yard",
+      "motion": "Paused",
+      "completionCaption": true,
+      "staleContinuation": false
+    },
+    {
+      "arena": "Relay Yard",
+      "motion": "Play preview",
+      "completionCaption": true,
+      "staleContinuation": false
+    },
+    {
+      "arena": "Relay Yard",
+      "motion": "Reduced effects",
+      "completionCaption": true,
+      "staleContinuation": false
+    }
+  ],
+  "control": "Relay Yard Joint capture scene still shows Joint Cut! Both lines are safe. Choose your next route together.",
+  "visual": "First Connection completed artwork and complete caption visible in both Saved/current and Working draft at380x190CSS board; same1152x576preparedpicture",
+  "warningsErrors": [],
+  "cleanup": "Owned tab99 and localserver sessions52327/33747 closed",
+  "limits": [
+    "No public release or productionquality approval",
+    "Bounded deterministic Studio previews, not physicaldevice/controller/touch/playthrough or offlinequalification",
+    "No gameplay, eventlatch, liveTeamhost or playerprogress mutation",
+    "Screenshots visuallyinspected via tool output; not independently saved asfiles"
+  ],
+  "servedRuntime": [
+    {
+      "path": "authoring/asset-studio/cross-mode-preview.mjs",
+      "bytes": 20950,
+      "sha256": "707dc42bbadbd35867c6265c0802bad1bfef5ef530d3f3aa7d0e1c98eb4ca3bf",
+      "origin": "candidate"
+    }
+  ],
+  "servedUniquePaths": 294,
+  "servedLogSHA256": "7c840d77278dab2ea375d713275b5a75825a84dfec7f1d3ce18d0ce8574b1ff3"
+}

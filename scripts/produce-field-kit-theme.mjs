@@ -17,6 +17,7 @@ import { compilePresentation } from './compile-presentation.mjs';
 import { readPresentation, writePresentation } from './write-presentation.mjs';
 import { preparePresentationOutput } from './prepare-presentation-output.mjs';
 import { createFieldKitTeamAssets } from './field-kit-team-assets.mjs';
+import { applyReviewedTeamArt } from './reviewed-team-art.mjs';
 import { retainProductionHistory } from './presentation-production-history.mjs';
 import { importThemeBundle, exportThemeBundle } from '../game/presentation/bundle.mjs';
 
@@ -313,7 +314,8 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
         );
     }
   }
-  for (const asset of team.assets) add(asset.slotId, asset.values, asset.body);
+  for (const asset of await applyReviewedTeamArt(team.assets, read))
+    add(asset.slotId, asset.values, asset.body);
   const document = reviseStudioTheme(baseline, { assets, bindings });
   return {
     document,
