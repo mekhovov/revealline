@@ -1,6 +1,11 @@
 # Xposed-led Journey — implementation contract
 
-Current checkpoint: [2026-09-21 item-by-item completion audit](verification/journey-completion-2026-09-21.md).
+Current checkpoint: [2026-09-22 item-by-item completion audit](verification/journey-completion-2026-09-22.md).
+The [Studio candidate library](verification/journey-studio-candidate-library.md)
+keeps the map and current draft primary while making bundled sources searchable.
+Inspection and Apply remain separate. This bounded authoring increment does not
+close human/device or coordinated release gates; historical snapshots below
+remain provenance rather than current acceptance claims.
 The [foundation-use diagnostic correction](verification/journey-foundation-observation-correction.md)
 now preserves engine ownership at exact landing edges. All 30 historical route
 checkpoints stay unchanged; four visited-foundation sets are corrected. Nearby

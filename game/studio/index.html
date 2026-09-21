@@ -19,133 +19,395 @@
           <p class="eyebrow">01 / AUTHORING WORKBENCH</p>
           <h1>Shape the next challenge.</h1>
         </div>
-        <p class="edition">FOUNDATIONS PREVIEW<br />Not a publishing tool</p>
+        <p class="edition">LOCAL CONTENT STUDIO<br />Drafts, not published editions</p>
       </div>
       <p id="status" role="status">Opening your local workbench…</p>
-      <p class="note">
-        Test the bundled Horizon → Border Journey:
-        <a href="../?journey=authored" target="_blank" rel="noopener">Solo ↗</a> ·
-        <a href="../couch/?journey=authored" target="_blank" rel="noopener">Versus ↗</a>. These
-        unvalidated test builds do not include your unpublished edits.
-      </p>
-      <p class="note">
-        Whole Journey original-picture review:
-        <a href="../?journey=whole-originals-v3" target="_blank" rel="noopener">Solo ↗</a> ·
-        <a href="../couch/?journey=whole-originals-v3" target="_blank" rel="noopener">Versus ↗</a>.
-        71 core missions and 12 optional Remixes. Human validation pending; original pictures
-        require a connection. These bundled candidates do not include your draft edits.
-      </p>
       <noscript>This editor needs JavaScript. No project has been changed.</noscript>
-      <p class="note">
-        Optional actor-material successor:
-        <a href="../presentation/journey-actor-review.html" target="_blank" rel="noopener"
-          >Body studies ↗</a
-        >
-        · <a href="../?journey=whole-originals-v4" target="_blank" rel="noopener">Solo ↗</a> ·
-        <a href="../couch/?journey=whole-originals-v4" target="_blank" rel="noopener">Versus ↗</a>.
-        Same authored challenges, explicit new presentation edition. Live readability and human
-        validation pending.
-      </p>
-      <p class="note">
-        Combined spatial + pressure review:
-        <a href="../?journey=whole-spatial-v1" target="_blank" rel="noopener">Solo ↗</a> ·
-        <a href="../couch/?journey=whole-spatial-v1" target="_blank" rel="noopener">Versus ↗</a>.
-        Nine revised encounters in the 71-mission core plus 12 optional Remixes; shared pressure
-        presets, campaign pictures and actor materials. Unvalidated candidates with separate review
-        progress. Human balance and device testing remain pending. Draft edits are not included;
-        nothing is published by inspecting or applying this source.
-      </p>
-      <p class="note">
-        Field-finale successor:
-        <a href="../?journey=whole-spatial-v2" target="_blank" rel="noopener">Solo ↗</a> ·
-        <a href="../couch/?journey=whole-spatial-v2" target="_blank" rel="noopener">Versus ↗</a>.
-        The same Journey with Home Signal's ordinary-capture finale instead of its boss. Balance
-        pending; separate review progress, unchanged pictures and other missions. The previous
-        edition above remains available. Draft edits are not included.
-      </p>
-      <p class="note">
-        Timed-bonus successor:
-        <a href="../?journey=whole-spatial-v3" target="_blank" rel="noopener">Solo ↗</a> ·
-        <a href="../couch/?journey=whole-spatial-v3" target="_blank" rel="noopener">Versus ↗</a>.
-        The field-finale Journey with three optional Border Bloom pickups that announce, expire and
-        relocate. Contact collects them; enclosure does not. Separate review progress; balance and
-        device testing pending. Other missions and pictures are unchanged. Inspect and Apply only
-        change your draft, never publish it.
-      </p>
-      <p class="note">
-        Ornament and workshop successor:
-        <a href="../?journey=whole-spatial-v4" target="_blank" rel="noopener">Solo ↗</a> ·
-        <a href="../couch/?journey=whole-spatial-v4" target="_blank" rel="noopener">Versus ↗</a>.
-        Eight original-picture missions in two optional four-mission sequences. Find them in the
-        global chooser; Next stays inside the chosen sequence. The 71-mission core and 12 Remixes
-        are unchanged. Separate review progress; human balance, cultural and device review pending.
-      </p>
       <div class="toolbar" aria-label="Draft actions">
-        <button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button
-        ><button id="save">Save checkpoint / retry</button
-        ><button id="export">Export backup</button>
-        <button id="pressure-edition" aria-describedby="pressure-edition-help">
-          Inspect pressure-v2 copy of current draft
-        </button>
-        <button id="opening">Inspect opening candidates</button>
-        <button id="border">Inspect Border Bloom candidates</button>
-        <button id="timed-border">Inspect timed bonus study</button>
-        <label
-          >Ornament / workshop study edition
-          <select id="spatial-edition">
-            <option value="original">Original greyboxes</option>
-            <option value="spatial-2">Spatial revision 2 — pacing study</option>
-          </select>
-        </label>
-        <button id="cultural-workshop">Inspect ornament + workshop greyboxes</button>
-        <button id="pursuit-intercept">Inspect pursuit + interception study</button>
-        <button id="combat-study">Inspect optional robot greyboxes</button>
-        <button id="signal">Inspect Signal Gardens greyboxes</button>
-        <button id="neon">Inspect Neon Contours picture candidates</button>
-        <button id="rover">Inspect Rover Yard picture candidates</button>
-        <button id="fracture">Inspect Fractured Grid picture candidates</button>
-        <button id="fracture-spatial">Inspect Two Districts greybox successor</button>
-        <button id="phase">Inspect Phaseworks picture candidates</button>
-        <button id="phase-spatial">Inspect Reserve landing greybox successor</button>
-        <button id="livewire">Inspect Livewire Foundry picture candidates</button>
-        <button id="relay">Inspect Relay Labyrinth picture candidates</button>
-        <button id="crosswind">Inspect Crosswind Array picture candidates</button>
-        <button id="sentinel">Inspect Sentinel Crown picture candidates</button>
-        <button id="sentinel-spatial">Inspect Sentinel receiver greybox successor</button>
-        <button id="apex">Inspect Apex Aurora picture candidates</button>
-        <button id="apex-spatial">Inspect Home Signal contested-return study</button>
-        <button id="apex-field">Inspect Home Signal field-finale study · balance pending</button>
-        <button id="whole-journey">Inspect whole Journey picture candidates</button>
-        <button id="whole-journey-actors">Inspect actor-material successor</button>
-        <button id="whole-spatial">Inspect combined spatial + pressure review</button>
-        <button id="whole-field">
-          Inspect combined Journey with field finale · balance pending
-        </button>
-        <button id="whole-timed">
-          Inspect combined Journey with timed bonuses · balance pending
-        </button>
-        <button id="whole-variety">
-          Inspect combined Journey with ornament and workshop · balance pending
-        </button>
-        <button id="team-signal">Inspect Team Signal greybox</button>
-        <button id="team-journey">Inspect Team Journey picture candidates</button>
-        <button id="team-timed">Inspect Team timed-route greyboxes</button>
-        <button id="team-timed-originals">Inspect Shared windows originals</button>
-        <a
-          href="../couch/relay-rescue.html?journey=team-timed-originals"
-          target="_blank"
-          rel="noopener"
-          >Play bundled Shared windows test (does not include draft edits)</a
-        >
+        <button id="undo" disabled>Undo</button>
+        <button id="redo" disabled>Redo</button>
+        <button id="save">Save checkpoint / retry</button>
+        <button id="export">Export backup</button>
         <label class="file-button"
           >Inspect import<input id="import" type="file" accept="application/json,.json"
         /></label>
+        <a class="workbench-jump" href="#map-workbench">Jump to map ↓</a>
       </div>
-      <p id="pressure-edition-help" class="note">
-        Pressure-v2 changes enemy speed and attack rests for all missions in the current draft.
-        Player handling, warnings, maps and pictures stay unchanged. Inspect, then Apply; nothing is
-        published. Disabled when this draft already uses pressure-v2.
-      </p>
+      <details class="candidate-library" id="candidate-library">
+        <summary>
+          Browse bundled candidates
+          <span class="library-summary-note">Whole Journey, chapters, mechanics and Team</span>
+        </summary>
+        <p id="candidate-library-help" class="note">
+          Your applied draft stays unchanged while you browse or inspect. Inspect a source, review
+          it, then explicitly Apply. Test players open separately and never include unpublished
+          draft edits. All bundled studies remain unvalidated candidates.
+        </p>
+        <div class="library-filters">
+          <label
+            >Search every bundled entry<input
+              id="candidate-search"
+              type="search"
+              maxlength="160"
+              placeholder="Try freeze, ornament, Team or a chapter name"
+              aria-describedby="candidate-library-help"
+          /></label>
+          <label
+            >Category<select id="candidate-category">
+              <option value="all">All categories</option>
+              <option value="journey">Whole Journey editions</option>
+              <option value="chapters">Chapters</option>
+              <option value="mechanics">Mechanics and spatial studies</option>
+              <option value="team">Team studies</option>
+              <option value="players">Early Journey test players</option>
+            </select></label
+          >
+          <button id="candidate-reset" type="button">Clear filters</button>
+        </div>
+        <p id="candidate-count" role="status" aria-live="polite" class="note"></p>
+        <div id="candidate-inspection" class="library-inspection" hidden>
+          <p class="eyebrow">CURRENT SOURCE INSPECTION</p>
+          <p id="candidate-inspection-status"></p>
+          <a href="#source" id="candidate-review">Review inspected source ↓</a>
+        </div>
+        <p id="candidate-empty" class="note" hidden>
+          No entries match. Clear filters to browse all bundled sources.
+        </p>
+        <section
+          class="candidate-group"
+          data-library-group="journey"
+          aria-labelledby="candidate-group-journey"
+        >
+          <h2 id="candidate-group-journey">Whole Journey editions</h2>
+          <div class="candidate-grid">
+            <div class="candidate-entry" data-library-entry>
+              <button id="whole-variety">
+                Inspect combined Journey with ornament and workshop · balance pending
+              </button>
+              <p class="note">
+                Ornament and workshop successor:
+                <a
+                  href="../?journey=whole-spatial-v4"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Solo · whole-spatial-v4 (new tab)"
+                  >Solo ↗</a
+                >
+                ·
+                <a
+                  href="../couch/?journey=whole-spatial-v4"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Versus · whole-spatial-v4 (new tab)"
+                  >Versus ↗</a
+                >. Eight original-picture missions in two optional four-mission sequences. Find them
+                in the global chooser; Next stays inside the chosen sequence. The 71-mission core
+                and 12 Remixes are unchanged. Separate review progress; human balance, cultural and
+                device review pending.
+              </p>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="whole-timed">
+                Inspect combined Journey with timed bonuses · balance pending
+              </button>
+              <p class="note">
+                Timed-bonus successor:
+                <a
+                  href="../?journey=whole-spatial-v3"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Solo · whole-spatial-v3 (new tab)"
+                  >Solo ↗</a
+                >
+                ·
+                <a
+                  href="../couch/?journey=whole-spatial-v3"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Versus · whole-spatial-v3 (new tab)"
+                  >Versus ↗</a
+                >. The field-finale Journey with three optional Border Bloom pickups that announce,
+                expire and relocate. Contact collects them; enclosure does not. Separate review
+                progress; balance and device testing pending. Other missions and pictures are
+                unchanged. Inspect and Apply only change your draft, never publish it.
+              </p>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="whole-field">
+                Inspect combined Journey with field finale · balance pending
+              </button>
+              <p class="note">
+                Field-finale successor:
+                <a
+                  href="../?journey=whole-spatial-v2"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Solo · whole-spatial-v2 (new tab)"
+                  >Solo ↗</a
+                >
+                ·
+                <a
+                  href="../couch/?journey=whole-spatial-v2"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Versus · whole-spatial-v2 (new tab)"
+                  >Versus ↗</a
+                >. The same Journey with Home Signal's ordinary-capture finale instead of its boss.
+                Balance pending; separate review progress, unchanged pictures and other missions.
+                The previous spatial edition remains available in this library. Draft edits are not
+                included.
+              </p>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="whole-spatial">Inspect combined spatial + pressure review</button>
+              <p class="note">
+                Combined spatial + pressure review:
+                <a
+                  href="../?journey=whole-spatial-v1"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Solo · whole-spatial-v1 (new tab)"
+                  >Solo ↗</a
+                >
+                ·
+                <a
+                  href="../couch/?journey=whole-spatial-v1"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Versus · whole-spatial-v1 (new tab)"
+                  >Versus ↗</a
+                >. Nine revised encounters in the 71-mission core plus 12 optional Remixes; shared
+                pressure presets, campaign pictures and actor materials. Unvalidated candidates with
+                separate review progress. Human balance and device testing remain pending. Draft
+                edits are not included; nothing is published by inspecting or applying this source.
+              </p>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="whole-journey-actors">Inspect actor-material successor</button>
+              <p class="note">
+                Optional actor-material successor:
+                <a
+                  href="../presentation/journey-actor-review.html"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Body studies · actor-material body studies (new tab)"
+                  >Body studies ↗</a
+                >
+                ·
+                <a
+                  href="../?journey=whole-originals-v4"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Solo · whole-originals-v4 (new tab)"
+                  >Solo ↗</a
+                >
+                ·
+                <a
+                  href="../couch/?journey=whole-originals-v4"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Versus · whole-originals-v4 (new tab)"
+                  >Versus ↗</a
+                >. Same authored challenges, explicit new presentation edition. Live readability and
+                human validation pending.
+              </p>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="whole-journey">Inspect whole Journey picture candidates</button>
+              <p class="note">
+                Whole Journey original-picture review:
+                <a
+                  href="../?journey=whole-originals-v3"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Solo · whole-originals-v3 (new tab)"
+                  >Solo ↗</a
+                >
+                ·
+                <a
+                  href="../couch/?journey=whole-originals-v3"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Versus · whole-originals-v3 (new tab)"
+                  >Versus ↗</a
+                >. 71 core missions and 12 optional Remixes. Human validation pending; original
+                pictures require a connection. These bundled candidates do not include your draft
+                edits.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section
+          class="candidate-group"
+          data-library-group="chapters"
+          aria-labelledby="candidate-group-chapters"
+        >
+          <h2 id="candidate-group-chapters">Individual chapters</h2>
+          <div class="candidate-grid">
+            <div class="candidate-entry" data-library-entry>
+              <button id="opening">Inspect opening candidates</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="border">Inspect Border Bloom candidates</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="signal">Inspect Signal Gardens greyboxes</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="neon">Inspect Neon Contours picture candidates</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="rover">Inspect Rover Yard picture candidates</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="fracture">Inspect Fractured Grid picture candidates</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="phase">Inspect Phaseworks picture candidates</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="livewire">Inspect Livewire Foundry picture candidates</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="relay">Inspect Relay Labyrinth picture candidates</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="crosswind">Inspect Crosswind Array picture candidates</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="sentinel">Inspect Sentinel Crown picture candidates</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="apex">Inspect Apex Aurora picture candidates</button>
+            </div>
+          </div>
+        </section>
+        <section
+          class="candidate-group"
+          data-library-group="mechanics"
+          aria-labelledby="candidate-group-mechanics"
+        >
+          <h2 id="candidate-group-mechanics">Mechanics and spatial studies</h2>
+          <div class="candidate-grid">
+            <div
+              class="candidate-entry"
+              data-library-entry
+              data-library-keywords="ukrainian vyshyvanka vyshivanka fpv drone pressure"
+            >
+              <label
+                >Ornament / workshop and pursuit study edition
+                <select id="spatial-edition">
+                  <option value="original">Original greyboxes</option>
+                  <option value="spatial-2">Spatial revision 2 — pacing study</option>
+                </select> </label
+              ><button id="cultural-workshop">Inspect ornament + workshop greyboxes</button
+              ><button id="pursuit-intercept">Inspect pursuit + interception study</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="timed-border">Inspect timed bonus study</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="combat-study">Inspect optional robot greyboxes</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="fracture-spatial">Inspect Two Districts greybox successor</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="phase-spatial">Inspect Reserve landing greybox successor</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="sentinel-spatial">Inspect Sentinel receiver greybox successor</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="apex-spatial">Inspect Home Signal contested-return study</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="apex-field">
+                Inspect Home Signal field-finale study · balance pending
+              </button>
+            </div>
+          </div>
+        </section>
+        <section
+          class="candidate-group"
+          data-library-group="team"
+          aria-labelledby="candidate-group-team"
+        >
+          <h2 id="candidate-group-team">Team studies</h2>
+          <div class="candidate-grid">
+            <div
+              class="candidate-entry"
+              data-library-entry
+              data-library-keywords="freeze slow speed bonus depot coolant window"
+            >
+              <button id="team-timed-originals">Inspect Shared windows originals</button>
+              <p class="note">
+                Three original-picture missions with optional shared pickup windows. Human and
+                device validation pending.
+              </p>
+              <a
+                href="../couch/relay-rescue.html?journey=team-timed-originals"
+                target="_blank"
+                rel="noopener"
+                aria-label="Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)"
+                >Play bundled Shared windows test (does not include draft edits)</a
+              >
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="team-journey">Inspect Team Journey picture candidates</button>
+              <p class="note">
+                Twelve authored Team candidates with original pictures. Human validation pending.
+              </p>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="team-timed">Inspect Team timed-route greyboxes</button>
+            </div>
+            <div class="candidate-entry" data-library-entry>
+              <button id="team-signal">Inspect Team Signal greybox</button>
+            </div>
+          </div>
+        </section>
+        <section
+          class="candidate-group"
+          data-library-group="players"
+          aria-labelledby="candidate-group-players"
+        >
+          <h2 id="candidate-group-players">Early Journey test players</h2>
+          <div class="candidate-grid">
+            <div class="candidate-entry" data-library-entry>
+              <p class="note">
+                Test the bundled Horizon → Border Journey:
+                <a
+                  href="../?journey=authored"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Solo · authored (new tab)"
+                  >Solo ↗</a
+                >
+                ·
+                <a
+                  href="../couch/?journey=authored"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Versus · authored (new tab)"
+                  >Versus ↗</a
+                >. These unvalidated test builds do not include your unpublished edits.
+              </p>
+            </div>
+          </div>
+        </section>
+      </details>
+      <details class="difficulty-edition">
+        <summary>Change this draft's difficulty edition</summary>
+        <button id="pressure-edition" aria-describedby="pressure-edition-help">
+          Inspect pressure-v2 copy of current draft
+        </button>
+        <p id="pressure-edition-help" class="note">
+          Pressure-v2 changes enemy speed and attack rests for all missions in the current draft.
+          Player handling, warnings, maps and pictures stay unchanged. Inspect, then Apply; nothing
+          is published. Disabled when this draft already uses pressure-v2.
+        </p>
+      </details>
       <div class="workspace">
         <aside aria-label="Project and missions">
           <p class="eyebrow">PROJECT</p>
@@ -277,7 +539,7 @@
             <pre id="effective"></pre>
           </details>
         </aside>
-        <section class="board-panel" aria-label="Map workbench">
+        <section class="board-panel" id="map-workbench" tabindex="-1" aria-label="Map workbench">
           <div class="section-heading">
             <h2 id="map-name">Map</h2>
             <span>72 × 36</span>
@@ -892,7 +1154,11 @@
           </div>
           <p id="team-test-help" class="note" hidden>
             Geometry and rules only. Import this file in the
-            <a href="../couch/relay-rescue.html" target="_blank" rel="noopener"
+            <a
+              href="../couch/relay-rescue.html"
+              target="_blank"
+              rel="noopener"
+              aria-label="Team test player (new tab)"
               >Team test player ↗</a
             >. Its preview scenery is not this mission's authored picture. No Journey awards or
             publication.

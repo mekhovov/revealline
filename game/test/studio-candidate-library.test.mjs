@@ -1,0 +1,259 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { Document } from './helpers/couch-dom.mjs';
+import { mountCouch } from './helpers/mount-html.mjs';
+import { createCandidateLibrary } from '../studio/candidate-library.mjs';
+
+const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
+const controls = [
+  'opening',
+  'border',
+  'timed-border',
+  'combat-study',
+  'cultural-workshop',
+  'pursuit-intercept',
+  'whole-spatial',
+  'whole-field',
+  'whole-timed',
+  'whole-variety',
+  'fracture-spatial',
+  'phase-spatial',
+  'sentinel-spatial',
+  'apex-spatial',
+  'apex-field',
+  'whole-journey',
+  'whole-journey-actors',
+  'team-journey',
+  'team-timed',
+  'team-timed-originals',
+  'team-signal',
+  'signal',
+  'neon',
+  'rover',
+  'fracture',
+  'phase',
+  'livewire',
+  'relay',
+  'crosswind',
+  'sentinel',
+  'apex',
+];
+function setup() {
+  const document = new Document();
+  mountCouch(document, html);
+  const $ = (id) => document.getElementById(id);
+  const api = createCandidateLibrary({ document });
+  const entries = [...$('candidate-library').querySelectorAll('[data-library-entry]')];
+  const visible = () => entries.filter((entry) => !entry.hidden);
+  const search = (value) => {
+    $('candidate-search').value = value;
+    $('candidate-search').emit('input');
+  };
+  return { document, $, api, entries, visible, search };
+}
+
+test('closed library preserves every static Inspect action, paired edition controls and workbench actions', () => {
+  const { document, $, entries } = setup();
+  assert.equal($('candidate-library').open, false);
+  assert.equal(entries.length, 31);
+  const actual = [...$('candidate-library').querySelectorAll('button')]
+    .map((button) => button.id)
+    .filter((id) => id !== 'candidate-reset');
+  assert.deepEqual(actual.toSorted(), controls.toSorted());
+  for (const id of controls) {
+    assert.equal(document.querySelectorAll('#' + id).length, 1);
+    assert.equal($(id).closest('form'), null);
+  }
+  assert.equal(
+    $('spatial-edition').closest('[data-library-entry]'),
+    $('pursuit-intercept').closest('[data-library-entry]'),
+  );
+  assert.equal(
+    $('spatial-edition').closest('[data-library-entry]'),
+    $('cultural-workshop').closest('[data-library-entry]'),
+  );
+  for (const id of ['undo', 'redo', 'save', 'export', 'import', 'pressure-edition']) {
+    assert.equal($(id).closest('#candidate-library'), null);
+  }
+  assert.equal($('map-workbench').getAttribute('aria-label'), 'Map workbench');
+  for (const group of ['journey', 'chapters', 'mechanics', 'team', 'players'])
+    assert.equal($('candidate-group-' + group).tagName, 'H2');
+});
+
+test('all sixteen original review routes keep explicit external-tab safety and distinct accessible labels', () => {
+  const { $ } = setup();
+  const links = [...$('candidate-library').querySelectorAll('a')].filter(
+    (link) => link.getAttribute('target') === '_blank',
+  );
+  const journeys = [
+    'whole-spatial-v4',
+    'whole-spatial-v3',
+    'whole-spatial-v2',
+    'whole-spatial-v1',
+    'whole-originals-v4',
+    'whole-originals-v3',
+    'authored',
+  ];
+  const expected = journeys.flatMap((id) => ['../?journey=' + id, '../couch/?journey=' + id]);
+  expected.push(
+    '../presentation/journey-actor-review.html',
+    '../couch/relay-rescue.html?journey=team-timed-originals',
+  );
+  assert.deepEqual(links.map((link) => link.getAttribute('href')).toSorted(), expected.toSorted());
+  const labels = links.map((link) => link.getAttribute('aria-label'));
+  assert.equal(new Set(labels).size, links.length);
+  for (const link of links) {
+    assert.equal(link.getAttribute('rel'), 'noopener');
+    assert.match(link.getAttribute('aria-label'), /new tab/);
+    const href = link.getAttribute('href');
+    const edition = href.split('journey=')[1];
+    if (edition && href.includes('relay-rescue')) {
+      assert.equal(
+        link.getAttribute('aria-label'),
+        'Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)',
+      );
+    } else if (edition) {
+      const mode = href.includes('/couch/') ? 'Versus' : 'Solo';
+      assert.equal(link.getAttribute('aria-label'), `${mode} · ${edition} (new tab)`);
+    } else {
+      assert.equal(
+        link.getAttribute('aria-label'),
+        'Body studies · actor-material body studies (new tab)',
+      );
+    }
+  }
+  assert.equal(documentFromHelpLabel(html), 'Team test player (new tab)');
+});
+
+function documentFromHelpLabel(markup) {
+  const document = new Document();
+  mountCouch(document, markup);
+  return document.getElementById('team-test-help').querySelector('a').getAttribute('aria-label');
+}
+
+test('each category retains its authored cohort and resetting never reorders entries', () => {
+  const { $, entries, visible } = setup();
+  for (const [category, count] of [
+    ['all', 31],
+    ['journey', 6],
+    ['chapters', 12],
+    ['mechanics', 8],
+    ['team', 4],
+    ['players', 1],
+  ]) {
+    $('candidate-category').value = category;
+    $('candidate-category').emit('change');
+    assert.equal(visible().length, count, category);
+  }
+  $('candidate-reset').emit('click');
+  assert.deepEqual(visible(), entries);
+});
+
+test('global token search finds copy, keywords, controls and edition routes with case/diacritic folding', () => {
+  const { search, visible } = setup();
+  for (const [query, id] of [
+    ['  COOLANT   FREEZE  ', 'team-timed-originals'],
+    ['výshyvanka', 'cultural-workshop'],
+    ['whole-spatial-v4', 'whole-variety'],
+    ['fracture-spatial', 'fracture-spatial'],
+  ]) {
+    search(query);
+    assert.equal(visible().length, 1, query);
+    assert(visible()[0].querySelector('#' + id), query);
+  }
+});
+
+test('category and search intersect, empty groups disappear, reset restores order and search focus', () => {
+  const { document, $, search, visible, entries } = setup();
+  $('candidate-category').value = 'chapters';
+  $('candidate-category').emit('change');
+  assert.equal(visible().length, 12);
+  search('neon');
+  assert.equal(visible().length, 1);
+  for (const query of ['[', '?', '"', 'no matching mission']) {
+    search(query);
+    if (query === '?') continue; // Literal query syntax is searchable in test-route hrefs.
+    assert.equal(visible().length, 0);
+    assert.equal($('candidate-empty').hidden, false);
+  }
+  assert(
+    [...$('candidate-library').querySelectorAll('[data-library-group]')].every((g) => g.hidden),
+  );
+  $('candidate-reset').emit('click');
+  assert.deepEqual(visible(), entries);
+  assert.equal(document.activeElement, $('candidate-search'));
+  assert.equal($('candidate-empty').hidden, true);
+  assert.match($('candidate-count').textContent, /^31 of 31 entries/);
+});
+
+test('browsing never edits source, Apply, project/checkpoint, global status, or candidate handlers', () => {
+  const { $, search } = setup();
+  const state = {
+    source: 'unapplied JSON',
+    'project-id': 'private-draft',
+    checkpoint: '7',
+  };
+  for (const [id, value] of Object.entries(state)) $(id).value = value;
+  $('apply').disabled = true;
+  $('status').textContent = 'Unsaved local work';
+  let inspections = 0;
+  $('whole-variety').onclick = () => inspections++;
+  search('ornament');
+  $('candidate-category').value = 'team';
+  $('candidate-category').emit('change');
+  $('candidate-reset').emit('click');
+  for (const [id, value] of Object.entries(state)) assert.equal($(id).value, value);
+  assert.equal($('apply').disabled, true);
+  assert.equal($('status').textContent, 'Unsaved local work');
+  assert.equal(inspections, 0);
+  $('whole-variety').emit('click');
+  assert.equal(inspections, 1);
+});
+
+test('inspection feedback is explicit, survives filtering and offers deliberate source focus only', () => {
+  const { document, $, api, search } = setup();
+  assert.equal($('candidate-inspection').hidden, true);
+  $('candidate-library').open = true;
+  api.reportInspection('Compiled; Apply to replace the draft.');
+  assert.equal($('candidate-library').open, true);
+  assert.equal($('candidate-inspection').hidden, false);
+  search('no match');
+  assert.equal($('candidate-inspection').hidden, false);
+  $('candidate-review').emit('click');
+  assert.equal($('candidate-library').open, false);
+  assert.equal(document.activeElement, $('source'));
+  assert.equal($('candidate-search').value, 'no match');
+  api.clearInspection();
+  assert.equal($('candidate-inspection').hidden, true);
+  assert.equal($('candidate-inspection-status').textContent, '');
+});
+
+test('host reports success only after compilation and clears feedback at every invalidation boundary', async () => {
+  const host = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
+  const inspect = host.slice(
+    host.indexOf('function inspectSource('),
+    host.indexOf("$('source').addEventListener('input'"),
+  );
+  assert(
+    inspect.indexOf('candidateLibrary.clearInspection()') <
+      inspect.indexOf('compileContentProject'),
+  );
+  assert(
+    inspect.indexOf('candidateLibrary.reportInspection(') >
+      inspect.indexOf("$('apply').disabled = false"),
+  );
+  for (const assignment of host.matchAll(/inspected = null;/g)) {
+    assert.match(
+      host.slice(assignment.index, assignment.index + 100),
+      /candidateLibrary.clearInspection\(\)/,
+    );
+  }
+  const handlers = host.slice(
+    host.indexOf("$('opening').onclick"),
+    host.indexOf("$('undo').onclick"),
+  );
+  assert.doesNotMatch(handlers, /candidateLibrary.reportInspection/);
+  const css = await readFile(new URL('../studio/studio.css', import.meta.url), 'utf8');
+  assert.match(css, /\.candidate-library \[hidden\] \{\s*display: none;/);
+});
