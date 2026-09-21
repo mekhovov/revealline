@@ -724,3 +724,375 @@
     width: calc(100vw - max(12px, var(--safe-left)) - max(12px, var(--safe-right)));
   }
 }
+
+/* Short landscape with physical controls: place the readable HUD beside play.
+   The fixed reserve depends on preferences, never live score or warning text. */
+@media (min-width: 521px) and (max-width: 1024px) and (min-height: 300px) and (max-height: 420px) and (orientation: landscape) {
+  body.field-kit.game-shell[data-flight-state='running']:not([data-screen-controls='shown']) {
+    --fk-side-hud: calc(var(--fk-text-counter) * 6 + 16px);
+    --fk-side-top: 52px;
+    --fk-side-bottom: calc(var(--fk-text-secondary) * 2.6 + 16px);
+  }
+  body.field-kit.game-shell[data-flight-state='running']:not([data-screen-controls='shown'])
+    .telemetry {
+    left: max(8px, var(--safe-left));
+    top: max(8px, var(--safe-top));
+    transform: none;
+    width: var(--fk-side-hud);
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4px;
+    padding: 0 8px 0 0;
+    border-right: 1px solid var(--fk-muted);
+  }
+  body.field-kit.game-shell[data-flight-state='running']:not([data-screen-controls='shown'])
+    .telemetry
+    > div {
+    border-left: 0;
+    padding-left: 0;
+    min-width: 0;
+  }
+  body.field-kit.game-shell[data-flight-state='running']:not([data-screen-controls='shown'])
+    .arena-panel
+    > .arena-shell,
+  body.field-kit.game-shell[data-flight-state='running']:not([data-screen-controls='shown'])
+    .arena-panel:has(> .encounter-status:not([hidden]))
+    > .arena-shell {
+    left: calc(
+      var(--safe-left) + var(--fk-side-hud) + 16px +
+        (100% - var(--safe-left) - var(--safe-right) - var(--fk-side-hud) - 24px) / 2
+    );
+    top: calc(
+      var(--safe-top) + var(--fk-side-top) +
+        (100% - var(--safe-top) - var(--safe-bottom) - var(--fk-side-top) - var(--fk-side-bottom)) /
+        2
+    );
+    width: min(
+      calc(100% - var(--safe-left) - var(--safe-right) - var(--fk-side-hud) - 24px),
+      calc(
+        (
+            100dvh - var(--safe-top) - var(--safe-bottom) - var(--fk-side-top) -
+              var(--fk-side-bottom)
+          ) *
+          var(--board-aspect, 1.333333)
+      )
+    );
+  }
+  body.field-kit.game-shell[data-flight-state='running']:not([data-screen-controls='shown'])
+    #shell-menu {
+    margin-left: calc(var(--safe-left) + var(--fk-side-hud) + 4px);
+  }
+  body.field-kit.game-shell[data-flight-state='running']:not([data-screen-controls='shown'])
+    #run-message {
+    left: calc(var(--safe-left) + var(--fk-side-hud) + 16px);
+    right: max(8px, var(--safe-right));
+    display: block;
+    top: auto;
+    bottom: max(8px, var(--safe-bottom));
+    white-space: normal;
+    max-height: calc(var(--fk-text-secondary) * 2.6);
+  }
+}
+
+/* Touch-only landscape keeps the steering rail outside the complete field.
+   All counters remain visible; score uses a short full-width row. */
+@media (min-width: 521px) and (max-width: 1024px) and (min-height: 300px) and (max-height: 420px) and (orientation: landscape) {
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown']:not(
+      :has(.play-controls .ability-buttons > button:not([hidden]))
+    ) {
+    --fk-touch-left: max(8px, var(--safe-left));
+    --fk-touch-right: calc(max(24px, calc(var(--safe-right) + 12px)) + var(--touch-size) + 12px);
+    --fk-touch-header: calc(var(--fk-text-counter) * 2.5 + var(--fk-text-secondary) * 2.9 + 16px);
+    --fk-touch-rail-left: calc(
+      100% - max(24px, calc(var(--safe-right) + 12px)) - var(--touch-size)
+    );
+  }
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-side='left']:not(
+      :has(.play-controls .ability-buttons > button:not([hidden]))
+    ) {
+    --fk-touch-left: calc(max(24px, calc(var(--safe-left) + 12px)) + var(--touch-size) + 12px);
+    --fk-touch-right: max(8px, var(--safe-right));
+    --fk-touch-rail-left: max(24px, calc(var(--safe-left) + 12px));
+  }
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown']:not(
+      :has(.play-controls .ability-buttons > button:not([hidden]))
+    )
+    .telemetry {
+    left: var(--fk-touch-left);
+    top: max(8px, var(--safe-top));
+    transform: none;
+    width: calc(100% - var(--fk-touch-left) - var(--fk-touch-right));
+    grid-template-columns: minmax(0, 1fr) max-content max-content;
+    row-gap: 4px;
+    padding: 0;
+  }
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown']:not(
+      :has(.play-controls .ability-buttons > button:not([hidden]))
+    )
+    .telemetry
+    > div {
+    min-width: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown']:not(
+      :has(.play-controls .ability-buttons > button:not([hidden]))
+    )
+    .telemetry
+    > div:has(#score) {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown']:not(
+      :has(.play-controls .ability-buttons > button:not([hidden]))
+    )
+    .arena-panel
+    > .arena-shell,
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown']:not(
+      :has(.play-controls .ability-buttons > button:not([hidden]))
+    )
+    .arena-panel:has(> .encounter-status:not([hidden]))
+    > .arena-shell {
+    left: calc(var(--fk-touch-left) + (100% - var(--fk-touch-left) - var(--fk-touch-right)) / 2);
+    top: calc(
+      var(--safe-top) + var(--fk-touch-header) +
+        (100% - var(--safe-top) - var(--safe-bottom) - var(--fk-touch-header) - 8px) / 2
+    );
+    width: min(
+      calc(100% - var(--fk-touch-left) - var(--fk-touch-right)),
+      calc(
+        (100dvh - var(--safe-top) - var(--safe-bottom) - var(--fk-touch-header) - 8px) *
+          var(--board-aspect, 1.333333)
+      )
+    );
+    max-width: none;
+  }
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown']:not(
+      :has(.play-controls .ability-buttons > button:not([hidden]))
+    )
+    .shell-bar {
+    left: var(--fk-touch-rail-left);
+    right: auto;
+    width: var(--touch-size);
+    padding: 0;
+    gap: 4px;
+  }
+  body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown']:not(
+      :has(.play-controls .ability-buttons > button:not([hidden]))
+    )
+    #run-message {
+    display: block;
+    left: var(--fk-touch-rail-left);
+    right: auto;
+    width: var(--touch-size);
+    top: calc(var(--safe-top) + 52px);
+    bottom: auto;
+    white-space: normal;
+    max-height: max(
+      0px,
+      calc(
+        100dvh - var(--safe-top) - max(24px, calc(var(--safe-bottom) + 12px)) - var(--touch-size) -
+          60px
+      )
+    );
+  }
+}
+
+/* Portrait direction-only play reserves distinct HUD, arena, caption and steering lanes. */
+@supports (width: 1cqh) {
+  @media (max-width: 680px) and (orientation: portrait) and (min-height: 480px) {
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      ) {
+      overflow: hidden;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      main {
+      position: fixed;
+      inset: calc(54px + var(--safe-top)) max(12px, var(--safe-right))
+        calc(
+          var(--fk-portrait-touch-height, var(--touch-size)) +
+            max(24px, calc(var(--safe-bottom) + 12px)) + 8px
+        )
+        max(12px, var(--safe-left));
+      padding: 0;
+      height: auto;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      .game-layout {
+      height: 100%;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      .arena-panel {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) calc(var(--fk-text-secondary) * 2.6);
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+      height: 100%;
+      max-width: none;
+      width: 100%;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      .telemetry {
+      grid-row: 1;
+      height: auto;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      grid-template-columns: minmax(0, 1fr) max-content max-content;
+      gap: 4px 8px;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      .telemetry
+      > div {
+      min-width: 0;
+      padding: 0;
+      border: 0;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      .telemetry
+      > div:has(#score) {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      .telemetry
+      .meter {
+      display: none;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      #target {
+      white-space: nowrap;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      #time {
+      min-width: calc(5ch + 20px);
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      #lives {
+      min-width: 64px;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      .arena-panel
+      > .arena-shell {
+      grid-row: 2;
+      container-type: size;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      min-width: 0;
+      min-height: 0;
+      aspect-ratio: auto;
+      border: 0;
+      box-shadow: none;
+      background: none;
+      display: grid;
+      place-items: center;
+      margin: 0;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      #game-canvas {
+      width: min(100cqw, calc(100cqh * var(--board-aspect, 1.333333)));
+      height: auto;
+      aspect-ratio: var(--board-ratio, 4 / 3);
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      #run-message {
+      grid-row: 3;
+      width: 100%;
+      margin: 0;
+      min-height: 0;
+      max-height: 100%;
+      line-height: 1.3;
+      overflow: hidden;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact']:not(
+        .first-flight-session
+      )
+      .flight-status {
+      display: none;
+    }
+  }
+}
+
+/* Short portrait keeps the chosen D-pad button size in one directional row,
+   reserving the freed height for the arena rather than scaling play to a sliver. */
+@supports (width: 1cqh) {
+  @media (max-width: 680px) and (orientation: portrait) and (min-height: 480px) and (max-height: 620px) {
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact'][data-touch-mode='dpad']:not(
+        .first-flight-session
+      ) {
+      --fk-portrait-touch-height: calc(var(--touch-size) / 3);
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact'][data-touch-mode='dpad']:not(
+        .first-flight-session
+      )
+      .play-controls
+      .direction-controls {
+      width: calc(var(--touch-size) * 4 / 3 + 12px);
+      height: var(--fk-portrait-touch-height);
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 1fr;
+      gap: 4px;
+      border-radius: 0;
+      background: none;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact'][data-touch-mode='dpad']:not(
+        .first-flight-session
+      )
+      .direction-controls
+      [data-move='left'] {
+      grid-area: 1 / 1;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact'][data-touch-mode='dpad']:not(
+        .first-flight-session
+      )
+      .direction-controls
+      [data-move='up'] {
+      grid-area: 1 / 2;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact'][data-touch-mode='dpad']:not(
+        .first-flight-session
+      )
+      .direction-controls
+      [data-move='down'] {
+      grid-area: 1 / 3;
+    }
+    body.field-kit.game-shell[data-flight-state='running'][data-screen-controls='shown'][data-arena-chrome='compact'][data-touch-mode='dpad']:not(
+        .first-flight-session
+      )
+      .direction-controls
+      [data-move='right'] {
+      grid-area: 1 / 4;
+    }
+  }
+}

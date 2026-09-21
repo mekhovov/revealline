@@ -49,7 +49,26 @@ export function attachTouchSteering({
     event.preventDefault();
     const x = event.clientX - gesture.x,
       y = event.clientY - gesture.y;
-    const direction = touchDirection(x, y, gesture.direction, gesture.mode === 'dpad' ? 6 : 10);
+    let direction;
+    const rect = gesture.mode === 'dpad' ? pad.getBoundingClientRect() : null;
+    if (rect && rect.width > rect.height * 2) {
+      // A short-screen directional row has semantic buttons, not radial sectors.
+      // Sliding across a gap retains the last command instead of inventing a turn.
+      const button = [...pad.querySelectorAll('[data-move]')].find((node) => {
+        const bounds = node.getBoundingClientRect();
+        return (
+          bounds.width > 0 &&
+          bounds.height > 0 &&
+          event.clientX >= bounds.left &&
+          event.clientX < bounds.left + bounds.width &&
+          event.clientY >= bounds.top &&
+          event.clientY < bounds.top + bounds.height
+        );
+      });
+      direction = button?.dataset.move || gesture.direction;
+    } else {
+      direction = touchDirection(x, y, gesture.direction, gesture.mode === 'dpad' ? 6 : 10);
+    }
     if (direction && direction !== gesture.direction) {
       // onDirection may synchronously clear input when resuming/changing modality.
       const current = gesture;
