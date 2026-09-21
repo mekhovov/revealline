@@ -2,6 +2,7 @@ import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
 import { createTimedBorderCandidates } from '../content-design/timed-border-candidates.mjs';
+import { createCulturalWorkshopCandidates } from '../content-design/cultural-workshop-candidates.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
 import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
 import { createRoverTeachingCandidates } from '../content-design/rover-teaching-candidates.mjs';
@@ -637,6 +638,12 @@ $('timed-border').onclick = guarded(() => {
     null,
     2,
   );
+  sourceChanged = true;
+  inspectSource();
+});
+$('cultural-workshop').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createCulturalWorkshopCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });

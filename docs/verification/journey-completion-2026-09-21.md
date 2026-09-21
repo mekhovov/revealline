@@ -20,6 +20,10 @@ separate gates. Older phase notes are provenance, not current release claims.
   published missions.
 - Original AI soundtrack generation remains explicitly paused. Music direction
   metadata and licensed previews are not a finished original soundtrack.
+- Eight additional Ukrainian-culture/workshop greyboxes now have48 no-loss Solo
+  replay routes and48 equal paired-board races across three presets/two steering
+  modes. These are separate optional studies, not extra published or human-balanced
+  content. [Detailed evidence and pacing risks](journey-cultural-workshop.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
@@ -74,6 +78,8 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
   [slice B evidence](journey-timed-bonuses.md); local implementation is not deployment.
 - [ ] Ukrainian/FPV arcs with distinct route decisions, original assets, cultural
   attribution, playtests and enrollment.
+  Eight shared-framework greyboxes and cultural attribution are implemented;
+  original final art, multi-seed/native/human qualification and enrollment remain.
 - [ ] Authored pressure roles and optional non-retaining combat actors, settings,
   pixel effects, bounded decals and cross-mode fairness.
 - [ ] Full Studio recoverability/conflict/large-library usability acceptance with
