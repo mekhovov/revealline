@@ -42,6 +42,47 @@ count. Each mission still needs its own playability and quality acceptance.
 No complete programme phase is closed by these bounded corrections. Older reports
 below retain their observation time and are not the current public acceptance record.
 
+## Current phase acceptance and next gates
+
+This is the current phase table. Tables inside historical checkpoints retain their
+original observation dates. Accepted scopes below are not whole-game completion.
+
+| Phase | Current status | Evidence and remaining acceptance |
+|---|---|---|
+| P00 integration | Accepted scoped baseline | v0.55; historical simulation, save and media identities must remain intact. |
+| P01 loading | Accepted original scope; new Journey gap open | v0.57.4 feedback contract. Required selected character imagery must finish preparation before an authored Journey Next attempt replaces its prior result; the existing picture-only gate is insufficient. |
+| P02-A master sound | Accepted scoped baseline | v0.58.1; keep master authority through later transports and previews. |
+| P02-B music | Partial | Shared playback foundations exist. PR209 remains separate from the device release; exact media transfer/offline behavior, rights/provenance, listening and mode qualification remain. AI-original music production remains paused by the user's later direction. |
+| P03 navigation | In progress | Public Library/Team-lobby corrections are accepted in v0.76.1. Device candidate covers modeled controller launch/continuation; physical controllers and complete current-screen journeys remain. |
+| P04 creation | Partial | Published previews/history and foundation-pack example exist. Studio mutation focus/cold Back are locally verified in held commit `74092988`; full edit/export/import/play/recovery and a public release of the held work remain. |
+| P05 presentation | In progress | Readable styles and compact layouts exist. v0.77.0 is a candidate, not accepted Pages delivery. All-mode EN/UA, Large/Plain, zoom, reduced effects and physical safe-area/browser-bar checks remain. |
+| P06 discovery/install | Partial | Existing catalog/installation foundations are published. Capacity, replacement/removal, media ownership conflicts and interrupted recovery still need complete journeys. |
+| P07 rewards/continuation | Partial | Held `76586bd1` adds Legacy campaign ending; `59533841` adds deliberate next-attempt difficulty after Legacy loss; `9076ada1` retires stale selection feedback. Scoped source/native evidence exists, but integrated qualification/public delivery and remaining story/Collection paths do not. |
+| P08-A/B art/action feedback | Partial | Shared rendering/catalog and effects exist; held Team production and separate actor-material successor candidates are not accepted public art. Finish motion, heading, scale, danger/capture/loss/pickup/Support/rescue readability in actual play. |
+| P09 challenge/intelligence | Partial | Existing pursuit/pressure/encounter foundations are implemented. Difficulty must be verified by route/counterplay and human playtests, not test counts or speed alone; new successor mechanics retain independent replay/checkpoint gates. |
+| P10 Team encounters | Incomplete | Foundations/candidates exist; the full authored two-player Support, rescue, objective and encounter matrix remains unaccepted. |
+| P11–P15 production allocation | Superseded for new production | Follow the approved Journey campaign programme. Candidate missions, source images and metadata are not released complete campaigns. Preserve the historical editions. |
+| P16 supporting workflows | Partial | Complete Collection, scores, replay, learning, save/media recovery and Legacy journeys across modes. |
+| P17 reproducible authoring | Partial | Guides, skills, prompts and a foundation-pack example exist. Independent complete asset/media/content creation, play, export and exact recovery remain. |
+| P18 browser qualification | Partial | Exact-source suites and retained browser evidence support bounded releases. Whole-program regression, physical inputs, actual media/offline lifecycle, performance and human enjoyment remain open. |
+| Native stores / network multiplayer | Deferred | Separate packaging, signing, platform lifecycle, hardware and network-failure gates. |
+
+### Held integration boundary
+
+Commit `74092988` in `codex/team-presentation-integration` is independent of frozen
+v0.77.0 source `432110b5`. Studio verification passed all 41 unique scoped cases on
+each Node 20.19.5/22.22.2 across retained initial 40/41 runs and the corrected 1/1 rerun:
+a sparse checkout omitted an exact tracked raster. No test was weakened. Native
+keyboard verification covers final Undo/Redo, Skip inventory, next Tab, Return to
+game and cold Back. [Evidence and limits](verification/p04-studio-navigation-integration/README.md).
+These results do not qualify the complete held branch or any physical device.
+
+**Next delivery sequence:** finish exact v0.77.0 qualification/freeze/public acceptance;
+then compose follow-on work against that accepted main SHA, preserving the separate
+music and selected-look preparation owners. Run fresh integrated gates, hunk-review,
+version, source PR, immutable snapshot, publication PR and actual public checks for
+each named delivery. Do not merge prepared candidates merely to clear the backlog.
+
 <details>
 <summary>Historical v0.69.3 / v0.70 integration checkpoint</summary>
 
