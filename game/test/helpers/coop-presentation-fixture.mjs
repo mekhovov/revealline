@@ -2,7 +2,12 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { waitFor as elapsedWaitFor } from './wait-for.mjs';
 import { validateCompiledPresentation } from '../../presentation/host.mjs';
-import { canvasPresentation, presentationCSSVariables } from '../../presentation/runtime.mjs';
+import {
+  canvasPresentation,
+  imagePresentation,
+  presentationCSSVariables,
+} from '../../presentation/runtime.mjs';
+import { inspectImageDataUrl } from '../../content.mjs';
 import { mountPresentationPage } from '../../presentation/page.mjs';
 import { COOP_PICTURE_BINDINGS } from '../../couch/coop-picture-bindings.mjs';
 
@@ -22,6 +27,43 @@ const originals = new Map(
         ),
       ),
     ]),
+  ),
+);
+
+// Finite decoded Team frames from the exact compiled originals. Browser pixels
+// remain a separate gate; this fixture must not silently omit selected images.
+const teamFrames = new Map(
+  await Promise.all(
+    Object.entries(compiled.resolved.assets)
+      .filter(([id, asset]) => id.startsWith('team.') && asset.kind === 'image')
+      .map(async ([id, asset]) => {
+        const bytes = await readFile(
+          new URL(
+            `../../presentation/compiled/${compiled.urls[asset.file.sha256]}`,
+            import.meta.url,
+          ),
+        );
+        const digest = createHash('sha256').update(bytes).digest('hex');
+        const header = inspectImageDataUrl(
+          `data:${asset.file.mime};base64,${bytes.toString('base64')}`,
+        );
+        if (
+          digest !== asset.file.sha256 ||
+          bytes.length !== asset.file.bytes ||
+          !header.valid ||
+          header.width !== asset.file.width ||
+          header.height !== asset.file.height
+        )
+          throw new Error(`Changed compiled Team image: ${id}`);
+        return [
+          id,
+          {
+            asset,
+            geometry: imagePresentation(asset),
+            image: { width: header.width, height: header.height, sha256: digest },
+          },
+        ];
+      }),
   ),
 );
 
@@ -50,6 +92,7 @@ export function installCoopPresentation({ doc, win, install, read, decode, load 
     source: compiled.source,
     manifestSha256,
     resolved: structuredClone(compiled.resolved),
+    image: (id) => teamFrames.get(id) ?? null,
     canvas: canvasPresentation(compiled.resolved),
     fonts: { ui: css['--fk-font-ui'], numeric: css['--fk-font-mono'] },
   };

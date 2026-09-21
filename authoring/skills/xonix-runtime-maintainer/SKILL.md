@@ -29,6 +29,10 @@ New host imports must enter the dependency fingerprint before scoped review;
 exercise each helper change and preserve unaffected recipe identities.
 Neither provisional revision39 fixture is a reusable production identity. Follow
 `docs/team-production-integration.md` before compiled adoption or a release.
+After image adoption, host test fixtures must supply frames from verified compiled
+originals. Assert the background by decoded-picture identity, not the final drawImage
+call: relay/effect art is drawn above it. Keep raw draw records and separately assert
+that the expected objective image is painted; never hide selected art to pass tests.
 
 For the shared handheld-control candidate, follow `docs/shared-device-play.md`.
 Classic-field live notices may use the already-reserved warning band only while
