@@ -138,7 +138,11 @@ function fixture(t, { indexedDB = null, snapshot = true, onRead } = {}) {
   };
 }
 async function savedFixture(t, memory = managedIndexedDB()) {
-  const manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true }),
+  const manager = createManagedMediaStore({
+      indexedDB: memory.indexedDB,
+      storyMedia: true,
+      soundtrackCatalogue: true,
+    }),
     store = createStillMediaStore({
       managedStore: manager,
       decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),
@@ -327,7 +331,11 @@ test('confirm refuses a changed saved generation and a changed release snapshot 
   const memory = managedIndexedDB(),
     f = fixture(t, { indexedDB: memory.indexedDB });
   await f.select(f.row);
-  const manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true }),
+  const manager = createManagedMediaStore({
+      indexedDB: memory.indexedDB,
+      storyMedia: true,
+      soundtrackCatalogue: true,
+    }),
     store = createStillMediaStore({ managedStore: manager });
   t.after(() => {
     store.close();
@@ -442,7 +450,7 @@ test('corrupt selected saved bytes fail before decoder and do not borrow the pub
   const saved = await savedFixture(t),
     f = fixture(t, { indexedDB: saved.memory.indexedDB });
   await new Promise((resolve, reject) => {
-    const open = saved.memory.indexedDB.open('revealline-soundtrack-v1', 4);
+    const open = saved.memory.indexedDB.open('revealline-soundtrack-v1', 5);
     open.onerror = () => reject(open.error);
     open.onsuccess = () => {
       const db = open.result,

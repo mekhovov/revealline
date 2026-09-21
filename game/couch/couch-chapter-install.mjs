@@ -139,7 +139,7 @@ export function createCouchChapterInstaller({
         knownDescriptors: SOURCE_EXTERNAL_CHAPTERS,
         getManagedStore: () => {
           check();
-          return (manager ??= createManagedMediaStore({ indexedDB, storyMedia: true }));
+          return (manager ??= createManagedMediaStore({ indexedDB, soundtrackCatalogue: true }));
         },
         decodeImage,
       });

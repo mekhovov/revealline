@@ -398,6 +398,8 @@ try {
     document,
     root: $('race-settings-panel-audio'),
     prefix: 'race',
+    getScene: ({ scene }) =>
+      !match || shell?.scope() === 'setup' ? 'menu' : match.status === 'ready' ? scene : 'gameplay',
     audioMaster,
     audioPreferences,
     soundscape: sound,

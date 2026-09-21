@@ -149,7 +149,7 @@ async function setup(t, { media = false } = {}) {
     reads = holdPresentationRead(memory);
   if (media) {
     const f = await earnedPictureFixture(),
-      manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true }),
+      manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true, soundtrackCatalogue: true }),
       store = createStillMediaStore({
         managedStore: manager,
         decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),

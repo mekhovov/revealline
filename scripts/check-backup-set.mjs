@@ -16,8 +16,18 @@ import { BACKUP_SET_MAX_BYTES } from '../game/backup-set.mjs';
 import { MEDIA_BUNDLE_FORMAT, MEDIA_BUNDLE_LIMITS } from '../game/media-bundle.mjs';
 import { validateStoredStillMedia, storedStillHashes } from '../game/media-storage-record.mjs';
 import { inspectStoryBundle } from '../game/story-bundle.mjs';
-import { SOUNDTRACK_BUNDLE_FORMAT } from '../game/soundtrack-bundle.mjs';
-import { resolveSoundtrackLibrary, SOUNDTRACK_LIMITS } from '../game/soundtrack.mjs';
+import {
+  SOUNDTRACK_BUNDLE_FORMAT,
+  SOUNDTRACK_BUNDLE_FORMAT_V2,
+  SOUNDTRACK_BUNDLE_FORMAT_V3,
+} from '../game/soundtrack-bundle.mjs';
+import {
+  resolveSoundtrackLibrary,
+  SOUNDTRACK_FORMAT_V2,
+  SOUNDTRACK_FORMAT_V3,
+  SOUNDTRACK_LIMITS,
+  soundtrackReferencedTracks,
+} from '../game/soundtrack.mjs';
 import { inspectMP3 } from '../game/mp3.mjs';
 import { validateExternalChapterIndex } from '../game/external-chapter.mjs';
 
@@ -107,11 +117,12 @@ function validateReport(report, reportName, reportBytes) {
       'restoreOrder',
       'files',
       'note',
+      ...(report.reportVersion === 2 ? ['referenceOnlyMusic', 'musicRecoveryNotice'] : []),
     ],
     'coverage report',
   );
   fail(
-    report.report === 'RevealLine backup set coverage' && report.reportVersion === 1,
+    report.report === 'RevealLine backup set coverage' && [1, 2].includes(report.reportVersion),
     'unsupported report format/version.',
   );
   fail(
@@ -197,11 +208,39 @@ function validateReport(report, reportName, reportBytes) {
       'invalid detached story identity.',
     );
   }
+  const referenceOnlyMusic = report.reportVersion === 2 ? report.referenceOnlyMusic : [];
+  fail(
+    Array.isArray(referenceOnlyMusic) && referenceOnlyMusic.length <= SOUNDTRACK_LIMITS.tracks * 2,
+    'invalid reference-only music list.',
+  );
+  const referenceIds = new Set();
+  for (const row of referenceOnlyMusic) {
+    exactKeys(row, ['id', 'title', 'sha256'], 'reference-only recording');
+    fail(
+      text(row.id, 120) &&
+        text(row.title, 160) &&
+        HASH.test(row.sha256) &&
+        !referenceIds.has(row.id),
+      'invalid or duplicate reference-only recording identity.',
+    );
+    referenceIds.add(row.id);
+  }
+  if (report.reportVersion === 2)
+    fail(
+      referenceOnlyMusic.length
+        ? text(report.musicRecoveryNotice, 2048) && /without audio/.test(report.musicRecoveryNotice)
+        : report.musicRecoveryNotice === '',
+      'reference-only music requires an explicit audio-omission notice.',
+    );
   fail(
     report.coverage ===
       (report.detachedStories.length
-        ? 'incomplete: detached story originals'
-        : 'saved referenced inventory'),
+        ? referenceOnlyMusic.length
+          ? 'incomplete: detached story originals and reference-only music'
+          : 'incomplete: detached story originals'
+        : referenceOnlyMusic.length
+          ? 'incomplete: reference-only music'
+          : 'saved referenced inventory'),
     'coverage label differs from detached inventory.',
   );
   fail(text(report.mediaScope, 512) && text(report.note, 2048), 'invalid coverage scope/note.');
@@ -217,13 +256,20 @@ function validateReport(report, reportName, reportBytes) {
 async function readContainer(handle, bytes, magic, maxManifest) {
   fail(bytes >= 12, 'truncated binary component.');
   const header = await readAt(handle, 12);
-  fail(header.subarray(0, 8).equals(Buffer.from(magic)), 'unsupported binary component format.');
+  const matchedMagic = (Array.isArray(magic) ? magic : [magic]).find((candidate) =>
+    header.subarray(0, 8).equals(Buffer.from(candidate)),
+  );
+  fail(matchedMagic, 'unsupported binary component format.');
   const length = header.readUInt32BE(8);
   fail(
     length > 0 && length <= maxManifest && 12 + length <= bytes,
     'invalid component manifest length.',
   );
-  return { manifest: json(await readAt(handle, length, 12), maxManifest), offset: 12 + length };
+  return {
+    manifest: json(await readAt(handle, length, 12), maxManifest),
+    offset: 12 + length,
+    magic: matchedMagic,
+  };
 }
 async function checkAssets(handle, bytes, offset, assets, wanted, maxAsset, inspect = null) {
   fail(
@@ -336,16 +382,66 @@ async function inspectComponent(id, path, handle, bytes) {
       );
     return { format: manifest.format, document, domain: domainResult(document, counts) };
   }
-  const { manifest, offset } = await readContainer(
+  const { manifest, offset, magic } = await readContainer(
     handle,
     bytes,
-    'RLSTB1\r\n',
-    SOUNDTRACK_LIMITS.metadataBytes + 32768,
+    ['RLSTB1\r\n', 'RLSTB2\r\n', 'RLSTB3\r\n'],
+    SOUNDTRACK_LIMITS.metadataBytes + 65536,
   );
-  exactKeys(manifest, ['format', 'library', 'assets'], 'soundtrack bundle');
-  fail(manifest.format === SOUNDTRACK_BUNDLE_FORMAT, 'unsupported audio component format.');
-  const library = resolveSoundtrackLibrary(manifest.library),
-    wanted = new Map(library.tracks.map((track) => [track.asset.sha256, track.asset])),
+  const v3 = magic === 'RLSTB3\r\n',
+    v2 = magic === 'RLSTB2\r\n';
+  exactKeys(
+    manifest,
+    ['format', 'library', 'assets', ...(v3 ? ['referenceOnlyTrackIds'] : [])],
+    'soundtrack bundle',
+  );
+  fail(
+    manifest.format ===
+      (v3
+        ? SOUNDTRACK_BUNDLE_FORMAT_V3
+        : v2
+          ? SOUNDTRACK_BUNDLE_FORMAT_V2
+          : SOUNDTRACK_BUNDLE_FORMAT),
+    'unsupported audio component format.',
+  );
+  const library = resolveSoundtrackLibrary(manifest.library);
+  fail(
+    (library.format === SOUNDTRACK_FORMAT_V2) === v2 &&
+      (library.format === SOUNDTRACK_FORMAT_V3) === v3,
+    'soundtrack bundle/library versions differ.',
+  );
+  const tracks = soundtrackReferencedTracks(library),
+    refs = new Set(v3 ? library.referenceOnlyTrackIds : []);
+  if (v3)
+    fail(
+      canonicalJSON(manifest.referenceOnlyTrackIds) ===
+        canonicalJSON(library.referenceOnlyTrackIds),
+      'reference-only music differs from its soundtrack manifest.',
+    );
+  if (v2 || v3) {
+    fail(
+      library.catalogTracks.every(
+        (track) => refs.has(track.id) || library.installedTrackIds.includes(track.id),
+      ),
+      'audio component requires every permitted catalogue original.',
+    );
+    fail(
+      (library.bonusAlbums ?? []).every((album) => album.downloaded),
+      'audio component requires every permitted bonus original.',
+    );
+  }
+  const omittedHashes = new Set(
+    tracks.filter((track) => refs.has(track.id)).map((track) => track.asset.sha256),
+  );
+  fail(
+    tracks.every((track) => !omittedHashes.has(track.asset.sha256) || refs.has(track.id)),
+    'all aliases of reference-only music must omit audio.',
+  );
+  const wanted = new Map(
+      tracks
+        .filter((track) => !refs.has(track.id))
+        .map((track) => [track.asset.sha256, track.asset]),
+    ),
     blob = await openAsBlob(path),
     counts = await checkAssets(
       handle,
@@ -362,7 +458,13 @@ async function inspectComponent(id, path, handle, bytes) {
         );
       },
     );
-  return { format: manifest.format, domain: domainResult(library, counts) };
+  return {
+    format: manifest.format,
+    referenceOnlyMusic: tracks
+      .filter((track) => refs.has(track.id))
+      .map((track) => ({ id: track.id, title: track.title, sha256: track.asset.sha256 })),
+    domain: domainResult(library, counts),
+  };
 }
 
 /** Verify a supplied report and regular destination files without importing,
@@ -436,6 +538,11 @@ export async function checkBackupSet({ reportPath, directory } = {}) {
     canonicalJSON(inspected.get('story').detached) === canonicalJSON(report.detachedStories),
     'detached story coverage differs from actual component.',
   );
+  fail(
+    canonicalJSON(inspected.get('audio').referenceOnlyMusic) ===
+      canonicalJSON(report.reportVersion === 2 ? report.referenceOnlyMusic : []),
+    'reference-only music coverage differs from actual component.',
+  );
   for (const record of records)
     fail(
       statIdentity(await lstat(record.path, { bigint: true })) === record.identity,
@@ -453,9 +560,12 @@ export async function checkBackupSet({ reportPath, directory } = {}) {
     edition: report.edition,
     coverage: report.coverage,
     detachedStories: report.detachedStories,
+    referenceOnlyMusic: report.reportVersion === 2 ? report.referenceOnlyMusic : [],
+    musicRecoveryNotice: report.reportVersion === 2 ? report.musicRecoveryNotice : '',
     files,
     notVerified: [
       'Report authenticity or trusted source provenance',
+      'Music licensing authority or availability of reference-only recordings',
       'Game replay validity or earned-picture/story ownership',
       'Native image/video/audio decoding and audible playback',
       'Successful restore, compatibility with another edition, or offline availability',

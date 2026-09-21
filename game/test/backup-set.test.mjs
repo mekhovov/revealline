@@ -6,10 +6,100 @@ import { exportBackup } from '../backup.mjs';
 import { exportMediaBundle } from '../media-bundle.mjs';
 import { exportStoryBundle } from '../story-bundle.mjs';
 import { exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
-import { backupSetFixture } from './helpers/backup-set-fixture.mjs';
+import { backupSetFixture, catalogueBackupAudio } from './helpers/backup-set-fixture.mjs';
+import { emptySoundtrackLibrary, setCatalogueTracks } from '../soundtrack.mjs';
 import { deferred, pngBytes } from './helpers/media-fixtures.mjs';
 const bytes = async (blob) => Buffer.from(await blob.arrayBuffer());
 const hash = (b) => createHash('sha256').update(b).digest('hex');
+
+test('v3 backup fetches every permitted offloaded original and records restricted music without reading its bytes', async () => {
+  const f = await backupSetFixture(),
+    audio = await catalogueBackupAudio(f),
+    set = await prepareBackupSet(f.source);
+  assert.deepEqual(audio.requests, [
+    { sha256: audio.allowedTrack.asset.sha256, purpose: 'export' },
+  ]);
+  assert.equal(set.coverage.reportVersion, 2);
+  assert.equal(set.coverage.coverage, 'incomplete: reference-only music');
+  assert.deepEqual(set.coverage.referenceOnlyMusic, [
+    {
+      id: audio.restrictedTrack.id,
+      title: audio.restrictedTrack.title,
+      sha256: audio.restrictedTrack.asset.sha256,
+    },
+  ]);
+  assert.match(set.coverage.musicRecoveryNotice, /without audio/);
+  const row = set.coverage.domains.find((domain) => domain.id === 'audio');
+  assert.equal(row.originals, 1);
+  assert.equal(row.originalBytes, audio.free.blob.size);
+  assert.deepEqual(
+    await bytes(set.files.find((file) => file.id === 'audio').blob),
+    await bytes(
+      await exportSoundtrackBundle(audio.library, audio.free.assets, {
+        catalogue: audio.catalogue,
+      }),
+    ),
+  );
+});
+
+test('legacy v2 offloaded catalogue originals remain mandatory and exported metadata describes restored pins', async () => {
+  const f = await backupSetFixture(),
+    audio = await catalogueBackupAudio(f, { restricted: false, modern: false }),
+    set = await prepareBackupSet(f.source);
+  assert.equal(set.coverage.reportVersion, 1);
+  assert.equal(set.coverage.domains.find((domain) => domain.id === 'audio').originals, 1);
+  assert.equal(audio.requests.length, 1);
+  assert.deepEqual(
+    await bytes(set.files.find((file) => file.id === 'audio').blob),
+    await bytes(
+      await exportSoundtrackBundle(audio.library, audio.free.assets, {
+        catalogue: audio.catalogue,
+      }),
+    ),
+  );
+});
+
+test('reference-only catalogue can be backed up without any audio reader or original bytes', async () => {
+  const f = await backupSetFixture(),
+    audio = await catalogueBackupAudio(f);
+  delete f.source.readAudioAsset;
+  f.source.readAudio = async () => ({
+    generation: f.metadata.audio,
+    library: setCatalogueTracks(emptySoundtrackLibrary(), [audio.restrictedTrack]),
+    assets: [],
+  });
+  const set = await prepareBackupSet(f.source);
+  assert.equal(set.coverage.referenceOnlyMusic.length, 1);
+  assert.equal(set.coverage.domains.find((domain) => domain.id === 'audio').originals, 0);
+});
+
+for (const failure of [
+  'missing reader',
+  'missing original',
+  'corrupt original',
+  'changed generation',
+])
+  test(`v3 backup refuses ${failure} instead of silently omitting a permitted original`, async () => {
+    const f = await backupSetFixture();
+    await catalogueBackupAudio(f);
+    const read = f.source.readAudioAsset;
+    if (failure === 'missing reader') delete f.source.readAudioAsset;
+    else
+      f.source.readAudioAsset = async (...args) => {
+        if (failure === 'missing original') return null;
+        if (failure === 'corrupt original') return new Blob(['corrupt']);
+        f.metadata.audio++;
+        return read(...args);
+      };
+    await assert.rejects(
+      prepareBackupSet(f.source),
+      failure.startsWith('missing')
+        ? /Music original is unavailable/
+        : failure === 'changed generation'
+          ? /changed/
+          : /mismatch|MP3|size|length/i,
+    );
+  });
 
 test('one sequential stable set retains exact existing JSON, PNG/poster, video and MP3 formats', async () => {
   const f = await backupSetFixture(),

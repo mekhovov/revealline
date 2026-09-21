@@ -162,7 +162,11 @@ async function fixture(t, { available = true, pack = preparedSource } = {}) {
     profileKey: 'revealline.library.dev.v1',
     packsKey: 'revealline.packs.dev.v1',
   });
-  const manager = createManagedMediaStore({ indexedDB: mediaMemory.indexedDB, storyMedia: true });
+  const manager = createManagedMediaStore({
+    indexedDB: mediaMemory.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const store = createStillMediaStore({ managedStore: manager, decodeImage });
   const writer = await claimProfileWriter(locks, pointer.keys.writerKey);
   const installer = createExternalChapterHost({
