@@ -3948,6 +3948,19 @@ try {
       ? nextJourneyMission(current.id) || current
       : current || (candidateHost ? journeyCatalog.missions[0] : null);
   }
+  function journeySkipMission() {
+    return journeyEnabled && !practice && !scenario && !courseSession && !campaignOverview
+      ? journeyMission()
+      : null;
+  }
+  function refreshJourneySkip() {
+    const mission = journeySkipMission();
+    show('journey-skip', !!mission);
+    if (!mission) journeySkipArmed = null;
+    if (journeySkipArmed === null)
+      $('journey-skip').textContent =
+        mission && !nextJourneyMission(mission.id) ? 'Find missions' : 'Skip mission';
+  }
   function nextJourneyMission(id) {
     return candidateHost ? candidateHost.next(id) : journeyCatalog.next(id);
   }
@@ -6694,6 +6707,7 @@ try {
   }
   function refreshHUD() {
     profileRecovery?.refresh();
+    refreshJourneySkip();
     show(
       'pause-button',
       started &&
@@ -7958,10 +7972,11 @@ try {
         (availableFocusTarget(opener) ? opener : controllerFocus())?.focus({ preventScroll: true });
       },
     });
-    $('journey-skip').hidden = false;
+    refreshJourneySkip();
     $('journey-skip').onclick = () => {
-      const mission = !practice && !scenario && journeyMission();
-      const next = mission && nextJourneyMission(mission.id);
+      const mission = journeySkipMission();
+      if (!mission) return;
+      const next = nextJourneyMission(mission.id);
       if (!next) {
         journeyChooser.open($('journey-skip'));
         return;
