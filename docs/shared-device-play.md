@@ -432,3 +432,39 @@ Boot/build and authored compact-arena checks pass 6/6 on each Node 20/22.
 Actual layout evidence and the original failures are retained under iteration-11.
 The preview used desktop Chromium viewport overrides without fullscreen, not
 physical Safari/Steam Deck. No complete device or production phase closes here.
+
+## Twelfth iteration: independent staged-event captions
+
+The remaining staged-caption check reproduced a real failure in Sentinel Relay:
+self-crossing a line at 568×320 displayed the loss explanation over the lower
+playable cells. The persistent mission card occupied the bottom strip, while the
+independent message retained an old narrow overlay position.
+
+Staged missions now reserve separate instruction and event bands for the whole
+mission. Duplicate phase captions remain hidden. Real loss messages wrap below
+the persistent instruction; phase changes do not resize the arena. The correction
+also keeps the shortest landscape D-pad below the HUD, with 44px targets.
+Ordinary compact Arcade and classic-field layouts keep their existing rules.
+
+Native browser checks used exact `5c73f36f` source with only the corrected stylesheet,
+Large/Plain text, Always steering and the Large D-pad preference. Actual
+Right → Down → Up self-crosses lost lives; no browser state was injected.
+
+| Viewport | Complete arena | Loss caption | Result |
+| --- | --- | --- | --- |
+| 568×320 | 164×123 | 544×23.40 | Full loss and recovery instruction; no caption/card/arena intersection |
+| 844×390 | 257.33×192.99 | 820×23.40 | Full loss and recovery instruction; no caption/card/arena intersection |
+| 320×480 | 283.73×212.79 | 296×46.80 | Wrapped loss and recovery instruction; no caption/card/arena intersection |
+
+Returned landscape controls clear the arena, HUD and both message positions.
+Portrait retains its existing translucent controls over part of the arena; the
+messages remain outside those controls. Recovery itself hides controls, so the
+retained receipt distinguishes loss samples from post-recovery control samples.
+The extra reserved text space makes staged landscape arenas smaller than ordinary
+Arcade; it preserves the complete board and readable warnings instead of clipping
+instructions. Future authored concise captions can improve that tradeoff.
+
+Layout/build checks pass 6/6 on each Node 20 and Node 22. See iteration-12 for exact
+rectangles, intersection checks, source hash and logs. The original 73f source's
+hosted run 35563009182 passed; it does not qualify this later stylesheet. Physical
+Safari/Steam Deck, final-source gates, freeze and public verification remain open.
