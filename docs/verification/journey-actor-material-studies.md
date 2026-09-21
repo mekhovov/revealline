@@ -1,11 +1,83 @@
-# Journey actor material studies — source review, not runtime enrollment
+# Journey actor materials — explicit candidate edition, not a release
+
+## Opt-in Solo/Versus integration
+
+Source `b1e6f38d4529333ec2ad835b957b36342e184f73` adds the separate
+`whole-originals-v4` candidate route. Twelve `-actors-v1` successor theme IDs
+select the materials below; historical themes, editions and replays retain their
+old presentation. Copy-on-write mission/project revisions and an independent
+suspended-attempt slot prevent silent replacement of V3. All498 resolved
+Solo/Versus preset simulation identities remain unchanged across83 missions.
+
+The small shared-painter hook replaces only the enemy body. Existing contact
+rings, role badges, headings, positions, warning states and player artwork remain
+authoritative. Explicit accepted actor skins and uploaded bodies take precedence.
+Studio offers a separate inspect-only successor button; inspection does not apply
+the draft or publish it. Exact-preview loading derives a registered successor
+only from its exact registered base theme. Unknown or missing bases are rejected.
+`audit-journey-adaptations --edition actor-originals` uses the same source projection:
+48 numbered references remain provisionally covered, with zero final dispositions.
+
+### Verification of b1e6f38d
+
+95 unique checks pass on each of Node20.19.5 and22.22.2: the90-case material,
+edition, actual-host, preview-loader, shared/Team-painter, Studio, navigation and
+campaign-presentation cohort, plus the added edition audit check and four
+adaptation-coverage checks. The final nine-case edition/coverage run repeats four
+earlier checks; they are counted once. Scoped lint, formatting and diff checks pass.
+Actual Solo and paired-board Versus hosts clear First return and advance directly
+to Choose your share. Authoritative checkpoints equal the reference edition;
+Versus boards remain equal. The V4 save does not overwrite the V3 suspended slot.
+
+Initial verification corrections are retained here: a mistyped host-test filename
+was corrected before that cohort ran; new assertions used the actual
+`manifest.level.revision` and `race-solo-return` element instead of nonexistent
+fields/elements. No failed assertion is counted as passing evidence.
+
+Native in-app-browser checks served this exact commit read-only on port8814:
+
+- First return cleared through ordinary Down input:34.3%,8160 points,3 lives,
+  0:03. Guide caption remained below the result actions. One Next entered Choose
+  your share at0:00 without an intermediate screen; Escape paused it.
+- Global mission search opened Folded corner. At1280×900, the live Neon board
+  showed its two field bodies and distinct frontier body around the internal
+  reclaimed lane, with functional contact/role cues. This was render inspection,
+  not a completed Neon playthrough or human recognition test.
+- The explicit Versus V4 entry prepared Folded corner on both boards with the
+  material-review theme label. Native Start displayed matching geometry, actor
+  positions and material bodies; Escape paused both. Full checkpoint equality is
+  automated evidence above, not inferred from the screenshot.
+- Studio's separate Inspect actor-material successor reported83 maps/83 missions
+  compiling and enabled Apply, while the workbench still displayed Nearby shore.
+  No native Apply or publication was performed. A read-only JSON inspection timed
+  out; the visible validation message, enabled Apply and unchanged workbench are
+  the native evidence. Temporary viewport sizing was reset.
+
+An old-baseline title mismatch was also observed: Continue named First return
+while correctly resuming Choose your share. The UX owner confirmed the accepted
+newer host already provides `titleContinueDestination`; this lane must preserve
+that callback during selective integration, not introduce a duplicate fix or
+replace the newer app/shell. Fresh V4 title qualification remains an integration
+check.
+
+### Remaining adoption gates
+
+Team is **not enrolled** by this change. Its separate prepared-sprite presentation
+lease, Team role names, secured-core drawing and verified candidate-picture
+ownership require an explicit successor integration. Passing existing Team
+regressions does not prove new Team material adoption. Broad live readability,
+physical devices, reduced-effects review, human role recognition/enjoyment,
+accepted-source integration and Pages publication remain open. No new character
+portrait, soundtrack or final aesthetic acceptance is claimed.
+
+## Earlier standalone study checkpoint
 
 The12 existing Journey campaign palettes still resolve the same retro body family.
 Source `35419a1d4a6081f56b7815646820658e0acf6159`, corrected by
 `b539592c98de670548f1878a376727b9ec2af12c`, adds twelve original code-native
 material studies across all seven existing enemy roles. It extends the project's
 pixel-drawing approach, not third-party pictures or generated bitmap assets.
-There are84 body recipes, not84 new enemies or mechanics. No production host,
+There are84 body recipes, not84 new enemies or mechanics. At that checkpoint no production host,
 renderer, theme registry, mission, simulation, save, release or deployment changes.
 
 ## Intent and boundaries
@@ -30,7 +102,8 @@ enemy type. It draws body pixels in a28×28 logical envelope. Recipes are frozen
 and precompiled once; no per-frame recipe generation, randomness, timers,
 network, image decoding or gameplay mutation. Dormant color treatment remains
 subdued. Unknown materials/types and ordinary Legacy frames draw nothing, leaving
-the caller's existing fallback available. Nothing currently calls this from play.
+the caller's existing fallback available. Play adoption was added only in the
+explicit successor described above.
 
 ## Review and evidence
 
@@ -58,7 +131,7 @@ zero-size default viewport; explicit responsive sizes were used for these checks
 not evidence of a game layout bug. A full-page capture had stitching artifacts;
 ordinary viewport screenshots and DOM geometry were used for inspection instead.
 
-## Next integration gate
+## Original integration gate (partially implemented above)
 
 Coordinate the shared actor-presentation hook with the existing release/renderer
 owner. Select an explicit new theme/presentation edition; do not reinterpret old
