@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
+import { soloPage, settle, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
@@ -344,7 +344,7 @@ test('result keyboard picture/Back and appearance/settings return keep the same 
   assert.deepEqual(page.errors, []);
 });
 
-test('campaign-complete replay choice opens the visible Missions dialog without changing the completed run', async (t) => {
+test('completed campaign keyboard Browse opens Missions directly and Back restores its won result', async (t) => {
   const campaign = structuredClone(failCampaign);
   campaign.levels[0].goal.coverage = 0.1;
   const page = await soloPage(t, { campaign });
@@ -354,14 +354,49 @@ test('campaign-complete replay choice opens the visible Missions dialog without 
   page.key('ArrowDown', false);
   page.frame(0);
   assert.equal(page.rendered.run.status, 'won');
-  key(page, 'Enter');
-  await settle(() => page.$('game-overlay').dataset.kind === 'campaign-complete');
+  assert.equal(page.$('overlay-title').textContent, 'Campaign complete.');
+  assert.equal(page.$('next-button').textContent, 'Browse campaigns →');
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
-  page.$('choose-mission').focus();
+  page.$('next-button').focus();
   key(page, 'Enter');
   assert.equal(page.$('shell-missions').open, true);
-  assert.ok(page.$('missions').contains(page.doc.activeElement));
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.ok(page.$('shell-missions').contains(page.doc.activeElement));
+  page.$('shell-briefing').focus();
+  key(page, 'Enter');
+  assert.equal(page.$('shell-missions').open, false);
+  assert.equal(page.doc.activeElement.id, 'next-button');
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});
+
+test('cold reload of legally earned campaign completion retains the existing overview and replay choice', async (t) => {
+  const campaign = structuredClone(failCampaign);
+  campaign.levels[0].goal.coverage = 0.1;
+  const storage = memoryStorage();
+  await t.test('earn completion through an ordinary cut', async (t) => {
+    const page = await soloPage(t, { campaign, storage });
+    page.$('start-button').click();
+    page.key('ArrowDown');
+    for (let i = 0; i < 1200 && page.rendered.run.status === 'running'; i++) page.frame();
+    page.key('ArrowDown', false);
+    page.frame(0);
+    assert.equal(page.rendered.run.status, 'won');
+  });
+  const earned = storage.getItem('revealline.library.dev.v1');
+  await t.test('reload and browse the retained overview without a new award', async (t) => {
+    // A cold profile has the earned library but no explicit replay bookmark.
+    const coldStorage = memoryStorage({ 'revealline.library.dev.v1': earned });
+    const page = await soloPage(t, { campaign, storage: coldStorage });
+    assert.equal(page.$('game-overlay').dataset.kind, 'campaign-complete');
+    assert.equal(page.$('next-button').textContent, 'View collection →');
+    page.$('choose-mission').focus();
+    key(page, 'Enter');
+    assert.equal(page.$('shell-missions').open, true);
+    assert.ok(page.$('missions').contains(page.doc.activeElement));
+    assert.equal(coldStorage.getItem('revealline.library.dev.v1'), earned);
+    assert.deepEqual(page.errors, []);
+  });
 });
 
 for (const pointerId of [41, undefined])

@@ -5,6 +5,16 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For completed Legacy campaigns, keep the earned final result as the parent of
+Browse campaigns. Resolve current mission ownership before choosing the Legacy
+picker: a Journey-enabled page may still contain a restored or installed Legacy
+attempt. Preserve the result picture, authoritative checkpoint, stored awards
+and opener focus through Browse/Back. Keep normal Journey/header routing and
+cold completed-campaign overview behavior intact. Verify legal consecutive wins,
+keyboard activation, picture viewing, Retry and cancelled/failed Next preparation.
+See `docs/solo-result-continuation.md`; navigation evidence does not establish
+campaign balance, physical-controller acceptance or a published release.
+
 For Pause-menu Sound, reuse the shared master subscription and mute adapter.
 Keep the accessible name `Sound` stable while `aria-pressed` and visible on/off
 text reflect the current preference. Do not change music transport, the selected

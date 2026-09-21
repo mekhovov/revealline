@@ -159,6 +159,70 @@ async function running(p, id) {
   });
 }
 
+test('a Journey-enabled shell completes an installed Legacy campaign and returns from its Legacy picker', async (t) => {
+  const { p } = await setup(t, { journey: true });
+  const legacy = {
+    ...structuredClone(campaign),
+    id: 'installed-legacy',
+    title: 'Installed Legacy',
+    themeId: 'fpv',
+  };
+  delete legacy.classRecipes;
+  const pack = {
+    format: 'xonix-pack.v1',
+    id: 'installed-legacy',
+    version: '1.0.0',
+    name: 'Installed Legacy',
+    description: 'A legal imported completion fixture.',
+    engine: 'xonix-core.v2',
+    dependencies: [],
+    metadata: { author: 'Reveal Line tests', license: 'Original project fixture' },
+    themes: [themes.find((theme) => theme.id === 'fpv')],
+    classRecipes: classes,
+    campaigns: [legacy],
+    visualOverrides: {},
+    levelVisuals: [],
+    music: [],
+  };
+  p.$('library-button').click();
+  p.doc.querySelector('[data-library-panel="packs"]').click();
+  const text = JSON.stringify(pack);
+  p.$('pack-file').files = [{ size: text.length, text: async () => text }];
+  await p.$('pack-file').onchange();
+  assert.match(p.$('pack-status').textContent, /Validated and installed/);
+  const play = [...p.$('installed-packs').children]
+    .flatMap((row) => [...row.children])
+    .find((button) => button.dataset.packAction === 'play');
+  assert.ok(play);
+  play.click();
+  await settle(() => {
+    p.frame(0);
+    return p.rendered.run.levelId === 'first-cut' && !p.$('library-dialog').open;
+  }, 'Library Play selects the imported Legacy mission and closes its own dialog.');
+  await win(p);
+  assert.equal(p.$('next-button').textContent, 'Next uncleared mission →');
+  p.$('next-button').click();
+  await running(p, 'next-cut');
+  await win(p);
+  assert.equal(p.$('overlay-title').textContent, 'Campaign complete.');
+  assert.equal(p.$('next-button').textContent, 'Browse campaigns →');
+  const run = p.rendered.run,
+    checkpoint = authoritativeCheckpoint(run),
+    profile = p.storage.getItem(profileKey);
+  p.$('next-button').focus();
+  p.$('next-button').click();
+  assert.equal(p.$('shell-missions').open, true);
+  assert.equal(p.$('journey-chooser').open, false);
+  p.$('shell-briefing').click();
+  assert.equal(p.doc.activeElement.id, 'next-button');
+  assert.equal(p.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.equal(p.storage.getItem(profileKey), profile);
+  p.$('shell-packs').click();
+  assert.equal(p.$('journey-chooser').open, true, 'Ordinary header routing still uses Journey');
+  assert.deepEqual(p.errors, []);
+});
+
 test('Journey chooser can supersede a held result picture without waiting for its stale decode', async (t) => {
   const { p, deferDecode } = await setup(t, { journey: true });
   p.$('shell-featured').click();
@@ -224,6 +288,62 @@ function kept(p, before) {
   assert.deepEqual(information.owner, before.information.owner);
   assert.deepEqual(information.lastWarning, before.information.lastWarning);
 }
+
+test('a legally completed Legacy campaign keeps its final picture and awards through Browse, Back, picture view, and Retry', async (t) => {
+  const { p } = await setup(t);
+  await win(p);
+  assert.equal(p.$('next-button').textContent, 'Next uncleared mission →');
+  p.$('next-button').click();
+  await running(p, 'next-cut');
+  await win(p);
+  const final = snapshot(p);
+  assert.equal(p.$('overlay-title').textContent, 'Campaign complete.');
+  assert.match(
+    p.$('overlay-copy').textContent,
+    /Owned result transitions: 2 \/ 2 missions complete/,
+  );
+  assert.equal(p.$('next-button').textContent, 'Browse campaigns →');
+  assert.equal(p.$('retry-button').hidden, false);
+  assert.equal(p.$('view-picture').hidden, false);
+  assert.equal(
+    loadLibrary(p.storage, profileKey, { campaigns: [campaign] }).library.pictureReceipts.length,
+    2,
+  );
+  for (const exit of ['back', 'cancel']) {
+    p.$('next-button').focus();
+    p.$('next-button').click();
+    assert.equal(p.$('shell-missions').open, true);
+    assert.equal(p.$('game-overlay').dataset.kind, 'won');
+    kept(p, final);
+    if (exit === 'back') p.$('shell-briefing').click();
+    else p.$('shell-missions').emit('cancel');
+    assert.equal(p.$('shell-missions').open, false);
+    assert.equal(p.doc.activeElement.id, 'next-button');
+    kept(p, final);
+  }
+  p.$('view-picture').click();
+  assert.equal(p.$('game-overlay').hidden, true);
+  kept(p, final);
+  p.$('show-result').click();
+  assert.equal(p.$('game-overlay').dataset.kind, 'won');
+  assert.equal(p.$('overlay-title').textContent, 'Campaign complete.');
+  assert.equal(p.doc.activeElement.id, 'view-picture');
+  kept(p, final);
+  p.$('retry-button').click();
+  await running(p, 'next-cut');
+  assert.notEqual(p.rendered.run, final.run);
+  assert.equal(p.rendered.run.tick, 0);
+  assert.equal(
+    p.storage.getItem(profileKey),
+    final.profile,
+    'Retry does not award another completion',
+  );
+  assert.equal(
+    loadLibrary(p.storage, profileKey, { campaigns: [campaign] }).library.pictureReceipts.length,
+    2,
+  );
+  assert.deepEqual(p.errors, []);
+});
 
 for (const policy of ['immediate', 'grid-center'])
   test(`${policy}: Next stages behind the completed result and starts directly only when ready`, async (t) => {
