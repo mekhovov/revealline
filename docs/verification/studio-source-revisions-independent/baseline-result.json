@@ -1,0 +1,6 @@
+{
+  "node": "22.22.2",
+  "exitCode": 1,
+  "runtimeSha256": "d566368cad4c85436f528b050661dbc33653240cabd2e745c93a9a1fb099ce11",
+  "expectedFailure": "New assets revision must be the next revision."
+}

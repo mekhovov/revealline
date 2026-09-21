@@ -1,0 +1,190 @@
+diff --git a/authoring/asset-studio/studio.mjs b/authoring/asset-studio/studio.mjs
+--- a/authoring/asset-studio/studio.mjs
++++ b/authoring/asset-studio/studio.mjs
+@@ -753,6 +753,15 @@
+       ? {
+           ...structuredClone(record),
+           id: `${revision.id}.source`,
++          // Metadata and reviews advance only the prepared asset. Source
++          // originals have their own immutable revision sequence.
++          revision:
++            Math.max(
++              0,
++              ...working.document.assets
++                .filter((asset) => asset.id === `${revision.id}.source`)
++                .map((asset) => asset.revision),
++            ) + 1,
+           description: `${slot.label} original source`,
+         }
+       : null;
+diff --git a/game/test/asset-studio-host-loading.test.mjs b/game/test/asset-studio-host-loading.test.mjs
+--- a/game/test/asset-studio-host-loading.test.mjs
++++ b/game/test/asset-studio-host-loading.test.mjs
+@@ -6,7 +6,11 @@
+ import { createStudioStore, STUDIO_DATABASE } from '../presentation/studio-store.mjs';
+ import { iconForSlot } from '../presentation/icons.mjs';
+ import { encodeSpritePNG } from '../../scripts/produce-field-kit-sprites.mjs';
+-import { hashPresentationBytes } from '../presentation/bundle.mjs';
++import {
++  hashPresentationBytes,
++  exportThemeBundle,
++  importThemeBundle,
++} from '../presentation/bundle.mjs';
+ import { waitFor } from './helpers/wait-for.mjs';
+ import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+ import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
+@@ -1090,6 +1094,90 @@
+     'A metadata edit preserves the original encoded image.',
+   );
+   assert.ok(bindButton(approved.id, 2), 'The approved original can still be rebound explicitly.');
++  // Original-source and prepared-asset identities have independent histories.
++  // Metadata/review creates no new source; later uploads must still stage.
++  const uploadAgain = async () => {
++    $('asset-upload').files = [original];
++    $('asset-upload').onchange();
++    await until(() => $('cancel-studio-operation').hidden);
++    assert.match(message(), /Replacement prepared/);
++    $('asset-creator').value = 'Fixture author';
++    $('asset-source').value = 'Owned repeated upload fixture';
++    $('asset-license').value = 'Fixture rights';
++    await $('stage-asset').onclick();
++    assert.match(message(), /validated and staged/);
++  };
++  await uploadAgain();
++  assert.equal(currentBinding(), `${customId}@3`);
++  assert.ok(historyRow(`${customId}.source`, 2));
++  $('review-evidence').value = 'Modeled fixture review; not production art approval.';
++  await $('record-review').onclick();
++  assert.equal(currentBinding(), `${customId}@4`);
++  await uploadAgain();
++  assert.equal(currentBinding(), `${customId}@5`);
++  assert.ok(historyRow(`${customId}.source`, 3));
++  for (const revision of [6, 7]) {
++    $('new-sprite').onclick();
++    $('sprite-canvas').emit('keydown', { code: 'Space' });
++    await $('use-sprite').onclick();
++    assert.match(message(), /Replacement prepared/);
++    const preparedSprite = $('upload-summary').textContent;
++    await $('use-sprite').onclick();
++    assert.match(message(), /Validate and stage the prepared slot/);
++    assert.equal($('upload-summary').textContent, preparedSprite);
++    $('asset-creator').value = 'Fixture author';
++    $('asset-source').value = 'Modeled sprite preparation; encoded PNG fixture';
++    $('asset-license').value = 'Fixture rights';
++    await $('stage-asset').onclick();
++    assert.match(message(), /validated and staged/);
++    assert.equal(currentBinding(), `${customId}@${revision}`);
++    assert.ok(historyRow(`${customId}.source`, revision - 2));
++  }
++  // A review before the first image must not start the source history at r2.
++  const freshSlot = 'icon.play';
++  inventoryButton(freshSlot).click();
++  await flush();
++  $('review-evidence').value = 'Modeled initial review fixture.';
++  await $('record-review').onclick();
++  assert.equal(currentBinding(), `${freshSlot}.custom@1`);
++  await uploadAgain();
++  assert.equal(currentBinding(), `${freshSlot}.custom@2`);
++  assert.ok(historyRow(`${freshSlot}.custom.source`, 1));
++  await $('save-workspace').onclick();
++  assert.match(message(), /saved atomically/);
++  const repeatedSave = await createStudioStore({ indexedDB: db.indexedDB }).load();
++  for (const asset of metadataSaved.document.assets)
++    assert.deepEqual(
++      repeatedSave.document.assets.find(
++        (row) => row.id === asset.id && row.revision === asset.revision,
++      ),
++      asset,
++      'Later uploads retain every earlier immutable revision.',
++    );
++  for (const [hash, blob] of metadataSaved.assets)
++    assert.deepEqual(
++      Buffer.from(await repeatedSave.assets.get(hash).arrayBuffer()),
++      Buffer.from(await blob.arrayBuffer()),
++      'Later uploads retain every earlier original and derivative byte.',
++    );
++  const transferred = await importThemeBundle(
++    await exportThemeBundle(repeatedSave.document, repeatedSave.assets),
++    { decodeImage: null },
++  );
++  assert.deepEqual(transferred.document, repeatedSave.document);
++  for (const [hash, blob] of repeatedSave.assets)
++    assert.deepEqual(
++      Buffer.from(await transferred.assets.get(hash).arrayBuffer()),
++      Buffer.from(await blob.arrayBuffer()),
++      'Every original and derivative round-trips byte-for-byte.',
++    );
++  const preparedAsset = resolvePresentation(transferred.document).assets[originalSlot];
++  assert.deepEqual(preparedAsset.provenance.parent, { id: `${customId}.source`, revision: 5 });
++  await $('reload-workspace').onclick();
++  assert.equal(currentBinding(), `${freshSlot}.custom@2`);
++  inventoryButton(originalSlot).click();
++  await flush();
++  assert.equal(currentBinding(), `${customId}@7`);
+   $('new-sprite').onclick();
+   const originalSpritePixels = new Uint8ClampedArray($('sprite-canvas').paintedPixels);
+   $('sprite-canvas').emit('keydown', { code: 'Space' });
+diff --git a/docs/asset-studio.md b/docs/asset-studio.md
+--- a/docs/asset-studio.md
++++ b/docs/asset-studio.md
+@@ -172,3 +172,9 @@
+ All existing asset, theme, collection, manifest and byte limits still apply to the combined workspace. An import that exceeds them fails before staging; it never drops old revisions to make room. Atomic transitions may append a contiguous batch of immutable revisions, but cannot skip a new revision, duplicate an identity or rewrite a retained record. This matches the local store's saved-history checks.
+ 
+ Maintainer prompt: “Stage two independent uploads A and B for one slot, export, then import into a fresh Studio. Find both exact historical bindings and downloadable originals, bind A, re-export and verify every payload byte. Retain authored collection labels, foreign parent chains and tokens, including sparse revisions and more than 128 theme revisions without one menu choice per revision. Cover namespace collisions, exact-record reuse, unbound same-ID records, all immutable append boundaries and combined-limit rejection without partial mutation. Keep native file chooser, image decoding, download, local-save and responsive evidence separate from public API tests; do not change player data or publication defaults.”
++
++### Replacing artwork after metadata or review edits
++
++Prepared artwork and its retained source original have independent immutable revision numbers. Editing geometry or recording review evidence creates a new prepared revision without inventing a source revision. A later upload or prepared sprite starts or advances its own original-source history and references that exact original. Earlier artwork, source bytes and review records remain available through history, Save/Reload and bundle transfer. No migration or renumbering is required.
++
++Maintenance prompt: “Upload and stage an asset, edit its metadata, record review evidence, then upload and stage another image. Also review an asset before its first upload and prepare two successive sprite edits. Check each exact asset ID advances independently, pending preparation cannot be replaced accidentally, and the prepared asset references the correct source revision. Save/reload and export/import every original byte and earlier record. Distinguish modeled handler checks from native picker, pixel decoding, actual downloads and public-release evidence.”
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -1304,12 +1304,14 @@
+ 
+ When focused Cancel load is hidden, restore an enabled transport action only while that load still owns foreground focus. Preserve newer input, editor/reader focus, replacement loads and lifecycle suspension. Completed replays keep Restart advice; empty/error states must not claim Play is available. Verify native Cancel→retry→paused Play→complete→Restart with exact checkpoints, and keep lifecycle/physical-input evidence separate. Use [Replay Theater’s prompt](../../../docs/replay-theater.md#load-focus-and-completed-playback) and [integration evidence](../../../docs/verification/p16-replay-integration/README.md).
+ 
+-
+ ### Studio revision transfer
+ 
+ Preserve historical slot bindings as well as original media bytes during import. Keep complete theme and collection families, collision-safe IDs, contiguous mapped revision batches, and one distinguishable menu choice per family. Never rewrite local history or silently drop revisions at capacity. Follow the transfer prompt in `docs/asset-studio.md`; verify two independent replacements through actual import, earlier binding, Save, Reload and exported bytes. Separate inherited production-reproduction failures from transfer regressions with pinned baseline comparison; do not weaken production gates. See `docs/verification/p04-studio-transfer-integration/README.md`.
+ 
+-
+ ### Scoped production review successors
+ 
+ When recipe inputs drift, generate and pin the actual source-stage ledger before adopting a new reviewed revision. Review the changed sources against retained native/test evidence; never transfer a prior approval by replacing its hash alone. Preserve every historical record and original payload, rebind Team's current exact theme identity to the generated successor, and keep earlier import policy separate. Verify pinned source-stage reconstruction, exact producer reproduction and affected real host/Studio tests. See `docs/verification/presentation-followup-review/README.md`; whole-source, final native and public gates remain mandatory.
++
++### Studio original revisions
++
++For Studio uploads, allocate revisions independently for the prepared `${slot}.custom` identity and its `${slot}.custom.source` original. Metadata edits and review evidence advance only the prepared asset, so never reuse its revision number for a new original. Preserve exact parent references, append-only validation and saved bytes; do not repair a gap by renumbering history or inserting placeholder sources. Follow the [replacement-after-review checks](../../../docs/asset-studio.md#replacing-artwork-after-metadata-or-review-edits) through repeated image/sprite preparation, Save/Reload and bundle transfer. Native upload/download and image fidelity remain separate acceptance checks.
+diff --git a/docs/verification/p04-studio-source-revisions.md b/docs/verification/p04-studio-source-revisions.md
+new file mode 100644
+--- /dev/null
++++ b/docs/verification/p04-studio-source-revisions.md
+@@ -0,0 +1,26 @@
++# P04 — independent original-source revisions
++
++Status: qualified source candidate; release acceptance remains pending.
++
++Base: `8cffb36b29a38013eb9213845efd675c4864c9d8`.
++
++A metadata edit or review appends a prepared-asset revision without a new source original. The upload path reused that prepared revision number for its different original-source asset ID. The next image or sprite could therefore fail with “New assets revision must be the next revision.” Original bytes remained intact, but ordinary iterative authoring could not continue.
++
++The fix allocates the original's next revision from that exact source ID. It retains immutable history, source/derivative parent references, validation limits and storage formats. No data migration or skipped-revision exception is introduced.
++
++## Verification
++
++- Baseline actual-host regression reproduces the precise rejection after metadata editing.
++- Final six complete test files pass 45/45 on Node 20.19.5 and 22.22.2, with no skips or failures: presentation Studio, transfer history, slot history, sprite editor, actual host loading, and published Studio.
++- Mounted-host sequences exercise upload → metadata → upload, review → upload, two sprite preparations, refusal of duplicate pending preparation, and review before the first original upload. Each source and derivative advances independently.
++- Save and Reload retain the selected revisions; every earlier immutable asset record and byte remains exact. The resulting document and all files also pass binary bundle export/import with the final derivative pointing to source revision 5.
++- An independent read-only review found no blocking correctness issue.
++- A separate baseline compiled-collection check exports 1,351 asset records and 133 files into a 7,399,336-byte bundle, SHA-256 `dd8d17b2227fef4d2e6b63a3f73253be1dbf4f870a4f74325fff24f7ce2371e3`. Node 22 import preserves document/payload bytes; Node 20 import/re-export produces identical bytes.
++
++The tests use modeled DOM, storage and predetermined valid PNG encoding. Transfer verification checks headers/hashes with `decodeImage: null`. These are not claims of native picker operation, pixel fidelity, physical input or public deployment.
++
++The attempted native transfer trial remained incomplete: both fresh Studio origins loaded normally, but browser-control activation failed to operate even native disclosures, and filechooser observation timed out. No product input defect is inferred. There was no browser upload, saved revision, actual download or fresh-origin import in that trial. Native transfer remains an acceptance item.
++
++Reproduce with the six complete source test files above. The isolated review packet retains baseline failure, both runtime TAP logs, exact loaded-source receipts and independent compiled transfer outputs under `.cache/p04-studio-source-revisions-8cff-r1/` and `.cache/p17-studio-transfer-8cff-r1/`. Do not add those locally generated theme archives to a public release as approved artwork.
++
++The release owner must integrate related hunks, synchronize the next unused version, run all six release gates and applicable build/browser checks against the exact commit, then freeze, deploy and verify public behavior. This source qualification does not waive those gates.

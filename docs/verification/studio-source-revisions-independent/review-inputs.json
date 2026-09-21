@@ -1,0 +1,27 @@
+{
+  "candidatePins": {
+    "authoring/asset-studio/studio.mjs": {
+      "bytes": 55708,
+      "sha256": "9b86b47d7aa9bbcaaccfd34ffdd93636d32682c8a7e2c360b4639c0b56da9ee3"
+    },
+    "game/test/asset-studio-host-loading.test.mjs": {
+      "bytes": 55258,
+      "sha256": "e82a499d46a9f15b92ea5b8d1aca53f3842c2440edc8d5710952aaacf9834da9"
+    },
+    "docs/asset-studio.md": {
+      "bytes": 34022,
+      "sha256": "08dfb8d30f4fde6353400448e3e23c4d43d5b3b5ed54bd890a10465db9a70db7"
+    },
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+      "bytes": 325100,
+      "sha256": "35976e6ce1d187eb727f06a7f690a426d387a1f1ad3faaf5bfe5e01c67a61317"
+    },
+    "docs/verification/p04-studio-source-revisions.md": {
+      "bytes": 3277,
+      "sha256": "fc94237e4ce4e9710acce6dfea8d39bc41bc001203950fbfa95257e8750704fb"
+    }
+  },
+  "patchSha256": "bc41e0b01219aec5e173f4e4e81cfb6c8b5d801727e673fbf8096880c9b12da3",
+  "localNoncandidateFiles": "verified against exact8cff Git bytes",
+  "loaderChange": "repository absolute path only; independent reads directory"
+}
