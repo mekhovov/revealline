@@ -3,6 +3,7 @@ import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
 import { drawCoopActiveTrail, drawCoopWall, prepareCoopWall } from './coop-terrain-trail.mjs';
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
+import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
 
 const THEME_FONTS = Object.freeze({
   ui: '"Field Kit UI", "Field Kit Mono", system-ui, sans-serif',
@@ -65,7 +66,15 @@ export function createCoopPainter(canvas) {
   ) {
     // This is a defensive arena guard, not full content-hash authority. The
     // picture lease verifies the pack/level hashes; the host owns attempt intent.
+    let pictureWidth = 1152,
+      pictureHeight = 576;
     if (picture !== null) {
+      if (picture.choice?.sourceKind === 'candidate-original') {
+        const frame = candidateTeamPictureFrame(picture, run.level, presentation);
+        if (!frame) throw new TypeError('Team candidate picture has no live verified owner.');
+        pictureWidth = frame.width;
+        pictureHeight = frame.height;
+      }
       if (
         picture.snapshot !== presentation ||
         !presentation ||
@@ -81,10 +90,12 @@ export function createCoopPainter(canvas) {
         throw new TypeError('Team picture does not match this prepared arena presentation.');
       if (
         picture.image &&
-        ((picture.image.naturalWidth ?? picture.image.width) !== 1152 ||
-          (picture.image.naturalHeight ?? picture.image.height) !== 576)
+        ((picture.image.naturalWidth ?? picture.image.width) !== pictureWidth ||
+          (picture.image.naturalHeight ?? picture.image.height) !== pictureHeight)
       )
-        throw new TypeError('Team picture must retain its complete 1152×576 decoded frame.');
+        throw new TypeError(
+          `Team picture must retain its complete ${pictureWidth}×${pictureHeight} decoded frame.`,
+        );
     }
     const fonts = canvasTextFonts(textFace, look?.fonts ?? THEME_FONTS);
     const palette = look?.palette;
@@ -135,7 +146,17 @@ export function createCoopPainter(canvas) {
       ctx.fillRect(0, 0, run.width, run.height);
       if (picture?.image) {
         ctx.imageSmoothingEnabled = false;
-        ctx.drawImage(picture.image, 0, 0, 1152, 576, 0, 0, run.width, run.height);
+        ctx.drawImage(
+          picture.image,
+          0,
+          0,
+          pictureWidth,
+          pictureHeight,
+          0,
+          0,
+          run.width,
+          run.height,
+        );
         // The accepted original is the victory reward. Keep the actual captured
         // cells and score intact while retiring the live arena's concealment/cues.
         if (run.status === 'won') return;

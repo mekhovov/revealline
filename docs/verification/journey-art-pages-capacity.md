@@ -45,3 +45,14 @@ Before promotion, measure the actual complete current/previous deployment,
 run the existing guard and routing/offline/rollback tests, and verify the uploaded
 inventory against its immutable manifest. Remaining Sentinel/Apex/Team originals
 will add further bytes; this forecast does not include them.
+
+## Follow-up measurement at e3897412
+
+The registry now contains98originals /249,814,831bytes. Sentinel Crown (five),
+Apex Aurora (five) and Team partners (eleven) add55,661,047bytes to the historical
+forecast above. The existing Shared detour original is reused, not counted twice.
+There are56 unpublished originals totaling142,220,415bytes. Applying exactly the
+same preserved-baseline/two-copy assumption gives1,127,274,518bytes, exceeding
+the unchanged950,000,000byte guard by177,274,518bytes before other costs.
+This is still a conditional forecast, not an integrated build or current-release
+failure. No originals were removed and no guard was changed.

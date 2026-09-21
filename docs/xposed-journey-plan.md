@@ -18,8 +18,10 @@ energy gates, streak penalties, hidden adaptive difficulty or mandatory reward s
 Team original-art source checkpoint: eleven new originals plus the existing Shared
 detour picture now bind all twelve candidate missions without changing36 resolved
 preset simulations. The15-case cohort on Node20/22 includes64 unchanged two-seat
-route outcomes. This is not Team picture delivery or P14 acceptance: the verified
-host adapter, native/human/device checks and publication remain pending.
+route outcomes. The next local host increment adds a separate `team-originals`
+candidate entry with verified display ownership and unchanged legacy import rules.
+Native/human/device checks, newer-host integration and publication remain pending;
+this is not P14 acceptance. See its verification record for test scope.
 
 - Enemy-seeded four-connected capture: closure secures the trail, then fills field
   regions containing no field-retaining enemy. Occupied regions on both sides may

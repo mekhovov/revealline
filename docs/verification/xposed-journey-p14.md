@@ -520,6 +520,37 @@ manifest pairs and64 two-seat route replays (joint cuts on/off), retaining histo
 checkpoints, clears, zero downs and contributions from both seats. Clear routes
 are not automatically mastery routes; each retains its previous mastery result.
 
-This checkpoint binds sources only. The current Team host and geometry exports
+At the source-binding checkpoint, the Team host and geometry exports
 do not yet deliver these candidate originals. A verified candidate-picture adapter,
 native picture checks, human/device qualification and release integration remain.
+
+### Explicit Team original-picture host candidate
+
+The separate `?journey=team-originals` entry opts into the authored background
+registry. `team-greybox`, ordinary Team entry and geometry exports remain unchanged.
+The candidate adapter verifies full pinned bytes and complete decoded dimensions
+through the existing authenticated candidate-picture owner. It accepts only a
+code-owned immutable Team row, exact pack/level/attempt and prepared FPV snapshot.
+It does not mint an official award, import receipt or managed-media assignment.
+
+The painter accepts varied2:1 dimensions only from a live opaque candidate owner;
+forged/cloned or disposed bindings fail closed. Historical Team bindings and
+uploaded envelopes retain their exact1152×576 contract. Each selection/preview
+owns an independent lease so preparing the next original cannot release the
+currently playing picture. Coverage, terrain concealment and victory percentage
+remain simulation-owned. Candidate cards retain starting-map diagrams and truthful
+visual-qualification labels; final picture-card design is not implied by this step.
+
+Integration seam: the UX owner's Team78/owned-presentation host work covers
+starter/historical/import paths, not Journey `row.background`. Compose these small
+candidate-selection/painter hunks with its newer accepted-display, exact Retry/Next,
+snapshot/audio/apply ownership. Do not replace the newer host file wholesale.
+No release or device qualification follows from this isolated implementation.
+
+The49-case adapter/painter/legacy-picture-host/art/card/Team-original-host cohort
+passes on Node20 and22. It earns all twelve clears with original-byte hashes,
+eleven direct Next handovers, one deliberately failed preload preserving the result,
+initial image failure and explicit Retry, and one-action chooser launch. The final
+theme-identity hardening and painter checks were re-run separately:19/19 on both
+runtimes. Scoped lint, format and diff checks pass. These use real runtime/host
+commands and finite browser/decode models, not native performance or human evidence.
