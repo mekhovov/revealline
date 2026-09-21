@@ -1,0 +1,18 @@
+{
+  "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "startedAt": "2026-09-21T08:49:44.620644+00:00",
+  "node": "20.19.5",
+  "testFiles": 689,
+  "concurrency": 2,
+  "log": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/.cache/full-team-source-r1/full-node20.tap",
+  "launcherPid": 96645,
+  "status": "interrupted",
+  "pid": 96655,
+  "exitCode": 143,
+  "stoppedAt": "2026-09-21T09:27:14.548760+00:00",
+  "reason": "Release coordinator explicitly requested stop at1.2GiB free disk. Not a timeout or test completion. No full-suite pass claim.",
+  "logBytes": 1834913,
+  "logSha256": "c57f4da4a237a699b0d91a8dcc48262870d8dce797fa2654ee81ebf87f119a66",
+  "observedTopLevelMax": 3615,
+  "liveProcessGroupMembers": []
+}

@@ -1,0 +1,142 @@
+{
+  "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "observedAt": "2026-09-21T09:24:37.344881+00:00",
+  "fullSuiteStillRunning": true,
+  "observedTAPPrefixBytes": 1831210,
+  "observedTAPPrefixSha256": "b7181eb4e7e80ca1054ba19b5df5a5700d2edb4e364241c59847b17229f01050",
+  "missingCount": 26,
+  "missingBytes": 68312462,
+  "files": [
+    {
+      "path": "authoring/library/1994-forever-art/originals/last-train-cassette.png",
+      "blob": "9c75e301856efa39602ad009d1869159ba0b3962",
+      "bytes": 2429841
+    },
+    {
+      "path": "authoring/library/1994-forever-art/originals/midnight-arcade.png",
+      "blob": "fb6aeb4371ff57ea032c58ad5defa23baf7ad303",
+      "bytes": 2522301
+    },
+    {
+      "path": "authoring/library/1994-forever-art/originals/rainy-video-rental.png",
+      "blob": "cca07244532a7ae0a40931c40dda430c7383d57a",
+      "bytes": 2779895
+    },
+    {
+      "path": "authoring/library/challenge-chapter-art/originals/crosswind-depot.png",
+      "blob": "9e38797a96ba41a8eb466283c66b5384428038a1",
+      "bytes": 3136739
+    },
+    {
+      "path": "authoring/library/challenge-chapter-art/originals/signal-switchback.png",
+      "blob": "edf8d203055fbaeb6e352535ab583b451cbbbf9f",
+      "bytes": 3047928
+    },
+    {
+      "path": "authoring/library/challenge-chapter-art/originals/split-signal-foundry.png",
+      "blob": "35ec3d754394ab8421f5767e59e654f9816a4723",
+      "bytes": 2765609
+    },
+    {
+      "path": "authoring/library/dawn-signal-story/candidate-v1/frame-95.png",
+      "blob": "dd5aadf97799b7b906c1c3b6d16444429d1fc554",
+      "bytes": 442522
+    },
+    {
+      "path": "authoring/library/equipment-workshop/backgrounds/workshop-01.png",
+      "blob": "9ad98863f3264d3a953e80d8a786f0e5c98acffe",
+      "bytes": 3053722
+    },
+    {
+      "path": "authoring/library/equipment-workshop/backgrounds/workshop-02.png",
+      "blob": "60082832b6f11e666d8ef10bacd6df2bd63cd6c0",
+      "bytes": 2326976
+    },
+    {
+      "path": "authoring/library/equipment-workshop/backgrounds/workshop-03.png",
+      "blob": "e65b698e4d497d37cf02ba3e7ca9d8302824e425",
+      "bytes": 2949329
+    },
+    {
+      "path": "authoring/library/fpv-arcade/backgrounds/night-signal.png",
+      "blob": "88fbf1d4412d107a5ce2243933b92e8229a5e060",
+      "bytes": 2785110
+    },
+    {
+      "path": "authoring/library/fpv-arcade/backgrounds/orchard-window.png",
+      "blob": "41fad7640d5610bab1020e707289ac037a24bd88",
+      "bytes": 3172117
+    },
+    {
+      "path": "authoring/library/fpv-arcade/backgrounds/split-courtyard.png",
+      "blob": "49b90f89ca5ad550228c4f42b19e70a279d247ea",
+      "bytes": 2809420
+    },
+    {
+      "path": "authoring/library/fpv-pressure-art/originals/courtyard-exits.png",
+      "blob": "117de9480c90f425cc4aaa398408e414c05f5834",
+      "bytes": 2912184
+    },
+    {
+      "path": "authoring/library/fpv-pressure-art/originals/night-crossfire.png",
+      "blob": "d66fc80323d9bc4fa7c3ceaa5eccc7862774a934",
+      "bytes": 2113587
+    },
+    {
+      "path": "authoring/library/fpv-pressure-art/originals/orchard-crossing.png",
+      "blob": "8cb6a745cf03a3b45641b7a0cbb13d7cfd177f24",
+      "bytes": 2999096
+    },
+    {
+      "path": "authoring/library/homeward-skies/backgrounds/homeward-01.png",
+      "blob": "dca275fa8654d30ed4ea09c2a506d7879f525ae6",
+      "bytes": 2949901
+    },
+    {
+      "path": "authoring/library/homeward-skies/backgrounds/homeward-02.png",
+      "blob": "5090d116a23f63ee88e6c213478ffc517c47769c",
+      "bytes": 2825406
+    },
+    {
+      "path": "authoring/library/homeward-skies/backgrounds/homeward-03.png",
+      "blob": "7304b5d455d17bb3b14ba171c6d937e693735317",
+      "bytes": 2741772
+    },
+    {
+      "path": "authoring/library/spend-network-art/originals/city-savings-observatory.png",
+      "blob": "1cf9389f405fecf7f529db51b23134380fb8b5f4",
+      "bytes": 2702090
+    },
+    {
+      "path": "authoring/library/spend-network-art/originals/shared-value-harbor.png",
+      "blob": "58673a9204dcbd7c6b330785696bbf2a93101afa",
+      "bytes": 2577915
+    },
+    {
+      "path": "authoring/library/spend-network-art/originals/thoughtful-market-workshop.png",
+      "blob": "121f171f155916467cb7f7c750f2e021d1b5eae3",
+      "bytes": 3005071
+    },
+    {
+      "path": "authoring/library/ukraine-atlas-art/originals/carpathian-woven-dawn.png",
+      "blob": "cdffc58aba6eddb1b006295928b753a644673eb1",
+      "bytes": 2920551
+    },
+    {
+      "path": "authoring/library/ukraine-atlas-art/originals/dnipro-autumn-watch.png",
+      "blob": "3c244d70ba5e545329c5a2d8884e9549732a00a4",
+      "bytes": 3046555
+    },
+    {
+      "path": "authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png",
+      "blob": "3276b3eae95474582a8871084ea0bb474b08f7e9",
+      "bytes": 3286349
+    },
+    {
+      "path": "docs/research/border-reference-crosswalk.json",
+      "blob": "7b7b0cd7f5c4dd236be25e413e21c039c31c2fb3",
+      "bytes": 10476
+    }
+  ],
+  "boundary": "Only paths observed in current failure output and verified absent on disk but tracked in Git. No files hydrated. Not an exhaustive test-input manifest."
+}
