@@ -11,14 +11,14 @@ import { prepareContentPreview } from '../content-design/preview.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
-test('Phase original has an exact verified preview; missing compositions remain absent', async () => {
+test('all seven Phase originals have exact unique pins and verified opt-in previews', async () => {
   const source = createPhaseCandidates({ artwork: true });
   const project = compileContentProject(source);
   const grey = compileContentProject(createPhaseCandidates());
   const theme = JSON.parse(
     await readFile(new URL('../content-design/themes.json', import.meta.url)),
   ).themes.find((row) => row.id === 'horizon');
-  assert.equal(PHASE_ART_CANDIDATES.length, 1);
+  assert.equal(PHASE_ART_CANDIDATES.length, 7);
   assert.equal(
     new Set(JOURNEY_ART_CANDIDATES.map((asset) => asset.sha256)).size,
     JOURNEY_ART_CANDIDATES.length,
@@ -33,10 +33,8 @@ test('Phase original has an exact verified preview; missing compositions remain 
     assert.equal(bytes.readUInt32BE(20), asset.height);
     assert.equal(asset.width, asset.height * 2);
     const consumers = source.missions.filter((m) => m.presentation.backgroundAssetId === asset.id);
-    assert.deepEqual(
-      consumers.map((m) => m.id),
-      ['return-in-reserve'],
-    );
+    assert.equal(consumers.length, 1);
+    assert.equal(asset.id, `phase-observatory-${consumers[0].id}`);
     const media = await loadPreviewArtwork(asset, {
       fetchAsset: async () => new Response(bytes),
       digest: (value) => webcrypto.subtle.digest('SHA-256', value),
@@ -48,7 +46,7 @@ test('Phase original has an exact verified preview; missing compositions remain 
     );
     assert.throws(() => prepareContentPreview(source, consumers[0].id, { theme }), /verify/);
   }
-  assert.equal(source.missions.filter((m) => m.presentation.backgroundAssetId === null).length, 6);
+  assert.equal(source.missions.filter((m) => m.presentation.backgroundAssetId === null).length, 0);
   assert.equal(grey.assets.length, 0);
   for (const mission of grey.missions) {
     assert.equal(mission.presentation.backgroundAssetId, null);
@@ -73,12 +71,13 @@ test('Phase prompt, edit and pending review correspond to the original pin', asy
   );
   assert.equal(record.tool, 'built-in-imagegen');
   assert.equal(record.assets.length, PHASE_ART_CANDIDATES.length);
+  assert.equal(new Set(record.assets.map((entry) => entry.missionId)).size, 7);
   for (const entry of record.assets) {
     const asset = PHASE_ART_CANDIDATES.find((row) => `game/${row.path}` === entry.path);
     assert(asset);
     for (const key of ['sha256', 'bytes', 'width', 'height']) assert.equal(entry[key], asset[key]);
     assert(entry.prompt.length > 500);
-    assert(entry.editPrompt.includes('remove'));
+    if (entry.editPrompt) assert(entry.editPrompt.includes('remove'));
     assert.equal(entry.review.kind, 'assistant-image-inspection-not-human-playtest');
     assert(entry.review.pending.includes('Human visual and gameplay qualification'));
     assert.equal(asset.review, 'candidate');

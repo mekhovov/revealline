@@ -261,3 +261,30 @@ craft. Its cause was not established, so this is not an input/focus acceptance
 claim. Close preview returned focus to Play with the draft intact. These small
 fragments do not qualify broad-area contrast, victory, other presets/modes or
 physical devices, and are not a human playtest.
+
+## Complete seven-composition local candidate set
+
+The six remaining original compositions are now produced: Two ways home uses an
+open reflecting-pool courtyard with two galleries; Dogleg transfer reveals a
+stepped lens/counterweight hall; Crossed bands uses soft fabric sunshades over an
+optical workshop; Pressure ladder reveals staggered service landings; Signal
+channels follows covered cable channels past an acoustic resonator and mirror;
+Close the circuit presents a dusk roof chamber and connected regulator gallery.
+All seven share observatory materials but have distinct focal objects/viewpoints.
+They are independent compositions, not crops or recolors. A targeted courtyard
+edit removed an incidental star-chart panel. Prompts and edits are preserved in
+the original prompt record; all outputs were visually inspected by the assistant.
+
+The seven unchanged1774×887 PNGs total15,168,484bytes. The existing opt-in factory
+now binds one unique immutable original to every Phaseworks mission; the default
+greybox, runtime policy, maps and receipts are unchanged. Exact pin/dimension/
+prompt/consumer parity and verified preview checks cover every picture. The same
+28-test cohort passes on both Node20.19.5 and22.22.2, including all42 Phase clear
+checkpoints and498 whole-library manifests. Scoped lint/format/diff pass.
+
+The prior native538fef04 observation covers only A return in reserve. The six new
+pictures have image inspection and technical preview evidence, not native overlay
+qualification yet. Broad-area/victory contrast, campaign actor/audio identity,
+device/human acceptance, aggregate offline budgeting, accepted-source integration
+and release/Pages remain open. Completing original compositions is not P07 phase
+acceptance or permission to enroll unqualified content in the public Journey.
