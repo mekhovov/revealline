@@ -82,8 +82,10 @@ read-only observations and do not alter engine state, events or existing hashes.
 
 ## Still required
 
-1. Miss-then-relocate and later-window taking routes, including the optional
-   shared reserve. Do not infer these from first-window anchor alternatives.
+1. Miss-then-relocate taking routes. The [reserve successor](journey-team-reserve-routes.md)
+   now proves optional shared reserve contact across all presets/seats/joint
+   settings, including a later first eligible window. It does not establish
+   visible expiry followed by relocated collection.
 2. Broader delayed-start sampling; alternate Expert mastery and robustness.
    The 16 original failures remain useful evidence that replaying a fixed plan
    against a changed opportunity is not an adaptive strategy.

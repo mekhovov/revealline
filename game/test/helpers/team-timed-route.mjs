@@ -34,6 +34,8 @@ export function assessTeamTimedRoute(
   if (swapped) owned.spawns.reverse();
   const run = startCoop(createCoop(owned, { seed, jointCuts }));
   const events = [],
+    bonusEvents = [],
+    initialReserves = run.team.reserves,
     returns = [0, 0],
     collected = [],
     closures = [],
@@ -55,7 +57,16 @@ export function assessTeamTimedRoute(
       }
       const cutting = run.players.map((p) => p.cutting),
         beforePositions = run.players.map((p) => [p.x, p.y]),
-        beforeItems = new Map(run.bonuses.items.map((item) => [item.id, { x: item.x, y: item.y }]));
+        beforeItems = new Map(
+          run.bonuses.items.map((item) => [
+            item.id,
+            {
+              x: item.x,
+              y: item.y,
+              reclaimed: run.cells[Math.floor(item.y) * run.width + Math.floor(item.x)] === SAFE,
+            },
+          ]),
+        );
       const freeze = coopBonusActive(run, 'enemy-freeze'),
         slow = coopBonusActive(run, 'enemy-slow'),
         speed = run.players.map((p) => coopBonusActive(run, 'player-speed', p.id));
@@ -70,6 +81,7 @@ export function assessTeamTimedRoute(
         bothIdleTicks++;
       for (const event of run.events) {
         events.push(structuredClone(event));
+        if (event.type.startsWith('bonus.')) bonusEvents.push(structuredClone(event));
         if (event.type === 'player.downed') firstDown ??= structuredClone(event);
         if (event.type === 'cut.started') cutStarts.push(structuredClone(event));
         if (event.type === 'powerup.collected') {
@@ -84,6 +96,7 @@ export function assessTeamTimedRoute(
             ...event,
             x: item.x,
             y: item.y,
+            reclaimedBeforeContactStep: item.reclaimed ?? null,
             partnerCutting: event.players.some((i) => cutting[1 - i]),
           });
         }
@@ -129,6 +142,13 @@ export function assessTeamTimedRoute(
     returns,
     firstDown,
     collected,
+    bonusEvents,
+    initialReserves,
+    finalReserves: run.team.reserves,
+    remainingBonuses: run.bonuses.items.map((item) => ({
+      ...structuredClone(item),
+      reclaimed: run.cells[Math.floor(item.y) * run.width + Math.floor(item.x)] === SAFE,
+    })),
     closures,
     cutStarts,
     activated: [...activated].sort(),

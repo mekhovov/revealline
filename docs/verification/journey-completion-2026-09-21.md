@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after Team timed-route mastery/alternate-start qualification. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after Team reserve-taking route qualification. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -90,9 +90,19 @@ taking clears with delayed starts. The 974-test combined cohort passes on both
 Node versions, including assertions
 that faithfully preserve failures; it does not turn those old routes into passes.
 **This is partial route qualification, not three released missions.** Optimized
-short clears, alternate Expert mastery, later windows/reserve collection,
+short clears, alternate Expert mastery, missed-window relocation taking,
 device/two-human testing, original artwork and
 release remain open. No automatic enrollment, Team save/replay claim or accepted phase.
+
+The [reserve-taking successor](journey-team-reserve-routes.md) adds twelve no-loss
+shared clears across all presets, seats and joint-cut settings. Each grants one
+reserve by contact while the partner is cutting. Standard additionally proves
+enclosure alone grants nothing and later contact on reclaimed ground still works.
+Its later first eligible window is not evidence of a visible pickup expiring and
+then being collected after relocation. That route and the broader gates above
+remain open; no new mission or public deployment is counted.
+The combined 987-test cohort passes on both Node versions; independent review
+verified the thirteen new checks and all twelve direct-engine routes.
 
 ## Latest completed spatial unit
 
