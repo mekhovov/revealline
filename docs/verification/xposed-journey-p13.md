@@ -121,7 +121,25 @@ clones are independent. The71-core/12-Remix sequence and defaultgreybox tests
 remain intact. These are composition checks, not fresh native decoding or human
 qualification of every picture, and not whole-library real-host delivery.
 
-Original source coverage is now complete for this83-candidate set. Native Studio
-composition, full presentation/device checks, pacing/cut decisions, accepted-tree
+Original source coverage is now complete for this83-candidate set. Full presentation/device
+checks, pacing/cut decisions, accepted-tree
 integration and guarded release packaging remain open. Preserve the current
 capacity forecast and950,000,000byte guard; this assembly does not establish fit.
+
+### Native original-library composition checkpoint
+
+At exact source `5543ec726de17b976ae6fd5d4ce0c08a9c786489`, the read-only server
+on8813 and dedicated tab38 loaded Studio project `whole-journey-original-review`.
+Inspect preserved its active one-mission draft. Explicit Apply installed83 missions,
+24 packs and25 campaigns and saved checkpoint2. Soft crossing's exact Solo preview
+loaded its original picture,68% target and3lives. A Down gesture earned0.6% and150
+points, neutralized5slow-field cells and stopped the craft at its island. The
+picture was visible along the perimeter, captured line and foundation; the rest
+of the field remained opaque, with slow-field markings and enemies distinguishable.
+The capture explanation was visible below the board. No full clear was attempted.
+
+Closing preview and reloading restored checkpoint2 and the83-mission original
+library; selection returned to First return. This confirms this saved draft and
+one original-picture preview, not all83 native decodes, full-library host flow,
+device/performance qualification, human enjoyment or public deployment. The
+candidate-art-not-visually-qualified warning remains intentional.
