@@ -153,8 +153,10 @@ See the P08 record and
 Relay Labyrinth now has seven local original archive compositions (17,223,024bytes),
 again opt-in with immutable pins and no changes to the42 historical clear checkpoints.
 The40-test art/relay-framework/candidate/registry/library cohort passes on Node20/22.
-Native gate/picture overlays, broader visual/device/human qualification and release
-remain open; see P09 and `docs/research/relay-original-art-prompts.json`.
+All seven have initial native pictured captures at9ddaea55, each opening one
+matching connector with3lives retained. Broader visual/device/human qualification,
+gate-traversal/victory states and release remain open; see P09 and
+`docs/research/relay-original-art-prompts.json`.
 The release owner confirms devicePR211 has the next delivery priority; these assets
 remain local source candidates without a new phase/version allocation.
 
