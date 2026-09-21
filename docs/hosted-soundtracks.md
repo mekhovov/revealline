@@ -18,6 +18,8 @@ The game repository owns the player, playlist UI and a generated catalogue of ex
 
 The game resolves a code-approved archive URL, verifies its pinned inventory, and fetches only matching `objects/<SHA-256>.mp3` files. Online playback uses temporary browser object URLs. Explicit offline installation stores verified bytes in the game's shared IndexedDB database. Imported credits and URLs cannot authorize a new download host or grant rights.
 
+The admitted archive's `inventory.json` and recording URLs are immutable dependencies of this edition. Future additions need a separately versioned archive admission with a distinct base URL or path prefix and a new inventory pin; preserve the existing inventory and objects so older editions can continue playing their catalogues.
+
 The archive is part of the game's delivery system. Players use it through the game; they do not need to browse the repository, download an MP3 manually or import an album first. Keeping optional MP3s in a separate repository avoids adding hundreds of megabytes to every game source checkout, release build and core offline cache. A normal game update can change UI and rules without republishing identical audio.
 
 ## Recording and review status
