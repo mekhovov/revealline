@@ -468,3 +468,33 @@ Layout/build checks pass 6/6 on each Node 20 and Node 22. See iteration-12 for e
 rectangles, intersection checks, source hash and logs. The original 73f source's
 hosted run 35563009182 passed; it does not qualify this later stylesheet. Physical
 Safari/Steam Deck, final-source gates, freeze and public verification remain open.
+
+
+## Combined handheld delivery candidate
+
+The focused successor to v0.78 composes shared compact music/Pause controls,
+Team corner pads through 600px landscape height, Solo authored warning-space
+selection, and the input lifecycle fixes. It does not require the separate Team
+artwork ledger migration.
+
+Solo, Versus and Team keep the same D-pad, floating-stick and swipe vocabulary
+and shared size/side/opacity preferences. Their seats remain independent. An
+ignored second finger cannot cancel an active steering finger. A resize that
+interrupts captured steering pauses safely; idle resize does not. Fullscreen
+requests are serialized and a retired request cannot update a replacement host.
+
+The reviewed browser layouts fit the complete bitmap with no fullscreen request.
+The pads overlap small lower-corner regions; this is not a claim that every cell
+is unobscured. Compact telemetry is 44px high in the checked landscape layouts;
+necessary Team objectives and authored warning/event captions retain distinct
+space. Large-text readability takes priority over forcing every instruction into
+one row.
+
+Physical acceptance remains explicit: iPhone Safari with expanded/collapsed
+browser bars, rotation, safe areas and Home Screen launch; real multi-touch in
+both couch seats; Steam Deck A-start, menu navigation, disconnect/reconnect and
+Resume. Desktop resizing and modeled gamepad input do not close those gates.
+
+References checked 2026-09-21: [WebKit safe areas](https://webkit.org/blog/7929/designing-websites-for-iphone-x/),
+[MDN controller discovery](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API),
+and [MDN fullscreen handling](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API/Guide).

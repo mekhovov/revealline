@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { hasCompactArcadeArena } from '../input-presentation.mjs';
+import { hasCompactArcadeArena, hasFieldWarningBand } from '../input-presentation.mjs';
 
 // Small presentation fixtures represent an already validated original level.
 // No phase, caller preference, current actor list, command or save is authority here.
@@ -20,6 +20,9 @@ test('explicit Arcade non-card roles can reclaim status space without changing a
   Object.freeze(level);
   assert.equal(hasCompactArcadeArena(level), true);
   assert.deepEqual(level, before);
+  const legacy = { version: 'xonix-level.v1', enemies: [{ type: 'bouncer' }] };
+  assert.equal(hasFieldWarningBand(legacy), false, 'Validated v1 has no encounter field');
+  assert.equal(hasCompactArcadeArena(legacy), false, 'Legacy manual-action policy is unchanged');
 });
 
 test('Tactical, unknown policy, encounters and every warning-capable or future role retain space', () => {
@@ -43,10 +46,12 @@ test('Tactical, unknown policy, encounters and every warning-capable or future r
 test('warning transitions and removal of a live enemy cannot release its authored warning reserve', () => {
   const run = { level: arcade(['bouncer', 'eroder']), enemies: [{ type: 'eroder', mode: null }] };
   assert.equal(hasCompactArcadeArena(run.level), false);
+  assert.equal(hasFieldWarningBand(run.level), true);
   run.enemies[0].mode = 'warning';
   assert.equal(hasCompactArcadeArena(run.level), false);
   run.enemies.length = 0;
   assert.equal(hasCompactArcadeArena(run.level), false);
+  assert.equal(hasFieldWarningBand(run.level), true);
   const pressure = {
     level: arcade(),
     enemies: [{ type: 'bouncer', pressure: { phase: 'patrol' } }],
@@ -55,4 +60,22 @@ test('warning transitions and removal of a live enemy cannot release its authore
     pressure.enemies[0].pressure.phase = phase;
     assert.equal(hasCompactArcadeArena(pressure.level), true);
   }
+});
+
+test('manual equipment does not reserve a nonexistent warning card, while unknown hazards remain conservative', () => {
+  const level = arcade(['bouncer', 'border-patrol']);
+  delete level.classic.arcadeActions;
+  const before = structuredClone(level);
+  assert.equal(hasCompactArcadeArena(level), false, 'Manual equipment policy stays intact');
+  assert.equal(hasFieldWarningBand(level), false, 'Only event notices need a lower band');
+  assert.deepEqual(level, before);
+  for (const type of ['eroder', 'claimed-rover', 'lane-boss', 'relay-sentinel', 'future-role'])
+    assert.equal(hasFieldWarningBand({ ...level, enemies: [{ type }] }), true);
+  for (const value of [
+    null,
+    undefined,
+    { ...level, encounter: {} },
+    { ...level, enemies: undefined },
+  ])
+    assert.equal(hasFieldWarningBand(value), true);
 });

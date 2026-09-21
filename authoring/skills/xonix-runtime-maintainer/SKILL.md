@@ -5,6 +5,20 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For compact Solo landscape, distinguish manual equipment from authored warning
+capability. `hasFieldWarningBand` uses the validated original level, including
+legacy v1's absent encounter field, never the live enemy list or current warning
+phase. Unknown roles retain warning space. `data-field-captions='notices'` permits
+only the event band; it does not remove manual actions, change capture policy or
+shrink text. Keep the existing Arcade chrome contract unchanged. Prompt:
+“Measure First Signal at568×320 Large/Plain before and after caption compaction;
+keep a44px top strip, complete aspect-correct arena, full event notices and44px
+direction targets. Enter Settings with keyboard, select Always/D-pad through the
+native select, Back and explicitly Continue; make one actual pointer cut. Verify
+warning-capable and unknown roles retain their authored reserve, and rerun shared
+touch/controller plus actual host Pause/Resume checks. Label iframe CSS checks,
+full-browser viewport checks and physical iPhone/Steam Deck tests separately.”
+
 For staged handheld missions, reserve separate stable bands for the live encounter
 instruction and independent event notice. Suppress only duplicate phase cues.
 Verify a real loss and recovery at 568×320, 844×390 and 320×480 with Large text;
@@ -1137,3 +1151,12 @@ their text fallback twice. Inspect long captions between Large landscape pads;
 a fitting canvas alone does not establish unobscured action feedback. Extend
 controller checks through Missions/Deploy/Pause/Resume without pointer clicks,
 while keeping modeled and physical Steam Deck evidence separate.
+
+
+### Combined handheld input and HUD qualification
+
+Keep Solo, Versus and Team on `attachTouchSteering` and shared preferences. A second ignored finger must not cancel the owning finger or another seat. Layout resize cancels only an active captured gesture and pauses through the host; idle resize does not pause. Explicit Resume and fresh input remain mandatory after interruption. Test every pad style and both turning policies through the actual host.
+
+Fullscreen is optional. Allow one pending request, retire listeners on teardown, and prevent late settlement from writing to a retired button. Keep the responsive arena usable when fullscreen is unavailable or denied. Team landscape must own its complete grid sizing through the full 600px-height breakpoint; use corner overlays without full-height pad gutters. Preserve safe areas, 44px minimum actual targets, readable objectives and the complete bitmap.
+
+Integration prompt: “Compose the compact HUD, Team landscape, extra-finger, resize and fullscreen patches on the accepted source. Include all helper imports rather than assuming a donor test ancestry. Run complete host files on both supported test runtimes. Record failed attempts separately, bind reads to exact sources, and distinguish native browser layout from physical iPhone/Steam Deck evidence. Do not claim a public release from local tests.”

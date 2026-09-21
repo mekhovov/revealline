@@ -71,3 +71,28 @@ inputs and the exact changed diff. Preserve the stale-ledger failure, append
 compatible history, review the bounded cues option and test default Solo behavior
 as well as Team's cues:false behavior. Record native keyboard Next/Retry music
 Pause continuity separately from listening, offline and physical-controller gates.”
+
+## Compact handheld soundtrack presentation
+
+Reuse `attachMusicCredit` for passive Solo/Versus/Team metadata. Keep the existing
+Pause action and accessible name; a track caption must never create transport,
+focus, gameplay-resume or extra HUD-row ownership. Reserve the same target size
+for playing, paused, muted, unavailable and long-title states. Full title, artist,
+original filename and safe source website remain in Audio settings. Missing data
+must be labelled honestly; reject non-HTTP(S) and credential-bearing source URLs.
+
+Prompt: “At 568×320 and 390×844, test each mode with Large/Plain text, changing
+tracks and master mute. Verify complete arenas, disjoint Menu/Fullscreen/Pause
+targets and no horizontal overflow. Check generated icon pseudo-elements and
+selector specificity in the actual browser: modeled DOM tests do not apply CSS.
+Keep the original Pause handler and keyboard/controller scope. Exit Audio to the
+paused owner, then require explicit Resume. Qualify uploaded MP3 details and
+physical touch/controllers separately before claiming the whole device phase.”
+
+Stronghold composition prompt: “Combine the reviewed corner-pad layout with the
+compact track caption in an isolated preview. Enable both player pads and
+Large/Plain text, inspect568×320,844×390,960×540 and390×844. Keep required objective
+text visible and record the complete arena aspect ratio,44px target floor and
+corner occlusion honestly. Do not treat the absent music row as permission to
+hide objectives. Test both independent directions and explicit paused return;
+separate actual pointer navigation from simultaneous physical multitouch.”

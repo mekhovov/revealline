@@ -1,0 +1,232 @@
+TAP version 13
+# (node:37988) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/compact-input-trial/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: stick: both seats steer independently, release persists, recovery clears stale fingers
+ok 1 - stick: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 2.713708
+  type: 'test'
+  ...
+# Subtest: swipe: both seats steer independently, release persists, recovery clears stale fingers
+ok 2 - swipe: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 1.101791
+  type: 'test'
+  ...
+# Subtest: dpad: both seats steer independently, release persists, recovery clears stale fingers
+ok 3 - dpad: both seats steer independently, release persists, recovery clears stale fingers
+  ---
+  duration_ms: 0.57575
+  type: 'test'
+  ...
+# (node:38452) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/compact-input-trial/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Solo choices are read unchanged by each new mode; no profile is written
+ok 4 - Solo choices are read unchanged by each new mode; no profile is written
+  ---
+  duration_ms: 1.131208
+  type: 'test'
+  ...
+# Subtest: invalid storage is preserved; valid legacy touch settings are used until explicit change
+ok 5 - invalid storage is preserved; valid legacy touch settings are used until explicit change
+  ---
+  duration_ms: 0.150333
+  type: 'test'
+  ...
+# Subtest: denied writes retain session choice and expose truthful feedback
+ok 6 - denied writes retain session choice and expose truthful feedback
+  ---
+  duration_ms: 0.107459
+  type: 'test'
+  ...
+# Subtest: external explicit choices notify once and terminal disposal stops observation
+ok 7 - external explicit choices notify once and terminal disposal stops observation
+  ---
+  duration_ms: 0.106875
+  type: 'test'
+  ...
+# Subtest: isolated practice can adjust this visit without writing the shared choice
+ok 8 - isolated practice can adjust this visit without writing the shared choice
+  ---
+  duration_ms: 0.113625
+  type: 'test'
+  ...
+# Subtest: legacy reconciliation applies before a shared choice, never over later explicit intent
+ok 9 - legacy reconciliation applies before a shared choice, never over later explicit intent
+  ---
+  duration_ms: 0.095959
+  type: 'test'
+  ...
+# Subtest: returning from a frozen page reads newer shared settings, but keeps isolated practice choices
+ok 10 - returning from a frozen page reads newer shared settings, but keeps isolated practice choices
+  ---
+  duration_ms: 0.152208
+  type: 'test'
+  ...
+# (node:38495) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/compact-input-trial/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: cardinal touch directions reject jitter and retain heading at diagonal boundaries
+ok 11 - cardinal touch directions reject jitter and retain heading at diagonal boundaries
+  ---
+  duration_ms: 0.57625
+  type: 'test'
+  ...
+# Subtest: floating stick starts where the finger lands, turns through four directions, releases capture
+ok 12 - floating stick starts where the finger lands, turns through four directions, releases capture
+  ---
+  duration_ms: 1.197708
+  type: 'test'
+  ...
+# Subtest: floating stick follows a drifting thumb and can reverse without returning to original contact
+ok 13 - floating stick follows a drifting thumb and can reverse without returning to original contact
+  ---
+  duration_ms: 0.19175
+  type: 'test'
+  ...
+# Subtest: swipe uses recent travel so a short reverse flick turns immediately
+ok 14 - swipe uses recent travel so a short reverse flick turns immediately
+  ---
+  duration_ms: 0.242791
+  type: 'test'
+  ...
+# Subtest: sliding D-pad fills gaps and accepts direction changes without lifting
+ok 15 - sliding D-pad fills gaps and accepts direction changes without lifting
+  ---
+  duration_ms: 0.203917
+  type: 'test'
+  ...
+# Subtest: D-pad mode does not intercept board touches or scrolling
+ok 16 - D-pad mode does not intercept board touches or scrolling
+  ---
+  duration_ms: 0.214667
+  type: 'test'
+  ...
+# Subtest: one steering finger cannot be stolen by a second finger
+ok 17 - one steering finger cannot be stolen by a second finger
+  ---
+  duration_ms: 0.164583
+  type: 'test'
+  ...
+# Subtest: pointercancel ends steering; stale moves cannot turn the craft
+ok 18 - pointercancel ends steering; stale moves cannot turn the craft
+  ---
+  duration_ms: 0.141291
+  type: 'test'
+  ...
+# Subtest: lostpointercapture ends steering; stale moves cannot turn the craft
+ok 19 - lostpointercapture ends steering; stale moves cannot turn the craft
+  ---
+  duration_ms: 0.252875
+  type: 'test'
+  ...
+# Subtest: capture-loss notifications without an owned gesture cannot cancel another input owner
+ok 20 - capture-loss notifications without an owned gesture cannot cancel another input owner
+  ---
+  duration_ms: 0.536416
+  type: 'test'
+  ...
+# Subtest: pause and modality reset require a new gesture
+ok 21 - pause and modality reset require a new gesture
+  ---
+  duration_ms: 0.126583
+  type: 'test'
+  ...
+# Subtest: mouse can use the visible stick but does not capture ordinary board clicks
+ok 22 - mouse can use the visible stick but does not capture ordinary board clicks
+  ---
+  duration_ms: 0.095833
+  type: 'test'
+  ...
+# Subtest: touch preferences survive export/import; old libraries migrate without losing other preferences
+ok 23 - touch preferences survive export/import; old libraries migrate without losing other preferences
+  ---
+  duration_ms: 1.639458
+  type: 'test'
+  ...
+# (node:39280) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/compact-input-trial/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual host: either stick moves, face pause/resume preserves the run and replay, disconnect pauses
+ok 24 - actual host: either stick moves, face pause/resume preserves the run and replay, disconnect pauses
+  ---
+  duration_ms: 7459.575417
+  type: 'test'
+  ...
+# Subtest: actual host: B pauses, X opens field guide, Y opens missions; back closes the active modal
+ok 25 - actual host: B pauses, X opens field guide, Y opens missions; back closes the active modal
+  ---
+  duration_ms: 3357.628583
+  type: 'test'
+  ...
+# Subtest: actual host: stick changes direction and gesture release keeps continuous flight
+ok 26 - actual host: stick changes direction and gesture release keeps continuous flight
+  ---
+  duration_ms: 1525.263167
+  type: 'test'
+  ...
+# Subtest: actual host: swipe changes direction and gesture release keeps continuous flight
+ok 27 - actual host: swipe changes direction and gesture release keeps continuous flight
+  ---
+  duration_ms: 1431.258292
+  type: 'test'
+  ...
+# Subtest: actual host: dpad changes direction and gesture release keeps continuous flight
+ok 28 - actual host: dpad changes direction and gesture release keeps continuous flight
+  ---
+  duration_ms: 1580.293333
+  type: 'test'
+  ...
+# Subtest: cold Steam Deck-style discovery: fresh A starts the selected flight after neutral input
+ok 29 - cold Steam Deck-style discovery: fresh A starts the selected flight after neutral input
+  ---
+  duration_ms: 541.60825
+  type: 'test'
+  ...
+# Subtest: Solo adopts the shared couch choice and editing opacity preserves its other fields
+ok 30 - Solo adopts the shared couch choice and editing opacity preserves its other fields
+  ---
+  duration_ms: 323.446833
+  type: 'test'
+  ...
+# Subtest: Solo reports a denied shared save while retaining the current touch choice
+ok 31 - Solo reports a denied shared save while retaining the current touch choice
+  ---
+  duration_ms: 310.159292
+  type: 'test'
+  ...
+# Subtest: modeled controller: Missions selection, Deploy, Pause and explicit Resume need no pointer click
+ok 32 - modeled controller: Missions selection, Deploy, Pause and explicit Resume need no pointer click
+  ---
+  duration_ms: 2364.115
+  type: 'test'
+  ...
+# Subtest: actual host: stick hands steering to and from a held controller without stealing direction
+ok 33 - actual host: stick hands steering to and from a held controller without stealing direction
+  ---
+  duration_ms: 2800.741416
+  type: 'test'
+  ...
+# Subtest: actual host: swipe hands steering to and from a held controller without stealing direction
+ok 34 - actual host: swipe hands steering to and from a held controller without stealing direction
+  ---
+  duration_ms: 2829.525458
+  type: 'test'
+  ...
+# Subtest: actual host: dpad hands steering to and from a held controller without stealing direction
+ok 35 - actual host: dpad hands steering to and from a held controller without stealing direction
+  ---
+  duration_ms: 2871.903
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 31909.490708
