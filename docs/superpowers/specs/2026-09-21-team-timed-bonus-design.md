@@ -1,8 +1,8 @@
 # Team timed bonuses — implementation contract
 
 Next P02/P14 qualification slice after the trail-aware Solo successor `2ab86e24`.
-This document does not enable Team schedules. Existing compiler rejection remains
-until the engine, transport, presentation and actual host agree on this contract.
+This document alone does not enable Team schedules. The implementation gates
+below track when engine, transport, presentation and actual host agree on it.
 
 ## Research and purpose
 
@@ -163,3 +163,15 @@ The damage-instant guard is authoritative (`lastDamageTime` per seat), not just
 an event-history filter: exact end-of-tick damage must remain excluded when the
 next tick clears its events. The compiler, pack reader and Studio remain closed
 until slice3 is complete. Human/device and publication gates remain open.
+
+## Authoring and host successor
+
+Slice3 now implements explicit `TeamMissionV4` promotion on schedule Apply,
+strict v5/v7 pack transport, Studio anchor overlay and shared Team pickup/effect
+presentation. The actual Team host import, keyboard collection, pause and retry
+are tested. Native Studio export/import and paused announcement/expiry observations
+are recorded in [integration verification](../../verification/journey-team-timed-integration.md).
+The761-test combined cohort passes on both supported Node versions. Independent
+review passes after a nested canvas-scope failure was fixed and pinned.
+Slices4–5 remain open: purpose-built optional-route studies, actual device/two-human
+qualification and coordinated publication. No automatic migration of old missions.

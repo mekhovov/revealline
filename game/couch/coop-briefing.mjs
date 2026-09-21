@@ -1,4 +1,5 @@
 import { coopGroundName } from './coop-ground.mjs';
+import { TEAM_BONUS_HELP } from './coop-bonus-view.mjs';
 
 /** Presentation advice for an already validated arena. Never changes its recipe. */
 export function coopArenaGuidance(level, { jointCuts = true } = {}) {
@@ -9,6 +10,7 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
   const relays = Boolean(level.strongholds?.length);
   const requiredCores = level.goal.cores?.length ?? 0;
   const threats = [];
+  if (level.timedBonuses) threats.push(TEAM_BONUS_HELP);
   const slow = level.terrain?.some((area) => area.kind === 'slow'),
     lethal = level.terrain?.some((area) => area.kind === 'lethal');
   if (slow)

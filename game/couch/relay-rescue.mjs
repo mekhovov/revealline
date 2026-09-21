@@ -34,6 +34,13 @@ import { createCoopPresentationImport } from './coop-import-source.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
 import { coopFailureFeedback, coopRetryFeedback, coopRoamerCaption } from './coop-feedback.mjs';
 import { coopArenaGuidance } from './coop-briefing.mjs';
+import {
+  coopBonusView,
+  coopBonusDetails,
+  coopBonusLive,
+  coopBonusCaption,
+  TEAM_BONUS_HELP,
+} from './coop-bonus-view.mjs';
 import { coopGroundName } from './coop-ground.mjs';
 import { terrainTransitionCaption } from '../ui/terrain-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
@@ -984,6 +991,14 @@ export function bootCoop({
   }
   function render() {
     if (!run) return;
+    const bonusView = coopBonusView(run),
+      bonusLive = coopBonusLive(bonusView);
+    $('coop-bonus-live').textContent = bonusLive;
+    $('coop-bonus-live').hidden = !bonusLive;
+    $('coop-bonus-details').hidden = !bonusView || run.status !== 'paused';
+    $('coop-bonus-detail-state').textContent =
+      coopBonusDetails(bonusView) || 'No pickup or effect window active.';
+    $('coop-bonus-help').textContent = bonusView ? TEAM_BONUS_HELP : '';
     painter.paint(run, {
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
       textFace: displayPreferences.snapshot().textFace,
@@ -2862,6 +2877,8 @@ export function bootCoop({
       }
       const roamerCaption = coopRoamerCaption(event);
       if (roamerCaption) message(roamerCaption);
+      const bonusCaption = coopBonusCaption(event, names);
+      if (bonusCaption) message(bonusCaption);
       if (event.type === 'cut.joint')
         message(
           captureTeaching

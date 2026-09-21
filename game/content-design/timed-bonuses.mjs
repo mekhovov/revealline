@@ -29,7 +29,15 @@ export function editTimedBonus(
   required(stableId(command.id), 'Give the schedule a stable ID.');
   const mission = project.missions.find((entry) => entry.id === missionId);
   required(mission, 'Choose an existing mission.');
-  required(!mission.modes.includes('team'), 'Timed bonuses are not yet qualified for Team.');
+  if (mission.modes.includes('team')) {
+    required(
+      version === TIMED_BONUS_TRAIL_VERSION,
+      'Team timed bonuses require the trail-aware v2 edition.',
+    );
+    // Explicit schedule Apply creates this mission's new edition, not a live
+    // attempt or an automatic migration of other Team missions.
+    mission.team.format = 'TeamMissionV4';
+  }
   const schedules = mission.timedBonuses?.schedules ?? [];
   const index = schedules.findIndex((entry) => entry.id === command.id);
   required(

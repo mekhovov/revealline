@@ -4,6 +4,7 @@ import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
 import { drawCoopActiveTrail, drawCoopWall, prepareCoopWall } from './coop-terrain-trail.mjs';
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
+import { coopBonusView, drawCoopBonuses } from './coop-bonus-view.mjs';
 
 const THEME_FONTS = Object.freeze({
   ui: '"Field Kit UI", "Field Kit Mono", system-ui, sans-serif',
@@ -98,6 +99,7 @@ export function createCoopPainter(canvas) {
         );
     }
     const fonts = canvasTextFonts(textFace, look?.fonts ?? THEME_FONTS);
+    const bonuses = coopBonusView(run);
     const palette = look?.palette;
     const colors = palette ? [palette.accent, palette.safe] : COLORS;
     const motionScale = reduced ? 0 : (look?.motionScale ?? 1);
@@ -202,6 +204,7 @@ export function createCoopPainter(canvas) {
           }
         }
       }
+      drawCoopBonuses(ctx, bonuses, { screenScale: canvas.clientWidth / 1152 });
       // Launch markers are anchored landmarks, not compulsory meeting pads.
       for (const effect of run.supportEffects || []) {
         ctx.fillStyle = colors[effect.player];

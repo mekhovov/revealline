@@ -453,60 +453,66 @@ export function drawClassicPickups(ctx, view, palette, images = {}, options = {}
     const diameter = pickupDiameter(options),
       color = PICKUP_COLORS[item.kind];
     ctx.save();
-    ctx.translate(item.x * SIZE, item.y * SIZE);
-    ctx.scale(diameter / 24, diameter / 24);
-    ctx.fillStyle = '#0c1423';
-    if (item.phase !== 'announce') ctx.fillRect(-12, -12, 24, 24);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    if (item.phase === 'announce') ctx.setLineDash([3, 3]);
-    ctx.strokeRect(-11, -11, 22, 22);
-    if (item.timed) {
-      ctx.setLineDash([]);
-      ctx.beginPath();
-      ctx.arc(0, 0, 16, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * item.remainingFraction);
-      ctx.stroke();
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 10px monospace';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(`${item.phase === 'announce' ? '+' : ''}${Math.ceil(item.seconds)}s`, 0, -18);
+    try {
+      ctx.translate(item.x * SIZE, item.y * SIZE);
+      ctx.scale(diameter / 24, diameter / 24);
+      ctx.fillStyle = '#0c1423';
+      if (item.phase !== 'announce') ctx.fillRect(-12, -12, 24, 24);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      if (item.phase === 'announce') ctx.setLineDash([3, 3]);
+      ctx.strokeRect(-11, -11, 22, 22);
+      if (item.timed) {
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.arc(0, 0, 16, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * item.remainingFraction);
+        ctx.stroke();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 10px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(`${item.phase === 'announce' ? '+' : ''}${Math.ceil(item.seconds)}s`, 0, -18);
+      }
+      const role = {
+        'extra-life': 'lifePickup',
+        'player-speed': 'speedPickup',
+        'enemy-slow': 'slowPickup',
+        'enemy-freeze': 'freezePickup',
+      }[item.kind];
+      if (images[role]) {
+        drawPresentationImage(ctx, images[role], 0, 0, 22, 22, images.presentationSprites?.[role]);
+        ctx.translate(8, 8);
+        ctx.scale(0.65, 0.65);
+        ctx.fillRect(-10, -10, 20, 20);
+      }
+      ctx.fillStyle = color;
+      icon(ctx, item.kind);
+    } finally {
+      ctx.restore();
     }
-    const role = {
-      'extra-life': 'lifePickup',
-      'player-speed': 'speedPickup',
-      'enemy-slow': 'slowPickup',
-      'enemy-freeze': 'freezePickup',
-    }[item.kind];
-    if (images[role]) {
-      drawPresentationImage(ctx, images[role], 0, 0, 22, 22, images.presentationSprites?.[role]);
-      ctx.translate(8, 8);
-      ctx.scale(0.65, 0.65);
-      ctx.fillRect(-10, -10, 20, 20);
-    }
-    ctx.fillStyle = color;
-    icon(ctx, item.kind);
-    ctx.restore();
   }
   ctx.save();
-  ctx.strokeStyle = palette.danger;
-  ctx.lineWidth = 2;
-  for (const cell of view.erosion) {
-    const x = cell.x * SIZE,
-      y = cell.y * SIZE;
-    ctx.strokeRect(x + 1, y + 1, 14, 14);
-    lines(ctx, [
-      [
-        [x + 4, y + 4],
-        [x + 12, y + 12],
-      ],
-      [
-        [x + 12, y + 4],
-        [x + 4, y + 12],
-      ],
-    ]);
+  try {
+    ctx.strokeStyle = palette.danger;
+    ctx.lineWidth = 2;
+    for (const cell of view.erosion) {
+      const x = cell.x * SIZE,
+        y = cell.y * SIZE;
+      ctx.strokeRect(x + 1, y + 1, 14, 14);
+      lines(ctx, [
+        [
+          [x + 4, y + 4],
+          [x + 12, y + 12],
+        ],
+        [
+          [x + 12, y + 4],
+          [x + 4, y + 12],
+        ],
+      ]);
+    }
+  } finally {
+    ctx.restore();
   }
-  ctx.restore();
 }
 
 /** The new role silhouette remains stable across themes and reduced effects. */

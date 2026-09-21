@@ -86,7 +86,7 @@ export function paintContentMap(
     ctx.fillText(bonusGlyphs[bonus.kind], x, y);
   }
   for (const [scheduleIndex, schedule] of (
-    manifest.level.classic?.timedBonuses?.schedules ?? []
+    (manifest.level.classic?.timedBonuses ?? manifest.level.timedBonuses)?.schedules ?? []
   ).entries())
     for (const [anchorIndex, anchor] of schedule.anchors.entries()) {
       const x = anchor.x * size,
