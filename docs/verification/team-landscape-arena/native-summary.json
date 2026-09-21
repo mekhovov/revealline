@@ -1,0 +1,128 @@
+{
+  "base": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+  "override": {
+    "game/ui/handheld-play.css": {
+      "bytes": 49758,
+      "sha256": "2fba0658336610549406fb2bc971263b9e140e9c5faa5b332d598ea9e2db3d8c"
+    }
+  },
+  "servedDistinct": 258,
+  "servedBytesMatch": true,
+  "browser": "Codex in-app browser; resized desktop, not physical touch",
+  "measurements": [
+    {
+      "scene": "First Connection",
+      "viewport": [568, 320],
+      "font": "pixel standard",
+      "steering": "dpad",
+      "pad": "regular",
+      "board": [438, 219],
+      "minDirection": 45.6640625,
+      "minActionHeight": 51.3984375
+    },
+    {
+      "scene": "First Connection",
+      "viewport": [568, 320],
+      "font": "plain large",
+      "steering": "dpad",
+      "pad": "regular",
+      "board": [418, 209],
+      "minDirection": 44,
+      "minActionHeight": 55.796875
+    },
+    {
+      "scene": "First Connection",
+      "viewport": [844, 390],
+      "font": "plain large",
+      "steering": "dpad",
+      "pad": "regular",
+      "board": [558, 279],
+      "minDirection": 52,
+      "minActionHeight": 55.796875,
+      "notice": "A Hunter caught an unfinished line. Sunflower needs a rescue. Hold Support nearby or capture 2% new territory."
+    },
+    {
+      "scene": "First Connection",
+      "viewport": [390, 844],
+      "font": "plain large",
+      "steering": "dpad",
+      "pad": "regular",
+      "board": [370, 185],
+      "minDirection": 52,
+      "minActionHeight": 62.03125
+    },
+    {
+      "scene": "Relay Yard",
+      "viewport": [568, 320],
+      "font": "plain large",
+      "steering": "dpad",
+      "pad": "regular",
+      "board": [363.203125, 181.6015625],
+      "minDirection": 44,
+      "minActionHeight": 44
+    },
+    {
+      "scene": "Relay Yard",
+      "viewport": [568, 320],
+      "font": "plain large",
+      "steering": "stick",
+      "pad": "large",
+      "board": [363.203125, 181.6015625],
+      "minActionHeight": 44
+    },
+    {
+      "scene": "Relay Yard",
+      "viewport": [844, 390],
+      "font": "plain large",
+      "steering": "stick",
+      "pad": "large",
+      "board": [503.203125, 251.6015625],
+      "minActionHeight": 55.796875
+    },
+    {
+      "scene": "Relay Yard",
+      "viewport": [844, 390],
+      "font": "plain large",
+      "steering": "swipe",
+      "pad": "large",
+      "board": [503.203125, 251.6015625],
+      "minActionHeight": 55.796875
+    },
+    {
+      "scene": "Relay Yard",
+      "viewport": [568, 320],
+      "font": "plain large",
+      "steering": "dpad",
+      "pad": "large",
+      "board": [363.203125, 181.6015625],
+      "minDirection": 44,
+      "minActionHeight": 44
+    },
+    {
+      "scene": "Relay Yard",
+      "viewport": [568, 320],
+      "font": "plain large",
+      "steering": "hidden",
+      "pad": "large",
+      "board": [363.203125, 181.6015625]
+    }
+  ],
+  "allMeasuredTargetsInViewport": true,
+  "horizontalOverflow": false,
+  "consoleWarningsErrors": [],
+  "journeys": [
+    "Lobby Settings \u2192 Show both \u2192 Dpad \u2192 Start",
+    "Player1 Right \u2192 line exposed \u2192 Escape \u2192 Settings \u2192 Plain/Large \u2192 Back remains paused \u2192 explicit Resume",
+    "Landscape \u2192 portrait rotation with real rescue warning",
+    "Change setup \u2192 confirm discard owned test \u2192 Relay Yard \u2192 Start",
+    "Pause \u2192 settings stick/swipe/dpad/hidden \u2192 explicit Resume"
+  ],
+  "notClaimed": [
+    "Physical iPhone or Steam Deck",
+    "Actual simultaneous touch fingers",
+    "Physical controller connection and one-seat hiding",
+    "Complete victory/rescue journey",
+    "Safe-area inset emulation",
+    "Production build or public release"
+  ]
+}

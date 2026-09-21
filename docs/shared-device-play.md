@@ -468,3 +468,15 @@ Layout/build checks pass 6/6 on each Node 20 and Node 22. See iteration-12 for e
 rectangles, intersection checks, source hash and logs. The original 73f source's
 hosted run 35563009182 passed; it does not qualify this later stylesheet. Physical
 Safari/Steam Deck, final-source gates, freeze and public verification remain open.
+
+## Team landscape arena follow-up (separate source candidate)
+
+The full-height touch-pad side gutters made the arena too small on short phones.
+The follow-up uses the existing Solo-style corner overlays and a height-fitted
+complete Team board. It retains the 44px HUD, authored objective when required,
+and independent event-caption strip. Portrait rules and shared input are unchanged.
+Relay Yard at 568×320 with Plain Large text grows from the retained 254×127
+measurement to 363.20×181.60; First Connection reaches 418×209. Controls can
+overlay the lower corners; this tradeoff still requires real thumb-comfort review.
+See [native evidence and remaining gates](verification/team-landscape-arena/README.md).
+This is outside the frozen presentation delivery and is not yet deployed.

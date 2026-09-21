@@ -426,8 +426,8 @@
     gap: 0;
     line-height: 1.1;
   }
-  /* The same controls as Solo float beside the board. Their measured-size
-     gutters below keep all playable cells clear without adding a HUD row. */
+  /* The same controls as Solo overlay the lower corners. Do not reserve
+     full-height columns for floating pads: the complete bitmap fits the arena. */
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -951,8 +951,6 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   body.field-kit.playing:has(#coop-overlay[hidden]) {
     --team-message-space: calc(var(--handheld-label) * 2.5 + 8px);
     --team-pad-size: min(156px, var(--team-pad-limit));
-    --team-left-gutter: 2px;
-    --team-right-gutter: 2px;
     --team-pad-limit: max(
       132px,
       calc(
@@ -964,18 +962,8 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   body.field-kit.playing:has(#coop-overlay[hidden]):has(.race-pad[data-touch-size='large']) {
     --team-pad-size: min(192px, var(--team-pad-limit));
   }
-  body.field-kit.playing:has(#coop-overlay[hidden]):has(
-      .control-card.sunflower[data-touch-visible='true']
-    ) {
-    --team-left-gutter: calc(var(--team-pad-size) + 8px);
-  }
-  body.field-kit.playing:has(#coop-overlay[hidden]):has(
-      .control-card.skyline[data-touch-visible='true']
-    ) {
-    --team-right-gutter: calc(var(--team-pad-size) + 8px);
-  }
-  /* A controller may hide only one seat. Retire the older fixed-width grid in
-     that case too; the actual visible seat alone owns its side clearance. */
+  /* A controller may hide only one seat. Retire the older fixed-width grid
+     in that case too, keeping the board stable as input devices change. */
   body.field-kit.playing:has(#coop-overlay[hidden])
     #coop-app:has(.control-card[data-touch-visible='false']) {
     grid-template-columns: minmax(0, 1fr);
@@ -986,7 +974,7 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
     grid-column: 1 / -1;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot {
-    padding-inline: var(--team-left-gutter) var(--team-right-gutter);
+    padding-inline: 2px;
     padding-bottom: calc(var(--team-message-space) + 8px);
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .control-card {
