@@ -5,6 +5,20 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For compact Solo landscape, distinguish manual equipment from authored warning
+capability. `hasFieldWarningBand` uses the validated original level, including
+legacy v1's absent encounter field, never the live enemy list or current warning
+phase. Unknown roles retain warning space. `data-field-captions='notices'` permits
+only the event band; it does not remove manual actions, change capture policy or
+shrink text. Keep the existing Arcade chrome contract unchanged. Prompt:
+“Measure First Signal at568×320 Large/Plain before and after caption compaction;
+keep a44px top strip, complete aspect-correct arena, full event notices and44px
+direction targets. Enter Settings with keyboard, select Always/D-pad through the
+native select, Back and explicitly Continue; make one actual pointer cut. Verify
+warning-capable and unknown roles retain their authored reserve, and rerun shared
+touch/controller plus actual host Pause/Resume checks. Label iframe CSS checks,
+full-browser viewport checks and physical iPhone/Steam Deck tests separately.”
+
 For staged handheld missions, reserve separate stable bands for the live encounter
 instruction and independent event notice. Suppress only duplicate phase cues.
 Verify a real loss and recovery at 568×320, 844×390 and 320×480 with Large text;

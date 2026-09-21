@@ -1576,6 +1576,26 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
 .music-credit-details p {
   overflow-wrap: anywhere;
 }
+
+/* Equipment and warning cards are independent. A manual-action mission with
+   only ordinary field/line enemies needs the event band, not an empty warning
+   card. Authored capability keeps the arena stable across deaths and phases. */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-arena-chrome='full'][data-field-captions='notices'][data-flight-state='running']:not(
+      .first-flight-session
+    ) {
+    --fk-flight-bottom: calc(var(--handheld-label) * 2.6 + 8px);
+  }
+  body.field-kit.game-shell[data-arena-chrome='full'][data-field-captions='notices'][data-flight-state='running']:not(
+      .first-flight-session
+    ):has(#encounter-status[data-kind='classic'])
+    #run-message {
+    bottom: max(4px, var(--safe-bottom));
+    max-height: calc(var(--fk-flight-bottom) - 8px);
+    overflow: auto;
+    pointer-events: auto;
+  }
+}
 .compact-track-pause::after {
   display: none;
 }
