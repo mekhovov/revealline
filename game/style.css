@@ -2097,6 +2097,7 @@ dialog input[type='search'] {
       'controls task'
       'controls arena'
       'controls status'
+      'controls music'
       'controls boost'
       'controls encounter'
       'controls reward'
@@ -2130,6 +2131,9 @@ dialog input[type='search'] {
   }
   .arena-panel > .flight-status {
     grid-area: status;
+  }
+  .arena-panel > .game-now-playing {
+    grid-area: music;
   }
   .arena-panel > .first-flight-panel {
     grid-area: course;
@@ -2205,6 +2209,7 @@ dialog input[type='search'] {
       'controls task'
       'controls arena'
       'controls status'
+      'controls music'
       'controls boost'
       'controls encounter'
       'controls reward'
@@ -2238,6 +2243,9 @@ dialog input[type='search'] {
   }
   .first-flight-session .arena-panel > .flight-status {
     grid-area: status;
+  }
+  .first-flight-session .arena-panel > .game-now-playing {
+    grid-area: music;
   }
   .first-flight-session .arena-panel > .first-flight-panel {
     grid-area: course;
