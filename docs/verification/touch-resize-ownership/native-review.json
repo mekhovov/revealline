@@ -1,0 +1,85 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "candidateFiles": {
+    "game/ui/input.mjs": {
+      "bytes": 18284,
+      "sha256": "93071b464fad1df0d2c5c604ba83d9bdaac87870b6d1c03acd12cac9f58c8254"
+    },
+    "game/couch/couch-input.mjs": {
+      "bytes": 18942,
+      "sha256": "cfbc198523b46436a6bd616222518f234986e375b65722f8eca3279e4e3b6375"
+    },
+    "game/ui/touch-steering.mjs": {
+      "bytes": 4109,
+      "sha256": "4a129cd0bf2cf09746b69190c07755481b5d1b4b338c28bab20792a80d8a23d9"
+    }
+  },
+  "uniqueServedFileBindings": 377,
+  "uniqueBoundBytes": 6602287,
+  "checks": [
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "state": "running",
+      "focus": "game-canvas",
+      "arena": [
+        366,
+        274.5
+      ],
+      "documentWidth": 390,
+      "scrollWidth": 390
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "state": "running",
+      "focus": "game-canvas",
+      "arena": [
+        344,
+        258
+      ],
+      "documentWidth": 844,
+      "scrollWidth": 844
+    },
+    {
+      "viewport": [
+        568,
+        320
+      ],
+      "state": "paused",
+      "focus": "start-button",
+      "documentWidth": 568,
+      "scrollWidth": 568
+    },
+    {
+      "viewport": [
+        568,
+        320
+      ],
+      "action": "Explicit Return Resume",
+      "state": "running",
+      "focus": "game-canvas",
+      "arena": [
+        250.6640625,
+        187.9921875
+      ]
+    }
+  ],
+  "consoleErrorsOrWarnings": [],
+  "limitations": [
+    "Desktop Chromium viewport overrides, no physical Safari/Steam Deck.",
+    "No held native pointer was synthesized; active-finger interruption remains modeled host evidence.",
+    "Source preview initially omitted authoring/ renderer imports and failed bootstrap; corrected preview routing then reloaded successfully. This was a preview-server error, not a product change.",
+    "These are unique served bindings, not total HTTP request count or transfer bytes.",
+    "Ordinary no-gesture resize and explicit Pause/Resume only; no complete mission or final release claim."
+  ],
+  "cleanup": {
+    "tab": 159,
+    "closed": true,
+    "viewportReset": true
+  }
+}

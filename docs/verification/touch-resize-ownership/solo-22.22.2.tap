@@ -1,0 +1,424 @@
+TAP version 13
+# Subtest: actual host: either stick moves, face pause/resume preserves the run and replay, disconnect pauses
+ok 1 - actual host: either stick moves, face pause/resume preserves the run and replay, disconnect pauses
+  ---
+  duration_ms: 2447.747375
+  type: 'test'
+  ...
+# Subtest: actual host: B pauses, X opens field guide, Y opens missions; back closes the active modal
+ok 2 - actual host: B pauses, X opens field guide, Y opens missions; back closes the active modal
+  ---
+  duration_ms: 2322.243166
+  type: 'test'
+  ...
+# Subtest: actual host: stick changes direction and gesture release keeps continuous flight
+ok 3 - actual host: stick changes direction and gesture release keeps continuous flight
+  ---
+  duration_ms: 1254.266625
+  type: 'test'
+  ...
+# Subtest: actual host: swipe changes direction and gesture release keeps continuous flight
+ok 4 - actual host: swipe changes direction and gesture release keeps continuous flight
+  ---
+  duration_ms: 1302.820833
+  type: 'test'
+  ...
+# Subtest: actual host: dpad changes direction and gesture release keeps continuous flight
+ok 5 - actual host: dpad changes direction and gesture release keeps continuous flight
+  ---
+  duration_ms: 1251.772458
+  type: 'test'
+  ...
+# Subtest: cold Steam Deck-style discovery: fresh A starts the selected flight after neutral input
+ok 6 - cold Steam Deck-style discovery: fresh A starts the selected flight after neutral input
+  ---
+  duration_ms: 440.580792
+  type: 'test'
+  ...
+# Subtest: Solo adopts the shared couch choice and editing opacity preserves its other fields
+ok 7 - Solo adopts the shared couch choice and editing opacity preserves its other fields
+  ---
+  duration_ms: 294.008417
+  type: 'test'
+  ...
+# Subtest: Solo reports a denied shared save while retaining the current touch choice
+ok 8 - Solo reports a denied shared save while retaining the current touch choice
+  ---
+  duration_ms: 296.862166
+  type: 'test'
+  ...
+# Subtest: modeled controller: Missions selection, Deploy, Pause and explicit Resume need no pointer click
+ok 9 - modeled controller: Missions selection, Deploy, Pause and explicit Resume need no pointer click
+  ---
+  duration_ms: 3516.64175
+  type: 'test'
+  ...
+# Subtest: actual host: stick hands steering to and from a held controller without stealing direction
+ok 10 - actual host: stick hands steering to and from a held controller without stealing direction
+  ---
+  duration_ms: 2218.665083
+  type: 'test'
+  ...
+# Subtest: actual host: swipe hands steering to and from a held controller without stealing direction
+ok 11 - actual host: swipe hands steering to and from a held controller without stealing direction
+  ---
+  duration_ms: 2151.71325
+  type: 'test'
+  ...
+# Subtest: actual host: dpad hands steering to and from a held controller without stealing direction
+ok 12 - actual host: dpad hands steering to and from a held controller without stealing direction
+  ---
+  duration_ms: 2211.267458
+  type: 'test'
+  ...
+# Subtest: actual host: immediate reconnect requires neutral then fresh Resume without losing the cut
+ok 13 - actual host: immediate reconnect requires neutral then fresh Resume without losing the cut
+  ---
+  duration_ms: 2745.81075
+  type: 'test'
+  ...
+# Subtest: actual host: grid-center reconnect requires neutral then fresh Resume without losing the cut
+ok 14 - actual host: grid-center reconnect requires neutral then fresh Resume without losing the cut
+  ---
+  duration_ms: 3024.293167
+  type: 'test'
+  ...
+# Subtest: actual host: ignored extra D-pad finger cannot release the active steering finger
+ok 15 - actual host: ignored extra D-pad finger cannot release the active steering finger
+  ---
+  duration_ms: 1100.347542
+  type: 'test'
+  ...
+# Subtest: actual host: stick resize interruption pauses until explicit Resume and a fresh gesture
+ok 16 - actual host: stick resize interruption pauses until explicit Resume and a fresh gesture
+  ---
+  duration_ms: 1221.893041
+  type: 'test'
+  ...
+# Subtest: actual host: swipe resize interruption pauses until explicit Resume and a fresh gesture
+ok 17 - actual host: swipe resize interruption pauses until explicit Resume and a fresh gesture
+  ---
+  duration_ms: 1351.499083
+  type: 'test'
+  ...
+# Subtest: actual host: dpad resize interruption pauses until explicit Resume and a fresh gesture
+ok 18 - actual host: dpad resize interruption pauses until explicit Resume and a fresh gesture
+  ---
+  duration_ms: 1250.564
+  type: 'test'
+  ...
+# Subtest: fresh keyboard direction survives synchronous clear when resuming
+ok 19 - fresh keyboard direction survives synchronous clear when resuming
+  ---
+  duration_ms: 1.746584
+  type: 'test'
+  ...
+# Subtest: focused mission details keep native scrolling keys and cannot resume or queue flight actions
+ok 20 - focused mission details keep native scrolling keys and cannot resume or queue flight actions
+  ---
+  duration_ms: 1.078125
+  type: 'test'
+  ...
+# Subtest: fresh hold and tap pointer directions survive resume clear
+ok 21 - fresh hold and tap pointer directions survive resume clear
+  ---
+  duration_ms: 0.313959
+  type: 'test'
+  ...
+# Subtest: latest held direction wins and releasing it falls back to previous direction
+ok 22 - latest held direction wins and releasing it falls back to previous direction
+  ---
+  duration_ms: 0.732792
+  type: 'test'
+  ...
+# Subtest: clear and focus loss reject stale direction and boost repeat
+ok 23 - clear and focus loss reject stale direction and boost repeat
+  ---
+  duration_ms: 0.72725
+  type: 'test'
+  ...
+# Subtest: browser shortcuts and editable descendants retain native key behavior
+ok 24 - browser shortcuts and editable descendants retain native key behavior
+  ---
+  duration_ms: 0.276
+  type: 'test'
+  ...
+# Subtest: D-pad buttons support held Space/Enter and blur releases keyboard hold
+ok 25 - D-pad buttons support held Space/Enter and blur releases keyboard hold
+  ---
+  duration_ms: 0.281834
+  type: 'test'
+  ...
+# Subtest: tap steering keyboard activation toggles once per fresh press
+ok 26 - tap steering keyboard activation toggles once per fresh press
+  ---
+  duration_ms: 0.128958
+  type: 'test'
+  ...
+# Subtest: pointer cancel clears steering, and secondary mouse buttons do not steer
+ok 27 - pointer cancel clears steering, and secondary mouse buttons do not steer
+  ---
+  duration_ms: 0.290417
+  type: 'test'
+  ...
+# Subtest: action buttons and keyboard hotkeys produce one request per fresh press
+ok 28 - action buttons and keyboard hotkeys produce one request per fresh press
+  ---
+  duration_ms: 0.319875
+  type: 'test'
+  ...
+# Subtest: controller pause clears and suppresses the same sample until controller is neutral
+ok 29 - controller pause clears and suppresses the same sample until controller is neutral
+  ---
+  duration_ms: 0.237417
+  type: 'test'
+  ...
+# Subtest: inactive dialogs/results suppress controller input and require neutral before reuse
+ok 30 - inactive dialogs/results suppress controller input and require neutral before reuse
+  ---
+  duration_ms: 0.116334
+  type: 'test'
+  ...
+# Subtest: controller disconnect force-pauses and clears keyboard command too
+ok 31 - controller disconnect force-pauses and clears keyboard command too
+  ---
+  duration_ms: 0.117209
+  type: 'test'
+  ...
+# Subtest: destroy removes button and window listeners
+ok 32 - destroy removes button and window listeners
+  ---
+  duration_ms: 0.123584
+  type: 'test'
+  ...
+# Subtest: touch Boost and direction use independent held pointers and release independently
+ok 33 - touch Boost and direction use independent held pointers and release independently
+  ---
+  duration_ms: 0.154167
+  type: 'test'
+  ...
+# Subtest: touch Boost reaches the real movement multiplier and release restores ordinary speed
+ok 34 - touch Boost reaches the real movement multiplier and release restores ordinary speed
+  ---
+  duration_ms: 4.703958
+  type: 'test'
+  ...
+# Subtest: tap Boost toggles once, preserves tap steering, and Stop clears both latches
+ok 35 - tap Boost toggles once, preserves tap steering, and Stop clears both latches
+  ---
+  duration_ms: 0.250875
+  type: 'test'
+  ...
+# Subtest: Boost keyboard activation holds or toggles without key-repeat or native-click duplication
+ok 36 - Boost keyboard activation holds or toggles without key-repeat or native-click duplication
+  ---
+  duration_ms: 0.216208
+  type: 'test'
+  ...
+# Subtest: click-only assistive Boost activation toggles in both steering modes and honors Stop
+ok 37 - click-only assistive Boost activation toggles in both steering modes and honors Stop
+  ---
+  duration_ms: 0.116417
+  type: 'test'
+  ...
+# Subtest: Boost suppresses gesture duplicate clicks without swallowing a later assistive activation
+ok 38 - Boost suppresses gesture duplicate clicks without swallowing a later assistive activation
+  ---
+  duration_ms: 5.513208
+  type: 'test'
+  ...
+# Subtest: Boost survives a fresh resume but clears on pause, cancellation, lost capture and window blur
+ok 39 - Boost survives a fresh resume but clears on pause, cancellation, lost capture and window blur
+  ---
+  duration_ms: 0.333375
+  type: 'test'
+  ...
+# Subtest: Shift remains hold-only in tap mode and controller/keyboard sources update Boost feedback
+ok 40 - Shift remains hold-only in tap mode and controller/keyboard sources update Boost feedback
+  ---
+  duration_ms: 0.136125
+  type: 'test'
+  ...
+# Subtest: Boost button is optional and its absence preserves keyboard boost
+ok 41 - Boost button is optional and its absence preserves keyboard boost
+  ---
+  duration_ms: 0.094
+  type: 'test'
+  ...
+# Subtest: inactive or secondary Boost gestures cannot latch and destroy releases Boost captures
+ok 42 - inactive or secondary Boost gestures cannot latch and destroy releases Boost captures
+  ---
+  duration_ms: 0.118958
+  type: 'test'
+  ...
+# Subtest: standard controller mapping has dead zone, D-pad priority and independent actions
+ok 43 - standard controller mapping has dead zone, D-pad priority and independent actions
+  ---
+  duration_ms: 0.050584
+  type: 'test'
+  ...
+# Subtest: custom physical keys move and release even when the release targets an editor
+ok 44 - custom physical keys move and release even when the release targets an editor
+  ---
+  duration_ms: 0.635709
+  type: 'test'
+  ...
+# Subtest: remapped equipment fires once and modifier or IME input remains native
+ok 45 - remapped equipment fires once and modifier or IME input remains native
+  ---
+  duration_ms: 0.258375
+  type: 'test'
+  ...
+# Subtest: custom stop clears held movement and boost; Escape remains a pause route
+ok 46 - custom stop clears held movement and boost; Escape remains a pause route
+  ---
+  duration_ms: 0.322958
+  type: 'test'
+  ...
+# Subtest: changing mappings with clear prevents a held old key surviving the change
+ok 47 - changing mappings with clear prevents a held old key surviving the change
+  ---
+  duration_ms: 0.169625
+  type: 'test'
+  ...
+# Subtest: external sampled commands bypass all hardware polling and status while keyboard/touch still arbitrate
+ok 48 - external sampled commands bypass all hardware polling and status while keyboard/touch still arbitrate
+  ---
+  duration_ms: 0.204042
+  type: 'test'
+  ...
+# Subtest: external clear and inactive phases need one neutral sample, never an internal controller read
+ok 49 - external clear and inactive phases need one neutral sample, never an internal controller read
+  ---
+  duration_ms: 0.103416
+  type: 'test'
+  ...
+# Subtest: external pause and stop clear every held source without duplicating pause or equipment actions
+ok 50 - external pause and stop clear every held source without duplicating pause or equipment actions
+  ---
+  duration_ms: 0.213916
+  type: 'test'
+  ...
+# Subtest: invalid external fields cannot manufacture movement/ability and destroyed input stops reading it
+ok 51 - invalid external fields cannot manufacture movement/ability and destroyed input stops reading it
+  ---
+  duration_ms: 0.096375
+  type: 'test'
+  ...
+# Subtest: default sampler preserves an assigned pad when another arrives, and pauses if that owner disappears
+ok 52 - default sampler preserves an assigned pad when another arrives, and pauses if that owner disappears
+  ---
+  duration_ms: 0.177833
+  type: 'test'
+  ...
+# Subtest: default sampler detects same-index descriptor changes and explicit same-device disconnect events
+ok 53 - default sampler detects same-index descriptor changes and explicit same-device disconnect events
+  ---
+  duration_ms: 0.145042
+  type: 'test'
+  ...
+# Subtest: router → injected input completes the real first mission identically to canonical input (immediate)
+ok 54 - router → injected input completes the real first mission identically to canonical input (immediate)
+  ---
+  duration_ms: 17.168333
+  type: 'test'
+  ...
+# Subtest: router → injected input completes the real first mission identically to canonical input (grid-center)
+ok 55 - router → injected input completes the real first mission identically to canonical input (grid-center)
+  ---
+  duration_ms: 11.29475
+  type: 'test'
+  ...
+# Subtest: onClear must be a function before any listeners are installed
+ok 56 - onClear must be a function before any listeners are installed
+  ---
+  duration_ms: 0.285042
+  type: 'test'
+  ...
+# Subtest: local Boost observation does not include the controller or poll/drain queued input
+ok 57 - local Boost observation does not include the controller or poll/drain queued input
+  ---
+  duration_ms: 0.470375
+  type: 'test'
+  ...
+# Subtest: switching controller Toggle off preserves a keyboard Boost hold and aggregate pressed state
+ok 58 - switching controller Toggle off preserves a keyboard Boost hold and aggregate pressed state
+  ---
+  duration_ms: 0.190917
+  type: 'test'
+  ...
+# Subtest: switching controller Toggle off preserves the independent touch Boost latch
+ok 59 - switching controller Toggle off preserves the independent touch Boost latch
+  ---
+  duration_ms: 0.231167
+  type: 'test'
+  ...
+# Subtest: keyboard-stop cancels both local and controller Toggle without stranding the adapter neutral gate
+ok 60 - keyboard-stop cancels both local and controller Toggle without stranding the adapter neutral gate
+  ---
+  duration_ms: 0.193917
+  type: 'test'
+  ...
+# Subtest: visible-stop cancels both local and controller Toggle without stranding the adapter neutral gate
+ok 61 - visible-stop cancels both local and controller Toggle without stranding the adapter neutral gate
+  ---
+  duration_ms: 0.124583
+  type: 'test'
+  ...
+# Subtest: pointer-cancel cancels both local and controller Toggle without stranding the adapter neutral gate
+ok 62 - pointer-cancel cancels both local and controller Toggle without stranding the adapter neutral gate
+  ---
+  duration_ms: 0.116625
+  type: 'test'
+  ...
+# Subtest: capture-loss cancels both local and controller Toggle without stranding the adapter neutral gate
+ok 63 - capture-loss cancels both local and controller Toggle without stranding the adapter neutral gate
+  ---
+  duration_ms: 0.20825
+  type: 'test'
+  ...
+# Subtest: blur cancels both local and controller Toggle without stranding the adapter neutral gate
+ok 64 - blur cancels both local and controller Toggle without stranding the adapter neutral gate
+  ---
+  duration_ms: 0.815667
+  type: 'test'
+  ...
+# Subtest: inactive cancels both local and controller Toggle without stranding the adapter neutral gate
+ok 65 - inactive cancels both local and controller Toggle without stranding the adapter neutral gate
+  ---
+  duration_ms: 0.353666
+  type: 'test'
+  ...
+# Subtest: clear cancels both local and controller Toggle without stranding the adapter neutral gate
+ok 66 - clear cancels both local and controller Toggle without stranding the adapter neutral gate
+  ---
+  duration_ms: 0.16175
+  type: 'test'
+  ...
+# Subtest: repeated inactive input clears preserve real router join, menu Confirm and later fresh flight Toggle
+ok 67 - repeated inactive input clears preserve real router join, menu Confirm and later fresh flight Toggle
+  ---
+  duration_ms: 0.179167
+  type: 'test'
+  ...
+# Subtest: input-local cancellation leaves Hold router output unchanged while its existing gate waits for release
+ok 68 - input-local cancellation leaves Hold router output unchanged while its existing gate waits for release
+  ---
+  duration_ms: 0.125291
+  type: 'test'
+  ...
+# Subtest: destroy cancels a router toggle and exposes no local Boost or new input
+ok 69 - destroy cancels a router toggle and exposes no local Boost or new input
+  ---
+  duration_ms: 0.148875
+  type: 'test'
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 69
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 30714.942709

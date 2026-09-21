@@ -471,3 +471,42 @@ test('actual host: ignored extra D-pad finger cannot release the active steering
   );
   assert.deepEqual(page.errors, []);
 });
+
+for (const mode of ['stick', 'swipe', 'dpad'])
+  test(`actual host: ${mode} resize interruption pauses until explicit Resume and a fresh gesture`, async (t) => {
+    const page = await classicPage(t);
+    page.change('touch-mode', mode);
+    page.change('screen-controls', 'always');
+    page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
+    page.win.emit('resize');
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    const surface =
+      mode === 'dpad' ? page.doc.querySelector('.direction-controls') : page.$('touch-surface');
+    surface._rect = { x: 0, y: 0, width: 156, height: 156 };
+    const pointer = (type, x, y, pointerId = 11) =>
+      surface.emit(type, { pointerId, pointerType: 'touch', button: 0, clientX: x, clientY: y });
+    pointer('pointerdown', mode === 'dpad' ? 145 : 78, 78);
+    if (mode !== 'dpad') pointer('pointermove', 115, 78);
+    page.frame();
+    assert.equal(page.rendered.run.player.direction, 'right');
+    page.win.emit('resize');
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.equal(surface.hasPointerCapture(11), false);
+    const paused = authoritativeCheckpoint(page.rendered.run);
+    page.win.emit('resize');
+    page.win.emit('focus');
+    pointer('pointermove', 5, 78);
+    pointer('lostpointercapture', 5, 78);
+    page.frame();
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), paused);
+    page.$('start-button').click();
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    pointer('pointerdown', 78, mode === 'dpad' ? 145 : 78, 33);
+    if (mode !== 'dpad') pointer('pointermove', 78, 115, 33);
+    page.frame();
+    assert.equal(page.rendered.run.player.direction, 'down');
+    assert.deepEqual(page.errors, []);
+  });

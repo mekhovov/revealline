@@ -399,7 +399,7 @@ export function attachInput({
         syncPressed();
       },
     });
-    listen(window, 'resize', () => touchSteering.clear());
+    listen(window, 'resize', () => touchSteering.cancel());
   }
   const poll = () => {
     if (destroyed) return neutral();
