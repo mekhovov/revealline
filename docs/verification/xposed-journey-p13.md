@@ -143,3 +143,24 @@ library; selection returned to First return. This confirms this saved draft and
 one original-picture preview, not all83 native decodes, full-library host flow,
 device/performance qualification, human enjoyment or public deployment. The
 candidate-art-not-visually-qualified warning remains intentional.
+
+## Explicit continuous original-picture review route
+
+The separate `?journey=whole-originals` review entry selects the83-mission pictured
+source through the existing shared route factory in both Solo and Versus. Its
+71-mission core ends deliberately at Home signal; twelve Remixes remain optional.
+The opening and authored URLs retain their exact historical sources and suspended
+save slots. The new Solo suspended-flight slot is separately named. Candidate
+receipts remain candidate receipts; this does not enroll official released content.
+Studio links clearly mark the library as human-validation-pending, connection-
+dependent for pictures and independent of unpublished draft edits.
+
+Verification is in progress. The three shared-route tests pass on Node20 and22,
+including independent mode hosts, no continuation cycles, all twelve core packs,
+optional Remix exclusion and prior-route identity preservation. All83 original
+files have freshly verified SHA-256 hashes. The sparse checkout omits21 older
+Signal/Neon/Rover PNGs; tests read those exact existing Git blobs through the local
+read-only source adapter. An initial host run stopped at those missing files before
+this adapter was corrected; no gameplay check was relaxed or asset substituted.
+Full command-earned host, native, performance and accepted-tree checks remain
+pending. No phase version, PR, public deployment or publisher change is made here.
