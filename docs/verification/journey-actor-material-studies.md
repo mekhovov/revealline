@@ -70,9 +70,7 @@ physical devices, reduced-effects review, human role recognition/enjoyment,
 accepted-source integration and Pages publication remain open. No new character
 portrait, soundtrack or final aesthetic acceptance is claimed.
 
-## Earlier standalone study checkpoint
-
-### Additive Team successor preparation
+## Additive Team successor preparation
 
 Source `d533415e` adds `createTeamActorCandidates`: the twelve purpose-built Team
 missions use explicit Horizon, Signal and Rover material treatments by their three
@@ -106,7 +104,20 @@ then qualify actual Team host/Next/native play. Do not infer override absence fr
 a theme name, start with a late-loading body, or claim these adapter tests validate
 the newer full Team painter. The release owner has the bounded additive packet.
 
-The12 existing Journey campaign palettes still resolve the same retro body family.
+## Whole-host successor verification — 2026-09-21
+
+The expanded `whole-originals-host.test.mjs` now qualifies both V3 and V4 through
+the actual Solo and Versus entries: 71 Solo clears and 70 Next actions (including
+failed-preload recovery), plus 71 equal paired-board races and 70 Next actions per
+edition. Node 20.19.5 and 22.22.2 each passed all four tests. These long runs began
+against the pre-pressure source `59416554` with this test expansion; they do not
+qualify the subsequent difficulty or timed-bonus successors. Picture bytes/hashes
+and simulation are checked, but the finite image decoder is not native pixel,
+physical-controller or human enjoyment evidence. Public integration remains open.
+
+## Earlier standalone study checkpoint
+
+At the original study checkpoint, the12 Journey campaign palettes resolved the same retro body family.
 Source `35419a1d4a6081f56b7815646820658e0acf6159`, corrected by
 `b539592c98de670548f1878a376727b9ec2af12c`, adds twelve original code-native
 material studies across all seven existing enemy roles. It extends the project's

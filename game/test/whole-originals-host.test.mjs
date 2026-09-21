@@ -13,7 +13,6 @@ import { waitFor } from './helpers/wait-for.mjs';
 import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
-const route = createAuthoredJourneyRoute('whole-originals-v3');
 // Retain original route/checkpoint evidence. Theme editions change run identity
 // and result revision, not physics; never rewrite the frozen replay fixtures.
 const historicalProject = compileContentProject(
@@ -82,14 +81,15 @@ const running = (p, id) =>
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === id;
   });
 
-test('campaign presentation edition:71 real Solo host clears retain exact themes and originals across70 Next actions and a failed preload', async (t) => {
+async function qualifySolo(t, routeId) {
+  const route = createAuthoredJourneyRoute(routeId);
   assert.equal(rows.length, 71);
   const memory = managedIndexedDB(),
     storage = memoryStorage();
   const backend = createJourneyBackend(memory);
   let refuse = null;
   const p = await soloPage(t, {
-    search: '?journey=whole-originals-v3',
+    search: `?journey=${routeId}`,
     titleScreen: true,
     storage,
     journeyIndexedDB: memory.indexedDB,
@@ -187,17 +187,19 @@ test('campaign presentation edition:71 real Solo host clears retain exact themes
     'revealline.suspended.journey-authored.v1',
     'revealline.suspended.journey-whole-originals.v1',
     'revealline.suspended.journey-whole-originals.v2',
+    `revealline.suspended.journey-whole-originals.${routeId.endsWith('v4') ? 'v3' : 'v4'}`,
   ])
     assert(!storage.writes.some(([written]) => written === key), key);
   assert.deepEqual(p.errors, []);
-});
+}
 
-test('campaign presentation edition:71 real Versus races keep equal boards, exact themes and pictures through70 deliberate Next actions', async (t) => {
+async function qualifyVersus(t, routeId) {
+  const route = createAuthoredJourneyRoute(routeId);
   const memory = managedIndexedDB(),
     storage = memoryStorage();
   const backend = createJourneyBackend(memory);
   const p = await couchPage(t, {
-    href: 'http://localhost/game/couch/?journey=whole-originals-v3',
+    href: `http://localhost/game/couch/?journey=${routeId}`,
     initialLevel: null,
     assetDatabase: memory.indexedDB,
     storage,
@@ -276,4 +278,11 @@ test('campaign presentation edition:71 real Versus races keep equal boards, exac
   assert.equal(Object.keys(profile.clears.versus).length, 71);
   assert.equal(Object.keys(profile.clears.solo).length, 0);
   assert.equal(Object.keys(profile.clears.team).length, 0);
-});
+}
+
+for (const routeId of ['whole-originals-v3', 'whole-originals-v4']) {
+  test(`${routeId}:71 real Solo host clears retain exact themes and originals across70 Next actions and a failed preload`, (t) =>
+    qualifySolo(t, routeId));
+  test(`${routeId}:71 real Versus races keep equal boards, exact themes and pictures through70 deliberate Next actions`, (t) =>
+    qualifyVersus(t, routeId));
+}
