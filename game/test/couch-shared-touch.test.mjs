@@ -7,6 +7,7 @@ import { attachCouchTouch } from '../ui/couch-touch.mjs';
 function fixture(t, mode) {
   const doc = new Document(),
     win = new Events();
+  doc.parentNode = win;
   const settings = doc.createElement('section');
   doc.body.append(settings);
   const pads = [0, 1].map((player) => {
@@ -31,6 +32,7 @@ function fixture(t, mode) {
     value: { getItem: () => null, setItem() {} },
   });
   let active = true,
+    pauses = 0,
     input;
   const touch = attachCouchTouch({
     document: doc,
@@ -45,6 +47,10 @@ function fixture(t, mode) {
     active: () => active,
     continuousSteering: () => true,
     steeringEdges: true,
+    onPause: () => {
+      pauses++;
+      active = false;
+    },
     getTouchSettings: () => ({ ...touch.snapshot(), mode }),
   });
   const surfaces = pads.map((p) =>
@@ -66,7 +72,7 @@ function fixture(t, mode) {
       pointerType: 'touch',
       button: 0,
     });
-  return { input, pointer, pads, setActive: (v) => (active = v) };
+  return { input, pointer, pads, surfaces, pauses: () => pauses, setActive: (v) => (active = v) };
 }
 for (const mode of ['stick', 'swipe', 'dpad'])
   test(`${mode}: both seats steer independently, release persists, recovery clears stale fingers`, (t) => {
@@ -90,4 +96,49 @@ for (const mode of ['stick', 'swipe', 'dpad'])
     f.setActive(false);
     f.pointer(1, 'pointerdown', 1, 78);
     assert.equal(f.input.snapshotDirection(1), 'down');
+  });
+
+for (const mode of ['stick', 'swipe', 'dpad'])
+  test(`${mode}: cancellation belongs to the captured finger and preserves the other seat`, (t) => {
+    const f = fixture(t, mode);
+    f.pointer(0, 'pointerdown', mode === 'dpad' ? 145 : 78, 78, 11);
+    f.pointer(1, 'pointerdown', 78, mode === 'dpad' ? 145 : 78, 22);
+    if (mode !== 'dpad') {
+      f.pointer(0, 'pointermove', 115, 78, 11);
+      f.pointer(1, 'pointermove', 78, 115, 22);
+    }
+    const extraTarget =
+      mode === 'dpad'
+        ? f.pads[0].querySelectorAll('button').find((button) => button.dataset.direction === 'left')
+        : f.surfaces[0];
+    extraTarget.emit('pointerdown', {
+      pointerId: 99,
+      pointerType: 'touch',
+      button: 0,
+      clientX: 5,
+      clientY: 78,
+    });
+    extraTarget.emit('pointercancel', { pointerId: 99, pointerType: 'touch' });
+    assert.equal(f.pauses(), 0, 'Cancel of an ignored second finger cannot interrupt either seat.');
+    assert.equal(f.input.snapshotDirection(0), 'right');
+    assert.equal(f.input.snapshotDirection(1), 'down');
+    assert.equal(f.surfaces[0].hasPointerCapture(11), true);
+    assert.equal(f.surfaces[1].hasPointerCapture(22), true);
+    f.pointer(0, 'pointercancel', 115, 78, 11);
+    assert.equal(f.pauses(), 1, 'Loss of the steering finger deliberately pauses the shared game.');
+    assert.equal(f.surfaces[0].hasPointerCapture(11), false);
+    assert.equal(f.surfaces[1].hasPointerCapture(22), false);
+    f.pointer(1, 'pointermove', 5, 78, 22);
+    assert.equal(
+      f.input.snapshotDirection(1),
+      'down',
+      'The retired other finger cannot reclaim steering.',
+    );
+    f.pointer(1, 'lostpointercapture', 5, 78, 22);
+    assert.equal(f.pauses(), 1, 'Late capture loss cannot trigger a second pause.');
+    f.setActive(true);
+    f.pointer(1, 'pointerdown', mode === 'dpad' ? 5 : 78, 78, 33);
+    if (mode !== 'dpad') f.pointer(1, 'pointermove', 5, 78, 33);
+    assert.equal(f.input.snapshotDirection(1), 'left');
+    assert.equal(f.input.snapshotDirection(0), 'right');
   });

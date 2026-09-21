@@ -1,0 +1,90 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "candidate": {
+    "game/ui/input.mjs": "e58260b1edbcc52d40465a7c7d83254579d0e16b63cc77cec9d4093108cec14c",
+    "game/couch/couch-input.mjs": "37a59abfeac89d790d61d1a0f3f70102f2a3455f1da9926c48ac5da489bee7e5",
+    "game/test/touchscreen-controller-host.test.mjs": "203e639c7e19e7c2f8984a8d986550b3ecbfa36fb3ac77f1e9f740df9777233e",
+    "game/test/couch-shared-touch.test.mjs": "8985442b68bfd27c24fac63a53d8552dd180f546e7b75b9e19eec5a5d4b5aa83"
+  },
+  "runs": [
+    {
+      "label": "couch-baseline-20.19.5",
+      "pass": 5,
+      "fail": 1,
+      "skipped": 0,
+      "trackedReads": 34,
+      "uniqueBindings": 34,
+      "originalLogSHA256": "986502ad7c1d95648f5b3d26d044cea4dadc26ca9b1c3b3aebcf4a184721ca4d",
+      "retainedLogSHA256": "ce052b2396a6eed5e82167a335cb9f30640ef78b99ef9ff5d59e8899a94c7074"
+    },
+    {
+      "label": "couch-final-20.19.5",
+      "pass": 113,
+      "fail": 0,
+      "skipped": 0,
+      "trackedReads": 414,
+      "uniqueBindings": 197,
+      "originalLogSHA256": "9587f9a6faa92587ac5b57745a3c337448da47d6c67855f0f76580926d75958d",
+      "retainedLogSHA256": "9587f9a6faa92587ac5b57745a3c337448da47d6c67855f0f76580926d75958d"
+    },
+    {
+      "label": "solo-20.19.5",
+      "pass": 66,
+      "fail": 0,
+      "skipped": 0,
+      "trackedReads": 299,
+      "uniqueBindings": 254,
+      "originalLogSHA256": "991861724d5a1507a1f50eb09527aa9035b9f196c05b7bbeb06e61b9b7af399a",
+      "retainedLogSHA256": "991861724d5a1507a1f50eb09527aa9035b9f196c05b7bbeb06e61b9b7af399a"
+    },
+    {
+      "label": "couch-baseline-22.22.2",
+      "pass": 5,
+      "fail": 1,
+      "skipped": 0,
+      "trackedReads": 34,
+      "uniqueBindings": 34,
+      "originalLogSHA256": "3d619f221678b307ee097ded2450c3f8fc049d0003f6e54e67cf17e926cf2595",
+      "retainedLogSHA256": "815445f51ca0c911913c3eda6d9587351526fd9351b21fbb197be2c39bb0cbbc"
+    },
+    {
+      "label": "couch-final-22.22.2",
+      "pass": 113,
+      "fail": 0,
+      "skipped": 0,
+      "trackedReads": 414,
+      "uniqueBindings": 197,
+      "originalLogSHA256": "10b30984f8c0512e61a54303247db0e668bd166f133a0d4a8f6e970b7d1f426a",
+      "retainedLogSHA256": "10b30984f8c0512e61a54303247db0e668bd166f133a0d4a8f6e970b7d1f426a"
+    },
+    {
+      "label": "solo-22.22.2",
+      "pass": 66,
+      "fail": 0,
+      "skipped": 0,
+      "trackedReads": 299,
+      "uniqueBindings": 254,
+      "originalLogSHA256": "c5838f707ecaff07d5178bad2e0aa20f1093223886803c29aba5b91bf6f93726",
+      "retainedLogSHA256": "c5838f707ecaff07d5178bad2e0aa20f1093223886803c29aba5b91bf6f93726"
+    }
+  ],
+  "boundary": "Separate bounded source compositions for Solo and couch; loaded module identity is pinned. Final combined source/browser/public/physical-device gates remain open.",
+  "soloBaseline": {
+    "node": "22.22.2",
+    "pass": 0,
+    "fail": 1,
+    "selected": 1,
+    "testSource": "Development test before formatting; runtime remains exact8cff",
+    "originalLogSHA256": "b0e0a860446978318e37e99ce83ed106deeec6da30370f4644f6d0ab1e098374"
+  },
+  "resourceLimitedAttempt": {
+    "node": "20.19.5",
+    "heapMiB": 384,
+    "terminal": "SIGABRT from heap exhaustion in couch-navigation file",
+    "observedPass": 103,
+    "observedFailure": 1,
+    "originalLogSHA256": "d68c2a0baab45e973ed471cecb5440b105bf26528cf035f8fc67f2807c164188",
+    "finalRerunHeapMiB": 1024,
+    "noSkippedFiles": true
+  }
+}

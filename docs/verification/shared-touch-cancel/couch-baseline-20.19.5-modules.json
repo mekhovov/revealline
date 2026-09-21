@@ -1,0 +1,206 @@
+[
+  {
+    "path": "game/content-design/map.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "93edb45d6af77738a3ba8ff42f3fb9d672bcecd9a00ccee20d259fe496b34c28",
+    "reads": 1
+  },
+  {
+    "path": "game/core/abilities.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde",
+    "reads": 1
+  },
+  {
+    "path": "game/core/arcade-actions.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726",
+    "reads": 1
+  },
+  {
+    "path": "game/core/capture-regions.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "57d7b36d8e82d4640bd8ae4b92b48924ccee42508963ab99142138e730d9b203",
+    "reads": 1
+  },
+  {
+    "path": "game/core/capture.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "081572756599471e0c1811812f2d20576ad4e479157be390ed945c6b12de263b",
+    "reads": 1
+  },
+  {
+    "path": "game/core/classic-contour.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8",
+    "reads": 1
+  },
+  {
+    "path": "game/core/classic-definition.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "af9a726d1a96f371122c4e308c8024ebe6ed0232f4fb3815c2a1e94df870e3bb",
+    "reads": 1
+  },
+  {
+    "path": "game/core/classic-motion.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "d593680e715467fd4ebfd50bf68bfdd2c3690e79ebbc579a64cdbab093c0a020",
+    "reads": 1
+  },
+  {
+    "path": "game/core/classic-state.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "2b328066188d54dc3010540384427fee18ac2f49f13c67f8c55f65539f61a500",
+    "reads": 1
+  },
+  {
+    "path": "game/core/classic-step.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "e9c532a138bf5eede4f8c11e08bf7a3b966e292d65ba4a79c8e7b8cc8dda7695",
+    "reads": 1
+  },
+  {
+    "path": "game/core/classic-topology.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "e72c4c6e3d75be33d0c2995c7ced65a21c81eba34874e18737b05e8c011284b3",
+    "reads": 1
+  },
+  {
+    "path": "game/core/contacts.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "d8c8294bf7141471a125dc325ab1202e2a705ca62ad7632d89129907c8072df4",
+    "reads": 1
+  },
+  {
+    "path": "game/core/encounter.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "7b98eb4ec29998ce902a62388b089a0a26b41675199bb9601e4b2a55f0df44ba",
+    "reads": 1
+  },
+  {
+    "path": "game/core/enemy-pressure.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb",
+    "reads": 1
+  },
+  {
+    "path": "game/core/foundations.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "d5aa7b471790e3d3f8ed04fc26747665ac316ce201962fdd6cfcc31f6f84389c",
+    "reads": 1
+  },
+  {
+    "path": "game/core/geometry.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "d7252d751c56f77cebffcdd5c3adc5b5db9c0f4f489a821591bb356f05c0af55",
+    "reads": 1
+  },
+  {
+    "path": "game/core/index.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "fa0d5e2affd2be15b6919f112fee84e0862c5c3bb7b95f2d3d604eb4ff352c5d",
+    "reads": 1
+  },
+  {
+    "path": "game/core/level.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "e294005640e2834672feccaeb6f57a659923194be38237b6ff5dda3731e1e88c",
+    "reads": 1
+  },
+  {
+    "path": "game/core/line-impact.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "e3a11756a9fb7272ad660dbf9a2c175095f89e26f889e3f3edb25865b2b7c5a0",
+    "reads": 1
+  },
+  {
+    "path": "game/core/movement.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "3f9ee5115eb94c001fe38595f39763b188ea276114ca21d1bc7a426be6e6922a",
+    "reads": 1
+  },
+  {
+    "path": "game/core/registry.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c",
+    "reads": 1
+  },
+  {
+    "path": "game/core/systems.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6",
+    "reads": 1
+  },
+  {
+    "path": "game/core/versions.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "2c782b83a7ceaa5765cf2d17fac3af06ca3ad596071cad10f4890601bc7079ce",
+    "reads": 1
+  },
+  {
+    "path": "game/couch/couch-input.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "a181a63eb580b03d55b7a3f282a1eefbc5a918eff384e3981ae55e1dd9fe6849",
+    "reads": 1
+  },
+  {
+    "path": "game/data-json.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "bcf8c3cb859473a39973cc93cee347085d3146164b0b92a02e81df57f6ffc823",
+    "reads": 1
+  },
+  {
+    "path": "game/key-bindings.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "bbd86d04ea7e45d9e140f1712e1e940956375b988841978537cd7a978da0ebe0",
+    "reads": 1
+  },
+  {
+    "path": "game/multiplayer.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "575caf3e4e475942b3cae91e921d450b345a4087d7f961bbb56261dcb98531fb",
+    "reads": 1
+  },
+  {
+    "path": "game/test/couch-shared-touch.test.mjs",
+    "source": "candidate",
+    "sha256": "8985442b68bfd27c24fac63a53d8552dd180f546e7b75b9e19eec5a5d4b5aa83",
+    "reads": 1
+  },
+  {
+    "path": "game/test/helpers/couch-dom.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "878852600b15a1551ba136fd506f88c890349472c6fc340225ab423a299159f8",
+    "reads": 1
+  },
+  {
+    "path": "game/touch-controls.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "247811a921e69ff3488faa3138e36db42f5bacddccd03e2d52b0f21169809cc6",
+    "reads": 1
+  },
+  {
+    "path": "game/touch-preferences.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "3fd5caf74eed8559e0fccb8bbf609e1f605a9a5702d047e35b750939438f7596",
+    "reads": 1
+  },
+  {
+    "path": "game/ui/couch-touch.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "8678d502ad789ec1d6cd7e2a16967f67cd151fd2c083966799483d752db88bd0",
+    "reads": 1
+  },
+  {
+    "path": "game/ui/input.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "7074593cb6a6ea4d4ad3ef8f4a5d8fa5092ccf5bca3a916f9639b57276d78507",
+    "reads": 1
+  },
+  {
+    "path": "game/ui/touch-steering.mjs",
+    "source": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+    "sha256": "2502da4cd0a38305473004b710affc9d7a53f18b08209d9f9cdc1a5f2ffdd4fa",
+    "reads": 1
+  }
+]

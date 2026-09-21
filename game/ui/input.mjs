@@ -274,7 +274,11 @@ export function attachInput({
       } catch {}
     };
     listen(b, 'pointerup', release);
-    listen(b, 'pointercancel', lifecycleClear);
+    listen(b, 'pointercancel', () => {
+      // Shared steering owns cancellation at the pad, including extra fingers.
+      // A child button must not retire its still-active steering gesture.
+      if (!touchSteering) lifecycleClear();
+    });
     listen(b, 'lostpointercapture', release);
     listen(b, 'click', (e) => {
       if (e.detail === 0 && active()) startDirection(b.dataset.move, 'assistive', b);
