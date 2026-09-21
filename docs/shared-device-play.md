@@ -124,3 +124,9 @@ controller-only Missions → Deploy → Pause → explicit Resume. This extends 
 modeled input evidence; it does not reproduce or certify the physical Steam Deck
 report. Short Versus, training, maximum counters, central hazard-caption clearance
 with two Large pads, real devices and exact-source release gates remain open.
+
+A broader Team picture-host check reproduced one stale storage-read inventory
+(18/19 passed): the mounted shared-touch owner now also reads its preference key.
+The correction adds only that key; display/menu-style write restrictions and all
+picture/HUD continuity checks are unchanged. The complete affected picture and
+shared-touch cohorts pass29/29 on both Node20 and Node22. Original failure retained.

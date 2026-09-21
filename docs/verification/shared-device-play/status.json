@@ -16,7 +16,8 @@
       "scope": "Iteration cohorts; final source gates and publication not yet run. The final coverage-target DOM annotation followed these cohorts; no simulation changes.",
       "finalTargetSourceNode22": "60/60 after final target annotation;10/10 shared preference/gesture checks after callback error-boundary cleanup",
       "finalInputSource": "60/60 on Node20 and Node22; exact original TAP retained compressed with SHA256 receipts",
-      "expandedControllerJourney": "61/61 shared-input cohort on bothNode20/22 including modeled controller-only Missions\u2192Deploy\u2192Pause\u2192Resume; physical Deck failure still not reproduced"
+      "expandedControllerJourney": "61/61 shared-input cohort on bothNode20/22 including modeled controller-only Missions\u2192Deploy\u2192Pause\u2192Resume; physical Deck failure still not reproduced",
+      "teamPictureCompatibility": "19-test predecessor18/19: expected read list lacked shared touch key. Only that key added; complete picture/shared/couch touch cohort29/29 on Node20 and Node22. Writes remain limited to display/menu-style."
     }
   },
   "nativeObservations": [

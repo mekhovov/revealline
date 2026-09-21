@@ -73,5 +73,20 @@
     "file": "controller-missions-first.tap.gz",
     "originalBytes": 384,
     "originalSha256": "77b1e9d4c5d54e805b356cfd4351a60832d77fc49019f724ee4e29ef9e798461"
+  },
+  {
+    "file": "team-picture-before.tap.gz",
+    "originalBytes": 6400,
+    "originalSha256": "8be76d1ee8df50444d27deb4ef4ee72d019fb3aa1a5d46edd9c63f19141f8b2e"
+  },
+  {
+    "file": "team-picture-corrected-node22.tap.gz",
+    "originalBytes": 7560,
+    "originalSha256": "fc2e663b435f0576c1472f22ad5e7a60f0db4edeb67cc95537808908aabb35f5"
+  },
+  {
+    "file": "team-picture-corrected-node20.tap.gz",
+    "originalBytes": 7125,
+    "originalSha256": "debd7f129a3b72ff4e450796b3429a0216aee943444b4830d03f449350165afe"
   }
 ]
