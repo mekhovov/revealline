@@ -283,11 +283,9 @@ Reproduce delayed Ready → Start confirmation through the real installed-pictur
 
 “Start Team, Pause, set Plain/Large, open Settings and return by keyboard. Rotate 390×844 → 844×390 → portrait; keep the same action focused and its complete outline inside the bordered client scrollport. Repeat Theme/Standard at 600×360. Check unchanged time/coverage/reserves and explicit Resume only. Cover stale focus during measurement, another modal, background/disposal and resize reentry in host tests. Preserve the original failed geometry; native checks do not establish physical-device or public acceptance.”
 
-
 ## Qualify narrow Solo active-flight counters
 
 “Use the exact current source and the selected text preferences. At 600×400, compare the actual running score and its icon with fullscreen/Pause; record the original overlap before changing the layout. Keep all four stats, the coverage target, owned captions, authored actions and the complete board. For 521–680px short landscape, budget two telemetry rows from the existing text tokens rather than shrinking text or letting event updates resize the arena. Preserve tutorial, portrait and Couch rules. Inspect Large/Plain with controls hidden and a shown D-pad, Standard/Theme with the existing floating stick, both boundary widths and 390×844 rotation. Start/play through ordinary UI; do not inject a score or win. Measure full rectangles and at least 44px action targets, then check Pause → Field details → Back and explicit Resume. Report the smaller arena as a play-comfort tradeoff. Retain exact source/CSS pins and original observations; separate a zero-score candidate check from a nonzero public baseline. Do not present modeled rectangles, formatting checks or the Large preference as native, physical-device or 200% zoom acceptance. Finish final integrated-source and affected public gates before closing the feature.” See [the scoped device-layout contract](../../docs/device-controls.md#narrow-solo-flight-counters--p05-hud-correction).
-
 
 Release packaging example: “Validate the complete evidence ZIP with the exact
 source uploader, including the root evidence-manifest.json. Preserve a rejected
@@ -302,3 +300,7 @@ separately from hosted upload success.”
 ### Retain an edition while publishing a menu correction
 
 “Prepare the archive from exact original ZIP/metadata. A new archive has zero previously accepted paths. Update only template-specific fixture identities; keep all corruption guards, inventory-base binding and budget limits. Preserve first failures, run complete fixtures, and verify hosted extraction plus every public body. Carry known historical UX issues into scoped native admission. Publish the separately qualified correction only after retention is admitted, then verify the affected public menu journey before marking its scope accepted.”
+
+### Team functional cues across visual themes
+
+“Review the real Team painter with dark, light and deliberately low-contrast theme tokens. Retain the exact accepted picture, gameplay geometry and timing. Check opaque label backing, numbered circle/diamond players, hunter/emitter warnings, Support, recovery, slowed enemies, launch landmarks, anchors and relay-core shield/exposure. Functional strokes over the board need contrasting opaque edges; text contrast against paper alone is insufficient. At narrow widths, inspect the actual-radius cutting-head centre after its outline. Verify paused and reduced effects, exact legacy rendering after null restoration, unchanged simulation and clean original-art victory. Exercise both arenas in Studio and live hosts; separate canvas-command tests, decoded browser views, physical controls and public acceptance.” See [Team cue palette](../../docs/team-cue-palette.md).

@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { format, resolveConfig } from 'prettier';
+import { resolveConfig } from 'prettier';
 import { ASSET_SLOTS, createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
 import { FORMATS, presentationCoverage } from '../game/presentation/model.mjs';
 import { reviseStudioTheme } from '../game/presentation/studio-session.mjs';
@@ -14,7 +14,9 @@ import {
 } from '../game/presentation/icons.mjs';
 import { encodeSpritePNG, inspectSprite } from './produce-field-kit-sprites.mjs';
 import { compilePresentation } from './compile-presentation.mjs';
-import { writePresentation } from './write-presentation.mjs';
+import { readPresentation, writePresentation } from './write-presentation.mjs';
+import { preparePresentationOutput } from './prepare-presentation-output.mjs';
+import { createFieldKitTeamAssets } from './field-kit-team-assets.mjs';
 import { retainProductionHistory } from './presentation-production-history.mjs';
 import { importThemeBundle, exportThemeBundle } from '../game/presentation/bundle.mjs';
 
@@ -104,13 +106,15 @@ export async function fieldKitRecipeSources(read) {
 export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const read = async (relative) => fs.readFile(path.join(projectRoot, relative));
   const json = async (relative) => JSON.parse(await read(relative));
-  const baseline = createDefaultThemeBundle();
+  const team = await createFieldKitTeamAssets({ projectRoot });
+  const baseline = structuredClone(createDefaultThemeBundle());
+  baseline.slots.push(...team.slots);
   const recipeSources = await fieldKitRecipeSources(read);
   const assets = [],
     bindings = {},
     bytes = new Map();
   const add = (slotId, values, body = null) => {
-    const slot = ASSET_SLOTS.find((s) => s.id === slotId);
+    const slot = baseline.slots.find((s) => s.id === slotId);
     if (!slot) throw new Error(`Unknown production slot ${slotId}.`);
     const asset = {
       format: FORMATS.asset,
@@ -309,8 +313,14 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
         );
     }
   }
+  for (const asset of team.assets) add(asset.slotId, asset.values, asset.body);
   const document = reviseStudioTheme(baseline, { assets, bindings });
-  return { document, assets: bytes, coverage: presentationCoverage(document) };
+  return {
+    document,
+    assets: bytes,
+    coverage: presentationCoverage(document),
+    appendSlots: team.slots,
+  };
 }
 async function generate(args) {
   if (args.length !== 1 || !['--write', '--check'].includes(args[0]))
@@ -325,7 +335,9 @@ async function generate(args) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  production.document = retainProductionHistory(production.document, history?.document);
+  production.document = retainProductionHistory(production.document, history?.document, {
+    appendSlots: production.appendSlots,
+  });
   production.assets = new Map([...(history?.assets ?? []), ...production.assets]);
   production.coverage = presentationCoverage(production.document);
   const historyBytes = Buffer.from(
@@ -341,36 +353,12 @@ async function generate(args) {
   const result = await compilePresentation(production.document, production.assets);
   const out = path.join(root, 'game/presentation/compiled');
   const config = await resolveConfig(path.join(root, 'game/build-config.json'));
-  // Generated JSON/CSS follows the same formatter as committed source files.
-  for (const [name, body] of result.files)
-    if (/\.(json|css)$/.test(name))
-      result.files.set(
-        name,
-        Buffer.from(
-          await format(new TextDecoder().decode(body), {
-            ...config,
-            parser: name.endsWith('.json') ? 'json' : 'css',
-          }),
-        ),
-      );
-  const inventory = [...result.files]
-    .filter(([name]) => name !== 'manifest.json')
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([name, body]) => ({ path: name, bytes: body.length, sha256: hash(body) }));
-  result.files.set(
-    'manifest.json',
-    Buffer.from(
-      await format(
-        JSON.stringify({
-          format: 'revealline-presentation-build.v1',
-          source: { id: production.document.id, revision: production.document.revision },
-          files: inventory,
-        }),
-        { ...config, parser: 'json' },
-      ),
-    ),
-  );
-  await writePresentation(result.files, out, { check: args[0] === '--check' });
+  // Format only fresh output, then preserve authenticated original bytes.
+  const files = await preparePresentationOutput(result.files, {
+    formatOptions: config,
+    previous: await readPresentation(out, { allowMissing: true }),
+  });
+  await writePresentation(files, out, { check: args[0] === '--check' });
   if (args[0] === '--write') {
     const temporary = `${historyPath}.tmp-${process.pid}`;
     try {
@@ -385,7 +373,7 @@ async function generate(args) {
       source: production.document.id,
       revision: production.document.revision,
       slots: production.document.slots.length,
-      files: result.files.size,
+      files: files.size,
       assetBytes: [...production.assets.values()].reduce((n, b) => n + b.size, 0),
       coverage: production.coverage.counts,
       qualification:

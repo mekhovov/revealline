@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "runtime": "20",
+      "passed": 6,
+      "rawSha256": "a99aac9900303846c536f1e6cd27ceb59c9d8a99acf446eca4e520e64440d089",
+      "file": "producer-node20.tap.gz",
+      "compressedSha256": "b7d1aa76d53a4cde0fd8e3228760c016f47d5bc743637a06b0f70aa55e06347c"
+    },
+    {
+      "runtime": "22",
+      "passed": 6,
+      "rawSha256": "a43e1742125586deb5ac8a66e075cfb265f2b9bb2f4cef2688b7060ac48da6a7",
+      "file": "producer-node22.tap.gz",
+      "compressedSha256": "40453c6dcffe3c8dc9b47a3c4480ca532dc226297af96c6fb368dd5733929855"
+    }
+  ],
+  "scope": "Actual producer plus six-PNG migration/compile/bundle round-trip and drift rejection. No compiled adoption, native visual approval, whole-source or public acceptance."
+}

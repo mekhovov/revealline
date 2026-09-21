@@ -33,7 +33,7 @@ test('the imported two-core map earns Results, one Next starts coverage, and its
   f.tap('Enter');
   assert.equal(f.$('coop-menu').hidden, true);
   assert.equal(f.$('coop-overlay').hidden, true);
-  assert.match(f.$('coop-objective').textContent, /0 \/ 2 secured · Relay 2/);
+  assert.match(f.$('coop-objective').textContent, /Relays 0 \/ 2 · Relay 2 · Anchors 0 \/ 2/);
   const objectives = [f.$('coop-objective').textContent];
   const emit = ({ code, down }) => {
     const key = code.startsWith('Key')
@@ -59,9 +59,24 @@ test('the imported two-core map earns Results, one Next starts coverage, and its
   }
   for (const code of ['ShiftLeft', 'ShiftRight']) emit({ code, down: false });
   assert.ok(
-    objectives.some((text) => /1 \/ 2 secured · Relay 3/.test(text)),
+    objectives.some((text) => /Relays 1 \/ 2 · Relay 3/.test(text)),
     objectives.join('\n'),
   );
+  // The optional first board relay must never inflate required progress, and
+  // the current relay label keeps the actual board number through earned captures.
+  const required = fixture.authoredPack.levels[0].goal.cores;
+  const boardRelays = fixture.authoredPack.levels[0].strongholds;
+  for (const objective of objectives.filter((text) => text.startsWith('Relays '))) {
+    const match = /^Relays (\d+) \/ (\d+) · Relay (\d+) · (.*)$/.exec(objective);
+    assert.ok(match, objective);
+    assert.equal(Number(match[2]), required.length);
+    assert.equal(boardRelays[Number(match[3]) - 1].id, required[Number(match[1])]);
+    if (match[4].startsWith('Anchors ')) {
+      const anchors = /^Anchors (\d+) \/ 2 — capture anchors$/.exec(match[4]);
+      assert.ok(anchors, objective);
+      assert.ok(Number(anchors[1]) >= 0 && Number(anchors[1]) <= 2);
+    }
+  }
   assert.equal(f.$('coop-objective').textContent, 'Strongholds secured together');
   assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
   assert.equal(f.$('coop-overlay').hidden, false);

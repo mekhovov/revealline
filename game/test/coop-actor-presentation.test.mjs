@@ -530,7 +530,7 @@ test('overlapping actor images cannot cover the final real enemy contact rings',
         call.args[0] === -1 / 16 &&
         call.args[1] === -1 / 16 &&
         call.args[2] === 2 / 16 &&
-        call.state.fillStyle === '#f1f7ed',
+        call.state.fillStyle === palette.ink,
     ),
   );
   assert.deepEqual(run, before);
@@ -672,7 +672,7 @@ for (const seat of [0, 1]) {
         cell = width / 72;
       assert.ok(index > view.calls.findLastIndex((call) => call.name === 'drawImage'));
       assert.equal(backing.name, 'fillRect');
-      assert.equal(backing.state.fillStyle, '#07111c');
+      assert.equal(backing.state.fillStyle, palette.paper);
       const [x, y, w, h] = backing.args;
       assert.ok(x >= 0 && y >= 0 && x + w <= 72 + 1e-9 && y + h <= 36 + 1e-9);
       const fontSize = Number(/600 ([\d.]+)px/.exec(cue.state.font)[1]) * cell;

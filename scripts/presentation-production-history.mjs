@@ -1,5 +1,9 @@
-import { canonicalJSON } from '../game/data-json.mjs';
-import { validateThemeBundle, resolvePresentation } from '../game/presentation/model.mjs';
+import { canonicalJSON, exactKeys, required } from '../game/data-json.mjs';
+import {
+  validateAssetSlotSpec,
+  validateThemeBundle,
+  resolvePresentation,
+} from '../game/presentation/model.mjs';
 import { reviseStudioTheme } from '../game/presentation/studio-session.mjs';
 
 const ref = (value) => ({ id: value.id, revision: value.revision });
@@ -14,18 +18,44 @@ const content = (asset) => {
 
 /** Reproduction keeps the accepted ledger. A changed file, geometry or brief
  * creates a successor; a quality review is itself an immutable new revision. */
-export function retainProductionHistory(desiredSource, priorSource = null) {
+export function retainProductionHistory(desiredSource, priorSource = null, options = {}) {
+  exactKeys(options, ['appendSlots'], 'production slot migration');
+  const requested = options.appendSlots === undefined ? [] : options.appendSlots;
+  required(Array.isArray(requested), 'Production appendSlots must be an array.');
+  const contracts = requested.map(validateAssetSlotSpec);
+  const migrationError =
+    'Production slot contracts changed; provide an explicit compatible migration.';
+  required(
+    new Set(contracts.map((slot) => slot.id)).size === contracts.length &&
+      contracts.every((slot) => !slot.required && slot.revision === 1),
+    migrationError,
+  );
   const desired = validateThemeBundle(desiredSource);
+  required(
+    contracts.every((slot) =>
+      same(
+        slot,
+        desired.slots.find((entry) => entry.id === slot.id),
+      ),
+    ),
+    migrationError,
+  );
+  const wanted = resolvePresentation(desired);
+  required(
+    contracts.every((slot) => wanted.assets[slot.id]),
+    'Every appended slot needs a bound production asset.',
+  );
   if (!priorSource) return desired;
   const prior = validateThemeBundle(priorSource);
+  const additions = desired.slots.slice(prior.slots.length);
   if (
     prior.id !== desired.id ||
     prior.selection.theme.id !== desired.selection.theme.id ||
-    !same(prior.slots, desired.slots)
+    !same(prior.slots, desired.slots.slice(0, prior.slots.length)) ||
+    additions.some((slot) => !contracts.some((contract) => same(contract, slot)))
   )
-    throw new Error('Production slot contracts changed; provide an explicit compatible migration.');
-  const wanted = resolvePresentation(desired),
-    previous = resolvePresentation(prior);
+    throw new Error(migrationError);
+  const previous = resolvePresentation(prior);
   const assets = [],
     bindings = {};
   for (const [slotId, proposed] of Object.entries(wanted.assets)) {
@@ -62,6 +92,17 @@ export function retainProductionHistory(desiredSource, priorSource = null) {
   const tokens = Object.fromEntries(
     Object.entries(wanted.tokens).filter(([key, value]) => !same(value, previous.tokens[key])),
   );
-  if (!assets.length && !Object.keys(bindings).length && !Object.keys(tokens).length) return prior;
-  return reviseStudioTheme(prior, { assets, bindings, tokens });
+  if (
+    !additions.length &&
+    !assets.length &&
+    !Object.keys(bindings).length &&
+    !Object.keys(tokens).length
+  )
+    return prior;
+  // New optional contracts cannot invalidate retained selections. Keep the
+  // original ledger intact and advance it once with the actual asset changes.
+  const extended = structuredClone(prior);
+  extended.slots.push(...structuredClone(additions));
+  const next = reviseStudioTheme(extended, { assets, bindings, tokens });
+  return validateThemeBundle(next, { previous: prior, expectedRevision: prior.revision });
 }

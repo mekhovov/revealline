@@ -12,6 +12,12 @@ const text = (v, max) => typeof v === 'string' && v.trim() === v && v.length > 0
 const revision = (v) => Number.isSafeInteger(v) && v > 0 && v <= 1000000;
 const authoredText = (v, max) => typeof v === 'string' && v.trim().length > 0 && v.length <= max;
 const authoredRevision = (v) => revision(v) || authoredText(v, 80);
+// Team imports retain the exact historical core/pack domains. These shape
+// checks do not replace validateCoopPack or authenticate a content owner.
+const teamText = (v, max) => typeof v === 'string' && v.length > 0 && v.length <= max;
+const teamPackId = (v) => typeof v === 'string' && /^[a-z][a-z0-9-]{0,79}$/.test(v);
+const teamPackRevision = (v) => revision(v) || teamText(v, 80);
+const teamLevelRevision = (v) => (Number.isInteger(v) && v > 0) || teamText(v, 100);
 const key = (v) => canonicalJSON(v);
 const catalogues = new WeakMap();
 function freeze(value) {
@@ -79,8 +85,8 @@ function context(value) {
     fields(owner, ['kind', 'id', 'revision', 'sha256'], 'Team content owner');
     required(
       owner.kind === 'team-pack' &&
-        stableId(owner.id) &&
-        authoredRevision(owner.revision) &&
+        teamPackId(owner.id) &&
+        teamPackRevision(owner.revision) &&
         hash(owner.sha256),
       'Invalid exact Team pack owner.',
     );
@@ -105,7 +111,10 @@ function context(value) {
       'Use the existing Journey simulation identity.',
     );
   required(
-    stableId(value.level.id) && authoredRevision(value.level.revision) && hash(value.level.sha256),
+    (value.mode === 'team' && owner.kind === 'team-pack'
+      ? teamText(value.level.id, 100) && teamLevelRevision(value.level.revision)
+      : stableId(value.level.id) && authoredRevision(value.level.revision)) &&
+      hash(value.level.sha256),
     'Invalid exact visual theme level.',
   );
   return value;

@@ -1,3 +1,4 @@
+import { teamEventSlot } from './team-event-slots.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import {
@@ -8,7 +9,12 @@ import {
   validateAssetRevision,
   validatePresentationTheme,
 } from './model.mjs';
+import { teamThreatSlot } from './team-threat-slots.mjs';
+import { teamEffectSlot } from './team-effect-slots.mjs';
+import { teamAnchorSlot } from './team-anchor-slots.mjs';
+import { teamActorSlot } from './team-actor-slots.mjs';
 import { hashPresentationBytes } from './bundle.mjs';
+import { presentationManifestPath } from './manifest-path.mjs';
 import { createPresentationDOMOwner } from './dom-ownership.mjs';
 import {
   applyPresentation,
@@ -153,7 +159,12 @@ async function cropBlob(image, frame, document) {
 const visibleSlot = (id, asset) =>
   asset.kind === 'font' ||
   (asset.kind === 'image' &&
-    /^(ui|icon|hud|reward|control|screen|player|enemy|terrain|pickup)\./.test(id));
+    (/^(ui|icon|hud|reward|control|screen|player|enemy|terrain|pickup)\./.test(id) ||
+      teamActorSlot(id) !== null ||
+      teamAnchorSlot(id) !== null ||
+      teamEffectSlot(id) !== null ||
+      teamThreatSlot(id) !== null ||
+      teamEventSlot(id) !== null));
 const controlIcons = {
   settings: '#shell-settings, #settings-button, #shell-options',
   play: '#shell-featured, #shell-continue, #shell-deploy, #start-button, #soundtrack-play, #race-start',
@@ -213,6 +224,7 @@ const hudGlyphs = {
 export function createPresentationHost({
   fetch: fetcher = globalThis.fetch,
   baseURL = new URL('./compiled/', import.meta.url),
+  retainedManifestSha256 = null,
   decodeImage = browserDecode,
   cropImage = cropBitmap,
   document = globalThis.document,
@@ -220,6 +232,7 @@ export function createPresentationHost({
   revokeObjectURL = (url) => URL.revokeObjectURL(url),
   fontFactory = (name, bytes, descriptors) => new FontFace(name, bytes, descriptors),
 } = {}) {
+  const manifestPath = presentationManifestPath(retainedManifestSha256);
   const base = new URL(baseURL);
   required(
     (['http:', 'https:'].includes(base.protocol) ||
@@ -438,6 +451,10 @@ export function createPresentationHost({
             /^[a-f0-9]{64}$/.test(expectedManifestSha256)),
         'Use an exact SHA-256 presentation manifest pin.',
       );
+      required(
+        retainedManifestSha256 === null || expectedManifestSha256 === retainedManifestSha256,
+        'A retained presentation requires its matching exact manifest pin.',
+      );
       cancelled(signal);
       pending?.abort();
       const controller = new AbortController();
@@ -468,7 +485,7 @@ export function createPresentationHost({
       controller.signal.addEventListener('abort', dispose, { once: true });
       try {
         report('reading', 'Loading release artwork and fonts…');
-        const bytes = await bytesAt('runtime.json', LIMITS.manifestBytes, controller.signal);
+        const bytes = await bytesAt(manifestPath, LIMITS.manifestBytes, controller.signal);
         report('verifying', 'Checking the release artwork manifest…');
         const manifestSha256 = await hashPresentationBytes(bytes);
         cancelled(controller.signal);

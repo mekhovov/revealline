@@ -579,3 +579,116 @@ test('picture originals remain lazy exact bytes and host close cancels a late or
   await rejected;
   assert.equal(cancelled, 1);
 });
+
+test('retained hosts load exact historical bytes beside shared assets without selecting the current manifest', async () => {
+  const original = await fixture();
+  const bytes = original.files.get('runtime.json');
+  const pin = await hashPresentationBytes(bytes);
+  const path = `runtime.${pin}.json`;
+  const files = new Map(original.files);
+  files.set(path, bytes);
+  files.set('runtime.json', new TextEncoder().encode('unrelated current release'));
+  const e = environment({ ...original, files }, { retainedManifestSha256: pin });
+  try {
+    const snapshot = await e.host.load({ expectedManifestSha256: pin });
+    assert.equal(snapshot.manifestSha256, pin);
+    assert.deepEqual(snapshot.resolved, original.manifest.resolved);
+    assert.deepEqual(
+      e.requests.map((request) => request.url),
+      [baseURL + path, baseURL + `assets/${original.hash}.png`],
+    );
+    assert.equal(snapshot.image('player.scout.compact').image, e.decoded[0]);
+  } finally {
+    e.host.close();
+  }
+  assert.equal(e.decoded[0].closes, 1);
+  assert.equal(e.revoked.length, e.urls.length);
+});
+
+test('retained host requires a matching explicit pin before fetching and rejects path-like authorities', async () => {
+  const f = await fixture();
+  const pin = await hashPresentationBytes(f.files.get('runtime.json'));
+  for (const invalid of [
+    '',
+    'A'.repeat(64),
+    '0'.repeat(63),
+    '../runtime.json',
+    `${pin}?v=1`,
+    {},
+    1,
+  ]) {
+    assert.throws(() => environment(f, { retainedManifestSha256: invalid }), /exact SHA-256/);
+  }
+  const e = environment(f, { retainedManifestSha256: pin });
+  try {
+    await assert.rejects(e.host.load(), /matching exact manifest pin/);
+    await assert.rejects(
+      e.host.load({ expectedManifestSha256: '0'.repeat(64) }),
+      /matching exact manifest pin/,
+    );
+    assert.equal(e.requests.length, 0);
+    assert.equal(e.host.current(), null);
+  } finally {
+    e.host.close();
+  }
+});
+
+test('missing or altered retained manifests fail visibly without current-release fallback or bitmap allocation', async () => {
+  const original = await fixture();
+  const bytes = original.files.get('runtime.json');
+  const pin = await hashPresentationBytes(bytes);
+  const path = `runtime.${pin}.json`;
+  for (const replacement of [
+    null,
+    new TextEncoder().encode(new TextDecoder().decode(bytes) + '\n'),
+  ]) {
+    const files = new Map(original.files);
+    if (replacement) files.set(path, replacement);
+    const e = environment({ ...original, files }, { retainedManifestSha256: pin });
+    const statuses = [];
+    try {
+      await assert.rejects(
+        e.host.load({ expectedManifestSha256: pin, onStatus: (status) => statuses.push(status) }),
+        replacement ? /differs from its pinned release/ : /unavailable/,
+      );
+      assert.deepEqual(
+        e.requests.map((request) => request.url),
+        [baseURL + path],
+      );
+      assert.equal(e.decoded.length, 0);
+      assert.equal(e.host.current(), null);
+      assert.equal(statuses.at(-1).status, 'error');
+    } finally {
+      e.host.close();
+    }
+  }
+});
+
+test('failed retained reload and aborted preparation preserve the accepted owner until explicit close', async () => {
+  const original = await fixture();
+  const bytes = original.files.get('runtime.json');
+  const pin = await hashPresentationBytes(bytes);
+  const path = `runtime.${pin}.json`;
+  const files = new Map(original.files);
+  files.set(path, bytes);
+  const e = environment({ ...original, files }, { retainedManifestSha256: pin });
+  try {
+    const snapshot = await e.host.load({ expectedManifestSha256: pin });
+    files.delete(path);
+    await assert.rejects(e.host.load({ expectedManifestSha256: pin }), /unavailable/);
+    assert.equal(e.host.current(), snapshot);
+    assert.equal(e.decoded[0].closes, 0);
+    const controller = new AbortController();
+    controller.abort();
+    const count = e.requests.length;
+    await assert.rejects(e.host.load({ expectedManifestSha256: pin, signal: controller.signal }), {
+      name: 'AbortError',
+    });
+    assert.equal(e.requests.length, count);
+    assert.equal(e.host.current(), snapshot);
+    assert.equal(e.decoded[0].closes, 0);
+  } finally {
+    e.host.close();
+  }
+  assert.equal(e.decoded[0].closes, 1);
+});

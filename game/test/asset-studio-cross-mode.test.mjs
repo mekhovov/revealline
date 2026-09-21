@@ -1,3 +1,5 @@
+import { teamThreatSlotSpecs } from '../presentation/team-threat-slots.mjs';
+import { TEAM_ACTOR_SLOTS } from '../presentation/team-actor-slots.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
@@ -137,6 +139,7 @@ test('each Versus painter receives its selected capture and failure effect', () 
 
 function fakeDocument() {
   const draws = [],
+    cues = [],
     nodes = [];
   class Node {
     constructor(tag) {
@@ -161,6 +164,8 @@ function fakeDocument() {
         {
           get: (target, name) => {
             if (name in target) return target[name];
+            if (['fillText', 'arc', 'setLineDash'].includes(name))
+              return (...args) => cues.push({ name, args });
             if (name === 'drawImage') return (image) => draws.push({ canvas: this, image });
             if (name === 'measureText') return (text) => ({ width: String(text).length * 7 });
             if (name === 'createLinearGradient' || name === 'createRadialGradient')
@@ -172,7 +177,7 @@ function fakeDocument() {
       return this.context;
     }
   }
-  return { document: { createElement: (tag) => new Node(tag) }, Node, draws, nodes };
+  return { document: { createElement: (tag) => new Node(tag) }, Node, draws, cues, nodes };
 }
 const palette = Object.fromEntries(
   ['ink', 'paper', 'muted', 'accent', 'safe', 'danger', 'field', 'grid', 'sky', 'land'].map(
@@ -409,3 +414,497 @@ test('a failed required Team image releases earlier decodes before showing recov
   assert.equal(first.src, '');
   assert.equal(surface.children.length, 0);
 });
+
+for (const arena of ['first-connection', 'relay-yard']) {
+  test(`all declared Team state images are prepared for ${arena}, including inactive core states`, async (t) => {
+    const dom = fakeDocument(),
+      previous = globalThis.document;
+    globalThis.document = dom.document;
+    t.after(() => {
+      globalThis.document = previous;
+    });
+    const view = resolved();
+    for (const row of TEAM_ACTOR_SLOTS)
+      view.assets[row.id] = {
+        ...view.assets[row.source],
+        id: row.id,
+        file: { ...view.assets[row.source].file, sha256: row.id },
+      };
+    const slot = { id: 'team.player.1.cutting.detailed', group: 'players' },
+      cleanups = [],
+      decoded = [];
+    await crossModeContextPreview(
+      new dom.Node('section'),
+      slot,
+      view.assets[slot.id],
+      view,
+      new Map(),
+      {
+        fieldMode: 'team',
+        teamArena: arena,
+        teamScenario: 'cutting',
+        motion: 'paused',
+        isCurrent: () => true,
+      },
+      (cleanup) => cleanups.push(cleanup),
+      {
+        decode: async (asset) => {
+          decoded.push(asset.id);
+          return decodedImage(asset);
+        },
+        presentation: snapshot,
+        loop: (own, draw) => draw(0, false),
+      },
+    );
+    for (const row of TEAM_ACTOR_SLOTS) assert.ok(decoded.includes(row.id), row.id);
+    assert.ok(dom.draws.some(({ image }) => image.id === slot.id));
+    assert.ok(
+      dom.nodes.some((node) => /selected Team body state is visible/.test(node.textContent || '')),
+    );
+    cleanups.forEach((cleanup) => cleanup());
+  });
+}
+
+for (const scenario of ['hunter-recovery', 'support', 'slowed', 'emitter-warning', 'spark']) {
+  for (const width of [390, 600]) {
+    for (const reduced of [false, true]) {
+      test(`Team painter exposes ${scenario} at ${width}px, reduced=${reduced}`, async (t) => {
+        const dom = fakeDocument(),
+          previous = globalThis.document;
+        globalThis.document = dom.document;
+        t.after(() => {
+          globalThis.document = previous;
+        });
+        const cleanups = [],
+          images = [],
+          surface = new dom.Node('section');
+        t.after(() => {
+          for (const cleanup of cleanups.reverse()) cleanup();
+        });
+        const view = resolved(),
+          slot = { id: 'player.scout.compact', group: 'players' };
+        let render;
+        await crossModeContextPreview(
+          surface,
+          slot,
+          view.assets[slot.id],
+          view,
+          new Map(),
+          {
+            fieldMode: 'team',
+            teamArena: 'relay-yard',
+            teamScenario: scenario,
+            motion: 'paused',
+            isCurrent: () => true,
+          },
+          (cleanup) => cleanups.push(cleanup),
+          {
+            decode: async (asset) => {
+              const image = decodedImage(asset);
+              images.push(image);
+              return image;
+            },
+            presentation: snapshot,
+            loop: (own, draw) => {
+              render = draw;
+              dom.nodes.find((node) => node.tagName === 'canvas').clientWidth = width;
+              draw(0, reduced);
+            },
+          },
+        );
+        const cues = structuredClone(dom.cues);
+        const label = (text) =>
+          cues.filter((cue) => cue.name === 'fillText' && cue.args[0] === text);
+        if (scenario === 'hunter-recovery') assert.equal(label('RECOVER').length, 2);
+        if (scenario === 'slowed') assert.equal(label('SLOWED').length, 2);
+        if (scenario === 'support')
+          assert.equal(cues.filter((cue) => cue.name === 'arc' && cue.args[2] === 6).length, 2);
+        if (scenario === 'emitter-warning')
+          assert.ok(
+            cues.some(
+              (cue) => cue.name === 'setLineDash' && JSON.stringify(cue.args[0]) === '[0.35,0.3]',
+            ),
+          );
+        if (scenario === 'spark') {
+          const impact = createStudioTeamFixture({ arena: 'relay-yard', scenario }).run.impacts[0];
+          assert.equal(
+            cues.filter(
+              (cue) =>
+                cue.name === 'arc' &&
+                cue.args[0] === impact.x &&
+                cue.args[1] === impact.y &&
+                cue.args[2] === 0.35,
+            ).length,
+            1,
+          );
+        }
+        assert.ok(
+          dom.draws.some(({ image }) => image.id === COOP_PICTURE_BINDINGS[1].picture.slot),
+        );
+        assert.ok(
+          dom.draws.some(
+            ({ image }) => image.id === `player.scout.${width < 480 ? 'compact' : 'detailed'}`,
+          ),
+        );
+        dom.cues.length = 0;
+        render(0, reduced);
+        assert.deepEqual(
+          dom.cues,
+          cues,
+          'held state must remain readable without advancing gameplay',
+        );
+        for (const cleanup of cleanups.reverse()) cleanup();
+        cleanups.length = 0;
+        assert.ok(images.every((image) => image.src === ''));
+      });
+    }
+  }
+}
+
+for (const [role, scenario] of [
+  ['support', 'support'],
+  ['slowed', 'slowed'],
+  ['rescue', 'rescue-p1'],
+  ['recovery', 'recovered-p2'],
+]) {
+  test(`Team context decodes the exact ${role} badge and reports its active state`, async (t) => {
+    const dom = fakeDocument(),
+      previous = globalThis.document;
+    globalThis.document = dom.document;
+    t.after(() => {
+      globalThis.document = previous;
+    });
+    const cleanups = [],
+      view = resolved(),
+      slot = { id: `team.effect.${role}`, group: 'effects' };
+    t.after(() => {
+      for (const cleanup of cleanups.reverse()) cleanup();
+    });
+    view.assets[slot.id] = {
+      ...view.assets['player.scout.compact'],
+      id: slot.id,
+      file: { ...view.assets['player.scout.compact'].file, sha256: slot.id },
+    };
+    await crossModeContextPreview(
+      new dom.Node('section'),
+      slot,
+      view.assets[slot.id],
+      view,
+      new Map(),
+      {
+        fieldMode: 'team',
+        teamArena: 'relay-yard',
+        teamScenario: scenario,
+        motion: 'paused',
+        isCurrent: () => true,
+      },
+      (cleanup) => cleanups.push(cleanup),
+      {
+        decode: async (asset) => decodedImage(asset),
+        presentation: snapshot,
+        loop: (own, draw) => draw(0, false),
+      },
+    );
+    assert.ok(dom.draws.some(({ image }) => image.id === slot.id));
+    assert.ok(
+      dom.nodes.some((node) => /selected feedback state is active/.test(node.textContent || '')),
+    );
+  });
+}
+
+for (const [role, scenario, size] of [
+  ['emitter-warning', 'emitter-warning', 32],
+  ['spark', 'spark', 16],
+  ['shield', 'initial', 64],
+]) {
+  test(`Team context decodes exact ${role} artwork and reports its actual state`, async (t) => {
+    const dom = fakeDocument(),
+      previous = globalThis.document;
+    globalThis.document = dom.document;
+    t.after(() => {
+      globalThis.document = previous;
+    });
+    const cleanups = [],
+      view = resolved(),
+      slot = teamThreatSlotSpecs().find((row) => row.id === `team.threat.${role}`);
+    t.after(() => {
+      for (const cleanup of cleanups.reverse()) cleanup();
+    });
+    view.assets[slot.id] = {
+      ...view.assets['player.scout.compact'],
+      id: slot.id,
+      geometry: {
+        ...view.assets['player.scout.compact'].geometry,
+        frame: { x: 0, y: 0, width: size, height: size },
+      },
+      file: {
+        ...view.assets['player.scout.compact'].file,
+        sha256: slot.id,
+        width: size,
+        height: size,
+      },
+    };
+    await crossModeContextPreview(
+      new dom.Node('section'),
+      slot,
+      view.assets[slot.id],
+      view,
+      new Map(),
+      {
+        fieldMode: 'team',
+        teamArena: 'relay-yard',
+        teamScenario: scenario,
+        motion: 'paused',
+        isCurrent: () => true,
+      },
+      (cleanup) => cleanups.push(cleanup),
+      {
+        decode: async (asset) => decodedImage(asset),
+        presentation: snapshot,
+        loop: (own, draw) => draw(0, false),
+      },
+    );
+    assert.ok(dom.draws.some(({ image }) => image.id === slot.id));
+    assert.ok(
+      dom.nodes.some((node) => /selected threat state is active/.test(node.textContent || '')),
+    );
+  });
+}
+
+for (const [arena, scenario, role, active] of [
+  ['first-connection', 'capture', 'joint-capture', true],
+  ['relay-yard', 'capture', 'joint-capture', true],
+  ['relay-yard', 'team-recovery', 'team-recovery', true],
+  ['relay-yard', 'recovered-p1', 'team-recovery', false],
+  ['first-connection', 'initial', 'joint-capture', false],
+]) {
+  test(`real ${arena} ${scenario} draws ${role} only in a dedicated event status canvas`, async (t) => {
+    const { teamEventSlotSpecs } = await import('../presentation/team-event-slots.mjs');
+    const dom = fakeDocument(),
+      previous = globalThis.document;
+    globalThis.document = dom.document;
+    t.after(() => {
+      globalThis.document = previous;
+    });
+    const cleanups = [],
+      view = resolved(),
+      slot = teamEventSlotSpecs().find((row) => row.id === `team.event.${role}`);
+    t.after(() => {
+      for (const cleanup of cleanups.reverse()) cleanup();
+    });
+    view.assets[slot.id] = {
+      ...view.assets['player.scout.compact'],
+      id: slot.id,
+      file: { ...view.assets['player.scout.compact'].file, sha256: slot.id },
+    };
+    let render;
+    await crossModeContextPreview(
+      new dom.Node('section'),
+      slot,
+      view.assets[slot.id],
+      view,
+      new Map(),
+      {
+        fieldMode: 'team',
+        teamArena: arena,
+        teamScenario: scenario,
+        motion: 'playing',
+        isCurrent: () => true,
+      },
+      (cleanup) => cleanups.push(cleanup),
+      {
+        decode: async (asset) => decodedImage(asset),
+        presentation: snapshot,
+        loop: (own, draw) => {
+          render = draw;
+          draw(0, false);
+        },
+      },
+    );
+    const icon = dom.nodes.find((node) => node.className === 'context-team-event-icon');
+    const status = dom.nodes.find((node) => node.className === 'context-team-event');
+    assert.equal(icon.hidden, !active);
+    assert.equal(status.hidden, !active);
+    const images = dom.draws.filter(({ image }) => image.id === slot.id);
+    assert.equal(images.length, active ? 1 : 0);
+    assert.ok(images.every(({ canvas }) => canvas === icon));
+    assert.equal(icon.width, 32);
+    assert.equal(icon.height, 32);
+    assert.equal(icon.attributes['aria-hidden'], 'true');
+    assert.notEqual(
+      status.style.color,
+      status.style.backgroundColor,
+      'readable caption despite low contrast authored palette',
+    );
+    assert.ok(
+      dom.nodes.some((node) =>
+        (active ? /selected event is retained/ : /selected event is inactive/).test(
+          node.textContent || '',
+        ),
+      ),
+    );
+    if (active) {
+      dom.draws.length = 0;
+      render(1 / 15, false);
+      assert.equal(
+        icon.hidden,
+        false,
+        'eight later simulation steps must not lose the single-tick receipt',
+      );
+      assert.ok(dom.draws.some(({ image, canvas }) => image.id === slot.id && canvas === icon));
+      for (let frame = 0; frame < 20; frame++) render(1 / 15, false);
+      assert.equal(icon.hidden, true, 'simulation lifetime ends before scene loops');
+      assert.equal(status.hidden, true);
+    }
+  });
+}
+
+for (const seat of [1, 2])
+  for (const width of [390, 600])
+    for (const reduced of [false, true]) {
+      test(`P${seat} crawling is real, held and resettable at ${width}px reduced=${reduced}`, async (t) => {
+        const dom = fakeDocument(),
+          previous = globalThis.document,
+          cleanups = [];
+        globalThis.document = dom.document;
+        t.after(() => {
+          for (const cleanup of cleanups.reverse()) cleanup();
+          globalThis.document = previous;
+        });
+        const view = resolved();
+        for (const row of TEAM_ACTOR_SLOTS)
+          view.assets[row.id] = {
+            ...view.assets[row.source],
+            id: row.id,
+            file: { ...view.assets[row.source].file, sha256: row.id },
+          };
+        const treatment = width < 480 ? 'compact' : 'detailed',
+          slot = { id: `team.player.${seat}.crawling.${treatment}`, group: 'players' };
+        let render;
+        await crossModeContextPreview(
+          new dom.Node('section'),
+          slot,
+          view.assets[slot.id],
+          view,
+          new Map(),
+          {
+            fieldMode: 'team',
+            teamArena: 'relay-yard',
+            teamScenario: `crawling-p${seat}`,
+            motion: 'playing',
+            isCurrent: () => true,
+          },
+          (cleanup) => cleanups.push(cleanup),
+          {
+            decode: async (asset) => decodedImage(asset),
+            presentation: snapshot,
+            loop: (own, draw) => {
+              render = draw;
+              dom.nodes.find((node) => node.tagName === 'canvas').clientWidth = width;
+              draw(0, reduced);
+            },
+          },
+        );
+        const shown = () => dom.draws.some(({ image }) => image.id === slot.id);
+        assert.ok(shown(), 'first held frame must use genuine displacement, not static downed art');
+        dom.draws.length = 0;
+        render(0, reduced);
+        assert.ok(shown(), 'same-tick paused repaint retains crawling');
+        assert.ok(
+          dom.nodes.some((node) =>
+            /selected Team body state is visible/.test(node.textContent || ''),
+          ),
+        );
+        if (!reduced) {
+          for (let frame = 0; frame < 53; frame++) render(1 / 15, false);
+          dom.draws.length = 0;
+          render(0, false);
+          assert.ok(shown(), 'private loop reset must re-prime earned movement');
+        }
+      });
+    }
+
+for (const arena of ['first-connection', 'relay-yard'])
+  for (const motion of ['paused', 'playing'])
+    for (const reduced of [false, true])
+      test(`completed ${arena} preview owns terminal guidance with ${motion} motion reduced=${reduced}`, async (t) => {
+        const { teamEventSlotSpecs } = await import('../presentation/team-event-slots.mjs');
+        const { createCoopEventFeedback } = await import('../couch/coop-event-feedback.mjs');
+        // A command-earned winner still has its final joint-cut event. Hiding or
+        // removing that event would conceal the defect instead of correcting UI ownership.
+        const earned = createStudioTeamFixture({ arena, scenario: 'victory' });
+        assert.equal(earned.run.status, 'won');
+        assert(earned.run.events.some((event) => event.type === 'cut.joint'));
+        const feedback = createCoopEventFeedback();
+        feedback.ingest(earned.run);
+        assert.equal(feedback.snapshot(earned.run).at(-1).kind, 'joint-capture');
+        const terminalState = structuredClone(earned.run);
+        const dom = fakeDocument(),
+          previous = globalThis.document,
+          cleanups = [];
+        globalThis.document = dom.document;
+        t.after(() => {
+          for (const cleanup of cleanups.reverse()) cleanup();
+          globalThis.document = previous;
+        });
+        const view = resolved();
+        const slot = teamEventSlotSpecs().find((row) => row.id === 'team.event.joint-capture');
+        view.assets[slot.id] = {
+          ...view.assets['player.scout.compact'],
+          id: slot.id,
+          file: { ...view.assets['player.scout.compact'].file, sha256: slot.id },
+        };
+        let render;
+        await crossModeContextPreview(
+          new dom.Node('section'),
+          slot,
+          view.assets[slot.id],
+          view,
+          new Map(),
+          {
+            fieldMode: 'team',
+            teamArena: arena,
+            teamScenario: 'victory',
+            motion,
+            isCurrent: () => true,
+          },
+          (cleanup) => cleanups.push(cleanup),
+          {
+            decode: async (asset) => decodedImage(asset),
+            presentation: snapshot,
+            loop: (own, draw) => {
+              render = draw;
+              draw(0, reduced);
+            },
+          },
+        );
+        const status = dom.nodes.find((node) => node.className === 'context-team-event');
+        const icon = dom.nodes.find((node) => node.className === 'context-team-event-icon');
+        const assertTerminal = () => {
+          assert.equal(status.hidden, false);
+          assert.equal(
+            status.children[1].textContent,
+            'Arena complete. Full artwork revealed; choose another preview state to inspect play.',
+          );
+          assert.equal(icon.hidden, true);
+          assert(
+            !dom.draws.some(({ image }) => image.id === slot.id),
+            'final capture icon must not claim live continuation',
+          );
+          assert(
+            dom.nodes.some((node) => /selected event is inactive/.test(node.textContent || '')),
+          );
+          assert(
+            !dom.nodes.some((node) => /selected event is retained/.test(node.textContent || '')),
+          );
+        };
+        assertTerminal();
+        for (let frame = 0; frame < 70; frame++) render(1 / 15, reduced);
+        assertTerminal();
+        // Terminal public commands do not erase the source event or advance time.
+        for (let frame = 0; frame < 70; frame++) earned.advance(1 / 15);
+        assert.deepEqual(earned.run, terminalState);
+        // The private specimen loop may adopt a new same-state run identity.
+        feedback.ingest(earned.run);
+        assert.equal(feedback.snapshot(earned.run).at(-1).kind, 'joint-capture');
+      });

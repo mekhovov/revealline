@@ -335,11 +335,13 @@ export async function page(
     doc.activeElement.emit('keyup', { key, code: key });
   };
   let now = 0;
-  const tick = (count = 1) => {
+  // A delayed RAF may run several fixed steps before one paint. Keep the
+  // historical one-step default; expose this timing only to modeled host tests.
+  const tick = (count = 1, { stepsPerFrame = 1 } = {}) => {
     for (let index = 0; index < count; index++) {
       const [id, callback] = frames.entries().next().value;
       frames.delete(id);
-      callback((now += FIXED_DT * 1000));
+      callback((now += stepsPerFrame * FIXED_DT * 1000));
     }
   };
   return {
