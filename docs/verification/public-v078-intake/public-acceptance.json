@@ -1,0 +1,79 @@
+{
+  "format": "revealline-public-acceptance.v1",
+  "status": "PASS",
+  "acceptedAt": "2026-09-21T13:23:03Z",
+  "repository": "mekhovov/revealline",
+  "release": {
+    "version": "v0.78.0",
+    "url": "https://github.com/mekhovov/revealline/releases/tag/v0.78.0",
+    "published": true,
+    "latest": true,
+    "assets": 9,
+    "sourceRevision": "e9434d03feb30bf8767051b2832a4ab987b2fa41",
+    "qualifiedSourceTree": "6885f7bf6c3af4a12c806c66887637ab6f126d02"
+  },
+  "pages": {
+    "url": "https://mekhovov.github.io/revealline/",
+    "exactVersionUrl": "https://mekhovov.github.io/revealline/releases/v0.78.0/site/game/",
+    "controllerCommit": "595fdadddf3cf5c4240c430b78d27772915df83d",
+    "controllerTree": "4e85a7be0038eef84833306acc528e22e67425fc",
+    "workflowRunId": 35603591639,
+    "deploymentId": 6569148205,
+    "deploymentState": "success",
+    "httpStatus": 200
+  },
+  "publicInventoryAudit": {
+    "status": "PASS",
+    "files": 4206,
+    "failedFiles": 0,
+    "expectedBytes": 866183041,
+    "verifiedBytes": 866183041,
+    "attempts": 4206,
+    "artifactReceiptSha256": "b4e73572710332e114a778749466d3e7e9a816fbdd14866d6b41b70ae7d24a4a",
+    "reportSha256": "408ee5f0c2457b858eea19dca37283bf21186cbffec18b27de20d18a8916a7ca",
+    "resultsSha256": "00ee268a310aa9fb4c74b67b287324fb679753ef51cb0a892933b8afdd6aec71"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "rootRedirectedToExactVersion": true,
+    "releaseExplorerListsCurrentVersion": true,
+    "historicalV077RouteReachedArchive41": true,
+    "mobileViewport": {
+      "width": 390,
+      "height": 844,
+      "horizontalOverflow": false
+    },
+    "desktopViewport": {
+      "width": 1280,
+      "height": 720,
+      "canvasWidth": 525,
+      "canvasHeight": 393
+    },
+    "firstSignal": {
+      "completed": true,
+      "revealedPercent": 52.2,
+      "score": 8160,
+      "livesLost": 0,
+      "pictureUnlocked": true
+    },
+    "offline": {
+      "optInRequired": true,
+      "verifiedFiles": 788,
+      "serviceWorkerUrl": "https://mekhovov.github.io/revealline/releases/v0.78.0/site/service-worker.js",
+      "disconnectedReopens": 2,
+      "passed": true
+    },
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "browserSessionRestoredOnlineAndClosed": true
+  },
+  "pullRequests": {
+    "merged": [209, 213],
+    "openAfterAcceptance": 0,
+    "draftExplanation": "PR 209 was intentionally held as a draft release-integrity lock until exact-source CI, artifact inspection, live browser, and offline gates passed; it was then marked ready and merged. PR 213 was never a draft."
+  },
+  "limitations": [
+    "No claim is made for physical controller hardware or audible music-quality review.",
+    "Private UA media and unapproved originals were not admitted to the public catalogue."
+  ]
+}
