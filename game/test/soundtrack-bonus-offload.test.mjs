@@ -85,6 +85,7 @@ test('trusted offload adopts historical installs and preserves edited metadata, 
   const automatic = resolveSoundtrackSelection({
     ...offloaded.library,
     selection: { playlistId: null },
+    listening: { ...offloaded.library.listening, mode: 'auto' },
   });
   assert(!automatic.playlist.trackIds.includes(a.track.id));
   assert.match(automatic.notice, /Download again/);
