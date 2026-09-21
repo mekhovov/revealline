@@ -130,6 +130,12 @@ on Node20/22. These local additions are not in the accepted v0.76 release and do
 not complete visual, human, device or whole-phase qualification. See the P06
 verification record and `docs/research/fracture-original-art-prompts.json`.
 
+Phaseworks also has its first local original (A return in reserve), wired as an
+opt-in immutable Studio candidate; six compositions remain absent. The28-test
+art/catalogue/candidate/library cohort passes on Node20/22 with unchanged42 clear
+checkpoints. Native visual qualification and publication are still pending. See
+the P07 verification record and `docs/research/phase-original-art-prompts.json`.
+
 ### Historical phase snapshots
 
 The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0
