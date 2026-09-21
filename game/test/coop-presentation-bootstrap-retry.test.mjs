@@ -100,7 +100,7 @@ for (const arena of ['first-connection', 'relay-yard']) {
     assert.equal(f.$('coop-menu').hidden, true);
     assert.equal(f.$('coop-play').hidden, false);
     assert.equal(f.$('coop-overlay').hidden, true);
-    assert.equal(f.drawImages.at(-1).sha256, row.picture.sha256);
+    assert.equal(f.arenaDrawImages.at(-1).sha256, row.picture.sha256);
     assert.equal(f.artwork.calls.loads, 2, 'Start borrows the recovered presentation.');
     assert.equal(f.artwork.calls.reads.length, 1);
   });

@@ -29,7 +29,7 @@ const hud = (f) =>
     'coop-state-0',
     'coop-state-1',
   ].map((id) => f.$(id).textContent);
-const image = (f) => f.drawImages.at(-1);
+const image = (f) => f.arenaDrawImages.at(-1);
 function tabTo(f, id) {
   for (let n = 0; n < 30 && f.doc.activeElement.id !== id; n++) f.tap('Tab');
   assert.equal(f.doc.activeElement.id, id, `Keyboard traversal reaches ${id}`);

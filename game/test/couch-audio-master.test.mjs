@@ -160,7 +160,8 @@ async function teamPage(t, store, { audio = null, assetDatabase, pads = [] } = {
   };
   $('coop-canvas').width = 1152;
   $('coop-canvas').height = 576;
-  $('coop-canvas').getContext = () => new Proxy({}, { get: () => () => {} });
+  $('coop-canvas').getContext = () =>
+    new Proxy({}, { get: (target, key) => (Object.hasOwn(target, key) ? target[key] : () => {}) });
   const frames = new Map(),
     originals = new Map();
   let next = 0,

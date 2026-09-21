@@ -35,7 +35,8 @@ async function eventPage(t, { arena = 'first-connection', reduced = false } = {}
   const f = await page(t, {
     presentation: {
       load({ snapshot }) {
-        const frames = new Map();
+        const frames = new Map(),
+          preparedImage = snapshot.image.bind(snapshot);
         for (const [kind, image] of images) {
           const id = `team.event.${kind}`,
             asset = { id: `${id}.host-test`, revision: 1, kind: 'image' };
@@ -46,7 +47,7 @@ async function eventPage(t, { arena = 'first-connection', reduced = false } = {}
             geometry: { frame: { x: 0, y: 0, width: 32, height: 32 }, pivot: { x: 0.5, y: 0.5 } },
           });
         }
-        snapshot.image = (id) => frames.get(id) ?? null;
+        snapshot.image = (id) => frames.get(id) ?? preparedImage(id);
       },
     },
     beforeImport({ $ }) {
