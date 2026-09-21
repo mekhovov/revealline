@@ -1,0 +1,110 @@
+{
+  "format": "revealline-public-browser-acceptance.v1",
+  "recordedAt": "2026-09-21T08:20:44Z",
+  "repository": "mekhovov/revealline",
+  "version": "v0.77.0",
+  "sourceCommit": "432110b51c570b838cdae390790b67dfa76f0785",
+  "sourceTree": "ffa1111d4392c76fa6083b929cc0efbcfd321147",
+  "controllerCommit": "6f851d1bce4cb7d5f257546ab6ffd3c68231f08a",
+  "controllerTree": "bcf081c81ad0214c64e34b8e1105bca083e0acd1",
+  "pagesRunId": 35576008746,
+  "pagesDeploymentId": 6564199467,
+  "publicUrl": "https://mekhovov.github.io/revealline/",
+  "status": "PASS",
+  "browser": {
+    "tool": "agent-browser",
+    "version": "0.27.0",
+    "session": "v077-public"
+  },
+  "checks": [
+    {
+      "name": "current-root-routing",
+      "status": "PASS",
+      "observedUrl": "https://mekhovov.github.io/revealline/releases/v0.77.0/site/game/",
+      "title": "Reveal / Line",
+      "readyState": "complete",
+      "versionMarker": "VERSION V0.77.0"
+    },
+    {
+      "name": "portrait-first-mission",
+      "status": "PASS",
+      "viewport": "390x844",
+      "result": "Mission complete; 52.2% captured; 8,160 points; target reached",
+      "screenshot": {
+        "path": "mobile-game-started.png",
+        "sha256": "dfde2352ac1fafa2c7ac34095d69c8aa0b2b347d148ee820f8dc0508cfff585b"
+      }
+    },
+    {
+      "name": "release-explorer",
+      "status": "PASS",
+      "currentHeading": "v0.77.0 · Current",
+      "v0.76.1PlayUrl": "https://mekhovov.github.io/revealline-archive-40/releases/v0.76.1/site/game/"
+    },
+    {
+      "name": "archive-40-route",
+      "status": "PASS",
+      "observedUrl": "https://mekhovov.github.io/revealline-archive-40/releases/v0.76.1/site/game/",
+      "readyState": "complete",
+      "versionMarker": "VERSION V0.76.1"
+    },
+    {
+      "name": "offline-preparation",
+      "status": "PASS",
+      "format": "revealline.offline-progress.v1",
+      "buildId": "1a96b34089ccbfdc3f0b006d5e1d0e7a91d63cd65dd3f332c41e4e211110bb1c",
+      "scope": "https://mekhovov.github.io/revealline/releases/v0.77.0/site/",
+      "filesVerified": 779,
+      "bytesVerified": 57571334,
+      "missing": [],
+      "corrupt": [],
+      "screenshot": {
+        "path": "offline-ready-mobile.png",
+        "sha256": "f39a2c319dfa74834e7c8fdd5d0e46dc024b4f4baab9e1c9295d259b69866243"
+      }
+    },
+    {
+      "name": "offline-reload-and-game-entry",
+      "status": "PASS",
+      "navigatorOnline": false,
+      "serviceWorkerControlled": true,
+      "readyState": "complete",
+      "versionMarker": "VERSION V0.77.0",
+      "gameEntryAvailable": true,
+      "screenshot": {
+        "path": "offline-game-started-mobile.png",
+        "sha256": "86f5bf7771e1548bbd333355b1bf40fc1b88723360ca245b897ccb42d9592448"
+      }
+    },
+    {
+      "name": "team-short-landscape",
+      "status": "PASS",
+      "viewport": "568x320",
+      "route": "https://mekhovov.github.io/revealline/releases/v0.77.0/site/game/couch/relay-rescue.html?return=solo",
+      "lobbyAvailable": true,
+      "arenaStarted": true,
+      "horizontalOverflow": false,
+      "screenshots": [
+        {
+          "path": "team-lobby-568x320.png",
+          "sha256": "6388174570ab719ebc8e0eaf4a61680166ba50f542e2ddcefb611fb1945a520b"
+        },
+        {
+          "path": "team-active-568x320.png",
+          "sha256": "1d84b76cc6323ffbe384b0a1ece94773b40efdf287595cbf6d34d7fa6806b996"
+        }
+      ]
+    },
+    {
+      "name": "browser-errors",
+      "status": "PASS",
+      "pageErrors": [],
+      "consoleMessages": []
+    }
+  ],
+  "notes": [
+    "A deliberate offline reload before choosing Prepare offline play failed with chrome-error://chromewebdata/. This was the expected unprepared state and is not counted as a pass.",
+    "After explicit preparation and verification, the same immutable route reloaded and entered the game with network emulation offline.",
+    "Responsive browser checks do not claim physical touch-device, physical-controller, audible-listening, or human balance acceptance."
+  ]
+}

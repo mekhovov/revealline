@@ -1,0 +1,480 @@
+{
+  "source": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+  "scope": "Missing tracked files under every explicit external-distribution ordinaryTree root. Read-only inventory; not proof of all build dependencies.",
+  "files": [
+    {
+      "path": "authoring/library/countercurrent-art/README.md",
+      "bytes": 5552,
+      "blob": "611a9e305d42c2782c94509d48ea090d094e3b8e"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/index.html",
+      "bytes": 5429,
+      "blob": "18762179c6d57ef62478b7b21b7ce86a0fe4d5ca"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-coupa.png",
+      "bytes": 2897299,
+      "blob": "5a27c5be5bc6686ed65a2e08703ad91f437ad129"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-fpv.png",
+      "bytes": 1953105,
+      "blob": "0a21c5ae0ba7e4971295eaa7a562b84859b9c0f3"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-retro.png",
+      "bytes": 2426061,
+      "blob": "1d929f1e1c197354360289b980a0bf48cc45fb33"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-ukraine.png",
+      "bytes": 2447624,
+      "blob": "c343ae53bfa0720cb51d2b603bf4e76c9305ca8f"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-coupa.png",
+      "bytes": 2735312,
+      "blob": "68af138eecd9fab195a5a509142abdb8b64f7e58"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-fpv.png",
+      "bytes": 2571756,
+      "blob": "a9e1747ba8fcf3acff9200c8c684909c4ce5d30c"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-retro.png",
+      "bytes": 2698820,
+      "blob": "3c03b8cd3678ca68d3b3d82593a6217ff4841e1b"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-ukraine.png",
+      "bytes": 3047188,
+      "blob": "17b14d9b723ff20da47731332d4ae72adad5030b"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-coupa.png",
+      "bytes": 2884014,
+      "blob": "21661cc316260c655fe0100f780b6c25a3b73859"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-fpv.png",
+      "bytes": 2534483,
+      "blob": "43482aa5e4dbfefca39848f9355b99c6ae4f1a70"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-retro.png",
+      "bytes": 2489771,
+      "blob": "6bc5ffeb57c4a037abbc1ae28e7b505dc80f4ac6"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-ukraine.png",
+      "bytes": 3007068,
+      "blob": "2c543078e0292dbfb95a7c92e740d083ccc62920"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/crossing-watch-coupa.jpg",
+      "bytes": 44732,
+      "blob": "85fd5e10115b1640832ce152719f4681b40e8d1d"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/crossing-watch-fpv.jpg",
+      "bytes": 25699,
+      "blob": "7beaaa8e99086b5d3a964e20d11a7403a73d5149"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/crossing-watch-retro.jpg",
+      "bytes": 36250,
+      "blob": "6caca78e51eb2f13a80ea359219adb870a2c2f1e"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/crossing-watch-ukraine.jpg",
+      "bytes": 35394,
+      "blob": "44410f8dc9aa0899d80f219d86583dc445acad20"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/offset-docks-coupa.jpg",
+      "bytes": 45676,
+      "blob": "609f871c9d40d7ec81e8eab3f5593da47cb15dbe"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/offset-docks-fpv.jpg",
+      "bytes": 39385,
+      "blob": "0b44163a3f387d14a30ce68332872819585b2794"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/offset-docks-retro.jpg",
+      "bytes": 42020,
+      "blob": "dac34abb3e7ff46310ff023cee1401b4efb9494d"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/offset-docks-ukraine.jpg",
+      "bytes": 45623,
+      "blob": "9ef73d1c8170edbbb944087d82acc582b88c64b5"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/sandbar-braid-coupa.jpg",
+      "bytes": 46852,
+      "blob": "9d6a2a66e60e7e2368639e5c99b1d45e54718f52"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/sandbar-braid-fpv.jpg",
+      "bytes": 34470,
+      "blob": "f54086e4d5b6df86ec2e388ae227b73857d1b1c7"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/sandbar-braid-retro.jpg",
+      "bytes": 39129,
+      "blob": "e70384eefa70e60c2bc0acc49969543125baaa09"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/thumbnails/sandbar-braid-ukraine.jpg",
+      "bytes": 48025,
+      "blob": "7a6cfad908351e505518677cf4db913f03f6d653"
+    },
+    {
+      "path": "authoring/library/countercurrent-chapters/README.md",
+      "bytes": 6499,
+      "blob": "a821d79248e631cac82f41b1db4aafadf1792d35"
+    },
+    {
+      "path": "authoring/library/countercurrent/README.md",
+      "bytes": 12141,
+      "blob": "b8dd718efcd2b00a85038d66651c84daaa924fa0"
+    },
+    {
+      "path": "authoring/library/external-chapter-pilot/README.md",
+      "bytes": 2436,
+      "blob": "f96d4f3f13491e7950963e90799dec900bb22919"
+    },
+    {
+      "path": "authoring/library/fracture-coupa-art/README.md",
+      "bytes": 4647,
+      "blob": "51b2d205a7e627538e3de223aabbda4c2f2d090c"
+    },
+    {
+      "path": "authoring/library/fracture-coupa-art/originals/fault-fan-coupa.png",
+      "bytes": 2950816,
+      "blob": "59329e81b2d7db7203f64aa19fd3e03cd60d7a30"
+    },
+    {
+      "path": "authoring/library/fracture-coupa-art/originals/frayed-causeway-coupa.png",
+      "bytes": 2698848,
+      "blob": "7fe7ae344dbc127f154bedfd1e5c851c7009f824"
+    },
+    {
+      "path": "authoring/library/fracture-coupa-art/originals/split-ring-coupa.png",
+      "bytes": 3057159,
+      "blob": "fa63c6f8292cfe392bf68cf81d8dae026b225137"
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/README.md",
+      "bytes": 3315,
+      "blob": "516eaa658c2170c87e209931dd3ee803e74f6dca"
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/originals/fault-fan-fpv.png",
+      "bytes": 2796382,
+      "blob": "9a7d4b18f7c2aa96bd1c2fd21e59e50075308ddd"
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/originals/frayed-causeway-fpv.png",
+      "bytes": 2938361,
+      "blob": "6d7238af21650ca9e9820bf8384566e8140cbc3f"
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/originals/split-ring-fpv.png",
+      "bytes": 2922125,
+      "blob": "72b690d61f2ab9260b17d9ec0b8f34058ef79b46"
+    },
+    {
+      "path": "authoring/library/fracture-lines-chapter/README.md",
+      "bytes": 4945,
+      "blob": "8e20b9d1d4255e13f660e0ef15cad898605dbf81"
+    },
+    {
+      "path": "authoring/library/fracture-lines/README.md",
+      "bytes": 6212,
+      "blob": "05c4e70e3f673e21520fc12fad3fa7837726344c"
+    },
+    {
+      "path": "authoring/library/fracture-retro-art/README.md",
+      "bytes": 4568,
+      "blob": "780c7a4a6ec3fa20d38785dc19548fe0def410ae"
+    },
+    {
+      "path": "authoring/library/fracture-retro-art/originals/fault-fan-retro.png",
+      "bytes": 2405219,
+      "blob": "a08764815c38419b9f63621c0cc0af70a65be012"
+    },
+    {
+      "path": "authoring/library/fracture-retro-art/originals/frayed-causeway-retro.png",
+      "bytes": 2731032,
+      "blob": "1ab251bd13231585b9406079c03d72a8c49fe0a2"
+    },
+    {
+      "path": "authoring/library/fracture-retro-art/originals/split-ring-retro.png",
+      "bytes": 2818631,
+      "blob": "b4fe2b564a77681e4c4ac7421d233122b1f80efe"
+    },
+    {
+      "path": "authoring/library/fracture-theme-chapters/README.md",
+      "bytes": 7148,
+      "blob": "814b79af208e5a3c5a0c02d9c84fce682c63d049"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/README.md",
+      "bytes": 5208,
+      "blob": "ddcefc6a64d1e6e07fa2e933c20014b1010bb15f"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/fault-fan-ukraine.png",
+      "bytes": 2981883,
+      "blob": "6db325ab34d106b1b6329895bf923daf09f862c6"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/frayed-causeway-ukraine.png",
+      "bytes": 2983333,
+      "blob": "04d0851b97b12d17c3dd7086566c4b9bf72e2ea7"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/split-ring-ukraine.png",
+      "bytes": 2756776,
+      "blob": "4fe9ce548b14ecb16314b409760370e15b7f5f2e"
+    },
+    {
+      "path": "authoring/library/retro-route-art/README.md",
+      "bytes": 3410,
+      "blob": "103b28bdb5f753fe474cfdbcd67c117e04a366f8"
+    },
+    {
+      "path": "authoring/library/retro-route-art/originals/crosswind-courier.png",
+      "bytes": 2760396,
+      "blob": "bc9749cd85955ecdb367c93676bd9c9605746981"
+    },
+    {
+      "path": "authoring/library/retro-route-art/originals/midnight-workshop.png",
+      "bytes": 2378256,
+      "blob": "4b6fa4302ba79a829143194b9dad587079e6a3f6"
+    },
+    {
+      "path": "authoring/library/retro-route-art/originals/signal-thread.png",
+      "bytes": 2440128,
+      "blob": "8d19b3ebdb79bc32edf6be6aea089c323fd96db8"
+    },
+    {
+      "path": "authoring/library/route-worlds/README.md",
+      "bytes": 6696,
+      "blob": "2f61a0ef57aa697339f2ddf805fdb524555b582e"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/README.md",
+      "bytes": 3611,
+      "blob": "6d2b2be9d27591fa1627970aff4e444d18cbbfd1"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/originals/listening-court.png",
+      "bytes": 2948372,
+      "blob": "7a6eca51834c03c3c11a3049426c55ec931c98cd"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/originals/open-the-circuit.png",
+      "bytes": 2701967,
+      "blob": "67dabd26dab6961ddee412e5fc2db83005926f0d"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/originals/switchyard-gates.png",
+      "bytes": 2933729,
+      "blob": "69425f59b3b5a11c7411c3f06f5b668caee64c3c"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-external/README.md",
+      "bytes": 4958,
+      "blob": "113a0661bfdb68dc742f8e5f1872a80954ee9f96"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit/README.md",
+      "bytes": 9959,
+      "blob": "ebb8d98b5274397bd4fee2846d557df603015347"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/README.md",
+      "bytes": 5504,
+      "blob": "2b6522a23338fb6077c9a6bf7621d86613abae8c"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+      "bytes": 2767187,
+      "blob": "84548d040b6271c89f6cd268499d8ca046862d0c"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+      "bytes": 2449288,
+      "blob": "fd26bfd5703dfc561275785623ce16a3faa16608"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+      "bytes": 2187660,
+      "blob": "553e3885221fa6f484367bf35b2a4f2bdd97d5b8"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/retro/originals/listening-court.png",
+      "bytes": 2455383,
+      "blob": "94f0ffbc4cfd0c0972243fd2be39ab7a15d04431"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/retro/originals/open-the-circuit.png",
+      "bytes": 2423183,
+      "blob": "6507b12a377fbcd4325495caff83d028c8403c8d"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/retro/originals/switchyard-gates.png",
+      "bytes": 2662328,
+      "blob": "24430e8fc58637cfee0a2c3902fc903c6d6b50c6"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/ukraine/originals/listening-court.png",
+      "bytes": 3018491,
+      "blob": "e2d147d23a61148b3d9f5ddab95d004775c28a76"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/ukraine/originals/open-the-circuit.png",
+      "bytes": 2462247,
+      "blob": "08fc567964dd025f6b12085279b5e863a421a439"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/ukraine/originals/switchyard-gates.png",
+      "bytes": 2682645,
+      "blob": "f64898ddcea356f75832fca37b81ab29ea58eaab"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-chapters/README.md",
+      "bytes": 7843,
+      "blob": "d0254d9d351d48e205d98417dc3cb14e18b0f22e"
+    },
+    {
+      "path": "authoring/library/spend-route-art/README.md",
+      "bytes": 4027,
+      "blob": "3ec4a7b2f82ac5b1b359f8df7cc99d61e46cdc23"
+    },
+    {
+      "path": "authoring/library/spend-route-art/originals/network-garden.png",
+      "bytes": 2858095,
+      "blob": "b548eaeacbec7ec2bf031a7f6f2011d5741b75f0"
+    },
+    {
+      "path": "authoring/library/spend-route-art/originals/shared-harbor.png",
+      "bytes": 2686912,
+      "blob": "db7acded5da57ca1f79c64fbcf3c7eea386b6914"
+    },
+    {
+      "path": "authoring/library/spend-route-art/originals/value-foundry.png",
+      "bytes": 2725160,
+      "blob": "dac73dc20b9ea2007913e6a3bf8eb9cf4580ca84"
+    },
+    {
+      "path": "authoring/library/ukraine-route-art/README.md",
+      "bytes": 6825,
+      "blob": "3fc056de8882ef55d1ab5790912816d231ce476f"
+    },
+    {
+      "path": "authoring/library/ukraine-route-art/originals/carpathian-thread-relay.png",
+      "bytes": 2926966,
+      "blob": "6dcd7c55cc51ea818375c901c2222710989c31dc"
+    },
+    {
+      "path": "authoring/library/ukraine-route-art/originals/crosswind-market-depot.png",
+      "bytes": 3107900,
+      "blob": "57555f1488f4bb7b300a1bc62ec4765e27f63f81"
+    },
+    {
+      "path": "authoring/library/ukraine-route-art/originals/two-lanes-forge.png",
+      "bytes": 2780010,
+      "blob": "047d89cc6f852ad5099736bd3d91d539f71e2676"
+    }
+  ],
+  "totals": {
+    "authoring/library/countercurrent-art": {
+      "files": 26,
+      "bytes": 32186737
+    },
+    "authoring/library/countercurrent-chapters": {
+      "files": 1,
+      "bytes": 6499
+    },
+    "authoring/library/countercurrent": {
+      "files": 1,
+      "bytes": 12141
+    },
+    "authoring/library/external-chapter-pilot": {
+      "files": 1,
+      "bytes": 2436
+    },
+    "authoring/library/fracture-coupa-art": {
+      "files": 4,
+      "bytes": 8711470
+    },
+    "authoring/library/fracture-lines-art": {
+      "files": 4,
+      "bytes": 8660183
+    },
+    "authoring/library/fracture-lines-chapter": {
+      "files": 1,
+      "bytes": 4945
+    },
+    "authoring/library/fracture-lines": {
+      "files": 1,
+      "bytes": 6212
+    },
+    "authoring/library/fracture-retro-art": {
+      "files": 4,
+      "bytes": 7959450
+    },
+    "authoring/library/fracture-theme-chapters": {
+      "files": 1,
+      "bytes": 7148
+    },
+    "authoring/library/fracture-ukraine-art": {
+      "files": 4,
+      "bytes": 8727200
+    },
+    "authoring/library/retro-route-art": {
+      "files": 4,
+      "bytes": 7582190
+    },
+    "authoring/library/route-worlds": {
+      "files": 1,
+      "bytes": 6696
+    },
+    "authoring/library/sentinel-circuit-art": {
+      "files": 4,
+      "bytes": 8587679
+    },
+    "authoring/library/sentinel-circuit-external": {
+      "files": 1,
+      "bytes": 4958
+    },
+    "authoring/library/sentinel-circuit": {
+      "files": 1,
+      "bytes": 9959
+    },
+    "authoring/library/sentinel-theme-art": {
+      "files": 10,
+      "bytes": 23113916
+    },
+    "authoring/library/sentinel-theme-chapters": {
+      "files": 1,
+      "bytes": 7843
+    },
+    "authoring/library/spend-route-art": {
+      "files": 4,
+      "bytes": 8274194
+    },
+    "authoring/library/ukraine-route-art": {
+      "files": 4,
+      "bytes": 8821701
+    }
+  },
+  "missingFileCount": 78,
+  "missingBytes": 122693557
+}

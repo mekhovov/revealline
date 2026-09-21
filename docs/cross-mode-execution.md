@@ -1,35 +1,36 @@
 # Reveal Line cross-mode execution register
 
-## Current delivery — v0.76.1 accepted Pages; v0.77.0 published, Pages pending
+## Current delivery — v0.77.0 accepted on Pages
 
-**Public default: [v0.76.1](https://mekhovov.github.io/revealline/releases/v0.76.1/site/game/).**
-Frozen source `17bd1965a2979489f5a163de13dc23c47c5b538d`, source PR208 and
-publication PR210 are accepted. Pages run35551436420 / deployment6560099093 passed.
-The independent public audit matched **4,130 files / 864,317,088 bytes**. Public
-boot and the 776-file core offline preparation passed. These checks do not complete
-physical-device or enjoyment gates.
+**Public default: [v0.77.0](https://mekhovov.github.io/revealline/releases/v0.77.0/site/game/).**
+Qualified game source `432110b51c570b838cdae390790b67dfa76f0785`, source PR211,
+and publication PR212 are accepted. Controller commit
+`6f851d1bce4cb7d5f257546ab6ffd3c68231f08a` deployed through Pages run35576008746 /
+deployment6564199467. The retained public HTTP audit matched **4,162 files /
+864,619,510 bytes**, with zero failures and no retries. Root independently matched
+every retained observation against the downloaded deployment receipt; this was a
+receipt/evidence intake, not a second complete network audit.
 
-**Published GitHub release, Pages pending: v0.77.0 shared handheld play.** Solo, Versus and Team share touch
-steering and preferences, with separate fingers for couch seats. Compact HUDs and
-visible-viewport fitting preserve the complete arena without requiring fullscreen.
-Required encounter instructions and event notices retain separate readable space;
-short staged landscape boards are consequently smaller than ordinary Arcade boards.
-Modeled controller Start, Retry, Next and pause journeys pass. They do not reproduce
-or certify the reported physical Steam Deck failure. Real Safari browser bars, safe
-areas, touch/controller hardware and remaining whole-mode journeys stay open.
+Solo, Versus and Team share touch steering and preferences, with separate fingers
+for couch seats. Compact HUDs and visible-viewport fitting preserve the complete
+arena without requiring fullscreen. Required encounter instructions and event
+notices retain separate readable space. Modeled controller Start, Retry, Next and
+pause journeys pass; they do not certify the reported physical Steam Deck failure.
 
-Exact versioned source `432110b51c570b838cdae390790b67dfa76f0785` passed
-hosted PR CI `35569123108` and qualification/freeze `35569126001`, each with all
-four test shards successful. [PR211](https://github.com/mekhovov/revealline/pull/211)
-merged as `6da80d80d9298566d14a3fa8647a8b71f929e3c4`; the GitHub release is published.
-The controller is preparing Archive40 and the Pages selector. **Pages inventory and
-public player-journey acceptance remain pending**, so the last accepted default
-above remains authoritative. See the [device implementation and retained evidence](shared-device-play.md).
-Later Team, Studio, campaign and soundtrack candidates remain outside this release cutoff.
+Public browser acceptance covers root routing, a legal Solo win at390×844, current
+Explorer, prior-release Archive40, 779-file/57,571,334-byte core offline preparation
+and offline game entry, plus Team lobby/active play at568×320 without horizontal
+overflow or page/console errors. Physical Safari browser bars, safe areas, actual
+touch/controllers, audible listening and remaining whole-mode journeys stay open.
+See [device implementation and retained evidence](shared-device-play.md).
+
+Later Team presentation, additional landscape enlargement, Studio, campaign and
+soundtrack candidates remain outside v0.77.0. Their local results are not public
+release acceptance.
 
 | Priority | Programme work | Current boundary |
 |---|---|---|
-| 1 | Release shared handheld controls and compact layouts | v0.77.0 source CI, qualification/freeze and source merge complete; GitHub release published; Pages and public journeys pending. |
+| 1 | Release shared handheld controls and compact layouts | v0.77.0 accepted on Pages with full inventory and bounded public journeys; physical device gates remain. |
 | 2 | Finish native navigation, shared readability and actor parity | Partial; all modes, complete input journeys, actual playing scale and responsive layouts remain. |
 | 3 | Action feedback, fair challenge and rewards | Partial; readable warnings/counters, loss causes, Retry/Next/stories and human playtests remain. |
 | 4 | Music, creation, discovery and campaign production | Partial; auditioned media, complete asset coverage, real installation/transfer/recovery and the revised XPOSED Journey programme remain. |
@@ -56,9 +57,9 @@ original observation dates. Accepted scopes below are not whole-game completion.
 | P01 loading | Accepted original scope; new Journey gap open | v0.57.4 feedback contract. Held `b6502bfc` prepares exact required character imagery before authored Journey Start/Next/Retry replaces its owner. Bounded host/native checks pass; final integrated qualification and public delivery remain. |
 | P02-A master sound | Accepted scoped baseline | v0.58.1; keep master authority through later transports and previews. |
 | P02-B music | Partial | Shared playback foundations exist. PR209 remains separate from the device release; exact media transfer/offline behavior, rights/provenance, listening and mode qualification remain. AI-original music production remains paused by the user's later direction. |
-| P03 navigation | In progress | Public Library/Team-lobby corrections are accepted in v0.76.1. Device candidate covers modeled controller launch/continuation; physical controllers and complete current-screen journeys remain. |
+| P03 navigation | In progress | Public Library/Team-lobby corrections are accepted in v0.76.1. v0.77.0 covers modeled controller launch/continuation; physical controllers and complete current-screen journeys remain. |
 | P04 creation | Partial | Published previews/history and foundation-pack example exist. Held Studio focus/cold Back (`74092988`) and historical replacement transfer (`aced2706`) have scoped tests and actual browser Save/Reload/export evidence. Complete independent creation/play/recovery and public acceptance remain. |
-| P05 presentation | In progress | Readable styles and compact layouts exist. v0.77.0 is GitHub-published but not yet accepted on Pages. Held compact Team settings and reviewed presentation41 remain separate. All-mode EN/UA, Large/Plain, zoom, reduced effects and physical safe-area/browser-bar checks remain. |
+| P05 presentation | In progress | Readable styles and compact layouts exist. v0.77.0 is accepted on Pages. Held compact Team settings and reviewed presentation41 remain separate. All-mode EN/UA, Large/Plain, zoom, reduced effects and physical safe-area/browser-bar checks remain. |
 | P06 discovery/install | Partial | Existing catalog/installation foundations are published. Capacity, replacement/removal, media ownership conflicts and interrupted recovery still need complete journeys. |
 | P07 rewards/continuation | Partial | Held `76586bd1` adds Legacy campaign ending; `59533841` adds deliberate next-attempt difficulty after Legacy loss; `9076ada1` retires stale selection feedback. Scoped source/native evidence exists, but integrated qualification/public delivery and remaining story/Collection paths do not. |
 | P08-A/B art/action feedback | Partial | Shared rendering/catalog and effects exist; held Team production and separate actor-material successor candidates are not accepted public art. Finish motion, heading, scale, danger/capture/loss/pickup/Support/rescue readability in actual play. |
@@ -72,8 +73,11 @@ original observation dates. Accepted scopes below are not whole-game completion.
 
 ### Held integration boundary
 
-Current source **`05d2d20119f15a937549b797fd59105b84558588`** in
-`codex/team-presentation-integration` is committed/pushed and independent of v0.77.0.
+Rebased candidate **`0a54fc850fa3b21634855ed95b245c47dc22c423`** in
+`codex/team-presentation-next` now includes accepted v0.77.0. The original
+`codex/team-presentation-integration` at `e69f4ecabbe8a92525853cc5f148f824487ecbaf`
+is preserved. Runtime, assets, scripts and tests match that original exactly; only
+accepted version files, publication records and additive maintainer guidance differ.
 It includes the retained Team artwork integration, Legacy result/difficulty recovery,
 compact Team settings, About and Replay focus corrections, required-look readiness,
 and the final Studio revision-transfer cutoff. Subsequent UX/content findings stay
@@ -99,15 +103,29 @@ Bounded final-source native visual review now passes on `05d2d201`: all 425 serv
 responses match; Team controls remain visible at 568×320 and 390×844, and Solo
 Large/Plain loss difficulty/Retry works at 568×320. The tiny two-player landscape
 board remains 254×127; further arena-size improvement is a presentation follow-up.
-All test shards and the ordinary build remain open. No game version or new PR is allocated. After the release controller provides
-the exact accepted main/Pages receipt, integrate that source and requalify the final
-follow-up before version/PR/freeze/publication. These checks do not certify physical
-iPhone, Steam Deck, touch/controller behavior or complete programme phases.
+The rebased candidate passes103 scoped checks on each Node20/22 runtime (the
+first Node22 viewport attempt required restoring its tracked sparse fixture), and
+production41 reproduces exactly. [Rebase proof and bounded reruns](verification/presentation-rebase-v077/README.md).
+All test shards and the ordinary build remain open. The accepted main has now been
+integrated without runtime changes. No new game version or PR is allocated; the
+release controller sequences this candidate after the separate music PR209.
+The retained browser results remain observations of their exact original source,
+not a newly performed full-device or final integrated release qualification.
 
-**Next delivery sequence:** finish v0.77.0 Pages acceptance → integrate the accepted
-base into this bounded follow-up → final source/native/build qualification → allocate
-and publish its own immutable version. Keep broader music, Collection, challenge and
-campaign work independent until its own complete gates pass.
+**Separate landscape follow-up:** `codex/team-landscape-arena` at
+`39381478825a4739222c071f6f294c713f197faa` uses Solo-style corner touch overlays
+instead of full-height side gutters, and fixes the Team compact-layout gap between
+501px and600px viewport height. Bounded actual-browser measurements with Large/Plain
+text include Relay Yard363.203×181.602 at568×320 and807.203×403.602 at960×540;
+portrait retains the complete370×185 arena at390×844. Targets remain at least44px.
+Corner controls can cover corner artwork. This is committed and separately tested,
+but is not part of the held Team cutoff or the public release. Physical simultaneous
+fingers, Safari bars and controller hardware remain unverified.
+
+**Next delivery sequence:** finish the controller's separate music PR209 delivery →
+final Team source/native/build qualification and immutable release → separately
+qualify the landscape follow-up. Keep Collection, challenge and campaign work
+independent until their own complete gates pass.
 
 <details>
 <summary>Historical v0.69.3 / v0.70 integration checkpoint</summary>
