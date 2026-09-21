@@ -44,3 +44,16 @@ Relay result 363.20×181.60 and portrait 370×185 remain unchanged. All measured
 targets remain in view and at least 44px. See `breakpoint-summary.json` and its
 independently verified served-byte log. This is a further candidate correction,
 not public acceptance; original evidence above remains scoped to its original CSS.
+
+## Accepted-base integration
+
+The same landscape changes are now carried by `codex/team-landscape-next` at
+`3b579b7b12ca497851ade7bde4f8fcf9a44e8b22`, based on the accepted-main Team integration
+`bce7b912`. The original landscape branch remains intact. All 252 retained final
+browser response hashes (2,731,529 bytes) exactly match the new committed source.
+The only runtime-file difference from the originally observed landscape candidate
+is the accepted build version. All five production recipe groups match the held
+Team integration; the independently reviewed handheld stylesheet is not a producer
+recipe input. No compiled asset successor is required for this stylesheet change.
+Formatting and whitespace checks pass. See `rebase-proof.json`. This source-to-
+evidence comparison is not a fresh browser session or public/device acceptance.
