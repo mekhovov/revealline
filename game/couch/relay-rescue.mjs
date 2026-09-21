@@ -965,9 +965,13 @@ export function bootCoop() {
       : strongholds.length
         ? 'Strongholds secured together'
         : coopGoalText(run.level);
+    const finished = run.status === 'won' || run.status === 'lost';
     for (const player of run.players) {
-      $('coop-state-' + player.id).textContent =
-        player.status === 'downed'
+      $('coop-state-' + player.id).textContent = finished
+        ? run.status === 'won'
+          ? 'Objective complete'
+          : 'Attempt ended'
+        : player.status === 'downed'
           ? run.team.reserves === 0
             ? 'Down · free rescue available'
             : `Rescue · ${Math.max(0, Math.ceil(player.downedUntil - run.time))}s`
@@ -976,8 +980,11 @@ export function bootCoop() {
             : player.graceUntil > run.time
               ? 'Recovery shield · safe ground only'
               : 'On safe ground';
-      $('coop-state-' + player.id).dataset.compact =
-        player.status === 'downed'
+      $('coop-state-' + player.id).dataset.compact = finished
+        ? run.status === 'won'
+          ? 'Complete'
+          : 'Ended'
+        : player.status === 'downed'
           ? run.team.reserves === 0
             ? 'Free rescue'
             : `Rescue ${Math.max(0, Math.ceil(player.downedUntil - run.time))}s`
@@ -987,29 +994,33 @@ export function bootCoop() {
               ? 'Shielded'
               : 'Safe';
       const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
-      $('coop-charge-' + player.id).textContent =
-        player.status === 'downed'
+      $('coop-charge-' + player.id).textContent = finished
+        ? 'Results ready'
+        : player.status === 'downed'
           ? 'Crawl to your partner'
           : player.rescue
             ? 'Hold Support · rescuing'
             : recharge > 0
               ? `Support · ${recharge.toFixed(1)}s`
               : 'Support ready';
-      $('coop-charge-' + player.id).dataset.compact =
-        player.status === 'downed'
+      $('coop-charge-' + player.id).dataset.compact = finished
+        ? 'Results'
+        : player.status === 'downed'
           ? 'Crawl to ally'
           : player.rescue
             ? 'Hold rescue'
             : recharge > 0
               ? `Support ${recharge.toFixed(1)}s`
               : 'Support ready';
-      $('coop-support-' + player.id).textContent = player.rescue
-        ? `Rescuing partner · ${Math.min(100, Math.floor((run.time - player.rescue.startedAt) * 100))}%`
-        : player.status === 'downed'
-          ? 'Crawl along safe ground toward your partner'
-          : recharge > 0
-            ? `Support recharging · ${recharge.toFixed(1)}s`
-            : 'Support ready · tap to cover, hold nearby to rescue';
+      $('coop-support-' + player.id).textContent = finished
+        ? `${names[player.id]}: ${run.status === 'won' ? 'Objective complete. Choose another arena or Retry.' : 'Attempt ended. Choose Retry or Change setup.'}`
+        : player.rescue
+          ? `Rescuing partner · ${Math.min(100, Math.floor((run.time - player.rescue.startedAt) * 100))}%`
+          : player.status === 'downed'
+            ? 'Crawl along safe ground toward your partner'
+            : recharge > 0
+              ? `Support recharging · ${recharge.toFixed(1)}s`
+              : 'Support ready · tap to cover, hold nearby to rescue';
     }
   }
   // This focus lifetime is local to one picture action. Native disabling may
@@ -2665,22 +2676,33 @@ export function bootCoop() {
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
+    const terminalMessage =
+      run.status === 'won'
+        ? 'Team objective complete. Your shared result is ready.'
+        : run.status === 'lost'
+          ? 'Team attempt ended. Choose Retry or Change setup.'
+          : null;
+    // The final step still owns its input cleanup, but its live region must
+    // not announce instructions for an attempt that has ended.
+    const announce = (text) => {
+      if (!terminalMessage) message(text);
+    };
     for (const event of run.events) {
       if (event.type === 'cells.claimed' && run.terrain) {
         const caption = terrainTransitionCaption(run, event);
-        if (caption) message(caption);
+        if (caption) announce(caption);
       }
       if (event.type === 'cut.closed') {
         input.clearPlayer(event.player);
         batch.release(event.player);
       }
       if (event.type === 'cut.joint')
-        message('Joint Cut! Both lines are safe. Choose your next route together.');
+        announce('Joint Cut! Both lines are safe. Choose your next route together.');
       if (event.type === 'player.downed') {
         knockdowns[event.player] = event;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        message(
+        announce(
           `${coopFailureFeedback(run, event).cause} ${names[event.player]} needs a rescue. Hold Support nearby${run.config.advancedCooperation ? ' or capture 2% new territory' : ''}.`,
         );
       }
@@ -2688,35 +2710,36 @@ export function bootCoop() {
         knockdowns[event.player] = null;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        message(
+        announce(
           `${names[event.player]} is back.${event.reason === 'reserve' ? ' One team reserve used.' : ''} Choose a fresh direction.`,
         );
       }
       if (event.type === 'team.recovery')
-        message('Both craft are back. One team reserve used. Choose fresh directions together.');
+        announce('Both craft are back. One team reserve used. Choose fresh directions together.');
       if (event.type === 'shield.disabled')
-        message('Both anchors secured! Now capture the exposed core in a new cut.');
+        announce('Both anchors secured! Now capture the exposed core in a new cut.');
       if (event.type === 'core.defeated')
-        message('Stronghold defeated! Its emitter and travelling sparks are gone.');
+        announce('Stronghold defeated! Its emitter and travelling sparks are gone.');
       if (event.type === 'support.pulse') {
         if (event.interceptedImpacts?.length)
-          message(`${names[event.player]} intercepted a travelling spark.`);
+          announce(`${names[event.player]} intercepted a travelling spark.`);
         else if (event.slowedEnemies?.length)
-          message(`${names[event.player]} slowed the pressure. There is room to finish a cut.`);
+          announce(`${names[event.player]} slowed the pressure. There is room to finish a cut.`);
       }
       if (event.type === 'rescue.completed') {
         input.clearPlayer(event.player);
         batch.release(event.player);
-        message(
+        announce(
           `${names[event.player]} rescued their partner. Both craft are ready for a fresh direction.`,
         );
       }
       if (event.type === 'rescue.cancelled' && event.requiresFreshSteering) {
         input.clearPlayer(event.player);
         batch.release(event.player);
-        message('Rescue interrupted. Choose a fresh direction or hold Support nearby again.');
+        announce('Rescue interrupted. Choose a fresh direction or hold Support nearby again.');
       }
     }
+    if (terminalMessage) message(terminalMessage);
   }
   function update(now) {
     if (disposed) return;

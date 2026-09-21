@@ -1,0 +1,12 @@
+Browser tab: 186, Title: "Relay Rescue · RevealLine", URL: "http://127.0.0.1:58352/game/couch/relay-rescue.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 10-11, 13-14, 18-20, 45
++			47 text Objective complete
++			48 text Results ready
++			49 text 100.0%
++			50 text 1 reserve
++			51 text Objective complete
++			52 text Results ready
++			53 text Reveal 0.01% together
++			54 text 0:03
+The focused UI element is 30 button Browse Team arenas, ID: coop-discovery-paused
