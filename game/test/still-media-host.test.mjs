@@ -7,10 +7,21 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { createStoryMediaStore } from '../story-media-store.mjs';
-import { exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
+import {
+  exportSoundtrackBundle,
+  importSoundtrackBundle,
+  prepareSoundtrackLibrary,
+} from '../soundtrack-bundle.mjs';
+import {
+  emptySoundtrackLibrary,
+  resolveSoundtrackCatalogue,
+  resolveSoundtrackLibrary,
+  setCatalogueTracks,
+} from '../soundtrack.mjs';
+import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { SoloElement } from './helpers/solo-dom.mjs';
-import { memoryIndexedDB, fixture } from './helpers/soundtrack-fixtures.mjs';
+import { memoryIndexedDB, fixture, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 import { mediaFixture, pngBytes, deferred } from './helpers/media-fixtures.mjs';
 
 const audioFixture = await fixture();
@@ -249,7 +260,7 @@ test('closing a pending workshop read restores the invoker before settling and p
   assert.equal(h.$('still-host-status').textContent, status);
   assert.equal(h.host.panel.dialog.open, false);
 });
-test('v1 MP3 bytes remain exact through shared v4 upgrade and explicit native backup preparation', async (t) => {
+test('v1 MP3 bytes remain exact through shared v5 upgrade and explicit native backup preparation', async (t) => {
   const memory = memoryIndexedDB(),
     old = createSoundtrackStore({ indexedDB: memory.indexedDB });
   await old.commit(audioFixture.prepared, { expectedGeneration: 0 });
@@ -275,6 +286,238 @@ test('v1 MP3 bytes remain exact through shared v4 upgrade and explicit native ba
   assert.match(h.$('still-host-status').textContent, /Download requested/);
   h.$('still-host-close').onclick();
   assert.equal(h.revoked.length, 1);
+});
+
+function recoveryCatalogue(redistribute = 'allowed') {
+  const id = 'builtin.catalog.still-recovery';
+  return resolveSoundtrackCatalogue({
+    format: 'revealline-soundtrack-catalogue.v2',
+    edition: 'still-recovery',
+    tracks: [
+      {
+        ...audioFixture.track,
+        id,
+        title: 'Still recovery recording',
+        edition: 'still-recovery',
+        path: 'optional/soundtracks/still-recovery.mp3',
+        tags: { genres: ['metal'], role: 'any', energy: 3, themes: [] },
+        policy: {
+          id,
+          sha256: audioFixture.track.asset.sha256,
+          webPlayback: 'allowed',
+          offlineCache: 'allowed',
+          redistribute,
+          modify: 'allowed',
+          gameplayVideo: 'unknown',
+          contentId: 'unknown',
+        },
+      },
+    ],
+  });
+}
+async function saveRecoveryFixture(h, library, assets, catalogue) {
+  assert.equal(await h.host.open(), true);
+  const store = createSoundtrackStore({ managedStore: h.managers[0] });
+  const prepared = await prepareSoundtrackLibrary(library, assets, {
+    catalogue,
+    probeMedia: structuralProbe,
+  });
+  await store.commit(prepared, { expectedGeneration: 0 });
+  h.host.panel.close();
+  return store;
+}
+function refuseRecoveryNetwork(t) {
+  const fetch = t.mock.method(globalThis, 'fetch', async () => {
+    throw new Error('Backup must not fetch music');
+  });
+  t.after(() => assert.equal(fetch.mock.callCount(), 0));
+}
+
+test('actual host omits unused trusted online pins from an importable backup without fetching or changing storage', async (t) => {
+  refuseRecoveryNetwork(t);
+  const h = await setup(t);
+  const catalogue = resolveSoundtrackCatalogue(SOUNDTRACK_CATALOGUE);
+  assert.equal(catalogue.tracks.length, 70);
+  const store = await saveRecoveryFixture(
+    h,
+    setCatalogueTracks(emptySoundtrackLibrary(), catalogue.tracks),
+    [],
+    catalogue,
+  );
+  const before = await store.read();
+  assert.equal(await h.$('still-host-export-audio').onclick(), true);
+  const blob = h.urls.get(h.$('still-host-download-audio').href);
+  const restored = await importSoundtrackBundle(blob, { catalogue, probeMedia: structuralProbe });
+  assert.equal(restored.library.catalogTracks.length, 0);
+  assert.deepEqual(restored.library.referenceOnlyTrackIds, []);
+  assert.deepEqual(restored.assets, []);
+  assert.match(
+    h.$('still-host-status').textContent,
+    /70 unused online catalogue recordings are not included/,
+  );
+  h.$('still-host-download-audio').onclick();
+  assert.match(h.$('still-host-status').textContent, /their audio is not saved in this backup/);
+  assert.deepEqual(await store.read(), before);
+});
+
+test('actual host preserves installed permitted originals and their metadata byte-for-byte', async (t) => {
+  refuseRecoveryNetwork(t);
+  const catalogue = recoveryCatalogue(),
+    track = catalogue.tracks[0];
+  const library = resolveSoundtrackLibrary({
+    ...setCatalogueTracks(emptySoundtrackLibrary(), catalogue.tracks),
+    installedTrackIds: [track.id],
+  });
+  const h = await setup(t, { host: { catalogue } });
+  const store = await saveRecoveryFixture(h, library, audioFixture.assets, catalogue);
+  const before = await store.read();
+  assert.equal(await h.$('still-host-export-audio').onclick(), true);
+  const restored = await importSoundtrackBundle(h.urls.get(h.$('still-host-download-audio').href), {
+    catalogue,
+    probeMedia: structuralProbe,
+  });
+  assert.deepEqual(restored.library, library);
+  assert.equal(restored.assets.length, 1);
+  assert.equal(restored.assets[0].sha256, track.asset.sha256);
+  assert.deepEqual(
+    Buffer.from(await restored.assets[0].blob.arrayBuffer()),
+    Buffer.from(await audioFixture.blob.arrayBuffer()),
+  );
+  assert.doesNotMatch(h.$('still-host-status').textContent, /without audio|not included/);
+  assert.deepEqual(await store.read(), before);
+});
+
+test('actual host names restricted references before preparing and retains that notice through download', async (t) => {
+  refuseRecoveryNetwork(t);
+  const catalogue = recoveryCatalogue('denied'),
+    track = catalogue.tracks[0];
+  // More permissive imported claims cannot replace this host's exact trusted authority.
+  const claims = recoveryCatalogue('allowed');
+  const library = setCatalogueTracks(emptySoundtrackLibrary(), claims.tracks);
+  const blobs = new Map();
+  let preparing = '';
+  const h = await setup(t, {
+    host: {
+      catalogue,
+      URLImpl: {
+        createObjectURL(blob) {
+          preparing = h.$('still-host-status').textContent;
+          blobs.set('blob:restricted-recovery', blob);
+          return 'blob:restricted-recovery';
+        },
+        revokeObjectURL() {},
+      },
+    },
+  });
+  const store = await saveRecoveryFixture(h, library, [], catalogue);
+  const before = await store.read();
+  assert.equal(await h.$('still-host-export-audio').onclick(), true);
+  for (const status of [preparing, h.$('still-host-status').textContent]) {
+    assert.match(status, /Still recovery recording/);
+    assert.match(status, /references are preserved without audio/);
+    assert.match(status, /approved online source/);
+  }
+  const restored = await importSoundtrackBundle(blobs.get(h.$('still-host-download-audio').href), {
+    catalogue,
+    probeMedia: structuralProbe,
+  });
+  assert.deepEqual(restored.library.referenceOnlyTrackIds, [track.id]);
+  assert.equal(restored.assets.length, 0);
+  h.$('still-host-download-audio').onclick();
+  assert.match(h.$('still-host-status').textContent, /Still recovery recording.*without audio/);
+  assert.deepEqual(await store.read(), before);
+  h.$('still-host-close').onclick();
+  h.$('still-host-download-audio').onclick();
+  assert.doesNotMatch(
+    h.$('still-host-status').textContent,
+    /Still recovery recording|without audio/,
+  );
+});
+
+test('missing permitted music stops preparation visibly and discards the earlier prepared URL', async (t) => {
+  refuseRecoveryNetwork(t);
+  const catalogue = recoveryCatalogue(),
+    track = catalogue.tracks[0];
+  let missing = false;
+  const h = await setup(t, {
+    host: {
+      catalogue,
+      createAudio(args) {
+        const store = createSoundtrackStore(args);
+        return {
+          ...store,
+          async read(options) {
+            const saved = await store.read(options);
+            return missing ? { ...saved, assets: [] } : saved;
+          },
+        };
+      },
+    },
+  });
+  const library = resolveSoundtrackLibrary({
+    ...setCatalogueTracks(emptySoundtrackLibrary(), catalogue.tracks),
+    installedTrackIds: [track.id],
+  });
+  const store = await saveRecoveryFixture(h, library, audioFixture.assets, catalogue);
+  const before = await store.read();
+  assert.equal(await h.$('still-host-export-audio').onclick(), true);
+  const oldURL = h.$('still-host-download-audio').href;
+  missing = true;
+  assert.equal(await h.$('still-host-export-audio').onclick(), false);
+  assert.equal(h.$('still-host-download-audio').hidden, true);
+  assert(h.revoked.includes(oldURL));
+  assert.equal(h.urls.size, 1, 'Failure creates no second download.');
+  assert.equal(h.$('still-host-status').dataset.state, 'error');
+  assert.match(
+    h.$('still-host-status').textContent,
+    /missing permitted originals: Still recovery recording/,
+  );
+  assert.match(h.$('still-host-status').textContent, /No backup was prepared/);
+  assert.deepEqual(await store.read(), before);
+});
+
+test('closing pending audio recovery prevents late status, notices or download ownership', async (t) => {
+  refuseRecoveryNetwork(t);
+  const catalogue = recoveryCatalogue('denied'),
+    gate = deferred(),
+    entered = deferred();
+  const h = await setup(t, {
+    host: {
+      catalogue,
+      createAudio(args) {
+        const store = createSoundtrackStore(args);
+        return {
+          ...store,
+          async read(options) {
+            const saved = await store.read(options);
+            entered.resolve();
+            await gate.promise;
+            return saved;
+          },
+        };
+      },
+    },
+  });
+  await saveRecoveryFixture(
+    h,
+    setCatalogueTracks(emptySoundtrackLibrary(), catalogue.tracks),
+    [],
+    catalogue,
+  );
+  const preparing = h.$('still-host-export-audio').onclick();
+  await entered.promise;
+  h.$('still-host-close').onclick();
+  const retained = h.$('still-host-status').textContent;
+  gate.resolve();
+  assert.equal(await preparing, false);
+  assert.equal(h.$('still-host-status').textContent, retained);
+  assert.equal(h.$('still-host-download-audio').hidden, true);
+  assert.equal(h.urls.size, 0);
+  h.$('still-host-download-audio').onclick();
+  assert.doesNotMatch(
+    h.$('still-host-status').textContent,
+    /Still recovery recording|without audio/,
+  );
 });
 test('file URL and cancelled late source load do not open or upgrade media', async (t) => {
   const h = await setup(t);
