@@ -31,7 +31,8 @@ function setup(t, mode = 'stick') {
     pad = new Surface(),
     surface = new Surface();
   const commands = [],
-    releases = [];
+    releases = [],
+    cancellations = [];
   let enabled = true;
   const input = attachTouchSteering({
     arena,
@@ -41,6 +42,7 @@ function setup(t, mode = 'stick') {
     active: () => enabled,
     onDirection: (direction) => commands.push(direction),
     onRelease: (id) => releases.push(id),
+    onCancel: () => cancellations.push(true),
   });
   t.after(() => input.destroy());
   return {
@@ -49,6 +51,7 @@ function setup(t, mode = 'stick') {
     surface,
     commands,
     releases,
+    cancellations,
     input,
     disable() {
       enabled = false;
@@ -138,6 +141,25 @@ for (const event of ['pointercancel', 'lostpointercapture']) {
     assert.deepEqual(f.releases, [1]);
   });
 }
+
+test('capture-loss notifications without an owned gesture cannot cancel another input owner', (t) => {
+  const f = setup(t);
+  for (const type of ['pointercancel', 'lostpointercapture']) {
+    f.surface.dispatchEvent(new Event(type));
+    f.surface.pointer(type, 0, 0, 41);
+  }
+  assert.deepEqual(f.cancellations, []);
+  f.surface.pointer('pointerdown', 100, 100, 41);
+  f.input.clear(); // Synchronous capture release belongs to this deliberate handoff.
+  f.surface.pointer('lostpointercapture', 0, 0, 41);
+  f.surface.dispatchEvent(new Event('lostpointercapture'));
+  assert.deepEqual(f.releases, [41]);
+  assert.deepEqual(f.cancellations, []);
+  f.surface.pointer('pointerdown', 100, 100, 42);
+  f.surface.pointer('pointercancel', 100, 100, 42);
+  assert.deepEqual(f.releases, [41, 42]);
+  assert.deepEqual(f.cancellations, [true], 'A genuine active-gesture interruption still cancels.');
+});
 
 test('pause and modality reset require a new gesture', (t) => {
   const f = setup(t);

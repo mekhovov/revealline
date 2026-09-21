@@ -375,3 +375,31 @@ reinforces adapting controls to the device and safe area. Steam's
 require the default configuration to expose all game functionality; an isolated A
 start test is therefore insufficient. This iteration extends that check through
 actual results and continuation, without claiming physical Deck certification.
+
+## Tenth iteration: capture ownership during input handoff
+
+Source CI 35559365314 failed one shard 3 test on 290aeb7e. The modeled touch event
+had no pointer ID. Deliberate touch cleanup retired its gesture, then synchronous
+capture release produced another missing-ID event. Comparing `gesture?.id` with
+that event matched two undefined values and incorrectly reported cancellation.
+That paused the flight during controller takeover and cleared the sampled frame.
+This is a reproduced input-ownership defect, not evidence of a physical Deck crash.
+
+The shared touch adapter now requires a live gesture before comparing its pointer
+ID. Deliberate cleanup cannot cancel the new input owner; actual active-gesture
+interruption still cancels. The host regression covers both numeric pointer 41 and
+the original missing-ID synthetic event, verifies held input cannot reclaim
+control, and requires the flight to remain running with its pause overlay hidden.
+The app's controller-frame handling is unchanged.
+
+The focused baseline has two failures and one pass; the corrected version passes
+all three. Full touch-steering/results-navigation tests pass 24/24 on each Node 20/22.
+Shared Solo/couch input and preference tests pass 104/104 on each runtime. These
+are separate modeled cohorts; final hosted source qualification and physical
+Safari/Steam Deck checks remain open. Exact logs and source hashes are retained
+under `docs/verification/shared-device-play/iteration-10/`.
+
+[MDN capture-loss documentation](https://developer.mozilla.org/en-US/docs/Web/API/Element/lostpointercapture_event)
+confirms that releasing pointer capture produces this event. Our ownership guard
+distinguishes intentional cleanup from interruption of a current gesture; the
+missing-ID reproducer is explicitly synthetic and does not model a native pointer ID.
