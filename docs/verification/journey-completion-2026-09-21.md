@@ -137,7 +137,7 @@ successor, including relevant public/human gates.
 |---|---|---|
 | Difficulty beyond lives | Explicit v2 speed factors Gentle1.0 / Standard1.4 / Expert1.75 and attack-rest factors1.25 /0.85 /0.65; fixed player handling and warning windows;498 ordinary candidate cases pass | Human balance, spatial shortcut/cleanup fixes, legacy-public migration and Team; no claim these multipliers are final or deployed |
 | Appearing/expiring/relocating bonuses | Versioned engine, shared Studio schedules, visual announcement/countdown; desktop native observation;54 bonus-taking clear/replay/race cases in each of original and pressure-v2 editions, plus expiry/relocation probes and post-contact saves | Broader seed/opportunity sampling, tempting-route/short-clear balance, Team/device/human checks and publication |
-| Ukrainian ornament/culture and FPV workshop maps | Eight distinct greyboxes, two arcs, cultural attribution;48 preset/control clear/replays and equal races; two successor geometry studies | Remaining short routes, original final pictures, cultural/playability review, mode qualification and enrollment |
+| Ukrainian ornament/culture and FPV workshop maps | Eight distinct greyboxes, two arcs, cultural attribution;48 preset/control clear/replays and equal races; two successor geometry studies; eight original pinned picture candidates and74 art/geometry regression tests per Node | Remaining short routes, native picture/cultural/playability review, final asset acceptance, mode qualification and enrollment |
 | Additional enemy behavior | Pursuer/interceptor catalogue and authoring, six variants,36 clear/replays and equal races; existing terrain/rover/erosion/relay/contour roles retained | Whole-Journey distribution/pacing, native/human/Team and public integration |
 | Optional running/shooting characters | D2a deterministic non-retaining scouts/sentries; D2b shared authoring/on-off editions and three greyboxes,42 on/off clear/replays and42 races; D2c/C1 pixel robots, attack cues and scrap components,315 tests per Node and static native inspection | C2 real-host drawing, audio, persistent player setting and native play; D2d Team; human/release gates. No graphic dismemberment or nationality-based caricatures |
 | More varied decisions without menu friction |83 Solo candidates including12 Remixes,12 Team candidates; shared framework and direct-flow host checks | Final cuts, human pacing/mastery, controller/device validation and accepted-release deployment |
@@ -164,6 +164,12 @@ each edition has54 ordinary no-loss collection/clear/replay/equal-race cases. On
 14 of the54 old paths transfer unchanged to higher pressure; newly verified paths
 close the remaining40. Short optimized clears and idle bonus waiting remain balance
 concerns, not completed acceptance. [Taking-route evidence and limits](journey-timed-bonuses.md).
+
+The eight cultural/workshop studies now also have distinct original picture
+candidates (16,011,991bytes total), as explicit art-only editions of original and
+spatial-revision2 maps. All60 relevant input routes preserve gameplay outcomes;
+new revision metadata has its own verified replay checksum. This closes missing
+picture creation, not visual/human/Pages acceptance. [Art evidence](journey-cultural-workshop-art.md).
 
 ### Research-to-implementation check
 
