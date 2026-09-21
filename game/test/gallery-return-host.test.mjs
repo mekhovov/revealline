@@ -110,7 +110,7 @@ async function setup(t) {
   nativeDialogs(t);
   const f = await earnedPictureFixture(),
     memory = memoryIndexedDB(),
-    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true }),
+    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true, soundtrackCatalogue: true }),
     store = createStillMediaStore({
       managedStore: manager,
       decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),

@@ -354,7 +354,7 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
           return;
         deletion = (async () => {
           const db = await new Promise((resolve, reject) => {
-            const req = f.media.indexedDB.open(SOUNDTRACK_DATABASE, 4);
+            const req = f.media.indexedDB.open(SOUNDTRACK_DATABASE, 5);
             req.onsuccess = () => resolve(req.result);
             req.onerror = () => reject(req.error);
           });

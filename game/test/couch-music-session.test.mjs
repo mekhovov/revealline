@@ -44,6 +44,7 @@ function setup({
     player,
     managedStore: {
       storyMedia: true,
+      soundtrackCatalogue: true,
       readDomain: read,
       commitDomain: async (_, value, options) => ({
         generation: options.expectedGeneration + 1,

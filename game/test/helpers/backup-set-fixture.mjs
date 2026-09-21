@@ -7,19 +7,25 @@ import { emptyPackLibrary } from '../../packs.mjs';
 import { prepareStoredStillMedia } from '../../media-storage-record.mjs';
 import { createStoryFixture } from './victory-story-fixture.mjs';
 import { fixture } from './soundtrack-fixtures.mjs';
+import {
+  emptySoundtrackLibrary,
+  resolveCatalogueTrack,
+  resolveSoundtrackCatalogue,
+  resolveSoundtrackLibrary,
+  setCatalogueTracks,
+} from '../../soundtrack.mjs';
 
 export async function backupSetFixture() {
   const f = createStoryFixture(),
     png = await readFile(
-      new URL(
-        '../../../authoring/library/runtime-sprite-candidates-v1/export/atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png',
-        import.meta.url,
-      ),
+      new URL('../../assets/field-kit/sprites/enemy-border-patrol.png', import.meta.url),
     ),
+    width = png.readUInt32BE(16),
+    height = png.readUInt32BE(20),
     sha256 = createHash('sha256').update(png).digest('hex'),
     library = structuredClone(f.library);
-  // Existing owned, valid-CRC 128×128 PNG; the native decoder remains modeled.
-  Object.assign(library.assets[0], { sha256, bytes: png.length, width: 128, height: 128 });
+  // A current tracked, valid-CRC PNG; the native decoder remains modeled.
+  Object.assign(library.assets[0], { sha256, bytes: png.length, width, height });
   const validated = validateMediaLibrary(library, { identityCatalog: f.identityCatalog });
   const pin = createPresentationPins({
     library: validated,
@@ -30,7 +36,7 @@ export async function backupSetFixture() {
   f.library = validated;
   f.pin = pin;
   f.descriptor = { ...f.descriptor, picturePin: pin };
-  const decodeImage = async () => ({ naturalWidth: 128, naturalHeight: 128 }),
+  const decodeImage = async () => ({ naturalWidth: width, naturalHeight: height }),
     still = await prepareStoredStillMedia(library, [{ sha256, blob: new Blob([png]) }], {
       executionCatalog: f.catalog,
       decodeImage,
@@ -81,4 +87,60 @@ export async function backupSetFixture() {
       identity = 'different-game';
     },
   };
+}
+
+/** Distinct structurally valid MPEG fixtures; no audible-quality assertion. */
+export async function catalogueBackupAudio(f, { restricted = true, modern = true } = {}) {
+  const free = await fixture('backup-free'),
+    limited = await fixture('backup-restricted'),
+    entry = (raw, slug, denied = false) => {
+      const id = `builtin.catalog.backup-${slug}`;
+      return resolveCatalogueTrack({
+        ...raw.track,
+        id,
+        title: `Backup ${slug}`,
+        edition: 'backup-1',
+        path: `optional/soundtracks/backup-${slug}.mp3`,
+        tags: { genres: ['synth90s'], role: 'any', energy: 3, themes: ['retro'] },
+        ...(modern
+          ? {
+              policy: {
+                id,
+                sha256: raw.track.asset.sha256,
+                webPlayback: 'allowed',
+                offlineCache: 'allowed',
+                redistribute: denied ? 'denied' : 'allowed',
+                modify: 'allowed',
+                gameplayVideo: 'allowed',
+                contentId: 'unknown',
+              },
+              websites: [{ label: 'Creator', url: 'https://example.test/creator' }],
+              fileName: `backup-${slug}.mp3`,
+            }
+          : {}),
+      });
+    },
+    allowedTrack = entry(free, 'free'),
+    restrictedTrack = entry(limited, 'restricted', true),
+    tracks = restricted ? [allowedTrack, restrictedTrack] : [allowedTrack],
+    catalogue = resolveSoundtrackCatalogue({
+      format: `revealline-soundtrack-catalogue.v${modern ? 2 : 1}`,
+      edition: 'backup-1',
+      tracks,
+    }),
+    library = modern
+      ? setCatalogueTracks(emptySoundtrackLibrary(), tracks)
+      : resolveSoundtrackLibrary({
+          ...emptySoundtrackLibrary({ catalogue: true, version: 2 }),
+          catalogTracks: tracks,
+        }),
+    requests = [];
+  f.source.catalogue = catalogue;
+  f.source.readAudio = async () => ({ generation: f.metadata.audio, library, assets: [] });
+  f.source.readAudioAsset = async (sha256, options) => {
+    requests.push({ sha256, purpose: options.purpose });
+    if (sha256 !== free.track.asset.sha256) throw new Error('Restricted audio must not be read.');
+    return free.blob;
+  };
+  return { free, limited, allowedTrack, restrictedTrack, catalogue, library, requests };
 }

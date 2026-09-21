@@ -178,7 +178,11 @@ async function fixture(t, { assigned = true, available = true, malformed = false
     profileKey: 'revealline.library.dev.v1',
     packsKey: 'revealline.packs.dev.v1',
   });
-  const manager = createManagedMediaStore({ indexedDB: media.indexedDB, storyMedia: true });
+  const manager = createManagedMediaStore({
+    indexedDB: media.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const store = createStillMediaStore({ managedStore: manager, decodeImage });
   const writer = await claimProfileWriter(locks, pointer.keys.writerKey);
   const installer = createExternalChapterHost({
@@ -467,7 +471,7 @@ test('a valid alternate still cannot bypass missing descriptor-original readines
   assert.equal(compact(f.solo.current()).sha256, pilot.descriptor.originals[1].sha256);
   const beforeDeletion = f.writes();
   const db = await new Promise((resolve, reject) => {
-    const request = f.media.indexedDB.open(MANAGED_MEDIA_DATABASE, 4);
+    const request = f.media.indexedDB.open(MANAGED_MEDIA_DATABASE, 5);
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
   });
@@ -841,7 +845,7 @@ test('external host Start and one-action Rematch share the Solo-selected still w
   const secondResult = finishRace();
   const beforeDeletion = f.writes();
   const db = await new Promise((resolve, reject) => {
-    const request = f.media.indexedDB.open(MANAGED_MEDIA_DATABASE, 4);
+    const request = f.media.indexedDB.open(MANAGED_MEDIA_DATABASE, 5);
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
   });
@@ -1009,7 +1013,7 @@ test('missing captured saved-still bytes fail after original readiness without f
   assert.equal(compact(accepted).sha256, digest);
   assert.equal(await f.reader.confirm(row, { raceId: 15 }), accepted);
   const db = await new Promise((resolve, reject) => {
-    const request = f.media.indexedDB.open(MANAGED_MEDIA_DATABASE, 4);
+    const request = f.media.indexedDB.open(MANAGED_MEDIA_DATABASE, 5);
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
   });

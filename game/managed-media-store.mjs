@@ -1,6 +1,9 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from './data-json.mjs';
 import {
   SOUNDTRACK_LIMITS,
+  SOUNDTRACK_FORMAT,
+  SOUNDTRACK_FORMAT_V3,
+  soundtrackStoredTracks,
   emptySoundtrackLibrary,
   resolveSoundtrackLibrary,
 } from './soundtrack.mjs';
@@ -27,6 +30,7 @@ export const MANAGED_MEDIA_DATABASE = 'revealline-soundtrack-v1';
 export const MANAGED_MEDIA_VERSION = 2;
 export const RICH_STILL_MEDIA_VERSION = 3;
 export const STORY_MEDIA_VERSION = 4;
+export const SOUNDTRACK_CATALOGUE_VERSION = 5;
 export const MANAGED_MEDIA_LIMITS = Object.freeze({
   bytes: 256 * 1024 * 1024,
   sourceBytes: 64 * 1024 * 1024,
@@ -49,7 +53,7 @@ const recordStore = (domain) =>
   ({ audio: 'metadata', media: 'mediaRecords', story: 'storyRecords' })[domain];
 const emptyMedia = emptyGenericMediaLibrary;
 const mediaLibrary = validateGenericMediaLibrary;
-function row(value, domain, richStillMedia, still) {
+function row(value, domain, richStillMedia, still, soundtrackCatalogue = false) {
   if (value === undefined)
     return {
       generation: 0,
@@ -64,13 +68,17 @@ function row(value, domain, richStillMedia, still) {
     maxBytes:
       (domain === 'audio' ? SOUNDTRACK_LIMITS.metadataBytes : MANAGED_MEDIA_LIMITS.metadataBytes) +
       1024,
-    maxNodes: (domain === 'media' && richStillMedia) || domain === 'story' ? 100000 : 32000,
+    maxNodes: (domain === 'media' && richStillMedia) || domain === 'story' ? 100000 : 65000,
     maxDepth: domain === 'media' && richStillMedia ? 26 : domain === 'story' ? 18 : 10,
     maxArray: domain === 'media' && richStillMedia ? 4096 : 512,
     maxString: domain === 'media' && richStillMedia ? 65536 : domain === 'story' ? 2048 : 1024,
   });
   exactKeys(copy, ['generation', 'library'], 'managed domain');
   required(integer(copy.generation), 'Invalid managed domain generation.');
+  required(
+    domain !== 'audio' || copy.library?.format === SOUNDTRACK_FORMAT || soundtrackCatalogue,
+    'Catalogue audio format requires the explicit DB5 capability.',
+  );
   return {
     generation: copy.generation,
     library:
@@ -163,7 +171,7 @@ function hashes(domain, library) {
   if (domain === 'media' && isStoredStillMedia(library)) return storedStillHashes(library);
   return new Set(
     domain === 'audio'
-      ? library.tracks.map((t) => t.asset.sha256)
+      ? soundtrackStoredTracks(library).map((t) => t.asset.sha256)
       : library.items.map((i) => i.sha256),
   );
 }
@@ -180,11 +188,15 @@ export function createManagedMediaStore({
   now = Date.now,
   richStillMedia = false,
   storyMedia = false,
+  soundtrackCatalogue = false,
 } = {}) {
   required(
-    typeof richStillMedia === 'boolean' && typeof storyMedia === 'boolean',
+    typeof richStillMedia === 'boolean' &&
+      typeof storyMedia === 'boolean' &&
+      typeof soundtrackCatalogue === 'boolean',
     'Invalid managed media opt-in.',
   );
+  storyMedia ||= soundtrackCatalogue;
   richStillMedia ||= storyMedia;
   const domains = storyMedia ? ['audio', 'media', 'story'] : ['audio', 'media'];
   const storesInUse = storyMedia ? [...STORES, 'storyRecords'] : STORES;
@@ -238,11 +250,13 @@ export function createManagedMediaStore({
         settled = false;
       const request = indexedDB.open(
         MANAGED_MEDIA_DATABASE,
-        storyMedia
-          ? STORY_MEDIA_VERSION
-          : richStillMedia
-            ? RICH_STILL_MEDIA_VERSION
-            : MANAGED_MEDIA_VERSION,
+        soundtrackCatalogue
+          ? SOUNDTRACK_CATALOGUE_VERSION
+          : storyMedia
+            ? STORY_MEDIA_VERSION
+            : richStillMedia
+              ? RICH_STILL_MEDIA_VERSION
+              : MANAGED_MEDIA_VERSION,
       );
       const rejectOpen = (error) => {
         failed = true;
@@ -375,7 +389,13 @@ export function createManagedMediaStore({
           if (--left) return;
           try {
             abort(signal);
-            const audioRow = row(values.audioRow, 'audio', richStillMedia),
+            const audioRow = row(
+                values.audioRow,
+                'audio',
+                richStillMedia,
+                undefined,
+                soundtrackCatalogue,
+              ),
               mediaRow = row(values.mediaRow, 'media', richStillMedia),
               storyRow = storyMedia
                 ? row(values.storyRow, 'story', true, mediaRow.library)
@@ -562,7 +582,7 @@ export function createManagedMediaStore({
         : [[recordStore(domain), 'library']],
       ([value, still]) => {
         const media = domain === 'story' ? row(still, 'media', true).library : undefined,
-          current = row(value, domain, richStillMedia, media);
+          current = row(value, domain, richStillMedia, media, soundtrackCatalogue);
         if (domain === 'story') validateStoryState(media, current.library);
         return Object.freeze(current);
       },
@@ -755,6 +775,10 @@ export function createManagedMediaStore({
         otherManagedBytes <= MANAGED_MEDIA_LIMITS.bytes,
       'Invalid soundtrack generation or managed usage.',
     );
+    required(
+      domain !== 'audio' || prepared.library.format === SOUNDTRACK_FORMAT || soundtrackCatalogue,
+      'Catalogue audio format requires the explicit DB5 capability.',
+    );
     const assets =
         domain === 'audio' ? ownSoundtrackAssets(prepared.assets) : ownMediaAssets(prepared.assets),
       nextRow = { generation: expectedGeneration + 1, library: prepared.library };
@@ -764,6 +788,12 @@ export function createManagedMediaStore({
       signal,
     );
     required(before.current.generation === expectedGeneration, changed(domain));
+    required(
+      domain !== 'audio' ||
+        before.current.library.format !== SOUNDTRACK_FORMAT_V3 ||
+        prepared.library.format === SOUNDTRACK_FORMAT_V3,
+      'Rights-aware soundtrack history cannot be downgraded.',
+    );
     if (domain === 'media') {
       required(
         !isStoredStillMedia(before.current.library) || isStoredStillMedia(prepared.library),
@@ -845,6 +875,12 @@ export function createManagedMediaStore({
               saved.generation === expectedGeneration &&
               current.generation === expectedGeneration,
             changed(domain),
+          );
+          required(
+            domain !== 'audio' ||
+              current.library.format !== SOUNDTRACK_FORMAT_V3 ||
+              prepared.library.format === SOUNDTRACK_FORMAT_V3,
+            'Rights-aware soundtrack history cannot be downgraded.',
           );
           if (domain === 'media') {
             required(
@@ -1009,6 +1045,7 @@ export function createManagedMediaStore({
   return Object.freeze({
     richStillMedia,
     storyMedia,
+    soundtrackCatalogue,
     readDomain,
     readDomainMetadata,
     readPresentationMetadata,

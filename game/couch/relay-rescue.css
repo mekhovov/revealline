@@ -631,10 +631,36 @@ canvas {
 }
 .board-footer {
   display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   align-items: center;
   min-height: 66px;
   font-size: 0.8rem;
+}
+#coop-app .couch-music-credit {
+  flex: 1 0 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  min-width: 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+#coop-app .couch-music-credit[hidden] {
+  display: none;
+}
+#coop-app .couch-music-credit span {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#coop-app .couch-music-credit a {
+  min-height: 24px;
+  padding: 2px 0;
 }
 .board-footer p {
   flex: 1;

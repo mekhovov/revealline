@@ -14,6 +14,9 @@ import { couchPage, mountCouch } from './helpers/couch-host.mjs';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 import { Soundscape } from '../ui/audio.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
+import { upgradeSoundtrackLibrary } from '../soundtrack.mjs';
+import { DEFAULT_TRACKS } from '../ui/music.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
 import { memoryIndexedDB, fixture, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
@@ -643,7 +646,11 @@ for (const mode of ['Team', 'Versus']) {
     const prepared = await prepareSoundtrackLibrary(library, imported.assets, {
       probeMedia: structuralProbe,
     });
-    const solo = createManagedMediaStore({ indexedDB: db.indexedDB, storyMedia: true });
+    const solo = createManagedMediaStore({
+      indexedDB: db.indexedDB,
+      storyMedia: true,
+      soundtrackCatalogue: true,
+    });
     await solo.commitDomain('audio', prepared, { expectedGeneration: 0 });
     solo.close();
     db.allPuts.length = 0;
@@ -654,6 +661,12 @@ for (const mode of ['Team', 'Versus']) {
     const prefix = mode === 'Team' ? 'coop' : 'race';
     await settleUntil(() => page.$(`${prefix}-music-status`)?.dataset.state === 'ready');
     assert.match(page.$(`${prefix}-music-status`).textContent, /Synthetic coded silence/);
+    for (const suffix of ['now-playing', 'menu-now-playing']) {
+      const credit = page.$(`${prefix}-music-${suffix}`);
+      assert.ok(credit, 'The real Couch page provides menu and arena credits.');
+      assert.equal(credit.hidden, true);
+      assert.equal(credit.closest('[data-couch-music],dialog'), null);
+    }
     assert.equal(a.media.plays, 0);
     assert.equal(a.contexts(), 0);
     page.$(mode === 'Team' ? 'coop-settings-open' : 'race-options').click();
@@ -661,6 +674,7 @@ for (const mode of ['Team', 'Versus']) {
     page.$(`${prefix}-music-play`).click();
     await settleUntil(() => a.media.plays === 1 && !a.media.paused);
     assert.equal(a.media.muted, true);
+    assert.equal(page.$(`${prefix}-music-now-playing`).hidden, true);
     const hide = () => {
       page.doc.hidden = true;
       page.doc.emit('visibilitychange');
@@ -781,6 +795,151 @@ test('Versus: Pause music before Start preserves actual cut sound effects withou
   assert.equal(saved.getItem('existing-player-profile'), 'unchanged-earned-progress');
 });
 
+test('Couch music credits follow audible MP3 metadata without live position announcements', async (t) => {
+  const doc = new Document(),
+    a = audio(t),
+    db = memoryIndexedDB(),
+    master = createAudioMaster({ muted: false, volume: 0.5 });
+  const original = Object.getOwnPropertyDescriptor(globalThis, 'indexedDB');
+  Object.defineProperty(globalThis, 'indexedDB', { configurable: true, value: db.indexedDB });
+  const mounts = ['now-playing', 'menu-now-playing'].map((suffix) => {
+    const node = doc.createElement('div');
+    node.id = `credits-music-${suffix}`;
+    doc.body.append(node);
+    return node;
+  });
+  const create = doc.createElement.bind(doc);
+  doc.createElement = (tag) => (tag === 'audio' ? a.createElement(doc) : create(tag));
+  const host = attachCouchMusicHost({
+    document: doc,
+    root: doc.body,
+    prefix: 'credits',
+    soundscape: a.soundscape,
+    audioMaster: master,
+  });
+  t.after(async () => {
+    host.dispose();
+    await a.soundscape.dispose();
+    master.dispose();
+    if (original) Object.defineProperty(globalThis, 'indexedDB', original);
+    else delete globalThis.indexedDB;
+  });
+  await settleUntil(() => doc.getElementById('credits-music-status').dataset.state === 'ready');
+  const imported = await fixture();
+  let generation = 0;
+  async function install(
+    source,
+    { fileName = 'original-file.mp3', title = '<b>Actual title</b>' } = {},
+  ) {
+    host.session.pause();
+    const value = structuredClone(upgradeSoundtrackLibrary(imported.library));
+    Object.assign(value.tracks[0], {
+      title,
+      artist: 'Original artist',
+      ...(fileName ? { fileName } : {}),
+      rights: { ...value.tracks[0].rights, source },
+    });
+    value.playlists[0].trackIds = [imported.track.id];
+    value.selection.playlistId = 'qa.mix';
+    host.library.adoptVerifiedSnapshot({
+      generation: ++generation,
+      library: value,
+      assets: imported.assets,
+    });
+    await host.player.prepare();
+    await host.session.play();
+    assert.equal(host.player.snapshot().playing, true);
+    assert.equal(host.player.snapshot().track.kind, 'mp3');
+  }
+  assert.ok(mounts.every((node) => node.hidden));
+  await install('https://composer.example/music?album=1');
+  for (const node of mounts) {
+    assert.equal(node.hidden, false);
+    assert.equal(node.getAttribute('aria-live'), null);
+    assert.equal(node.getAttribute('role'), null);
+    assert.equal(
+      node.children[0].textContent,
+      'Now playing: <b>Actual title</b> · Original artist',
+    );
+    assert.equal(node.children[1].textContent, 'File: original-file.mp3');
+    assert.equal(node.children[2].getAttribute('href'), 'https://composer.example/music?album=1');
+    assert.equal(node.children[2].textContent, 'Source: composer.example');
+    assert.equal(node.children[2].getAttribute('rel'), 'noopener noreferrer');
+    assert.equal(node.children[2].getAttribute('target'), '_blank');
+  }
+  const titleNode = mounts[0].children[0];
+  let writes = 0;
+  const originalText = titleNode.textContent;
+  Object.defineProperty(titleNode, 'textContent', {
+    configurable: true,
+    get: () => originalText,
+    set: () => {
+      writes++;
+    },
+  });
+  for (let tick = 1; tick <= 3; tick++) {
+    a.media.currentTime = tick;
+    a.media.emit('timeupdate');
+    host.update(false, {});
+  }
+  assert.equal(writes, 0, 'Position ticks do not rewrite the track announcement.');
+  delete titleNode.textContent;
+  master.setMuted(true);
+  assert.ok(mounts.every((node) => node.hidden));
+  master.setMuted(false);
+  assert.ok(
+    mounts.every((node) => !node.hidden),
+    'Master changes update without a frame tick.',
+  );
+  master.setVolume(0);
+  assert.ok(mounts.every((node) => node.hidden));
+  master.setVolume(0.5);
+  host.session.setVolume(0);
+  assert.ok(mounts.every((node) => node.hidden));
+  host.session.setVolume(0.5);
+  host.session.pause();
+  assert.ok(mounts.every((node) => node.hidden));
+  for (const unsafe of [
+    'javascript:alert(1)',
+    'https://name:password@example.test/music',
+    'not a URL',
+  ]) {
+    await install(unsafe, { title: 'Next title', fileName: null });
+    assert.equal(mounts[0].children[0].textContent, 'Now playing: Next title · Original artist');
+    assert.equal(mounts[0].children[1].textContent, 'Original filename not recorded');
+    assert.equal(mounts[0].children[2].hidden, true);
+    assert.equal(mounts[0].children[2].getAttribute('href'), null, 'Old safe link is removed.');
+  }
+  host.session.pause();
+  const catalogueLibrary = structuredClone(upgradeSoundtrackLibrary(imported.library));
+  const catalogueTrack = {
+    ...imported.track,
+    id: 'builtin.catalog.credit-check',
+    edition: 'test-1',
+    path: 'credit-check.mp3',
+    tags: { genres: ['synth90s'], role: 'any', energy: 3, themes: [] },
+    fileName: 'composer-master.mp3',
+    websites: [{ label: 'Composer', url: 'https://artist.example/album' }],
+    rights: { ...imported.track.rights, source: 'https://license.example/terms' },
+  };
+  catalogueLibrary.catalogTracks = [catalogueTrack];
+  catalogueLibrary.installedTrackIds = [catalogueTrack.id];
+  catalogueLibrary.playlists[0].trackIds = [catalogueTrack.id];
+  catalogueLibrary.selection.playlistId = 'qa.mix';
+  host.library.adoptVerifiedSnapshot({
+    generation: ++generation,
+    library: catalogueLibrary,
+    assets: imported.assets,
+  });
+  await host.player.prepare();
+  await host.session.play();
+  assert.equal(mounts[0].children[1].textContent, 'File: composer-master.mp3');
+  assert.equal(mounts[0].children[2].getAttribute('href'), 'https://artist.example/album');
+  host.dispose();
+  master.setMuted(true);
+  assert.ok(mounts.every((node) => node.hidden && node.children.length === 0));
+});
+
 test('a failed music assignment replaces pending status with its actionable error', async (t) => {
   const doc = new Document(),
     a = audio(t),
@@ -858,4 +1017,46 @@ test('Journey music library keeps keyboard Back, paused boards and chooser owner
   assert.doesNotMatch(p.$('race-music-status').textContent, /assignment is unavailable/);
   assert.equal(a.media.plays, 0);
   assert.equal(a.contexts(), 0);
+});
+
+test('Couch explicit scene keeps level music across inactive Pause, Settings, results and retry until setup', async (t) => {
+  const doc = new Document(),
+    a = audio(t),
+    db = memoryIndexedDB();
+  const original = Object.getOwnPropertyDescriptor(globalThis, 'indexedDB');
+  Object.defineProperty(globalThis, 'indexedDB', { configurable: true, value: db.indexedDB });
+  const create = doc.createElement.bind(doc);
+  doc.createElement = (tag) => (tag === 'audio' ? a.createElement(doc) : create(tag));
+  let scene = 'menu';
+  const host = attachCouchMusicHost({
+    document: doc,
+    root: doc.body,
+    prefix: 'scene',
+    soundscape: a.soundscape,
+    getScene: () => scene,
+  });
+  t.after(async () => {
+    host.dispose();
+    await a.soundscape.dispose();
+    if (original) Object.defineProperty(globalThis, 'indexedDB', original);
+    else delete globalThis.indexedDB;
+  });
+  await settleUntil(() => doc.getElementById('scene-music-status').dataset.state === 'ready');
+  host.player.setAuthoredTrack(DEFAULT_TRACKS[1]);
+  host.update(false, { family: 'fpv' });
+  assert.notEqual(host.player.snapshot().source, 'authored');
+  scene = 'gameplay';
+  host.update(true, { family: 'fpv' });
+  await host.player.prepare();
+  assert.equal(host.player.snapshot().source, 'authored');
+  const before = host.player.snapshot();
+  for (const status of ['paused', 'settings', 'finished', 'retry']) {
+    host.update(false, { family: 'fpv' }, { status });
+    assert.equal(host.player.snapshot().source, 'authored');
+    assert.deepEqual(host.player.snapshot().queue, before.queue);
+    assert.equal(host.player.snapshot().track.id, before.track.id);
+  }
+  scene = 'menu';
+  host.update(false, { family: 'fpv' });
+  assert.notEqual(host.player.snapshot().source, 'authored');
 });

@@ -132,6 +132,7 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
         'optionalChapters',
         'externalChapters',
         'optionalArtwork',
+        'soundtrackAlbums',
       ].includes(k),
   );
   if (unknown.length) fail(`Unknown build-config fields: ${unknown.join(', ')}`);
@@ -148,6 +149,10 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
         .some((p) => p.startsWith('.') || ['node_modules', 'dist', 'releases'].includes(p))
     )
       fail(`Build include contains a private/generated path: ${included}`);
+  }
+  if (config.soundtrackAlbums !== undefined) {
+    const { validateSoundtrackDistributionConfig } = await import('./soundtrack-distribution.mjs');
+    validateSoundtrackDistributionConfig(config.soundtrackAlbums);
   }
   if (config.optionalOffline !== undefined) {
     const optional = config.optionalOffline;
@@ -717,6 +722,19 @@ export async function buildProject({
       );
     declared.add(entry.name);
   }
+  const soundtrackEntries =
+    config.soundtrackAlbums === undefined
+      ? []
+      : await (
+          await import('./soundtrack-distribution.mjs')
+        ).readSoundtrackDistributionEntries(root, config.soundtrackAlbums);
+  if (config.soundtrackAlbums && !files.includes(config.soundtrackAlbums.catalog))
+    fail('Soundtrack album catalog must be included in the core build');
+  for (const entry of soundtrackEntries) {
+    if (declared.has(entry.name))
+      fail('Soundtrack bodies must remain outside automatic includes and other downloads');
+    declared.add(entry.name);
+  }
   await fs.mkdir(path.dirname(out), { recursive: true });
   const staging = await fs.mkdtemp(path.join(path.dirname(out), '.xonix-build-'));
   let old;
@@ -724,7 +742,7 @@ export async function buildProject({
     const entries = [];
     for (const name of files)
       entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
-    entries.push(...optionalEntries, ...externalEntries);
+    entries.push(...optionalEntries, ...externalEntries, ...soundtrackEntries);
     const info = { formatVersion: FORMAT_VERSION, version, sourceRevision, entry: config.entry };
     const replace = (name, bytes) => {
       const found = entries.find((e) => e.name === name);
@@ -739,7 +757,7 @@ export async function buildProject({
       info,
       config,
       optionalEntries.map((entry) => entry.name),
-      externalEntries.map((entry) => entry.name),
+      [...externalEntries, ...soundtrackEntries].map((entry) => entry.name),
       optionalArtwork,
     );
     entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));

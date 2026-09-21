@@ -10,16 +10,24 @@ import { fileURLToPath } from 'node:url';
 import { checkBackupSet } from './check-backup-set.mjs';
 import { prepareBackupSet } from '../game/backup-set.mjs';
 import { EXTERNAL_BACKUP_FORMAT } from '../game/backup.mjs';
-import { backupSetFixture } from '../game/test/helpers/backup-set-fixture.mjs';
+import {
+  backupSetFixture,
+  catalogueBackupAudio,
+} from '../game/test/helpers/backup-set-fixture.mjs';
 
 const execute = promisify(execFile);
 const cli = fileURLToPath(new URL('./check-backup-set.mjs', import.meta.url));
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
-async function savedSet(t, { detached = false } = {}) {
+async function savedSet(t, { detached = false, audioVersion = 1, restricted = true } = {}) {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'revealline-check-backup-set-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));
   const fixture = await backupSetFixture();
+  if (audioVersion > 1)
+    await catalogueBackupAudio(fixture, {
+      modern: audioVersion === 3,
+      restricted: audioVersion === 3 && restricted,
+    });
   if (detached) {
     fixture.story.originals = [];
     fixture.source.readStory = async () => ({
@@ -92,6 +100,56 @@ test('saved actual four-format set verifies exact bytes without changing any fil
     set.report.files.map(({ id, filename, bytes, sha256 }) => ({ id, filename, bytes, sha256 })),
   );
   assert.deepEqual(await fingerprints(set.directory), before);
+});
+
+for (const version of [2, 3])
+  test(`checker accepts a complete v${version} music bundle and describes reference-only omissions`, async (t) => {
+    const set = await savedSet(t, { audioVersion: version }),
+      before = await fingerprints(set.directory),
+      result = await checkBackupSet({ reportPath: set.reportPath });
+    assert.equal(result.status, 'verified');
+    assert.equal(result.referenceOnlyMusic.length, version === 3 ? 1 : 0);
+    if (version === 3) {
+      assert.equal(result.coverage, 'incomplete: reference-only music');
+      assert.match(result.musicRecoveryNotice, /without audio/);
+    }
+    assert.deepEqual(await fingerprints(set.directory), before);
+  });
+
+test('v3 complete permissive music keeps an empty reference list and a complete coverage label', async (t) => {
+  const set = await savedSet(t, { audioVersion: 3, restricted: false }),
+    result = await checkBackupSet({ reportPath: set.reportPath });
+  assert.equal(set.report.reportVersion, 2);
+  assert.equal(result.coverage, 'saved referenced inventory');
+  assert.deepEqual(result.referenceOnlyMusic, []);
+});
+
+test('v3 restricted reference coverage cannot be hidden by rewriting report labels', async (t) => {
+  const set = await savedSet(t, { audioVersion: 3 });
+  set.report.referenceOnlyMusic = [];
+  set.report.musicRecoveryNotice = '';
+  set.report.coverage = 'saved referenced inventory';
+  await set.saveReport();
+  await assert.rejects(checkBackupSet({ reportPath: set.reportPath }), /reference-only music/i);
+});
+
+test('v3 music cannot omit a permitted original even with a fresh component hash', async (t) => {
+  const set = await savedSet(t, { audioVersion: 3 }),
+    original = await fs.readFile(set.file('audio')),
+    rewritten = changeBundleManifest(original, (manifest) => {
+      manifest.assets = [];
+    }),
+    metadataOnly = rewritten.subarray(0, 12 + rewritten.readUInt32BE(8));
+  await replaceComponent(set, 'audio', metadataOnly);
+  await assert.rejects(checkBackupSet({ reportPath: set.reportPath }), /original|asset/i);
+});
+
+test('v3 magic cannot wrap legacy library semantics', async (t) => {
+  const set = await savedSet(t, { audioVersion: 2 }),
+    original = await fs.readFile(set.file('audio'));
+  original[5] = '3'.charCodeAt(0);
+  await replaceComponent(set, 'audio', original);
+  await assert.rejects(checkBackupSet({ reportPath: set.reportPath }), /format|manifest|version/i);
 });
 
 test('explicit component directory works when the coverage report is stored elsewhere', async (t) => {
