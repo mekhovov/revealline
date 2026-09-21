@@ -142,8 +142,11 @@ successor, including relevant public/human gates.
 | Optional running/shooting characters | D2a deterministic non-retaining scouts/sentries; D2b shared authoring/on-off editions and three greyboxes,42 on/off clear/replays and42 races | D2c pixel robots/attack cues/scrap/audio/player setting and native checks; D2d Team; human/release gates. No graphic dismemberment or nationality-based caricatures |
 | More varied decisions without menu friction |83 Solo candidates including12 Remixes,12 Team candidates; shared framework and direct-flow host checks | Final cuts, human pacing/mastery, controller/device validation and accepted-release deployment |
 
-The latest D2b code is `a22bbb16`. D2c presentation specification has passed
-independent review; a specification is not completed rendering or gameplay integration.
+The latest D2b code is `a22bbb16`. D2c/C1 pixel presentation components and a
+static review sheet are now implemented/reviewed:315 tests per Node,95,718
+projected route frames, native16/24/32px and narrow-layout observations. This is
+not live gameplay integration: C2 host/preferences/audio, Team, human balance and
+public deployment remain pending. [C1 evidence](journey-optional-combat-presentation.md).
 
 ### Original shared requirements
 
@@ -179,8 +182,10 @@ independent review; a specification is not completed rendering or gameplay integ
   regression cases verified on both Node versions. D2b catalogue/Studio authoring,
   explicit editions, pressure/capture inspection and three original greyboxes are
   now implemented and reviewed:219 tests per Node,42 on/off clear/replays and42
-  paired races. Actual pixel presentation/player toggle, Team semantics,
-  native/human and release gates remain. Enabled live preview is intentionally
+  paired races. C1 pixel bodies, aim/projectile cues and scrap components now pass
+  315 tests per Node and scoped static native checks; live host integration/player
+  toggle/audio, Team semantics, native play/human and release gates remain.
+  Enabled live preview is intentionally
   blocked until readable presentation exists. [D1 evidence](journey-pursuit-interception.md),
   [D2a evidence](journey-optional-combat-runtime.md),
   [D2b evidence and pacing limits](journey-optional-combat-authoring.md).
