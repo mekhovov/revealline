@@ -26,6 +26,10 @@ now supports reviewing that successor before Apply, with Undo/Redo and native
 first-return verification; it does not change released editions or publication.
 That successor replaces the old balance assumptions; historical phase entries
 below remain provenance, not claims of current public delivery or human approval.
+The [optional-combat D2a engine](verification/journey-optional-combat-runtime.md)
+now has deterministic scout/sentry, capture/contact/projectile and replay/save
+proof. Catalogue/Studio, pixel presentation and player toggle, Team semantics,
+human qualification and deployment remain separate unfinished increments.
 
 Approved by the user on 20 September 2026. This supersedes the campaign allocations
 in earlier research plans, not their observations or provenance. References and

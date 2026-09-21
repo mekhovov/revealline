@@ -33,6 +33,7 @@ import { enemyContact } from './contacts.mjs';
 import { updateAbilities, useAbilities } from './abilities.mjs';
 import { createAbility, switchClass, updateSignal, challengeContact } from './systems.mjs';
 import { createClassicState } from './classic-state.mjs';
+import { clearCombatPatrols } from './combat-patrols.mjs';
 import { initializeClassicActors, stepClassic } from './classic-step.mjs';
 import { foundationGeometry } from './foundations.mjs';
 import { createRelayState } from './relay-gates.mjs';
@@ -217,6 +218,7 @@ export function releaseInputs(state) {
 function complete(state, won) {
   if (state._terminalEmitted) return;
   clearLineImpacts(state, 'completed');
+  clearCombatPatrols(state, 'completed');
   state.status = won ? 'won' : 'lost';
   state._terminalEmitted = true;
   releaseInputs(state);
@@ -234,6 +236,7 @@ function complete(state, won) {
 
 function recover(state, contact) {
   clearLineImpacts(state, 'recovery');
+  clearCombatPatrols(state, 'recovery');
   state.failureCause = contact.kind;
   const absorbed =
     ![

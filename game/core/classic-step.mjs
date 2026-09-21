@@ -41,6 +41,19 @@ import {
   collectTimedBonus,
   cancelHazardousTimedBonuses,
 } from './timed-bonuses.mjs';
+import {
+  initializeCombatPatrols,
+  expireCombatProjectiles,
+  updateCombatPatrols,
+  impactCombatProjectile,
+  clearCombatPatrols,
+} from './combat-patrols.mjs';
+import {
+  planCombatMotion,
+  combatContacts,
+  advanceCombatMotion,
+  finishCombatMotion,
+} from './combat-motion.mjs';
 
 export function initializeClassicActors(state) {
   for (const enemy of state.enemies) {
@@ -63,6 +76,7 @@ export function initializeClassicActors(state) {
     }
   }
   initializeEnemyPressure(state);
+  initializeCombatPatrols(state);
   updateClassicAnchors(state);
 }
 
@@ -209,6 +223,7 @@ const failureOrder = [
   'enemy-trail',
   'enemy-player',
   'boss-lane',
+  'combat-projectile',
 ];
 function firstFailure(candidates) {
   return (
@@ -281,11 +296,14 @@ function world(state, input, hooks) {
       });
     });
     const incoming = state.enemies.map(({ x, y, vx, vy }) => ({ x, y, vx, vy }));
+    const combatPlans = planCombatMotion(state, remaining);
     let horizon = Math.min(
       remaining,
       trace.closure ?? Infinity,
       trace.stop ?? Infinity,
       ...plans.map((plan) => plan.event?.time ?? Infinity),
+      ...combatPlans.patrols.map((plan) => plan.event?.time ?? Infinity),
+      ...combatPlans.shots.map((plan) => plan.event?.time ?? Infinity),
       erosionDue(state) ? 0 : Infinity,
     );
     const impactSeed = recovering ? null : nextLineImpactSeed(state, plans, trace, horizon);
@@ -293,8 +311,13 @@ function world(state, input, hooks) {
     horizon = Math.min(horizon, impactSeed?.time ?? Infinity, impactEvent?.time ?? Infinity);
     const hits = recovering ? [] : pickupContacts(state, playerPlan.paths, horizon);
     horizon = Math.min(horizon, hits[0]?.time ?? Infinity);
+    const combat = recovering
+      ? { rams: [], failure: null }
+      : combatContacts(state, playerPlan.paths, combatPlans, trace, horizon);
+    horizon = Math.min(horizon, combat.rams[0]?.time ?? Infinity);
     const self = recovering ? null : selfContact(state, trace, horizon);
     const failure = firstFailure([
+      combat.failure && combat.failure.time <= horizon + EPS ? combat.failure : null,
       challengeContact(state, trace, horizon),
       self === null ? null : { time: self, kind: 'self-contact', id: 'player' },
       recovering ? null : materialContact(state, playerPlan.paths, horizon),
@@ -332,11 +355,13 @@ function world(state, input, hooks) {
       if (enemy.type === 'border-patrol') enemy.perimeter = patrolDistance(enemy, state);
     }
     advanceLineImpacts(state, elapsed);
+    advanceCombatMotion(state, combatPlans, elapsed);
     state.time += elapsed;
     if (!classicEffectActive(state, 'enemy-freeze')) state.classic.actorTime += elapsed;
     remaining -= elapsed;
     finishLineImpactDepartures(state);
     if (failure) {
+      if (failure.shot) impactCombatProjectile(state, failure.shot);
       if (failure.impact)
         state.events.push({
           type: 'lineImpact.arrived',
@@ -369,6 +394,7 @@ function world(state, input, hooks) {
         state.player.speed = 0;
       }
     }
+    finishCombatMotion(state, combatPlans, combat, elapsed, !!failure);
     for (const [i, enemy] of state.enemies.entries()) {
       const event = plans[i].event;
       if (
@@ -455,7 +481,10 @@ export function stepClassic(state, input, hooks) {
   if (input.switchClass && input.switchClass !== state._input.switchClass)
     switchClass(state, input.switchClass);
   updateSignal(state);
+  const beforeAbility = state.status;
   useAbilities(state, input);
+  if (beforeAbility !== 'respawning' && state.status === 'respawning')
+    clearCombatPatrols(state, 'recovery');
   if (state.status === 'respawning') {
     state.classic.effects['player-speed'] = { from: 0, until: 0 };
     state.classic.departure = null;
@@ -463,6 +492,7 @@ export function stepClassic(state, input, hooks) {
   updateActors(state);
   updateEnemyPressure(state);
   updateTimedBonuses(state);
+  expireCombatProjectiles(state);
   const interrupted = world(state, input, hooks);
   if (state.status === 'won' || state.status === 'lost') return;
   state.time = endTime;
@@ -484,4 +514,5 @@ export function stepClassic(state, input, hooks) {
     updateEnemyPressure(state);
     if (won(state)) hooks.complete(state, true);
   }
+  updateCombatPatrols(state);
 }

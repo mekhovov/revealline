@@ -158,10 +158,12 @@ no zero-time loops, skipped elapsed time or changing unrelated enemy plans.
 - Ram: exposed craft contact with a live patrol eliminates that patrol once.
   Returning/ground movement is not an invisible safe-area weapon. Ordinary
   keeper contact and trail collisions remain unchanged.
-- Capture: after an accepted closure, any live patrol whose circular footprint
+- Capture: after an accepted closure, any live patrol whose classic radius envelope
   intersects newly reclaimed cells is eliminated. This includes secured trail,
   filled remote chambers and explicit boss-release fill. It never retains a
   field region or contributes coverage. Domain boundaries are recalculated.
+  Use the same conservative radius envelope as classic domain motion, including
+  corner cells, so a surviving actor is never embedded and needs no teleport repair.
 - A projectile is a radius0.10 moving point, travels toward the locked aim without
   homing, and damages only the exposed craft body, not its trail. It disappears
   at the first wall/reclaimed boundary, expiry, owner elimination, life recovery or
