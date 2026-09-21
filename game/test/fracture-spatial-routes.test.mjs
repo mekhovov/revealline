@@ -17,6 +17,9 @@ const project = compileContentProject(createFractureSpatialCandidates());
 const fixture = JSON.parse(
   await readFile(new URL('./fixtures/fracture-spatial-clear-routes.json', import.meta.url)),
 );
+const mastery = JSON.parse(
+  await readFile(new URL('./fixtures/fracture-spatial-mastery-routes.json', import.meta.url)),
+);
 const key = (r) => [r.difficulty, r.turnPolicy, r.seed, r.delaySeconds].join('/');
 test('district successor has all six configurations and separate seed/delay samples', () => {
   assert.equal(fixture.format, 'FractureSpatialFeasibilityV1');
@@ -33,8 +36,22 @@ test('district successor has all six configurations and separate seed/delay samp
   );
   assert.deepEqual(fixture.rows.map(key).sort(), expected.sort());
 });
-for (const row of fixture.rows)
-  test(`district no-loss clear/replay/race: ${key(row)}`, () => {
+test('district optional mastery has independent routes for all six configurations', () => {
+  assert.equal(mastery.format, 'FractureSpatialMasteryV1');
+  assert.equal(mastery.projectRevision, project.source.revision);
+  const expected = ['gentle', 'standard', 'expert'].flatMap((difficulty) =>
+    ['immediate', 'grid-center'].map((turnPolicy) =>
+      key({ difficulty, turnPolicy, seed: 1, delaySeconds: 0 }),
+    ),
+  );
+  assert.deepEqual(mastery.rows.map(key).sort(), expected.sort());
+  assert(mastery.rows.every((row) => row.goal.achieved && row.goal.lethalNeutralized));
+});
+for (const [label, row] of [
+  ['ordinary', fixture],
+  ['mastery', mastery],
+].flatMap(([label, collection]) => collection.rows.map((row) => [label, row])))
+  test(`district ${label} no-loss clear/replay/race: ${key(row)}`, () => {
     assert.equal(row.id, 'two-districts');
     const manifest = resolveMission(project, row.id, { difficulty: row.difficulty });
     assert.equal(manifest.simulationIdentity, row.simulationIdentity);
@@ -96,6 +113,7 @@ for (const row of fixture.rows)
       }),
       row.goal,
     );
+    if (label === 'mastery') assert.equal(row.goal.achieved, true);
     assert.equal(match.status, 'finished');
     assert.equal(match.winner, null);
     assert(match.runs.every((r) => r.status === 'won' && r.classic.livesLost === 0));

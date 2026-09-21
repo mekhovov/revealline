@@ -4,7 +4,8 @@ The independently reviewed [design](../superpowers/specs/2026-09-21-two-district
 is implemented as `fracture-spatial-review`, revision `district-spatial-1`.
 Initial source `bd4b0e91`; the Studio database retry fix follows at `cc9f6c81`.
 Old Fracture and whole-pressure editions remain unchanged. No enrollment or
-public release is claimed; **optional-mastery feasibility is still unresolved**.
+public release is claimed. Optional-mastery feasibility now has a separate six-case
+packet; human pacing, native full play and delivery qualification remain open.
 
 ## Implemented difference and verification
 
@@ -48,6 +49,46 @@ on Node20.19.5 and22.22.2. Following the descriptive role/density correction, th
 29 directly affected candidate/route tests were rerun with identical simulation
 identities/checkpoints. Lint, formatting and whitespace pass.
 
+## Optional-mastery follow-up
+
+The original18 ordinary routes remain unchanged: none neutralizes the entire
+eastern lethal field. Straight-cut-only searches can leave the eroder beside the
+hazard below the baffle. That was a search limitation, not evidence that the
+existing optional goal required a map or runtime change.
+
+The opt-in `--hazard-first` offline probe now considers bounded bent enclosures,
+rejects premature wins with lethal field remaining, and prioritizes the eastern
+approach. Frozen capture estimates only order proposals; actual public input must
+survive the moving enemies. No runtime cells, actors, objectives, collision rules,
+victory rules, goal conditions, map geometry or speed recipes are changed.
+Ordinary probes retain their existing default search. A completed ordinary prefix
+cannot be mislabeled as satisfying the requested hazard target.
+
+`fracture-spatial-mastery-routes.json` adds six separate seed1/no-start-delay
+routes, checked against the actual optional-goal predicate (cuts in both districts,
+lethal neutralization and no loss), public replay and independent equal races:
+
+| Preset | Immediate | Grid + Buffer |
+|---|---:|---:|
+| Gentle |50.25s /13 closures|49.55s /13|
+| Standard |50.15s /14|58.65s /12|
+| Expert |56.55s /12|51.45s /13|
+
+All six collect no bonus, repair some erosion, preserve permanent foundations and
+keep the coverage denominator fixed. Four link all reclaimed components; the goal
+does not require this, nor does it require neutralizing the western slow field.
+Exposure ranges23.9–34.1seconds total; longest individual exposure3.9–5.5seconds.
+Different cuts and legal waiting windows mean these times do not rank difficulty.
+Searches are wall-clock bounded and some resume checked partial prefixes; the
+committed input/checkpoint fixtures, not a repeat of greedy search, are the stable
+evidence. They are omniscient feasibility routes, not recommended human routes.
+
+The combined candidate, ordinary/mastery route, bent-proposal and probe cohort
+passes42/42 on Node20.19.5 and22.22.2. Lint, formatting and whitespace pass.
+This closes the six-configuration optional-goal feasibility gap only. It does not
+replace the old18 observations, increase whole-pressure416/498 coverage, or remove
+the35–40second ordinary-clear pacing flag.
+
 ## Native observation and storage issue
 
 Exact-source local8821 Studio first loaded `bd4b0e91`. Inspect left the previous
@@ -74,12 +115,10 @@ metadata correction does not change its simulation identity.
 
 ## Required follow-up before qualification
 
-- **0/18 current routes meet optional mastery.** All close cuts in both districts,
-  but leave part of the eastern lethal field unclaimed. Ten also repair erosion.
-  This does not prove mastery impossible; the area-greedy probe does not prioritize
-  hazard neutralization. Find targeted legal-input mastery routes across all six
-  configurations, or revise the eastern baffle/anchor approach if needed. Do not
-  remove the goal, make it mandatory or claim it complete from ordinary clears.
+- Optional mastery now has6/6 targeted feasibility routes, separate from the
+  unchanged0/18 ordinary observations. Check whether players can discover bent
+  enclosures around the baffle without confusing walls with return surfaces.
+  Do not make mastery mandatory or infer enjoyment from the longer target routes.
 - Verify useful island returns during later play, readable eroder/frontier pressure,
   and that each district offers distinct decisions without repetitive cleanup.
 - Human pacing/understanding/retry, additional native play, device/accessibility,

@@ -11,9 +11,11 @@ import {
 } from '../../game/replay.mjs';
 import { createWholeJourneyCandidates } from '../../game/content-design/whole-journey-candidates.mjs';
 import { withPressureDifficulty } from '../../game/content-design/pressure-candidates.mjs';
+import { bentFieldChoices, sampleBentChoices } from './bent-route-search.mjs';
 export function probePressureRoute(
   FIRST_RETURNS,
   createProject = () => withPressureDifficulty(createWholeJourneyCandidates()),
+  searchPolicy = {},
 ) {
   const difficulty = process.argv[3] ?? 'standard',
     turnPolicy = process.argv[4] ?? 'immediate';
@@ -56,7 +58,8 @@ export function probePressureRoute(
     const root = Math.floor(run.player.y) * run.width + Math.floor(run.player.x);
     const prior = new Map([[root, null]]),
       queue = [root],
-      candidates = [];
+      candidates = [],
+      bent = [];
     for (let cursor = 0; cursor < queue.length; cursor++) {
       const cell = queue[cursor],
         x = cell % run.width,
@@ -71,6 +74,14 @@ export function probePressureRoute(
           queue.push(n);
         }
         if (run.cells[n] !== CELL.FIELD) continue;
+        const path = [];
+        let p = cell;
+        while (p !== null) {
+          path.push(p);
+          p = prior.get(p);
+        }
+        path.reverse();
+        if (searchPolicy.bentCuts) bent.push(...bentFieldChoices(run, cell, path, direction));
         let cx = nx,
           cy = ny,
           length = 0,
@@ -96,17 +107,12 @@ export function probePressureRoute(
           run.cells[cy * run.width + cx] !== CELL.SAFE
         )
           continue;
-        const path = [];
-        let p = cell;
-        while (p !== null) {
-          path.push(p);
-          p = prior.get(p);
-        }
-        candidates.push({ direction, length, path: path.reverse() });
+        candidates.push({ direction, length, path });
       }
     }
     candidates.sort((a, b) => a.path.length + a.length - b.path.length - b.length);
     return [
+      ...(searchPolicy.bentCuts ? sampleBentChoices(run, bent) : []),
       ...new Set([
         ...candidates.slice(0, 16),
         ...Array.from(
@@ -155,6 +161,12 @@ export function probePressureRoute(
         }
       if (authoritativeCheckpoint(run).hash !== row.checkpoint)
         throw Error('Prefix checkpoint mismatch');
+      if (
+        run.status === 'won' &&
+        searchPolicy.acceptCompletion &&
+        !searchPolicy.acceptCompletion(run)
+      )
+        throw Error('Completed prefix does not meet the requested offline target');
     }
     for (let tick = 0; tick < Math.round(delaySeconds / FIXED_DT); tick++) step(run, null, log);
     if (process.argv.includes('--teach-opening') && !resumePath) {
@@ -186,6 +198,7 @@ export function probePressureRoute(
           )
             step(next, null, moves);
           if (next.status === 'won' && !next.classic.livesLost) {
+            if (searchPolicy.acceptCompletion && !searchPolicy.acceptCompletion(next)) continue;
             best = { score: 10000, next, moves };
             break;
           }
@@ -197,26 +210,51 @@ export function probePressureRoute(
           )
             continue;
           let closed = false;
-          for (
-            let tick = 0;
-            tick < 1000 && next.status === 'running' && !next.classic.livesLost;
-            tick++
-          ) {
-            step(next, choice.direction, moves);
-            if (next.events.some((e) => e.type === 'cut.closed')) {
-              closed = true;
-              break;
+          if (choice.legs) {
+            legs: for (const leg of choice.legs) {
+              const axis = DIRECTIONS[leg.direction].x ? 'x' : 'y';
+              for (let tick = 0; tick < 1000; tick++) {
+                if (next.status !== 'running' || next.classic.livesLost) break legs;
+                if (Math.abs(next.player[axis] - leg[axis]) < 0.045) break;
+                const before = next.player[axis];
+                step(next, leg.direction, moves);
+                if (next.events.some((e) => e.type === 'cut.closed')) {
+                  closed = true;
+                  break legs;
+                }
+                if (Math.abs(next.player[axis] - before) < 1e-9 || tick === 999) break legs;
+              }
             }
-          }
+          } else
+            for (
+              let tick = 0;
+              tick < 1000 && next.status === 'running' && !next.classic.livesLost;
+              tick++
+            ) {
+              step(next, choice.direction, moves);
+              if (next.events.some((e) => e.type === 'cut.closed')) {
+                closed = true;
+                break;
+              }
+            }
           if (next.classic.livesLost || (!closed && next.status !== 'won')) continue;
+          if (
+            next.status === 'won' &&
+            searchPolicy.acceptCompletion &&
+            !searchPolicy.acceptCompletion(next)
+          )
+            continue;
           const gain = next.claimedCount - run.claimedCount;
           if (gain <= 0 && next.status !== 'won') continue;
           const objectiveGain =
             next.objectives.filter((o) => o.captured).length -
             run.objectives.filter((o) => o.captured).length;
-          const score =
+          const defaultScore =
             (gain + objectiveGain * 800) / (next.tick - run.tick + 120) +
             (next.status === 'won' ? 1000 : 0);
+          const score = searchPolicy.scoreCandidate
+            ? searchPolicy.scoreCandidate({ run, next, defaultScore })
+            : defaultScore;
           if (!best || score > best.score) best = { score, next, moves };
         }
       }
