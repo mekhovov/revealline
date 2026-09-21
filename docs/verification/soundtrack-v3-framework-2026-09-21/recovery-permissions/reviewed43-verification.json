@@ -1,0 +1,50 @@
+{
+  "baselineHead": "2248f7f35ac5ad75b8bdff5aaa66ca45417180be",
+  "baselineRevision": 41,
+  "revision": 43,
+  "stage": "reviewed",
+  "ledger": {
+    "bytes": 7441355,
+    "sha256": "6c6086ba445c806e0562db56657dc5faeabbe684da53cb17790412272ef0500e"
+  },
+  "groups": {
+    "assets": {
+      "retained": 1373,
+      "appended": 16,
+      "retainedSha256": "e169708031225cf4968b42492d74af28d6e76f160f5f07074ae4f47f74dbdd63",
+      "totalCount": 1389,
+      "sha256": "f2af9d10371c35e15cdb55c09588ead1bae349d7d808bebd804bc5b6dcaa5df3"
+    },
+    "collections": {
+      "retained": 1,
+      "appended": 0,
+      "retainedSha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57",
+      "totalCount": 1,
+      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+    },
+    "slots": {
+      "retained": 293,
+      "appended": 0,
+      "retainedSha256": "75ceaae41400f20fced4bfb885d2c9175082eb4f5cbdcea30175191b56d93c68",
+      "totalCount": 293,
+      "sha256": "75ceaae41400f20fced4bfb885d2c9175082eb4f5cbdcea30175191b56d93c68"
+    },
+    "themes": {
+      "retained": 42,
+      "appended": 2,
+      "retainedSha256": "05fc8024dd4cdc173133c72647e55de1a9b7145981c39f4e8dc7c1a5f2231662",
+      "totalCount": 44,
+      "sha256": "5840cc65fd9c7b11ca93482b3537d186bd00e50ca527c9ceefa04ff0dd19b8aa"
+    }
+  },
+  "exactPreservedPayloads": 127,
+  "unchangedOtherSelectedSlots": true,
+  "recipeSources": {
+    "ui": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e",
+    "screens": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845",
+    "motion": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4",
+    "effects": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13",
+    "audio": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998"
+  },
+  "approvedRecordings": 0
+}

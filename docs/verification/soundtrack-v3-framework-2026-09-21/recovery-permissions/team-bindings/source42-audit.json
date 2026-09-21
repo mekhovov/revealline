@@ -1,0 +1,53 @@
+{
+  "format": "revealline-team-picture-successor-source-audit.v1",
+  "baseline": "2248f7f35ac5ad75b8bdff5aaa66ca45417180be",
+  "baselineRevision": 41,
+  "sourceRevision": 42,
+  "ledger": {
+    "bytes": 7418047,
+    "sha256": "15ab9517ab9bdfb413cd3735b99d1035a51a2b0b73a42d43669b5d07a08e7bca"
+  },
+  "method": "Validated both complete ledger bodies with importThemeBundle decodeImage:null; canonical-prefix equality for all metadata groups; actual Buffer equality for all 127 payload bodies; canonical equality for both picture and five actor descriptors.",
+  "groups": {
+    "assets": {
+      "baselineCount": 1373,
+      "count": 1381,
+      "sha256": "71223f216e3c1f7666338ed3007a92162582e15554fffab5d725e526816cdc4a",
+      "baselinePrefixPreserved": true
+    },
+    "themes": {
+      "baselineCount": 42,
+      "count": 43,
+      "sha256": "b72607c28373c826c9b4688979420cc05326a8a1ad3738482cf89011201ec883",
+      "baselinePrefixPreserved": true
+    },
+    "slots": {
+      "baselineCount": 293,
+      "count": 293,
+      "sha256": "75ceaae41400f20fced4bfb885d2c9175082eb4f5cbdcea30175191b56d93c68",
+      "baselinePrefixPreserved": true
+    },
+    "collections": {
+      "baselineCount": 1,
+      "count": 1,
+      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57",
+      "baselinePrefixPreserved": true
+    }
+  },
+  "payloadBodies": {
+    "count": 127,
+    "allByteEqual": true
+  },
+  "unchangedResolvedDescriptors": [
+    "scene.reveal.wide",
+    "picture.fpv.adf5c9eea274ba7f",
+    "player.scout.compact",
+    "player.scout.detailed",
+    "enemy.bouncer",
+    "enemy.border-patrol",
+    "enemy.relay-sentinel"
+  ],
+  "limitations": [
+    "No native image decoder, browser, musical or visual review."
+  ]
+}

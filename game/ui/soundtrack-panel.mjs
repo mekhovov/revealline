@@ -1407,7 +1407,7 @@ export function attachSoundtrackPanel({
     const plan = soundtrackRecoveryPlan(library, { catalogue: catalogue ?? undefined });
     if (!plan.referenceOnlyTrackIds.length) return 'Contains every permitted referenced recording.';
     const names = new Map(soundtrackTracks(library).map((track) => [track.id, track.title]));
-    return `Requires online restoration for listed music: ${plan.referenceOnlyTrackIds.map((id) => names.get(id) ?? id).join(', ')}.`;
+    return `Requires online restoration for listed music: ${plan.referenceOnlyTrackIds.map((id) => names.get(id) ?? id).join(', ')}. ${plan.notice}`;
   }
   function renderBackup() {
     backupReady.hidden = preparedBackup === null;

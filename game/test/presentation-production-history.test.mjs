@@ -475,7 +475,7 @@ test('soundtrack UI and audio bind only their reviewed current inputs', async ()
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:42509346fbac2c57c8f365dbb2fc8d9c30c9fb0b0110d7a63356c6273ee19f98',
+          'sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998',
         ),
         slot.id,
       );
@@ -535,48 +535,77 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
   const root = fileURLToPath(new URL('../../', import.meta.url));
   const fixture = await fs.mkdtemp(path.join(os.tmpdir(), 'recipe-source-invalidation-'));
   t.after(() => fs.rm(fixture, { recursive: true, force: true }));
+  const recoveryInputs = [
+    'soundtrack.mjs',
+    'soundtrack-rights.mjs',
+    'soundtrack-bundle.mjs',
+    'soundtrack-share.mjs',
+    'soundtrack-source.mjs',
+    'ui/soundtrack-panel.mjs',
+  ];
   const inputs = new Map([
-    ['operation-status.css', 'ui'],
-    ['operation-status.mjs', 'ui'],
-    ['soundtrack-player.mjs', 'audio'],
-    ['audio-master.mjs', 'audio'],
-    ['field-kit-surfaces.css', 'screens'],
-    ['actor-presentation.mjs', 'motion'],
+    ['ui/operation-status.css', 'ui'],
+    ['ui/operation-status.mjs', 'ui'],
+    ['ui/soundtrack-player.mjs', 'audio'],
+    ['ui/audio-master.mjs', 'audio'],
+    ...recoveryInputs.map((input) => [input, 'audio']),
+    ['ui/field-kit-surfaces.css', 'screens'],
+    ['ui/actor-presentation.mjs', 'motion'],
   ]);
-  // Read unchanged inputs through links; only the named fixture files are writable.
+  // Game-relative keys cover both model and UI helpers. Only copied ordinary
+  // fixture files may be changed; links to the real project are read-only inputs.
   await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
   for (const entry of ['authoring', 'site'])
     await fs.symlink(path.join(root, entry), path.join(fixture, entry));
-  for (const entry of await fs.readdir(path.join(root, 'game')))
-    if (entry !== 'ui')
-      await fs.symlink(path.join(root, 'game', entry), path.join(fixture, 'game', entry));
-  for (const entry of await fs.readdir(path.join(root, 'game', 'ui'))) {
-    const source = path.join(root, 'game', 'ui', entry);
-    const target = path.join(fixture, 'game', 'ui', entry);
-    if (inputs.has(entry)) await fs.copyFile(source, target);
-    else await fs.symlink(source, target);
-  }
-  for (const [input, group] of inputs) {
-    const target = path.join(fixture, 'game', 'ui', input);
-    const original = await fs.readFile(target);
-    await fs.appendFile(target, '\n/* Unreviewed fixture change. */\n');
-    const changed = await createFieldKitProduction({ projectRoot: fixture });
-    const next = retainProductionHistory(changed.document, prior);
-    validateThemeBundle(next, { previous: prior });
-    const assets = resolvePresentation(next).assets;
-    for (const slot of reviewed) {
-      const affected = slot.group === group && assets[slot.id].kind === 'recipe';
-      assert.equal(assets[slot.id].quality.stage, affected ? 'source' : 'reviewed', slot.id);
-      if (affected) {
-        assert.notEqual(
-          assets[slot.id].provenance.source,
-          resolved.assets[slot.id].provenance.source,
-        );
-        assert.equal(assets[slot.id].revision, resolved.assets[slot.id].revision + 1);
-      } else assert.deepEqual(assets[slot.id], resolved.assets[slot.id]);
+  for (const directory of ['', 'ui'])
+    for (const entry of await fs.readdir(path.join(root, 'game', directory))) {
+      if (!directory && entry === 'ui') continue;
+      const input = directory ? `${directory}/${entry}` : entry;
+      const source = path.join(root, 'game', input);
+      const target = path.join(fixture, 'game', input);
+      if (inputs.has(input)) await fs.copyFile(source, target);
+      else await fs.symlink(source, target);
     }
-    assert.deepEqual(next.assets.slice(0, prior.assets.length), prior.assets);
-    await fs.writeFile(target, original);
+  for (const [input, group] of inputs) {
+    const target = path.join(fixture, 'game', input);
+    const stat = await fs.lstat(target);
+    assert(stat.isFile() && !stat.isSymbolicLink(), `Writable copy required: ${input}`);
+    const original = await fs.readFile(target);
+    try {
+      await fs.appendFile(target, '\n/* Unreviewed fixture change. */\n');
+      const changed = await createFieldKitProduction({ projectRoot: fixture });
+      const next = retainProductionHistory(changed.document, prior);
+      validateThemeBundle(next, { previous: prior });
+      const assets = resolvePresentation(next).assets;
+      for (const slot of reviewed) {
+        const affected = slot.group === group && assets[slot.id].kind === 'recipe';
+        assert.equal(assets[slot.id].quality.stage, affected ? 'source' : 'reviewed', slot.id);
+        if (affected) {
+          assert.notEqual(
+            assets[slot.id].provenance.source,
+            resolved.assets[slot.id].provenance.source,
+          );
+          assert.equal(assets[slot.id].revision, resolved.assets[slot.id].revision + 1);
+        } else assert.deepEqual(assets[slot.id], resolved.assets[slot.id]);
+      }
+      assert.deepEqual(next.assets.slice(0, prior.assets.length), prior.assets);
+    } finally {
+      await fs.writeFile(target, original);
+      assert.deepEqual(await fs.readFile(path.join(root, 'game', input)), original);
+    }
+    if (recoveryInputs.includes(input)) {
+      const retained = `${target}.missing-fixture`;
+      await fs.rename(target, retained);
+      try {
+        await assert.rejects(
+          createFieldKitProduction({ projectRoot: fixture }),
+          (error) => error.code === 'ENOENT' && error.path === target,
+          `Missing audio dependency must refuse production: ${input}`,
+        );
+      } finally {
+        await fs.rename(retained, target);
+      }
+    }
   }
 });
 

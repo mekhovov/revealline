@@ -1,0 +1,46 @@
+{
+  "format": "revealline-superseded-ci-inspection.v1",
+  "runId": 35551612984,
+  "sourceRevision": "2248f7f35ac5ad75b8bdff5aaa66ca45417180be",
+  "jobId": 106187604057,
+  "conclusion": "cancelled",
+  "log": "superseded-2248-shard3.log",
+  "logBytes": 629657,
+  "logSha256": "ab595239aed06ffb80406bcf913972c9ac11529a5641265393e532c84b73a952",
+  "finalMetadata": "superseded-2248-final.json",
+  "finalMetadataSha256": "ae08e30fbb58239c192f2bc880d5a9bad532f3a3499ab594da68ed3596776301",
+  "download": {
+    "command": [
+      "gh",
+      "api",
+      "repos/mekhovov/revealline/actions/jobs/106187604057/logs"
+    ],
+    "limitBytes": 8388608,
+    "timeoutSeconds": 45,
+    "exitCode": 0
+  },
+  "inspection": {
+    "topLevelOkCount": 1502,
+    "reportedOkIncludingNested": 1575,
+    "notOkCount": 0,
+    "finalTapSummary": false,
+    "errorLines": [
+      "##[error]The operation was canceled."
+    ],
+    "lastProgressAt": "2026-09-21T02:25:13.7845816Z",
+    "lastNestedTest": "five native pairs, three Route Choices wins and one Sentinel win",
+    "testFile": "game/test/route-worlds-host.test.mjs",
+    "nestedDurationMs": 689420.186892,
+    "cancelledAt": "2026-09-21T02:25:35.7681596Z",
+    "postCancellationTrackedSourceMatches": true
+  },
+  "assessment": "No actionable test failure is present in this partial original log. Actual passing progress occurred about22seconds before cancellation; elapsed time alone does not demonstrate a stall. No complete-suite pass is asserted.",
+  "otherJobs": {
+    "preflight": "success",
+    "release_gate": "skipped",
+    "build": "success",
+    "test (2)": "success",
+    "test (4)": "success",
+    "test (1)": "success"
+  }
+}
