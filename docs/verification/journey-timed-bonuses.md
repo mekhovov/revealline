@@ -62,9 +62,9 @@ pass for this slice.
 ## Still required
 
 Controller/touch/small-screen
-countdown readability; human optional-route/reward balance; bonus-taking route
-qualification across seeds; timed Team ownership/schema design; integrated
-pressure-catalogue balance; reviewed release-owner PR/version/Pages deployment.
+countdown readability; human optional-route/reward balance; broader seed/opportunity
+sampling beyond the bounded cases below; timed Team ownership/schema design;
+integrated pressure-catalogue balance; reviewed release-owner PR/version/Pages deployment.
 No claim of Reloaded's exact timings, final accessibility approval, whole-plan
 completion or proof that these mechanics improve enjoyment.
 
@@ -89,3 +89,67 @@ explicit study and started Behind the patrol Expert preview. Paused at24seconds
 after the first appearance/expiry, opened Field details and confirmed that the
 unknown-effects warning is absent. No warning/error console entries were observed.
 Team, physical-device/human and release gates remain pending.
+
+## Taking-route follow-up — authored V1 and explicit pressure V2
+
+The committed `timed-taking-routes.json` fixture and public-input tests now cover
+**54 ordinary cases per edition**: three missions × three presets × two steering
+policies × three mission-specific seeds. Behind uses1/3/10, Second1/2/6 and
+Long1/2/3. Each route contacts exactly one timed item, activates its effect or gains
+a life, and clears without losing any lives. A collected life cannot conceal a
+failure. Fixed pickups remain present; the earlier all-missed/no-fixed study is
+the separate optionality evidence, not a result inferred from these taking routes.
+
+The pressure study uses `withPressureDifficulty(createTimedBorderCandidates())`;
+it does not edit maps, anchors, timing, effect strength or player handling. Neither
+edition is silently enrolled. All cases are replayed from fresh runs using public
+directions, verified through exported replays, and repeated in real paired-board
+Versus races with equal final authoritative checkpoints and independent schedules.
+Post-contact suspension/restoration is checked for each of the three bonus kinds
+in both editions, continuing the same remaining inputs to the pinned clear.
+
+Directly applying the54 old input paths to pressure V2 gives14 no-loss clears,
+28 first losses and12 incomplete paths. All54 collect before that outcome. A
+regression preserves this distinction: old inputs are not pressure qualification.
+Fresh cross-preset path trials and bounded continuation searches from undamaged
+post-collection closures produced the complete new54-case matrix. Long search
+used82.025s; Behind/Second62.990s. These are offline omniscient feasibility searches,
+not human attempts, autonomous gameplay or measured player completion times.
+
+| Mission | Authored V1 clear seconds | Pressure V2 clear seconds | Pressure stationary seconds |
+|---|---:|---:|---:|
+| Behind the Patrol |18.05–25.25|18.30–31.45|6–8|
+| Second Landing |17.35–24.55|18.25–36.40|6–15.25|
+| Long Rail |19.80–45.08|19.80–41.00|5.05–13.05|
+
+Stationary time is measured from unchanged craft positions, not inferred from null
+inputs (continuous steering can still move). Most optimized routes fall below the
+plan's45–150second ordinary target. Bonus waiting is not useful challenge by itself.
+These results keep short-clear geometry, tempting-route value, warning readability
+and human pacing review open; faster enemies alone do not settle those questions.
+
+Three seeds do not guarantee three different positions: Second's ordinary paths
+collect only two anchors. Additional far-anchor routes collect(58.5,18.5) and
+clear in23.45s(V1) /28.15s(V2). Separate missed-window probes let the first item
+expire, collect the second appearance at a different anchor, and clear in49.05s(V1)
+/56.10s(V2), including30s/33.75s stationary time. They verify relocation, not
+desirable pacing. The pressure version required departing30ticks earlier; simply
+reusing the old departure lost a life before closure. Each edition now covers all
+nine authored anchors. These four additional probes are labelled separately and
+never inflate the ordinary matrix or imply every seed/anchor pairing is safe.
+
+Final verification: **348/348 tests pass on Node20.19.5 and22.22.2**, including
+235 taking-route tests (112 collection/clear/replays,112 real paired races, six
+post-contact saves and five matrix/anchor/transfer checks). The other113 tests
+cover schedules, authoring/host, all-missed routes, existing bonuses, core,
+presentation and versioned/foundation transport. ESLint, Prettier and diff checks
+pass. Sparse-checkout runs use the existing read-only `.cache/read-source-git.mjs`
+fixture adapter; the new route fixture is committed, not an ignored cache input.
+Independent review approved the final112-row snapshot, separately reran all235
+taking tests, and reproduced the late pressure-departure failure at tick4205.
+
+Direct reproduction from a complete checkout:
+`node --test game/test/timed-taking-routes.test.mjs`.
+
+No runtime, candidate, shared host, published manifest or Pages deployment changes
+are made by this evidence follow-up. Team and human/device acceptance remain open.

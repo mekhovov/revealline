@@ -89,8 +89,8 @@ result, not outstanding route failures. Acceptance gaps remain in the phase tabl
 - Return in Reserve now has an explicit two-bay greybox successor:18 ordinary
   seed/delay samples and six separate impact-mastery clear/replay/race routes;
   133 tests on each Node. Native Inspect/Apply/saved-slot restoration were observed,
-  but a browser interaction failure left first-return and edit/Undo verification
-  incomplete. Short22–32second optimized paths and brief impact visibility remain
+  and subsequent exact-source checks closed edit/Undo/Redo and Standard first-return
+  verification. Short22–32second optimized paths and brief impact visibility remain
   open concerns. [Study evidence](journey-reserve-spatial.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
@@ -114,7 +114,7 @@ successor, including relevant public/human gates.
 |---|---|---|
 | P00 — plan/audit/flow/progress/teaching | Canonical plan;110 old Solo /64 files /48 numbered references audited; direct flow, stable receipts and teaching fixtures; scoped integration accepted | Exact public whole-flow audit; human capture understanding; latest release reconciliation |
 | P01 — foundations/Prologue/Horizon/Studio minimum | Foundation topology/runtime; ten opening candidates including Remix; original art; shared compiler/Studio; all60 stronger-pressure clear/replay/race cases and startup observations | Fast courtyard/outpost clears, island-bypass/Remix review; whole-set native/device/human balance; successor integration/Pages |
-| P02 — Border/bonuses/frontier/Studio CRUD/image | Seven candidates/art; contact bonuses; outer/frontier teaching; CRUD/manual image workflow; timed-schedule engine/editor and three-mission study; all42 stronger-pressure clear/replay/race cases | Short/unused-landing routes and Expert departure teaching; timed native/mode/release qualification; broader Studio usability/conflict tests; human/promotion gates |
+| P02 — Border/bonuses/frontier/Studio CRUD/image | Seven candidates/art; contact bonuses; outer/frontier teaching; CRUD/manual image workflow; timed-schedule engine/editor and three-mission study; all42 ordinary stronger-pressure cases;54 timed-taking clear/replay/race cases per difficulty edition, exact post-contact saves | Short/unused-landing routes and Expert departure teaching; timed controller/Team/human/release qualification; broader Studio usability/conflict tests; promotion gates |
 | P03 — Signal/terrain/catalogues/presentation/trace | Seven candidates/art; terrain contracts; actor catalogues; bounded trace benchmark; reactive captions; all42 pressure clear/replay/race cases | Short routes/neutralization/link mastery; whole-set native/human; final audio; public integration |
 | P04 — Neon | Seven candidates/art; frontier-shaping routes; Remix; replay/race/mastery/seed checks; all42 pressure clear/replay/race cases | Short paths and mouth/frontier goal review, human pacing, public integration |
 | P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; all42 pressure clear/replay/race cases | Sorting Yard/Split Berths short routes and late activation; presentation, human balance, public integration |
@@ -136,7 +136,7 @@ successor, including relevant public/human gates.
 | Request | Completed locally | Still required |
 |---|---|---|
 | Difficulty beyond lives | Explicit v2 speed factors Gentle1.0 / Standard1.4 / Expert1.75 and attack-rest factors1.25 /0.85 /0.65; fixed player handling and warning windows;498 ordinary candidate cases pass | Human balance, spatial shortcut/cleanup fixes, legacy-public migration and Team; no claim these multipliers are final or deployed |
-| Appearing/expiring/relocating bonuses | Versioned engine, shared Studio schedules, visual announcement/countdown, replay/save and three Border studies; desktop native observation | Bonus-taking multi-seed routes, stronger-pressure combination, Team/device/human checks and publication |
+| Appearing/expiring/relocating bonuses | Versioned engine, shared Studio schedules, visual announcement/countdown; desktop native observation;54 bonus-taking clear/replay/race cases in each of original and pressure-v2 editions, plus expiry/relocation probes and post-contact saves | Broader seed/opportunity sampling, tempting-route/short-clear balance, Team/device/human checks and publication |
 | Ukrainian ornament/culture and FPV workshop maps | Eight distinct greyboxes, two arcs, cultural attribution;48 preset/control clear/replays and equal races; two successor geometry studies | Remaining short routes, original final pictures, cultural/playability review, mode qualification and enrollment |
 | Additional enemy behavior | Pursuer/interceptor catalogue and authoring, six variants,36 clear/replays and equal races; existing terrain/rover/erosion/relay/contour roles retained | Whole-Journey distribution/pacing, native/human/Team and public integration |
 | Optional running/shooting characters | D2a deterministic non-retaining scouts/sentries; D2b shared authoring/on-off editions and three greyboxes,42 on/off clear/replays and42 races; D2c/C1 pixel robots, attack cues and scrap components,315 tests per Node and static native inspection | C2 real-host drawing, audio, persistent player setting and native play; D2d Team; human/release gates. No graphic dismemberment or nationality-based caricatures |
@@ -158,6 +158,12 @@ The held additive renderer patch is now implemented and independently reviewed;
 389 tests pass on each supported Node version, including ten executable patched
 BoardPainter tests. The actual shared renderer/hosts and preview guard are not
 changed. [Exact patch/source evidence and remaining C2 work](journey-combat-board-adapter.md).
+
+Timed-bonus taking feasibility is now separate from the earlier all-missed tests:
+each edition has54 ordinary no-loss collection/clear/replay/equal-race cases. Only
+14 of the54 old paths transfer unchanged to higher pressure; newly verified paths
+close the remaining40. Short optimized clears and idle bonus waiting remain balance
+concerns, not completed acceptance. [Taking-route evidence and limits](journey-timed-bonuses.md).
 
 ### Research-to-implementation check
 
