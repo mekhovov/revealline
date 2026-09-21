@@ -1304,3 +1304,9 @@ Preserve historical slot bindings as well as original media bytes during import.
 ### Scoped production review successors
 
 When recipe inputs drift, generate and pin the actual source-stage ledger before adopting a new reviewed revision. Review the changed sources against retained native/test evidence; never transfer a prior approval by replacing its hash alone. Preserve every historical record and original payload, rebind Team's current exact theme identity to the generated successor, and keep earlier import policy separate. Verify pinned source-stage reconstruction, exact producer reproduction and affected real host/Studio tests. See `docs/verification/presentation-followup-review/README.md`; whole-source, final native and public gates remain mandatory.
+
+### Team landscape overlay sizing
+
+Do not reserve full-height side columns for floating shared touch pads. Fit the complete Team bitmap into the available height, keep the existing translucent corner controls, and reserve separate HUD, authored objective and event-caption space. Preserve the 44px target floor, shared size/opacity preferences, independent seat ownership and explicit Resume. Do not crop or stretch artwork to fill the screen.
+
+Prompt: “Inspect First Connection and Relay Yard at 568×320, 844×390 and 390×844 using regular/Large controls and Plain/Large text. Compare full bitmap size, all target rectangles, required objective and a real rescue warning. Switch D-pad/stick/swipe and hide controls through Settings, then explicitly Resume. Record corner overlap honestly; verify real iPhone thumbs and Steam Deck separately.” Follow `docs/verification/team-landscape-arena/README.md`; CSS geometry evidence is not physical input certification or production acceptance.
