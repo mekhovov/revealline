@@ -1,0 +1,7 @@
+# Read original presentation output before adopting a successor
+
+`readPresentation(output, { allowMissing: false })` reads a real compiler-owned directory into a detached byte map. It authenticates the ownership manifest, rejects unmanaged or linked paths, and validates existing hash-named archives with their selected dependencies. Explicit `allowMissing: true` returns null only when the output root does not exist. An existing incomplete or edited tree remains an error; no output is created, overwritten or discarded.
+
+Use this map with `retainPresentationManifests` after compiling and formatting the next current output. The retention helper additionally verifies both current runtime selections before archiving. Do not reconstruct old manifests from a newer ledger, and do not run a formatter over archived bytes. The writer rechecks the on-disk tree before staged replacement and refuses loss of existing archives. Reading a map is not production/art approval and is not a replacement for build/offline inventory checks.
+
+Maintenance prompt: expose historical compiler-owned output through this reader; preserve exact prior runtime bytes, code-owned paths, rejected manual edits, and archive dependencies. Test absent versus incomplete output, linked/unmanaged entries, detached-byte ownership, transitive retention and idempotent reproduction. Adopt a successor only through the full production, source and release gates. This helper does not change defaults or the generator.

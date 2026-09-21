@@ -1,4 +1,5 @@
 import { required } from '../data-json.mjs';
+import { presentationManifestPath } from './manifest-path.mjs';
 import { hashPresentationBytes } from './bundle.mjs';
 import { validateCompiledPresentation } from './host.mjs';
 import { freezePresentation, LIMITS } from './model.mjs';
@@ -12,7 +13,11 @@ const cancelled = (signal) => {
  * list. Includes lazy originals/audio; procedural bindings have no file. This
  * is an exact byte inventory, not proof of approval, availability or decoding.
  */
-export async function inspectPresentationDependencies(source, { signal } = {}) {
+export async function inspectPresentationDependencies(
+  source,
+  { signal, retainedManifestSha256 = null } = {},
+) {
+  const manifestPath = presentationManifestPath(retainedManifestSha256);
   cancelled(signal);
   required(
     source instanceof Uint8Array &&
@@ -26,6 +31,10 @@ export async function inspectPresentationDependencies(source, { signal } = {}) {
   );
   const sha256 = await hashPresentationBytes(bytes);
   cancelled(signal);
+  required(
+    retainedManifestSha256 === null || sha256 === retainedManifestSha256,
+    'Retained presentation dependencies differ from their exact manifest pin.',
+  );
   const byHash = new Map();
   for (const [slot, asset] of Object.entries(manifest.resolved.assets)) {
     if (!asset.file) continue;
@@ -46,7 +55,7 @@ export async function inspectPresentationDependencies(source, { signal } = {}) {
   for (const item of files) item.slots.sort();
   return freezePresentation({
     format: 'revealline-presentation-dependencies.v1',
-    manifest: { path: 'runtime.json', bytes: bytes.byteLength, sha256 },
+    manifest: { path: manifestPath, bytes: bytes.byteLength, sha256 },
     source: manifest.source,
     theme: { id: manifest.resolved.theme.id, revision: manifest.resolved.theme.revision },
     collection: manifest.resolved.collection,
@@ -61,7 +70,7 @@ export async function inspectPresentationDependencies(source, { signal } = {}) {
  */
 export async function verifyPresentationDependencies(
   source,
-  { read, signal, expectedManifestSha256 = null } = {},
+  { read, signal, expectedManifestSha256 = null, retainedManifestSha256 = null } = {},
 ) {
   required(typeof read === 'function', 'A bounded presentation dependency reader is required.');
   required(
@@ -69,7 +78,10 @@ export async function verifyPresentationDependencies(
       (typeof expectedManifestSha256 === 'string' && /^[a-f0-9]{64}$/.test(expectedManifestSha256)),
     'Use an exact SHA-256 presentation manifest pin.',
   );
-  const inventory = await inspectPresentationDependencies(source, { signal });
+  const inventory = await inspectPresentationDependencies(source, {
+    signal,
+    retainedManifestSha256,
+  });
   cancelled(signal);
   required(
     expectedManifestSha256 === null || inventory.manifest.sha256 === expectedManifestSha256,

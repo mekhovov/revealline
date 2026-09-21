@@ -1,0 +1,728 @@
+{
+  "base": "290aeb7ed4b31cb81271bea8a58f6fdef0734266",
+  "patchSha256": "d372c88fc8ee5887b94acf7a0db19e0c3bf92f6689c042d62cd059ae2377165e",
+  "files": [
+    {
+      "path": ".prettierignore",
+      "sha256": "4ffa653fb4df513d0fa2812606c72ca5c208525ea9eb95f7b081e16d119ad488",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/asset-studio/cross-mode-preview.mjs",
+      "sha256": "707dc42bbadbd35867c6265c0802bad1bfef5ef530d3f3aa7d0e1c98eb4ca3bf",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/asset-studio/index.html",
+      "sha256": "7d61c471e77d9c0637730cb5aef0034b48b12b88b50b223b194bc939be03c362",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/asset-studio/preview.mjs",
+      "sha256": "a7e9a232af9c44b8e315a0e9443dbb58879b1d52762d61d2800ebe48255f5f5c",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/asset-studio/studio.css",
+      "sha256": "cd8c9715cc2a1a6eb6dd334e7274c18c9bc288adb05f75f1355726a4c3ef4c5e",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/asset-studio/studio.mjs",
+      "sha256": "270b57cb302c7ff331159a038fb3bbf6b8bf0e3e98d2d3a4ad6466ec383d2a4a",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/asset-studio/team-preview-fixture.mjs",
+      "sha256": "8441d6135669c3e3d5a5809b1c511f0c379de0fc7e88bfcf83cc29b2b84d685f",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/README.md",
+      "sha256": "062ea97dad7e1707fb5996e318760aa0f9e777730bcf24825fe18e804ba02216",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/available.png",
+      "sha256": "e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/captured.png",
+      "sha256": "fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/prepared/manifest.json",
+      "sha256": "c915eb29bc70307318c72757af604d1625a8eef38f73fbd2590e5e2a629a4778",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/review.html",
+      "sha256": "4d3341a9b539b68af6393d17dc3acbd5a7770fb3cb23e6a6d25d7636b1c6679f",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-anchor-field-kit-v1/source.mjs",
+      "sha256": "ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/README.md",
+      "sha256": "a3f9895cccb67ac44bc3c7778e9cee6a189c5170d78d9bee4da91c3a9d5e76b8",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/manifest.json",
+      "sha256": "3b05352f5a59474edeb2dc4da330f183885585512d204b2376f760c65fe994af",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/recovery.png",
+      "sha256": "53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/rescue.png",
+      "sha256": "0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/slowed.png",
+      "sha256": "4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/prepared/support.png",
+      "sha256": "a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/review.html",
+      "sha256": "b10f2c0e91bb076e74ebe8cff15f1f23b8b0fd241447795dbf77ca5b3aee754f",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/library/team-feedback-field-kit-v1/source.mjs",
+      "sha256": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "sha256": "325fc55efb8d9410dd0c9b8327d50ac05cea16551a05b967dfa269f68cea63ae",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/prompts/team-actor-states.md",
+      "sha256": "24f4b385aa4aa73fea3e87fdb3e95e8076e58ae012df65b58788e9c44398cd4f",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/prompts/team-event-artwork.md",
+      "sha256": "fe6b87586dd2cd45560288498e80cf7d9b5d713a7da87529afcabb031e481fdd",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/prompts/team-feedback.md",
+      "sha256": "c50d42ccef0467fa5fba611ec02635501c9676a9dfb615e0ad4120d1f10eceef",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/prompts/team-retained-presentation.md",
+      "sha256": "b293366910aa46a998bf78da94c4eed2cdf56b09d71e43d6c21dd6c9c5c474d0",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/prompts/team-studio-states.md",
+      "sha256": "d5f6a82f3100dd138755d11d5aa8bd6998bb9f8ccc4306fc6bc1305558ecc312",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/prompts/team-threat-overlays.md",
+      "sha256": "4dc157d7f5f646f1fe5dd81e533539d2ce196a3efb82756428f21920cb9e6e46",
+      "capsuleMatches": true
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "sha256": "85bed271be02ad7b69caf1070f855b9cda67e9b03cd8f981aeb35c017ead43a3",
+      "capsuleMatches": false
+    },
+    {
+      "path": "docs/couch-installed-chapters.md",
+      "sha256": "3619a2e63e3c1e28ca69b2b00b674b53cdfb7c1825f631390ce5cde4f59a42a5",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/presentation-output-preparation.md",
+      "sha256": "b1981e4605d3ba0e6df579e76650e34af636c4c6880217c7d9a8fc935e18b37d",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/presentation-output-reader.md",
+      "sha256": "27471a23cc3a67fb6dfac465764c6f49910f5313389dbc60a4ae745c3f93c985",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/production-slot-migrations.md",
+      "sha256": "87a27bd963df79a8a34daa7a3271a444c1eddee4dea2ac0fac28d95101353be2",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/retained-presentation-manifests.md",
+      "sha256": "808f43f0539c0933a2e0a40877e0801e465ba6fe5e7a5d5239147457e1444292",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/retained-team-build-preflight.md",
+      "sha256": "42720aa843aa3c633f9ff9a755d0ccc0d7e34b8824e20b3680befc289c37841f",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-actor-state-authoring.md",
+      "sha256": "197edf6ffdb0a8f5044cbb7918671647ee7d4aef29df5ffeee729a2db2b0f4a2",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-anchor-authoring.md",
+      "sha256": "0c88084258246215bde0b9d5d133c82003a5a42e80628a0fc14ff947dd1e85e5",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-cue-palette.md",
+      "sha256": "8ddc57b6597ad8a8ff067b7261a2685a6d24c893d55ce900b27aaca9badc1c38",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-event-authoring.md",
+      "sha256": "6d9ea298558da6717931a49522b3a45eb94e7d76954eea9b6c9afd1ca0a81d8d",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-feedback-authoring.md",
+      "sha256": "84e5451271edc6d8d82130434b67be18c5df0655d04ab3a328167fac643b8528",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-owned-presentation-host.md",
+      "sha256": "53e475005f75be6aae17acd3d8b7095ca57f9b76f4991fd9db7414d2b8597230",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-owned-presentation.md",
+      "sha256": "490d2f2d358ed869c8b18e52126a06ae4bc5b0f2ae1c91c3dd82a9e7c5648fb2",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-presentation-display.md",
+      "sha256": "f677a4b53ceeb2aae9720507d28b17a8070c8284ad3ca680da34b8b4b6e29e66",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-studio-states.md",
+      "sha256": "9398e2bcddefbd92d927864400d37fec6f829e7e95b18e90bbc914def4eb4a14",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-threat-authoring.md",
+      "sha256": "5fec48e7369306ac3c205ec88155f998857432bc63e9d900db5cbb58b8cf4a89",
+      "capsuleMatches": true
+    },
+    {
+      "path": "docs/team-visual-theme-identities.md",
+      "sha256": "f80c7991d04ee41316ec02637bdb44e74986a4ea35b96aaf26b0bec390161ca0",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-actor-presentation.mjs",
+      "sha256": "c137c928d9bdab181bde2613193d4c6af016c7457a5504333c8792d88c2b5bd0",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-anchor-presentation.mjs",
+      "sha256": "a7c2a44dc9d8698ee6925bbbbedb80840105228da19c0625ed1c7e4e1c04f8e5",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-cue-palette.mjs",
+      "sha256": "f90a0f08b018509efee68999bba75b780384c5045f890b8eaa984fcf07b8cf9f",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-effect-presentation.mjs",
+      "sha256": "90ac847ce3f874c20b717d87d47eb2d8929bb2510d0cefeb2b21d4ebbaf09f81",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-event-feedback.mjs",
+      "sha256": "17408680cb8dca375f013ada4023e5ac871984ba36641c0f993db8f2a8caabe6",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-event-presentation.mjs",
+      "sha256": "aa62b291f91d1ace3ea0d542d43e4beeea98f5b9ab4066687a13c95082265619",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-owned-presentation.mjs",
+      "sha256": "38c494da69f13199e387999a72193517d8966203941aa0bee69a226c1d26a725",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-presentation-display.mjs",
+      "sha256": "b5d62cf116f083502abea06582f14cd59073a5a5cb1b702cae26a2e67dddaee1",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-retained-presentation.mjs",
+      "sha256": "7b4d303e0744253d0f3c475303fcc5638b2035ac154ea8b44cf4e64c327d5d10",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-threat-presentation.mjs",
+      "sha256": "c382ff77bea08db0e56a9e160b5aa2f427358e6a12f5f3d8529f8f2785220c57",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "sha256": "9ff9e6cdbdcd6da90d26dc9c8342156b85c564288a8ce64c27917cc371df804c",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "sha256": "cbec28c212c2bea91fb6f77518a8e9cc88ef9dc9688f98d928e3343dfff9ff36",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "sha256": "802d40ea72835aec960b7919efe32a84e2aaf623976da3a6dca831fbb6f4efd0",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "sha256": "d800b83279a8d1c2f16840d8a855039e731646c31af2fa04fdc47455017c8e6b",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/dependencies.mjs",
+      "sha256": "cf38269e5d2c2e6154b014d0e5469f09315232f7f6434e626c96fad7907ffd14",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/host.mjs",
+      "sha256": "df15e6dd2635e5eb46ca886f59e075f42a820e330d81f4304c5eb9628ca7709a",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/manifest-path.mjs",
+      "sha256": "759bac83965a5ad8decfda59e4b10d68b240ef20234df06e21fb2dfcc4ae0a14",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/model.mjs",
+      "sha256": "ed5876ea15d576d1c74de48a01346634f5c6bd2c453f65122e75c93a29be8f3b",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/studio-session.mjs",
+      "sha256": "305f477fb0149c54439329a8dda59e417ca5da0cd309e1b6df9a0be32b773cea",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/team-actor-slots.mjs",
+      "sha256": "97b9a12bbf2127f0fe8a2e6a6803b2fc0dd76006ddd40024bc0377ee9425c97a",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/team-anchor-slots.mjs",
+      "sha256": "2dee100af12eec8e5d60eff5bd2e0c2d431d55c6db7c800427bde937e391eb8f",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/team-effect-slots.mjs",
+      "sha256": "82328525ddb631d33ae70ff24e28dc509356015a2c6d5df69545a60e866ec936",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/team-event-slots.mjs",
+      "sha256": "2e92c99e3775041a147e05ed5c304e951fa4ed9de57eb5afbf46e4cf01b3f886",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/team-threat-slots.mjs",
+      "sha256": "4c5ec435733c998d62d2aebe54955f2f07fd085c094e3d2fe5fcc8a7a4a7c869",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/presentation/visual-theme-catalogue.mjs",
+      "sha256": "0304c27f06390d50cd39e034d393f4a5484fd8e642b5a8d2372899b3fac8c971",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/asset-studio-cross-mode.test.mjs",
+      "sha256": "d068d6935712a32cffd7aaed1af623c6f8495efc0d88061bf07f267d33725a28",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/asset-studio-team-authoring-host.test.mjs",
+      "sha256": "2f414e4822ec73ca8dd3cf70cedc597be13b1c955c6b1df0c93157c5901977b2",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/asset-studio-team-fixture.test.mjs",
+      "sha256": "ccd8e552c1f869f713c4fdf483ee8f082d2f2929e3f873cbe0a10a371534ba5b",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-actor-layout.test.mjs",
+      "sha256": "a59a4963b1781fd5286017a320b1ccc08299a757eaac4e1bd4ee60262f89623e",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "sha256": "dee02a5b11737cf47926c071896ac864dddac105ac9ad9874f62df66cf0bbb59",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-crawling-prime.test.mjs",
+      "sha256": "e1aebdf937005d1143401f12cb288229b6b19853ed6a3d7d44b6565d409d64d6",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-cue-palette.test.mjs",
+      "sha256": "839840bae9c5c75f668cd6b5a95d15bf375b67289e8e77e17a742b7f248ddb3d",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-custom-artwork-host.test.mjs",
+      "sha256": "161abcac16bfee7d0ae68be1e3deb96eaf432e96626b3fca326fecdf8b4f591b",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-event-feedback.test.mjs",
+      "sha256": "4a57c27b4bbcd0afd2954cdb6a5b2dd65ae695271aafa1a1379af6c30daa55bd",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-event-host.test.mjs",
+      "sha256": "2cbe03c451143edf777b87179552b927c196d60b60a33073e2f1c99f9aefee36",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-host.test.mjs",
+      "sha256": "6ddcf02c174d0b4265d11d2d7e63f0d763005eac2e1a12e5cf14fbe8dc5631f8",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-import-artwork-host.test.mjs",
+      "sha256": "b328992a1fe890c39f8a268c347db82f754304fbe40a0edd174e5d6e37aaa8b4",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-import-next.test.mjs",
+      "sha256": "f1c29c55b2b638d586f86012d7edf85f892a2a93ebeb02ce5fc40d51341e778d",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-owned-presentation.test.mjs",
+      "sha256": "5867f9ae24722917911c7b784adf62e187b465c5ee7b235794d23022bee9b97d",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-picture-host.test.mjs",
+      "sha256": "0b61140778348a91a39f2a58c75a7f616b2d875a319f12d441dd08e3de230f05",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-presentation-display.test.mjs",
+      "sha256": "622cba21e22d764ff3f6898ad322d245c61d50349465a0d2ce7e9ed746ae5c42",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-results-resize.test.mjs",
+      "sha256": "ad8e6191393188737320243faff97bd76a45e86b7c322c9aa979dd2eff1f30f4",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-terminal-guidance.test.mjs",
+      "sha256": "2064babe6a5a9bb567c2ecb30f22cab3217867bd90970469ad85627173a52a82",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/coop-view-presentation.test.mjs",
+      "sha256": "72958435b4a3443c7c8228461c3633212f466887581dfd813426e64a84c27fd6",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/cross-mode-art-inventory.test.mjs",
+      "sha256": "19ee17f2fc113e782badcd959bd4c752a8824e8b4d33f92b6ba1c95c597822cb",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/helpers/coop-host.mjs",
+      "sha256": "e22137e3a0a358261bb1c4c891f731a0a805a24b13dfa30480c7fb486d42ff62",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/helpers/coop-import-win.mjs",
+      "sha256": "91e01a081adc379e0374135b0925e4b25a2ec10eea437c02a26d49c8c5b09932",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/helpers/coop-presentation-fixture.mjs",
+      "sha256": "7b9a085a138f9f5735cb5a508fcb5f32081557896771dcf96bddfb5d495bfea6",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/presentation-archive-formatting.test.mjs",
+      "sha256": "96fa9d4e0ce8f4c24f569f0d50522a4169c51751d2481e96e15fe7c7886c8c1a",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/presentation-dependencies.test.mjs",
+      "sha256": "c78b4c496901c59b57abfbd1e27c01b9030fc5c2ddbc308505be8473aecf7a99",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/presentation-host.test.mjs",
+      "sha256": "bdb96529cfafafb5961e8763b3f9c8f954dea130e07a963f9c76d1429afa3984",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/presentation-output-preparation.test.mjs",
+      "sha256": "345165229a3e77870a6b1a5baf8660e6c8e473e057461a7c1fd67957ba179dff",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/presentation-production-slots.test.mjs",
+      "sha256": "41866ff4b891081831919f63905953586f60bff7a28417899a8e27a9282f0270",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/presentation-retained-publishing.test.mjs",
+      "sha256": "8c419d8a7a47f276f18b4bd8d6960bbf9090573007d8a8576b2c10c1c4b0a379",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/team-actor-slots.test.mjs",
+      "sha256": "cb9e344e5e7516062193b944696b3f6b419cb62f783abca37d3443aa207c33a3",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/team-anchor-slots.test.mjs",
+      "sha256": "9d8067cb1e2a69778ec5944522d2781e79dce4160ce1b28d5cf4b1d9c1571c4d",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/team-effect-slots.test.mjs",
+      "sha256": "a8cd2433a6fc62c7e88f79137d2cb4aaf30e1c570332e6de7d6c5e85bc88c87a",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/team-event-slots.test.mjs",
+      "sha256": "46af2da4db818f02fcceb46ae6aa6b122f3ae38ff4077fc453e0e0e05d5723c8",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/team-threat-slots.test.mjs",
+      "sha256": "4377a18f47c649e334004833017a6a126c5fa088813402e7132d9ccfb22c8ff6",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/team-visual-theme-identity-compatibility.test.mjs",
+      "sha256": "5aad893aa25e5f0c5878ea6a4e796218a44175c604883ab23d709aa8f6c9e685",
+      "capsuleMatches": true
+    },
+    {
+      "path": "game/test/visual-theme-lease.test.mjs",
+      "sha256": "1d6004b08074a7fdca97ffe91e9752da225c084099c34646ee048c5286058e90",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/check-field-kit-readiness.mjs",
+      "sha256": "ff669cabbd49c8d7d0677185eb2f6ae917531a1ac209a73abde6a6841c6b885f",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "sha256": "9a49695954546412e19a68b3ab53589da42720354bd6a25d20b5109333743bfa",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/prepare-presentation-output.mjs",
+      "sha256": "56c93bba264e272ed72d2c0566468c7e9156fa6892d7269cbfdd6c1d8f791926",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/presentation-production-history.mjs",
+      "sha256": "775e70cb731f0656feceeb012e6a482c9677b2758655bd175587dad3eaf30045",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "sha256": "5257b6de0b4c665e30309f3f33b08715d4ed6bd1bc7db78e30a60aeba6c64646",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/produce-team-anchor-art.mjs",
+      "sha256": "8e0e2fad42d7fae3974b2230b3c91d595357e291c1c24cc3c81988204f3fadb3",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/produce-team-feedback-art.mjs",
+      "sha256": "020ec01cd02fad02f24058abe5f9ab458bc9305a3a6578ea1ac12a87fccc884a",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/retained-team-presentation.mjs",
+      "sha256": "fec816b73a3da1e9a62dab0fff5720b8eb71c8ea64c5afe0965f87b90b8ba31c",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/test-retained-team-presentation.mjs",
+      "sha256": "3a64873dee5f7c313afc7b8c839840cf2f53ac07b06af3efcc982fe7c965f3be",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/test-team-anchor-art.mjs",
+      "sha256": "f7569fbbb24e6c93a33327c1a9092a2925d9786b50a5c67d9ed57340e79460c9",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/test-team-feedback-art.mjs",
+      "sha256": "33245760dd8f89ecaaa297d5a3cdec36be9019ad0a6bd5fe314994ff980b84bf",
+      "capsuleMatches": true
+    },
+    {
+      "path": "scripts/write-presentation.mjs",
+      "sha256": "2e0e7b4c0255c9daa5b8a0de9253d1f62e952a84debdc8f043220ef4b28f91aa",
+      "capsuleMatches": true
+    }
+  ],
+  "note": "118capsulepaths originally matched; guide clean3way retained290a. Producer subsequently extended with six-PNG adoption preparation; see producerFiles. DeviceCSS/build-config/package versions unchanged.",
+  "producerFiles": {
+    "scripts/field-kit-team-assets.mjs": "7032c18a13e9adfdd00677d76d324b9beb74505793848c5766b98c5692793e47",
+    "scripts/produce-field-kit-theme.mjs": "497c2f2915e74ffcb1c48226561f8801b9ec8f0c3788b8f4faac2e0ca5c84611",
+    "game/test/field-kit-team-production.test.mjs": "751447b65b187d88d712aad572a8c995f743b6e3b89766ee13bf80cd965268e5"
+  },
+  "finalIntegratedFiles": {
+    ".prettierignore": "4ffa653fb4df513d0fa2812606c72ca5c208525ea9eb95f7b081e16d119ad488",
+    "authoring/asset-studio/cross-mode-preview.mjs": "707dc42bbadbd35867c6265c0802bad1bfef5ef530d3f3aa7d0e1c98eb4ca3bf",
+    "authoring/asset-studio/index.html": "7d61c471e77d9c0637730cb5aef0034b48b12b88b50b223b194bc939be03c362",
+    "authoring/asset-studio/preview.mjs": "a7e9a232af9c44b8e315a0e9443dbb58879b1d52762d61d2800ebe48255f5f5c",
+    "authoring/asset-studio/studio.css": "cd8c9715cc2a1a6eb6dd334e7274c18c9bc288adb05f75f1355726a4c3ef4c5e",
+    "authoring/asset-studio/studio.mjs": "270b57cb302c7ff331159a038fb3bbf6b8bf0e3e98d2d3a4ad6466ec383d2a4a",
+    "authoring/asset-studio/team-preview-fixture.mjs": "8441d6135669c3e3d5a5809b1c511f0c379de0fc7e88bfcf83cc29b2b84d685f",
+    "authoring/library/team-anchor-field-kit-v1/README.md": "062ea97dad7e1707fb5996e318760aa0f9e777730bcf24825fe18e804ba02216",
+    "authoring/library/team-anchor-field-kit-v1/prepared/available.png": "e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353",
+    "authoring/library/team-anchor-field-kit-v1/prepared/captured.png": "fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6",
+    "authoring/library/team-anchor-field-kit-v1/prepared/manifest.json": "c915eb29bc70307318c72757af604d1625a8eef38f73fbd2590e5e2a629a4778",
+    "authoring/library/team-anchor-field-kit-v1/review.html": "4d3341a9b539b68af6393d17dc3acbd5a7770fb3cb23e6a6d25d7636b1c6679f",
+    "authoring/library/team-anchor-field-kit-v1/source.mjs": "ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e",
+    "authoring/library/team-feedback-field-kit-v1/README.md": "a3f9895cccb67ac44bc3c7778e9cee6a189c5170d78d9bee4da91c3a9d5e76b8",
+    "authoring/library/team-feedback-field-kit-v1/prepared/manifest.json": "3b05352f5a59474edeb2dc4da330f183885585512d204b2376f760c65fe994af",
+    "authoring/library/team-feedback-field-kit-v1/prepared/recovery.png": "53dc09b7187b54af081994da3e27dfbb31ab229097fae735de1b2b52388c7408",
+    "authoring/library/team-feedback-field-kit-v1/prepared/rescue.png": "0e1e3a81fb1517f8d9fbea61a139e38118e3dc89f0ce3f2148e17376fcf66b6c",
+    "authoring/library/team-feedback-field-kit-v1/prepared/slowed.png": "4cabfd9cbdb4b7d4a3389f466896f0ed134a73f8964a4e5c65578b10b9027fdf",
+    "authoring/library/team-feedback-field-kit-v1/prepared/support.png": "a2d58468a2d56988b6542bf44e74728ab53aa9d5f312d874b60a3de05f9a9def",
+    "authoring/library/team-feedback-field-kit-v1/review.html": "b10f2c0e91bb076e74ebe8cff15f1f23b8b0fd241447795dbf77ca5b3aee754f",
+    "authoring/library/team-feedback-field-kit-v1/source.mjs": "4728241a5a1fc4b163961ca85a438019da91892d8316f62d46447d354f38ad4f",
+    "authoring/prompts/cross-mode-delivery.md": "325fc55efb8d9410dd0c9b8327d50ac05cea16551a05b967dfa269f68cea63ae",
+    "authoring/prompts/team-actor-states.md": "24f4b385aa4aa73fea3e87fdb3e95e8076e58ae012df65b58788e9c44398cd4f",
+    "authoring/prompts/team-event-artwork.md": "fe6b87586dd2cd45560288498e80cf7d9b5d713a7da87529afcabb031e481fdd",
+    "authoring/prompts/team-feedback.md": "c50d42ccef0467fa5fba611ec02635501c9676a9dfb615e0ad4120d1f10eceef",
+    "authoring/prompts/team-retained-presentation.md": "b293366910aa46a998bf78da94c4eed2cdf56b09d71e43d6c21dd6c9c5c474d0",
+    "authoring/prompts/team-studio-states.md": "d5f6a82f3100dd138755d11d5aa8bd6998bb9f8ccc4306fc6bc1305558ecc312",
+    "authoring/prompts/team-threat-overlays.md": "4dc157d7f5f646f1fe5dd81e533539d2ce196a3efb82756428f21920cb9e6e46",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md": "cd6dc3dc5693e20939b7e60dd594d22d16637d3d3719bc53d93ff71d5ae23a47",
+    "docs/couch-installed-chapters.md": "3619a2e63e3c1e28ca69b2b00b674b53cdfb7c1825f631390ce5cde4f59a42a5",
+    "docs/presentation-output-preparation.md": "b1981e4605d3ba0e6df579e76650e34af636c4c6880217c7d9a8fc935e18b37d",
+    "docs/presentation-output-reader.md": "27471a23cc3a67fb6dfac465764c6f49910f5313389dbc60a4ae745c3f93c985",
+    "docs/production-slot-migrations.md": "87a27bd963df79a8a34daa7a3271a444c1eddee4dea2ac0fac28d95101353be2",
+    "docs/retained-presentation-manifests.md": "808f43f0539c0933a2e0a40877e0801e465ba6fe5e7a5d5239147457e1444292",
+    "docs/retained-team-build-preflight.md": "42720aa843aa3c633f9ff9a755d0ccc0d7e34b8824e20b3680befc289c37841f",
+    "docs/team-actor-state-authoring.md": "197edf6ffdb0a8f5044cbb7918671647ee7d4aef29df5ffeee729a2db2b0f4a2",
+    "docs/team-anchor-authoring.md": "0c88084258246215bde0b9d5d133c82003a5a42e80628a0fc14ff947dd1e85e5",
+    "docs/team-cue-palette.md": "8ddc57b6597ad8a8ff067b7261a2685a6d24c893d55ce900b27aaca9badc1c38",
+    "docs/team-event-authoring.md": "6d9ea298558da6717931a49522b3a45eb94e7d76954eea9b6c9afd1ca0a81d8d",
+    "docs/team-feedback-authoring.md": "84e5451271edc6d8d82130434b67be18c5df0655d04ab3a328167fac643b8528",
+    "docs/team-owned-presentation-host.md": "53e475005f75be6aae17acd3d8b7095ca57f9b76f4991fd9db7414d2b8597230",
+    "docs/team-owned-presentation.md": "490d2f2d358ed869c8b18e52126a06ae4bc5b0f2ae1c91c3dd82a9e7c5648fb2",
+    "docs/team-presentation-display.md": "f677a4b53ceeb2aae9720507d28b17a8070c8284ad3ca680da34b8b4b6e29e66",
+    "docs/team-studio-states.md": "9398e2bcddefbd92d927864400d37fec6f829e7e95b18e90bbc914def4eb4a14",
+    "docs/team-threat-authoring.md": "5fec48e7369306ac3c205ec88155f998857432bc63e9d900db5cbb58b8cf4a89",
+    "docs/team-visual-theme-identities.md": "f80c7991d04ee41316ec02637bdb44e74986a4ea35b96aaf26b0bec390161ca0",
+    "game/couch/coop-actor-presentation.mjs": "c137c928d9bdab181bde2613193d4c6af016c7457a5504333c8792d88c2b5bd0",
+    "game/couch/coop-anchor-presentation.mjs": "a7c2a44dc9d8698ee6925bbbbedb80840105228da19c0625ed1c7e4e1c04f8e5",
+    "game/couch/coop-cue-palette.mjs": "f90a0f08b018509efee68999bba75b780384c5045f890b8eaa984fcf07b8cf9f",
+    "game/couch/coop-effect-presentation.mjs": "90ac847ce3f874c20b717d87d47eb2d8929bb2510d0cefeb2b21d4ebbaf09f81",
+    "game/couch/coop-event-feedback.mjs": "17408680cb8dca375f013ada4023e5ac871984ba36641c0f993db8f2a8caabe6",
+    "game/couch/coop-event-presentation.mjs": "aa62b291f91d1ace3ea0d542d43e4beeea98f5b9ab4066687a13c95082265619",
+    "game/couch/coop-owned-presentation.mjs": "38c494da69f13199e387999a72193517d8966203941aa0bee69a226c1d26a725",
+    "game/couch/coop-presentation-display.mjs": "b5d62cf116f083502abea06582f14cd59073a5a5cb1b702cae26a2e67dddaee1",
+    "game/couch/coop-retained-presentation.mjs": "7b4d303e0744253d0f3c475303fcc5638b2035ac154ea8b44cf4e64c327d5d10",
+    "game/couch/coop-threat-presentation.mjs": "c382ff77bea08db0e56a9e160b5aa2f427358e6a12f5f3d8529f8f2785220c57",
+    "game/couch/coop-view.mjs": "9ff9e6cdbdcd6da90d26dc9c8342156b85c564288a8ce64c27917cc371df804c",
+    "game/couch/relay-rescue.css": "cbec28c212c2bea91fb6f77518a8e9cc88ef9dc9688f98d928e3343dfff9ff36",
+    "game/couch/relay-rescue.html": "802d40ea72835aec960b7919efe32a84e2aaf623976da3a6dca831fbb6f4efd0",
+    "game/couch/relay-rescue.mjs": "d800b83279a8d1c2f16840d8a855039e731646c31af2fa04fdc47455017c8e6b",
+    "game/presentation/dependencies.mjs": "cf38269e5d2c2e6154b014d0e5469f09315232f7f6434e626c96fad7907ffd14",
+    "game/presentation/host.mjs": "df15e6dd2635e5eb46ca886f59e075f42a820e330d81f4304c5eb9628ca7709a",
+    "game/presentation/manifest-path.mjs": "759bac83965a5ad8decfda59e4b10d68b240ef20234df06e21fb2dfcc4ae0a14",
+    "game/presentation/model.mjs": "ed5876ea15d576d1c74de48a01346634f5c6bd2c453f65122e75c93a29be8f3b",
+    "game/presentation/studio-session.mjs": "305f477fb0149c54439329a8dda59e417ca5da0cd309e1b6df9a0be32b773cea",
+    "game/presentation/team-actor-slots.mjs": "97b9a12bbf2127f0fe8a2e6a6803b2fc0dd76006ddd40024bc0377ee9425c97a",
+    "game/presentation/team-anchor-slots.mjs": "2dee100af12eec8e5d60eff5bd2e0c2d431d55c6db7c800427bde937e391eb8f",
+    "game/presentation/team-effect-slots.mjs": "82328525ddb631d33ae70ff24e28dc509356015a2c6d5df69545a60e866ec936",
+    "game/presentation/team-event-slots.mjs": "2e92c99e3775041a147e05ed5c304e951fa4ed9de57eb5afbf46e4cf01b3f886",
+    "game/presentation/team-threat-slots.mjs": "4c5ec435733c998d62d2aebe54955f2f07fd085c094e3d2fe5fcc8a7a4a7c869",
+    "game/presentation/visual-theme-catalogue.mjs": "0304c27f06390d50cd39e034d393f4a5484fd8e642b5a8d2372899b3fac8c971",
+    "game/test/asset-studio-cross-mode.test.mjs": "d068d6935712a32cffd7aaed1af623c6f8495efc0d88061bf07f267d33725a28",
+    "game/test/asset-studio-team-authoring-host.test.mjs": "2f414e4822ec73ca8dd3cf70cedc597be13b1c955c6b1df0c93157c5901977b2",
+    "game/test/asset-studio-team-fixture.test.mjs": "ccd8e552c1f869f713c4fdf483ee8f082d2f2929e3f873cbe0a10a371534ba5b",
+    "game/test/coop-actor-layout.test.mjs": "a59a4963b1781fd5286017a320b1ccc08299a757eaac4e1bd4ee60262f89623e",
+    "game/test/coop-actor-presentation.test.mjs": "dee02a5b11737cf47926c071896ac864dddac105ac9ad9874f62df66cf0bbb59",
+    "game/test/coop-crawling-prime.test.mjs": "e1aebdf937005d1143401f12cb288229b6b19853ed6a3d7d44b6565d409d64d6",
+    "game/test/coop-cue-palette.test.mjs": "839840bae9c5c75f668cd6b5a95d15bf375b67289e8e77e17a742b7f248ddb3d",
+    "game/test/coop-custom-artwork-host.test.mjs": "161abcac16bfee7d0ae68be1e3deb96eaf432e96626b3fca326fecdf8b4f591b",
+    "game/test/coop-event-feedback.test.mjs": "4a57c27b4bbcd0afd2954cdb6a5b2dd65ae695271aafa1a1379af6c30daa55bd",
+    "game/test/coop-event-host.test.mjs": "2cbe03c451143edf777b87179552b927c196d60b60a33073e2f1c99f9aefee36",
+    "game/test/coop-host.test.mjs": "6ddcf02c174d0b4265d11d2d7e63f0d763005eac2e1a12e5cf14fbe8dc5631f8",
+    "game/test/coop-import-artwork-host.test.mjs": "b328992a1fe890c39f8a268c347db82f754304fbe40a0edd174e5d6e37aaa8b4",
+    "game/test/coop-import-next.test.mjs": "f1c29c55b2b638d586f86012d7edf85f892a2a93ebeb02ce5fc40d51341e778d",
+    "game/test/coop-owned-presentation.test.mjs": "5867f9ae24722917911c7b784adf62e187b465c5ee7b235794d23022bee9b97d",
+    "game/test/coop-picture-host.test.mjs": "0b61140778348a91a39f2a58c75a7f616b2d875a319f12d441dd08e3de230f05",
+    "game/test/coop-presentation-display.test.mjs": "622cba21e22d764ff3f6898ad322d245c61d50349465a0d2ce7e9ed746ae5c42",
+    "game/test/coop-results-resize.test.mjs": "ad8e6191393188737320243faff97bd76a45e86b7c322c9aa979dd2eff1f30f4",
+    "game/test/coop-terminal-guidance.test.mjs": "2064babe6a5a9bb567c2ecb30f22cab3217867bd90970469ad85627173a52a82",
+    "game/test/coop-view-presentation.test.mjs": "72958435b4a3443c7c8228461c3633212f466887581dfd813426e64a84c27fd6",
+    "game/test/cross-mode-art-inventory.test.mjs": "19ee17f2fc113e782badcd959bd4c752a8824e8b4d33f92b6ba1c95c597822cb",
+    "game/test/helpers/coop-host.mjs": "e22137e3a0a358261bb1c4c891f731a0a805a24b13dfa30480c7fb486d42ff62",
+    "game/test/helpers/coop-import-win.mjs": "91e01a081adc379e0374135b0925e4b25a2ec10eea437c02a26d49c8c5b09932",
+    "game/test/helpers/coop-presentation-fixture.mjs": "7b9a085a138f9f5735cb5a508fcb5f32081557896771dcf96bddfb5d495bfea6",
+    "game/test/presentation-archive-formatting.test.mjs": "96fa9d4e0ce8f4c24f569f0d50522a4169c51751d2481e96e15fe7c7886c8c1a",
+    "game/test/presentation-dependencies.test.mjs": "c78b4c496901c59b57abfbd1e27c01b9030fc5c2ddbc308505be8473aecf7a99",
+    "game/test/presentation-host.test.mjs": "bdb96529cfafafb5961e8763b3f9c8f954dea130e07a963f9c76d1429afa3984",
+    "game/test/presentation-output-preparation.test.mjs": "345165229a3e77870a6b1a5baf8660e6c8e473e057461a7c1fd67957ba179dff",
+    "game/test/presentation-production-slots.test.mjs": "41866ff4b891081831919f63905953586f60bff7a28417899a8e27a9282f0270",
+    "game/test/presentation-retained-publishing.test.mjs": "8c419d8a7a47f276f18b4bd8d6960bbf9090573007d8a8576b2c10c1c4b0a379",
+    "game/test/team-actor-slots.test.mjs": "cb9e344e5e7516062193b944696b3f6b419cb62f783abca37d3443aa207c33a3",
+    "game/test/team-anchor-slots.test.mjs": "9d8067cb1e2a69778ec5944522d2781e79dce4160ce1b28d5cf4b1d9c1571c4d",
+    "game/test/team-effect-slots.test.mjs": "a8cd2433a6fc62c7e88f79137d2cb4aaf30e1c570332e6de7d6c5e85bc88c87a",
+    "game/test/team-event-slots.test.mjs": "46af2da4db818f02fcceb46ae6aa6b122f3ae38ff4077fc453e0e0e05d5723c8",
+    "game/test/team-threat-slots.test.mjs": "4377a18f47c649e334004833017a6a126c5fa088813402e7132d9ccfb22c8ff6",
+    "game/test/team-visual-theme-identity-compatibility.test.mjs": "5aad893aa25e5f0c5878ea6a4e796218a44175c604883ab23d709aa8f6c9e685",
+    "game/test/visual-theme-lease.test.mjs": "1d6004b08074a7fdca97ffe91e9752da225c084099c34646ee048c5286058e90",
+    "scripts/check-field-kit-readiness.mjs": "ff669cabbd49c8d7d0677185eb2f6ae917531a1ac209a73abde6a6841c6b885f",
+    "scripts/game-cli.mjs": "9a49695954546412e19a68b3ab53589da42720354bd6a25d20b5109333743bfa",
+    "scripts/prepare-presentation-output.mjs": "56c93bba264e272ed72d2c0566468c7e9156fa6892d7269cbfdd6c1d8f791926",
+    "scripts/presentation-production-history.mjs": "775e70cb731f0656feceeb012e6a482c9677b2758655bd175587dad3eaf30045",
+    "scripts/produce-field-kit-theme.mjs": "497c2f2915e74ffcb1c48226561f8801b9ec8f0c3788b8f4faac2e0ca5c84611",
+    "scripts/produce-team-anchor-art.mjs": "8e0e2fad42d7fae3974b2230b3c91d595357e291c1c24cc3c81988204f3fadb3",
+    "scripts/produce-team-feedback-art.mjs": "020ec01cd02fad02f24058abe5f9ab458bc9305a3a6578ea1ac12a87fccc884a",
+    "scripts/retained-team-presentation.mjs": "fec816b73a3da1e9a62dab0fff5720b8eb71c8ea64c5afe0965f87b90b8ba31c",
+    "scripts/test-retained-team-presentation.mjs": "3a64873dee5f7c313afc7b8c839840cf2f53ac07b06af3efcc982fe7c965f3be",
+    "scripts/test-team-anchor-art.mjs": "f7569fbbb24e6c93a33327c1a9092a2925d9786b50a5c67d9ed57340e79460c9",
+    "scripts/test-team-feedback-art.mjs": "33245760dd8f89ecaaa297d5a3cdec36be9019ad0a6bd5fe314994ff980b84bf",
+    "scripts/write-presentation.mjs": "2e0e7b4c0255c9daa5b8a0de9253d1f62e952a84debdc8f043220ef4b28f91aa"
+  }
+}

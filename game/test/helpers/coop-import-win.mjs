@@ -56,7 +56,7 @@ export async function winImported(t, { pack = importedRoute.authoredPack, ...opt
   f.tap('Enter');
   assert.equal(f.$('coop-overlay').hidden, true);
   const route = playImportedRoute(f);
-  assert.ok(route.objectives.some((text) => /1 \/ 2 secured · Relay 3/.test(text)));
+  assert.ok(route.objectives.some((text) => /Relays 1 \/ 2 · Relay 3/.test(text)));
   assert.equal(f.$('coop-objective').textContent, 'Strongholds secured together');
   assert.equal(f.$('coop-reserves').textContent, '5 reserves');
   return f;

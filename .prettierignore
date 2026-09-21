@@ -1,1 +1,4 @@
 game/vendor/
+
+# Exact retained manifests are authenticated by filename and content hash.
+game/presentation/compiled/runtime.*.json

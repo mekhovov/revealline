@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Team relay anchors · Field Kit production candidate</title>
+    <link rel="stylesheet" href="../../../game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../../../game/ui/field-kit-tokens.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #070b12;
+        color: #f3f0db;
+        font: 18px/1.5 var(--fk-font-ui, system-ui);
+      }
+      main {
+        max-width: 860px;
+        margin: 32px auto;
+        padding: 24px;
+      }
+      h1 {
+        font-size: 32px;
+        line-height: 1.2;
+      }
+      a {
+        color: #78dce8;
+      }
+      .pair {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .card {
+        border: 2px solid #78dce8;
+        padding: 16px;
+      }
+      .samples {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        min-height: 170px;
+      }
+      .samples img {
+        image-rendering: pixelated;
+      }
+      .small {
+        width: 24px;
+        height: 24px;
+      }
+      .large {
+        width: 144px;
+        height: 144px;
+      }
+      .light {
+        background: #f3f0db;
+        color: #070b12;
+        padding: 16px;
+        margin-top: 16px;
+      }
+      .neutral {
+        filter: grayscale(1);
+      }
+      code {
+        overflow-wrap: anywhere;
+      }
+      a {
+        display: inline-block;
+        min-height: 44px;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+      a:focus-visible {
+        outline: 3px solid #f4bf62;
+        outline-offset: 3px;
+      }
+      @media (max-width: 550px) {
+        .pair {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p>FIELD KIT / TEAM OBJECTIVES / PRODUCED CANDIDATE</p>
+      <h1>Relay anchors</h1>
+      <p>
+        One radio receiver, two connector states. Available has separated jaws; captured closes the
+        link. The game supplies anchor letters, checks and capture boundaries.
+      </p>
+      <div class="pair">
+        <section class="card">
+          <h2>Available</h2>
+          <div class="samples">
+            <img
+              class="small"
+              src="./prepared/available.png"
+              alt="Available relay radio at native 24 pixels"
+            /><img
+              class="large"
+              src="./prepared/available.png"
+              alt="Enlarged available radio with separated connector jaws"
+            />
+          </div>
+          <div class="light samples neutral">
+            <img
+              class="small"
+              src="./prepared/available.png"
+              alt="Available radio at 24 pixels in grayscale over a light background"
+            /><img
+              class="large"
+              src="./prepared/available.png"
+              alt="Enlarged available radio in grayscale"
+            />
+          </div>
+        </section>
+        <section class="card">
+          <h2>Captured</h2>
+          <div class="samples">
+            <img
+              class="small"
+              src="./prepared/captured.png"
+              alt="Captured relay radio at native 24 pixels"
+            /><img
+              class="large"
+              src="./prepared/captured.png"
+              alt="Enlarged captured radio with a closed connector and joined centre"
+            />
+          </div>
+          <div class="light samples neutral">
+            <img
+              class="small"
+              src="./prepared/captured.png"
+              alt="Captured radio at 24 pixels in grayscale over a light background"
+            /><img
+              class="large"
+              src="./prepared/captured.png"
+              alt="Enlarged captured radio in grayscale"
+            />
+          </div>
+        </section>
+      </div>
+      <p>
+        Original integer-pixel artwork, five-colour family, binary transparency, centred pivot.
+        Production candidates remain separate from approved runtime collections. Review both states
+        in Relay Yard and imported multi-stronghold maps before adoption.
+      </p>
+      <nav aria-label="Authoring references">
+        <a href="../../asset-studio/">Open Asset Studio</a
+        ><a href="./prepared/manifest.json">Requirements, hashes and AI prompts</a
+        ><a href="./source.mjs">Editable pixel source</a>
+      </nav>
+    </main>
+  </body>
+</html>

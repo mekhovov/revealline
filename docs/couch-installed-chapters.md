@@ -6,8 +6,10 @@ race uses the selected chapter's authored controls, dimensions, class and world;
 Couch does not convert Tactical missions into Arcade missions.
 
 In **Race setup**, the map selector also lists installed maps from this exact
-profile channel. Install or recover chapters in solo **More worlds**, then use
-**Refresh installed chapters** here. Refresh preserves the selected owner. It
+profile channel. Use **Chapters** in Versus to download and play entries from the embedded
+chapter catalogue directly. External chapters still need installation or recovery
+through Solo; their authenticated installed maps appear after **Refresh installed
+chapters** here. Refresh preserves the selected owner. It
 never chooses a different chapter, starts a race, or resumes the solo flight.
 An unavailable selected chapter stays unavailable until it is repaired or the
 player explicitly chooses another map.
@@ -144,3 +146,7 @@ all-edition coverage, offline and public release acceptance outstanding.
 No-mutation checks observe attempted puts and all completed readwrite transactions,
 including delete-only mutations; deliberate fixture edits precede each consumer
 baseline. Schema initialization remains a separate storage responsibility.
+
+## Complete source artwork inventory
+
+`game/test/cross-mode-art-inventory.test.mjs` enumerates all 51 built-in map/theme owners through the actual current release snapshot and immutable production ledger, comparing Solo selection with the static Versus reader. It requires reviewed production status for selected release images and explicitly distinguishes 15 FPV release pictures from 36 intentional First Signal procedural scenes. Procedural records must retain the complete authored theme and level plus the exact source and contract hashes. The same test inventories all five optional embedded packs (15 missions) and all 16 registered external chapters (48 missions), checking exact owner/revision, original bytes, image headers and release categories. External source PNG readiness is not an installed database proof; the existing external-host parity tests separately require authenticated descriptor originals even when an alternate release picture is selected. These source checks do not establish native image decoding, all-map playability, physical devices, offline durability or public-release acceptance.

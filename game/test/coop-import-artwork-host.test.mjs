@@ -36,7 +36,7 @@ test('historical multi-core imports prepare real approved image bytes and retain
   f.tap('Enter');
   assert.equal(f.$('coop-menu').hidden, true);
   assert.equal(teamImage(f), preview(f));
-  assert.match(f.$('coop-objective').textContent, /0 \/ 2 secured/);
+  assert.match(f.$('coop-objective').textContent, /Relays 0 \/ 2 · Relay 2 · Anchors 0 \/ 2/);
 });
 
 for (const ending of ['success', 'failure']) {

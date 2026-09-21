@@ -53,6 +53,56 @@
         <button
           data-studio-host="control"
           type="button"
+          id="prepare-team-actors"
+          data-tool-control
+          data-studio-startup-disabled
+          disabled
+        >
+          Prepare Team actor slots
+        </button>
+        <button
+          data-studio-host="control"
+          type="button"
+          id="prepare-team-anchors"
+          data-tool-control
+          data-studio-startup-disabled
+          disabled
+        >
+          Prepare Team anchor slots
+        </button>
+        <button
+          data-studio-host="control"
+          type="button"
+          id="prepare-team-effects"
+          data-tool-control
+          data-studio-startup-disabled
+          disabled
+        >
+          Prepare Team effect slots
+        </button>
+        <button
+          data-studio-host="control"
+          type="button"
+          id="prepare-team-threats"
+          data-tool-control
+          data-studio-startup-disabled
+          disabled
+        >
+          Prepare Team threat slots
+        </button>
+        <button
+          data-studio-host="control"
+          type="button"
+          id="prepare-team-events"
+          data-tool-control
+          data-studio-startup-disabled
+          disabled
+        >
+          Prepare Team event slots
+        </button>
+        <button
+          data-studio-host="control"
+          type="button"
           id="save-workspace"
           data-tool-control
           data-studio-startup-disabled
@@ -136,6 +186,48 @@
           <p data-studio-host="body">
             This guide stays in your workspace. You can read it while an asset is preparing without
             losing your crop, pixel edits or staged changes.
+          </p>
+          <p data-studio-host="body">
+            <strong>Team bodies:</strong> Prepare Team actor slots adds editable starting bodies for
+            both players, hunter phases, drifters and relay cores. They start unreviewed. Choose
+            Field context → Couch Team to inspect an applicable arena and scene; an inactive-state
+            message means the selected body is not being shown. Keep numbers, warnings, rotors and
+            rescue progress in their runtime layers. Save or export your work before leaving.
+          </p>
+          <p>
+            <strong>Crawling:</strong> In Field context choose Relay Yard → Player 1 crawling or
+            Player 2 crawling. Paused and Reduced effects retain an actual slow movement pose. Play
+            preview releases steering after the short crawl, returning the body to downed before the
+            loop resets. Both variants keep stopped rotors.
+          </p>
+          <p data-studio-host="body">
+            <strong>Team events:</strong> Prepare Team event slots adds Joint capture and Team
+            reserve recovery. Upload centered 32×32 transparent icons and inspect their real earned
+            scenes. They appear beside status text, outside playable cells. A small joined cut need
+            not earn Joint Cut credit, and shared reserve recovery is different from a personal
+            rescue.
+          </p>
+          <p data-studio-host="body">
+            <strong>Team threats:</strong> Prepare Team threat slots adds emitter warning,
+            travelling spark and shield overlays. Use the exact centered frame, keep the middle
+            transparent, and inspect Relay Yard. Runtime positions, warning paths, true contact
+            markers and objective labels stay visible above the artwork. First Connection has no
+            emitters or shields.
+          </p>
+          <p data-studio-host="body">
+            <strong>Team feedback:</strong> Prepare Team effect slots adds Support, Slowed, Rescue
+            and Player recovery. Upload transparent 32×32 badges, then inspect the matching scene in
+            Field context → Couch Team. Runtime ranges, labels and progress remain authoritative.
+            Crowded boards can suppress a cosmetic badge. Source recipes are editable starting
+            points, not reviewed publication assets.
+          </p>
+          <p data-studio-host="body">
+            <strong>Team relay anchors:</strong> Prepare Team anchor slots adds the available and
+            captured objective pair with the current procedural appearance. Replace either with a
+            24×24 transparent image or edit theme tokens. Inspect Relay Yard in Initial field and
+            Anchors captured; First Connection has no anchors. Images receive a minimum readable
+            display size beside the real letter/check; capture geometry stays fixed. Both states
+            need review before publication. Support and rescue remain separate cues.
           </p>
           <ol>
             <li data-studio-host="body">
@@ -371,16 +463,24 @@
               <option value="cutting">Active cuts</option>
               <option value="warning">Hunter warning</option>
               <option value="charge">Hunter charge</option>
-              <option value="capture">Capture feedback</option>
+              <option value="hunter-recovery">Hunter recovery</option>
+              <option value="support">Support pulse</option>
+              <option value="slowed">Slowed enemies</option>
+              <option value="emitter-warning" disabled>Emitter warning</option>
+              <option value="spark" disabled>Travelling spark</option>
+              <option value="capture">Joint capture</option>
               <option value="anchors" disabled>Anchors captured</option>
               <option value="core" disabled>Relay core exposed</option>
               <option value="victory">Completed field</option>
               <option value="downed-p1" disabled>Player 1 downed</option>
+              <option value="crawling-p1" disabled>Player 1 crawling</option>
               <option value="rescue-p1" disabled>Rescuing Player 1</option>
               <option value="recovered-p1" disabled>Player 1 recovered</option>
               <option value="downed-p2" disabled>Player 2 downed</option>
+              <option value="crawling-p2" disabled>Player 2 crawling</option>
               <option value="rescue-p2" disabled>Rescuing Player 2</option>
               <option value="recovered-p2" disabled>Player 2 recovered</option>
+              <option value="team-recovery" disabled>Team reserve recovery</option>
             </select></label
           ><label data-studio-host="control"
             >Backdrop<select data-studio-host="control" id="preview-background">

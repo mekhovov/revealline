@@ -717,6 +717,22 @@ export async function buildProject({
       );
     declared.add(entry.name);
   }
+  let verifyRetainedEntries;
+  if (files.includes('game/couch/coop-owned-presentation.mjs')) {
+    const { readRetainedTeamPresentation, verifyRetainedTeamPresentationEntries } = await import(
+      './retained-team-presentation.mjs'
+    );
+    const retainedPresentation = await readRetainedTeamPresentation(root, files, {
+      excluded: [
+        ...(config.optionalOffline ?? []),
+        ...optionalEntries.map((entry) => entry.name),
+        ...externalEntries.map((entry) => entry.name),
+        ...(optionalArtwork?.files.map((file) => file.path) ?? []),
+      ],
+    });
+    verifyRetainedEntries = (entries) =>
+      verifyRetainedTeamPresentationEntries(retainedPresentation, entries);
+  }
   await fs.mkdir(path.dirname(out), { recursive: true });
   const staging = await fs.mkdtemp(path.join(path.dirname(out), '.xonix-build-'));
   let old;
@@ -725,6 +741,7 @@ export async function buildProject({
     for (const name of files)
       entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
     entries.push(...optionalEntries, ...externalEntries);
+    verifyRetainedEntries?.(entries);
     const info = { formatVersion: FORMAT_VERSION, version, sourceRevision, entry: config.entry };
     const replace = (name, bytes) => {
       const found = entries.find((e) => e.name === name);

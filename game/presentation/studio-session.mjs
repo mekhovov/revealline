@@ -1,5 +1,6 @@
 import { FORMATS, validateThemeBundle, resolvePresentation } from './model.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
+import { mergeTeamActorSlotContracts } from './team-actor-slots.mjs';
 
 const reference = (record) => ({ id: record.id, revision: record.revision });
 const same = (a, b) => a.id === b.id && a.revision === b.revision;
@@ -104,6 +105,7 @@ export function adoptStudioBundle(source, incomingSource) {
   const incoming = validateThemeBundle(incomingSource);
   const presentation = resolvePresentation(incoming);
   const next = structuredClone(previous);
+  next.slots = structuredClone(mergeTeamActorSlotContracts(previous, incoming));
   const used = new Set([...next.assets, ...next.collections].map((record) => record.id));
   const prefix = `import-${next.revision + 1}`;
   let namespace = prefix;

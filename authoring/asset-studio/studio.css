@@ -292,6 +292,10 @@ body.field-kit {
   gap: 8px;
   padding-bottom: 12px;
 }
+.field-kit .preview-controls .inline-check {
+  min-height: 44px;
+  padding-block: 8px;
+}
 .compare-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -598,8 +602,8 @@ body.field-kit {
     gap: 12px;
   }
   .preview-controls > label {
-    flex: 1;
-    min-width: 120px;
+    /* Host text roles reset min-inline-size; preserve wrapping with a real basis. */
+    flex: 1 1 12rem;
   }
   .preview-controls select {
     min-width: 0;
@@ -965,4 +969,27 @@ body.field-kit[data-effects='reduced'] .preview-surface {
     grid-template-columns: minmax(0, 1fr);
     justify-items: start;
   }
+}
+
+.context-team-event {
+  margin: 0;
+  padding: 8px;
+  color: var(--fk-text);
+  background: var(--fk-bg);
+  font-family: var(--fk-font-ui);
+  font-size: var(--fk-text-secondary);
+  line-height: 1.4;
+}
+.board-context-frame .context-team-event-icon {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  aspect-ratio: 1;
+  margin-inline-end: 8px;
+  vertical-align: middle;
+  image-rendering: pixelated;
+}
+.context-team-event[hidden],
+.board-context-frame .context-team-event-icon[hidden] {
+  display: none;
 }

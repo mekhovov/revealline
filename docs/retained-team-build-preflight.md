@@ -1,0 +1,9 @@
+# Retained Team build preflight
+
+Builds shipping `game/couch/coop-owned-presentation.mjs` must retain the exact presentation associations declared in `coop-retained-presentation.mjs`. An exact current runtime may satisfy its pin directly. When the current runtime differs, its hash-named historical runtime must be present. Uploaded filenames, an arbitrary old theme revision, and a newly rehashed replacement cannot authorize another association.
+
+Before creating a build staging directory, `readRetainedTeamPresentation` validates the current runtime and any required historical runtime, checks exact source/theme/collection identity, and verifies all selected assets, including lazy picture originals and audio. Every required file must be in the shipped core offline inventory. Missing files, excluded dependencies, symlinks and altered bytes fail preparation. The build compares the packaged rereads against the verified pins before writing distribution artifacts.
+
+Existing recursive `game` inclusion places these files in the loose distribution, ZIP and offline worker configuration. The worker's existing file/byte limits and SHA-256 verification remain unchanged. Its readiness result covers only inventoried files; this preflight prevents the supported historical association from being accidentally omitted. Builds without the owned Team host retain their existing boundary.
+
+This is a packaging safeguard. It does not adopt another production theme, create an archive, rewrite original bytes, change picture associations, approve artwork or certify offline play. The producer must assemble retained files explicitly with `retainPresentationManifests`, after formatting the new current runtime, while leaving archived bytes unchanged. Final native offline preparation and a network-disabled historical import remain separate qualification.
