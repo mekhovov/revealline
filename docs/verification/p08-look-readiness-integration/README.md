@@ -1,0 +1,13 @@
+# Required selected-look readiness — integration
+
+Integrated the sealed ten-path source correction on494429f2. Authored Journey Start/Resume and result Choose/Next/Retry wait for the exact required craft/override images while retaining the old run/picture. Cancel cannot bypass readiness through a different Start control. Identical decoded sources are reused. Ready compact AND detailed FPV sprites avoid unnecessary original-image waiting. Historical cosmetic fallbacks remain distinct.
+
+The actual app/core/renderer tests cover legal capture→Next, held/failed/cancelled required images, direct Start after Cancel, ready compiled FPV, and Pause/Resume preserving an off-center down/right queued turn at tick27→28. Unit/host cohorts cover timeouts, stale owners, override precedence, one-use adoption, result continuation, saved media, first entry, difficulty and recipe helper invalidation.
+
+The ten-file cohort ran92 cases on each Node20.19.5/22.22.2:87 passed; five real-renderer cases failed because the sparse checkout lacked tracked character originals. Restoring the exact tracked Motion and FPV role PNGs, without code/test changes, gives5/5 on each Node. This establishes92 distinct scoped cases per runtime; it is NOT described as a single92/92 run. Earlier missing campaign-art and intermediate4/5 logs are retained too. Lint, formatting and whitespace checks pass. The first Node22 rerun shell invocation had a mistyped output directory and did not launch tests; the corrected command produced the retained run.
+
+The owner’s final keyboard browser journey held Retro artwork before title Start, cancelled, attempted direct briefing Start, released pixels, earned a legal victory and used Next once. Console was clean. All377 unique observed served file hashes match this integrated runtime and tracked files. The retained source receipt supplies the exact evidence boundaries; this is not a new browser run, physical touch/controller check, saved-restoration native check or offline certification.
+
+Source review confirmed abort/deadline disposal does not release borrowed or adopted images; token/snapshot checks reject obsolete adoption; compiled shortcuts require both display variants and never bypass an explicit override. No simulation/core, collision or score-authority source changed.
+
+The effects fingerprint now includes the new helper and is2614da4d…; earlier loss-layout work also leaves screen fingerprintd7b27aa… awaiting review. Existing reviewed digests, original art, compiled manifests and production history were NOT changed. Fresh scoped review, production adoption/reproduction, all source gates, version, PR, freeze and public verification are still required. Current PR211 stays frozen.

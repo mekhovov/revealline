@@ -1,0 +1,20 @@
+{
+  "README.md": "be674c05fdd61216f93f83cb3a1ac5d1290b3fb4499c43d36b01018318c941db",
+  "baseline-direct-start-red.log.gz": "de54da54b0060bbe7cfc3026ce1bbac7a95477ab65b7983a0b931fc2592eec30",
+  "integration.json": "bd74bec2bacd122f7d1df82909b780e91bedb3aedadef4820086e9d0544c66c3",
+  "native-byte-comparison.json": "adfb1bc2700cef085632c8366d1b5ef22ac44c84b623e4c4c8087fee3e54d205",
+  "native-evidence.json": "674b8a5ec67a5c0f52e7d97a4044b5b405e2950f071f30b68a6a19fcbf43c755",
+  "native-served.jsonl.gz": "c35901010f3d21894d4cea66b547fccb7614b4a8a490315a14b631f055cf69be",
+  "native-source-delay.jsonl.gz": "42598ec7bbeb391c405edad963f5292a2eddd5be0fae6f9ec7203d1ded3a1c32",
+  "node20-r2.tap.gz": "9f5d52c3c9ddc0e084d7567d1a800cff0f0c330afe805fdc8254cfdea9a34e84",
+  "node20.tap.gz": "81d6113514d81288acf78a742ac754e7cf94f6ccd5839f4062ffdf2b1616c245",
+  "node22-r2.tap.gz": "1cd90072950391d2b501a6e20d37c17aac03d8af61e97c955e23df766cce6325",
+  "node22.tap.gz": "485a2eb6b3d318257f88daa29417047cb650bf33c84ea2002de3c7c600d9900c",
+  "packet-qualification.json": "554d9b27441a2b9860ba93d1d11c14123f36099290a351cd887441b708219e9d",
+  "packet-ready.json": "dd06ddcabad4f140d18898d1e2cded82e681467162f14303ad9c718aca35efdf",
+  "real-renderer-node20-r3.tap.gz": "2333882bd9275b54a4e39bcd6473f33adb79db46507e9b52a839951310d5c05a",
+  "real-renderer-node20-r4.tap.gz": "71efa949d1f618698d1a795eefb2c3b07e6641af9e64cd77ef6e3be00c11710b",
+  "real-renderer-node22-r3.tap.gz": "697b8569f754e58a8907ed59f06cd70e81ac7e5cc25f13c0d68c1bf2648a272a",
+  "real-renderer-node22-r4.tap.gz": "f0e9357b27f3c4cc7fcb655dbcfec190c225ed64f2b6e5ff26b0b9181fa1f119",
+  "recipe-sources.json": "3d0ef4e813e5be8298f5224850af86e728cdae8d1a4c2538d0b3ff6754311a2d"
+}

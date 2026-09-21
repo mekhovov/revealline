@@ -1,3 +1,4 @@
+import { prepareLookImages } from './look-preparation.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
 import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
 import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
@@ -124,6 +125,95 @@ export class BoardPainter {
   // source theme, picture, body preset or any simulation-owned reference.
   setPresentation(snapshot = null) {
     this.presentation = snapshot;
+  }
+  requiredLookReady() {
+    return (
+      this.requiredLookToken === this.loadToken &&
+      (!(this.theme?.id === 'fpv' || this.theme?.family === 'fpv') ||
+        this.requiredLookPresentation === this.presentation)
+    );
+  }
+  // Curated attempts stage their selected look before retiring the old result.
+  // Both viewport variants must be decoded before the compiled player can
+  // replace its source bitmap; rotation must not expose an unloaded fallback.
+  async prepareLook(theme, bodyId, overrides = {}, options = {}) {
+    const body = this.presets.characters[bodyId];
+    if (!body) throw new Error('The selected craft is not registered.');
+    const token = this.loadToken,
+      presentation = theme.id === 'fpv' || theme.family === 'fpv' ? this.presentation : null,
+      set =
+        presentation &&
+        this.presets.characterPresentations?.sets.find(
+          (entry) => entry.themeId === 'fpv' && Object.values(entry.classBodies).includes(bodyId),
+        ),
+      role = set && Object.entries(set.classBodies).find(([, id]) => id === bodyId)?.[0],
+      compiledPlayer =
+        !overrides.player &&
+        role &&
+        presentation.image(`player.${role}.compact`) &&
+        presentation.image(`player.${role}.detailed`),
+      sourceFor = (selectedBody, selectedOverrides) => ({
+        player:
+          selectedOverrides.player?.dataUrl ||
+          (selectedBody?.src
+            ? new URL(`../../authoring/motion-lab/${selectedBody.src}`, import.meta.url).href
+            : null),
+        ...Object.fromEntries(
+          Object.entries(selectedOverrides)
+            .filter(([key]) => key !== 'player')
+            .map(([key, value]) => [key, value.dataUrl]),
+        ),
+      }),
+      sources = sourceFor(body, overrides),
+      previousSources = sourceFor(this.body, this.overrides),
+      jobs = Object.entries(sources)
+        .filter(([key, src]) => src && !(key === 'player' && compiledPlayer))
+        .map(([key, src]) => ({
+          role: key,
+          src,
+          image: previousSources[key] === src ? this.images[key] : null,
+        })),
+      assets = await prepareLookImages(jobs, options),
+      current = () =>
+        assets.current() &&
+        token === this.loadToken &&
+        (!(theme.id === 'fpv' || theme.family === 'fpv') || presentation === this.presentation);
+    let accepted = false;
+    return Object.freeze({
+      bodyId,
+      current: () => !accepted && current(),
+      accept: () => {
+        if (accepted || !current())
+          throw new DOMException('Craft preparation superseded.', 'AbortError');
+        assets.adopt();
+        accepted = true;
+        ++this.loadToken;
+        this.requiredLookToken = this.loadToken;
+        this.requiredLookPresentation = presentation;
+        this.enemyBodies.clear();
+        this.lookWarning = '';
+        this.theme = theme;
+        this.bodyId = bodyId;
+        this.overrides = overrides;
+        this.body = body;
+        this.recipe = this.presets.animationRecipes[body.animationRecipe];
+        this.images = assets.images;
+        this.image = this.images.player || null;
+        this.background = this.makeArt(theme);
+        this.animation = createAnimationState();
+        this.actorPresentation.reset();
+        this.reportAssets();
+        try {
+          this.onAssetStatus({
+            status: 'ready',
+            stage: 'ready',
+            message: 'Craft and scene artwork are ready.',
+            progress: null,
+          });
+        } catch {}
+      },
+      dispose: () => assets.dispose(),
+    });
   }
   async setLook(theme, bodyId, overrides = {}) {
     const token = ++this.loadToken;

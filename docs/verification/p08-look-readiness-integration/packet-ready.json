@@ -1,0 +1,70 @@
+{
+  "status": "qualified-scoped-source-handoff-pending-integration-release",
+  "base": "9076ada123551c2b65ae05638e19ebe828aedb68",
+  "patch": {
+    "path": ".cache/p08-required-look-907-r1/source.patch",
+    "bytes": 52732,
+    "sha256": "8b8cbd084179a734680185eaccdc70ef88c8532a4c5e3dce8ee25cdbb45d22af"
+  },
+  "changedPaths": 10,
+  "artifacts": [
+    {
+      "path": ".cache/p08-required-look-907-r1/source.patch",
+      "bytes": 52732,
+      "sha256": "8b8cbd084179a734680185eaccdc70ef88c8532a4c5e3dce8ee25cdbb45d22af"
+    },
+    {
+      "path": ".cache/p08-required-look-907-r1/changed-paths.json",
+      "bytes": 2260,
+      "sha256": "8a4875144da338fce4e5473040e74eaee8bf91159eb4361bdf892d5797987a0b"
+    },
+    {
+      "path": ".cache/p08-required-look-907-r1/patch-checks.json",
+      "bytes": 333,
+      "sha256": "64299ba2261b5545168371dd109f238c2d5537991a9dcfea21975c77e4ae9fa6"
+    },
+    {
+      "path": ".cache/p08-required-look-907-r1/qualification.json",
+      "bytes": 3708,
+      "sha256": "554d9b27441a2b9860ba93d1d11c14123f36099290a351cd887441b708219e9d"
+    },
+    {
+      "path": ".cache/p08-required-look-907-r1/source-inputs.json",
+      "bytes": 131548,
+      "sha256": "20f162b630402d529ff2c8f9a9db45902d5414125d2e4c2ca41a09aa776cfc9d"
+    },
+    {
+      "path": ".cache/p08-required-look-907-r1/README.md",
+      "bytes": 3072,
+      "sha256": "4aa945a4645fe292e019e38d7a2a4fc539a85b79ac2dcf6ebe67184fa3d0319d"
+    },
+    {
+      "path": ".cache/p08-required-look-907-r1/lint-final.json",
+      "bytes": 931,
+      "sha256": "ca574e03f5025a1b310b9ddaad078b3b48eac86c91781d4c6abb2341b2a5371c"
+    },
+    {
+      "path": ".cache/p08-required-look-907-r1/static-final-additions.json",
+      "bytes": 724,
+      "sha256": "bddd77c001a7c6a658b6546918bced26e437dce129ee5bbd3d504695c1d90302"
+    }
+  ],
+  "native": {
+    "path": ".cache/p08-required-look-final-native-907-r2/native-final-evidence.json",
+    "sha256": "674b8a5ec67a5c0f52e7d97a4044b5b405e2950f071f30b68a6a19fcbf43c755",
+    "scope": "final de27;1280x720;ordinary keyboard;delayed Start/Cancel/direct Start/release/legal win/Next;console[]"
+  },
+  "hostEvidence": {
+    "path": ".cache/p08-required-look-host-907-r1/ready.json",
+    "sha256": "d06dfc0cefc42b6c1b731ae65c5a3424150be8db33c229096331be3f1ec4be30",
+    "fullCohort": "5/5 each Node20/22 on5304; unchanged first4 retained",
+    "finalDelta": "1/1 focused de27 each Node20/22, with real paused queued-turn preservation and clean won status",
+    "directStartRed": "same final assertion fails old cedd runtime with tick24/running/source absent"
+  },
+  "releaseRequirements": [
+    "Integrate after accepted main into fresh PR; do not widen current release211.",
+    "Run exact integrated six source gates, build/production reproduction and relevant browser checks.",
+    "Review final combined effects dependencies, regenerate approved production record and compile manifest; old approval digest is intentionally not updated here.",
+    "Assign next unused version, freeze immutable release, deploy and verify public play."
+  ]
+}

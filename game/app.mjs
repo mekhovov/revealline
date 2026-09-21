@@ -895,6 +895,7 @@ try {
   let flightPictures = null,
     picturePrewarm = null,
     pictureResume = null,
+    pictureLookController = null,
     pictureThemePending = null,
     pictureGeneration = 0;
   const picturePreparingMessage =
@@ -1193,6 +1194,8 @@ try {
       picturePrewarm = null;
     } else if (picturePrewarm) picturePrewarm.observe = null;
     pictureThemePending?.controller.abort();
+    pictureLookController?.abort();
+    pictureLookController = null;
     pictureResume = null;
     pictureThemePending = null;
   }
@@ -5630,7 +5633,7 @@ try {
     if (flightPictures?.current()?.image) delete overrides.background;
     return overrides;
   }
-  function setTheme() {
+  function setTheme(preparedLook = null) {
     if (library.preferences.matchClassAppearance) {
       const candidate = characterPresentations.recommendedBody(
         theme,
@@ -5669,7 +5672,8 @@ try {
         : 'Original worlds · make every line count';
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
-    painter.setLook(theme, bodyId, painterVisuals());
+    if (preparedLook) preparedLook.accept();
+    else painter.setLook(theme, bodyId, painterVisuals());
     soundtrackPlayer?.setContext(soundtrackContext());
   }
   function updateBodies() {
@@ -6109,7 +6113,8 @@ try {
       writer.writable === ticket.writable &&
       persistenceReady === ticket.persistenceReady &&
       backupLock === ticket.backupLock &&
-      savedRaw === ticket.savedRaw
+      savedRaw === ticket.savedRaw &&
+      (!ticket.look || ticket.look.current())
     );
   }
   function finishResultAttempt(ticket, message, state, restoreFocus = false) {
@@ -6120,6 +6125,7 @@ try {
     ticket.feedback?.finish(message, state);
     ticket.controller.abort();
     ticket.pictures?.dispose();
+    ticket.look?.dispose();
     if (
       restoreFocus &&
       resultAttemptEpoch === epoch &&
@@ -6286,6 +6292,53 @@ try {
       });
       if (!resultAttemptCurrent(ticket))
         throw new DOMException('Preparation cancelled.', 'AbortError');
+      if (candidateAttempt) {
+        // Authored Journey visuals are required for this attempt. Keep the
+        // previous result and decoded original until their selected look is
+        // ready too. Historical packs retain their explicit cosmetic fallback.
+        if (nextTheme.id === 'fpv' || nextTheme.family === 'fpv') await presentationReady;
+        if (!resultAttemptCurrent(ticket))
+          throw new DOMException('Preparation cancelled.', 'AbortError');
+        const allowed = new Set(entry.themes.map((item) => item.player));
+        let selectedBody = bodyId;
+        if (
+          !themeOverride &&
+          (library.preferences.matchClassAppearance ||
+            !Object.hasOwn(presets.characters, selectedBody) ||
+            !allowed.has(selectedBody))
+        )
+          selectedBody = nextTheme.player;
+        if (library.preferences.matchClassAppearance) {
+          const recommended = characterPresentations.recommendedBody(
+            nextTheme,
+            nextClassId,
+            nextTheme.player,
+          );
+          selectedBody =
+            Object.hasOwn(presets.characters, recommended) && allowed.has(recommended)
+              ? recommended
+              : 'neutral-marker';
+        }
+        if (!Object.hasOwn(presets.characters, selectedBody)) selectedBody = 'neutral-marker';
+        if (!allowed.has(selectedBody))
+          selectedBody =
+            allowed.has(nextTheme.player) && Object.hasOwn(presets.characters, nextTheme.player)
+              ? nextTheme.player
+              : 'neutral-marker';
+        const overrides = {
+          ...entry.visualOverrides,
+          ...entry.levelVisuals?.find((item) => item.levelId === level.id)?.visualOverrides,
+        };
+        if (ticket.pictures.current()?.image) delete overrides.background;
+        ticket.look = await painter.prepareLook(nextTheme, selectedBody, overrides, {
+          signal: ticket.controller.signal,
+          onStatus: (status) => {
+            if (resultAttemptCurrent(ticket)) ticket.feedback.update(status);
+          },
+        });
+        if (!resultAttemptCurrent(ticket))
+          throw new DOMException('Preparation cancelled.', 'AbortError');
+      }
       const preparedPictures = ticket.pictures;
       const adopted = prepare({
         preparedAttempt: {
@@ -6364,6 +6417,7 @@ try {
     } finally {
       if (resultAttempt === ticket) cancelResultAttempt();
       ticket.pictures?.dispose();
+      ticket.look?.dispose();
       if (!ticket.adoptionEpoch) ticket.candidatePicture?.release();
     }
   }
@@ -6581,7 +6635,7 @@ try {
     }
     if (scenario?.music) assignMusic(scenario.music);
     painter.setLevel?.(run.level, { seed });
-    setTheme();
+    setTheme(preparedAttempt?.ticket.look);
     started = false;
     paused = true;
     handled = false;
@@ -6647,13 +6701,19 @@ try {
     // Enable audio on the original gesture, before any storage/decode await.
     // Master mute only gates output. It never discards a pending or paused playlist.
     activateAudio().catch(() => {});
-    if (!flightPictures?.ready(theme.id)) {
+    const needsLook = candidateHost?.owns(activeEntry) && !painter.requiredLookReady();
+    if (!flightPictures?.ready(theme.id) || needsLook) {
       if (pictureResume) return;
       clearPictureRecovery();
       const owner = flightPictures,
         ticket = ++pictureGeneration,
         selectedRun = run,
-        selectedTheme = theme.id;
+        selectedTheme = theme.id,
+        selectedBody = bodyId,
+        controller = new AbortController();
+      let preparedLook = null,
+        lookStage = false;
+      pictureLookController = controller;
       pictureResume = ticket;
       paused = true;
       clearInput();
@@ -6671,6 +6731,29 @@ try {
       const prepared =
         prewarm?.promise ?? owner.ensure(selectedTheme, { onStatus: feedback.update });
       void prepared
+        .then(async () => {
+          if (!needsLook) return;
+          const current = () =>
+            pictureResume === ticket &&
+            pictureGeneration === ticket &&
+            owner === flightPictures &&
+            run === selectedRun &&
+            theme.id === selectedTheme &&
+            bodyId === selectedBody &&
+            !controller.signal.aborted;
+          if (!current()) throw new DOMException('Preparation cancelled.', 'AbortError');
+          lookStage = true;
+          if (theme.id === 'fpv' || theme.family === 'fpv') await presentationReady;
+          if (!current()) throw new DOMException('Preparation cancelled.', 'AbortError');
+          preparedLook = await painter.prepareLook(theme, bodyId, painterVisuals(), {
+            signal: controller.signal,
+            onStatus: (status) => {
+              if (current()) feedback.update(status);
+            },
+          });
+          if (!current() || !preparedLook.current())
+            throw new DOMException('Preparation cancelled.', 'AbortError');
+        })
         .then(() => {
           if (
             pictureResume === ticket &&
@@ -6679,13 +6762,30 @@ try {
             run === selectedRun &&
             theme.id === selectedTheme
           )
-            feedback.finish('Picture ready. Press Resume to continue.');
+            feedback.finish(needsLook ? '' : 'Picture ready. Press Resume to continue.');
           if (
             pictureResume !== ticket ||
             pictureGeneration !== ticket ||
             owner !== flightPictures ||
             run !== selectedRun ||
             theme.id !== selectedTheme ||
+            (needsLook && bodyId !== selectedBody) ||
+            document.hidden ||
+            !document.hasFocus() ||
+            dialogOpen() ||
+            courseBlocked()
+          )
+            return;
+          preparedLook?.accept();
+          // Renderer/status observers may hand control to Pause or a newer
+          // surface while adopting pixels; that never authorizes this resume.
+          if (
+            pictureResume !== ticket ||
+            pictureGeneration !== ticket ||
+            owner !== flightPictures ||
+            run !== selectedRun ||
+            theme.id !== selectedTheme ||
+            (needsLook && bodyId !== selectedBody) ||
             document.hidden ||
             !document.hasFocus() ||
             dialogOpen() ||
@@ -6697,6 +6797,15 @@ try {
         })
         .catch((error) => {
           if (pictureResume === ticket) {
+            if (lookStage) {
+              const cancelled = error?.name === 'AbortError';
+              const message = cancelled
+                ? 'Preparation cancelled. Your flight stays paused.'
+                : 'Selected craft artwork is unavailable. Your flight stays paused. Try Start or Resume again.';
+              feedback.finish(message, cancelled ? 'cancelled' : 'error');
+              if (!cancelled) notify(message);
+              return;
+            }
             feedback.finish(
               error instanceof ReleasePictureWriteRequiredError
                 ? error.message
@@ -6707,6 +6816,9 @@ try {
           }
         })
         .finally(() => {
+          preparedLook?.dispose();
+          controller.abort();
+          if (pictureLookController === controller) pictureLookController = null;
           if (pictureResume === ticket) pictureResume = null;
         });
       return;

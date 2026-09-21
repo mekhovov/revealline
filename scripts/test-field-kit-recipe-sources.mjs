@@ -15,6 +15,7 @@ test('functional helper changes invalidate only their explicit recipe group', as
     ['game/content-design/actor-marker.mjs', 'effects'],
     ['game/ui/lane-presentation.mjs', 'effects'],
     ['game/ui/render.mjs', 'effects'],
+    ['game/ui/look-preparation.mjs', 'effects'],
   ]) {
     assert(inputs.has(name), `${name}: missing dependency`);
     const after = await fieldKitRecipeSources(async (file) =>
@@ -30,7 +31,7 @@ test('functional helper changes invalidate only their explicit recipe group', as
 test('missing helper bytes cannot produce a supposedly valid fingerprint', async () => {
   await assert.rejects(
     fieldKitRecipeSources(async (file) => {
-      if (file === 'game/ui/lane-presentation.mjs') throw new Error('Missing required helper');
+      if (file === 'game/ui/look-preparation.mjs') throw new Error('Missing required helper');
       return Buffer.from(file);
     }),
     /Missing required helper/,
