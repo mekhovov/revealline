@@ -1,0 +1,152 @@
+{
+  "format": "revealline-scoped-audio-review.v1",
+  "recordedUTC": "2026-09-21T02:18:57.897736+00:00",
+  "baseHead": "2248f7f35ac5ad75b8bdff5aaa66ca45417180be",
+  "workingTreeReview": true,
+  "reviewer": "Independent implementation subagent /root/ukrainian_research",
+  "authorshipDisclosure": "Did not author this runtime permission repair or its new runtime regressions. Previously contributed recovery/backup functionality. This pass authored only the changed-recipe-input test block in presentation-production-history.test.mjs and these evidence files.",
+  "scope": "Functional recovery-permission rule and Music backup wording, including bundle, share, source and backup-set integration. The ten ordered audio inputs identify the reviewed functional-audio recipe; unchanged transport inputs rely also on the separately retained prior reviews.",
+  "audioFingerprint": "c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998",
+  "fingerprintAlgorithm": "SHA-256 of the raw bytes of audioInputs concatenated in their listed order",
+  "audioInputs": [
+    {
+      "path": "game/ui/audio.mjs",
+      "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388"
+    },
+    {
+      "path": "game/ui/published-audio.mjs",
+      "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "sha256": "91c268ded6fd212a6ab285a8d7f9443f8a4af582824339031469f4238436e244"
+    },
+    {
+      "path": "game/ui/audio-master.mjs",
+      "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+    },
+    {
+      "path": "game/soundtrack.mjs",
+      "sha256": "f888d088850357dde7d60d44f91c6578b3fa6088a0e09203ef2ab193033171a4"
+    },
+    {
+      "path": "game/soundtrack-rights.mjs",
+      "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04"
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "sha256": "1bdd70af4a316ea5333135f0f07ccd0e74b64e179397801c92bf809c2cd66fea"
+    },
+    {
+      "path": "game/soundtrack-share.mjs",
+      "sha256": "44cc5e9bb5b5c7008fa48c87c1089da64a2ca1333de6a2b137bd10f7080b5c07"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "sha256": "b1a1fd56262bacca1a75ac9c88b7106bc43f2c91eb34cad4ca80591dd4dff3f7"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "sha256": "e8b1b1b7fb2c48c23dcaeb01164aec056616b404636f95eb7a0a1d4680c5387b"
+    }
+  ],
+  "additionalReviewedInputs": [
+    {
+      "path": "game/test/soundtrack-rights.test.mjs",
+      "sha256": "f358785e5b75cfe338b44499f1a66398dd3bdff2e6d190ed4e274cec0cdfedfd"
+    },
+    {
+      "path": "game/test/soundtrack-reference-recovery.test.mjs",
+      "sha256": "4f7eec5dff25ac08b6c3755e7f3d02c8656bfa6da9d59fbf50ecd342140aacbc"
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "sha256": "ba614ce1c5eeb9bb35271da5b4e3f40965ca4626baa9d3a10abd8f6c1369c62f"
+    },
+    {
+      "path": "game/test/soundtrack-source.test.mjs",
+      "sha256": "03164fb18aa6f056dd7a4fb8009eb5fd9c9c0f7df4003c11495e23c66743b0a7"
+    },
+    {
+      "path": "game/test/soundtrack-share.test.mjs",
+      "sha256": "ce067c0069b9eada3a8fdcfdda1906e56d1b2238991b2b174f00013e4857e9f3"
+    },
+    {
+      "path": "game/backup-set.mjs",
+      "sha256": "22a9aefcb303ab5b990c76384c5eabe9c2d71b3860ecc6ca6f9f935f879e8395"
+    },
+    {
+      "path": "game/test/presentation-production-history.test.mjs",
+      "sha256": "c1ce531c34cfbb24b9ca31df4197b2e4a9aad2241197c730596909afe4a2d636"
+    }
+  ],
+  "policyConclusions": [
+    "Recovery bytes require both effective redistribute and offlineCache permission to be allowed. Denied and unverified permissions both preserve metadata as references only.",
+    "Exclusion is by exact recording hash, so a permitted-looking custom alias cannot carry omitted bytes for the same restricted recording.",
+    "Bundle export, playlist share and backup-set export inherit the shared recovery plan. Missing permitted original bytes still fail; supplied excluded bytes are omitted.",
+    "Imported unknown reference markers remain conservative without granting a network source. Trusted catalogue authority is needed to restore approved online playback.",
+    "Standalone MP3 export remains governed by redistribution permission; that separate action does not promise an importable offline recovery bundle.",
+    "The shared notice accurately covers both denied and unverified offline or redistribution permission. The Music backup panel includes that notice alongside preserved track names."
+  ],
+  "findings": [],
+  "result": "No unresolved P1/P2 defect identified within this bounded source and test review.",
+  "verification": {
+    "testReceipt": "test-receipt.json",
+    "testReceiptSha256": "191ce88b76f52d8d4f5d44fbd6e375ebb352a9826a7f7993cd9079fd95076f89",
+    "argv": [
+      "node",
+      "--test",
+      "--test-concurrency=2",
+      "game/test/soundtrack-rights.test.mjs",
+      "game/test/soundtrack-reference-recovery.test.mjs",
+      "game/test/soundtrack-panel.test.mjs",
+      "game/test/soundtrack-source.test.mjs",
+      "game/test/soundtrack-share.test.mjs"
+    ],
+    "exitCode": 0,
+    "summary": {
+      "tests": 117,
+      "pass": 117,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 1404.536667
+    },
+    "testLog": "focused-tests.log",
+    "testLogSha256": "1bcde742c4d5b8e3067028c791905fbe5fee2a06cbd548dc667d06c8cea1f07d",
+    "beforeAfterPinnedInputsUnchanged": true,
+    "otherCompletedChecks": [
+      {
+        "command": "node --check game/test/presentation-production-history.test.mjs",
+        "exitCode": 0
+      },
+      {
+        "command": "node_modules/.bin/prettier --check game/test/presentation-production-history.test.mjs",
+        "exitCode": 0
+      },
+      {
+        "command": "node --test scripts/test-field-kit-recipe-sources.mjs",
+        "exitCode": 0,
+        "tests": 2,
+        "pass": 2
+      },
+      {
+        "description": "Inline source-collector checks changed each of the six added helpers and confirmed audio-only fingerprint changes, then removed each helper and confirmed source collection refused missing bytes.",
+        "exitCode": 0
+      }
+    ]
+  },
+  "recipeInvalidationTest": {
+    "file": "game/test/presentation-production-history.test.mjs",
+    "scope": "Changed recipe inputs reopen only their own reviewed group",
+    "safety": "Game-relative inputs are copied to ordinary fixture files before writes. Each mutation checks non-symlink status and verifies the real source bytes remain unchanged. Missing-byte checks rename only copied fixture inputs.",
+    "fullFileExecution": "Pending root approved-digest declaration; not claimed by this receipt."
+  },
+  "limitations": [
+    "This is a source and automated-test review, not a complete project qualification or final CI result.",
+    "No recording audition, musical-quality approval, Ukrainian cultural review, physical/native listening test, frozen offline validation, publication or release approval is granted.",
+    "Zero original, UA-FPV or creator recordings are approved for public admission by this review.",
+    "Producer declaration and ledger generation are intentionally not hashed here, avoiding a circular review-evidence dependency. Root owns source-stage and reviewed successors."
+  ]
+}

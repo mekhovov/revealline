@@ -15,7 +15,7 @@ import {
   importSoundtrackBundle,
   prepareSoundtrackLibrary,
 } from '../soundtrack-bundle.mjs';
-import { mergeSoundtrackShare } from '../soundtrack-share.mjs';
+import { mergeSoundtrackShare, soundtrackPlaylistShare } from '../soundtrack-share.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createSoundtrackSource } from '../soundtrack-source.mjs';
 import { responseFor } from './helpers/soundtrack-albums.mjs';
@@ -198,6 +198,86 @@ test('trusted matching hash authority can require bytes for a previously unknown
   assert.deepEqual(restored.library.referenceOnlyTrackIds, []);
   assert.equal(restored.assets.length, 1);
 });
+
+for (const offlineCache of ['denied', 'unknown'])
+  test(`additive shares retain catalogue and renamed-upload references when offline storage is ${offlineCache}`, async () => {
+    const source = entry(limited, `storage-${offlineCache}`, 'allowed');
+    const streamOnly = resolveCatalogueTrack({
+      ...source,
+      policy: { ...source.policy, offlineCache },
+    });
+    const trusted = resolveSoundtrackCatalogue({ ...catalogue, tracks: [allowed, streamOnly] });
+    const alias = {
+      ...limited.track,
+      id: `upload.storage-${offlineCache}`,
+      rights: { ...limited.track.rights, kind: 'original' },
+    };
+    const original = resolveSoundtrackLibrary({
+      ...setCatalogueTracks(emptySoundtrackLibrary(), [streamOnly]),
+      tracks: [alias],
+      playlists: [
+        {
+          id: 'shared.streams',
+          title: 'References with repeats',
+          trackIds: [streamOnly.id, alias.id, streamOnly.id],
+          order: 'ordered',
+          repeat: 'all',
+        },
+      ],
+    });
+    const share = soundtrackPlaylistShare(original, original.playlists[0], {
+      catalogue: trusted,
+    });
+    const bundle = await exportSoundtrackBundle(share, limited.assets, { catalogue: trusted });
+    const header = new Uint8Array(await bundle.slice(0, 12).arrayBuffer());
+    const size = new DataView(header.buffer).getUint32(8, false);
+    const manifest = JSON.parse(await bundle.slice(12, 12 + size).text());
+    assert.deepEqual(manifest.assets, []);
+    assert.equal(bundle.size, 12 + size, 'No audio payload follows the reference-only manifest');
+    const references = new Set([streamOnly.id, alias.id]);
+    assert.deepEqual(new Set(manifest.referenceOnlyTrackIds), references);
+    const imported = await importSoundtrackBundle(bundle, {
+      catalogue: trusted,
+      probeMedia: structuralProbe,
+    });
+    const current = resolveSoundtrackLibrary({
+      ...setCatalogueTracks(emptySoundtrackLibrary(), [allowed]),
+      installedTrackIds: [allowed.id],
+      playlists: [
+        {
+          id: 'existing.choice',
+          title: 'Keep my current playlist',
+          trackIds: [allowed.id],
+          order: 'shuffle',
+          repeat: 'all',
+        },
+      ],
+      selection: { playlistId: 'existing.choice' },
+    });
+    const merged = mergeSoundtrackShare(current, free.assets, imported);
+    assert.deepEqual(merged.library.selection, current.selection);
+    assert.deepEqual(merged.library.playlists, [...current.playlists, ...share.playlists]);
+    assert.deepEqual(new Set(merged.library.referenceOnlyTrackIds), references);
+    assert.deepEqual(merged.library.installedTrackIds, [allowed.id]);
+    assert.deepEqual(
+      merged.assets.map((asset) => asset.sha256),
+      [allowed.asset.sha256],
+    );
+    const prepared = await prepareSoundtrackLibrary(merged.library, merged.assets, {
+      catalogue: trusted,
+      probeMedia: structuralProbe,
+    });
+    assert.deepEqual(await prepared.assets[0].blob.arrayBuffer(), await free.blob.arrayBuffer());
+    const restored = await importSoundtrackBundle(
+      await exportSoundtrackBundle(prepared.library, prepared.assets, { catalogue: trusted }),
+      { catalogue: trusted, probeMedia: structuralProbe },
+    );
+    assert.deepEqual(restored.library, prepared.library);
+    assert.deepEqual(
+      restored.assets.map((asset) => asset.sha256),
+      [allowed.asset.sha256],
+    );
+  });
 
 test('Installed only excludes restored aliases without bytes and recognizes the same original owned under another ID', () => {
   const alias = { ...limited.track, id: 'upload.offline-alias' },

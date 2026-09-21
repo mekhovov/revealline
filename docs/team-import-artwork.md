@@ -18,7 +18,9 @@ The code-owned `COOP_HISTORICAL_IMPORT_PICTURE_POLICY` in [Team picture bindings
 
 The theme revision is an explicit source binding, not a runtime “latest” lookup. At source `eab879cffd482d0377a0490b7ce65647699451d7`, both starter bindings and the historical-import policy pin revision `36`. For another source, inspect its policy and compiled `resolved.theme` together before preparing an attempt. A theme revision can advance when only UI/effects metadata changes; unchanged picture bytes do not make an older theme association compatible. Preserve historical records and qualify an explicit successor association instead of weakening the match.
 
-The current soundtrack-framework successor explicitly pins revision `41`. Its [metadata compatibility receipt](verification/soundtrack-v3-framework-2026-09-21/preflight-repair/team-bindings/README.md) proves preservation of the original bytes and exact descriptors, with the complete Team binding/presentation cohort passing. The earlier source record above remains historical evidence.
+The current soundtrack framework explicitly pins revision `43`; its [recovery-permission compatibility receipt](verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/team-bindings/verification.json) verifies all original bytes and exact descriptors, with 235/235 Team tests passing.
+
+The earlier soundtrack-framework successor explicitly pinned revision `41`. Its [metadata compatibility receipt](verification/soundtrack-v3-framework-2026-09-21/preflight-repair/team-bindings/README.md) proves preservation of the original bytes and exact descriptors, with the complete Team binding/presentation cohort passing. The earlier source record above remains historical evidence.
 
 The same existing derivative is already part of the presentation assets. This feature adds no new image bytes. That does not establish a successful offline cold start or public deployment; qualification must verify the actual manifest, cached dependencies, decoded image and selected imported pack.
 
