@@ -82,9 +82,34 @@ saved, and no first-return or Undo/Redo pass is claimed. Cause of the browser
 interaction failure is unresolved; it is not classified as a game defect from
 these observations alone.
 
+### Completed follow-up observation
+
+On2026-09-21 a fresh background browser tab revisited the same localhost8822
+preview. The served Studio module/HTML, spatial factory, compiler, core step,
+renderer and Solo host bytes were compared against `4ef1f7b2` and matched.
+The saved `phase-spatial-review` checkpoint1 was inspected and explicitly applied
+without changing `my-journey`. A reversible project-name edit passed Inspect and
+Apply; Undo restored the original name, Redo restored the temporary name, and a
+second Undo restored the exact original project JSON. Explicit save reported
+checkpoint3. Earlier immutable checkpoints remain available.
+
+The exact Standard Solo preview then launched through Studio. Using Start and a
+normal ArrowUp input, the craft connected the central deck to the north landing,
+secured0.3% earned coverage and stopped. All three lives remained; score60 and
+the fresh-direction caption were visible. A screenshot showed the connecting
+reclaimed line, craft at the landing, both still-occupied bays and lower walls.
+The preview was paused and closed. This was an actual first return, not injected
+simulation state, a whole-level clear or a human difficulty assessment.
+
+After reload, two Playwright reads timed out; the documented accessibility path
+remained available and showed saved checkpoint3, the original project name and
+mission, with the temporary name absent. Exact whole-source equality was checked
+before reload, not asserted from those timed-out reads. No save failure or lost
+edit was observed; browser-controller reliability still needs wider checking.
+
 ## Open gates
 
-Complete native Studio edit/Undo/Redo and actual first return, final picture composition, full native/device
+Final picture composition, full native/device
 play, integrated host, human lesson comprehension and public promotion remain
 open at this source checkpoint. The lower bay prevents a one-bay clear, but
 22–32second optimized routes, preset inversions, short impact visibility and
