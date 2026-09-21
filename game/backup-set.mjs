@@ -2,7 +2,12 @@ import { canonicalJSON, required } from './data-json.mjs';
 import { exportBackup, MAX_BACKUP_BYTES } from './backup.mjs';
 import { exportMediaBundle } from './media-bundle.mjs';
 import { exportStoryBundle } from './story-bundle.mjs';
-import { exportSoundtrackBundle } from './soundtrack-bundle.mjs';
+import { exportSoundtrackBundle, ownSoundtrackAssets } from './soundtrack-bundle.mjs';
+import {
+  SOUNDTRACK_FORMAT_V3,
+  soundtrackRecoveryPlan,
+  soundtrackReferencedTracks,
+} from './soundtrack.mjs';
 import { MANAGED_MEDIA_LIMITS } from './managed-media-store.mjs';
 
 // One saved shared-media inventory plus the existing per-format metadata bounds.
@@ -103,18 +108,60 @@ export async function prepareBackupSet(
   onProgress('Checking saved music originals…');
   const audio = await source.readAudio({ signal });
   required(audio.generation === metadata.audio, 'Music changed. Prepare the backup set again.');
-  await add(
-    'audio',
-    `${filenamePrefix}-soundtrack.rlsound`,
-    await exportSoundtrackBundle(audio.library, audio.assets, { signal }),
+  const audioPlan = soundtrackRecoveryPlan(audio.library, { catalogue: source.catalogue }),
+    referencedAudio = soundtrackReferencedTracks(audio.library),
+    referencedHashes = new Set(referencedAudio.map((track) => track.asset.sha256)),
+    requiredAudio = new Map(audioPlan.requiredTracks.map((track) => [track.asset.sha256, track])),
+    savedAudio = ownSoundtrackAssets(audio.assets);
+  required(
+    savedAudio.every((asset) => referencedHashes.has(asset.sha256)),
+    'Music inventory contains an unreferenced original.',
   );
+  required(
+    total + [...requiredAudio.values()].reduce((sum, track) => sum + track.asset.bytes, 0) <=
+      maxBytes,
+    'Backup set exceeds its bounded preparation budget.',
+  );
+  const audioAssets = new Map(
+    savedAudio
+      .filter((asset) => requiredAudio.has(asset.sha256))
+      .map((asset) => [asset.sha256, asset]),
+  );
+  for (const [sha256, track] of requiredAudio) {
+    abort(signal);
+    if (audioAssets.has(sha256)) continue;
+    required(
+      typeof source.readAudioAsset === 'function',
+      `Music original is unavailable: ${track.title}. Download or restore it before preparing the backup set.`,
+    );
+    onProgress(`Reading the permitted music original: ${track.title}…`);
+    const blob = await source.readAudioAsset(sha256, { signal, purpose: 'export' });
+    abort(signal);
+    assertGameCurrent();
+    required(blob, `Music original is unavailable: ${track.title}. Download or restore it first.`);
+    audioAssets.set(sha256, { sha256, blob });
+  }
+  const audioBlob = await exportSoundtrackBundle(audio.library, [...audioAssets.values()], {
+    signal,
+    catalogue: source.catalogue,
+  });
+  // The serializer may install previously offloaded pins or upgrade a restricted
+  // legacy upload to reference-only v3. Coverage describes the actual portable
+  // document, not a different saved-state manifest.
+  const audioHeader = new Uint8Array(await audioBlob.slice(0, 12).arrayBuffer()),
+    audioManifestBytes = new DataView(audioHeader.buffer).getUint32(8, false),
+    portableAudio = JSON.parse(await audioBlob.slice(12, 12 + audioManifestBytes).text()).library,
+    referenceOnlyMusic = referencedAudio
+      .filter((track) => audioPlan.referenceOnlyTrackIds.includes(track.id))
+      .map((track) => ({ id: track.id, title: track.title, sha256: track.asset.sha256 }));
+  await add('audio', `${filenamePrefix}-soundtrack.rlsound`, audioBlob);
   const detachedStories = story.document.stories
     .filter((row) => !story.document.originals.includes(row.source.sha256))
     .map((row) => ({ id: row.id, sha256: row.source.sha256 }));
   onProgress('Hashing inventory metadata for the coverage report…');
   const coverage = Object.freeze({
     report: 'RevealLine backup set coverage',
-    reportVersion: 1,
+    reportVersion: portableAudio.format === SOUNDTRACK_FORMAT_V3 ? 2 : 1,
     preparedAt: savedAt,
     edition: {
       version: source.edition.version,
@@ -127,7 +174,7 @@ export async function prepareBackupSet(
       [
         ['media', still.document, still.assets],
         ['story', story.document, story.assets],
-        ['audio', audio.library, audio.assets],
+        ['audio', portableAudio, [...audioAssets.values()]],
       ].map(async ([id, document, assets]) => ({
         id,
         metadataSha256: await digest(new Blob([canonicalJSON(document)]), signal),
@@ -136,14 +183,22 @@ export async function prepareBackupSet(
       })),
     ),
     coverage: detachedStories.length
-      ? 'incomplete: detached story originals'
-      : 'saved referenced inventory',
+      ? referenceOnlyMusic.length
+        ? 'incomplete: detached story originals and reference-only music'
+        : 'incomplete: detached story originals'
+      : referenceOnlyMusic.length
+        ? 'incomplete: reference-only music'
+        : 'saved referenced inventory',
     detachedStories,
+    ...(portableAudio.format === SOUNDTRACK_FORMAT_V3
+      ? { referenceOnlyMusic, musicRecoveryNotice: audioPlan.notice }
+      : {}),
     exclusions: [
       'Unsaved editor drafts',
       'Other profile channels',
       'Unreferenced blobs and browser caches',
       'Unavailable or detached originals',
+      ...(referenceOnlyMusic.length ? ['Audio bytes of reference-only restricted music'] : []),
     ],
     restoreOrder: [
       'Restore .rlmedia picture/poster originals',
@@ -158,7 +213,9 @@ export async function prepareBackupSet(
       sha256,
       status: 'Prepared',
     })),
-    note: 'Prepared files have not been saved to disk. Download each file and check its bytes and SHA-256. Restore uses the existing independent reviews; it is not an atomic multi-file transaction.',
+    note:
+      'Prepared files have not been saved to disk. Download each file and check its bytes and SHA-256. Restore uses the existing independent reviews; it is not an atomic multi-file transaction.' +
+      (audioPlan.notice ? ` ${audioPlan.notice}` : ''),
   });
   await add(
     'coverage',

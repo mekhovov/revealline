@@ -679,6 +679,7 @@ export function bootCoop() {
     document,
     root: $('coop-settings-panel-audio'),
     prefix: 'coop',
+    getScene: () => (run ? 'gameplay' : 'menu'),
     audioMaster,
     audioPreferences,
     canOpen: () => !!settingsOwner && settingsDialog.open && settingsCurrent(settingsOwner),

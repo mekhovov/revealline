@@ -50,7 +50,7 @@ async function setup(t, { journey = false } = {}) {
     diagnosticAction?.();
   });
   const memory = memoryIndexedDB();
-  const manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true });
+  const manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true, soundtrackCatalogue: true });
   const store = createStillMediaStore({
     managedStore: manager,
     decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),
