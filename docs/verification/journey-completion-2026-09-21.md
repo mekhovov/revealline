@@ -1,6 +1,6 @@
 # Journey redesign: completion and remaining work
 
-Updated 2026-09-21 after the first Team visible-miss/relocation route. This is the original Xposed-led P00–P15 programme, not the
+Updated 2026-09-21 after the Island Outpost spatial successor. This is the original Xposed-led P00–P15 programme, not the
 separately numbered Crossmode releases. **The plan is not complete.** Code,
 deterministic feasibility, native observations, human acceptance and deployment
 are separate gates; percentages would conceal those distinctions.
@@ -138,6 +138,16 @@ clear with real inward/outward cuts, matching replays and equal races. The140-te
 cohort passes on both Node versions. Actual Studio inward/outward closures are
 checked. Optimized14.55–18.65s clears remain short; this is not human pacing
 acceptance, a new mission count, or an already deployed revision.
+
+[Island Outpost](journey-outpost-spatial.md) now offers an explicit keeper-position
+successor. One keeper moves west; the old fast routes stay legal but no longer
+receive their observed large second-cut windfall. Near-island north/south
+departures have distinct seeded-fill consequences across all six preset/control
+combinations. Eight new no-loss full routes pass replay/equal-race and actual
+two-perimeter-side mastery checks; the combined165-test cohort passes on both
+Node versions. Native Studio import and the western bridge are checked. This
+does not claim universally harder presets, human pacing, full native qualification
+or publication; the other nine inherited mission runtimes remain unchanged.
 
 ## Latest requested additions
 

@@ -98,3 +98,7 @@ whole opening-arc pacing (including Outpost and unused Remix landings), broader
 seed/timing coverage, picture and device checks, whole-Journey enrollment,
 release-owner integration, reviewed PR and Pages verification. Candidate presence
 must not be reported as deployment or completed P01.
+
+The subsequent [Island Outpost keeper-position study](journey-outpost-spatial.md)
+inherits this Courtyard edition unchanged. It adds one explicit Outpost successor
+and full-route evidence, not another ten missions or automatic Journey enrollment.
