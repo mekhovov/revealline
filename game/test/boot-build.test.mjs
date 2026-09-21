@@ -9,7 +9,8 @@ import { iosHTMLPolicy, IOS_CSP } from '../../scripts/native-cli.mjs';
 
 const sourceRoot = new URL('../', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const fieldKitFiles = [
+const playerPresentationFiles = [
+  'game/ui/handheld-play.css',
   'game/ui/field-kit-fonts.css',
   'game/ui/field-kit-tokens.css',
   'game/ui/field-kit-components.css',
@@ -46,6 +47,7 @@ test('the actual game has a static dark guard before resources and a single caug
   assert.match(html, /<script id="boot-phaser" src="vendor\/phaser-4.2.1.min.js" defer><\/script>/);
   assert.doesNotMatch(html, /<link\b[^>]*\shref="[^\"]+\.css"/);
   assert.match(html, /data-boot-href="ui\/operation-status.css"/);
+  assert.match(html, /data-boot-href="ui\/handheld-play.css"/);
   assert.doesNotMatch(html, /<script\b[^>]*src="app.mjs"/);
   assert.equal([...html.matchAll(/id="boot-status"/g)].length, 1);
   assert.ok(
@@ -103,7 +105,7 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   for (const name of [
     'game/boot.mjs',
     'game/boot.css',
-    ...fieldKitFiles,
+    ...playerPresentationFiles,
     'game/offline.mjs',
     'game/platform.mjs',
     'game/offline/service-worker.template.js',
@@ -117,7 +119,7 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     await copy(name);
   const html = await fs.readFile(path.join(root, 'game/index.html'), 'utf8');
   for (const [, relative] of html.matchAll(/<link[^>]*href="([^"]+\.css)"/g))
-    if (relative !== 'boot.css' && !relative.startsWith('ui/field-kit-'))
+    if (!copied.has(`game/${relative}`))
       await put(`game/${relative}`, '/* unrelated fixture style */');
   await put('game/vendor/phaser-4.2.1.min.js', 'globalThis.Phaser = {};');
   await put('game/app.mjs', 'export {};');
@@ -157,6 +159,7 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/index.html',
     'game/boot.mjs',
     'game/boot.css',
+    'game/ui/handheld-play.css',
     'site/launch.mjs',
     'site/about.html',
     'game/presentation/page-entry.mjs',

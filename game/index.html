@@ -122,6 +122,7 @@
     <link rel="stylesheet" data-boot-href="ui/backup-set.css" />
     <link rel="stylesheet" data-boot-href="ui/operation-status.css" />
     <link rel="stylesheet" data-boot-href="ui/menu-appearance.css" />
+    <link rel="stylesheet" data-boot-href="ui/handheld-play.css" />
   </head>
   <body class="field-kit">
     <section id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
@@ -232,7 +233,17 @@
         <section class="arena-panel" aria-label="Game">
           <div class="telemetry">
             <div class="coverage">
-              <span>REVEALED</span><strong id="coverage">0.0<small>%</small></strong>
+              <span>REVEALED</span
+              ><strong
+                id="coverage"
+                role="progressbar"
+                aria-label="Picture revealed"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+                aria-valuetext="0 percent revealed"
+                >0.0<small>%</small></strong
+              >
               <div class="meter"><i id="coverage-bar"></i><b id="goal-marker"></b></div>
               <em id="target">TARGET 45%</em>
             </div>
@@ -1562,11 +1573,6 @@
         <p id="shell-title-edition" class="eyebrow">FPV FIELD KIT / FLIGHT READY</p>
         <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
         <p class="home-copy">Find your line.<br />Bring the picture home.</p>
-        <p id="journey-artwork-availability" class="home-status" hidden>
-          Authored Journey web previews need an online connection for their original pictures. Core
-          offline preparation does not save these pictures. Full downloaded distributions include
-          them.
-        </p>
         <nav id="shell-title-modes" aria-label="Game mode">
           <a id="shell-title-versus" href="couch/?return=solo">Couch Versus</a>
           <a id="shell-title-team" href="couch/relay-rescue.html?return=solo">Couch Team</a>
@@ -1630,6 +1636,11 @@
           </button>
         </nav>
         <p id="shell-destination" class="home-destination" aria-live="polite"></p>
+        <p id="journey-artwork-availability" class="home-status" hidden>
+          Authored Journey web previews need an online connection for their original pictures. Core
+          offline preparation does not save these pictures. Full downloaded distributions include
+          them.
+        </p>
         <p class="home-hint">Choose a flight. Trace a path. Close the line.</p>
         <p id="landing-version" class="landing-version" aria-label="Game version">
           Version __REVEALLINE_VERSION__

@@ -1,3 +1,4 @@
+import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
 import { createBoardFootprints } from './board-footprint.mjs';
@@ -1350,7 +1351,12 @@ try {
       }
     };
   }
+  const couchTouch = attachCouchTouch({
+    controls: $('race-touch-0').closest('.race-fields'),
+    clear: () => input?.clearPhysical(),
+  });
   const input = attachCouchInput({
+    getTouchSettings: () => couchTouch.snapshot(),
     continuousSteering: () => true,
     getGamepads: readCachedPads,
     active: () => match?.status === 'running',
@@ -1970,6 +1976,7 @@ try {
     contentController?.abort();
     disposed = true;
     preparationStatus.dispose();
+    couchTouch.destroy();
     input.destroy();
     menuRouter.destroy();
     reading.destroy();
@@ -2091,6 +2098,7 @@ try {
       left === null
         ? 'No countdown'
         : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+    $('race-clock').dataset.compact = left === null ? '∞' : $('race-clock').textContent;
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i];
       $(`racer-stats-${i}`).textContent =

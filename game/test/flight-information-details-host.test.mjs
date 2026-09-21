@@ -316,6 +316,9 @@ test('mounted encounter Details uses actual full instruction and typed lane', as
   );
   await start(p);
   ticks(p, 13);
+  assert.equal(p.$('run-message').dataset.cue, 'encounter');
+  assert.equal(p.$('encounter-status').hidden, false);
+  assert.ok(p.$('run-message').textContent.includes(p.$('encounter-instruction').textContent));
   p.$('pause-button').click();
   open(p);
   const source = info(p);
@@ -409,6 +412,11 @@ test('actual reader Tab leaves Done for Back once; reopening resets only the new
   await start(p);
   tap(p, 'ArrowDown');
   ticks(p, 13);
+  assert.notEqual(
+    p.$('run-message').dataset.cue,
+    'encounter',
+    'Ordinary notices remain independent',
+  );
   p.$('pause-button').click();
   const checkpoint = authoritativeCheckpoint(p.rendered.run);
   open(p);

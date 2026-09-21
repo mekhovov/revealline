@@ -1,26 +1,32 @@
 # Reveal Line cross-mode execution register
 
-## Current delivery — v0.76.0 publicly verified; v0.76.1 corrections in qualification
+## Current delivery — v0.76.1 publicly verified; v0.77.0 device candidate
 
-**Public default: [v0.76.0](https://mekhovov.github.io/revealline/releases/v0.76.0/site/game/).**
-Frozen source `6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd`, source PR206 and
-publication PR207 are accepted. Pages run35543093816 / deployment6558712376 passed.
-The independent public audit matched **4,104 files / 864,133,226 bytes**, with zero
-retries or failures. Public boot, 776-file offline preparation, newest-32 historical
-profile discovery, release explorer and Archive39 v0.70 boot were verified by the
-release coordinator. These checks do not complete physical-device or enjoyment gates.
+**Public default: [v0.76.1](https://mekhovov.github.io/revealline/releases/v0.76.1/site/game/).**
+Frozen source `17bd1965a2979489f5a163de13dc23c47c5b538d`, source PR208 and
+publication PR210 are accepted. Pages run35551436420 / deployment6560099093 passed.
+The independent public audit matched **4,130 files / 864,317,088 bytes**. Public
+boot and the 776-file core offline preparation passed. These checks do not complete
+physical-device or enjoyment gates.
 
-**Next candidate: v0.76.1.** Three scoped corrections are integrated: Library selection
-and saved-flight restoration dismiss retained Settings only after successful owned
-transitions; the Team lobby keeps setup/preview/Start together and reveals the current
-focused action after rotation; non-running short-landscape telemetry fits the viewport.
-The verified foundation-pack authoring example and associated skills/evidence accompany
-the Library correction. Final integrated source, frozen artifacts and public acceptance
-are still pending. The running side-HUD/touch-rail prototype remains excluded.
+**Next candidate: v0.77.0 shared handheld play.** Solo, Versus and Team share touch
+steering and preferences, with separate fingers for couch seats. Compact HUDs and
+visible-viewport fitting preserve the complete arena without requiring fullscreen.
+Required encounter instructions and event notices retain separate readable space;
+short staged landscape boards are consequently smaller than ordinary Arcade boards.
+Modeled controller Start, Retry, Next and pause journeys pass. They do not reproduce
+or certify the reported physical Steam Deck failure. Real Safari browser bars, safe
+areas, touch/controller hardware and remaining whole-mode journeys stay open.
+
+Exact unversioned source `3da14c7eea9ea57ba74b200bf88627b8bf983a10` passed hosted
+preflight, build and all four test shards in run35565825740. The versioned source,
+frozen artifacts and public acceptance still require qualification. See the
+[device implementation and retained evidence](shared-device-play.md). Later Team,
+Studio, campaign and soundtrack candidates remain outside this release cutoff.
 
 | Priority | Programme work | Current boundary |
 |---|---|---|
-| 1 | Release the scoped navigation/layout corrections | Integrated candidate; six source gates, production checks, build and public journeys pending. |
+| 1 | Release shared handheld controls and compact layouts | v0.77.0 candidate; unversioned source CI passed; versioned qualification, freeze and public journeys pending. |
 | 2 | Finish native navigation, shared readability and actor parity | Partial; all modes, complete input journeys, actual playing scale and responsive layouts remain. |
 | 3 | Action feedback, fair challenge and rewards | Partial; readable warnings/counters, loss causes, Retry/Next/stories and human playtests remain. |
 | 4 | Music, creation, discovery and campaign production | Partial; auditioned media, complete asset coverage, real installation/transfer/recovery and the revised XPOSED Journey programme remain. |
