@@ -1,0 +1,62 @@
+{
+  "binding-verification.json": {
+    "bytes": 975,
+    "sha256": "7d98b02c016aebd4e2078250a4c7e9255ba87b4e3aeba59a4b8403882d322439"
+  },
+  "console.json": {
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "corrected-focus.png": {
+    "bytes": 103234,
+    "sha256": "f2b42c404d07b96c3a69a53d4208d65a8cd0140f4a7014dde104778a84dd7cd0"
+  },
+  "final-paused.txt": {
+    "bytes": 542,
+    "sha256": "0f9811f53b3136c0883d77c5eb3a02c2100e7787813994469ef7600ba1f0c3c7"
+  },
+  "font-requests-candidate.jsonl": {
+    "bytes": 1419,
+    "sha256": "5abb918146e0ec3c2797151b50d61481247a3a5313b33bc5812692fd5fb7e49b"
+  },
+  "journey.json": {
+    "bytes": 2038,
+    "sha256": "2a96e5016d7b7604077a734f9a0e9eb14c0cb5929b2ea8a4bdeb365aeb215a67"
+  },
+  "keyboard-focus.json": {
+    "bytes": 173,
+    "sha256": "5e432553692cb7268c4a326835f02a04badbe201f05998cfd2ad39b41f24e5dc"
+  },
+  "keyboard-launch.json": {
+    "bytes": 330,
+    "sha256": "ac2c6e1b7205813ebdfe575b9d8b4428d00cd1faaa31294149882a7c36c1ead2"
+  },
+  "keyboard-return.json": {
+    "bytes": 75,
+    "sha256": "ab25eeb9de554aa6648e72bccf0c1f0ed5fba18e78c7ebb692e92f6abcd2df43"
+  },
+  "native-pins-candidate.json": {
+    "bytes": 143,
+    "sha256": "0ae726f1a8154d6de7fc4a7789f7c61b46b61865b9a320bcd1d88ed95fdf0229"
+  },
+  "native-served-candidate.jsonl": {
+    "bytes": 75576,
+    "sha256": "676a59f741d84c7117d86a1d81da5f1985367528d15ed0002a8286090ea8fe32"
+  },
+  "native-server-candidate.json": {
+    "bytes": 164,
+    "sha256": "4c7742c549243816a0a5ef15dc092fe0e3fe67c6ba6a1c9cd189561192a1d442"
+  },
+  "overrides/game/ui/mission-gallery.mjs": {
+    "bytes": 6583,
+    "sha256": "cc3f928980d3bd54d32f0a98a630855d5a185407afb0ab515cfd96a172795ed5"
+  },
+  "pointer-focus.json": {
+    "bytes": 173,
+    "sha256": "5e432553692cb7268c4a326835f02a04badbe201f05998cfd2ad39b41f24e5dc"
+  },
+  "serve.py": {
+    "bytes": 4802,
+    "sha256": "2451027bb90ba9d6a2b04827946f3ead7df4ae1f0f8182bb302aa4720f79f689"
+  }
+}
