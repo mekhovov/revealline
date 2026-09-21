@@ -1,0 +1,154 @@
+[
+  {
+    "step": "stage-custom-actor-geometry",
+    "status": [
+      "Verifying original bytes and replacement history…",
+      "",
+      "Saved preview: ready.",
+      "Draft preview: ready."
+    ]
+  },
+  {
+    "step": "custom-geometry-staged",
+    "status": [
+      "Replacement validated and staged. The original source and earlier revisions remain in the bundle.",
+      "",
+      "Saved preview: ready.",
+      "Draft preview: ready."
+    ]
+  },
+  {
+    "step": "native-pixel-edit-prepared",
+    "pivot": "0.4",
+    "rotors": "[\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.3,\n    \"y\": 0.25\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.75,\n    \"y\": 0.25\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.25,\n    \"y\": 0.75\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.75,\n    \"y\": 0.75\n  }\n]",
+    "status": [
+      "Replacement prepared. Check geometry and enter actual creator, source, and rights before staging. Authored placement retained; review pivot, rotor hubs and panel slices after all pixel edits, including moves, flips and rotations.",
+      "",
+      "Saved preview: ready.",
+      "Draft preview: ready."
+    ]
+  },
+  {
+    "step": "partial-crop-defaults",
+    "pivot": "0.5",
+    "rotors": "[\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.25,\n    \"y\": 0.25\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.75,\n    \"y\": 0.25\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.25,\n    \"y\": 0.75\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.75,\n    \"y\": 0.75\n  }\n]",
+    "status": [
+      "Derivative prepared. Check geometry and enter actual creator, source, and rights before staging. Placement defaults applied because the frame size or crop changed; review pivot, rotor hubs and panel slices before staging.",
+      "",
+      "Saved preview: ready.",
+      "Draft preview: ready."
+    ]
+  },
+  {
+    "step": "full-crop-restores-authored-placement",
+    "pivot": "0.4",
+    "rotors": "[\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.3,\n    \"y\": 0.25\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.75,\n    \"y\": 0.25\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.25,\n    \"y\": 0.75\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.75,\n    \"y\": 0.75\n  }\n]",
+    "status": [
+      "Derivative prepared. Check geometry and enter actual creator, source, and rights before staging. Authored placement retained; review pivot, rotor hubs and panel slices after all pixel edits, including moves, flips and rotations.",
+      "",
+      "Saved preview: ready.",
+      "Draft preview: ready."
+    ]
+  },
+  {
+    "step": "saved",
+    "status": [
+      "Local revision saved atomically. Player saves are untouched.",
+      "",
+      "Saved preview: ready.",
+      "Draft preview: ready."
+    ],
+    "workspace": ["Theme FPV Field Kit · document r43 · local save 1"]
+  },
+  {
+    "step": "saved-reloaded-placement",
+    "pivot": "0.4",
+    "rotors": "[\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.3,\n    \"y\": 0.25\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.75,\n    \"y\": 0.25\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.25,\n    \"y\": 0.75\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.75,\n    \"y\": 0.75\n  }\n]",
+    "workspace": ["Theme FPV Field Kit · document r43 · local save 1"]
+  },
+  {
+    "step": "fresh-import-origin",
+    "url": "http://127.0.0.1:56852/authoring/asset-studio/",
+    "workspace": ["Theme FPV Field Kit · document r41 · local save none"]
+  },
+  {
+    "step": "fresh-import-staged",
+    "status": [
+      "Verified collection staged atomically. Current and imported source files are retained. Save to persist.",
+      "",
+      "Saved preview: ready.",
+      "Draft preview: ready."
+    ],
+    "workspace": [
+      "Theme FPV Field Kit · document r42 · local save none · unsaved changes · import-42"
+    ]
+  },
+  {
+    "step": "imported-placement",
+    "pivot": "0.4",
+    "rotors": "[\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.3,\n    \"y\": 0.25\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.75,\n    \"y\": 0.25\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.25,\n    \"y\": 0.75\n  },\n  {\n    \"blades\": 3,\n    \"radius\": 0.12,\n    \"x\": 0.75,\n    \"y\": 0.75\n  }\n]"
+  },
+  {
+    "step": "bind-original",
+    "status": [
+      "Earlier asset bound in a new immutable theme revision.",
+      "",
+      "Saved preview: decoding the asset image…",
+      "Draft preview: decoding the asset image…"
+    ],
+    "workspace": ["Theme FPV Field Kit · document r43 · local save 1 · unsaved changes"]
+  },
+  {
+    "step": "undo-original-binding",
+    "status": [
+      "Draft change undone. Saved history is intact.",
+      "",
+      "Saved preview: ready.",
+      "Draft preview: ready."
+    ],
+    "workspace": ["Theme FPV Field Kit · document r42 · local save 1 · import-42"]
+  },
+  {
+    "step": "undo-selected-revision",
+    "binding": [
+      {
+        "revision": "import-42-1353@1",
+        "selected": true
+      }
+    ]
+  },
+  {
+    "step": "redo-selected-original",
+    "binding": [
+      {
+        "revision": "player.scout.detailed.field-kit@2",
+        "selected": true
+      }
+    ],
+    "status": ["Draft change restored.", "", "Saved preview: ready.", "Draft preview: ready."]
+  },
+  {
+    "step": "restore-import-before-export",
+    "binding": [
+      {
+        "revision": "import-42-1353@1",
+        "selected": true
+      }
+    ],
+    "status": [
+      "Draft change undone. Saved history is intact.",
+      "",
+      "Saved preview: ready.",
+      "Draft preview: ready."
+    ]
+  },
+  {
+    "step": "re-export-requested",
+    "status": [
+      "Theme download requested with all source files and immutable revisions.",
+      "",
+      "Saved preview: ready.",
+      "Draft preview: ready."
+    ]
+  }
+]

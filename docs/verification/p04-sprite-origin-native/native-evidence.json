@@ -1,0 +1,75 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "prerequisites": [
+    "bc41e0b01219aec5e173f4e4e81cfb6c8b5d801727e673fbf8096880c9b12da3",
+    "c49429b2958378c9d07cd57be6d0f1d6a20a6e9b27db672c2bfc7144bc407705"
+  ],
+  "origins": [
+    {
+      "server": {
+        "port": 56526,
+        "pid": 84421,
+        "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+        "pinsSHA256": "7ad6cd4af918b1d85a5a2df2bcdc1c4d23afdf1e15610157a29eb34c7aa457a5"
+      },
+      "uniqueHTTPBindings": 297,
+      "uniqueBoundBytes": 10042970,
+      "note": "Deduplicated observed bindings, not traffic or request counts."
+    },
+    {
+      "server": {
+        "port": 56852,
+        "pid": 95194,
+        "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+        "pinsSHA256": "7ad6cd4af918b1d85a5a2df2bcdc1c4d23afdf1e15610157a29eb34c7aa457a5"
+      },
+      "uniqueHTTPBindings": 297,
+      "uniqueBoundBytes": 10042970,
+      "note": "Deduplicated observed bindings, not traffic or request counts."
+    }
+  ],
+  "verifiedUniqueBindings": 297,
+  "screenshots": [
+    {
+      "file": "01-retained-placement.jpg",
+      "bytes": 77733,
+      "sha256": "fbf832eaf52bf7eb98d05f5207fead2e6816498b6868fcb8d503e2da96ebcd2e",
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG"
+    },
+    {
+      "file": "02-saved-actor-preview.jpg",
+      "bytes": 107338,
+      "sha256": "9447160f24bae2b3f328d572897ff97d356fd0aed1ddcf8ad68ccc3845d2a3b2",
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG"
+    },
+    {
+      "file": "03-complete-actor-preview.jpg",
+      "bytes": 104733,
+      "sha256": "8c15df269409f2565ab2ad010f15e41f95e98a19374c8de2d2a8ce1d617c0a10",
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG"
+    },
+    {
+      "file": "04-imported-history.jpg",
+      "bytes": 62472,
+      "sha256": "934734c89746518756a5ef51bc49c9bd576a7c0eb0323e2b97f62d4386d2e964",
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG"
+    }
+  ],
+  "nativeEvents": 16,
+  "tabsClosed": ["170", "171"],
+  "viewportOverride": false,
+  "consoleErrors": [],
+  "inputScope": "Actual desktop browser mixed pointer/keyboard, including one Space pixel edit and actual file chooser import. No touch-only/controller-only/physical certification.",
+  "receiptCorrections": [
+    "Screenshot API returned JPEG bytes; corrected filename suffix and decoded dimensions. Image bytes unchanged; previous receipt retained."
+  ],
+  "serversStopped": true
+}

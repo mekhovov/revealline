@@ -1,0 +1,101 @@
+{
+  "validateOnly": [
+    {
+      "node": "20.19.5",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/compile-presentation.mjs",
+        "--bundle",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p04-sprite-origin-native-8cff-r1/native-export.rltheme"
+      ],
+      "report": {
+        "source": "field-kit",
+        "revision": 43,
+        "slots": 299,
+        "files": 138,
+        "output": null,
+        "qualification": "Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate."
+      },
+      "stderr": ""
+    },
+    {
+      "node": "20.19.5",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/compile-presentation.mjs",
+        "--bundle",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p04-sprite-origin-native-8cff-r1/native-reexport.rltheme"
+      ],
+      "report": {
+        "source": "field-kit",
+        "revision": 42,
+        "slots": 299,
+        "files": 138,
+        "output": null,
+        "qualification": "Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate."
+      },
+      "stderr": ""
+    },
+    {
+      "node": "22.22.2",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/compile-presentation.mjs",
+        "--bundle",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p04-sprite-origin-native-8cff-r1/native-export.rltheme"
+      ],
+      "report": {
+        "source": "field-kit",
+        "revision": 43,
+        "slots": 299,
+        "files": 138,
+        "output": null,
+        "qualification": "Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate."
+      },
+      "stderr": ""
+    },
+    {
+      "node": "22.22.2",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/compile-presentation.mjs",
+        "--bundle",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p04-sprite-origin-native-8cff-r1/native-reexport.rltheme"
+      ],
+      "report": {
+        "source": "field-kit",
+        "revision": 42,
+        "slots": 299,
+        "files": 138,
+        "output": null,
+        "qualification": "Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate."
+      },
+      "stderr": ""
+    }
+  ],
+  "compile": {
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "scripts/compile-presentation.mjs",
+      "--bundle",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p04-sprite-origin-native-8cff-r1/native-export.rltheme",
+      "--out",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-compiler-8cff-r1/source/.cache/native-sprite-transfer-01"
+    ],
+    "report": {
+      "source": "field-kit",
+      "revision": 43,
+      "slots": 299,
+      "files": 138,
+      "output": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p17-studio-compiler-8cff-r1/source/.cache/native-sprite-transfer-01",
+      "qualification": "Validated manifest, file hashes and headers; browser image/font/audio and gameplay review are separate."
+    },
+    "stderr": "",
+    "files": 138,
+    "bytes": 8297384,
+    "manifestSHA256": "bcfb96cf1691ae094238050671eacd09a89dbb72c91f60e93bfdfdfbdb8a9e9d",
+    "allPayloadsExact": true,
+    "studioDocumentExact": true
+  },
+  "sourceAuthority": "79 exactGit8cff files already pinned and qualified in p17-studio-compiler-8cff-r1/source-inputs.json; ordinary imports; CLI uses header/hash checks, native browser decoding separately observed."
+}

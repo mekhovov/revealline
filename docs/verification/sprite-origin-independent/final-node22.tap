@@ -1,0 +1,394 @@
+TAP version 13
+# (node:25529) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: crop uses an integer centered frame and never mutates source coordinates
+ok 1 - crop uses an integer centered frame and never mutates source coordinates
+  ---
+  duration_ms: 0.988208
+  type: 'test'
+  ...
+# Subtest: occupied bounds distinguish alpha from actual visible silhouette, including empty sprite
+ok 2 - occupied bounds distinguish alpha from actual visible silhouette, including empty sprite
+  ---
+  duration_ms: 0.157417
+  type: 'test'
+  ...
+# Subtest: inventory combines usage/state/media/readiness filters without treating source as produced
+ok 3 - inventory combines usage/state/media/readiness filters without treating source as produced
+  ---
+  duration_ms: 0.163291
+  type: 'test'
+  ...
+# Subtest: edited sprite retains only authored placement while remeasuring its new frame and pixels
+ok 4 - edited sprite retains only authored placement while remeasuring its new frame and pixels
+  ---
+  duration_ms: 0.28525
+  type: 'test'
+  ...
+# Subtest: edited sprite placement falls back to valid defaults for changed dimensions or any partial crop
+ok 5 - edited sprite placement falls back to valid defaults for changed dimensions or any partial crop
+  ---
+  duration_ms: 0.120833
+  type: 'test'
+  ...
+# (node:25530) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+ok 6 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 17695.330792
+  type: 'test'
+  ...
+# (node:25535) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: studio revisions preserve prior theme records and apply explicit token changes
+ok 7 - studio revisions preserve prior theme records and apply explicit token changes
+  ---
+  duration_ms: 176.404459
+  type: 'test'
+  ...
+# Subtest: a complete required collection can retain separate compact edit revisions
+ok 8 - a complete required collection can retain separate compact edit revisions
+  ---
+  duration_ms: 189.337625
+  type: 'test'
+  ...
+# Subtest: collection replacement rejects incomplete members and missing dependencies atomically
+ok 9 - collection replacement rejects incomplete members and missing dependencies atomically
+  ---
+  duration_ms: 152.70775
+  type: 'test'
+  ...
+# Subtest: studio database compare-and-swap rejects stale tabs and preserves data on write failure
+ok 10 - studio database compare-and-swap rejects stale tabs and preserves data on write failure
+  ---
+  duration_ms: 253.0585
+  type: 'test'
+  ...
+# Subtest: generated prompts carry real slot, theme, states and release limitations
+ok 11 - generated prompts carry real slot, theme, states and release limitations
+  ---
+  duration_ms: 38.045375
+  type: 'test'
+  ...
+# Subtest: audio and font briefs request the actual output medium and preserve the immutable slot document
+ok 12 - audio and font briefs request the actual output medium and preserve the immutable slot document
+  ---
+  duration_ms: 42.317583
+  type: 'test'
+  ...
+# Subtest: all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection
+ok 13 - all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection
+  ---
+  duration_ms: 75.406917
+  type: 'test'
+  ...
+# Subtest: edit briefs retain actual custom geometry and the production palette contract
+ok 14 - edit briefs retain actual custom geometry and the production palette contract
+  ---
+  duration_ms: 98.552292
+  type: 'test'
+  ...
+# Subtest: saved lineage allows a batch of staged actions and reset, but refuses rewritten history
+ok 15 - saved lineage allows a batch of staged actions and reset, but refuses rewritten history
+  ---
+  duration_ms: 875.023916
+  type: 'test'
+  ...
+# Subtest: two independent studio tabs serialize compare-and-swap without dropping the winning save
+ok 16 - two independent studio tabs serialize compare-and-swap without dropping the winning save
+  ---
+  duration_ms: 312.886709
+  type: 'test'
+  ...
+# Subtest: a failed save of new bytes and invalid geometry both retain the saved workspace
+ok 17 - a failed save of new bytes and invalid geometry both retain the saved workspace
+  ---
+  duration_ms: 336.772
+  type: 'test'
+  ...
+# Subtest: imports reserve unoccupied asset and collection identities and retain derivative links
+ok 18 - imports reserve unoccupied asset and collection identities and retain derivative links
+  ---
+  duration_ms: 193.026042
+  type: 'test'
+  ...
+# Subtest: self-imports retain every revision without duplicating history; conflicting parents stay isolated
+ok 19 - self-imports retain every revision without duplicating history; conflicting parents stay isolated
+  ---
+  duration_ms: 370.128667
+  type: 'test'
+  ...
+# Subtest: incompatible imported slots fail atomically and replaced collections retain history
+ok 20 - incompatible imported slots fail atomically and replaced collections retain history
+  ---
+  duration_ms: 349.285291
+  type: 'test'
+  ...
+# Subtest: closing a pending open rejects its caller promptly and closes a late database
+ok 21 - closing a pending open rejects its caller promptly and closes a late database
+  ---
+  duration_ms: 1.227083
+  type: 'test'
+  ...
+# Subtest: closing before a pending upgrade aborts that upgrade without creating a workspace
+ok 22 - closing before a pending upgrade aborts that upgrade without creating a workspace
+  ---
+  duration_ms: 0.383417
+  type: 'test'
+  ...
+# Subtest: a blocked open that succeeds late cannot invalidate the newer studio connection
+ok 23 - a blocked open that succeeds late cannot invalidate the newer studio connection
+  ---
+  duration_ms: 0.440209
+  type: 'test'
+  ...
+# Subtest: a retired database close callback does not detach a newer owned handle
+ok 24 - a retired database close callback does not detach a newer owned handle
+  ---
+  duration_ms: 1.590125
+  type: 'test'
+  ...
+# (node:28497) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: release studio adopts exact current assets and preserves export bytes without storage
+ok 25 - release studio adopts exact current assets and preserves export bytes without storage
+  ---
+  duration_ms: 370.309417
+  type: 'test'
+  ...
+# Subtest: source absence is explicit; malformed metadata, redirects and corrupt bodies reject atomically
+ok 26 - source absence is explicit; malformed metadata, redirects and corrupt bodies reject atomically
+  ---
+  duration_ms: 198.710209
+  type: 'test'
+  ...
+# Subtest: cancellation interrupts a pending release reader and never returns partial assets
+ok 27 - cancellation interrupts a pending release reader and never returns partial assets
+  ---
+  duration_ms: 202.861292
+  type: 'test'
+  ...
+# (node:29610) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: sprite preparation owns the opening origin and each callback receives an independent copy
+ok 28 - sprite preparation owns the opening origin and each callback receives an independent copy
+  ---
+  duration_ms: 3.9135
+  type: 'test'
+  ...
+# Subtest: a blank sprite drops the previous edit origin
+ok 29 - a blank sprite drops the previous edit origin
+  ---
+  duration_ms: 0.679084
+  type: 'test'
+  ...
+# Subtest: a blank sprite drops the previous edit origin after Reset
+ok 30 - a blank sprite drops the previous edit origin after Reset
+  ---
+  duration_ms: 0.955708
+  type: 'test'
+  ...
+# Subtest: reset during sprite encoding aborts before preparation reaches the host
+ok 31 - reset during sprite encoding aborts before preparation reaches the host
+  ---
+  duration_ms: 0.703125
+  type: 'test'
+  ...
+# Subtest: reset after encoding rejects delayed acceptance and preserves the newer editor
+ok 32 - reset after encoding rejects delayed acceptance and preserves the newer editor
+  ---
+  duration_ms: 0.811875
+  type: 'test'
+  ...
+# Subtest: open during sprite encoding aborts before preparation reaches the host
+ok 33 - open during sprite encoding aborts before preparation reaches the host
+  ---
+  duration_ms: 0.661458
+  type: 'test'
+  ...
+# Subtest: open after encoding rejects delayed acceptance and preserves the newer editor
+ok 34 - open after encoding rejects delayed acceptance and preserves the newer editor
+  ---
+  duration_ms: 1.085791
+  type: 'test'
+  ...
+# Subtest: accepting a delayed snapshot preserves newer edits in the same sprite and an undoable clean baseline
+ok 35 - accepting a delayed snapshot preserves newer edits in the same sprite and an undoable clean baseline
+  ---
+  duration_ms: 0.736375
+  type: 'test'
+  ...
+# Subtest: operation cancellation after encoding starts does not prepare or accept a sprite
+ok 36 - operation cancellation after encoding starts does not prepare or accept a sprite
+  ---
+  duration_ms: 0.514875
+  type: 'test'
+  ...
+# Subtest: an encoding failure leaves edits and origin available for a retry
+ok 37 - an encoding failure leaves edits and origin available for a retry
+  ---
+  duration_ms: 1.165958
+  type: 'test'
+  ...
+# (node:29640) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: bounded sprite documents own their bytes and reject mismatched imports
+ok 38 - bounded sprite documents own their bytes and reject mismatched imports
+  ---
+  duration_ms: 1.119708
+  type: 'test'
+  ...
+# Subtest: a closed shape contains flood fill, with undo and branchable redo
+ok 39 - a closed shape contains flood fill, with undo and branchable redo
+  ---
+  duration_ms: 0.3935
+  type: 'test'
+  ...
+# Subtest: invalid strokes and clipped moves never partially change the document
+ok 40 - invalid strokes and clipped moves never partially change the document
+  ---
+  duration_ms: 0.24225
+  type: 'test'
+  ...
+# Subtest: overlapping selection moves preserve the selected source, and rotations round trip
+ok 41 - overlapping selection moves preserve the selected source, and rotations round trip
+  ---
+  duration_ms: 0.217333
+  type: 'test'
+  ...
+# Subtest: sparse colors and invalid operations retain exact pixels and the redo branch
+ok 42 - sparse colors and invalid operations retain exact pixels and the redo branch
+  ---
+  duration_ms: 0.26275
+  type: 'test'
+  ...
+# Subtest: undo and redo are lossless across rectangular transforms and overlapping transparent moves
+ok 43 - undo and redo are lossless across rectangular transforms and overlapping transparent moves
+  ---
+  duration_ms: 0.119084
+  type: 'test'
+  ...
+# (node:29657) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: exact historical bindings retain approved field-kit assets after a custom upload
+ok 44 - exact historical bindings retain approved field-kit assets after a custom upload
+  ---
+  duration_ms: 272.96125
+  type: 'test'
+  ...
+# Subtest: unbound same-ID revisions and unrelated slot assets are not guessed into history
+ok 45 - unbound same-ID revisions and unrelated slot assets are not guessed into history
+  ---
+  duration_ms: 327.760875
+  type: 'test'
+  ...
+# Subtest: old collection revisions and arbitrary imported asset identities remain reachable
+ok 46 - old collection revisions and arbitrary imported asset identities remain reachable
+  ---
+  duration_ms: 654.888083
+  type: 'test'
+  ...
+# Subtest: source lineage is exact, download-only, and cannot become a binding by naming convention
+ok 47 - source lineage is exact, download-only, and cannot become a binding by naming convention
+  ---
+  duration_ms: 277.654875
+  type: 'test'
+  ...
+# Subtest: a parent that was itself bound remains restorable and shared sources are deduplicated
+ok 48 - a parent that was itself bound remains restorable and shared sources are deduplicated
+  ---
+  duration_ms: 280.493709
+  type: 'test'
+  ...
+# Subtest: restoring an earlier choice appends a theme revision without rewriting any retained asset
+ok 49 - restoring an earlier choice appends a theme revision without rewriting any retained asset
+  ---
+  duration_ms: 322.356459
+  type: 'test'
+  ...
+# Subtest: unknown slots and invalid historical bindings fail through the existing validator
+ok 50 - unknown slots and invalid historical bindings fail through the existing validator
+  ---
+  duration_ms: 250.9125
+  type: 'test'
+  ...
+# (node:29849) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/sprite-origin-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real PNG bundle transfer retains independent historical bindings, originals, names and rebind/export bytes
+ok 51 - real PNG bundle transfer retains independent historical bindings, originals, names and rebind/export bytes
+  ---
+  duration_ms: 835.193917
+  type: 'test'
+  ...
+# Subtest: mapped historical theme parents, tokens and collection bindings remain selectable
+ok 52 - mapped historical theme parents, tokens and collection bindings remain selectable
+  ---
+  duration_ms: 753.843208
+  type: 'test'
+  ...
+# Subtest: more than 128 incoming theme revisions retain their exact token history within existing limits
+ok 53 - more than 128 incoming theme revisions retain their exact token history within existing limits
+  ---
+  duration_ms: 6343.775291
+  type: 'test'
+  ...
+# Subtest: self-import shares exact existing immutable records and namespaces avoid theme collisions
+ok 54 - self-import shares exact existing immutable records and namespaces avoid theme collisions
+  ---
+  duration_ms: 440.567625
+  type: 'test'
+  ...
+# Subtest: foreign root and conflicting parent assets are mapped without rewriting local identities
+ok 55 - foreign root and conflicting parent assets are mapped without rewriting local identities
+  ---
+  duration_ms: 154.667583
+  type: 'test'
+  ...
+# Subtest: history capacity rejection leaves both validated inputs unchanged
+ok 56 - history capacity rejection leaves both validated inputs unchanged
+  ---
+  duration_ms: 2404.975375
+  type: 'test'
+  ...
+# Subtest: sparse foreign theme and collection families remap contiguous revisions and exact parent references
+ok 57 - sparse foreign theme and collection families remap contiguous revisions and exact parent references
+  ---
+  duration_ms: 159.837292
+  type: 'test'
+  ...
+# Subtest: atomic transition accepts contiguous immutable batches but rejects gaps, duplicates and rewrites
+ok 58 - atomic transition accepts contiguous immutable batches but rejects gaps, duplicates and rewrites
+  ---
+  duration_ms: 266.551292
+  type: 'test'
+  ...
+# Subtest: asset and collection batches enforce contiguous append-only records; slots remain unique
+ok 59 - asset and collection batches enforce contiguous append-only records; slots remain unique
+  ---
+  duration_ms: 394.875334
+  type: 'test'
+  ...
+# Subtest: theme choices distinguish imported and local family names without per-revision choices
+ok 60 - theme choices distinguish imported and local family names without per-revision choices
+  ---
+  duration_ms: 204.637458
+  type: 'test'
+  ...
+1..60
+# tests 60
+# suites 0
+# pass 60
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23685.227708

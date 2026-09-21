@@ -1,0 +1,51 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "packets": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p04-studio-source-revisions-8cff-r1/source.patch",
+      "sha256": "bc41e0b01219aec5e173f4e4e81cfb6c8b5d801727e673fbf8096880c9b12da3"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p04-sprite-origin-8cff-r1/source.patch",
+      "sha256": "c49429b2958378c9d07cd57be6d0f1d6a20a6e9b27db672c2bfc7144bc407705"
+    }
+  ],
+  "candidate": {
+    "authoring/asset-studio/studio.mjs": {
+      "bytes": 57189,
+      "sha256": "5325ac8a8da27514788f7d2f0bf6f591621c51103b7416693c1eb8863d763c35"
+    },
+    "authoring/asset-studio/sprite-panel.mjs": {
+      "bytes": 8613,
+      "sha256": "fcd5d618e8016c66ee59046e07d7b281342b6f207358de6724d9febc3ad072a8"
+    },
+    "authoring/asset-studio/helpers.mjs": {
+      "bytes": 4310,
+      "sha256": "02f90c2f206d989d3269255b599928907f7bfd2f62aca96062dbd2cf8b253f0a"
+    },
+    "authoring/asset-studio/index.html": {
+      "bytes": 40057,
+      "sha256": "5d346fae0d5d2ca7e921aa4aeeaa06841948048b1cf4fddd155a96ed573228e6"
+    },
+    "game/test/asset-studio-host-loading.test.mjs": {
+      "bytes": 58252,
+      "sha256": "0b716f5caf4740047bc6b010d846742ffb6b8415429cc99ecf7909fc6c883f2c"
+    },
+    "game/test/asset-studio-helpers.test.mjs": {
+      "bytes": 5787,
+      "sha256": "d786f2744d00c2a687791cc4097d887812fe67c36b20c7e2ccf2745b8a5cc144"
+    },
+    "game/test/sprite-edit-origin.test.mjs": {
+      "bytes": 10400,
+      "sha256": "387accd26aa22b491c4951cab1874394504d8b8df07e773527d4c4592f17cab3"
+    },
+    "docs/asset-studio.md": {
+      "bytes": 34937,
+      "sha256": "9a9091510da1f5220d81cba0798e8e3f80da483b69cdbc3a9d6b1cfe85bfd35d"
+    },
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+      "bytes": 326576,
+      "sha256": "87abc90fa32758bdae93446eb0df890cd8c28b908df419520b13f057c26b8643"
+    }
+  }
+}

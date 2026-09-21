@@ -1385,3 +1385,13 @@ playback. Prompt: “Start Team with Enter, navigate Pause/Settings/Back without
 mouse, enable both shared pads, measure the full arena at568×320 through1024×600
 and390×844, then start an independent cut with each pad. State exactly which
 controls were physical, modeled or browser-pointer driven.”
+
+For edited-sprite source qualification, preserve the exact edited asset as the
+new original's provenance parent. Retain authored pivot, rotor anchors and panel
+slices only for an unchanged full frame; remeasure occupied pixels and require
+placement review after flips, moves, rotations or crops. Compare real downloaded
+transfer bytes and every prior record after explicit namespace remapping. See
+`docs/verification/sprite-origin-independent/README.md`. When testing a sparse
+snapshot, materialize every requested test entry before invocation and check the
+expected test count as well as exit status: missing entries can produce different
+Node20/22 behavior. Never promote a smaller accidental cohort as a full pass.
