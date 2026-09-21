@@ -1,0 +1,235 @@
+{
+  "format": "revealline-scoped-functional-review.v1",
+  "reviewer": "independent audio architecture agent",
+  "scope": "Append-only production ledger mechanics and exact source-stage identities; not full audio approval",
+  "source": {
+    "head": "5d0e14a626076128245b76fe91585c4dad3be810",
+    "worktreeHasUncommittedSourceStage": true,
+    "baselineCommit": "9f4bc2dab04a4d7fdd85bffc0ab6761bacb7d44a"
+  },
+  "baseline": {
+    "path": "authoring/library/fpv-field-kit/production.rltheme",
+    "revision": 50,
+    "bytes": 7563551,
+    "sha256": "9c3331266e37fc43bca4d2965eb33f386624660313a71fa639e68cbcc404505b"
+  },
+  "current": {
+    "path": "authoring/library/fpv-field-kit/production.rltheme",
+    "bytes": 7577235,
+    "sha256": "9f32dd44dcabb419b12f2115e305b3a821f4a4884006d2e03e654e68aac5a5d5",
+    "revision": 51,
+    "selection": {
+      "id": "fpv",
+      "revision": 51
+    }
+  },
+  "fingerprint": {
+    "group": "audio",
+    "sha256": "e1bd9c13f39d0b00bd370532c3c77cac3aee78ae1738ae940ca8e80127269f6b",
+    "orderedInputs": [
+      {
+        "path": "game/ui/audio.mjs",
+        "bytes": 26731,
+        "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388"
+      },
+      {
+        "path": "game/ui/published-audio.mjs",
+        "bytes": 5773,
+        "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72"
+      },
+      {
+        "path": "game/ui/soundtrack-player.mjs",
+        "bytes": 35408,
+        "sha256": "04988fbfbc2ef70268d2b670891962f30c5dda6830e55cf3c68c183167e168f2"
+      },
+      {
+        "path": "game/ui/audio-master.mjs",
+        "bytes": 5277,
+        "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+      },
+      {
+        "path": "game/soundtrack.mjs",
+        "bytes": 38403,
+        "sha256": "decb9f2b10cf2065986dbb1ad8302b8fbc808d140dd0256d4330108b87095fbe"
+      },
+      {
+        "path": "game/soundtrack-rights.mjs",
+        "bytes": 3755,
+        "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04"
+      },
+      {
+        "path": "game/soundtrack-bundle.mjs",
+        "bytes": 12028,
+        "sha256": "fa6a98e404ca7d169c2dc4fd5383065d79d69f2f8af25e3ca7c4ee6f67d745fd"
+      },
+      {
+        "path": "game/soundtrack-share.mjs",
+        "bytes": 5602,
+        "sha256": "6cc8878ca926476b236c0fb0f9544a5248ee627011787a14c2d1c00cad7a78ee"
+      },
+      {
+        "path": "game/soundtrack-source.mjs",
+        "bytes": 4239,
+        "sha256": "70e04379d52b34462f6e105f7c0c05328fbb3a5cc78b721505f003b789145626"
+      },
+      {
+        "path": "game/ui/soundtrack-panel.mjs",
+        "bytes": 88945,
+        "sha256": "33dc55f581cfbd3bc4571ae873060d1c55889bbf1f943586b66c22f9b645b63a"
+      },
+      {
+        "path": "game/soundtrack-albums.mjs",
+        "bytes": 11118,
+        "sha256": "632e82dfc0189fd0f11bbdfbbfc4c8ac468725ca967a76d0c478adc86b1645e1"
+      },
+      {
+        "path": "game/soundtrack-portable.mjs",
+        "bytes": 2891,
+        "sha256": "d5423f59dfd25ca6310d47d78e433d7ff1e32a8003bf313bb74968f2e07b1103"
+      },
+      {
+        "path": "game/content/soundtrack-catalogue.mjs",
+        "bytes": 132639,
+        "sha256": "0618993ff8ff9508d1ab4295920c07d0b5a8f6f34df683538029754b438dc44f"
+      }
+    ]
+  },
+  "mechanics": [
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "bytes": 22386,
+      "sha256": "29571dcaf3b93e6b827442a449487cf2bdfd3fc493839ca628bf4d6549fb0a44"
+    },
+    {
+      "path": "scripts/presentation-production-history.mjs",
+      "bytes": 2887,
+      "sha256": "238de86667e57d51b0d3f65e27b0ff19b324a3cd956b6db53aa2eb3254af2ded"
+    }
+  ],
+  "checks": {
+    "priorDocumentValidation": true,
+    "immutablePrefixes": {
+      "slots": {
+        "oldCount": 293,
+        "newCount": 293,
+        "canonicalPrefixSha256": "75ceaae41400f20fced4bfb885d2c9175082eb4f5cbdcea30175191b56d93c68"
+      },
+      "assets": {
+        "oldCount": 1445,
+        "newCount": 1453,
+        "canonicalPrefixSha256": "a0357caa456a1234f2b566aa197270b6a009176dad2a67e28db740f929eac92f"
+      },
+      "themes": {
+        "oldCount": 51,
+        "newCount": 52,
+        "canonicalPrefixSha256": "395e8410ed1fb7e611af54bf73036012b7642b2fd88511c650a1a7d173edb5f8"
+      },
+      "collections": {
+        "oldCount": 1,
+        "newCount": 1,
+        "canonicalPrefixSha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      }
+    },
+    "allOriginalPayloads": {
+      "count": 127,
+      "bytes": 4007816,
+      "actualHashAndBodyEquality": true,
+      "canonicalInventorySha256": "8117060274f4e7525d8bc71d172ae915671e8aea610640b28084a14f59523bef"
+    },
+    "onlyAddedRecords": [
+      {
+        "id": "audio.focus.field-kit",
+        "revision": 22,
+        "stage": "source",
+        "parent": {
+          "id": "audio.focus.field-kit",
+          "revision": 21
+        }
+      },
+      {
+        "id": "audio.confirm.field-kit",
+        "revision": 22,
+        "stage": "source",
+        "parent": {
+          "id": "audio.confirm.field-kit",
+          "revision": 21
+        }
+      },
+      {
+        "id": "audio.cancel.field-kit",
+        "revision": 22,
+        "stage": "source",
+        "parent": {
+          "id": "audio.cancel.field-kit",
+          "revision": 21
+        }
+      },
+      {
+        "id": "audio.capture.field-kit",
+        "revision": 22,
+        "stage": "source",
+        "parent": {
+          "id": "audio.capture.field-kit",
+          "revision": 21
+        }
+      },
+      {
+        "id": "audio.failure.field-kit",
+        "revision": 22,
+        "stage": "source",
+        "parent": {
+          "id": "audio.failure.field-kit",
+          "revision": 21
+        }
+      },
+      {
+        "id": "audio.victory.field-kit",
+        "revision": 22,
+        "stage": "source",
+        "parent": {
+          "id": "audio.victory.field-kit",
+          "revision": 21
+        }
+      },
+      {
+        "id": "audio.pickup.field-kit",
+        "revision": 22,
+        "stage": "source",
+        "parent": {
+          "id": "audio.pickup.field-kit",
+          "revision": 21
+        }
+      },
+      {
+        "id": "audio.music.field-kit",
+        "revision": 22,
+        "stage": "source",
+        "parent": {
+          "id": "audio.music.field-kit",
+          "revision": 21
+        }
+      }
+    ],
+    "newThemeParent": {
+      "id": "fpv",
+      "revision": 50
+    },
+    "inMemoryProductionReproducesCurrentLedgerExactly": true
+  },
+  "requiredNextSteps": [
+    "Retain source fpv51/audio22 and immutable fpv50 history.",
+    "Finish separately pinned independent functional reviews for all changed areas of the thirteen inputs, including hosted catalogue/admission and author-owned model/panel reviewed by another agent.",
+    "Pin exact evidence paths/hashes and e1bd9c13 fingerprint in REVIEWED_RECIPE_INPUTS.audio, then append reviewed fpv52/audio23 via the producer; do not rewrite source51 or old50 records.",
+    "Update only current-source assertions and exercise both new audio fingerprint inputs in the source-invalidation regression; preserve historical fixtures.",
+    "Verify 52 has only eight reviewed audio successors and unchanged127 payloads and exact image descriptors; then move the three live Team pins50 to52 with matching current assertions.",
+    "Run producer --check, complete production-history and Team binding/actor/historical cohorts and relevant audio gates against final bytes."
+  ],
+  "limits": [
+    "No runtime code or ledger mutations performed by this review. Only this /tmp receipt is written.",
+    "No recording, composition, listening, musical suitability, Ukrainian authenticity, physical device, frozen offline, public release or full source approval.",
+    "Earlier bounded player/portable review does not independently approve my own model/panel implementation or hosted catalogue compilation.",
+    "The first in-memory producer attempt encountered a sparse missing prepared title file; after parent hydration the complete in-memory reproduction passed.",
+    "No full build or workflow dispatch."
+  ],
+  "result": "Source-stage51 preserves accepted50 and originals; reviewed52 remains conditional on final scoped review evidence."
+}

@@ -1,0 +1,48 @@
+{
+  "format": "revealline-hosted-family-comparison.v1",
+  "sourceRevision": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+  "sourceTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+  "version": "v0.80.0",
+  "testFiles": 683,
+  "inputs": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/.cache/v080-qualification/preliminary-14a965f2/pr/summary.json",
+      "bytes": 36546,
+      "sha256": "0ae7150fd2cea30f9f613906380701cc37137f4aed5878fbe4fe0e8821e87293"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/.cache/v080-qualification/preliminary-14a965f2/manual/summary.json",
+      "bytes": 27289,
+      "sha256": "0e2d27ff172488eda06cf2505734db807e609bef3cc6db8478d6fef8115512cd"
+    }
+  ],
+  "shards": [
+    {
+      "shard": 1,
+      "bothTerminal": true,
+      "countsEqual": false,
+      "expectedListsEqual": true
+    },
+    {
+      "shard": 2,
+      "bothTerminal": true,
+      "countsEqual": true,
+      "expectedListsEqual": true
+    },
+    {
+      "shard": 3,
+      "bothTerminal": true,
+      "countsEqual": true,
+      "expectedListsEqual": true
+    },
+    {
+      "shard": 4,
+      "bothTerminal": true,
+      "countsEqual": false,
+      "expectedListsEqual": true
+    }
+  ],
+  "fullCountsEqual": false,
+  "bothUtilityCountFamiliesSatisfied": false,
+  "scope": "Six TAP count fields and source/list comparison only; not artifact utility or release approval."
+}

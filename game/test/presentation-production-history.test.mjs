@@ -444,6 +444,11 @@ test('Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
 test('soundtrack UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
+  const audioReviewPath =
+    'docs/verification/hosted-soundtracks-2026-09-21/selection-cache/review.json';
+  const audioReviewHash = createHash('sha256')
+    .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
+    .digest('hex');
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
   assert.equal(reviewed.length, 32);
   for (const slot of reviewed) {
@@ -468,32 +473,20 @@ test('soundtrack UI and audio bind only their reviewed current inputs', async ()
     } else {
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
-        asset.quality.evidence.some(
-          (entry) =>
-            entry.includes(
-              'docs/verification/music-expansion-2026-09-21/review.json sha256:b7897ae961e67504eab17991193840d0764164690345cb012ec7d7ef8723c780',
-            ) &&
-            entry.includes(
-              'docs/verification/music-expansion-2026-09-21/album-review.json sha256:fc767799091324d0f975586ddf6a1fb907dea8a5db92961b4659337b68cae2b8',
-            ),
+        asset.quality.evidence.some((entry) =>
+          entry.includes(`${audioReviewPath} sha256:${audioReviewHash}`),
         ),
         slot.id,
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:5d8df2e346074b8f7b3b7a33f5f102620f221c5d39a54dd7761b84d9733ee948',
-        ),
-        slot.id,
-      );
-      assert.ok(
-        asset.quality.evidence.some((entry) =>
-          entry.includes(
-            'docs/verification/music-v077-integration-2026-09-21/panel-review.json sha256:53b663c1eb2551c0991ff35c693ae221c14ceb009aa8da0b26bba05e076c9040',
-          ),
+          'sha256:8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768',
         ),
         slot.id,
       );
       assert.match(asset.provenance.source, /game\/ui\/audio-master\.mjs/);
+      assert.match(asset.provenance.source, /game\/soundtrack-portable\.mjs/);
+      assert.match(asset.provenance.source, /game\/content\/soundtrack-catalogue\.mjs/);
     }
   }
 });
@@ -556,6 +549,8 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
     'soundtrack-share.mjs',
     'soundtrack-source.mjs',
     'soundtrack-albums.mjs',
+    'soundtrack-portable.mjs',
+    'content/soundtrack-catalogue.mjs',
     'ui/soundtrack-panel.mjs',
   ];
   const inputs = new Map([
@@ -570,11 +565,12 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
   // Game-relative keys cover both model and UI helpers. Only copied ordinary
   // fixture files may be changed; links to the real project are read-only inputs.
   await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
+  await fs.mkdir(path.join(fixture, 'game', 'content'), { recursive: true });
   for (const entry of ['authoring', 'site'])
     await fs.symlink(path.join(root, entry), path.join(fixture, entry));
-  for (const directory of ['', 'ui'])
+  for (const directory of ['', 'ui', 'content'])
     for (const entry of await fs.readdir(path.join(root, 'game', directory))) {
-      if (!directory && entry === 'ui') continue;
+      if (!directory && ['ui', 'content'].includes(entry)) continue;
       const input = directory ? `${directory}/${entry}` : entry;
       const source = path.join(root, 'game', input);
       const target = path.join(fixture, 'game', input);

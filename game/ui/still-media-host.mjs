@@ -4,6 +4,9 @@ import { createStillMediaStore } from '../media-store.mjs';
 import { createStoryMediaStore } from '../story-media-store.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
+import { resolveSoundtrackCatalogue, soundtrackTracks } from '../soundtrack.mjs';
+import { soundtrackPortableRecoveryPlan } from '../soundtrack-portable.mjs';
+import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
 import { readAssetStore } from '../storage.mjs';
 import { createStillAuthoringCatalog, stillAuthoringKeys } from './still-media-catalog.mjs';
 import { attachStillMediaPanel } from './still-media-panel.mjs';
@@ -79,8 +82,10 @@ export function attachStillMediaHost({
   decodeImage,
   readPads,
   channel,
+  catalogue = SOUNDTRACK_CATALOGUE,
 } = {}) {
   if (channel !== undefined) stillAuthoringKeys(channel);
+  const trustedCatalogue = resolveSoundtrackCatalogue(catalogue);
   const $ = (id) => doc.getElementById(id),
     status = $('still-host-status');
   let manager = null,
@@ -92,6 +97,7 @@ export function attachStillMediaHost({
     disposed = false,
     audioTask = null,
     audioURL = null,
+    audioNotice = '',
     frame = null,
     sourceChannel = channel ?? 'dev',
     openSerial = 0,
@@ -137,6 +143,7 @@ export function attachStillMediaHost({
     audioTask = null;
     if (audioURL) URLImpl.revokeObjectURL(audioURL);
     audioURL = null;
+    audioNotice = '';
     $('still-host-download-audio').hidden = true;
     $('still-host-download-audio').removeAttribute('href');
   }
@@ -261,25 +268,54 @@ export function attachStillMediaHost({
     audioTask = own;
     $('still-host-export-audio').disabled = true;
     const lease = feedback.begin({
-      message: 'Reading and verifying the complete saved soundtrack…',
+      message: 'Reading saved music and checking backup permissions…',
       stage: 'reading',
       isCurrent: () => !disposed && audioTask === own,
     });
     activity = lease;
     try {
       const saved = await audio.read({ signal: own.signal });
-      lease.update({ message: 'Preparing the verified soundtrack backup…', stage: 'exporting' });
+      if (disposed || own.signal.aborted || audioTask !== own) return false;
+      const plan = soundtrackPortableRecoveryPlan(saved.library, { catalogue: trustedCatalogue });
+      const names = new Map(
+        soundtrackTracks(saved.library).map((track) => [track.id, track.title]),
+      );
+      const notice = [
+        plan.referenceOnlyTrackIds.length
+          ? `Requires online restoration for listed music: ${plan.referenceOnlyTrackIds.map((id) => names.get(id) ?? id).join(', ')}.`
+          : '',
+        plan.notice,
+      ]
+        .filter(Boolean)
+        .join(' ');
+      lease.update({
+        message: ['Preparing the verified soundtrack backup…', notice].filter(Boolean).join(' '),
+        stage: 'exporting',
+      });
+      const available = new Set(saved.assets.map((asset) => asset.sha256));
+      const missing = plan.requiredTracks.filter((track) => !available.has(track.asset.sha256));
+      if (missing.length)
+        throw new Error(
+          `Soundtrack backup needs these missing permitted originals: ${missing.map((track) => track.title).join(', ')}. Restore or download them in Music library & playlists, then retry. No backup was prepared.`,
+        );
       const blob = await exportSoundtrackBundle(saved.library, saved.assets, {
         signal: own.signal,
+        catalogue: trustedCatalogue,
       });
       if (disposed || own.signal.aborted || audioTask !== own) return false;
       audioURL = URLImpl.createObjectURL(blob);
+      audioNotice = notice;
       const link = $('still-host-download-audio');
       link.href = audioURL;
       link.download = 'RevealLine-soundtrack.rlsound';
       link.hidden = false;
       setStatus(
-        `Soundtrack backup prepared (${blob.size} bytes). Choose Download soundtrack; this file does not contain still images.`,
+        [
+          `Soundtrack backup prepared (${blob.size} bytes). Choose Download soundtrack; this file does not contain still images.`,
+          audioNotice,
+        ]
+          .filter(Boolean)
+          .join(' '),
       );
       lease.finish({ message: status.textContent });
       link.focus();
@@ -300,7 +336,12 @@ export function attachStillMediaHost({
   $('still-host-export-audio').disabled = true;
   $('still-host-download-audio').onclick = () => {
     setStatus(
-      'Download requested. Confirm the destination in your browser; the prepared copy remains available to retry.',
+      [
+        'Download requested. Confirm the destination in your browser; the prepared copy remains available to retry.',
+        audioNotice,
+      ]
+        .filter(Boolean)
+        .join(' '),
     );
   };
   $('still-host-close').onclick = () => {

@@ -1,0 +1,239 @@
+{
+  "format": "revealline-soundtrack-selection-cache-independent-review.v1",
+  "reviewedAt": "2026-09-21T15:39:57.632Z",
+  "reviewer": "audio_architecture (independent peer)",
+  "outcome": "No remaining functional blocker found within the scoped final-source review.",
+  "scope": "Immutable library validation reuse and one-entry player base-selection caching, including constructor refusal cleanup; no catalogue, rights-policy, queue, persistence, transport-intent or media-byte changes.",
+  "baseline": {
+    "commit": "9c2920b91d533fa5693d2fed8930840cef85eeff",
+    "tree": "d17c6fcf4799e1f6ca43eeb23d4d8030a393d80d",
+    "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest",
+    "reviewedState": "Uncommitted exact bytes pinned below; subsequent production-ledger updates are outside this review."
+  },
+  "authorship": {
+    "model": "Parent implemented game/soundtrack.mjs and model regressions.",
+    "player": "soundtrack_references implemented player and regressions.",
+    "reviewer": "Authored no production patch. Independently inspected changes, identified the constructor resource leak, verified its correction and ran additional bounded probes."
+  },
+  "audioFingerprint": "8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768",
+  "audioInputCount": 13,
+  "recipeSources": {
+    "ui": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e",
+    "screens": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845",
+    "motion": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4",
+    "effects": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13",
+    "audio": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs sha256:8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768"
+  },
+  "sourcePins": [
+    {
+      "path": "game/ui/audio.mjs",
+      "bytes": 26731,
+      "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388"
+    },
+    {
+      "path": "game/ui/published-audio.mjs",
+      "bytes": 5773,
+      "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 36260,
+      "sha256": "64b1bc7663ecc0a80eb73e68cb39e9760ba78631a673cc236da3ed7627c761ce"
+    },
+    {
+      "path": "game/ui/audio-master.mjs",
+      "bytes": 5277,
+      "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+    },
+    {
+      "path": "game/soundtrack.mjs",
+      "bytes": 38693,
+      "sha256": "0cfb15e62f0cf65b182bd77164f5cca8be239deebbde08b8c21cd412f179ba3f"
+    },
+    {
+      "path": "game/soundtrack-rights.mjs",
+      "bytes": 3755,
+      "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04"
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "bytes": 12028,
+      "sha256": "fa6a98e404ca7d169c2dc4fd5383065d79d69f2f8af25e3ca7c4ee6f67d745fd"
+    },
+    {
+      "path": "game/soundtrack-share.mjs",
+      "bytes": 5602,
+      "sha256": "6cc8878ca926476b236c0fb0f9544a5248ee627011787a14c2d1c00cad7a78ee"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "bytes": 4239,
+      "sha256": "70e04379d52b34462f6e105f7c0c05328fbb3a5cc78b721505f003b789145626"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 88945,
+      "sha256": "33dc55f581cfbd3bc4571ae873060d1c55889bbf1f943586b66c22f9b645b63a"
+    },
+    {
+      "path": "game/soundtrack-albums.mjs",
+      "bytes": 11118,
+      "sha256": "632e82dfc0189fd0f11bbdfbbfc4c8ac468725ca967a76d0c478adc86b1645e1"
+    },
+    {
+      "path": "game/soundtrack-portable.mjs",
+      "bytes": 2891,
+      "sha256": "d5423f59dfd25ca6310d47d78e433d7ff1e32a8003bf313bb74968f2e07b1103"
+    },
+    {
+      "path": "game/content/soundtrack-catalogue.mjs",
+      "bytes": 132639,
+      "sha256": "0618993ff8ff9508d1ab4295920c07d0b5a8f6f34df683538029754b438dc44f"
+    }
+  ],
+  "changedAudioInputs": [
+    "game/ui/soundtrack-player.mjs",
+    "game/soundtrack.mjs"
+  ],
+  "testPins": [
+    {
+      "path": "game/test/soundtrack.test.mjs",
+      "bytes": 12735,
+      "sha256": "2afde5c2de68ececd70bffe375d7740e6099139c7817834f239635f88bc7feb7"
+    },
+    {
+      "path": "game/test/soundtrack-player.test.mjs",
+      "bytes": 44361,
+      "sha256": "89269d07c26245309f8f1d7721f76cb660a9506a18422e2279fb300a082927b1"
+    },
+    {
+      "path": "game/test/couch-menu-music.test.mjs",
+      "bytes": 7341,
+      "sha256": "793040d3c45748d682883859e2f593a5a4d4908f29202eb155f43abf9a024049"
+    }
+  ],
+  "reviewedDiff": {
+    "sha256": "73f89e1cf7a6c8a46061d8ab9116dd89bdc550e192bcd0d9fa59a6e3345718b0"
+  },
+  "conclusions": [
+    "Only a private WeakSet of fully validated resolver-owned recursively frozen outputs can bypass library validation. Originals, edited clones, shallow/deep frozen foreign objects and proxies do not inherit its identity.",
+    "Branding does not provide catalogue authority or change effective permissions, same-hash restrictions, upload capacity or malformed-input validation.",
+    "The player retains one cache entry. Keys are its owned immutable library identity, owned copied context identity and primitive override. The entry is replaced only after selection resolution succeeds.",
+    "Null catalogue and existing resolver-branded catalogues permit memoization. Raw adapters are never memoized, even when their root is frozen; subsequent policy mutations and malformed edits are still observed.",
+    "Published allowed(), failed track membership and authored fallback remain outside the memo. Snapshot status/position/queue and transport intent are not cached.",
+    "Context updates remain replacement based. Library/listening/installed IDs/recording-mode/override updates select new dependencies; existing invalid setter validation leaves old valid state intact.",
+    "Constructor catalogue validation now occurs before media deck/master ownership. Invalid input leaves no media-owner or subscription residue, allowing a clean retry.",
+    "The seven existing menu tests and their deadlines are byte-identical to baseline. No timeout increase or removal of behavioral assertions is part of this optimization."
+  ],
+  "ownerVerification": {
+    "attribution": "Executed by soundtrack_references; original final log and source/test hashes independently checked, not a duplicate local run by this reviewer.",
+    "command": "node --test game/test/soundtrack-player.test.mjs game/test/couch-menu-music.test.mjs",
+    "counts": {
+      "tests": 58,
+      "pass": 58,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "durationMs": 396.237291,
+    "log": {
+      "path": "/tmp/soundtrack-selection-cache-final-v2.log",
+      "bytes": 13587,
+      "sha256": "baf95fb41bb2c8b81c1daa4b6c65a238b28eb0e31dd815c2b86d2b4d9e337acf"
+    },
+    "receipt": {
+      "path": ".cache/v080-qualification/preliminary-14a965f2/failures/menu-startup-profile/optimized/review-final.json",
+      "bytes": 3590,
+      "sha256": "388198dc572047d5593573e6d97a505708a912b6ba70e9b34b47ab4027fac10a"
+    }
+  },
+  "independentVerification": {
+    "command": "node --test /tmp/soundtrack-cache-independent-probes.mjs",
+    "counts": {
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "script": {
+      "path": "/tmp/soundtrack-cache-independent-probes.mjs",
+      "bytes": 5636,
+      "sha256": "ad6a9cd8c26d279196444f7f7cea7dcf5922386b1671449adfe4f6b3a368dfd8"
+    },
+    "log": {
+      "path": "/tmp/soundtrack-cache-independent-probes-final.log",
+      "bytes": 1145,
+      "sha256": "5ddc053c95692288e6242b92a5277e16f942ed3aac76707c5aa7cb3c1cffd5f6"
+    },
+    "cases": [
+      "Owned context ignores external mutation until setContext; global/campaign/map assignment precedence and explicit override remain correct after warm-cache reads.",
+      "Energy and menu/gameplay context changes select eligible tracks without starting playback or changing desired intent.",
+      "A shallow-frozen raw catalogue still observes policy revocation, rejects a later malformed bound hash and recovers after a valid policy restoration.",
+      "Invalid raw catalogue construction leaves zero subscriptions; retry creates both expected bindings and dispose releases both."
+    ],
+    "initialProbeCorrection": {
+      "log": {
+        "path": "/tmp/soundtrack-cache-independent-probes-initial.log",
+        "bytes": 1527,
+        "sha256": "f77c24219bef5560b08d8095247ad653370bedf82f19a280b2f9d42210ae6f43"
+      },
+      "counts": {
+        "tests": 3,
+        "pass": 2,
+        "fail": 1,
+        "skipped": 0
+      },
+      "explanation": "One independent test expected unavailable after excluding the sole menu Metal recording. The existing Metal procedural fallback correctly yields catalogue-fallback. Corrected that test expectation only, then added the constructor probe and reran all four; this was not a product defect."
+    }
+  },
+  "resolvedFindings": [
+    {
+      "id": "constructor-owner-leak",
+      "severity": "P2",
+      "status": "Fixed and independently retested",
+      "initialPlayerSha256": "6f41618f59971769442a9c7004fddcd176d84d8009ec86663f07d9279e64098d",
+      "reproduction": "Invalid raw catalogue threw after binding media to master: one retained subscription and later valid retry failed with Audio media element already has a master owner.",
+      "fix": "Move one-time cache eligibility validation before deck/master resource setup.",
+      "redLog": {
+        "path": "/tmp/soundtrack-selection-construction-before.log",
+        "bytes": 14734,
+        "sha256": "560b49e7650fa3a79ad18479414eae7a12bf5c9fa2b26f2273e35089b6151579"
+      },
+      "redCounts": {
+        "tests": 51,
+        "pass": 0,
+        "fail": 1,
+        "skipped": 50,
+        "cancelled": 0,
+        "todo": 0
+      },
+      "redScope": "Name-filtered defect reproduction only; not a qualification suite."
+    }
+  ],
+  "performanceEvidence": {
+    "baseline": {
+      "path": ".cache/v080-qualification/preliminary-14a965f2/failures/menu-startup-profile/snapshot-benchmark.json",
+      "bytes": 1051,
+      "sha256": "adcc24e0fc867aba30133929cf81ff0bd4019003b4feeca18d31c599e33ef80c"
+    },
+    "optimized": {
+      "path": ".cache/v080-qualification/preliminary-14a965f2/failures/menu-startup-profile/optimized/snapshot-benchmark.json",
+      "bytes": 2804,
+      "sha256": "1746802dd434b576175a962277e3623a6d261e28dc228b350e8de9c10663cbf4"
+    },
+    "attribution": "Benchmarks executed by soundtrack_references. Optimized benchmark pins the pre-constructor-relocation player; it is not relabelled as a measurement of final bytes. The complete final 58-test run occurred after relocation. Local timings are diagnostic, not hardware-independent guarantees."
+  },
+  "remainingFindings": [],
+  "releaseImplications": [
+    "Two of the thirteen audio inputs changed; prior reviewed stage 52 cannot be reused for this fingerprint. Parent owns immutable source/review successors and Team descriptor/payload equality proof.",
+    "Hosted exact-source qualification, frozen artifact checks and native browser acceptance remain separate."
+  ],
+  "limits": [
+    "Functional source review only: no recording or composition approval, subjective or repeated listening, Ukrainian authenticity, Content ID determination, physical-device acceptance, release/deployment approval or native/browser codec claim.",
+    "No network, media download, new audio output, public action, tracked-source mutation or production-ledger write was performed by this review.",
+    "Owner test logs are attributed; independent incremental checks used modeled audio adapters and tiny existing structural MP3 fixtures."
+  ]
+}

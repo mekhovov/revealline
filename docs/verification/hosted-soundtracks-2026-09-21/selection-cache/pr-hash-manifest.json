@@ -1,0 +1,45 @@
+{
+  "format": "revealline-evidence-hashes.v1",
+  "files": [
+    {
+      "path": "metadata.json",
+      "bytes": 14469,
+      "sha256": "946c241256c0512ac0e3f33a0f8e27cdc786ce4f935f2621b216be4b20239ca5"
+    },
+    {
+      "path": "run.log",
+      "bytes": 4632830,
+      "sha256": "c9245c16e372ef8b003a24b0ac9e9669951e1d2387065fd86800b7552c477e58"
+    },
+    {
+      "path": "shard-1.txt",
+      "bytes": 6630,
+      "sha256": "64399f0855add92360fa521e1c628a7ca208ccc407d3adaf57e13234de2b05e7"
+    },
+    {
+      "path": "shard-2.txt",
+      "bytes": 6660,
+      "sha256": "b63abe1b77edfcad47e87c29020fa8fe88e384e16d9117c93748a6ad95433728"
+    },
+    {
+      "path": "shard-3.txt",
+      "bytes": 6683,
+      "sha256": "d3f911973fc15ae05608fc21c73645cfb16bb365160f92749e9935f85d57588e"
+    },
+    {
+      "path": "shard-4.txt",
+      "bytes": 6512,
+      "sha256": "e4035cf5acb2b98c87852fe29f21a2345c007c324f10c8a8d67c6ac377359e62"
+    },
+    {
+      "path": "source.json",
+      "bytes": 32707,
+      "sha256": "f60b4d1097e47b0d20d5509c73c610ab18ab3200eca69b22b5c2f1de4b2d4963"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 36546,
+      "sha256": "0ae7150fd2cea30f9f613906380701cc37137f4aed5878fbe4fe0e8821e87293"
+    }
+  ]
+}

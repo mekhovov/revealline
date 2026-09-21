@@ -1,0 +1,1111 @@
+{
+  "format": "revealline-hosted-family-evidence.v1",
+  "family": "pr",
+  "runId": 35614378422,
+  "runUrl": "https://github.com/mekhovov/revealline/actions/runs/35614378422",
+  "runConclusion": "failure",
+  "sourceRevision": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+  "sourceTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+  "version": "v0.80.0",
+  "testFiles": 683,
+  "shards": [
+    {
+      "shard": 1,
+      "jobId": 106382057914,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/35614378422/job/106382057914",
+      "jobConclusion": "failure",
+      "step": {
+        "completedAt": "2026-09-21T15:07:37Z",
+        "conclusion": "failure",
+        "name": "Run test shard 1/4",
+        "number": 7,
+        "startedAt": "2026-09-21T14:49:28Z",
+        "status": "completed"
+      },
+      "counts": {
+        "tests": 2152,
+        "pass": 2139,
+        "fail": 13,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "suites": 0,
+      "terminalTapSummary": true,
+      "partialSummaryFields": {},
+      "summaryLogLines": {
+        "tests": 44325,
+        "pass": 44327,
+        "fail": 44328,
+        "cancelled": 44329,
+        "skipped": 44330,
+        "todo": 44331,
+        "suites": 44326
+      },
+      "expectedTestFiles": 171,
+      "expectedListPath": "shard-1.txt",
+      "expectedListSha256": "64399f0855add92360fa521e1c628a7ca208ccc407d3adaf57e13234de2b05e7",
+      "recordedFileListMatches": null,
+      "selectionStatementMatches": true,
+      "actualCheckoutCommit": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+      "actualCheckoutTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+      "sourceChecks": [
+        {
+          "completedAt": "2026-09-21T14:49:26Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-21T14:49:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:07:45Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after test shard",
+          "number": 8,
+          "startedAt": "2026-09-21T15:07:37Z",
+          "status": "completed"
+        }
+      ],
+      "sourceByteReceipts": [
+        {
+          "line": 33183,
+          "step": "Verify exact tracked source before commands",
+          "identity": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline/source",
+            "sourceRevision": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+            "sourceTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+            "files": 15691,
+            "bytes": 1384961123,
+            "aggregateSha256": "d2baaa8cac58565f534bd4458b0d7009907786ee654f7448da5c4e102962255c",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        {
+          "line": 44341,
+          "step": "Verify tracked source after test shard",
+          "identity": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline/source",
+            "sourceRevision": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+            "sourceTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+            "files": 15691,
+            "bytes": 1384961123,
+            "aggregateSha256": "d2baaa8cac58565f534bd4458b0d7009907786ee654f7448da5c4e102962255c",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        }
+      ],
+      "observedTopLevelOkRecords": 2089,
+      "observedNotOkRecords": 13,
+      "skipRecords": []
+    },
+    {
+      "shard": 2,
+      "jobId": 106382057858,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/35614378422/job/106382057858",
+      "jobConclusion": "success",
+      "step": {
+        "completedAt": "2026-09-21T15:28:04Z",
+        "conclusion": "success",
+        "name": "Run test shard 2/4",
+        "number": 7,
+        "startedAt": "2026-09-21T14:49:21Z",
+        "status": "completed"
+      },
+      "counts": {
+        "tests": 1839,
+        "pass": 1839,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "suites": 0,
+      "terminalTapSummary": true,
+      "partialSummaryFields": {},
+      "summaryLogLines": {
+        "tests": 20630,
+        "pass": 20632,
+        "fail": 20633,
+        "cancelled": 20634,
+        "skipped": 20635,
+        "todo": 20636,
+        "suites": 20631
+      },
+      "expectedTestFiles": 171,
+      "expectedListPath": "shard-2.txt",
+      "expectedListSha256": "b63abe1b77edfcad47e87c29020fa8fe88e384e16d9117c93748a6ad95433728",
+      "recordedFileListMatches": null,
+      "selectionStatementMatches": true,
+      "actualCheckoutCommit": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+      "actualCheckoutTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+      "sourceChecks": [
+        {
+          "completedAt": "2026-09-21T14:49:19Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-21T14:49:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:28:12Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after test shard",
+          "number": 8,
+          "startedAt": "2026-09-21T15:28:04Z",
+          "status": "completed"
+        }
+      ],
+      "sourceByteReceipts": [
+        {
+          "line": 11390,
+          "step": "Verify exact tracked source before commands",
+          "identity": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline/source",
+            "sourceRevision": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+            "sourceTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+            "files": 15691,
+            "bytes": 1384961123,
+            "aggregateSha256": "d2baaa8cac58565f534bd4458b0d7009907786ee654f7448da5c4e102962255c",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        {
+          "line": 20645,
+          "step": "Verify tracked source after test shard",
+          "identity": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline/source",
+            "sourceRevision": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+            "sourceTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+            "files": 15691,
+            "bytes": 1384961123,
+            "aggregateSha256": "d2baaa8cac58565f534bd4458b0d7009907786ee654f7448da5c4e102962255c",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        }
+      ],
+      "observedTopLevelOkRecords": 1809,
+      "observedNotOkRecords": 0,
+      "skipRecords": []
+    },
+    {
+      "shard": 3,
+      "jobId": 106382057821,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/35614378422/job/106382057821",
+      "jobConclusion": "success",
+      "step": {
+        "completedAt": "2026-09-21T15:14:01Z",
+        "conclusion": "success",
+        "name": "Run test shard 3/4",
+        "number": 7,
+        "startedAt": "2026-09-21T14:49:23Z",
+        "status": "completed"
+      },
+      "counts": {
+        "tests": 1935,
+        "pass": 1935,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "suites": 0,
+      "terminalTapSummary": true,
+      "partialSummaryFields": {},
+      "summaryLogLines": {
+        "tests": 10974,
+        "pass": 10976,
+        "fail": 10977,
+        "cancelled": 10978,
+        "skipped": 10979,
+        "todo": 10980,
+        "suites": 10975
+      },
+      "expectedTestFiles": 171,
+      "expectedListPath": "shard-3.txt",
+      "expectedListSha256": "d3f911973fc15ae05608fc21c73645cfb16bb365160f92749e9935f85d57588e",
+      "recordedFileListMatches": null,
+      "selectionStatementMatches": true,
+      "actualCheckoutCommit": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+      "actualCheckoutTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+      "sourceChecks": [
+        {
+          "completedAt": "2026-09-21T14:49:21Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-21T14:49:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:14:12Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after test shard",
+          "number": 8,
+          "startedAt": "2026-09-21T15:14:01Z",
+          "status": "completed"
+        }
+      ],
+      "sourceByteReceipts": [
+        {
+          "line": 1217,
+          "step": "Verify exact tracked source before commands",
+          "identity": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline/source",
+            "sourceRevision": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+            "sourceTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+            "files": 15691,
+            "bytes": 1384961123,
+            "aggregateSha256": "d2baaa8cac58565f534bd4458b0d7009907786ee654f7448da5c4e102962255c",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        {
+          "line": 10989,
+          "step": "Verify tracked source after test shard",
+          "identity": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline/source",
+            "sourceRevision": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+            "sourceTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+            "files": 15691,
+            "bytes": 1384961123,
+            "aggregateSha256": "d2baaa8cac58565f534bd4458b0d7009907786ee654f7448da5c4e102962255c",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        }
+      ],
+      "observedTopLevelOkRecords": 1882,
+      "observedNotOkRecords": 0,
+      "skipRecords": []
+    },
+    {
+      "shard": 4,
+      "jobId": 106382057901,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/35614378422/job/106382057901",
+      "jobConclusion": "failure",
+      "step": {
+        "completedAt": "2026-09-21T15:27:13Z",
+        "conclusion": "failure",
+        "name": "Run test shard 4/4",
+        "number": 7,
+        "startedAt": "2026-09-21T14:49:53Z",
+        "status": "completed"
+      },
+      "counts": {
+        "tests": 2162,
+        "pass": 2161,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "suites": 0,
+      "terminalTapSummary": true,
+      "partialSummaryFields": {},
+      "summaryLogLines": {
+        "tests": 32785,
+        "pass": 32787,
+        "fail": 32788,
+        "cancelled": 32789,
+        "skipped": 32790,
+        "todo": 32791,
+        "suites": 32786
+      },
+      "expectedTestFiles": 170,
+      "expectedListPath": "shard-4.txt",
+      "expectedListSha256": "e4035cf5acb2b98c87852fe29f21a2345c007c324f10c8a8d67c6ac377359e62",
+      "recordedFileListMatches": null,
+      "selectionStatementMatches": true,
+      "actualCheckoutCommit": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+      "actualCheckoutTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+      "sourceChecks": [
+        {
+          "completedAt": "2026-09-21T14:49:51Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-21T14:49:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:27:26Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after test shard",
+          "number": 8,
+          "startedAt": "2026-09-21T15:27:13Z",
+          "status": "completed"
+        }
+      ],
+      "sourceByteReceipts": [
+        {
+          "line": 21855,
+          "step": "Verify exact tracked source before commands",
+          "identity": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline/source",
+            "sourceRevision": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+            "sourceTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+            "files": 15691,
+            "bytes": 1384961123,
+            "aggregateSha256": "d2baaa8cac58565f534bd4458b0d7009907786ee654f7448da5c4e102962255c",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        {
+          "line": 32801,
+          "step": "Verify tracked source after test shard",
+          "identity": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline/source",
+            "sourceRevision": "14a965f22e47a4d35258e88cf28aa3fec4f8a7c8",
+            "sourceTree": "4a25b6f6ea896932a9bd0316d8e2d90cf8bf41fa",
+            "files": 15691,
+            "bytes": 1384961123,
+            "aggregateSha256": "d2baaa8cac58565f534bd4458b0d7009907786ee654f7448da5c4e102962255c",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        }
+      ],
+      "observedTopLevelOkRecords": 2089,
+      "observedNotOkRecords": 1,
+      "skipRecords": []
+    }
+  ],
+  "tests": {
+    "tests": 8088,
+    "pass": 8074,
+    "fail": 14,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "suites": 0,
+  "completedShardSubtotal": {
+    "tests": 8088,
+    "pass": 8074,
+    "fail": 14,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "allTerminalSummaries": true,
+  "utilityTestCountsSatisfied": false,
+  "jobs": [
+    {
+      "name": "preflight",
+      "jobId": 106381197637,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "completedAt": "2026-09-21T14:46:13Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-21T14:46:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:46:41Z",
+          "conclusion": "success",
+          "name": "Check out source",
+          "number": 2,
+          "startedAt": "2026-09-21T14:46:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:46:42Z",
+          "conclusion": "success",
+          "name": "Check out the workflow's source verifier",
+          "number": 3,
+          "startedAt": "2026-09-21T14:46:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:46:47Z",
+          "conclusion": "success",
+          "name": "Set up Node.js",
+          "number": 4,
+          "startedAt": "2026-09-21T14:46:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:47:01Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-21T14:46:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:47:06Z",
+          "conclusion": "success",
+          "name": "Install dependencies",
+          "number": 6,
+          "startedAt": "2026-09-21T14:47:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:47:58Z",
+          "conclusion": "success",
+          "name": "Validate, lint, and format source",
+          "number": 7,
+          "startedAt": "2026-09-21T14:47:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:48:04Z",
+          "conclusion": "success",
+          "name": "Verify Field Kit production ledger and compiled output",
+          "number": 8,
+          "startedAt": "2026-09-21T14:47:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:48:09Z",
+          "conclusion": "success",
+          "name": "Verify immutable production sources first",
+          "number": 9,
+          "startedAt": "2026-09-21T14:48:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:48:23Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after preflight",
+          "number": 10,
+          "startedAt": "2026-09-21T14:48:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:48:24Z",
+          "conclusion": "success",
+          "name": "Post Set up Node.js",
+          "number": 18,
+          "startedAt": "2026-09-21T14:48:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:48:24Z",
+          "conclusion": "success",
+          "name": "Post Check out the workflow's source verifier",
+          "number": 19,
+          "startedAt": "2026-09-21T14:48:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:48:24Z",
+          "conclusion": "success",
+          "name": "Post Check out source",
+          "number": 20,
+          "startedAt": "2026-09-21T14:48:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:48:24Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 21,
+          "startedAt": "2026-09-21T14:48:24Z",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "name": "release_gate",
+      "jobId": 106381198620,
+      "status": "completed",
+      "conclusion": "skipped",
+      "steps": []
+    },
+    {
+      "name": "test (3)",
+      "jobId": 106382057821,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "completedAt": "2026-09-21T14:48:30Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-21T14:48:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:00Z",
+          "conclusion": "success",
+          "name": "Check out source",
+          "number": 2,
+          "startedAt": "2026-09-21T14:48:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:02Z",
+          "conclusion": "success",
+          "name": "Check out the workflow's test runner",
+          "number": 3,
+          "startedAt": "2026-09-21T14:49:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:10Z",
+          "conclusion": "success",
+          "name": "Set up Node.js",
+          "number": 4,
+          "startedAt": "2026-09-21T14:49:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:21Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-21T14:49:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:23Z",
+          "conclusion": "success",
+          "name": "Install dependencies",
+          "number": 6,
+          "startedAt": "2026-09-21T14:49:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:14:01Z",
+          "conclusion": "success",
+          "name": "Run test shard 3/4",
+          "number": 7,
+          "startedAt": "2026-09-21T14:49:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:14:12Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after test shard",
+          "number": 8,
+          "startedAt": "2026-09-21T15:14:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:14:12Z",
+          "conclusion": "success",
+          "name": "Post Set up Node.js",
+          "number": 14,
+          "startedAt": "2026-09-21T15:14:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:14:12Z",
+          "conclusion": "success",
+          "name": "Post Check out the workflow's test runner",
+          "number": 15,
+          "startedAt": "2026-09-21T15:14:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:14:12Z",
+          "conclusion": "success",
+          "name": "Post Check out source",
+          "number": 16,
+          "startedAt": "2026-09-21T15:14:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:14:12Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-09-21T15:14:12Z",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "name": "test (2)",
+      "jobId": 106382057858,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "completedAt": "2026-09-21T14:48:30Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-21T14:48:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:02Z",
+          "conclusion": "success",
+          "name": "Check out source",
+          "number": 2,
+          "startedAt": "2026-09-21T14:48:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:04Z",
+          "conclusion": "success",
+          "name": "Check out the workflow's test runner",
+          "number": 3,
+          "startedAt": "2026-09-21T14:49:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:11Z",
+          "conclusion": "success",
+          "name": "Set up Node.js",
+          "number": 4,
+          "startedAt": "2026-09-21T14:49:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:19Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-21T14:49:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:21Z",
+          "conclusion": "success",
+          "name": "Install dependencies",
+          "number": 6,
+          "startedAt": "2026-09-21T14:49:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:28:04Z",
+          "conclusion": "success",
+          "name": "Run test shard 2/4",
+          "number": 7,
+          "startedAt": "2026-09-21T14:49:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:28:12Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after test shard",
+          "number": 8,
+          "startedAt": "2026-09-21T15:28:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:28:13Z",
+          "conclusion": "success",
+          "name": "Post Set up Node.js",
+          "number": 14,
+          "startedAt": "2026-09-21T15:28:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:28:13Z",
+          "conclusion": "success",
+          "name": "Post Check out the workflow's test runner",
+          "number": 15,
+          "startedAt": "2026-09-21T15:28:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:28:13Z",
+          "conclusion": "success",
+          "name": "Post Check out source",
+          "number": 16,
+          "startedAt": "2026-09-21T15:28:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:28:13Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-09-21T15:28:13Z",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "name": "build",
+      "jobId": 106382057897,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "completedAt": "2026-09-21T14:48:30Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-21T14:48:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:48:49Z",
+          "conclusion": "success",
+          "name": "Check out complete history and tags",
+          "number": 2,
+          "startedAt": "2026-09-21T14:48:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:48:50Z",
+          "conclusion": "success",
+          "name": "Check out the workflow's source verifier",
+          "number": 3,
+          "startedAt": "2026-09-21T14:48:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:48:55Z",
+          "conclusion": "success",
+          "name": "Set up Node.js",
+          "number": 4,
+          "startedAt": "2026-09-21T14:48:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:09Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-21T14:48:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:11Z",
+          "conclusion": "success",
+          "name": "Install dependencies",
+          "number": 6,
+          "startedAt": "2026-09-21T14:49:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:51:51Z",
+          "conclusion": "success",
+          "name": "Build pull-request artifact",
+          "number": 7,
+          "startedAt": "2026-09-21T14:49:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:52:04Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after build",
+          "number": 8,
+          "startedAt": "2026-09-21T14:51:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:52:04Z",
+          "conclusion": "success",
+          "name": "Post Set up Node.js",
+          "number": 14,
+          "startedAt": "2026-09-21T14:52:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:52:04Z",
+          "conclusion": "success",
+          "name": "Post Check out the workflow's source verifier",
+          "number": 15,
+          "startedAt": "2026-09-21T14:52:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:52:04Z",
+          "conclusion": "success",
+          "name": "Post Check out complete history and tags",
+          "number": 16,
+          "startedAt": "2026-09-21T14:52:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:52:04Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-09-21T14:52:04Z",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "name": "test (4)",
+      "jobId": 106382057901,
+      "status": "completed",
+      "conclusion": "failure",
+      "steps": [
+        {
+          "completedAt": "2026-09-21T14:49:06Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-21T14:49:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:33Z",
+          "conclusion": "success",
+          "name": "Check out source",
+          "number": 2,
+          "startedAt": "2026-09-21T14:49:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:34Z",
+          "conclusion": "success",
+          "name": "Check out the workflow's test runner",
+          "number": 3,
+          "startedAt": "2026-09-21T14:49:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:38Z",
+          "conclusion": "success",
+          "name": "Set up Node.js",
+          "number": 4,
+          "startedAt": "2026-09-21T14:49:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:51Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-21T14:49:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:53Z",
+          "conclusion": "success",
+          "name": "Install dependencies",
+          "number": 6,
+          "startedAt": "2026-09-21T14:49:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:27:13Z",
+          "conclusion": "failure",
+          "name": "Run test shard 4/4",
+          "number": 7,
+          "startedAt": "2026-09-21T14:49:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:27:26Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after test shard",
+          "number": 8,
+          "startedAt": "2026-09-21T15:27:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:27:26Z",
+          "conclusion": "skipped",
+          "name": "Post Set up Node.js",
+          "number": 14,
+          "startedAt": "2026-09-21T15:27:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:27:26Z",
+          "conclusion": "success",
+          "name": "Post Check out the workflow's test runner",
+          "number": 15,
+          "startedAt": "2026-09-21T15:27:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:27:26Z",
+          "conclusion": "success",
+          "name": "Post Check out source",
+          "number": 16,
+          "startedAt": "2026-09-21T15:27:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:27:26Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-09-21T15:27:26Z",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "name": "test (1)",
+      "jobId": 106382057914,
+      "status": "completed",
+      "conclusion": "failure",
+      "steps": [
+        {
+          "completedAt": "2026-09-21T14:48:30Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-21T14:48:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:12Z",
+          "conclusion": "success",
+          "name": "Check out source",
+          "number": 2,
+          "startedAt": "2026-09-21T14:48:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:13Z",
+          "conclusion": "success",
+          "name": "Check out the workflow's test runner",
+          "number": 3,
+          "startedAt": "2026-09-21T14:49:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:19Z",
+          "conclusion": "success",
+          "name": "Set up Node.js",
+          "number": 4,
+          "startedAt": "2026-09-21T14:49:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:26Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-21T14:49:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T14:49:28Z",
+          "conclusion": "success",
+          "name": "Install dependencies",
+          "number": 6,
+          "startedAt": "2026-09-21T14:49:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:07:37Z",
+          "conclusion": "failure",
+          "name": "Run test shard 1/4",
+          "number": 7,
+          "startedAt": "2026-09-21T14:49:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:07:45Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after test shard",
+          "number": 8,
+          "startedAt": "2026-09-21T15:07:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:07:45Z",
+          "conclusion": "skipped",
+          "name": "Post Set up Node.js",
+          "number": 14,
+          "startedAt": "2026-09-21T15:07:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:07:45Z",
+          "conclusion": "success",
+          "name": "Post Check out the workflow's test runner",
+          "number": 15,
+          "startedAt": "2026-09-21T15:07:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:07:45Z",
+          "conclusion": "success",
+          "name": "Post Check out source",
+          "number": 16,
+          "startedAt": "2026-09-21T15:07:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-21T15:07:45Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-09-21T15:07:45Z",
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "scope": "Source job/TAP evidence only; not a complete artifact utility qualification. No artifact download, musical/listening, physical-device or release approval.",
+  "originalInputs": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/.cache/v080-qualification/preliminary-14a965f2/pr/metadata.json",
+      "bytes": 14469,
+      "sha256": "946c241256c0512ac0e3f33a0f8e27cdc786ce4f935f2621b216be4b20239ca5"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/.cache/v080-qualification/preliminary-14a965f2/pr/run.log",
+      "bytes": 4632830,
+      "sha256": "c9245c16e372ef8b003a24b0ac9e9669951e1d2387065fd86800b7552c477e58"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "gh",
+        "run",
+        "view",
+        "35614378422",
+        "--repo",
+        "mekhovov/revealline",
+        "--json",
+        "databaseId,headSha,headBranch,name,workflowName,status,conclusion,url,event,createdAt,updatedAt,jobs"
+      ],
+      "startedAt": "2026-09-21T15:29:12.890170+00:00",
+      "completedAt": "2026-09-21T15:29:14.121146+00:00",
+      "exitCode": 0,
+      "output": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/.cache/v080-qualification/preliminary-14a965f2/pr/metadata.json",
+        "bytes": 14469,
+        "sha256": "946c241256c0512ac0e3f33a0f8e27cdc786ce4f935f2621b216be4b20239ca5"
+      }
+    },
+    {
+      "argv": [
+        "gh",
+        "run",
+        "view",
+        "35614378422",
+        "--repo",
+        "mekhovov/revealline",
+        "--log"
+      ],
+      "startedAt": "2026-09-21T15:29:14.122102+00:00",
+      "completedAt": "2026-09-21T15:29:17.664806+00:00",
+      "exitCode": 0,
+      "output": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/.cache/v080-qualification/preliminary-14a965f2/pr/run.log",
+        "bytes": 4632830,
+        "sha256": "c9245c16e372ef8b003a24b0ac9e9669951e1d2387065fd86800b7552c477e58"
+      }
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "format": "soundtrack-selection-cache-benchmark.v1",
+  "date": "2026-09-21T15:36:05.107Z",
+  "pins": {
+    "game/ui/soundtrack-player.mjs": "6f41618f59971769442a9c7004fddcd176d84d8009ec86663f07d9279e64098d",
+    "game/soundtrack.mjs": "0cfb15e62f0cf65b182bd77164f5cca8be239deebbde08b8c21cd412f179ba3f",
+    "game/test/soundtrack-player.test.mjs": "fb234dafd3772a37bb30b93a0e46a4512bc5e29359a356b182225608863af4f2",
+    "game/test/couch-menu-music.test.mjs": "793040d3c45748d682883859e2f593a5a4d4908f29202eb155f43abf9a024049"
+  },
+  "method": "Same ten status reads and explicit local coded-silence fixture as prior benchmark. Raw catalogue cases retain revalidation; branded cases model the owned catalogue host path. No network or audible quality measurement.",
+  "rows": [
+    {
+      "branded": false,
+      "catalogueTracks": 0,
+      "snapshots": 10,
+      "timingsMs": [
+        0.13270800000000094,
+        0.1659589999999973,
+        0.05349999999999966,
+        0.04008400000000023,
+        0.03662499999999724,
+        0.08587500000000148,
+        0.03904100000000099,
+        0.037375000000000824,
+        0.03587500000000077,
+        0.04137500000000216
+      ],
+      "totalMs": 0.6684170000000016,
+      "status": "paused",
+      "track": "qa.silence"
+    },
+    {
+      "branded": false,
+      "catalogueTracks": 70,
+      "snapshots": 10,
+      "timingsMs": [
+        6.904416999999995,
+        6.759125000000012,
+        6.761916000000014,
+        6.923957999999999,
+        6.387833999999998,
+        6.6797909999999945,
+        7.047167000000002,
+        6.691291000000007,
+        6.203416000000004,
+        6.475666999999987
+      ],
+      "totalMs": 66.83458200000001,
+      "status": "paused",
+      "track": "qa.silence"
+    },
+    {
+      "branded": true,
+      "catalogueTracks": 0,
+      "snapshots": 10,
+      "timingsMs": [
+        0.001125000000001819,
+        0.0007079999999746178,
+        0.0006250000000136424,
+        0.0005830000000059954,
+        0.0008339999999975589,
+        0.0006669999999928677,
+        0.0007080000000030395,
+        0.0005829999999775737,
+        0.0006669999999928677,
+        0.0007090000000005148
+      ],
+      "totalMs": 0.007208999999960497,
+      "status": "paused",
+      "track": "qa.silence"
+    },
+    {
+      "branded": true,
+      "catalogueTracks": 70,
+      "snapshots": 10,
+      "timingsMs": [
+        0.0009160000000179025,
+        0.0005419999999958236,
+        0.00045800000000895125,
+        0.00045800000000895125,
+        0.0005000000000165983,
+        0.0004999999999881766,
+        0.00045800000000895125,
+        0.00045799999998052954,
+        0.00041699999999877946,
+        0.0005000000000165983
+      ],
+      "totalMs": 0.005207000000041262,
+      "status": "paused",
+      "track": "qa.silence"
+    }
+  ]
+}

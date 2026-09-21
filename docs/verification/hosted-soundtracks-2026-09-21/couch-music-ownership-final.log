@@ -1,0 +1,538 @@
+TAP version 13
+# Subtest: Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+    # Subtest: actual Versus controls
+    ok 1 - actual Versus controls
+      ---
+      duration_ms: 382.63825
+      ...
+    # Subtest: fresh Team receives settings, not music or progress
+    ok 2 - fresh Team receives settings, not music or progress
+      ---
+      duration_ms: 45.5085
+      ...
+    # Subtest: fresh Versus restores without context creation or playing
+    ok 3 - fresh Versus restores without context creation or playing
+      ---
+      duration_ms: 251.464583
+      ...
+    1..3
+ok 1 - Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+  ---
+  duration_ms: 680.33725
+  ...
+# Subtest: Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+ok 2 - Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+  ---
+  duration_ms: 1151.760834
+  ...
+# Subtest: Versus controller edits the actual master slider without starting either board
+ok 3 - Versus controller edits the actual master slider without starting either board
+  ---
+  duration_ms: 221.152292
+  ...
+# Subtest: Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+ok 4 - Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+  ---
+  duration_ms: 327.352333
+  ...
+# Subtest: Team keeps its sound explanation through saved edits, storage failure and recovery without starting play
+ok 5 - Team keeps its sound explanation through saved edits, storage failure and recovery without starting play
+  ---
+  duration_ms: 205.404833
+  ...
+# Subtest: Versus sound edits survive paused Help pan and keyboard return without replacing audio feedback
+ok 6 - Versus sound edits survive paused Help pan and keyboard return without replacing audio feedback
+  ---
+  duration_ms: 1375.660792
+  ...
+# Subtest: Team sound edits survive paused Help pan and keyboard return without replacing audio feedback
+ok 7 - Team sound edits survive paused Help pan and keyboard return without replacing audio feedback
+  ---
+  duration_ms: 213.109875
+  ...
+# Subtest: Team: actual music library returns through Audio Settings and Pause survives first Start
+ok 8 - Team: actual music library returns through Audio Settings and Pause survives first Start
+  ---
+  duration_ms: 1652.042375
+  ...
+# Subtest: Team: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+ok 9 - Team: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+  ---
+  duration_ms: 3200.804833
+  ...
+# Subtest: Versus: actual music library returns through Audio Settings and Pause survives first Start
+ok 10 - Versus: actual music library returns through Audio Settings and Pause survives first Start
+  ---
+  duration_ms: 2116.735667
+  ...
+# Subtest: Versus: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+ok 11 - Versus: actual Music Play stays muted and session volume does not rewrite master or Solo profile
+  ---
+  duration_ms: 3634.419167
+  ...
+# Subtest: Team: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+ok 12 - Team: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+  ---
+  duration_ms: 2340.969958
+  ...
+# Subtest: Team: modeled controller owns the nested music library and Back returns to its opener
+ok 13 - Team: modeled controller owns the nested music library and Back returns to its opener
+  ---
+  duration_ms: 5291.153875
+  ...
+# Subtest: Versus: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+ok 14 - Versus: saved shared MP3 loads silently and foreground restoration retains explicit Pause
+  ---
+  duration_ms: 2830.645542
+  ...
+# Subtest: Versus: modeled controller owns the nested music library and Back returns to its opener
+ok 15 - Versus: modeled controller owns the nested music library and Back returns to its opener
+  ---
+  duration_ms: 7370.998084
+  ...
+# Subtest: Versus: Pause music before Start preserves actual cut sound effects without starting music
+ok 16 - Versus: Pause music before Start preserves actual cut sound effects without starting music
+  ---
+  duration_ms: 1755.431209
+  ...
+# Subtest: Couch music credits follow audible MP3 metadata without live position announcements
+ok 17 - Couch music credits follow audible MP3 metadata without live position announcements
+  ---
+  duration_ms: 6475.34375
+  ...
+# Subtest: Versus menu music source is reachable with Tab and controller without starting either board
+ok 18 - Versus menu music source is reachable with Tab and controller without starting either board
+  ---
+  duration_ms: 2772.061792
+  ...
+# Subtest: a failed music assignment replaces pending status with its actionable error
+ok 19 - a failed music assignment replaces pending status with its actionable error
+  ---
+  duration_ms: 573.085625
+  ...
+# Subtest: Journey music library keeps keyboard Back, paused boards and chooser ownership
+ok 20 - Journey music library keeps keyboard Back, paused boards and chooser ownership
+  ---
+  duration_ms: 2391.493
+  ...
+# Subtest: Couch explicit scene keeps level music across inactive Pause, Settings, results and retry until setup
+ok 21 - Couch explicit scene keeps level music across inactive Pause, Settings, results and retry until setup
+  ---
+  duration_ms: 1280.999042
+  ...
+# Subtest: race: first trusted menu gesture plays remembered unmuted music without rewriting master or storage
+ok 22 - race: first trusted menu gesture plays remembered unmuted music without rewriting master or storage
+  ---
+  duration_ms: 1541.306417
+  ...
+# Subtest: coop: first trusted menu gesture plays remembered unmuted music without rewriting master or storage
+ok 23 - coop: first trusted menu gesture plays remembered unmuted music without rewriting master or storage
+  ---
+  duration_ms: 1480.790583
+  ...
+# Subtest: menu activation respects mute, zero volume, hidden pages, music controls and intentional Pause
+ok 24 - menu activation respects mute, zero volume, hidden pages, music controls and intentional Pause
+  ---
+  duration_ms: 1670.654041
+  ...
+# Subtest: denied menu permission retries only on another trusted gesture and cannot change master intent
+ok 25 - denied menu permission retries only on another trusted gesture and cannot change master intent
+  ---
+  duration_ms: 2122.385334
+  ...
+# Subtest: gesture during library loading schedules no late autoplay; disposal removes menu activation
+ok 26 - gesture during library loading schedules no late autoplay; disposal removes menu activation
+  ---
+  duration_ms: 977.012833
+  ...
+# Subtest: race: compact caption and Audio credits follow actual playback without changing transport intent
+ok 27 - race: compact caption and Audio credits follow actual playback without changing transport intent
+  ---
+  duration_ms: 1751.971792
+  ...
+# Subtest: coop: compact caption and Audio credits follow actual playback without changing transport intent
+ok 28 - coop: compact caption and Audio credits follow actual playback without changing transport intent
+  ---
+  duration_ms: 1730.692208
+  ...
+# Subtest: compatible Solo/Versus use the exact existing assignment identity
+ok 29 - compatible Solo/Versus use the exact existing assignment identity
+  ---
+  duration_ms: 1.268458
+  ...
+# Subtest: invalid or over-budget compatible context is rejected: {"campaignKey":""}
+ok 30 - invalid or over-budget compatible context is rejected: {"campaignKey":""}
+  ---
+  duration_ms: 0.144709
+  ...
+# Subtest: invalid or over-budget compatible context is rejected: {"themeId":""}
+ok 31 - invalid or over-budget compatible context is rejected: {"themeId":""}
+  ---
+  duration_ms: 0.073875
+  ...
+# Subtest: invalid or over-budget compatible context is rejected: {"level":{"id":"opening"}}
+ok 32 - invalid or over-budget compatible context is rejected: {"level":{"id":"opening"}}
+  ---
+  duration_ms: 0.040458
+  ...
+# Subtest: invalid or over-budget compatible context is rejected: {"level":{"id":"opening","revision":2}}
+ok 33 - invalid or over-budget compatible context is rejected: {"level":{"id":"opening","revision":2}}
+  ---
+  duration_ms: 0.042584
+  ...
+# Subtest: invalid or over-budget compatible context is rejected: {"campaignKey":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+ok 34 - invalid or over-budget compatible context is rejected: {"campaignKey":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+  ---
+  duration_ms: 0.121583
+  ...
+# Subtest: Team context binds the canonical validated pack hash, exact level, revision and theme
+ok 35 - Team context binds the canonical validated pack hash, exact level, revision and theme
+  ---
+  duration_ms: 6.862
+  ...
+# Subtest: changed geometry with reused labels/IDs does not reuse the Team assignment
+ok 36 - changed geometry with reused labels/IDs does not reuse the Team assignment
+  ---
+  duration_ms: 4.214083
+  ...
+# Subtest: equivalent plain/envelope-extracted packs and reordered object keys share an identity
+ok 37 - equivalent plain/envelope-extracted packs and reordered object keys share an identity
+  ---
+  duration_ms: 6.470958
+  ...
+# Subtest: hashing owns a snapshot before yielding, so caller mutation cannot retarget it
+ok 38 - hashing owns a snapshot before yielding, so caller mutation cannot retarget it
+  ---
+  duration_ms: 6.770292
+  ...
+# Subtest: theme changes affect assignment context, not gameplay pack identity
+ok 39 - theme changes affect assignment context, not gameplay pack identity
+  ---
+  duration_ms: 8.757917
+  ...
+# Subtest: same-ID changed level and unknown level are refused before an assignment can escape
+ok 40 - same-ID changed level and unknown level are refused before an assignment can escape
+  ---
+  duration_ms: 5.345167
+  ...
+# Subtest: invalid packs and extra historical music fields remain rejected
+ok 41 - invalid packs and extra historical music fields remain rejected
+  ---
+  duration_ms: 0.878583
+  ...
+# Subtest: already cancelled and cancelled-during-hash contexts never return an assignment
+ok 42 - already cancelled and cancelled-during-hash contexts never return an assignment
+  ---
+  duration_ms: 2.403125
+  ...
+# Subtest: loading prepares accepted MP3 silently; a ready first Start plays in its gesture turn
+ok 43 - loading prepares accepted MP3 silently; a ready first Start plays in its gesture turn
+  ---
+  duration_ms: 10.390916
+  ...
+# Subtest: explicit Pause before first Start survives preparation, Retry and Resume
+ok 44 - explicit Pause before first Start survives preparation, Retry and Resume
+  ---
+  duration_ms: 4.243084
+  ...
+# Subtest: slow library readiness never blocks Start or performs a late autoplay
+ok 45 - slow library readiness never blocks Start or performs a late autoplay
+  ---
+  duration_ms: 4.1065
+  ...
+# Subtest: Pause during a pending load clears deferred Play intent
+ok 46 - Pause during a pending load clears deferred Play intent
+  ---
+  duration_ms: 4.124584
+  ...
+# Subtest: gameplay Pause, Retry and accepted context change retain the MP3 node, position and listening choice
+ok 47 - gameplay Pause, Retry and accepted context change retain the MP3 node, position and listening choice
+  ---
+  duration_ms: 4.3345
+  ...
+# Subtest: lifecycle return restores prior listening but cannot request gameplay Resume
+ok 48 - lifecycle return restores prior listening but cannot request gameplay Resume
+  ---
+  duration_ms: 6.132833
+  ...
+# Subtest: blocked browser Play is reported from its actual promise and keeps master muted
+ok 49 - blocked browser Play is reported from its actual promise and keeps master muted
+  ---
+  duration_ms: 3.833666
+  ...
+# Subtest: session music volume is independent of shared master and never uses profile storage
+ok 50 - session music volume is independent of shared master and never uses profile storage
+  ---
+  duration_ms: 1.416916
+  ...
+# Subtest: storage denial leaves a visible error and permits a deliberate built-in music start
+ok 51 - storage denial leaves a visible error and permits a deliberate built-in music start
+  ---
+  duration_ms: 0.991375
+  ...
+# Subtest: inactive menu update still pumps the existing player; suspension/disposal gate the pump
+ok 52 - inactive menu update still pumps the existing player; suspension/disposal gate the pump
+  ---
+  duration_ms: 0.217166
+  ...
+# Subtest: disposal fences a late library completion without closing borrowed owners
+ok 53 - disposal fences a late library completion without closing borrowed owners
+  ---
+  duration_ms: 1.190416
+  ...
+# Subtest: library save updates accepted bytes without requesting playback
+ok 54 - library save updates accepted bytes without requesting playback
+  ---
+  duration_ms: 3.523042
+  ...
+# Subtest: a playing session remains ready across a slow library refresh without another Play request
+ok 55 - a playing session remains ready across a slow library refresh without another Play request
+  ---
+  duration_ms: 2.067833
+  ...
+# Subtest: repeated Start during a delayed browser play promise makes one request and waits for reality
+ok 56 - repeated Start during a delayed browser play promise makes one request and waits for reality
+  ---
+  duration_ms: 2.0565
+  ...
+# Subtest: Pause wins against a delayed browser play resolution and cannot regain listening intent
+ok 57 - Pause wins against a delayed browser play resolution and cannot regain listening intent
+  ---
+  duration_ms: 1.354792
+  ...
+# Subtest: repeated foreground notifications coalesce resume permission and do not restart settled playback
+ok 58 - repeated foreground notifications coalesce resume permission and do not restart settled playback
+  ---
+  duration_ms: 1.966459
+  ...
+# Subtest: an accepted paused track can resume while a new library refresh is still pending
+ok 59 - an accepted paused track can resume while a new library refresh is still pending
+  ---
+  duration_ms: 2.232875
+  ...
+# Subtest: actual Versus signal-01 shares one exact approved picture and fit through Start and paused continuation
+ok 60 - actual Versus signal-01 shares one exact approved picture and fit through Start and paused continuation
+  ---
+  duration_ms: 259.777292
+  ...
+# Subtest: actual Versus orchard-crossing shares one exact approved picture and fit through Start and paused continuation
+not ok 61 - actual Versus orchard-crossing shares one exact approved picture and fit through Start and paused continuation
+  ---
+  duration_ms: 80.488292
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:186:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    768 !== 1152
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1152
+  actual: 768
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:194:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: required decode failure blocks Start; Retry retains the same attempt and chosen original
+ok 62 - required decode failure blocks Start; Retry retains the same attempt and chosen original
+  ---
+  duration_ms: 105.712083
+  ...
+# Subtest: pending Retry owns Cancel and respects ready
+ok 63 - pending Retry owns Cancel and respects ready
+  ---
+  duration_ms: 97.621541
+  ...
+# Subtest: pending Retry owns Cancel and respects error
+ok 64 - pending Retry owns Cancel and respects error
+  ---
+  duration_ms: 104.015416
+  ...
+# Subtest: pending Retry owns Cancel and respects deliberate focus
+ok 65 - pending Retry owns Cancel and respects deliberate focus
+  ---
+  duration_ms: 92.927
+  ...
+# Subtest: pending Retry owns Cancel and respects background return
+ok 66 - pending Retry owns Cancel and respects background return
+  ---
+  duration_ms: 107.1845
+  ...
+# Subtest: pending Retry owns Cancel and respects scope return
+ok 67 - pending Retry owns Cancel and respects scope return
+  ---
+  duration_ms: 101.893083
+  ...
+# Subtest: interrupted async Next stays ready after blur and return until a fresh Start
+ok 68 - interrupted async Next stays ready after blur and return until a fresh Start
+  ---
+  duration_ms: 1076.204542
+  ...
+# Next picture preparation failed. Error: Injected complete image decode refusal.
+#     at Image.decode (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:78:15)
+#     at async image.onload (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/couch-static-pictures.mjs:166:11)
+# Subtest: failed Next retains the completed round and its displayed original
+ok 69 - failed Next retains the completed round and its displayed original
+  ---
+  duration_ms: 844.682291
+  ...
+# Subtest: whole optional snapshot failure retains explicit authored fallback with a visible notice
+not ok 70 - whole optional snapshot failure retains explicit authored fallback with a visible notice
+  ---
+  duration_ms: 64.125375
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:398:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'source')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:405:27)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Back cancels a pending required picture and late completion cannot resume or replace the accepted attempt
+ok 71 - Back cancels a pending required picture and late completion cannot resume or replace the accepted attempt
+  ---
+  duration_ms: 102.436125
+  ...
+# Subtest: page disposal releases the owned picture URL once and preserves the original bytes
+ok 72 - page disposal releases the owned picture URL once and preserves the original bytes
+  ---
+  duration_ms: 70.149958
+  ...
+# Subtest: initial required-picture loading leaves the actual lobby Cancel keyboard reachable
+ok 73 - initial required-picture loading leaves the actual lobby Cancel keyboard reachable
+  ---
+  duration_ms: 63.584667
+  ...
+# Subtest: combined ready focus after a required picture respects untouched
+ok 74 - combined ready focus after a required picture respects untouched
+  ---
+  duration_ms: 66.083625
+  ...
+# Subtest: combined ready focus after a required picture respects deliberate mode link
+ok 75 - combined ready focus after a required picture respects deliberate mode link
+  ---
+  duration_ms: 66.128
+  ...
+# Subtest: combined ready focus after a required picture respects blur and return
+ok 76 - combined ready focus after a required picture respects blur and return
+  ---
+  duration_ms: 73.809916
+  ...
+# Subtest: combined ready focus after a required picture respects decode failure
+ok 77 - combined ready focus after a required picture respects decode failure
+  ---
+  duration_ms: 63.658083
+  ...
+# Subtest: failed Next original read keeps Results and keyboard View, then retry adopts one new round
+ok 78 - failed Next original read keeps Results and keyboard View, then retry adopts one new round
+  ---
+  duration_ms: 861.923333
+  ...
+# Subtest: pending completed Next preserves Results through Cancel
+ok 79 - pending completed Next preserves Results through Cancel
+  ---
+  duration_ms: 864.339042
+  ...
+# Subtest: pending completed Next preserves Results through Help
+ok 80 - pending completed Next preserves Results through Help
+  ---
+  duration_ms: 900.849666
+  ...
+# Subtest: pending completed Next preserves Results through View
+ok 81 - pending completed Next preserves Results through View
+  ---
+  duration_ms: 858.171459
+  ...
+# Subtest: pending completed Next preserves Results through Setup confirmation
+ok 82 - pending completed Next preserves Results through Setup confirmation
+  ---
+  duration_ms: 890.523667
+  ...
+# Subtest: pending completed Next preserves Results through dispose
+ok 83 - pending completed Next preserves Results through dispose
+  ---
+  duration_ms: 795.875625
+  ...
+# Subtest: successful Next retires its original only after the new duel and picture are published
+ok 84 - successful Next retires its original only after the new duel and picture are published
+  ---
+  duration_ms: 833.115042
+  ...
+# Next picture preparation failed. Error: Injected complete image decode refusal.
+#     at Image.decode (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:78:15)
+#     at async image.onload (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/couch-static-pictures.mjs:166:11)
+# Next picture preparation failed. Error: Injected complete image decode refusal.
+#     at Image.decode (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:78:15)
+#     at async image.onload (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/couch-static-pictures.mjs:166:11)
+# Subtest: completed match wins reset only when an explicitly retried Next commits
+ok 85 - completed match wins reset only when an explicitly retried Next commits
+  ---
+  duration_ms: 3483.196791
+  ...
+# Next picture preparation failed. Error: Injected complete image decode refusal.
+#     at Image.decode (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/test/couch-static-picture-host.test.mjs:78:15)
+#     at async image.onload (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/game/couch/couch-static-pictures.mjs:166:11)
+# Subtest: default One race win settles once, retains Review and ignores a hidden format draft
+ok 86 - default One race win settles once, retains Review and ignores a hidden format draft
+  ---
+  duration_ms: 2897.60225
+  ...
+# Subtest: default One race draw settles once, retains Review and ignores a hidden format draft
+ok 87 - default One race draw settles once, retains Review and ignores a hidden format draft
+  ---
+  duration_ms: 1096.244375
+  ...
+# Subtest: a direct Rematch click from BODY focus owns preparation without an extra Start
+ok 88 - a direct Rematch click from BODY focus owns preparation without an extra Start
+  ---
+  duration_ms: 1333.734458
+  ...
+# Subtest: a direct Rematch click from race-help focus owns preparation without an extra Start
+ok 89 - a direct Rematch click from race-help focus owns preparation without an extra Start
+  ---
+  duration_ms: 1368.355959
+  ...
+# Subtest: controller format draft can cancel or commit while preserving selector focus and never starting a round
+ok 90 - controller format draft can cancel or commit while preserving selector focus and never starting a round
+  ---
+  duration_ms: 318.727584
+  ...
+# Subtest: pending Next respects a newer deliberate action focus when its picture completes
+ok 91 - pending Next respects a newer deliberate action focus when its picture completes
+  ---
+  duration_ms: 778.73775
+  ...
+# Subtest: Next restoration cannot revive its intent after a queued newer focus choice returns to BODY
+ok 92 - Next restoration cannot revive its intent after a queued newer focus choice returns to BODY
+  ---
+  duration_ms: 774.759458
+  ...
+# Subtest: confirmed new setup owns a fresh race after a cancelled Next decoder settles late
+ok 93 - confirmed new setup owns a fresh race after a cancelled Next decoder settles late
+  ---
+  duration_ms: 916.178667
+  ...
+# Subtest: muted music and completed Results survive Next cancel, Help reading and a fresh retry
+ok 94 - muted music and completed Results survive Next cancel, Help reading and a fresh retry
+  ---
+  duration_ms: 11990.33
+  ...
+# Subtest: muted music and completed Results survive Next decode refusal, Help reading and a fresh retry
+ok 95 - muted music and completed Results survive Next decode refusal, Help reading and a fresh retry
+  ---
+  duration_ms: 12018.488625
+  ...
+1..95
+# tests 98
+# suites 0
+# pass 96
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 48239.095416

@@ -1461,7 +1461,7 @@ try {
           soundtrackPlayer.setLibrary(soundtrackLibrary);
           // This does not play audio. It only makes a selected local MP3 ready
           // before the player taps Start or Play, which iOS requires.
-          void soundtrackPlayer.prepare();
+          void soundtrackPlayer.prepare({ allowNetwork: false });
         } else if (!soundtrackDisposed) {
           const state = soundtrackPlayer.snapshot();
           soundtrackStatus(
