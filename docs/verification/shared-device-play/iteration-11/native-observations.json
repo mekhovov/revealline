@@ -62,5 +62,74 @@
     "No physicaliPhone/SteamDeck,frozenartifact,public,completecampaign orhumanacceptance"
   ],
   "cleanup": "Ownedpreviewtabclosed;viewportreset;previewserverstopped",
-  "consoleErrors": []
+  "consoleErrors": [],
+  "touchClearance": {
+    "source": "a5f5943d9dff69db2c36dce1f0f7ebdd607514cd, same device stylesheet",
+    "workflow": "New owned preview; existing imported probe; Deploy; Down51.4%capture; Upcollision2lives; Pause/rotate/explicitResume. Large/Plain, Always steering, Large D-pad preference.",
+    "samples": [
+      {
+        "viewport": [568, 320],
+        "canvas": [112, 56, 344, 172],
+        "notice": [12, 269.203125, 544, 46.796875],
+        "controls": [
+          ["Scan", 24, 168, 78, 52],
+          ["Boost", 106, 168, 78, 52],
+          ["Up", 456, 88, 44, 44],
+          ["Left", 412, 132, 44, 44],
+          ["Right", 500, 132, 44, 44],
+          ["Down", 456, 176, 44, 44]
+        ],
+        "noticeIntersectsArena": false,
+        "noticeIntersectsControls": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        },
+        "existingControlIntersectsArena": {
+          "Scan": false,
+          "Boost": true,
+          "Up": false,
+          "Left": true,
+          "Right": false,
+          "Down": false
+        }
+      },
+      {
+        "viewport": [844, 390],
+        "canvas": [180, 56, 484, 242],
+        "notice": [12, 362.6015625, 820, 23.3984375],
+        "controls": [
+          ["Scan", 24, 182, 160, 52],
+          ["Boost", 24, 238, 160, 52],
+          ["Up", 692, 98, 64, 64],
+          ["Left", 628, 162, 64, 64],
+          ["Right", 756, 162, 64, 64],
+          ["Down", 692, 226, 64, 64]
+        ],
+        "noticeIntersectsArena": false,
+        "noticeIntersectsControls": {
+          "Scan": false,
+          "Boost": false,
+          "Up": false,
+          "Left": false,
+          "Right": false,
+          "Down": false
+        },
+        "existingControlIntersectsArena": {
+          "Scan": true,
+          "Boost": true,
+          "Up": false,
+          "Left": true,
+          "Right": false,
+          "Down": false
+        }
+      }
+    ],
+    "scope": "The notice intersects neither arena nor controls. Existing translucent Solo controls overlap portions of the arena; this correction does not claim zero control/arena overlap.",
+    "consoleErrors": [],
+    "cleanup": "Owned tab closed, viewport reset, server stopped."
+  }
 }
