@@ -140,6 +140,13 @@ agree on gameplay configuration; Team needs explicit simultaneous-event rules.
 
 ## Whole-library balancing and acceptance
 
+The [498-case route assessment](../../verification/journey-pressure-route-assessment.md)
+prioritizes the next balance work: first the persistent Twin Receivers/Relay
+Perimeter short-clear geometry, then Livewire approach/attack-window failures,
+Crosswind/Apex return paths and flagged post-objective tails.312 passing cases
+are technical feasibility, not balance signoff;186 need new routes or explicit
+redesign. No global easing or warning shortening to make old scripts pass.
+
 Audit every map, not only its preset number. Measure first-safe-return travel time,
 enemy travel during that exposure, unavoidable spawn pressure, available alternate
 routes, mechanic combinations, objective/coverage cleanup and optimized clear time.

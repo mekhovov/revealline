@@ -43,6 +43,13 @@ multiple seeds/delays, objective/coverage cleanup, native readability and human
 balance are qualified. Do not replace historical fixtures with the failed paths
 or call this whole-library balancing complete.
 
+The subsequent [all-preset route assessment](journey-pressure-route-assessment.md)
+now covers498 cases across83 missions, three presets and both steering modes.
+Bounded reuse/retiming of historical legal routes finds312 no-loss clears with
+fresh replays and equal paired-board races;303 collect no pickups.186 cases still
+need new routes or redesign. This does not contradict the12/83 result above,
+which reused only each mission's unmodified Standard/immediate input sequence.
+
 ## Verification
 
 Initial compiler/catalogue/Studio/replay regression cohort:44/44 Node20; expanded
