@@ -37,6 +37,10 @@ separate gates. Older phase notes are provenance, not current release claims.
   Shared encounter timings/rules remain unchanged; optimized21–38second Twin
   routes remain a human pacing concern. Exact-source Studio and Expert first
   returns checked on both boards. [Successor evidence](journey-sentinel-spatial.md).
+- A fresh-route Livewire follow-up now clears all42 configurations on the
+  unchanged stronger-pressure editions, with42 replays/equal races and no pickups.
+  Combined audit coverage is347/498,151 unresolved,34/83 complete six-case sets.
+  Short17–35second routes still need pacing review. [Livewire evidence](journey-livewire-pressure.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
@@ -61,12 +65,12 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; route checks | Presentation/pressure successor, human balance, public integration |
 | P06 — Fractured Grid | Seven candidates/art; erosion/anchors/repair; Remix; route checks | Human repair readability/pacing, pressure retest, public integration |
 | P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; route checks | Whole-set native hit explanations, human difficulty, public integration |
-| P08 — Livewire | Seven candidates/art; telegraphed lanes; Remix; route checks | Difficulty-sensitive rest cadence, human warning overlap/ordering, public integration |
+| P08 — Livewire | Seven candidates/art; telegraphed lanes; Remix; all42 stronger-pressure clear/replay/race cases;32 optional goals | Short-clear spatial review;10 optional-goal cases; human warning overlap/ordering, public integration |
 | P09 — Relay | Seven candidates/art; permanent connectors; Studio links; Remix; route checks | Pressure/replay checks, human shortcut usefulness, public integration |
 | P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; route checks | Human precision/readability, pressure retest, public integration |
 | P11 — Sentinel | Four core + Remix/art; multi-relay encounter; replay/restoration; two explicit receiver-layout successors with12 clear/replay/race cases and native first returns | Optimized21–38second Twin clears remain pacing risks; successor full native/art/host adoption, human boss balance, public integration |
 | P12 — Apex | Four core + Remix/art; capstone combinations; replay/race checks | Short optimized finales need rework; human mastery, public integration |
-| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22;498-case pressure audit | Resolve186 pressure-route cases and flagged cleanup tails; human cuts, final reference dispositions, integrated Pages |
+| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22;498-case pressure audit plus Livewire refinement | Resolve151 remaining pressure-route cases and flagged cleanup tails; human cuts, final reference dispositions, integrated Pages |
 | P14 —12 Team missions | Three four-mission arcs; original art; joint cuts/seat swaps; Team flow/Skip/chooser/presets | Live two-player balance/controllers; material successor host adoption; new mechanic qualification; Pages |
 | P15 — final validation/Legacy/rollback | Immutable evidence records; compiler/CLI/Studio inspection; persistence/compatibility groundwork | Human sessions; full device/accessibility/performance; Legacy transition; public rollback proof; deployment |
 
