@@ -6,7 +6,7 @@ These are personal local imports, not publicly downloadable licensed albums. The
 
 ## Compatibility: packs need the new soundtrack framework
 
-These four files use **RLSTB3 / soundtrack library v3** and require the framework introduced in **PR #209** or a later release containing it. The accepted **v0.77.0** source (`432110b51c570b838cdae390790b67dfa76f0785`), like the earlier v0.76.1 base, accepts **RLSTB1 only**. It cannot import these four packs, and renaming the files or changing their header will not convert them. The release number alone is not enough: in Music Studio, **Add album file to draft** and **Music selection → My mix** identify the new workflow described below. The older studio has **Complete soundtrack backup (.rlsound)** and only replacement-backup import.
+These four files use **RLSTB3 / soundtrack library v3** and work with **v0.78.0 and later**, which contain the framework introduced in PR #209. The older **v0.77.0** source (`432110b51c570b838cdae390790b67dfa76f0785`), like the earlier v0.76.1 base, accepts **RLSTB1 only**. It cannot import these four packs, and renaming the files or changing their header will not convert them. In Music Studio, **Add album file to draft** and **Music selection → My mix** identify the workflow described below. The older studio has **Complete soundtrack backup (.rlsound)** and only replacement-backup import.
 
 ### Play the source MP3s in v0.77.0 or v0.76.1
 
@@ -50,7 +50,7 @@ Every volume is below the **64 MiB** optional-album target, including its manife
 
 ## Import without replacing your existing music
 
-The remaining pack and genre instructions require the **new framework from PR #209**, as described above. Use it on the browser profile or native host where you want the music saved. Browser profiles, private windows, origins, and native apps may have separate local libraries.
+The remaining pack and genre instructions require **v0.78.0 or later**, as described above. Use it on the browser profile or native host where you want the music saved. Browser profiles, private windows, origins, and native apps may have separate local libraries.
 
 1. Open **Settings → Music library & playlists** in Solo, or the **Music library** from the Couch audio controls.
 2. If you already have music, use **Prepare saved-library backup (.rlsound)**, then **Download prepared backup**. Save any current draft first if you want it included. Keep the source MP3 folder separately too.
@@ -67,7 +67,7 @@ After all four volumes are saved, choose **Ukrainian** in **Music selection**, t
 
 For a mix with other installed or available music, select **My mix**, enable the desired genre checkboxes, and click **Save & use music selection**. **Installed only** limits selection to audio available locally. Leave **Recording mode** off for these unverified personal files: their gameplay-video permission and Content ID status are unknown, so that filter excludes them.
 
-The three exact-byte duplicates retain both filename identities so all 80 names remain selectable. The four supplied volume playlists queue each recording only once. A genre-wide mix can include both alias rows, so three recordings can appear under two names. For a continuous **77-recording-only** genre mix, optionally remove the three unqueued alias rows marked `queued: false` in the JSON index, then Save. They are not referenced by the supplied playlists. Retain the index and all original files so no original filename provenance is lost; keeping all 80 rows is equally supported.
+The three exact-byte duplicates retain both filename identities so all 80 names remain selectable. The four supplied volume playlists queue each recording only once. In **v0.80.0**, genre-wide selections and My mix also deduplicate identical recordings by hash, so you can keep all 80 filename rows without replaying their three aliases as additional songs. Custom playlists preserve their explicit entries, including deliberate repeats. In v0.78.0 and v0.79.x, use the four supplied playlists or build one from the index's 77 `queued: true` entries to avoid alias repeats. Retain the index and all original files so no filename provenance is lost.
 
 To make your own playlist, select a track in **Tracks**, click **New playlist with selected track**, set **Playlist title**, **Playback order**, and **Repeat**, then click **Apply playlist details to draft**. Use **Track to add → Add selected track** for further entries, adjust entry order if desired, and **Save all changes**. Choose it in the playback selector and use **Save & use playlist**. A playlist supports up to 128 entries. The JSON index's canonical entries (`queued: true`) identify the 77 distinct recordings if you build one combined playlist manually.
 
