@@ -51,6 +51,7 @@ import { campaignKey } from '../library.mjs';
 import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { foundationReturnCaption } from '../ui/foundation-feedback.mjs';
 const $ = (id) => document.getElementById(id);
 const unclaimedFocus = (element) =>
   !element || element === document.body || element === document.documentElement;
@@ -399,6 +400,7 @@ try {
   for (const t of themes.themes) $('race-theme').append(new Option(t.name, t.id));
   for (const c of registry) $('race-class').append(new Option(c.label, c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
+  const foundationCaptions = new WeakMap();
   for (const painter of painters) presentationPage.bindPainter(painter);
   const sound = (pageSound = new Soundscape({ persistentMusic: true, audioMaster }));
   sound.configure({ master: 1 });
@@ -1695,6 +1697,8 @@ try {
             $(`racer-stats-${i}`).textContent,
             $(`racer-state-${i}`).textContent,
             $(`racer-input-${i}`).textContent,
+            $(`racer-capture-${i}`).hidden,
+            $(`racer-capture-${i}`).textContent,
             $(`racer-encounter-${i}`).hidden,
             $(`racer-encounter-title-${i}`).textContent,
             $(`racer-encounter-instruction-${i}`).textContent,
@@ -2067,6 +2071,11 @@ try {
             if (match.runs[i].tick !== before[i]) {
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
               for (const event of match.runs[i].events) sound.event(event);
+              const run = match.runs[i],
+                caption = foundationReturnCaption(run);
+              if (caption) foundationCaptions.set(run, caption);
+              else if (run.player.speed > 0 || run.status !== 'running')
+                foundationCaptions.delete(run);
             }
         }
       }
@@ -2127,6 +2136,10 @@ try {
         : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i];
+      const returnCaption = foundationCaptions.get(run) || '',
+        returnRegion = $(`racer-capture-${i}`);
+      if (returnRegion.textContent !== returnCaption) returnRegion.textContent = returnCaption;
+      returnRegion.hidden = !returnCaption || match.status === 'finished';
       $(`racer-stats-${i}`).textContent =
         `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points`;
       $(`racer-state-${i}`).textContent = match.status === 'running' ? run.status : match.status;

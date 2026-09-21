@@ -1,4 +1,20 @@
 import { coopGroundName } from './coop-ground.mjs';
+import { isJourneyTeamLevel } from '../coop/foundations.mjs';
+import { foundationCaptionForCell } from '../ui/foundation-feedback.mjs';
+
+/** Team stores its accepted return cell directly; joint/assisted banking is not
+ * a physical foundation return. Keep the same explanation as Solo and Versus. */
+export function coopFoundationReturnCaption(run, events = run.events) {
+  if (!isJourneyTeamLevel(run.level) || run.status !== 'running') return '';
+  for (const event of events) {
+    if (event.type !== 'cut.closed' || event.reason !== 'return') continue;
+    const player = run.players[event.player];
+    if (!player || player.status !== 'active') continue;
+    const caption = foundationCaptionForCell(run.level.safeRects, player.cellIndex, run.width);
+    if (caption) return caption;
+  }
+  return '';
+}
 
 /** Describe observed failures without assigning blame or changing game state. */
 export function coopFailureFeedback(run, event) {

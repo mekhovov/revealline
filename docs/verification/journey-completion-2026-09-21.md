@@ -63,8 +63,11 @@ now distinguishes accepted edge contacts from raw point containment without
 altering gameplay or old evidence. All 30 historical checkpoints remain exact;
 four visited-foundation sets change, while the recorded Nearby shore/Second
 landing/Remix bypass findings persist. Nearby shore also has a no-wait island-first
-route, so its next task is clearer non-modal return teaching, not a compulsory
-island gate. Later-level pressure/geometry and human balance remain open.
+route. The [non-modal return teaching successor](journey-foundation-return-feedback.md)
+now explains accepted foundations consistently in Solo, each Versus board and
+Team, with 86 tests passing on each Node version and scoped native keyboard
+checks. No compulsory island gate was added. Coordinated release, compact/device
+qualification, later-level pressure/geometry and human balance remain open.
 
 ## Latest native performance unit
 

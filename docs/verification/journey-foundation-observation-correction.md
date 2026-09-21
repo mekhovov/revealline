@@ -59,7 +59,8 @@ and 140 points. The craft stopped and displayed “Line secured. 0.6% revealed.
 Tap a direction to fly again.” This is a first-return observation, not a native
 full clear; wall-clock time includes inspection and is not pacing evidence.
 
-The next implementation task is a short, non-modal foundation-return explanation
+The follow-up [foundation-return teaching unit](journey-foundation-return-feedback.md)
+now implements a short, non-modal foundation-return explanation
 using accepted ownership, with no forced briefing or new rule. The existing card
 advertises the island choice, but the capture feedback does not explain why a
 small reveal nevertheless established a useful permanent return. Keep this
