@@ -1,0 +1,49 @@
+{
+  "runtimeBase": "59533841c5596ed1cd610d9bebf83d627374861a",
+  "documentationOnlyCommitDuringChecks": "cc1fbafc",
+  "status": "held integration candidate; not released",
+  "patchSha256": "8333b1214d67e190ac4c26d7098a15a5046cb062df74b141d7e2f52c5094986c",
+  "sourcePins": {
+    "game/app.mjs": "f8befa8ad9e2369207cf476bfd0968090fbcc1bbc38062f1b84ef2f4bdc77b42",
+    "game/test/mission-selection-status-host.test.mjs": "9b5b75046c6551536d08edce3032ec6ab9a569fcceb526560fba8600920dbaa0"
+  },
+  "tests": {
+    "node20.19.5": {
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0
+    },
+    "node22.22.2": {
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0
+    },
+    "files": [
+      "game/test/mission-selection-status-host.test.mjs",
+      "game/test/solo-result-continuation-host.test.mjs",
+      "game/test/loss-difficulty-host.test.mjs",
+      "game/test/backup-content-feedback-host.test.mjs"
+    ],
+    "scope": "ordinary source, no custom loader; legal capture/Next/cancellation/failure/reentry, loss-difficulty compatibility and backup feedback"
+  },
+  "checks": ["ESLint changed runtime/test", "Prettier changed runtime/test", "git diff --check"],
+  "native": "native-observations.json",
+  "nativeSha256": "5f84dc0a1961b27cabe0c2304f9605d951a9d15695008d270850881632c72242",
+  "logs": [
+    {
+      "file": "node20.tap.gz",
+      "rawSha256": "29f504b74ae3efc2c95efe7dd4de3c66cf5edbe55dc6ddbdea81384f67d0d4b8",
+      "gzipSha256": "30914d59f2e7385992b832d44f711810017811850c4054135baa2bd1e582bd1b"
+    },
+    {
+      "file": "node22.tap.gz",
+      "rawSha256": "b70a2c4170b01d95df1322dbebad69926c055a966337eb9ccf87e47a3a6c4aa7",
+      "gzipSha256": "31464d35a4ecee9f1abc7438b4207c05e4fef2ca8208a562d017f2c86b55b821"
+    },
+    {
+      "file": "native-served.log.gz",
+      "rawSha256": "10a290e6f0e5908106458265c6612871d1f88e0c5c965848128ca46ff37c27e6",
+      "gzipSha256": "6d46efd4648d5a45ad0fadf8d6d7a668a4287ef7c4502809322b0b18f93aeb2f"
+    }
+  ]
+}

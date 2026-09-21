@@ -213,6 +213,7 @@ try {
     .map((id) => $(id))
     .filter(Boolean)
     .map((target) => ({ target, presenter: createOperationStatus(target), lease: null }));
+  let contentSelectionIdentity = null;
   let attemptFiles = null,
     profileRecovery = null;
   const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource, archiveCatalogSource] =
@@ -3279,7 +3280,9 @@ try {
         ticket.adopting = true;
       }
       selectEntry(target.entry, target.options);
-      contentStatus(`${campaign.levels[levelIndex].name} selected. Deploy when ready.`);
+      contentStatus(`${campaign.levels[levelIndex].name} selected. Deploy when ready.`, false, {
+        selection: true,
+      });
       return true;
     }
     if (request.kind === 'lesson') {
@@ -3306,14 +3309,16 @@ try {
     }
     if (request.kind === 'campaign') {
       selectEntry(target.entry);
-      contentStatus(`${target.title} selected and ready.`);
+      contentStatus(`${target.title} selected and ready.`, false, { selection: true });
     } else if (request.kind === 'level') return selectLevel(request.id);
     else {
       leavePractice();
       levelIndex = campaign.levels.findIndex((level) => level.id === request.id);
       prepare();
       rememberSelection();
-      contentStatus(`${campaign.levels[levelIndex].name} selected. Deploy when ready.`);
+      contentStatus(`${campaign.levels[levelIndex].name} selected. Deploy when ready.`, false, {
+        selection: true,
+      });
       if (!ticket) focusMission();
     }
     return true;
@@ -3817,7 +3822,17 @@ try {
     $('campaign-select').value = activeEntry.baseCampaignKey || campaignKey(campaign);
     refreshContentSelectors();
   }
-  function contentStatus(message, error = false, { busy = false, stage = 'preparing' } = {}) {
+  function currentContentSelectionIdentity() {
+    const level = campaign.levels[levelIndex];
+    return JSON.stringify([campaignKey(campaign), level.id, level.revision]);
+  }
+  function contentStatus(
+    message,
+    error = false,
+    { busy = false, stage = 'preparing', selection = false } = {},
+  ) {
+    contentSelectionIdentity =
+      selection && !busy && !error ? currentContentSelectionIdentity() : null;
     for (const feedback of contentFeedback) {
       const options = { message, stage };
       if (busy && feedback.target.dataset.state === 'busy') feedback.lease.update(options);
@@ -4429,7 +4444,11 @@ try {
         beforeSelect?.();
         selectEntry(baseEntry, { levelId, contentSwitchTicket: operation });
         if (announce)
-          contentStatus(`Base game · ${campaign.levels[levelIndex].name} selected and ready.`);
+          contentStatus(
+            `Base game · ${campaign.levels[levelIndex].name} selected and ready.`,
+            false,
+            { selection: true },
+          );
         else contentStatus('');
         return operation;
       }
@@ -4463,6 +4482,8 @@ try {
       if (announce)
         contentStatus(
           `${result.installed ? `${result.pack.name} installed · ` : ''}${campaign.levels[levelIndex].name} selected and ready.`,
+          false,
+          { selection: true },
         );
       else contentStatus('');
       return operation;
@@ -4492,7 +4513,9 @@ try {
     levelIndex = index;
     prepare();
     rememberSelection();
-    contentStatus(`${campaign.levels[levelIndex].name} selected and ready.`);
+    contentStatus(`${campaign.levels[levelIndex].name} selected and ready.`, false, {
+      selection: true,
+    });
     return true;
   }
   function savedAttempt() {
@@ -6465,6 +6488,13 @@ try {
         classRecipes: scenario?.classRecipes || classRegistry,
       });
     runId = preparedAttempt?.runId || crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
+    // Only an accepted different mission retires its predecessor's ready notice.
+    // Pending/failed preparation and unrelated storage/import feedback keep their owner.
+    if (
+      contentSelectionIdentity !== null &&
+      contentSelectionIdentity !== currentContentSelectionIdentity()
+    )
+      contentStatus('');
     const informationOwner = flightInformation.adopt(run, runId);
     courseObserver = null;
     courseUnavailable = null;

@@ -1265,3 +1265,7 @@ Prepare fresh compiler output with `preparePresentationOutput` before both produ
 ### Legacy failure difficulty
 
 Keep the loss-only difficulty control aligned with the preparation preference through the existing validation/persistence authority. Selection changes next-attempt intent and cancels stale Retry preparation; it never calls direct `prepare()` or replaces the accepted result. Explicit Retry alone stages the new rules with retained picture/story pins. Qualify real self-contact losses, keyboard/select and controller reachability, cancellation/failure/later selection, denied saves and exact picture/saved-flight ownership. Exclude Practice, scenarios, training and actual automatic-reset Journey missions, while allowing unowned Legacy entries in a Journey-enabled shell. Preserve Journey's separate Gentle/Standard/Expert contract and automatic reset. Use the [focused guide and maintainer prompt](../../../docs/campaign-difficulty.md#legacy-failure-results-access); modeled host checks do not replace native or public release checks.
+
+## Mission selection feedback
+
+Tag successful selection feedback with campaign and mission revision identity. Retire it only after a different prepared mission is accepted; pending, cancelled or failed preparation and unrelated warnings keep their own feedback. Preserve same-mission Retry notices. Follow `docs/solo-result-continuation.md` and verify legal Next, Browse/Back, stale work and storage authority before acceptance.
