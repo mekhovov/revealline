@@ -4,6 +4,10 @@
 finale. Eight public-input no-loss clears replay and finish equal paired-board
 races. They establish feasibility, not human enjoyment or increasing difficulty.
 
+Follow-up: the [combined field-finale edition](journey-whole-field-review.md)
+now makes this exact candidate playable inside the full Solo/Versus test Journey.
+That explicit successor does not replace the default or resolve balance concerns.
+
 ## Why a different encounter
 
 The prior [contested-return study](journey-apex-home-spatial.md) still has

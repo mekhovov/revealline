@@ -7,10 +7,11 @@ export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
   'whole-originals-v3',
   'whole-originals-v4',
   'whole-spatial-v1',
+  'whole-spatial-v2',
 ]);
 export const isAuthoredJourneyRouteId = (id) => AUTHORED_JOURNEY_ROUTE_IDS.includes(id);
 export const authoredJourneyUsesActorMaterials = (id) =>
-  ['whole-originals-v4', 'whole-spatial-v1'].includes(id);
+  ['whole-originals-v4', 'whole-spatial-v1', 'whole-spatial-v2'].includes(id);
 
 /** Fixed same-game destinations. Team has different authored missions and is
  * intentionally not inferred from a Solo/Versus route. This is navigation only:
