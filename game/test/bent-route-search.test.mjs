@@ -45,3 +45,25 @@ test('bent proposals stay within field, avoid walls/lethal terrain and end on re
   assert.deepEqual(authoritativeCheckpoint(run), before, 'frozen estimates never mutate gameplay');
   assert.deepEqual(bentFieldChoices(run, 0, [0], 'up'), []);
 });
+
+test('frozen bent ranking recognizes uncaptured objectives without claiming a legal capture', () => {
+  const run = createRun(manifest.level),
+    start = 30 * run.width + 37;
+  const choice = bentFieldChoices(run, start, [start], 'right')[0];
+  const initial = sampleBentChoices(run, [choice])[0].estimate;
+  const cell = choice.trail[0];
+  // Synthetic objective isolates the offline ranking term, not gameplay evidence.
+  run.objectives = [
+    {
+      id: 'ranking-test',
+      x: (cell % run.width) + 0.5,
+      y: Math.floor(cell / run.width) + 0.5,
+      captured: false,
+    },
+  ];
+  const ranked = sampleBentChoices(run, [choice])[0].estimate;
+  assert(Math.abs(ranked - initial - 800 / (choice.path.length + choice.length + 15)) < 1e-9);
+  assert.equal(run.objectives[0].captured, false);
+  run.objectives[0].captured = true;
+  assert.equal(sampleBentChoices(run, [choice])[0].estimate, initial);
+});

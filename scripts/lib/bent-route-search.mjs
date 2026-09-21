@@ -63,7 +63,10 @@ export function sampleBentChoices(run, choices) {
     const snapshot = inspectCaptureSnapshot(run, { trailCells: choice.trail });
     const hazard = snapshot.filledCells.filter((i) => run.classic.terrain[i] === 2).length;
     choice.estimate =
-      (snapshot.filledCells.length + choice.trail.length + hazard * 2000) /
+      (snapshot.filledCells.length +
+        choice.trail.length +
+        hazard * 2000 +
+        snapshot.affectedObjectiveIds.length * 800) /
       (choice.path.length + choice.length + 15);
   }
   return sampled.sort((a, b) => b.estimate - a.estimate).slice(0, 60);

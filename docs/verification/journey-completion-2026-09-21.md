@@ -5,8 +5,8 @@ numbered Crossmode programme. **No claim of whole-plan completion.** Source,
 automated fixtures, native observations, human acceptance and deployment are
 separate gates. Older phase notes are provenance, not current release claims.
 
-Current pressure checkpoint: **446/498 preset/control cases verified;52 remain**.
-All six configurations are covered for65/83 Solo candidates. The phase table below
+Current pressure checkpoint: **498/498 ordinary preset/control cases verified**.
+All six configurations are covered for83/83 Solo candidates. The phase table below
 lists implemented work and remaining acceptance separately. Stronger-pressure
 balance, optional combat, final cultural/workshop art, Team/device/human validation
 and reviewed public promotion are not complete.
@@ -74,6 +74,14 @@ and reviewed public promotion are not complete.
   **446/498,52 unresolved,65/83 complete six-case sets**. All six failed old first
   departures have short no-wait alternatives; fast clears and unused landings
   remain design-review flags. [Opening evidence](journey-opening-pressure.md).
+- Signal/Neon/Rover/Phaseworks/original Sentinel now cover all198 configurations:
+  52 new paths plus146 historical successes. Combined ordinary seed1 coverage is
+  **498/498,83/83 complete six-case sets**, with no remaining ordinary route gap.
+  Of the52 new paths,32 meet existing optional goals and20 do not. Reserve's
+  10.55–12.35second clears bypass impact teaching; all six failed old Phase
+  openings have short no-wait alternatives, not unavoidable damage. [Evidence and
+  design priorities](journey-middle-pressure.md). This closes a feasibility gap,
+  not the stronger-pressure balance, multi-seed, Team or delivery gates.
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
@@ -93,17 +101,17 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | P00 — plan/audit/flow/progress/teaching | Canonical plan;110 old Solo /64 files /48 numbered references audited; direct flow, stable receipts and teaching fixtures; scoped integration accepted | Exact public whole-flow audit; human capture understanding; latest release reconciliation |
 | P01 — foundations/Prologue/Horizon/Studio minimum | Foundation topology/runtime; ten opening candidates including Remix; original art; shared compiler/Studio; all60 stronger-pressure clear/replay/race cases and startup observations | Fast courtyard/outpost clears, island-bypass/Remix review; whole-set native/device/human balance; successor integration/Pages |
 | P02 — Border/bonuses/frontier/Studio CRUD/image | Seven candidates/art; contact bonuses; outer/frontier teaching; CRUD/manual image workflow; timed-schedule engine/editor and three-mission study; all42 stronger-pressure clear/replay/race cases | Short/unused-landing routes and Expert departure teaching; timed native/mode/release qualification; broader Studio usability/conflict tests; human/promotion gates |
-| P03 — Signal/terrain/catalogues/presentation/trace | Seven candidates/art; terrain contracts; actor catalogues; bounded trace benchmark; reactive captions | Whole-set native/human; final audio; public integration |
-| P04 — Neon | Seven candidates/art; frontier-shaping routes; Remix; replay/race/mastery/seed checks | Stronger-pressure retest, human pacing, public integration |
-| P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; route checks | Presentation/pressure successor, human balance, public integration |
+| P03 — Signal/terrain/catalogues/presentation/trace | Seven candidates/art; terrain contracts; actor catalogues; bounded trace benchmark; reactive captions; all42 pressure clear/replay/race cases | Short routes/neutralization/link mastery; whole-set native/human; final audio; public integration |
+| P04 — Neon | Seven candidates/art; frontier-shaping routes; Remix; replay/race/mastery/seed checks; all42 pressure clear/replay/race cases | Short paths and mouth/frontier goal review, human pacing, public integration |
+| P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; all42 pressure clear/replay/race cases | Sorting Yard/Split Berths short routes and late activation; presentation, human balance, public integration |
 | P06 — Fractured Grid | Seven candidates/art; erosion/anchors/repair; Remix; all42 pressure clear/replay/race cases; opening observations; Two Districts spatial study,18 ordinary samples and6 separate mastery routes |35–40second optimized ordinary pacing; discoverability of bent hazard enclosures; repair/roamer teaching, human pacing, public integration |
-| P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; route checks | Whole-set native hit explanations, human difficulty, public integration |
+| P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; all42 pressure clear/replay/race cases; six safe alternative first returns | Reserve's fast impact-free clear/teaching successor; whole-set native hit explanations, human difficulty, public integration |
 | P08 — Livewire | Seven candidates/art; telegraphed lanes; Remix; all42 stronger-pressure clear/replay/race cases;32 optional goals | Short-clear spatial review;10 optional-goal cases; human warning overlap/ordering, public integration |
 | P09 — Relay | Seven candidates/art; permanent connectors; Studio links; Remix; all42 pressure clear/replay/race cases; opening observations | Connector bypass/long post-objective intervals, human shortcut usefulness, public integration |
 | P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; all42 pressure clear/replay/race cases | Short-clear/connector/optional-goal review; human precision/readability, public integration |
-| P11 — Sentinel | Four core + Remix/art; multi-relay encounter; replay/restoration; two explicit receiver-layout successors with12 clear/replay/race cases and native first returns | Optimized21–38second Twin clears remain pacing risks; successor full native/art/host adoption, human boss balance, public integration |
+| P11 — Sentinel | Four core + Remix/art; multi-relay encounter; all30 original pressure clear/replay/race cases; two explicit receiver-layout successors with12 clear/replay/race cases and native first returns | Optimized21–38second Twin clears remain pacing risks; Crown separate-shield mastery; successor full native/art/host adoption, human boss balance, public integration |
 | P12 — Apex | Four core + Remix/art; capstone combinations; all30 pressure clear/replay/race cases | Short optimized finales need rework; optional-goal routes, human mastery, public integration |
-| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22;498-case pressure audit plus seven-chapter refinement | Resolve52 remaining pressure-route cases and flagged spatial/cleanup issues; human cuts, final reference dispositions, integrated Pages |
+| P13 — whole Journey/12 Remixes/cuts/navigation |83-candidate library; all boundaries; flat chooser; save isolation; V3 and V4 full-host Solo/Versus routes passed on Node20/22; all498 ordinary pressure clear/replay/race cases | Flagged spatial/teaching/cleanup issues; optional mastery, multi-seed and human balance; final cuts/reference dispositions; integrated Pages |
 | P14 —12 Team missions | Three four-mission arcs; original art; joint cuts/seat swaps; Team flow/Skip/chooser/presets | Live two-player balance/controllers; material successor host adoption; new mechanic qualification; Pages |
 | P15 — final validation/Legacy/rollback | Immutable evidence records; compiler/CLI/Studio inspection; persistence/compatibility groundwork | Human sessions; full device/accessibility/performance; Legacy transition; public rollback proof; deployment |
 
