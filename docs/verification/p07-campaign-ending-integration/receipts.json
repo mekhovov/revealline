@@ -1,0 +1,71 @@
+{
+  "base": "fac78c03cbfeb9b195541be0ba61034593f6f24c",
+  "status": "held integration candidate; not released",
+  "sourcePins": {
+    "game/app.mjs": "642e62c82d922cafe9d731c1c683ed341714247b2cf8694671410073fc577cc7",
+    "game/ui/game-shell.mjs": "4991238269225d3d243fcd98c083cc361568f18c21dc8a273b9ac04427ac3c22",
+    "game/test/solo-result-continuation-host.test.mjs": "1966fc5f68161051900c675158beaaabda5c6ace857efbdef965d29724f980f0",
+    "game/test/terminal-navigation.test.mjs": "84cdae1207ba91b5ec6908a10e60f35d35c0c3377394235894a87b5bc70f6317"
+  },
+  "testEvidence": {
+    "uniqueTestsPerNode": 142,
+    "nodes": ["20.19.5", "22.22.2"],
+    "initialCohort": {
+      "tests": 142,
+      "passed": 133,
+      "failed": 9,
+      "cause": "Sparse checkout omitted exact tracked first-return.png."
+    },
+    "firstAffectedFileRerun": {
+      "tests": 12,
+      "passed": 11,
+      "failed": 1,
+      "cause": "Sparse checkout also omitted exact tracked choose-your-share.png."
+    },
+    "finalAffectedFileRerun": {
+      "tests": 12,
+      "passed": 12,
+      "failed": 0
+    },
+    "interpretation": "All142 unique cases passed across retained unchanged-source runs after exact dependency hydration. This is not one clean142-test run. No test assertions or runtime were weakened."
+  },
+  "logs": [
+    {
+      "file": "node20.tap.gz",
+      "rawSha256": "ae1f0bb12508864a9d18f7f5a12105c1d751359994725b3ab3595aad07e99f46",
+      "gzipSha256": "14f442ba6d8cc49fe6d48d31a36f05622332f468c6f29ac7b8a5f2b208104867"
+    },
+    {
+      "file": "node22.tap.gz",
+      "rawSha256": "5e27c22dd55632b19b6dfceff450e40ec4bdd367c2eecf9359bdd53f7b7154fc",
+      "gzipSha256": "67a703428b449df922b0e3a1819b01148c501f1b67b803e91ca8523edcae42e3"
+    },
+    {
+      "file": "journey-return-node20.tap.gz",
+      "rawSha256": "1d98010c3d915b608a3bcc234df1eb400fc66c74349b11a73de7e277fc4329fe",
+      "gzipSha256": "1352dcb159da1800b698b4b2d5462965b3863b53201ee592dc52e59fa6f72d53"
+    },
+    {
+      "file": "journey-return-node22.tap.gz",
+      "rawSha256": "185de0e33976b73820726ddf3c2e521dd1afb6f668478f58f9228aa80cbc3148",
+      "gzipSha256": "9cdab8515110ab4d6428e22d0077e5c526d69764318e4d57a8a4591622e2773a"
+    },
+    {
+      "file": "journey-return-complete-node20.tap.gz",
+      "rawSha256": "42d5a71b28b8af02faf71b013cdc2056a2aa496c56e8a4e5a2dca43f3c874c26",
+      "gzipSha256": "97394538cae901d4d0422d29c72f1e42474713d7c7d4212af42d18e0a8858cd4"
+    },
+    {
+      "file": "journey-return-complete-node22.tap.gz",
+      "rawSha256": "b59b53194bbd7b1815533ccaba90e9b58a8360bf20a7457fd5b0c63baf031a74",
+      "gzipSha256": "839651677fe6bc660f9ff26b4b0a2702d56840b0139aa714f50673c0d619607e"
+    },
+    {
+      "file": "native-served.log.gz",
+      "rawSha256": "7487ef019ede0abdc8bdc34a680797790336182a9f24f6e4d8c4db30664c27da",
+      "gzipSha256": "34424abf2cc7bf6d3dd776d50cd1ad09b6d35feb81112f7ea2f981438282bbb4"
+    }
+  ],
+  "nativeEvidence": "native-observations.json",
+  "nativeSha256": "7bc9d8c407e4848239d896b50eed085ac1c0216717ac51802d979db00f194907"
+}
