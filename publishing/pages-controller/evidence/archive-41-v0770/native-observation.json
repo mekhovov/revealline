@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "scope": "Chromium route/load smoke through agent-browser; not whole-game, audible-listening, physical-device, controller, touch, or screen-reader acceptance.",
+  "recordedAt": "2026-09-21T08:35:56Z",
+  "browser": {
+    "tool": "agent-browser",
+    "version": "0.27.0",
+    "session": "archive41-public"
+  },
+  "source": "382e44348d2740fab95a30e9ff53e60e7a26e5f2",
+  "sourceTree": "6ab302e3ed31cf2410352dbb688a6afebef77b50",
+  "deploymentId": 6564578625,
+  "routes": [
+    {
+      "name": "archive-root",
+      "url": "https://mekhovov.github.io/revealline-archive-41/",
+      "title": "RevealLine archive 41",
+      "readyState": "complete",
+      "markers": [
+        "RevealLine archive 41",
+        "Play v0.77.0",
+        "Open the current release explorer"
+      ],
+      "interactiveLinkCount": 2,
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "game-entry",
+      "url": "https://mekhovov.github.io/revealline-archive-41/releases/v0.77.0/site/game/",
+      "title": "Reveal / Line",
+      "readyState": "complete",
+      "markers": [
+        "VERSION V0.77.0",
+        "Start"
+      ],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": {
+        "path": "browser-game.png",
+        "sha256": "f94637410d36edbc80f72db5b437e41f29ee3a76cc731ccc2025294048a15be4"
+      }
+    }
+  ],
+  "publicAudit": {
+    "status": "PASS",
+    "files": 875,
+    "bytes": 422508632,
+    "failedFiles": 0,
+    "reportSha256": "460e8ba0103f02684c53379a64bd3afdeface47a95367b75d81c5ff555ea6e5f"
+  }
+}

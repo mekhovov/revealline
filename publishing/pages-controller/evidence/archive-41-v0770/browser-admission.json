@@ -1,0 +1,29 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-41",
+  "infrastructureCommit": "382e44348d2740fab95a30e9ff53e60e7a26e5f2",
+  "deploymentId": 6564578625,
+  "versions": [
+    "v0.77.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-41-v0770/native-observation.json",
+      "sha256": "e0c573f86a3fbf7a2334fd83754630e384968bd446ee7e46788c1a3e7728fb4b"
+    },
+    {
+      "path": "evidence/archive-41-v0770/terminal-run.json",
+      "sha256": "ccfc63adbfdc4120e48d7f4074d5c964b273ce4f8bb391c781022952a53eec42"
+    },
+    {
+      "path": "evidence/archive-41-v0770/deployments.json",
+      "sha256": "ef1e09260bc03f79319e99783aae335f2cafe2d5d24267dea72259c55f8f8f9f"
+    },
+    {
+      "path": "evidence/archive-41-v0770/deployment-statuses.json",
+      "sha256": "54d9faff949288c8d89e548b51c9bb32a9094702f75d68a0f8f95330d2566e32"
+    }
+  ],
+  "scope": "Exact original v0.77.0 bytes and scoped browser archive-root/game-route loading. The complete audit verified every one of the 875 hosted paths and all 422,508,632 bytes. Whole-game, audible-listening, physical controller/touch and screen-reader acceptance are not claimed. The main v0.77.0 deployment retains its separate prepared-offline reload and responsive gameplay acceptance."
+}
