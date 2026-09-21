@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
-import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+
+import { authoritativeCheckpoint } from '../replay.mjs';
+import { audioHarness } from './helpers/soundtrack-audio.mjs';
 
 // Real Solo entry, menu routing and document capture/bubble handlers. The
 // finite DOM models button activation only; this is not physical-device or
@@ -166,4 +169,155 @@ test('changing categories cancels real key capture without saving a binding or c
   assert.equal(page.doc.activeElement, binding);
   assert.deepEqual([...page.storage.map], before);
   heldAtTitle(page, run);
+});
+
+test('Pause quick sound preserves the live cut and intentionally paused music until deliberate Resume', async (t) => {
+  const storage = memoryStorage({
+    [AUDIO_PREFERENCES_KEY]: JSON.stringify({ muted: false, volume: 0.13 }),
+  });
+  const audio = audioHarness();
+  const page = await soloPage(t, { storage, audio });
+  const quick = page.$('overlay-sound');
+  assert.equal(quick.hidden, true, 'Ready has no Pause-only Sound action.');
+  assert.equal(quick.getAttribute('aria-label'), 'Sound');
+  await settle(() => !page.$('soundtrack-open').disabled);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  for (let n = 0; n < 27; n++) page.frame();
+  page.key('ArrowDown', false);
+  assert.equal(page.rendered.run.player.cutting, true);
+  page.$('pause-button').click();
+  page.frame(0);
+  const run = page.rendered.run,
+    before = authoritativeCheckpoint(run),
+    pausedTick = run.tick;
+  assert.equal(quick.hidden, false);
+  assert.equal(page.doc.activeElement, page.$('start-button'), 'Resume keeps initial Pause focus.');
+
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  page.$('soundtrack-open').click();
+  await settle(() => page.$('soundtrack-dialog')?.open && !page.$('soundtrack-pause').disabled);
+  await page.$('soundtrack-pause').onclick();
+  assert.match(page.$('soundtrack-summary').textContent, /paused/);
+  await settle(
+    () => !page.$('soundtrack-close').disabled,
+    'Music controls finish their loading operation.',
+  );
+  page.$('soundtrack-close').click();
+  await settle(() => !page.$('soundtrack-dialog').open);
+  page.doc.querySelector('[data-close="settings-dialog"]').click();
+  const transport = () => ({
+    summary: page.$('soundtrack-summary').textContent,
+    media: page.audioElements.map((media) => ({
+      src: media.src,
+      time: media.currentTime,
+      plays: media.plays,
+      paused: media.paused,
+    })),
+  });
+  const previousTransport = transport();
+  for (const muted of [true, false]) {
+    activate(page, 'overlay-sound');
+    assert.deepEqual(JSON.parse(storage.getItem(AUDIO_PREFERENCES_KEY)), { muted, volume: 0.13 });
+    assert.equal(quick.textContent, muted ? 'Sound: off' : 'Sound: on');
+    assert.equal(quick.getAttribute('aria-label'), 'Sound');
+    assert.equal(quick.getAttribute('aria-pressed'), String(!muted));
+    assert.equal(page.$('shell-sound').textContent, quick.textContent);
+    assert.equal(page.$('settings-master-mute').textContent, muted ? 'Unmute sound' : 'Mute sound');
+    for (let n = 0; n < 20; n++) page.frame();
+    assert.equal(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), before);
+    assert.equal(page.rendered.paused, true);
+    assert.equal(page.doc.activeElement, quick);
+    assert.deepEqual(transport(), previousTransport);
+  }
+  storage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify({ muted: true, volume: 0.42 }));
+  page.win.emit('storage', {
+    key: AUDIO_PREFERENCES_KEY,
+    storageArea: storage,
+    newValue: storage.getItem(AUDIO_PREFERENCES_KEY),
+  });
+  assert.equal(quick.textContent, 'Sound: off');
+  assert.equal(quick.getAttribute('aria-pressed'), 'false');
+  quick.textContent = 'Stale native restoration';
+  quick.setAttribute('aria-pressed', 'true');
+  page.win.emit('pageshow', { persisted: true });
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.equal(quick.textContent, 'Sound: off');
+  assert.equal(quick.getAttribute('aria-pressed'), 'false');
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+  assert.deepEqual(transport(), previousTransport);
+  activate(page, 'start-button');
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  for (let n = 0; n < 4; n++) page.frame();
+  assert.equal(page.rendered.run, run);
+  assert.ok(run.tick > pausedTick);
+  assert.equal(page.$('game-overlay').hidden, true);
+  assert.match(
+    page.$('soundtrack-summary').textContent,
+    /paused/,
+    'Flight Resume preserves Music Pause.',
+  );
+  assert.deepEqual(page.errors, []);
+});
+
+test('Pause quick sound keeps failed-save session intent through restoration without resuming', async (t) => {
+  const storage = memoryStorage({
+    [AUDIO_PREFERENCES_KEY]: JSON.stringify({ muted: false, volume: 0.13 }),
+  });
+  const page = await soloPage(t, { storage });
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.$('pause-button').click();
+  page.frame(0);
+  const before = authoritativeCheckpoint(page.rendered.run),
+    saved = storage.getItem(AUDIO_PREFERENCES_KEY);
+  const write = storage.setItem.bind(storage);
+  t.mock.method(storage, 'setItem', (key, value) => {
+    if (key === AUDIO_PREFERENCES_KEY) throw new Error('Test storage unavailable.');
+    return write(key, value);
+  });
+  activate(page, 'overlay-sound');
+  assert.equal(storage.getItem(AUDIO_PREFERENCES_KEY), saved);
+  assert.equal(page.$('overlay-sound').textContent, 'Sound: off');
+  assert.equal(page.$('shell-sound').textContent, 'Sound: off');
+  page.win.emit('pageshow', { persisted: true });
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  page.frame(200);
+  assert.equal(page.$('overlay-sound').getAttribute('aria-pressed'), 'false');
+  assert.equal(page.doc.activeElement, page.$('overlay-sound'));
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+  assert.deepEqual(page.errors, []);
+});
+
+test('embedded training Pause Sound remains session-only and cannot resume or award progress', async (t) => {
+  const page = await soloPage(t, {
+    search: '?course=first-flight&lesson=close-line',
+    parentWindow: {},
+  });
+  page.$('start-button').click();
+  page.key('ArrowDown');
+  page.key('ArrowDown', false);
+  for (let n = 0; n < 20; n++) page.frame();
+  assert.equal(page.rendered.run.player.cutting, true);
+  page.key('Escape');
+  page.key('Escape', false);
+  page.frame(0);
+  const before = authoritativeCheckpoint(page.rendered.run),
+    stored = [...page.storage.map],
+    writes = page.storage.writes.length;
+  assert.equal(page.$('overlay-sound').hidden, false);
+  const prior = page.$('overlay-sound').getAttribute('aria-pressed');
+  activate(page, 'overlay-sound');
+  assert.notEqual(page.$('overlay-sound').getAttribute('aria-pressed'), prior);
+  for (let n = 0; n < 20; n++) page.frame();
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+  assert.deepEqual([...page.storage.map], stored);
+  assert.equal(page.storage.writes.length, writes);
+  assert.equal(page.doc.activeElement, page.$('overlay-sound'));
+  assert.deepEqual(page.errors, []);
 });

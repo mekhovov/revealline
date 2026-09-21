@@ -5,6 +5,18 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For Pause-menu Sound, reuse the shared master subscription and mute adapter.
+Keep the accessible name `Sound` stable while `aria-pressed` and visible on/off
+text reflect the current preference. Do not change music transport, the selected
+song, the paused checkpoint or Resume behavior. Test D-pad navigation to Sound,
+fresh A, held A, focus retention and explicit navigation back to Resume, as well
+as keyboard activation, denied storage and session-only embedded training.
+Modeled controller samples establish input sequencing, browser checks establish
+rendered reachability, and physical devices need their own acceptance. Prompt:
+“Pause during a live cut, navigate to Sound without a pointer, toggle twice,
+return to Resume, and prove that the cut and music playback intent have not
+changed before explicit Resume.”
+
 For direct-contact loss feedback, follow `docs/retry-feedback.md`. Select wording
 from the actual failure cause and actor ID, never the craft's post-recovery cutting
 state. A claimed-ground rover collision must explain danger on reclaimed ground;
