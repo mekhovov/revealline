@@ -1420,3 +1420,23 @@ kbd {
     max-width: 360px;
   }
 }
+
+/* Optional event art stays in the existing status line, outside playable cells. */
+.board-footer .coop-event-art {
+  display: inline-block;
+  inline-size: 24px;
+  block-size: 24px;
+  aspect-ratio: 1;
+  margin-inline-end: 6px;
+  vertical-align: middle;
+  image-rendering: pixelated;
+}
+.board-footer .coop-event-art[hidden] {
+  display: none;
+}
+/* Keep the compact status line available when controls and board share little height. */
+@media (max-height: 480px) {
+  .board-footer .coop-event-art {
+    display: none;
+  }
+}

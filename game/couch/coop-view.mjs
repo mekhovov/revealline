@@ -1,3 +1,16 @@
+import { prepareCoopEvents } from './coop-event-presentation.mjs';
+import { prepareCoopThreats, drawCoopThreats } from './coop-threat-presentation.mjs';
+import {
+  prepareCoopEffects,
+  coopEffectMarkers,
+  drawCoopEffect,
+} from './coop-effect-presentation.mjs';
+import {
+  prepareCoopAnchors,
+  drawCoopAnchor,
+  coopAnchorBounds,
+} from './coop-anchor-presentation.mjs';
+import { coopCuePalette, coopCueOutline } from './coop-cue-palette.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
@@ -17,7 +30,11 @@ export function createCoopPainter(canvas) {
   const actors = createCoopActorPresentation();
   let presentation = null,
     look = null,
-    wall = null;
+    wall = null,
+    anchors = null,
+    effects = null,
+    threats = null,
+    eventFrames = new Map();
   function setPresentation(snapshot) {
     let next = null;
     if (snapshot != null) {
@@ -54,10 +71,18 @@ export function createCoopPainter(canvas) {
     // Keep the page lease's exact snapshot identity while capturing its display
     // values. The painter never changes or disposes shared presentation assets.
     const nextWall = prepareCoopWall(snapshot);
+    const nextAnchors = prepareCoopAnchors(snapshot);
+    const nextEffects = prepareCoopEffects(snapshot);
+    const nextThreats = prepareCoopThreats(snapshot);
+    const nextEvents = prepareCoopEvents(snapshot);
     actors.setPresentation(snapshot ?? null);
     presentation = snapshot ?? null;
     look = next;
     wall = nextWall;
+    anchors = nextAnchors;
+    effects = nextEffects;
+    threats = nextThreats;
+    eventFrames = nextEvents;
   }
   function paint(
     run,
@@ -88,7 +113,8 @@ export function createCoopPainter(canvas) {
     }
     const fonts = canvasTextFonts(textFace, look?.fonts ?? THEME_FONTS);
     const palette = look?.palette;
-    const colors = palette ? [palette.accent, palette.safe] : COLORS;
+    const cues = coopCuePalette(palette ?? null);
+    const colors = palette ? [cues.warning, cues.slowed] : COLORS;
     const motionScale = reduced ? 0 : (look?.motionScale ?? 1);
     reduced ||= motionScale === 0;
     actors.update(run, {
@@ -124,6 +150,24 @@ export function createCoopPainter(canvas) {
       if (rect) occupied.push(rect);
       return rect;
     };
+    // Two-tone functional paths stay identifiable over concealment and revealed art.
+    // Its centerline and target still describe the unchanged authoritative threat.
+    function boardCueStroke(draw = () => ctx.stroke()) {
+      const width = ctx.lineWidth,
+        color = ctx.strokeStyle,
+        alpha = ctx.globalAlpha;
+      if (palette) {
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = coopCueOutline(color);
+        ctx.lineWidth = Math.max(width, 1.5 / cssCell) + 2 / cssCell;
+        draw();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = Math.max(width, 1.5 / cssCell);
+      }
+      draw();
+      ctx.lineWidth = width;
+      ctx.globalAlpha = alpha;
+    }
     ctx.save();
     try {
       ctx.scale(unit, unit);
@@ -155,10 +199,10 @@ export function createCoopPainter(canvas) {
             ctx.fillStyle = palette?.land ?? ((row + col) % 2 ? '#315744' : '#385f4a');
             ctx.fillRect(x, y, 1.01, 1.01);
             if (x === 0 || y === 0 || x === run.width - 1 || y === run.height - 1) {
-              ctx.fillStyle = '#66816b';
+              ctx.fillStyle = palette?.safe ?? '#66816b';
               ctx.fillRect(x + 0.1, y + 0.1, 0.8, 0.8);
             } else if (x % 6 === 3 && y % 5 === 2) {
-              ctx.fillStyle = '#93b37d';
+              ctx.fillStyle = palette?.muted ?? '#93b37d';
               ctx.beginPath();
               ctx.arc(x + 0.5, y + 0.5, 0.35, 0, Math.PI * 2);
               ctx.fill();
@@ -191,9 +235,10 @@ export function createCoopPainter(canvas) {
         ctx.globalAlpha = 0.65;
         ctx.strokeStyle = colors[effect.player];
         ctx.lineWidth = 0.08;
-        ctx.stroke();
+        boardCueStroke();
         ctx.globalAlpha = 1;
       }
+      occupied.push(...drawCoopThreats(ctx, threats, run, cssCell, 'shield'));
       // Paint every cosmetic body before functional markers and labels. Larger
       // sprites must never cover another actor's warning or a stronghold anchor.
       const bodies = new Set();
@@ -205,11 +250,95 @@ export function createCoopPainter(canvas) {
       ])
         for (const actor of list)
           if (actors.draw(ctx, kind, actor.id, palette)) bodies.add(`${kind}:${actor.id}`);
+      occupied.push(...drawCoopThreats(ctx, threats, run, cssCell, 'foreground'));
+      // Paint cosmetic objective bodies before every functional label. Reserve
+      // their rectangles so readable label plates cannot hide uploaded artwork.
+      const anchorArt = new Map();
+      const anchorOptions = { cssCell, width: run.width, height: run.height };
+      const anchorLayouts = (run.strongholds || []).flatMap((core) =>
+        core.anchors.map((anchor) => ({
+          anchor,
+          art: coopAnchorBounds(anchors, anchor, anchorOptions),
+        })),
+      );
+      const intersects = (a, b) =>
+        Math.abs(a.x - b.x) < (a.size + b.size) / 2 && Math.abs(a.y - b.y) < (a.size + b.size) / 2;
+      for (const { anchor, art } of anchorLayouts) {
+        // Valid imported anchors may be closer than the minimum readable icon.
+        // Omit crowded decoration on both sides; keep every real target and cue.
+        if (
+          !art ||
+          (run.strongholds || []).some((core) => intersects(art, { ...core.core, size: 2.4 })) ||
+          anchorLayouts.some(
+            (other) =>
+              other.anchor !== anchor &&
+              ((other.art && intersects(art, other.art)) ||
+                intersects(art, { ...other.anchor, size: 1.4 })),
+          )
+        )
+          continue;
+        const drawn = drawCoopAnchor(ctx, anchors, anchor, anchorOptions);
+        if (!drawn) continue;
+        anchorArt.set(anchor, drawn);
+        const size = drawn.size * cssCell,
+          x = drawn.x * cssCell,
+          y = drawn.y * cssCell;
+        occupied.push({
+          left: x - size / 2,
+          right: x + size / 2,
+          top: y - size / 2,
+          bottom: y + size / 2,
+          width: size,
+          height: size,
+          x,
+          y,
+        });
+      }
+      // Feedback badges are optional decoration. Keep them near the actual source,
+      // outside actor contact points and objective art; functional cues draw above.
+      const protectedBodies = [...heads, ...occupied];
+      for (const actor of [
+        ...run.players,
+        ...run.enemies.filter((enemy) => enemy.active !== false),
+        ...(run.strongholds || []),
+      ]) {
+        const point = actor.core || actor;
+        const radius = Math.max(12, (actor.radius || 1) * cssCell + 3);
+        protectedBodies.push({
+          left: point.x * cssCell - radius,
+          right: point.x * cssCell + radius,
+          top: point.y * cssCell - radius,
+          bottom: point.y * cssCell + radius,
+        });
+      }
+      for (const marker of coopEffectMarkers(run)) {
+        const frame = effects?.get(marker.slot);
+        if (!frame) continue;
+        const rect = placeCoopCue({
+          x: marker.x * cssCell,
+          y: marker.y * cssCell,
+          width: 24,
+          height: 24,
+          arenaWidth: cueScale.width,
+          arenaHeight: run.height * cssCell,
+          heads: [...protectedBodies, ...occupied],
+        });
+        // Never move a feedback badge across the board or cover a required cue.
+        if (!rect || Math.hypot(rect.x - marker.x * cssCell, rect.y - marker.y * cssCell) > 56)
+          continue;
+        occupied.push(rect);
+        drawCoopEffect(ctx, frame, {
+          left: rect.left / cssCell,
+          top: rect.top / cssCell,
+          width: rect.width / cssCell,
+          height: rect.height / cssCell,
+        });
+      }
       const clearance = (kind, id, minimum) =>
         body(kind, id)
           ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + 9 / cssCell)
           : minimum;
-      function cue(text, x, y, size, font, backed = false, color = '#f1f7ed', minimum = 12) {
+      function cue(text, x, y, size, font, backed = false, color = cues.text, minimum = 12) {
         ctx.save();
         size = cueScale.font(size, minimum, 18);
         ctx.font = `600 ${size}px ${font}`;
@@ -220,8 +349,8 @@ export function createCoopPainter(canvas) {
           (Number.isFinite(measured) ? measured : size * text.length * 0.7) * cssCell + 6;
         const rect = place(x, y, width, size * cssCell * 1.4);
         if (rect) {
-          if (backed) {
-            ctx.fillStyle = '#07111c';
+          if (backed || palette) {
+            ctx.fillStyle = cues.back;
             ctx.fillRect(
               rect.left / cssCell,
               rect.top / cssCell,
@@ -253,7 +382,7 @@ export function createCoopPainter(canvas) {
           cy = rect.y / cssCell,
           radius = shape / 2 / cssCell;
         ctx.save();
-        ctx.fillStyle = '#07111c';
+        ctx.fillStyle = cues.back;
         ctx.strokeStyle = colors[player.id];
         ctx.lineWidth = 1.5 / cssCell;
         if (!downed && player.graceUntil > run.time) ctx.setLineDash([2 / cssCell, 2 / cssCell]);
@@ -272,29 +401,29 @@ export function createCoopPainter(canvas) {
         ctx.font = `600 ${cueScale.font(0.66, 14, 18)}px ${fonts.numeric}`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillStyle = '#f1f7ed';
+        ctx.fillStyle = cues.text;
         ctx.fillText(String(player.id + 1), cx, cy);
         if (downed) {
-          ctx.fillStyle = '#07111c';
+          ctx.fillStyle = cues.back;
           ctx.fillRect(
             (rect.right - 10) / cssCell,
             (rect.y - 8) / cssCell,
             10 / cssCell,
             16 / cssCell,
           );
-          ctx.fillStyle = '#f1f7ed';
+          ctx.fillStyle = cues.text;
           ctx.font = `600 ${12 / cssCell}px ${fonts.numeric}`;
           ctx.fillText('+', (rect.right - 5) / cssCell, cy);
         }
         if (pilotBody && offset && (offset.x !== 0 || offset.y !== 0)) {
           // Dashed cosmetic tether ends at the true cutting head; it is not a trail.
-          ctx.strokeStyle = '#07111c';
+          ctx.strokeStyle = cues.back;
           ctx.lineWidth = 3 / cssCell;
           ctx.beginPath();
           ctx.moveTo(player.x, player.y);
           ctx.lineTo(x, y);
           ctx.stroke();
-          ctx.strokeStyle = '#f1f7ed';
+          ctx.strokeStyle = cues.text;
           ctx.lineWidth = 1 / cssCell;
           ctx.setLineDash([2 / cssCell, 2 / cssCell]);
           ctx.stroke();
@@ -309,7 +438,7 @@ export function createCoopPainter(canvas) {
             0.66,
             fonts.ui,
             true,
-            '#f1f7ed',
+            cues.text,
             14,
           );
       }
@@ -318,28 +447,29 @@ export function createCoopPainter(canvas) {
         const relayLabel =
           run.strongholds.length > 1 ? `${run.strongholds.indexOf(stronghold) + 1}` : '';
         for (const [i, anchor] of stronghold.anchors.entries()) {
-          ctx.strokeStyle = anchor.captured ? '#c9e4a0' : '#ffd279';
-          ctx.fillStyle = anchor.captured ? '#315744' : '#604b30';
+          ctx.strokeStyle = anchor.captured ? cues.anchorCaptured : cues.warning;
+          ctx.fillStyle = anchor.captured ? cues.anchorCapturedFill : cues.anchorReadyFill;
           ctx.lineWidth = 0.1;
-          ctx.fillRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
+          if (!anchorArt.has(anchor)) ctx.fillRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
           ctx.strokeRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
-          ctx.fillStyle = '#fff1c8';
+          ctx.fillStyle = cues.anchorText;
           ctx.font = `600 0.85px ${fonts.ui}`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
+          const artwork = anchorArt.get(anchor);
           cue(
             anchor.captured ? '✓' : `${relayLabel}${String.fromCharCode(65 + i)}`,
-            anchor.x,
-            anchor.y,
+            artwork?.x ?? anchor.x,
+            artwork ? artwork.y - artwork.size / 2 - 10 / cssCell : anchor.y,
             0.85,
             fonts.ui,
             true,
-            '#fff1c8',
+            cues.anchorText,
           );
         }
         const core = stronghold.core;
-        ctx.fillStyle = stronghold.defeated ? '#a0c887' : '#ffc1a4';
-        ctx.strokeStyle = stronghold.shielded ? '#f1b860' : '#f48885';
+        ctx.fillStyle = stronghold.defeated ? cues.coreSecured : cues.coreLive;
+        ctx.strokeStyle = stronghold.shielded ? cues.shield : cues.exposed;
         ctx.lineWidth = stronghold.shielded ? 0.2 : 0.08;
         ctx.beginPath();
         for (let i = 0; i < 6; i++) {
@@ -350,32 +480,32 @@ export function createCoopPainter(canvas) {
           else ctx.lineTo(x, y);
         }
         ctx.closePath();
-        ctx.stroke();
+        boardCueStroke();
         ctx.beginPath();
         ctx.arc(core.x, core.y, 0.48, 0, Math.PI * 2);
         ctx.fill();
         cue(
-          `${relayLabel ? `${relayLabel} ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELD' : 'CAPTURE'}`,
+          `${relayLabel ? `${relayLabel} ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELD' : 'CAPTURE'}${run.level.goal.cores?.includes(stronghold.id) ? '' : ' · OPTIONAL'}`,
           core.x,
           Math.max(0.6, core.y - clearance('core', stronghold.id, 1.75)),
           0.64,
           fonts.ui,
           coreBody,
-          stronghold.defeated ? '#a0c887' : '#ffc1a4',
+          stronghold.defeated ? cues.coreSecured : cues.coreLive,
         );
         const emitter = stronghold.emitter;
         if (emitter?.phase === 'warning' && Number.isInteger(emitter.cellIndex)) {
           const x = (emitter.cellIndex % run.width) + 0.5,
             y = Math.floor(emitter.cellIndex / run.width) + 0.5;
-          ctx.strokeStyle = '#ffd279';
+          ctx.strokeStyle = cues.warning;
           ctx.lineWidth = 0.12;
           ctx.setLineDash([0.35, 0.3]);
           ctx.beginPath();
           ctx.moveTo(core.x, core.y);
           ctx.lineTo(x, y);
-          ctx.stroke();
+          boardCueStroke();
           ctx.setLineDash([]);
-          ctx.strokeRect(x - 0.7, y - 0.7, 1.4, 1.4);
+          boardCueStroke(() => ctx.strokeRect(x - 0.7, y - 0.7, 1.4, 1.4));
         }
       }
       for (const enemy of run.enemies) {
@@ -386,18 +516,18 @@ export function createCoopPainter(canvas) {
           !enemy.targetPoint
         )
           continue;
-        ctx.strokeStyle = '#ffd279';
+        ctx.strokeStyle = cues.warning;
         ctx.lineWidth = 0.1;
         ctx.setLineDash([0.25, 0.35]);
         ctx.beginPath();
         ctx.moveTo(enemy.x, enemy.y);
         ctx.lineTo(enemy.targetPoint.x, enemy.targetPoint.y);
-        ctx.stroke();
+        boardCueStroke();
         ctx.setLineDash([]);
         ctx.beginPath();
         ctx.arc(enemy.targetPoint.x, enemy.targetPoint.y, 0.75, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.fillStyle = '#ffd279';
+        boardCueStroke();
+        ctx.fillStyle = cues.warning;
         ctx.font = `600 0.65px ${fonts.ui}`;
         ctx.textAlign = 'center';
         cue(
@@ -407,7 +537,7 @@ export function createCoopPainter(canvas) {
           0.65,
           fonts.ui,
           body('enemy', enemy.id),
-          '#ffd279',
+          cues.warning,
         );
       }
       for (const [i, spawn] of run.level.spawns.entries()) {
@@ -415,7 +545,7 @@ export function createCoopPainter(canvas) {
         ctx.lineWidth = 0.08;
         ctx.beginPath();
         ctx.arc(spawn.x, spawn.y, 0.9, 0, Math.PI * 2);
-        ctx.stroke();
+        boardCueStroke();
       }
       for (const player of run.players) {
         ctx.strokeStyle = colors[player.id];
@@ -444,12 +574,12 @@ export function createCoopPainter(canvas) {
         ctx.save();
         ctx.translate(player.x, player.y);
         if (!downed && player.graceUntil > run.time) {
-          ctx.strokeStyle = '#e6ffcf';
+          ctx.strokeStyle = cues.recovery;
           ctx.lineWidth = 0.12;
           ctx.setLineDash([0.2, 0.18]);
           ctx.beginPath();
           ctx.arc(0, 0, 0.95, 0, Math.PI * 2);
-          ctx.stroke();
+          boardCueStroke();
           ctx.setLineDash([]);
           ctx.strokeStyle = colors[player.id];
         }
@@ -460,7 +590,7 @@ export function createCoopPainter(canvas) {
           ctx.fill();
           ctx.globalAlpha = 1;
         }
-        ctx.fillStyle = '#172c34';
+        ctx.fillStyle = cues.playerFill;
         ctx.lineWidth = 0.12;
         ctx.beginPath();
         if (player.id === 0) ctx.arc(0, 0, 0.58, 0, Math.PI * 2);
@@ -472,7 +602,7 @@ export function createCoopPainter(canvas) {
           ctx.closePath();
         }
         if (!pilotBody) ctx.fill();
-        ctx.stroke();
+        boardCueStroke();
         ctx.fillStyle = colors[player.id];
         ctx.beginPath();
         ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
@@ -488,27 +618,27 @@ export function createCoopPainter(canvas) {
         if (enemyBody) {
           // Shared body drawing includes a contact cue, but later body images
           // can cover it. Restore the actual footprint in this final overlay.
-          ctx.strokeStyle = '#07111c';
+          ctx.strokeStyle = cues.back;
           ctx.lineWidth = 3 / 16;
           ctx.beginPath();
           ctx.arc(0, 0, enemy.radius, 0, Math.PI * 2);
           ctx.stroke();
-          ctx.strokeStyle = '#f1f7ed';
+          ctx.strokeStyle = cues.text;
           ctx.lineWidth = 1 / 16;
           ctx.stroke();
-          ctx.fillStyle = '#07111c';
+          ctx.fillStyle = cues.back;
           ctx.fillRect(-2 / 16, -2 / 16, 4 / 16, 4 / 16);
-          ctx.fillStyle = '#f1f7ed';
+          ctx.fillStyle = cues.text;
           ctx.fillRect(-1 / 16, -1 / 16, 2 / 16, 2 / 16);
         }
         if (!enemyBody) {
           ctx.fillStyle =
             enemy.phase === 'warning'
-              ? '#ffd279'
+              ? cues.warning
               : enemy.type === 'hunter' && enemy.phase !== 'commit'
-                ? '#849fa4'
-                : '#fc786f';
-          ctx.strokeStyle = '#ffc0a1';
+                ? cues.enemyQuiet
+                : cues.enemyHot;
+          ctx.strokeStyle = cues.enemyLine;
           ctx.lineWidth = 0.08;
           ctx.beginPath();
           if (enemy.type === 'hunter') {
@@ -523,12 +653,12 @@ export function createCoopPainter(canvas) {
           }
           ctx.closePath();
           ctx.fill();
-          ctx.stroke();
-          ctx.fillStyle = '#521f2a';
+          boardCueStroke();
+          ctx.fillStyle = cues.enemyCenter;
           ctx.fillRect(-0.1, -0.1, 0.2, 0.2);
         }
         if (enemy.type === 'hunter' && enemy.phase !== 'warning') {
-          ctx.fillStyle = '#eee7c8';
+          ctx.fillStyle = cues.enemyText;
           ctx.font = `600 0.57px ${fonts.ui}`;
           ctx.textAlign = 'center';
           ctx.restore();
@@ -539,21 +669,21 @@ export function createCoopPainter(canvas) {
             0.57,
             fonts.ui,
             enemyBody,
-            '#eee7c8',
+            cues.enemyText,
           );
           ctx.save();
           ctx.translate(enemy.x, enemy.y);
         }
         // Authoritative active time keeps this cue visible through pause and reduced effects.
         if (enemy.speedScale < 1 && enemy.slowUntil > run.time) {
-          ctx.strokeStyle = '#e6f8ff';
+          ctx.strokeStyle = cues.slowed;
           ctx.lineWidth = 0.11;
           ctx.setLineDash([0.16, 0.12]);
           ctx.beginPath();
           ctx.arc(0, 0, 0.88, 0, Math.PI * 2);
-          ctx.stroke();
+          boardCueStroke();
           ctx.setLineDash([]);
-          ctx.fillStyle = '#e6f8ff';
+          ctx.fillStyle = cues.slowed;
           ctx.font = `600 0.6px ${fonts.ui}`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
@@ -565,7 +695,7 @@ export function createCoopPainter(canvas) {
             0.6,
             fonts.ui,
             enemyBody,
-            '#e6f8ff',
+            cues.slowed,
           );
           ctx.save();
           ctx.translate(enemy.x, enemy.y);
@@ -574,12 +704,14 @@ export function createCoopPainter(canvas) {
       }
       for (const player of run.players) {
         ctx.fillStyle = colors[player.id];
-        ctx.strokeStyle = '#07111c';
+        ctx.strokeStyle = cues.back;
         ctx.lineWidth = 1 / cssCell;
         ctx.beginPath();
         ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
         ctx.fill();
-        ctx.stroke();
+        boardCueStroke();
+        // Wide responsive outlines must not erase the true-radius cutting head.
+        if (palette) ctx.fill();
       }
       for (const impact of run.impacts || []) {
         const x = Number.isFinite(impact.x) ? impact.x : (impact.cellIndex % run.width) + 0.5;
@@ -587,8 +719,8 @@ export function createCoopPainter(canvas) {
           ? impact.y
           : Math.floor(impact.cellIndex / run.width) + 0.5;
         if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
-        ctx.fillStyle = '#fff0bc';
-        ctx.strokeStyle = '#fc786f';
+        ctx.fillStyle = cues.impactFill;
+        ctx.strokeStyle = cues.enemyHot;
         ctx.lineWidth = 0.14;
         ctx.beginPath();
         ctx.arc(x, y, 0.35, 0, Math.PI * 2);
@@ -601,7 +733,9 @@ export function createCoopPainter(canvas) {
   }
   return {
     paint,
+    actorFrame: (kind, id) => actors.frame(kind, id),
     setPresentation,
+    eventFrame: (kind) => eventFrames.get(`team.event.${kind}`) ?? null,
     get presentation() {
       return presentation;
     },

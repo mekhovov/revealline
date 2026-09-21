@@ -8,16 +8,24 @@ export const TEAM_PREVIEW_SCENARIOS = Object.freeze(
     ['cutting', 'Active cuts'],
     ['warning', 'Hunter warning'],
     ['charge', 'Hunter charge'],
+    ['hunter-recovery', 'Hunter recovery'],
+    ['support', 'Support pulse'],
+    ['slowed', 'Slowed enemies'],
+    ['emitter-warning', 'Emitter warning'],
+    ['spark', 'Travelling spark'],
     ['capture', 'Joint capture'],
     ['anchors', 'Anchors captured'],
     ['core', 'Exposed relay core'],
     ['victory', 'Completed arena'],
     ['downed-p1', 'Player 1 downed'],
+    ['crawling-p1', 'Player 1 crawling'],
     ['rescue-p1', 'Rescuing player 1'],
     ['recovered-p1', 'Player 1 recovered'],
     ['downed-p2', 'Player 2 downed'],
+    ['crawling-p2', 'Player 2 crawling'],
     ['rescue-p2', 'Rescuing player 2'],
     ['recovered-p2', 'Player 2 recovered'],
+    ['team-recovery', 'Team reserve recovery'],
   ].map(([id, label]) => Object.freeze({ id, label })),
 );
 
@@ -68,6 +76,15 @@ const winning = Object.freeze({
     segment(122, right, left),
   ]),
 });
+// Stop both cuts after the warning is earned, leaving a real trail for the
+// emitter. No actor, event or projectile is injected into a presentation state.
+const sparkTrace = Object.freeze([
+  segment(60, up, up),
+  segment(230, right, left),
+  segment(1, ...inwardCover),
+  segment(33, right, left),
+  segment(240, release, release),
+]);
 const rescueTrace = (seat) =>
   Object.freeze([
     segment(140, right, left),
@@ -79,12 +96,41 @@ const rescueTrace = (seat) =>
     segment(120, command(null, true, seat === 1), command(null, true, seat === 0)),
   ]);
 const rescues = Object.freeze([rescueTrace(0), rescueTrace(1)]);
+// The existing trace earns a downed craft at tick483. Fresh steering moves that
+// craft along genuinely captured ground; the partner remains stationary.
+const crawls = Object.freeze(
+  [0, 1].map((seat) =>
+    Object.freeze([
+      ...rescues[seat].slice(0, 5),
+      segment(
+        72,
+        command(seat === 0 ? 'right' : null, false),
+        command(seat === 1 ? 'left' : null, false),
+      ),
+      segment(360, release, release),
+    ]),
+  ),
+);
+// Both craft are actually downed and revived through one shared reserve.
+// Continue with released inputs so the two-second grace can be inspected.
+const teamRecoveryTrace = Object.freeze([
+  segment(140, right, left),
+  segment(70, up, up),
+  segment(214, right, left),
+  segment(1, release, release),
+  segment(24, left, right),
+  segment(35, up, up),
+  segment(360, release, release),
+]);
 const ticks = Object.freeze({
   'first-connection': Object.freeze({
     initial: 0,
     cutting: 65,
     warning: 90,
     charge: 234,
+    'hunter-recovery': 433,
+    support: 211,
+    slowed: 258,
     capture: 414,
     victory: 1179,
   }),
@@ -93,18 +139,33 @@ const ticks = Object.freeze({
     cutting: 65,
     warning: 180,
     charge: 324,
+    'hunter-recovery': 505,
+    support: 291,
+    slowed: 348,
+    'emitter-warning': 324,
+    spark: 426,
     capture: 414,
     anchors: 653,
     core: 709,
     victory: 832,
     'downed-p1': 483,
+    'crawling-p1': 495,
     'rescue-p1': 560,
     'recovered-p1': 620,
     'downed-p2': 483,
+    'crawling-p2': 495,
     'rescue-p2': 560,
     'recovered-p2': 620,
+    'team-recovery': 484,
   }),
 });
+/** The controls and the fixture share one availability contract. */
+export function teamPreviewScenarios(arena) {
+  if (typeof arena !== 'string' || !Object.hasOwn(ticks, arena))
+    throw new Error('Unknown Team preview arena.');
+  return TEAM_PREVIEW_SCENARIOS.filter((item) => Object.hasOwn(ticks[arena], item.id));
+}
+
 const arenas = Object.freeze({ 'first-connection': FIRST_CONNECTION, 'relay-yard': RELAY_YARD });
 const MAX_STEPS = 8;
 const LOOP_STEPS = 360;
@@ -131,7 +192,15 @@ export function createStudioTeamFixture({ arena = 'first-connection', scenario =
     throw new Error(`Team preview scenario "${scenario}" is unavailable in ${arena}.`);
   const level = freezeLevel(structuredClone(arenas[arena]));
   const isRescue = /^(downed|rescue|recovered)-p[12]$/.test(scenario);
-  const trace = isRescue ? rescues[scenario.endsWith('1') ? 0 : 1] : winning[arena];
+  const trace = scenario.startsWith('crawling-')
+    ? crawls[scenario.endsWith('1') ? 0 : 1]
+    : isRescue
+      ? rescues[scenario.endsWith('1') ? 0 : 1]
+      : scenario === 'team-recovery'
+        ? teamRecoveryTrace
+        : scenario === 'spark'
+          ? sparkTrace
+          : winning[arena];
   const selectedTick = ticks[arena][scenario];
   const traceEnd = trace.reduce((sum, item) => sum + item.ticks, 0);
   const loopEnd = Math.min(traceEnd, selectedTick + LOOP_STEPS);
@@ -142,7 +211,11 @@ export function createStudioTeamFixture({ arena = 'first-connection', scenario =
     stepCoop(run, trace[index].commands, FIXED_DT);
     if (--remaining === 0 && index + 1 < trace.length) remaining = trace[++index].ticks;
   }
-  for (let tick = 0; tick < selectedTick; tick++) step();
+  let predecessor = null;
+  for (let tick = 0; tick < selectedTick; tick++) {
+    if (tick === selectedTick - 1) predecessor = { run: structuredClone(run), index, remaining };
+    step();
+  }
   // Retain only an actual earned state. Restoring this private copy avoids a
   // synchronous multi-second replay seek on every animation-loop boundary.
   const selected = structuredClone(run);
@@ -150,16 +223,41 @@ export function createStudioTeamFixture({ arena = 'first-connection', scenario =
   const selectedRemaining = remaining;
   let accumulator = 0;
   let held = 0;
+  let primeReady = true;
   function reset() {
     run = structuredClone(selected);
     index = selectedIndex;
     remaining = selectedRemaining;
     accumulator = 0;
     held = 0;
+    primeReady = true;
     return run;
   }
-  function advance(dt) {
+  /** Seed cosmetic displacement from two command-earned samples at the exact
+   * selected state. No wall clock, fabricated velocity or extra seek is used.
+   * Call only at a fresh scene/reset, before advancing its public clock. */
+  function prime(observer) {
+    if (typeof observer !== 'function')
+      throw new TypeError('Team preview primer must be a function.');
+    if (!primeReady)
+      throw new Error('Prime a Team scene only once after creation or reset, before advancing.');
+    const next = structuredClone(predecessor?.run ?? run);
+    observer(next);
+    if (predecessor) {
+      stepCoop(next, trace[predecessor.index].commands, FIXED_DT);
+      observer(next);
+    }
+    // The selected cursor and clock stay unchanged. A failed observer cannot
+    // replace the usable fixture or consume its one-shot prime opportunity.
+    run = next;
+    primeReady = false;
+    return run;
+  }
+  function advance(dt, onStep = null) {
+    if (onStep !== null && typeof onStep !== 'function')
+      throw new TypeError('Team preview step observer must be a function.');
     if (!Number.isFinite(dt) || dt <= 0) return run;
+    primeReady = false;
     accumulator += Math.min(dt, MAX_STEPS * FIXED_DT);
     const count = Math.min(MAX_STEPS, Math.floor((accumulator + 1e-12) / FIXED_DT));
     accumulator = Math.max(0, accumulator - count * FIXED_DT);
@@ -169,7 +267,10 @@ export function createStudioTeamFixture({ arena = 'first-connection', scenario =
           reset();
           break;
         }
-      } else step();
+      } else {
+        step();
+        onStep?.(run);
+      }
     }
     return run;
   }
@@ -179,6 +280,7 @@ export function createStudioTeamFixture({ arena = 'first-connection', scenario =
       return run;
     },
     advance,
+    prime,
     reset,
     scenario,
     label: descriptor.label,

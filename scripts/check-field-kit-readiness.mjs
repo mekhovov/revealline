@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { TEAM_EVENT_SLOTS, teamEventSlot } from '../game/presentation/team-event-slots.mjs';
 /** Release declaration gate, not a substitute for visual or gameplay review. */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -6,6 +7,10 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { importThemeBundle } from '../game/presentation/bundle.mjs';
+import { TEAM_THREAT_SLOTS, teamThreatSlot } from '../game/presentation/team-threat-slots.mjs';
+import { TEAM_EFFECT_SLOTS, teamEffectSlot } from '../game/presentation/team-effect-slots.mjs';
+import { TEAM_ANCHOR_SLOTS, teamAnchorSlot } from '../game/presentation/team-anchor-slots.mjs';
+import { TEAM_ACTOR_SLOTS, teamActorSlot } from '../game/presentation/team-actor-slots.mjs';
 import { LIMITS, presentationCoverage } from '../game/presentation/model.mjs';
 
 export const PRODUCTION_LEDGER = 'authoring/library/fpv-field-kit/production.rltheme';
@@ -18,7 +23,63 @@ const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export async function checkFieldKitReadiness(ledger) {
   const { document } = await importThemeBundle(ledger, { decodeImage: null });
   const coverage = presentationCoverage(document);
+  const teamSelected = coverage.rows.some((row) => teamActorSlot(row.slotId) && row.asset);
   const required = coverage.rows.filter((row) => row.required);
+  if (teamSelected)
+    for (const { id } of TEAM_ACTOR_SLOTS)
+      if (!required.some((row) => row.slotId === id))
+        required.push(
+          coverage.rows.find((row) => row.slotId === id) ?? {
+            slotId: id,
+            stage: 'missing',
+            asset: null,
+            evidence: [],
+          },
+        );
+  if (coverage.rows.some((row) => teamAnchorSlot(row.slotId) && row.asset))
+    for (const { id } of TEAM_ANCHOR_SLOTS)
+      if (!required.some((row) => row.slotId === id))
+        required.push(
+          coverage.rows.find((row) => row.slotId === id) ?? {
+            slotId: id,
+            stage: 'missing',
+            asset: null,
+            evidence: [],
+          },
+        );
+  if (coverage.rows.some((row) => teamEffectSlot(row.slotId) && row.asset))
+    for (const { id } of TEAM_EFFECT_SLOTS)
+      if (!required.some((row) => row.slotId === id))
+        required.push(
+          coverage.rows.find((row) => row.slotId === id) ?? {
+            slotId: id,
+            stage: 'missing',
+            asset: null,
+            evidence: [],
+          },
+        );
+  if (coverage.rows.some((row) => teamThreatSlot(row.slotId) && row.asset))
+    for (const { id } of TEAM_THREAT_SLOTS)
+      if (!required.some((row) => row.slotId === id))
+        required.push(
+          coverage.rows.find((row) => row.slotId === id) ?? {
+            slotId: id,
+            stage: 'missing',
+            asset: null,
+            evidence: [],
+          },
+        );
+  if (coverage.rows.some((row) => teamEventSlot(row.slotId) && row.asset))
+    for (const { id } of TEAM_EVENT_SLOTS)
+      if (!required.some((row) => row.slotId === id))
+        required.push(
+          coverage.rows.find((row) => row.slotId === id) ?? {
+            slotId: id,
+            stage: 'missing',
+            asset: null,
+            evidence: [],
+          },
+        );
   const unresolved = required.filter(
     (row) =>
       row.stage !== 'reviewed' ||

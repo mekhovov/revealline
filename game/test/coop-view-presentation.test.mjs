@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { createCoop, startCoop, pauseCoop, stepCoop } from '../coop/core.mjs';
 import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
@@ -13,7 +14,7 @@ import { compileContentProject, resolveMission } from '../content-design/project
 function canvasRecorder() {
   const calls = [],
     stack = [];
-  let state = { imageSmoothingEnabled: true };
+  let state = { imageSmoothingEnabled: true, globalAlpha: 1 };
   const context = new Proxy(
     {},
     {
@@ -257,7 +258,12 @@ test('existing Team non-trail cues and geometry remain above the picture in redu
   const semantic = () => {
     const start = view.calls.findIndex((call) => call.name === 'arc' && call.args[2] === 6);
     assert.ok(start >= 0, 'Support radius is still represented.');
-    return commands(view.calls.slice(start));
+    // Compare authoritative cue centerlines/targets, not their new backing plates or doubled contrast strokes.
+    return commands(
+      view.calls
+        .slice(start)
+        .filter((call) => ['arc', 'moveTo', 'lineTo', 'translate'].includes(call.name)),
+    );
   };
   painter.paint(run, { reduced: true });
   const legacy = semantic(),
@@ -346,4 +352,37 @@ test('the existing page lease applies/restores the Team snapshot without overrid
   two.close();
   assert.equal(painter.presentation, later, 'Closing the old page lease cannot undo a later look.');
   assert.equal(closes, 1);
+});
+
+// Imported packs may contain optional strongholds as well as the required subset.
+// Labels must explain that distinction without changing capture rules or state.
+test('imported core labels distinguish optional relays and retain every shield/capture state', async () => {
+  const fixture = JSON.parse(
+    await readFile(new URL('./fixtures/coop-import-route.json', import.meta.url)),
+  );
+  for (const coverage of [false, true]) {
+    const level = structuredClone(fixture.authoredPack.levels[0]);
+    if (coverage) level.goal = { coverage: 0.65 };
+    const run = createCoop(level),
+      view = canvasRecorder(),
+      painter = createCoopPainter(view.canvas);
+    view.canvas.clientWidth = 238;
+    painter.setPresentation(snapshot(0));
+    for (const state of ['SHIELD', 'CAPTURE', 'SECURED']) {
+      for (const stronghold of run.strongholds) {
+        stronghold.shielded = state === 'SHIELD';
+        stronghold.defeated = state === 'SECURED';
+      }
+      const before = structuredClone(run);
+      view.reset();
+      painter.paint(run, { reduced: true });
+      for (const [index, stronghold] of run.strongholds.entries()) {
+        const optional = coverage || !level.goal.cores.includes(stronghold.id);
+        const expected = `${index + 1} ${state}${optional ? ' · OPTIONAL' : ''}`;
+        assert.ok(labels(view.calls).includes(expected), expected);
+      }
+      assert.deepEqual(run, before);
+      assert.equal(view.stack.length, 0);
+    }
+  }
 });

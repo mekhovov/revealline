@@ -1,4 +1,6 @@
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
+import { createCoopEventFeedback } from './coop-event-feedback.mjs';
+import { coopEventCaption, drawCoopEventIcon } from './coop-event-presentation.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
@@ -24,7 +26,8 @@ import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
-import { createCoopPresentation } from './coop-presentation.mjs';
+import { createOwnedCoopPresentation } from './coop-owned-presentation.mjs';
+import { createCoopPresentationDisplay } from './coop-presentation-display.mjs';
 import {
   COOP_PICTURE_BINDINGS,
   COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
@@ -212,10 +215,13 @@ export function bootCoop() {
     menuStyle.dispose();
   };
   const painter = createCoopPainter($('coop-canvas'));
+  const eventFeedback = createCoopEventFeedback();
+  let messageEventKind = null;
+  let presentationDisplay = null;
   const presentationPage = mountPresentationPage({ document, window });
   presentationPage.bindPainter(painter);
   void presentationPage.ready.then((snapshot) => {
-    if (!disposed && snapshot) menuStyle.setPresentation(snapshot);
+    if (!disposed && snapshot) presentationDisplay?.sync();
   });
   const batch = createCoopCommandBatch();
   let loopStopped = false;
@@ -615,7 +621,7 @@ export function bootCoop() {
         !inactive &&
         foreground() &&
         run === attempt &&
-        (!attempt || run.status === 'paused') &&
+        (!attempt || ['paused', 'won', 'lost'].includes(run.status)) &&
         generation === epoch &&
         settingsVisit === visit &&
         !settingsDialog.open &&
@@ -626,7 +632,7 @@ export function bootCoop() {
         panel.contains(target) &&
         document.activeElement === target;
       // Resize owns no opener or future focus. The reading adapter owns its
-      // separate text region; only the current lobby or paused action is considered here.
+      // separate text region; only the current lobby, paused or Results action is considered here.
       if (
         !current() ||
         !target?.matches('button,a[href],select,input,textarea,summary') ||
@@ -903,8 +909,10 @@ export function bootCoop() {
   earnedDialog.addEventListener('close', earnedClosed);
   earnedDialog.addEventListener('cancel', earnedCancelled);
   earnedDialog.addEventListener('keydown', settingsKeydown);
-  function message(text) {
-    if ($('coop-message').textContent !== text) $('coop-message').textContent = text;
+  function message(text, eventKind = null) {
+    messageEventKind = eventKind;
+    $('coop-event-art').hidden = true;
+    if ($('coop-message-text').textContent !== text) $('coop-message-text').textContent = text;
   }
   function overlay({ focus = true } = {}) {
     const show = run && !running();
@@ -940,12 +948,34 @@ export function bootCoop() {
         : 'Release your controls, then choose Resume together.';
     if (focus) primary().focus({ preventScroll: true });
   }
+  presentationDisplay = createCoopPresentationDisplay({
+    getSelection: () =>
+      run ? acceptedPicture : pictureSelection?.state === 'ready' ? pictureSelection : null,
+    getDefaultSnapshot: presentationPage.current,
+    painter,
+    element: document.documentElement,
+    setMenuPresentation: menuStyle.setPresentation,
+    isDisposed: () => disposed,
+    paintOptions: () => ({
+      reduced: displayPreferences.snapshot().effectiveReducedEffects,
+      textFace: displayPreferences.snapshot().textFace,
+    }),
+  });
   function render() {
-    if (!run) return;
+    if (!run || !presentationDisplay.sync()) return;
     painter.paint(run, {
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
       textFace: displayPreferences.snapshot().textFace,
       picture: acceptedPicture?.binding ?? null,
+    });
+    const receipt = eventFeedback
+      .snapshot(run)
+      .findLast((entry) => entry.kind === messageEventKind);
+    drawCoopEventIcon($('coop-event-art'), receipt && painter.eventFrame(receipt.kind), receipt, {
+      time: run.time,
+      reduced:
+        displayPreferences.snapshot().effectiveReducedEffects ||
+        painter.presentation?.canvas?.motionScale === 0,
     });
     const coverage = run.coverage * 100;
     $('coop-coverage').textContent = `${coverage.toFixed(1)}%`;
@@ -958,9 +988,15 @@ export function bootCoop() {
     $('coop-clock').textContent = clock(run.time);
     const strongholds = run.strongholds.filter((item) => run.level.goal.cores?.includes(item.id));
     const stronghold = strongholds.find((item) => !item.defeated);
+    const multipleRelays = strongholds.length > 1;
+    const anchorsCaptured = stronghold?.anchors.filter((anchor) => anchor.captured).length;
+    const relayProgress =
+      stronghold && multipleRelays
+        ? `Relays ${strongholds.filter((item) => item.defeated).length} / ${strongholds.length} · Relay ${run.strongholds.indexOf(stronghold) + 1} · `
+        : '';
     $('coop-objective').dataset.kind = stronghold ? 'stronghold' : 'coverage';
     $('coop-objective').textContent = stronghold
-      ? `${strongholds.length > 1 ? `${strongholds.filter((item) => item.defeated).length} / ${strongholds.length} secured · Relay ${run.strongholds.indexOf(stronghold) + 1} · ` : ''}${stronghold.shielded ? `Capture the shield anchors · ${stronghold.anchors.filter((anchor) => anchor.captured).length} / 2 secured` : 'Shield down · capture the exposed core in a new cut'}`
+      ? `${relayProgress}${stronghold.shielded ? (multipleRelays ? `Anchors ${anchorsCaptured} / 2 — capture anchors` : `Capture the shield anchors · ${anchorsCaptured} / 2 secured`) : 'Shield down · capture the exposed core in a new cut'}`
       : strongholds.length
         ? 'Strongholds secured together'
         : coopGoalText(run.level);
@@ -1189,6 +1225,7 @@ export function bootCoop() {
     $('coop-picture-preview').dataset.state = previewState;
   }
   function pictureUI(messageText) {
+    if (!presentationDisplay.sync()) return;
     picturePreview();
     const busy = Boolean(pictureOperation),
       ready = pictureSelection?.state === 'ready',
@@ -1241,11 +1278,12 @@ export function bootCoop() {
         attemptId: `team-${++pictureSequence}`,
         ...(artworkSource ? { artworkSource } : {}),
       },
-      lease: createCoopPresentation({
+      lease: createOwnedCoopPresentation({
         bindings: COOP_PICTURE_BINDINGS,
         historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
         getSnapshot: presentationPage.current,
         readPicture: presentationPage.readPicture,
+        readAudio: presentationPage.readAudio,
         decodeImage: decodeCoopPicture,
       }),
       binding: null,
@@ -1322,9 +1360,9 @@ export function bootCoop() {
       try {
         const snapshot = await (retry ? presentationPage.retry() : presentationPage.ready);
         // The original ready observer already handles first load. A recovered
-        // shared page also updates global appearance, even after picture Cancel.
+        // shared page reconciles the displayed owner, even after picture Cancel.
         if (retry && !disposed && snapshot && snapshot === presentationPage.current())
-          menuStyle.setPresentation(snapshot);
+          presentationDisplay.sync();
         if (!current()) return;
         const binding = await selection.lease.select({
           ...selection.request,
@@ -1515,11 +1553,7 @@ export function bootCoop() {
       startCoop(candidate);
       if (!current()) return;
       // First paint is tested while the completed attempt still owns its image.
-      painter.paint(candidate, {
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        textFace: displayPreferences.snapshot().textFace,
-        picture: selection.binding,
-      });
+      presentationDisplay.paintPrepared(candidate, selection.binding);
       if (!current()) {
         if (!disposed && run === operation.run) render();
         return;
@@ -1771,14 +1805,13 @@ export function bootCoop() {
       )
         throw aborted();
     };
-    const lease = createCoopPresentation({
+    const lease = createOwnedCoopPresentation({
       bindings: COOP_PICTURE_BINDINGS,
       historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
       getSnapshot() {
         check();
         const current = presentationPage.current();
         check();
-        if (current !== snapshot) throw aborted();
         return current;
       },
       readPicture: presentationPage.readPicture,
@@ -1788,8 +1821,8 @@ export function bootCoop() {
       if (released) return;
       released = true;
       signal.removeEventListener('abort', release);
-      // This preview owns its decoder only. The current attempt and the opaque
-      // imported source retain their separate owners throughout browsing.
+      // This preview owns its decoder and any retained theme lease. The current
+      // attempt and opaque imported source keep their separate owners.
       lease.dispose();
     };
     const confirm = () => {
@@ -1798,6 +1831,7 @@ export function bootCoop() {
         // Revalidate the live row as well as the captured request: matching IDs
         // cannot authorize a changed pack or an expired local artwork owner.
         const binding = lease.confirm({ ...request, pack: row.pack, signal });
+        if (lease.snapshot() !== snapshot) throw aborted();
         check();
         return binding.image;
       } catch (error) {
@@ -1809,8 +1843,6 @@ export function bootCoop() {
     try {
       check();
       await presentationPage.ready;
-      check();
-      snapshot = presentationPage.current();
       check();
       await lease.select({
         ...request,
@@ -1825,6 +1857,7 @@ export function bootCoop() {
           if (text) onStatus(text);
         },
       });
+      snapshot = lease.snapshot();
       const image = confirm();
       return Object.freeze({ image, confirm, release });
     } catch (error) {
@@ -2042,11 +2075,7 @@ export function bootCoop() {
       }
       check();
       selection.binding = selection.lease.confirm(selection.request);
-      painter.paint(candidate, {
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        textFace: displayPreferences.snapshot().textFace,
-        picture: selection.binding,
-      });
+      presentationDisplay.paintPrepared(candidate, selection.binding);
       check();
       clear();
       check();
@@ -2235,6 +2264,7 @@ export function bootCoop() {
     knockdowns = [null, null];
     const level = next.level;
     run = next;
+    eventFeedback.begin(run);
     attemptLevel = startingLevel;
     attemptPack = selection.pack;
     const previousPicture = acceptedPicture;
@@ -2664,22 +2694,37 @@ export function bootCoop() {
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
+    eventFeedback.ingest(run);
+    const terminalMessage =
+      run.status === 'won'
+        ? 'Team objective complete. Your shared result is ready.'
+        : run.status === 'lost'
+          ? 'Team attempt ended. Choose Retry or Change setup.'
+          : null;
+    // The final step still owns its input cleanup and event receipts, but its
+    // live region must not announce instructions for an attempt that has ended.
+    const announce = (text, eventKind) => {
+      if (!terminalMessage) message(text, eventKind);
+    };
     for (const event of run.events) {
       if (event.type === 'cells.claimed' && run.terrain) {
         const caption = terrainTransitionCaption(run, event);
-        if (caption) message(caption);
+        if (caption) announce(caption);
       }
       if (event.type === 'cut.closed') {
         input.clearPlayer(event.player);
         batch.release(event.player);
       }
       if (event.type === 'cut.joint')
-        message('Joint Cut! Both lines are safe. Choose your next route together.');
+        announce(
+          coopEventCaption({ kind: 'joint-capture', meaningful: event.meaningful }),
+          'joint-capture',
+        );
       if (event.type === 'player.downed') {
         knockdowns[event.player] = event;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        message(
+        announce(
           `${coopFailureFeedback(run, event).cause} ${names[event.player]} needs a rescue. Hold Support nearby${run.config.advancedCooperation ? ' or capture 2% new territory' : ''}.`,
         );
       }
@@ -2687,35 +2732,36 @@ export function bootCoop() {
         knockdowns[event.player] = null;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        message(
+        announce(
           `${names[event.player]} is back.${event.reason === 'reserve' ? ' One team reserve used.' : ''} Choose a fresh direction.`,
         );
       }
       if (event.type === 'team.recovery')
-        message('Both craft are back. One team reserve used. Choose fresh directions together.');
+        announce(coopEventCaption({ kind: 'team-recovery' }), 'team-recovery');
       if (event.type === 'shield.disabled')
-        message('Both anchors secured! Now capture the exposed core in a new cut.');
+        announce('Both anchors secured! Now capture the exposed core in a new cut.');
       if (event.type === 'core.defeated')
-        message('Stronghold defeated! Its emitter and travelling sparks are gone.');
+        announce('Stronghold defeated! Its emitter and travelling sparks are gone.');
       if (event.type === 'support.pulse') {
         if (event.interceptedImpacts?.length)
-          message(`${names[event.player]} intercepted a travelling spark.`);
+          announce(`${names[event.player]} intercepted a travelling spark.`);
         else if (event.slowedEnemies?.length)
-          message(`${names[event.player]} slowed the pressure. There is room to finish a cut.`);
+          announce(`${names[event.player]} slowed the pressure. There is room to finish a cut.`);
       }
       if (event.type === 'rescue.completed') {
         input.clearPlayer(event.player);
         batch.release(event.player);
-        message(
+        announce(
           `${names[event.player]} rescued their partner. Both craft are ready for a fresh direction.`,
         );
       }
       if (event.type === 'rescue.cancelled' && event.requiresFreshSteering) {
         input.clearPlayer(event.player);
         batch.release(event.player);
-        message('Rescue interrupted. Choose a fresh direction or hold Support nearby again.');
+        announce('Rescue interrupted. Choose a fresh direction or hold Support nearby again.');
       }
     }
+    if (terminalMessage) message(terminalMessage);
   }
   function update(now) {
     if (disposed) return;
@@ -2855,7 +2901,7 @@ export function bootCoop() {
       : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
   }
   function showPackStatus() {
-    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}`;
+    const label = `${pack.name} · ${pack.levels.length} ${pack.levels.length === 1 ? 'level' : 'levels'}${packArtworkSource ? ' · Local artwork' : ''}`;
     packStatus.begin({ message: label }).finish({ message: label });
   }
   function showPack(next, preferred = next.levels[0].id, isCurrent = () => true) {
@@ -2976,7 +3022,7 @@ export function bootCoop() {
       if (!current()) return;
       const snapshot = await (retry ? presentationPage.retry() : presentationPage.ready);
       if (retry && !disposed && snapshot && snapshot === presentationPage.current())
-        menuStyle.setPresentation(snapshot);
+        presentationDisplay.sync();
       if (!current()) return;
       const selection = draft.selection;
       const binding = await selection.lease.select({
@@ -3110,7 +3156,7 @@ export function bootCoop() {
       importDisplay = null;
       packStatus.begin({ message: 'Team pack unavailable.' }).finish({
         state: 'error',
-        message: `Pack unchanged: ${error.message}. Retry pack or choose another file.`,
+        message: `Pack unchanged: ${String(error.message).replace(/[.\s]+$/, '')}. Retry pack or choose another file.`,
       });
       $('coop-pack-cancel').hidden = true;
       $('coop-pack-retry').hidden = false;
@@ -3225,6 +3271,11 @@ export function bootCoop() {
     .catch((error) => console.error('Native lifecycle unavailable:', error));
   const dispose = () => {
     if (disposed) return;
+    // Retire display ownership before cancellation can reenter pictureUI: the
+    // page lifecycle may already have released the borrowed theme snapshot.
+    presentationDisplay.dispose();
+    eventFeedback.reset();
+    $('coop-event-art').hidden = true;
     discoveryStarted = null;
     discovery?.dispose();
     cancelDiscoveryPreparation();

@@ -193,7 +193,7 @@ test('custom fractional coverage and multiple required cores drive the actual br
   assert.match(f.$('coop-threat-help').textContent, /sending a spark/);
   assert.doesNotMatch(f.$('coop-level-note').textContent, /Bait a Hunter/);
   f.$('coop-start').click();
-  assert.match(f.$('coop-objective').textContent, /0 \/ 2 secured/);
+  assert.match(f.$('coop-objective').textContent, /Relays 0 \/ 2 · Relay 2 · Anchors 0 \/ 2/);
   assert.match(
     f.$('coop-objective').textContent,
     /Relay 2/,

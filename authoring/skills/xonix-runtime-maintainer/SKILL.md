@@ -14,6 +14,16 @@ older card selector still wins. Keep 44px direction targets clear of the HUD.
 Record that recovery hides controls and that portrait retains its existing
 translucent arena overlay; do not claim simultaneous states from separate samples.
 
+For production Team artwork, use `scripts/field-kit-team-assets.mjs` and the real
+Field Kit producer. Preserve both anchor and all four feedback roles as complete
+families. Verify prepared manifests and PNGs against the original generators;
+append the exact optional slot contracts through the immutable history writer.
+Clone frozen defaults before extending them. Run the real-producer regression in
+`game/test/field-kit-team-production.test.mjs`, not just helper tests. Generation
+keeps quality at produced; attach scoped visual evidence to a new reviewed revision.
+Neither provisional revision39 fixture is a reusable production identity. Follow
+`docs/team-production-integration.md` before compiled adoption or a release.
+
 For the shared handheld-control candidate, follow `docs/shared-device-play.md`.
 Classic-field live notices may use the already-reserved warning band only while
 the static classic summary is hidden. Keep full activation/loss text visible and
@@ -1137,3 +1147,59 @@ their text fallback twice. Inspect long captions between Large landscape pads;
 a fitting canvas alone does not establish unobscured action feedback. Extend
 controller checks through Missions/Deploy/Pause/Resume without pointer clicks,
 while keeping modeled and physical Steam Deck evidence separate.
+
+### Team actor-state authoring
+
+Use `game/presentation/team-actor-slots.mjs` for the optional 32 Team body contracts. Preparation appends immutable source-stage bodies using exact existing image bytes, pivots and rotor anchors; it does not approve artwork or write player data. Separate global slot registration from bindings in the selected theme. Preserve numbered shape markers, runtime warnings and original simulation timing. Reject partial/conflicting imported contracts, preserve selections across undo/reset, and decode every declared Team state before atomically adopting a painter snapshot. A state preview must say when the selected state or compact/detailed treatment is inactive. If any Team override is selected for publication, require the full reviewed family in the readiness gate. Follow [Team actor-state authoring](../../../docs/team-actor-state-authoring.md) and its maintenance prompt. Do not claim this body-authoring slice completes procedural objectives, five-edition artwork or physical-device qualification.
+
+### Team semantic cue contrast
+
+Keep Team cue colours in `coop-cue-palette.mjs`, derived from the accepted presentation. Preserve null-snapshot legacy drawing. Text uses opaque paper backing with unrounded 4.5:1 contrast; neutral fallback does not authorize a replacement theme or picture. Functional paths over artwork/concealment require opaque contrasting inner/outer strokes, with widths derived from CSS cell size. Paint the actual-radius player head centre after its halo so outlines cannot erase it on phones. Keep existing shared three-layer trails. Check Support, recovery, slowed, spawn, core and warning paths over black, white and gray; compare exact run state and restore canvas alpha/width. See [Team cue palette](../../../docs/team-cue-palette.md) for the reproduction prompt and evidence limits.
+
+### Team relay-anchor authoring
+
+Treat `team.anchor.available` and `team.anchor.captured` as a complete optional contract pair. Explicit Studio preparation adds source-stage recipes without changing historical selections; selected pairs require review evidence before production. Imports accept only exact known contracts. Prepare all declared images atomically even in First Connection, which has no anchors. Cosmetic artwork gets a 24 CSS-pixel minimum and pivot-aware arena containment; preserve the original capture border. Draw all anchor art before functional labels and reserve its rectangles during label placement. Verify actual uploaded pixels remain visible on phones, not merely `drawImage` calls. See [Team anchor authoring](../../../docs/team-anchor-authoring.md) and its native, import/Undo and release requirements.
+
+For [Team Studio state inspection](../../../docs/team-studio-states.md), keep scene-menu availability sourced from `teamPreviewScenarios`, the same immutable tick table used by the public-command fixture. Support, slowed enemies and Hunter recovery apply to both starter arenas; emitter warning and travelling spark apply to Relay Yard. Derive the spark from a legal warned cut and ordinary release commands, never by adding a projectile or altering the authored level. Preserve held-state, bounded motion-loop, reset and disposal behavior. Use the [Team state prompt](../../prompts/team-studio-states.md). Keep procedural state preview, editable asset-slot coverage, native visual evidence and full publication acceptance distinct.
+
+For Studio preview controls, preserve a wrapping flex basis when host text styles reset `min-inline-size`. A physical `min-width` can be overridden by that logical property; verify actual portrait geometry rather than relying on the declaration. Keep the Geometry overlay label and all selectors at least 44 pixels high, and qualify Large/Plain text with retained keyboard focus.
+
+For [Team feedback authoring](../../../docs/team-feedback-authoring.md), preserve exact four-slot contracts and source-stage recipe defaults. Support is a pulse, Slowed belongs to an affected enemy, Rescue belongs to the active helper, and Recovery belongs to the revived player, never the hunter. Derive badges from authoritative active time and keep existing functional cues. Prepare declared images atomically; reserve actor/core/anchor bounds and suppress cosmetic badges when nearby space is unavailable. Stronghold positions are nested under `core`, unlike players/enemies. Qualify actual started simulations with valid direction/boost/support commands and assert time advances. Follow the [feedback prompt](../../prompts/team-feedback.md), distinguish earned scenes from synthetic layout stress, and keep missing recovery causes explicit.
+
+For [Team threat overlays](../../../docs/team-threat-authoring.md), preserve the separate exact three-slot family and historical feedback contracts. Derive warning/shield/impact state from the simulation only. Sparks use exact finite sub-cell coordinates; pair legacy cell fallbacks only when both axes are absent, with valid cell/owner/player/trail checks. Clip edge art without relocating it. Paint shields beneath core bodies and warning/spark accents above decorative bodies but below functional cues and labels; require actual visible uploaded pixels rather than draw-call counts. Test multi-core ownership, cleared impacts and a started warning-to-spark trace. Use the [threat prompt](../../prompts/team-threat-overlays.md); registration/readiness/native/public evidence remain distinct.
+
+For the Team reserve-recovery Studio specimen, retain the command-earned Relay Yard tick484 state (Standard / seed17), two reserves and two revived craft at authored spawns. It is not a contact rescue or independent reserve revival. Hold exact state when paused/reduced, advance real released-input ticks to expire grace, and reset only the private specimen copy. Do not replay rewards/audio from retained last-tick events. Any future live celebration must consume `run.events` after every simulation step, since multi-step frames overwrite earlier events. First Connection must not offer a fabricated equivalent.
+
+### Team event receipts and artwork
+
+Keep Team `cut.joint` and `team.recovery` presentation in the host-owned `coop-event-feedback.mjs` latch. Ingest after **every** completed step, not once per rendered frame. Never add receipts to simulation/checkpoint data or infer them from grace, counters or individual revival. Retry/new-run identity resets the latch; its 1.25-second lifetime uses simulation time. Captions own live status: newer messages hide obsolete artwork and expiry leaves the text available. Reduced effects disables the decorative entrance, not event meaning.
+
+`team.event.joint-capture` and `team.event.team-recovery` are a separate exact two-slot family (`team.event.v1`), both centered 32×32 transparent status icons. Prepare/decode all declared revisions atomically with the accepted snapshot. Keep icons outside playable cells, cosmetic and silent; do not imply medals or new reserves. Field context uses actual per-step events from both Joint capture scenes and Relay Yard Team reserve recovery. Source recipes and complete bindings are not art approval. Follow `docs/team-event-authoring.md` and `authoring/prompts/team-event-artwork.md`; qualify real live-host events, stale assets, short landscape, history and byte-preserving round trips.
+
+### Authentic paused crawling specimens
+
+Team crawling is derived from two same-attempt, same-status observations with genuine displacement. Studio's Relay Yard crawling scenes use actual tick494→495 samples earned by public commands. `fixture.prime(observer)` is one-shot at construction/reset; observe a temporary predecessor, run one recorded core step, observe the result, and only then adopt it. Preserve the selected clock, trace cursor and existing scene on failure. Never fake velocity or make the live renderer trust an authoring state flag. Prime before advancing a new scene and after its bounded loop resets; do not send predecessor events to the presentation-event latch. Qualify both players, compact/detailed, Paused/Reduced, release-to-downed, reset and independent real-core replay.
+
+## Original Team relay-anchor production
+
+`authoring/library/team-anchor-field-kit-v1` contains the original 24px available/captured radio pair, editable integer-pixel source, exact manifest and variation prompts. Run `node scripts/produce-team-anchor-art.mjs --check` and `node --test scripts/test-team-anchor-art.mjs`. Source bytes are captured alongside the imported drawing; another project-root source cannot be credited for cached pixels. Conflicting retained outputs fail before known missing outputs are written; create a new art revision instead of overwriting an accepted family. Keep both slot bindings in one coordinated collection. Production metadata remains **produced** until imported-map/live-size review and release adoption are evidenced. Studio save/export does not publish these assets or change player saves. Follow the family README for the real upload, collection, import/Undo and runtime adoption steps.
+
+### Imported Team objective clarity
+
+Derive required relays from `run.level.goal.cores`, never from stronghold count or order. Keep optional relay status explicit without changing simulation objectives. Before painting minimum-size anchor artwork, reject decoration that overlaps another planned anchor image or an authoritative anchor/core target; keep the original border and label/check. Test mixed image/recipe neighbors, dense border maps, narrow boards and captured/available states with font-aware measurements. Record native visual evidence separately from modeled painter checks. This fallback does not approve an incomplete production collection.
+
+### Original Team feedback production
+
+The four `team.effect.*` roles have editable original 32px art in `authoring/library/team-feedback-field-kit-v1`. Reproduce with `node scripts/produce-team-feedback-art.mjs --check`; keep source identity, retained files and produced/reviewed boundaries explicit. Use the manifest's role-specific prompts. Radio pulse may hit nothing, hourglass needs the SLOWED context, paired links denote held helper rescue, and the tapered craft badge denotes personal revival grace. Keep runtime captions/progress and do not reuse these icons for Scan, joint capture, shared-reserve rewards or hunter recovery. Inspect earned scenes, inactive states, reduced effects and collection byte preservation before release adoption.
+
+## Explicit production slot migration
+
+Use the exact code-owned optional contracts through `retainProductionHistory(desired, prior, { appendSlots })` when adopting a new production family. Preserve the complete prior slot prefix and immutable asset/theme/collection ledger; validate the final successor against the original prior document. Do not make old slots optional or relax historical theme/picture/import identity checks. Require bound new roles, one successor, idempotent reproduction and unchanged old selection resolution. See [production slot migrations](../../../docs/production-slot-migrations.md) for the contract, prompt and required tests. Runtime adoption, reviewed quality, historical receipt compatibility and public/offline gates remain separate.
+
+### Retained Team presentation ownership
+
+Use `createOwnedCoopPresentation` for live Team attempts and independent previews. Exact archived manifest hashes and immutable Team identity associations authorize older artwork; imports cannot supply runtime URLs. Retry confirms the accepted owner, while Next/catalogue prepare and first-paint a candidate before replacing the previous attempt/results. Route painter, DOM asset variables and menu Auto appearance through `createCoopPresentationDisplay`; failed/reentrant updates must restore all surfaces, including future Auto refreshes. Retire display ownership before terminal cancellation callbacks because the page may already have released its borrowed snapshot. Keep BFCache suspension separate. Follow [host ownership](../../../docs/team-owned-presentation-host.md) and the [maintenance prompt](../../prompts/team-retained-presentation.md); qualify late decoder cleanup, rollback, preview return focus and real old/current asset bindings. A provisional two-revision fixture does not authorize changing production defaults or skipping offline/public release gates.
+
+### Reproducible output and immutable runtime archives
+
+Prepare fresh compiler output with `preparePresentationOutput` before both production write/check. Preserve the generator's ownership metadata format, and retain historical manifests only after formatting current output. Keep `.prettierignore` protection for `game/presentation/compiled/runtime.*.json`: ordinary repository formatting must never rewrite hash-pinned originals. Validate archives through ownership, exact hashes and complete dependencies instead. Test current-output byte reproduction, multiple retained generations, formatter-policy changes and the real CLI/lock path in disposable fixtures. Follow [output preparation](../../../docs/presentation-output-preparation.md); no helper/fixture result approves a new theme, recipe quality, offline journey or public release.
