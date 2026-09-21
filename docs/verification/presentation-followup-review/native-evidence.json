@@ -1,0 +1,64 @@
+{
+  "source": "05d2d20119f15a937549b797fd59105b84558588",
+  "runtimeOverrides": {},
+  "servedResponsesMatched": 425,
+  "method": "Native CUA interaction with exact committed Git-source server; no state injection. Team settings use native UI. Owned loss fixture installed through actual file chooser.",
+  "team": {
+    "arena": "Relay Yard",
+    "selectedPicturePrepared": true,
+    "compact": {
+      "viewport": [
+        568,
+        320
+      ],
+      "board": [
+        254,
+        127
+      ],
+      "directionsMin": 45.6640625,
+      "actionsMin": 44,
+      "allControlsInViewport": true
+    },
+    "portrait": {
+      "viewport": [
+        390,
+        844
+      ],
+      "board": [
+        370,
+        185
+      ],
+      "directionTargets": 52,
+      "actionTargets": [
+        76,
+        54.8984375
+      ],
+      "allControlsInViewport": true
+    },
+    "settingsReturn": "Stayed paused until explicit Resume together",
+    "consoleWarningsErrors": []
+  },
+  "solo": {
+    "fixtureSHA256": "023a10a3b8f295f4fc35625e6be042d3cf00ae612d69dfb73e6b47820304d54f",
+    "viewport": [
+      568,
+      320
+    ],
+    "text": "Plain/Large",
+    "observed": [
+      "Actual Down, Right, Left movement ended one-life attempt by self-contact at0%,0:07.",
+      "Impact cue preceded loss menu.",
+      "Settings appearance change retained loss.",
+      "Tab from Retry to Change difficulty; Space,Down,Enter selected Gentle while current result stayed Standard.",
+      "Focused select wholly visible at x294 y124.039 w237.961 h45.5.",
+      "ShiftTab Enter Retry started fresh0% at0:00 with five lives, then Escape gave explicit Resume."
+    ],
+    "consoleWarningsErrors": []
+  },
+  "limitations": [
+    "Team initial board and controls, not partial/complete reveal, rescue, anchor capture or fairness playthrough.",
+    "Loss verification uses local authored fixture, not production map acceptance.",
+    "Short landscape Large text uses separate scrolling details/actions; not all text visible simultaneously.",
+    "No physical touch/controller, browser zoom, offline, listening or public release acceptance."
+  ]
+}
