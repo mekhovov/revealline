@@ -42,6 +42,16 @@ Use the actual authored Journey host for untimed-clock checks; Legacy races requ
 a valid duration. Missing sparse image dependencies must be restored from exact
 source blobs before evaluating picture-host failures.
 
+For Team caption clearance, measure the message, both complete touch groups,
+Support labels, Pause and authored stronghold objective together. A caption in
+normal document flow may still be covered by fixed thumb controls. Bound preferred
+sizes without changing stored preferences, and retain 44px direction targets in
+the declared minimum viewport. Very short strongholds may omit decorative action
+icons while retaining readable Boost/Support labels. Title mode cards must be
+checked at Large text in short landscape, including focus reveal for lower menu
+actions. New Solo stylesheets use `data-boot-href`, never an early direct `href`;
+include actual bytes in `boot-build.test.mjs` reproducibility/offline checks.
+
 For Library selection and saved-flight restoration, use the Solo host's `focusMission` return path only after the owned operation succeeds. Dismiss retained Settings as well as Workshop/Home before focusing the paused mission. Passive Back, Stay, cancellation, failures and stale callbacks retain their existing parent/focus behavior; never replace operation ownership with a global close-all-dialogs shortcut. Cover ready and active-cut selection, suspended/imported restore, unchanged checkpoints and explicit Start/Resume. See [Library launch navigation](../../../docs/library-launch-navigation.md) for the maintenance prompt and the separate modeled/native verification gates. For native saved-flight checks, export a real paused cut, select another mission without starting it, import the downloaded file, and export again before Resume. Compare replay, checkpoint, run identity, presentation pins and continuation exactly; only a refreshed savedAt timestamp may differ. Resume must require an explicit action and use the retained direction. For Grid + buffer, also export an off-center queued turn and prove the queue survives import before explicit Resume consumes it. Record whether the sample was on secured ground or a live cut; one does not establish both. Keep physical-device acceptance separate.
 
 For Team lobby changes, keep the mode/arena choices, preview, objective and Start together, and keep authored threat/Support/stronghold guidance inside the existing Help reading region so it remains available during Pause. Preserve IDs and reading/controller ownership. Large text may scroll vertically; do not shrink it to conceal layout overflow. Resize may reveal only the current foreground lobby/paused action, with ownership rechecked after layout reads; never refocus or resume. See [compact Team lobby](../../../docs/team-lobby-layout.md) for the native and modeled checks and authoring prompt. When restructuring lobby markup, include `coop-lobby-preview.test.mjs` with the navigation/resize cohort. Check common lobby ownership and preview-before-launch reading order through the new grouping while preserving exact image reuse, mystery masking, retry, earned-victory and no-automatic-Start assertions. Do not treat the old immediate-parent shape as player behavior.

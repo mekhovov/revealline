@@ -23,6 +23,12 @@
       "node20": "113/113",
       "node22": "113/113",
       "scope": "Couch shell, candidate Versus host, board footprint and complete First Flight cohort; native CSS checks separate. Final release gates remain pending."
+    },
+    "iteration5": {
+      "node20": "107/107",
+      "node22": "107/107",
+      "finalBootBuild": "3/3 each runtime after final CSS changes",
+      "scope": "Boot, build/offline inventory, Team host, paused resize, shared touch. Final source CI and physical devices remain open."
     }
   },
   "nativeObservations": [
@@ -198,6 +204,51 @@
       "arena": [296, 148],
       "document": [320, 480],
       "note": "Large text/192px Dpad; hidden field-condition width no longer shrinks arena; rotation retains Pause."
+    },
+    {
+      "viewport": [568, 320],
+      "mode": "Team First Connection caption correction",
+      "hudHeight": 44,
+      "arena": [418, 209],
+      "caption": [544, 53],
+      "touchSurfaces": [132, 132],
+      "directionTargets": [44, 44],
+      "document": [568, 320],
+      "note": "Large text/preference; full-width caption below controls and complete arena; no Support overlap."
+    },
+    {
+      "viewport": [844, 390],
+      "mode": "Team First Connection caption correction",
+      "hudHeight": 44,
+      "arena": [558, 279],
+      "caption": [820, 53],
+      "touchSurfaces": [192, 192],
+      "document": [844, 390],
+      "note": "Large text/preference; labeled Boost/Support56.4px high; full caption text fits two rows."
+    },
+    {
+      "viewport": [568, 320],
+      "mode": "Team Relay Yard stronghold caption correction",
+      "hudHeight": 44,
+      "arena": [363.203125, 181.6015625],
+      "caption": [544, 53],
+      "touchSurfaces": [132, 132],
+      "directionTargets": [44, 44],
+      "document": [568, 320],
+      "note": "Objective ends71.4px; pads start75px. Short stronghold actions omit decorative icons, keep44px-high labeled Boost58px/Support70px with no text overflow."
+    },
+    {
+      "viewport": [844, 390],
+      "mode": "Solo title Large text",
+      "modeCard": [262.6640625, 75.296875],
+      "menuActions": [350, 344],
+      "note": "Available-width title; modes before actions; native Tab reveals Workshop. Vertical scrolling retained."
+    },
+    {
+      "viewport": [320, 480],
+      "mode": "Solo title Large text",
+      "modeCard": [85.3359375, 123.890625],
+      "note": "Mode names remain single-line with6px side padding; no card overflow. Portrait title still scrolls; long artwork explanation needs entry-flow polish."
     }
   ],
   "pending": [

@@ -169,3 +169,50 @@ at 320×480 it remains 296×148. Both documents fit the viewport. This catches t
 old D-pad side reservation and high-specificity hidden field-condition width
 rule; the handheld layout explicitly owns those dimensions. Rotation stayed
 paused until explicit Resume. Further device/encounter stress checks remain.
+
+## Fifth iteration: Team caption clearance and title readability
+
+At 568×320 with Large text and two Large touch preferences, Team's old central
+caption occupied the same space as both Support buttons. The caption now has a
+full-width bottom strip; the complete board fits above it and controls fit their
+remaining height. At this shortest layout, preferred Large pads resolve to 132px
+with 44px direction targets. The shared preference itself remains Large. Boost
+and Support stay distinct, labeled actions; Support receives enough column width
+to avoid clipping. Long captions retain bounded scrolling and complete accessible
+text. This is a readability tradeoff: one 44px counter strip plus a 53px caption
+strip at Large text, rather than obscuring either controls or the board border.
+
+The 844×390 Large-text title previously confined three mode cards to half of a
+460px content column, producing roughly 66px cards and broken words. The title now
+uses available width, keeps mode choices together before the menu actions, and
+preserves scrolling. Cards measure 262.66×75.30px; keyboard Tab through the menu
+reveals Workshop without activation. Very narrow mode cards use smaller side
+padding without reducing text or target size.
+
+A release review also found the handheld stylesheet bypassed Solo's guarded
+startup. It now uses `data-boot-href`, joining the existing load/error ownership.
+The build test uses its real CSS bytes, verifies reproducibility and checks its
+exact offline inventory hash. Three build/boot checks pass on both runtimes;
+the full boot, Team host, paused resize and shared touch cohort passes 107/107 on
+Node 20 and Node 22. Final CSS finishing received another 3/3 boot-build run.
+Missing sparse test dependencies were restored from exact HEAD, not replaced
+with placeholder assets. Native startup still reaches the real title and play.
+
+Research recheck: [Apple's game guidance](https://developer.apple.com/design/human-interface-guidelines/designing-for-games)
+emphasizes platform-appropriate control sizing and menu behavior.
+[Game Accessibility Guidelines](https://gameaccessibilityguidelines.com/ensure-interactive-elements-virtual-controls-are-large-and-well-spaced-particularly-on-small-or-touch-screens/)
+recommends large, separated touch controls. This candidate preserves 44px minimum
+direction targets in the tested short landscape. Hardware safe areas, browser
+bars, actual fingers and controller comfort still require separate qualification.
+
+Final geometry with Large text: First Connection has a 418×209 complete board at
+568×320, and 558×279 at 844×390. Relay Yard keeps its mandatory objective visible;
+at 568×320 the objective ends at 71.40px, controls begin at 75px and its complete
+board measures 363.20×181.60. Boost/Support remain 44px tall; their labels fit 58px
+and 70px-wide buttons after omitting only decorative icons in this short stronghold.
+All measurements are desktop-browser overrides, not hardware certification.
+
+At 320×480 with Large text, title mode labels remain single-line in 85.33px cards
+and do not overflow; descriptions wrap naturally. The full portrait title still
+scrolls, and its long online-artwork explanation remains a later entry-flow
+polish item. This observation does not close the complete native-menu gate.
