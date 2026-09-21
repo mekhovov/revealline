@@ -1,0 +1,143 @@
+{
+  "format": "revealline-scoped-ledger-verification.v1",
+  "sourceHead": "5d0e14a626076128245b76fe91585c4dad3be810",
+  "uncommittedReviewedSuccessor": true,
+  "baseline": {
+    "commit": "9f4bc2dab04a4d7fdd85bffc0ab6761bacb7d44a",
+    "revision": 50,
+    "bytes": 7563551,
+    "sha256": "9c3331266e37fc43bca4d2965eb33f386624660313a71fa639e68cbcc404505b"
+  },
+  "current": {
+    "path": "authoring/library/fpv-field-kit/production.rltheme",
+    "bytes": 7602519,
+    "sha256": "226084d76df03d1cf1218bc579af142fcb3a8827206183d4f33a705d6dbeb3a9",
+    "revision": 52
+  },
+  "review": {
+    "path": "docs/verification/hosted-soundtracks-2026-09-21/review.json",
+    "bytes": 10597,
+    "sha256": "0fb98b0cde3157ea26d24888bbf68bd8d84563f03f73b148c339b7dad2bf5917"
+  },
+  "source51": {
+    "reconstructedExact": true,
+    "bytes": 7577235,
+    "sha256": "9f32dd44dcabb419b12f2115e305b3a821f4a4884006d2e03e654e68aac5a5d5"
+  },
+  "checks": {
+    "consecutive50To51To52Validation": true,
+    "allHistorical50PrefixesExact": true,
+    "allOriginalPayloads": {
+      "count": 127,
+      "bytes": 4007816,
+      "actualHashAndBodyEquality": true
+    },
+    "onlyNew52Records": [
+      {
+        "id": "audio.focus.field-kit",
+        "revision": 23,
+        "stage": "reviewed",
+        "parent": {
+          "id": "audio.focus.field-kit",
+          "revision": 22
+        }
+      },
+      {
+        "id": "audio.confirm.field-kit",
+        "revision": 23,
+        "stage": "reviewed",
+        "parent": {
+          "id": "audio.confirm.field-kit",
+          "revision": 22
+        }
+      },
+      {
+        "id": "audio.cancel.field-kit",
+        "revision": 23,
+        "stage": "reviewed",
+        "parent": {
+          "id": "audio.cancel.field-kit",
+          "revision": 22
+        }
+      },
+      {
+        "id": "audio.capture.field-kit",
+        "revision": 23,
+        "stage": "reviewed",
+        "parent": {
+          "id": "audio.capture.field-kit",
+          "revision": 22
+        }
+      },
+      {
+        "id": "audio.failure.field-kit",
+        "revision": 23,
+        "stage": "reviewed",
+        "parent": {
+          "id": "audio.failure.field-kit",
+          "revision": 22
+        }
+      },
+      {
+        "id": "audio.victory.field-kit",
+        "revision": 23,
+        "stage": "reviewed",
+        "parent": {
+          "id": "audio.victory.field-kit",
+          "revision": 22
+        }
+      },
+      {
+        "id": "audio.pickup.field-kit",
+        "revision": 23,
+        "stage": "reviewed",
+        "parent": {
+          "id": "audio.pickup.field-kit",
+          "revision": 22
+        }
+      },
+      {
+        "id": "audio.music.field-kit",
+        "revision": 23,
+        "stage": "reviewed",
+        "parent": {
+          "id": "audio.music.field-kit",
+          "revision": 22
+        }
+      }
+    ],
+    "teamDescriptors": [
+      {
+        "slot": "scene.reveal.wide",
+        "canonicalDescriptorSha256": "9606825aee1687d68c53b3f114521d1067932ba647bd490e2f3419902fa0cbf0",
+        "file": {
+          "bytes": 52720,
+          "height": 576,
+          "mime": "image/png",
+          "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+          "width": 1152
+        },
+        "url": "./assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+        "exactUnchanged": true
+      },
+      {
+        "slot": "picture.fpv.adf5c9eea274ba7f",
+        "canonicalDescriptorSha256": "14ec56ba4d7cd29bc9340fa83b0fd4ae73ada6b3e166897d85b20f37757a2a51",
+        "file": {
+          "bytes": 38090,
+          "height": 576,
+          "mime": "image/png",
+          "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d",
+          "width": 1152
+        },
+        "url": "./assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png",
+        "exactUnchanged": true
+      }
+    ],
+    "compiledThemeRevision": 52
+  },
+  "audioRecipeSource": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs sha256:e1bd9c13f39d0b00bd370532c3c77cac3aee78ae1738ae940ca8e80127269f6b",
+  "scope": "Independent append-only history and exact Team artwork equivalence verification. Supports metadata-only live pins50 to52; no artwork, recording, listening, musical or public release approval.",
+  "tests": "Focused history and Team suites will be recorded separately after the live-pin update.",
+  "verificationNote": "An initial check incorrectly supplied50 as the immediate previous revision of52 and correctly refused. Correct consecutive50 to51 to52 checks pass."
+}
