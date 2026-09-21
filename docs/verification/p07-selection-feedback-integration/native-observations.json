@@ -1,0 +1,23 @@
+{
+  "base": "59533841c5596ed1cd610d9bebf83d627374861a",
+  "runtimeOverride": {
+    "game/app.mjs": "f8befa8ad9e2369207cf476bfd0968090fbcc1bbc38062f1b84ef2f4bdc77b42"
+  },
+  "fixtureSha256": "074e0a7a3aea1995f01acf043201e9de9d0075060068e309df8c6ae9503d8070",
+  "method": "Exact base Git-object preview except working app.mjs; owned two-level fixture installed through file chooser; legal keyboard cuts. Read-only DOM observations, no game-state injection.",
+  "viewport": [1280, 720],
+  "observations": [
+    "After pack Play, content-select-status and shell-featured-status both named Verification cut1 selected.",
+    "First legal win retained13.0%,2040points,three lives,0:04.",
+    "Enter on Next started second mission at0:00; both old selection notices empty.",
+    "Second legal win retained13.0%,2040points,three lives,0:10 and Campaign complete2/2.",
+    "Browse picker selected Verification cut2; deploy bar matchedcut2; no oldcut1 success notice.",
+    "Escape retained exact visible finalresult and next-buttonfocus; both selection statuses remainedempty.",
+    "Browser console warnings/errors empty."
+  ],
+  "limits": [
+    "Owned easy fixture tests navigation, not production balance.",
+    "Native run does not prove exact saved bytes, checkpoint identity, cancellation or decoder failure; modeled tests cover these.",
+    "Not physical iPhone/SteamDeck/touch/controller, assistive technology, offline, full release or public qualification."
+  ]
+}
