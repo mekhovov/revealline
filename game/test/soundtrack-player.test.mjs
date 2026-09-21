@@ -2,7 +2,12 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
-import { BUILTIN_SOUNDTRACK_TRACKS, emptySoundtrackLibrary } from '../soundtrack.mjs';
+import {
+  BUILTIN_SOUNDTRACK_TRACKS,
+  emptySoundtrackLibrary,
+  upgradeSoundtrackLibrary,
+  setCatalogueTracks,
+} from '../soundtrack.mjs';
 import { fixture } from './helpers/soundtrack-fixtures.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 
@@ -602,4 +607,395 @@ test('earlier cached play settlement cannot clear a newer play preparation obser
   pending[1]();
   await second;
   assert.equal(h.player.snapshot().preparation, null);
+});
+
+function pairSetup({ fadeMs = 80, readAsset, library, ...options } = {}) {
+  const second = audioHarness().media;
+  const entries = ['first', 'second', 'third'].map((name) => ({
+    ...original.track,
+    id: `qa.${name}`,
+    title: name,
+  }));
+  const pairLibrary = {
+    ...list(entries.map((track) => track.id)),
+    tracks: entries,
+  };
+  const h = setup({
+    library: library ?? pairLibrary,
+    readAsset,
+    secondAudioElement: second,
+    fadeMs,
+    ...options,
+  });
+  return { ...h, second, entries, pairLibrary };
+}
+
+test('two streaming decks preload only the next track and genuinely overlap the audible boundary', async (t) => {
+  let reads = 0;
+  const h = pairSetup({
+    readAsset: async () => {
+      reads++;
+      return original.blob;
+    },
+  });
+  t.after(() => h.player.dispose());
+  await h.player.play();
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === 'qa.second');
+  assert.equal(reads, 2);
+  assert.equal(h.second.plays, 0, 'preloading never starts an inaudible media clock');
+  assert.equal(h.created.length - h.revoked.length, 2);
+  h.media.currentTime = original.track.asset.durationSeconds - 0.06;
+  h.media.emit('timeupdate');
+  await settleUntil(() => h.player.snapshot().transitioning);
+  assert.equal(h.player.snapshot().track.id, 'qa.second');
+  assert.equal(h.media.paused, false);
+  assert.equal(h.second.paused, false);
+  assert.ok(h.media.volume > 0 && h.second.volume > 0);
+  const base = h.soundscape.getSettings().master * h.player.snapshot().volume;
+  assert.ok(Math.abs(h.media.volume + h.second.volume - base) < 0.00001);
+  const lease = h.player.acquireGain({ factor: 0.2 });
+  assert.ok(Math.abs(h.media.volume + h.second.volume - base * 0.2) < 0.00001);
+  lease.release();
+  await settleUntil(() => !h.player.snapshot().transitioning);
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === 'qa.third');
+  assert.equal(reads, 3);
+  assert.equal(
+    h.created.length - h.revoked.length,
+    2,
+    'released deck is reused for the next original',
+  );
+  assert.equal(h.media.paused, true);
+  assert.equal(h.second.paused, false);
+});
+
+test('pause during a crossfade cancels the outgoing deck and preserves the incoming position', async (t) => {
+  const h = pairSetup();
+  t.after(() => h.player.dispose());
+  await h.player.play();
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === 'qa.second');
+  const advancing = h.player.next();
+  await settleUntil(() => h.player.snapshot().transitioning);
+  h.second.currentTime = 0.1;
+  h.player.pause();
+  assert.equal(await advancing, false);
+  assert.equal(h.media.paused, true);
+  assert.equal(h.second.paused, true);
+  assert.equal(h.player.snapshot().positionSeconds, 0.1);
+  assert.equal(h.player.snapshot().desired, false);
+  assert.equal(h.player.snapshot().transitioning, false);
+  assert.equal(h.created.length - h.revoked.length, 1);
+  const activeURL = h.second.src;
+  await h.player.play();
+  assert.equal(h.second.src, activeURL);
+  assert.equal(h.player.snapshot().positionSeconds, 0.1);
+});
+
+for (const action of ['seek', 'library', 'context', 'suspend', 'dispose']) {
+  test(`${action} cancels next-track acquisition and late bytes cannot allocate a deck`, async (t) => {
+    let reads = 0,
+      release,
+      signal;
+    const h = pairSetup({
+      readAsset: async (_, options) => {
+        reads++;
+        if (reads === 1) return original.blob;
+        signal = options.signal;
+        return new Promise((resolve) => {
+          release = resolve;
+        });
+      },
+    });
+    t.after(() => h.player.dispose());
+    await h.player.play();
+    await settleUntil(() => !!release);
+    if (action === 'seek') h.player.seek(0.1);
+    else if (action === 'library') h.player.setLibrary(h.pairLibrary);
+    else if (action === 'context') h.player.setContext({ scene: 'menu' });
+    else h.player[action]();
+    assert.equal(signal.aborted, true);
+    release(original.blob);
+    await delay(10);
+    assert.equal(h.created.length, 1);
+    assert.equal(h.second.plays, 0);
+    assert.equal(h.player.snapshot().preloadedTrackId, null);
+  });
+}
+
+test('a browser denying the second element reuses the permitted first deck for the entire queue', async (t) => {
+  const h = pairSetup({ fadeMs: 20 });
+  t.after(() => h.player.dispose());
+  await h.player.play();
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === 'qa.second');
+  const preparedURL = h.second.src;
+  h.second.rejectPlay = new DOMException('This element needs a fresh gesture.', 'NotAllowedError');
+  assert.equal(await h.player.next(), true);
+  assert.equal(h.second.plays, 1);
+  assert.equal(h.media.plays, 2);
+  assert.equal(h.media.src, preparedURL, 'reuse the validated original without another download');
+  assert.equal(h.player.snapshot().track.id, 'qa.second');
+  assert.equal(h.player.snapshot().transitioning, false);
+  assert.equal(h.media.paused, false);
+  assert.equal(h.second.paused, true);
+  assert.equal(
+    h.revoked.includes(preparedURL),
+    false,
+    'transferred ownership retains the original URL',
+  );
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === 'qa.third');
+  h.media.emit('ended');
+  await settleUntil(
+    () => h.player.snapshot().track.id === 'qa.third' && h.player.snapshot().playing,
+  );
+  assert.equal(h.media.plays, 3);
+  assert.equal(h.second.plays, 1, 'later tracks also use the already permitted element');
+  assert.equal(h.revoked.filter((url) => url === preparedURL).length, 1);
+});
+
+test('scene selection switches menu/gameplay music without changing paused listening intent', async (t) => {
+  const entries = ['menu', 'gameplay'].map((role) => ({
+    ...original.track,
+    id: `qa.${role}`,
+    title: role,
+  }));
+  const library = {
+    ...upgradeSoundtrackLibrary(emptySoundtrackLibrary()),
+    tracks: entries,
+    tags: Object.fromEntries(
+      entries.map((track) => [
+        track.id,
+        {
+          genres: ['synth90s'],
+          role: track.title,
+          energy: 2,
+          themes: [],
+        },
+      ]),
+    ),
+  };
+  const h = setup({ library });
+  t.after(() => h.player.dispose());
+  h.player.setContext({ scene: 'menu' });
+  await h.player.play();
+  assert.equal(h.player.snapshot().track.id, 'qa.menu');
+  h.player.pause();
+  h.player.setContext({ scene: 'gameplay' });
+  await settleUntil(() => h.player.snapshot().track.id === 'qa.gameplay');
+  assert.equal(h.player.snapshot().status, 'paused');
+  assert.equal(h.player.snapshot().desired, false);
+  assert.equal(h.media.plays, 1);
+});
+
+test('empty Ukrainian/fusion selections stay silent with an explanation instead of unrelated fallback', async (t) => {
+  const h = setup({ library: upgradeSoundtrackLibrary(emptySoundtrackLibrary()) });
+  t.after(() => h.player.dispose());
+  h.player.setAuthoredTrack(BUILTIN_SOUNDTRACK_TRACKS[0].recipe);
+  for (const mode of ['ukrainian', 'fusion']) {
+    await h.player.selectListening({
+      mode,
+      genres: ['synth90s', 'metal', 'ukrainian'],
+      installedOnly: false,
+      recordingMode: false,
+    });
+    assert.equal(await h.player.play(), false);
+    assert.equal(h.player.snapshot().track, null);
+    assert.equal(h.player.snapshot().status, 'idle');
+    assert.ok(h.player.snapshot().notice.includes('No '));
+  }
+  assert.equal(h.media.plays, 0);
+});
+
+test('an offline Ukrainian queue tries each original once and stops without mislabelled fallback', async (t) => {
+  let reads = 0;
+  const track = { ...original.track, id: 'qa.ukrainian' };
+  const library = {
+    ...upgradeSoundtrackLibrary(emptySoundtrackLibrary()),
+    tracks: [track],
+    tags: { [track.id]: { genres: ['ukrainian'], role: 'any', energy: 3, themes: [] } },
+    listening: {
+      mode: 'ukrainian',
+      genres: ['ukrainian'],
+      installedOnly: false,
+      recordingMode: false,
+    },
+  };
+  const h = setup({
+    library,
+    readAsset: async () => {
+      reads++;
+      throw new Error('Offline');
+    },
+  });
+  t.after(() => h.player.dispose());
+  assert.equal(await h.player.play(), false);
+  assert.equal(reads, 1);
+  assert.equal(h.player.snapshot().status, 'error');
+  assert.equal(h.player.snapshot().desired, false);
+  assert.equal(h.created.length, 0);
+  assert.ok(h.player.snapshot().notice);
+});
+
+test('failed restricted mixes and explicit v2 playlists preserve the selected music families', async (t) => {
+  const base = upgradeSoundtrackLibrary(original.library);
+  const tagged = {
+    ...base,
+    tags: { [original.track.id]: { genres: ['ukrainian'], role: 'any', energy: 3, themes: [] } },
+  };
+  const libraries = [
+    {
+      ...tagged,
+      selection: { playlistId: null },
+      listening: { mode: 'mix', genres: ['ukrainian'], installedOnly: false, recordingMode: false },
+    },
+    {
+      ...tagged,
+      playlists: [{ ...base.playlists[0], trackIds: [original.track.id] }],
+      selection: { playlistId: base.playlists[0].id },
+    },
+  ];
+  for (const library of libraries) {
+    let reads = 0;
+    const h = setup({
+      library,
+      readAsset: async () => {
+        reads++;
+        throw new Error('Offline');
+      },
+    });
+    t.after(() => h.player.dispose());
+    assert.equal(await h.player.play(), false);
+    assert.equal(reads, 1);
+    assert.equal(h.player.snapshot().status, 'error');
+    assert.equal(h.player.snapshot().desired, false);
+    assert.equal(h.media.plays, 0);
+    assert(!h.changes.some((state) => state.track?.kind === 'synth'));
+  }
+});
+
+test('an explicit catalogue playlist with no installed recordings stays empty offline', async (t) => {
+  const track = {
+    ...original.track,
+    id: 'builtin.catalog.offline',
+    edition: 'test-1',
+    path: 'game/content/music/offline.mp3',
+    tags: { genres: ['ukrainian'], role: 'any', energy: 3, themes: [] },
+  };
+  const base = setCatalogueTracks(emptySoundtrackLibrary(), [track]);
+  let reads = 0;
+  const h = setup({
+    library: {
+      ...base,
+      playlists: [
+        {
+          id: 'offline.only',
+          title: 'My album',
+          trackIds: [track.id],
+          order: 'ordered',
+          repeat: 'all',
+        },
+      ],
+      selection: { playlistId: 'offline.only' },
+      listening: { ...base.listening, installedOnly: true },
+    },
+    readAsset: async () => {
+      reads++;
+      return original.blob;
+    },
+  });
+  t.after(() => h.player.dispose());
+  assert.equal(await h.player.play(), false);
+  assert.equal(reads, 0);
+  assert.equal(h.player.snapshot().track, null);
+  assert.equal(h.player.snapshot().playlistId, 'offline.only');
+  assert.match(h.player.snapshot().notice, /Download/);
+});
+
+test('offloaded bonus tracks are skipped without fetching and an empty explicit album asks for Download again', async (t) => {
+  const base = upgradeSoundtrackLibrary(original.library);
+  let reads = 0;
+  const h = setup({
+    library: {
+      ...base,
+      bonusAlbums: [{ id: 'qa.bonus', trackIds: [original.track.id], downloaded: false }],
+      selection: { playlistId: 'qa.mix' },
+    },
+    readAsset: async () => {
+      reads++;
+      throw new Error('Offloaded bonus recordings must not be fetched by playback');
+    },
+  });
+  t.after(() => h.player.dispose());
+  await h.player.play();
+  await finishSynth(h);
+  assert.equal(h.player.snapshot().track.kind, 'synth');
+  assert.equal(reads, 0);
+  h.player.setLibrary({
+    ...base,
+    playlists: [{ ...base.playlists[0], trackIds: [original.track.id] }],
+    selection: { playlistId: 'qa.mix' },
+    bonusAlbums: [{ id: 'qa.bonus', trackIds: [original.track.id], downloaded: false }],
+  });
+  await h.player.next();
+  const state = h.player.snapshot();
+  assert.equal(state.playing, false);
+  assert.equal(state.playlistId, 'qa.mix');
+  assert.match(state.notice, /Download again/);
+  assert.equal(reads, 0);
+});
+
+test('catalogue metadata drives playback and same-ID theme selection changes the next rendition', async (t) => {
+  const catalogTracks = ['circuit', 'river'].map((theme) => ({
+    ...original.track,
+    id: `builtin.catalog.${theme}`,
+    edition: 'test-1',
+    path: `game/content/music/${theme}.mp3`,
+    tags: { genres: ['synth90s'], role: 'gameplay', energy: 3, themes: [theme] },
+  }));
+  const h = setup({ library: setCatalogueTracks(emptySoundtrackLibrary(), catalogTracks) });
+  t.after(() => h.player.dispose());
+  h.player.setContext({ scene: 'gameplay', themeId: 'circuit' });
+  await h.player.play();
+  const playlistId = h.player.snapshot().playlistId;
+  const url = h.media.src;
+  h.player.setContext({ scene: 'gameplay', themeId: 'river' });
+  assert.equal(h.player.snapshot().track.id, 'builtin.catalog.circuit');
+  assert.equal(h.player.snapshot().pendingPlaylistId, playlistId);
+  assert.equal(h.media.src, url, 'theme matching waits for the audible boundary');
+  h.media.emit('ended');
+  await settleUntil(
+    () => h.player.snapshot().track.id === 'builtin.catalog.river' && h.player.snapshot().playing,
+  );
+  assert.equal(h.player.snapshot().playlistId, playlistId);
+  assert.notEqual(h.media.src, url);
+});
+
+test('short clips preserve their opening before entering the default crossfade window', async (t) => {
+  const h = pairSetup({ fadeMs: 1500 });
+  t.after(() => h.player.dispose());
+  await h.player.play();
+  await settleUntil(() => h.player.snapshot().preloadedTrackId === 'qa.second');
+  assert.equal(h.player.snapshot().track.id, 'qa.first');
+  assert.equal(h.player.snapshot().transitioning, false);
+  assert.equal(h.second.plays, 0);
+});
+
+test('choosing an available genre clears the previous unavailable selection notice', async (t) => {
+  const track = { ...original.track, id: 'qa.available-metal' };
+  const base = upgradeSoundtrackLibrary(emptySoundtrackLibrary());
+  const h = setup({
+    library: {
+      ...base,
+      tracks: [track],
+      tags: { [track.id]: { genres: ['metal'], role: 'any', energy: 4, themes: [] } },
+      listening: { ...base.listening, mode: 'ukrainian' },
+    },
+  });
+  t.after(() => h.player.dispose());
+  assert.equal(await h.player.play(), false);
+  assert.match(h.player.snapshot().notice, /No ukrainian/i);
+  await h.player.selectListening({ ...base.listening, mode: 'metal' });
+  assert.equal(h.player.snapshot().notice, null);
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.player.snapshot().track.id, track.id);
+  assert.equal(h.player.snapshot().notice, null);
+  assert.equal(h.player.snapshot().error, null);
 });

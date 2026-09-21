@@ -130,7 +130,13 @@ export function createCouchInstalledChapters({
     writer: Object.freeze({ writable: false }),
     registeredEntries,
     knownDescriptors: SOURCE_EXTERNAL_CHAPTERS,
-    getManagedStore: () => (manager ??= createManagedMediaStore({ indexedDB, storyMedia: true })),
+    // Current Couch shares the catalogue-aware authority used by solo play.
+    getManagedStore: () =>
+      (manager ??= createManagedMediaStore({
+        indexedDB,
+        storyMedia: true,
+        soundtrackCatalogue: true,
+      })),
     decodeImage: verifyDecode,
   });
   // Embedded installs have the same fresh-picture policy as shipped maps. Each

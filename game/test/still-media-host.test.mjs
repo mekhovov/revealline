@@ -82,7 +82,7 @@ async function setup(t, options = {}) {
     lockManager: { request: async (_name, _options, work) => work({}) },
     decodeImage,
     createManager(args) {
-      assert.deepEqual(args, { storyMedia: true });
+      assert.deepEqual(args, { storyMedia: true, soundtrackCatalogue: true });
       const manager = createManagedMediaStore({ ...args, indexedDB: memory.indexedDB });
       managers.push(manager);
       return manager;

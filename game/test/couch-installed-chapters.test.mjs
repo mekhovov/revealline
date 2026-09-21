@@ -110,7 +110,11 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
     packsKey: 'revealline.packs.dev.v1',
   });
   const writer = await claimProfileWriter(locks, pointer.keys.writerKey);
-  const manager = createManagedMediaStore({ indexedDB: media.indexedDB, storyMedia: true });
+  const manager = createManagedMediaStore({
+    indexedDB: media.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const still = createStillMediaStore({ managedStore: manager, decodeImage });
   const installer = createExternalChapterHost({
     indexedDB: assets.indexedDB,
@@ -713,7 +717,7 @@ test('pending journals, missing descriptors and absent original bytes refuse ins
   await f.put(f.pointer.keys.indexKey, raw.index);
   const rows = await f.reader.refresh();
   const db = await new Promise((resolve) => {
-    const r = f.media.indexedDB.open(MANAGED_MEDIA_DATABASE, 4);
+    const r = f.media.indexedDB.open(MANAGED_MEDIA_DATABASE, 5);
     r.onsuccess = () => resolve(r.result);
   });
   await new Promise((resolve, reject) => {

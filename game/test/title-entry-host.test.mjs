@@ -142,7 +142,7 @@ class Picture {
 }
 async function media(t) {
   const memory = memoryIndexedDB(),
-    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true });
+    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true, soundtrackCatalogue: true });
   const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
   const themes = JSON.parse(
     readFileSync(new URL('../content/themes.json', import.meta.url)),
