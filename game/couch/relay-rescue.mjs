@@ -3709,11 +3709,14 @@ try {
     });
   } else if (
     journeyRequests.length === 1 &&
-    ['team-timed-originals', 'team-window-spatial-1'].includes(journeyRequests[0])
+    ['team-timed-originals', 'team-window-spatial-1', 'team-depot-spatial-1'].includes(
+      journeyRequests[0],
+    )
   ) {
     const { createTeamTimedEntry } = await import('../content-design/team-timed-entry.mjs');
     candidateEntry = await createTeamTimedEntry({
       spatial: journeyRequests[0] === 'team-window-spatial-1',
+      depot: journeyRequests[0] === 'team-depot-spatial-1',
     });
   }
   bootCoop(candidateEntry);
