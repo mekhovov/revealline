@@ -1,5 +1,7 @@
 # RevealLine — Pixel FPV Field Kit
 
+Research and source-original links below open the versioned repository online. They are reference evidence, separate from this release’s playable assets and offline help.
+
 Design specification and review atlas for the whole-game redesign. The selected production direction is **Pixel FPV Field Kit**: a complete original FPV presentation, supported by an extensible asset and theme framework. Ukrainian, Retro and Coupa remain future presentation collections; this redesign does not claim their artwork is complete.
 
 Open the [interactive design atlas](../authoring/design-atlas/index.html) through the repository’s local server. It provides desktop, tablet and phone layout studies, alternative screen states, English/Ukrainian type specimens, a screen matrix, palette roles and reference comparisons. The studies are HTML/CSS illustrations, not gameplay. Their example scores, maps and objectives do not replace authored mission data.
@@ -8,7 +10,7 @@ Open the [interactive design atlas](../authoring/design-atlas/index.html) throug
 
 All 64 images in `docs/research/_xposed-reloaded_reloaded_examples/` were inspected: 48 level layouts across four packs and 16 menu, gameplay and result references. The title uses few actions and one strong image; the gallery combines artwork, level labels, medals and high scores; a bright active cut gives way to a quiet captured contour; results explain earned rewards and provide direct repeat actions.
 
-The [official PlayStation listing](https://store.playstation.com/en-us/product/UP2538-CUSA28099_00-XPOSEDRELOADED01) describes picture exposure, coverage goals and pack progression. The [related Nintendo release](https://www.nintendo.com/en-ca/store/products/xposed-switched-switch/) supplies useful context but is not assumed to be mechanically identical. Existing [motion observations](research/round-07-reloaded-ui-motion.md) and [manual/still analysis](research/round-05-reloaded-stills.md) remain the evidence for temporal behavior and terrain meaning; new screenshots alone do not establish those rules.
+The [official PlayStation listing](https://store.playstation.com/en-us/product/UP2538-CUSA28099_00-XPOSEDRELOADED01) describes picture exposure, coverage goals and pack progression. The [related Nintendo release](https://www.nintendo.com/en-ca/store/products/xposed-switched-switch/) supplies useful context but is not assumed to be mechanically identical. Existing [motion observations](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/docs/research/round-07-reloaded-ui-motion.md) and [manual/still analysis](https://github.com/mekhovov/revealline/blob/290aeb7ed4b31cb81271bea8a58f6fdef0734266/docs/research/round-05-reloaded-stills.md) remain the evidence for temporal behavior and terrain meaning; new screenshots alone do not establish those rules.
 
 Xposed combines smooth illustrations with pixel UI. Our chosen direction keeps its composition and attention hierarchy while unifying new artwork around original, restrained pixel FPV imagery. Do not copy its logo, sprites, music, pictures or proprietary control glyphs. Reference screenshots remain source research and are excluded from playable distributions.
 
