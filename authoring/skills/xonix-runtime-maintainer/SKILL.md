@@ -1329,3 +1329,10 @@ Prompt example: “Run the complete Team host and painter cohort after a present
 A closed IndexedDB connection must not permanently poison Journey reads or saves. Retire only the current cached connection after unexpected close, version change or synchronous transaction `InvalidStateError`; retire only the owning open request on failure. Keep late events from retired owners harmless. Preserve the failed operation and pending progress for the next call; never replay a transaction automatically or convert a storage error into an empty success.
 
 Prompt example: “Close the Journey connection after loading, then attempt a save. Prove the clear remains available in memory, the failed operation performs no hidden retry, and explicit flush opens once and commits once. Cover late old close/error notifications, blocked and synchronous open failures, concurrent readers and quota refusal. Keep finite IndexedDB tests separate from native storage-interruption qualification.”
+
+
+### Controller reconnect through a live cut
+
+Test reconnect through the actual player host as well as the input adapter. Disconnect during an unfinished cut, retain the exact paused checkpoint and saved replay, then reconnect with Confirm and a movement axis held. Neither reconnect nor later neutral input may resume. A fresh Confirm after neutral must resume the same flight; inspect the zero-time resume boundary before simulation ticks legitimately advance. Repeat Immediate and Grid + buffer, then verify the resumed replay. Model button release with both `pressed: false` and `value: 0`; a stale analog value is still held input.
+
+Prompt example: “Start and steer through sampled controller edges, disconnect during a cut, reconnect while holding A and Down, release both and press A freshly. Assert exact paused state and stored bytes, explicit successful Resume and a verifiable continuation in both steering modes. Do not inject a run or call Resume directly. Report modeled host evidence separately from real Steam Deck mapping, Bluetooth reconnection and device testing.”

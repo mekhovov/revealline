@@ -57,7 +57,10 @@ async function setup(t) {
   const page = await classicPage(t, { readPads: () => [pad] });
   const release = () => {
     pad.axes.fill(0);
-    pad.buttons.forEach((b) => (b.pressed = false));
+    pad.buttons.forEach((b) => {
+      b.pressed = false;
+      b.value = 0;
+    });
     page.frame();
     page.frame();
   };
@@ -368,5 +371,55 @@ for (const mode of ['stick', 'swipe', 'dpad'])
     press(9);
     const saved = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
     assert.equal(verifyReplay(saved.replay).match, true);
+    assert.deepEqual(page.errors, []);
+  });
+
+for (const turnPolicy of ['immediate', 'grid-center'])
+  test(`actual host: ${turnPolicy} reconnect requires neutral then fresh Resume without losing the cut`, async (t) => {
+    const { page, pad, press, release, start } = await setup(t);
+    page.change('turn-select', turnPolicy);
+    await settle(
+      () => !page.$('start-button').disabled && page.$('turn-select').value === turnPolicy,
+    );
+    await start();
+    assert.equal(page.rendered.run.turnPolicy, turnPolicy);
+    pad.axes[0] = 1;
+    for (let i = 0; i < 25; i++) page.frame();
+    release();
+    pad.axes[0] = 0;
+    pad.axes[1] = 1;
+    for (let i = 0; i < 20; i++) page.frame();
+    assert.ok(page.rendered.run.trail.length > 0, 'Disconnect occurs during an unfinished cut.');
+    pad.connected = false;
+    page.frame();
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    const checkpoint = authoritativeCheckpoint(page.rendered.run);
+    const suspended = page.storage.getItem('revealline.suspended.dev.v1');
+    assert.equal(verifyReplay(JSON.parse(suspended).replay).match, true);
+    pad.buttons[0].pressed = true;
+    pad.buttons[0].value = 1;
+    pad.connected = true;
+    for (let i = 0; i < 20; i++) page.frame();
+    assert.equal(page.doc.body.dataset.flightState, 'paused', 'Held reconnect is not Resume.');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.equal(page.storage.getItem('revealline.suspended.dev.v1'), suspended);
+    release();
+    assert.equal(page.doc.body.dataset.flightState, 'paused', 'Neutral alone does not resume.');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    pad.buttons[0].pressed = true;
+    pad.buttons[0].value = 1;
+    page.frame(0);
+    await settle(() => {
+      page.frame(0);
+      return page.doc.body.dataset.flightState === 'running';
+    }, 'Fresh A explicitly resumes the retained flight');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    release();
+    press(9);
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.equal(
+      verifyReplay(JSON.parse(page.storage.getItem('revealline.suspended.dev.v1')).replay).match,
+      true,
+    );
     assert.deepEqual(page.errors, []);
   });

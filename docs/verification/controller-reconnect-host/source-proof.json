@@ -1,0 +1,23 @@
+{
+  "base": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "testSHA256": "2856b3329f65de417a1f3721213772ea45a4a416ff416633027e3d88455fb046",
+  "runs": [
+    {
+      "node": "20.19.5",
+      "pass": 14,
+      "fail": 0,
+      "skip": 0,
+      "logSHA256": "311a21b8c8da838f363eda0f58edabf339d6e4bc070e902180ec3c00b4e5d969",
+      "verifiedTrackedModuleReads": 266
+    },
+    {
+      "node": "22.22.2",
+      "pass": 14,
+      "fail": 0,
+      "skip": 0,
+      "logSHA256": "b6907ecc85715ae4214501f3956bed75fdaa75a9f88ce4db6e8d0faee1d167aa",
+      "verifiedTrackedModuleReads": 266
+    }
+  ],
+  "boundary": "Complete 14-case actual host file with modeled DOM and standard controller snapshots; no physical device or native mapping claim."
+}
