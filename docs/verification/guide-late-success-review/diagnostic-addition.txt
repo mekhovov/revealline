@@ -1,0 +1,25 @@
+for (const intent of ['Read focus', 'hidden then visible', 'pagehide then pageshow'])
+  test(`review: successful delayed practice preserves newer ${intent}`, async (t) => {
+    const gate = deferredPractice();
+    const h = setup(t, { loadImpactScenario: () => gate.promise });
+    h.guide.open({ topic: 'line-impact' });
+    const play = focusedPracticePlay(h);
+    const operation = play.onclick();
+    if (intent === 'Read focus') h.$('read').focus();
+    if (intent === 'hidden then visible') {
+      h.doc.hidden = true; h.doc.emit('visibilitychange');
+      h.doc.hidden = false; h.doc.emit('visibilitychange');
+    }
+    if (intent === 'pagehide then pageshow') {
+      h.host.emit('pagehide', { persisted: true });
+      h.host.emit('pageshow', { persisted: true });
+    }
+    const focus = h.doc.activeElement;
+    gate.resolve(impact);
+    const result = await operation;
+    const observation = {intent, result, active:h.guide.practiceActive, frameHidden:h.guide.frame.hidden, focusBefore:focus?.id||focus?.tagName, focusAfter:h.doc.activeElement?.id||h.doc.activeElement?.tagName, started:h.started, handoffChanged:h.host.sessionStorage.getItem(handoff)!=='prior preview bytes'};
+    t.diagnostic(JSON.stringify(observation));
+    assert.equal(h.doc.activeElement?.id || h.doc.activeElement?.tagName, focus?.id || focus?.tagName, 'A completed request must not steal newer attention.');
+    assert.equal(h.guide.practiceActive, false, 'Background return does not enter practice automatically.');
+    assert.equal(h.host.sessionStorage.getItem(handoff), 'prior preview bytes');
+  });

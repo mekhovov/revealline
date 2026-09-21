@@ -1,0 +1,93 @@
+{
+  "reviewedPacket": ".cache/p16-guide-practice-return-bce-r1/source.patch",
+  "packetSha256": "cff7118860a080d833e78bc47f8a3a8186d5b984e5456c2e2f9662bd45b147db",
+  "runtimeBase": "8cffb36b29a38013eb9213845efd675c4864c9d8",
+  "candidateSourcePins": {
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/test/enemy-guide-panel.test.mjs": {
+      "replacement": "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/guide-success-review/panel-review.mjs",
+      "sha256": "e895df3f9a5c96f2bc595e43f548850b2af8e8f940d40ade6f1127d69054a794"
+    },
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-presentation-integration/game/ui/enemy-guide.mjs": {
+      "replacement": "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p16-guide-practice-return-bce-r1/candidate/game/ui/enemy-guide.mjs",
+      "sha256": "0891287c2b6fa4e5aabc824936318d217f5b689a24a6f49b38ea4b386dae5126"
+    }
+  },
+  "results": {
+    "node20.tap": {
+      "sha256": "679018631e8ab5ce894cee836d19a88085b8e78819a61cc1c72a9b128b73cb00",
+      "observations": [
+        {
+          "intent": "Read focus",
+          "result": true,
+          "active": true,
+          "frameHidden": false,
+          "focusBefore": "enemy-guide-read",
+          "focusAfter": "enemy-guide-frame",
+          "started": 1,
+          "handoffChanged": true
+        },
+        {
+          "intent": "hidden then visible",
+          "result": true,
+          "active": true,
+          "frameHidden": false,
+          "focusBefore": "BODY",
+          "focusAfter": "enemy-guide-frame",
+          "started": 1,
+          "handoffChanged": true
+        },
+        {
+          "intent": "pagehide then pageshow",
+          "result": true,
+          "active": true,
+          "frameHidden": false,
+          "focusBefore": "BODY",
+          "focusAfter": "enemy-guide-frame",
+          "started": 1,
+          "handoffChanged": true
+        }
+      ],
+      "assertionFailures": 3,
+      "scope": "Three selected diagnostic scenarios; not full-suite qualification."
+    },
+    "node22-r2.tap": {
+      "sha256": "6c285f1484cf2eb37ff8d32410bccb5ebb5d04992f1dc708e031935a92e0c1d7",
+      "observations": [
+        {
+          "intent": "Read focus",
+          "result": true,
+          "active": true,
+          "frameHidden": false,
+          "focusBefore": "enemy-guide-read",
+          "focusAfter": "enemy-guide-frame",
+          "started": 1,
+          "handoffChanged": true
+        },
+        {
+          "intent": "hidden then visible",
+          "result": true,
+          "active": true,
+          "frameHidden": false,
+          "focusBefore": "BODY",
+          "focusAfter": "enemy-guide-frame",
+          "started": 1,
+          "handoffChanged": true
+        },
+        {
+          "intent": "pagehide then pageshow",
+          "result": true,
+          "active": true,
+          "frameHidden": false,
+          "focusBefore": "BODY",
+          "focusAfter": "enemy-guide-frame",
+          "started": 1,
+          "handoffChanged": true
+        }
+      ],
+      "assertionFailures": 3,
+      "scope": "Three selected diagnostic scenarios; not full-suite qualification."
+    }
+  },
+  "disposition": "Separate late-success gap sent to existing UX owner. Failure-focus fix remains scoped; do not claim lifecycle-success coverage.",
+  "qualificationBoundary": "Actual candidate guide and real operation-focus code in existing finite panel fixture. Not browser pixel/hardware evidence."
+}
