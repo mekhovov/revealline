@@ -74,5 +74,19 @@ Transitions, warnings and release waits have not been lengthened.
 - Reviewed integration, allocated immutable release and exact GitHub Pages proof
   remain release-owner gates. The public/frozen release has not been changed.
 
-Exact-source native inspection will be recorded separately after this packet is
-committed. Automated checks must not be presented as human acceptance.
+## Exact-source native observation
+
+Committed source4386affa, read-only port8819, in-app desktop browser. Inspect left
+the starter mission unchanged until explicit Apply. Both new boards visually
+matched the authored landings, baffles, receiver positions and connector links.
+The frozen overlay reported one retained region, zero would-fill cells and the
+Sentinel as sole field anchor. Relay showed28 reserved non-scoring gate cells.
+
+Expert rules visibly explained two lives,75% faster moving enemies and35% shorter
+attack rests, while keeping craft10cells/s and warning lengths unchanged. Launched
+each exact Solo preview and played one real direction input. Twin's Up closure
+secured0.6% with both lives intact; paused at0:15 with no unfinished line. Relay's
+Down closure secured0.4% with both lives intact; paused at0:18. No warning/error
+console entries were observed. This verifies launch, first-return behavior and
+preview wiring, not native full clears, actual connector traversal, physical
+controllers, human enjoyment or public deployment.
