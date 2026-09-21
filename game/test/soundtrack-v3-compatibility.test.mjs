@@ -6,7 +6,13 @@ import {
   prepareManagedMediaBytes as prepareV2Media,
 } from './fixtures/soundtrack-v2/managed-media-store.mjs';
 import { prepareStoredStories, emptyStoredStories } from '../story-storage-record.mjs';
-import { emptySoundtrackLibrary, upgradeSoundtrackLibrary } from '../soundtrack.mjs';
+import {
+  emptySoundtrackLibrary,
+  upgradeSoundtrackLibrary,
+  resolveSoundtrackLibrary,
+  soundtrackPlaylists,
+  SOUNDTRACK_GENRES,
+} from '../soundtrack.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { fixture, structuralProbe, memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 const sample = await fixture('future-format');
@@ -14,6 +20,34 @@ const prepare = (value, assets = []) =>
   prepareSoundtrackLibrary(value, assets, { probeMedia: structuralProbe });
 const oldLibrary = emptySoundtrackLibrary({ catalogue: true, version: 2 });
 const still = { format: 'revealline-managed-bytes.v1', items: [] };
+
+test('v2 writers retain legacy genre choices and require v3 before writing expanded styles', () => {
+  assert.deepEqual(oldLibrary.listening.genres, ['synth90s', 'metal', 'ukrainian']);
+  assert(
+    !soundtrackPlaylists(oldLibrary).some(
+      (playlist) => playlist.id === 'builtin.playlist.chiptune',
+    ),
+  );
+  assert.deepEqual(emptySoundtrackLibrary({ catalogue: true }).listening.genres, SOUNDTRACK_GENRES);
+  for (const patch of [{ mode: 'chiptune' }, { genres: ['chiptune'] }]) {
+    const value = { ...oldLibrary, listening: { ...oldLibrary.listening, ...patch } };
+    assert.throws(() => resolveSoundtrackLibrary(value), /require library v3/);
+  }
+  const tagged = {
+    ...oldLibrary,
+    tracks: [sample.track],
+    tags: { [sample.track.id]: { genres: ['ambient'], role: 'any', energy: 2, themes: [] } },
+  };
+  assert.throws(() => resolveSoundtrackLibrary(tagged), /require library v3/);
+  assert.equal(
+    resolveSoundtrackLibrary({
+      ...emptySoundtrackLibrary({ catalogue: true }),
+      tracks: tagged.tracks,
+      tags: tagged.tags,
+    }).tags[sample.track.id].genres[0],
+    'ambient',
+  );
+});
 
 test('frozen DB5/v2 readers reject a v3 row without touching shared metadata or audio', async () => {
   const memory = memoryIndexedDB();

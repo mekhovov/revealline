@@ -227,7 +227,7 @@ test('candidate producer binds every admitted source and stays separate from pub
     new Set(catalog.albums.flatMap((a) => a.library.tracks.map((t) => t.id))).size,
     register.tracks.length,
   );
-  assert.equal(register.tracks.length, 30);
+  assert.equal(register.tracks.length, 70);
   for (const bundle of result.bundles) {
     const metadata = catalog.albums.find((album) => album.path === bundle.name);
     assert.equal(bundle.bytes.length, metadata.bytes);

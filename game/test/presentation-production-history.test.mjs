@@ -468,14 +468,20 @@ test('soundtrack UI and audio bind only their reviewed current inputs', async ()
     } else {
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
-        asset.quality.evidence.some((entry) =>
-          entry.includes('Scoped soundtrack audio source review'),
+        asset.quality.evidence.some(
+          (entry) =>
+            entry.includes(
+              'docs/verification/music-expansion-2026-09-21/review.json sha256:b7897ae961e67504eab17991193840d0764164690345cb012ec7d7ef8723c780',
+            ) &&
+            entry.includes(
+              'docs/verification/music-expansion-2026-09-21/album-review.json sha256:fc767799091324d0f975586ddf6a1fb907dea8a5db92961b4659337b68cae2b8',
+            ),
         ),
         slot.id,
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:c38f261649fb24bf0b24d4ac4f1e04de08871434e9413524c99a7317f4c09998',
+          'sha256:407ed87024f42f215eeedaab51ad34e8643bb39c7fd6d406cd7145d2e1c98fe0',
         ),
         slot.id,
       );
@@ -541,6 +547,7 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
     'soundtrack-bundle.mjs',
     'soundtrack-share.mjs',
     'soundtrack-source.mjs',
+    'soundtrack-albums.mjs',
     'ui/soundtrack-panel.mjs',
   ];
   const inputs = new Map([
