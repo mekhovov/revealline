@@ -233,7 +233,17 @@
         <section class="arena-panel" aria-label="Game">
           <div class="telemetry">
             <div class="coverage">
-              <span>REVEALED</span><strong id="coverage">0.0<small>%</small></strong>
+              <span>REVEALED</span
+              ><strong
+                id="coverage"
+                role="progressbar"
+                aria-label="Picture revealed"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+                aria-valuetext="0 percent revealed"
+                >0.0<small>%</small></strong
+              >
               <div class="meter"><i id="coverage-bar"></i><b id="goal-marker"></b></div>
               <em id="target">TARGET 45%</em>
             </div>

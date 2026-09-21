@@ -6758,6 +6758,11 @@ try {
               ? 'paused'
               : 'running';
     $('coverage').innerHTML = `${(run.coverage * 100).toFixed(1)}<small>%</small>`;
+    $('coverage').setAttribute('aria-valuenow', (run.coverage * 100).toFixed(1));
+    $('coverage').setAttribute(
+      'aria-valuetext',
+      `${(run.coverage * 100).toFixed(1)} percent revealed; target ${Math.round(run.level.goal.coverage * 100)} percent`,
+    );
     $('coverage-bar').style.width = `${run.coverage * 100}%`;
     $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
     $('target').textContent = `TARGET ${Math.round(run.level.goal.coverage * 100)}%`;

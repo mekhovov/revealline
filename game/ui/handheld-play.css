@@ -793,18 +793,20 @@
     display: none;
   }
   body.field-kit.game-shell[data-flight-state='running'] #coverage {
-    display: inline-flex;
-    flex-wrap: wrap;
+    display: inline-grid;
+    grid-template-columns: auto auto;
     align-content: center;
     justify-content: center;
-    width: 5ch;
+    width: max-content;
+    min-width: 6ch;
+    white-space: nowrap;
     line-height: 1;
   }
   body.field-kit.game-shell[data-flight-state='running'] #coverage small {
     font-size: inherit;
   }
   body.field-kit.game-shell[data-flight-state='running'] #coverage::after {
-    flex-basis: 100%;
+    grid-column: 1 / -1;
     text-align: center;
     line-height: 1;
   }
@@ -1178,7 +1180,7 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
       .first-flight-session
     ) {
-    --fk-flight-bottom: calc(var(--handheld-label) * 4 + 12px);
+    --fk-flight-bottom: calc(var(--handheld-label) * 4 + 20px);
   }
   body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
       .first-flight-session
@@ -1221,11 +1223,106 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
 /* The persistent encounter card already presents these exact phase messages.
    Keep other event notices (loss, pickup, storage failure) available. Full
    encounter text remains in Field details and the live card. */
-@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
   body.field-kit.game-shell[data-flight-state='running']:has(
       #encounter-status[data-kind='encounter']:not([hidden])
     )
     #run-message[data-cue='encounter'] {
     display: none;
+  }
+}
+
+/* Warning-capable portrait play shares the same floating control convention.
+   A second full-height pad reservation must not collapse the complete arena. */
+@media (max-width: 680px) and (orientation: portrait) {
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    ) {
+    --solo-warning-space: calc(var(--handheld-label) * 5.2 + 20px);
+    --solo-field-space: calc(
+      100dvh - 56px - var(--solo-warning-space) - var(--safe-top) - var(--safe-bottom)
+    );
+  }
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    main,
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    .arena-panel {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    display: block;
+  }
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    .arena-panel
+    > .arena-shell {
+    position: fixed;
+    left: calc(var(--safe-left) + (100% - var(--safe-left) - var(--safe-right)) / 2);
+    top: calc(var(--safe-top) + 56px + var(--solo-field-space) / 2);
+    transform: translate(-50%, -50%);
+    width: min(
+      calc(100% - 24px - var(--safe-left) - var(--safe-right)),
+      calc(var(--solo-field-space) * var(--board-aspect, 1.333333))
+    );
+    height: auto;
+    aspect-ratio: var(--board-ratio, 4 / 3);
+    container-type: normal;
+    display: block;
+  }
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    #game-canvas {
+    width: 100%;
+    height: 100%;
+  }
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    #encounter-status:not([hidden]):not([data-kind='classic'][data-phase='open']) {
+    position: fixed;
+    display: grid;
+    left: max(12px, var(--safe-left));
+    right: max(12px, var(--safe-right));
+    bottom: max(4px, var(--safe-bottom));
+    width: auto;
+    transform: none;
+    margin: 0;
+    padding: 4px 8px;
+    font-size: var(--handheld-label);
+    line-height: 1.3;
+    background: var(--fk-bg, #070b12);
+  }
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    .play-controls {
+    position: fixed;
+    bottom: calc(var(--solo-warning-space) + var(--safe-bottom) + 8px);
+  }
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    )
+    #run-message {
+    position: fixed;
+    left: max(12px, var(--safe-left));
+    right: max(12px, var(--safe-right));
+    bottom: calc(var(--solo-warning-space) + var(--safe-bottom) + 4px);
+    width: auto;
+  }
+}
+@media (max-width: 680px) and (orientation: portrait) and (max-height: 600px) {
+  body.field-kit.game-shell[data-arena-chrome='full'][data-flight-state='running']:not(
+      .first-flight-session
+    ) {
+    --touch-size: 132px;
   }
 }
