@@ -941,3 +941,111 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
     left: calc(var(--safe-left) + (100% - var(--safe-left) - var(--safe-right)) / 2);
   }
 }
+
+/* Team captions keep a full-width reading strip below the shared arena and
+   both thumbs. The preferred pad size fits the remaining height; small screens
+   keep at least 44px direction targets instead of covering Pause or Support. */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.playing:has(#coop-overlay[hidden]) {
+    --team-message-space: calc(var(--handheld-label) * 2.5 + 8px);
+    --team-pad-limit: max(
+      132px,
+      calc(
+        100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 140px -
+          var(--team-message-space)
+      )
+    );
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot {
+    padding-bottom: calc(var(--team-message-space) + 8px);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .control-card {
+    bottom: calc(var(--team-message-space) + 12px + env(safe-area-inset-bottom));
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad {
+    --touch-size: min(156px, var(--team-pad-limit));
+    grid-template-columns: minmax(44px, 1fr) minmax(70px, 1fr);
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad[data-touch-size='large'] {
+    --touch-size: min(192px, var(--team-pad-limit));
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-message {
+    left: max(12px, env(safe-area-inset-left));
+    right: max(12px, env(safe-area-inset-right));
+    bottom: env(safe-area-inset-bottom);
+    height: var(--team-message-space);
+    max-height: var(--team-message-space);
+    margin: 0;
+    padding-block: 4px;
+    line-height: 1.25;
+    overflow: auto;
+    scrollbar-width: thin;
+    z-index: 10;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad > button[data-action] {
+    font-size: var(--handheld-label);
+    line-height: 1.1;
+    padding-inline: 0;
+  }
+}
+
+/* The short-landscape title uses the available width, not a desktop 460px
+   content column split in half. Mode links keep their place before menu actions
+   and enough width for words at Large text size. Scroll remains available. */
+@media (min-width: 681px) and (max-width: 1024px) and (max-height: 600px) {
+  body.field-kit.game-shell .shell-home[open] {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    padding: max(16px, var(--safe-top)) max(20px, var(--safe-right)) max(16px, var(--safe-bottom))
+      max(20px, var(--safe-left));
+  }
+  body.field-kit.game-shell .home-content {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 1fr);
+    gap: 8px 24px;
+  }
+  body.field-kit.game-shell .home-content > * {
+    grid-column: 1;
+  }
+  body.field-kit.game-shell .home-content > .eyebrow {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    margin-bottom: 4px;
+  }
+  body.field-kit.game-shell #shell-title-modes {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-bottom: 8px;
+  }
+  body.field-kit.game-shell .home-content > .home-actions {
+    grid-column: 2;
+    grid-row: 3 / 12;
+    align-self: start;
+    margin: 0;
+  }
+}
+@media (max-width: 399px) {
+  .field-kit .game-mode-choice > :is(a, [aria-current]),
+  .field-kit #couch-app .game-mode-choice > :is(a, [aria-current]) {
+    padding-inline: 6px;
+  }
+}
+/* A short stronghold keeps its mandatory objective above both thumbs. Text
+   labels identify actions here; decorative icons return when height permits. */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 350px) {
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    .race-pad
+    > button[data-action] {
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    .race-pad
+    > button[data-action]::before {
+    display: none;
+  }
+}
