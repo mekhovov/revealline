@@ -2167,7 +2167,7 @@ export function bootCoop({
           departure = ticket;
           $('coop-discard-title').textContent = 'Start another Team arena?';
           $('coop-discard-copy').textContent =
-            `Stay keeps this attempt and its picture. Replace & play starts ${row.title} together. Team progress stays on this page.`;
+            `Stay keeps this attempt and its picture. Replace & play starts ${row.title} together. This unfinished attempt is not saved; replacing it loses its current territory, not previously recorded mission clears.`;
           $('coop-discard-confirm').textContent = 'Replace & play';
           try {
             departureDialog.showModal();
@@ -2671,7 +2671,7 @@ export function bootCoop({
     clear();
     $('coop-discard-title').textContent = 'Discard this Team attempt?';
     $('coop-discard-copy').textContent =
-      `Team progress is only kept on this page; this attempt is not saved. ${
+      `This unfinished attempt is not saved; discarding it loses its current territory, not previously recorded mission clears. ${
         loopStopped
           ? 'Stay keeps this stopped attempt on screen. It cannot resume after the arena error.'
           : 'Stay keeps both players paused. Resume together remains a separate action.'

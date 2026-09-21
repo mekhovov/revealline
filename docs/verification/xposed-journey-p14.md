@@ -462,3 +462,14 @@ foundation/material/roamer host setups and untouched historical guidance. The
 full27-case Team Journey flow passes on Node22; the changed held-direction case
 also passes on Node20. Scoped format/lint/diff checks pass. Native compact-card
 and early-Journey wording inspection remain next, not human qualification.
+
+Native exact `746ba0bc` on local port8811 confirms Twin landings' reclaimed-ground
+closure/rescue/return-route instructions. All twelve optional goals start collapsed;
+opening and closing Twin landings' goal leaves Play separate and the chooser open.
+The normal-viewport screenshot confirms distinct diagrams and visible route/Play
+with compact goal disclosures. No small-screen or physical-controller claim follows.
+
+Departure and chooser-replacement warnings now distinguish unsaved territory in
+the current attempt from previously recorded mission clears. They no longer claim
+that all Team progress exists only on the current page. Eighteen exit/discovery/
+input cases pass on both Node versions, including candidate and legacy Stay paths.
