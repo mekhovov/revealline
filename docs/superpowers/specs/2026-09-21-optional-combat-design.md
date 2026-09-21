@@ -1,6 +1,6 @@
 # Optional combat patrols — versioned Solo/Versus foundation
 
-Status: proposed detailed D2 specification; independent review pending. The user
+Status: D2 specification approved by independent review (revision 2). The user
 authorized automatic continuation, so documented decisions and review replace
 routine approval pauses. This does not authorize publication without technical
 gates or invent human acceptance. Music remains paused.
@@ -56,8 +56,9 @@ Add opt-in `classic.combatPatrols` with exact keys:
 
 `{ version: 'combat-patrols.v1', enabled: boolean, actors: [...] }`.
 
-Each actor has `id`, `role` (`scout` or `sentry`), cell-centered `x/y`, eight-way
-unit heading encoded as two integers in -1..1, `speed`, `turnTicks`; sentries also
+Each actor has `id`, `role` (`scout` or `sentry`), cell-centered `x/y`, heading
+components `headingX/headingY` (integers in -1..1, not both zero), `speed`,
+`turnTicks`; normalize diagonal headings to unit length for travel. Sentries also
 have `senseRadius`, `scanTicks`, `openingTicks`, `warningTicks`, `recoveryTicks`,
 `restTicks`, `shotSpeed`, `shotLifeTicks`. No unknown keys, inferred defaults or
 executable values. Scout descriptors reject sentry-only keys. Dense bounded JSON,
@@ -96,8 +97,10 @@ does not damage the craft. Their future projectile is the only new damage source
 Initial shared authoring recipes for D2b: measured speed1.8 cells/s, turn120 actor
 ticks; scout never fires. Sentry sense16 cells, scan30 ticks, opening480 ticks,
 warning180 ticks, recovery180 ticks, rest1200 ticks, shot speed8 cells/s,
-shot lifetime360 actor ticks. Moving speed uses the existing difficulty multiplier;
-only attack rest uses the existing rest multiplier. Warning, recovery, opening,
+shot lifetime360 actor ticks. D2a consumes already-resolved descriptor values:
+there is no runtime difficulty multiplier. D2b applies the catalogue's existing
+movement and attack-rest factors exactly once, when compiling speed/restTicks
+(round rest ticks to the nearest integer). Warning, recovery, opening,
 projectile speed/lifetime and sensing do not get additional difficulty scaling.
 No per-map player physics. Runtime validation bounds: speed0.25–8, turn30–1200,
 sense4–24, scan12–120, opening240–2400, warning120–480, recovery120–600,
@@ -109,8 +112,33 @@ within range, outside recovery/grace and line-of-sight crosses only field cells.
 Lock the observed craft position when warning begins; do not track subsequent
 steering. At firing, require a live target still cutting with the locked ray
 unobstructed; returning to reclaimed ground or an intervening capture cancels the
-warning into cooldown. Never queue a burst. If projectile capacity is full, skip
+warning into cooldown. A capture cancels only if it eliminates the sentry,
+returns the craft to ground, or obstructs the locked ray; unrelated remote fill
+does not cancel it. Never queue a burst. If projectile capacity is full, skip
 the shot and enter recovery. Announce locks through events for D2c's visual cue.
+
+All AI deadlines use the existing non-frozen `classic.actorTick`, initially zero.
+`stepClassic` increments this clock before world simulation. Process combat AI
+transitions once at the **end** of a nonterminal fixed tick, after collisions,
+accepted captures, boss release and recovery, at that tick's ending world time.
+Use `>=` deadline checks and do not catch up missed scans or random turns in a
+burst. Newly emitted shots move and can damage only in the following world step,
+including a shot initially touching the exposed craft (contact time zero then).
+
+| State/event | Deadline and transition |
+| --- | --- |
+| Initialization | Wandering cooldown; first scan at `openingTicks`, first random turn at `turnTicks`. |
+| Eligible cooldown scan | At `actorTick >= nextScanTick`, acquire only under the conditions above. On success lock position and set `warningUntil = actorTick + warningTicks`; otherwise `nextScanTick = actorTick + scanTicks`. Recovery/grace suppresses acquisition, not wandering. |
+| Warning | Remain stationary; evaluate cancellation every non-frozen end tick. If still valid at `warningUntil`, emit at most one shot and enter recovery with `recoveryUntil = actorTick + recoveryTicks`. A capacity-skipped shot follows the same recovery. |
+| Recovery | Remain stationary until `recoveryUntil`; then wander with `nextScanTick = recoveryUntil + restTicks`. Rest begins after recovery, not after firing. |
+| Warning cancellation / life loss | Resume wandering; set `nextScanTick = actorTick + restTicks`, discard locked aim. Life loss cancels all live projectiles and warnings without resetting surviving actors' PRNG. |
+| Wandering turn | When due and wandering, draw exactly one seeded heading and set `nextTurnTick = actorTick + turnTicks`. Warning/recovery consumes no turn draws; an overdue turn runs once when wandering resumes. |
+
+Freeze suppresses this transition pass as well as clock advance. Expire existing
+shots at the start of world simulation when `actorTick >= expiresAtTick`, before
+contact queries; expiry therefore wins a same-tick contact tie. Shot capacity
+allocation at an end-tick boundary is ascending actor-ID order. A newly fired
+shot's expiry is `actorTick + shotLifeTicks`; paused/frozen ticks consume no life.
 
 Enemy freeze pauses patrol movement, attack actor clocks, projectiles and their
 damage; frozen patrols can still be rammed or captured. Enemy slow scales patrol
@@ -136,8 +164,12 @@ no zero-time loops, skipped elapsed time or changing unrelated enemy plans.
   field region or contributes coverage. Domain boundaries are recalculated.
 - A projectile is a radius0.10 moving point, travels toward the locked aim without
   homing, and damages only the exposed craft body, not its trail. It disappears
-  at the first wall/reclaimed boundary, expiry, owner elimination, recovery or
-  terminal completion. At a boundary/body-contact tie the boundary absorbs it.
+  at the first wall/reclaimed boundary, expiry, owner elimination, life recovery or
+  terminal completion. At a boundary/body-contact tie the boundary absorbs it,
+  using geometry existing immediately before that candidate event. Newly claimed
+  cells cannot retroactively absorb an otherwise fatal closure-time hit. After an
+  accepted capture, remove surviving shots overlapping newly reclaimed cells and
+  shots belonging to eliminated patrols; replan the remaining shots.
 - Existing fatal collision/timeout priorities remain unchanged. A fatal contact
   at or before a ram/closure wins; no new invulnerability through same-time rams.
   A patrol eliminated by a ram or capture cannot emit a new shot at that same
@@ -147,6 +179,10 @@ no zero-time loops, skipped elapsed time or changing unrelated enemy plans.
 - Nonfatal ram and capture ties yield one elimination, with capture taking the
   cause when its newly secured cells overlap the patrol. Use stable actor ID ties
   for simultaneous patrols/projectiles. Terminal cleanup creates no new attacks.
+
+Life-loss and accepted-capture cleanup run in their event handlers even during
+freeze, never solely in the suppressed end-tick AI pass. A closure cancels its
+pending warnings before another cut can begin within the same fixed tick.
 
 Elimination emits stable `combat.eliminated` ID/cause/position/tick data once;
 locking, firing, cancellation, projectile expiry and impact have explicit events.
@@ -182,7 +218,8 @@ brief pixel breakup/sparks and inert scrap, never realistic body remains.
 
 1. Strict descriptor validation and enabled-only initial state; reject malformed,
    nonfinite, overlapping, unsupported/version-mismatched and over-budget input.
-   Verify absence preserves old manifests/checkpoints exactly.
+   Verify absence preserves old manifests/checkpoints exactly. Disabled data
+   retains distinct descriptor authority but creates no live state or RNG draws.
 2. Pure seeded movement/attack planners, explicit events and bounded projectiles;
    deterministic state projection. Tests cover timing, locked versus changing
    aim, occlusion, capacity, freeze/slow, pause/recovery and terminal states.
