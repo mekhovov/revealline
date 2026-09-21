@@ -1,0 +1,125 @@
+TAP version 13
+# Subtest: Journey restore merges missing progress for every mode while current receipts and cursors win
+ok 1 - Journey restore merges missing progress for every mode while current receipts and cursors win
+  ---
+  duration_ms: 1.660125
+  ...
+# Subtest: malformed, oversized, prototype and invented receipt backups cannot modify state
+ok 2 - malformed, oversized, prototype and invented receipt backups cannot modify state
+  ---
+  duration_ms: 0.983875
+  ...
+# Subtest: restoration and live progress merge atomically across tabs in either transaction order
+ok 3 - restoration and live progress merge atomically across tabs in either transaction order
+  ---
+  duration_ms: 5.311958
+  ...
+# Subtest: failed restore stays exportable in-session, retries and survives recreation without replacing saved history
+ok 4 - failed restore stays exportable in-session, retries and survives recreation without replacing saved history
+  ---
+  duration_ms: 1.780709
+  ...
+# Subtest: corrupt durable data is not replaced by a valid imported backup
+ok 5 - corrupt durable data is not replaced by a valid imported backup
+  ---
+  duration_ms: 0.588208
+  ...
+# Subtest: backup dialog inspects without mutation, restores only on Apply, and exports the resulting profile
+ok 6 - backup dialog inspects without mutation, restores only on Apply, and exports the resulting profile
+  ---
+  duration_ms: 2.06825
+  ...
+# Subtest: closed dialogs and later file choices invalidate in-flight inspection; failed imports leave no Apply
+ok 7 - closed dialogs and later file choices invalidate in-flight inspection; failed imports leave no Apply
+  ---
+  duration_ms: 0.749416
+  ...
+# Subtest: Journey navigation crosses campaigns, excludes incompatible modes and ends without wrapping
+ok 8 - Journey navigation crosses campaigns, excludes incompatible modes and ends without wrapping
+  ---
+  duration_ms: 1.465666
+  ...
+# Subtest: catalog owns its data and stable IDs survive renaming or reordering
+ok 9 - catalog owns its data and stable IDs survive renaming or reordering
+  ---
+  duration_ms: 0.33575
+  ...
+# Subtest: skipping never grants a clear; exact legal completion removes skip and is idempotent
+ok 10 - skipping never grants a clear; exact legal completion removes skip and is idempotent
+  ---
+  duration_ms: 1.074375
+  ...
+# Subtest: IndexedDB progress survives store recreation and merges concurrent tab writes atomically
+ok 11 - IndexedDB progress survives store recreation and merges concurrent tab writes atomically
+  ---
+  duration_ms: 2.267917
+  ...
+# Subtest: unavailable storage stays session-only, exports progress and retries without losing events
+ok 12 - unavailable storage stays session-only, exports progress and retries without losing events
+  ---
+  duration_ms: 1.013792
+  ...
+# Subtest: a slow initial read cannot overwrite a clear recorded during loading
+ok 13 - a slow initial read cannot overwrite a clear recorded during loading
+  ---
+  duration_ms: 0.439959
+  ...
+# Subtest: unresponsive storage has a bounded wait and late reads cannot erase session progress
+ok 14 - unresponsive storage has a bounded wait and late reads cannot erase session progress
+  ---
+  duration_ms: 10.412459
+  ...
+# Subtest: corrupt durable data is never overwritten by a session event
+ok 15 - corrupt durable data is never overwritten by a session event
+  ---
+  duration_ms: 0.201166
+  ...
+# Subtest: closed connection refuses the affected read once and a deliberate retry opens a fresh connection
+ok 16 - closed connection refuses the affected read once and a deliberate retry opens a fresh connection
+  ---
+  duration_ms: 1.34225
+  ...
+# Subtest: unexpected close invalidates the cache and a late retired close cannot invalidate its replacement
+ok 17 - unexpected close invalidates the cache and a late retired close cannot invalidate its replacement
+  ---
+  duration_ms: 0.293167
+  ...
+# Subtest: failed persistence retains a pending clear and explicit flush commits it once after reopening
+ok 18 - failed persistence retains a pending clear and explicit flush commits it once after reopening
+  ---
+  duration_ms: 2.429
+  ...
+# Subtest: a synchronous open refusal is not cached forever and a deliberate read may retry
+ok 19 - a synchronous open refusal is not cached forever and a deliberate read may retry
+  ---
+  duration_ms: 0.221792
+  ...
+# Subtest: quota refusal retains the healthy connection and the pending event until an explicit retry
+ok 20 - quota refusal retains the healthy connection and the pending event until an explicit retry
+  ---
+  duration_ms: 0.809875
+  ...
+# Subtest: a stale version-change callback closes only its original connection
+ok 21 - a stale version-change callback closes only its original connection
+  ---
+  duration_ms: 0.327375
+  ...
+# Subtest: concurrent reads share one reopened connection without writing progress
+ok 22 - concurrent reads share one reopened connection without writing progress
+  ---
+  duration_ms: 0.513167
+  ...
+# Subtest: a blocked request and its late failure cannot poison the successful retry
+ok 23 - a blocked request and its late failure cannot poison the successful retry
+  ---
+  duration_ms: 0.149
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 159.371458
