@@ -69,11 +69,13 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
   const context = new Proxy(
     {},
     {
-      get:
-        (_, method) =>
-        (...args) =>
-          calls.push({ method, args, ...(method === 'fillText' ? { font } : {}) }),
-      set: (_, key, value) => {
+      get(target, method) {
+        if (Object.hasOwn(target, method)) return target[method];
+        return (...args) =>
+          calls.push({ method, args, ...(method === 'fillText' ? { font } : {}) });
+      },
+      set: (target, key, value) => {
+        target[key] = value;
         if (key === 'font') font = value;
         return true;
       },
