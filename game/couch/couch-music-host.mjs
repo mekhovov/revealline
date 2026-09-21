@@ -39,7 +39,8 @@ export function attachCouchMusicHost({
     visit = null,
     context = { scene: 'menu' },
     warning = '',
-    contextWarning = '';
+    contextWarning = '',
+    menuGestureAccepted = false;
   const section = doc.createElement('section');
   section.setAttribute('data-couch-music', prefix);
   section.setAttribute('aria-label', 'Music');
@@ -261,6 +262,48 @@ export function attachCouchMusicHost({
     return panel.isOpen();
   }
   const unsubscribeMaster = audioMaster?.subscribe(() => render());
+  function startRememberedMenuMusic(event) {
+    if (disposed || !event.isTrusted || menuGestureAccepted) return;
+    const state = session.snapshot(),
+      master = audioMaster?.snapshot();
+    if (
+      !master ||
+      master.muted ||
+      master.volume === 0 ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      context.scene !== 'menu' ||
+      state.transportChoice === 'pause' ||
+      state.playback.playing ||
+      !state.readyForStart
+    )
+      return;
+    if (
+      section.contains(event.target) ||
+      panel.element.contains(event.target) ||
+      (event.type !== 'click' &&
+        event.target?.closest?.(
+          `#${prefix}-quick-sound, #${prefix}-audio, #${prefix}-master-volume`,
+        ))
+    )
+      return;
+    if (
+      event.type === 'keydown' &&
+      (event.repeat ||
+        !['Enter', ' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key))
+    )
+      return;
+    // Call start in the activation task. A denied attempt may retry on another
+    // trusted gesture; slow library readiness never schedules late autoplay.
+    menuGestureAccepted = true;
+    void run(() => session.start()).then((played) => {
+      if (!played) menuGestureAccepted = false;
+    });
+  }
+  doc.addEventListener('pointerdown', startRememberedMenuMusic, true);
+  doc.addEventListener('keydown', startRememberedMenuMusic, true);
+  // A native click observes explicit mute/unmute after its own button handler.
+  doc.addEventListener('click', startRememberedMenuMusic);
   void run(load);
   return Object.freeze({
     sound,
@@ -304,6 +347,9 @@ export function attachCouchMusicHost({
       if (disposed) return;
       disposed = true;
       lifetime.abort();
+      doc.removeEventListener('pointerdown', startRememberedMenuMusic, true);
+      doc.removeEventListener('keydown', startRememberedMenuMusic, true);
+      doc.removeEventListener('click', startRememberedMenuMusic);
       unsubscribeMaster?.();
       panel.dispose();
       session.dispose();

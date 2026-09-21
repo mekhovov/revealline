@@ -1830,6 +1830,8 @@ try {
       !music?.root() && settingsTabOwnsKey(event, $('race-options-panel')),
     accept: (element) =>
       music?.contains(element) ||
+      (element.tagName === 'A' &&
+        !!element.closest('#race-music-now-playing, #race-music-menu-now-playing')) ||
       catalogue?.root()?.contains(element) ||
       menuIds.has(element.id) ||
       !!element.closest('#journey-chooser, #journey-backup'),
