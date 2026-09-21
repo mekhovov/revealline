@@ -8,6 +8,7 @@ import { PHASE_ART_CANDIDATES } from './phase-art.mjs';
 import { LIVEWIRE_ART_CANDIDATES } from './livewire-art.mjs';
 import { RELAY_ART_CANDIDATES } from './relay-art.mjs';
 import { CROSSWIND_ART_CANDIDATES } from './crosswind-art.mjs';
+import { SENTINEL_ART_CANDIDATES } from './sentinel-art.mjs';
 import {
   SIGNAL_ILLUSTRATED_ART_CANDIDATES,
   SIGNAL_PIXEL_ART_CANDIDATES,
@@ -29,4 +30,5 @@ export const JOURNEY_ART_CANDIDATES = freezeDesign([
   ...LIVEWIRE_ART_CANDIDATES,
   ...RELAY_ART_CANDIDATES,
   ...CROSSWIND_ART_CANDIDATES,
+  ...SENTINEL_ART_CANDIDATES,
 ]);

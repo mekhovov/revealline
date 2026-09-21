@@ -4,6 +4,30 @@ Status: local technical increment, not a released or human-qualified campaign.
 Publication remains with the release coordinator. No public Journey enrollment,
 version bump, PR, tag, release or Pages promotion is implied by this record.
 
+## Original citadel artwork continuation
+
+All five missions now have independent original1774×887 opaque backgrounds,
+12,975,848bytes total. Bastion approaches, twin receivers, an incomplete perimeter,
+rain-washed audience courtyard and dusk machinery-well terraces give distinct
+architectural reveals. Exact pins and complete built-in generation prompts are in
+`../research/sentinel-original-art-prompts.json`. These are detailed stylized
+illustrations, not strict low-resolution pixel art; they encode no collision,
+shield objective, hazard or directional symbol.
+
+The factory remains greybox by default. Explicit artwork opt-in and Studio
+Inspect → Apply bind the shared immutable asset registry without changing mission
+editions, actor recipes or progression authority. The six-file art/candidate/core/
+project/registry/whole-library cohort passes35/35 on Node20.19.5 and22.22.2,
+preserving all30 exact Sentinel clear checkpoints and498 library manifests.
+Scoped ESLint, formatting and diff checks pass.
+
+Native picture/capture and the full shield-warning/attack/open/release presentation
+matrix, actor/audio treatment, device/human evidence and publication remain open.
+DevicePR211 owns the next delivery. No phase/version allocation or publisher edit
+is made here. The existing Pages guard and source originals remain unchanged;
+the five new images add12,975,848bytes beyond the35-image capacity forecast in
+`journey-art-pages-capacity.md`, strengthening the packaging prerequisite.
+
 ## Versioned multi-shield encounter
 
 The legacy encounter supports one shield relay. The successor pins
