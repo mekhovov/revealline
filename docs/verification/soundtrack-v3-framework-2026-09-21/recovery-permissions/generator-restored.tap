@@ -1,0 +1,51 @@
+TAP version 13
+# Subtest: publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+ok 1 - publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+  ---
+  duration_ms: 59.158125
+  ...
+# Subtest: absent album opt-in preserves output bytes and does not read the audio producer
+ok 2 - absent album opt-in preserves output bytes and does not read the audio producer
+  ---
+  duration_ms: 94.000208
+  ...
+# Subtest: opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+ok 3 - opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+  ---
+  duration_ms: 49.95
+  ...
+# Subtest: incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+ok 4 - incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+  ---
+  duration_ms: 60.325458
+  ...
+# Subtest: candidate producer binds every admitted source and stays separate from published catalogue
+not ok 5 - candidate producer binds every admitted source and stays separate from published catalogue
+  ---
+  duration_ms: 3.124042
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/scripts/test-soundtrack-distribution.mjs:200:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, lstat '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/provenance'"
+  code: 'ENOENT'
+  stack: |-
+    async lstat (node:internal/fs/promises:1025:18)
+    async ordinary (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/build.mjs:28:16)
+    async buildSoundtrackAlbums (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/licensed-audio/build.mjs:59:20)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/scripts/test-soundtrack-distribution.mjs:223:18)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: approved original recordings are optional binaries while their catalogue remains offline metadata
+ok 6 - approved original recordings are optional binaries while their catalogue remains offline metadata
+  ---
+  duration_ms: 65.567583
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 5
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 392.487458

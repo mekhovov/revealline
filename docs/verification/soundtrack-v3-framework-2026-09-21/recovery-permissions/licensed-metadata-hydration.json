@@ -1,0 +1,107 @@
+{
+  "head": "2248f7f35ac5ad75b8bdff5aaa66ca45417180be",
+  "freeBytesBefore": 9372495872,
+  "bytes": 250202,
+  "files": [
+    {
+      "path": "authoring/library/licensed-audio/README.md",
+      "bytes": 4103,
+      "sha256": "f82c664da2d93754806fd88372e8c0a84345611d639d447b9d63a1796f269e07"
+    },
+    {
+      "path": "authoring/library/licensed-audio/production-register.json",
+      "bytes": 95494,
+      "sha256": "cf472095deab7cc0ac94673847d22954ddd77bbf0a7a21a781957ced751f5be4"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/3xblast-INFO.txt",
+      "bytes": 590,
+      "sha256": "d0a016f21f1e1f3ec7bc70982f80fe6f8f8a3612e52270de19e9ddbee1567861"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/3xblast-source.html",
+      "bytes": 57031,
+      "sha256": "689cd2ecb83cb35ea8197248b8f1fcae3c4bb7620d29f45f3342645c96403302"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/SOURCE-HISTORY.md",
+      "bytes": 6081,
+      "sha256": "09fef16af45bd57cbf4b44e93ad79a09f08e61eb0e81ce19b19175cb08c65748"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/additional-derivatives.json",
+      "bytes": 3572,
+      "sha256": "488ebc1c41159964bec37c63f51ca6d78e49fe1cc685d260248c582bbfb9d96d"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/additional-downloads.json",
+      "bytes": 6456,
+      "sha256": "594932ae6e6c9ab232e31d0c4e56696f4ddd4968091443555ecad3cc89f1eb64"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/album-build-receipt.json",
+      "bytes": 1345,
+      "sha256": "d43a84829e53799cfa1f22e25a6d4ca1908451660be4300d9c376995f55a8558"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/derivative-inspection.json",
+      "bytes": 2719,
+      "sha256": "4d21b65fd98e7399f4b313ca4576151352fa9ed23933ededd26013838c24addb"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/derivatives.json",
+      "bytes": 4798,
+      "sha256": "2d50dd3c92ab2fa3809c88cce5ec24a73c81239a7ce88d3cec03dc281228bdac"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/encode-additions.py",
+      "bytes": 4327,
+      "sha256": "caa09c8a3b5e9fcf7e1024c553f7856a5689d21d486f20e5a0ecf80fe3be9bf1"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/encode-derivatives.py",
+      "bytes": 3135,
+      "sha256": "0d3df15b75a557e8eb0cddd8a7c665829df70c2dfc69fb5f8898a30c0d406cf0"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/encoder-LICENSE.txt",
+      "bytes": 7655,
+      "sha256": "6039b8a570773eb83c43a7d3b332bbc9f805c6975411eaefd4120a39d9c5daeb"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/encoder-wheel-source.json",
+      "bytes": 943,
+      "sha256": "a3a4b552f81d945ce32ff379d136c55285acb22c999c92292ecd02e01d678aef"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/holizna-browser-receipt.json",
+      "bytes": 5058,
+      "sha256": "f96213082cc8e79d5126f54e9667472212a62005621751ae54b001081249d600"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/holizna-decode-measurements.json",
+      "bytes": 5979,
+      "sha256": "01849e3d34967eddb528b6db0dab977199f72a00c580e4d2884a40fc58ce0162"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/license-revalidation.json",
+      "bytes": 7427,
+      "sha256": "dc7505d27162f6b3243106ef46638e542e76ce6bb2b5a2a0084bef39a821d256"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/reuse-2026-09-21.json",
+      "bytes": 13092,
+      "sha256": "8dab9aac032f51c32104c08b7b5206d104972a73a3a32d1a7e4d6c015e2c52bf"
+    },
+    {
+      "path": "authoring/library/licensed-audio/provenance/runtime-frame-inspection.json",
+      "bytes": 20326,
+      "sha256": "1c6daaf47e0f09e0ef6c2d9301d6225fec55e7cf2cd55d77880c99fd3c475809"
+    },
+    {
+      "path": "authoring/library/licensed-audio/publication.json",
+      "bytes": 71,
+      "sha256": "b4a3c90e8f521139e00eed52e275603fd9b84a9a2c8dee597a92f75f45512944"
+    }
+  ]
+}

@@ -192,6 +192,64 @@ test('v3 mixed recovery includes all permitted originals and explicit restricted
     await assert.rejects(importBundle(await changedBundle(body, edit)));
 });
 
+for (const offlineCache of ['denied', 'unknown'])
+  test(`recovery preserves references when redistribution is allowed but offline storage is ${offlineCache}`, async () => {
+    const streamOnly = track(restricted, `builtin.catalog.storage-${offlineCache}`, {
+      offlineCache,
+      redistribute: 'allowed',
+    });
+    const trusted = catalog(streamOnly);
+    const original = resolveSoundtrackLibrary({
+      ...setCatalogueTracks(emptySoundtrackLibrary(), [streamOnly]),
+      playlists: [
+        {
+          id: 'storage.mix',
+          title: 'Streamed recordings',
+          trackIds: [streamOnly.id, streamOnly.id],
+          order: 'ordered',
+          repeat: 'all',
+        },
+      ],
+      selection: { playlistId: 'storage.mix' },
+    });
+    const plan = soundtrackRecoveryPlan(original, { catalogue: trusted });
+    assert.deepEqual(plan.requiredTracks, []);
+    assert.deepEqual(plan.referenceOnlyTrackIds, [streamOnly.id]);
+    assert.match(plan.notice, /offline|storage/i);
+    assert.doesNotMatch(plan.notice, /redistribution is not permitted/i);
+
+    // Even bytes left by an older installation must not enter an unrestorable backup.
+    const bundle = await exportSoundtrackBundle(original, restricted.assets, {
+      catalogue: trusted,
+    });
+    const { manifest, body } = await decode(bundle);
+    assert.deepEqual(manifest.assets, []);
+    assert.equal(body.size, 0);
+    assert.deepEqual(manifest.referenceOnlyTrackIds, [streamOnly.id]);
+    assert.deepEqual(manifest.library.referenceOnlyTrackIds, [streamOnly.id]);
+    assert.deepEqual(manifest.library.installedTrackIds, []);
+    assert.deepEqual(
+      await (await exportSoundtrackBundle(original, [], { catalogue: trusted })).arrayBuffer(),
+      await bundle.arrayBuffer(),
+      'Reference recovery never requires a download or retained original',
+    );
+    const imported = await importBundle(bundle, { catalogue: trusted });
+    assert.deepEqual(imported.assets, []);
+    assert.deepEqual(imported.library.playlists, original.playlists);
+    assert.deepEqual(imported.library.selection, original.selection);
+    assert.deepEqual(imported.library.referenceOnlyTrackIds, [streamOnly.id]);
+    const prepared = await prepare(imported.library, [], { catalogue: trusted });
+    assert.deepEqual(prepared.library, imported.library);
+    assert.deepEqual(prepared.assets, []);
+    assert.deepEqual(
+      await (
+        await exportSoundtrackBundle(prepared.library, prepared.assets, { catalogue: trusted })
+      ).arrayBuffer(),
+      await bundle.arrayBuffer(),
+    );
+    assert.deepEqual(original.referenceOnlyTrackIds, []);
+  });
+
 test('restricted upload aliases cannot leak the same bytes through recovery or selected shares', async () => {
   const base = library();
   const alias = {

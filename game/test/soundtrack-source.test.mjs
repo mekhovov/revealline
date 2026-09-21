@@ -63,6 +63,58 @@ test('offline listening does not fetch; an explicit download can fetch; stored o
   assert.equal(requests, 1);
 });
 
+for (const offlineCache of ['denied', 'unknown'])
+  test(`standalone export remains allowed when offline storage is ${offlineCache}`, async () => {
+    const restricted = resolveCatalogueTrack({
+      ...track,
+      policy: {
+        id: track.id,
+        sha256: track.asset.sha256,
+        webPlayback: 'allowed',
+        offlineCache,
+        redistribute: 'allowed',
+        modify: 'allowed',
+        gameplayVideo: 'allowed',
+        contentId: 'not-registered',
+      },
+    });
+    let reads = 0,
+      requests = 0;
+    const source = createSoundtrackSource({
+      catalogue: {
+        ...catalogue,
+        format: 'revealline-soundtrack-catalogue.v2',
+        tracks: [restricted],
+      },
+      baseURL: 'https://example.test/releases/v1/',
+      readLocal: () => {
+        reads++;
+        return null;
+      },
+      fetch: async (url) => {
+        requests++;
+        assert.equal(url, 'https://example.test/releases/v1/optional/soundtracks/source.mp3');
+        return responseFor(body, url);
+      },
+    });
+    await assert.rejects(
+      source.readAsset(track.asset.sha256, { purpose: 'offline' }),
+      /not approved/,
+    );
+    assert.equal(reads, 0);
+    assert.equal(requests, 0);
+    const exported = await source.readAsset(track.asset.sha256, { purpose: 'export' });
+    assert.deepEqual(await exported.arrayBuffer(), await body.arrayBuffer());
+    assert.equal(reads, 1);
+    assert.equal(requests, 1);
+    await assert.rejects(
+      source.readAsset(track.asset.sha256, { purpose: 'offline' }),
+      /not approved/,
+    );
+    assert.equal(reads, 1, 'Standalone export does not grant later offline read permission');
+    assert.equal(requests, 1);
+  });
+
 test('streaming rejects corrupt/truncated media and cancellation before a request', async () => {
   const source = createSoundtrackSource({
     catalogue,

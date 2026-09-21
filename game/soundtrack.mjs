@@ -898,14 +898,17 @@ export function soundtrackRecoveryPlan(value, { catalogue } = {}) {
   );
   const excluded = new Set(
     tracks
-      .filter(
-        (track) =>
-          effectiveSoundtrackPolicy(track, trusted).redistribute !== 'allowed' ||
+      .filter((track) => {
+        const policy = effectiveSoundtrackPolicy(track, trusted);
+        return (
+          policy.redistribute !== 'allowed' ||
+          policy.offlineCache !== 'allowed' ||
           // An imported reference may be a renamed legacy upload with no policy
           // field. Its omitted bytes remain unknown until trusted hash-bound
           // authority says otherwise; a marker never grants network permission.
-          (savedReferences.has(track.id) && !authoritativeHashes.has(track.asset.sha256)),
-      )
+          (savedReferences.has(track.id) && !authoritativeHashes.has(track.asset.sha256))
+        );
+      })
       .map((track) => track.asset.sha256),
   );
   const referenceOnlyTrackIds = tracks
@@ -915,7 +918,7 @@ export function soundtrackRecoveryPlan(value, { catalogue } = {}) {
     requiredTracks: tracks.filter((track) => !excluded.has(track.asset.sha256)),
     referenceOnlyTrackIds,
     notice: referenceOnlyTrackIds.length
-      ? `${referenceOnlyTrackIds.length} recording references are preserved without audio because redistribution is not permitted. Restoring them requires the approved game catalogue.`
+      ? `${referenceOnlyTrackIds.length} recording references are preserved without audio because offline storage or redistribution is denied or not verified. Playback requires an approved online source from the game catalogue.`
       : '',
   });
 }

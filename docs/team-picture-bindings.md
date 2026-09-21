@@ -1,6 +1,10 @@
 # Team picture authority preparation
 
-## Current revision 41 compatibility correction
+## Current revision 43 recovery-permission successor
+
+The current soundtrack framework selects `fpv@43`, collection `null`. The three exact Team pins advance from revision 41 after the recovery-permission review. The [new compatibility receipt](verification/soundtrack-v3-framework-2026-09-21/recovery-permissions/team-bindings/verification.json) preserves every revision-41 and source-stage-42 record, all 127 original payload bodies, both picture descriptors and five actor descriptors. All 235 tests in the complete Team cohort pass; this does not grant native, artwork, music or release approval.
+
+## Historical revision 41 compatibility correction
 
 The soundtrack framework's metadata successor selects `fpv@41`, collection `null`. The two starter bindings and the historical-import policy now explicitly admit that revision. All 127 original payload bodies, all prior asset/theme records, both complete Orchard/Foundry picture descriptors and their 1152×576 full-frame geometry are preserved from revision 38. The lease, starter pack, pack/level hashes and picture asset revisions are unchanged; older and newer unbound snapshots still fail closed.
 
