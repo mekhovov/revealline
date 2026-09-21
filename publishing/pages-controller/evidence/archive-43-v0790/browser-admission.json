@@ -1,0 +1,29 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-43",
+  "infrastructureCommit": "26fc401966fd5ef8ad0949260b774595e2979b41",
+  "deploymentId": 6572615798,
+  "versions": [
+    "v0.79.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-43-v0790/native-observation.json",
+      "sha256": "207aa56c6e98c66ba380daf16120a603913807ba99479b8e97f1b1e4582547d0"
+    },
+    {
+      "path": "evidence/archive-43-v0790/terminal-run.json",
+      "sha256": "d9d48c21a1578b9a6083ef85b11db5feb7f151f529a19d62ff838ecd14ac9917"
+    },
+    {
+      "path": "evidence/archive-43-v0790/deployments.json",
+      "sha256": "799b04850b1b0b2eae9c7e3356d5d307518fc159493b3a4e90097319ef96179b"
+    },
+    {
+      "path": "evidence/archive-43-v0790/deployment-statuses.json",
+      "sha256": "ecf2bea2b55f3c3e94a3b18747236e4f28ec90ca74ea6d2eee915686e086822f"
+    }
+  ],
+  "scope": "Exact original v0.79.0 bytes: 885 paths and 423016709 bytes; exact archived route, keyboard resume and steering, and First Signal 50 percent/7820/3-lives win. Physical iPhone, Steam Deck/controller, simultaneous multitouch and disconnected reopen remain separate open gates."
+}
