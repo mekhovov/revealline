@@ -20,7 +20,7 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
           "Shield, warning, attack, exposed-core and release-state visual matrix",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
@@ -45,7 +45,7 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
           "Shield, warning, attack, exposed-core and release-state visual matrix",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
@@ -70,7 +70,7 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
           "Shield, warning, attack, exposed-core and release-state visual matrix",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
@@ -95,7 +95,7 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
           "Shield, warning, attack, exposed-core and release-state visual matrix",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
@@ -120,7 +120,7 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
           "Shield, warning, attack, exposed-core and release-state visual matrix",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
@@ -129,5 +129,82 @@
         ]
       }
     }
-  ]
+  ],
+  "nativePreview": {
+    "kind": "assistant-native-keyboard-observation-not-human-playtest",
+    "sourceCommit": "82c8a0b31b412e36e1fb2f9a01bb0dedfd70439a",
+    "context": "Separate exact-source local server, explicit Studio Inspect then Apply, Standard Solo Practice and normal Start plus direction; no state injection.",
+    "observations": [
+      {
+        "missionId": "first-relay",
+        "input": "Down",
+        "coveragePercent": 0.6,
+        "score": 130,
+        "targetPercent": 85,
+        "lives": 3,
+        "stoppedOnCapture": true,
+        "completedObjectives": 0,
+        "totalObjectives": 2
+      },
+      {
+        "missionId": "twin-receivers",
+        "input": "Up",
+        "coveragePercent": 0.5,
+        "score": 110,
+        "targetPercent": 85,
+        "lives": 3,
+        "stoppedOnCapture": true,
+        "completedObjectives": 0,
+        "totalObjectives": 3
+      },
+      {
+        "missionId": "relay-perimeter",
+        "input": "Down",
+        "coveragePercent": 0.3,
+        "score": 60,
+        "targetPercent": 85,
+        "lives": 3,
+        "stoppedOnCapture": true,
+        "completedObjectives": 0,
+        "totalObjectives": 4
+      },
+      {
+        "missionId": "crown-audience",
+        "input": "Up",
+        "coveragePercent": 0.4,
+        "score": 80,
+        "targetPercent": 85,
+        "lives": 3,
+        "stoppedOnCapture": true,
+        "completedObjectives": 0,
+        "totalObjectives": 5
+      },
+      {
+        "missionId": "sentinel-remix",
+        "input": "Up",
+        "coveragePercent": 0.3,
+        "score": 70,
+        "targetPercent": 85,
+        "lives": 3,
+        "stoppedOnCapture": true,
+        "completedObjectives": 0,
+        "totalObjectives": 4
+      }
+    ],
+    "findings": [
+      "All five originals load in border, foundations and first captured strips.",
+      "Striped horizontal LANE WARNING crosses pictured strips in First relay, Twin receivers and Rings of return.",
+      "Shield markers and Sentinel crown remain distinct; Relay perimeter and Remix numbered gates remain patterned and closed.",
+      "Rings of return captured strip loses arrows while adjacent unclaimed speed-field arrows remain.",
+      "Roamers remained dormant; no activation, exposed-core, release or full-clear observation is claimed.",
+      "The fixed-height Studio iframe clips lower encounter-status content in the observed viewport. Full text is in the accessibility tree; broader caption visibility remains an open shared UX issue.",
+      "All previews closed and focus returned to Play exact Solo preview."
+    ],
+    "limitations": [
+      "Initial capture only, no full encounter-state or victory matrix",
+      "No native shield collection or gate opening in this set",
+      "No device, full accessibility or human enjoyment qualification",
+      "No public release"
+    ]
+  }
 }
