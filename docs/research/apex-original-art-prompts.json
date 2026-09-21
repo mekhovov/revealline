@@ -20,7 +20,7 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
           "Terrain, relay, arrow and encounter-state visual matrix",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
@@ -45,7 +45,7 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
           "Terrain, relay, arrow and encounter-state visual matrix",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
@@ -70,7 +70,7 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
           "Terrain, relay, arrow and encounter-state visual matrix",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
@@ -95,7 +95,7 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
           "Terrain, relay, arrow and encounter-state visual matrix",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
@@ -120,7 +120,7 @@
           "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
         ],
         "pending": [
-          "Native partial-reveal, broad-area and victory overlay checks",
+          "Native broad-area and victory overlay checks beyond recorded first captures",
           "Terrain, relay, arrow and encounter-state visual matrix",
           "Campaign-specific actor presentation and audio",
           "Reduced effects and small-screen/device review",
@@ -129,5 +129,71 @@
         ]
       }
     }
-  ]
+  ],
+  "nativePreview": {
+    "kind": "assistant-native-keyboard-observation-not-human-playtest",
+    "sourceCommit": "1f7a6d125d021785834256b238eb30540bcbe20a",
+    "context": "Separate exact-source local server, explicit Studio Inspect then Apply, Standard Solo Practice and normal Start plus direction; no state injection.",
+    "observations": [
+      {
+        "missionId": "crossing-complete",
+        "input": "Down",
+        "coveragePercent": 0.3,
+        "score": 60,
+        "targetPercent": 84,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "final-broadcast",
+        "input": "Up",
+        "coveragePercent": 0.7,
+        "score": 150,
+        "targetPercent": 84,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "returning-light",
+        "input": "Right",
+        "coveragePercent": 1.2,
+        "score": 250,
+        "targetPercent": 85,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "home-signal",
+        "input": "Up",
+        "coveragePercent": 0.6,
+        "score": 130,
+        "targetPercent": 85,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "apex-remix",
+        "input": "Up",
+        "coveragePercent": 0.4,
+        "score": 70,
+        "targetPercent": 85,
+        "lives": 3,
+        "stoppedOnCapture": true
+      }
+    ],
+    "findings": [
+      "All five originals load in borders, authored foundations and first captured strips.",
+      "Crossing complete keeps paired-dash slow terrain, framed lethal cells, directional arrows and optional freeze pickup distinct.",
+      "Final broadcast keeps numbered closed gates, objectives, eroder and carrier distinct; no relay is collected.",
+      "Returning light and Dawn circuit captured strips lose arrows while adjacent unclaimed cells retain them. Returning light roamer remains dormant; lane-warning caption only, not active overlay proof.",
+      "Home signal displays its three-shield briefing, closed numbered dock and horizontal striped warning over the pictured first cut; no shield collected or release performed.",
+      "Home signal retains the shared lower encounter-caption clipping at the observed Studio preview height; full text remains in AX.",
+      "All previews closed; focus returned to Play exact Solo preview."
+    ],
+    "limitations": [
+      "First captures only, no full native clear, broad-area or victory matrix",
+      "No erosion restoration, awakened-roamer, complete attack, shield-release or gate-traversal visual qualification",
+      "No device, accessibility matrix, human enjoyment or public-release acceptance"
+    ]
+  }
 }
