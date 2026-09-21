@@ -1,3 +1,4 @@
+import { attachMusicCredit } from './ui/music-credit.mjs';
 import { createTouchPreferences } from './touch-preferences.mjs';
 import { createCharacterPresentations } from './character-presentations.mjs';
 import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs';
@@ -846,11 +847,18 @@ try {
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
   // The shared authority owns master attenuation; local music and effects keep their faders.
   sound.configure({ master: 1 });
+  const compactCredit = attachMusicCredit({
+    document,
+    root: $('settings-panel-audio'),
+    pauseButton: $('pause-button'),
+    prefix: 'solo',
+  });
   let musicPreviewState = null,
     musicPreviewRequest = 0;
   function renderMusicPreview() {
     if (!musicPreviewState) return;
     const track = musicPreviewState.track;
+    compactCredit.render(musicPreviewState, audioMaster.snapshot());
     const audible =
       musicPreviewState.playing &&
       !audioMaster.snapshot().muted &&
@@ -2137,6 +2145,7 @@ try {
       soundtrackPanel?.dispose();
       stopMasterView();
       stopDisplayView();
+      compactCredit.dispose();
       audioRestoration.dispose();
       displayRestoration.dispose();
       displayPreferences.dispose();

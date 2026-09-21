@@ -1,3 +1,4 @@
+import { attachMusicCredit } from '../ui/music-credit.mjs';
 import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_ARCHIVES } from '../content/soundtrack-catalogue.mjs';
 import { createSoundtrackSource } from '../soundtrack-source.mjs';
 import { Soundscape } from '../ui/audio.mjs';
@@ -85,6 +86,12 @@ export function attachCouchMusicHost({
   const retry = action('retry', 'Retry music library', () => load());
   make('p', 'note', 'Music volume lasts for this visit. Master sound is shared across game modes.');
   root.append(section);
+  const compactCredit = attachMusicCredit({
+    document: doc,
+    root: section,
+    pauseButton: doc.getElementById(`${prefix}-pause`),
+    prefix,
+  });
   // These mounts live in the menu and arena, outside the Settings/Studio scope.
   // They deliberately have no live region: position ticks must stay silent.
   const credits = ['now-playing', 'menu-now-playing']
@@ -231,6 +238,7 @@ export function attachCouchMusicHost({
     play.disabled = !state.readyForStart && !track.playing;
     if (doc.activeElement !== volume) volume.value = String(track.volume);
     renderCredits(track);
+    compactCredit.render(track, audioMaster?.snapshot());
     panel?.update();
   }
   async function run(work) {
@@ -362,6 +370,7 @@ export function attachCouchMusicHost({
         credit.node.hidden = true;
         credit.node.replaceChildren();
       }
+      compactCredit.dispose();
       section.remove();
     },
   });
