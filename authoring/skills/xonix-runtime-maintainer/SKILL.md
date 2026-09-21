@@ -1373,3 +1373,15 @@ Prompt example: “Compose the accepted music and landscape styles, then start a
 ### Portable theme review handoff
 
 Follow [the portable-theme workflow](../../examples/theme-review.md) when qualifying a Studio export for another maintainer. Pin the actual file and compile with `scripts/compile-presentation.mjs --bundle FILE --out NEW_CACHE_DIR`; reject existing destinations and verify output against its own manifest. Distinguish compact CLI metadata from formatted production metadata, while requiring exact original payload bytes and parsed identity/history. Keep native fresh-origin import/save/reload/export, cross-mode review and actual release adoption as separate gates. Do not represent a fresh module closure as a full repository/build trial.
+
+For composed handheld previews, separate control visibility from actual touch
+capability. A Show both players override allows layout and pointer-action checks,
+not physical multitouch acceptance. Record the actual canvas ratio, visible target
+sizes and HUD height separately at landscape and portrait sizes; Large portrait
+text may legitimately use more than one row. Retain failed tooling attempts and
+append changed-environment rechecks without rewriting the historical result.
+Synthesized music showing playing is not proof of an MP3 credit strip or audible
+playback. Prompt: “Start Team with Enter, navigate Pause/Settings/Back without a
+mouse, enable both shared pads, measure the full arena at568×320 through1024×600
+and390×844, then start an independent cut with each pad. State exactly which
+controls were physical, modeled or browser-pointer driven.”
