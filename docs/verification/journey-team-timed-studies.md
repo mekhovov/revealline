@@ -91,6 +91,13 @@ integration are separate evidence, not silently counted as these new routes.
 
 ## Remaining gates
 
+**Successor evidence:** [mastery and alternate-start qualification](journey-team-timed-qualification.md)
+now proves six base mastery families and nine alternate-taking families, with60
+seat/joint-cut clears. It strengthens Depot mastery to require actual continued
+cutting after both roamers activate, retaining the rejected winning-tick example.
+The original results above remain unchanged. The successor narrows gates1–2 below,
+but does not close later-window/reserve, wider robustness, human or release gates.
+
 Research recheck: [Xposed Reloaded's publisher listing](https://store.playstation.com/en-us/concept/10002881/)
 supports compact controls and demanding picture-reveal levels, not a specific
 pickup timer or enemy-speed formula. [AirXonix's developer rules](https://www.axysoft.com/airxonix/)

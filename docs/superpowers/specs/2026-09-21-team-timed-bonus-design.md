@@ -188,3 +188,13 @@ there is no automatic Journey enrollment, artwork or publication claim.
 The904-test combined gate passes on both Node versions; that includes expected
 failed-probe outcomes, not904 successful clears. Slice4 remains partial and slice5
 still requires device/two-human qualification and coordinated release.
+
+## Route qualification successor
+
+[Mastery and alternate-start evidence](../../verification/journey-team-timed-qualification.md)
+adds60 seat/joint cases: six base mastery families and nine seed2/delay30 taking
+families. Depot mastery now requires a new cut/return after both roamers activate;
+a rejected terminal-tick activation proposal remains a negative regression.
+The original16 failed probes stay unchanged. Slice4 is still partial because
+later windows, reserve taking, broader start sampling and pacing remain open.
+This successor does not close device/human, artwork, enrollment or release gates.

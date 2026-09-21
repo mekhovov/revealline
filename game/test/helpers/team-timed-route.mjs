@@ -37,6 +37,8 @@ export function assessTeamTimedRoute(
     returns = [0, 0],
     collected = [],
     closures = [],
+    cutStarts = [],
+    activatedAt = new Map(),
     activated = new Set();
   let firstDown = null,
     failure = null,
@@ -69,6 +71,7 @@ export function assessTeamTimedRoute(
       for (const event of run.events) {
         events.push(structuredClone(event));
         if (event.type === 'player.downed') firstDown ??= structuredClone(event);
+        if (event.type === 'cut.started') cutStarts.push(structuredClone(event));
         if (event.type === 'powerup.collected') {
           const item =
             beforeItems.get(event.id) ??
@@ -100,7 +103,11 @@ export function assessTeamTimedRoute(
           });
         }
       }
-      for (const enemy of run.enemies) if (enemy.rover?.mode === 'active') activated.add(enemy.id);
+      for (const enemy of run.enemies)
+        if (enemy.rover?.mode === 'active') {
+          activated.add(enemy.id);
+          if (!activatedAt.has(enemy.id)) activatedAt.set(enemy.id, run.tick);
+        }
     }
   const neutralized = run.level.terrain.every((r) => {
     for (let y = r.y; y < r.y + r.h; y++)
@@ -123,7 +130,9 @@ export function assessTeamTimedRoute(
     firstDown,
     collected,
     closures,
+    cutStarts,
     activated: [...activated].sort(),
+    activatedAt: Object.fromEntries([...activatedAt].sort(([a], [b]) => a.localeCompare(b))),
     neutralized,
     simultaneousTicks,
     bothIdleTicks,
