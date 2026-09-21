@@ -14,8 +14,10 @@ coverage is498/498 after [Crosswind/Apex](verification/journey-late-pressure.md)
 [final five-chapter refinement](verification/journey-middle-pressure.md);
 all83 missions cover all six ordinary seed1 configurations. Next
 review the ordinary pacing and bent-cut discoverability of the [Two Districts spatial study](verification/journey-fracture-spatial.md), whose six preset/control
-mastery routes now pass separately from the18 ordinary samples; redesign Return
-in Reserve's fast impact-free teaching bypass and review late roamer activation,
+mastery routes now pass separately from the18 ordinary samples; the [Return in
+Reserve two-bay study](verification/journey-reserve-spatial.md) now has18 ordinary
+and six impact-mastery routes, but short clears/readability and native verification
+remain open. Review late roamer activation,
 connector bypasses, short-clear spatial choices, optional goals and objective tails.
 These are technical candidate
 checks, not human balance or public-deployment acceptance.

@@ -82,6 +82,12 @@ and reviewed public promotion are not complete.
   openings have short no-wait alternatives, not unavoidable damage. [Evidence and
   design priorities](journey-middle-pressure.md). This closes a feasibility gap,
   not the stronger-pressure balance, multi-seed, Team or delivery gates.
+- Return in Reserve now has an explicit two-bay greybox successor:18 ordinary
+  seed/delay samples and six separate impact-mastery clear/replay/race routes;
+  133 tests on each Node. Native Inspect/Apply/saved-slot restoration were observed,
+  but a browser interaction failure left first-return and edit/Undo verification
+  incomplete. Short22–32second optimized paths and brief impact visibility remain
+  open concerns. [Study evidence](journey-reserve-spatial.md).
 
 Read-only inspection of all23 missions in the eight public pins at `17bd1965`
 also found three player speeds (8,10,15 cells/s). Moving enemies span0.2–12.0416
@@ -105,7 +111,7 @@ candidate catalogue. A global multiplier must not be applied to all blindly.
 | P04 — Neon | Seven candidates/art; frontier-shaping routes; Remix; replay/race/mastery/seed checks; all42 pressure clear/replay/race cases | Short paths and mouth/frontier goal review, human pacing, public integration |
 | P05 — Rover | Seven candidates/art; reclaimed-ground threat/escape teaching; Remix; all42 pressure clear/replay/race cases | Sorting Yard/Split Berths short routes and late activation; presentation, human balance, public integration |
 | P06 — Fractured Grid | Seven candidates/art; erosion/anchors/repair; Remix; all42 pressure clear/replay/race cases; opening observations; Two Districts spatial study,18 ordinary samples and6 separate mastery routes |35–40second optimized ordinary pacing; discoverability of bent hazard enclosures; repair/roamer teaching, human pacing, public integration |
-| P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; all42 pressure clear/replay/race cases; six safe alternative first returns | Reserve's fast impact-free clear/teaching successor; whole-set native hit explanations, human difficulty, public integration |
+| P07 — Phaseworks | Seven candidates/art; selective trail impact; Remix; all42 pressure clear/replay/race cases; six safe alternative first returns; separate two-bay Reserve study with18 ordinary +6 mastery samples | Reserve pacing/impact readability and unfinished native check; whole-set hit explanations, human difficulty, public integration |
 | P08 — Livewire | Seven candidates/art; telegraphed lanes; Remix; all42 stronger-pressure clear/replay/race cases;32 optional goals | Short-clear spatial review;10 optional-goal cases; human warning overlap/ordering, public integration |
 | P09 — Relay | Seven candidates/art; permanent connectors; Studio links; Remix; all42 pressure clear/replay/race cases; opening observations | Connector bypass/long post-objective intervals, human shortcut usefulness, public integration |
 | P10 — Crosswind | Seven candidates/art; directional fields/no drift; Remix; all42 pressure clear/replay/race cases | Short-clear/connector/optional-goal review; human precision/readability, public integration |

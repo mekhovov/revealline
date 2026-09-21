@@ -64,9 +64,27 @@ Node22.22.2 (one combined run), covering original Phase routes/mastery/seeds/tim
 selective impact, capture, foundations, Studio/history and successor evidence.
 JavaScript lint, formatting and whitespace checks pass.
 
+## Scoped native observation
+
+Exact-source preview at commit `4ef1f7b2f267e34a4444e22e8ca95cbf04b0e227`,
+localhost8822: Inspect left My Journey/Nearby Shore active while showing the new
+source. Explicit Apply opened and saved the separate phase-spatial-review slot;
+the board listed2066 earnable cells, two occupied regions and three anchors, with
+the Standard40%-faster pressure policy. Inspecting the original my-journey saved
+slot returned its original source without replacing the active study.
+
+The browser connection then stalled during a second saved-slot inspection. A
+fresh tab successfully restored phase-spatial-review checkpoint1. A reversible
+project-name edit remained unapplied: repeated source-inspection activation did
+not advance to an enabled Apply control. The connection also timed out closing
+the earlier tab. No runtime state was injected, no unsaved edit was reported
+saved, and no first-return or Undo/Redo pass is claimed. Cause of the browser
+interaction failure is unresolved; it is not classified as a game defect from
+these observations alone.
+
 ## Open gates
 
-Native Studio/actual first return, final picture composition, full native/device
+Complete native Studio edit/Undo/Redo and actual first return, final picture composition, full native/device
 play, integrated host, human lesson comprehension and public promotion remain
 open at this source checkpoint. The lower bay prevents a one-bay clear, but
 22–32second optimized routes, preset inversions, short impact visibility and
