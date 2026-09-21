@@ -1,36 +1,39 @@
 # Reveal Line cross-mode execution register
 
-## Current delivery — v0.77.0 accepted on Pages
+## Current delivery — v0.78.0 accepted; v0.79.0 device candidate qualifying
 
-**Public default: [v0.77.0](https://mekhovov.github.io/revealline/releases/v0.77.0/site/game/).**
-Qualified game source `432110b51c570b838cdae390790b67dfa76f0785`, source PR211,
-and publication PR212 are accepted. Controller commit
-`6f851d1bce4cb7d5f257546ab6ffd3c68231f08a` deployed through Pages run35576008746 /
-deployment6564199467. The retained public HTTP audit matched **4,162 files /
-864,619,510 bytes**, with zero failures and no retries. Root independently matched
-every retained observation against the downloaded deployment receipt; this was a
-receipt/evidence intake, not a second complete network audit.
+**Public default: [v0.78.0](https://mekhovov.github.io/revealline/releases/v0.78.0/site/game/).**
+Qualified game source `e9434d03feb30bf8767051b2832a4ab987b2fa41`, source PR209,
+and publication PR213 are accepted. Main/controller commit
+`595fdadddf3cf5c4240c430b78d27772915df83d` deployed through Pages run35603591639 /
+deployment6569148205. The release owner's public audit matched **4,206 files /
+866,183,041 bytes**, with zero failures. Root inspected and hash-verified the
+[acceptance receipt](verification/public-v078-intake/public-acceptance.json);
+this intake is not a second complete network audit.
 
-Solo, Versus and Team share touch steering and preferences, with separate fingers
-for couch seats. Compact HUDs and visible-viewport fitting preserve the complete
-arena without requiring fullscreen. Required encounter instructions and event
-notices retain separate readable space. Modeled controller Start, Retry, Next and
-pause journeys pass; they do not certify the reported physical Steam Deck failure.
+Public browser acceptance covers current/root/history routing, 390×844 without
+horizontal overflow, a legal Solo win at52.2%/8,160 without life loss, explicit
+788-file offline preparation and two disconnected reopens. The named browser was
+restored online and closed. Nine immutable release assets are published. Physical
+Safari/Steam Deck/controller use and audible quality are not certified by this receipt.
 
-Public browser acceptance covers root routing, a legal Solo win at390×844, current
-Explorer, prior-release Archive40, 779-file/57,571,334-byte core offline preparation
-and offline game entry, plus Team lobby/active play at568×320 without horizontal
-overflow or page/console errors. Physical Safari browser bars, safe areas, actual
-touch/controllers, audible listening and remaining whole-mode journeys stay open.
-See [device implementation and retained evidence](shared-device-play.md).
+Solo, Versus and Team share touch steering/preferences and independent couch
+fingers. The focused **v0.79.0 candidate `fc847b18`** improves compact music/Pause,
+Team landscape fit, Solo caption space, ignored-finger cancellation, resize and
+fullscreen ownership. It retains all76 reviewed device postimages from `8c81c9b3`
+exactly on accepted main; only version files and release notes are added. Final
+[source qualification and freeze](https://github.com/mekhovov/revealline/actions/runs/35605558851)
+are in progress. The earlier source-only run35604260193 passed source checks and
+was deliberately superseded while full shards were running; it is not a full-test
+pass. No v0.79 release or physical-device acceptance is claimed.
 
-Later Team presentation, additional landscape enlargement, Studio, campaign and
-soundtrack candidates remain outside v0.77.0. Their local results are not public
-release acceptance.
+Later Team artwork, Studio, pack/Collection recovery and campaign candidates remain
+separate. See [shared-device implementation](shared-device-play.md) and the current
+follow-up register below. Published v0.77.0 remains preserved through Archive41.
 
 | Priority | Programme work | Current boundary |
 |---|---|---|
-| 1 | Release shared handheld controls and compact layouts | v0.77.0 accepted on Pages with full inventory and bounded public journeys; physical device gates remain. |
+| 1 | Release shared handheld controls and compact layouts | v0.78.0 accepted; focused v0.79.0 final-source qualification/freeze in progress. Public device delivery and physical gates remain. |
 | 2 | Finish native navigation, shared readability and actor parity | Partial; all modes, complete input journeys, actual playing scale and responsive layouts remain. |
 | 3 | Action feedback, fair challenge and rewards | Partial; readable warnings/counters, loss causes, Retry/Next/stories and human playtests remain. |
 | 4 | Music, creation, discovery and campaign production | Partial; auditioned media, complete asset coverage, real installation/transfer/recovery and the revised XPOSED Journey programme remain. |
@@ -56,7 +59,7 @@ original observation dates. Accepted scopes below are not whole-game completion.
 | P00 integration | Accepted scoped baseline | v0.55; historical simulation, save and media identities must remain intact. |
 | P01 loading | Accepted original scope; new Journey gap open | v0.57.4 feedback contract. Held `b6502bfc` prepares exact required character imagery before authored Journey Start/Next/Retry replaces its owner. Bounded host/native checks pass; final integrated qualification and public delivery remain. |
 | P02-A master sound | Accepted scoped baseline | v0.58.1; keep master authority through later transports and previews. |
-| P02-B music | Partial | Shared playback foundations exist. PR209 remains separate from the device release; exact media transfer/offline behavior, rights/provenance, listening and mode qualification remain. AI-original music production remains paused by the user's later direction. |
+| P02-B music | Partial | PR209 and v0.78.0 are accepted with the licensed music delivery and bounded transfer/offline evidence. Audible quality, physical interruptions and the complete advertised-mode matrix remain. AI-original music production remains paused by the user's later direction. |
 | P03 navigation | In progress | Public Library/Team-lobby corrections are accepted in v0.76.1. v0.77.0 covers modeled controller launch/continuation; physical controllers and complete current-screen journeys remain. |
 | P04 creation | Partial | Published previews/history and foundation-pack example exist. Held Studio focus/cold Back (`74092988`) and historical replacement transfer (`aced2706`) have scoped tests and actual browser Save/Reload/export evidence. Complete independent creation/play/recovery and public acceptance remain. |
 | P05 presentation | In progress | Readable styles and compact layouts exist. v0.77.0 is accepted on Pages. Held compact Team settings and reviewed presentation41 remain separate. All-mode EN/UA, Large/Plain, zoom, reduced effects and physical safe-area/browser-bar checks remain. |
@@ -139,7 +142,7 @@ and public gate remain open.
 | P18-TOUCH-RESIZE | Source correction; held after PR209 | Window resize interrupts an owned steering gesture through Pause instead of leaving flight running without that finger. Couch116/116 and separate Solo69/69 per runtime; bounded no-gesture native resize checked. [Evidence](verification/touch-resize-ownership/README.md). | Final composed source/public checks and physical phone rotation/browser-bar behavior. |
 | P18-LANDSCAPE-MUSIC | Source composition and bounded Team browser flow checked | Landscape61af and music8ee combine without conflict; all239 preview bindings verified. Later actual Team Start/Settings/Resume and both pad cuts passed; seven viewport sizes retain the complete arena. MP3 credit/stronghold geometry remains open; portrait Large HUD is74px. [Review and final matrix](verification/handheld-music-integration-rehearsal/README.md). | Actual accepted PR209 base, live music/stronghold/control-size geometry, compact credit design and physical devices. |
 | P18-COMPACT-TRACK | Scoped candidate and stronghold composition checked; held after PR209 | Runtime `855f9981`: shared passive Solo/Versus/Team presenter, stable88×44 Pause caption and full Audio metadata. Music26/26 plus input35/35 each Node20/22; actual browser entry and paused return. `1080d32c` verifies landscape61af composition with both pads, Relay Yard and Large/Plain text at568/844/960 landscape and390 portrait: complete arena, ≥44px targets, zero overflow. [Candidate](https://github.com/mekhovov/revealline/blob/855f9981/docs/verification/compact-track-hud/README.md), [stronghold evidence](https://github.com/mekhovov/revealline/blob/1080d32c/docs/verification/compact-track-hud/stronghold/README.md), [contract](compact-gameplay-music.md). | Compose with accepted PR209 and held Team/input source; final all-mode wide-map/MP3/UA/safe-area matrix, physical touch/controllers, full gates and versioned public release. Overlay corner occlusion remains explicit; portrait Large HUD74px. |
-| P18-DEVICE-COMPOSITION | Committed `8c81c9b3`; full hosted qualification in progress | Focused device successor on accepted music ancestry; no Team artwork fork. Compact HUD + landscape + caption + extra-finger/resize/fullscreen ownership. Eight complete files76/76 eachNode20/22;1,780 verified reads. Native568×320 keyboard Start/win/Retry/Settings/Back/Continue and D-pad win; Team inherits D-pad,44px HUD438×219arena and independent P1/P2 cuts.407 served files verified; console empty. [Evidence](https://github.com/mekhovov/revealline/blob/8c81c9b3/docs/verification/device-composition/README.md). | [Full source run35604260193](https://github.com/mekhovov/revealline/actions/runs/35604260193), next unused version and final qualification/PR/Pages/public inventory; physical iPhone/Deck and whole P18 remain open. |
+| P18-DEVICE-COMPOSITION | Committed `8c81c9b3`; full hosted qualification in progress | Focused device successor on accepted music ancestry; no Team artwork fork. Compact HUD + landscape + caption + extra-finger/resize/fullscreen ownership. Eight complete files76/76 eachNode20/22;1,780 verified reads. Native568×320 keyboard Start/win/Retry/Settings/Back/Continue and D-pad win; Team inherits D-pad,44px HUD438×219arena and independent P1/P2 cuts.407 served files verified; console empty. [Evidence](https://github.com/mekhovov/revealline/blob/8c81c9b3/docs/verification/device-composition/README.md). | Final candidate `fc847b18` / v0.79.0 [qualifies in run35605558851](https://github.com/mekhovov/revealline/actions/runs/35605558851); PR/Pages/public inventory and physical iPhone/Deck remain. Source-only35604260193 was superseded, not counted as full-suite acceptance. |
 | P18-SOLO-CAPTION | Source candidate `1a941f05`; held after PR209 | Manual equipment no longer implies an empty warning-card band. Authored non-warning missions retain two lines of notices,44px HUD and44px direction targets. First Signal568×320 Large/Plain arena area increases48%; actual native keyboard Settings/Back/Continue and one-pointer-cut win checked.40/40 eachNode20/22 with1,248 verified source reads. [Candidate and limits](https://github.com/mekhovov/revealline/blob/1a941f05/docs/verification/solo-caption-compaction/README.md). | Final source/presentation composition, warning-capable/wide/localized matrix and physical iPhone/Deck; browser evidence uses an isolated iframe, not device certification. |
 | P16-COLLECTION-RECOVERY | Candidate independently reviewed; not integrated | Missing legacy Collection pictures expose an actionable recovery route instead of a disabled card. Root reproduces the disabled-card failure, then verifies58/58 eachNode20/22 and750 candidate reads. Paused flight, exact opener/page/search and honest unknown-source identity are covered. [Review](verification/collection-recovery-independent/README.md). | Adopt required P06 pack-review foundation plus successor; final native/physical/public qualification. Historical original identity remains a separate requirement. |
 | P06-PACK-RETENTION | Independently reviewed candidate; not integrated | Frozen `ce08` patch on8cff preserves a paused installed flight when an unrelated pack changes. Root baseline reproduces tick30→0/cut loss; candidate29/29 eachNode20/22 passes both complete host files. Six postimages and1,052 candidate source reads verified. [Independent proof](verification/pack-retention-independent/README.md). | Adopt after PR209 with newer app/skill hunks; final source/public qualification and separate explicit whole-library replacement review. |
