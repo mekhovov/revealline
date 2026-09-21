@@ -92,6 +92,38 @@ the form, boundaries, readable results and collapsed detailed report. No ledger
 upload, physical device, small-screen, full gameplay or human observation was
 claimed by this native panel check. Those remain separately qualified work.
 
+## Earlier-reader progress round trip
+
+The previous backup test validated today's data with today's reader. The new
+cross-release suite instead loads exact earlier source from local tag `v0.69.3`,
+commit `406637f36c039f991e83d241cb49d4568a871109`. Three small historical files
+(profile, catalog and shared JSON boundary) are preserved in a test-only fixture.
+Their original SHA-256 pins are asserted before execution; only their two relative
+import locations are relocated to in-memory module URLs. Tests need no Git history,
+network, downloads or filesystem writes. No earlier implementation is edited.
+
+Five cases verify:
+
+- Current records at all three presets and modes survive an old reader's load and
+  write, retaining unknown mission IDs and exact receipt identities.
+- Concurrent earlier/current writers retain each other's progress in either order.
+- Current backup → earlier restore/export → current restore retains all history;
+  repeated no-op restore stays idempotent rather than advancing generations.
+- An injected failed earlier write leaves durable data untouched, remains exportable
+  in-session and merges a newer writer's history after retry.
+- A Team clear earned by the recorded public command route, not an arranged won
+  state, survives the earlier reader and returns to the current Team adapter.
+
+Both versions open the same database name at version1, without schema upgrade.
+Four cases deliberately use labelled synthetic storage receipts; only the last
+case claims an actual command-earned clear. These local records grant no awards.
+The five tests and broader39-test profile/backup/Team-progress/authority/preferences
+cohort pass on Node20.19.5 and22.22.2; logs are
+`.cache/journey-p15-storage-regression-node{20,22}-r1.tap`. Scoped ESLint, formatting
+and diff checks pass. The finite IndexedDB model proves transaction semantics,
+not real browser disk behavior, deployed Pages rollback, cache switching or an
+unreleased future schema. Those remain separate required gates.
+
 This is infrastructure for honest qualification, not a substitute for playing the
 game. Genuine human sessions, physical devices, complete accessibility/performance
 checks, Legacy transition, rollback proof, original pending artwork, accepted
