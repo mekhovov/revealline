@@ -1,0 +1,24 @@
+{
+  "format": "revealline-still-recovery-defect-retention.v1",
+  "scope": "Independent actual-host modeled reproductions;3 successful reproductions mean3 confirmed defects, not passing release qualification. Saved data unchanged.",
+  "files": [
+    {
+      "original": "/tmp/still-audio-recovery-defect-review.json",
+      "path": "docs/verification/hosted-soundtracks-2026-09-21/still-recovery/defect-review.json",
+      "bytes": 6028,
+      "sha256": "470f6518b8adf6907d333eb785429e83935a85370c8d30fec49fc4712b6fbd24"
+    },
+    {
+      "original": "/tmp/still-audio-recovery-repro.mjs",
+      "path": "docs/verification/hosted-soundtracks-2026-09-21/still-recovery/reproduction.mjs",
+      "bytes": 5792,
+      "sha256": "e0b7bd44227617f68a7e956099a0ac51e23d57518082ecacdfef44c0ccf69b1b"
+    },
+    {
+      "original": "/tmp/still-audio-recovery-repro.log",
+      "path": "docs/verification/hosted-soundtracks-2026-09-21/still-recovery/reproduction.log",
+      "bytes": 1900,
+      "sha256": "780ee845437ffaaad5a709f4394ae653be6c8423278093a9b8e0ac0abeb8b4c6"
+    }
+  ]
+}
