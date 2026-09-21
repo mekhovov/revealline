@@ -67,8 +67,10 @@ pacing evidence. This table and the original fixtures remain historical truth.
   Dnipro and Four motor pacing before promotion, not just increase coverage.
 - Human route choice, cultural legibility, failure explanations, first-play and
   practiced timing, absence of quota cleanup and distinction between missions.
-- Original per-mission picture compositions after greybox/readability gates;
-  campaign-consistent material/audio direction. AI music remains paused.
+- Eight original per-mission picture compositions now exist in a separate explicit
+  candidate edition; exact pins and unchanged route outcomes are tested. Native
+  partial-reveal and human/cultural review remain. [Picture evidence](journey-cultural-workshop-art.md).
+  Campaign material/audio qualification remains; AI music is paused.
 - Team requires purpose-built routes and explicit qualification; these maps
   intentionally advertise only Solo and Versus.
 - Reviewed successor integration, version/release allocation and exact Pages
