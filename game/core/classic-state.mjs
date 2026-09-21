@@ -8,6 +8,7 @@ export const CLASSIC_EFFECTS = Object.freeze({
   'enemy-slow': 720,
   'enemy-freeze': 360,
 });
+export const CLASSIC_EFFECT_FACTORS = Object.freeze({ 'player-speed': 1.25, 'enemy-slow': 0.5 });
 
 export function createClassicState(level, cells) {
   const terrain = new Uint8Array(cells.length);

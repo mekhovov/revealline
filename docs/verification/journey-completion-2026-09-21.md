@@ -65,8 +65,14 @@ and a common geometry-opportunity primitive. Six new tests cover either active
 pilot, both actual live trails, seat permutation, obstacles/terrain, occupancy
 and continued unsupported-runtime rejection. With the existing bonus cohorts,
 407 tests pass on each Node version. **This does not enable Team pickups**:
-shared schedules, swept collection/effects, transport, UI and mode qualification
-remain implementation work.
+the qualification primitive alone did not implement a playable mode.
+
+The [Team engine successor](journey-team-timed-runtime.md) now adds shared schedules,
+swept collection, all four bounded effects and deterministic damage/revival tie
+handling under an explicit runtime edition. Seventeen new engine tests and the
+combined727-test cohort pass on both Node versions. **Compiler/import/editor and
+presentation remain closed/pending**, as do actual-host, purpose-built route,
+device/two-human and release gates. Engine evidence does not close P02 or P14.
 
 ## Latest completed spatial unit
 

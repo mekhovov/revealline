@@ -152,3 +152,14 @@ matched multi-origin search to the OR of separate single-origin searches. Those
 are reviewer probes, not an additional committed test count. Review also corrected
 freeze contact parity, capture-based revival ordering, remove-last semantics and
 the actual Team steering scope above. Remaining slices1(state machine)–5 are open.
+
+## Engine successor
+
+The next slice implements the reused schedule state machine, explicit levelv5 /
+rulesv7, all four effects and swept contact arbitration. Qualification evidence
+and remaining user-facing gates are in
+[Team runtime verification](../../verification/journey-team-timed-runtime.md).
+The damage-instant guard is authoritative (`lastDamageTime` per seat), not just
+an event-history filter: exact end-of-tick damage must remain excluded when the
+next tick clears its events. The compiler, pack reader and Studio remain closed
+until slice3 is complete. Human/device and publication gates remain open.
