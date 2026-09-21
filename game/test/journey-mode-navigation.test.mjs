@@ -205,7 +205,13 @@ test('authored departure reports refused saving truthfully and still requires de
   );
 });
 
-for (const route of ['authored', 'whole-originals', 'whole-originals-v2', 'whole-originals-v3'])
+for (const route of [
+  'authored',
+  'whole-originals',
+  'whole-originals-v2',
+  'whole-originals-v3',
+  'whole-originals-v4',
+])
   test(`${route} owns its native Solo mode link without changing the frozen route`, async (t) => {
     const p = await solo(t, { search: `?journey=${route}` });
     assert.equal(

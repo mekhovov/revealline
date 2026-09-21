@@ -10,14 +10,25 @@ const json = async (relative) => JSON.parse(await readFile(new URL(relative, roo
 /** Existing declarations only: no second mission registry, inferred matching by
  * name, edited historical observation, asset loading or publication. */
 export async function loadJourneyAdaptationInputs({ edition = 'greybox' } = {}) {
-  if (!['greybox', 'originals', 'teaching-originals', 'campaign-originals'].includes(edition))
+  if (
+    ![
+      'greybox',
+      'originals',
+      'teaching-originals',
+      'campaign-originals',
+      'actor-originals',
+    ].includes(edition)
+  )
     throw new Error('Unknown adaptation content edition.');
   const ledger = await json('docs/research/xposed-journey-ledger.json');
   const chapters = [];
   const selected = createWholeJourneyChapterSources({
     artwork: edition !== 'greybox',
-    roverTeaching: ['teaching-originals', 'campaign-originals'].includes(edition),
-    campaignPresentation: edition === 'campaign-originals',
+    roverTeaching: ['teaching-originals', 'campaign-originals', 'actor-originals'].includes(
+      edition,
+    ),
+    campaignPresentation: ['campaign-originals', 'actor-originals'].includes(edition),
+    campaignActors: edition === 'actor-originals',
   });
   for (const [index, chapter] of selected.entries()) {
     const module = await import(`../game/content-design/${chapter.id}-candidates.mjs`);
@@ -175,7 +186,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const args = process.argv.slice(2);
     if (args.length && (args.length !== 2 || args[0] !== '--edition'))
       throw new Error(
-        'Usage: node scripts/audit-journey-adaptations.mjs [--edition greybox|originals|teaching-originals]',
+        'Usage: node scripts/audit-journey-adaptations.mjs [--edition greybox|originals|teaching-originals|campaign-originals|actor-originals]',
       );
     const report = await auditJourneyAdaptations(args.length ? { edition: args[1] } : undefined);
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);

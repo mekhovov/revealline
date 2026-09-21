@@ -7,6 +7,7 @@ import { createAuthoredJourneyRoute } from './content-design/route.mjs';
 import { authoredJourneyModeHref } from './content-design/mode-href.mjs';
 import { attachJourneyReactions } from './ui/journey-reactions.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
+import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';
 import { DIFFICULTY_CATALOG, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
 import { attachJourneyChooser } from './ui/journey-chooser.mjs';
@@ -322,7 +323,10 @@ try {
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? createCandidateSoloHost(authoredRoute.source, {
-        themes: (await getJSON('content-design/themes.json')).themes,
+        themes:
+          authoredRoute.id === 'whole-originals-v4'
+            ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes)
+            : (await getJSON('content-design/themes.json')).themes,
         buildVersion,
         corePackIds: authoredRoute.corePackIds,
       })
