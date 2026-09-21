@@ -5759,6 +5759,7 @@ try {
   }
   function focusMission() {
     // Explicit content selection leaves the retained menus; passive Back does not.
+    if ($('settings-dialog').open) $('settings-dialog').close();
     if ($('shell-workshop-dialog').open) $('shell-workshop-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     $('arena-shell').scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });

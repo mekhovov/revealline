@@ -92,12 +92,15 @@ function assertLobbyOwned(f) {
   assert.equal(f.$('coop-menu').contains(preview), true);
   assert.equal(f.$('coop-tools').contains(preview), false);
   assert.equal(f.$('coop-overlay').contains(preview), false);
-  const parent = f.$('coop-start').parentNode;
-  assert.equal(preview.parentNode, parent, 'Preview and Start share their menu-copy container.');
-  assert.equal(parent.classList.contains('menu-copy'), true);
-  const children = [...parent.children];
+  const actions = f.$('coop-start').parentNode;
+  const launch = preview.parentNode;
+  assert.equal(actions.parentNode, launch, 'Preview and launch actions share the lobby group.');
+  assert.equal(launch.parentNode.classList.contains('menu-copy'), true);
+  assert.equal(launch.classList.contains('coop-launch-grid'), true);
+  assert.equal(actions.classList.contains('coop-launch-actions'), true);
+  const children = [...launch.children];
   assert.ok(
-    children.indexOf(preview) < children.indexOf(f.$('coop-start')),
+    children.indexOf(preview) < children.indexOf(actions),
     'Authored DOM order places the preview before Start; this is not a native CSS/layout claim.',
   );
 }

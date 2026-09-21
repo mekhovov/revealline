@@ -1,0 +1,81 @@
+TAP version 13
+# Subtest: rotation reveals the focused Team lobby control without starting or refocusing
+not ok 1 - rotation reveals the focused Team lobby control without starting or refocusing
+  ---
+  duration_ms: 75.145584
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-compact-lobby/game/test/coop-lobby-resize.test.mjs:26:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+
+    + []
+    - [
+    -   {
+    -     behavior: 'instant',
+    -     block: 'nearest',
+    -     inline: 'nearest'
+    -   }
+    - ]
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      block: 'nearest'
+      inline: 'nearest'
+      behavior: 'instant'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-compact-lobby/game/test/coop-lobby-resize.test.mjs:29:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: rotation leaves a fully visible Team lobby control alone
+ok 2 - rotation leaves a fully visible Team lobby control alone
+  ---
+  duration_ms: 32.280292
+  type: 'test'
+  ...
+# Subtest: background rotation cannot scroll the Team lobby
+ok 3 - background rotation cannot scroll the Team lobby
+  ---
+  duration_ms: 28.583791
+  type: 'test'
+  ...
+# Subtest: a newer focus during lobby measurement vetoes the old resize reveal
+not ok 4 - a newer focus during lobby measurement vetoes the old resize reveal
+  ---
+  duration_ms: 26.154833
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-compact-lobby/game/test/coop-lobby-resize.test.mjs:49:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'coop-settings-open'
+    - 'coop-discovery-open'
+            ^
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'coop-discovery-open'
+  actual: 'coop-settings-open'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-compact-lobby/game/test/coop-lobby-resize.test.mjs:57:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 2
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 260.289083
