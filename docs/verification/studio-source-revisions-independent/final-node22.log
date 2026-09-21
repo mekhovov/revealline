@@ -1,0 +1,298 @@
+TAP version 13
+# (node:7103) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/studio-revision-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+ok 1 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 14777.978
+  type: 'test'
+  ...
+# (node:7104) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/studio-revision-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: studio revisions preserve prior theme records and apply explicit token changes
+ok 2 - studio revisions preserve prior theme records and apply explicit token changes
+  ---
+  duration_ms: 171.699625
+  type: 'test'
+  ...
+# Subtest: a complete required collection can retain separate compact edit revisions
+ok 3 - a complete required collection can retain separate compact edit revisions
+  ---
+  duration_ms: 183.642
+  type: 'test'
+  ...
+# Subtest: collection replacement rejects incomplete members and missing dependencies atomically
+ok 4 - collection replacement rejects incomplete members and missing dependencies atomically
+  ---
+  duration_ms: 147.638333
+  type: 'test'
+  ...
+# Subtest: studio database compare-and-swap rejects stale tabs and preserves data on write failure
+ok 5 - studio database compare-and-swap rejects stale tabs and preserves data on write failure
+  ---
+  duration_ms: 241.132583
+  type: 'test'
+  ...
+# Subtest: generated prompts carry real slot, theme, states and release limitations
+ok 6 - generated prompts carry real slot, theme, states and release limitations
+  ---
+  duration_ms: 37.602375
+  type: 'test'
+  ...
+# Subtest: audio and font briefs request the actual output medium and preserve the immutable slot document
+ok 7 - audio and font briefs request the actual output medium and preserve the immutable slot document
+  ---
+  duration_ms: 40.72125
+  type: 'test'
+  ...
+# Subtest: all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection
+ok 8 - all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection
+  ---
+  duration_ms: 71.452
+  type: 'test'
+  ...
+# Subtest: edit briefs retain actual custom geometry and the production palette contract
+ok 9 - edit briefs retain actual custom geometry and the production palette contract
+  ---
+  duration_ms: 95.767417
+  type: 'test'
+  ...
+# Subtest: saved lineage allows a batch of staged actions and reset, but refuses rewritten history
+ok 10 - saved lineage allows a batch of staged actions and reset, but refuses rewritten history
+  ---
+  duration_ms: 851.141542
+  type: 'test'
+  ...
+# Subtest: two independent studio tabs serialize compare-and-swap without dropping the winning save
+ok 11 - two independent studio tabs serialize compare-and-swap without dropping the winning save
+  ---
+  duration_ms: 310.779417
+  type: 'test'
+  ...
+# Subtest: a failed save of new bytes and invalid geometry both retain the saved workspace
+ok 12 - a failed save of new bytes and invalid geometry both retain the saved workspace
+  ---
+  duration_ms: 308.641708
+  type: 'test'
+  ...
+# Subtest: imports reserve unoccupied asset and collection identities and retain derivative links
+ok 13 - imports reserve unoccupied asset and collection identities and retain derivative links
+  ---
+  duration_ms: 188.692792
+  type: 'test'
+  ...
+# Subtest: self-imports retain every revision without duplicating history; conflicting parents stay isolated
+ok 14 - self-imports retain every revision without duplicating history; conflicting parents stay isolated
+  ---
+  duration_ms: 360.763125
+  type: 'test'
+  ...
+# Subtest: incompatible imported slots fail atomically and replaced collections retain history
+ok 15 - incompatible imported slots fail atomically and replaced collections retain history
+  ---
+  duration_ms: 338.673666
+  type: 'test'
+  ...
+# Subtest: closing a pending open rejects its caller promptly and closes a late database
+ok 16 - closing a pending open rejects its caller promptly and closes a late database
+  ---
+  duration_ms: 1.1675
+  type: 'test'
+  ...
+# Subtest: closing before a pending upgrade aborts that upgrade without creating a workspace
+ok 17 - closing before a pending upgrade aborts that upgrade without creating a workspace
+  ---
+  duration_ms: 0.318375
+  type: 'test'
+  ...
+# Subtest: a blocked open that succeeds late cannot invalidate the newer studio connection
+ok 18 - a blocked open that succeeds late cannot invalidate the newer studio connection
+  ---
+  duration_ms: 0.399666
+  type: 'test'
+  ...
+# Subtest: a retired database close callback does not detach a newer owned handle
+ok 19 - a retired database close callback does not detach a newer owned handle
+  ---
+  duration_ms: 1.383083
+  type: 'test'
+  ...
+# (node:10051) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/studio-revision-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: release studio adopts exact current assets and preserves export bytes without storage
+ok 20 - release studio adopts exact current assets and preserves export bytes without storage
+  ---
+  duration_ms: 336.745166
+  type: 'test'
+  ...
+# Subtest: source absence is explicit; malformed metadata, redirects and corrupt bodies reject atomically
+ok 21 - source absence is explicit; malformed metadata, redirects and corrupt bodies reject atomically
+  ---
+  duration_ms: 181.120542
+  type: 'test'
+  ...
+# Subtest: cancellation interrupts a pending release reader and never returns partial assets
+ok 22 - cancellation interrupts a pending release reader and never returns partial assets
+  ---
+  duration_ms: 178.099833
+  type: 'test'
+  ...
+# (node:11121) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/studio-revision-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: bounded sprite documents own their bytes and reject mismatched imports
+ok 23 - bounded sprite documents own their bytes and reject mismatched imports
+  ---
+  duration_ms: 0.953166
+  type: 'test'
+  ...
+# Subtest: a closed shape contains flood fill, with undo and branchable redo
+ok 24 - a closed shape contains flood fill, with undo and branchable redo
+  ---
+  duration_ms: 0.348291
+  type: 'test'
+  ...
+# Subtest: invalid strokes and clipped moves never partially change the document
+ok 25 - invalid strokes and clipped moves never partially change the document
+  ---
+  duration_ms: 0.227083
+  type: 'test'
+  ...
+# Subtest: overlapping selection moves preserve the selected source, and rotations round trip
+ok 26 - overlapping selection moves preserve the selected source, and rotations round trip
+  ---
+  duration_ms: 0.212292
+  type: 'test'
+  ...
+# Subtest: sparse colors and invalid operations retain exact pixels and the redo branch
+ok 27 - sparse colors and invalid operations retain exact pixels and the redo branch
+  ---
+  duration_ms: 0.259167
+  type: 'test'
+  ...
+# Subtest: undo and redo are lossless across rectangular transforms and overlapping transparent moves
+ok 28 - undo and redo are lossless across rectangular transforms and overlapping transparent moves
+  ---
+  duration_ms: 0.115083
+  type: 'test'
+  ...
+# (node:11136) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/studio-revision-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: exact historical bindings retain approved field-kit assets after a custom upload
+ok 29 - exact historical bindings retain approved field-kit assets after a custom upload
+  ---
+  duration_ms: 242.847875
+  type: 'test'
+  ...
+# Subtest: unbound same-ID revisions and unrelated slot assets are not guessed into history
+ok 30 - unbound same-ID revisions and unrelated slot assets are not guessed into history
+  ---
+  duration_ms: 289.49225
+  type: 'test'
+  ...
+# Subtest: old collection revisions and arbitrary imported asset identities remain reachable
+ok 31 - old collection revisions and arbitrary imported asset identities remain reachable
+  ---
+  duration_ms: 598.240458
+  type: 'test'
+  ...
+# Subtest: source lineage is exact, download-only, and cannot become a binding by naming convention
+ok 32 - source lineage is exact, download-only, and cannot become a binding by naming convention
+  ---
+  duration_ms: 268.179583
+  type: 'test'
+  ...
+# Subtest: a parent that was itself bound remains restorable and shared sources are deduplicated
+ok 33 - a parent that was itself bound remains restorable and shared sources are deduplicated
+  ---
+  duration_ms: 283.830541
+  type: 'test'
+  ...
+# Subtest: restoring an earlier choice appends a theme revision without rewriting any retained asset
+ok 34 - restoring an earlier choice appends a theme revision without rewriting any retained asset
+  ---
+  duration_ms: 321.33425
+  type: 'test'
+  ...
+# Subtest: unknown slots and invalid historical bindings fail through the existing validator
+ok 35 - unknown slots and invalid historical bindings fail through the existing validator
+  ---
+  duration_ms: 238.925541
+  type: 'test'
+  ...
+# (node:11310) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/shared-device-r1/studio-revision-independent/loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real PNG bundle transfer retains independent historical bindings, originals, names and rebind/export bytes
+ok 36 - real PNG bundle transfer retains independent historical bindings, originals, names and rebind/export bytes
+  ---
+  duration_ms: 773.343917
+  type: 'test'
+  ...
+# Subtest: mapped historical theme parents, tokens and collection bindings remain selectable
+ok 37 - mapped historical theme parents, tokens and collection bindings remain selectable
+  ---
+  duration_ms: 721.261709
+  type: 'test'
+  ...
+# Subtest: more than 128 incoming theme revisions retain their exact token history within existing limits
+ok 38 - more than 128 incoming theme revisions retain their exact token history within existing limits
+  ---
+  duration_ms: 5853.749042
+  type: 'test'
+  ...
+# Subtest: self-import shares exact existing immutable records and namespaces avoid theme collisions
+ok 39 - self-import shares exact existing immutable records and namespaces avoid theme collisions
+  ---
+  duration_ms: 351.530416
+  type: 'test'
+  ...
+# Subtest: foreign root and conflicting parent assets are mapped without rewriting local identities
+ok 40 - foreign root and conflicting parent assets are mapped without rewriting local identities
+  ---
+  duration_ms: 157.938917
+  type: 'test'
+  ...
+# Subtest: history capacity rejection leaves both validated inputs unchanged
+ok 41 - history capacity rejection leaves both validated inputs unchanged
+  ---
+  duration_ms: 2370.339875
+  type: 'test'
+  ...
+# Subtest: sparse foreign theme and collection families remap contiguous revisions and exact parent references
+ok 42 - sparse foreign theme and collection families remap contiguous revisions and exact parent references
+  ---
+  duration_ms: 164.682375
+  type: 'test'
+  ...
+# Subtest: atomic transition accepts contiguous immutable batches but rejects gaps, duplicates and rewrites
+ok 43 - atomic transition accepts contiguous immutable batches but rejects gaps, duplicates and rewrites
+  ---
+  duration_ms: 266.481459
+  type: 'test'
+  ...
+# Subtest: asset and collection batches enforce contiguous append-only records; slots remain unique
+ok 44 - asset and collection batches enforce contiguous append-only records; slots remain unique
+  ---
+  duration_ms: 376.018625
+  type: 'test'
+  ...
+# Subtest: theme choices distinguish imported and local family names without per-revision choices
+ok 45 - theme choices distinguish imported and local family names without per-revision choices
+  ---
+  duration_ms: 203.510292
+  type: 'test'
+  ...
+1..45
+# tests 45
+# suites 0
+# pass 45
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21690.359667
