@@ -31,8 +31,11 @@ now has deterministic scout/sentry, capture/contact/projectile and replay/save
 proof. [D2b shared catalogue/Studio authoring](verification/journey-optional-combat-authoring.md)
 now adds explicit on/off editions, exact inspection and three original greyboxes;
 219 tests pass on each Node, including42 on/off clear/replays and42 paired races.
-Pixel presentation/player toggle, native/human qualification, Team semantics and
-deployment remain unfinished. Enabled gameplay preview stays blocked until the
+The [C1 pixel presentation component](verification/journey-optional-combat-presentation.md)
+now has315 passing tests per Node,95,718 compatible projected route frames and a
+scoped native static review. Actual host integration/player toggle/audio,
+native play/human qualification, Team semantics and deployment remain unfinished.
+Enabled gameplay preview stays blocked until the
 new attacks are visible; automated feasibility does not establish balanced pacing.
 
 Approved by the user on 20 September 2026. This supersedes the campaign allocations
