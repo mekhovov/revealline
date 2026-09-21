@@ -178,7 +178,7 @@ export function cancelHazardousTimedBonuses(state) {
 
 /** One call at the start of each active tick, before swept contact. Expiry wins
  * the expiry-tick boundary; recovery freezes this clock without refunding grants. */
-export function updateTimedBonuses(state) {
+export function updateTimedBonuses(state, opportunity = eligible) {
   const timed = state.classic.timedBonuses;
   if (!timed || state.status !== 'running') return;
   timed.clock++;
@@ -192,7 +192,7 @@ export function updateTimedBonuses(state) {
       event(state, schedule, definition, 'bonus.expired');
       rest(state, schedule, definition);
     } else if (schedule.phase === 'announce') {
-      if (!eligible(state, definition, definition.anchors[schedule.currentAnchor])) {
+      if (!opportunity(state, definition, definition.anchors[schedule.currentAnchor])) {
         event(state, schedule, definition, 'bonus.cancelled');
         rest(state, schedule, definition);
         continue;
@@ -217,7 +217,8 @@ export function updateTimedBonuses(state) {
         { length: definition.anchors.length },
         (_, n) => (start + n) % definition.anchors.length,
       ).find(
-        (n) => n !== schedule.previousAnchor && eligible(state, definition, definition.anchors[n]),
+        (n) =>
+          n !== schedule.previousAnchor && opportunity(state, definition, definition.anchors[n]),
       );
       if (index === undefined) {
         schedule.deadline = timed.clock + definition.cooldownTicks;

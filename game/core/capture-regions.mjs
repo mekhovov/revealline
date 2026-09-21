@@ -9,7 +9,10 @@ export function captureSeedEnemies(state, releaseBoss = false) {
       (state.classic ? classicSeedsField(enemy) : enemy.type !== 'border-patrol') &&
       // Team v6 explicitly qualifies reclaimed roamers. Earlier snapshots keep
       // their own seed contract, including unsupported historical actor data.
-      !(state.ruleset === 'revealline-coop.v6' && enemy.type === 'claimed-rover') &&
+      !(
+        ['revealline-coop.v6', 'revealline-coop.v7'].includes(state.ruleset) &&
+        enemy.type === 'claimed-rover'
+      ) &&
       !(enemy.type === 'relay-sentinel' && (releaseBoss || state.encounter?.defeated)),
   );
 }
