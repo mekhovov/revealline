@@ -153,10 +153,10 @@ No global easing or warning shortening to make old scripts pass, and no balance
 signoff from technical feasibility alone.
 
 Team now has its own [stronger-pressure route assessment](../../verification/journey-team-pressure.md):
-13/36 sets survive bounded historical reuse and nine fresh opening/foundation
-routes extend that to22/36, with joint settings and seat-label symmetry checked
-separately. The14 remaining sets, short clears and one-player-idle patterns require further
-work. Team stores a seed but does not vary enemy movement with it; use real
+13/36 sets survive bounded historical reuse and23 fresh routes extend that toall
+36/36, with joint settings and seat-label symmetry checked separately. Seventeen
+optional-mastery misses, short clears, timing-sensitive routes and one-player-idle
+patterns require further work. Team stores a seed but does not vary enemy movement with it; use real
 departure timing differences, not seed-count inflation. This is not P14 acceptance.
 
 Audit every map, not only its preset number. Measure first-safe-return travel time,
