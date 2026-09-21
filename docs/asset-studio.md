@@ -52,7 +52,7 @@ Host instructions and actions retain their readable roles even when the draft pr
 
 The system reduced-motion preference caps the saved choice. The checkbox retains the user's raw choice and an explanation identifies an active system cap. Preview changes affect owned frames only; clearing the cap resumes retained Playing with a reset clock, while Paused and Reduced remain still. Text changes do not restart the animation or audio. Persisted navigation may rebuild the existing owned preview views; changing an Interface control does not.
 
-A successful foreground inventory selection retains the replacement selected button on desktop if its activating button owned focus. At widths up to 700px, selection keeps the existing Inspector handoff. A rejected prepared-upload or dirty-sprite selection leaves the original button and work in place. This scoped correction does not fix cold Back filter/selection restoration or focus after a successful mutation disables its own action; those remain separate P04 work.
+A successful foreground inventory selection retains the replacement selected button on desktop if its activating button owned focus. At widths up to 700px, selection keeps the existing Inspector handoff. A rejected prepared-upload or dirty-sprite selection leaves the original button and work in place. Cold Back filter/selection restoration follows the Returning to the inventory contract below. Mutation completion focus has the bounded contract below.
 
 ## Replacing an asset
 
@@ -136,3 +136,29 @@ and Studio opener, then Back to Home. Separately exercise Return to game. Prove 
 run advancement or player-save writes, and verify hidden/blurred, disposed, newer
 focus/dialog, duplicate-hint and history-unavailable cases. Preserve each tool's
 unsaved-edit safeguards. Record native checks separately from modeled host tests.”
+
+### Focus after workspace mutations
+
+An operation returns foreground focus to its initiating control when that control survives and remains usable. If the last Undo disables itself, focus moves to Redo; the last Redo moves to Undo. Reset, successful Stage, discarded preparation, a replaced history Bind button, and completed Team preparation return to the selected visible inventory asset, or Search when that selection is filtered out. Focusing an asset does not activate it or change the inspector selection.
+
+Only the operation that still owns attention may return focus. Another focus or input choice, true window blur, hidden document, navigation, a new dialog or a newer operation retires that permission. Cancellation may return owned focus immediately; an obsolete completion cannot reclaim it. Stop waiting on a durable save and terminal disposal abandon later focus restoration without changing the existing save/lock authority. Surviving saved data, immutable history, exact original bytes, pending edits and player data keep their existing owners.
+
+Maintenance prompt: “Stage a real theme or token change, then keyboard-activate final Undo, final Redo and Reset. Check enabled logical successors, including Search when the selected asset is filtered out. Validate and stage an original and bind an earlier immutable revision; verify returned focus without extra selection, saves or altered bytes. Hold an operation, choose another control or leave the page, cancel, and complete an obsolete task: no stale focus return is allowed. Preserve the operation lock, durable Stop waiting and disposal behavior. Keep cold history restoration separate; finite DOM checks do not establish native responsive, assistive-technology or physical-input acceptance.”
+
+## Returning to the inventory
+
+The Studio remembers its selected slot and Search, Screen, State, Kind and Readiness filters in the current browser-history entry. Returning to the game and using browser Back can therefore restore the same inventory and inspector after a cold page load. View changes replace that entry's small, versioned hint; they do not add navigation steps, save a workspace, change the selected theme, or write player/global preferences. Unrelated history state is preserved. Browsers that deny history access still allow normal Studio use, but cannot promise this restoration.
+
+Restoration validates the hint against the document that actually loaded. A valid inspector selection stays selected even when its filters hide its row, matching the live Studio behavior. Unknown filter choices are cleared; a removed slot falls back to the first matching slot, or the first available slot when the filtered list is empty. Search hints are bounded to 512 characters. No asset bytes or workspace revisions are stored in history.
+
+A browser back-forward-cache return retains the live workspace, unsaved revisions, pixel edits and selected slot. It does not reapply an older history hint. A cold return restores inventory view only; unsaved workspace changes still require the existing Save or Export workflow and departure warning. Restoration does not focus a control, and late loading from a retired page cannot rewrite the next entry.
+
+Maintainer prompt: “Using the real Studio, search for player, select the detailed scout body, return to the game, then use browser Back with a cold reload. Verify the same query, count, pressed row and inspector, without a workspace save or player preference write. Also retain a valid filtered-out inspector, reject unknown filters, recover a removed slot, and test denied/malformed history. Exercise a published-only slot, BFCache with an unsaved revision, newer view input and a late cancelled startup. Preserve unrelated history keys and do not push entries or restore focus. Distinguish modeled lifecycle tests from actual browser history and publication evidence.”
+
+### Skip inventory without losing the selected asset
+
+Ordinary same-tab activation of **Skip inventory** focuses the existing inspector and scrolls it into view without creating a fragment history entry. The next Tab continues through inspector controls. This keeps the selected asset and filters in the same per-entry view hint when you return to the game and use browser Back, including after a workspace change is undone. The action does not save or discard workspace, upload or pixel drafts.
+
+The anchor retains its native `href="#inspector"` for no-script navigation and modified activations; direct fragment URLs still work. Ctrl/Cmd/Shift/Alt, middle-click, download links, other browsing targets and an already-cancelled click retain their normal browser behavior. The Studio adds no generic `popstate` or `hashchange` handler and does not rewrite a traversed entry or change its URL. Native focus/scroll and following Tab require real-browser verification alongside modeled cold-return checks.
+
+Maintainer prompt: “Preserve the Asset Studio’s current selected slot, filters and in-memory drafts across Skip inventory → Return to game → browser Back. Use the actual shipped anchor and ordinary focus navigation. Keep native modifiers and direct fragment fallback; do not add history entries, intercept generic traversal or write view state on pagehide. Verify the actual mounted Studio with a reversible theme change/Undo and inspect native focus, scroll, next Tab, unchanged URL, cold Back and selected row. Do not confuse modeled DOM focus with native layout evidence.”

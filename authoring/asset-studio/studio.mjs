@@ -46,10 +46,15 @@ import { createStudioStore } from '../../game/presentation/studio-store.mjs';
 import { loadPublishedStudio } from '../../game/presentation/published-studio.mjs';
 import { inspectImageDataUrl } from '../../game/content.mjs';
 import { centerCrop, checkedCrop, pixelBounds, matchingSlots } from './helpers.mjs';
+import {
+  createStudioInventoryHistory,
+  normalizeStudioInventoryView,
+} from './inventory-history.mjs';
 import { drawAssetPreview } from './preview.mjs';
 import { teamPreviewScenarios } from './team-preview-fixture.mjs';
 import { mountSpritePanel } from './sprite-panel.mjs';
 import { createStudioOperations } from './operation.mjs';
+import { captureStudioOperationFocus } from './operation-focus.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createAudioMaster } from '../../game/ui/audio-master.mjs';
 import { createAudioPreferences } from '../../game/audio-preferences.mjs';
@@ -76,6 +81,11 @@ let selected = working.document.slots[0].id,
   undo = [],
   redo = [],
   promptAction = 'variation';
+const inventoryHistory = createStudioInventoryHistory(window);
+const initialInventoryView = inventoryHistory.read();
+let inventoryReady = false,
+  inventoryTouched = false,
+  inventoryActive = true;
 const collectionSlots = new Set();
 let previewGeneration = 0;
 const currentSlot = () => working.document.slots.find((slot) => slot.id === selected);
@@ -85,40 +95,44 @@ document.querySelectorAll('[data-studio-startup-disabled]').forEach((control) =>
   control.disabled = false;
   control.removeAttribute('data-studio-startup-disabled');
 });
-let operationFocus = null;
+let operationFocus = null,
+  operationFocusEpoch = 0;
+const mutationRegions =
+  '.workspace-actions,.workspace-state,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel';
 const operations = createStudioOperations({
   target: $('studio-status'),
   cancelButton: $('cancel-studio-operation'),
-  setBusy(value) {
-    if (value) operationFocus = document.activeElement;
-    // Escape and preview observation controls stay outside these mutation regions.
-    document
-      .querySelectorAll(
-        '.workspace-actions,.workspace-state,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel',
-      )
-      .forEach((el) => {
-        el.inert = value;
-        el.setAttribute('aria-busy', String(value));
-      });
-    if (
-      !value &&
-      document.hasFocus() &&
-      [document.body, $('cancel-studio-operation')].includes(document.activeElement) &&
-      operationFocus?.isConnected
-    ) {
-      if (
-        [
-          'prepare-team-actors',
-          'prepare-team-anchors',
-          'prepare-team-effects',
-          'prepare-team-threats',
-          'prepare-team-events',
-        ].includes(operationFocus.id) &&
-        operationFocus.disabled
-      )
-        $('asset-list').querySelector('button[aria-pressed="true"]')?.focus();
-      else if (!operationFocus.disabled) operationFocus.focus();
+  setBusy(value, { restoreFocus = true } = {}) {
+    if (value) {
+      operationFocus?.cancel();
+      const opener = document.activeElement,
+        epoch = ++operationFocusEpoch;
+      operationFocus = captureStudioOperationFocus(
+        opener?.closest(mutationRegions) ? opener : null,
+        {
+          document,
+          window,
+          cancelButton: $('cancel-studio-operation'),
+          isCurrent: () => operationFocusEpoch === epoch,
+          resolveTarget(eligible) {
+            if (eligible(opener)) return opener;
+            const opposite = { 'undo-draft': 'redo-draft', 'redo-draft': 'undo-draft' }[opener?.id];
+            if (opposite && eligible($(opposite))) return $(opposite);
+            const selectedButton = $('asset-list').querySelector('button[aria-pressed="true"]');
+            return eligible(selectedButton) ? selectedButton : $('filter-search');
+          },
+        },
+      );
     }
+    const returning = value ? null : operationFocus;
+    if (!value) operationFocus = null;
+    // Escape and preview observation controls stay outside these mutation regions.
+    document.querySelectorAll(mutationRegions).forEach((el) => {
+      el.inert = value;
+      el.setAttribute('aria-busy', String(value));
+    });
+    if (restoreFocus) returning?.restore();
+    else returning?.cancel();
   },
 });
 const status = (message, kind = '') => operations.message(message, kind);
@@ -198,6 +212,8 @@ function discardPreparation() {
 }
 function selectSlot(id) {
   requireSettled();
+  inventoryTouched = true;
+  inventoryReady = true;
   selected = id;
   sprite.reset();
   refresh();
@@ -210,6 +226,48 @@ function filters() {
     kind: $('filter-kind').value,
     quality: $('filter-quality').value,
   };
+}
+function restoreInventoryView() {
+  if (!inventoryActive || inventoryTouched) return;
+  const view = normalizeStudioInventoryView(
+    initialInventoryView ?? { selected, ...filters() },
+    working.document,
+    resolved(),
+  );
+  const changed =
+    selected !== view.selected ||
+    Object.entries(filters()).some(([key, value]) => value !== view[key]);
+  selected = view.selected;
+  for (const [key, id] of [
+    ['query', 'filter-search'],
+    ['screen', 'filter-screen'],
+    ['state', 'filter-state'],
+    ['kind', 'filter-kind'],
+    ['quality', 'filter-quality'],
+  ])
+    $(id).value = view[key];
+  inventoryReady = true;
+  return changed;
+}
+function rememberInventoryView() {
+  if (inventoryActive && inventoryReady) inventoryHistory.write({ selected, ...filters() });
+}
+function refreshFilterOptions() {
+  for (const [id, values, label] of [
+    ['filter-screen', working.document.slots.flatMap((slot) => slot.screens), 'All screens'],
+    ['filter-state', working.document.slots.flatMap((slot) => slot.states), 'All states'],
+  ]) {
+    const previous = $(id).value;
+    const choices = ['', ...new Set(values)].sort();
+    $(id).replaceChildren(
+      ...choices.map((value) => {
+        const option = node('option', value || label);
+        option.value = value;
+        return option;
+      }),
+    );
+    $(id).value = choices.includes(previous) ? previous : '';
+  }
 }
 function refreshInventory() {
   const view = resolved(),
@@ -259,11 +317,13 @@ function refreshInventory() {
   }
   $('asset-list').replaceChildren(list);
   $('empty-inventory').hidden = rows.length !== 0;
+  rememberInventoryView();
 }
 function updateCollectionCount() {
   $('collection-count').textContent = `${collectionSlots.size} slots selected`;
 }
 function refresh() {
+  refreshFilterOptions();
   const validSlots = new Set(working.document.slots.map((slot) => slot.id));
   for (const id of collectionSlots) if (!validSlots.has(id)) collectionSlots.delete(id);
   if (!working.document.slots.some((slot) => slot.id === selected))
@@ -1098,11 +1158,12 @@ $('prepare-team-actors').onclick = () =>
       `${count} Team body slots staged from your current artwork. Edit and inspect each state; these templates are not a reviewed Team collection. Player saves and the public game are unchanged.`,
     );
   });
-$('discard-asset').onclick = () => {
-  discardPreparation();
-  refreshInspector();
-  status('Prepared slot discarded. Staged workspace revisions are unchanged.');
-};
+$('discard-asset').onclick = () =>
+  operation('Discarding the prepared slot…', () => {
+    discardPreparation();
+    refreshInspector();
+    status('Prepared slot discarded. Staged workspace revisions are unchanged.');
+  });
 $('token-form').onsubmit = (event) => {
   event.preventDefault();
   operation('Preparing workspace change…', () => {
@@ -1117,8 +1178,35 @@ $('token-form').onsubmit = (event) => {
   });
 };
 ['filter-search', 'filter-screen', 'filter-state', 'filter-kind', 'filter-quality'].forEach((id) =>
-  $(id).addEventListener(id === 'filter-search' ? 'input' : 'change', refreshInventory),
+  $(id).addEventListener(id === 'filter-search' ? 'input' : 'change', () => {
+    inventoryTouched = true;
+    inventoryReady = true;
+    refreshInventory();
+  }),
 );
+// Skip navigation moves focus within this Studio visit. A native fragment entry
+// would have no inventory hint and could lose the selected inspector on cold Back.
+const inventorySkipLink = document.querySelector('a[href="#inspector"]');
+inventorySkipLink?.addEventListener('click', (event) => {
+  const target = inventorySkipLink.getAttribute('target');
+  if (
+    !inventoryActive ||
+    event.defaultPrevented ||
+    (event.button !== undefined && event.button !== 0) ||
+    event.altKey ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.shiftKey ||
+    inventorySkipLink.getAttribute('href') !== '#inspector' ||
+    inventorySkipLink.hasAttribute('download') ||
+    (target && target.toLowerCase() !== '_self')
+  )
+    return;
+  event.preventDefault();
+  // Default focus scrolling keeps the target visible; subsequent Tab continues
+  // through the inspector. The href remains a native/no-script fallback.
+  $('inspector').focus();
+});
 $('filter-theme').onchange = () =>
   operation('Preparing workspace change…', () => {
     try {
@@ -1338,6 +1426,8 @@ async function loadWorkspace(task) {
   if (!working.document.slots.some((slot) => slot.id === selected))
     selected = working.document.slots[0].id;
   sprite.reset();
+  refreshFilterOptions();
+  if (!inventoryReady) restoreInventoryView();
   refresh();
   status(
     result
@@ -1368,6 +1458,7 @@ $('load-release').onclick = () =>
     );
   });
 window.addEventListener('pagehide', (event) => {
+  inventoryActive = false;
   copyRequest++;
   if (event.persisted) {
     operations.cancel();
@@ -1389,7 +1480,18 @@ window.addEventListener('pagehide', (event) => {
   }
 });
 window.addEventListener('pageshow', (event) => {
+  inventoryActive = true;
   if (event.persisted) refreshPreviews();
+  else if (
+    inventoryReady &&
+    !inventoryTouched &&
+    working === saved &&
+    !pending &&
+    !sprite.hasEdits()
+  ) {
+    // Native form restoration can happen after the first async workspace load.
+    if (restoreInventoryView()) refresh();
+  }
 });
 window.addEventListener('beforeunload', (event) => {
   if (working !== saved || pending || sprite.hasEdits()) {
@@ -1397,16 +1499,12 @@ window.addEventListener('beforeunload', (event) => {
     event.returnValue = '';
   }
 });
-for (const [id, values] of [
-  ['filter-screen', working.document.slots.flatMap((s) => s.screens)],
-  ['filter-state', working.document.slots.flatMap((s) => s.states)],
-])
-  $(id).append(
-    ...[...new Set(values)].sort().map((value) => {
-      const option = node('option', value);
-      option.value = value;
-      return option;
-    }),
-  );
 refresh();
-operation('Loading saved Studio workspace…', loadWorkspace);
+operation('Loading saved Studio workspace…', loadWorkspace).then(() => {
+  // Failed initial storage/release loading still leaves a usable source inventory.
+  // A retired page cannot apply or persist this late fallback.
+  if (!inventoryReady && inventoryActive) {
+    restoreInventoryView();
+    refresh();
+  }
+});

@@ -6,6 +6,85 @@ import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { createStudioStore, STUDIO_DATABASE } from '../presentation/studio-store.mjs';
 import { TEAM_ACTOR_SLOTS } from '../presentation/team-actor-slots.mjs';
+import { TEAM_ANCHOR_SLOTS } from '../presentation/team-anchor-slots.mjs';
+import { TEAM_EFFECT_SLOTS } from '../presentation/team-effect-slots.mjs';
+import { TEAM_THREAT_SLOTS } from '../presentation/team-threat-slots.mjs';
+import { TEAM_EVENT_SLOTS } from '../presentation/team-event-slots.mjs';
+import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
+import { resolvePresentation } from '../presentation/model.mjs';
+import { reviseStudioTheme } from '../presentation/studio-session.mjs';
+import { verifyThemeAssets } from '../presentation/bundle.mjs';
+
+// A deliberately incomplete local workspace, not a claim that the live release
+// lacks Team artwork. Keep exact published body records, parents and originals.
+async function incompleteTeamWorkspace() {
+  const published = JSON.parse(
+      await readFile(new URL('../presentation/compiled/studio.json', import.meta.url), 'utf8'),
+    ),
+    unchanged = JSON.stringify(published),
+    base = createDefaultThemeBundle(),
+    view = resolvePresentation(published),
+    records = new Map(published.assets.map((asset) => [`${asset.id}@${asset.revision}`, asset])),
+    existing = new Map(base.assets.map((asset) => [`${asset.id}@${asset.revision}`, asset])),
+    added = new Map(),
+    bindings = {};
+  const retain = (asset) => {
+    assert.ok(asset, 'Every published provenance parent exists');
+    const key = `${asset.id}@${asset.revision}`;
+    if (existing.has(key)) {
+      assert.deepEqual(existing.get(key), asset);
+      return;
+    }
+    if (added.has(key)) return;
+    // Studio append validation retains every intermediate immutable revision.
+    for (const earlier of published.assets
+      .filter((item) => item.id === asset.id && item.revision < asset.revision)
+      .sort((a, b) => a.revision - b.revision))
+      retain(earlier);
+    if (asset.provenance.parent)
+      retain(records.get(`${asset.provenance.parent.id}@${asset.provenance.parent.revision}`));
+    added.set(key, asset);
+  };
+  for (const source of new Set(TEAM_ACTOR_SLOTS.map((row) => row.source))) {
+    const asset = view.assets[source];
+    assert.equal(asset.kind, 'image', `${source} needs real original raster bytes`);
+    retain(asset);
+    bindings[source] = { id: asset.id, revision: asset.revision };
+  }
+  let document = base;
+  for (const asset of added.values()) document = reviseStudioTheme(document, { assets: [asset] });
+  document = reviseStudioTheme(document, { bindings });
+  const assets = new Map();
+  for (const asset of document.assets)
+    if (asset.file && !assets.has(asset.file.sha256)) {
+      assert.equal(asset.file.mime, 'image/png');
+      const bytes = await readFile(
+        new URL(`../presentation/compiled/assets/${asset.file.sha256}.png`, import.meta.url),
+      );
+      assets.set(asset.file.sha256, new Blob([bytes], { type: asset.file.mime }));
+    }
+  const verified = await verifyThemeAssets(document, assets, { decodeImage: null }),
+    resolved = resolvePresentation(document);
+  for (const row of [
+    ...TEAM_ACTOR_SLOTS,
+    ...TEAM_ANCHOR_SLOTS,
+    ...TEAM_EFFECT_SLOTS,
+    ...TEAM_THREAT_SLOTS,
+    ...TEAM_EVENT_SLOTS,
+  ]) {
+    assert.equal(resolved.assets[row.id], undefined, `Fixture deliberately omits ${row.id}`);
+    assert.equal(
+      document.slots.some((slot) => slot.id === row.id),
+      false,
+    );
+  }
+  assert.equal(
+    JSON.stringify(published),
+    unchanged,
+    'Constructing the local fixture leaves published records untouched',
+  );
+  return { document, assets: verified };
+}
 function mount(doc, html) {
   const stack = [doc.body];
   for (const [token] of html
@@ -42,6 +121,10 @@ test('real Studio Team preparation, collection prompt, undo, redo, reset, save a
     db = memoryIndexedDB(),
     writes = [],
     opened = [];
+  const fixture = await incompleteTeamWorkspace();
+  await createStudioStore({ indexedDB: db.indexedDB }).save(fixture.document, fixture.assets, {
+    expectedGeneration: 0,
+  });
   class StudioElement extends Element {
     constructor(document, tag) {
       super(document, tag);
@@ -103,7 +186,12 @@ test('real Studio Team preparation, collection prompt, undo, redo, reset, save a
   await waitFor(() => $('cancel-studio-operation').hidden, {
     message: 'Studio startup did not finish',
   });
-  assert.match($('workspace-summary').textContent, /r38/);
+  assert.ok(
+    $('workspace-summary').textContent.includes(
+      `document r${fixture.document.revision} · local save 1`,
+    ),
+  );
+  assert.match(message(), /Saved studio workspace loaded/);
   assert.equal($('prepare-team-actors').disabled, false);
   $('prepare-team-actors').focus();
   await $('prepare-team-actors').onclick();
@@ -205,6 +293,17 @@ test('real Studio Team preparation, collection prompt, undo, redo, reset, save a
   ])
     assert.ok(saved.document.slots.some((slot) => slot.id === id));
   assert.ok(saved.document.slots.every((slot) => typeof slot.id === 'string'));
+  for (const field of ['slots', 'assets', 'themes', 'collections'])
+    assert.deepEqual(
+      saved.document[field].slice(0, fixture.document[field].length),
+      fixture.document[field],
+    );
+  for (const [sha256, blob] of fixture.assets)
+    assert.deepEqual(
+      Buffer.from(await saved.assets.get(sha256).arrayBuffer()),
+      Buffer.from(await blob.arrayBuffer()),
+    );
+
   for (const row of TEAM_ACTOR_SLOTS)
     assert.ok(saved.document.slots.some((slot) => slot.id === row.id));
   assert.equal(
