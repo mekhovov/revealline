@@ -8,9 +8,8 @@ import { createTeamJourneyProgress } from './team-progress.mjs';
  * Loading reads the shared progress store; only admitted play records events. */
 export async function createTeamGreyboxEntry() {
   const source = createTeamJourneyCandidates();
-  const preferences = createJourneyPreferences();
+  const preferences = createJourneyPreferences({ window: globalThis.window ?? globalThis });
   const snapshot = preferences.snapshot();
-  preferences.dispose();
   const candidateJourney = createCandidateTeamHost(source, {
     corePackIds: source.packs.map((pack) => pack.id),
   });
@@ -19,6 +18,7 @@ export async function createTeamGreyboxEntry() {
   return Object.freeze({
     candidateJourney,
     candidateProgress,
+    candidatePreferences: preferences,
     candidateDifficulty: snapshot.difficulty,
     candidateNotice: snapshot.durable ? '' : snapshot.error,
   });

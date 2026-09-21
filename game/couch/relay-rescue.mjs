@@ -95,6 +95,7 @@ function picturePreparationText({ stage, status }, destination = null) {
 export function bootCoop({
   candidateJourney = null,
   candidateProgress = null,
+  candidatePreferences = null,
   candidateDifficulty = 'standard',
   candidateNotice = '',
 } = {}) {
@@ -243,6 +244,8 @@ export function bootCoop({
     startPermitted = true;
   let automaticRetry = null;
   let journeySkip = null;
+  let candidatePresetIntent = 0;
+  let candidatePreferenceRestoration = null;
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
   let inactive = !foreground();
   let previousPads = new Map();
@@ -288,7 +291,9 @@ export function bootCoop({
     ...candidateDiscoveryRows.filter(
       (row) =>
         row.journeyRow.difficulty ===
-        (acceptedPicture?.journeyRow?.difficulty ?? candidateDifficulty),
+        (acceptedPicture?.journeyRow?.difficulty ??
+          selectedCandidateRow()?.difficulty ??
+          candidateDifficulty),
     ),
     ...starterDiscoveryRows,
     ...(localDiscoveryPack?.rows ?? []),
@@ -923,6 +928,7 @@ export function bootCoop({
     $('coop-overlay').hidden = !show;
     placeTools(Boolean(show));
     $('coop-pause').disabled = !running();
+    difficultyControls();
     const skipDestination = journeyNavigation();
     $('coop-journey-skip').hidden = !running() || !skipDestination?.next;
     $('coop-journey-skip-confirm').hidden =
@@ -2577,6 +2583,7 @@ export function bootCoop({
       $('coop-play').hidden = true;
       $('coop-menu').hidden = false;
       showPackStatus();
+      difficultyControls();
       placeTools(false);
       if (
         retainedPicture?.sourcePack === pack &&
@@ -2978,11 +2985,20 @@ export function bootCoop({
     $('coop-help-support').textContent =
       `${guidance.supportText} A downed player can crawl along safe ground to meet their partner.`;
   }
-  function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
+  function selectedCandidateRow() {
+    const level = selectedLevel();
+    return candidateJourney?.rows.find((row) => row.pack === pack && row.level === level) ?? null;
+  }
+  function difficultyControls(level = selectedLevel()) {
     // Compiled Journey packs are immutable preset editions. Changing this menu
-    // cannot re-project their actors/lives through the historical Team rules.
-    $('coop-difficulty').disabled = Boolean(level.journeyDifficulty);
+    // selects a newly compiled owned edition, never re-projects imported bytes.
+    $('coop-difficulty').disabled =
+      Boolean(level.journeyDifficulty) &&
+      (Boolean(run) || !candidatePreferences || !selectedCandidateRow());
     if (level.journeyDifficulty) $('coop-difficulty').value = level.journeyDifficulty;
+  }
+  function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
+    difficultyControls(level);
     const guidance = coopArenaGuidance(level, experiment);
     $('coop-intro').textContent = experiment.jointCuts
       ? 'Start with a small loop. Cover each other, then meet to join a larger cut.'
@@ -3343,6 +3359,38 @@ export function bootCoop({
     return preparePicture();
   };
   $('coop-experiment').onchange = setupNote;
+  $('coop-difficulty').onchange = () => {
+    const previous = selectedCandidateRow(),
+      requested = $('coop-difficulty').value;
+    if (!previous || !candidatePreferences || run || departure || disposed || !foreground()) {
+      difficultyControls();
+      return;
+    }
+    const row = candidateJourney.row(previous.mission, requested);
+    if (!row) {
+      difficultyControls();
+      return;
+    }
+    const ticket = ++candidatePresetIntent,
+      previousPack = pack;
+    const current = () =>
+      !disposed && !run && !departure && foreground() && ticket === candidatePresetIntent;
+    cancelImport({ forget: true });
+    if (!current() || pack !== previousPack) return;
+    candidateDifficulty = requested;
+    candidatePreferences.choose(requested);
+    if (!current() || pack !== previousPack) return;
+    // Retire the old preset before publishing new setup. Reentrant Start must
+    // never pair a new compiled level with the previous edition's image lease.
+    retirePicture();
+    if (!current() || pack !== previousPack) return;
+    pictureUI('Preparing the selected Journey difficulty…');
+    if (!current() || pack !== previousPack) return;
+    packArtworkSource = null;
+    showPack(row.pack, row.level.id, current);
+    if (!current() || pack !== row.pack) return;
+    return preparePicture();
+  };
   // The classic entry owns intent before the select becomes interactive.
   // Without that evidence, retain native setup rather than override a choice.
   const earlySelection = globalThis.RevealLineTeamEntry?.take();
@@ -3435,6 +3483,8 @@ export function bootCoop({
     closeDisplay();
     arenaPreference.dispose();
     candidateProgress?.dispose();
+    candidatePreferences?.dispose();
+    candidatePreferenceRestoration?.dispose();
     importRequest++;
     disposed = true;
     packStatus.dispose();
@@ -3462,61 +3512,80 @@ export function bootCoop({
     suspend();
   });
   window.addEventListener('pageshow', returned);
-  let progressExport = 0;
-  candidateProgress?.subscribe(({ ready, durable, error }) => {
-    if (disposed) return;
-    const notice = $('coop-journey-save'),
-      focus = document.activeElement,
-      ownedFocus = !notice.hidden && notice.contains(focus),
-      attempt = run,
-      epoch = generation;
-    notice.hidden = !ready || durable || !error;
-    if (disposed) return;
-    $('coop-journey-save-message').textContent = error
-      ? `Team Journey progress is session-only. Retry saving or export before closing. ${error}`
-      : '';
-    if (
-      ownedFocus &&
-      notice.hidden &&
-      !disposed &&
-      foreground() &&
-      !running() &&
-      run === attempt &&
-      generation === epoch &&
-      (document.activeElement === focus || unclaimedFocus(document.activeElement))
-    ) {
-      const target = primary();
-      if (visibleAction(target)) target.focus({ preventScroll: true });
-    }
-  });
-  $('coop-journey-save-retry').onclick = () => {
-    if (!disposed) {
-      progressExport++;
-      void candidateProgress?.retry();
-    }
-  };
-  $('coop-journey-save-export').onclick = async () => {
-    if (disposed || !candidateProgress) return;
-    const ticket = ++progressExport;
-    try {
-      const result = await exportJSONFile(
-        JSON.parse(candidateProgress.export()),
-        'revealline-journey-progress.json',
-      );
-      if (!disposed && ticket === progressExport && !$('coop-journey-save').hidden)
-        $('coop-journey-save-message').textContent =
-          `Team Journey progress is session-only. ${result.message}`;
-    } catch (error) {
-      if (!disposed && ticket === progressExport && !$('coop-journey-save').hidden)
-        $('coop-journey-save-message').textContent =
-          `Export failed: ${error.message}. Your session progress is still here.`;
-    }
-  };
+  function attachJourneyRecovery(owner, prefix, label, filename) {
+    let exportSequence = 0;
+    owner?.subscribe(({ ready = true, durable, error }) => {
+      if (disposed) return;
+      const notice = $(prefix),
+        focus = document.activeElement,
+        ownedFocus = !notice.hidden && notice.contains(focus),
+        attempt = run,
+        epoch = generation;
+      notice.hidden = !ready || durable || !error;
+      if (disposed) return;
+      $(`${prefix}-message`).textContent = error
+        ? `${label} is session-only. Retry saving or export before closing. ${error}`
+        : '';
+      if (
+        ownedFocus &&
+        notice.hidden &&
+        !disposed &&
+        foreground() &&
+        !running() &&
+        run === attempt &&
+        generation === epoch &&
+        (document.activeElement === focus || unclaimedFocus(document.activeElement))
+      ) {
+        const target = primary();
+        if (visibleAction(target)) target.focus({ preventScroll: true });
+      }
+    });
+    $(`${prefix}-retry`).onclick = () => {
+      if (!disposed) {
+        exportSequence++;
+        void owner?.retry();
+      }
+    };
+    $(`${prefix}-export`).onclick = async () => {
+      if (disposed || !owner) return;
+      const ticket = ++exportSequence;
+      try {
+        const result = await exportJSONFile(JSON.parse(owner.export()), filename);
+        if (!disposed && ticket === exportSequence && !$(prefix).hidden)
+          $(`${prefix}-message`).textContent = `${label} is session-only. ${result.message}`;
+      } catch (error) {
+        if (!disposed && ticket === exportSequence && !$(prefix).hidden)
+          $(`${prefix}-message`).textContent =
+            `Export failed: ${error.message}. Your session choice or progress is still here.`;
+      }
+    };
+  }
+  attachJourneyRecovery(
+    candidateProgress,
+    'coop-journey-save',
+    'Team Journey progress',
+    'revealline-journey-progress.json',
+  );
+  attachJourneyRecovery(
+    candidatePreferences,
+    'coop-journey-preferences',
+    'Journey difficulty',
+    'revealline-journey-difficulty.json',
+  );
+  candidatePreferenceRestoration = candidatePreferences
+    ? attachPreferenceRestoration({
+        window,
+        getSnapshot: () => (run ? attemptLevel : selectedLevel()),
+        render: (level) => {
+          if (!disposed) difficultyControls(level);
+        },
+      })
+    : null;
   $('coop-start').disabled = false;
   $('coop-start').textContent = 'Start together →';
   bootDisplay.finish({
     message: candidateJourney
-      ? `Team Journey geometry test · twelve missions · human validation and original artwork pending. ${candidateNotice}`.trim()
+      ? `Team Journey geometry test · twelve missions · human validation and original artwork pending. ${candidatePreferences ? '' : candidateNotice}`.trim()
       : 'Two players · one screen · a shared victory',
   });
   document.documentElement.dataset.toolState = 'ready';
