@@ -3,20 +3,24 @@ import { readFile, stat } from 'node:fs/promises';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import { resolveContentJourney } from '../game/content-design/journey.mjs';
 import { inspectContentPacing } from '../game/content-design/pacing.mjs';
+import {
+  inspectMissionAcceptance,
+  readPlaytestLedger,
+} from '../game/content-design/acceptance-evidence.mjs';
 
 const limit = 4 * 1024 * 1024;
-async function input(path) {
+async function input(path, maxBytes = limit, label = 'Project') {
   if (path !== '-') {
     const info = await stat(path);
-    if (!info.isFile() || info.size > limit)
-      throw new Error('Project input exceeds 4 MiB or is not a file.');
+    if (!info.isFile() || info.size > maxBytes)
+      throw new Error(`${label} input exceeds ${maxBytes / 1024 / 1024} MiB or is not a file.`);
     return readFile(path, 'utf8');
   }
   const chunks = [];
   let bytes = 0;
   for await (const chunk of process.stdin) {
     bytes += chunk.length;
-    if (bytes > limit) throw new Error('Project input exceeds 4 MiB.');
+    if (bytes > maxBytes) throw new Error(`${label} input exceeds ${maxBytes / 1024 / 1024} MiB.`);
     chunks.push(chunk);
   }
   return Buffer.concat(chunks).toString('utf8');
@@ -25,13 +29,16 @@ async function main() {
   const [path, ...args] = process.argv.slice(2);
   if (!path)
     throw new Error(
-      'Usage: compile-content-project.mjs <project.json|-> [--check | --mission ID | --journey | --pacing] [--pack ID] [--mode solo|versus|team] [--difficulty gentle|standard|expert] [--exclude-campaigns ID,ID (pacing only)]',
+      'Usage: compile-content-project.mjs <project.json|-> [--check | --mission ID | --journey | --pacing | --acceptance --mission ID --source-commit SHA] [--pack ID] [--mode solo|versus|team] [--difficulty gentle|standard|expert] [--exclude-campaigns ID,ID (pacing only)] [--evidence-ledger FILE (acceptance only)]',
     );
   const options = {},
     seen = new Set();
   let check = false,
     journey = false,
     pacing = false,
+    acceptance = false,
+    evidencePath,
+    sourceCommit,
     excludedCampaignIds,
     packId,
     missionId;
@@ -51,8 +58,20 @@ async function main() {
       pacing = true;
       continue;
     }
+    if (arg === '--acceptance') {
+      acceptance = true;
+      continue;
+    }
     if (
-      !['--mission', '--pack', '--mode', '--difficulty', '--exclude-campaigns'].includes(arg) ||
+      ![
+        '--mission',
+        '--pack',
+        '--mode',
+        '--difficulty',
+        '--exclude-campaigns',
+        '--source-commit',
+        '--evidence-ledger',
+      ].includes(arg) ||
       !args[i + 1] ||
       args[i + 1].startsWith('--')
     )
@@ -61,8 +80,21 @@ async function main() {
     if (arg === '--mission') missionId = value;
     else if (arg === '--pack') packId = value;
     else if (arg === '--exclude-campaigns') excludedCampaignIds = value.split(',');
+    else if (arg === '--source-commit') sourceCommit = value;
+    else if (arg === '--evidence-ledger') evidencePath = value;
     else options[arg.slice(2)] = value;
   }
+  if (
+    acceptance &&
+    (!missionId || !sourceCommit || check || journey || pacing || packId || excludedCampaignIds)
+  )
+    throw new Error(
+      '--acceptance requires --mission and --source-commit; do not combine it with other report selections.',
+    );
+  if (!acceptance && (sourceCommit || evidencePath))
+    throw new Error('--source-commit and --evidence-ledger require --acceptance.');
+  if (evidencePath === '-')
+    throw new Error('Use a named evidence-ledger file; stdin is reserved for the project.');
   if (
     check &&
     (missionId || journey || pacing || packId || excludedCampaignIds || Object.keys(options).length)
@@ -78,6 +110,21 @@ async function main() {
   if (!check && !missionId && !journey && !pacing)
     throw new Error('Choose --check, --mission ID, --journey or --pacing.');
   const source = await input(path);
+  if (acceptance) {
+    const result = inspectMissionAcceptance(source, missionId, {
+      ...options,
+      sourceCommit,
+      ...(evidencePath
+        ? {
+            ledger: readPlaytestLedger(
+              await input(evidencePath, 8 * 1024 * 1024, 'Evidence ledger'),
+            ),
+          }
+        : {}),
+    });
+    process.stdout.write(JSON.stringify(result, null, 2) + '\n');
+    return;
+  }
   if (pacing) {
     const result = inspectContentPacing(source, {
       ...options,

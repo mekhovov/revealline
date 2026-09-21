@@ -43,11 +43,18 @@ import { createRelayEditor } from './relay-editor.mjs';
 import { createDirectionalEditor } from './directional-editor.mjs';
 import { createEncounterEditor } from './encounter-editor.mjs';
 import { createPacingInspector } from './pacing-inspector.mjs';
+import { createAcceptanceInspector } from './acceptance-inspector.mjs';
 import { observePreviewReadiness } from './preview-readiness.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
 const pacingInspector = createPacingInspector({ document, getSource: () => session.current() });
+const acceptanceInspector = createAcceptanceInspector({
+  document,
+  getSource: () => session.current(),
+  getMission: () => currentMission(),
+  getDifficulty: () => $('difficulty').value,
+});
 let session,
   inspected = null,
   sourceChanged = false,
@@ -248,6 +255,7 @@ function draw(preview) {
 }
 function inspectBoard(trailCells = []) {
   const mission = currentMission();
+  acceptanceInspector.sync();
   actorEditor.sync();
   geometryEditor.sync();
   bonusEditor.sync();
