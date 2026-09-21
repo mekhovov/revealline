@@ -679,8 +679,9 @@ reworks an actual short-clear/late-roamer case using baffles, retained pockets a
 contested stub returns. Shared pressure speeds and capture rules remain unchanged.
 All six ordinary and six optional-mastery routes replay and race equally; native
 Studio selection, explicit Apply and first capture are checked. Keep the old
-edition immutable; next qualify shared whole-route integration, cleanup and human
-balance before release promotion. Split Berths' current teaching edition must not
+edition immutable. [Whole-Journey v5](verification/journey-whole-sorting.md) now
+qualifies shared Solo/Versus enrollment and cross-campaign Next/Skip; cleanup,
+human balance and release promotion remain. Split Berths' current teaching edition must not
 be judged using its older pre-teaching activation report.
 
 The [Team timed live-host follow-up](verification/journey-team-timed-host.md)

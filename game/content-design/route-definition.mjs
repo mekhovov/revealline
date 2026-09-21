@@ -15,9 +15,21 @@ export function createAuthoredJourneyRouteDefinition(
     createWholeFieldCandidates,
     createWholeTimedCandidates,
     createWholeVarietyCandidates,
+    createWholeSortingCandidates,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v5')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey contested sorting lanes review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v5',
+      profileKey: 'journey-whole-spatial-v5',
+      source: createWholeSortingCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v4')
     return freezeDesign({
       id,

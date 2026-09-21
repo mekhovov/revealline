@@ -9,7 +9,8 @@ import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { AUTHORED_JOURNEY_ROUTE_IDS } from '../content-design/mode-href.mjs';
 
-// Exact JSON bytes observed at pre-change commit 7ea5f399, before moving code.
+// Historical JSON bytes observed at pre-change commit 7ea5f399; explicit v5
+// addition is independently compared with canonical composition in snapshot tests.
 // Includes all source content, route metadata, save/profile keys and order.
 const golden = {
   opening: [20768, '0dd34097ba74c64cca71139f0656846fab3214fac925abb195acc734c73b1cf9'],
@@ -31,9 +32,10 @@ const golden = {
   'whole-spatial-v2': [229396, '3c20126e35a09324001f61a781a8ae8a684cf421f9de9f5fd5fd7ed1644eab17'],
   'whole-spatial-v3': [230328, '7e8e35ad9147b75b5040db88411d337c0088ab133f5066ea5ec3eeb5ba092f4c'],
   'whole-spatial-v4': [252113, 'fd5175f63b842b7f71a11cab9e8067f6b7d9d698f026122c83ae14997a91d448'],
+  'whole-spatial-v5': [252377, '74162393aa803207f7e933f4ded83a64a6b223c926aecc5be7bffd113fd959fe'],
 };
 
-test('all supported routes are covered by independent pre-change snapshots', () => {
+test('all supported routes are covered by pinned edition snapshots', () => {
   assert.deepEqual(Object.keys(golden), AUTHORED_JOURNEY_ROUTE_IDS);
 });
 for (const id of AUTHORED_JOURNEY_ROUTE_IDS)

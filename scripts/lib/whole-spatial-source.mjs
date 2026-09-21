@@ -13,6 +13,7 @@ import { createTimedBorderCandidates } from '../../game/content-design/timed-bor
 import { TIMED_BONUS_TRAIL_VERSION } from '../../game/core/timed-bonuses.mjs';
 import { createCulturalWorkshopArtCandidates } from '../../game/content-design/cultural-workshop-art-candidates.mjs';
 import { createSpatialBalanceCandidates } from '../../game/content-design/spatial-balance-candidates.mjs';
+import { createRoverSpatialCandidates } from '../../game/content-design/rover-spatial-candidates.mjs';
 
 const studies = [
   {
@@ -48,7 +49,9 @@ export function composeWholeSpatialCandidates({
   fieldFinale = false,
   timedBorder = false,
   culturalWorkshop = false,
+  sortingLanes = false,
 } = {}) {
+  if (sortingLanes) culturalWorkshop = true;
   if (culturalWorkshop) timedBorder = true;
   const source = withPressureDifficulty(
     createWholeJourneyCandidates({ artwork, roverTeaching: true, campaignActors: true }),
@@ -70,6 +73,12 @@ export function composeWholeSpatialCandidates({
       missionIds: ['behind-the-patrol', 'second-landing', 'long-rail'],
       create: () =>
         withPressureDifficulty(createTimedBorderCandidates({ version: TIMED_BONUS_TRAIL_VERSION })),
+    });
+  if (sortingLanes)
+    selections.push({
+      id: 'rover-sorting',
+      missionIds: ['sorting-yard'],
+      create: createRoverSpatialCandidates,
     });
   for (const study of selections) {
     const candidate = study.create();
@@ -141,6 +150,14 @@ export function composeWholeSpatialCandidates({
     source.id = artwork ? 'whole-variety-original-review' : 'whole-variety-greybox-review';
     source.revision = 'cultural-workshop-review-1';
     source.name = 'Whole Journey · unvalidated ornament and workshop review';
+  }
+  if (sortingLanes) {
+    // The one-map delta is appended after the unchanged optional library.
+    const sortingMap = source.maps.findIndex((item) => item.id === 'sorting-yard-map');
+    source.maps.push(...source.maps.splice(sortingMap, 1));
+    source.id = artwork ? 'whole-sorting-original-review' : 'whole-sorting-greybox-review';
+    source.revision = 'sorting-lanes-review-1';
+    source.name = 'Whole Journey · unvalidated contested sorting lanes review';
   }
   for (const item of [...source.campaigns, ...source.packs]) item.revision = source.revision;
   return structuredClone(compileContentProject(source).source);
