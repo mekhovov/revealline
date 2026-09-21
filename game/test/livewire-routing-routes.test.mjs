@@ -23,6 +23,9 @@ const project = compileContentProject(createLivewireSpatialCandidates({ edition:
 const fixture = JSON.parse(
   await readFile(new URL('./fixtures/livewire-routing-routes.json', import.meta.url)),
 );
+const masteryFixture = JSON.parse(
+  await readFile(new URL('./fixtures/livewire-routing-mastery.json', import.meta.url)),
+);
 
 test('routing clears cover both missions, all presets and both policies', () => {
   assert.equal(fixture.format, 'LivewireRoutingRoutesV1');
@@ -43,8 +46,24 @@ test('routing clears cover both missions, all presets and both policies', () => 
   }
 });
 
-for (const row of fixture.rows)
-  test(`${row.id} full legal clear/replay/equal race: ${row.difficulty}/${row.turnPolicy}/seed${row.seed}`, () => {
+test('separate Split mastery paths cover both non-Gentle presets and both controls', () => {
+  assert.equal(masteryFixture.format, 'LivewireRoutingMasteryV1');
+  assert.equal(masteryFixture.rows.length, 4);
+  assert.deepEqual(masteryFixture.rows.map((row) => row.difficulty + '/' + row.turnPolicy).sort(), [
+    'expert/grid-center',
+    'expert/immediate',
+    'standard/grid-center',
+    'standard/immediate',
+  ]);
+  assert(
+    masteryFixture.rows.every(
+      (row) => row.id === 'split-junction' && row.seed === 1 && row.delaySeconds === 0,
+    ),
+  );
+});
+
+for (const row of [...fixture.rows, ...masteryFixture.rows])
+  test(`${row.id} full legal clear/replay/equal race: ${row.difficulty}/${row.turnPolicy}/seed${row.seed}/${masteryFixture.rows.includes(row) ? 'mastery' : 'ordinary'}`, () => {
     const manifest = resolveMission(project, row.id, { difficulty: row.difficulty });
     assert.equal(manifest.simulationIdentity, row.simulationIdentity);
     const options = { seed: row.seed, classId: 'scout', turnPolicy: row.turnPolicy };
@@ -100,7 +119,8 @@ for (const row of fixture.rows)
     });
     assert.equal(goal.allLinked, true);
     // Mastery remains optional: a coverage win may leave a dangerous corner active.
-    const mastery = row.id === 'switchyard' || row.difficulty === 'gentle';
+    const mastery =
+      masteryFixture.rows.includes(row) || row.id === 'switchyard' || row.difficulty === 'gentle';
     assert.equal(goal.achieved, mastery);
     assert.equal(goal.lethalNeutralized, mastery);
     assert.equal(duel.status, 'finished');
