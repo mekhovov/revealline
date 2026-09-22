@@ -14,7 +14,8 @@ import {
 } from '../game/presentation/icons.mjs';
 import { encodeSpritePNG, inspectSprite } from './produce-field-kit-sprites.mjs';
 import { compilePresentation } from './compile-presentation.mjs';
-import { writePresentation } from './write-presentation.mjs';
+import { writePresentation, retainedPresentationPath } from './write-presentation.mjs';
+import { readFieldKitRetainedOutput } from './field-kit-retained-runtime.mjs';
 import { retainProductionHistory } from './presentation-production-history.mjs';
 import { importThemeBundle, exportThemeBundle } from '../game/presentation/bundle.mjs';
 
@@ -47,19 +48,19 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: '28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e',
+    sha256: '2d2803a0727c61e1241267bcbcb50525cde16bab72d7cfb77d83fc793b4b890e',
     evidence: [
-      'Scoped soundtrack UI source review: docs/verification/soundtrack-v3-framework-2026-09-21/ui-screen-review/review.json sha256:29b58017d3a3e1bf33347606695e522830cb170fb595c907310f9fd5c244fae0; UI recipe inputs sha256:28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e. Only the compiled CSS input changes from accepted main; shared DOM ownership, component and operation-status inputs remain byte-identical.',
-      'The independent review checks visible/hidden Solo credits, explicit non-running grid placement, Couch credits and source-link navigation, Large text and compact reserve arithmetic. The 12 focused tests and separately attributed earlier native observations have the scope stated in the review; no final-byte browser claim is inferred.',
-      'Functional source approval only. Complete native, forced-colour, screen-reader, physical-device, art, offline, human and public acceptance remain separate. Any UI recipe input change reopens this group. Earlier source approvals and all immutable history remain retained.',
+      'Scoped retained-presentation functional source review: docs/verification/fresh-presentation-retention/review.json sha256:120fbc1081856a6961f99bd479212695a09a4ce4b8debf3e3069a05620e75675. Six UI inputs sha256:2d2803a0727c61e1241267bcbcb50525cde16bab72d7cfb77d83fc793b4b890e; only the authenticated retained-manifest reader changes. All24 procedural UI recipes, tokens, compiled CSS and original payloads are unchanged.',
+      'Independent per-slot and source review found no correctness blocker. Pre-approval candidate passes109 integrated checks on each Node20/22; its native keyboard Start, confirmed Restart, win, staged Next and reload Continue matches402 served bindings with an empty console. Exact final-source gates remain required.',
+      'Continuation of prior functional source approval only. No new visual/art, whole-screen, screen-reader, physical-device, audio listening, offline or public acceptance. Immutable prior approvals remain in canonical history; any UI input change reopens this group.',
     ],
   },
   audio: {
-    sha256: '1128ede72e1d687690a3832d84b240bd8013be643bb9a21b430fe6875adcac94',
+    sha256: 'f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601',
     evidence: [
-      'Scoped soundtrack-player source and browser review: docs/verification/soundtrack-player-ux-2026-09-21/review.json sha256:b35df30b1583a691852caaf5869e4b1f54a3656037057f156655e9b1f51adc3f. Fourteen ordered audio inputs have fingerprint sha256:1128ede72e1d687690a3832d84b240bd8013be643bb9a21b430fe6875adcac94; soundtrack-panel.css is now an explicit input. Fresh v3 libraries select 90s Synth while saved libraries keep their explicit mode.',
-      'The focused catalogue, player, panel, host, v3 compatibility, Couch-audio and modal-navigation cohort passed 274/274; the panel-only compatibility cohort passed 99/99. Browser review covered desktop and 390x844 layouts, style playback, all-style shuffle, visible credits/source links and seven closed advanced sections. Hosts without a catalogue retain visible playlist playback. The verified hosted synth object returned HTTP 200, CORS *, and its declared 1,740,382-byte length.',
-      'Functional player approval only. The 70 CC0/CC BY recordings retain audited rights and pending musical review; no recording, composition, Ukrainian authenticity, physical-device, frozen-offline or public-release approval is granted. UA-FPV remains excluded without redistribution permission. All earlier production history remains immutable before this reviewed successor.',
+      'Scoped retained-audio functional source review: docs/verification/fresh-presentation-retention/review.json sha256:120fbc1081856a6961f99bd479212695a09a4ce4b8debf3e3069a05620e75675. Fourteen audio inputs sha256:f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601; only published-audio.mjs changes accepted snapshot ownership and stale-reader rejection.',
+      'All8 selected roles remain the same procedural recipes with no audio files. Synthesis, catalogue, scheduling, gain/master authority, saved playback intent and soundtrack panel inputs are byte-identical. Source and lifecycle tests support the same functional player scope; native retained-image observations do not prove custom audio-file decoding.',
+      'No recording, composition, musical suitability, Ukrainian authenticity, native listening, physical-device, frozen-offline or public approval. The70 hosted recordings retain pending musical review and UA-FPV remains excluded without redistribution permission. All historical records and127 original payloads are immutable.',
     ],
   },
   motion: {
@@ -313,38 +314,19 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const document = reviseStudioTheme(baseline, { assets, bindings });
   return { document, assets: bytes, coverage: presentationCoverage(document) };
 }
-async function generate(args) {
-  if (args.length !== 1 || !['--write', '--check'].includes(args[0]))
-    throw new Error('Use --write to adopt production assets or --check for reproducibility.');
-  const production = await createFieldKitProduction();
-  const historyPath = path.join(root, 'authoring/library/fpv-field-kit/production.rltheme');
-  let history = null;
-  try {
-    history = await importThemeBundle(new Blob([await fs.readFile(historyPath)]), {
-      decodeImage: null,
-    });
-  } catch (error) {
-    if (error.code !== 'ENOENT') throw error;
-  }
-  production.document = retainProductionHistory(production.document, history?.document);
-  production.assets = new Map([...(history?.assets ?? []), ...production.assets]);
-  production.coverage = presentationCoverage(production.document);
-  const historyBytes = Buffer.from(
-    await (await exportThemeBundle(production.document, production.assets)).arrayBuffer(),
-  );
-  if (
-    args[0] === '--check' &&
-    (!history || hash(await fs.readFile(historyPath)) !== hash(historyBytes))
-  )
-    throw new Error(
-      'Stale production revision ledger. Run --write to append compatible revisions.',
-    );
-  const result = await compilePresentation(production.document, production.assets);
-  const out = path.join(root, 'game/presentation/compiled');
-  const config = await resolveConfig(path.join(root, 'game/build-config.json'));
-  // Generated JSON/CSS follows the same formatter as committed source files.
+/** Deterministic production output from the ledger and explicit retained inputs.
+ * This stage owns no release writes and does not read prior compiled artifacts. */
+export async function compileFieldKitProduction(
+  production,
+  { read = (relative) => fs.readFile(path.join(root, relative)), config = {} } = {},
+) {
+  const previousOutput = await readFieldKitRetainedOutput({ read, assets: production.assets });
+  const result = await compilePresentation(production.document, production.assets, {
+    previousOutput,
+  });
+  // Format current artifacts only; retained runtime names bind original raw bytes.
   for (const [name, body] of result.files)
-    if (/\.(json|css)$/.test(name))
+    if (/\.(json|css)$/.test(name) && !retainedPresentationPath(name))
       result.files.set(
         name,
         Buffer.from(
@@ -371,6 +353,37 @@ async function generate(args) {
       ),
     ),
   );
+  return result;
+}
+async function generate(args) {
+  if (args.length !== 1 || !['--write', '--check'].includes(args[0]))
+    throw new Error('Use --write to adopt production assets or --check for reproducibility.');
+  const production = await createFieldKitProduction();
+  const historyPath = path.join(root, 'authoring/library/fpv-field-kit/production.rltheme');
+  let history = null;
+  try {
+    history = await importThemeBundle(new Blob([await fs.readFile(historyPath)]), {
+      decodeImage: null,
+    });
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  production.document = retainProductionHistory(production.document, history?.document);
+  production.assets = new Map([...(history?.assets ?? []), ...production.assets]);
+  production.coverage = presentationCoverage(production.document);
+  const historyBytes = Buffer.from(
+    await (await exportThemeBundle(production.document, production.assets)).arrayBuffer(),
+  );
+  if (
+    args[0] === '--check' &&
+    (!history || hash(await fs.readFile(historyPath)) !== hash(historyBytes))
+  )
+    throw new Error(
+      'Stale production revision ledger. Run --write to append compatible revisions.',
+    );
+  const config = await resolveConfig(path.join(root, 'game/build-config.json'));
+  const result = await compileFieldKitProduction(production, { config });
+  const out = path.join(root, 'game/presentation/compiled');
   await writePresentation(result.files, out, { check: args[0] === '--check' });
   if (args[0] === '--write') {
     const temporary = `${historyPath}.tmp-${process.pid}`;

@@ -1,5 +1,13 @@
 # RevealLine delivery plan
 
+## Status reconciliation — 22 September 2026
+
+The [current remaining-work checkpoint](ux-delivery-status-20260922.md) records public v0.82.0, the qualifying v0.82.1 candidate and the remaining feature queue. This update does not accept unfinished phases or qualify draft PRs. Each candidate requires its final source/version, immutable release and public verification.
+
+The dated snapshots below are retained verbatim. Their earlier “current” and “next” descriptions are historical; use the checkpoint above and its linked live PRs for the newer delivery state.
+
+## Historical checkpoint retained below
+
 **Current public baseline, 20 September 2026: [v0.65.0 — imported-Team continuation](https://mekhovov.github.io/revealline/releases/v0.65.0/site/game/).** Its [scoped acceptance](../publishing/pages-controller/delivery/evidence/cross-mode-p07/v0650-public/README.md) covers imported pictures, earned-picture viewing, Next and Retry. Whole navigation, rewards, presentation and browser qualification remain incomplete.
 
 The [cross-mode execution register](cross-mode-execution.md) is the single authority for current item status and execution order. Next are the qualified v0.66.0 Team/Studio publication and the v0.67.0 discovery candidate, followed by the remaining player-experience phases. This document retains earlier requirements and dated evidence; its historical “current” or “next” wording is not today's release status.

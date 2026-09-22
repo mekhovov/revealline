@@ -27,8 +27,10 @@ function catalogTransport(t) {
     requests.push({ url: String(url), signal: options?.signal });
     return response();
   };
+  const installedFetch = globalThis.fetch;
   t.after(() => {
-    globalThis.fetch = original;
+    // The outer page fixture may already have restored browser globals.
+    if (globalThis.fetch === installedFetch) globalThis.fetch = original;
   });
   return {
     requests,
@@ -79,6 +81,7 @@ function tab(page) {
 test('More worlds shows all authored layout/equipment descriptions before downloading, without changing a paused cut or Tab controls', async (t) => {
   const page = await soloPage(t);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let i = 0; i < 13; i++) page.frame();

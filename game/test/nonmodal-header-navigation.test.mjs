@@ -2,7 +2,7 @@
 // hardware are modeled. No run state, navigation callbacks or saves are replaced.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { soloPage, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary } from '../library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
@@ -89,8 +89,9 @@ async function fixture(t, policy, options = {}) {
   assert.equal(page.rendered.run.turnPolicy, policy);
   return page;
 }
-function startCut(page) {
+async function startCut(page) {
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   frames(page, 24);
@@ -100,8 +101,9 @@ function startCut(page) {
   page.frame(0);
   assert.equal(page.$('game-overlay').dataset.kind, 'pause');
 }
-function win(page) {
+async function win(page) {
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let i = 0; i < 1200 && page.rendered.run.status !== 'won'; i++) page.frame();
@@ -157,9 +159,9 @@ for (const policy of ['immediate', 'grid-center']) {
   for (const state of ['ready', 'paused', 'picture', 'result']) {
     test(`${policy}: native Enter and controller activate visible headers from ${state} without starting or replacing the flight`, async (t) => {
       const page = await fixture(t, policy);
-      if (state === 'paused') startCut(page);
+      if (state === 'paused') await startCut(page);
       if (['picture', 'result'].includes(state)) {
-        win(page);
+        await win(page);
         if (state === 'result') {
           page.$('show-result').click();
           page.frame(0);
@@ -230,7 +232,7 @@ for (const policy of ['immediate', 'grid-center']) {
   });
   test(`${policy}: paused header controller/Back preserves direction and modal scope prevents click-through`, async (t) => {
     const page = await fixture(t, policy);
-    startCut(page);
+    await startCut(page);
     const before = snapshot(page),
       controls = pad(page, t);
     controls.reach('shell-settings');
@@ -272,9 +274,9 @@ for (const policy of ['immediate', 'grid-center']) {
         search: `?course=first-flight&lesson=close-line&turn-policy=${policy}`,
         parentWindow: {},
       });
-      if (state === 'paused') startCut(page);
+      if (state === 'paused') await startCut(page);
       if (['picture', 'result'].includes(state)) {
-        win(page);
+        await win(page);
         if (state === 'result') {
           page.$('show-result').click();
           page.frame(0);

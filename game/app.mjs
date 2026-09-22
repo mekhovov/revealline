@@ -1,3 +1,7 @@
+import {
+  freshSoloVisualSelection,
+  prepareFreshSoloVisualTheme,
+} from './presentation/fresh-visual-theme.mjs';
 import { attachMusicCredit } from './ui/music-credit.mjs';
 import { createTouchPreferences } from './touch-preferences.mjs';
 import { createCharacterPresentations } from './character-presentations.mjs';
@@ -117,6 +121,7 @@ import { attachMenuStyleControls } from './ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from './ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from './ui/settings-panels.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
+import { prepareSavedVisualTheme } from './presentation/saved-visual-theme.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
 import { upgradeSoundtrackLibrary, setCatalogueTracks } from './soundtrack.mjs';
 import { createSoundtrackSource } from './soundtrack-source.mjs';
@@ -955,6 +960,9 @@ try {
     event.returnValue = '';
   };
   window.addEventListener('beforeunload', protectSessionOriginals);
+  let flightVisualLease = null,
+    freshVisualAttempt = false,
+    pictureVisualController = null;
   let flightPictures = null,
     picturePrewarm = null,
     pictureResume = null,
@@ -1260,6 +1268,8 @@ try {
       picturePrewarm = null;
     } else if (picturePrewarm) picturePrewarm.observe = null;
     pictureThemePending?.controller.abort();
+    pictureVisualController?.abort();
+    pictureVisualController = null;
     pictureResume = null;
     pictureThemePending = null;
   }
@@ -1591,6 +1601,7 @@ try {
   // opens the local Asset Studio database or changes a flight's picture pins.
   let presentationHost = null,
     presentationSnapshot = null,
+    pagePresentationSnapshot = null,
     presentationReady = Promise.resolve(null);
   try {
     presentationHost = createPresentationHost({
@@ -1599,12 +1610,8 @@ try {
     presentationReady = presentationHost
       .load({ onStatus: presentationFeedback.update })
       .then((snapshot) => {
-        presentationHost.apply(document.documentElement);
-        painter.setPresentation(snapshot);
-        presentationSnapshot = snapshot;
-        menuStyle.setPresentation(snapshot);
-        enemyGuide?.refreshPresentation();
-        document.documentElement.dataset.presentationTheme = snapshot.resolved.theme.id;
+        pagePresentationSnapshot = snapshot;
+        if (!flightVisualLease) applyFlightPresentation();
         return snapshot;
       })
       .catch((error) => {
@@ -1619,10 +1626,44 @@ try {
   const publishedAudio = attachPublishedAudio({
     sound,
     ready: presentationReady,
-    getHost: () => presentationHost,
+    getHost: () => flightVisualLease ?? presentationHost,
     allowMusic: () =>
       (theme.id === 'fpv' || theme.family === 'fpv') && !scenario?.music && !musicOverride,
   });
+  function applyFlightPresentation() {
+    const snapshot = flightVisualLease?.snapshot ?? pagePresentationSnapshot;
+    if (snapshot) (flightVisualLease ?? presentationHost).apply(document.documentElement);
+    presentationSnapshot = snapshot;
+    painter.setPresentation(snapshot);
+    menuStyle.setPresentation(snapshot);
+    enemyGuide?.refreshPresentation();
+    publishedAudio.setPresentation(snapshot);
+    if (snapshot) {
+      document.documentElement.dataset.presentationTheme = snapshot.resolved.theme.id;
+      document.documentElement.dataset.presentationRevision = String(
+        snapshot.resolved.theme.revision,
+      );
+      document.documentElement.dataset.presentationManifest = snapshot.manifestSha256;
+    } else {
+      delete document.documentElement.dataset.presentationRevision;
+      delete document.documentElement.dataset.presentationManifest;
+    }
+  }
+  function prepareFreshAttemptVisuals(entry, level, themeId, options) {
+    if (practice || candidateHost?.owns(entry) || !freshSoloVisualSelection(entry, themeId))
+      return Promise.resolve(null);
+    return prepareFreshSoloVisualTheme(
+      { entry, level, themeId, currentManifestSha256: pagePresentationSnapshot?.manifestSha256 },
+      { baseURL: new URL('presentation/compiled/', location.href), ...options },
+    );
+  }
+  function adoptFlightVisualLease(next) {
+    if (flightVisualLease === next) return;
+    const prior = flightVisualLease;
+    flightVisualLease = next;
+    applyFlightPresentation();
+    prior?.release();
+  }
   const releasePictures = createReleasePictureDefaults({
     getHost: () => presentationHost,
     ready: () => presentationReady,
@@ -2189,6 +2230,8 @@ try {
       audioMaster.dispose();
       soundtrackStore?.close();
       flightPictures?.dispose();
+      flightVisualLease?.release();
+      flightVisualLease = null;
       candidateHost?.preparer.dispose();
       journeyPreferences?.dispose();
       missionThumbnails.close();
@@ -2472,6 +2515,7 @@ try {
           runId,
           continuation: { direction: input.snapshotDirection() },
           presentationPins: flightPictures?.pins(),
+          ...(flightVisualLease ? { visualThemePin: flightVisualLease.pin() } : {}),
           mediaIdentityCatalog: flightPictures?.identityCatalog,
           storage: localStorage,
           sessionKey,
@@ -2631,6 +2675,7 @@ try {
       runId,
       continuation: { direction: input.snapshotDirection() },
       presentationPins: flightPictures?.pins(),
+      ...(flightVisualLease ? { visualThemePin: flightVisualLease.pin() } : {}),
       mediaIdentityCatalog: flightPictures?.identityCatalog,
       storage: localStorage,
       sessionKey,
@@ -3017,6 +3062,8 @@ try {
     worldAttempt = null;
     ++worldPlayEpoch;
     ticket.controller.abort();
+    ticket.visuals?.release();
+    ticket.visuals = null;
     const pictures = ticket.pictures;
     ticket.pictures = null;
     pictures?.dispose();
@@ -3157,6 +3204,11 @@ try {
           ),
       });
       assertCurrent();
+      ticket.visuals = await prepareFreshAttemptVisuals(entry, level, nextTheme.id, {
+        signal: ticket.controller.signal,
+        onStatus: request.onStatus,
+      });
+      assertCurrent();
       const preparedAttempt = {
         kind: 'world-play',
         ticket,
@@ -3190,6 +3242,8 @@ try {
     } finally {
       for (const signal of signals) signal.removeEventListener('abort', cancel);
       if (worldAttempt === ticket) worldAttempt = null;
+      ticket.visuals?.release();
+      ticket.visuals = null;
       const pictures = ticket.pictures;
       ticket.pictures = null;
       pictures?.dispose();
@@ -4695,6 +4749,7 @@ try {
       savedAt,
       continuation: { direction: input.snapshotDirection() },
       presentationPins: flightPictures?.pins(),
+      ...(flightVisualLease ? { visualThemePin: flightVisualLease.pin() } : {}),
     });
   }
   function currentBackupSession(savedAt) {
@@ -4795,7 +4850,8 @@ try {
     const controller = new AbortController();
     restoreController = controller;
     let feedback,
-      stagedPictures = null;
+      stagedPictures = null,
+      stagedVisuals = null;
     const abort = () => {
       controller.abort();
       // Title cancellation owns this field status too. Settle it immediately;
@@ -4824,6 +4880,23 @@ try {
           'Loading was cancelled; your newer selection is kept.',
           'AbortError',
         );
+      if (restored.session.visualThemePin) {
+        stagedVisuals = await prepareSavedVisualTheme(
+          {
+            pin: restored.session.visualThemePin,
+            entry,
+            currentManifestSha256: pagePresentationSnapshot?.manifestSha256,
+          },
+          {
+            baseURL: new URL('presentation/compiled/', location.href),
+            signal: controller.signal,
+            onStatus(status) {
+              feedback.update(status);
+              onStatus?.(status);
+            },
+          },
+        );
+      }
       stagedPictures = newFlightPictures({
         nextRun: restored.run,
         nextRunId: restored.session.runId,
@@ -4870,6 +4943,8 @@ try {
       recordingStopped = false;
       clearInput();
       input.restoreDirection(restored.session.continuation?.direction ?? null);
+      adoptFlightVisualLease(stagedVisuals);
+      stagedVisuals = null;
       setTheme();
       painter.setLevel?.(run.level, { seed });
       updateLoadout();
@@ -4904,6 +4979,7 @@ try {
       signal?.removeEventListener('abort', abort);
       sessionBusy = false;
       stagedPictures?.dispose();
+      stagedVisuals?.release();
       if (restoreController === controller) restoreController = null;
       refreshSavedFlight();
       await packCommits.reconcile();
@@ -4916,6 +4992,8 @@ try {
     if (!ticket) return;
     titleFlight = null;
     ticket.controller.abort();
+    ticket.visuals?.release();
+    ticket.visuals = null;
     if (ticket.prewarm?.observe === ticket.observe) ticket.prewarm.observe = null;
     ticket.feedback.finish({
       state: 'cancelled',
@@ -5076,8 +5154,26 @@ try {
         }
         if (owner !== flightPictures)
           throw new DOMException('The chosen picture changed.', 'AbortError');
+        assertCurrent();
+        if (freshVisualAttempt && !flightVisualLease) {
+          ticket.visuals = await prepareFreshAttemptVisuals(
+            activeEntry,
+            campaign.levels[levelIndex],
+            theme.id,
+            {
+              signal: ticket.controller.signal,
+              onStatus: ticket.observe,
+            },
+          );
+        }
       }
       if (!titleFlightCurrent(ticket, expected) || !flightPictures?.ready(theme.id))
+        throw new DOMException('Title launch changed. Your flight stays paused.', 'AbortError');
+      if (ticket.visuals) {
+        adoptFlightVisualLease(ticket.visuals);
+        ticket.visuals = null;
+      }
+      if (!titleFlightCurrent(ticket, expected))
         throw new DOMException('Title launch changed. Your flight stays paused.', 'AbortError');
       feedback.finish({ message: '' });
       titleFlight = null;
@@ -5094,6 +5190,8 @@ try {
               : `Flight unavailable: ${error.message}`,
         });
     } finally {
+      ticket.visuals?.release();
+      ticket.visuals = null;
       if (ticket.prewarm?.observe === ticket.observe) ticket.prewarm.observe = null;
       if (titleFlight === ticket) {
         titleFlight = null;
@@ -6255,6 +6353,8 @@ try {
     ticket.feedback?.finish(message, state);
     ticket.controller.abort();
     ticket.pictures?.dispose();
+    ticket.visuals?.release();
+    ticket.visuals = null;
     if (
       restoreFocus &&
       resultAttemptEpoch === epoch &&
@@ -6421,6 +6521,14 @@ try {
       });
       if (!resultAttemptCurrent(ticket))
         throw new DOMException('Preparation cancelled.', 'AbortError');
+      if (kind !== 'retry') {
+        ticket.visuals = await prepareFreshAttemptVisuals(entry, level, nextTheme.id, {
+          signal: ticket.controller.signal,
+          onStatus: ticket.feedback.update,
+        });
+        if (!resultAttemptCurrent(ticket))
+          throw new DOMException('Preparation cancelled.', 'AbortError');
+      }
       const preparedPictures = ticket.pictures;
       const adopted = prepare({
         preparedAttempt: {
@@ -6499,6 +6607,8 @@ try {
     } finally {
       if (resultAttempt === ticket) cancelResultAttempt();
       ticket.pictures?.dispose();
+      ticket.visuals?.release();
+      ticket.visuals = null;
       if (!ticket.adoptionEpoch) ticket.candidatePicture?.release();
     }
   }
@@ -6507,6 +6617,7 @@ try {
     contentSwitchTicket = null,
     difficulty,
     preparedAttempt = null,
+    retainAttemptAppearance = false,
   } = {}) {
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
     if (preparedAttempt) {
@@ -6543,6 +6654,17 @@ try {
       }
       cancelPictureStart();
       storyDialog.close();
+    }
+    const retainedPictures =
+      retainAttemptAppearance && flightPictures
+        ? { pins: flightPictures.pins(), legacy: flightPictures.legacy }
+        : null;
+    const keepVisuals =
+      restoreAdoption || retainAttemptAppearance || preparedAttempt?.ticket.kind === 'retry';
+    freshVisualAttempt = !keepVisuals;
+    if (!keepVisuals) {
+      adoptFlightVisualLease(preparedAttempt?.ticket.visuals ?? null);
+      if (preparedAttempt) preparedAttempt.ticket.visuals = null;
     }
     let previousPictures = null;
     if (preparedAttempt) {
@@ -6750,7 +6872,7 @@ try {
       'host.ready',
     );
     if (!restoreAdoption && !preparedAttempt) {
-      flightPictures = newFlightPictures();
+      flightPictures = newFlightPictures(retainedPictures ?? {});
       warmPicture();
     }
     previousPictures?.dispose();
@@ -6775,13 +6897,24 @@ try {
     // Enable audio on the original gesture, before any storage/decode await.
     // Master mute only gates output. It never discards a pending or paused playlist.
     activateAudio().catch(() => {});
-    if (!flightPictures?.ready(theme.id)) {
+    const needsFreshVisuals =
+      freshVisualAttempt &&
+      !flightVisualLease &&
+      !practice &&
+      !candidateHost?.owns(activeEntry) &&
+      !!freshSoloVisualSelection(activeEntry, theme.id);
+    if (!flightPictures?.ready(theme.id) || needsFreshVisuals) {
       if (pictureResume) return;
       clearPictureRecovery();
       const owner = flightPictures,
         ticket = ++pictureGeneration,
         selectedRun = run,
         selectedTheme = theme.id;
+      const selectedEntry = activeEntry,
+        selectedLevel = activeEntry.campaign.levels[levelIndex],
+        controller = new AbortController();
+      let stagedVisuals = null;
+      pictureVisualController = controller;
       pictureResume = ticket;
       paused = true;
       clearInput();
@@ -6797,8 +6930,21 @@ try {
         if (prewarm.latest) feedback.update(prewarm.latest);
       }
       const prepared =
-        prewarm?.promise ?? owner.ensure(selectedTheme, { onStatus: feedback.update });
+        prewarm?.promise ??
+        owner.ensure(selectedTheme, { signal: controller.signal, onStatus: feedback.update });
       void prepared
+        .then(async () => {
+          if (needsFreshVisuals)
+            stagedVisuals = await prepareFreshAttemptVisuals(
+              selectedEntry,
+              selectedLevel,
+              selectedTheme,
+              {
+                signal: controller.signal,
+                onStatus: feedback.update,
+              },
+            );
+        })
         .then(() => {
           if (
             pictureResume === ticket &&
@@ -6807,7 +6953,7 @@ try {
             run === selectedRun &&
             theme.id === selectedTheme
           )
-            feedback.finish('Picture ready. Press Resume to continue.');
+            feedback.finish('Flight assets ready. Press Resume to continue.');
           if (
             pictureResume !== ticket ||
             pictureGeneration !== ticket ||
@@ -6820,7 +6966,19 @@ try {
             courseBlocked()
           )
             return;
+          if (stagedVisuals) {
+            adoptFlightVisualLease(stagedVisuals);
+            stagedVisuals = null;
+          }
+          if (
+            pictureResume !== ticket ||
+            pictureGeneration !== ticket ||
+            run !== selectedRun ||
+            owner !== flightPictures
+          )
+            return;
           pictureResume = null;
+          pictureVisualController = null;
           resume({ alignCourseBoard, contentSwitchTicket });
         })
         .catch((error) => {
@@ -6835,11 +6993,16 @@ try {
           }
         })
         .finally(() => {
+          stagedVisuals?.release();
+          if (pictureVisualController === controller) pictureVisualController = null;
           if (pictureResume === ticket) pictureResume = null;
         });
       return;
     }
     pictureResume = null;
+    // Readiness may finish while focus is elsewhere. Retire its Resume instruction
+    // only when this explicit or still-owned activation actually starts the flight.
+    clearPreparation();
     clearPictureRecovery();
     legacyPictureButton.hidden = true;
     clearInput();
@@ -7613,6 +7776,15 @@ try {
     cancelRestore();
     cancelPictureStart();
     pause(true);
+    if (flightVisualLease && $('theme-select').value !== theme.id) {
+      $('theme-select').value = theme.id;
+      themeFeedback.begin({ message: '' }).finish({
+        state: 'error',
+        message:
+          'This saved flight keeps its original world. Choose a new mission to change worlds.',
+      });
+      return;
+    }
     const next =
       themesFile.themes.find((t) => t.id === $('theme-select').value) ||
       (scenario?.theme?.id === $('theme-select').value ? scenario.theme : themesFile.themes[0]);
@@ -7810,7 +7982,7 @@ try {
     if ($('shell-workshop-dialog').open) $('shell-workshop-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     demo = false;
-    prepare();
+    prepare({ retainAttemptAppearance: true });
     resume();
   };
   $('retry-button').onclick = () => {

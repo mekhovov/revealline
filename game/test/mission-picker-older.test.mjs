@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
 import { attachMissionPicker } from '../ui/mission-picker.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
-import { inspectImageDataUrl } from '../content.mjs';
+import { PNGImage as ChapterImage } from './helpers/png-image.mjs';
 import { loadLibrary } from '../library.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 
@@ -100,19 +100,6 @@ function padInput(page, t) {
   pulse(0);
   return { next: () => pulse(13), confirm: () => pulse(0), back: () => pulse(1) };
 }
-class ChapterImage {
-  set src(value) {
-    const header = inspectImageDataUrl(value);
-    assert.equal(header.valid, true);
-    this.width = this.naturalWidth = header.width;
-    this.height = this.naturalHeight = header.height;
-    queueMicrotask(() => this.onload?.());
-  }
-  decode() {
-    return Promise.resolve();
-  }
-}
-
 test('actual host keeps nine primary cards and four exact archive cards behind a native closed disclosure', async (t) => {
   const page = await soloPage(t);
   const picker = attachMissionPicker({ document: page.doc });
@@ -161,8 +148,10 @@ test('native keyboard defaults, pointer activation and exact disclosure focus le
     requests++;
     return actualFetch(...args);
   };
+  const installedFetch = globalThis.fetch;
   t.after(() => {
-    globalThis.fetch = actualFetch;
+    // The outer page fixture may already have restored browser globals.
+    if (globalThis.fetch === installedFetch) globalThis.fetch = actualFetch;
   });
   page.$('pack-select').addEventListener('change', () => changes++);
   // Traverse the actual modal from its host-selected card; native Tab is the
@@ -288,8 +277,10 @@ test('a failed older-card request preserves a paused cut and its disclosure; a n
           rejectRequest = reject;
         })
       : actualFetch(url, ...args);
+  const installedFetch = globalThis.fetch;
   t.after(() => {
-    globalThis.fetch = actualFetch;
+    // The outer page fixture may already have restored browser globals.
+    if (globalThis.fetch === installedFetch) globalThis.fetch = actualFetch;
   });
   page.$('pack-select').addEventListener('change', () => changes++);
   const target = card(page, oldIds[0]);

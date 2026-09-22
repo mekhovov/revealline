@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { loadLibrary } from '../library.mjs';
-import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 
 const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
 const profileKey = 'revealline.library.dev.v1';
@@ -40,6 +40,7 @@ test('Settings and arena assists synchronize, persist across app reload, and ret
   assert.equal(preferences().reducedEffects, true);
   assert.equal(preferences().tapSteering, true);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   const down = page.$('touch-surface');
   down.emit('pointerdown', {
     pointerId: 1,
