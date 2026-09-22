@@ -15,6 +15,10 @@ test('functional helper changes invalidate only their explicit recipe group', as
     ['game/content-design/actor-marker.mjs', 'effects'],
     ['game/ui/lane-presentation.mjs', 'effects'],
     ['game/ui/render.mjs', 'effects'],
+    ['game/ui/relay-view.mjs', 'effects'],
+    ['game/ui/directional-view.mjs', 'effects'],
+    ['game/enemy-catalog.mjs', 'effects'],
+    ['game/presentation/journey-actor-materials.mjs', 'motion'],
     ['game/soundtrack-portable.mjs', 'audio'],
     ['game/content/soundtrack-catalogue.mjs', 'audio'],
   ]) {

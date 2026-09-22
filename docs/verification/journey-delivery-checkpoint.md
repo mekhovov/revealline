@@ -66,3 +66,11 @@ Full hosted qualification remains mandatory. No release or Pages success is
 claimed for v0.82.0 here. The last checked public marker is v0.80.1; v0.80.2 has
 an immutable GitHub release but its Pages promotion remains in the release owner's
 pipeline and does not include this checkpoint.
+
+PR [#225](https://github.com/mekhovov/revealline/pull/225) now contains the source
+checkpoint. Its first run correctly rejected the stale composed presentation
+ledger. [The repair review](journey-delivery-effects-review.md) records complete
+input fingerprints, immutable fpv58 metadata, exact Team artwork binding,
+134 independent presentation checks and 69 binding/history checks per Node,
+plus a final native Team launch. The original failed run stays visible; full CI
+must pass again on the repaired head before merge or release.
