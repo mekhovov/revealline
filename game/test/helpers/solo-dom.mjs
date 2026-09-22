@@ -152,7 +152,9 @@ export async function soloPage(
   {
     campaign,
     storage = memoryStorage(),
-    search = '',
+    // Historical host tests exercise Legacy unless they explicitly request the
+    // ordinary public entry with search: '' or a particular Journey edition.
+    search = '?journey=legacy',
     previewStorage = memoryStorage(),
     titleScreen = false,
     fetchJSON,

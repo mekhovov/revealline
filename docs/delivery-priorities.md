@@ -1,5 +1,19 @@
 # RevealLine delivery plan
 
+## Current priority — 2026-09-22 default Journey delivery
+
+The [six-hour default Journey release plan](default-journey-release.md) is the
+current delivery register. v0.82.0 was the accepted public baseline at start;
+v0.82.1 has passed exact-source qualification and is being published. The one
+successor, reserved v0.83.0, makes the existing 91 Solo/Versus and 12 Team missions
+the ordinary default while keeping explicit Legacy access. No new production,
+save migration or unrelated queued feature is on this critical path.
+
+Earlier checkpoints below retain their original evidence and dates. Their “next”
+versions/order are historical, not the current publication queue. Full programme,
+human-balance, physical-device and comprehensive offline gates remain open.
+
+
 **Current public baseline, 20 September 2026: [v0.65.0 — imported-Team continuation](https://mekhovov.github.io/revealline/releases/v0.65.0/site/game/).** Its [scoped acceptance](../publishing/pages-controller/delivery/evidence/cross-mode-p07/v0650-public/README.md) covers imported pictures, earned-picture viewing, Next and Retry. Whole navigation, rewards, presentation and browser qualification remain incomplete.
 
 The [cross-mode execution register](cross-mode-execution.md) is the single authority for current item status and execution order. Next are the qualified v0.66.0 Team/Studio publication and the v0.67.0 discovery candidate, followed by the remaining player-experience phases. This document retains earlier requirements and dated evidence; its historical “current” or “next” wording is not today's release status.

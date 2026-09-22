@@ -255,7 +255,7 @@ test('menu, lifecycle, mode departure and newer focus retire a pending Next with
         // not a browser navigation or a focus-triggered cancellation.
         const click = link.emit('click', { button: 0 });
         assert.equal(click.defaultPrevented, false);
-        assert.equal(link.getAttribute('href'), '../');
+        assert.equal(link.getAttribute('href'), '../?journey=legacy');
         assert.notEqual(f.doc.activeElement.id, link.id);
       } else if (action === 'Settings') f.$('coop-settings-open').click();
       else if (action === 'earned picture') f.$('coop-view-picture').click();

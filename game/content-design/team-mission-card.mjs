@@ -2,10 +2,10 @@ import { paintMissionThumbnail } from './mission-card.mjs';
 
 const presetName = (value) => value[0].toUpperCase() + value.slice(1);
 
-/** Candidate-only decoration, injected by the explicit review entry. Legacy
+/** Owned Journey decoration, injected by the selected Journey entry. Legacy
  * discovery does not import the content compiler or Solo simulation for cards.
  * Identity, not imported IDs, grants access to the owned initial-state diagram. */
-export function createTeamMissionCardPresenter(journey, progress) {
+export function createTeamMissionCardPresenter(journey, progress, { reviewCopy = true } = {}) {
   return ({ document, row, card }) => {
     const owned = row.journeyRow;
     if (!journey.owns(owned)) return false;
@@ -48,7 +48,9 @@ export function createTeamMissionCardPresenter(journey, progress) {
     canvas.setAttribute('aria-hidden', 'true');
     caption.className = 'team-discovery-teaser-message';
     const artStatus = owned.background
-      ? 'Original-art test; visual qualification pending.'
+      ? reviewCopy
+        ? 'Original-art test; visual qualification pending.'
+        : 'Win to reveal the original artwork.'
       : 'Original artwork pending.';
     caption.textContent = `Starting map · craft 1 + 2. Not a capture prediction. ${artStatus}`;
     try {

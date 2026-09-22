@@ -13,7 +13,7 @@ const frames = (page, count) => {
 };
 async function setup(t, index, { stopOnCapture, journey = false, level } = {}) {
   const page = await soloPage(t, {
-      search: journey ? '?journey=1' : '',
+      search: journey ? '?journey=1' : '?journey=legacy',
       titleScreen: journey,
       journeyIndexedDB: managedIndexedDB().indexedDB,
     }),

@@ -7,6 +7,7 @@ import { createJourneyProfileStore } from './journey/profile.mjs';
 import { attachJourneySaveNotice } from './ui/journey-save-notice.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
 import { loadAuthoredJourneyRoute } from './content-design/route-loader.mjs';
+import { resolveJourneyRequest } from './content-design/default-entry.mjs';
 import {
   authoredJourneyModeHref,
   authoredJourneyUsesActorMaterials,
@@ -338,8 +339,11 @@ try {
   // Switching source maps inside an authored preview must not turn the same
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
-  // P00 technical preview. Historical editions keep their original navigation.
-  const authoredRoute = !practiceSession && (await loadAuthoredJourneyRoute(params.get('journey')));
+  const journeyRequest = resolveJourneyRequest(params, {
+    mode: 'solo',
+    auxiliary: practiceSession,
+  });
+  const authoredRoute = !practiceSession && (await loadAuthoredJourneyRoute(journeyRequest));
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? createCandidateSoloHost(authoredRoute.source, {
@@ -2517,19 +2521,26 @@ try {
       $('first-flight-help-enter').focus({ preventScroll: true });
     }
   }
-  const modeDestinations =
-    authoredModeDestinations('solo', authoredRoute?.id) ??
-    Object.freeze({
-      team: 'couch/relay-rescue.html?return=solo',
-      versus: 'couch/?return=solo',
-    });
+  const catalogueHref = authoredRoute ? './?journey=legacy' : './';
+  const catalogueLabel = authoredRoute ? 'Legacy missions' : 'New Journey';
+  const modeDestinations = Object.freeze({
+    ...(authoredModeDestinations('solo', authoredRoute?.id ?? 'legacy') ?? {
+      team: 'couch/relay-rescue.html?journey=legacy&return=solo',
+      versus: 'couch/?journey=legacy&return=solo',
+    }),
+    catalogue: catalogueHref,
+  });
+  for (const kind of ['versus', 'team'])
+    for (const id of [`shell-title-${kind}`, `shell-${kind}`])
+      $(id)?.setAttribute('href', modeDestinations[kind]);
   if (authoredRoute) {
-    for (const kind of ['versus', 'team'])
-      for (const id of [`shell-title-${kind}`, `shell-${kind}`])
-        $(id)?.setAttribute('href', modeDestinations[kind]);
-    $('shell-team').textContent = 'Separate Team arenas · 2 players';
+    $('shell-team').textContent =
+      authoredRoute.id === 'whole-spatial-v5'
+        ? '12 Team missions · 2 players'
+        : 'Separate Team arenas · 2 players';
   }
-  const modeLabel = (kind) => (kind === 'versus' ? 'Versus' : 'Team');
+  const modeLabel = (kind) =>
+    kind === 'catalogue' ? catalogueLabel : kind === 'versus' ? 'Versus' : 'Team';
   const currentAuthoredModeRoute = () =>
     candidateHost?.owns(activeEntry) ? authoredRoute.id : null;
   const modeDestination = (ticket) =>
@@ -2540,6 +2551,8 @@ try {
     for (const id of ['shell-versus', 'shell-title-versus']) $(id).setAttribute('href', href);
   }
   function prepareModeHint(ticket) {
+    if (ticket.kind === 'catalogue')
+      return { token: null, href: new URL(catalogueHref, location.href).href };
     // Authored progress and suspended attempts already have their own route.
     // Do not write a Legacy selection bookmark for a candidate execution.
     if (ticket.journeyRouteId)
@@ -2605,13 +2618,15 @@ try {
         ? 'Your paused flight was saved and verified. Continue can restore it after returning.'
         : 'This current flight is session-only: it remains paused in this tab. Leaving may lose this attempt. This flight was not verified as safely saved.';
     $('mode-leave-status').textContent = `${flight} ${
-      ticket.journeyRouteId
-        ? `This opens ${ticket.kind === 'team' ? 'the separate Team arenas' : 'Versus with its own Journey progress'}. Returning opens this Solo Journey title; Continue stays explicit.`
-        : ticket.origin === 'solo-title'
-          ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
-          : ticket.fallback
-            ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
-            : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
+      ticket.kind === 'catalogue'
+        ? `This opens ${catalogueLabel}. Its missions and progress stay separate. Returning does not resume a flight automatically.`
+        : ticket.journeyRouteId
+          ? `This opens ${ticket.kind === 'team' ? 'the separate Team arenas' : 'Versus with its own Journey progress'}. Returning opens this Solo Journey title; Continue stays explicit.`
+          : ticket.origin === 'solo-title'
+            ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
+            : ticket.fallback
+              ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
+              : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
     }`;
   }
   function unfinishedFlight() {
@@ -6098,7 +6113,7 @@ try {
     if (kind === 'won') {
       $('overlay-title').textContent = 'A little more light.';
       $('overlay-copy').textContent =
-        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? 'Authored test clear recorded in Journey progress. No Legacy collection awards.' : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : sessionPictures.status().originals ? 'Picture collected for this session. Export game data and session originals from Settings → Game data → Saves & recovery to keep it.' : 'Picture collected for this session. Export your library to keep it.')}`;
+        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? (authoredRoute.id === 'whole-spatial-v5' ? 'Journey mission complete.' : 'Authored test clear recorded in Journey progress. No Legacy collection awards.') : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : sessionPictures.status().originals ? 'Picture collected for this session. Export game data and session originals from Settings → Game data → Saves & recovery to keep it.' : 'Picture collected for this session. Export your library to keep it.')}`;
       $('result-medals').textContent = '★'.repeat(
         run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
       );
@@ -8180,8 +8195,13 @@ try {
   if (journeyEnabled) {
     document.body.classList.add('journey-preview');
     show('journey-artwork-availability', !!candidateHost);
+    if (authoredRoute?.id === 'whole-spatial-v5')
+      $('journey-artwork-availability').textContent =
+        'Mission pictures need an internet connection. Preparing offline play does not yet include them; full game downloads do.';
     $('shell-title-edition').textContent = candidateHost
-      ? `${authoredRoute.label.toUpperCase()} / UNVALIDATED TEST BUILD`
+      ? authoredRoute.id === 'whole-spatial-v5'
+        ? `NEW JOURNEY / ${journeyCatalog.missions.length} MISSIONS`
+        : `${authoredRoute.label.toUpperCase()} / UNVALIDATED TEST BUILD`
       : 'JOURNEY / TECHNICAL TEST PREVIEW';
     journeyChooser = attachJourneyChooser({
       catalog: journeyCatalog,
@@ -8206,6 +8226,7 @@ try {
         (availableFocusTarget(opener) ? opener : controllerFocus())?.focus({ preventScroll: true });
       },
     });
+    $('journey-chooser').querySelector('.journey-footer').append($('missions-catalogue'));
     refreshJourneySkip();
     $('journey-skip').onclick = () => {
       const mission = journeySkipMission();
@@ -8467,7 +8488,27 @@ try {
           })
       : undefined,
   });
-  mountWorkshopLinks({ document, href: location.href });
+  if (authoredRoute?.id === 'whole-spatial-v5')
+    $('shell-title-team').querySelector('.game-mode-description').textContent = '12 Team missions';
+  for (const id of ['shell-catalogue', 'missions-catalogue']) {
+    const link = $(id);
+    link.hidden = practiceSession;
+    link.textContent = catalogueLabel;
+    link.setAttribute('href', catalogueHref);
+    link.onclick = (event) => {
+      const parent = link.closest('dialog');
+      void requestModeDeparture('catalogue', event, link, {
+        origin: 'solo-title',
+        isCurrent: () => parent?.open && parent.contains(link),
+      });
+    };
+  }
+  const workshopContext = new URL(location.href);
+  workshopContext.searchParams.set(
+    'journey',
+    authoredRoute?.id ?? (journeyEnabled ? '1' : 'legacy'),
+  );
+  mountWorkshopLinks({ document, href: workshopContext.href });
   attachFullscreen($('shell-fullscreen'));
   void initializeSoundtrack();
   if (autoplayPackLaunch)

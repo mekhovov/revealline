@@ -433,7 +433,7 @@ test('picture waiting and checked mode departure have separate owners with reach
   const f = await page(t, {
     ...options,
     waitPicture: false,
-    href: 'http://localhost/game/couch/relay-rescue.html?return=solo',
+    href: 'http://localhost/game/couch/relay-rescue.html?return=solo&journey=legacy',
     presentation: { read: () => gate.promise },
   });
   f.$('coop-solo').focus();
@@ -444,7 +444,7 @@ test('picture waiting and checked mode departure have separate owners with reach
   f.tap('Enter');
   f.$('coop-solo').focus();
   f.tap('Enter');
-  assert.deepEqual(f.visits, ['http://localhost/game/']);
+  assert.deepEqual(f.visits, ['http://localhost/game/?journey=legacy']);
   gate.resolve();
 });
 

@@ -302,3 +302,14 @@ separately from hosted upload success.”
 ### Retain an edition while publishing a menu correction
 
 “Prepare the archive from exact original ZIP/metadata. A new archive has zero previously accepted paths. Update only template-specific fixture identities; keep all corruption guards, inventory-base binding and budget limits. Preserve first failures, run complete fixtures, and verify hosted extraction plus every public body. Carry known historical UX issues into scoped native admission. Publish the separately qualified correction only after retention is admitted, then verify the affected public menu journey before marking its scope accepted.”
+
+
+## Ordinary default entry qualification
+
+Use the [default Journey contract](../../docs/default-journey-release.md) for the
+v0.83 candidate. Test fresh and returning ordinary root entry (no special URL),
+91/91/12 catalogue counts, direct Start, explicit Legacy access, mode/Workshop
+return, Retry/Next/endings and loading recovery. Reuse current Journey scopes;
+no save migration, database deletion or mission/art generation is in this feature.
+Report source, PR, public version/link, actual input/viewports and evidence limits;
+never infer publication or complete human/device qualification from a host pass.

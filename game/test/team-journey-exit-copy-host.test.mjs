@@ -6,7 +6,7 @@ import { waitFor } from './helpers/coop-presentation-fixture.mjs';
 for (const journey of [false, true]) {
   async function fixture(t) {
     const f = await page(t, {
-      href: `http://localhost/game/couch/relay-rescue.html${journey ? '?journey=team-greybox' : ''}`,
+      href: `http://localhost/game/couch/relay-rescue.html?journey=${journey ? 'team-greybox' : 'legacy'}`,
       nativeFocus: true,
       nativeVisibility: true,
     });
