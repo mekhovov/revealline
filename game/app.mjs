@@ -199,6 +199,12 @@ import { suspendSession, restoreSession, saveSession, SESSION_STORAGE_BYTES } fr
 import { createAttemptFilePreparer } from './attempt-file.mjs';
 import { challengeCampaign } from './challenges.mjs';
 import { createGalleryDifficultyResolver } from './gallery-difficulty.mjs';
+import {
+  applyGameplayTuning,
+  createGameplayTuningController,
+  recoverGameplayTuning,
+} from './gameplay-tuning.mjs';
+import { mountGameplayTuning } from './ui/gameplay-tuning.mjs';
 import { savedFlightPreview } from './continuation.mjs';
 import { createSelectionBookmark, resolveSelectionBookmark } from './selection-bookmark.mjs';
 import { createModeReturn } from './mode-return.mjs';
@@ -383,6 +389,14 @@ try {
   // Legacy browsing reads the same next-attempt preset as receiving Journey
   // hosts, without changing Legacy rules or writing a preference.
   const browsingJourneyPreferences = journeyPreferences || createJourneyPreferences({ window });
+  const gameplayTuning = createGameplayTuningController({ eventTarget: window });
+  let gameplayTuningPanel = null;
+  const nextGameplayTuning = (entry = activeEntry) =>
+    gameplayTuning.snapshot(
+      entry?.difficulty && candidateHost?.owns(entry)
+        ? entry.difficulty
+        : browsingJourneyPreferences.snapshot().difficulty,
+    );
   function difficultyLabel(entry) {
     return candidateHost?.owns(entry)
       ? entry.difficulty[0].toUpperCase() + entry.difficulty.slice(1)
@@ -1154,6 +1168,10 @@ try {
     explicitLegacy = false,
     candidatePicture = null,
   } = {}) {
+    // Difficulty changes simulation, not the ownership of an original picture.
+    const pictureLevel = recoverGameplayTuning(nextRun.level)
+      ? entry.campaign.levels.find((level) => level.id === nextRun.levelId)
+      : nextRun.level;
     if (candidateHost?.owns(entry)) {
       const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
       return createCandidateFlightPictures({
@@ -1161,7 +1179,7 @@ try {
           runId: nextRunId,
           executionKey: campaignKey(entry.campaign),
           levelId: nextRun.levelId,
-          levelRevision: nextRun.level.revision,
+          levelRevision: pictureLevel.revision,
           themeId: manifest.presentation.themeId,
         },
         asset: manifest.background,
@@ -1184,10 +1202,10 @@ try {
         runId: nextRunId,
         executionKey: campaignKey(entry.campaign),
         levelId: nextRun.levelId,
-        levelRevision: nextRun.level.revision,
+        levelRevision: pictureLevel.revision,
         themeId: nextThemeId,
       },
-      level: nextRun.level,
+      level: pictureLevel,
       themeIds: entry.themes.map((item) => item.id),
       identityCatalog: legacy ? null : pictureIdentity(),
       readMedia: pictureMedia,
@@ -2238,6 +2256,8 @@ try {
       unifiedLibrary?.library.dispose();
       disposeUnifiedPreview?.();
       journeyPreferences?.dispose();
+      gameplayTuningPanel?.dispose();
+      gameplayTuning.dispose();
       if (browsingJourneyPreferences !== journeyPreferences) browsingJourneyPreferences.dispose();
       missionThumbnails.close();
       libraryPanel.dispose();
@@ -3286,7 +3306,7 @@ try {
         worldAttemptCurrent(ticket),
       );
       assertCurrent();
-      const nextRun = createRun(level, options);
+      const nextRun = createRun(applyGameplayTuning(level, nextGameplayTuning(entry)), options);
       const nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
       const nextRecorder = createRecorder(nextRun.level, options, buildVersion);
       ticket.pictures = newFlightPictures({
@@ -4034,6 +4054,15 @@ try {
     progress = progressFor(library, campaign);
   }
   function refreshDifficulty() {
+    const nextPressure = gameplayTuning.snapshot(browsingJourneyPreferences.snapshot().difficulty);
+    $('menu-difficulty').value = nextPressure.difficulty;
+    $('menu-difficulty').disabled = contentSwitchBusy || backupBusy || sessionBusy;
+    $('menu-difficulty-note').textContent =
+      `${nextPressure.difficulty}: enemy speed ×${nextPressure.enemySpeed.toFixed(2)}, craft speed ×${nextPressure.playerSpeed.toFixed(2)}, target +${Math.round(nextPressure.enemyDensity * 100)}% field keepers (rounded up where safe). ` +
+      'Relative to the authored preset. Next fresh attempt only; Resume keeps its rules. ' +
+      (nextPressure.adminOverride ? 'Admin playtest · no normal clears or awards. ' : '') +
+      (browsingJourneyPreferences.snapshot().error || gameplayTuning.status().error || '');
+    gameplayTuningPanel?.refresh();
     if (candidateHost?.owns(activeEntry)) {
       const next = journeyPreferences.snapshot();
       const catalogId = authoredRoute.source.difficultyCatalogId;
@@ -4045,10 +4074,10 @@ try {
       $('difficulty-select').value = next.difficulty;
       $('difficulty-select').disabled = contentSwitchBusy || backupBusy || sessionBusy;
       $('difficulty-note').textContent =
-        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${journeyPreset(next.difficulty, catalogId).description} Resume and Load preserve this flight. ${next.error}`;
+        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${journeyPreset(next.difficulty, catalogId).description} Additional pressure: enemies ×${nextPressure.enemySpeed.toFixed(2)}, craft ×${nextPressure.playerSpeed.toFixed(2)}; target +${Math.round(nextPressure.enemyDensity * 100)}% field keepers, rounded up where safe. Resume and Load preserve this flight. ${next.error}`;
       show('difficulty-details', false);
       $('overlay-difficulty').textContent =
-        `Journey ${activeEntry.difficulty}. ${journeyPreset(activeEntry.difficulty, catalogId).description}`;
+        `Journey ${activeEntry.difficulty}. ${journeyPreset(activeEntry.difficulty, catalogId).description} ${recoverGameplayTuning(run?.level) ? `${run.enemies.length} enemies · ${run.level.rules.moveSpeed.toFixed(1)} craft cells/s${recoverGameplayTuning(run.level).adminOverride ? ' · ADMIN PLAYTEST' : ''}.` : ''}`;
       show('overlay-difficulty', true);
       return;
     }
@@ -4062,7 +4091,8 @@ try {
     $('difficulty-select').value = library.preferences.campaignDifficulty;
     $('difficulty-select').disabled =
       !cue.available || courseSession || !!courseEntry || contentSwitchBusy || backupBusy;
-    $('difficulty-note').textContent = cue.copy;
+    $('difficulty-note').textContent =
+      `${cue.copy} Main-menu pressure: ${nextPressure.difficulty}; enemy speed ×${nextPressure.enemySpeed.toFixed(2)}, craft ×${nextPressure.playerSpeed.toFixed(2)} relative to this authored preset.`;
     const standard = executionCatalog.select(activeEntry.baseCampaignKey, 'standard'),
       gentle = executionCatalog.select(activeEntry.baseCampaignKey, 'gentle');
     show('difficulty-details', cue.available && !!standard && !!gentle);
@@ -4841,6 +4871,7 @@ try {
     return suspendSession({
       run,
       recorder,
+      presentationLevel: campaign.levels.find((level) => level.id === run.levelId),
       campaignKey: campaignKey(campaign),
       themeId: theme.id,
       bodyId,
@@ -5009,7 +5040,9 @@ try {
       recorder = restored.recorder;
       runId = restored.session.runId;
       const informationOwner = flightInformation.adopt(run, runId);
-      masteryDefinition = masteryFor(campaignKey(campaign), run.levelId, masteryCatalog);
+      masteryDefinition = recoverGameplayTuning(run.level)
+        ? null
+        : masteryFor(campaignKey(campaign), run.levelId, masteryCatalog);
       masteryObserver = restored.masteryObserver ?? null;
       masteryAward = null;
       classId = run.classId;
@@ -5632,6 +5665,7 @@ try {
       return;
     }
     const mode = resolveCampaignDifficulty($('difficulty-select').value);
+    browsingJourneyPreferences.choose(mode);
     clearInput();
     preferences({ campaignDifficulty: mode });
     // Saving may merge a newer preference from another writer; use the actual
@@ -5639,6 +5673,32 @@ try {
     if (!started && !sessionBusy) prepare();
     else refreshDifficulty();
   };
+  $('menu-difficulty').onchange = () => {
+    if ($('menu-difficulty').disabled) return;
+    const difficulty = $('menu-difficulty').value;
+    browsingJourneyPreferences.choose(difficulty);
+    if (!candidateHost?.owns(activeEntry))
+      preferences({ campaignDifficulty: difficulty === 'gentle' ? 'gentle' : 'standard' });
+    cancelResultAttempt();
+    cancelWorldAttempt();
+    cancelTitleFlight();
+    clearInput();
+    if (!started && !sessionBusy && !contentSwitchBusy && !backupBusy) prepare();
+    else refreshDifficulty();
+  };
+  gameplayTuningPanel = mountGameplayTuning({
+    root: $('gameplay-tuning'),
+    controller: gameplayTuning,
+    getDifficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+  });
+  gameplayTuning.subscribe(() => {
+    cancelResultAttempt();
+    cancelWorldAttempt();
+    cancelTitleFlight();
+    clearInput();
+    if (!started && !sessionBusy && !contentSwitchBusy && !backupBusy) prepare();
+    else refreshDifficulty();
+  });
   $('save-attempt-button').onclick = () => {
     pause(true);
     try {
@@ -6295,9 +6355,13 @@ try {
       $('overlay-title').textContent = 'A little more light.';
       $('overlay-copy').textContent =
         `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? (authoredRoute.id === 'whole-spatial-v5' ? 'Journey mission complete.' : 'Authored test clear recorded in Journey progress. No Legacy collection awards.') : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : sessionPictures.status().originals ? 'Picture collected for this session. Export game data and session originals from Settings → Game data → Saves & recovery to keep it.' : 'Picture collected for this session. Export your library to keep it.')}`;
+      if (recoverGameplayTuning(run.level)?.adminOverride)
+        $('overlay-copy').textContent =
+          `${(run.coverage * 100).toFixed(1)}% captured. Admin playtest complete; no clear, medal or mastery awarded. Reset tuning in Settings for normal progression.`;
       $('result-medals').textContent = '★'.repeat(
         run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
       );
+      if (recoverGameplayTuning(run.level)?.adminOverride) $('result-medals').textContent = '';
       $('next-button').textContent = practice
         ? 'Try it yourself →'
         : journeyEnabled && journeyMission()
@@ -6539,7 +6603,11 @@ try {
             seed,
             turnPolicy,
           },
-          { signal: ticket.controller.signal, onStatus: ticket.feedback.update },
+          {
+            signal: ticket.controller.signal,
+            onStatus: ticket.feedback.update,
+            gameplayTuning: nextGameplayTuning(entry),
+          },
         );
         if (!resultAttemptCurrent(ticket)) {
           if (candidateHost.preparer.current(candidateAttempt)) candidateHost.preparer.cancel();
@@ -6548,7 +6616,9 @@ try {
         candidateHost.preparer.take(candidateAttempt);
         ticket.candidatePicture = candidateAttempt.picture;
       }
-      const nextRun = candidateAttempt?.run ?? createRun(level, options),
+      const nextRun =
+          candidateAttempt?.run ??
+          createRun(applyGameplayTuning(level, nextGameplayTuning(entry)), options),
         nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`,
         nextRecorder =
           candidateAttempt?.recorder ?? createRecorder(nextRun.level, options, buildVersion);
@@ -6557,7 +6627,7 @@ try {
           ? retryFlightPresentationPins(ticket.owner.pins(), {
               identityCatalog: pictureIdentity(),
               campaignKey: campaignKey(entry.campaign),
-              level: nextRun.level,
+              level,
               themeId: nextTheme.id,
             })
           : undefined;
@@ -6776,12 +6846,17 @@ try {
     clearInput({ resetDirection: true });
     run =
       preparedAttempt?.run ||
-      createRun(scenario?.level || campaign.levels[levelIndex], {
-        seed,
-        turnPolicy,
-        classId,
-        classRecipes: scenario?.classRecipes || classRegistry,
-      });
+      createRun(
+        scenario || practice || courseSession || restoreAdoption
+          ? scenario?.level || campaign.levels[levelIndex]
+          : applyGameplayTuning(campaign.levels[levelIndex], nextGameplayTuning()),
+        {
+          seed,
+          turnPolicy,
+          classId,
+          classRecipes: scenario?.classRecipes || classRegistry,
+        },
+      );
     runId = preparedAttempt?.runId || crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
     const informationOwner = flightInformation.adopt(run, runId);
     courseObserver = null;
@@ -6816,13 +6891,14 @@ try {
               );
             })
         : campaign;
-    masteryDefinition = courseSession
-      ? null
-      : explicitPractice
-        ? scenario.masteryDefinition
-        : observedCampaign
-          ? masteryFor(campaignKey(observedCampaign), run.levelId, masteryCatalog)
-          : null;
+    masteryDefinition =
+      courseSession || recoverGameplayTuning(run.level)
+        ? null
+        : explicitPractice
+          ? scenario.masteryDefinition
+          : observedCampaign
+            ? masteryFor(campaignKey(observedCampaign), run.levelId, masteryCatalog)
+            : null;
     masteryObserver = null;
     masteryAward = null;
     $('mastery-announcement').textContent = '';
@@ -6888,6 +6964,8 @@ try {
       : practice
         ? 'PLAYGROUND / PRACTICE'
         : `${campaign.title || campaign.name || campaign.id}${difficultyLabel(activeEntry) ? ` · ${difficultyLabel(activeEntry)}` : ''} · ${String(levelIndex + 1).padStart(2, '0')} / ${campaign.levels.length}`;
+    if (recoverGameplayTuning(run.level)?.adminOverride)
+      $('mode-caption').textContent += ' · ADMIN PLAYTEST · no awards';
     $('campaign-name').textContent = courseSession
       ? 'FIRST FLIGHT / LEARN BY PLAYING'
       : `CAMPAIGN / ${campaign.title || campaign.name || campaign.id}`;
@@ -7624,7 +7702,7 @@ try {
         paused = true;
         clearInput();
         refreshCourse();
-        if (run.status === 'won' && !practice) {
+        if (run.status === 'won' && !practice && !recoverGameplayTuning(run.level)?.adminOverride) {
           const mission = journeyEnabled && !scenario && journeyMission();
           if (mission)
             journeyProfile.record({
@@ -7642,9 +7720,25 @@ try {
           if (!candidateHost?.owns(activeEntry)) {
             const previousBodies = availableBodies();
             try {
+              const result = getSummary(run);
+              const tuning = recoverGameplayTuning(run.level);
+              if (tuning) {
+                const authored = campaign.levels.find((level) => level.id === run.levelId);
+                if (
+                  tuning.adminOverride ||
+                  canonicalJSON(applyGameplayTuning(authored, tuning)) !== canonicalJSON(run.level)
+                )
+                  throw new Error(
+                    'This playtest does not qualify for authored collection progress.',
+                  );
+                // Normal pressure clears retain the original picture/collection owner.
+                // Exact reconstruction above admits only this versioned adapter;
+                // arbitrary replay revisions never reach the authored award path.
+                result.revision = authored.revision;
+              }
               library = recordLibraryCompletion(library, {
                 campaign,
-                result: getSummary(run),
+                result,
                 runId,
                 themeId: theme.id,
                 bodyId,
@@ -7699,6 +7793,18 @@ try {
           }
         }
         if (run.status === 'won') {
+          if (recoverGameplayTuning(run.level)?.adminOverride)
+            try {
+              const old = JSON.parse(localStorage.getItem(sessionKey));
+              if (old?.runId === runId) {
+                assertWriter();
+                localStorage.removeItem(sessionKey);
+              }
+            } catch {
+              warning(
+                'Playtest ended, but its saved slot could not be cleared. Review Library & saves before continuing.',
+              );
+            }
           painter.startCelebration?.({
             levelId: run.levelId,
             seed,
