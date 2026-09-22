@@ -1,5 +1,6 @@
 /** Publishing infrastructure only: one verified current graph plus authenticated historical bridges. */
 import * as fs from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -24,8 +25,20 @@ import {
   retainRecentMetadata,
   validReleaseRetention,
 } from './metadata.mjs';
+import { validateWaivedSourceQualification } from './source-qualification.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+function readGitSourceFile(revision, relative) {
+  safePath(relative);
+  if (!COMMIT.test(revision)) throw new Error('Invalid source revision for policy evidence.');
+  const result = spawnSync('git', ['show', `${revision}:${relative}`], {
+    cwd: root,
+    encoding: null,
+    maxBuffer: 64 * 1024,
+  });
+  if (result.status !== 0) throw new Error('Cannot read policy evidence from qualified source.');
+  return Buffer.from(result.stdout);
+}
 export async function readOrdinary(directory, relative, budget = 8_000_000) {
   safePath(relative);
   let file = directory;
@@ -70,6 +83,7 @@ export async function validateAdmissions({
   configuration,
   metadata,
   requireBrowser = true,
+  readSourceFile = readGitSourceFile,
 }) {
   if (
     !exact(configuration, [
@@ -117,28 +131,36 @@ export async function validateAdmissions({
   if (digest(qualificationBytes) !== qualificationPin.sha256)
     throw new Error('Current source qualification byte pin mismatch.');
   const qualification = parseJSON(qualificationBytes);
-  if (
-    qualification.format !== 'revealline-source-qualification.v1' ||
-    qualification.version !== configuration.currentVersion ||
-    qualification.sourceRevision !==
-      metadata.get(configuration.currentVersion).record.sourceRevision ||
-    !COMMIT.test(qualification.sourceTree) ||
-    qualification.passed !== true ||
-    qualification.allTrackedSourceContentsAndModesMatch !== true ||
-    !Array.isArray(qualification.gates)
-  )
-    throw new Error('Current source qualification identity or result mismatch.');
-  for (const gate of ['validate', 'lint', 'test', 'format', 'native-format', 'motion-syntax']) {
-    const rows = qualification.gates.filter((row) => row.gate === gate);
+  const sourceRevision = metadata.get(configuration.currentVersion).record.sourceRevision;
+  if (qualification.format === 'revealline-source-qualification.v1') {
     if (
-      rows.length !== 1 ||
-      !(
-        rows[0].exitCode === 0 ||
-        (rows[0].step?.status === 'completed' && rows[0].step?.conclusion === 'success')
-      )
+      qualification.version !== configuration.currentVersion ||
+      qualification.sourceRevision !== sourceRevision ||
+      !COMMIT.test(qualification.sourceTree) ||
+      qualification.passed !== true ||
+      qualification.allTrackedSourceContentsAndModesMatch !== true ||
+      !Array.isArray(qualification.gates)
     )
-      throw new Error(`Current source gate is not passed: ${gate}`);
-  }
+      throw new Error('Current source qualification identity or result mismatch.');
+    for (const gate of ['validate', 'lint', 'test', 'format', 'native-format', 'motion-syntax']) {
+      const rows = qualification.gates.filter((row) => row.gate === gate);
+      if (
+        rows.length !== 1 ||
+        !(
+          rows[0].exitCode === 0 ||
+          (rows[0].step?.status === 'completed' && rows[0].step?.conclusion === 'success')
+        )
+      )
+        throw new Error(`Current source gate is not passed: ${gate}`);
+    }
+  } else if (qualification.format === 'revealline-source-qualification.v2')
+    await validateWaivedSourceQualification({
+      qualification,
+      version: configuration.currentVersion,
+      sourceRevision,
+      readPolicyEvidence: readSourceFile,
+    });
+  else throw new Error('Current source qualification identity or result mismatch.');
   const allocationsBytes = await readOrdinary(directory, 'allocations.json');
   if (digest(allocationsBytes) !== configuration.allocationSha256)
     throw new Error('Allocation byte pin mismatch.');

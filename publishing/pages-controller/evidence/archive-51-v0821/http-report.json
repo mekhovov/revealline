@@ -1,0 +1,20 @@
+{
+  "format": "revealline-archive-http-admission.v1",
+  "status": "PASS",
+  "base": "https://mekhovov.github.io/revealline-archive-51/",
+  "files": 1059,
+  "expectedFiles": 1059,
+  "verifiedBytes": 590404002,
+  "expectedBytes": 590404002,
+  "failedFiles": 0,
+  "skipped": [],
+  "attempts": 1060,
+  "retryCount": 1,
+  "failedAttempts": 1,
+  "expectedInventorySha256": "7687ea84796d955b63b6bc11b41465a7777be7e7f24ccd07b2becd2eeee246c0",
+  "rawReport": {
+    "path": "http-report-original.json",
+    "sha256": "d44e8642dbdd8adfa55117efd1825a290e7115b105537d481a1e24e2c4204d34"
+  },
+  "scope": "All1059 canonical public bodies/hash/MIME checked, including one retained503 attempt then successful retry. Native owner admission remains separately pending."
+}

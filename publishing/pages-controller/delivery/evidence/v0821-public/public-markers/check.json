@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-09-22T15:15:42.993430+00:00",
+  "rows": [
+    {
+      "kind": "root",
+      "url": "https://mekhovov.github.io/revealline/release.json",
+      "status": 200,
+      "mime": "application/json; charset=utf-8",
+      "finalUrl": "https://mekhovov.github.io/revealline/release.json",
+      "bytes": 526,
+      "sha256": "48df556f03553c8c7a4f6b98384a9f0f51c464fddbfb88eeeace4b79ac9d56c7",
+      "record": {
+        "formatVersion": 1,
+        "version": "v0.82.1",
+        "sourceRevision": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+        "sourceArchiveSha256": "b9f0f46af0b189796180ab4dcca21e1fc7ac771e0f9f8048d264e3c04949c449",
+        "distributionSha256": "eb98abe00155176d77facbcedcd1510219031057afc56a5669f98c7330b2b3af",
+        "manifestSha256": "f28ad08403db215de393ac562ca1d3fe7dfc6791f49194513af60bf5db1b7e3d",
+        "play": "releases/v0.82.1/site/game/",
+        "download": "https://github.com/mekhovov/revealline/releases/download/v0.82.1/distribution.zip"
+      }
+    },
+    {
+      "kind": "canonical",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.82.1/release.json",
+      "status": 200,
+      "mime": "application/json; charset=utf-8",
+      "finalUrl": "https://mekhovov.github.io/revealline/releases/v0.82.1/release.json",
+      "bytes": 465,
+      "sha256": "bba2db9c5ed2c0d136224472dde33117cae6c8518c6d162f279f1cb5ed27bb5e",
+      "record": {
+        "formatVersion": 1,
+        "version": "v0.82.1",
+        "sourceRevision": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+        "sourceArchiveSha256": "b9f0f46af0b189796180ab4dcca21e1fc7ac771e0f9f8048d264e3c04949c449",
+        "distributionSha256": "eb98abe00155176d77facbcedcd1510219031057afc56a5669f98c7330b2b3af",
+        "manifestSha256": "f28ad08403db215de393ac562ca1d3fe7dfc6791f49194513af60bf5db1b7e3d",
+        "play": "v0.82.1/site/game/",
+        "download": "v0.82.1/site/distribution.zip"
+      }
+    }
+  ]
+}

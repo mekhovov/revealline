@@ -1,0 +1,34 @@
+- button "Game menu" [ref=e1]
+  - StaticText " ◩ REVEAL / LINE"
+- button "Enter fullscreen" [ref=e2]
+  - StaticText "⛶"
+- button "Pause or resume" [ref=e3]
+  - StaticText "Ⅱ"
+- main
+  - region "Game" [ref=e4]
+    - generic
+      - StaticText "REVEALED"
+      - progressbar "Picture revealed": 0
+        - StaticText "0.0%"
+      - generic
+      - emphasis
+        - StaticText "TARGET 58%"
+    - StaticText "LIVES"
+    - strong "3 lives"
+      - StaticText "◆ ◆ ◆"
+    - StaticText "TIME"
+    - strong
+      - StaticText "0:22"
+    - StaticText "SCORE"
+    - strong
+      - StaticText "00000"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving." [ref=e5] focusable [tabindex]
+    - generic
+      - strong
+        - StaticText "Safe ground"
+      - StaticText "Relay: 0 / 1"
+    - status
+      - StaticText "Choose your route. Open Missions → Mission brief for guidance."
+    - status
+      - StaticText "Another game tab owns saving. This tab is session-only; close the other game tab, then reload here to save. Export still works."
+    - status

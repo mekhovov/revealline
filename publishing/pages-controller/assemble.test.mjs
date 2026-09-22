@@ -199,6 +199,78 @@ async function fixture(t, versions = ['v0.1.0', 'v0.44.0'], { archiveCurrent = f
   return { directory, currentSite, outputDirectory, configuration, records, write };
 }
 
+const waivedPolicy = () => ({
+  format: 'revealline-release-test-policy.v1',
+  mode: 'waived',
+  authorization: 'explicit-user-request-20260922',
+  scope: 'automated-test-suites',
+  reason: 'Temporary automated test waiver requested by the user.',
+  restoration: 'Restore required automated tests in a reviewed change.',
+});
+
+function waivedQualification(version, policyBytes) {
+  const sourceRevision = 'a'.repeat(40),
+    sourceTree = 'f'.repeat(40),
+    step = (name, number) => ({ name, number, status: 'completed', conclusion: 'success' }),
+    policyEvidence = {
+      path: 'publishing/test-policy.json',
+      bytes: policyBytes.length,
+      sha256: digest(policyBytes),
+    },
+    runEvidence = { path: 'run.json', bytes: 10, sha256: '1'.repeat(64) },
+    jobsEvidence = { path: 'jobs.json', bytes: 10, sha256: '2'.repeat(64) };
+  return {
+    format: 'revealline-source-qualification.v2',
+    status: 'qualified-with-test-waiver',
+    releaseEligible: true,
+    version,
+    sourceRevision,
+    sourceTree,
+    actualCheckoutCommit: sourceRevision,
+    actualCheckoutTree: sourceTree,
+    allTrackedSourceContentsAndModesMatch: true,
+    gates: ['validate', 'lint', 'format', 'native-format', 'motion-syntax'].map((gate, index) => ({
+      gate,
+      command: [
+        'npm run validate',
+        'npm run lint',
+        'npm run format:check',
+        'npm run format:native:check',
+        'node --check authoring/motion-lab/app.js',
+      ][index],
+      jobId: 100 + index,
+      step: step(`Gate ${gate}`, index + 1),
+    })),
+    tests: { status: 'waived', counts: null },
+    testPolicy: {
+      mode: 'waived',
+      authorization: 'explicit-user-request-20260922',
+      reason: waivedPolicy().reason,
+      policyEvidence,
+    },
+    waiverEvidence: { runId: 42, runEvidence, jobsEvidence },
+    evidencePins: [
+      policyEvidence,
+      runEvidence,
+      jobsEvidence,
+      { path: 'empty.log', bytes: 0, sha256: '3'.repeat(64) },
+      { path: 'large-diff.bin', bytes: 5 * 1024 * 1024, sha256: '4'.repeat(64) },
+    ],
+    ordinaryBuildCorroboration: {
+      command: 'npm run build',
+      step: step('Build', 20),
+    },
+    frozenArtifactCorroboration: {
+      artifactId: 99,
+      runId: 42,
+      wholeOriginalArtifactVerifiedBeforeQualification: true,
+      sourceTarGitBlobTypeModeAndPaxCommitVerified: true,
+      allInnerZipManifestBytesVerified: true,
+      frozenOfflineInventoryAndBindingsVerified: true,
+    },
+  };
+}
+
 test('complete artifact retains original graph and creates only authenticated historical bridges', async (t) => {
   const f = await fixture(t),
     receipt = await assemble(f);
@@ -495,6 +567,109 @@ test('current source admission refuses a failed gate or borrowed source even wit
     await assert.rejects(
       validateAdmissions({ directory: f.directory, metadata, configuration }),
       /Current source/,
+    );
+  }
+});
+
+test('v2 admits an explicit waiver with empty and 5 MiB generic evidence without claiming tests passed', async (t) => {
+  const f = await fixture(t),
+    { metadata } = await loadCatalog(f.directory),
+    policyBytes = jsonBytes(waivedPolicy()),
+    qualification = waivedQualification(f.configuration.currentVersion, policyBytes),
+    bytes = jsonBytes(qualification),
+    configuration = structuredClone(f.configuration);
+  await fs.writeFile(path.join(f.directory, 'qualification.json'), bytes);
+  configuration.currentSourceQualification.sha256 = digest(bytes);
+  const result = await validateAdmissions({
+    directory: f.directory,
+    metadata,
+    configuration,
+    readSourceFile: async (revision, name) => {
+      assert.equal(revision, qualification.sourceRevision);
+      assert.equal(name, 'publishing/test-policy.json');
+      return policyBytes;
+    },
+  });
+  assert.equal(result.qualification.status, 'qualified-with-test-waiver');
+  assert.deepEqual(result.qualification.tests, { status: 'waived', counts: null });
+  assert.equal(Object.hasOwn(result.qualification, 'passed'), false);
+  assert.deepEqual(
+    result.qualification.evidencePins.slice(-2).map((pin) => pin.bytes),
+    [0, 5 * 1024 * 1024],
+  );
+});
+
+test('v2 refuses forged pass claims, failed mandatory gates, and missing or invalid policy', async (t) => {
+  const f = await fixture(t),
+    { metadata } = await loadCatalog(f.directory),
+    policyBytes = jsonBytes(waivedPolicy()),
+    original = waivedQualification(f.configuration.currentVersion, policyBytes);
+  for (const [name, mutate, policy = policyBytes] of [
+    ['forged pass', (q) => (q.passed = true)],
+    ['fake counts', (q) => (q.tests.counts = { passed: 100, failed: 0 })],
+    ['invented shards', (q) => (q.testShards = [])],
+    ['failed gate', (q) => (q.gates[1].step.conclusion = 'failure')],
+    [
+      'forged gate exit code',
+      (q) => {
+        q.gates[1].exitCode = 0;
+        q.gates[1].step.conclusion = 'failure';
+      },
+    ],
+    ['missing gate', (q) => q.gates.pop()],
+    ['test gate', (q) => (q.gates[2].gate = 'test')],
+    ['substituted gate command', (q) => (q.gates[2].command = 'true')],
+    ['missing waiver run evidence', (q) => delete q.waiverEvidence],
+    [
+      'oversized run evidence',
+      (q) => {
+        q.waiverEvidence.runEvidence.bytes = 4 * 1024 * 1024 + 1;
+        q.evidencePins.find((pin) => pin.path === 'run.json').bytes = 4 * 1024 * 1024 + 1;
+      },
+    ],
+    [
+      'missing evidence pin',
+      (q) => (q.evidencePins = q.evidencePins.filter((pin) => pin.path !== 'jobs.json')),
+    ],
+    [
+      'oversized generic evidence',
+      (q) =>
+        q.evidencePins.push({
+          path: 'too-large.bin',
+          bytes: 64 * 1024 * 1024 + 1,
+          sha256: '5'.repeat(64),
+        }),
+    ],
+    ['failed build', (q) => (q.ordinaryBuildCorroboration.step.conclusion = 'failure')],
+    [
+      'incomplete frozen proof',
+      (q) => (q.frozenArtifactCorroboration.allInnerZipManifestBytesVerified = false),
+    ],
+    ['mismatched frozen run', (q) => (q.frozenArtifactCorroboration.runId = 43)],
+    ['missing policy pin', (q) => delete q.testPolicy.policyEvidence],
+    ['wrong policy hash', (q) => (q.testPolicy.policyEvidence.sha256 = '0'.repeat(64))],
+    ['required source policy', () => {}, jsonBytes({ ...waivedPolicy(), mode: 'required' })],
+    [
+      'oversized restoration',
+      () => {},
+      jsonBytes({ ...waivedPolicy(), restoration: 'r'.repeat(2001) }),
+    ],
+  ]) {
+    const qualification = structuredClone(original);
+    mutate(qualification);
+    const bytes = jsonBytes(qualification),
+      configuration = structuredClone(f.configuration);
+    await fs.writeFile(path.join(f.directory, 'qualification.json'), bytes);
+    configuration.currentSourceQualification.sha256 = digest(bytes);
+    await assert.rejects(
+      validateAdmissions({
+        directory: f.directory,
+        metadata,
+        configuration,
+        readSourceFile: async () => policy,
+      }),
+      undefined,
+      name,
     );
   }
 });

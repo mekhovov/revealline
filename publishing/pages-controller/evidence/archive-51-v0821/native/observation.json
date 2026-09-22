@@ -1,0 +1,139 @@
+{
+  "format": "revealline-archive-native-observation.v1",
+  "status": "SCOPED_JOURNEY_OBSERVED_WITH_RETAINED_INITIAL_FAILURE",
+  "archiveId": "archive-51",
+  "repository": "mekhovov/revealline-archive-51",
+  "version": "v0.82.1",
+  "gameSourceRevision": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+  "gameSourceTree": "402f5f12d83cb86dbceb9d9dceec12731ea48980",
+  "infrastructureCommit": "8bf0ed6c3947ca8c47ad2d9246db3e57acd986cf",
+  "infrastructureTree": "c057f683ae6f7afcf3696120d9d5d65fb9fb38d7",
+  "workflowRunId": 35747012670,
+  "deploymentId": 6594278854,
+  "observedAt": "2026-09-22T15:40:52.195470+00:00",
+  "browser": {
+    "tool": "agent-browser 0.27.0",
+    "session": "archive51-v0821",
+    "headed": true,
+    "freshIsolatedProfile": "/tmp/revealline-archive51-qa-20260922",
+    "userProfileUsed": false,
+    "engine": "Chrome/153.0.0.0",
+    "observedViewport": {
+      "width": 1200,
+      "height": 1203,
+      "devicePixelRatio": 2
+    }
+  },
+  "observer": "audio_architecture using actual CLI browser navigation, snapshots, keyboard input and screenshot; not an independent physical-device witness.",
+  "sequence": [
+    {
+      "step": 1,
+      "action": "Open canonical archived game URL in the fresh isolated headed profile.",
+      "observed": "Flight on hold: dynamic app import failed. Actual network log identifies descendant game/sessions.mjs503; app.mjs itself200.",
+      "evidence": [
+        "native/open.txt",
+        "native/title.txt",
+        "native/network-first.txt"
+      ]
+    },
+    {
+      "step": 2,
+      "action": "Click the visible Reload game link, then wait for network idle.",
+      "observed": "Native title menu ready, VERSION V0.82.1, Start \u00b7 First Signal. Final browser network log records sessions.mjs200 on retry.",
+      "evidence": [
+        "native/reload-action.txt",
+        "native/title-ready.txt",
+        "native/network-final.txt"
+      ]
+    },
+    {
+      "step": 3,
+      "action": "Click Start, wait for network idle, press ArrowDown.",
+      "observed": "Initial running route followed by observed PAUSED at0:12. The script waited for an unobserved guessed label First Signal complete; only that owned wait CLI process was stopped after90+seconds. This wait mismatch is not classified as a game failure.",
+      "evidence": [
+        "native/first-signal-start.txt",
+        "native/arrow-down-action.txt",
+        "native/wait-interruption.txt",
+        "native/route-current.txt"
+      ]
+    },
+    {
+      "step": 4,
+      "action": "Click visible Resume \u2192 and press ArrowDown.",
+      "observed": "Live line then caught line,2 lives and0% revealed. Preserved ordinary gameplay attempt.",
+      "evidence": [
+        "native/resumed-route.txt",
+        "native/first-signal-result.txt"
+      ]
+    },
+    {
+      "step": 5,
+      "action": "Press Escape; click Restart mission. Initial ArrowDown was while restart confirmation was still open; then click the actual confirmation Restart mission, wait for readiness and press ArrowDown.",
+      "observed": "Mission complete, target reached,52.2% of45% target,3 lives,0:04 and8,160 points. Actual screenshot subsequently shows Mission01/FirstSignal result card and full picture added to collection.",
+      "evidence": [
+        "native/paused-after-caught.txt",
+        "native/restart-result.txt",
+        "native/restart-confirm-result.txt",
+        "native/first-signal-win.png"
+      ]
+    },
+    {
+      "step": 6,
+      "action": "Navigate to the canonical archive index; click Open the current release explorer.",
+      "observed": "Main explorer heading Playable versions; Current:v0.82.1 and source64ec; original historical rows present.",
+      "evidence": [
+        "native/archive-index.txt",
+        "native/explorer-click.txt",
+        "native/explorer-url.txt",
+        "native/explorer.txt"
+      ]
+    },
+    {
+      "step": 7,
+      "action": "Use browser Back, collect final observations and close only the owned session.",
+      "observed": "Returned to archive51 index URL and heading; Browser closed; no matching owned Chrome user-data-dir process remains.",
+      "evidence": [
+        "native/back-url.txt",
+        "native/back-index.txt",
+        "native/close.txt",
+        "native/cleanup-process-check.txt"
+      ]
+    }
+  ],
+  "nativeScopePassed": true,
+  "rootAdmissionApproved": false,
+  "fullPublicByteAuditIsSeparate": true,
+  "consoleAndPageErrorBuffers": {
+    "initial": "empty",
+    "final": "empty",
+    "limitation": "Actual network503 and favicon404 are retained separately; empty CLI buffers do not erase them."
+  },
+  "noHarnessOrStorageInjection": true,
+  "soundStayedOff": true,
+  "cleanup": {
+    "ownSessionClosed": true,
+    "ownProfileProcessCountAfterClose": 0,
+    "profileRetainedLocally": true,
+    "userProfileOrOtherSessionsTouched": false
+  },
+  "limits": [
+    "Historical online keyboard play and scoped navigation only.",
+    "No offline install/restart, physical phone/SteamDeck, gamepad, multitouch, audio/listening-quality or full-game acceptance.",
+    "Initial HTTP503 plus ordinary Reload recovery, paused/caught first attempt, wrong expected-label wait and restart-confirmation detour remain retained.",
+    "Viewport was observed, not set or claimed representative of every layout.",
+    "Raw support originals are preserved individually and in an exact verified ZIP; no game state or cookies were exported."
+  ],
+  "supportOriginals": [
+    {
+      "path": "native-support-manifest.json",
+      "bytes": 7842,
+      "sha256": "b969ed91cf7c5fa0a9efc407c4e9a0982f724124852bee289fd5641dc0b0b8cf"
+    },
+    {
+      "path": "native-support-originals.zip",
+      "bytes": 244623,
+      "sha256": "c63268921800ef12d437673a1fd035174fe054ceb4c5a6d8a8ec4af8a57c7360"
+    }
+  ],
+  "supportFileCount": 51
+}
