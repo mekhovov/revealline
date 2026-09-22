@@ -31,6 +31,37 @@ async function setup(t, difficulty = 'standard', options = {}) {
   return p;
 }
 
+test('Versus save warning uses existing pause and recovery without changing either board', async (t) => {
+  const p = await setup(t, 'standard', { assetDatabase: undefined });
+  assert.equal(p.$('race-journey-save').parentNode, p.$('race-main'));
+  assert.equal(p.$('race-journey-save').hidden, false);
+  assert.equal(p.$('race-journey-save-options').hidden, false);
+  assert.equal(p.$('race-pause').dataset.journeyUnsaved, 'true');
+  p.$('race-start').click();
+  await waitFor(() => {
+    p.frame();
+    return !p.$('race-pause').disabled;
+  });
+  assert.equal(p.$('race-main').hidden, true);
+  p.$('race-pause').click();
+  p.frame(0);
+  const previous = [...p.renders],
+    checkpoint = p.checkpoint();
+  p.$('race-journey-save-options').click();
+  assert.equal(p.doc.activeElement, p.$('race-journey-save-retry'));
+  assert.equal(p.state(), 'paused');
+  p.$('race-journey-save-retry').click();
+  await waitFor(() => !p.$('race-journey-save').hidden);
+  assert.deepEqual(p.renders, previous);
+  p.frames(30);
+  assert.deepEqual(p.checkpoint(), checkpoint);
+  assert.equal(p.state(), 'paused');
+  p.$('race-start').click();
+  p.frame();
+  assert.equal(p.renders[0].status, 'running');
+  assert.equal(p.renders[1].status, 'running');
+});
+
 for (const difficulty of ['gentle', 'standard', 'expert'])
   test(`real paired-board host loads the authored ${difficulty} opening with one original and equal rules`, async (t) => {
     const p = await setup(t, difficulty);

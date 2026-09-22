@@ -80,6 +80,8 @@ test('explicit Team Journey earns twelve consecutive clears across all five camp
   assert.match(f.$('coop-boot').textContent, /human validation and original artwork pending/);
   assert.match(f.$('coop-journey-preferences-message').textContent, /only to this session/);
   assert.equal(f.$('coop-journey-save').hidden, false);
+  assert.equal(f.$('coop-pause').dataset.journeyUnsaved, 'true');
+  assert.equal(f.$('coop-journey-save-options').hidden, false);
   assert.match(
     f.$('coop-journey-save-message').textContent,
     /Team Journey progress is session-only/,
@@ -380,10 +382,16 @@ test('denied Team saving stays playable, exports pending progress and Retry save
   assert(backup.profile.clears.team[navigation.catalog.missions[0].id]);
   assert.match(f.$('coop-journey-save-message').textContent, /Download requested/);
   const copy = f.$('coop-overlay-copy').textContent;
+  f.$('coop-journey-save-options').focus();
+  f.tap('Enter');
+  assert.equal(f.doc.activeElement.id, 'coop-journey-save-retry');
+  assert.equal(f.$('coop-overlay-copy').textContent, copy);
   allowStorage = true;
   f.$('coop-journey-save-retry').focus();
   f.tap('Enter');
   await waitFor(() => f.$('coop-journey-save').hidden);
+  assert.equal(f.$('coop-pause').dataset.journeyUnsaved, 'false');
+  assert.equal(f.$('coop-journey-save-options').hidden, true);
   assert.equal(f.doc.activeElement.id, 'coop-next');
   assert.equal(f.$('coop-overlay-copy').textContent, copy);
   assert.equal(f.$('coop-level').value, 'twin-landings');
