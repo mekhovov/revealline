@@ -1,3 +1,5 @@
+import { createDefaultThemeBundle } from './catalog.mjs';
+import { isTeamRuntimeImageSlot } from './team-runtime-slots.mjs';
 import { FORMATS, validateThemeBundle, resolvePresentation } from './model.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 
@@ -104,6 +106,23 @@ export function adoptStudioBundle(source, incomingSource) {
   const incoming = validateThemeBundle(incomingSource);
   const presentation = resolvePresentation(incoming);
   const next = structuredClone(previous);
+  // Import is one atomic authoring transition. A fresh historical workspace may
+  // lack current Team roles; only this runtime's exact registered contracts may
+  // be added. Bundle metadata cannot authorize a new renderer or alter history.
+  const missing = incoming.slots.filter((slot) => !next.slots.some((row) => row.id === slot.id));
+  if (missing.length) {
+    const approved = new Map(createDefaultThemeBundle().slots.map((slot) => [slot.id, slot]));
+    for (const slot of missing) {
+      const contract = approved.get(slot.id);
+      required(
+        isTeamRuntimeImageSlot(slot.id) &&
+          contract &&
+          canonicalJSON(slot) === canonicalJSON(contract),
+        `Unsupported imported slot contract: ${slot.id}. Use a compatible Studio release.`,
+      );
+      next.slots.push(structuredClone(contract));
+    }
+  }
   const used = new Set([...next.assets, ...next.collections].map((record) => record.id));
   const prefix = `import-${next.revision + 1}`;
   let namespace = prefix;

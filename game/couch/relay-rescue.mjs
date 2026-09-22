@@ -2931,6 +2931,7 @@ export function bootCoop({
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
+    painter.observe(run);
     const terminalMessage =
       run.status === 'won'
         ? 'Team objective complete. Your shared result is ready.'

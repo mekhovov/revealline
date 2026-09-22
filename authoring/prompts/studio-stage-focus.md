@@ -1,0 +1,3 @@
+# Studio Stage focus review
+
+Prepare a valid uploaded or metadata-only replacement and activate Validate and stage replacement with Enter. After successful staging, confirm the now-disabled Stage action hands foreground focus to Save local revision; the next Enter saves once. Verify a rejected candidate remains editable and newer guide/preview focus is not stolen. Preserve original and derivative bytes, exact revision history, pending edits and pause/player-save separation. Check actual browser focus after inert/disabled transitions separately from modeled DOM behavior. Keep background pages quiet.

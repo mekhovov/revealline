@@ -1273,3 +1273,105 @@ When a reader dependency changes, reopen its recipe group and compare each selec
 ## 2026-09-22: Initial modal focus and asynchronous thumbnail geometry
 
 Native showModal may already focus the selected action. Keep guarded visibility correction outside the manual-focus branch so an already focused action is revealed without refocusing. Compare its entire rectangle with the current dialog client scrollport and viewport, and recheck visit, focus, visibility and foreground after layout reads. Preserve fully visible actions and newer destinations. Reserve thumbnail geometry before asynchronous image preparation; keep the canvas hidden until actual paint, instead of growing the card after the initial reveal or scheduling scrolling that can chase newer user intent. Test native autofocus, partial clipping, stable thumbnail ownership and focus/layout reentry. Finite DOM tests do not replace native checks after display preference changes. On return from a picture detail, preserve its exact opener and apply the same guarded visibility check only after the current picture session restores focus. Do not reveal an old opener after a newer focus or panel change. Keep search and attempt activation unchanged.
+
+## Editable Team relay anchors
+
+Team anchor states use dedicated `team.anchor.available` and `team.anchor.captured` slots. Existing snapshots without these optional authoring slots retain their historical cues. Add missing slots only through an explicit Studio draft revision; preserve all old themes/assets/collections and support Undo before save. Artwork uses a centered 24×24 frame and may not own collision geometry, capture state, letter/number labels or the captured checkmark. Keep the functional square and readable label visible beside replacement decoration at small canvas sizes. A missing/malformed advertised frame must fail before the painter adopts the new presentation. The Studio context must decode selected anchor assets through the real Team painter, state when the selected state is inactive, and reject Solo/Versus or arenas without anchors. Qualify upgrade → upload → save → reopen → export → import → undo; byte verification and simulated state tests do not replace native preview review. See [Team anchor authoring](../../../docs/team-anchor-authoring.md) and its [prompt](../../prompts/team-anchor-authoring.md). This feature does not qualify core, Support, rescue, emitter or whole-Team production coverage.
+
+
+## Team relay-core presentation contract
+
+`team.core.shielded`, `team.core.exposed` and `team.core.secured` accept centered 64×64 transparent bodies or `team.core.v1`. Select from authoritative stronghold state; never change simulation geometry, timers, attacks or capture. Keep functional rings, center cues and status labels game-owned. Validate all frames before adopting a snapshot. Historical absence retains the shared body and original presentation; malformed advertised artwork must fail visibly. Studio's **Add Team objective slots** explicitly appends missing anchor/core contracts without rewriting prior records. Keep the legacy anchor-only upgrade exports compatible. Normal victory shows the reveal picture and hides objectives: do not label hidden artwork as visible. See `docs/team-core-authoring.md` and `authoring/prompts/team-core-authoring.md`. Production artwork and public acceptance remain separate from source/authoring qualification.
+
+
+## Team Support specimen and scene availability
+
+Studio's `support` scenario uses unchanged winning-trace public inputs at First Connection tick211 and Relay Yard tick291. Both players trigger real pulses and two hunters are slowed. Do not manufacture run fields for this preview. Scene controls derive availability from `isTeamPreviewScenarioAvailable`; keep it synchronized with fixture ticks rather than a second host allowlist. Paused/Reduced effects hold the selected specimen; Play advances actual clocks; switching controls rebuilds it. Preserve historical state hashes and independent replay/expiration/reset tests. Support is not Scan, and procedural-preview coverage is not a claim of new production assets. See `docs/team-support-preview.md` and `authoring/prompts/team-support-preview.md`.
+
+
+## Editable Team Support roles and current upgrade label
+
+Current Studio action is **Add Team presentation slots**, superseding earlier anchor/objective-only labels. Preserve those historical helper exports; the full upgrade adds only missing anchor/core/Support contracts. `team.support.pulse`64×64 and `team.enemy.slowed`24×24 accept centered transparent decoration or `team.support.v1`. Keep radius/timing/cooldowns/slowdown/rescue/collision authoritative. Clip pulse artwork to the existing radius, bound opacity, paint actors/functional labels above it and keep slowdown rings/labels. Reject all malformed advertised frames before snapshot adoption; historical absence keeps original behavior. Use real Support fixtures in both arenas for active/expired/reduced comparisons. Upload validation, fixture screenshots and zero missing slots do not constitute new art approval or public-release acceptance. See `docs/team-support-authoring.md` and `authoring/prompts/team-support-assets.md`.
+
+
+## Editable Team emitter roles
+
+`team.emitter.warning` (24×24) and `team.emitter.spark` (16×16) accept centered transparent decoration or `team.emitter.v1`. Full **Add Team presentation slots** appends these without rewriting old bindings or records. Keep warning lines/target squares and spark center/outlines game-owned; take positions from authoritative emitter/impact state. Preserve all timing, targeting, movement, collision, interception and clearing semantics. Prepare every advertised frame before adopting a painter snapshot. Historical absence retains prior appearance. Relay Yard's emitter-warning tick360 and emitter-spark tick430 specimens use public commands, never fabricated fields. First Connection has no emitter: its recovery route is the compatible arena or Native size, not Solo/Versus. See `docs/team-emitter-authoring.md` and `authoring/prompts/team-emitter-assets.md`. QA fixture art and scoped tests do not complete production or public-release acceptance.
+
+
+## Editable Team rescue and recovery
+
+`team.rescue.progress` and `team.player.recovery` use centered 32×32 frames or `team.rescue.v1`. Full Team slot upgrade appends contracts and a theme revision without replacing existing bindings. Paint decorations before all actor bodies and fixed numbers/shapes. Contact rescue decorates the rescuer; its game-owned target-number label uses the existing one-second progress. Keep post-revival grace's dashed ring above art. Observe state only: do not change rescue eligibility, duration, cancellation, reserves, grace, collision or release gates. Real Pause releases rescue; Studio Paused holds its isolated specimen. Inspect both players using Relay Yard public-command rescue/recovered scenes. Both arenas support the slots; inactive scenes must say so. Prepare all frames before snapshot adoption and retain historical absence. See `docs/team-rescue-authoring.md` and `authoring/prompts/team-rescue-assets.md`. Scoped fixtures do not establish production or deployment acceptance.
+
+
+## Team runtime image preparation
+
+Studio preview decoding is not proof of runtime asset integration. Every Team image slot must have a renderer contract and appear in `TEAM_RUNTIME_IMAGE_SLOTS` from `game/presentation/team-runtime-slots.mjs`. The shared host uses this exact allowlist with its existing hash, dimensions, decode budget, cancellation and lifetime checks; never broaden it to arbitrary `team.*`. Test actual compiler output through `createPresentationHost`, inspect decoded revisions, then pass that snapshot to the Team painter. Failed replacement must retain the old snapshot and release partial new resources. Keep reveal-picture resolution separate. See `docs/team-runtime-assets.md`; require real browser decoding in addition to mocked host tests before release adoption.
+
+
+### Team pilot state artwork contract (P04 candidate)
+
+Use the 24 `team.pilot.p{1|2}.{state}.{compact|detailed}` slots and `team.pilot.v1` inheritance recipe; see `docs/team-pilot-assets.md` and `authoring/prompts/team-pilot-assets.md`. Never infer a state from the selected Studio slot. Verify actual painter `sourceSlot`, seat, six states and both sizes through the release host as well as Studio. Invalid custom images/geometry must preserve the accepted snapshot. Preserve four runtime rotors, game-owned identity/contact/rescue cues, frozen downed/crawling rotors and simulation semantics. Prior crawl samples come from public commands; current level identity may alias mutable actors, so inspect prior sampled actor arrays. Recipe coverage and geometric QA fixtures do not prove production art readiness.
+
+For asynchronous Studio exports, retain the exact prepared revision as an explicit download link until replacement or normal page exit. Do not claim download completion from a synthetic click. Preserve prior usable links on preparation failure and verify a real downloaded bundle and browser import.
+
+
+### Team enemy state slots (P04 candidate)
+
+Use `team.enemy.drifter` and hunter patrol/warning/charge/recovery slots; the charge binding maps to core `commit`. The `team.enemy.v1` recipe explicitly inherits the shared bouncer/border-patrol image without changing Team behavior. Add new slots to the exact runtime allowlist and Studio upgrade, native/context previews, prompts and bundle/geometry validation together. Use actual command-earned Hunter recovery specimens in both arenas; never manufacture phase state for a passing preview. Preserve all warning lines, contact centers, labels, Support and simulation hashes. Follow `docs/team-enemy-assets.md` and `authoring/prompts/team-enemy-assets.md`; source coverage is not finished production art or release acceptance.
+
+
+## Studio imports into a historical registry
+
+Test real exported collections in a fresh workspace as well as an upgraded one. Import may append only exact code-owned Team slot contracts supported by the running release; unknown IDs, prefix matches and altered contracts fail before staging. Preserve all old slots, assets, themes and collections. Keep slot adoption and asset validation in the existing single atomic import operation; cancellation/failure must leave the old document and bytes usable. An actual downloaded file and its validated payload hashes are required export evidence. Browser upload permissions and in-app download limitations are distinct from product correctness.
+
+
+## Team joint and reserve outcome presentation
+
+Consume the core’s transient events after every fixed step, before another step replaces them. Rendering is read-only; it must not infer extra rewards or alter simulation. Retain only bounded one-second active-time joint/recovery cues, freeze with pause, clear on new attempts/backward time and terminal states. Preserve warning placement priority and real player identities. Register exact slots in runtime loading, Studio upgrade/import, native/context previews and docs/prompts. Qualify both command-earned arena scenes, multi-step frames, expiry/reset, reduced effects, invalid-image retention and unchanged simulation. Short baseline recipe provenance may reference the full slot prompt; never rewrite historical bundle records.
+
+
+## Team complete touch-layout qualification
+
+In landscape, reserve the actual HUD, objective, footer and both complete player control groups before fitting the unchanged 2:1 board. The large pad includes its action row; seeing four direction targets is not proof that Boost and Support fit. Inspect Standard/Large text, Plain/theme fonts, Regular/Large pad sizes, visible/hidden/one-seat touch states, and paused/settings return. Measure every visible action against the actual viewport and 44 CSS-pixel minimum, and confirm board/control rectangles do not intersect. Requested viewport dimensions are not evidence until DOM measurements confirm them. Preserve portrait behavior and explicit pause semantics. In short landscape, reserve the actual visible pad width on each side of the board, including when only one seat is visible; floating controls must not cover playable cells. This supersedes the older no-gutters guidance above.
+
+
+## Studio consumed Stage focus
+
+Successful asset staging consumes its prepared candidate and disables Stage. Advance only that owned foreground completion to Save local revision; retain the ordinary opener on errors and never displace newer guide/preview focus or a background page. Use the existing operation owner and preserve bytes/history. Test real host staging and native Enter → Stage → Enter → Save. In DOM tests compare IDs or booleans for large trees, avoiding huge assertion diffs. Other disabled-action handoffs and cold Back restoration remain separate work.
+
+
+## Studio history-entry inspection position
+
+Keep Studio view memory outside player saves and workspace/theme revisions. Store only a bounded versioned slot/filter record on the current history entry, preserving other owners and refusing to overwrite future versions or unsupported foreign state. Do not add entries or change URLs. Reconcile against the accepted workspace and current option values after loading. Restore foreground focus only if the body still owns it; preserve Guide, cancellation and newer focus. Native reload and Atlas → Back checks must show retained filters/selection without saving a revision. Model actual implicit option values in host fixtures. Record cached navigation separately from cold document reload and do not claim native background-tab or physical-device evidence from fixtures.
+
+
+## Team production recipe review scope
+
+When adding or revising Team slots, keep their production recipe fingerprint separate from the Solo effects and motion reviews. The production generator uses the `team` input group for every `team.*` role. Do not copy an existing Solo review digest/evidence into that group. Keep Team roles at source stage until a review tied to the actual Team inputs, roles and state coverage is recorded. Changes to shared actor presentation, Team painter helpers, runtime slot loading or the slot contract must reopen that review. Historical optional slots remain readable; optional compatibility is not production acceptance. See `docs/team-production-review-scope.md` and `authoring/prompts/team-production-review.md`.
+
+Use the explicit `retainFieldKitProductionHistory` adapter when the release builder adopts all 42 Team roles into a historical ledger. It refuses unrelated additions, removed/altered contracts and partial Team role sets, preserves all old records, and advances one document revision. Keep the generic history writer strict. Regenerate the ledger/compiled assets before current-production reproduction tests; do not weaken their byte-equality checks to make an old ledger pass a new generator.
+
+
+## Team equipment artwork production
+
+Keep the five anchor/core sprites in `game/presentation/team-equipment-art.mjs` original and deterministic. Use the exact registered Team slot palette, centered 24×24/64×64 frames, binary alpha and no baked labels or rotors. Production binds PNGs with measured occupied bounds and source provenance; new images start produced, never inherit Solo review. Preserve the core warning outline and live label with a thin center ring instead of painting the historical solid dot over authored images. Historical and recipe states retain their existing dot. Run equipment, core painter, Team review and history tests; inspect Native size and actual Team context. See `docs/team-equipment-art.md` and `authoring/prompts/team-equipment-art.md`. Exact merged collection review, artwork admission, release gates and public play remain required.
+
+
+## Team and Journey presentation integration
+
+Preserve Journey claimed-rover rendering, timed bonuses, candidate picture/frame authority and navigation when adding Team's 42-role contract. Merge helpers instead of replacing the host with an older snapshot. Team recipe provenance includes shared image drawing, enemy-body motion, motion-lab animation, actor markers and enemy catalogues as well as direct Team helpers. Fingerprint changes reopen independent Team review; Solo effects approval is not transferable. Regenerate against the latest immutable production ledger, never adopt a provisional preview theme revision. Admit exact unchanged reveal-picture associations only after final compiled-byte review. Follow `docs/team-presentation-integration.md`.
+
+### Team migration fixtures after canonical-main reconciliation
+
+A migration rejection test must reconstruct the immutable pre-migration checkpoint rather than assume the live production ledger still lacks the new contracts. For the 42-role Team migration, authenticate canonical fpv57 with the existing reconciliation oracle's group-prefix hashes, all 127 payload hashes and complete exported bundle hash. Retain the generic writer rejection and exact first successor check, then separately prove current-ledger prefix preservation and no-op repetition after installation. Keep accepted main history and the alternate inert archive exact; an old unpublished Team fpv59 preview is not a canonical successor. Update picture binding revisions only with the actual reviewed generated identity, and treat the changed UI fingerprint as a separate review gate.
+
+
+## 2026-09-22: Shared admission contracts and review fingerprints
+
+When a reviewed host imports another feature's admission contract, fingerprint that shared contract in every consuming review group. Keep immutable slot authority in a dependency-free leaf and re-export its exact frozen constants from existing owners; avoid duplicated allowlists and unnecessary dependence on renderer implementations. Assert exact historical slot order/public identity and independent invalidation: changing the shared leaf reopens both groups, while Team-only drawing changes reopen Team only. Passing contract tests does not approve UI appearance, Team artwork or generated production.
+
+
+## 2026-09-22: Scoped UI review continuation and independent navigation findings
+
+A scoped review continuation may carry forward unchanged UI recipe payloads only with exact functional-record/token comparison and a closed dependency fingerprint. Tie runtime and native receipts to the actual pre-approval source/output, preserve discovered navigation defects, and exclude unrelated Team artwork or whole-phase acceptance. Update only the applicable reviewed group and its exact current-review assertions; append immutable production history after review rather than rewriting earlier evidence. Keep stale accepted-audio test reconciliation separate from any new audio approval.

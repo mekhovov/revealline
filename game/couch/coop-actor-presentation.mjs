@@ -1,3 +1,6 @@
+import { prepareTeamEnemies, teamEnemySlot } from './coop-enemy-slots.mjs';
+import { prepareTeamPilots, teamPilotSlot } from './coop-pilot-slots.mjs';
+import { prepareTeamCores, teamCoreState } from './coop-core-presentation.mjs';
 import {
   actorDiameter,
   createActorPresentation,
@@ -79,6 +82,9 @@ export function createCoopActorPresentation() {
   const sampler = createActorPresentation();
   let snapshot = null,
     sprites = new Map(),
+    pilotSprites = new Map(),
+    enemySprites = new Map(),
+    coreFrames = Object.freeze({}),
     entries = new Map(),
     pilots = new Map(),
     attempt = null,
@@ -93,7 +99,10 @@ export function createCoopActorPresentation() {
     previousTime = 0;
   }
   function setPresentation(next) {
+    const nextEnemies = prepareTeamEnemies(next);
+    const nextPilots = prepareTeamPilots(next);
     const prepared = new Map();
+    const nextCoreFrames = prepareTeamCores(next);
     if (typeof next?.image === 'function') {
       for (const slot of [
         'player.scout.compact',
@@ -106,14 +115,35 @@ export function createCoopActorPresentation() {
         if (sprite?.image && sprite.geometry) prepared.set(slot, sprite);
       }
     }
+    for (const [id, frame] of Object.entries(nextCoreFrames))
+      if (frame.kind === 'image') prepared.set(id, frame);
     snapshot = next;
     sprites = prepared;
+    pilotSprites = nextPilots;
+    enemySprites = nextEnemies;
+    coreFrames = nextCoreFrames;
     reset();
   }
   function update(
     run,
-    { reduced = false, motionScale = 1, canvasCSSWidth = 1152, style = 'hybrid' } = {},
+    {
+      reduced = false,
+      motionScale = 1,
+      canvasCSSWidth = 1152,
+      style = 'hybrid',
+      previousRun = null,
+    } = {},
   ) {
+    if (
+      attempt !== run &&
+      previousRun &&
+      previousRun.level === run.level &&
+      previousRun.tick === run.tick - 1 &&
+      previousRun.time < run.time
+    ) {
+      update(previousRun, { reduced, motionScale, canvasCSSWidth, style });
+      attempt = run;
+    }
     if (attempt !== run || run.tick < previousTick || run.time < previousTime) {
       reset();
       attempt = run;
@@ -168,12 +198,18 @@ export function createCoopActorPresentation() {
         vy: enemy.vy,
         radius: enemy.radius,
       });
-      descriptions.set(id, { ...COOP_ACTOR_ROLES[enemy.type], radius: enemy.radius });
+      descriptions.set(id, { ...COOP_ACTOR_ROLES[enemy.type], radius: enemy.radius, enemy });
     }
     for (const stronghold of run.strongholds || []) {
       const id = key('core', stronghold.id);
       actors.push({ id, type: 'team-stronghold', x: stronghold.core.x, y: stronghold.core.y });
-      descriptions.set(id, { ...COOP_ACTOR_ROLES.core, secured: stronghold.defeated });
+      const stateSlot = `team.core.${teamCoreState(stronghold)}`;
+      descriptions.set(id, {
+        ...COOP_ACTOR_ROLES.core,
+        slot: coreFrames[stateSlot]?.kind === 'image' ? stateSlot : COOP_ACTOR_ROLES.core.slot,
+        secured: stronghold.defeated,
+        customCore: coreFrames[stateSlot]?.kind === 'image',
+      });
       frozen.push({ id, frozen: true });
     }
     const frames = sampler.sample(actors, {
@@ -207,7 +243,18 @@ export function createCoopActorPresentation() {
         // Geometry must use the final heading, including pivot and rotor bounds.
         frame = { ...sampled, ...result.pose };
       }
-      const sprite = sprites.get(description.slot) ?? null;
+      const stateSlot = description.player
+        ? teamPilotSlot(description.player.id, frame.pilotState, treatment)
+        : description.enemy
+          ? teamEnemySlot(description.enemy)
+          : null;
+      const sourceSlot =
+        pilotSprites.has(stateSlot) || enemySprites.has(stateSlot) ? stateSlot : description.slot;
+      const sprite =
+        pilotSprites.get(sourceSlot) ??
+        enemySprites.get(sourceSlot) ??
+        sprites.get(sourceSlot) ??
+        null;
       const bodyOffset =
         description.role === COOP_ACTOR_ROLES.pilot.role && sprite
           ? coopPilotBodyOffset(
@@ -221,10 +268,13 @@ export function createCoopActorPresentation() {
       next.set(id, {
         sprite,
         secured: description.secured === true,
+        customCore: description.customCore === true,
         frame: Object.freeze({
           ...frame,
           role: description.role,
-          sourceSlot: description.slot,
+          sourceSlot,
+          stateSlot,
+          enemyState: description.enemy ? (stateSlot?.split('.').at(-1) ?? null) : null,
           bodyOffset,
           // The shared sampler bounds cosmetic data; Team owns the real footprint.
           radius: core ? 0 : description.radius * CELL,
@@ -253,7 +303,7 @@ export function createCoopActorPresentation() {
       ctx.scale(1 / CELL, 1 / CELL);
       ctx.imageSmoothingEnabled = false;
       if (kind === 'core') {
-        ctx.globalAlpha = entry.secured ? 0.45 : 1;
+        ctx.globalAlpha = entry.secured && !entry.customCore ? 0.45 : 1;
         drawPresentationImage(
           ctx,
           sprite.image,
