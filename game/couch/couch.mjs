@@ -1764,12 +1764,24 @@ try {
         missionIndex: index,
         baseURL: new URL('../../', location.href),
       });
-      libraryInventory ??= await createMissionLibraryInventory({
-        reader: createExternalChapterInventoryReader({
-          profileKey: `revealline.library.${contentChannel}.v1`,
-          packsKey: `revealline.packs.${contentChannel}.v1`,
-        }),
-      });
+      if (!libraryInventory) {
+        let reader = null;
+        // Capability failures belong to the inventory's unavailable state, not
+        // the whole mission library. Keep the strict reader and retry its real
+        // construction on refresh; never classify unknown storage as empty.
+        const getReader = () =>
+          (reader ??= createExternalChapterInventoryReader({
+            profileKey: `revealline.library.${contentChannel}.v1`,
+            packsKey: `revealline.packs.${contentChannel}.v1`,
+          }));
+        libraryInventory = await createMissionLibraryInventory({
+          reader: {
+            snapshot: (options) => getReader().snapshot(options),
+            confirm: (snapshot, options) => getReader().confirm(snapshot, options),
+            close: () => reader?.close(),
+          },
+        });
+      }
       if (disposed || artworkLifetime.signal.aborted) {
         libraryInventory.close();
         throw new DOMException('Mission library closed.', 'AbortError');
