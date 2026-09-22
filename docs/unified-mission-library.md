@@ -324,3 +324,14 @@ verification. It must receive a new pinned native check before acceptance.
 - All16 retained Legacy cases pass across bounded runs; the new actual authored
   supersession case passes. A single final whole-cohort run remains part of full
   qualification; earlier interrupted runs are not counted as clean full runs.
+
+### Short-landscape follow-up
+
+- Native `5e73511a4` recheck verified the portrait improvement:470px mission area,
+  three complete compact rows, usable Filters and keyboard selection. Landscape
+  still overflowed because shared Field Kit styles added panel margins/padding
+  to both native details controls.
+- Added compact-specific spacing overrides while preserving44px targets. In short
+  landscape, expanded Solo setup fields scroll above the stable footer rather
+  than pushing Back below the viewport.22 chooser/compact and3 Solo setup tests
+  pass; a new pinned native recheck is still required.

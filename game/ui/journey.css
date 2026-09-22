@@ -240,6 +240,7 @@
     gap: 0.35rem;
   }
   #journey-chooser.mission-library-chooser h2 {
+    margin: 0;
     font-size: 1.25rem;
     line-height: 1.2;
   }
@@ -252,6 +253,24 @@
     gap: 0.5rem;
     align-items: end;
   }
+  /* Field-kit dialog details have panel spacing; these are compact controls. */
+  #journey-chooser.mission-library-chooser .journey-filter-details,
+  #journey-chooser.mission-library-chooser .mission-library-setup {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-block-size: 0;
+  }
+  #journey-chooser.mission-library-chooser .journey-search-field {
+    margin: 0;
+    gap: 0;
+  }
+  #journey-chooser.mission-library-chooser #journey-search {
+    box-sizing: border-box;
+    min-height: 44px;
+    min-block-size: 44px;
+    margin: 0;
+  }
   .mission-library-chooser .journey-search-field > .journey-filter-label {
     position: absolute;
     width: 1px;
@@ -263,10 +282,12 @@
   .mission-library-chooser .journey-filter-details {
     position: relative;
   }
-  .mission-library-chooser .journey-filter-details > summary {
+  #journey-chooser.mission-library-chooser .journey-filter-details > summary {
     display: flex;
     align-items: center;
+    box-sizing: border-box;
     min-height: 44px;
+    min-block-size: 44px;
     padding: 0.35rem 0.65rem;
     border: 1px solid #799786;
     border-radius: 0.35rem;
@@ -339,8 +360,17 @@
   .mission-library-chooser:not(.mission-library-detailed) .journey-card-map {
     display: none;
   }
-  .mission-library-chooser .journey-footer {
+  #journey-chooser.mission-library-chooser .journey-footer {
     gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    align-items: start;
+  }
+  #journey-chooser.mission-library-chooser .journey-footer > button {
+    box-sizing: border-box;
+    min-height: 44px;
+    min-block-size: 44px;
+    margin: 0;
   }
   #journey-chooser.mission-library-chooser #journey-back {
     margin-top: 0;
@@ -348,14 +378,42 @@
   .mission-library-chooser .mission-library-setup {
     flex: 1 1 13rem;
   }
-  .mission-library-chooser .mission-library-setup > summary {
+  #journey-chooser.mission-library-chooser .mission-library-setup > summary {
     display: flex;
     align-items: center;
+    box-sizing: border-box;
     min-height: 44px;
+    min-block-size: 44px;
+    padding: 0.35rem 0.5rem;
   }
   .mission-library-chooser .mission-library-setup[open] {
     flex-basis: 100%;
     max-height: 38dvh;
+  }
+}
+@media (max-height: 480px) {
+  #journey-chooser.mission-library-chooser .journey-footer {
+    position: relative;
+  }
+  #journey-chooser.mission-library-chooser .mission-library-setup[open] {
+    flex-basis: 13rem;
+    max-height: none;
+    overflow: visible;
+  }
+  /* Keep Back and the setup summary in place while the existing fields scroll. */
+  #journey-chooser.mission-library-chooser .mission-library-setup > .mission-picker-setup-fields {
+    position: absolute;
+    z-index: 3;
+    bottom: calc(100% + 0.35rem);
+    left: 0;
+    right: 0;
+    max-height: min(24rem, calc(100dvh - 8rem));
+    overflow: auto;
+    padding: 0.75rem;
+    border: 1px solid #94c6b0;
+    border-radius: 0.35rem;
+    background: var(--panel, #15251f);
+    box-shadow: 0 -0.75rem 1.5rem #0008;
   }
 }
 #journey-backup {
