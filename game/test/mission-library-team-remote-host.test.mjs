@@ -1,0 +1,225 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { webcrypto } from 'node:crypto';
+import { page } from './helpers/coop-host.mjs';
+import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
+
+const files = new Map(
+  await Promise.all(
+    [
+      'content/mission-library-index.json',
+      'content-design/themes.json',
+      'content/campaign.json',
+      'content/classes.json',
+    ].map(async (path) => [path, await readFile(new URL('../' + path, import.meta.url))]),
+  ),
+);
+async function fixture(t, { read = async () => null, returnStorage } = {}) {
+  const reads = [];
+  const f = await page(t, {
+    nativeFocus: true,
+    nativeVisibility: true,
+    returnStorage,
+    beforeImport({ install }) {
+      install('crypto', { value: webcrypto });
+      install('fetch', {
+        value: async (url) => {
+          const path = new URL(url).pathname.split('/game/')[1];
+          assert(
+            files.has(path),
+            'Other-mode browsing only reads bounded metadata, never pictures',
+          );
+          reads.push(path);
+          return (await read(path)) ?? new Response(files.get(path));
+        },
+      });
+    },
+  });
+  return Object.assign(f, { reads });
+}
+async function open(f, paused = false) {
+  f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open').focus();
+  f.tap('Enter');
+  await waitFor(() => f.$('journey-chooser')?.open);
+}
+const cards = (f) => [...f.$('journey-cards').querySelectorAll('.journey-card')];
+function mode(f, value) {
+  f.$('journey-mode').focus();
+  f.$('journey-mode').value = value;
+  f.$('journey-mode').emit('change');
+}
+const loaded = (f) =>
+  waitFor(
+    () => cards(f).length === 201,
+    () => f.$('coop-library-remote-status').textContent,
+  );
+
+test('Team loads all201 Solo/Versus metadata rows only after selecting another mode and never decodes rewards', async (t) => {
+  const f = await fixture(t);
+  await open(f);
+  assert.equal(cards(f).length, 14);
+  const footer = f.$('journey-chooser').querySelector('.journey-footer');
+  assert.equal(footer.contains(f.$('coop-library-remote-status')), false);
+  assert.equal(footer.contains(f.$('coop-library-remote-retry')), false);
+  assert.equal(f.$('coop-library-status').contains(f.$('journey-chooser-status')), true);
+  assert.equal(f.$('coop-library-preview').hidden, false);
+  assert.equal(f.reads.length, 0);
+  const pictureReads = f.artwork.calls.reads.length;
+  mode(f, 'solo');
+  await loaded(f);
+  assert.equal(f.reads.length, 4);
+  assert.equal(f.$('coop-library-preview').hidden, true);
+  assert.equal(f.doc.activeElement.id, 'journey-mode');
+  assert(f.$('coop-library-remote-status').textContent.length < 80);
+  assert.equal(f.artwork.calls.reads.length, pictureReads);
+  assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 98);
+  mode(f, 'versus');
+  assert.equal(cards(f).length, 201);
+  assert.equal(f.reads.length, 4);
+  mode(f, 'team');
+  assert.equal(cards(f).length, 14);
+  assert.equal(f.$('coop-library-remote-status').hidden, true);
+  assert.equal(f.$('coop-library-remote-feedback').hidden, true);
+  assert.equal(f.$('coop-library-preview').hidden, false);
+});
+
+test('Team exact nonfirst Versus handoff keeps its attempt on Stay and only departs after Replace', async (t) => {
+  const f = await fixture(t);
+  f.$('coop-start').click();
+  f.$('coop-pause').click();
+  await open(f, true);
+  mode(f, 'versus');
+  await loaded(f);
+  const button = cards(f)[8];
+  const name = button.querySelector('strong').textContent;
+  const exactId = button.dataset.missionId;
+  button.focus();
+  f.tap('Enter');
+  await waitFor(() => f.$('coop-discard-dialog').open);
+  assert.match(f.$('coop-discard-copy').textContent, new RegExp(name));
+  assert.equal(f.visits.length, 0);
+  f.$('coop-discard-stay').click();
+  await waitFor(() => f.$('journey-chooser').open);
+  assert.equal(f.$('journey-mode').value, 'versus');
+  assert.equal(f.$('coop-stage').textContent, 'FIRST CONNECTION');
+  const current = cards(f).find((row) => row.querySelector('strong').textContent === name);
+  current.focus();
+  f.tap('Enter');
+  await waitFor(() => f.$('coop-discard-dialog').open);
+  f.$('coop-discard-confirm').click();
+  await waitFor(() => f.visits.length === 1);
+  const destination = new URL(f.visits[0]);
+  assert.equal(destination.pathname, '/game/couch/');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('library-mission'), exactId);
+  assert.equal(destination.searchParams.size, 2);
+});
+
+test('late other-mode metadata cannot replace Team filter or newer focus; later deliberate selection uses it', async (t) => {
+  const gate = deferred();
+  const f = await fixture(t, {
+    read: async (path) => {
+      if (path.includes('index')) await gate.promise;
+    },
+  });
+  await open(f);
+  mode(f, 'solo');
+  await waitFor(() => f.reads.length === 4);
+  mode(f, 'team');
+  f.$('journey-search').focus();
+  gate.resolve();
+  await new Promise((resolve) => setTimeout(resolve, 200));
+  assert.equal(cards(f).length, 14);
+  assert.equal(f.$('journey-mode').value, 'team');
+  assert.equal(f.doc.activeElement.id, 'journey-search');
+  mode(f, 'versus');
+  await loaded(f);
+  assert.equal(f.reads.length, 4);
+});
+
+test('failed remote metadata has an explicit Retry that retains focus and never starts a mission', async (t) => {
+  let fail = true;
+  const f = await fixture(t, {
+    read: async (path) =>
+      fail && path.includes('index') ? new Response('', { status: 503 }) : null,
+  });
+  await open(f);
+  mode(f, 'solo');
+  await waitFor(() => !f.$('coop-library-remote-retry').hidden);
+  assert.match(f.$('coop-library-remote-status').textContent, /503/);
+  fail = false;
+  f.$('coop-library-remote-retry').focus();
+  f.tap('Enter');
+  await loaded(f);
+  assert.equal(f.doc.activeElement.id, 'coop-library-remote-retry');
+  assert.equal(f.visits.length, 0);
+  assert.equal(f.$('coop-menu').hidden, false);
+});
+
+for (const interrupt of ['blur', 'Escape'])
+  test(`interrupted Team remote loading offers Retry and completes on deliberate reopen after ${interrupt}`, async (t) => {
+    const gate = deferred();
+    const f = await fixture(t, {
+      read: async (path) => {
+        if (path.includes('index')) await gate.promise;
+      },
+    });
+    await open(f);
+    mode(f, 'solo');
+    await waitFor(() => f.reads.length === 4);
+    if (interrupt === 'blur') {
+      f.win.emit('blur');
+      assert.match(f.$('coop-library-remote-status').textContent, /interrupted/i);
+      assert.equal(f.$('coop-library-remote-retry').hidden, false);
+      f.win.emit('focus');
+      f.$('journey-back').click();
+    } else f.tap('Escape');
+    assert.equal(f.$('journey-chooser').open, false);
+    assert.equal(f.visits.length, 0);
+    gate.resolve();
+    await open(f);
+    assert.equal(f.$('journey-mode').value, 'solo');
+    await loaded(f);
+    assert.equal(f.reads.length, 4, 'Reopening reuses checked metadata, not a second fetch.');
+    assert.equal(f.$('coop-library-remote-retry').hidden, true);
+    assert.equal(f.doc.activeElement.id, 'journey-search');
+    assert.equal(f.visits.length, 0);
+  });
+
+test('saved other-mode browsing never overrides the initial Team-mode selector', async (t) => {
+  const values = new Map([
+    [
+      'revealline.mission-library.selector.v1.team',
+      JSON.stringify({
+        search: '',
+        collection: '',
+        campaign: '',
+        mode: 'solo',
+        selectedId: '',
+        scroll: 0,
+      }),
+    ],
+  ]);
+  const f = await fixture(t, {
+    returnStorage: {
+      getItem: (key) => values.get(key) ?? null,
+      setItem: (key, value) => values.set(key, value),
+    },
+  });
+  await open(f);
+  assert.equal(f.$('journey-mode').value, 'team');
+  assert.equal(cards(f).length, 14);
+  assert.equal(f.reads.length, 0);
+});
+
+test('Team remote feedback retains a bounded status row and 44px Retry target in short landscape', async () => {
+  const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8');
+  assert.match(css, /#journey-chooser #coop-library-status p \{[^}]*margin: 0;/s);
+  assert.match(css, /#journey-chooser #coop-library-remote-feedback\[hidden\] \{\s*display: none;/);
+  assert.match(css, /#journey-chooser #coop-library-remote-retry \{[^}]*min-block-size: 44px;/s);
+  assert.match(
+    css,
+    /@media \(max-height: 480px\) \{\s*#journey-chooser #coop-library-status \{[^}]*max-height: 5rem;[^}]*overflow: auto;/s,
+  );
+});

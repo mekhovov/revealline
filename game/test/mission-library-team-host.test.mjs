@@ -122,6 +122,25 @@ test('Team unified chooser has12 missions plus2 retained arenas; browsing is art
   assert.equal(f.$('coop-level').value, 'twin-landings');
 });
 
+test('explicit current Team handoff shows player-facing edition and retains every exact mission ID', async (t) => {
+  const f = await fixture(t, { href: `${base}?journey=team-spatial-originals-1` });
+  await open(f);
+  const journeyCards = cards(f).filter((row) => row.textContent.includes('Journey'));
+  assert.equal(journeyCards.length, 12);
+  assert.deepEqual(
+    journeyCards.map((row) => row.dataset.missionId),
+    model.missions.map((row) => row.id),
+  );
+  for (const row of journeyCards) {
+    assert.equal(row.querySelector('.journey-card-edition').textContent, 'Team Journey');
+    assert.doesNotMatch(
+      row.textContent,
+      /team-spatial-originals|visual qualification|Geometry test/,
+    );
+  }
+  assert.match(f.$('journey-campaign').textContent, /Horizon partners/);
+});
+
 test('Team library plays an exact nonfirst mission at the selected Expert preset and keeps original Next', async (t) => {
   const f = await fixture(t, { difficulty: 'expert' });
   await open(f);

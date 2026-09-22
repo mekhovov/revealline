@@ -394,3 +394,21 @@ verification. It must receive a new pinned native check before acceptance.
 - The pack-inspection cohort passes42/42; the final metadata-source, inspection,
   existing pack and Custom-source cohort passes37/37. These overlap, not79 unique
   tests. Host adoption and read-only inventory integration are still pending.
+
+### Team remote catalogue and browsing recovery
+
+- Team's same-screen Solo/Versus filters now expose91 Journey and110 retained
+  Classic identities. Journey and Base are verified for direct exact handoff;
+  the other98 entries explicitly remain Unavailable until installation/media
+  readiness is integrated. They are not falsely reported missing or ready.
+- Independent review reproduced an interrupted-load/reopen dead end. New input,
+  blur and reopening now retain a deliberate Retry path and can reuse completed
+  metadata without a duplicate fetch or replacing the current Team attempt.
+- Status feedback shares the existing bounded status row, not the action footer;
+  Team preview hides in other modes. Current Team edition labels are player-facing
+  and retain exact opaque IDs and chapter titles.
+-49 Team cases,22 shared chooser/compact cases and3 Team-source cases pass in
+  bounded cohorts. New pinned native Team compact verification is still required.
+- Native cross-mode checking separately found lost return-route context and a
+  saved-difficulty mismatch in Legacy remote cards. Their fixes are in progress;
+  successful exact forward handoffs alone do not close the round-trip gate.
