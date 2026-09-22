@@ -104,6 +104,7 @@ export function attachMissionLibraryChooser({
   const cards = new Map(),
     downloads = new Set();
   let opener = null,
+    nativeReturnFocus = null,
     selectedId = '',
     savedScroll = 0,
     pendingCampaign = '',
@@ -274,16 +275,57 @@ export function attachMissionLibraryChooser({
     // ticket. Keep filters/focus for an unsuccessful or cancelled handoff.
     const ticket = ++visit;
     remember();
-    let context = null;
+    let context = null,
+      closeRetired = false;
+    // close() restores native focus and may run reentrant host listeners before
+    // the owner's launch lease exists. Admit only this input turn and the
+    // browser's expected return targets; a newer action must keep its focus.
+    const closingFocus = new Set([
+      doc.activeElement,
+      nativeReturnFocus,
+      doc.body,
+      doc.documentElement,
+      dialog,
+    ]);
+    const retireClose = () => {
+      closeRetired = true;
+    };
+    const closingFocusChanged = () => {
+      if (!closingFocus.has(doc.activeElement)) retireClose();
+    };
+    const closingInputs = ['keydown', 'pointerdown', 'click'];
     const mayRestore = () =>
+      !closeRetired &&
       ticket === visit &&
       !destroyed &&
       !doc.hidden &&
       doc.hasFocus?.() !== false &&
       context?.isCurrent?.() !== false;
+    const mayLaunch = () =>
+      mayRestore() &&
+      closingFocus.has(doc.activeElement) &&
+      modeFilter.value === activeMode &&
+      cards.get(row.id)?.button === button &&
+      list.contains(button) &&
+      library.find(row.id) === row;
     try {
-      context = launchContext(row, { mode: activeMode });
-      dialog.close();
+      doc.addEventListener('focusin', closingFocusChanged, true);
+      for (const type of closingInputs) doc.addEventListener(type, retireClose, true);
+      try {
+        context = launchContext(row, { mode: activeMode });
+        if (!mayLaunch()) {
+          context?.retire?.();
+          return;
+        }
+        dialog.close();
+        if (!mayLaunch() || dialog.open) {
+          context?.retire?.();
+          return;
+        }
+      } finally {
+        doc.removeEventListener('focusin', closingFocusChanged, true);
+        for (const type of closingInputs) doc.removeEventListener(type, retireClose, true);
+      }
       const accepted = await library.launch(row, { ...context, mode: activeMode });
       if (accepted === false && mayRestore()) {
         message = 'Mission not opened. Your current game is kept.';
@@ -501,6 +543,7 @@ export function attachMissionLibraryChooser({
     invalidateDiagrams();
     rebuildCampaigns();
     render();
+    if (!dialog.open) nativeReturnFocus = doc.activeElement;
     dialog.showModal();
     restoreSelection();
   }
