@@ -1,0 +1,64 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "archiveId": "archive-51",
+  "repository": "mekhovov/revealline-archive-51",
+  "infrastructureCommit": "8bf0ed6c3947ca8c47ad2d9246db3e57acd986cf",
+  "deploymentId": 6594278854,
+  "workflowRunId": 35747012670,
+  "status": "PENDING_ROOT_ADMISSION_REVIEW",
+  "versions": [
+    "v0.82.1"
+  ],
+  "expectedFiles": 1059,
+  "expectedBytes": 590404002,
+  "scopedBrowserJourneyPassed": true,
+  "admitted": false,
+  "evidence": [
+    {
+      "path": "evidence/archive-51-v0821/native/observation.json",
+      "sha256": "764f621751970d1be9d5f6f77e9e79d7481101a5cde9af9993e10054d4e89ee2"
+    },
+    {
+      "path": "evidence/archive-51-v0821/native-support-originals.zip",
+      "sha256": "c63268921800ef12d437673a1fd035174fe054ceb4c5a6d8a8ec4af8a57c7360"
+    },
+    {
+      "path": "evidence/archive-51-v0821/native-support-manifest.json",
+      "sha256": "b969ed91cf7c5fa0a9efc407c4e9a0982f724124852bee289fd5641dc0b0b8cf"
+    },
+    {
+      "path": "evidence/archive-51-v0821/http-report-original.json",
+      "sha256": "d44e8642dbdd8adfa55117efd1825a290e7115b105537d481a1e24e2c4204d34"
+    },
+    {
+      "path": "evidence/archive-51-v0821/deployed-main-original.json",
+      "sha256": "384471ec29bd8defe5385985818fd5e8ac6c4f81ddc49969e40e4b8097819ee2"
+    },
+    {
+      "path": "evidence/archive-51-v0821/deployed-commit-original.json",
+      "sha256": "4c4506e02e7dfa990fa46becf3e0fd8e764b82fbccd77da821e56296a5e5f26a"
+    },
+    {
+      "path": "evidence/archive-51-v0821/deployment-actual-original.json",
+      "sha256": "68b6e37fa8de5b5e7d33dab27262a7d145ad9fff26f88d561bba81b8139a0f18"
+    },
+    {
+      "path": "evidence/archive-51-v0821/deployment-statuses-original.json",
+      "sha256": "fcdc9ea4d671814537e9d08bf58bafafbd6e582858464f27d65d083172e26616"
+    },
+    {
+      "path": "evidence/archive-51-v0821/deploy-run-original.json",
+      "sha256": "f3caf107280d4df167b6ff98356815e21cf1400c6a17ac37a3b574826552b9a5"
+    },
+    {
+      "path": "evidence/archive-51-v0821/original-release-preservation.json",
+      "sha256": "c26bb7d90e7ba78a67b3e64ffdf9b2e95747190854f2d081f0f944bd8bc183a3"
+    }
+  ],
+  "scope": "Observed archived821 title after ordinary503 recovery, actualFirstSignalwin, archiveindex/currentreleaseexplorer/Back in fresh isolated headedChromium. Root admission review remains pending.",
+  "limits": [
+    "Initial503, wrong guessed-text wait, paused/caught attempt and explicitrestartconfirmation retained in native observation.",
+    "No offline, physical-device, controller, touch or audible/listening claim.",
+    "Observation is from the operating agent; independent review is a review of evidence, not a second physical witness."
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "format": "revealline-independent-committed-archive-review.v1",
+  "status": "PASS_SCOPED_COMMITTED_TEMPLATE",
+  "reviewedAt": "2026-09-22T15:22:38.883866+00:00",
+  "reviewer": "Codex subagent /root/soundtrack_references",
+  "authorship": "Reviewer did not author or commit archive51. This addendum binds the earlier staged review to committed Git blobs.",
+  "repository": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/revealline-archive-51",
+  "commit": "12883d18c784161530da239498b5761f64bf9c81",
+  "tree": "c057f683ae6f7afcf3696120d9d5d65fb9fb38d7",
+  "priorReview": {
+    "path": "independent-staged-input-review.json",
+    "sha256": "ebe65d5dd1883b2c637cfaf575fea9cdb9ca5a48d71bc327dfe285ce5a28750a"
+  },
+  "templateManifest": {
+    "path": "template-manifest.json",
+    "sha256": "3b6c5c552988c746f4466a730ae99ef6beb2b48a8f2a72ea5a895f87968338c6",
+    "files": 23,
+    "bytes": 511657
+  },
+  "checks": {
+    "gitTreeEqualsExpectedPaths": true,
+    "missing": 0,
+    "extra": 0,
+    "hashOrByteMismatches": 0,
+    "unsafeModes": 0,
+    "hiddenWorkflowPresent": true,
+    "signedAuthorityBytesPreserved": true,
+    "allPinsReadFromExplicitCommit": true,
+    "lazyFetchDisabledForFinalVerification": true
+  },
+  "files": [
+    {
+      "path": ".github/workflows/deploy.yml",
+      "bytes": 3234,
+      "sha256": "1f71c389543ab172d5f0f1f8faa265b08676d1d084e188fc9cc10fd4b7ec9ea6",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "63b44bf8be1bdb0e90fd9b11c0ecb260d141e387"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 19,
+      "sha256": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7a60b85e148f80966a550e5ab6a762a907c69ca6"
+    },
+    {
+      "path": "README.md",
+      "bytes": 768,
+      "sha256": "37d1560b56eb67043c77728337756c2286c6d380178218f15d571f384f54e27c",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6d720076cd0cebe1df37e71b149b54ed9136344b"
+    },
+    {
+      "path": "authority/release-original.json",
+      "bytes": 17717,
+      "sha256": "82a6f62af9f63c2c0b3a094ea00332f4fc1e67fa6c80e95e79a20db3496e394c",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f3a54646be92334c8dcd87e0e7096fb527884783"
+    },
+    {
+      "path": "authority/reviewed-release-descriptors.json",
+      "bytes": 1959,
+      "sha256": "664b256708321e5131afa7b0e73b3eff42b6b48da015c1ea9f8fd01642477c8f",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "740380be3e7240448399a00152a68eff3b7a85d4"
+    },
+    {
+      "path": "authority/source-commit-local.txt",
+      "bytes": 1227,
+      "sha256": "5a652c2f2024692bac23dccfde6801fd0038e253d314c3570e11587bd6825b2f",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c83a3e4de092e4f77e3dde29a7ffd593d98a45e1"
+    },
+    {
+      "path": "authority/source-identity-local.json",
+      "bytes": 386,
+      "sha256": "681fbb10fa8923871d40c191d093e8c8129d6bc2fbbbc361199b94e0de8e2d90",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "344138a9a12b2f7c402cba12c645de42618ddb2e"
+    },
+    {
+      "path": "authority/tag-original.json",
+      "bytes": 713,
+      "sha256": "593129224fa401bb3417182ad0efa2b82edcf017e1f470998024ba99ed142e5d",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f9eeb52e3e8558bfbb057921fa2897f733585876"
+    },
+    {
+      "path": "authority/tag-ref-original.json",
+      "bytes": 337,
+      "sha256": "c0baa2b753f3537ea5daeb9fa7bd8a6bec437ee986f643532aad9b08bc62e315",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4e2b9e157ab5be950be2fbcda9a102f0e0c903c6"
+    },
+    {
+      "path": "expected-inventory.json",
+      "bytes": 216442,
+      "sha256": "7687ea84796d955b63b6bc11b41465a7777be7e7f24ccd07b2becd2eeee246c0",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "344911a6e33a22a083b8aae9b4d6650b040b3dfe"
+    },
+    {
+      "path": "index.html",
+      "bytes": 823,
+      "sha256": "030bf7155d451cdd32925415009fc1ffe5cc624c95fee7839ed8711d82cc3fe7",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "dd08c401710e015fc939042846b56dafaad96d9f"
+    },
+    {
+      "path": "input-authority.json",
+      "bytes": 2758,
+      "sha256": "8bfca0dfe31a53b22395334c37081df5646bb76c4520e2da6fccdd94c8effe98",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0d8d82359f1aa77f6e7229541b627a5e69050bf1"
+    },
+    {
+      "path": "metadata/v0.82.1/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "cd471011a9f229a656943a4b9e37363e86b2fc4660fe762dc3e3e158b9bc3588",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "00404d7f5aaea1d6bf95c29b90a3f3e380df7509"
+    },
+    {
+      "path": "metadata/v0.82.1/manifest.json",
+      "bytes": 192123,
+      "sha256": "f28ad08403db215de393ac562ca1d3fe7dfc6791f49194513af60bf5db1b7e3d",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "943ad498b1527255837a6d624315f200e8ec8290"
+    },
+    {
+      "path": "metadata/v0.82.1/release.json",
+      "bytes": 465,
+      "sha256": "bba2db9c5ed2c0d136224472dde33117cae6c8518c6d162f279f1cb5ed27bb5e",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "214a1dcb69607dba941c707b6cb8445aabd59ce8"
+    },
+    {
+      "path": "metadata/v0.82.1/source-qualification.json",
+      "bytes": 34101,
+      "sha256": "f723ddb7c5150353cb58d9f032da5acfa53f8f89018716c364038c51fc45aff8",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "edb5c09c916a1364f9605e41a65fafd8a2e60261"
+    },
+    {
+      "path": "releases/index.html",
+      "bytes": 571,
+      "sha256": "a67eebc2c45e1659fef5b993c65fee2146ae3e47f352f25b0c9d42ccc77471c0",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "604483fe86714a1998605d59279bec89d15a2330"
+    },
+    {
+      "path": "source-lock.json",
+      "bytes": 1429,
+      "sha256": "577463d0b1cfc7709581e3abd73945a53792fc2735e9efa1c8a5694c8ab01512",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "27c4430dad3627bf582e0067ba75f6911cf47db1"
+    },
+    {
+      "path": "tools/configure_v0821.py",
+      "bytes": 5010,
+      "sha256": "0143ecee571494355b0663600950625fecee4b1c7b3e41bb78fb0a468cd087c6",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8000bf2395b8e1cf8e29695d582bc814c407f9da"
+    },
+    {
+      "path": "tools/prepare.py",
+      "bytes": 4420,
+      "sha256": "d0c66a9f0ff13e5c9e343cec0251da40aebc98849059ffc70da948b3f0fa524f",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "65e59e6dadf6a916f9f674893a97905938045cff"
+    },
+    {
+      "path": "tools/test_prepare.py",
+      "bytes": 16878,
+      "sha256": "7534d006f44eda8b33793517ecafcb89497543d9f5a48d6d7dce47b5c561f9cc",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d9c2cfa6c7dec881d2bd1fd75984689b366c7355"
+    },
+    {
+      "path": "tools/test_verify.py",
+      "bytes": 2278,
+      "sha256": "84891f0ee35945d12e165279b5fcffc8393646dc940c703f3fdeab1ef16b3a85",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "206b32f8e2c1e789fd3281a9ddc54786fbce99f9"
+    },
+    {
+      "path": "tools/verify.py",
+      "bytes": 7916,
+      "sha256": "5e9c64fdc246d61b58355a5afebb39de55cfd4a1d1315f7f6d73b7e706281b06",
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3eb74c34b53907a2bd63683974901e3f7a47d000"
+    }
+  ],
+  "blockers": [],
+  "initialPathCorrection": "First handoff named the non-Git staging repository directory. Explicit commit lookup inherited game Git and emitted two failed automatic promisor lookups (not our ref). No archive bodies or source changes resulted. Actual standalone Git repository was then identified and every final read used GIT_NO_LAZY_FETCH=1.",
+  "limitations": [
+    "No remote CI status query, hosted-result claim, merge, deployment, browser or public HTTP execution.",
+    "Run35746682937 success and later archive acceptance remain parent-owned gates.",
+    "Original signed authority whitespace intentionally preserved; no evidence reformatting."
+  ]
+}

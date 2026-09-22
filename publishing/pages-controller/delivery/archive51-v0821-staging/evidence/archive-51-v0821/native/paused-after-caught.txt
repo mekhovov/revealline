@@ -1,0 +1,46 @@
+- button "Game menu" [ref=e1]
+  - StaticText " ◩ REVEAL / LINE"
+- StaticText "TACTICAL EDITION"
+- button "Enter fullscreen" [ref=e2]
+  - StaticText "⛶"
+- button "Missions" [ref=e3]
+- button "Collection" [ref=e4]
+- button "Game settings" [ref=e5]
+  - StaticText "Settings"
+- main
+  - region "Game" [ref=e6]
+    - generic
+      - StaticText "REVEALED"
+      - progressbar "Picture revealed": 0
+        - StaticText "0.0%"
+      - generic
+      - emphasis
+        - StaticText "TARGET 45%"
+    - StaticText "LIVES"
+    - strong "2 lives"
+      - StaticText "◆ ◆"
+    - StaticText "TIME"
+    - strong
+      - StaticText "0:59"
+    - StaticText "SCORE"
+    - strong
+      - StaticText "00000"
+    - generic
+      - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving." [ref=e7] focusable [tabindex]
+      - generic
+        - status
+          - StaticText "PAUSED"
+        - button "Resume →" [ref=e8]
+        - button "◆ Field details" [ref=e9]
+          - StaticText "◆"
+          - StaticText "Field details"
+        - button "Restart mission" [ref=e10]
+        - button "Mission brief" [ref=e11]
+        - button "Main menu" [ref=e12]
+    - generic
+      - strong
+        - StaticText "Paused"
+      - StaticText "Close a line to reveal the picture"
+    - status
+      - StaticText "Your line was caught. The territory you revealed is kept."
+    - status

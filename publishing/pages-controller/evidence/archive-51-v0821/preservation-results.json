@@ -1,0 +1,74 @@
+{
+  "format": "revealline-archive51-preservation-results.v1",
+  "status": "PUBLIC_BYTES_AND_SCOPED_NATIVE_OBSERVED_PENDING_OWNER_ADMISSION",
+  "infrastructureCommit": "8bf0ed6c3947ca8c47ad2d9246db3e57acd986cf",
+  "infrastructureTree": "c057f683ae6f7afcf3696120d9d5d65fb9fb38d7",
+  "runId": 35747012670,
+  "deploymentId": 6594278854,
+  "publicHTTP": {
+    "files": 1059,
+    "bytes": 590404002,
+    "attempts": 1060,
+    "failedAttempts": 1,
+    "retriedFiles": 1,
+    "failedFiles": 0,
+    "skipped": [],
+    "durationSeconds": 108.423,
+    "sourcePinsUnchanged": true,
+    "auditDeadlineExceeded": false
+  },
+  "nativeScopePassed": true,
+  "gameAllocationChanged": false,
+  "admitted": false,
+  "pins": [
+    {
+      "path": "http/http-20260922T153449Z-0594c0fd/http-report.json",
+      "bytes": 1638,
+      "sha256": "d44e8642dbdd8adfa55117efd1825a290e7115b105537d481a1e24e2c4204d34"
+    },
+    {
+      "path": "http/http-20260922T153449Z-0594c0fd/http-attempts.jsonl",
+      "bytes": 863758,
+      "sha256": "72dacd8bdd54ae86814d9fe8cbfbbbeedfb68908d4c65c1d11e9b021273485a9"
+    },
+    {
+      "path": "http/http-20260922T153449Z-0594c0fd/http-results.jsonl",
+      "bytes": 863101,
+      "sha256": "1d53ec693eccc08765fafbb803dc16e6876addff5f7be8cbbe97378f21d318fe"
+    },
+    {
+      "path": "native/observation.json",
+      "bytes": 5795,
+      "sha256": "764f621751970d1be9d5f6f77e9e79d7481101a5cde9af9993e10054d4e89ee2"
+    },
+    {
+      "path": "native-support-manifest.json",
+      "bytes": 7842,
+      "sha256": "b969ed91cf7c5fa0a9efc407c4e9a0982f724124852bee289fd5641dc0b0b8cf"
+    },
+    {
+      "path": "native-support-originals.zip",
+      "bytes": 244623,
+      "sha256": "c63268921800ef12d437673a1fd035174fe054ceb4c5a6d8a8ec4af8a57c7360"
+    },
+    {
+      "path": "original-release-preservation.json",
+      "bytes": 2676,
+      "sha256": "c26bb7d90e7ba78a67b3e64ffdf9b2e95747190854f2d081f0f944bd8bc183a3"
+    },
+    {
+      "path": "execution-request.reviewed.json",
+      "bytes": 1638,
+      "sha256": "0d493b69396b82f12b14a81722cf4556cb30621c51d1512b42ca5e27ed1fa561"
+    },
+    {
+      "path": "independent-deployed-http-preparation-review.json",
+      "bytes": 7508,
+      "sha256": "2aa0b99121bf1bccea2dbea84f3bde82779acce11012ac9337de67d4485bb254"
+    }
+  ],
+  "remaining": [
+    "Independent read-only review of actual HTTP result and scoped native support.",
+    "Root admission decision and later append-only publisher integration; current game allocation/version remains untouched."
+  ]
+}

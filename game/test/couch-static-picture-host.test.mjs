@@ -545,8 +545,11 @@ for (const outcome of ['untouched', 'deliberate mode link', 'blur and return', '
       document.getElementById('race-mode-choices').children.map((item) => item.dataset.gameMode),
       ['solo', 'versus', 'team'],
     );
-    assert.equal(document.getElementById('race-solo-return').getAttribute('href'), '../');
-    assert.equal(team.getAttribute('href'), 'relay-rescue.html?return=versus');
+    assert.equal(
+      document.getElementById('race-solo-return').getAttribute('href'),
+      '../?journey=legacy',
+    );
+    assert.equal(team.getAttribute('href'), 'relay-rescue.html?journey=legacy&return=versus');
   });
 
 const completedResult = (p) => ({
