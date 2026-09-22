@@ -630,3 +630,13 @@ verification. It must receive a new pinned native check before acceptance.
   the pending view. Completion/error removes listeners so idle status is not
   later relabelled interrupted. The affected Team cohorts pass17/17, with two
   final cleanup regressions repeated. Native verification remains required.
+
+### Compact focused-card visibility repair
+
+- Native keyboard testing confirmed Clear search works at44px in both compact
+  orientations, but an expanded Filters popover could cover the focused card.
+  Compact Filters now close when focus reaches cards/footer, preserving values
+  and focus. In-filter/controller previews and wide layouts remain expanded.
+- Two new regressions reproduced the old failure. The final shared chooser,
+  compact and controller cohort passes191/191. Native focus visibility must be
+  rechecked on this repair before the compact gate is considered complete.
