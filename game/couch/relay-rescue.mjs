@@ -328,6 +328,12 @@ export function bootCoop({
     libraryLocalOwner = null,
     libraryRemoteJourney = null,
     libraryRemotePending = null,
+    libraryOtherModes = null,
+    libraryOtherModesPending = null,
+    libraryOtherModesRegistered = false,
+    libraryOtherModesOpening = null,
+    libraryOtherModesLoad = null,
+    libraryOtherModesLifetime = new AbortController(),
     libraryPreview = null,
     libraryReturnFocus = true;
   const libraryRuntimeRows = new WeakMap();
@@ -2577,11 +2583,16 @@ export function bootCoop({
     }
   }
   async function launchRemoteTeamRow(row, context) {
+    return launchRemoteLibraryMission(context);
+  }
+  async function launchRemoteLibraryMission(context) {
+    const row = missionLibrary.find(context.libraryMissionId);
+    if (!row || !row.modes.includes(context.mode) || !context.isCurrent()) return false;
     const href = missionLibraryHref({
       baseURL: location.href,
       currentMode: 'team',
-      mode: 'team',
-      journey: TEAM_LIBRARY_JOURNEY_EDITION,
+      mode: context.mode,
+      journey: row.collection === 'Journey' ? row.editionId : 'legacy',
       missionId: context.libraryMissionId,
     });
     const attempt = run,
@@ -2600,9 +2611,10 @@ export function bootCoop({
           resolve,
         };
         departure = ticket;
-        $('coop-discard-title').textContent = 'Open Team Journey?';
+        $('coop-discard-title').textContent =
+          `Open ${context.mode === 'team' ? 'Team' : context.mode === 'solo' ? 'Solo' : 'Versus'} mission?`;
         $('coop-discard-copy').textContent =
-          `Stay keeps this attempt and its picture. Replace & play opens ${row.level.name} in its original Team Journey. This unfinished attempt is not saved.`;
+          `Stay keeps this attempt and its picture. Replace & play opens ${row.name} in its original mode and edition. This unfinished attempt is not saved.`;
         $('coop-discard-confirm').textContent = 'Replace & play';
         departureDialog.showModal();
         $('coop-discard-stay').focus({ preventScroll: true });
@@ -2621,13 +2633,14 @@ export function bootCoop({
           teamJourneyLibrarySource({
             journey: candidateJourney,
             editionId: libraryEdition,
-            edition: defaultJourney
-              ? 'Team Journey'
-              : `Team Journey · ${libraryEdition} · ${
-                  candidateJourney.rows.some((row) => row.background)
-                    ? 'Original-art test; visual qualification pending'
-                    : 'Geometry test; human validation pending'
-                }`,
+            edition:
+              libraryEdition === TEAM_LIBRARY_JOURNEY_EDITION
+                ? 'Team Journey'
+                : `Team Journey · ${libraryEdition} · ${
+                    candidateJourney.rows.some((row) => row.background)
+                      ? 'Original-art test; visual qualification pending'
+                      : 'Geometry test; human validation pending'
+                  }`,
             progress: candidateProgress,
             difficulty: libraryDifficulty,
             launch: (row, context) =>
@@ -2693,6 +2706,15 @@ export function bootCoop({
       });
     await libraryRemotePending;
   }
+  function retireOtherModesOpening() {
+    const opening = libraryOtherModesOpening;
+    libraryOtherModesOpening = null;
+    opening?.dispose();
+    if (!opening || libraryOtherModesRegistered || libraryChooser?.state().mode === 'team') return;
+    $('coop-library-remote-status').textContent = 'Loading interrupted. Retry when ready.';
+    $('coop-library-remote-retry').hidden = false;
+    $('coop-library-remote-retry').removeAttribute('aria-disabled');
+  }
   function mountTeamLibrary() {
     if (libraryChooser) return;
     libraryChooser = attachMissionLibraryChooser({
@@ -2712,6 +2734,7 @@ export function bootCoop({
         discoveryControls();
       },
       onReturn(opener) {
+        retireOtherModesOpening();
         retireLibraryLaunch();
         libraryPreview?.close();
         clear();
@@ -2721,6 +2744,105 @@ export function bootCoop({
       },
     });
     const dialog = $('journey-chooser');
+    const statusGroup = document.createElement('div');
+    statusGroup.id = 'coop-library-status';
+    const chooserStatus = $('journey-chooser-status');
+    // Keep one status grid row; remote feedback must not expand the action footer.
+    dialog.replaceChildren(
+      ...[...dialog.children].map((child) => (child === chooserStatus ? statusGroup : child)),
+    );
+    const remoteFeedback = document.createElement('div');
+    remoteFeedback.id = 'coop-library-remote-feedback';
+    remoteFeedback.hidden = true;
+    const remoteStatus = document.createElement('p');
+    remoteStatus.id = 'coop-library-remote-status';
+    remoteStatus.setAttribute('role', 'status');
+    remoteStatus.hidden = true;
+    const remoteRetry = document.createElement('button');
+    remoteRetry.id = 'coop-library-remote-retry';
+    remoteRetry.type = 'button';
+    remoteRetry.textContent = 'Retry';
+    remoteRetry.setAttribute('aria-label', 'Retry Solo and Versus mission loading');
+    remoteRetry.hidden = true;
+    remoteFeedback.append(remoteStatus, remoteRetry);
+    statusGroup.append(chooserStatus, remoteFeedback);
+    async function includeOtherModes() {
+      libraryOtherModesOpening?.dispose();
+      libraryOtherModesOpening = null;
+      remoteStatus.hidden = libraryChooser.state().mode === 'team';
+      remoteFeedback.hidden = remoteStatus.hidden;
+      if (
+        !remoteStatus.hidden &&
+        document.activeElement === previewButton &&
+        dialog.open &&
+        foreground()
+      )
+        $('journey-mode').focus({ preventScroll: true });
+      previewButton.hidden = !remoteStatus.hidden;
+      remoteRetry.hidden = remoteStatus.hidden || document.activeElement !== remoteRetry;
+      remoteRetry.setAttribute('aria-disabled', 'true');
+      if (remoteStatus.hidden || libraryOtherModesRegistered) return;
+      const opening = trackMissionLibraryOpening({
+        document,
+        onRetire() {
+          if (libraryOtherModesOpening !== opening) return;
+          remoteStatus.textContent = 'Loading interrupted. Retry when ready.';
+          remoteRetry.removeAttribute('aria-disabled');
+          remoteRetry.hidden = libraryChooser.state().mode === 'team';
+        },
+      });
+      libraryOtherModesOpening = opening;
+      remoteStatus.textContent = 'Loading Solo and Versus mission metadata…';
+      try {
+        libraryOtherModesPending ??= import('../mission-library/remote-solo-versus.mjs')
+          .then(({ createRemoteSoloVersusLibrarySources }) =>
+            createRemoteSoloVersusLibrarySources({
+              baseURL: new URL('../', location.href),
+              launch: launchRemoteLibraryMission,
+              difficulty: libraryDifficulty,
+              signal: libraryOtherModesLifetime.signal,
+            }),
+          )
+          .then((owner) => {
+            if (disposed) {
+              owner.dispose();
+              throw new DOMException('Mission browsing closed.', 'AbortError');
+            }
+            libraryOtherModes = owner;
+            return owner;
+          })
+          .catch((error) => {
+            libraryOtherModesPending = null;
+            throw error;
+          });
+        const owner = await libraryOtherModesPending;
+        if (
+          libraryOtherModesOpening !== opening ||
+          !opening.current() ||
+          !dialog.open ||
+          libraryChooser.state().mode === 'team' ||
+          !foreground() ||
+          disposed
+        )
+          return;
+        opening.dispose();
+        for (const source of owner.sources) missionLibrary.register(source);
+        libraryOtherModesRegistered = true;
+        remoteStatus.textContent = 'Journey and Base ready. Other chapters: open Solo or Versus.';
+        remoteRetry.textContent = 'Loaded';
+      } catch (error) {
+        if (libraryOtherModesOpening === opening && opening.current() && dialog.open) {
+          remoteStatus.textContent = `Other modes unavailable: ${error.message}. Your Team attempt is kept.`;
+          remoteRetry.hidden = false;
+          remoteRetry.removeAttribute('aria-disabled');
+        }
+      } finally {
+        opening.dispose();
+      }
+    }
+    libraryOtherModesLoad = includeOtherModes;
+    $('journey-mode').addEventListener('change', includeOtherModes);
+    remoteRetry.onclick = includeOtherModes;
     const previewButton = document.createElement('button');
     previewButton.id = 'coop-library-preview';
     previewButton.type = 'button';
@@ -2762,6 +2884,7 @@ export function bootCoop({
         mountTeamLibrary();
         libraryChooser.open(opener);
         libraryPreview.refresh();
+        void libraryOtherModesLoad();
       } catch (error) {
         if (opening.current() && !disposed)
           $('coop-discovery-status').textContent =
@@ -2771,6 +2894,7 @@ export function bootCoop({
       }
     },
     close({ restore = true } = {}) {
+      retireOtherModesOpening();
       libraryOpening?.dispose();
       libraryOpening = null;
       libraryReturnFocus = restore;
@@ -2781,6 +2905,7 @@ export function bootCoop({
     },
     back: () => discovery.close(),
     cancel() {
+      retireOtherModesOpening();
       libraryOpening?.dispose();
       libraryOpening = null;
       retireLibraryLaunch();
@@ -2788,6 +2913,8 @@ export function bootCoop({
     },
     dispose() {
       discovery.cancel();
+      libraryOtherModesLifetime.abort();
+      libraryOtherModes?.dispose();
       libraryReturnFocus = false;
       libraryPreview?.dispose();
       libraryChooser?.destroy();
