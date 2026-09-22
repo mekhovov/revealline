@@ -1375,3 +1375,18 @@ When a reviewed host imports another feature's admission contract, fingerprint t
 ## 2026-09-22: Scoped UI review continuation and independent navigation findings
 
 A scoped review continuation may carry forward unchanged UI recipe payloads only with exact functional-record/token comparison and a closed dependency fingerprint. Tie runtime and native receipts to the actual pre-approval source/output, preserve discovered navigation defects, and exclude unrelated Team artwork or whole-phase acceptance. Update only the applicable reviewed group and its exact current-review assertions; append immutable production history after review rather than rewriting earlier evidence. Keep stale accepted-audio test reconciliation separate from any new audio approval.
+
+## Bounded complete presentation transfer
+
+When complete immutable collection successors fit the 5 MiB document bound but the
+redundant transfer asset table does not, keep fitting RLTHM1 exports byte-identical
+and use RLTHM2 only for that envelope overflow. Its manifest contains the complete
+validated document; payload order and lengths come from sorted unique file hashes.
+Reject inconsistent kind, MIME, byte count or dimensions for one hash. Preserve
+all history, provenance and original bytes, the 5 MiB decoded document/manifest and
+32 MiB complete file caps, and all structural limits. Do not solve transfer capacity
+with compression, history deletion or evidence trimming. Test both formats, exact
+boundaries, corrupt/truncated/trailing data, aborts, deterministic byte round trips
+and the real full collection plus review/replacement successors. Keep historical
+capacity measurements tied to their exact evidence bytes; concise and older review
+wording can change the deficit without changing the redundant-table cause.
