@@ -464,3 +464,19 @@ verification. It must receive a new pinned native check before acceptance.
   generations, overlapping reads, cleanup failure and explicit download veto.
   This controller performs no downloads or decoding; host integration follows
   the separately reviewed return-route checkpoint.
+
+### Exact materialization and native qualification update
+
+- Added deliberate-Play materialization that accepts only an inspected inventory
+  member, calls genuine host inspection and compares the complete prepared-pack
+  fingerprint before returning a runtime owner. Missing/modified/raw lookalikes,
+  decoding failures and storage changes cannot substitute another edition.
+- Independent review repeats16 controller/materializer tests successfully.
+  Full retained-index, prepared-identity and metadata inspection reconciliation
+  also passes20/20 in109 seconds after the metadata refactor.
+- Native `dbbcee8fe` Team compact checks pass844×390 and390×844 with readable
+  cards,44px targets, visible footer and bounded remote loading feedback.
+- Native Team→Solo exposed a blocking incoming-start focus race: the correct
+  late-mission URL can remain at the opener. Browser Back also retained search
+  while resetting the mode filter. Both are tracked in the active integration
+  fixes; these native failures prevent Release B acceptance despite helper tests.
