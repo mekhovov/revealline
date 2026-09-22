@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_SCOPED_NATIVE_AVAILABILITY",
+  "checkedAt": "2026-09-22T21:54:54.797707+00:00",
+  "observerTask": "01a0a0be-e184-7c03-ba2b-59dc179a9800",
+  "archive": "revealline-archive-53",
+  "version": "v0.84.0",
+  "gameSource": "1107f570508e0d107440236b6aeedbce8506cd7d",
+  "infrastructureRevision": "9ebb2c397b6db59561129147b8758ad24e0489c2",
+  "infrastructureTree": "6abe465ee6775405df2441b2cda76f8c8bfd20d5",
+  "workflowRun": 35789096805,
+  "deployment": 6601503691,
+  "deploymentStatus": 18699469453,
+  "canonicalURL": "https://mekhovov.github.io/revealline-archive-53/releases/v0.84.0/site/game/",
+  "authority": {
+    "independentGhRunReadback": "completed/success, exact infrastructure revision",
+    "publicReleaseMarker": {
+      "version": "v0.84.0",
+      "sourceRevision": "1107f570508e0d107440236b6aeedbce8506cd7d",
+      "sourceArchiveSha256": "0cbec5f398e0b5951951515fe6282b0789d9848142d4aeaebcc0fa98a7f65f88",
+      "distributionSha256": "923d5588b2ab6d3223546ab73fc6247b32fb0152153a13f6d1e6e7341062725f",
+      "manifestSha256": "ffca25551a2b479575648603d6eacd32b2515abeabf5494562402a90ae7d6ca5"
+    }
+  },
+  "environment": {
+    "browser": "Codex in-app browser",
+    "browserId": "1",
+    "temporaryTab": "354",
+    "viewport": "1280x720",
+    "profile": "Existing returning profile retained; no storage reset",
+    "input": "browser pointer navigation"
+  },
+  "firstLoad": {
+    "pass": true,
+    "observedLoadingStatus": "Loading flight systems\u2026",
+    "failuresObserved": [],
+    "retriesPerformed": 0,
+    "visibleTitle": "REVEAL / LINE",
+    "visibleVersion": "VERSION V0.84.0",
+    "visibleContent": "NEW JOURNEY / 91 MISSIONS",
+    "continueDestination": "Prologue \u00b7 Choose your share",
+    "allMissionsEntryVisible": true
+  },
+  "navigation": [
+    {
+      "action": "Workshop \u2192 Sound & game extras \u2192 About & build information",
+      "url": "https://mekhovov.github.io/revealline-archive-53/releases/v0.84.0/site/site/about.html#versions",
+      "pass": true
+    },
+    {
+      "action": "Expand Build information \u2192 Release history",
+      "url": "https://mekhovov.github.io/revealline/releases/",
+      "observed": [
+        "Playable versions",
+        "Current: v0.84.0. Every edition keeps its original gameplay, saves and artwork.",
+        "v0.84.0 \u00b7 Current",
+        "1107f570508e0d107440236b6aeedbce8506cd7d"
+      ],
+      "pass": true
+    },
+    {
+      "action": "Browser Back",
+      "url": "https://mekhovov.github.io/revealline-archive-53/releases/v0.84.0/site/site/about.html#versions",
+      "observed": "Archived About page and Return to game link restored",
+      "pass": true
+    },
+    {
+      "action": "Return to game",
+      "url": "https://mekhovov.github.io/revealline-archive-53/releases/v0.84.0/site/game/",
+      "observed": [
+        "NEW JOURNEY / 91 MISSIONS",
+        "VERSION V0.84.0",
+        "Continue \u00b7 Prologue \u00b7 Choose your share"
+      ],
+      "pass": true
+    }
+  ],
+  "console": {
+    "capturedWarningAndErrorEntries": []
+  },
+  "screenshots": {
+    "storage": "Raw unaltered screenshots preserved inline in cua_repl tool messages; no disk PNG export claimed",
+    "toolReferences": [
+      "Verify Archive53 title and retained release version",
+      "Verify Archive53 links to the central release explorer",
+      "Record Archive53 restored title and console outcome"
+    ]
+  },
+  "limits": [
+    "Basic native availability and navigation only; not gameplay, offline, physical-device or extended test qualification.",
+    "Central main catalogue was observed current v0.84.0 at verification time; this receipt does not establish v0.85 main deployment.",
+    "Full public HTTP byte audit is separate and not claimed here.",
+    "No release/archive mutations, uploads, gameplay or explicit save changes.",
+    "Existing profile was retained; no fresh-user or storage-reset claim."
+  ],
+  "cleanup": {
+    "ownedTab354Closed": true,
+    "noUserTabsClosed": true,
+    "viewportOverrideUsed": false
+  }
+}
