@@ -1,0 +1,48 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "archiveId": "archive-48",
+  "repository": "mekhovov/revealline-archive-48",
+  "infrastructureCommit": "4ef95ba8dc1ae3648c516157b24228753f7675e3",
+  "deploymentId": 6582115858,
+  "status": "PASS",
+  "workflowRunId": 35679560783,
+  "versions": [
+    "v0.80.3"
+  ],
+  "expectedFiles": 886,
+  "expectedBytes": 423287087,
+  "httpAudit": {
+    "failedCount": 0,
+    "retryCount": 0,
+    "observedFiles": 886,
+    "observedBytes": 423287087
+  },
+  "scopedBrowserJourneyPassed": true,
+  "admitted": true,
+  "evidence": [
+    {
+      "path": "evidence/archive-48-v0803/http-report-original.json",
+      "sha256": "20a006fa35ce6c1f4013e8ad4845c9b480bf85b04918fca1ac762ea37bd5cbd3"
+    },
+    {
+      "path": "evidence/archive-48-v0803/deployments.json",
+      "sha256": "b4b84766fb235677824a61eec2c034289a34d33362eaa8180b354fe54b54bcc5"
+    },
+    {
+      "path": "evidence/archive-48-v0803/deployment-statuses.json",
+      "sha256": "29eb8e91cc9dd2fea3dab4e8ec02e9c938c3de8a2f1b91532a377f753af74d06"
+    },
+    {
+      "path": "evidence/archive-48-v0803/workflow-run.json",
+      "sha256": "be2db7c87659c4a41a47f8784cdf9fd4d713f8fbdb63ac4977df6f071b3d80c1"
+    },
+    {
+      "path": "evidence/archive-48-v0803/native-observation.json",
+      "sha256": "910d6b2c3f1a9c2e6a2a2acdc1cd3bb69c8756616e8aa2e79042cf009d46168d"
+    }
+  ],
+  "limits": [
+    "Historical online preservation and a scoped Missions \u2192 Deploy \u2192 Pause \u2192 explicit Resume \u2192 Pause journey only.",
+    "No save-write, physical iPhone, Steam Deck, controller, multitouch, audible-listening, offline, victory or whole-phase acceptance is claimed."
+  ]
+}
