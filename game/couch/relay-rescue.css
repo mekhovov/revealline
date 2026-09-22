@@ -140,6 +140,12 @@
   background: var(--fk-bg, #070b12);
   border: var(--fk-border-width, 2px) solid var(--fk-line, #425563);
 }
+.field-kit .team-discovery .team-discovery-thumbnail-frame {
+  width: 100%;
+  max-width: 288px;
+  aspect-ratio: 2 / 1;
+  margin-inline: auto;
+}
 .field-kit .team-discovery .team-discovery-teaser canvas {
   display: block;
   width: 100%;
