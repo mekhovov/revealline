@@ -189,5 +189,12 @@ export async function createMetadataInstalledMissionLibrary({
     return library;
   }
   await refreshInstalled();
-  return Object.freeze({ library, refreshInstalled });
+  return Object.freeze({
+    library,
+    refreshInstalled,
+    // A containing gameplay host may mirror these exact owners only after its
+    // opening/input lease is still current. Metadata construction itself must
+    // not mutate an unrelated visible registry while the player acts elsewhere.
+    sources: () => Object.freeze([...journeySources, ...sources, ...customOwners.values()]),
+  });
 }

@@ -142,7 +142,10 @@ test('Download to Play preserves Classic owner, grants no clear and never autola
     },
   });
   const row = classic(host.library);
+  const originalSources = host.sources();
+  assert(Object.isFrozen(originalSources));
   assert.deepEqual(await host.library.prepare(row), { state: 'ready' });
+  assert.deepEqual(host.sources(), originalSources);
   assert.equal(classic(host.library), row);
   assert.equal(host.library.progress(row), '');
   assert.equal(plays, 0);
