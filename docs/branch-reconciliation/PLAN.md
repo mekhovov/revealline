@@ -60,12 +60,20 @@ The old v0.51.1 audio branch has four post-PR commits requiring successor/behavi
 review; it is **not** classified as completely delivered. Its tag endpoint
 returned404, which is retained as an observation rather than a publication claim.
 
-At this checkpoint, the 794 captured ref rows comprise587 merged,34
-patch-equivalent,48 exact-head open-PR,41 historical/superseded,2 needing unique
-change intake,1 active awaiting its owner's draft, and81 still unclassified.
+After independent review, the 794 captured ref rows comprise587 merged,6
+exact-current-content equivalents,48 exact-head open-PR,41 historical/superseded
+controllers,7 source duplicates with pinned unmerged successors,7 needing unique
+change intake,1 active awaiting its owner's draft at snapshot time, and97 still
+unclassified. Earlier patch-history-only promotions were withdrawn: an identical
+historical patch does not prove its behavior remains after subsequent revisions.
 All94 dirty worktrees remain preserved and explicitly unaccounted until owner
-review. Counts are ref rows, not independent feature counts; matching local and
-GitHub refs are deliberately separate.
+review. Any eventual dirty-retention approval must bind staged, unstaged and
+untracked content identities plus the owner's evidence, not merely the same
+path/HEAD; new same-HEAD edits invalidate that approval. Counts are ref rows, not independent feature counts; matching local and
+GitHub refs are deliberately separate. The first review also caught two clean
+detached worktree commits outside the branch inventory. `worktree-commits.json`
+now accounts for every worktree HEAD; both commits have main-history patch
+matches but remain pending current-retention review. Clean does not mean merged.
 
 Reproduction, from this isolated checkout:
 
@@ -77,10 +85,14 @@ node scripts/branch-coverage.mjs NEW_SNAPSHOT_DIRECTORY
 
 Manual proof files are bound to the snapshot's exact tips and main. Do not copy
 them to a new snapshot without revalidation. For this reviewed snapshot, run
-`node scripts/branch-reconciliation-enrich.mjs` and
+`node scripts/branch-reconciliation-enrich.mjs`,
+`node scripts/branch-worktree-coverage.mjs`, and
 `node scripts/branch-reconciliation-validate.mjs`. The validator checks census
 totals, exact-tip bindings, classification evidence and retained dirty states;
-it reports `complete: false` rather than disguising the remaining work.
+it reports `complete: false` rather than disguising the remaining work. The census
+refuses an existing output directory before API/Git work. Node regression tests
+cover history-only equivalence, clean detached omissions, dirty/unknown status,
+explicit holds, owner-retention bindings, and snapshot overwrite refusal.
 
 Stable patch history is not runtime acceptance. Unmatched patches may be a
 rebased/squashed successor, a historical artifact, or unique work. They require

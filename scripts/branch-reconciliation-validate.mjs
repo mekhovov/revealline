@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { completionReport, hasExactCurrentCoverage } from './branch-reconciliation-rules.mjs';
 
 const directory = path.resolve(process.argv[2] || 'docs/branch-reconciliation/2026-09-22');
 const read = async (name) => JSON.parse(await readFile(path.join(directory, name), 'utf8'));
@@ -10,8 +11,12 @@ const patches = await read('patch-index.json');
 const coverage = await read('coverage.json');
 const supersession = await read('supersession-proof.json');
 const historical = await read('historical-ref-proof.json');
+const recovery = await read('recovery-ref-proof.json');
+const art = await read('art-ref-proof.json');
+const worktreeProof = await read('worktree-commits.json');
 assert.equal(historical.main, inventory.main);
-for (const data of [reconciled, patches, coverage]) assert.equal(data.main, inventory.main);
+for (const data of [reconciled, patches, coverage, recovery, art, worktreeProof])
+  assert.equal(data.main, inventory.main);
 assert.equal(supersession.liveMainSha, inventory.main);
 assert.equal(
   inventory.refs.length,
@@ -36,10 +41,7 @@ for (const ref of reconciled.refs) {
     assert(ref.pullRequests.some((pr) => pr.state === 'open' && pr.head === ref.tip));
   if (ref.classification === 'patch-equivalent-to-main') {
     const proof = coverage.coverage.find((item) => item.tip === ref.tip);
-    assert(proof && (proof.allChangedPathsExact || proof.allNonMergePatchesMatchMain));
-    if (proof.allChangedPathsExact) assert(proof.changes.every((item) => item.exact));
-    if (proof.allNonMergePatchesMatchMain)
-      assert(patches.refs.find((item) => item.tip === ref.tip)?.allNonMergePatchesMatchMain);
+    assert(hasExactCurrentCoverage(proof));
   }
   if (
     [
@@ -47,12 +49,27 @@ for (const ref of reconciled.refs) {
       'historical-rejected-proposal',
       'superseded-historical-selector',
       'unique-changes-require-intake',
-    ].includes(ref.classification)
+    ].includes(ref.classification) &&
+    ref.proof?.file === 'historical-ref-proof.json'
   ) {
     const proof = historical.refs.find((item) => item.tip === ref.tip);
     assert(proof && proof.classification === ref.classification);
     assert.equal(proof.dirtyChangesCovered, false);
     assert(proof.refs.some((item) => item.name === ref.name && item.location === ref.location));
+  }
+  if (ref.proof?.file === 'art-ref-proof.json') {
+    const proof = art.refs.find((item) => item.tip === ref.tip && item.name === ref.name);
+    assert(proof);
+    if (ref.classification === 'superseded-duplicate')
+      assert.deepEqual(ref.successor, proof.successor);
+  }
+  if (ref.proof?.file === 'recovery-ref-proof.json') {
+    const proof = recovery.pairs.find(
+      (item) => item.source === ref.tip && item.target === ref.successor.tip,
+    );
+    assert(proof && proof.committedCoverage === 'complete-at-pinned-successor');
+    assert.equal(proof.unaccountedCommittedPaths.length, 0);
+    assert.equal(proof.dirtyChangesCovered, false);
   }
 }
 assert.deepEqual(counts, reconciled.counts.classifications);
@@ -65,6 +82,15 @@ assert(
     .filter((worktree) => worktree.dirty)
     .every((worktree) => worktree.statusEntries.length),
 );
+assert.equal(reconciled.worktreeCommitAccounting.length, inventory.worktrees.length);
+for (const worktree of inventory.worktrees) {
+  const record = reconciled.worktreeCommitAccounting.find((item) => item.path === worktree.path);
+  assert(record && record.tip === worktree.head);
+  assert.deepEqual(
+    record.proof,
+    worktreeProof.proofs.find((item) => item.tip === worktree.head),
+  );
+}
 console.log(
   JSON.stringify(
     {
@@ -73,7 +99,7 @@ console.log(
       refs: inventory.refs.length,
       worktrees: inventory.worktrees.length,
       classifications: counts,
-      complete: counts.unclassified === 0 && inventory.counts.dirtyWorktrees === 0,
+      completion: completionReport(reconciled),
     },
     null,
     2,

@@ -7,7 +7,43 @@ const read = async (name) => JSON.parse(await readFile(path.join(directory, name
 const ledger = await read('reconciled.json');
 const historical = await read('historical-ref-proof.json');
 assert.equal(historical.main, ledger.main);
+const recovery = await read('recovery-ref-proof.json');
+const art = await read('art-ref-proof.json');
+assert.equal(recovery.main, ledger.main);
+assert.equal(art.main, ledger.main);
+for (const item of recovery.pairs) {
+  assert.equal(item.committedCoverage, 'complete-at-pinned-successor');
+  assert.equal(item.unaccountedCommittedPaths.length, 0);
+  for (const ref of ledger.refs.filter((entry) => entry.tip === item.source)) {
+    ref.classification = 'superseded-duplicate';
+    ref.successor = { pr: item.successorPr, tip: item.target };
+    ref.proof = {
+      kind: 'exact-source-path-coverage',
+      file: 'recovery-ref-proof.json',
+      tip: item.source,
+      main: ledger.main,
+    };
+    ref.dirtyChangesCovered = false;
+    ref.disposition =
+      'Retain original ref. Committed changes covered by pinned draft successor, not yet delivered by this proof.';
+    delete ref.requiredAction;
+  }
+}
+for (const item of art.refs) {
+  const ref = ledger.refs.find((entry) => entry.location === 'local' && entry.name === item.name);
+  assert(ref && ref.tip === item.tip, `Stale art proof: ${item.name}`);
+  ref.proof = { kind: item.finding, file: 'art-ref-proof.json', tip: item.tip, main: ledger.main };
+  ref.dirtyChangesCovered = false;
+  ref.requiredAction = item.next;
+  if (item.successor) {
+    ref.classification = 'superseded-duplicate';
+    ref.successor = item.successor;
+  } else if (item.finding !== 'unique-rejected-study-reference-owner-retention-required') {
+    ref.classification = 'unique-changes-require-intake';
+  }
+}
 for (const item of historical.refs) {
+  if (item.classification === 'patch-equivalent-to-main') continue; // Patch-only history still needs current retention review.
   for (const binding of item.refs) {
     const ref = ledger.refs.find(
       (entry) => entry.location === binding.location && entry.name === binding.name,

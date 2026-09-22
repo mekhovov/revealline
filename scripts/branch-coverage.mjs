@@ -2,6 +2,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { hasExactCurrentCoverage } from './branch-reconciliation-rules.mjs';
 
 const directory = path.resolve(process.argv[2] || 'docs/branch-reconciliation/2026-09-22');
 const inventory = JSON.parse(await readFile(path.join(directory, 'inventory.json'), 'utf8'));
@@ -73,13 +74,22 @@ for (const tip of [
     changes,
   });
 }
-const proven = coverage.filter(
-  (item) => item.allChangedPathsExact || item.allNonMergePatchesMatchMain,
-);
+const proven = coverage.filter(hasExactCurrentCoverage);
 for (const ref of inventory.refs) {
   if (ref.classification !== 'unclassified') continue;
   const proof = proven.find((item) => item.tip === ref.tip);
-  if (!proof) continue;
+  if (!proof) {
+    if (coverage.find((item) => item.tip === ref.tip)?.allNonMergePatchesMatchMain) {
+      ref.candidateProof = {
+        file: 'patch-index.json',
+        kind: 'historical-patch-match-only',
+        tip: ref.tip,
+      };
+      ref.requiredAction =
+        'Review present-day retention or explicit successor/reversion intent. Historical patch IDs alone do not prove current coverage.';
+    }
+    continue;
+  }
   ref.classification = 'patch-equivalent-to-main';
   ref.stablePatchGroup =
     patches.refs
@@ -97,9 +107,7 @@ for (const ref of inventory.refs) {
         ) || [],
   };
   ref.proof = {
-    kind: proof.allChangedPathsExact
-      ? 'exact-final-changed-path-blobs-and-modes'
-      : 'all-unique-commit-stable-patches-in-main-history',
+    kind: 'exact-final-changed-path-blobs-and-modes',
     file: 'coverage.json',
     tip: ref.tip,
     main: inventory.main,
