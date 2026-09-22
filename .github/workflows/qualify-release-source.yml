@@ -20,6 +20,11 @@ on:
         required: false
         default: false
         type: boolean
+      run_tests:
+        description: Run all automated suites even while the reviewed temporary waiver is active
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -31,6 +36,9 @@ concurrency:
 jobs:
   qualify:
     if: github.event_name != 'workflow_dispatch' || inputs.operation == 'qualify'
+    outputs:
+      runTests: ${{ steps.test_policy.outputs.runTests }}
+      testMode: ${{ steps.test_policy.outputs.mode }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out exact candidate
@@ -44,6 +52,12 @@ jobs:
           node-version: 20.19.x
           cache: npm
 
+      - name: Read explicit automated-suite policy
+        id: test_policy
+        env:
+          RUN_FULL_TESTS: ${{ inputs.run_tests && 'true' || 'false' }}
+        run: node publishing/test-policy.mjs --force-tests "$RUN_FULL_TESTS"
+
       - name: Record source identity
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
@@ -55,6 +69,7 @@ jobs:
         run: npm ci
 
       - name: Check hosted artifact utility locally
+        if: steps.test_policy.outputs.runTests == 'true'
         run: python3 -m unittest discover -s publishing/utility -p 'test_*.py'
 
       - name: Validate source
@@ -86,6 +101,7 @@ jobs:
           git diff --cached --exit-code
 
   test:
+    if: needs.qualify.outputs.runTests == 'true'
     needs: qualify
     runs-on: ubuntu-latest
     strategy:
@@ -130,7 +146,12 @@ jobs:
           git diff --cached --exit-code
 
   freeze:
-    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'qualify' && inputs.freeze_snapshot
+    if: >-
+      ${{ !cancelled() && github.event_name == 'workflow_dispatch' &&
+          inputs.operation == 'qualify' && inputs.freeze_snapshot &&
+          needs.qualify.result == 'success' &&
+          ((needs.qualify.outputs.testMode == 'required' && needs.test.result == 'success') ||
+           (needs.qualify.outputs.testMode == 'waived' && needs.test.result == 'skipped')) }}
     needs: [qualify, test]
     runs-on: ubuntu-latest
     steps:
@@ -190,6 +211,17 @@ jobs:
           path: automation
           persist-credentials: false
 
+      - name: Set up explicit test policy runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+
+      - name: Read explicit automated-suite policy
+        id: test_policy
+        env:
+          RUN_FULL_TESTS: ${{ inputs.run_tests && 'true' || 'false' }}
+        run: node automation/publishing/test-policy.mjs --force-tests "$RUN_FULL_TESTS"
+
       - name: Validate the reviewed binding before source checkout
         id: binding
         env:
@@ -207,6 +239,7 @@ jobs:
           persist-credentials: false
 
       - name: Verify local utility tests before authenticated work
+        if: steps.test_policy.outputs.runTests == 'true'
         run: python3 -m unittest discover -s automation/publishing/utility -p 'test_*.py'
 
       - name: Inspect all frozen originals without release writes
@@ -248,6 +281,17 @@ jobs:
           path: automation
           persist-credentials: false
 
+      - name: Set up explicit test policy runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+
+      - name: Read explicit automated-suite policy
+        id: test_policy
+        env:
+          RUN_FULL_TESTS: ${{ inputs.run_tests && 'true' || 'false' }}
+        run: node automation/publishing/test-policy.mjs --force-tests "$RUN_FULL_TESTS"
+
       - name: Validate the reviewed binding before source checkout
         id: binding
         env:
@@ -265,6 +309,7 @@ jobs:
           persist-credentials: false
 
       - name: Verify local utility tests before authenticated work
+        if: steps.test_policy.outputs.runTests == 'true'
         run: python3 -m unittest discover -s automation/publishing/utility -p 'test_*.py'
 
       - name: Verify all originals and upload two absent members to the existing draft

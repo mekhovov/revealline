@@ -38,6 +38,9 @@ WORKFLOW = '.github/workflows/qualify-release-source.yml'
 GATES = ['validate', 'lint', 'format', 'native-format', 'motion-syntax', 'test']
 COMMANDS = ['npm run validate', 'npm run lint', 'npm run format:check',
             'npm run format:native:check', 'node --check authoring/motion-lab/app.js']
+WAIVER_FORMAT = 'revealline-source-qualification.v2'
+POLICY_PATH = 'publishing/test-policy.json'
+WAIVER_AUTHORIZATION = 'explicit-user-request-20260922'
 
 
 def require(ok, why):
@@ -141,7 +144,51 @@ class RecordedGitHub(upload_source.GitHub):
             connection.close()
 
 
-def artifact_authority(api, binding):
+def test_policy(body):
+    policy = parse(body)
+    require(isinstance(policy, dict) and set(policy) == {
+        'format', 'mode', 'authorization', 'scope', 'reason', 'restoration'}, 'Invalid test policy fields')
+    require(policy['format'] == 'revealline-release-test-policy.v1' and
+            policy['mode'] in ['required', 'waived'] and policy['authorization'] == WAIVER_AUTHORIZATION and
+            policy['scope'] == 'automated-test-suites' and
+            all(isinstance(policy[k], str) and policy[k].strip() and len(policy[k]) <= 2000
+                for k in ['reason', 'restoration']), 'Invalid temporary test policy')
+    return policy
+
+
+def committed_test_policy(repo, source):
+    """Missing policy preserves the legacy requirement; Git errors never enable a waiver."""
+    args = ['git', '-C', str(repo)]
+    row = subprocess.check_output(args + ['ls-tree', source['commit'], '--', POLICY_PATH], timeout=30)
+    if not row:
+        return None
+    require(row.startswith(b'100644 blob ') and row.endswith(b'\t' + POLICY_PATH.encode() + b'\n'),
+            'Test policy must be an ordinary committed file')
+    size = subprocess.check_output(args + ['cat-file', '-s', source['commit'] + ':' + POLICY_PATH], timeout=30)
+    require(size.strip().isdigit() and 0 < int(size) <= 16384, 'Test policy exceeds bound')
+    body = subprocess.check_output(args + ['show', source['commit'] + ':' + POLICY_PATH], timeout=30)
+    require(len(body) == int(size), 'Test policy size differs')
+    test_policy(body)
+    return body
+
+
+def source_jobs_check(jobs, source, waived=False):
+    required = ['qualify', 'freeze'] if waived else ['qualify', 'test (1)', 'test (2)', 'test (3)', 'test (4)', 'freeze']
+    for name in required:
+        matched = [j for j in jobs if j.get('name') == name]
+        require(len(matched) == 1 and matched[0].get('status') == 'completed' and
+                matched[0].get('conclusion') == 'success' and matched[0].get('head_sha') == source,
+                'Actual successful source/freeze job missing: ' + name)
+    if waived:
+        tests = [j for j in jobs if j.get('name') == 'test' or str(j.get('name', '')).startswith('test (')]
+        names = [j.get('name') for j in tests]
+        require(names == ['test'] or len(names) == 4 and set(names) == {'test (1)', 'test (2)', 'test (3)', 'test (4)'},
+                'Actual skipped test job inventory missing')
+        require(all(j.get('status') == 'completed' and j.get('conclusion') == 'skipped' and
+                    j.get('head_sha') == source for j in tests), 'Waived test jobs must actually be skipped')
+
+
+def artifact_authority(api, binding, policy_body=None):
     repo, expected = binding['repository'], binding['artifact']
     item = api.get(f'/repos/{repo}/actions/artifacts/{expected["id"]}')
     require(item.get('id') == expected['id'] and item.get('name') == 'qualified-release-snapshot' and
@@ -164,11 +211,11 @@ def artifact_authority(api, binding):
             break
     else:
         raise ValueError('Jobs exceed pagination bound')
-    for name in ['qualify', 'test (1)', 'test (2)', 'test (3)', 'test (4)', 'freeze']:
-        matched = [j for j in jobs if j.get('name') == name]
-        require(len(matched) == 1 and matched[0].get('status') == 'completed' and
-                matched[0].get('conclusion') == 'success' and matched[0].get('head_sha') == binding['source']['commit'],
-                'Actual successful source/freeze job missing: ' + name)
+    waived = policy_body is not None and test_policy(policy_body)['mode'] == 'waived'
+    # A policy permits skipping; an explicitly opted-in successful test run remains valid.
+    skipped = any(j.get('name') in ['test', 'test (1)'] and
+                  j.get('conclusion') == 'skipped' for j in jobs)
+    source_jobs_check(jobs, binding['source']['commit'], waived=waived and skipped)
     return item
 
 
@@ -224,8 +271,8 @@ def source_identity(repo, source):
     return {'sourceRevision': source['commit'], 'sourceTree': source['tree'], 'trackedCheckoutClean': True}
 
 
-def inspect_original(binding, repo, out, api):
-    item = artifact_authority(api, binding)
+def inspect_original(binding, repo, out, api, policy_body=None):
+    item = artifact_authority(api, binding, policy_body)
     source, artifact = binding['source'], binding['artifact']
     original = out / 'qualified-artifact-original.zip'
     record(out / 'evidence/artifact-authority.json', item)
@@ -267,6 +314,8 @@ def counts_pass(counts):
 
 
 def qualification_check(q, binding):
+    if q.get('format') == WAIVER_FORMAT:
+        return waiver_qualification_check(q, binding)
     source = binding['source']
     require(q.get('format') == 'revealline-source-qualification.v1' and q.get('passed') is True and
             q.get('sourceRevision') == q.get('actualCheckoutCommit') == source['commit'] and
@@ -296,6 +345,44 @@ def qualification_check(q, binding):
                 'frozenOfflineInventoryAndBindingsVerified']), 'Qualification frozen original coverage missing')
 
 
+def waiver_qualification_check(q, binding):
+    source = binding['source']
+    require(q.get('status') == 'qualified-with-test-waiver' and q.get('releaseEligible') is True and
+            not any(k in q for k in ['passed', 'testFiles', 'additionalManualQualification', 'shards', 'testShards']) and
+            q.get('tests') == {'status': 'waived', 'counts': None}, 'Waiver must not assert passing tests')
+    require(q.get('sourceRevision') == q.get('actualCheckoutCommit') == source['commit'] and
+            q.get('sourceTree') == q.get('actualCheckoutTree') == source['tree'] and
+            q.get('version') == source['version'] and q.get('allTrackedSourceContentsAndModesMatch') is True,
+            'Reviewed qualification identity/result differs')
+    gates = q['gates']
+    require([g['gate'] for g in gates] == GATES[:5] and [g['command'] for g in gates] == COMMANDS and
+            all(successful(g['step']) and 'actualJobSteps' not in g for g in gates),
+            'All five actual non-test source gates required')
+    policy = q['testPolicy']
+    require(set(policy) == {'mode', 'authorization', 'reason', 'policyEvidence'} and
+            policy['mode'] == 'waived' and policy['authorization'] == WAIVER_AUTHORIZATION and
+            isinstance(policy['reason'], str) and policy['reason'].strip() and len(policy['reason']) <= 2000,
+            'Explicit test waiver authorization required')
+    proof = q['waiverEvidence']
+    require(set(proof) == {'runId', 'runEvidence', 'jobsEvidence'} and
+            proof['runId'] == binding['artifact']['runId'] and positive(proof['runId'], 10**14),
+            'Waiver must bind the actual frozen-source run')
+    for item in [policy['policyEvidence'], proof['runEvidence'], proof['jobsEvidence']]:
+        require(isinstance(item, dict) and set(item) == {'path', 'bytes', 'sha256'} and
+                isinstance(item['path'], str) and positive(item['bytes'], 4 * MIB) and
+                isinstance(item['sha256'], str) and HEX.fullmatch(item['sha256']) and
+                item in q['evidencePins'], 'Waiver original pin missing')
+    require(policy['policyEvidence']['path'] == POLICY_PATH, 'Waiver policy must use its canonical evidence path')
+    require(policy['policyEvidence']['bytes'] <= 16384, 'Waiver policy exceeds its 16 KiB bound')
+    require(successful(q['ordinaryBuildCorroboration']['step']) and
+            q['ordinaryBuildCorroboration']['command'] == 'npm run build', 'Actual successful ordinary build missing')
+    frozen = q['frozenArtifactCorroboration']
+    require(frozen['artifactId'] == binding['artifact']['id'] and
+            all(frozen.get(k) is True for k in ['wholeOriginalArtifactVerifiedBeforeQualification',
+                'sourceTarGitBlobTypeModeAndPaxCommitVerified', 'allInnerZipManifestBytesVerified',
+                'frozenOfflineInventoryAndBindingsVerified']), 'Qualification frozen original coverage missing')
+
+
 def sensitive_check(body):
     patterns = [rb'gh[pousr]_[A-Za-z0-9]{20,}', rb'(?i)Bearer\s+[a-zA-Z0-9._-]{20,}',
                 rb'(?i)[?&](?:sig|signature|X-Amz-Signature|token)=[^\s"<>]{8,}']
@@ -303,7 +390,7 @@ def sensitive_check(body):
             'Sensitive token or signed URL pattern in release evidence')
 
 
-def verify_evidence(body, qualification, source):
+def verify_evidence(body, qualification, source, policy_body=None):
     """Every stored original is bounded, path-safe and checked by CRC/length/hash."""
     with zipfile.ZipFile(io.BytesIO(body)) as archive:
         inventory = inspector.zip_inventory(archive, 2001)
@@ -331,6 +418,33 @@ def verify_evidence(body, qualification, source):
         for item in qualification['evidencePins']:
             require(item['path'] in index and all(index[item['path']][k] == item[k] for k in ['bytes', 'sha256']),
                     'Qualification pin has no exact archived original')
+        if qualification.get('format') == WAIVER_FORMAT:
+            waiver = qualification['waiverEvidence']
+            policy_pin = qualification['testPolicy']['policyEvidence']
+            policy_original = archive.read(policy_pin['path'])
+            policy = test_policy(policy_original)
+            require(policy['mode'] == 'waived' and all(policy[k] == qualification['testPolicy'][k]
+                    for k in ['mode', 'authorization', 'reason']), 'Archived policy differs from waiver')
+            if policy_body is not None:
+                require(policy_original == policy_body, 'Waiver policy differs from the exact committed source')
+            run = parse(archive.read(waiver['runEvidence']['path']))
+            jobs = parse(archive.read(waiver['jobsEvidence']['path']))
+            require(run.get('id') == waiver['runId'] and run.get('event') == 'workflow_dispatch' and
+                    run.get('path') == WORKFLOW and run.get('head_sha') == source['commit'] and successful(run),
+                    'Waiver original run identity/result differs')
+            job_rows = jobs.get('jobs')
+            require(isinstance(job_rows, list) and 0 < len(job_rows) <= 1000 and jobs.get('total_count') == len(job_rows) and
+                    all(j.get('run_id') == run['id'] and positive(j.get('id'), 10**14) for j in job_rows) and
+                    len({j['id'] for j in job_rows}) == len(job_rows), 'Waiver original jobs incomplete or borrowed')
+            source_jobs_check(job_rows, source['commit'], waived=True)
+            qualify = next(j for j in job_rows if j.get('name') == 'qualify')
+            names = ['Validate source', 'Lint source', 'Check formatting',
+                     'Check native formatting', 'Check motion lab syntax']
+            for gate, name in zip(qualification['gates'], names):
+                matched = [s for s in qualify.get('steps', []) if s.get('name') == name]
+                require(gate.get('jobId') == qualify['id'] and len(matched) == 1 and
+                        all(gate['step'].get(k) == matched[0].get(k) for k in ['name', 'number', 'status', 'conclusion']) and
+                        successful(matched[0]), 'Waiver mandatory gate lacks its actual job/step original')
         return {'files': len(rows), 'originalBytes': sum(r['bytes'] for r in rows),
                 'manifestSha256': sha(manifest_body), 'everyMemberCRCAndHashVerified': True,
                 'allQualificationPinsResolved': True}
@@ -373,12 +487,15 @@ class DraftUploadAPI:
         return self.api.upload(path, stream, size, digest)
 
 
-def small_assets_check(binding, bodies, inspection):
+def small_assets_check(binding, bodies, inspection, policy_body=None, *, require_committed_policy=False):
     source = binding['source']
     for name, body in bodies.items():
         if name != 'source-qualification-evidence.zip':
             sensitive_check(body)
     q = parse(bodies['source-qualification.json'])
+    if q.get('format') == WAIVER_FORMAT and require_committed_policy:
+        require(policy_body is not None and test_policy(policy_body)['mode'] == 'waived',
+                'Waiver upload requires the exact committed policy')
     qualification_check(q, binding)
     prior = parse(bodies['verification.json'])
     for key in ['format', 'status', 'gitHead', 'gitTree', 'version', 'manifestSha256', 'releaseHashChainVerified']:
@@ -391,7 +508,9 @@ def small_assets_check(binding, bodies, inspection):
     require(record_value['sourceRevision'] == source['commit'] and record_value['sourceTree'] == source['tree'] and
             record_value['version'] == source['version'] and record_value['sourceQualified'] is True and
             record_value['originalFrozenPayloadVerified'] is True, 'Evidence record source/result differs')
-    require(record_value['sourceGateCounts'] == q['tests'] and
+    waived = q.get('format') == WAIVER_FORMAT
+    require((record_value['sourceGateCounts'] is None and record_value.get('testStatus') == 'waived'
+             if waived else record_value['sourceGateCounts'] == q['tests']) and
             all(record_value['frozenArtifact'][k] == binding['artifact'][k] for k in ['bytes', 'sha256']) and
             record_value['frozenArtifact'].get('externallyExpectedDigestSupplied') is True,
             'Evidence record gate totals or original artifact binding differs')
@@ -412,10 +531,10 @@ def small_assets_check(binding, bodies, inspection):
         require(row.get('originalMember') == inspection[role]['outerMember'] == source['version'] + '/' + member and
                 row.get('copiedToDisk') is False and all(descriptors[name][k] == inspection[role][k] for k in ['bytes', 'sha256']),
                 'Original source/distribution member binding differs')
-    return verify_evidence(bodies['source-qualification-evidence.zip'], q, source)
+    return verify_evidence(bodies['source-qualification-evidence.zip'], q, source, policy_body)
 
 
-def upload_originals(binding, out, inspection, api):
+def upload_originals(binding, out, inspection, api, policy_body=None):
     assets = asset_set(api, binding, SMALL_NAMES, NAMES - SMALL_NAMES)
     bodies = {}
     small = out / 'evidence/reviewed-small-assets'
@@ -429,7 +548,7 @@ def upload_originals(binding, out, inspection, api):
         bodies[asset['name']] = path.read_bytes()
     for name in ['release.json', 'manifest.json', 'distribution.zip.sha256']:
         require(bodies[name] == (out / 'qualified-artifact-verified' / name).read_bytes(), 'Small original differs: ' + name)
-    evidence_review = small_assets_check(binding, bodies, inspection)
+    evidence_review = small_assets_check(binding, bodies, inspection, policy_body, require_committed_policy=True)
     record(out / 'evidence/attachment-preflight.json', evidence_review)
     descriptors = {r['name']: r for r in binding['release']['assets']}
     common = dict(outer_zip=str(out / 'qualified-artifact-original.zip'),
@@ -525,10 +644,11 @@ def main():
             'workflowSha': workflow_sha, 'workflowTree': automation_tree, 'runId': os.environ.get('GITHUB_RUN_ID'),
             'runAttempt': os.environ.get('GITHUB_RUN_ATTEMPT'), 'sourceCheckout': before,
             'helpers': [pin(p) for p in sorted(helper_root.glob('*.py'))]})
-        inspection = inspect_original(binding, args.repo, out, api)
+        policy_body = committed_test_policy(args.repo, binding['source'])
+        inspection = inspect_original(binding, args.repo, out, api, policy_body)
         if args.mode == 'upload-originals':
-            upload_originals(binding, out, inspection, api)
-        artifact_authority(api, binding)
+            upload_originals(binding, out, inspection, api, policy_body)
+        artifact_authority(api, binding, policy_body)
         require(source_identity(args.repo, binding['source']) == before, 'Source identity changed')
         record(out / 'evidence/source-after.json', before)
         result['status'] = 'INSPECTED_VERIFIED' if args.mode == 'inspect-artifact' else 'ALL_NINE_VERIFIED'

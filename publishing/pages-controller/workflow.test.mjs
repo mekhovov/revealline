@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 
-test('source qualification retains six gates while the controller owns guarded main publication', async () => {
+test('source qualification retains mandatory guards and restorable suites while controller owns publication', async () => {
   const legacy = await fs.readFile(
     new URL('../../.github/workflows/deploy-pages.yml', import.meta.url),
     'utf8',
@@ -56,6 +56,122 @@ test('source qualification retains six gates while the controller owns guarded m
       workflow.indexOf('name: Upload verified Pages artifact'),
   );
   assert.doesNotMatch(workflow, /pull_request_target|environment:.*preview|npm test/);
+});
+
+test('explicit policy controls only suites; all build, identity and publication guards stay mandatory', async () => {
+  const read = (name) =>
+    fs.readFile(new URL('../../.github/workflows/' + name, import.meta.url), 'utf8');
+  const pr = await read('deploy-pages.yml');
+  const manual = await read('qualify-release-source.yml');
+  const pages = await read('publish-frozen-pages.yml');
+  for (const workflow of [pr, manual, pages]) {
+    assert.match(workflow, /id: test_policy/);
+    assert.match(workflow, /publishing\/test-policy.mjs/);
+    assert.doesNotMatch(workflow, /continue-on-error|\|\| true/);
+  }
+  assert.match(
+    pr,
+    /test:\n\s+if: github.event_name == 'pull_request' && needs.preflight.outputs.runTests == 'true'/,
+  );
+  assert.match(
+    pr,
+    /Verify immutable production sources first\n\s+if: steps.test_policy.outputs.runTests == 'true'/,
+  );
+  assert.match(manual, /test:\n\s+if: needs.qualify.outputs.runTests == 'true'/);
+  assert.match(manual, /run_tests:\n[\s\S]*?type: boolean/);
+  assert.equal(
+    (
+      manual.match(
+        /Verify local utility tests before authenticated work\n\s+if: steps.test_policy.outputs.runTests == 'true'/g,
+      ) ?? []
+    ).length,
+    2,
+  );
+  assert.match(
+    manual,
+    /Check hosted artifact utility locally\n\s+if: steps.test_policy.outputs.runTests == 'true'/,
+  );
+  assert.match(
+    pages,
+    /Verify metadata bridges and bounded ZIP extraction\n\s+if: steps.test_policy.outputs.runTests == 'true'/,
+  );
+  for (const [workflow, names] of [
+    [
+      pr,
+      [
+        'Validate, lint, and format source',
+        'Verify Field Kit production ledger and compiled output',
+        'Verify exact tracked source before commands',
+        'Build pull-request artifact',
+      ],
+    ],
+    [
+      manual,
+      [
+        'Validate source',
+        'Lint source',
+        'Check formatting',
+        'Check native formatting',
+        'Require reviewed production slots in the committed ledger',
+        'Freeze the exact qualified commit',
+        'Inspect all frozen originals without release writes',
+        'Verify all originals and upload two absent members to the existing draft',
+      ],
+    ],
+    [
+      pages,
+      [
+        'Validate frozen selector and admitted archives',
+        'Assemble exact current ZIP and historical metadata bridges',
+        'Independently reread every prepared artifact byte',
+      ],
+    ],
+  ]) {
+    const blocks = workflow.split('      - name: ');
+    for (const name of names) {
+      const block = blocks.find((value) => value.startsWith(name + '\n'));
+      assert.ok(block, name);
+      assert.doesNotMatch(block, /if:.*test_policy|if:.*runTests/, name);
+    }
+  }
+});
+
+test('freeze admits required-success or explicit-waiver-skipped only, never failure or cancellation', async () => {
+  const manual = await fs.readFile(
+    new URL('../../.github/workflows/qualify-release-source.yml', import.meta.url),
+    'utf8',
+  );
+  const match = /  freeze:\n    if: >-\n([\s\S]*?)\n    needs:/.exec(manual);
+  assert.ok(match);
+  const expression = match[1]
+    .trim()
+    .replace(/^\$\{\{/, '')
+    .replace(/\}\}$/, '');
+  const evaluate = new Function(
+    'cancelled',
+    'github',
+    'inputs',
+    'needs',
+    'return (' + expression + ')',
+  );
+  for (const cancelled of [false, true])
+    for (const mode of ['required', 'waived', ''])
+      for (const qualify of ['success', 'failure', 'skipped', 'cancelled'])
+        for (const tests of ['success', 'failure', 'skipped', 'cancelled']) {
+          const result = evaluate(
+            () => cancelled,
+            { event_name: 'workflow_dispatch' },
+            { operation: 'qualify', freeze_snapshot: true },
+            { qualify: { result: qualify, outputs: { testMode: mode } }, test: { result: tests } },
+          );
+          assert.equal(
+            result,
+            !cancelled &&
+              qualify === 'success' &&
+              ((mode === 'required' && tests === 'success') ||
+                (mode === 'waived' && tests === 'skipped')),
+          );
+        }
 });
 
 test('delivery-only push is excluded after the controller glob while PR review and mixed publication remain enabled', async () => {
