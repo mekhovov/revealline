@@ -74,6 +74,9 @@ test('bounded reader rejects duplicates, malformed metadata and mixed source edi
     (value) => {
       value.missions[0].modes = ['team'];
     },
+    (value) => {
+      delete value.missions.find((row) => row.packId).packIdentity;
+    },
   ]) {
     const value = structuredClone(index);
     mutate(value);
@@ -82,4 +85,11 @@ test('bounded reader rejects duplicates, malformed metadata and mixed source edi
   const mixed = structuredClone(index);
   mixed.missions[1].sourceFile.sha256 = 'a'.repeat(64);
   assert.throws(() => classicLibrarySources(mixed, adapters), /different source editions/);
+  const artworkMixed = structuredClone(index);
+  const firstPack = artworkMixed.missions.find((row) => row.packId);
+  const sibling = artworkMixed.missions.find(
+    (row) => row !== firstPack && row.packId === firstPack.packId,
+  );
+  sibling.packIdentity.sha256 = 'b'.repeat(64);
+  assert.throws(() => classicLibrarySources(artworkMixed, adapters), /different source editions/);
 });

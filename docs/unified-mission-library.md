@@ -80,3 +80,31 @@ Current state: implementation in progress; no B release or public acceptance yet
   campaign or search change no longer overwrites the new view's status.
 - All39 fast registry, chooser, adapter, handoff and existing-chooser checks pass.
   Host mounting, exact receiving-host lookup and public acceptance remain pending.
+
+### Exact targets and installed editions
+
+- Solo's guarded chapter launcher now accepts an exact campaign, mission and
+  revision. Explicit selections cannot silently become the first or remembered
+  mission, and late selections are not clamped to earned unlocks. Omitted targets
+  preserve existing chapter Continue behavior. This is launch-path support; the
+  unified selector is still not mounted in gameplay hosts.
+- Added Custom adapters preserving original installed pack, entry and level
+  references, host-declared mode support, authored order and actual rule text.
+  Only positively verified originals are excluded from Custom. Names and matching
+  IDs do not combine editions.
+- Added full prepared-pack canonical SHA-256/byte identities to the trusted index
+  and a shared immutable-object verification cache. This distinguishes modified
+  artwork editions without fetching every official pack or decoding its pictures.
+  Managed original-picture readiness remains a separate host check. The110-row
+  index is now183,555 bytes.
+- Local verification:56 fast tests, all16 existing Solo chapter-launch host
+  regressions, and eight full-source index/determinism/tamper/pack-identity tests
+  pass (seven index cases plus the separate all-prepared-pack case). Independent
+  read-only review found no blocker in this slice and repeated21 helper/adapter
+  cases plus two actual Solo host regressions. These are finite test boundaries,
+  not native/controller/public verification.
+
+Next: mount the library in Solo Journey and Classic hosts, resolve incoming opaque
+selection through the exact registered owner, wire preparation/readiness and
+device Custom content, then repeat for Versus and Team. Retain atomic artwork
+adoption, replacement/departure guards and each owner's separate Next sequence.
