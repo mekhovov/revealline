@@ -8,6 +8,7 @@ import {
   loadCatalog,
   validateAdmissions,
   rootCompatibilityRows,
+  rootReleaseProjection,
   directoryInventory,
 } from './assemble.mjs';
 import { digest, jsonBytes, retainRecentMetadata } from './metadata.mjs';
@@ -235,6 +236,20 @@ test('complete artifact retains original graph and creates only authenticated hi
   assert.equal(receipt.currentGraphLayout, 'single-canonical-with-root-metadata-v1');
   const { metadata } = await loadCatalog(f.directory);
   const current = metadata.get('v0.44.0');
+  const rootRelease = JSON.parse(
+    await fs.readFile(path.join(f.outputDirectory, 'release.json'), 'utf8'),
+  );
+  assert.deepEqual(rootRelease, rootReleaseProjection(current.record, 'mekhovov/revealline'));
+  assert.equal(rootRelease.play, 'releases/v0.44.0/site/game/');
+  assert.equal(
+    rootRelease.download,
+    'https://github.com/mekhovov/revealline/releases/download/v0.44.0/distribution.zip',
+  );
+  await fs.access(path.join(f.outputDirectory, rootRelease.play, 'index.html'));
+  assert.deepEqual(
+    await fs.readFile(path.join(f.outputDirectory, 'releases/v0.44.0/release.json')),
+    current.recordBytes,
+  );
   // Every immutable runtime body is present once at its canonical path, even
   // when its old root duplicate is no longer emitted. Never edit frozen bytes.
   for (const row of current.manifest.files) {
