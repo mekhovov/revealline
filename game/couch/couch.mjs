@@ -2,6 +2,7 @@ import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
+import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
 import { createBoardFootprints } from './board-footprint.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
@@ -244,6 +245,17 @@ try {
     journeyChooser = null,
     journeySkipArmed = null;
   const journeySessionId = authoredJourney ? crypto.randomUUID() : null;
+  const journeySaveCue = attachJourneySaveCue({
+    document,
+    target: $('race-pause'),
+    action: $('race-journey-save-options'),
+    announcement: $('race-journey-save-announcement'),
+    onOpen() {
+      if (shell.scope() !== 'main') return;
+      const target = $('race-journey-save').hidden ? $('race-start') : $('race-journey-save-retry');
+      if (!target.disabled && !target.hidden) target.focus();
+    },
+  });
   if (authoredJourney) {
     document.body.classList.add('candidate-journey');
     candidateJourney = createCandidateVersusHost(authoredRoute.source, {
@@ -269,10 +281,14 @@ try {
     journeyProfile = createJourneyProfileStore({
       profileKey: authoredRoute.profileKey,
       onStatus({ ready, durable, error }) {
-        $('race-journey-save').hidden = !ready || durable || !error;
+        const unsaved = journeySaveCue.update({ ready, durable, error });
+        const notice = $('race-journey-save');
+        notice.hidden = !unsaved && !notice.contains(document.activeElement);
         $('race-journey-save-message').textContent = error
           ? `Journey race progress is session-only. Retry saving or export before closing. ${error}`
-          : '';
+          : ready && durable
+            ? 'Journey race progress saved locally. You can continue playing.'
+            : '';
       },
     });
     await journeyProfile.load();
@@ -1800,6 +1816,7 @@ try {
     'race-journey-preferences-retry',
     'race-journey-preferences-export',
     'race-journey-save-retry',
+    'race-journey-save-options',
     'race-journey-save-export',
     'race-chapter-retry',
     'race-picture-cancel',
