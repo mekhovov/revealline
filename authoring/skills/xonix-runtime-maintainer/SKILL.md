@@ -128,6 +128,20 @@ control text size. Test actual opening/authored Journey controller entry as well
 as Legacy: discovery-held A must remain neutral, fresh A launches the named map,
 then Pause/Resume must retain the same run without leaking Confirm into movement.
 
+For iPhone and iPad display, distinguish a Safari tab from a Home Screen launch.
+Safari does not expose document fullscreen for the main game page; never ship a dead
+fullscreen control or claim that responsive CSS removes browser bars. Keep the tab
+layout usable with dynamic viewport units and safe-area insets, and offer a concise
+keyboard/controller-accessible explanation of Safari Share → Add to Home Screen.
+The packaged manifest, icons, start URL and standalone metadata must remain scoped
+and byte-inventoried. In standalone mode, mark the root immersive without showing
+the install explanation. Test iPhone and touch-capable iPad identities, a supported
+Fullscreen API browser, an unsupported ordinary browser and an already-installed
+launch separately. Modeled identities do not certify physical Safari or saved-data
+behavior. Prompt: “On an iPhone-sized Safari tab, activate the visible full-screen
+help, complete it without a pointer, then launch the installed build and prove the
+same mission fits safe areas with no install prompt and no automatic Resume.”
+
 For Library selection and saved-flight restoration, use the Solo host's `focusMission` return path only after the owned operation succeeds. Dismiss retained Settings as well as Workshop/Home before focusing the paused mission. Passive Back, Stay, cancellation, failures and stale callbacks retain their existing parent/focus behavior; never replace operation ownership with a global close-all-dialogs shortcut. Cover ready and active-cut selection, suspended/imported restore, unchanged checkpoints and explicit Start/Resume. See [Library launch navigation](../../../docs/library-launch-navigation.md) for the maintenance prompt and the separate modeled/native verification gates. For native saved-flight checks, export a real paused cut, select another mission without starting it, import the downloaded file, and export again before Resume. Compare replay, checkpoint, run identity, presentation pins and continuation exactly; only a refreshed savedAt timestamp may differ. Resume must require an explicit action and use the retained direction. For Grid + buffer, also export an off-center queued turn and prove the queue survives import before explicit Resume consumes it. Record whether the sample was on secured ground or a live cut; one does not establish both. Keep physical-device acceptance separate.
 
 For Team lobby changes, keep the mode/arena choices, preview, objective and Start together, and keep authored threat/Support/stronghold guidance inside the existing Help reading region so it remains available during Pause. Preserve IDs and reading/controller ownership. Large text may scroll vertically; do not shrink it to conceal layout overflow. Resize may reveal only the current foreground lobby/paused action, with ownership rechecked after layout reads; never refocus or resume. See [compact Team lobby](../../../docs/team-lobby-layout.md) for the native and modeled checks and authoring prompt. When restructuring lobby markup, include `coop-lobby-preview.test.mjs` with the navigation/resize cohort. Check common lobby ownership and preview-before-launch reading order through the new grouping while preserving exact image reuse, mystery masking, retry, earned-victory and no-automatic-Start assertions. Do not treat the old immediate-parent shape as player behavior.
@@ -1152,7 +1166,6 @@ a fitting canvas alone does not establish unobscured action feedback. Extend
 controller checks through Missions/Deploy/Pause/Resume without pointer clicks,
 while keeping modeled and physical Steam Deck evidence separate.
 
-
 ### Combined handheld input and HUD qualification
 
 Keep Solo, Versus and Team on `attachTouchSteering` and shared preferences. A second ignored finger must not cancel the owning finger or another seat. Layout resize cancels only an active captured gesture and pauses through the host; idle resize does not pause. Explicit Resume and fresh input remain mandatory after interruption. Test every pad style and both turning policies through the actual host.
@@ -1166,7 +1179,6 @@ Integration prompt: “Compose the compact HUD, Team landscape, extra-finger, re
 When a Missions card rebuilds during activation, a bubbling event's nested artwork/status target may already be detached from its button. Capture the actual initiating card before host mutation, but queue restoration only after its target handler via the matching bubbling phase: native callbacks can checkpoint microtasks between listeners. Test that timing separately from synchronous JS dispatch. Restore only through the shared operation-focus lease for the same open dialog and selected mission. Do not grant focus to passive repaints or BODY. Retain tests for nested labels, keyboard/controller activation, newer focus, Back, reopening and destroy; see [Mission selection focus](../../../docs/mission-selection-focus.md). Native and physical input evidence remain distinct from finite DOM tests.
 
 For [Team terminal feedback](../../../docs/team-terminal-player-hud.md), finish all player-facing instructions with the attempt: full and compact HUD state/charge fields, Help Support paragraphs and the footer live region must not promise rescue, crawling or Support after won/lost. Keep player identity and the existing Results/Retry actions clear. Preserve event/input cleanup while suppressing terminal-step flight captions; keep active capture, rescue and recovery captions unchanged. Preserve the distinct legal one-down/zero-reserve case, where free rescue remains available, and explicit Help/Back/Resume ownership. Use legal imported routes and the [focused prompt](../../prompts/team-terminal-player-hud.md); QA maps are test fixtures, never production campaigns. Retain exact RED/green source bindings and deduplicate the existing terminal-message guard when composing held presentation work. This bounded correction does not qualify the whole P08 phase.
-
 
 ## Team complete touch-layout qualification
 

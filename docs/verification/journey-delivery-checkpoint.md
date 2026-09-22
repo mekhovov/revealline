@@ -111,3 +111,14 @@ cache budget. It began before the final metadata-reader edits and is therefore
 packaging evidence, **not** an exact-final-source freeze. The final committed
 head still requires fresh hosted preflight, all test shards and build gates.
 The failed runs remain part of the record. No v0.82.0 deployment is claimed.
+
+Before a new run could start, accepted main advanced to `e8bacfe0` (iOS Home
+Screen guidance, PR #224, plus the already published v0.80.2 selector). The
+checkpoint merges that main revision without modifying its accepted guidance or
+publication evidence. Only the three version files conflicted; every package and
+build version stays at 0.82.0. The Solo document's new guidance dialog merged
+without conflict, and the production ledger still reproduces exactly. The
+combined source, not either parent, must pass the new PR gates.
+Local Node 20 startup/fullscreen checks pass 39/39. Independent Node 22 review
+passes 23/23 fullscreen/bootstrap checks and 16/16 actual authored-mode-entry
+checks, with no failures or skips. This does not certify physical iOS behavior.
