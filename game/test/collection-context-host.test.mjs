@@ -190,6 +190,7 @@ for (const modes of [['standard'], ['gentle'], ['standard', 'gentle']])
 test('global Collection inspects earned chapter progress independently of the paused current flight', async (t) => {
   const page = await setup(t);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let i = 0; i < 20; i++) page.frame();

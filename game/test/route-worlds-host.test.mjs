@@ -4,6 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { releasedExternalOriginal } from './helpers/released-original.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { buildRouteWorld } from '../../authoring/library/route-worlds/build.mjs';
@@ -205,8 +206,10 @@ async function page(t, f = {}, release = false) {
     if (e) return new Response(u.endsWith('/pack.json') ? e.payloads.pack : e.payloads.media);
     return prior(url, options);
   };
+  const installedFetch = globalThis.fetch;
   t.after(() => {
-    globalThis.fetch = prior;
+    // The outer page fixture may already have restored browser globals.
+    if (globalThis.fetch === installedFetch) globalThis.fetch = prior;
   });
   return Object.assign(p, { fixture: f, requests });
 }
@@ -320,6 +323,7 @@ test('five exact registered editions install together within unchanged budgets, 
   await t.test('five native pairs, three Route Choices wins and one Sentinel win', async (t) => {
     const p = await page(t, f);
     p.$('start-button').click();
+    await settle(() => p.doc.body.dataset.flightState === 'running');
     direction(p, 'down');
     ticks(p, 13);
     p.$('pause-button').click();
@@ -365,7 +369,10 @@ test('five exact registered editions install together within unchanged budgets, 
     }
     await open(p);
     await play(p, sentinel);
-    assert.equal(p.rendered.backdrop.pin.sha256, sentinel.descriptor.originals[0].sha256);
+    assert.equal(
+      p.rendered.backdrop.pin.sha256,
+      releasedExternalOriginal(sentinel.descriptor, 0).sha256,
+    );
     assert.equal(p.rendered.run.activeClassId, 'scout');
     const route = sentinelProof.routes.find((r) => r.id === 'fpv/standard/immediate/court-upper');
     for (const step of route.segments) {
@@ -382,7 +389,11 @@ test('five exact registered editions install together within unchanged budgets, 
     receipts = library.pictureReceipts;
     assert.equal(receipts.length, 4);
     for (const e of [...editions, sentinel])
-      assert(receipts.some((r) => r.presentationPin.sha256 === e.descriptor.originals[0].sha256));
+      assert(
+        receipts.some(
+          (r) => r.presentationPin.sha256 === releasedExternalOriginal(e.descriptor, 0).sha256,
+        ),
+      );
     assert(library.storyReceipts.every((r) => r.storyPin === null));
     p.$('library-button').click();
     await p.$('export-backup').onclick();

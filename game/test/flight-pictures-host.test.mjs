@@ -494,7 +494,13 @@ test('a missing saved original cannot adopt a different picture or overwrite the
     checkpoint = authoritativeCheckpoint(current),
     raw = p.storage.getItem(sessionKey),
     image = p.rendered.backdrop;
-  assert.equal(image.pin.assetId, 'picture-b');
+  assert.equal(
+    image.pin.assetId,
+    'picture-a',
+    'Confirmed Restart retains accepted A even after assigning B.',
+  );
+  // B remains the fresh assignment; importing missing saved A must neither
+  // switch to B nor disturb the already decoded current A and its checkpoint.
   // Model lost/corrupt user storage through the actual IDB transaction boundary.
   const db = await new Promise((resolve, reject) => {
     const r = f.memory.indexedDB.open('revealline-soundtrack-v1', 5);

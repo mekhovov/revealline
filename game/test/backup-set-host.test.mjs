@@ -4,7 +4,7 @@ import { Document } from './helpers/couch-dom.mjs';
 import { attachBackupSetPanel } from '../ui/backup-set-panel.mjs';
 import { backupSetFixture, catalogueBackupAudio } from './helpers/backup-set-fixture.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
-import { soloPage } from './helpers/solo-dom.mjs';
+import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 const fetchBlob = globalThis.fetch;
 
@@ -171,6 +171,7 @@ test('changed source rejects native activation and visibility teardown releases 
 test('actual solo host exports a paused unfinished flight without changing its checkpoint, storage or intent', async (t) => {
   const h = await soloPage(t);
   h.$('start-button').click();
+  await settle(() => h.doc.body.dataset.flightState === 'running');
   h.key('ArrowDown');
   for (let i = 0; i < 30; i++) h.frame();
   h.key('ArrowDown', false);
@@ -218,6 +219,7 @@ for (const exit of ['escape', 'controller'])
       },
       h = await soloPage(t, { readPads: () => [pad] });
     h.$('start-button').click();
+    await settle(() => h.doc.body.dataset.flightState === 'running');
     h.key('ArrowDown');
     for (let i = 0; i < 30; i++) h.frame();
     h.key('ArrowDown', false);

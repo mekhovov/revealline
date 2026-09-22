@@ -12,6 +12,7 @@ import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { loadLibrary } from '../library.mjs';
 import { EXTERNAL_CATALOG } from '../external-chapter-catalog.mjs';
+import { releasedExternalOriginal as selectedOriginal } from './helpers/released-original.mjs';
 const allEditions = [];
 for (const theme of ['fpv', 'ukraine', 'retro', 'coupa'])
   allEditions.push(await buildCountercurrentTheme(theme));
@@ -199,8 +200,10 @@ async function page(t, f = {}, release = false) {
     if (e) return new Response(u.endsWith('/pack.json') ? e.payloads.pack : e.payloads.media);
     return prior(url, options);
   };
+  const installedFetch = globalThis.fetch;
   t.after(() => {
-    globalThis.fetch = prior;
+    // The outer page fixture may already have restored browser globals.
+    if (globalThis.fetch === installedFetch) globalThis.fetch = prior;
   });
   return Object.assign(p, { fixture: f, requests });
 }
@@ -371,6 +374,7 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
     async (t) => {
       const p = await page(t, f, true);
       p.$('start-button').click();
+      await settle(() => p.doc.body.dataset.flightState === 'running');
       direction(p, 'down');
       ticks(p, 13);
       p.$('pause-button').click();
@@ -410,7 +414,7 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
         if (!p.$('optional-worlds-dialog').open) await open(p);
         await play(p, e, { replaceFlight: e === allEditions[0] });
         assert.equal(p.rendered.backdrop.pin.identity.baseCampaignKey, e.descriptor.campaignKey);
-        assert.equal(p.rendered.backdrop.pin.sha256, e.descriptor.originals[0].sha256);
+        assert.equal(p.rendered.backdrop.pin.sha256, selectedOriginal(e.descriptor, 0).sha256);
         const route = routeFor(e.descriptor.originals[0].levelId);
         const captures = playPrefix(p, route);
         assert.deepEqual(
@@ -436,7 +440,7 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
           receipts.find(
             (r) => r.presentationPin.identity.baseCampaignKey === e.descriptor.campaignKey,
           ).presentationPin.sha256,
-          e.descriptor.originals[0].sha256,
+          selectedOriginal(e.descriptor, 0).sha256,
         );
       assert(stories.every((r) => r.storyPin === null));
       assert.deepEqual(p.errors, []);
@@ -459,7 +463,7 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
         p.rendered.backdrop.pin.identity.baseCampaignKey,
         selected.descriptor.campaignKey,
       );
-      assert.equal(p.rendered.backdrop.pin.sha256, selected.descriptor.originals[1].sha256);
+      assert.equal(p.rendered.backdrop.pin.sha256, selectedOriginal(selected.descriptor, 1).sha256);
       const route = routeFor(selected.descriptor.originals[1].levelId);
       const boundary = route.saved.find((s) => s.trailCells > 0 && s.tick < route.expected.tick);
       assert.ok(boundary);
@@ -504,6 +508,7 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
       assert.equal(p.fixture.assets.allPuts.length, writes);
       p.$('library-dialog').close();
       p.$('start-button').click();
+      await settle(() => p.doc.body.dataset.flightState === 'running');
       direction(p, 'down');
       ticks(p, 13);
       p.$('pause-button').click();
@@ -518,7 +523,11 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
       await acceptGameDataReplacement(p);
       await pendingImport;
       assert.match(p.$('save-status').textContent, /Game data restored/);
-      assert.match(p.$('save-status').textContent, /saved flight is ready to load/);
+      assert.match(
+        p.$('save-status').textContent,
+        /saved flight is restored\. Loading verifies its required artwork and visual collection/,
+      );
+      assert.doesNotMatch(p.$('save-status').textContent, /ready to load/);
       p.$('library-dialog').close();
       await p.$('continue-saved').onclick();
       await settle(

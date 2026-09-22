@@ -198,8 +198,10 @@ async function page(t, f = {}, release = false) {
     if (e) return new Response(u.endsWith('/pack.json') ? e.payloads.pack : e.payloads.media);
     return prior(url, options);
   };
+  const installedFetch = globalThis.fetch;
   t.after(() => {
-    globalThis.fetch = prior;
+    // The outer page fixture may already have restored browser globals.
+    if (globalThis.fetch === installedFetch) globalThis.fetch = prior;
   });
   return Object.assign(p, { fixture: f, requests });
 }
@@ -300,6 +302,7 @@ test('three Sentinel Download & play choices preserve an unrelated cut through S
     async (t) => {
       const p = await page(t, f, true);
       p.$('start-button').click();
+      await settle(() => p.doc.body.dataset.flightState === 'running');
       direction(p, 'down');
       ticks(p, 13);
       p.$('pause-button').click();

@@ -16,6 +16,7 @@ import { createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
 import { inspectPresentationDependencies } from '../game/presentation/dependencies.mjs';
 import { campaignKey } from '../game/library.mjs';
 import { validatePack } from '../game/packs.mjs';
+import { retainPresentationOutput } from './retain-presentation-output.mjs';
 
 const extensions = Object.freeze({
   'image/png': 'png',
@@ -34,7 +35,7 @@ const encode = (value) => new TextEncoder().encode(value);
 export async function compilePresentation(
   source,
   sourceAssets = new Map(),
-  { themeId, collectionId, decodeImage = null } = {},
+  { themeId, collectionId, decodeImage = null, previousOutput = null } = {},
 ) {
   const document = validateThemeBundle(source),
     assets = await verifyThemeAssets(document, sourceAssets, { decodeImage });
@@ -109,7 +110,7 @@ export async function compilePresentation(
   );
   const dependencies = await inspectPresentationDependencies(files.get('runtime.json'));
   return Object.freeze({
-    files,
+    files: previousOutput === null ? files : await retainPresentationOutput(files, previousOutput),
     resolved,
     dependencies,
     imagesDecoded: typeof decodeImage === 'function',

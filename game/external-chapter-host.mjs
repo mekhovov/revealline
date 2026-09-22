@@ -30,6 +30,18 @@ const own = (value) =>
     maxArray: 4096,
     maxDepth: 28,
   });
+// Snapshot pack strings are already serialized. Do not JSON-encode their
+// embedded originals a second time just to compare immutable string values.
+const sameValue = (left, right) =>
+  typeof left === 'string' || typeof right === 'string'
+    ? left === right
+    : canonicalJSON(left) === canonicalJSON(right);
+const sameSnapshot = (left, right) =>
+  left.backup === right.backup &&
+  left.external === right.external &&
+  left.locked === right.locked &&
+  sameValue(left.packs, right.packs) &&
+  sameValue(left.index, right.index);
 const bytes = (value) =>
   new TextEncoder().encode(typeof value === 'string' ? value : JSON.stringify(value)).length;
 
@@ -271,7 +283,7 @@ export function createExternalChapterHost({
                   'Recover pending backup/external state before changing packs.',
                 );
                 required(
-                  canonicalJSON(result) === canonicalJSON(mutation.before),
+                  sameSnapshot(result, mutation.before),
                   'Chapter snapshot changed; review again.',
                 );
                 if (values.packs !== mutation.after) store.put(mutation.after, keys.packsKey);
@@ -299,10 +311,7 @@ export function createExternalChapterHost({
     required(state && snapshot.status === 'checked', 'Use this host’s checked chapter snapshot.');
     const now = await raw(signal);
     clearState(now);
-    required(
-      canonicalJSON(now) === canonicalJSON(state.raw),
-      'Chapter snapshot changed; review again.',
-    );
+    required(sameSnapshot(now, state.raw), 'Chapter snapshot changed; review again.');
     return state;
   }
   async function catalog(rawPacks, rawIndex, signal) {
@@ -448,10 +457,7 @@ export function createExternalChapterHost({
     }
     check(signal);
     const after = await raw(signal);
-    required(
-      canonicalJSON(before) === canonicalJSON(after),
-      'Chapter snapshot changed during inspection.',
-    );
+    required(sameSnapshot(before, after), 'Chapter snapshot changed during inspection.');
     const result = Object.freeze({
       status: 'checked',
       packs: content.packs,
