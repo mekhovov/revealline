@@ -1,0 +1,596 @@
+{
+  "format": "OutpostSpatialRoutesV1",
+  "source": "createOutpostSpatialCandidates / outpost-spatial-1",
+  "methodology": "Bounded public-input search, fresh replay and equal paired-board race evidence; not human balance or official content enrollment.",
+  "limitations": [
+    "Optimized omniscient routes; legal stopped waits remain in logs.",
+    "Six base preset/control cases and two Standard alternatives are not universal seed/timing coverage.",
+    "No native full-clear, physical-device, human, art or release qualification."
+  ],
+  "rows": [
+    {
+      "id": "island-outpost",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "3349357763758459",
+      "ticks": 4326,
+      "lives": 5,
+      "coverage": 0.7044585987261146,
+      "cuts": 3,
+      "searchSteps": 3,
+      "checkpoint": "b563e170f1542e09",
+      "events": [
+        [630, "cut.closed", null],
+        [1530, "cut.closed", null],
+        [4326, "cut.closed", null]
+      ],
+      "closures": [
+        [630, 0.020806794055201697],
+        [1530, 0.4072186836518047],
+        [4326, 0.7044585987261146]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 846
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        }
+      ],
+      "variant": "east-route"
+    },
+    {
+      "id": "island-outpost",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "3349357763758459",
+      "ticks": 2574,
+      "lives": 5,
+      "coverage": 0.6658174097664543,
+      "cuts": 3,
+      "searchSteps": 3,
+      "checkpoint": "d2e718650fdada89",
+      "events": [
+        [630, "cut.closed", null],
+        [1530, "cut.closed", null],
+        [2574, "cut.closed", null]
+      ],
+      "closures": [
+        [630, 0.020806794055201697],
+        [1530, 0.48747346072186837],
+        [2574, 0.6658174097664543]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 594
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "right",
+          "ticks": 846
+        }
+      ],
+      "variant": "east-route"
+    },
+    {
+      "id": "island-outpost",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "38487477ee6ee139",
+      "ticks": 3318,
+      "lives": 3,
+      "coverage": 0.7800424628450107,
+      "cuts": 3,
+      "searchSteps": 3,
+      "checkpoint": "d7b0498ecbf5262e",
+      "events": [
+        [618, "cut.closed", null],
+        [1494, "cut.closed", null],
+        [3318, "cut.closed", null]
+      ],
+      "closures": [
+        [618, 0.020806794055201697],
+        [1494, 0.5422505307855626],
+        [3318, 0.7800424628450107]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 624
+        },
+        {
+          "direction": "left",
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 246
+        },
+        {
+          "direction": "right",
+          "ticks": 246
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        }
+      ],
+      "variant": "east-route"
+    },
+    {
+      "id": "island-outpost",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "38487477ee6ee139",
+      "ticks": 4458,
+      "lives": 3,
+      "coverage": 0.7800424628450107,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "b15c3a1cb25e429b",
+      "events": [
+        [618, "cut.closed", null],
+        [1542, "cut.closed", null],
+        [1842, "cut.closed", null],
+        [4458, "cut.closed", null]
+      ],
+      "closures": [
+        [618, 0.020806794055201697],
+        [1542, 0.4369426751592357],
+        [1842, 0.5422505307855626],
+        [4458, 0.7800424628450107]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 618
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 198
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        }
+      ],
+      "variant": "east-route"
+    },
+    {
+      "id": "island-outpost",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "fc9f4e9f0fc7ecdd",
+      "ticks": 3558,
+      "lives": 2,
+      "coverage": 0.7800424628450107,
+      "cuts": 3,
+      "searchSteps": 3,
+      "checkpoint": "9c57575f42518672",
+      "events": [
+        [618, "cut.closed", null],
+        [1494, "cut.closed", null],
+        [3558, "cut.closed", null]
+      ],
+      "closures": [
+        [618, 0.020806794055201697],
+        [1494, 0.5422505307855626],
+        [3558, 0.7800424628450107]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 624
+        },
+        {
+          "direction": "left",
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 246
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 246
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        }
+      ],
+      "variant": "east-route"
+    },
+    {
+      "id": "island-outpost",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "fc9f4e9f0fc7ecdd",
+      "ticks": 3618,
+      "lives": 2,
+      "coverage": 0.7341825902335456,
+      "cuts": 3,
+      "searchSteps": 3,
+      "checkpoint": "95797a456649cb72",
+      "events": [
+        [618, "cut.closed", null],
+        [1542, "cut.closed", null],
+        [3618, "cut.closed", null]
+      ],
+      "closures": [
+        [618, 0.020806794055201697],
+        [1542, 0.4369426751592357],
+        [3618, 0.7341825902335456]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 618
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 858
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        }
+      ],
+      "variant": "east-route"
+    },
+    {
+      "id": "island-outpost",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "38487477ee6ee139",
+      "ticks": 4134,
+      "lives": 3,
+      "coverage": 0.8467091295116773,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "bf030feb47bab3b0",
+      "events": [
+        [222, "cut.closed", null],
+        [1182, "cut.closed", null],
+        [3174, "cut.closed", null],
+        [4134, "cut.closed", null]
+      ],
+      "closures": [
+        [222, 0.006794055201698514],
+        [1182, 0.3040339702760085],
+        [3174, 0.6012738853503184],
+        [4134, 0.8467091295116773]
+      ],
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 222
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 846
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 180
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 642
+        }
+      ],
+      "variant": "western-first"
+    },
+    {
+      "id": "island-outpost",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 1.5,
+      "seed": 2,
+      "status": "won",
+      "simulationIdentity": "38487477ee6ee139",
+      "ticks": 4506,
+      "lives": 3,
+      "coverage": 0.7044585987261146,
+      "cuts": 3,
+      "searchSteps": 3,
+      "checkpoint": "0fa90e8bbce5d1a5",
+      "events": [
+        [810, "cut.closed", null],
+        [1710, "cut.closed", null],
+        [4506, "cut.closed", null]
+      ],
+      "closures": [
+        [810, 0.020806794055201697],
+        [1710, 0.4072186836518047],
+        [4506, 0.7044585987261146]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 180
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 846
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 846
+        }
+      ],
+      "variant": "delayed-east-route"
+    }
+  ]
+}

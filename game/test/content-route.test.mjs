@@ -7,10 +7,36 @@ import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
 import { createContentExecutionCatalog } from '../content-design/execution.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
+import {
+  createWholeJourneyCandidates,
+  WHOLE_JOURNEY_CORE_PACK_IDS,
+} from '../content-design/whole-journey-candidates.mjs';
 
 const themes = JSON.parse(
   await readFile(new URL('../content-design/themes.json', import.meta.url)),
 ).themes;
+
+test('explicit whole-originals review preserves source editions and offers one shared71-mission core', () => {
+  const route = createAuthoredJourneyRoute('whole-originals');
+  assert.deepEqual(route.source, createWholeJourneyCandidates({ artwork: true }));
+  assert.deepEqual(route.corePackIds, WHOLE_JOURNEY_CORE_PACK_IDS);
+  assert.equal(route.sessionKey, 'revealline.suspended.journey-whole-originals.v1');
+  assert(Object.isFrozen(route.source.assets[0]));
+  for (const createHost of [createCandidateSoloHost, createCandidateVersusHost]) {
+    const host = createHost(route.source, { themes, corePackIds: route.corePackIds });
+    const core = [];
+    for (let mission = host.catalog.missions[0]; mission; mission = host.next(mission.id)) {
+      assert(!core.includes(mission), 'No continuation cycle');
+      core.push(mission);
+    }
+    assert.equal(core.length, 71);
+    assert.equal(core.at(-1).levelId, 'home-signal');
+    const remixes = host.catalog.missions.filter((m) => !host.isCore(m.id));
+    assert.equal(remixes.length, 12);
+    assert(remixes.every((m) => host.next(m.id) === null));
+    assert.equal(new Set(core.map((m) => m.packId)).size, 12);
+  }
+});
 
 test('staged route appends Border without changing prior execution or progress identities', () => {
   assert.equal(createAuthoredJourneyRoute('1'), null);
@@ -39,6 +65,35 @@ test('staged route appends Border without changing prior execution or progress i
         );
       }
     }
+  }
+});
+
+test('teaching review has an independent slot and exactly two explicit successor encounters', () => {
+  const previous = createAuthoredJourneyRoute('whole-originals');
+  const current = createAuthoredJourneyRoute('whole-originals-v2');
+  assert.deepEqual(
+    current.source,
+    createWholeJourneyCandidates({ artwork: true, roverTeaching: true }),
+  );
+  assert.equal(current.sessionKey, 'revealline.suspended.journey-whole-originals.v2');
+  assert.notEqual(current.sessionKey, previous.sessionKey);
+  assert.equal(current.source.revision, 'teaching-review-1');
+  assert.deepEqual(current.source.maps, previous.source.maps);
+  assert.deepEqual(current.source.assets, previous.source.assets);
+  const revised = ['wake-the-yard', 'split-berths'];
+  for (const mission of current.source.missions) {
+    const prior = previous.source.missions.find((m) => m.id === mission.id);
+    if (revised.includes(mission.id)) {
+      assert.equal(mission.revision, 'teaching-1');
+      assert.notDeepEqual(mission.actors, prior.actors);
+    } else assert.deepEqual(mission, prior);
+  }
+  for (const createHost of [createCandidateSoloHost, createCandidateVersusHost]) {
+    const host = createHost(current.source, { themes, corePackIds: current.corePackIds });
+    let count = 0;
+    for (let mission = host.catalog.missions[0]; mission; mission = host.next(mission.id)) count++;
+    assert.equal(count, 71);
+    assert.equal(host.catalog.missions.length, 83);
   }
 });
 

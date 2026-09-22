@@ -1,14 +1,22 @@
 import { createRun, CELL } from '../core/index.mjs';
+import { createCoop } from '../coop/core.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
-import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
+import {
+  traceContentActor,
+  contentActorMarkerType,
+  contentCombatMarkers,
+} from './actor-marker.mjs';
 const cards = new WeakMap();
 
 /** Read-only initial-state diagram. Uses the engine's actual topology and actor
  * placement, never predicts a future capture or reveals the reward picture. */
 export function createMissionCard(manifest) {
   if (cards.has(manifest)) return cards.get(manifest);
-  const run = createRun(manifest.level, { seed: 1, classId: 'scout' });
+  const team = manifest.mode === 'team';
+  const run = team
+    ? createCoop(manifest.level, { seed: 1 })
+    : createRun(manifest.level, { seed: 1, classId: 'scout' });
   const card = freezeDesign({
     preset: manifest.difficulty,
     band: manifest.design.difficulty.band,
@@ -17,14 +25,20 @@ export function createMissionCard(manifest) {
     width: run.width,
     height: run.height,
     cells: [...run.cells],
-    terrain: [...run.classic.terrain],
-    spawn: { x: run.player.x, y: run.player.y },
-    actors: run.enemies.map((actor) => ({
-      type: contentActorMarkerType(manifest.level, actor),
-      x: actor.x,
-      y: actor.y,
-    })),
-    objectives: run.objectives
+    terrain: [...(team ? (run.terrain ?? new Uint8Array(run.cells.length)) : run.classic.terrain)],
+    spawn: team
+      ? { x: run.players[0].x, y: run.players[0].y }
+      : { x: run.player.x, y: run.player.y },
+    ...(team ? { spawns: run.players.map(({ id, x, y }) => ({ seat: id, x, y })) } : {}),
+    actors: [
+      ...run.enemies.map((actor) => ({
+        type: contentActorMarkerType(manifest.level, actor),
+        x: actor.x,
+        y: actor.y,
+      })),
+      ...contentCombatMarkers(manifest.level),
+    ],
+    objectives: (run.objectives ?? [])
       .filter((objective) => objective.revealed)
       .map(({ x, y }) => ({ x, y })),
   });
@@ -66,16 +80,30 @@ export function paintMissionThumbnail(ctx, card, width = 288) {
     ctx.beginPath();
     traceContentActor(ctx, actor.type, x, y, r);
     ctx.fill();
+    if (actor.inactive) {
+      ctx.strokeStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(x - r, y + r);
+      ctx.lineTo(x + r, y - r);
+      ctx.stroke();
+    }
   }
   ctx.strokeStyle = '#fff0ad';
   ctx.lineWidth = 1.5;
   for (const objective of card.objectives)
     ctx.strokeRect(objective.x * unit - 3, objective.y * unit - 3, 6, 6);
   // The launch cross is inset at outer rails so every arm remains visible.
-  const x = Math.max(5, Math.min(width - 5, card.spawn.x * unit));
-  const y = Math.max(5, Math.min(card.height * unit - 5, card.spawn.y * unit));
-  ctx.fillStyle = '#f5ffba';
-  ctx.fillRect(x - 5, y - 1.5, 10, 3);
-  ctx.fillRect(x - 1.5, y - 5, 3, 10);
+  for (const spawn of card.spawns ?? [card.spawn]) {
+    const x = Math.max(5, Math.min(width - 5, spawn.x * unit));
+    const y = Math.max(5, Math.min(card.height * unit - 5, spawn.y * unit));
+    ctx.fillStyle = spawn.seat === 1 ? '#aee8ff' : '#f5ffba';
+    ctx.fillRect(x - 5, y - 1.5, 10, 3);
+    ctx.fillRect(x - 1.5, y - 5, 3, 10);
+    if (card.spawns) {
+      ctx.font = 'bold 10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(String(spawn.seat + 1), x, Math.max(10, y - 7));
+    }
+  }
   ctx.restore();
 }

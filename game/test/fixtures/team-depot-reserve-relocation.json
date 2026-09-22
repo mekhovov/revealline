@@ -1,0 +1,1272 @@
+{
+  "format": "TeamDepotReserveRelocationEvidenceV1",
+  "sourceRevision": "depot-spatial-1",
+  "limitations": "Public-input deterministic feasibility, not human balance, mandatory cooperation or both-rover mastery. Standard tail fails on Gentle and Expert; preset-specific tails retained. No runtime changes.",
+  "rows": [
+    {
+      "difficulty": "gentle",
+      "simulationIdentity": "5f3f62d1644f3a2f",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 168
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 354
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 186
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 264
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 222
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 276
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 456
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 115
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 8
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 232
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 160
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 60
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 50
+        },
+        {
+          "a": "down",
+          "b": "right",
+          "ticks": 24
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 46
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 9
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 67
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 180
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 240
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 222
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4740,
+            "coverage": 0.8795066413662239,
+            "returns": [6, 9],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [0],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 4,
+            "finalReserves": 5,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "b2f6e550d9f3c3ebc11d2fed975859d2c94eeb7a8ce5e92cb2121ec564474edd"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4740,
+            "coverage": 0.8795066413662239,
+            "returns": [6, 9],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [0],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 4,
+            "finalReserves": 5,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "936d0d344b7b586244f2e69a7727f161e55ffad30f95ad0c493beba338b2517a"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4740,
+            "coverage": 0.8795066413662239,
+            "returns": [9, 6],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [1],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 4,
+            "finalReserves": 5,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "73dd4ff762b8d5f51628ce05451e14418fbe455186b378f3b33d4d71e724fcc5"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4740,
+            "coverage": 0.8795066413662239,
+            "returns": [9, 6],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [1],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 4,
+            "finalReserves": 5,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "85968efcd384f9e5d30c1ec8a676105ae639eb11865feb959facb5f205ea0819"
+          }
+        }
+      ]
+    },
+    {
+      "difficulty": "standard",
+      "simulationIdentity": "ac89a609fdc609a1",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 168
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 354
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 186
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 264
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 222
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 276
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 456
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 115
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 8
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 232
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 160
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 60
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 50
+        },
+        {
+          "a": "down",
+          "b": "right",
+          "ticks": 24
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 46
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 9
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 67
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 234
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3852,
+            "coverage": 0.788899430740038,
+            "returns": [5, 9],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [0],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 2,
+            "finalReserves": 3,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "abc3042efb512c75bc78cc0fa5647b05ebb8add58020f37b6c0f39559435e823"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3852,
+            "coverage": 0.788899430740038,
+            "returns": [5, 9],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [0],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 2,
+            "finalReserves": 3,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "b4ef2d5adba914dcdd93e9059e3f5297fc2b32f0cc775886b7a7409e118e1ef6"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3852,
+            "coverage": 0.788899430740038,
+            "returns": [9, 5],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [1],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 2,
+            "finalReserves": 3,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "8c3f77c45b8fe615e0f2eb0e42b148059312d88ea7f2ac912ccbc95aaa7ab4e9"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3852,
+            "coverage": 0.788899430740038,
+            "returns": [9, 5],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [1],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 2,
+            "finalReserves": 3,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "1457beeb99c4dbb25e09f46bae34dfbd91daecdb9b2bf1c32183fd353b903075"
+          }
+        }
+      ]
+    },
+    {
+      "difficulty": "expert",
+      "simulationIdentity": "da37bc7dfec85877",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 168
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 354
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 186
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 264
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 222
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 276
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 456
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 115
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 8
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 232
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 160
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 60
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 50
+        },
+        {
+          "a": "down",
+          "b": "right",
+          "ticks": 24
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 46
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 9
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 67
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 180
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 240
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 48
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 186
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4668,
+            "coverage": 0.8866223908918406,
+            "returns": [6, 9],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [0],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 1,
+            "finalReserves": 2,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "13a0d0905aee674824de2fd8e057016b117a1b097f0f905c310aa2dad48ab441"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4668,
+            "coverage": 0.8866223908918406,
+            "returns": [6, 9],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [0],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 1,
+            "finalReserves": 2,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "6cff6b3adfa9d721e239d3707ef0200df9507bea64384209fc90e5401bf1a67e"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4668,
+            "coverage": 0.8866223908918406,
+            "returns": [9, 6],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [1],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 1,
+            "finalReserves": 2,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "673c82d2b4980471b24cf4f4a69c64aab25facab54f1948d949fe4843a827a42"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4668,
+            "coverage": 0.8866223908918406,
+            "returns": [9, 6],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              },
+              {
+                "type": "powerup.collected",
+                "tick": 3396,
+                "time": 28.303666666666665,
+                "id": "depot-reserve",
+                "kind": "extra-life",
+                "players": [1],
+                "gain": 1,
+                "activationTick": null,
+                "untilTick": null,
+                "x": 52.5,
+                "y": 7.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": true
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 1,
+            "finalReserves": 2,
+            "bothIdleTicks": 22,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "7b8bb41a61da0a60be4008f64f3922502a293d59bc19ee99770ff0998a47d978"
+          }
+        }
+      ]
+    }
+  ]
+}

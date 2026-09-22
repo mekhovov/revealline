@@ -1,6 +1,7 @@
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
+import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { createBoardFootprints } from './board-footprint.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
@@ -9,9 +10,11 @@ import { attachCouchCatalogue } from './couch-catalogue.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
-import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
+import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
+import { authoredJourneyUsesActorMaterials } from '../content-design/mode-href.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
-import { DIFFICULTY_CATALOG } from '../content-design/catalogs.mjs';
+import { journeyDifficultyCatalog, journeyPreset } from '../content-design/catalogs.mjs';
 import { createJourneyProfileStore } from '../journey/profile.mjs';
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 import { dataIdentity } from '../data-json.mjs';
@@ -50,6 +53,7 @@ import { campaignKey } from '../library.mjs';
 import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { foundationReturnCaption } from '../ui/foundation-feedback.mjs';
 const $ = (id) => document.getElementById(id);
 const unclaimedFocus = (element) =>
   !element || element === document.body || element === document.documentElement;
@@ -232,7 +236,7 @@ try {
     music: [],
     sourcePackId: null,
   };
-  const authoredRoute = createAuthoredJourneyRoute(
+  const authoredRoute = await loadAuthoredJourneyRoute(
     new URL(location.href).searchParams.get('journey'),
   );
   const authoredJourney = !!authoredRoute;
@@ -243,8 +247,13 @@ try {
   if (authoredJourney) {
     document.body.classList.add('candidate-journey');
     candidateJourney = createCandidateVersusHost(authoredRoute.source, {
-      themes: (await json('../content-design/themes.json')).themes,
+      themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
+        ? journeyActorThemeCandidates((await json('../content-design/themes.json')).themes, {
+            includeOriginals: authoredRoute.preserveOriginalThemes === true,
+          })
+        : (await json('../content-design/themes.json')).themes,
       corePackIds: authoredRoute.corePackIds,
+      optionalCampaignIds: authoredRoute.optionalCampaignIds,
     });
     journeyPreferences = createJourneyPreferences({ window });
     $('race-journey-note').hidden = false;
@@ -252,12 +261,13 @@ try {
       `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
-      ...Object.keys(DIFFICULTY_CATALOG.presets).map(
-        (id) => new Option(id[0].toUpperCase() + id.slice(1), id),
-      ),
+      ...Object.keys(
+        journeyDifficultyCatalog(authoredRoute.source.difficultyCatalogId).presets,
+      ).map((id) => new Option(id[0].toUpperCase() + id.slice(1), id)),
     );
     $('race-journey-difficulty').value = journeyPreferences.snapshot().difficulty;
     journeyProfile = createJourneyProfileStore({
+      profileKey: authoredRoute.profileKey,
       onStatus({ ready, durable, error }) {
         $('race-journey-save').hidden = !ready || durable || !error;
         $('race-journey-save-message').textContent = error
@@ -392,6 +402,7 @@ try {
   for (const t of themes.themes) $('race-theme').append(new Option(t.name, t.id));
   for (const c of registry) $('race-class').append(new Option(c.label, c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
+  const foundationCaptions = new WeakMap();
   for (const painter of painters) presentationPage.bindPainter(painter);
   const sound = (pageSound = new Soundscape({ persistentMusic: true, audioMaster }));
   sound.configure({ master: 1 });
@@ -484,6 +495,7 @@ try {
   const preparationStatus = createOperationStatus($('race-preparation'), {
     isCurrent: () => !disposed,
   });
+  const journeyReactions = attachJourneyReactions({ prefix: 'race-' });
   let preparationDisplay = null;
   let menuRouter, navigation, shell, reading;
   let readingModality = 'pointer';
@@ -890,6 +902,12 @@ try {
       )
         return null;
       clear({ resetDirection: true });
+      // Only the adopted, still-owned continuation may replace these controls.
+      // A failed/cancelled picture keeps the previous map and theme choices.
+      $('race-theme').replaceChildren(
+        ...entry.themes.map((item) => new Option(item.name, item.id)),
+      );
+      $('race-theme').value = attempt.recipe.theme.id;
       paintRound(attempt.recipe);
       if (candidateJourney)
         journeyProfile.record({
@@ -1257,7 +1275,7 @@ try {
       }
       $('race-journey-difficulty').value = snapshot.difficulty;
       $('race-journey-difficulty-note').textContent =
-        `Next fresh race: ${snapshot.difficulty}. Both current boards keep their rules.`;
+        `Next fresh race: ${snapshot.difficulty}. ${journeyPreset(snapshot.difficulty, authoredRoute.source.difficultyCatalogId).description} Both current boards keep their rules.`;
       preferenceExportSequence++;
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
       $('race-journey-preferences-message').textContent = snapshot.error;
@@ -1346,7 +1364,7 @@ try {
     $('race-journey-save-retry').onclick = () => void journeyProfile.flush();
     $('race-journey-save-export').onclick = async () => {
       try {
-        await downloadJSON(JSON.parse(journeyProfile.export()), 'revealline-journey-progress.json');
+        await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
       } catch (error) {
         $('race-journey-save-message').textContent =
           `Export failed: ${error.message}. Your session progress is still here.`;
@@ -1388,6 +1406,8 @@ try {
     onLeaveRequest: pause,
     getSoloReturnToken: () =>
       readVersusSoloReturnToken({ href: location.href, storage: soloReturnStorage }),
+    getSoloJourneyRoute: () =>
+      candidateJourney?.owns(roundRecipe?.entry) ? authoredRoute.id : null,
     onTransition: ({ to, back = false } = {}) => {
       catalogue?.close();
       catalogue?.cancel();
@@ -1687,6 +1707,8 @@ try {
             $(`racer-stats-${i}`).textContent,
             $(`racer-state-${i}`).textContent,
             $(`racer-input-${i}`).textContent,
+            $(`racer-capture-${i}`).hidden,
+            $(`racer-capture-${i}`).textContent,
             $(`racer-encounter-${i}`).hidden,
             $(`racer-encounter-title-${i}`).textContent,
             $(`racer-encounter-instruction-${i}`).textContent,
@@ -1705,6 +1727,18 @@ try {
   }
   function updateMenu() {
     if (!match || disposed) return;
+    const completedBoards = match.runs.filter((run) => run.status === 'won').length;
+    journeyReactions.present({
+      owned: !!candidateJourney?.owns(roundRecipe?.entry),
+      mode: 'versus',
+      outcome:
+        match.status === 'finished' && completedBoards
+          ? completedBoards === 2
+            ? 'draw'
+            : 'won'
+          : null,
+      missionId: roundRecipe?.entry?.mission?.id,
+    });
     const running = match.status === 'running';
     if (candidateJourney) {
       $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
@@ -1981,6 +2015,7 @@ try {
     disposed = true;
     preparationStatus.dispose();
     couchTouch.destroy();
+    journeyReactions.dispose();
     input.destroy();
     menuRouter.destroy();
     reading.destroy();
@@ -2050,6 +2085,11 @@ try {
             if (match.runs[i].tick !== before[i]) {
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
               for (const event of match.runs[i].events) sound.event(event);
+              const run = match.runs[i],
+                caption = foundationReturnCaption(run);
+              if (caption) foundationCaptions.set(run, caption);
+              else if (run.player.speed > 0 || run.status !== 'running')
+                foundationCaptions.delete(run);
             }
         }
       }
@@ -2078,11 +2118,17 @@ try {
         `${match.winner === null ? 'Draw' : `${name} wins the ${series ? 'round' : 'race'}`}. ${match.reason}.${series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
       if (
         candidateJourney &&
-        candidateJourney.isCore(roundRecipe.entry.mission.id) &&
+        (candidateJourney.isCore(roundRecipe.entry.mission.id) ||
+          candidateJourney.isOptionalSequence(roundRecipe.entry.mission.id)) &&
         !candidateJourney.next(roundRecipe.entry.mission.id)
       )
-        $('race-message').textContent +=
-          ' End of this test route. Choose Find missions for optional Remixes, Rematch, or leave whenever you like.';
+        $('race-message').textContent += candidateJourney.isOptionalSequence(
+          roundRecipe.entry.mission.id,
+        )
+          ? ' End of this optional sequence. Choose Find missions, Rematch, or leave whenever you like.'
+          : authoredRoute.optionalCampaignIds?.length
+            ? ' End of this test route. Choose Find missions for optional Remixes and sequences, Rematch, or leave whenever you like.'
+            : ' End of this test route. Choose Find missions for optional Remixes, Rematch, or leave whenever you like.';
       $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
@@ -2105,6 +2151,10 @@ try {
     $('race-clock').dataset.compact = left === null ? '∞' : $('race-clock').textContent;
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i];
+      const returnCaption = foundationCaptions.get(run) || '',
+        returnRegion = $(`racer-capture-${i}`);
+      if (returnRegion.textContent !== returnCaption) returnRegion.textContent = returnCaption;
+      returnRegion.hidden = !returnCaption || match.status === 'finished';
       $(`racer-stats-${i}`).textContent =
         `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points`;
       $(`racer-state-${i}`).textContent = match.status === 'running' ? run.status : match.status;

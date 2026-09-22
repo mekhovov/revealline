@@ -1,0 +1,505 @@
+{
+  "format": "TeamInnerLandingRoutesV1",
+  "revision": "return-network-1",
+  "limitations": "Partial useful eastern landing routes at every preset; Standard ordinary full continuation only. Not simultaneous cooperation or both-rover mastery. Public input, no injected state.",
+  "partial": {
+    "log": [
+      {
+        "a": null,
+        "b": "left",
+        "ticks": 120
+      },
+      {
+        "a": null,
+        "b": "down",
+        "ticks": 120
+      },
+      {
+        "a": null,
+        "b": "left",
+        "ticks": 84
+      },
+      {
+        "a": null,
+        "b": "up",
+        "ticks": 67
+      },
+      {
+        "a": null,
+        "b": null,
+        "ticks": 1
+      },
+      {
+        "a": null,
+        "b": "up",
+        "ticks": 150
+      },
+      {
+        "a": null,
+        "b": "right",
+        "ticks": 204
+      },
+      {
+        "a": null,
+        "b": "down",
+        "ticks": 55
+      }
+    ],
+    "rows": [
+      {
+        "difficulty": "gentle",
+        "simulationIdentity": "c131a63bc7119ba9",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": false,
+          "jointCuts": false
+        },
+        "checkpoint": "9f9afc36e8e2b5e5edda7f87b2a64f7db980ed1a0549cd2239ceb7440a0aa285"
+      },
+      {
+        "difficulty": "gentle",
+        "simulationIdentity": "c131a63bc7119ba9",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": false,
+          "jointCuts": true
+        },
+        "checkpoint": "106d42882aeaa3f54f69dc79d7ee022a23543b87f4f0366b49acd173e13d291d"
+      },
+      {
+        "difficulty": "gentle",
+        "simulationIdentity": "c131a63bc7119ba9",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": true,
+          "jointCuts": false
+        },
+        "checkpoint": "3a637156c190bfaf8ddf6e8a927b7b0aa44054d131e3dbd02a89235e2ca0e5ce"
+      },
+      {
+        "difficulty": "gentle",
+        "simulationIdentity": "c131a63bc7119ba9",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": true,
+          "jointCuts": true
+        },
+        "checkpoint": "02c10d1b0755feb88412af3d3e6f356937f981fbbb370fe61ac83db82415702f"
+      },
+      {
+        "difficulty": "standard",
+        "simulationIdentity": "b0283f7094f97a33",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": false,
+          "jointCuts": false
+        },
+        "checkpoint": "98b3456d4dbcecacc9892ce79b401baf26a265783fe450d8c893f60f07329362"
+      },
+      {
+        "difficulty": "standard",
+        "simulationIdentity": "b0283f7094f97a33",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": false,
+          "jointCuts": true
+        },
+        "checkpoint": "3f337f0a6158ba14dc87c128358a84a2a97b97e81aa8e14bca532cb1f9983045"
+      },
+      {
+        "difficulty": "standard",
+        "simulationIdentity": "b0283f7094f97a33",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": true,
+          "jointCuts": false
+        },
+        "checkpoint": "b19b9c0c7b32c2e7bf5e2fa92902fa457b23a99371c1a01b972d43eed8a6d45c"
+      },
+      {
+        "difficulty": "standard",
+        "simulationIdentity": "b0283f7094f97a33",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": true,
+          "jointCuts": true
+        },
+        "checkpoint": "9e3f888166b6cf55299875cff482296232e17ef161c7cc1f4ce4176286117a34"
+      },
+      {
+        "difficulty": "expert",
+        "simulationIdentity": "fc9a2baa6c83b001",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": false,
+          "jointCuts": false
+        },
+        "checkpoint": "e0f31527a8faf03a6e63e7e84cd84f6fd7d63a878fd694e852aeb25b21982399"
+      },
+      {
+        "difficulty": "expert",
+        "simulationIdentity": "fc9a2baa6c83b001",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": false,
+          "jointCuts": true
+        },
+        "checkpoint": "f79a5d3f9bf83ad7834b2c1f7834ebe24c1b943f4c867677979925a7ae78028d"
+      },
+      {
+        "difficulty": "expert",
+        "simulationIdentity": "fc9a2baa6c83b001",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": true,
+          "jointCuts": false
+        },
+        "checkpoint": "e251b58cf46ea1b4fcc987271df18662d4e1711ac35cb2c6ee49a5bb5e36318b"
+      },
+      {
+        "difficulty": "expert",
+        "simulationIdentity": "fc9a2baa6c83b001",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": true,
+          "jointCuts": true
+        },
+        "checkpoint": "4706fd1696c0b599627140437a79bd54e95001be7ca79d1a0ebc0df4485d1dfb"
+      }
+    ]
+  },
+  "full": {
+    "log": [
+      {
+        "a": null,
+        "b": "left",
+        "ticks": 120
+      },
+      {
+        "a": null,
+        "b": "down",
+        "ticks": 120
+      },
+      {
+        "a": null,
+        "b": "left",
+        "ticks": 84
+      },
+      {
+        "a": null,
+        "b": "up",
+        "ticks": 67
+      },
+      {
+        "a": null,
+        "b": null,
+        "ticks": 1
+      },
+      {
+        "a": null,
+        "b": "up",
+        "ticks": 150
+      },
+      {
+        "a": null,
+        "b": "right",
+        "ticks": 204
+      },
+      {
+        "a": null,
+        "b": "down",
+        "ticks": 55
+      },
+      {
+        "a": null,
+        "b": null,
+        "ticks": 1
+      },
+      {
+        "a": null,
+        "b": "down",
+        "ticks": 6
+      },
+      {
+        "a": null,
+        "b": "right",
+        "ticks": 12
+      },
+      {
+        "a": null,
+        "b": "down",
+        "ticks": 84
+      },
+      {
+        "a": null,
+        "b": "down",
+        "ticks": 72
+      },
+      {
+        "a": null,
+        "b": "left",
+        "ticks": 126
+      },
+      {
+        "a": null,
+        "b": null,
+        "ticks": 1
+      },
+      {
+        "a": "left",
+        "b": null,
+        "ticks": 24
+      },
+      {
+        "a": "down",
+        "b": null,
+        "ticks": 12
+      },
+      {
+        "a": "left",
+        "b": null,
+        "ticks": 108
+      },
+      {
+        "a": "up",
+        "b": null,
+        "ticks": 210
+      },
+      {
+        "a": null,
+        "b": null,
+        "ticks": 1
+      },
+      {
+        "a": "up",
+        "b": null,
+        "ticks": 6
+      },
+      {
+        "a": "down",
+        "b": null,
+        "ticks": 216
+      },
+      {
+        "a": "right",
+        "b": null,
+        "ticks": 168
+      },
+      {
+        "a": "down",
+        "b": null,
+        "ticks": 12
+      },
+      {
+        "a": "right",
+        "b": null,
+        "ticks": 72
+      },
+      {
+        "a": "down",
+        "b": null,
+        "ticks": 186
+      },
+      {
+        "a": null,
+        "b": null,
+        "ticks": 1
+      },
+      {
+        "a": "down",
+        "b": null,
+        "ticks": 6
+      },
+      {
+        "a": "right",
+        "b": null,
+        "ticks": 576
+      },
+      {
+        "a": "up",
+        "b": null,
+        "ticks": 420
+      },
+      {
+        "a": "left",
+        "b": null,
+        "ticks": 96
+      },
+      {
+        "a": "down",
+        "b": null,
+        "ticks": 324
+      },
+      {
+        "a": "right",
+        "b": null,
+        "ticks": 90
+      },
+      {
+        "a": null,
+        "b": null,
+        "ticks": 1
+      },
+      {
+        "a": null,
+        "b": "left",
+        "ticks": 126
+      },
+      {
+        "a": null,
+        "b": "down",
+        "ticks": 96
+      },
+      {
+        "a": null,
+        "b": "left",
+        "ticks": 168
+      },
+      {
+        "a": null,
+        "b": "up",
+        "ticks": 192
+      },
+      {
+        "a": null,
+        "b": "up",
+        "ticks": 222
+      },
+      {
+        "a": null,
+        "b": null,
+        "ticks": 1
+      },
+      {
+        "a": "right",
+        "b": null,
+        "ticks": 6
+      },
+      {
+        "a": "left",
+        "b": null,
+        "ticks": 60
+      },
+      {
+        "a": "up",
+        "b": null,
+        "ticks": 318
+      }
+    ],
+    "rows": [
+      {
+        "difficulty": "standard",
+        "simulationIdentity": "b0283f7094f97a33",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": false,
+          "jointCuts": false
+        },
+        "checkpoint": "4772a9d3f1e88e12f4f07514f24836f042240fdd658bbfae05c2298cce860033"
+      },
+      {
+        "difficulty": "standard",
+        "simulationIdentity": "b0283f7094f97a33",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": false,
+          "jointCuts": true
+        },
+        "checkpoint": "c4ab0794700327f09c3d39769fb902723297d7c7621901cae36e9e1482a2057d"
+      },
+      {
+        "difficulty": "standard",
+        "simulationIdentity": "b0283f7094f97a33",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": true,
+          "jointCuts": false
+        },
+        "checkpoint": "5a082360e49667a84b58561a351b99e4511aee981b2f94be3c31e37267f53ba8"
+      },
+      {
+        "difficulty": "standard",
+        "simulationIdentity": "b0283f7094f97a33",
+        "options": {
+          "seed": 17,
+          "delayTicks": 1,
+          "swapped": true,
+          "jointCuts": true
+        },
+        "checkpoint": "f0c05ed2229ae45467d292658804aa6d9f84fd0a1fcacb404159041cee9022ef"
+      }
+    ]
+  },
+  "negative": {
+    "log": [
+      {
+        "a": null,
+        "b": "down",
+        "ticks": 120
+      },
+      {
+        "a": null,
+        "b": "left",
+        "ticks": 204
+      },
+      {
+        "a": null,
+        "b": "up",
+        "ticks": 67
+      }
+    ],
+    "rows": [
+      {
+        "difficulty": "gentle",
+        "tick": 372,
+        "failure": {
+          "type": "player.downed",
+          "tick": 371,
+          "time": 3.0935921676916265,
+          "player": 1,
+          "cause": "enemy-trail",
+          "enemy": "keeper-2"
+        }
+      },
+      {
+        "difficulty": "standard",
+        "tick": 266,
+        "failure": {
+          "type": "player.downed",
+          "tick": 265,
+          "time": 2.2097086912080144,
+          "player": 1,
+          "cause": "enemy-trail",
+          "enemy": "keeper-2"
+        }
+      },
+      {
+        "difficulty": "expert",
+        "tick": 213,
+        "failure": {
+          "type": "player.downed",
+          "tick": 212,
+          "time": 1.767766952966167,
+          "player": 1,
+          "cause": "enemy-trail",
+          "enemy": "keeper-2"
+        }
+      }
+    ]
+  }
+}

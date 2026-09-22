@@ -4,7 +4,7 @@ import { createLivewireCandidates } from '../content-design/livewire-candidates.
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
-import { drawLaneAttack } from '../ui/lane-presentation.mjs';
+import { drawLaneAttack, laneWarningCaption } from '../ui/lane-presentation.mjs';
 import { foundationCompatibleView } from '../ui/foundation-view.mjs';
 import { drawClassicEnemy } from '../ui/classic-view.mjs';
 import {
@@ -42,6 +42,29 @@ const level = resolveMission(
   compileContentProject(createLivewireCandidates()),
   'read-the-lock',
 ).level;
+
+test('authored lane warnings identify the emitter, not the separate relay Sentinel', () => {
+  const run = createRun(level);
+  const enemy = run.enemies.find((actor) => actor.type === 'lane-boss');
+  const event = { type: 'boss.warning', id: enemy.id };
+  const before = authoritativeCheckpoint(run).hash;
+  for (const ruleset of ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'])
+    assert.equal(
+      laneWarningCaption({ ...run, ruleset }, event, 'Sentinel'),
+      'Lane emitter: the marked lane will activate shortly.',
+    );
+  assert.equal(
+    laneWarningCaption({ ...run, ruleset: 'xonix-core.v5' }, event, 'Historical guardian'),
+    'Historical guardian: the marked lane will activate shortly.',
+  );
+  assert.equal(laneWarningCaption(run, { ...event, id: 'missing' }), '');
+  assert.equal(laneWarningCaption(run, { ...event, type: 'encounter.phaseChanged' }), '');
+  assert.equal(
+    laneWarningCaption({ ...run, enemies: [{ id: enemy.id, type: 'relay-sentinel' }] }, event),
+    '',
+  );
+  assert.equal(authoritativeCheckpoint(run).hash, before);
+});
 
 for (const screenScale of [294 / 1152, 1])
   for (const axis of ['horizontal', 'vertical'])

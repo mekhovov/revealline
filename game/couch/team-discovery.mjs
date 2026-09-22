@@ -11,7 +11,10 @@ export function attachTeamDiscovery({
   status,
   back,
   cancel,
+  search = null,
+  campaign = null,
   getEntries,
+  presentCard = () => false,
   canOpen = () => true,
   activate,
   preparePreview,
@@ -33,7 +36,10 @@ export function attachTeamDiscovery({
     element?.isConnected && !element.disabled && !element.closest('[hidden],[inert]');
   const owns = (owner) => !disposed && visit === owner;
   const live = (owner) => owns(owner) && dialog.open;
-  const available = () => visit?.cards.find(({ row }) => row.key === selected) ?? visit?.cards[0];
+  const available = () => {
+    const cards = visit?.cards.filter(({ card }) => !card.hidden) ?? [];
+    return cards.find(({ row }) => row.key === selected) ?? cards[0];
+  };
   const pictures =
     preview && preparePreview
       ? attachTeamDiscoveryPictures({
@@ -65,6 +71,8 @@ export function attachTeamDiscovery({
     cancel.hidden = !busy;
     if (owns(owner)) list.setAttribute('aria-busy', String(busy));
     if (owns(owner)) pictures?.setBusy(busy);
+    if (owns(owner) && search) search.disabled = busy;
+    if (owns(owner) && campaign) campaign.disabled = busy;
   }
   function restoreCard(owner, button) {
     if (!live(owner) || operation || !foreground() || !visible(button)) return;
@@ -85,7 +93,7 @@ export function attachTeamDiscovery({
     return true;
   }
   async function play(owner, row, button) {
-    if (!live(owner) || operation || !foreground() || button.disabled) return;
+    if (!live(owner) || operation || !foreground() || !visible(button)) return;
     selected = row.key;
     const pending = { owner, row, button, controller: new AbortController() };
     operation = pending;
@@ -140,7 +148,8 @@ export function attachTeamDiscovery({
   function populate(owner) {
     const rows = getEntries();
     if (!Array.isArray(rows)) throw new TypeError('Team arenas are unavailable.');
-    const keys = new Set();
+    const keys = new Set(),
+      packs = [];
     const cards = rows.map((row) => {
       if (!row || typeof row.key !== 'string' || keys.has(row.key))
         throw new TypeError('Team arena identities are unavailable.');
@@ -160,14 +169,44 @@ export function attachTeamDiscovery({
       button.setAttribute('aria-label', `Play ${row.title} · ${row.packName} · ${row.sourceLabel}`);
       button.className = 'field-kit-primary team-discovery-play';
       button.onclick = () => play(owner, row, button);
-      card.append(pack, title, goal, button);
-      return { row, button, card };
+      card.append(pack, title, goal);
+      const hasDiagram = presentCard({ document, row, card }) === true;
+      card.append(button);
+      let group = packs.findIndex((pack) => pack === row.pack);
+      if (group < 0) group = packs.push(row.pack) - 1;
+      return {
+        row,
+        button,
+        card,
+        hasDiagram,
+        group: String(group),
+        searchText: `${row.levelId} ${card.textContent}`.normalize('NFKC').toLocaleLowerCase(),
+      };
     });
     if (!owns(owner)) return;
     owner.cards = cards;
+    owner.query = owner.group = '';
+    if (search) search.value = '';
+    if (campaign) {
+      const option = (value, label) => {
+        const item = document.createElement('option');
+        item.value = value;
+        item.textContent = label;
+        return item;
+      };
+      campaign.replaceChildren(
+        option('', 'All campaigns and packs'),
+        ...packs.map((pack, index) => {
+          const row = cards.find((card) => card.row.pack === pack).row;
+          return option(String(index), `${row.packName} · ${row.sourceLabel}`);
+        }),
+      );
+      campaign.value = '';
+    }
+    if (!owns(owner)) return;
     list.replaceChildren(...cards.map(({ card }) => card));
     if (!owns(owner)) return;
-    pictures?.populate(cards);
+    pictures?.populate(cards.filter(({ hasDiagram }) => !hasDiagram));
     if (!owns(owner)) return;
     describe(
       owner,
@@ -177,6 +216,41 @@ export function attachTeamDiscovery({
     );
     controls(owner, false);
   }
+  function filterCards() {
+    const owner = visit;
+    if (!owner || !live(owner)) return;
+    if (operation || pictures?.primary()) {
+      if (search) search.value = owner.query;
+      if (campaign) campaign.value = owner.group;
+      return;
+    }
+    owner.query = (search?.value ?? '').slice(0, 160);
+    owner.group = campaign?.value ?? '';
+    const words = owner.query
+      .normalize('NFKC')
+      .toLocaleLowerCase()
+      .trim()
+      .split(/\s+/u)
+      .filter(Boolean);
+    let count = 0;
+    for (const entry of owner.cards) {
+      if (!live(owner)) return;
+      entry.card.hidden =
+        Boolean(owner.group && owner.group !== entry.group) ||
+        !words.every((word) => entry.searchText.includes(word));
+      if (!entry.card.hidden) count++;
+    }
+    if (!live(owner)) return;
+    describe(
+      owner,
+      count
+        ? `${count} of ${owner.cards.length} Team missions. Play directly; your current attempt stays available.`
+        : 'No matching Team missions. Clear Search or choose All campaigns and packs. Back keeps your current attempt.',
+    );
+    onViewChange();
+  }
+  if (search) search.oninput = filterCards;
+  if (campaign) campaign.onchange = filterCards;
   function open(opener = document.activeElement) {
     if (disposed || dialog.open || visit || !foreground() || !canOpen()) return false;
     const owner = { opener, cards: [], restore: true, sequence: ++visitSequence };
@@ -279,6 +353,8 @@ export function attachTeamDiscovery({
       pending?.controller.abort();
       pictures?.dispose();
       back.onclick = cancel.onclick = null;
+      if (search) search.oninput = null;
+      if (campaign) campaign.onchange = null;
       dialog.removeEventListener('close', closed);
       dialog.removeEventListener('cancel', cancelled);
       dialog.removeEventListener('keydown', keydown);

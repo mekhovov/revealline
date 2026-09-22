@@ -6,6 +6,16 @@ import { createBorderCandidates } from '../content-design/border-candidates.mjs'
 import { BORDER_ART_CANDIDATES } from '../content-design/border-art.mjs';
 import { NEON_ART_CANDIDATES } from '../content-design/neon-art.mjs';
 import { ROVER_ART_CANDIDATES } from '../content-design/rover-art.mjs';
+import { FRACTURE_ART_CANDIDATES } from '../content-design/fracture-art.mjs';
+import { PHASE_ART_CANDIDATES } from '../content-design/phase-art.mjs';
+import { LIVEWIRE_ART_CANDIDATES } from '../content-design/livewire-art.mjs';
+import { RELAY_ART_CANDIDATES } from '../content-design/relay-art.mjs';
+import { CROSSWIND_ART_CANDIDATES } from '../content-design/crosswind-art.mjs';
+import { SENTINEL_ART_CANDIDATES } from '../content-design/sentinel-art.mjs';
+import { APEX_ART_CANDIDATES } from '../content-design/apex-art.mjs';
+import { TEAM_ART_CANDIDATES } from '../content-design/team-art.mjs';
+import { TEAM_TIMED_ART_CANDIDATES } from '../content-design/team-timed-art.mjs';
+import { CULTURAL_WORKSHOP_ART_CANDIDATES } from '../content-design/cultural-workshop-art.mjs';
 import { JOURNEY_ART_CANDIDATES } from '../content-design/journey-art.mjs';
 import {
   SIGNAL_ILLUSTRATED_ART_CANDIDATES,
@@ -34,7 +44,17 @@ test('all seven Border compositions are unique original pinned bytes, paired wit
     SIGNAL_PIXEL_ART_CANDIDATES.length +
     SIGNAL_TEAM_ART_CANDIDATES.length +
     NEON_ART_CANDIDATES.length +
-    ROVER_ART_CANDIDATES.length;
+    ROVER_ART_CANDIDATES.length +
+    FRACTURE_ART_CANDIDATES.length +
+    PHASE_ART_CANDIDATES.length +
+    LIVEWIRE_ART_CANDIDATES.length +
+    RELAY_ART_CANDIDATES.length +
+    CROSSWIND_ART_CANDIDATES.length +
+    SENTINEL_ART_CANDIDATES.length +
+    APEX_ART_CANDIDATES.length +
+    TEAM_ART_CANDIDATES.length +
+    TEAM_TIMED_ART_CANDIDATES.length +
+    CULTURAL_WORKSHOP_ART_CANDIDATES.length;
   assert.equal(JOURNEY_ART_CANDIDATES.length, expectedCount);
   assert.equal(new Set(JOURNEY_ART_CANDIDATES.map((row) => row.sha256)).size, expectedCount);
   for (const asset of BORDER_ART_CANDIDATES) {

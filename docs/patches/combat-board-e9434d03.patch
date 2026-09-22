@@ -1,0 +1,75 @@
+diff --git a/game/ui/render.mjs b/game/ui/render.mjs
+index f93317fa0d48d862ecffa29d4cd3b854d04a35b9..f731b54cf167c91adeea1df3203f3a56294524b5 100644
+--- a/game/ui/render.mjs
++++ b/game/ui/render.mjs
+@@ -14,2 +14,9 @@
+ } from './classic-view.mjs';
++import { combatView } from './combat-view.mjs';
++import {
++  createCombatPresentation,
++  drawCombatScrap,
++  drawCombatWarnings,
++  drawCombatProjectiles,
++} from './combat-presentation.mjs';
+ import { foundationCompatibleView as classicView } from './foundation-view.mjs';
+@@ -107,3 +114,4 @@
+     this.animation = createAnimationState();
+     this.actorPresentation = createActorPresentation();
++    this.combatPresentation = createCombatPresentation();
+     this.heading = 0;
+@@ -137,3 +145,4 @@
+     this.animation = createAnimationState();
+     this.actorPresentation.reset();
++    this.combatPresentation.reset();
+     const knownBody = Object.hasOwn(this.presets.characters, bodyId)
+@@ -224,3 +233,4 @@
+     this.time = 0;
+     this.actorPresentation.reset();
++    this.combatPresentation.reset();
+   }
+@@ -292,4 +302,5 @@
+       showGrid = false,
+       debug = false,
+       fullReveal = false,
++      showCombatScrap = true,
+       celebrationPaused = false,
+@@ -305,3 +316,7 @@
+     if (!this.theme || !state) return;
++    const combat = combatView(state);
++    if (combat && !combat.valid) {
++      throw new Error(`Cannot render optional combat: ${combat.error}`);
++    }
+     const presentation =
+       this.theme.id === 'fpv' || this.theme.family === 'fpv' ? this.presentation : null;
+@@ -337,4 +352,11 @@
+         : Number.isFinite(ctx.canvas?.clientWidth) && ctx.canvas.clientWidth > 0
+           ? ctx.canvas.clientWidth
+           : W;
++    const combatOptions = {
++      reduced,
++      screenScale: canvasCSSWidth / W,
++      canvasCSSWidth,
++      scale: actorScale,
++      showScrap: showCombatScrap,
++    };
+     const images = { ...this.images, presentationSprites: {} };
+@@ -470,3 +492,4 @@
+     }
+     drawClassicTerrain(ctx, classic, p, images);
++    if (combat) drawCombatScrap(ctx, combat, p, combatOptions);
+     // Reveal decoration belongs below current hazards, actors and live cuts.
+@@ -717,3 +740,4 @@
+         drawEncounterCore(ctx, state, e, p, reduced);
+       }
++      if (combat) this.combatPresentation.drawActors(ctx, combat, p, combatOptions);
+       drawEnemyPressure(ctx, classic, p, {
+@@ -722,3 +746,4 @@
+         fonts,
+       });
++      if (combat) drawCombatWarnings(ctx, combat, p, combatOptions);
+       drawActiveTrail(ctx, state.trailSegments, state.trail, state.player, p, {
+@@ -786,3 +811,4 @@
+         }
+       }
++      if (combat) drawCombatProjectiles(ctx, combat, p, combatOptions);
+       drawClassicStatus(ctx, classic, p, {

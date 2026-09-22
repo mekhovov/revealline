@@ -123,6 +123,11 @@ node --test scripts/test-production-metadata-history.mjs
 
 The combined enemy presentation changes preserve the former 25,033-byte actor renderer as an exact `.mjs` snapshot. Verification reads and hashes source text; it never imports or executes archived modules. Older v1 authoring readers refuse the v2 index. Frozen releases and runtime storage schemas are unchanged; historical register pins and approvals stay exact.
 
+The Journey integration also retains the original 5,966-byte enemy catalogue as
+an inert `.mjs` snapshot under the same v2 contract. Its exact main-source bytes
+remain the authority for historical register recipes; the expanded live catalogue
+does not rewrite their source pins or grant new production assessments.
+
 ## Preserve recipe implementation revisions
 
 The optional [source history index](history/source-index.json) preserves the exact renderer bytes referenced by earlier recipe records. It uses the separate `revealline-production-source-history.v1` format; the metadata-history v1/v2 index and all existing production registers retain their own identities. Only `authoring/motion-lab/render-character.mjs` and `game/ui/actor-presentation.mjs` are admitted by this finite reader. Each complete original path, byte count and SHA-256 identity resolves to `history/<sha256>.source`. These snapshots are read and hashed as inert bytes; they are never imported, evaluated or used by the game renderer.

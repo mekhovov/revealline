@@ -1,0 +1,3223 @@
+{
+  "format": "FractureSpatialFeasibilityV1",
+  "projectRevision": "district-spatial-1",
+  "scope": "Explicit Two Districts successor, seed1 base configurations plus seed2 and seed1/180tick delayed samples. Actual public input, not human acceptance.",
+  "rows": [
+    {
+      "id": "two-districts",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4746,
+        "seconds": 39.5499999999984,
+        "coverage": 0.8017324350336862,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 5,
+        "exposureTicks": 1332,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4746,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "a3e7d44b1282d714"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "70169cd27100c62d",
+      "ticks": 4746,
+      "lives": 2,
+      "coverage": 0.8017324350336862,
+      "cuts": 5,
+      "searchSteps": 5,
+      "checkpoint": "a3e7d44b1282d714",
+      "events": [
+        [798, "cut.closed", null],
+        [1542, "cut.closed", null],
+        [3318, "cut.closed", null],
+        [3678, "cut.closed", null],
+        [4746, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1542, 0.314725697786333],
+        [3318, 0.7179980750721848],
+        [3678, 0.7526467757459095],
+        [4746, 0.8017324350336862]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 264
+        },
+        {
+          "direction": "up",
+          "ticks": 252
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 576
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 282
+        },
+        {
+          "direction": "left",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 534
+        },
+        {
+          "direction": "down",
+          "ticks": 108
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 108
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 1.5,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 5370,
+        "seconds": 44.7499999999981,
+        "coverage": 0.868623676612127,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 7,
+        "exposureTicks": 2040,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 5370,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "144677a8dee5d34e"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["west", "east"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "70169cd27100c62d",
+      "ticks": 5370,
+      "lives": 2,
+      "coverage": 0.868623676612127,
+      "cuts": 7,
+      "searchSteps": 7,
+      "checkpoint": "144677a8dee5d34e",
+      "events": [
+        [798, "cut.closed", null],
+        [1926, "cut.closed", null],
+        [2334, "cut.closed", null],
+        [2862, "cut.closed", null],
+        [3498, "cut.closed", null],
+        [3858, "cut.closed", null],
+        [5370, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.17468719923002887],
+        [1926, 0.3397497593840231],
+        [2334, 0.40279114533205007],
+        [2862, 0.507218479307026],
+        [3498, 0.566410009624639],
+        [3858, 0.5986525505293552],
+        [5370, 0.868623676612127]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 414
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "right",
+          "ticks": 564
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 270
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 228
+        },
+        {
+          "direction": "left",
+          "ticks": 270
+        },
+        {
+          "direction": "right",
+          "ticks": 282
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 270
+        },
+        {
+          "direction": "right",
+          "ticks": 210
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 456
+        },
+        {
+          "direction": "down",
+          "ticks": 306
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 2,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4746,
+        "seconds": 39.5499999999984,
+        "coverage": 0.8017324350336862,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 5,
+        "exposureTicks": 1332,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4746,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "c534fad432919ab8"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "70169cd27100c62d",
+      "ticks": 4746,
+      "lives": 2,
+      "coverage": 0.8017324350336862,
+      "cuts": 5,
+      "searchSteps": 5,
+      "checkpoint": "c534fad432919ab8",
+      "events": [
+        [798, "cut.closed", null],
+        [1542, "cut.closed", null],
+        [3318, "cut.closed", null],
+        [3678, "cut.closed", null],
+        [4746, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1542, 0.314725697786333],
+        [3318, 0.7179980750721848],
+        [3678, 0.7526467757459095],
+        [4746, 0.8017324350336862]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 264
+        },
+        {
+          "direction": "up",
+          "ticks": 252
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 576
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 282
+        },
+        {
+          "direction": "left",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 534
+        },
+        {
+          "direction": "down",
+          "ticks": 108
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 108
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 6750,
+        "seconds": 56.24999999999745,
+        "coverage": 0.8079884504331087,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 11,
+        "exposureTicks": 3120,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 6750,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "2b1fee006d468ec5"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "70169cd27100c62d",
+      "ticks": 6750,
+      "lives": 2,
+      "coverage": 0.8079884504331087,
+      "cuts": 11,
+      "searchSteps": 11,
+      "checkpoint": "2b1fee006d468ec5",
+      "events": [
+        [798, "cut.closed", null],
+        [1530, "cut.closed", null],
+        [2694, "cut.closed", null],
+        [3066, "cut.closed", null],
+        [3486, "cut.closed", null],
+        [3798, "cut.closed", null],
+        [4854, "cut.closed", null],
+        [5094, "cut.closed", null],
+        [6078, "cut.closed", null],
+        [6486, "cut.closed", null],
+        [6750, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1530, 0.314725697786333],
+        [2694, 0.4292589027911453],
+        [3066, 0.4788257940327238],
+        [3486, 0.5365736284889316],
+        [3798, 0.5784408084696824],
+        [4854, 0.6371511068334937],
+        [5094, 0.6703561116458133],
+        [6078, 0.7358036573628489],
+        [6486, 0.7449470644850819],
+        [6750, 0.8079884504331087]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 264
+        },
+        {
+          "direction": "up",
+          "ticks": 252
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 576
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 324
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 366
+        },
+        {
+          "direction": "down",
+          "ticks": 42
+        },
+        {
+          "direction": "left",
+          "ticks": 270
+        },
+        {
+          "direction": "right",
+          "ticks": 498
+        },
+        {
+          "direction": "down",
+          "ticks": 300
+        },
+        {
+          "direction": "right",
+          "ticks": 264
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 174
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "left",
+          "ticks": 264
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 558
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 276
+        },
+        {
+          "direction": "left",
+          "ticks": 144
+        },
+        {
+          "direction": "up",
+          "ticks": 114
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 1.5,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 5358,
+        "seconds": 44.64999999999811,
+        "coverage": 0.8233878729547642,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 6,
+        "exposureTicks": 1884,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 5358,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "e557ddf08b11e02c"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["west", "east"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "70169cd27100c62d",
+      "ticks": 5358,
+      "lives": 2,
+      "coverage": 0.8233878729547642,
+      "cuts": 6,
+      "searchSteps": 6,
+      "checkpoint": "e557ddf08b11e02c",
+      "events": [
+        [798, "cut.closed", null],
+        [1914, "cut.closed", null],
+        [2370, "cut.closed", null],
+        [2886, "cut.closed", null],
+        [3510, "cut.closed", null],
+        [5358, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.17468719923002887],
+        [1914, 0.3397497593840231],
+        [2370, 0.40279114533205007],
+        [2886, 0.4966313763233879],
+        [3510, 0.566410009624639],
+        [5358, 0.8233878729547642]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 414
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "right",
+          "ticks": 564
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 276
+        },
+        {
+          "direction": "up",
+          "ticks": 240
+        },
+        {
+          "direction": "left",
+          "ticks": 270
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 270
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "left",
+          "ticks": 324
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 444
+        },
+        {
+          "direction": "down",
+          "ticks": 294
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 2,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 6750,
+        "seconds": 56.24999999999745,
+        "coverage": 0.8079884504331087,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 11,
+        "exposureTicks": 3120,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 6750,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "e826370868b0104a"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "70169cd27100c62d",
+      "ticks": 6750,
+      "lives": 2,
+      "coverage": 0.8079884504331087,
+      "cuts": 11,
+      "searchSteps": 11,
+      "checkpoint": "e826370868b0104a",
+      "events": [
+        [798, "cut.closed", null],
+        [1530, "cut.closed", null],
+        [2694, "cut.closed", null],
+        [3066, "cut.closed", null],
+        [3486, "cut.closed", null],
+        [3798, "cut.closed", null],
+        [4854, "cut.closed", null],
+        [5094, "cut.closed", null],
+        [6078, "cut.closed", null],
+        [6486, "cut.closed", null],
+        [6750, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1530, 0.314725697786333],
+        [2694, 0.4292589027911453],
+        [3066, 0.4788257940327238],
+        [3486, 0.5365736284889316],
+        [3798, 0.5784408084696824],
+        [4854, 0.6371511068334937],
+        [5094, 0.6703561116458133],
+        [6078, 0.7358036573628489],
+        [6486, 0.7449470644850819],
+        [6750, 0.8079884504331087]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 264
+        },
+        {
+          "direction": "up",
+          "ticks": 252
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 576
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 324
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 366
+        },
+        {
+          "direction": "down",
+          "ticks": 42
+        },
+        {
+          "direction": "left",
+          "ticks": 270
+        },
+        {
+          "direction": "right",
+          "ticks": 498
+        },
+        {
+          "direction": "down",
+          "ticks": 300
+        },
+        {
+          "direction": "right",
+          "ticks": 264
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 174
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "left",
+          "ticks": 264
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 558
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 276
+        },
+        {
+          "direction": "left",
+          "ticks": 144
+        },
+        {
+          "direction": "up",
+          "ticks": 114
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 7878,
+        "seconds": 65.64999999999831,
+        "coverage": 0.8897978825794033,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 14,
+        "exposureTicks": 3576,
+        "maxExposureTicks": 492,
+        "firstCoverageMetTick": 7878,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "55fb447a557f0d0b"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "1eb7aee0ddec8b17",
+      "ticks": 7878,
+      "lives": 5,
+      "coverage": 0.8897978825794033,
+      "cuts": 14,
+      "searchSteps": 14,
+      "checkpoint": "55fb447a557f0d0b",
+      "events": [
+        [798, "cut.closed", null],
+        [1374, "cut.closed", null],
+        [1794, "cut.closed", null],
+        [2454, "cut.closed", null],
+        [3402, "cut.closed", null],
+        [4182, "cut.closed", null],
+        [5046, "cut.closed", null],
+        [5394, "cut.closed", null],
+        [5958, "cut.closed", null],
+        [6270, "cut.closed", null],
+        [6498, "cut.closed", null],
+        [6654, "cut.closed", null],
+        [7362, "cut.closed", null],
+        [7878, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1374, 0.2435033686236766],
+        [1794, 0.32435033686236764],
+        [2454, 0.40038498556304136],
+        [3402, 0.5110683349374399],
+        [4182, 0.6015399422521656],
+        [5046, 0.6381135707410972],
+        [5394, 0.6828681424446583],
+        [5958, 0.7011549566891242],
+        [6270, 0.71944177093359],
+        [6498, 0.7261790182868142],
+        [6654, 0.7295476419634264],
+        [7362, 0.7386910490856593],
+        [7878, 0.8897978825794033]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": "left",
+          "ticks": 78
+        },
+        {
+          "direction": "up",
+          "ticks": 342
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 192
+        },
+        {
+          "direction": "down",
+          "ticks": 132
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 618
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 336
+        },
+        {
+          "direction": "right",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 330
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 306
+        },
+        {
+          "direction": "right",
+          "ticks": 318
+        },
+        {
+          "direction": "left",
+          "ticks": 54
+        },
+        {
+          "direction": "up",
+          "ticks": 294
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 288
+        },
+        {
+          "direction": "down",
+          "ticks": 108
+        },
+        {
+          "direction": "right",
+          "ticks": 126
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 126
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 690
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 270
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 1.5,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 7878,
+        "seconds": 65.64999999999831,
+        "coverage": 0.8897978825794033,
+        "losses": 0,
+        "firstCutTick": 978,
+        "cuts": 14,
+        "exposureTicks": 3576,
+        "maxExposureTicks": 492,
+        "firstCoverageMetTick": 7878,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "55fb447a557f0d0b"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "1eb7aee0ddec8b17",
+      "ticks": 7878,
+      "lives": 5,
+      "coverage": 0.8897978825794033,
+      "cuts": 14,
+      "searchSteps": 14,
+      "checkpoint": "55fb447a557f0d0b",
+      "events": [
+        [978, "cut.closed", null],
+        [1374, "cut.closed", null],
+        [1794, "cut.closed", null],
+        [2454, "cut.closed", null],
+        [3402, "cut.closed", null],
+        [4182, "cut.closed", null],
+        [5046, "cut.closed", null],
+        [5394, "cut.closed", null],
+        [5958, "cut.closed", null],
+        [6270, "cut.closed", null],
+        [6498, "cut.closed", null],
+        [6654, "cut.closed", null],
+        [7362, "cut.closed", null],
+        [7878, "cut.closed", null]
+      ],
+      "closures": [
+        [978, 0.18286814244465832],
+        [1374, 0.2435033686236766],
+        [1794, 0.32435033686236764],
+        [2454, 0.40038498556304136],
+        [3402, 0.5110683349374399],
+        [4182, 0.6015399422521656],
+        [5046, 0.6381135707410972],
+        [5394, 0.6828681424446583],
+        [5958, 0.7011549566891242],
+        [6270, 0.71944177093359],
+        [6498, 0.7261790182868142],
+        [6654, 0.7295476419634264],
+        [7362, 0.7386910490856593],
+        [7878, 0.8897978825794033]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 180
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": "left",
+          "ticks": 78
+        },
+        {
+          "direction": "up",
+          "ticks": 342
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 192
+        },
+        {
+          "direction": "down",
+          "ticks": 132
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 618
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 336
+        },
+        {
+          "direction": "right",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 330
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 306
+        },
+        {
+          "direction": "right",
+          "ticks": 318
+        },
+        {
+          "direction": "left",
+          "ticks": 54
+        },
+        {
+          "direction": "up",
+          "ticks": 294
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 288
+        },
+        {
+          "direction": "down",
+          "ticks": 108
+        },
+        {
+          "direction": "right",
+          "ticks": 126
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 126
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 690
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 270
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 2,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 7878,
+        "seconds": 65.64999999999831,
+        "coverage": 0.8897978825794033,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 14,
+        "exposureTicks": 3576,
+        "maxExposureTicks": 492,
+        "firstCoverageMetTick": 7878,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "e43c0f9ffa674e64"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "1eb7aee0ddec8b17",
+      "ticks": 7878,
+      "lives": 5,
+      "coverage": 0.8897978825794033,
+      "cuts": 14,
+      "searchSteps": 14,
+      "checkpoint": "e43c0f9ffa674e64",
+      "events": [
+        [798, "cut.closed", null],
+        [1374, "cut.closed", null],
+        [1794, "cut.closed", null],
+        [2454, "cut.closed", null],
+        [3402, "cut.closed", null],
+        [4182, "cut.closed", null],
+        [5046, "cut.closed", null],
+        [5394, "cut.closed", null],
+        [5958, "cut.closed", null],
+        [6270, "cut.closed", null],
+        [6498, "cut.closed", null],
+        [6654, "cut.closed", null],
+        [7362, "cut.closed", null],
+        [7878, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1374, 0.2435033686236766],
+        [1794, 0.32435033686236764],
+        [2454, 0.40038498556304136],
+        [3402, 0.5110683349374399],
+        [4182, 0.6015399422521656],
+        [5046, 0.6381135707410972],
+        [5394, 0.6828681424446583],
+        [5958, 0.7011549566891242],
+        [6270, 0.71944177093359],
+        [6498, 0.7261790182868142],
+        [6654, 0.7295476419634264],
+        [7362, 0.7386910490856593],
+        [7878, 0.8897978825794033]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": "left",
+          "ticks": 78
+        },
+        {
+          "direction": "up",
+          "ticks": 342
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 192
+        },
+        {
+          "direction": "down",
+          "ticks": 132
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 618
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 336
+        },
+        {
+          "direction": "right",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 330
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 306
+        },
+        {
+          "direction": "right",
+          "ticks": 318
+        },
+        {
+          "direction": "left",
+          "ticks": 54
+        },
+        {
+          "direction": "up",
+          "ticks": 294
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 288
+        },
+        {
+          "direction": "down",
+          "ticks": 108
+        },
+        {
+          "direction": "right",
+          "ticks": 126
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 126
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 690
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 270
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 5574,
+        "seconds": 46.449999999998006,
+        "coverage": 0.8272377285851781,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 7,
+        "exposureTicks": 2124,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 5574,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "1165728eab99923c"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": false,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "1eb7aee0ddec8b17",
+      "ticks": 5574,
+      "lives": 5,
+      "coverage": 0.8272377285851781,
+      "cuts": 7,
+      "searchSteps": 7,
+      "checkpoint": "1165728eab99923c",
+      "events": [
+        [798, "cut.closed", null],
+        [1362, "cut.closed", null],
+        [1770, "cut.closed", null],
+        [2406, "cut.closed", null],
+        [3414, "cut.closed", null],
+        [4050, "cut.closed", null],
+        [5574, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1362, 0.2435033686236766],
+        [1770, 0.32435033686236764],
+        [2406, 0.3960538979788258],
+        [3414, 0.5697786333012512],
+        [4050, 0.6130895091434071],
+        [5574, 0.8272377285851781]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": "left",
+          "ticks": 66
+        },
+        {
+          "direction": "up",
+          "ticks": 342
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 192
+        },
+        {
+          "direction": "down",
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 252
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 522
+        },
+        {
+          "direction": "right",
+          "ticks": 354
+        },
+        {
+          "direction": "down",
+          "ticks": 282
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 276
+        },
+        {
+          "direction": "up",
+          "ticks": 282
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 1.5,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 5574,
+        "seconds": 46.449999999998006,
+        "coverage": 0.8272377285851781,
+        "losses": 0,
+        "firstCutTick": 978,
+        "cuts": 7,
+        "exposureTicks": 2124,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 5574,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "1165728eab99923c"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": false,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "1eb7aee0ddec8b17",
+      "ticks": 5574,
+      "lives": 5,
+      "coverage": 0.8272377285851781,
+      "cuts": 7,
+      "searchSteps": 7,
+      "checkpoint": "1165728eab99923c",
+      "events": [
+        [978, "cut.closed", null],
+        [1362, "cut.closed", null],
+        [1770, "cut.closed", null],
+        [2406, "cut.closed", null],
+        [3414, "cut.closed", null],
+        [4050, "cut.closed", null],
+        [5574, "cut.closed", null]
+      ],
+      "closures": [
+        [978, 0.18286814244465832],
+        [1362, 0.2435033686236766],
+        [1770, 0.32435033686236764],
+        [2406, 0.3960538979788258],
+        [3414, 0.5697786333012512],
+        [4050, 0.6130895091434071],
+        [5574, 0.8272377285851781]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 180
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": "left",
+          "ticks": 66
+        },
+        {
+          "direction": "up",
+          "ticks": 342
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 192
+        },
+        {
+          "direction": "down",
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 252
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 522
+        },
+        {
+          "direction": "right",
+          "ticks": 354
+        },
+        {
+          "direction": "down",
+          "ticks": 282
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 276
+        },
+        {
+          "direction": "up",
+          "ticks": 282
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 2,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 5574,
+        "seconds": 46.449999999998006,
+        "coverage": 0.8272377285851781,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 7,
+        "exposureTicks": 2124,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 5574,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "afdd5d2240aa7db8"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": false,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "1eb7aee0ddec8b17",
+      "ticks": 5574,
+      "lives": 5,
+      "coverage": 0.8272377285851781,
+      "cuts": 7,
+      "searchSteps": 7,
+      "checkpoint": "afdd5d2240aa7db8",
+      "events": [
+        [798, "cut.closed", null],
+        [1362, "cut.closed", null],
+        [1770, "cut.closed", null],
+        [2406, "cut.closed", null],
+        [3414, "cut.closed", null],
+        [4050, "cut.closed", null],
+        [5574, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1362, 0.2435033686236766],
+        [1770, 0.32435033686236764],
+        [2406, 0.3960538979788258],
+        [3414, 0.5697786333012512],
+        [4050, 0.6130895091434071],
+        [5574, 0.8272377285851781]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": "left",
+          "ticks": 66
+        },
+        {
+          "direction": "up",
+          "ticks": 342
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 192
+        },
+        {
+          "direction": "down",
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 252
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 522
+        },
+        {
+          "direction": "right",
+          "ticks": 354
+        },
+        {
+          "direction": "down",
+          "ticks": 282
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 276
+        },
+        {
+          "direction": "up",
+          "ticks": 282
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4278,
+        "seconds": 35.64999999999862,
+        "coverage": 0.8017324350336862,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 4,
+        "exposureTicks": 1320,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4278,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "f3ecc7f6848f6324"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": false,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "627fd9ff555f681f",
+      "ticks": 4278,
+      "lives": 3,
+      "coverage": 0.8017324350336862,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "f3ecc7f6848f6324",
+      "events": [
+        [798, "cut.closed", null],
+        [1134, "cut.closed", null],
+        [2166, "cut.closed", null],
+        [4278, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1134, 0.2435033686236766],
+        [2166, 0.39990375360923963],
+        [4278, 0.8017324350336862]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "left",
+          "ticks": 516
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 1.5,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4314,
+        "seconds": 35.9499999999986,
+        "coverage": 0.7983638113570741,
+        "losses": 0,
+        "firstCutTick": 978,
+        "cuts": 5,
+        "exposureTicks": 1524,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4314,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "a062502448e37db7"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": false,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "627fd9ff555f681f",
+      "ticks": 4314,
+      "lives": 3,
+      "coverage": 0.7983638113570741,
+      "cuts": 5,
+      "searchSteps": 5,
+      "checkpoint": "a062502448e37db7",
+      "events": [
+        [978, "cut.closed", null],
+        [1314, "cut.closed", null],
+        [1854, "cut.closed", null],
+        [2670, "cut.closed", null],
+        [4314, "cut.closed", null]
+      ],
+      "closures": [
+        [978, 0.18286814244465832],
+        [1314, 0.2435033686236766],
+        [1854, 0.36717998075072183],
+        [2670, 0.5409047160731473],
+        [4314, 0.7983638113570741]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 180
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 192
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 132
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 522
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 288
+        },
+        {
+          "direction": "right",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 282
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 2,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4278,
+        "seconds": 35.64999999999862,
+        "coverage": 0.8017324350336862,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 4,
+        "exposureTicks": 1320,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4278,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "7c04738caa28b43d"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": false,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "627fd9ff555f681f",
+      "ticks": 4278,
+      "lives": 3,
+      "coverage": 0.8017324350336862,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "7c04738caa28b43d",
+      "events": [
+        [798, "cut.closed", null],
+        [1134, "cut.closed", null],
+        [2166, "cut.closed", null],
+        [4278, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1134, 0.2435033686236766],
+        [2166, 0.39990375360923963],
+        [4278, 0.8017324350336862]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "left",
+          "ticks": 516
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4230,
+        "seconds": 35.24999999999864,
+        "coverage": 0.8118383060635226,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 4,
+        "exposureTicks": 1320,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4230,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "f6058b21ff964ad4"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": false,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "627fd9ff555f681f",
+      "ticks": 4230,
+      "lives": 3,
+      "coverage": 0.8118383060635226,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "f6058b21ff964ad4",
+      "events": [
+        [798, "cut.closed", null],
+        [1122, "cut.closed", null],
+        [2118, "cut.closed", null],
+        [4230, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1122, 0.2435033686236766],
+        [2118, 0.41000962463907603],
+        [4230, 0.8118383060635226]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "left",
+          "ticks": 516
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 1.5,
+      "seed": 1,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 6390,
+        "seconds": 53.24999999999762,
+        "coverage": 0.8180943214629451,
+        "losses": 0,
+        "firstCutTick": 978,
+        "cuts": 10,
+        "exposureTicks": 3072,
+        "maxExposureTicks": 492,
+        "firstCoverageMetTick": 6390,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "268be8329e19a27c"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "627fd9ff555f681f",
+      "ticks": 6390,
+      "lives": 3,
+      "coverage": 0.8180943214629451,
+      "cuts": 10,
+      "searchSteps": 10,
+      "checkpoint": "268be8329e19a27c",
+      "events": [
+        [978, "cut.closed", null],
+        [1302, "cut.closed", null],
+        [1926, "cut.closed", null],
+        [2802, "cut.closed", null],
+        [3174, "cut.closed", null],
+        [3582, "cut.closed", null],
+        [3918, "cut.closed", null],
+        [4338, "cut.closed", null],
+        [5418, "cut.closed", null],
+        [6390, "cut.closed", null]
+      ],
+      "closures": [
+        [978, 0.18286814244465832],
+        [1302, 0.2435033686236766],
+        [1926, 0.38209817131857554],
+        [2802, 0.49278152069297404],
+        [3174, 0.5437921077959577],
+        [3582, 0.5986525505293552],
+        [3918, 0.641963426371511],
+        [4338, 0.6915303176130895],
+        [5418, 0.7290664100096247],
+        [6390, 0.8180943214629451]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 180
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "left",
+          "ticks": 6
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "left",
+          "ticks": 132
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 618
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 336
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 360
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 282
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 42
+        },
+        {
+          "direction": "left",
+          "ticks": 318
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 732
+        },
+        {
+          "direction": "down",
+          "ticks": 282
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 474
+        }
+      ]
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 2,
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 4230,
+        "seconds": 35.24999999999864,
+        "coverage": 0.8118383060635226,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 4,
+        "exposureTicks": 1320,
+        "maxExposureTicks": 408,
+        "firstCoverageMetTick": 4230,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "9790b940d42943a5"
+      },
+      "goal": {
+        "achieved": false,
+        "repair": false,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": false,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      },
+      "status": "won",
+      "simulationIdentity": "627fd9ff555f681f",
+      "ticks": 4230,
+      "lives": 3,
+      "coverage": 0.8118383060635226,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "9790b940d42943a5",
+      "events": [
+        [798, "cut.closed", null],
+        [1122, "cut.closed", null],
+        [2118, "cut.closed", null],
+        [4230, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1122, 0.2435033686236766],
+        [2118, 0.41000962463907603],
+        [4230, 0.8118383060635226]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "left",
+          "ticks": 516
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ]
+    }
+  ]
+}

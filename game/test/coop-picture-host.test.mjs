@@ -4,6 +4,7 @@ import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
+import { JOURNEY_REACTION_PREFERENCES_KEY as reactionKey } from '../journey/reaction-preferences.mjs';
 
 // Actual Team entry/markup/core/input/painter and exact release bytes. The shared
 // page's injected reader/decoder and finite DOM are not native image/layout proof.
@@ -366,9 +367,10 @@ test('BFCache suspension keeps accepted artwork and shared preferences; terminal
 });
 
 test('paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes', async (t) => {
+  const savedReaction = JSON.stringify({ format: 'JourneyReactionPreferencesV1', enabled: false });
   const writes = [],
     storageReads = [],
-    values = new Map();
+    values = new Map([[reactionKey, savedReaction]]);
   const f = await page(t, {
     ...options,
     beforeImport: ({ install }) =>
@@ -410,9 +412,12 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
   assert.equal(f.doc.body.dataset.textFace, 'plain');
   assert.equal(f.doc.body.dataset.textSize, 'large');
   assert.equal(f.doc.body.dataset.menuOrnaments, 'off');
+  assert.equal(f.$('coop-journey-reactions-enabled').checked, false);
+  assert.equal(values.get(reactionKey), savedReaction);
   assert.deepEqual([...new Set(storageReads)].sort(), [
     'revealline.audio-master.v1',
     'revealline.display.v1',
+    reactionKey,
     'revealline.menu-style.v1',
     'revealline.team-arena.v1',
     'revealline.touch.v1',

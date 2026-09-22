@@ -3,6 +3,8 @@ import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
 import { drawCoopActiveTrail, drawCoopWall, prepareCoopWall } from './coop-terrain-trail.mjs';
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
+import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
+import { coopBonusView, drawCoopBonuses } from './coop-bonus-view.mjs';
 
 const THEME_FONTS = Object.freeze({
   ui: '"Field Kit UI", "Field Kit Mono", system-ui, sans-serif',
@@ -65,7 +67,15 @@ export function createCoopPainter(canvas) {
   ) {
     // This is a defensive arena guard, not full content-hash authority. The
     // picture lease verifies the pack/level hashes; the host owns attempt intent.
+    let pictureWidth = 1152,
+      pictureHeight = 576;
     if (picture !== null) {
+      if (picture.choice?.sourceKind === 'candidate-original') {
+        const frame = candidateTeamPictureFrame(picture, run.level, presentation);
+        if (!frame) throw new TypeError('Team candidate picture has no live verified owner.');
+        pictureWidth = frame.width;
+        pictureHeight = frame.height;
+      }
       if (
         picture.snapshot !== presentation ||
         !presentation ||
@@ -81,12 +91,15 @@ export function createCoopPainter(canvas) {
         throw new TypeError('Team picture does not match this prepared arena presentation.');
       if (
         picture.image &&
-        ((picture.image.naturalWidth ?? picture.image.width) !== 1152 ||
-          (picture.image.naturalHeight ?? picture.image.height) !== 576)
+        ((picture.image.naturalWidth ?? picture.image.width) !== pictureWidth ||
+          (picture.image.naturalHeight ?? picture.image.height) !== pictureHeight)
       )
-        throw new TypeError('Team picture must retain its complete 1152×576 decoded frame.');
+        throw new TypeError(
+          `Team picture must retain its complete ${pictureWidth}×${pictureHeight} decoded frame.`,
+        );
     }
     const fonts = canvasTextFonts(textFace, look?.fonts ?? THEME_FONTS);
+    const bonuses = coopBonusView(run);
     const palette = look?.palette;
     const colors = palette ? [palette.accent, palette.safe] : COLORS;
     const motionScale = reduced ? 0 : (look?.motionScale ?? 1);
@@ -135,7 +148,17 @@ export function createCoopPainter(canvas) {
       ctx.fillRect(0, 0, run.width, run.height);
       if (picture?.image) {
         ctx.imageSmoothingEnabled = false;
-        ctx.drawImage(picture.image, 0, 0, 1152, 576, 0, 0, run.width, run.height);
+        ctx.drawImage(
+          picture.image,
+          0,
+          0,
+          pictureWidth,
+          pictureHeight,
+          0,
+          0,
+          run.width,
+          run.height,
+        );
         // The accepted original is the victory reward. Keep the actual captured
         // cells and score intact while retiring the live arena's concealment/cues.
         if (run.status === 'won') return;
@@ -181,6 +204,7 @@ export function createCoopPainter(canvas) {
           }
         }
       }
+      drawCoopBonuses(ctx, bonuses, { screenScale: canvas.clientWidth / 1152 });
       // Launch markers are anchored landmarks, not compulsory meeting pads.
       for (const effect of run.supportEffects || []) {
         ctx.fillStyle = colors[effect.player];
@@ -503,9 +527,10 @@ export function createCoopPainter(canvas) {
         }
         if (!enemyBody) {
           ctx.fillStyle =
-            enemy.phase === 'warning'
+            enemy.phase === 'warning' || enemy.rover?.mode === 'warning'
               ? '#ffd279'
-              : enemy.type === 'hunter' && enemy.phase !== 'commit'
+              : (enemy.type === 'hunter' && enemy.phase !== 'commit') ||
+                  (enemy.type === 'claimed-rover' && enemy.rover?.mode !== 'active')
                 ? '#849fa4'
                 : '#fc786f';
           ctx.strokeStyle = '#ffc0a1';
@@ -516,6 +541,10 @@ export function createCoopPainter(canvas) {
             ctx.lineTo(0.55, 0);
             ctx.lineTo(0, 0.65);
             ctx.lineTo(-0.55, 0);
+          } else if (enemy.type === 'claimed-rover') {
+            ctx.rect(-0.48, -0.4, 0.96, 0.8);
+            ctx.fillRect(-0.65, -0.55, 0.2, 1.1);
+            ctx.fillRect(0.45, -0.55, 0.2, 1.1);
           } else {
             ctx.moveTo(0, -0.6);
             ctx.lineTo(0.58, 0.42);
@@ -540,6 +569,24 @@ export function createCoopPainter(canvas) {
             fonts.ui,
             enemyBody,
             '#eee7c8',
+          );
+          ctx.save();
+          ctx.translate(enemy.x, enemy.y);
+        }
+        if (enemy.type === 'claimed-rover') {
+          ctx.restore();
+          cue(
+            enemy.rover?.mode === 'warning'
+              ? 'WAKING'
+              : enemy.rover?.mode === 'active'
+                ? 'ROAMER'
+                : 'DORMANT',
+            enemy.x,
+            Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.05)),
+            0.57,
+            fonts.ui,
+            enemyBody,
+            '#f1f7ed',
           );
           ctx.save();
           ctx.translate(enemy.x, enemy.y);

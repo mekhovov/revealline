@@ -9,7 +9,12 @@ export function foundationCompatibleView(run) {
     if (!run || typeof run !== 'object') return null;
     const descriptor = Object.getOwnPropertyDescriptor(run, 'ruleset');
     if (!descriptor || !Object.hasOwn(descriptor, 'value')) return null;
-    if (descriptor.value !== 'xonix-core.v6') return classicView(run);
+    if (
+      !['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
+        descriptor.value,
+      )
+    )
+      return classicView(run);
     const descriptors = Object.getOwnPropertyDescriptors(run);
     descriptors.ruleset = { value: 'xonix-core.v5', enumerable: true };
     return classicView(Object.create(null, descriptors));

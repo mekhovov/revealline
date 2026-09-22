@@ -174,6 +174,44 @@ test('Team terrain uses shared non-color symbols only on unclaimed ground, inclu
   assert.equal(view.stack.length, 0);
 });
 
+test('Team reclaimed roamers retain tracked silhouettes and distinct state labels through pause and reduced effects', () => {
+  const source = createTeamOpeningCandidates();
+  source.actorCatalogId = 'journey-actors-v2';
+  source.missions[0].team.format = 'TeamMissionV3';
+  source.missions[0].actors.push({
+    id: 'roamer',
+    role: 'reclaimed-roamer',
+    tier: 'measured',
+    x: 10.5,
+    y: 17.5,
+    heading: [1, 0],
+  });
+  const run = createCoop(
+    resolveMission(compileContentProject(source), 'twin-landings', { mode: 'team' }).level,
+  );
+  const actor = run.enemies.find((enemy) => enemy.id === 'roamer');
+  for (const reduced of [false, true])
+    for (const [mode, label] of [
+      ['dormant', 'DORMANT'],
+      ['warning', 'WAKING'],
+      ['active', 'ROAMER'],
+    ]) {
+      actor.rover.mode = mode;
+      const view = canvasRecorder(),
+        painter = createCoopPainter(view.canvas),
+        before = structuredClone(run);
+      painter.paint(run, { reduced });
+      assert(labels(view.calls).includes(label));
+      assert(
+        view.calls.some(
+          ({ name, args }) => name === 'rect' && args.join(',') === '-0.48,-0.4,0.96,0.8',
+        ),
+      );
+      assert.equal(view.stack.length, 0);
+      assert.deepEqual(run, before);
+    }
+});
+
 test('wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing', () => {
   const view = canvasRecorder(),
     painter = createCoopPainter(view.canvas),

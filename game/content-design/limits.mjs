@@ -15,3 +15,7 @@ export const CONTENT_PROJECT_ITEM_LIMITS = Object.freeze({
   packs: 64,
   assets: 512,
 });
+
+// Per-original byte limit, also used to bound descriptive optional-art metadata.
+// This does not change the separate 64 MiB core offline-cache budget.
+export const CONTENT_ASSET_MAX_BYTES = 4 * 1024 * 1024;

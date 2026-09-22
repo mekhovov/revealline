@@ -1,4 +1,5 @@
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
+import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
@@ -25,6 +26,7 @@ import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCoopPresentation } from './coop-presentation.mjs';
+import { createCandidateTeamPictures } from './candidate-team-pictures.mjs';
 import {
   COOP_PICTURE_BINDINGS,
   COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
@@ -32,8 +34,22 @@ import {
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 import { createCoopPresentationImport } from './coop-import-source.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
-import { coopFailureFeedback, coopRetryFeedback } from './coop-feedback.mjs';
+import {
+  coopFailureFeedback,
+  coopRecoveryCause,
+  coopRetryFeedback,
+  coopRoamerCaption,
+  coopFoundationReturnCaption,
+} from './coop-feedback.mjs';
 import { coopArenaGuidance } from './coop-briefing.mjs';
+import {
+  coopBonusView,
+  coopBonusDetails,
+  coopBonusLive,
+  coopBonusCaption,
+  TEAM_BONUS_HELP,
+} from './coop-bonus-view.mjs';
+import { coopGroundName } from './coop-ground.mjs';
 import { terrainTransitionCaption } from '../ui/terrain-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
@@ -41,7 +57,7 @@ import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
 import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
 import { nextInputModality } from '../input-presentation.mjs';
-import { onNativeInactive } from '../platform.mjs';
+import { onNativeInactive, exportJSONFile } from '../platform.mjs';
 import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-policy.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
@@ -95,7 +111,16 @@ function picturePreparationText({ stage, status }, destination = null) {
     : `${action} the Team picture…`;
 }
 
-export function bootCoop() {
+export function bootCoop({
+  candidateJourney = null,
+  candidateProgress = null,
+  candidatePreferences = null,
+  candidateCardPresenter = undefined,
+  candidateCaptureTeaching = null,
+  candidateDifficulty = 'standard',
+  candidateNotice = '',
+  candidateEditionLabel = '',
+} = {}) {
   // Entry links select a code-owned destination, never a supplied URL or referrer.
   // Older/direct links and ambiguous contexts retain the existing Versus return.
   const returns = new URL(location.href).searchParams.getAll('return');
@@ -247,6 +272,11 @@ export function bootCoop() {
     nextOperation = null,
     startPermitted = true;
   let automaticRetry = null;
+  let foundationMessage = null;
+  let journeySkip = null;
+  const journeyReactions = attachJourneyReactions({ prefix: 'coop-' });
+  let candidatePresetIntent = 0;
+  let candidatePreferenceRestoration = null;
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
   let inactive = !foreground();
   let previousPads = new Map();
@@ -273,7 +303,32 @@ export function bootCoop() {
       }),
     );
   const starterDiscoveryRows = discoveryRows(COOP_STARTER_PACK, null, 'starter');
-  const currentDiscoveryRows = () => [...starterDiscoveryRows, ...(localDiscoveryPack?.rows ?? [])];
+  const candidateDiscoveryRows =
+    candidateJourney?.rows.map((row) =>
+      Object.freeze({
+        key: row.key,
+        title: row.level.name,
+        packName: row.pack.name,
+        sourceLabel: `Team Journey · ${row.background ? 'original-art candidate' : 'geometry test'} · not human validated`,
+        goal: coopGoalText(row.level),
+        levelId: row.level.id,
+        level: row.level,
+        pack: row.pack,
+        artworkSource: null,
+        journeyRow: row,
+      }),
+    ) ?? [];
+  const currentDiscoveryRows = () => [
+    ...candidateDiscoveryRows.filter(
+      (row) =>
+        row.journeyRow.difficulty ===
+        (acceptedPicture?.journeyRow?.difficulty ??
+          selectedCandidateRow()?.difficulty ??
+          candidateDifficulty),
+    ),
+    ...starterDiscoveryRows,
+    ...(localDiscoveryPack?.rows ?? []),
+  ];
   const artworkImports = createCoopPresentationImport();
   let importRequest = 0;
   const packStatus = createOperationStatus($('coop-pack-status'), { isCurrent: () => !disposed });
@@ -904,14 +959,40 @@ export function bootCoop() {
   earnedDialog.addEventListener('close', earnedClosed);
   earnedDialog.addEventListener('cancel', earnedCancelled);
   earnedDialog.addEventListener('keydown', settingsKeydown);
-  function message(text) {
+  function message(text, { foundationPlayers = [] } = {}) {
+    foundationMessage = foundationPlayers.length
+      ? {
+          run,
+          positions: foundationPlayers.map((id) => ({
+            id,
+            x: run.players[id].x,
+            y: run.players[id].y,
+          })),
+        }
+      : null;
     if ($('coop-message').textContent !== text) $('coop-message').textContent = text;
   }
   function overlay({ focus = true } = {}) {
+    const reactionRow = acceptedPicture?.journeyRow;
+    journeyReactions.present({
+      owned: !!candidateJourney?.owns(reactionRow),
+      mode: 'team',
+      outcome: run?.status,
+      missionId: reactionRow?.mission?.id,
+    });
     const show = run && !running();
     $('coop-overlay').hidden = !show;
     placeTools(Boolean(show));
     $('coop-pause').disabled = !running();
+    difficultyControls();
+    const skipDestination = journeyNavigation();
+    $('coop-journey-skip').hidden = !running() || !skipDestination?.next;
+    $('coop-journey-skip-confirm').hidden =
+      !['paused', 'lost'].includes(run?.status) || !skipDestination?.next || loopStopped;
+    $('coop-journey-skip-confirm').textContent =
+      journeySkip?.run === run && journeySkip.generation === generation
+        ? 'Confirm skip'
+        : 'Skip mission';
     discoveryControls();
     if (!show) return;
     const won = run.status === 'won',
@@ -934,8 +1015,11 @@ export function bootCoop() {
       : lost
         ? 'Your next route starts here.'
         : 'Both players paused';
+    const completionCopy = destination?.journey
+      ? 'Team Journey test complete. Browse a mission, replay, or leave whenever you are ready.'
+      : 'Pack complete. Browse Team arenas to choose your next challenge, or retry this one.';
     $('coop-overlay-copy').textContent = won
-      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. ${destination?.next ? `Next arena: ${destination.next.name}.` : destination?.final ? 'Pack complete. Browse Team arenas to choose your next challenge, or retry this one.' : 'Browse Team arenas or retry this challenge.'}`
+      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. ${destination?.next ? `Next arena: ${destination.next.name}.` : destination?.final ? completionCopy : 'Browse Team arenas or retry this challenge.'}`
       : lost
         ? coopRetryFeedback(run, knockdowns.filter(Boolean))
         : 'Release your controls, then choose Resume together.';
@@ -943,6 +1027,14 @@ export function bootCoop() {
   }
   function render() {
     if (!run) return;
+    const bonusView = coopBonusView(run),
+      bonusLive = coopBonusLive(bonusView);
+    $('coop-bonus-live').textContent = bonusLive;
+    $('coop-bonus-live').hidden = !bonusLive;
+    $('coop-bonus-details').hidden = !bonusView || run.status !== 'paused';
+    $('coop-bonus-detail-state').textContent =
+      coopBonusDetails(bonusView) || 'No pickup or effect window active.';
+    $('coop-bonus-help').textContent = bonusView ? TEAM_BONUS_HELP : '';
     painter.paint(run, {
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
       textFace: displayPreferences.snapshot().textFace,
@@ -966,6 +1058,7 @@ export function bootCoop() {
         ? 'Strongholds secured together'
         : coopGoalText(run.level);
     const finished = run.status === 'won' || run.status === 'lost';
+    const groundName = coopGroundName(run.level);
     for (const player of run.players) {
       $('coop-state-' + player.id).textContent = finished
         ? run.status === 'won'
@@ -978,8 +1071,8 @@ export function bootCoop() {
           : player.cutting
             ? 'Line exposed'
             : player.graceUntil > run.time
-              ? 'Recovery shield · safe ground only'
-              : 'On safe ground';
+              ? `Recovery shield · ${groundName} only`
+              : `On ${groundName}`;
       $('coop-state-' + player.id).dataset.compact = finished
         ? run.status === 'won'
           ? 'Complete'
@@ -992,7 +1085,9 @@ export function bootCoop() {
             ? 'Exposed'
             : player.graceUntil > run.time
               ? 'Shielded'
-              : 'Safe';
+              : groundName === 'reclaimed ground'
+                ? 'Reclaimed'
+                : 'Safe';
       const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
       $('coop-charge-' + player.id).textContent = finished
         ? 'Results ready'
@@ -1017,7 +1112,7 @@ export function bootCoop() {
         : player.rescue
           ? `Rescuing partner · ${Math.min(100, Math.floor((run.time - player.rescue.startedAt) * 100))}%`
           : player.status === 'downed'
-            ? 'Crawl along safe ground toward your partner'
+            ? `Crawl along ${groundName} toward your partner`
             : recharge > 0
               ? `Support recharging · ${recharge.toFixed(1)}s`
               : 'Support ready · tap to cover, hold nearby to rescue';
@@ -1160,7 +1255,7 @@ export function bootCoop() {
       level = selection?.pack.levels.find((level) => level.id === selection.levelId),
       name = level?.name;
     $('coop-preview-caption').textContent =
-      level?.journeyDifficulty && !selection.artworkSource
+      level?.journeyDifficulty && !selection.artworkSource && !selection.journeyRow?.background
         ? `${name} geometry test. Preview scenery is not authored mission artwork. Win to reveal the full picture; scenery does not mark obstacles.`
         : name
           ? `${name} preview. Win to reveal the full picture. Scenery does not mark obstacles.`
@@ -1241,8 +1336,18 @@ export function bootCoop() {
     focus?.finish($('coop-picture-retry'));
   }
   function newPictureSelection(recipe, sourcePack, pinnedPack = sourcePack, artworkSource = null) {
+    // Only code-owned exact recipes join this route. An imported pack with the
+    // same IDs (or even the same bytes) keeps its independent local ordering.
+    const journeyRow =
+      candidateJourney?.rows.find(
+        (row) =>
+          row.pack === sourcePack &&
+          row.difficulty === recipe.options.difficulty &&
+          JSON.stringify(row.level) === JSON.stringify(recipe.level),
+      ) ?? null;
     const selection = {
       sourcePack,
+      journeyRow,
       artworkSource,
       pack: structuredClone(pinnedPack),
       levelId: recipe.level.id,
@@ -1253,13 +1358,20 @@ export function bootCoop() {
         attemptId: `team-${++pictureSequence}`,
         ...(artworkSource ? { artworkSource } : {}),
       },
-      lease: createCoopPresentation({
-        bindings: COOP_PICTURE_BINDINGS,
-        historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
-        getSnapshot: presentationPage.current,
-        readPicture: presentationPage.readPicture,
-        decodeImage: decodeCoopPicture,
-      }),
+      lease:
+        journeyRow?.background && !artworkSource
+          ? createCandidateTeamPictures({
+              row: journeyRow,
+              owns: candidateJourney.owns,
+              getSnapshot: presentationPage.current,
+            })
+          : createCoopPresentation({
+              bindings: COOP_PICTURE_BINDINGS,
+              historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+              getSnapshot: presentationPage.current,
+              readPicture: presentationPage.readPicture,
+              decodeImage: decodeCoopPicture,
+            }),
       binding: null,
       state: 'new',
     };
@@ -1306,7 +1418,7 @@ export function bootCoop() {
     }
     if (!retry || !pictureSelection) {
       retirePicture();
-      const sourcePack = run ? attemptPack : pack;
+      const sourcePack = run ? (acceptedPicture?.journeyRow?.pack ?? attemptPack) : pack;
       pictureSelection = newPictureSelection(
         currentRecipe(),
         sourcePack,
@@ -1384,6 +1496,25 @@ export function bootCoop() {
   };
   // Follow the accepted content snapshot. Imports retain their own order and
   // recipes even when IDs match built-ins or a source catalogue later changes.
+  function journeyNavigation() {
+    if (
+      acceptedPicture?.state !== 'ready' ||
+      acceptedPicture.pack !== attemptPack ||
+      acceptedPicture.levelId !== attemptLevel?.id ||
+      !candidateJourney?.owns(acceptedPicture.journeyRow)
+    )
+      return null;
+    const row = acceptedPicture.journeyRow;
+    if (JSON.stringify(row.level) !== JSON.stringify(attemptLevel)) return null;
+    const destination = candidateJourney.destination(row);
+    return {
+      ...destination,
+      journey: true,
+      row,
+      nextRow: destination.next,
+      next: destination.next?.level ?? null,
+    };
+  }
   function teamDestination() {
     if (
       run?.status !== 'won' ||
@@ -1392,6 +1523,7 @@ export function bootCoop() {
       acceptedPicture.levelId !== attemptLevel?.id
     )
       return null;
+    if (candidateJourney?.owns(acceptedPicture.journeyRow)) return journeyNavigation();
     return coopPackDestination(attemptPack, attemptLevel);
   }
   function nextStatus(text) {
@@ -1416,7 +1548,11 @@ export function bootCoop() {
     operation.detach();
     try {
       if (announce && !disposed)
-        nextStatus('Next arena cancelled. Your result and picture are still here.');
+        nextStatus(
+          operation.skipped
+            ? 'Skip cancelled. Your attempt and picture are still here.'
+            : 'Next arena cancelled. Your result and picture are still here.',
+        );
     } finally {
       operation.controller.abort();
       operation.selection.lease?.dispose();
@@ -1435,10 +1571,11 @@ export function bootCoop() {
     )
       return;
     if (restore && run === operation.run && generation === operation.generation && foreground())
-      $('coop-next').focus({ preventScroll: true });
+      operation.action.focus({ preventScroll: true });
   }
-  async function nextArena() {
-    const destination = teamDestination()?.next;
+  async function nextArena({ skipRow = null } = {}) {
+    const navigation = skipRow ? journeyNavigation() : teamDestination(),
+      destination = navigation?.next;
     if (
       !destination ||
       disposed ||
@@ -1449,15 +1586,16 @@ export function bootCoop() {
       discovery?.isOpen() ||
       settingsDialog.open ||
       earnedDialog.open ||
-      departure
+      departure ||
+      (skipRow && (navigation.row !== skipRow || !['paused', 'lost'].includes(run?.status)))
     )
       return;
     const recipe = { level: structuredClone(destination), options: currentRecipe().options };
     const selection = newPictureSelection(
       recipe,
-      acceptedPicture.sourcePack,
-      attemptPack,
-      acceptedPicture.artworkSource,
+      navigation.nextRow?.pack ?? acceptedPicture.sourcePack,
+      navigation.nextRow?.pack ?? attemptPack,
+      navigation.nextRow ? null : acceptedPicture.artworkSource,
     );
     const rememberBuiltIn = selection.sourcePack === COOP_STARTER_PACK;
     const operation = {
@@ -1467,6 +1605,9 @@ export function bootCoop() {
       pack: attemptPack,
       settingsVisit,
       selection,
+      skipped: skipRow,
+      action: $(skipRow ? 'coop-journey-skip-confirm' : 'coop-next'),
+      status: run.status,
       controller: new AbortController(),
       detach: () => {},
     };
@@ -1479,7 +1620,7 @@ export function bootCoop() {
       generation === operation.generation &&
       acceptedPicture === operation.picture &&
       attemptPack === operation.pack &&
-      run.status === 'won' &&
+      run.status === operation.status &&
       !loopStopped &&
       !settingsDialog.open &&
       !earnedDialog.open &&
@@ -1501,12 +1642,14 @@ export function bootCoop() {
       !departure;
     nextOperation = operation;
     const focusChanged = (event) => {
-      if (event.target !== $('coop-next') && event.target !== $('coop-next-cancel')) cancelNext();
+      if (event.target !== operation.action && event.target !== $('coop-next-cancel')) cancelNext();
     };
     document.addEventListener('focusin', focusChanged);
     operation.detach = () => document.removeEventListener('focusin', focusChanged);
     try {
-      nextStatus(`Preparing ${destination.name}… Your result stays available.`);
+      nextStatus(
+        `Preparing ${destination.name}… Your ${skipRow ? 'attempt' : 'result'} stays available.`,
+      );
       if (!current()) return;
       $('coop-next-cancel').focus({ preventScroll: true });
       await presentationPage.ready;
@@ -1542,6 +1685,8 @@ export function bootCoop() {
         run,
         level: attemptLevel,
         pack: attemptPack,
+        setupPack: pack,
+        artworkSource: packArtworkSource,
         picture: acceptedPicture,
         selection: pictureSelection,
         knockdowns,
@@ -1565,6 +1710,11 @@ export function bootCoop() {
       accumulator = 0;
       try {
         if (rememberBuiltIn) lastBuiltInArena = destination.id;
+        if (navigation.nextRow) {
+          packArtworkSource = null;
+          showPack(navigation.nextRow.pack, destination.id, () => adopted(candidate));
+          if (!adopted(candidate)) return;
+        }
         $('coop-level').value = destination.id;
         $('coop-difficulty').value = candidate.difficulty;
         const configuration = COOP_PLAYTEST_CONFIGURATIONS.find((item) =>
@@ -1595,6 +1745,24 @@ export function bootCoop() {
           accumulator = previous.accumulator;
           generation++;
           lastBuiltInArena = previous.lastBuiltInArena;
+          if (navigation.nextRow) {
+            packArtworkSource = previous.artworkSource;
+            const epoch = generation;
+            showPack(
+              previous.setupPack,
+              previous.arena,
+              () =>
+                run === previous.run &&
+                generation === epoch &&
+                acceptedPicture === previous.picture,
+            );
+            if (
+              run !== previous.run ||
+              generation !== epoch ||
+              acceptedPicture !== previous.picture
+            )
+              return;
+          }
           $('coop-level').value = previous.arena;
           $('coop-difficulty').value = previous.difficulty;
           $('coop-experiment').value = previous.configuration;
@@ -1608,6 +1776,8 @@ export function bootCoop() {
       if (adopted(candidate) && rememberBuiltIn) arenaPreference.choose(destination.id);
       if (acceptedPicture !== previous.picture && pictureSelection !== previous.picture)
         previous.picture.lease?.dispose();
+      if (!adopted(candidate)) return;
+      candidateProgress?.started(selection.journeyRow, candidate, { skipped: skipRow });
       if (!adopted(candidate)) return;
       message(`${destination.name}. Choose fresh directions when you are ready.`);
       input.focus();
@@ -1649,7 +1819,7 @@ export function bootCoop() {
         !nextOperation
       ) {
         nextStatus(
-          `Could not start ${destination.name}. Your result is unchanged. Try Next again.`,
+          `Could not start ${destination.name}. Your ${skipRow ? 'attempt' : 'result'} is unchanged. ${skipRow ? 'Choose Skip again when ready.' : 'Try Next again.'}`,
         );
         try {
           render();
@@ -1664,7 +1834,7 @@ export function bootCoop() {
           !settingsDialog.open &&
           !earnedDialog.open
         )
-          $('coop-next').focus({ preventScroll: true });
+          operation.action.focus({ preventScroll: true });
       }
     } finally {
       if (nextOperation === operation) cancelNext();
@@ -1681,6 +1851,66 @@ export function bootCoop() {
   }
   $('coop-next').onclick = () => void nextArena();
   $('coop-next-cancel').onclick = () => cancelNext({ restore: true });
+
+  function cancelJourneySkip() {
+    if (!journeySkip) return;
+    journeySkip = null;
+    if (!disposed) overlay({ focus: false });
+  }
+  function skipJourney() {
+    const destination = journeyNavigation();
+    if (
+      !destination?.next ||
+      disposed ||
+      inactive ||
+      !foreground() ||
+      loopStopped ||
+      nextOperation ||
+      discovery?.isOpen() ||
+      settingsDialog.open ||
+      earnedDialog.open ||
+      departure ||
+      !['running', 'paused', 'lost'].includes(run?.status)
+    )
+      return;
+    if (
+      journeySkip?.run === run &&
+      journeySkip.generation === generation &&
+      journeySkip.picture === acceptedPicture
+    ) {
+      const row = journeySkip.row;
+      journeySkip = null;
+      $('coop-journey-skip-confirm').textContent = 'Skip mission';
+      void nextArena({ skipRow: row });
+      return;
+    }
+    const attempt = run,
+      epoch = generation;
+    pause({ focus: false });
+    if (
+      disposed ||
+      run !== attempt ||
+      generation !== epoch ||
+      !foreground() ||
+      inactive ||
+      settingsDialog.open ||
+      earnedDialog.open ||
+      departure ||
+      discovery?.isOpen()
+    )
+      return;
+    journeySkip = { run, generation, picture: acceptedPicture, row: destination.row };
+    $('coop-journey-skip-confirm').textContent = 'Confirm skip';
+    $('coop-overlay-copy').textContent =
+      `Skip to ${destination.next.name}? No clear is awarded. You can return through Browse Team arenas.`;
+    $('coop-journey-skip-confirm').focus({ preventScroll: true });
+  }
+  const skipFocusChanged = (event) => {
+    if (event.target !== $('coop-journey-skip-confirm')) cancelJourneySkip();
+  };
+  document.addEventListener('focusin', skipFocusChanged);
+  $('coop-journey-skip').onclick = skipJourney;
+  $('coop-journey-skip-confirm').onclick = skipJourney;
 
   function canOpenDiscovery() {
     return (
@@ -1783,7 +2013,7 @@ export function bootCoop() {
       )
         throw aborted();
     };
-    const lease = createCoopPresentation({
+    const leaseOptions = {
       bindings: COOP_PICTURE_BINDINGS,
       historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
       getSnapshot() {
@@ -1795,7 +2025,15 @@ export function bootCoop() {
       },
       readPicture: presentationPage.readPicture,
       decodeImage: decodeCoopPicture,
-    });
+    };
+    const lease =
+      row.journeyRow?.background && !row.artworkSource
+        ? createCandidateTeamPictures({
+            row: row.journeyRow,
+            owns: candidateJourney.owns,
+            getSnapshot: leaseOptions.getSnapshot,
+          })
+        : createCoopPresentation(leaseOptions);
     const release = () => {
       if (released) return;
       released = true;
@@ -1847,7 +2085,13 @@ export function bootCoop() {
   async function activateDiscovery(row, { signal, isCurrent, onStatus, opener }) {
     if (!canOpenDiscovery() || !currentDiscoveryRows().includes(row))
       throw new DOMException('Arena selection is no longer current.', 'AbortError');
-    const recipe = { level: structuredClone(row.level), options: currentRecipe().options };
+    const recipe = {
+      level: structuredClone(row.level),
+      options: {
+        ...currentRecipe().options,
+        ...(row.journeyRow ? { difficulty: row.journeyRow.difficulty } : {}),
+      },
+    };
     const selection = newPictureSelection(recipe, row.pack, row.pack, row.artworkSource);
     const previous = {
       run,
@@ -2035,7 +2279,7 @@ export function bootCoop() {
           departure = ticket;
           $('coop-discard-title').textContent = 'Start another Team arena?';
           $('coop-discard-copy').textContent =
-            `Stay keeps this attempt and its picture. Replace & play starts ${row.title} together. Team progress stays on this page.`;
+            `Stay keeps this attempt and its picture. Replace & play starts ${row.title} together. This unfinished attempt is not saved; replacing it loses its current territory, not previously recorded mission clears.`;
           $('coop-discard-confirm').textContent = 'Replace & play';
           try {
             departureDialog.showModal();
@@ -2116,6 +2360,8 @@ export function bootCoop() {
       };
       for (const old of new Set([previous.picture, previous.selection]))
         if (old && old !== acceptedPicture && old !== pictureSelection) old.lease?.dispose();
+      if (run === candidate && running() && foreground() && !disposed)
+        candidateProgress?.started(selection.journeyRow, candidate);
       return run === candidate && running() && foreground() && !disposed;
     } finally {
       if (discoveryOperation === operation) discoveryOperation = null;
@@ -2141,7 +2387,10 @@ export function bootCoop() {
     status: $('coop-discovery-status'),
     back: $('coop-discovery-back'),
     cancel: $('coop-discovery-cancel'),
+    search: $('coop-discovery-search'),
+    campaign: $('coop-discovery-campaign'),
     getEntries: currentDiscoveryRows,
+    presentCard: candidateCardPresenter,
     canOpen: canOpenDiscovery,
     activate: activateDiscovery,
     preparePreview: prepareDiscoveryPreview,
@@ -2211,6 +2460,7 @@ export function bootCoop() {
     };
   }
   function start(recipe = currentRecipe(), prepared = null) {
+    cancelJourneySkip();
     cancelAutomaticRetry();
     cancelNext();
     nextStatus('');
@@ -2281,6 +2531,9 @@ export function bootCoop() {
       arenaPreference.choose(startingLevel.id);
     if (!disposed && run === next && running() && foreground())
       acceptMusic(selection, { play: true });
+    if (!disposed && run === next && running() && foreground())
+      candidateProgress?.started(selection.journeyRow, next);
+    if (disposed || run !== next || !running() || !foreground()) return;
     input.focus();
     if (loopStopped) {
       loopStopped = false;
@@ -2443,6 +2696,7 @@ export function bootCoop() {
       $('coop-play').hidden = true;
       $('coop-menu').hidden = false;
       showPackStatus();
+      difficultyControls();
       placeTools(false);
       if (
         retainedPicture?.sourcePack === pack &&
@@ -2529,7 +2783,7 @@ export function bootCoop() {
     clear();
     $('coop-discard-title').textContent = 'Discard this Team attempt?';
     $('coop-discard-copy').textContent =
-      `Team progress is only kept on this page; this attempt is not saved. ${
+      `This unfinished attempt is not saved; discarding it loses its current territory, not previously recorded mission clears. ${
         loopStopped
           ? 'Stay keeps this stopped attempt on screen. It cannot resume after the arena error.'
           : 'Stay keeps both players paused. Resume together remains a separate action.'
@@ -2646,6 +2900,7 @@ export function bootCoop() {
   document.addEventListener('focusin', retryFocusChanged);
   const suspend = () => {
     if (disposed) return;
+    cancelJourneySkip();
     music?.suspend();
     discovery?.cancel();
     cancelDiscoveryPreparation();
@@ -2684,20 +2939,58 @@ export function bootCoop() {
           : null;
     // The final step still owns its input cleanup, but its live region must
     // not announce instructions for an attempt that has ended.
-    const announce = (text) => {
-      if (!terminalMessage) message(text);
+    const announce = (text, options) => {
+      if (!terminalMessage) message(text, options);
     };
+    // Only this owned instructional cue expires on movement. A later threat,
+    // bonus, rescue or menu message revokes ownership in message() above.
+    if (
+      foundationMessage?.run === run &&
+      foundationMessage.positions.some(
+        ({ id, x, y }) => run.players[id].x !== x || run.players[id].y !== y,
+      )
+    )
+      announce('Choose your next route. Close cuts on reclaimed ground.');
+    const captureTeaching = candidateCaptureTeaching?.(
+      acceptedPicture?.journeyRow,
+      run,
+      run.events,
+    );
+    const foundationCaption = coopFoundationReturnCaption(run);
+    const foundationPlayers = run.events
+      .filter((event) => coopFoundationReturnCaption(run, [event]))
+      .map((event) => event.player);
+    const captureCaption = [
+      captureTeaching,
+      foundationCaption,
+      ...run.events
+        .filter((event) => event.type === 'cells.claimed')
+        .map((event) => terrainTransitionCaption(run, event)),
+    ]
+      .filter(Boolean)
+      .join(' ');
+    // Revivals clear stored knockdowns below. Preserve this step's observed
+    // causes first, so immediate shared recovery cannot erase its own reason.
+    const recoveryFailures = [...knockdowns];
+    for (const event of run.events)
+      if (event.type === 'player.downed') recoveryFailures[event.player] = event;
     for (const event of run.events) {
-      if (event.type === 'cells.claimed' && run.terrain) {
-        const caption = terrainTransitionCaption(run, event);
-        if (caption) announce(caption);
-      }
+      if (event.type === 'cells.claimed' && captureCaption)
+        announce(captureCaption, { foundationPlayers });
       if (event.type === 'cut.closed') {
         input.clearPlayer(event.player);
         batch.release(event.player);
       }
+      const roamerCaption = coopRoamerCaption(event);
+      if (roamerCaption) announce(roamerCaption);
+      const bonusCaption = coopBonusCaption(event, names);
+      if (bonusCaption) announce(bonusCaption);
       if (event.type === 'cut.joint')
-        announce('Joint Cut! Both lines are safe. Choose your next route together.');
+        announce(
+          captureTeaching
+            ? `Joint Cut! ${captureTeaching}`
+            : 'Joint Cut! Both lines are banked. Choose your next route together.',
+        );
       if (event.type === 'player.downed') {
         knockdowns[event.player] = event;
         input.clearPlayer(event.player);
@@ -2707,15 +3000,23 @@ export function bootCoop() {
         );
       }
       if (event.type === 'player.revived') {
+        const cause =
+          event.reason === 'reserve'
+            ? coopRecoveryCause(run, [recoveryFailures[event.player]])
+            : '';
         knockdowns[event.player] = null;
         input.clearPlayer(event.player);
         batch.release(event.player);
         announce(
-          `${names[event.player]} is back.${event.reason === 'reserve' ? ' One team reserve used.' : ''} Choose a fresh direction.`,
+          `${cause ? `${cause} ` : ''}${names[event.player]} is back.${event.reason === 'reserve' ? ' One team reserve used.' : ''} Choose a fresh direction.`,
         );
       }
-      if (event.type === 'team.recovery')
-        announce('Both craft are back. One team reserve used. Choose fresh directions together.');
+      if (event.type === 'team.recovery') {
+        const cause = coopRecoveryCause(run, recoveryFailures);
+        announce(
+          `${cause ? `${cause} ` : ''}Both craft are back. One team reserve used. Choose fresh directions together.`,
+        );
+      }
       if (event.type === 'shield.disabled')
         announce('Both anchors secured! Now capture the exposed core in a new cut.');
       if (event.type === 'core.defeated')
@@ -2812,6 +3113,10 @@ export function bootCoop() {
           accumulator -= FIXED_DT;
           events();
           if (!running()) {
+            const finishedAttempt = run,
+              epoch = generation;
+            if (run.status === 'won') candidateProgress?.complete(run);
+            if (disposed || run !== finishedAttempt || generation !== epoch) break;
             clear();
             overlay();
             if (run.status === 'lost' && run.level.journeyDifficulty && !loopStopped) {
@@ -2847,23 +3152,34 @@ export function bootCoop() {
   function supportGuidance(guidance) {
     $('coop-support-help').textContent = guidance.supportText;
     $('coop-help-support').textContent =
-      `${guidance.supportText} A downed player can crawl along safe ground to meet their partner.`;
+      `${guidance.supportText} A downed player can crawl along ${guidance.groundName} to meet their partner.`;
+  }
+  function selectedCandidateRow() {
+    const level = selectedLevel();
+    return candidateJourney?.rows.find((row) => row.pack === pack && row.level === level) ?? null;
+  }
+  function difficultyControls(level = selectedLevel()) {
+    // Compiled Journey packs are immutable preset editions. Changing this menu
+    // selects a newly compiled owned edition, never re-projects imported bytes.
+    $('coop-difficulty').disabled =
+      Boolean(level.journeyDifficulty) &&
+      (Boolean(run) || !candidatePreferences || !selectedCandidateRow());
+    if (level.journeyDifficulty) $('coop-difficulty').value = level.journeyDifficulty;
   }
   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
-    // Compiled Journey packs are immutable preset editions. Changing this menu
-    // cannot re-project their actors/lives through the historical Team rules.
-    $('coop-difficulty').disabled = Boolean(level.journeyDifficulty);
-    if (level.journeyDifficulty) $('coop-difficulty').value = level.journeyDifficulty;
+    difficultyControls(level);
     const guidance = coopArenaGuidance(level, experiment);
+    $('coop-closure-help').textContent =
+      `Draw a short loop back to ${guidance.groundName} to claim it. Banking stops your craft; steer again for your next cut.`;
     $('coop-intro').textContent = experiment.jointCuts
       ? 'Start with a small loop. Cover each other, then meet to join a larger cut.'
-      : 'Start with small loops. Cover each other and return to safe ground to bank each line.';
+      : `Start with small loops. Cover each other and return to ${guidance.groundName} to bank each line.`;
     $('coop-cut-title').textContent = experiment.jointCuts
       ? 'Join when ready.'
       : 'Bring each line home.';
     $('coop-cut-help').textContent = experiment.jointCuts
       ? 'Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.'
-      : 'Return to safe ground to bank your cut. Crossing a partner’s line is harmless; meeting their head does not join your lines.';
+      : `Return to ${guidance.groundName} to bank your cut. Crossing a partner’s line is harmless; meeting their head does not join your lines.`;
     $('coop-threat-title').textContent = guidance.threatTitle;
     $('coop-threat-help').textContent = guidance.threatText;
     supportGuidance(guidance);
@@ -2879,7 +3195,8 @@ export function bootCoop() {
       : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
   }
   function showPackStatus() {
-    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}`;
+    const candidate = candidateJourney?.rows.find((row) => row.pack === pack);
+    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}${candidate ? ` · ${candidate.background ? 'Original-art candidate' : 'Geometry test'} · not human validated` : ''}`;
     packStatus.begin({ message: label }).finish({ message: label });
   }
   function showPack(next, preferred = next.levels[0].id, isCurrent = () => true) {
@@ -3213,6 +3530,38 @@ export function bootCoop() {
     return preparePicture();
   };
   $('coop-experiment').onchange = setupNote;
+  $('coop-difficulty').onchange = () => {
+    const previous = selectedCandidateRow(),
+      requested = $('coop-difficulty').value;
+    if (!previous || !candidatePreferences || run || departure || disposed || !foreground()) {
+      difficultyControls();
+      return;
+    }
+    const row = candidateJourney.row(previous.mission, requested);
+    if (!row) {
+      difficultyControls();
+      return;
+    }
+    const ticket = ++candidatePresetIntent,
+      previousPack = pack;
+    const current = () =>
+      !disposed && !run && !departure && foreground() && ticket === candidatePresetIntent;
+    cancelImport({ forget: true });
+    if (!current() || pack !== previousPack) return;
+    candidateDifficulty = requested;
+    candidatePreferences.choose(requested);
+    if (!current() || pack !== previousPack) return;
+    // Retire the old preset before publishing new setup. Reentrant Start must
+    // never pair a new compiled level with the previous edition's image lease.
+    retirePicture();
+    if (!current() || pack !== previousPack) return;
+    pictureUI('Preparing the selected Journey difficulty…');
+    if (!current() || pack !== previousPack) return;
+    packArtworkSource = null;
+    showPack(row.pack, row.level.id, current);
+    if (!current() || pack !== row.pack) return;
+    return preparePicture();
+  };
   // The classic entry owns intent before the select becomes interactive.
   // Without that evidence, retain native setup rather than override a choice.
   const earlySelection = globalThis.RevealLineTeamEntry?.take();
@@ -3224,7 +3573,15 @@ export function bootCoop() {
   }
   // Keep the existing option nodes and an already-correct native value while a
   // player may have the platform's selector open during module preparation.
-  if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
+  if (candidateJourney && !earlySelection?.claimed) {
+    const first = candidateJourney.catalog.missions.find((mission) =>
+      candidateJourney.isCore(mission.id),
+    );
+    const row =
+      candidateProgress?.initial(candidateDifficulty) ??
+      candidateJourney.row(first, candidateDifficulty);
+    showPack(row.pack, row.level.id);
+  } else if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
   showPackStatus();
   setupNote();
   $('coop-touch').value = 'auto';
@@ -3259,6 +3616,9 @@ export function bootCoop() {
     cancelNext({ announce: false });
     $('coop-next').onclick = null;
     $('coop-next-cancel').onclick = null;
+    $('coop-journey-skip').onclick = null;
+    $('coop-journey-skip-confirm').onclick = null;
+    document.removeEventListener('focusin', skipFocusChanged);
     // Retire dialog callbacks before native close or preference disposal can
     // reenter. No terminal cleanup restores focus or resumes the attempt.
     settingsOwner = null;
@@ -3292,7 +3652,11 @@ export function bootCoop() {
     presentationPage.close();
     closeAudio();
     closeDisplay();
+    journeyReactions.dispose();
     arenaPreference.dispose();
+    candidateProgress?.dispose();
+    candidatePreferences?.dispose();
+    candidatePreferenceRestoration?.dispose();
     importRequest++;
     disposed = true;
     packStatus.dispose();
@@ -3321,9 +3685,82 @@ export function bootCoop() {
     suspend();
   });
   window.addEventListener('pageshow', returned);
+  function attachJourneyRecovery(owner, prefix, label, filename) {
+    let exportSequence = 0;
+    owner?.subscribe(({ ready = true, durable, error }) => {
+      if (disposed) return;
+      const notice = $(prefix),
+        focus = document.activeElement,
+        ownedFocus = !notice.hidden && notice.contains(focus),
+        attempt = run,
+        epoch = generation;
+      notice.hidden = !ready || durable || !error;
+      if (disposed) return;
+      $(`${prefix}-message`).textContent = error
+        ? `${label} is session-only. Retry saving or export before closing. ${error}`
+        : '';
+      if (
+        ownedFocus &&
+        notice.hidden &&
+        !disposed &&
+        foreground() &&
+        !running() &&
+        run === attempt &&
+        generation === epoch &&
+        (document.activeElement === focus || unclaimedFocus(document.activeElement))
+      ) {
+        const target = primary();
+        if (visibleAction(target)) target.focus({ preventScroll: true });
+      }
+    });
+    $(`${prefix}-retry`).onclick = () => {
+      if (!disposed) {
+        exportSequence++;
+        void owner?.retry();
+      }
+    };
+    $(`${prefix}-export`).onclick = async () => {
+      if (disposed || !owner) return;
+      const ticket = ++exportSequence;
+      try {
+        const result = await exportJSONFile(JSON.parse(owner.export()), filename);
+        if (!disposed && ticket === exportSequence && !$(prefix).hidden)
+          $(`${prefix}-message`).textContent = `${label} is session-only. ${result.message}`;
+      } catch (error) {
+        if (!disposed && ticket === exportSequence && !$(prefix).hidden)
+          $(`${prefix}-message`).textContent =
+            `Export failed: ${error.message}. Your session choice or progress is still here.`;
+      }
+    };
+  }
+  attachJourneyRecovery(
+    candidateProgress,
+    'coop-journey-save',
+    'Team Journey progress',
+    candidateProgress?.backupFilename ?? 'revealline-journey-progress.json',
+  );
+  attachJourneyRecovery(
+    candidatePreferences,
+    'coop-journey-preferences',
+    'Journey difficulty',
+    'revealline-journey-difficulty.json',
+  );
+  candidatePreferenceRestoration = candidatePreferences
+    ? attachPreferenceRestoration({
+        window,
+        getSnapshot: () => (run ? attemptLevel : selectedLevel()),
+        render: (level) => {
+          if (!disposed) difficultyControls(level);
+        },
+      })
+    : null;
   $('coop-start').disabled = false;
   $('coop-start').textContent = 'Start together →';
-  bootDisplay.finish({ message: 'Two players · one screen · a shared victory' });
+  bootDisplay.finish({
+    message: candidateJourney
+      ? `Team Journey ${candidateEditionLabel ? `${candidateEditionLabel} · ` : ''}${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
+      : 'Two players · one screen · a shared victory',
+  });
   document.documentElement.dataset.toolState = 'ready';
   startPermitted = !$('coop-start').disabled;
   void preparePicture({
@@ -3341,7 +3778,36 @@ try {
   document.addEventListener('focusin', initialFocusChoice, true);
   document.addEventListener('visibilitychange', initialVisibility);
   window.addEventListener('blur', initialFocusLost);
-  bootCoop();
+  const journeyRequests = new URL(location.href).searchParams.getAll('journey');
+  let candidateEntry;
+  if (
+    journeyRequests.length === 1 &&
+    [
+      'team-greybox',
+      'team-originals',
+      'team-pressure-originals-1',
+      'team-spatial-originals-1',
+    ].includes(journeyRequests[0])
+  ) {
+    const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
+    candidateEntry = await createTeamGreyboxEntry({
+      artwork: journeyRequests[0] === 'team-originals',
+      pressure: journeyRequests[0] === 'team-pressure-originals-1',
+      spatial: journeyRequests[0] === 'team-spatial-originals-1',
+    });
+  } else if (
+    journeyRequests.length === 1 &&
+    ['team-timed-originals', 'team-window-spatial-1', 'team-depot-spatial-1'].includes(
+      journeyRequests[0],
+    )
+  ) {
+    const { createTeamTimedEntry } = await import('../content-design/team-timed-entry.mjs');
+    candidateEntry = await createTeamTimedEntry({
+      spatial: journeyRequests[0] === 'team-window-spatial-1',
+      depot: journeyRequests[0] === 'team-depot-spatial-1',
+    });
+  }
+  bootCoop(candidateEntry);
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootDisplay.finish({ state: 'error', message: `Could not start Relay Rescue: ${error.message}` });

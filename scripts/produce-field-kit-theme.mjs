@@ -25,9 +25,10 @@ const sources = {
   ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs',
   screens:
     'game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css',
-  motion: 'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs',
+  motion:
+    'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs',
   effects:
-    'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs',
+    'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs',
   audio:
     'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs',
 };
@@ -62,19 +63,19 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   motion: {
-    sha256: 'b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4',
+    sha256: 'ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76',
     evidence: [
-      'Scoped P08-A source review: docs/actor-size-recipe-review.md; motion recipe inputs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4. The actor presentation input repairs fitted CSS minimum/maximum sizing while retaining source artwork, rotor recipes and finite actor/tail budgets. The unchanged Motion painter remains the second fingerprint input. The companion Solo/Versus body inset is separately pinned and leaves true contact, cut/head, ability centres and simulation unchanged.',
-      'The three runtime bodies committed in v0.61.22 source 307f46382a580b877a99123b3a7df7d9bc53dd40 match the reviewed candidate exactly. The retained cohort passed 100 tests each on Node20.19.5 and Node22.22.2, including actual-paint edge/transform envelopes, separate contact/trail geometry and checkpoint preservation. Original scoped native review sha256:c688971d7375f0e6fd0e361b6cd5b421f283a935ac2b5d62944e6221257a9b47 observed compact/detailed Solo and Versus craft at examined edges and exposed cuts; modeled geometry and browser observations remain distinct.',
-      'This is a bounded sizing/inset recipe declaration, not complete animation-set, all-role, all-theme, physical-input, brightness, fairness, audio, offline or public acceptance. Separate narrow Large HUD overflow remains open. Immutable fpv28 approval and the measured fpv29 source-stage successor are retained before this reviewed successor; all original payloads remain unchanged. Final integrated-source qualification and public verification are still required.',
+      'Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.',
+      'Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.',
+      'Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. The unpublished Journey fpv55–58 lineage is preserved as an authenticated inert archive; canonical history starts from accepted main fpv56. See docs/verification/journey-main-reconciliation/README.md. All 127 original payloads remain unchanged. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group.',
     ],
   },
   effects: {
-    sha256: '7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13',
+    sha256: '13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9',
     evidence: [
-      'Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.',
-      'Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.',
-      'Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group.',
+      'Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.',
+      'Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially rejected stale exact theme bindings and were repaired in the archived fpv58 checkpoint; those historical results do not qualify the new canonical binding. Complete reconciled host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.',
+      'Functional source approval only. All 127 original payloads remain unchanged. Accepted main fpv55/fpv56 records remain canonical and immutable; the differing unpublished Journey fpv55–58 lineage is separately archived, not silently reinterpreted. See docs/verification/journey-main-reconciliation/README.md. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group.',
     ],
   },
 };

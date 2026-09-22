@@ -4,6 +4,8 @@ import assert from 'node:assert/strict';
 import { couchPage } from './helpers/couch-host.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
 // Actual Couch entry, BoardPainter and simulation; finite DOM, image dimensions,
 // ResizeObserver and Canvas2D commands. This does not implement browser layout.
@@ -474,6 +476,70 @@ test('actual Versus fallback refits both boards before drawing a changed encount
     'An unchanged fallback layout key does not read geometry on every frame.',
   );
   assert.deepEqual(page.checkpoint(), checkpoint);
+});
+
+test('actual Versus fallback refits after a return caption retires with unchanged score', async (t) => {
+  const level = resolveMission(
+    compileContentProject(createOpeningCandidates()),
+    'nearby-shore',
+  ).level;
+  const campaign = {
+    version: 'xonix-campaign.v1',
+    id: 'foundation-caption',
+    revision: '1',
+    title: 'Return caption',
+    classRecipes: JSON.parse(await readFile(new URL('../content/classes.json', import.meta.url))),
+    levels: [level],
+  };
+  let geometryReads = 0;
+  const { page, rendering } = await fixture(t, {
+    campaign,
+    resizeObserver: false,
+    onMount({ document }) {
+      for (const seat of [0, 1]) {
+        const arena = document.getElementById(`race-canvas-${seat}`).parentElement;
+        arena.clientWidth = 700;
+        Object.defineProperty(arena, 'clientHeight', {
+          configurable: true,
+          get() {
+            geometryReads++;
+            return document.getElementById(`racer-capture-${seat}`).hidden ? 300 : 250;
+          },
+        });
+      }
+    },
+  });
+  assert.equal(rendering.observers.length, 0);
+  assert.deepEqual(
+    page.drawOptions.map((o) => o.displayCSSWidth),
+    [600, 600],
+  );
+  page.key('KeyS');
+  for (let i = 0; i < 300 && !page.renders[0].claimedCount; i++) page.frame(1000 / 120);
+  page.key('KeyS', false);
+  assert.equal(page.$('racer-capture-0').hidden, false);
+  assert.deepEqual(
+    page.drawOptions.map((o) => o.displayCSSWidth),
+    [500, 600],
+  );
+  const stats = [0, 1].map((i) => page.$(`racer-stats-${i}`).textContent),
+    reads = geometryReads;
+  page.key('KeyD');
+  page.frame(1000 / 120);
+  page.key('KeyD', false);
+  assert.equal(page.$('racer-capture-0').hidden, true);
+  assert.deepEqual(
+    [0, 1].map((i) => page.$(`racer-stats-${i}`).textContent),
+    stats,
+  );
+  assert(geometryReads > reads);
+  assert.deepEqual(
+    page.drawOptions.map((o) => o.displayCSSWidth),
+    [600, 600],
+  );
+  const settled = geometryReads;
+  page.frames(3, 0);
+  assert.equal(geometryReads, settled, 'stable caption state does not poll geometry');
 });
 
 test('actual Versus fallback refits wrapping statistics after a normal capture before either seat paints', async (t) => {

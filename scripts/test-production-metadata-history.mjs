@@ -118,7 +118,7 @@ test('history admits only finite complete JSON identities, with no arbitrary sna
 });
 test('the preserved FPV preset revision remains exact after a later runtime change', async (t) => {
   const retained = index.entries[1];
-  assert.equal(index.entries.length, 3);
+  assert.equal(index.entries.length, 4);
   assert.deepEqual(retained, {
     path: old.path,
     bytes: 36911,
@@ -166,6 +166,12 @@ test('v2 preserves the exact prior renderer as inert source bytes and v1 still a
   assert.equal(hash(bytes), retained.sha256);
   const dir = await fixture(t);
   await writeFile(path.join(dir, retained.path), bytes);
+  // A v1 checkout must also carry the exact live catalogue it originally pinned.
+  const catalog = index.entries.find((entry) => entry.path === 'game/enemy-catalog.mjs');
+  await writeFile(
+    path.join(dir, catalog.path),
+    await readFile(path.join(root, `${historyRoot}/${catalog.sha256}.mjs`)),
+  );
   await writeFile(
     path.join(dir, historyRoot, 'index.json'),
     JSON.stringify({
@@ -220,4 +226,36 @@ test('a private exact module snapshot is authenticated as bytes and never execut
   const result = await verifyProductionSources(candidate, { root: dir });
   assert.equal(result.metadata, 'verified');
   assert.equal(result.originalBytesVerified, false);
+});
+
+test('the original enemy catalogue remains pinned while the Journey catalogue evolves', async (t) => {
+  const retained = index.entries.find((entry) => entry.path === 'game/enemy-catalog.mjs');
+  assert.deepEqual(retained, {
+    path: 'game/enemy-catalog.mjs',
+    bytes: 5966,
+    sha256: '46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447',
+  });
+  assert(pins(register).some((pin) => JSON.stringify(pin) === JSON.stringify(retained)));
+  const name = `${historyRoot}/${retained.sha256}.mjs`;
+  const bytes = await readFile(path.join(root, name));
+  assert.equal(bytes.length, retained.bytes);
+  assert.equal(hash(bytes), retained.sha256);
+  assert.notEqual(hash(await readFile(path.join(root, retained.path))), retained.sha256);
+  const dir = await fixture(t),
+    before = JSON.stringify(register),
+    target = path.join(dir, name);
+  assert.equal((await verifyProductionSources(register, { root: dir })).metadata, 'verified');
+  // Neither a matching live body nor another retained authority may mask damage.
+  await writeFile(path.join(dir, retained.path), bytes);
+  await rm(target);
+  await assert.rejects(verifyProductionSources(register, { root: dir }), /ENOENT/);
+  await writeFile(target, 'changed retained catalogue');
+  await assert.rejects(verifyProductionSources(register, { root: dir }), /changed authority/);
+  await rm(target);
+  await symlink(path.join(dir, retained.path), target);
+  await assert.rejects(verifyProductionSources(register, { root: dir }), /Symlink/);
+  await rm(target);
+  await writeFile(target, bytes);
+  assert.equal((await verifyProductionSources(register, { root: dir })).metadata, 'verified');
+  assert.equal(JSON.stringify(register), before);
 });

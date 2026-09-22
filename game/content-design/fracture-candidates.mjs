@@ -1,5 +1,6 @@
 import { createStarterProject } from './starter.mjs';
 import { freezeDesign, FRACTURE_ACTOR_CATALOG } from './catalogs.mjs';
+import { FRACTURE_ART_CANDIDATES } from './fracture-art.mjs';
 
 // Original greybox hypotheses. Still images establish spatial motifs, not AI,
 // erosion timings, surface behavior, collision rules or a finished difficulty curve.
@@ -309,12 +310,12 @@ export const FRACTURE_FIRST_RETURNS = freezeDesign(
   Object.fromEntries(rows.map((row) => [row.id, row.departure])),
 );
 
-export function createFractureCandidates() {
+export function createFractureCandidates({ artwork = false } = {}) {
   const project = createStarterProject('fracture-greybox-candidates');
   project.name = 'Fractured Grid · greybox candidates';
   project.actorCatalogId = FRACTURE_ACTOR_CATALOG.id;
   project.maps = [];
-  project.assets = [];
+  project.assets = artwork ? structuredClone(FRACTURE_ART_CANDIDATES) : [];
   project.missions = rows.map((row, index) => {
     const map = {
       format: 'MapDesignV1',
@@ -339,7 +340,11 @@ export function createFractureCandidates() {
       objectives: structuredClone(row.objectives),
       bonuses: [],
       coverage: row.coverage,
-      presentation: { themeId: 'horizon', backgroundAssetId: null },
+      presentation: {
+        themeId: 'horizon',
+        backgroundAssetId:
+          project.assets.find((asset) => asset.id === `fracture-coastal-${row.id}`)?.id ?? null,
+      },
       design: {
         routeDecision: row.decision,
         lesson: row.lesson,

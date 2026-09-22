@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
 import { Document } from './helpers/couch-dom.mjs';
 import { authoredModeDestinations, authoredTeamReturn } from '../ui/authored-mode-routes.mjs';
+import { AUTHORED_JOURNEY_ROUTE_IDS } from '../content-design/mode-href.mjs';
 const source = await readFile(new URL('../couch/mode-entry.js', import.meta.url), 'utf8');
 function boot(mode, search) {
   const document = new Document();
@@ -21,7 +22,7 @@ function boot(mode, search) {
       ? document.getElementById(id).textContent
       : document.getElementById(id).getAttribute('href');
 }
-for (const route of ['opening', 'authored'])
+for (const route of AUTHORED_JOURNEY_ROUTE_IDS)
   test(`${route}: native boot escape matches ready destinations before any host modules load`, () => {
     const links = boot('versus', `?journey=${route}`);
     assert.equal(links('boot-return'), authoredModeDestinations('versus', route).solo);

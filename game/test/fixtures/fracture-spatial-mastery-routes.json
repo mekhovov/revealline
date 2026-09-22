@@ -1,0 +1,1658 @@
+{
+  "format": "FractureSpatialMasteryV1",
+  "projectRevision": "district-spatial-1",
+  "rows": [
+    {
+      "id": "two-districts",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "1eb7aee0ddec8b17",
+      "ticks": 6030,
+      "lives": 5,
+      "coverage": 0.8075072184793071,
+      "cuts": 13,
+      "searchSteps": 13,
+      "checkpoint": "8d059e873586f442",
+      "events": [
+        [570, "cut.closed", null],
+        [1182, "cut.closed", null],
+        [1770, "cut.closed", null],
+        [1926, "cut.closed", null],
+        [2154, "cut.closed", null],
+        [2622, "cut.closed", null],
+        [3054, "cut.closed", null],
+        [3270, "cut.closed", null],
+        [4170, "cut.closed", null],
+        [4554, "cut.closed", null],
+        [4962, "cut.closed", null],
+        [5298, "cut.closed", null],
+        [6030, "cut.closed", null]
+      ],
+      "closures": [
+        [570, 0.07940327237728585],
+        [1182, 0.23339749759384024],
+        [1770, 0.30317613089509143],
+        [1926, 0.3128007699711261],
+        [2154, 0.3238691049085659],
+        [2622, 0.42829643888354185],
+        [3054, 0.4523580365736285],
+        [3270, 0.4807507218479307],
+        [4170, 0.5741097208854667],
+        [4554, 0.6275264677574591],
+        [4962, 0.6819056785370549],
+        [5298, 0.7271414821944177],
+        [6030, 0.8075072184793071]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 144
+        },
+        {
+          "direction": "right",
+          "ticks": 402
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": "up",
+          "ticks": 354
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "down",
+          "ticks": 366
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 42
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 192
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 126
+        },
+        {
+          "direction": "right",
+          "ticks": 138
+        },
+        {
+          "direction": "down",
+          "ticks": 168
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 84
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 798
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 348
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 354
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": "up",
+          "ticks": 294
+        },
+        {
+          "direction": "down",
+          "ticks": 66
+        },
+        {
+          "direction": "left",
+          "ticks": 288
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 282
+        }
+      ],
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 6030,
+        "seconds": 50.24999999999779,
+        "coverage": 0.8075072184793071,
+        "losses": 0,
+        "firstCutTick": 570,
+        "cuts": 13,
+        "exposureTicks": 4092,
+        "maxExposureTicks": 660,
+        "firstCoverageMetTick": 6030,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "8d059e873586f442"
+      },
+      "goal": {
+        "achieved": true,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": true,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      }
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "1eb7aee0ddec8b17",
+      "ticks": 5946,
+      "lives": 5,
+      "coverage": 0.7776708373435997,
+      "cuts": 13,
+      "searchSteps": 13,
+      "checkpoint": "3ba5370148349d4f",
+      "events": [
+        [570, "cut.closed", null],
+        [1194, "cut.closed", null],
+        [1794, "cut.closed", null],
+        [1938, "cut.closed", null],
+        [2190, "cut.closed", null],
+        [2346, "cut.closed", null],
+        [2682, "cut.closed", null],
+        [3030, "cut.closed", null],
+        [3258, "cut.closed", null],
+        [4182, "cut.closed", null],
+        [4374, "cut.closed", null],
+        [4998, "cut.closed", null],
+        [5946, "cut.closed", null]
+      ],
+      "closures": [
+        [570, 0.07940327237728585],
+        [1194, 0.23339749759384024],
+        [1794, 0.30317613089509143],
+        [1938, 0.3103946102021174],
+        [2190, 0.3161693936477382],
+        [2346, 0.3253128007699711],
+        [2682, 0.42829643888354185],
+        [3030, 0.44995187680461984],
+        [3258, 0.4817131857555342],
+        [4182, 0.5726660250240616],
+        [4374, 0.5986525505293552],
+        [4998, 0.6597690086621751],
+        [5946, 0.7776708373435997]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 144
+        },
+        {
+          "direction": "right",
+          "ticks": 402
+        },
+        {
+          "direction": "left",
+          "ticks": 270
+        },
+        {
+          "direction": "up",
+          "ticks": 354
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "down",
+          "ticks": 366
+        },
+        {
+          "direction": "up",
+          "ticks": 30
+        },
+        {
+          "direction": "left",
+          "ticks": 36
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 30
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "right",
+          "ticks": 54
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 108
+        },
+        {
+          "direction": "right",
+          "ticks": 198
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 54
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 54
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 120
+        },
+        {
+          "direction": "left",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 504
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 78
+        },
+        {
+          "direction": "left",
+          "ticks": 114
+        },
+        {
+          "direction": "right",
+          "ticks": 318
+        },
+        {
+          "direction": "down",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 90
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 132
+        },
+        {
+          "direction": "left",
+          "ticks": 264
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 90
+        }
+      ],
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 5946,
+        "seconds": 49.54999999999783,
+        "coverage": 0.7776708373435997,
+        "losses": 0,
+        "firstCutTick": 570,
+        "cuts": 13,
+        "exposureTicks": 2988,
+        "maxExposureTicks": 468,
+        "firstCoverageMetTick": 5946,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "3ba5370148349d4f"
+      },
+      "goal": {
+        "achieved": true,
+        "repair": true,
+        "allLinked": false,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": true,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      }
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "627fd9ff555f681f",
+      "ticks": 6018,
+      "lives": 3,
+      "coverage": 0.7738209817131858,
+      "cuts": 14,
+      "searchSteps": 14,
+      "checkpoint": "8cb0ce09664ae81a",
+      "events": [
+        [798, "cut.closed", null],
+        [1122, "cut.closed", null],
+        [1302, "cut.closed", null],
+        [1782, "cut.closed", null],
+        [2130, "cut.closed", null],
+        [2298, "cut.closed", null],
+        [2526, "cut.closed", null],
+        [2730, "cut.closed", null],
+        [3738, "cut.closed", null],
+        [4242, "cut.closed", null],
+        [4518, "cut.closed", null],
+        [4818, "cut.closed", null],
+        [4998, "cut.closed", null],
+        [6018, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1122, 0.2435033686236766],
+        [1302, 0.25553416746871993],
+        [1782, 0.3638113570741097],
+        [2130, 0.4013474494706448],
+        [2298, 0.4066410009624639],
+        [2526, 0.4408084696823869],
+        [2730, 0.4870067372473532],
+        [3738, 0.5712223291626564],
+        [4242, 0.6881616939364774],
+        [4518, 0.7242540904716073],
+        [4818, 0.7613089509143407],
+        [4998, 0.7670837343599615],
+        [6018, 0.7738209817131858]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 264
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 54
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 156
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 126
+        },
+        {
+          "direction": "down",
+          "ticks": 228
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 408
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 288
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 42
+        },
+        {
+          "direction": "left",
+          "ticks": 234
+        },
+        {
+          "direction": "right",
+          "ticks": 54
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        },
+        {
+          "direction": "left",
+          "ticks": 54
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 180
+        },
+        {
+          "direction": "right",
+          "ticks": 396
+        },
+        {
+          "direction": "up",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 396
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        }
+      ],
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 6018,
+        "seconds": 50.149999999997796,
+        "coverage": 0.7738209817131858,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 14,
+        "exposureTicks": 3276,
+        "maxExposureTicks": 660,
+        "firstCoverageMetTick": 6018,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "8cb0ce09664ae81a"
+      },
+      "goal": {
+        "achieved": true,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": false,
+        "lethalNeutralized": true,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      }
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "627fd9ff555f681f",
+      "ticks": 7038,
+      "lives": 3,
+      "coverage": 0.8012512030798845,
+      "cuts": 12,
+      "searchSteps": 12,
+      "checkpoint": "64edecba1b119ed0",
+      "events": [
+        [798, "cut.closed", null],
+        [1134, "cut.closed", null],
+        [1314, "cut.closed", null],
+        [1974, "cut.closed", null],
+        [2262, "cut.closed", null],
+        [2622, "cut.closed", null],
+        [3138, "cut.closed", null],
+        [3450, "cut.closed", null],
+        [5406, "cut.closed", null],
+        [6114, "cut.closed", null],
+        [6534, "cut.closed", null],
+        [7038, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1134, 0.2435033686236766],
+        [1314, 0.25553416746871993],
+        [1974, 0.40230991337824834],
+        [2262, 0.42540904716073147],
+        [2622, 0.4307025986525505],
+        [3138, 0.4600577478344562],
+        [3450, 0.48315688161693937],
+        [5406, 0.6376323387872955],
+        [6114, 0.6973051010587104],
+        [6534, 0.7362848893166506],
+        [7038, 0.8012512030798845]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 54
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 138
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 180
+        },
+        {
+          "direction": "up",
+          "ticks": 150
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 162
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 30
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 54
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "left",
+          "ticks": 180
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 618
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 300
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 192
+        },
+        {
+          "direction": "left",
+          "ticks": 90
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 234
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 90
+        }
+      ],
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 7038,
+        "seconds": 58.64999999999731,
+        "coverage": 0.8012512030798845,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 12,
+        "exposureTicks": 2868,
+        "maxExposureTicks": 492,
+        "firstCoverageMetTick": 7038,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "64edecba1b119ed0"
+      },
+      "goal": {
+        "achieved": true,
+        "repair": true,
+        "allLinked": false,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": true,
+        "lethalNeutralized": true,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      }
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "70169cd27100c62d",
+      "ticks": 6786,
+      "lives": 2,
+      "coverage": 0.8681424446583254,
+      "cuts": 12,
+      "searchSteps": 12,
+      "checkpoint": "d66f0fb815156c61",
+      "events": [
+        [798, "cut.closed", null],
+        [1110, "cut.closed", null],
+        [1422, "cut.closed", null],
+        [1686, "cut.closed", null],
+        [2298, "cut.closed", null],
+        [2442, "cut.closed", null],
+        [2790, "cut.closed", null],
+        [4458, "cut.closed", null],
+        [5142, "cut.closed", null],
+        [5442, "cut.closed", null],
+        [6126, "cut.closed", null],
+        [6786, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1110, 0.23339749759384024],
+        [1422, 0.2593840230991338],
+        [1686, 0.4061597690086622],
+        [2298, 0.4128970163618864],
+        [2442, 0.42204042348411935],
+        [2790, 0.4456207892204042],
+        [4458, 0.6010587102983638],
+        [5142, 0.6462945139557267],
+        [5442, 0.6857555341674687],
+        [6126, 0.766121270452358],
+        [6786, 0.8681424446583254]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 54
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 198
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 54
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 156
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "left",
+          "ticks": 618
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 264
+        },
+        {
+          "direction": "right",
+          "ticks": 402
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": "up",
+          "ticks": 258
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 288
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 282
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 276
+        },
+        {
+          "direction": "down",
+          "ticks": 138
+        }
+      ],
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 6786,
+        "seconds": 56.54999999999743,
+        "coverage": 0.8681424446583254,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 12,
+        "exposureTicks": 3408,
+        "maxExposureTicks": 660,
+        "firstCoverageMetTick": 6786,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "d66f0fb815156c61"
+      },
+      "goal": {
+        "achieved": true,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": true,
+        "lethalNeutralized": true,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      }
+    },
+    {
+      "id": "two-districts",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "seed": 1,
+      "status": "won",
+      "simulationIdentity": "70169cd27100c62d",
+      "ticks": 6174,
+      "lives": 2,
+      "coverage": 0.8079884504331087,
+      "cuts": 13,
+      "searchSteps": 13,
+      "checkpoint": "3b16a22000f9a4a8",
+      "events": [
+        [798, "cut.closed", null],
+        [1110, "cut.closed", null],
+        [1362, "cut.closed", null],
+        [1590, "cut.closed", null],
+        [1746, "cut.closed", null],
+        [2202, "cut.closed", null],
+        [2994, "cut.closed", null],
+        [3354, "cut.closed", null],
+        [3498, "cut.closed", null],
+        [4470, "cut.closed", null],
+        [5166, "cut.closed", null],
+        [5478, "cut.closed", null],
+        [6174, "cut.closed", null]
+      ],
+      "closures": [
+        [798, 0.18286814244465832],
+        [1110, 0.22329162656400384],
+        [1362, 0.24254090471607315],
+        [1590, 0.2579403272377286],
+        [1746, 0.2670837343599615],
+        [2202, 0.31857555341674687],
+        [2994, 0.3474494706448508],
+        [3354, 0.4167468719923003],
+        [3498, 0.48604427333974976],
+        [4470, 0.6424446583253128],
+        [5166, 0.6876804619826756],
+        [5478, 0.7276227141482194],
+        [6174, 0.8079884504331087]
+      ],
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 216
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 54
+        },
+        {
+          "direction": "right",
+          "ticks": 258
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 90
+        },
+        {
+          "direction": "up",
+          "ticks": 30
+        },
+        {
+          "direction": "left",
+          "ticks": 198
+        },
+        {
+          "direction": "right",
+          "ticks": 54
+        },
+        {
+          "direction": "up",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 210
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 288
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 42
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 192
+        },
+        {
+          "direction": "left",
+          "ticks": 90
+        },
+        {
+          "direction": "right",
+          "ticks": 54
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "left",
+          "ticks": 156
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 618
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 264
+        },
+        {
+          "direction": "right",
+          "ticks": 402
+        },
+        {
+          "direction": "left",
+          "ticks": 54
+        },
+        {
+          "direction": "up",
+          "ticks": 258
+        },
+        {
+          "direction": "down",
+          "ticks": 30
+        },
+        {
+          "direction": "left",
+          "ticks": 288
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 282
+        }
+      ],
+      "metrics": {
+        "status": "no-loss-clear",
+        "ticks": 6174,
+        "seconds": 51.44999999999772,
+        "coverage": 0.8079884504331087,
+        "losses": 0,
+        "firstCutTick": 798,
+        "cuts": 13,
+        "exposureTicks": 3732,
+        "maxExposureTicks": 660,
+        "firstCoverageMetTick": 6174,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "collectedBonusIds": [],
+        "checkpoint": "3b16a22000f9a4a8"
+      },
+      "goal": {
+        "achieved": true,
+        "repair": true,
+        "allLinked": true,
+        "anchors": true,
+        "anchorCoverage": [],
+        "materialsNeutralized": true,
+        "lethalNeutralized": true,
+        "districts": ["east", "west"],
+        "activeClosure": false
+      }
+    }
+  ]
+}

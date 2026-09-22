@@ -1,5 +1,5 @@
 import { nativePlatform } from './platform.mjs';
-import { CONTENT_PROJECT_ITEM_LIMITS } from './content-design/limits.mjs';
+import { CONTENT_PROJECT_ITEM_LIMITS, CONTENT_ASSET_MAX_BYTES } from './content-design/limits.mjs';
 /** Explicit preparation of a generated distribution's declared core cache. */
 const MARKER = 'meta[name="revealline-offline"]';
 const OPTIONAL_ARTWORK_NAMES = new Set(['Opening Journey artwork', 'Journey candidate artwork']);
@@ -47,7 +47,9 @@ function configFromPage(documentRef = globalThis.document, locationRef = globalT
       config.optionalArtwork.count > CONTENT_PROJECT_ITEM_LIMITS.assets ||
       !Number.isSafeInteger(config.optionalArtwork.bytes) ||
       config.optionalArtwork.bytes < 1 ||
-      config.optionalArtwork.bytes > 128 * 1024 * 1024)
+      // These bytes describe excluded online-only originals, never a cache
+      // allocation. Use the same finite count and per-image bound as authoring.
+      config.optionalArtwork.bytes > config.optionalArtwork.count * CONTENT_ASSET_MAX_BYTES)
   )
     return null;
   const page = new URL(locationRef.href),

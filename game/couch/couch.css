@@ -356,6 +356,12 @@ body.candidate-journey .race-shell {
   color: #8ea8c8;
   margin: 5px 0;
 }
+.racer-capture {
+  margin: 4px 0;
+  color: #aedfff;
+  font-size: 14px;
+  line-height: 1.3;
+}
 .racer-encounter {
   display: flex;
   gap: 8px;

@@ -1,5 +1,145 @@
 # Xposed-led Journey — implementation contract
 
+Current checkpoint: [2026-09-22 item-by-item completion audit](verification/journey-completion-2026-09-22.md).
+The [shared-return follow-up](verification/journey-team-partner-returns.md) now
+qualifies a simultaneous Shared Lookout opening where each pilot banks on the
+other's earlier line, with missing-partner controls and complete continuations.
+Twin Depots' inner-first choice now has full Gentle/Expert finishes as well as
+Standard. These close specific route-use gaps, not whole-Team human/device or
+pacing acceptance; roamer mastery remains separately reported.
+The [Team automatic-recovery caption](verification/journey-team-recovery-cause.md)
+now retains the actual failure cause after a reserve is spent, including
+same-step shared recovery. No new dialog, pause or gameplay change is introduced;
+native/human explanation acceptance remains open.
+The [Team changing-return integration](verification/journey-team-spatial-player.md)
+now brings two revised roamer layouts into the pictured twelve-mission route,
+preserving the other ten missions and all old editions. Twin Depots' eastern
+inner landing has a verified bank→fresh departure→useful capture on every preset,
+plus a complete Standard continuation. This closes a specific landing-use gap;
+broader cooperation, pacing, human/device and public-release gates remain open.
+Depot's relocated reserve now has complementary collection routes on all three
+presets: one pilot takes the second window while the other cuts, both bank with
+substantial work remaining, and real keyboard-host routes finish without loss.
+Preserve the failed cross-preset finishing controls; feasibility is not balance.
+The [twelve-mission Team pressure player](verification/journey-team-pressure-player.md)
+now exposes the already-tested catalogue with original pictures, isolated progress,
+and eleven uninterrupted Next handovers. The old `team-originals` route keeps its
+historical catalogue. This closes an enrollment gap, not short routes, optional
+mastery, human/controller qualification or public promotion.
+The [Depot inner-lane successor](verification/journey-team-depot-spatial.md)
+addresses a demonstrated difficulty inversion: a corner circuit cleared Expert
+in eight seconds while earning only18.8% on the other presets. Two keeper
+headings preserve contested inner ground without changing rules or speed tiers.
+New relocation qualification requires a nonterminal boosted foundation return
+and a fresh subsequent cut, not merely a pickup immediately before victory.
+Keep this paired-preset retention check in all remaining map reviews. Wider
+pacing, cooperation/mastery, human/device and coordinated release gates remain.
+The [Window Exchange outer-pocket successor](verification/journey-team-window-spatial.md)
+now qualifies ordinary, cooperative first-window taking and genuine relocation
+across all presets, preserving shared speeds, geometry and bonus timing. Its
+explicit Team player/Studio edition keeps old progress and content untouched.
+Short optimized clears, human/device evidence and coordinated public promotion
+remain open; this is not acceptance of P02/P14 or the complete plan.
+The [Studio candidate library](verification/journey-studio-candidate-library.md)
+keeps the map and current draft primary while making bundled sources searchable.
+Inspection and Apply remain separate. This bounded authoring increment does not
+close human/device or coordinated release gates; historical snapshots below
+remain provenance rather than current acceptance claims.
+The [foundation-use diagnostic correction](verification/journey-foundation-observation-correction.md)
+now preserves engine ownership at exact landing edges. All 30 historical route
+checkpoints stay unchanged; four visited-foundation sets are corrected. Nearby
+shore has a qualified no-wait island-first route. The follow-up
+[foundation-return explanation](verification/journey-foundation-return-feedback.md)
+now works in Solo, Versus and Team, with 86 passing tests on each Node version
+and scoped native keyboard checks. This closes a teaching gap, not later-level
+pressure, geometry, compact/device, human or coordinated release gates.
+The latest [Home Signal field-finale alternative](verification/journey-apex-field-finale.md)
+tests ordinary capture instead of a Sentinel encounter, preserving old editions.
+Eight replay/race clears include all presets/controls and two far-wing mastery
+cases; short routes, quota tails and adapted starts remain unresolved. This is an
+explicit Studio study, not automatic enrollment or final balance acceptance.
+An [adapted-start follow-up](verification/journey-apex-adapted-routes.md) adds six
+further preset/control samples without added waiting and makes Studio's applied
+enemy-speed factors visible in its difficulty selector. Historical failed routes,
+remaining balance concerns and human/release gates stay explicit.
+The [combined field-finale integration](verification/journey-whole-field-review.md)
+now exposes that exact alternative through the full `whole-spatial-v2` Solo/Versus
+test route and Studio, preserving the other82 encounters and old save/profile
+namespaces. The133-test cohort passes on both Node versions; native first-return,
+Studio Apply and reload/Continue observations remain bounded. P12/P13 balance,
+human/device qualification and coordinated publication are still open.
+The user's difficulty/bonus/Ukrainian-and-FPV/enemy-variety extension is specified in
+[the pressure and variety successor](superpowers/specs/2026-09-21-journey-pressure-and-variety.md).
+
+The [combined timed-bonus integration](verification/journey-whole-timed-review.md)
+extends that source at `whole-spatial-v3` with the three reviewed trail-aware
+Border schedules. Other80 missions/maps/pictures and historical editions remain
+unchanged. Shared Studio Inspect/Apply, Solo/Versus direct continuation and exact
+bonus saves are qualified separately from human balance and public promotion.
+
+The [optional ornament/workshop integration](verification/journey-whole-variety-review.md)
+adds the eight existing pictured spatial studies to `whole-spatial-v4` as two
+voluntary four-mission sequences. The71-core/12-Remix route stays intact; Next/Skip
+remain inside the chosen optional sequence, and its ending makes no blanket
+completion claim. Separate progress and original theme dependencies are explicit.
+Technical qualification does not close human pacing/cultural/device or release gates.
+
+Current follow-up evidence: [two Sentinel receiver-layout successors](verification/journey-sentinel-spatial.md)
+preserve encounter rules while removing the recorded10–14second shortcuts;
+[new Livewire pressure paths](verification/journey-livewire-pressure.md) cover all42
+configurations without changing those levels. Combined unchanged-pressure route
+coverage is498/498 after [Crosswind/Apex](verification/journey-late-pressure.md),
+[Relay/Fracture](verification/journey-relay-fracture-pressure.md) and
+[Horizon/Border refinement](verification/journey-opening-pressure.md) and the
+[final five-chapter refinement](verification/journey-middle-pressure.md);
+all83 missions cover all six ordinary seed1 configurations. Next
+review the ordinary pacing and bent-cut discoverability of the [Two Districts spatial study](verification/journey-fracture-spatial.md), whose six preset/control
+mastery routes now pass separately from the18 ordinary samples; the [Return in
+Reserve two-bay study](verification/journey-reserve-spatial.md) now has18 ordinary
+and six impact-mastery routes. Native Studio history and Standard first-return
+checks are complete; short clears/readability and whole-play qualification remain
+open. Review late roamer activation,
+connector bypasses, short-clear spatial choices, optional goals and objective tails.
+These are technical candidate
+checks, not human balance or public-deployment acceptance.
+Studio's [explicit pressure-edition inspection](verification/studio-pressure-inspection.md)
+now supports reviewing that successor before Apply, with Undo/Redo and native
+first-return verification; it does not change released editions or publication.
+That successor replaces the old balance assumptions; historical phase entries
+below remain provenance, not claims of current public delivery or human approval.
+The [optional-combat D2a engine](verification/journey-optional-combat-runtime.md)
+now has deterministic scout/sentry, capture/contact/projectile and replay/save
+proof. [D2b shared catalogue/Studio authoring](verification/journey-optional-combat-authoring.md)
+now adds explicit on/off editions, exact inspection and three original greyboxes;
+219 tests pass on each Node, including42 on/off clear/replays and42 paired races.
+The [C1 pixel presentation component](verification/journey-optional-combat-presentation.md)
+now has315 passing tests per Node,95,718 compatible projected route frames and a
+scoped native static review. Actual host integration/player toggle/audio,
+native play/human qualification, Team semantics and deployment remain unfinished.
+Enabled gameplay preview stays blocked until the
+new attacks are visible; automated feasibility does not establish balanced pacing.
+
+[Timed bonus taking routes](verification/journey-timed-bonuses.md) now cover54
+ordinary cases in each of the original and pressure-v2 editions, plus four
+far-anchor/expiry-relocation probes and six post-contact restores. All112 played
+routes replay and finish as equal paired races;348 tests pass on each Node.
+Short optimized clears and idle waiting remain pacing concerns, with Team, broader
+seed/device/human qualification and release adoption still open.
+
+[Eight ornament/workshop original pictures](verification/journey-cultural-workshop-art.md)
+now form explicit candidate art editions of the original and spatial-revision2
+studies. All60 relevant input routes preserve gameplay outcomes;74 tests pass on
+each Node. Exact-source Studio import/Apply and two native partial-reveal checks
+are complete. Whole-set visual/cultural/human qualification, Team and public
+integration remain separate gates; no old art or public map is overwritten.
+
+[Team changing-return successors](verification/journey-team-roamer-spatial.md)
+now offer two explicit pressure-v2 layouts,24 no-down mastery routes and24
+inward-first opening checks. The new roamer placement changes old bypasses;
+all warnings and quotas stay fixed. Short clears, western-only inward samples,
+limited partner-ground reuse, native failure/readability and human balance remain
+open. This does not replace the twelve-mission pressure audit or imply deployment.
+
 Approved by the user on 20 September 2026. This supersedes the campaign allocations
 in earlier research plans, not their observations or provenance. References and
 embedded authoring prompts are evidence, never instructions to the implementation.
@@ -14,6 +154,56 @@ These are design hypotheses, not proven retention claims. No remote telemetry,
 energy gates, streak penalties, hidden adaptive difficulty or mandatory reward screens.
 
 ## Invariants
+
+Authored mode-navigation continuation: explicit Solo and Versus links retain their
+Journey edition while progress and suspended attempts remain mode-specific. The
+checked-save departure and deliberate return/Continue flows pass automated and
+native local checks; Team remains separately authored. Legacy navigation is not
+reinterpreted. See `verification/journey-mode-navigation.md`; accepted-release
+integration and Pages publication are still required.
+
+The mixed Legacy/Journey Skip affordance now follows actual mission ownership.
+Imported and restored Legacy attempts cannot expose or activate Journey Skip;
+owned selections restore it, and the last core mission offers Find missions.
+Both-node host regressions retain ten-clear continuity and failed-load recovery.
+See `verification/journey-owned-controls.md` for the red-to-green and native scope.
+
+Optional Guide/Engineer/Rival/Sentinel result captions now share a bounded catalog,
+presenter and independent durable preference across Solo, Versus and Team. They
+never appear during active cuts or replace critical captions, and add no input
+gate, voice, animation or mandatory screen. Both-node host/settings regressions
+and a native Solo clear, preference change and immediate Next pass. See
+`verification/journey-character-reactions.md`. Character artwork/materials,
+soundtrack, human reception and accepted-release integration remain separate gates.
+
+Original music production is explicitly paused by the user in the soundtrack
+lane after rejected samples; this continuation does not resume it. Twelve
+machine-readable campaign direction briefs now bind to exact Solo/Versus and
+separately hashed Team contexts without selecting recordings or writing player
+preferences.18 checks pass per Node; original approvals remain zero. Licensed
+recording matching, rights and playback continuity remain with the soundtrack
+owner. See the soundtrack handoff in `verification/journey-campaign-presentation.md`.
+
+Actor-material follow-up has84 bounded code-native body recipes (twelve material
+treatments across seven existing roles), with a read-only native-size review sheet.
+An explicit `whole-originals-v4` Solo/Versus candidate now uses twelve successor
+themes without changing498 resolved simulation identities, old editions, uploaded
+body precedence or the V3 suspended slot.95 checks pass on each supported Node;
+native opening clear/Next, Neon Solo/Versus rendering and Studio inspect-only flow
+pass within the documented scope. Team's separate prepared-sprite pipeline is not
+yet enrolled; an additive twelve-mission successor source and verified-picture
+selection adapter preserve36 Team preset simulations and pass45 checks per Node,
+but require the newer host's exact ready-look transaction before live adoption.
+Human recognition, final character art, newer-host integration and
+Pages publication remain open. See `verification/journey-actor-material-studies.md`.
+
+Team original-art source checkpoint: eleven new originals plus the existing Shared
+detour picture now bind all twelve candidate missions without changing36 resolved
+preset simulations. The15-case cohort on Node20/22 includes64 unchanged two-seat
+route outcomes. The next local host increment adds a separate `team-originals`
+candidate entry with verified display ownership and unchanged legacy import rules.
+Native/human/device checks, newer-host integration and publication remain pending;
+this is not P14 acceptance. See its verification record for test scope.
 
 - Enemy-seeded four-connected capture: closure secures the trail, then fills field
   regions containing no field-retaining enemy. Occupied regions on both sides may
@@ -39,6 +229,12 @@ Audit all 110 existing Solo missions and 64 supplied Xposed files. Preserve hash
 and evidence limitations. Each of the 48 numbered references receives an original
 adaptation proposal and final disposition; merge/cut weak candidates with reasons.
 Do not copy third-party artwork, names, coordinates or UI composition.
+
+Current implementation coverage is derived by
+`node scripts/audit-journey-adaptations.mjs`: all48 numbered references link to
+current original candidates through66 explicit declarations. This is provisional
+coverage, not48 final dispositions or released adaptations. The64 original source
+records remain unchanged; human, artwork and release acceptance stay separate.
 
 Backlog target: 242 Solo candidates, 12 finale Remixes and 12 purpose-built Team
 missions. There is no minimum shipped count. Every candidate records its route
@@ -94,26 +290,169 @@ retry and expose export. Distinguish technical-ready from human-validated conten
 
 ## Delivery tracker
 
+### Current publication handoff — September 21
+
+This notice supersedes the historical draft/release statuses and provisional
+version allocations in the phase snapshots below. v0.76.0 is published: source
+`6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd`, controller merge
+`14298758fee0f7af08dd87376187568ada531d0a`. The public `release.json` and
+`current-entry-routing.json` were independently checked and agree on that source
+and version. This scoped marker check does not repeat the release owner's complete
+byte audit. See the [v0.76.0 release record](https://github.com/mekhovov/revealline/releases/tag/v0.76.0).
+
+That release includes P03–P08 **Studio candidates**, not their public Journey
+enrollment or full phase acceptance. Signal/Neon/Rover have art candidates;
+Fracture/Phase/Livewire art and broader human/device qualification remain pending.
+P09–P15 remain isolated local successors. No v0.77.0 allocation is confirmed.
+PR208/v0.76.1 merged at `d70f3a586f3692a9bef58a87d8181714b62798f5`.
+The release record is published and the independently fetched public `release.json`
+now names v0.76.1 and source `17bd1965a2979489f5a163de13dc23c47c5b538d`.
+This is a marker check, not a repeat of full public-byte or native acceptance.
+The active release owner is prioritizing
+the user's shared touch, compact mobile HUD and Steam Deck launch corrections.
+Reconcile against the owner's accepted-source handoff and agreed phase order before opening a new
+phase PR; preserve accepted UX, Studio and controller changes. Do not race a
+live release or duplicate its builds. Independent bounded local work continues.
+
+Local content continuation: all seven Fractured Grid reveal originals are now
+produced as immutable candidates (18,019,065bytes total), with explicit opt-in
+Studio binding and unchanged physics/receipts. All seven have scoped native
+partial-reveal checks (First fracture at232bd92c; the other six at0ef504e0), including
+one25% Two districts reveal. A transient caption/frame overflow concern is recorded
+for the shared HUD owner. The full set has exact-byte/preview/route regression checks
+on Node20/22. These local additions are not in the accepted v0.76 release and do
+not complete visual, human, device or whole-phase qualification. See the P06
+verification record and `docs/research/fracture-original-art-prompts.json`.
+
+Phaseworks now has all seven local original compositions (15,168,484bytes), wired
+as opt-in immutable Studio candidates. The28-test art/catalogue/candidate/library
+cohort passes on Node20/22 with unchanged42 clear checkpoints. All seven now have
+initial native picture-binding checks (first mission538fef04; remaining six133b6d5d),
+not broad-area/victory, device, human or public-release qualification. See
+the P07 verification record and `docs/research/phase-original-art-prompts.json`.
+
+Livewire Foundry now also has seven local original compositions (17,247,834bytes),
+with exact pins, opt-in factory/Studio binding and unchanged42 clear checkpoints.
+The38-test art/catalogue/candidate/presentation/library cohort passes on Node20/22.
+All seven have initial native picture/first-return checks at8eda2234; scoped dashed
+and active lane overlays are observed. Broad-area/victory presentation, the full
+attack/device matrix, human qualification and accepted-source release remain open.
+See the P08 record and
+`docs/research/livewire-original-art-prompts.json`. No new version is allocated.
+
+Relay Labyrinth now has seven local original archive compositions (17,223,024bytes),
+again opt-in with immutable pins and no changes to the42 historical clear checkpoints.
+The40-test art/relay-framework/candidate/registry/library cohort passes on Node20/22.
+All seven have initial native pictured captures at9ddaea55, each opening one
+matching connector with3lives retained. Broader visual/device/human qualification,
+gate-traversal/victory states and release remain open; see P09 and
+`docs/research/relay-original-art-prompts.json`.
+The release owner confirms devicePR211 has the next delivery priority; these assets
+remain local source candidates without a new phase/version allocation.
+
+Crosswind Array has seven local original highland compositions (18,900,961bytes),
+exact pins/prompts and explicit Studio opt-in. Its40-test art/directional-core/
+framework/candidate/library cohort passes on Node20/22 with42 unchanged clear
+checkpoints. All seven initial native picture/capture checks at422f1587 retain
+3lives and show captured strips losing arrows; the Remix opens its connector.
+Restoration, broader threat-state/broad-area/victory, device/human and release gates
+remain open; see P10 and its artwork prompt record.
+The existing implementation guard is950,000,000bytes (stricter than950MiB wording
+below). Preserve it unchanged and requalify aggregate current/previous deployment
+size on accepted source before promotion; candidate originals do not prove fit.
+The read-only capacity forecast in
+`docs/verification/journey-art-pages-capacity.md` finds1,015,952,424bytes for
+two preserved payload copies after adding the35 unpublished originals, exceeding
+the existing guard by65,952,424bytes before other costs. This is conditional on
+unchanged packaging, not a failure of accepted v0.76.1. Packaging review is an
+explicit integration gate; do not delete originals or raise the guard.
+
+Sentinel Crown now has five local original citadel compositions (12,975,848bytes),
+immutable pins and explicit Studio opt-in. Its35-test art/core/project/candidate/
+registry/library cohort passes Node20/22 with30 unchanged historical clears.
+All five initial native pictured closures at82c8a0b3 retain3lives; warning stripes
+remain visible over pictured strips. Studio lower encounter captions can be clipped
+at the observed preview height. Full encounter-state, device/human and release qualification
+remain open. These five assets are additional to the capacity forecast above;
+see P11 and `docs/research/sentinel-original-art-prompts.json`.
+
+Apex Aurora now has five original polar compositions (12,248,056bytes), immutable
+pins and explicit Studio opt-in. The24-test art/candidate/lifecycle/registry/
+library cohort passes Node20/22 with30 unchanged historical clears. All five
+initial native pictured closures at1f7a6d12 retain3lives; the same Studio caption
+limitation occurs in Home signal. Complete presentation/device/human and release
+qualification remain open.
+See P12 and `docs/research/apex-original-art-prompts.json`. These bytes are also
+additional to the capacity forecast; no budget or release authority changes.
+
+### Historical phase snapshots
+
+Latest presentation continuation: `whole-originals-v3` introduces explicit
+campaign-theme successors for59 later missions, preserving all498 simulation
+identities and83 original assets against the teaching review. Twelve themes now
+resolve consistently through Solo, Versus, whole/individual Studio inspection
+and the `campaign-originals` adaptation audit. Earlier routes stay exact.
+Both Nodes pass71 Solo clears and71 equal races with70 Next each, checking
+actual theme controls as well as pictures. Those checks found and fixed a stale
+Versus theme selector after cross-campaign continuation; failed preparation
+continues to preserve prior boards and controls. Native Solo/Studio/Versus checks
+and61+56 scoped regression tests are recorded in
+[campaign presentation evidence](verification/journey-campaign-presentation.md).
+This is not complete character/material/music/human qualification or a deployment.
+The soundtrack brief and minimal host correction are handed to their owners;
+devicePR211 and accepted-source release integration keep priority.
+
+Local learning-order follow-up: an explicit `teaching-1` successor brings the
+first Rover warning onto the first small island capture and preserves both
+escape directions. Twelve clear and twelve unchanged optional-goal routes are
+pinned;180 sampled first returns check warning/activation/escape behavior. Studio
+and the separate `whole-originals-v2` review route select it without rewriting
+the earlier review or its suspension slot. Native first warnings and both Node
+20/22 runs of 71 Solo clears/71 equal races with 70 Next each pass.
+The two Signal warnings remain visible after180 protected-start checks, pending
+human readability/pacing evidence. The read-only reference audit can select the
+same teaching edition. Human and publication gates remain open. See
+[Rover teaching review](verification/rover-first-capture-teaching.md).
+
+Local whole-library continuation now has an explicit `whole-originals` review URL
+in Solo and Versus, separate from the unchanged opening/authored routes and their
+save slots. It exposes71 core missions with12 optional Remixes and original pins,
+not official enrollment. The full71-mission Solo and71-race Versus host checks
+pass Node20/22, each with70Next transitions. Native Studio composition/reload,
+late Solo search/launch/Skip/Continue and a paired Crosswind first-return check
+are recorded in P13. These scoped results do not close human, device, release
+packaging or accepted-tree gates. DevicePR211 remains the release owner's priority.
+
+The whole-library Studio inspection now explicitly selects an original-picture
+review draft:83 unique mission originals, all498 Solo/Versus preset manifests and
+execution keys matching standalone pictured editions, and unchanged simulation
+identities against greyboxes. Eleven composition tests pass on Node20/22. Default
+greybox callers and the existing public opening/authored routes remain unchanged;
+no full-library enrollment or publication is implied. See P13 for exact scope.
+
 The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0
 publisher 7b898a7b through integration b5193ca1; the public Team/Studio acceptance
 is scoped, not whole-phase or physical-device validation. Preserve the user's dirty
 original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 
-| Phase | Version | Scope | State |
-|---|---|---|---|
-| P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | Scoped technical preview published and verified; remaining phase acceptance open |
-| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | Accepted composition PR184 and publisher PR189 merged; immutable release published, public byte audit3789files/698351359bytes passed with zero issues; scoped native Next passed, human phase acceptance remains |
-| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | PR175 exact bbbbf87b: all7189 hosted tests and frozen snapshot passed; independent release-owner inspection/promotion and public acceptance pending |
-| P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Seven Solo greyboxes; 119 clear/delay fixtures, 420 seed checks, all42 preset/steering optional-goal combinations replay-verified, reference crosswalk, terrain captions, explicit Team terrain edition/template, Shared detour Team greybox, bounded tracing benchmark and shared advisory progression inspector; broader route quality/pacing, final art, human and release gates pending |
-| P04 | 0.72.0 | Neon Contours and Remix | Draft PR190: seven original greyboxes,42 no-loss Solo routes and42 equal paired races, all42 optional-goal combinations,315 seed checks and35 delayed-start routes; Inside out bypass revised; shared Studio/CLI preview and native map inspection verified. Original assets, human and release gates remain |
-| P05 | 0.73.0 | Rover Yard and Remix | Draft PR192 exact8a970b07 passed7373 hosted tests; seven original backgrounds,42 replay-verified Solo clears and42 equal paired races, all42 optional-goal combinations,320 seed checks and35 delayed-start alternatives. Shared Studio/CLI and six reference adaptations. Broader native/human, integrated release and Pages gates remain |
-| P06 | 0.74.0 | Fractured Grid and Remix | Draft PR198: explicit v3 eroder catalogue, seven original greyboxes,42 no-loss Solo/public-replay clears and42 equal paired races, all42 optional-goal combinations,210 seed checks and35 delayed-start alternatives; rejected quota-cleanup and unsafe departure evidence retained. Five-reference crosswalk, shared Studio/CLI and scoped native teaching verified. Original art, broader native/human and integrated release/Pages gates remain |
-| P07 | 0.75.0 | Phaseworks and Remix | Draft PR200: selective line-impact.v2 and v4 carrier catalogue, seven original greyboxes,42 no-loss Solo/public-replay clears and42 equal paired races, all42 optional-goal combinations with20 supplemental routes,210 seed checks and35 sampled delayed-start alternatives. Seven unsafe opening repetitions retained. Four-reference crosswalk, shared Studio/CLI and scoped native first returns. Original art, broader visual/native/human, production recipe review and integrated release/Pages remain |
-| P08 | 0.76.0 | Livewire Foundry and Remix | Draft PR203: v5 lane-emitter authoring, seven greyboxes and cell-aligned warning cues. All42 Solo/equal-race/mastery cases,210 seed runs and35 delayed clears verified. Exact Team picture revision regression corrected and independently native-rechecked. Original art, remaining native/human, Team mission, combined-tree review and release/Pages gates remain |
-| P09–P12 | 0.77.0–0.80.0 | Campaigns 9–12, each with Remix/assets/mode qualification | Pending |
-| P13 | 0.81.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Pending |
-| P14 | 0.82.0 | Complete 12 Team missions and two-player balance | Pending |
-| P15 | 0.83.0 | Human validation, accessibility/performance, Legacy/rollback | Pending |
+| Phase | Version | Scope                                                                             | State                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ----- | ------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P00   | 0.67.0  | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | Scoped technical preview published and verified; remaining phase acceptance open                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| P01   | 0.69.0  | Foundations, Prologue/Horizon School, Remix, minimal Studio                       | Accepted composition PR184 and publisher PR189 merged; immutable release published, public byte audit3789files/698351359bytes passed with zero issues; scoped native Next passed, human phase acceptance remains                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| P02   | 0.70.0  | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow                | PR175 exact bbbbf87b: all7189 hosted tests and frozen snapshot passed; independent release-owner inspection/promotion and public acceptance pending                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| P03   | 0.71.0  | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark          | Seven Solo greyboxes; 119 clear/delay fixtures, 420 seed checks, all42 preset/steering optional-goal combinations replay-verified, reference crosswalk, terrain captions, explicit Team terrain edition/template, Shared detour Team greybox, bounded tracing benchmark and shared advisory progression inspector; broader route quality/pacing, final art, human and release gates pending                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| P04   | 0.72.0  | Neon Contours and Remix                                                           | Draft PR190: seven original greyboxes,42 no-loss Solo routes and42 equal paired races, all42 optional-goal combinations,315 seed checks and35 delayed-start routes; Inside out bypass revised; shared Studio/CLI preview and native map inspection verified. Original assets, human and release gates remain                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| P05   | 0.73.0  | Rover Yard and Remix                                                              | Draft PR192 exact8a970b07 passed7373 hosted tests; seven original backgrounds,42 replay-verified Solo clears and42 equal paired races, all42 optional-goal combinations,320 seed checks and35 delayed-start alternatives. Shared Studio/CLI and six reference adaptations. Broader native/human, integrated release and Pages gates remain                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| P06   | 0.74.0  | Fractured Grid and Remix                                                          | Draft PR198: explicit v3 eroder catalogue, seven original greyboxes,42 no-loss Solo/public-replay clears and42 equal paired races, all42 optional-goal combinations,210 seed checks and35 delayed-start alternatives; rejected quota-cleanup and unsafe departure evidence retained. Five-reference crosswalk, shared Studio/CLI and scoped native teaching verified. Original art, broader native/human and integrated release/Pages gates remain                                                                                                                                                                                                                                                                                                                                                                                 |
+| P07   | 0.75.0  | Phaseworks and Remix                                                              | Draft PR200: selective line-impact.v2 and v4 carrier catalogue, seven original greyboxes,42 no-loss Solo/public-replay clears and42 equal paired races, all42 optional-goal combinations with20 supplemental routes,210 seed checks and35 sampled delayed-start alternatives. Seven unsafe opening repetitions retained. Four-reference crosswalk, shared Studio/CLI and scoped native first returns. Original art, broader visual/native/human, production recipe review and integrated release/Pages remain                                                                                                                                                                                                                                                                                                                      |
+| P08   | 0.76.0  | Livewire Foundry and Remix                                                        | Draft PR203: v5 lane-emitter authoring, seven greyboxes and cell-aligned warning cues. All42 Solo/equal-race/mastery cases,210 seed runs and35 delayed clears verified. Exact Team picture revision regression corrected and independently native-rechecked. Original art, remaining native/human, Team mission, combined-tree review and release/Pages gates remain                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| P09   | 0.77.0  | Relay Labyrinth and Remix                                                         | Isolated explicit relay editions, shared inspection/transport/numbered cues and copy-on-write Studio CRUD. Seven original greyboxes;42 prepared Solo/public-replay clears and42 equal paired races, all42 optional goals,210 seed checks,35 delayed-start clears,42 first returns and exact CLI/Studio parity on Node20/22. Routes open relays before victory and traverse a connector; all59 historical routes unchanged. Spiral mastery redesigned around consecutive shortcut captures, with rejected winding proposal retained. Scoped native CRUD/open/reset and independent two-link behavior verified. Content/art, broader native/human, Team and release gates remain; excluded from frozen v0.76                                                                                                                         |
+| P10   | 0.78.0  | Crosswind Array and Remix                                                         | Isolated directional Map/Mission V3/runtime/replay successor, fixed player-only with/against/across recipe and no drift. Shared compiler/transport/cues/Studio controls. Seven original greyboxes, five-reference crosswalk,42 prepared Solo/public-replay clears and42 equal paired races, all42 optional goals,210 seed samples,35 delayed alternatives and42 first returns pass on Node20/22. Outer loop exterior keeper added after a near-free capture probe; four unsafe delayed openings and an unused-connector route rejected.54 core/relay,18 authoring/transport,82 shell and31 lifecycle cohort tests pass; all59 earlier routes unchanged. Native CRUD/reload/capture neutralization and Compass layout verified. Artwork, Team, broader native/human and release gates remain                                        |
+| P11   | 0.79.0  | Sentinel Crown and Remix                                                          | Isolated multi-shield successor, shared compiler/transport and atomic Studio controls. Four core greyboxes plus optional Remix and three reference proposals. All 30 prepared Solo/replay, equal paired races and optional goals; 150 seed samples; 25 delayed alternatives; 30 resumed snapshots. Final candidate cohort 50/50 passes Node20/22. Native first capture checked; short optimized clears keep two layouts provisional. Art, Team, broader native/human and publication gates remain; see P11 verification record                                                                                                                                                                                                                                                                                                     |
+| P12   | 0.80.0  | Apex Aurora and Remix                                                             | Isolated four-mission capstone arc plus optional Remix; three reference finales reinspected. All30 bonus-independent Solo/replay, equal paired races and optional goals;150 seed samples,32 restored snapshots and25 delayed alternatives pass Node20/22. Final66/66 cohort,69/69 shell regression. Empty chamber, unused dock and five-second keeper collision rejected. Native import/closure/three-shield brief and corrected lane-emitter caption verified. Short optimized finale clears remain pacing risks. Art/offline capacity, Team, broader native/human and publication gates remain                                                                                                                                                                                                                                   |
+| P13   | 0.81.0  | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility              | Local83-mission greybox review library (71core+12Remix), explicit Studio inspection, exact standalone edition/key parity and all-boundary sequence checks. Flat chooser component checks cover both modes. Immutable project-local projection reuse reduces repeated compilation; no public enrollment or art requirement bypass. Broader regressions/native, real-host flow, human cuts/pacing and publication pending; see P13 record                                                                                                                                                                                                                                                                                                                                                                                            |
+| P14   | 0.82.0  | Complete 12 Team missions and two-player balance                                  | Local preparation: twelve candidates preserve earlier editions across three four-mission learning arcs. Foundation/material/changing-ground routes qualify joint cuts on/off and swapped seats; explicit Team v6 adds reclaimed roamers. The labelled Team greybox host clears all12 across four campaign boundaries with one Next, shared persistent receipts, session-only recovery and two-activation reversible Skip. Pre-game difficulty selects exact compiled editions and persists through the shared preference store. Flat searchable/filterable chooser shows exact starting maps, route decisions and progress. Native preset/Skip/reload and search/filter/direct launch checked; broader native/human balance, original art, device/recovery qualification and publication gates remain; see P14 verification record |
+| P15   | 0.83.0  | Human validation, accessibility/performance, Legacy/rollback                      | Local technical preparation: bounded immutable mission evidence records and read-only shared compiler/CLI/Studio inspection distinguish automated, native and human claims, exact editions, stale records and explicit corrections. No inferred human qualification or automatic release approval. Human sessions, full accessibility/performance, Legacy transition, rollback and publication remain pending; see P15 verification record                                                                                                                                                                                                                                                                                                                                                                                         |
 
 September 20 release coordination: the parallel discovery feature PR170 initially
 also selected 0.67.0. Its owner and Journey agreed to preserve the earlier P00
@@ -122,6 +461,7 @@ P01–P15 therefore shift one further minor, as above; these later allocations r
 provisional. Preserve both features through reviewed integration and new exact-source
 gates. Journey must not race the current publication owner or replace its selector.
 Independent source correction, tests and content preparation continue during that wait.
+The September 21 handoff above now governs publication and version assignment.
 
 Latest continuation instruction explicitly allows independent P01 implementation
 while P00 publication waits. The local `codex/xposed-journey-p01` branch is stacked
@@ -178,7 +518,12 @@ native export/import verified pinned Expert rules and both-seat movement. New
 Journey Team editions automatically reset failed attempts with fresh controls,
 while focus/settings/disconnection/faults cancel pending recovery. These close
 the manual authoring-test path and scoped recovery gap, not the Team Journey
-chooser/profile, final artwork, human balance or release gates.
+chooser/profile, final artwork, human balance or release gates at that checkpoint.
+The later P14 local `?journey=team-greybox` route now joins twelve candidates with
+cross-campaign Next, release-independent Team receipts and two-activation Skip.
+Native chooser/direct launch and modeled failure/input recovery are recorded in
+`docs/verification/xposed-journey-p14.md`; this is not public enrollment or a
+claim that Team artwork, human balance, device qualification or P14 is complete.
 
 P02 preparation is isolated on `codex/xposed-journey-p02`, draft PR175 stacked on
 P01 `e7aa131f`. Six Border Bloom core candidates and one optional Remix progress
@@ -236,7 +581,10 @@ See the P02 and Studio-image evidence files for exact bounds and remaining gates
 Studio now exposes catalog-based enemy CRUD alongside geometry. Authors select
 roles, preset-resolved speed tiers and legal domain placements; arbitrary physics
 overrides remain unavailable. Every supported mode/preset compiles before adoption.
-Team retains its field-keeper-only qualification boundary. Native add/invalid edit/
+At that P02 checkpoint, Team retained its field-keeper-only qualification boundary.
+The later P14 TeamMissionV3 edition adds reclaimed roamers through the same
+Studio/compiler role qualifier; older Team editions still reject unsupported roles.
+Native add/invalid edit/
 direction change/Undo/reload and automated confirmation/failure tests are recorded
 in the P02 evidence; edited content is still unqualified until separately tested.
 Existing foundation/wall/terrain rectangles can also be reshaped or removed with
@@ -346,7 +694,62 @@ uses a native modal with an explicit return path, guided by the
 
 ## Research sources
 
+### Native transition checkpoint (2026-09-21)
+
+The [P13/P15 timing observation](verification/journey-performance-observations.md)
+adds bounded native Solo/Versus measurements to the completion ledger. It is not
+an optimization or full acceptance: local Continue/Next/reset readiness samples
+are within their targets, while the startup module payload remains substantial.
+The [selective-loading successor](verification/journey-selective-loading.md)
+now defers unselected candidate source families, preserving all ten historical
+route outputs and normal compiler/artwork verification. Spatial routes remove 26
+modules and approximately 220 kB from the measured source graph; no browser-speedup
+claim follows from source size alone. Native module-failure recovery and direct
+Solo/Versus continuation are checked. The next performance task is a controlled
+repeated-run browser baseline. Team, physical devices, automatic
+recovery, ten consecutive missions, public distribution and human gates remain.
+Keep single samples and mock-DOM regression counts separate from real performance
+or human enjoyment claims. See the [item-by-item ledger](verification/journey-completion-2026-09-21.md).
+
 ### Continuing source checkpoints (not phase completion)
+
+The [Sorting Yard successor](verification/journey-rover-sorting-spatial.md)
+reworks an actual short-clear/late-roamer case using baffles, retained pockets and
+contested stub returns. Shared pressure speeds and capture rules remain unchanged.
+All six ordinary and six optional-mastery routes replay and race equally; native
+Studio selection, explicit Apply and first capture are checked. Keep the old
+edition immutable. [Whole-Journey v5](verification/journey-whole-sorting.md) now
+qualifies shared Solo/Versus enrollment and cross-campaign Next/Skip; cleanup,
+human balance and release promotion remain. Split Berths' current teaching edition must not
+be judged using its older pre-teaching activation report.
+
+The [Team timed live-host follow-up](verification/journey-team-timed-host.md)
+qualifies collection at the unchanged production seed 17, rather than assuming
+the earlier seed 1/seed 2 direct-core recordings are identical UI transcripts.
+Nine imported keyboard paths cover all three existing greyboxes and presets;
+separate engine checkpoints, failed controls and a one-frame Depot return
+adjustment remain explicit. This is P02/P14 technical evidence, not new artwork,
+public enrollment, human balance or phase completion. Next Team gates are
+bonus-optional host play, wider relocation/mastery, two-person/device qualification
+and coordinated release.
+
+The [Shared windows pictured follow-up](verification/journey-team-timed-originals.md)
+now supplies the three originals and an explicit `team-timed-originals` route,
+with Studio Inspect/Apply, cross-campaign Next/Skip and isolated Team progress.
+The nine greybox gameplay identities stay unchanged. All nine production-seed
+bonus-free keyboard paths now clear; direct-core seat/joint variants and the
+prior failed Coolant control stay separately recorded. Native inspection, Skip
+and bookmark reload are checked. Broader relocation/mastery, human/device balance,
+final integration and coordinated release remain unfinished; this is not P14
+acceptance or a new required content quota.
+
+The [Coolant relocation follow-up](verification/journey-coolant-relocation.md)
+qualifies all three presets at the live seed, retaining real captures between
+the first visible expiry and relocated collection. It also corrects Studio's
+wording: later appearances require another eligible field anchor and remaining
+appearance capacity. No schedule, geometry or difficulty edition changes.
+Remaining relocation work is Window, Depot Gentle/Standard and optional reserves;
+human/device and coordinated publication gates still apply.
 
 P03 frozen source9ee58177 passed all7280 hosted tests on Node20.19.6 in run35511526470;
 freeze=false deliberately produced no release snapshot. Integration, publication

@@ -45,6 +45,13 @@ export function editContentObjective(source, missionId, input) {
     );
     required(command.objective?.id === command.id, 'Objective identity must match the command.');
   }
+  if (command.action === 'remove') {
+    const dependents = (mission.relayLinks ?? []).filter((link) => link.objectiveId === command.id);
+    required(
+      !dependents.length,
+      `Objective controls relay gates: ${dependents.map((link) => link.gateId).join(', ')}. Relink or remove those gates first.`,
+    );
+  }
   if (command.action === 'add') mission.objectives.push(command.objective);
   else if (command.action === 'replace') mission.objectives[index] = command.objective;
   else mission.objectives.splice(index, 1);
