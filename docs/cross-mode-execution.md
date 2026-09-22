@@ -7,7 +7,10 @@ current delivery register. v0.82.0 was the accepted public baseline at start;
 v0.82.1 has passed exact-source qualification and is being published. The one
 successor, reserved v0.83.0, makes the existing 91 Solo/Versus and 12 Team missions
 the ordinary default while keeping explicit Legacy access. No new production,
-save migration or unrelated queued feature is on this critical path.
+save migration or unrelated queued feature is on this critical path. The later
+approved Release B unified tagged selector follows A public acceptance immediately;
+queued recovery/Studio/presentation work follows B. See the current plan for scope
+and the7–11-hour B estimate.
 
 Earlier checkpoints below retain their original evidence and dates. Their “next”
 versions/order are historical, not the current publication queue. Full programme,

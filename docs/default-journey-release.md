@@ -8,8 +8,9 @@ one successor is being prepared.
 ## Current release boundary
 
 - Accepted public baseline at implementation start: **v0.82.0**.
-- **v0.82.1** source `565c4f3bd6a06a593d22786730435f59ee6b1aa1` is merged through
-  PR250. Exact qualification run35729850339 passed; publication/public acceptance
+- **v0.82.1** exact merged source `64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e`
+  (PR250 predecessor `565c4f3bd6a06a593d22786730435f59ee6b1aa1`) passed exact
+  qualification run35729850339; publication/public acceptance
   remains owned by the publisher. Do not infer deployment from that pass.
 - **v0.83.0** is reserved for this feature. It is a candidate until both source
   check families, immutable freeze, Pages and public acceptance pass.
@@ -73,13 +74,24 @@ The targets are implementation by T+60–90m, PR qualification by T+2–3.5h, me
 source/freeze by T+4–5.5h and public entry by T+5–6h. Fresh pipeline time is commonly
 2.5–4.5h; a blocking rerun requires an immediate revised estimate.
 
-After the milestone, ship one independently verified item at a time. The following
+The later approved follow-up places **Release B, a unified tagged selector,
+immediately after A is publicly accepted**. It presents All (new first), Journey,
+Classic and Custom in one browser, with content owner/revision-aware rows and
+existing runtime dispatch. Preserve every current level and original ownership;
+normal browsing must not download all media. It is separate from A's explicit
+Legacy fallback and adds no simulation or artwork. Its implementation/review,
+source qualification and public-delivery target is **7–11 hours from B's start**,
+subject to the accepted mode-compatible inventory; no B source work is included
+in A. Recovery and other queued features follow B, one release at a time.
+
+After B, ship one independently verified item at a time. The following
 ranges include expected release overhead from each item's start; they are not
 additive commitments or guarantees.
 
 | Priority | Remaining work | Estimate |
 |---|---|---|
-| Next | PR235 superseded PR-check cancellation | 2–4 hours |
+| Immediate after A | Release B unified tagged selector | 7–11 hours |
+| After B | PR235 superseded PR-check cancellation | 2–4 hours |
 | Next | PR252/257 backup preflight and Restore focus | 4–8 hours |
 | Next | PR256 retained presentation/history recovery | 6–12 hours |
 | Next | PR230/231 chapter retry, Replay restoration/navigation | 4–8 hours per feature |
