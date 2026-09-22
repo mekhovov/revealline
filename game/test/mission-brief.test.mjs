@@ -14,7 +14,7 @@ test('classic ready cards name contact pickups, material hazards and claimed-gro
   assert.match(missionBriefing(levels[0]).copy, /Touch pickups/);
   assert.match(
     missionBriefing(levels[2]).copy,
-    /Contour crawlers follow the changing frontier after captures; check your next return\./,
+    /Contour crawlers follow new frontiers after captures\. Check your return\./,
   );
   assert.match(missionBriefing(levels[3]).copy, /Rovers wake/);
   assert.match(missionBriefing(levels[4]).copy, /reopening captured ground/);

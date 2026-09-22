@@ -155,3 +155,52 @@ altered. The local four-file regression cohort passes **53/53** on both Node
 20.19.5 and 22.22.2, with no failures or skips. Independent review found no blocker
 and separately passed the two repaired files **17/17** on Node 22. Earlier
 failures remain visible, and fresh full hosted qualification is still required.
+
+### Full-run integration corrections at 9262ed78
+
+Run `35676036012` passed preflight, build and shard4 (3,042/3,042), then
+completed shard1 with 2,830 passes and one failure, and shard3 with 2,883 passes
+and two failures. Both failed shards retained exact tracked-source identity after
+execution. Shard2 was still running when these corrections were prepared.
+An earlier live-UI search returned no matches for `not ok` in the loaded views;
+the complete terminal job logs supersede that incomplete early observation.
+
+All three failures reproduced locally before repair:
+
+- The expanded contour-patrol hint made Two Ways Home's combined stop/recovery,
+  selective bolt-impact and frontier card 249 characters, exceeding its existing
+  240-character cap. The hint now reads “Contour crawlers follow new frontiers
+  after captures. Check your return.” The card is 236 characters. No cap, physics,
+  warning, other critical hint or authored mission data changes. Regression
+  checks retain the complete combined guidance and the same cap. The first added
+  assertion incorrectly demanded a frontier hint even on terrain-priority cards;
+  it was corrected to the actual Two Ways Home composition without altering the
+  existing hint-selection policy. Final Phaseworks/briefing/Livewire cohorts pass
+  26/26 on Node20.19.5 and22.22.2. Independent read-only review passes with no
+  findings and separately reproduces 2/2 Phaseworks tests on Node20.
+- Studio navigation's test assumed adjacent single-line `href` and `target`
+  attributes, while the existing formatted links span several lines. It now
+  checks the complete opening anchor, exactly one expected Solo/Versus authored
+  destination, `_blank`, `noopener` and the explicit new-tab accessible label.
+  Runtime HTML/navigation are unchanged; ownership/return checks remain.
+  Independent review found that an initial word-boundary regex could accept
+  `data-target` instead of `target`. The final check parses exact attribute
+  names/values and adds a negative data-prefixed-attribute fixture; re-review
+  passes without remaining findings.
+- The Team picture-host test's exact storage-read list omitted the already
+  mounted reaction preference. It now supplies an existing disabled preference,
+  verifies the checkbox and exact stored bytes remain unchanged, and includes
+  that one key in the read list. The write list remains strictly display/menu
+  preferences only; HUD, accepted image and artwork-read continuity checks remain.
+  Runtime storage/presentation behavior is unchanged. Complete Studio-navigation,
+  Team-picture-host and reaction-preference cohorts pass 35/35 on each Node.
+
+ESLint, Prettier and whitespace checks pass for the five changed code/test files.
+The final combined seven-file cohort passes **62/62 on each Node20.19.5 and
+22.22.2**, with no failures, skips or cancellations. All five changed code/test
+files have independent read-only approval. Local source validation also passes;
+it retains the four known generated-site navigation warnings rather than
+silencing them. These focused results do not replace fresh full CI on the
+eventual committed head, immutable freeze or public verification. The workflow
+has `cancel-in-progress: false`; the repair can queue without discarding the
+remaining old shard's result. No v0.82.0 publication is claimed.

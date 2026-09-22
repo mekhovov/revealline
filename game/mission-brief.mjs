@@ -86,7 +86,7 @@ export function missionBriefing(
             ? 'Striped fields slow your craft while they remain hidden.'
             : '',
         level.enemies?.some((enemy) => enemy.type === 'contour-patrol')
-          ? 'Contour crawlers follow the changing frontier after captures; check your next return.'
+          ? 'Contour crawlers follow new frontiers after captures. Check your return.'
           : '',
         level.enemies?.some((enemy) => enemy.type === 'claimed-rover')
           ? 'Rovers wake on claimed ground after a warning.'
