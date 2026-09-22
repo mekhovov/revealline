@@ -2,6 +2,7 @@ import { canonicalJSON, required } from '../data-json.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
 import { createExternalChapterHost } from '../external-chapter-host.mjs';
 import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
+import { EXTERNAL_CATALOG, prepareExternalDownload } from '../external-chapter-catalog.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { installPack, preparePack, PACK_LIMITS } from '../packs.mjs';
 import { prepareMissionLibraryIndex } from '../mission-library/classic-source.mjs';
@@ -16,8 +17,9 @@ import {
 
 const cancelled = () => new DOMException('Chapter installation cancelled.', 'AbortError');
 
-/** Explicit embedded-chapter installation only. Browsing and racing retain their
- * separate read-only owner; this service never writes Solo progress or pictures.
+/** Explicit chapter installation only. Browsing and racing retain their
+ * separate read-only owner; this service never writes Solo progress or silently
+ * replaces retained picture choices. Paired originals use the existing journal.
  */
 export function createCouchChapterInstaller({
   channel,
@@ -319,7 +321,180 @@ export function createCouchChapterInstaller({
     return bytes;
   }
 
+  function externalTarget(row) {
+    // Capture the caller's bounded row before the first asynchronous boundary.
+    // Neither an index nor an uploaded descriptor can add paired authority.
+    const supplied = prepareMissionLibraryIndex({
+      format: 'revealline-mission-library-index.v1',
+      missions: [row],
+    }).missions[0];
+    const checked = indexedMissions?.missions.find((item) => item.id === supplied.id);
+    required(
+      checked && canonicalJSON(checked) === canonicalJSON(supplied),
+      'Choose an exact mission from this release’s trusted index.',
+    );
+    required(checked.source === 'external', 'Choose a paired external-original chapter.');
+    const descriptor = SOURCE_EXTERNAL_CHAPTERS.find((item) => item.id === checked.packId);
+    const download = EXTERNAL_CATALOG.chapters.find((item) => item.id === checked.packId);
+    required(descriptor && download, 'This external edition is not registered by this release.');
+    const peers = indexedMissions.missions.filter((item) => item.packId === checked.packId);
+    required(
+      peers.length === descriptor.originals.length &&
+        peers.every((item) => {
+          const original = descriptor.originals[item.levelIndex];
+          return (
+            item.source === 'external' &&
+            item.packVersion === '1.0.0' &&
+            item.campaignKey === descriptor.campaignKey &&
+            item.themeId === descriptor.themeId &&
+            original?.levelId === item.levelId &&
+            original.levelRevision === item.levelRevision &&
+            item.sourceFile.path === download.pack.path &&
+            item.sourceFile.bytes === descriptor.pack.bytes &&
+            item.sourceFile.sha256 === descriptor.pack.sha256 &&
+            canonicalJSON(item.packIdentity) === canonicalJSON(checked.packIdentity) &&
+            item.download?.id === descriptor.id &&
+            item.download.packPath === download.pack.path &&
+            item.download.mediaPath === download.media.path &&
+            item.download.bytes === descriptor.pack.bytes + descriptor.media.bytes
+          );
+        }) &&
+        new Set(peers.map((item) => item.levelIndex)).size === peers.length,
+      'The indexed chapter differs from its code-owned gameplay and original-picture pair.',
+    );
+    return { row: checked, descriptor, peers };
+  }
+
+  async function verifyExternalPack(pack, target, check) {
+    const exact = await Promise.all(
+      target.peers.map((row) => verifyIndexedInstalledPack(pack, row)),
+    );
+    check();
+    required(
+      exact.every(Boolean) &&
+        pack.campaigns.reduce((n, campaign) => n + campaign.levels.length, 0) ===
+          target.peers.length,
+      'A different edition of this chapter is installed or downloaded. Existing content was not replaced.',
+    );
+  }
+
+  async function externalReady(owner, snapshot, target, { signal, check, report }) {
+    const pack = snapshot.packs.packs.find((item) => item.id === target.descriptor.id);
+    if (!pack) return null;
+    await verifyExternalPack(pack, target, check);
+    report('Checking the complete installed originals…', 'verifying');
+    check();
+    // The host binds descriptor, retained owner, actual original bytes/decode,
+    // pointer snapshot and final media generation. Metadata alone is not ready.
+    const proof = await owner.readiness(snapshot, target.descriptor.id, { signal });
+    check();
+    return Object.freeze({
+      status: 'ready',
+      ready: true,
+      reason: '',
+      pack,
+      library: snapshot.packs,
+      usage: snapshot.usage,
+      descriptor: target.descriptor,
+      pins: proof.pins,
+      mediaGeneration: proof.metadata.generation,
+    });
+  }
+
   return Object.freeze({
+    /** Explicit readiness check, not browsing: may decode all three originals.
+     * Data-only proof is transient; the launch owner must recheck its operation
+     * and exact selection before adoption. No borrowed store escapes its host.
+     */
+    async inspectExternal(row, options) {
+      const target = externalTarget(row);
+      return operation(async (context) => {
+        const owner = context.host(Object.freeze({ writable: false }));
+        const snapshot = await context.inspect(owner);
+        const ready = await externalReady(owner, snapshot, target, context);
+        context.check();
+        return (
+          ready ??
+          Object.freeze({
+            status: 'absent',
+            ready: false,
+            reason: 'Download the gameplay and original pictures together.',
+            descriptor: target.descriptor,
+            bytes: target.row.download.bytes,
+          })
+        );
+      }, options);
+    },
+    async installExternal(row, options = {}) {
+      const target = externalTarget(row),
+        pictureReview = options.pictureReview;
+      return operation(async (context) => {
+        const { item, signal, report, check, host, inspect, decodeImage } = context;
+        const reader = host(Object.freeze({ writable: false }));
+        report('Checking the installed chapter and originals…', 'verifying');
+        const before = await inspect(reader);
+        const existing = await externalReady(reader, before, target, context);
+        check();
+        if (existing) return Object.freeze({ ...existing, committed: false, reused: true });
+        report(
+          `Downloading and verifying ${target.row.campaignTitle} and originals…`,
+          'downloading',
+        );
+        check();
+        const prepared = await prepareExternalDownload(target.descriptor.id, {
+          baseURL: distributionRoot,
+          fetch: request,
+          decodeImage,
+          signal,
+        });
+        check();
+        await verifyExternalPack(prepared.pack, target, check);
+        reader.close();
+        report('Reserving safe chapter installation…', 'verifying');
+        check();
+        item.writer = await claimProfileWriter(lockManager, `${profileKey}.writer`);
+        check();
+        required(
+          item.writer.writable,
+          'Chapter installation cannot reserve this profile. Close the other saving tab or restore Web Locks, then retry. Your Couch match is kept.',
+        );
+        const writer = host(item.writer),
+          fresh = await inspect(writer);
+        const installedMeanwhile = await externalReady(writer, fresh, target, context);
+        check();
+        if (installedMeanwhile)
+          return Object.freeze({ ...installedMeanwhile, committed: false, reused: true });
+        report(`Saving ${target.row.campaignTitle} and originals…`, 'saving');
+        check();
+        // The existing paired transaction rejects replacements, preserves
+        // retained assignments and owns all journal/recovery/DB4 publication.
+        await writer.install(prepared, { signal, pictureReview });
+        try {
+          report('Chapter installed. Verifying saved originals…', 'verifying');
+          check();
+          const next = await inspect(writer);
+          const ready = await externalReady(writer, next, target, context);
+          required(ready, 'The committed chapter needs a fresh readiness check.');
+          report('Chapter and originals installed.', 'ready');
+          check();
+          return Object.freeze({ ...ready, committed: true, reused: false });
+        } catch (error) {
+          // Publication already settled. No live adoption or rollback claim;
+          // unknown library/usage stay null until a fresh inspection succeeds.
+          return Object.freeze({
+            status: 'installed',
+            ready: false,
+            reason: `Chapter and originals were installed, but readiness could not be confirmed: ${error.message || error}. Reopen missions to check again.`,
+            pack: prepared.pack,
+            library: null,
+            usage: null,
+            descriptor: target.descriptor,
+            committed: true,
+            reused: false,
+          });
+        }
+      }, options);
+    },
     inspect(options) {
       return operation(async ({ host, inspect, report, check }) => {
         report('Checking installed chapters…', 'verifying');

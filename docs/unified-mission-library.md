@@ -480,3 +480,20 @@ verification. It must receive a new pinned native check before acceptance.
   late-mission URL can remain at the opener. Browser Back also retained search
   while resetting the mode filter. Both are tracked in the active integration
   fixes; these native failures prevent Release B acceptance despite helper tests.
+
+### Paired-original installation service checkpoint
+
+- Added explicit paired-original installation/readiness using code-owned release
+  descriptors and the existing recoverable journaled media transaction. The
+  indexed gameplay file and original-picture bundle are verified together;
+  compact JSON alone cannot become a playable original edition.
+- Exact reuse avoids rewriting installed content. Modified uploads, corrupt
+  originals, pending recovery and retained-picture conflicts fail closed. Any
+  retained-picture review must come from the existing explicit consent workflow.
+- A settled installation whose final readiness check is interrupted reports
+  committed-but-unconfirmed, never a fictitious rollback. Readiness evidence is
+  transient data; launch must still perform its normal staged owner checks.
+- Final paired/embedded/indexed installer cohort passes41/41 in46.3 seconds,
+  using actual trusted source payloads with modeled browser/transaction boundaries.
+  Source review found no blocker. Inline host adoption and native/public tests
+  remain required before paired-download functionality is marked complete.
