@@ -36601,6 +36601,1248 @@
       },
       "recipe": { "id": "audio.music.v1" },
       "revision": 25
+    },
+    {
+      "description": "scout rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.scout.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.scout.rotors.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit scout rotor recipe for slot player.scout.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:5696cf68dc1d40002ffed46c1b7a1e35ef0022de6b0b80b954ea315c6ff02ea1"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 10
+    },
+    {
+      "description": "bomber rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.bomber.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.bomber.rotors.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit bomber rotor recipe for slot player.bomber.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:5696cf68dc1d40002ffed46c1b7a1e35ef0022de6b0b80b954ea315c6ff02ea1"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 10
+    },
+    {
+      "description": "carrier rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.carrier.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.carrier.rotors.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit carrier rotor recipe for slot player.carrier.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:5696cf68dc1d40002ffed46c1b7a1e35ef0022de6b0b80b954ea315c6ff02ea1"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 10
+    },
+    {
+      "description": "interceptor rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.interceptor.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.interceptor.rotors.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit interceptor rotor recipe for slot player.interceptor.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:5696cf68dc1d40002ffed46c1b7a1e35ef0022de6b0b80b954ea315c6ff02ea1"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 10
+    },
+    {
+      "description": "fiber rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.fiber.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.fiber.rotors.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit fiber rotor recipe for slot player.fiber.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:5696cf68dc1d40002ffed46c1b7a1e35ef0022de6b0b80b954ea315c6ff02ea1"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 10
+    },
+    {
+      "description": "impact rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.impact.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.impact.rotors.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit impact rotor recipe for slot player.impact.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:5696cf68dc1d40002ffed46c1b7a1e35ef0022de6b0b80b954ea315c6ff02ea1"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 10
+    },
+    {
+      "description": "trapper rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.trapper.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.trapper.rotors.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit trapper rotor recipe for slot player.trapper.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:5696cf68dc1d40002ffed46c1b7a1e35ef0022de6b0b80b954ea315c6ff02ea1"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 10
+    },
+    {
+      "description": "active trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.active.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.active.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit active trail for slot trail.active. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:f53ffce36c72abcf9e39dd3a63feefa14bf8f18e9e371d1e99f9f6d7923419bb"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 9
+    },
+    {
+      "description": "secured trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.secured.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.secured.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit secured trail for slot trail.secured. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:f53ffce36c72abcf9e39dd3a63feefa14bf8f18e9e371d1e99f9f6d7923419bb"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 9
+    },
+    {
+      "description": "head trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.head.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.head.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit head trail for slot trail.head. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:f53ffce36c72abcf9e39dd3a63feefa14bf8f18e9e371d1e99f9f6d7923419bb"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 9
+    },
+    {
+      "description": "Capture pulse: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.capture.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.capture.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit capture pulse for slot effect.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:f53ffce36c72abcf9e39dd3a63feefa14bf8f18e9e371d1e99f9f6d7923419bb"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.capture.v1" },
+      "revision": 9
+    },
+    {
+      "description": "failure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.failure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.failure.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit failure feedback for slot effect.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:f53ffce36c72abcf9e39dd3a63feefa14bf8f18e9e371d1e99f9f6d7923419bb"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "victory feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.victory.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.victory.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit victory feedback for slot effect.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:f53ffce36c72abcf9e39dd3a63feefa14bf8f18e9e371d1e99f9f6d7923419bb"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "pickup feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pickup.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pickup.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit pickup feedback for slot effect.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:f53ffce36c72abcf9e39dd3a63feefa14bf8f18e9e371d1e99f9f6d7923419bb"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "shield feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.shield.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.shield.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit shield feedback for slot effect.shield. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:f53ffce36c72abcf9e39dd3a63feefa14bf8f18e9e371d1e99f9f6d7923419bb"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "respawn feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.respawn.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.respawn.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit respawn feedback for slot effect.respawn. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:f53ffce36c72abcf9e39dd3a63feefa14bf8f18e9e371d1e99f9f6d7923419bb"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "pressure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pressure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pressure.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit pressure feedback for slot effect.pressure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs sha256:f53ffce36c72abcf9e39dd3a63feefa14bf8f18e9e371d1e99f9f6d7923419bb"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 9
+    },
+    {
+      "description": "active trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.active.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.active.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit active trail for slot trail.active. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs sha256:68eec80299ccc6cf4850a617184a1692358a5d083fff691d2ddd9178b7126dab"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 10
+    },
+    {
+      "description": "secured trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.secured.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.secured.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit secured trail for slot trail.secured. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs sha256:68eec80299ccc6cf4850a617184a1692358a5d083fff691d2ddd9178b7126dab"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 10
+    },
+    {
+      "description": "head trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.head.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.head.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit head trail for slot trail.head. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs sha256:68eec80299ccc6cf4850a617184a1692358a5d083fff691d2ddd9178b7126dab"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 10
+    },
+    {
+      "description": "Capture pulse: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.capture.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.capture.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit capture pulse for slot effect.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs sha256:68eec80299ccc6cf4850a617184a1692358a5d083fff691d2ddd9178b7126dab"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.capture.v1" },
+      "revision": 10
+    },
+    {
+      "description": "failure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.failure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.failure.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit failure feedback for slot effect.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs sha256:68eec80299ccc6cf4850a617184a1692358a5d083fff691d2ddd9178b7126dab"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "victory feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.victory.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.victory.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit victory feedback for slot effect.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs sha256:68eec80299ccc6cf4850a617184a1692358a5d083fff691d2ddd9178b7126dab"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "pickup feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pickup.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pickup.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit pickup feedback for slot effect.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs sha256:68eec80299ccc6cf4850a617184a1692358a5d083fff691d2ddd9178b7126dab"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "shield feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.shield.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.shield.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit shield feedback for slot effect.shield. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs sha256:68eec80299ccc6cf4850a617184a1692358a5d083fff691d2ddd9178b7126dab"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "respawn feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.respawn.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.respawn.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit respawn feedback for slot effect.respawn. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs sha256:68eec80299ccc6cf4850a617184a1692358a5d083fff691d2ddd9178b7126dab"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "pressure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pressure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pressure.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit pressure feedback for slot effect.pressure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs sha256:68eec80299ccc6cf4850a617184a1692358a5d083fff691d2ddd9178b7126dab"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 10
+    },
+    {
+      "description": "active trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.active.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.active.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit active trail for slot trail.active. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv57 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 11
+    },
+    {
+      "description": "secured trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.secured.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.secured.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit secured trail for slot trail.secured. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv57 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 11
+    },
+    {
+      "description": "head trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.head.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.head.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit head trail for slot trail.head. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv57 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 11
+    },
+    {
+      "description": "Capture pulse: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.capture.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.capture.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit capture pulse for slot effect.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv57 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.capture.v1" },
+      "revision": 11
+    },
+    {
+      "description": "failure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.failure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.failure.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit failure feedback for slot effect.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv57 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 11
+    },
+    {
+      "description": "victory feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.victory.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.victory.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit victory feedback for slot effect.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv57 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 11
+    },
+    {
+      "description": "pickup feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pickup.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pickup.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit pickup feedback for slot effect.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv57 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 11
+    },
+    {
+      "description": "shield feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.shield.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.shield.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit shield feedback for slot effect.shield. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv57 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 11
+    },
+    {
+      "description": "respawn feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.respawn.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.respawn.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit respawn feedback for slot effect.respawn. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv57 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 11
+    },
+    {
+      "description": "pressure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pressure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pressure.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit pressure feedback for slot effect.pressure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv57 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 11
+    },
+    {
+      "description": "scout rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.scout.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.scout.rotors.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit scout rotor recipe for slot player.scout.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.",
+          "Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.",
+          "Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. All prior source-stage metadata and all 127 original payloads remain preserved. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 11
+    },
+    {
+      "description": "bomber rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.bomber.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.bomber.rotors.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit bomber rotor recipe for slot player.bomber.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.",
+          "Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.",
+          "Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. All prior source-stage metadata and all 127 original payloads remain preserved. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 11
+    },
+    {
+      "description": "carrier rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.carrier.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.carrier.rotors.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit carrier rotor recipe for slot player.carrier.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.",
+          "Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.",
+          "Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. All prior source-stage metadata and all 127 original payloads remain preserved. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 11
+    },
+    {
+      "description": "interceptor rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.interceptor.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.interceptor.rotors.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit interceptor rotor recipe for slot player.interceptor.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.",
+          "Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.",
+          "Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. All prior source-stage metadata and all 127 original payloads remain preserved. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 11
+    },
+    {
+      "description": "fiber rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.fiber.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.fiber.rotors.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit fiber rotor recipe for slot player.fiber.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.",
+          "Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.",
+          "Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. All prior source-stage metadata and all 127 original payloads remain preserved. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 11
+    },
+    {
+      "description": "impact rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.impact.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.impact.rotors.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit impact rotor recipe for slot player.impact.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.",
+          "Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.",
+          "Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. All prior source-stage metadata and all 127 original payloads remain preserved. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 11
+    },
+    {
+      "description": "trapper rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.trapper.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.trapper.rotors.field-kit", "revision": 10 },
+        "prompt": "Create one original FPV Field Kit trapper rotor recipe for slot player.trapper.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.",
+          "Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.",
+          "Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. All prior source-stage metadata and all 127 original payloads remain preserved. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 11
+    },
+    {
+      "description": "active trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.active.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.active.field-kit", "revision": 11 },
+        "prompt": "Create one original FPV Field Kit active trail for slot trail.active. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 12
+    },
+    {
+      "description": "secured trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.secured.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.secured.field-kit", "revision": 11 },
+        "prompt": "Create one original FPV Field Kit secured trail for slot trail.secured. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 12
+    },
+    {
+      "description": "head trail: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "trail.head.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "trail.head.field-kit", "revision": 11 },
+        "prompt": "Create one original FPV Field Kit head trail for slot trail.head. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "trail.signal.v1" },
+      "revision": 12
+    },
+    {
+      "description": "Capture pulse: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.capture.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.capture.field-kit", "revision": 11 },
+        "prompt": "Create one original FPV Field Kit capture pulse for slot effect.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.capture.v1" },
+      "revision": 12
+    },
+    {
+      "description": "failure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.failure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.failure.field-kit", "revision": 11 },
+        "prompt": "Create one original FPV Field Kit failure feedback for slot effect.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 12
+    },
+    {
+      "description": "victory feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.victory.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.victory.field-kit", "revision": 11 },
+        "prompt": "Create one original FPV Field Kit victory feedback for slot effect.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 12
+    },
+    {
+      "description": "pickup feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pickup.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pickup.field-kit", "revision": 11 },
+        "prompt": "Create one original FPV Field Kit pickup feedback for slot effect.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 12
+    },
+    {
+      "description": "shield feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.shield.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.shield.field-kit", "revision": 11 },
+        "prompt": "Create one original FPV Field Kit shield feedback for slot effect.shield. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 12
+    },
+    {
+      "description": "respawn feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.respawn.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.respawn.field-kit", "revision": 11 },
+        "prompt": "Create one original FPV Field Kit respawn feedback for slot effect.respawn. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 12
+    },
+    {
+      "description": "pressure feedback: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "effect.pressure.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "effect.pressure.field-kit", "revision": 11 },
+        "prompt": "Create one original FPV Field Kit pressure feedback for slot effect.pressure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.",
+          "Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.",
+          "Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "effect.feedback.v1" },
+      "revision": 12
     }
   ],
   "collections": [
@@ -37576,11 +38818,11 @@
   ],
   "format": "revealline-theme-bundle.v1",
   "id": "field-kit",
-  "revision": 54,
+  "revision": 58,
   "selection": {
     "base": { "id": "base", "revision": 1 },
     "collection": null,
-    "theme": { "id": "fpv", "revision": 54 }
+    "theme": { "id": "fpv", "revision": 58 }
   },
   "slots": [
     {
@@ -55389,6 +56631,106 @@
       "name": "FPV Field Kit",
       "parent": { "id": "fpv", "revision": 53 },
       "revision": 54,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "effect.capture": { "id": "effect.capture.field-kit", "revision": 9 },
+        "effect.failure": { "id": "effect.failure.field-kit", "revision": 9 },
+        "effect.pickup": { "id": "effect.pickup.field-kit", "revision": 9 },
+        "effect.pressure": { "id": "effect.pressure.field-kit", "revision": 9 },
+        "effect.respawn": { "id": "effect.respawn.field-kit", "revision": 9 },
+        "effect.shield": { "id": "effect.shield.field-kit", "revision": 9 },
+        "effect.victory": { "id": "effect.victory.field-kit", "revision": 9 },
+        "player.bomber.rotors": { "id": "player.bomber.rotors.field-kit", "revision": 10 },
+        "player.carrier.rotors": { "id": "player.carrier.rotors.field-kit", "revision": 10 },
+        "player.fiber.rotors": { "id": "player.fiber.rotors.field-kit", "revision": 10 },
+        "player.impact.rotors": { "id": "player.impact.rotors.field-kit", "revision": 10 },
+        "player.interceptor.rotors": {
+          "id": "player.interceptor.rotors.field-kit",
+          "revision": 10
+        },
+        "player.scout.rotors": { "id": "player.scout.rotors.field-kit", "revision": 10 },
+        "player.trapper.rotors": { "id": "player.trapper.rotors.field-kit", "revision": 10 },
+        "trail.active": { "id": "trail.active.field-kit", "revision": 9 },
+        "trail.head": { "id": "trail.head.field-kit", "revision": 9 },
+        "trail.secured": { "id": "trail.secured.field-kit", "revision": 9 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 54 },
+      "revision": 55,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "effect.capture": { "id": "effect.capture.field-kit", "revision": 10 },
+        "effect.failure": { "id": "effect.failure.field-kit", "revision": 10 },
+        "effect.pickup": { "id": "effect.pickup.field-kit", "revision": 10 },
+        "effect.pressure": { "id": "effect.pressure.field-kit", "revision": 10 },
+        "effect.respawn": { "id": "effect.respawn.field-kit", "revision": 10 },
+        "effect.shield": { "id": "effect.shield.field-kit", "revision": 10 },
+        "effect.victory": { "id": "effect.victory.field-kit", "revision": 10 },
+        "trail.active": { "id": "trail.active.field-kit", "revision": 10 },
+        "trail.head": { "id": "trail.head.field-kit", "revision": 10 },
+        "trail.secured": { "id": "trail.secured.field-kit", "revision": 10 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 55 },
+      "revision": 56,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "effect.capture": { "id": "effect.capture.field-kit", "revision": 11 },
+        "effect.failure": { "id": "effect.failure.field-kit", "revision": 11 },
+        "effect.pickup": { "id": "effect.pickup.field-kit", "revision": 11 },
+        "effect.pressure": { "id": "effect.pressure.field-kit", "revision": 11 },
+        "effect.respawn": { "id": "effect.respawn.field-kit", "revision": 11 },
+        "effect.shield": { "id": "effect.shield.field-kit", "revision": 11 },
+        "effect.victory": { "id": "effect.victory.field-kit", "revision": 11 },
+        "trail.active": { "id": "trail.active.field-kit", "revision": 11 },
+        "trail.head": { "id": "trail.head.field-kit", "revision": 11 },
+        "trail.secured": { "id": "trail.secured.field-kit", "revision": 11 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 56 },
+      "revision": 57,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "effect.capture": { "id": "effect.capture.field-kit", "revision": 12 },
+        "effect.failure": { "id": "effect.failure.field-kit", "revision": 12 },
+        "effect.pickup": { "id": "effect.pickup.field-kit", "revision": 12 },
+        "effect.pressure": { "id": "effect.pressure.field-kit", "revision": 12 },
+        "effect.respawn": { "id": "effect.respawn.field-kit", "revision": 12 },
+        "effect.shield": { "id": "effect.shield.field-kit", "revision": 12 },
+        "effect.victory": { "id": "effect.victory.field-kit", "revision": 12 },
+        "player.bomber.rotors": { "id": "player.bomber.rotors.field-kit", "revision": 11 },
+        "player.carrier.rotors": { "id": "player.carrier.rotors.field-kit", "revision": 11 },
+        "player.fiber.rotors": { "id": "player.fiber.rotors.field-kit", "revision": 11 },
+        "player.impact.rotors": { "id": "player.impact.rotors.field-kit", "revision": 11 },
+        "player.interceptor.rotors": {
+          "id": "player.interceptor.rotors.field-kit",
+          "revision": 11
+        },
+        "player.scout.rotors": { "id": "player.scout.rotors.field-kit", "revision": 11 },
+        "player.trapper.rotors": { "id": "player.trapper.rotors.field-kit", "revision": 11 },
+        "trail.active": { "id": "trail.active.field-kit", "revision": 12 },
+        "trail.head": { "id": "trail.head.field-kit", "revision": 12 },
+        "trail.secured": { "id": "trail.secured.field-kit", "revision": 12 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 57 },
+      "revision": 58,
       "tokens": {}
     }
   ]

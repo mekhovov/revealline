@@ -410,7 +410,7 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
-test('Livewire feedback dependencies bind only the reviewed v0.76 effects inputs', async () => {
+test('Journey feedback dependencies bind only the reviewed integrated effects inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   for (const slotId of [
@@ -429,13 +429,15 @@ test('Livewire feedback dependencies bind only the reviewed v0.76 effects inputs
     assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(
       asset.provenance.source.endsWith(
-        'sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13',
+        'sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9',
       ),
     );
     assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
     assert.match(asset.provenance.source, /game\/content-design\/actor-marker\.mjs/);
     assert.equal(
-      asset.quality.evidence.some((entry) => entry.includes('Scoped v0.76 effects source review')),
+      asset.quality.evidence.some((entry) =>
+        entry.includes('Scoped integrated Journey effects review'),
+      ),
       true,
     );
   }
@@ -491,12 +493,12 @@ test('soundtrack UI and audio bind only their reviewed current inputs', async ()
   }
 });
 
-test('soundtrack screen and P08-A motion reviews bind only the inspected current inputs', async () => {
+test('soundtrack screen and Journey motion reviews bind only the inspected current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const fingerprints = {
     screens: '1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845',
-    motion: 'b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4',
+    motion: 'ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76',
   };
   const reviewed = production.document.slots.filter(
     (slot) => slot.group in fingerprints && resolved.assets[slot.id].kind === 'recipe',
@@ -510,7 +512,7 @@ test('soundtrack screen and P08-A motion reviews bind only the inspected current
       asset.quality.evidence.some((entry) =>
         entry.includes(
           slot.group === 'motion'
-            ? 'Scoped P08-A source review'
+            ? 'Scoped Journey motion/material source review'
             : 'Scoped soundtrack screen source review',
         ),
       ),
