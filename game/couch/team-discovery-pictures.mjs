@@ -1,3 +1,4 @@
+import { paintTeamPicturePreview } from './team-picture-preview.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 
 /** Gallery-owned copies only. One underlying preparation remains in flight until
@@ -96,22 +97,20 @@ export function attachTeamDiscoveryPictures({
     if (!current(job)) return;
     const context = canvas.getContext('2d');
     if (!context) throw new Error('Artwork preview is unavailable.');
-    context.imageSmoothingEnabled = false;
-    context.globalAlpha = 1;
-    context.globalCompositeOperation = 'source-over';
-    if (!current(job)) return;
-    context.drawImage(handle.image, 0, 0, width, height);
-    if (!current(job)) return;
-    // Both player preview sizes keep the same border teaser. The complete
-    // picture remains the win reward; creator previews have their own host.
-    const border = width / 12;
-    context.fillStyle = '#0b1a24';
-    context.fillRect(border, border, width - border * 2, height - border * 2);
-    if (!current(job)) return;
+    if (
+      !paintTeamPicturePreview(context, handle.image, width, height, {
+        full: Boolean(job.detail),
+        isCurrent: () => current(job),
+      })
+    )
+      return;
     canvas.hidden = false;
     if (job.detail) {
       detailReady(job);
-      describe(job.owner, 'Locked preview. Win to reveal the full picture.');
+      describe(
+        job.owner,
+        'Full picture preview. Viewing does not complete an arena or earn a picture.',
+      );
     } else {
       job.card.state = 'ready';
       job.card.message.textContent = 'Artwork teaser';
@@ -211,7 +210,7 @@ export function attachTeamDiscoveryPictures({
     list.hidden = true;
     preview.panel.hidden = false;
     preview.retry.hidden = true;
-    preview.title.textContent = `${card.row.title} · Locked preview`;
+    preview.title.textContent = `${card.row.title} · Picture preview`;
     back.textContent = 'Back to arenas';
     onViewChange();
     if (!live(owner) || detail !== shown) return;

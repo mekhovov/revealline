@@ -302,3 +302,7 @@ separately from hosted upload success.”
 ### Retain an edition while publishing a menu correction
 
 “Prepare the archive from exact original ZIP/metadata. A new archive has zero previously accepted paths. Update only template-specific fixture identities; keep all corruption guards, inventory-base binding and budget limits. Preserve first failures, run complete fixtures, and verify hosted extraction plus every public body. Carry known historical UX issues into scoped native admission. Publish the separately qualified correction only after retention is admitted, then verify the affected public menu journey before marking its scope accepted.”
+
+## Team teaser and optional full picture preview
+
+Use one read-only draw helper for the ready lobby and catalogue teaser so both expose a recognisable broad border with a concealed centre. The existing explicit Preview picture action shows the complete authenticated original, with clear copy that viewing neither completes the arena nor earns a picture. This supersedes the older locked enlarged-teaser prompt above. Preserve current attempt/profile/checkpoint bytes, no automatic Start, transient preview lease release, cancellation and stale-visit guards, and exact Preview opener on Back. Test true centre/border pixel outcomes with both built-ins and imported artwork; qualify native recognisability, responsive controls and focus separately. Do not alter artwork, production recipes, simulation, awards or saves.

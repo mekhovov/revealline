@@ -1398,3 +1398,7 @@ When a production successor changes only reviewed equipment metadata, the curren
 A paint-order test must inspect a fresh frame: the accepted decoded picture is the first background draw, once, followed by prepared actors. The last draw is no longer a reliable picture oracle. Keep failed/cancelled preparation, release ownership, Retry and stale-completion assertions intact.
 
 Use the [reviewed successor prompt](../../prompts/team-reviewed-successor.md). Equipment-image quality, recipe-functional review and public release acceptance have separate evidence. Exact adoption must reproduce the generated inventory and pass bounded transfer/history and direct host tests before final release qualification.
+
+## Team optional full preview without awards
+
+The current Team discovery contract permits an explicit full picture preview; it supersedes the older locked enlarged-teaser rule. Keep the passive lobby and catalogue cards on the same meaningful broad-border teaser. Reuse the authenticated original and existing transient preview owner; full viewing is not gameplay, completion or an earned-picture receipt. Preserve accepted attempts, progress/profile bytes and independent image leases. Exercise cancellation, foreground loss, newer visits, decode failure and exact Back opener. Assert actual full-detail centre versus concealed teaser pixels, plus no simulation/start/award/write side effects. Keep native layout and visual recognition separate from finite Canvas tests; no renderer, recipe fingerprint or production-art change is implied.

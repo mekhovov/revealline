@@ -30,7 +30,7 @@ With the exact original renderer, the two authored-win tests fail specifically b
 
 Cache originals are retained under `.cache/p08a-team-win-picture-ece40093/`, including the original failing output, source preimages, patch, input pins and bounded run receipts. Native rasterization, real winning/result journeys, bright-art contrast, physical controllers/touch, offline/public qualification and full P03/P05/P08-A acceptance remain open. Do not transfer this candidate's results to a later composed source without checking its exact changes.
 
-The lobby does not pre-award this result: its exact prepared original has an opaque black centre and only a narrow border teaser. Tests must pair ready/retained-lobby concealment with the real authored-win renderer, which alone removes the gameplay mask. The teaser changes no progress or image ownership.
+The lobby does not pre-award this result: its exact prepared original uses the same broad-border concealed teaser as catalogue cards. An explicit catalogue full preview may show the original without awarding it. Tests pair ready/retained-lobby concealment and no-award full preview with the real authored-win renderer, which removes the gameplay mask after a win. These display paths change no progress or accepted image ownership. Earlier narrow-border receipts retain their historical scope.
 
 ## Visible lobby return action
 
