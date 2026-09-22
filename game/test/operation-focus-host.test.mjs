@@ -75,7 +75,13 @@ async function pending(t, kind, { failure = false, onEnable } = {}) {
   opener.click();
   await settle(() => requested);
   assert.equal(opener.disabled, true);
-  assert.equal(h.doc.activeElement === h.doc.body, true, 'Native disable dropped initiating focus');
+  assert.equal(
+    h.doc.activeElement === (kind === 'install' ? h.$('library-operation-cancel') : h.doc.body),
+    true,
+    kind === 'install'
+      ? 'Cancel owns usable focus throughout preparation'
+      : 'Chapter retains its existing focus contract',
+  );
   const complete = async () => {
     finish();
     if (kind === 'chapter') {
@@ -173,12 +179,14 @@ for (const kind of ['chapter', 'install']) {
     assert.equal(root.contains(h.doc.activeElement), true);
   });
 }
-// Native interior Tab remains browser-owned. Model its sequential start at the
-// disabled opener; shared navigation still owns boundary wrapping and key events.
-function tabToCancel(h, root, opener) {
-  let cursor = opener;
+// Start on the usable Cancel control. Native interior Tab remains browser-owned;
+// travel through a newer non-owned control before renewing explicit Cancel intent.
+function tabToCancel(h, root) {
+  const cancel = h.$('library-operation-cancel');
+  assert.equal(h.doc.activeElement, cancel);
   const eligible = (node) => {
     if (node.disabled || node.closest('[hidden],[inert]')) return false;
+    if (node.hasAttribute('tabindex') && Number(node.getAttribute('tabindex')) < 0) return false;
     for (
       let ancestor = node.parentElement;
       ancestor && ancestor !== root;
@@ -192,18 +200,14 @@ function tabToCancel(h, root, opener) {
         return false;
     return true;
   };
-  const expected = [
-    [...root.querySelectorAll('summary')].find((node) => node.textContent === 'Paste pack JSON'),
-    root.querySelector('[data-close="library-dialog"]'),
-    h.$('library-operation-cancel'),
-  ];
-  for (const target of expected) {
-    assert.ok(target);
-    const active = h.doc.activeElement,
-      event = active.emit('keydown', { key: 'Tab', code: 'Tab' });
+  let left = false;
+  const visited = new Set();
+  const all = [...root.querySelectorAll('button,a,input,select,textarea,summary,[tabindex]')];
+  for (let step = 0; step < all.length + 2; step++) {
+    const active = h.doc.activeElement;
+    const event = active.emit('keydown', { key: 'Tab', code: 'Tab' });
     if (!event.defaultPrevented) {
-      const all = [...root.querySelectorAll('button,a,input,select,textarea,summary')],
-        index = all.indexOf(cursor);
+      const index = all.indexOf(active);
       for (let n = 1; n <= all.length; n++) {
         const next = all[(index + n) % all.length];
         if (eligible(next)) {
@@ -212,17 +216,29 @@ function tabToCancel(h, root, opener) {
         }
       }
     }
-    cursor = h.doc.activeElement;
-    assert.equal(
-      cursor === target,
-      true,
-      `Actual native Tab order reaches ${target.id || target.textContent}`,
+    const current = h.doc.activeElement;
+    assert.ok(
+      root.contains(current) && !current.disabled,
+      'Native Tab stays on a usable dialog control',
     );
-    cursor.emit('keyup', { key: 'Tab', code: 'Tab' });
+    current.emit('keyup', { key: 'Tab', code: 'Tab' });
+    visited.add(current);
+    if (current === cancel && left) {
+      assert.ok(
+        visited.has(h.$('library-operation-message')),
+        'Native Tab reaches the readable operation message',
+      );
+      assert.ok(
+        visited.has(root.querySelector('[data-close="library-dialog"]')),
+        'Native Tab reaches Close before returning',
+      );
+      return cancel;
+    }
+    if (current !== cancel) left = true;
   }
-  return cursor;
+  assert.fail('Native Tab must visit another action and return to Cancel');
 }
-test('explicit Library Cancel after three native Tabs renews return to the actual Install action', async (t) => {
+test('explicit Library Cancel after a native Tab cycle renews return to the actual Install action', async (t) => {
   const { h, opener, root, complete } = await pending(t, 'install');
   const cancel = tabToCancel(h, root, opener);
   cancel.click();
