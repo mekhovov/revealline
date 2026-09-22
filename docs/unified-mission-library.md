@@ -882,3 +882,9 @@ verification. It must receive a new pinned native check before acceptance.
   distribution-root navigation warnings. Repository lint, web/native formatting,
   motion syntax, Field Kit production-ledger check and version consistency all
   pass. These do not substitute for the exact hosted build or public acceptance.
+- PR268 is now ready for review against main, not a stacked draft. Exact local
+  source verification on release candidate29b70c14 checked17,059 tracked files
+  and confirmed all contents/modes. The hosted PR run must bind the final pushed
+  documentation checkpoint; retargeting alone did not start a workflow. This
+  status update triggers the required PR synchronization/build checks. No tag,
+  immutable B release, main merge or Pages deployment has occurred yet.
