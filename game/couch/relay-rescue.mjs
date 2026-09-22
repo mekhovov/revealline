@@ -359,13 +359,15 @@ export function bootCoop({
     libraryRemotePending = null,
     libraryOtherModes = null,
     libraryOtherModesPending = null,
-    libraryOtherModesRegistered = false,
+    libraryOtherModesVisit = 0,
+    libraryOtherModesCheckedVisit = -1,
     libraryOtherModesOpening = null,
     libraryOtherModesLoad = null,
     libraryOtherModesLifetime = new AbortController(),
     libraryPreview = null,
     libraryReturnFocus = true;
   const libraryRuntimeRows = new WeakMap();
+  const libraryOtherSources = new Map();
   const librarySession = createMissionLibrarySessionState({ mode: 'team' });
   const libraryVisit = crypto.randomUUID();
   const discoveryRows = (sourcePack, artworkSource, prefix) =>
@@ -2656,6 +2658,8 @@ export function bootCoop({
       if (!replace || !current()) return false;
     }
     if (!current()) return false;
+    if (context.confirmInventory && !(await context.confirmInventory())) return false;
+    if (!current() || missionLibrary.find(context.libraryMissionId) !== row) return false;
     location.assign(href);
     return true;
   }
@@ -2744,7 +2748,7 @@ export function bootCoop({
     const opening = libraryOtherModesOpening;
     libraryOtherModesOpening = null;
     opening?.dispose();
-    if (!opening || libraryOtherModesRegistered || libraryChooser?.state().mode === 'team') return;
+    if (!opening || libraryChooser?.state().mode === 'team') return;
     $('coop-library-remote-status').textContent = 'Loading interrupted. Retry when ready.';
     $('coop-library-remote-retry').hidden = false;
     $('coop-library-remote-retry').removeAttribute('aria-disabled');
@@ -2815,7 +2819,7 @@ export function bootCoop({
       previewButton.hidden = !remoteStatus.hidden;
       remoteRetry.hidden = remoteStatus.hidden || document.activeElement !== remoteRetry;
       remoteRetry.setAttribute('aria-disabled', 'true');
-      if (remoteStatus.hidden || libraryOtherModesRegistered) return;
+      if (remoteStatus.hidden || libraryOtherModesCheckedVisit === libraryOtherModesVisit) return;
       const opening = trackMissionLibraryOpening({
         document,
         onRetire() {
@@ -2826,17 +2830,27 @@ export function bootCoop({
         },
       });
       libraryOtherModesOpening = opening;
+      remoteRetry.textContent = 'Retry';
       remoteStatus.textContent = 'Loading Solo and Versus mission metadata…';
       try {
         libraryOtherModesPending ??= import('../mission-library/remote-solo-versus.mjs')
-          .then(({ createRemoteSoloVersusLibrarySources }) =>
-            createRemoteSoloVersusLibrarySources({
+          .then(async ({ createRemoteSoloVersusLibrarySources }) => {
+            let channel = 'dev';
+            if (document.querySelector('meta[name="revealline-offline"]')) {
+              const response = await fetch(new URL('../build-info.json', location.href), {
+                signal: libraryOtherModesLifetime.signal,
+              });
+              if (!response.ok) throw new Error('The exact release channel is unavailable.');
+              channel = `release-${(await response.json()).version}`;
+            }
+            return createRemoteSoloVersusLibrarySources({
               baseURL: new URL('../', location.href),
               launch: launchRemoteLibraryMission,
               difficulty: libraryDifficulty,
               signal: libraryOtherModesLifetime.signal,
-            }),
-          )
+              installed: { channel },
+            });
+          })
           .then((owner) => {
             if (disposed) {
               owner.dispose();
@@ -2859,11 +2873,43 @@ export function bootCoop({
           disposed
         )
           return;
+        // A cached owner may have completed after an earlier opening retired.
+        // Recheck raw installed metadata before this visit publishes its rows.
+        await owner.refresh({ signal: libraryOtherModesLifetime.signal });
+        if (
+          libraryOtherModesOpening !== opening ||
+          !opening.current() ||
+          !dialog.open ||
+          libraryChooser.state().mode === 'team' ||
+          !foreground() ||
+          disposed
+        )
+          return;
         opening.dispose();
-        for (const source of owner.sources) missionLibrary.register(source);
-        libraryOtherModesRegistered = true;
-        remoteStatus.textContent = 'Journey and Base ready. Other chapters: open Solo or Versus.';
-        remoteRetry.textContent = 'Loaded';
+        const sources = owner.sources;
+        const owned = new Set(sources.map((source) => source.id));
+        for (const id of libraryOtherSources.keys())
+          if (!owned.has(id)) {
+            missionLibrary.remove(id);
+            libraryOtherSources.delete(id);
+          }
+        for (const source of sources)
+          if (libraryOtherSources.get(source.id) !== source) {
+            missionLibrary.register(source);
+            libraryOtherSources.set(source.id, source);
+          }
+        // Even unchanged owners may have lost readiness (storage failure or
+        // expired paired-media proof). Do not leave their old Play labels up.
+        libraryChooser.refresh();
+        libraryOtherModesCheckedVisit = owner.state().ready ? libraryOtherModesVisit : -1;
+        remoteStatus.textContent = owner.state().ready
+          ? 'All missions loaded. Downloads stay here; Play opens the exact mode.'
+          : 'Journey and Base ready. Installed content unavailable; Retry.';
+        remoteStatus.setAttribute('aria-description', owner.state().reason || '');
+        remoteStatus.title = owner.state().reason || '';
+        remoteRetry.hidden = owner.state().ready;
+        if (!owner.state().ready) remoteRetry.removeAttribute('aria-disabled');
+        remoteRetry.textContent = owner.state().ready ? 'Loaded' : 'Retry';
       } catch (error) {
         if (libraryOtherModesOpening === opening && opening.current() && dialog.open) {
           remoteStatus.textContent = `Other modes unavailable: ${error.message}. Your Team attempt is kept.`;
@@ -2872,6 +2918,7 @@ export function bootCoop({
         }
       } finally {
         opening.dispose();
+        if (libraryOtherModesOpening === opening) libraryOtherModesOpening = null;
       }
     }
     libraryOtherModesLoad = includeOtherModes;
@@ -2916,6 +2963,7 @@ export function bootCoop({
         opening.dispose();
         libraryOpening = null;
         mountTeamLibrary();
+        ++libraryOtherModesVisit;
         libraryChooser.open(opener);
         libraryPreview.refresh();
         void libraryOtherModesLoad();
