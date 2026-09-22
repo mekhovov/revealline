@@ -193,6 +193,21 @@ function mergedDocument(current, incoming, assignmentMode) {
   return document;
 }
 
+/** Merge validated immutable picture history without assigning a storage generation
+ * or committing bytes. Destination assignments remain authoritative by default.
+ */
+export function mergeStoredMediaDocuments(current, incoming, { assignmentMode = 'preserve' } = {}) {
+  required(
+    ['preserve', 'restore'].includes(assignmentMode),
+    'Unsupported still assignment merge mode.',
+  );
+  return mergedDocument(
+    validateStoredStillMedia(current),
+    validateStoredStillMedia(incoming),
+    assignmentMode,
+  );
+}
+
 /** A target-specific, cancellable review; no writes/reservations are made here.
  * preserve: destination assignments win, missing bindings are added.
  * restore: the bundle's exact assignment set replaces current assignments.
