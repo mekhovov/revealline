@@ -19,3 +19,11 @@ Independent review found no actionable runtime regression or weakened test guara
 Choose the next unused version only after the coordinated parent release is accepted and the candidate is integrated against the selected main cutoff. Run all six exact-source gates, production reproduction, ordinary build, and the combined native v5 backup/export/restore journey. Then freeze original artifacts, deploy through the reviewed Pages selector and verify public bytes/play.
 
 This packet does not establish physical-device, production-artwork, full-suite or public acceptance. Earlier PR233 native evidence remains attributed to its original source. Synthetic diagnostic PNGs are not visual-art approval.
+
+## Native same-origin restoration follow-up
+
+Exact source `3563ef77344de3b7fa27263cefd90a38a4326be1` passed an ordinary First Signal win → direct Next → Relay Orchard pause → v5 game-data export → Keep → deliberate Replace → Load paused → Undo → reload → explicit Continue journey at1280×720. The visible post-load export retained the identical run, complete simulation checkpoint, picture pins, visual-theme pin and library. Undo focused enabled Export; title Continue explicitly resumed the retained flight.
+
+[Native qualification](pr256-native-qualification.json) binds1,134 responses across405 paths, checked against exact source (with the installed Phaser4.2.1 bundle separately identified), zero mismatches and no observed console warnings/errors. The server is retained for reproduction. No simulation or storage state was injected.
+
+This closes the scoped combined same-origin native path above. It does not establish fresh-origin original-media transfer, operating-system download completion, physical devices, offline operation or public release. The initial expected paused-Continue inspection observed running play because title Continue itself is the deliberate resume action; Library Load remained paused as required. The inline pause screenshot conceals the board intentionally and is not artwork approval.
