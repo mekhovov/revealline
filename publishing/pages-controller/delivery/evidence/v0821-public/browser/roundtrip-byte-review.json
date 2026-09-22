@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "sessionAndRestoredAssetsIdentical": true,
+  "assetCount": 2,
+  "assetBytes": 87465,
+  "bundles": [
+    {
+      "name": "RevealLine-session-originals.rlmedia",
+      "bytes": 104198,
+      "sha256": "26496d7d88c23f08176dba7e6dcd73c6fa7608f5ee7c01fcdd05356a020146db",
+      "assets": [
+        {
+          "bytes": 46655,
+          "sha256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65"
+        },
+        {
+          "bytes": 40810,
+          "sha256": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce"
+        }
+      ],
+      "allAssetHashesVerified": true,
+      "noTrailingBytes": true
+    },
+    {
+      "name": "roundtrip-originals.rlmedia",
+      "bytes": 104198,
+      "sha256": "26496d7d88c23f08176dba7e6dcd73c6fa7608f5ee7c01fcdd05356a020146db",
+      "assets": [
+        {
+          "bytes": 46655,
+          "sha256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65"
+        },
+        {
+          "bytes": 40810,
+          "sha256": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce"
+        }
+      ],
+      "allAssetHashesVerified": true,
+      "noTrailingBytes": true
+    }
+  ],
+  "gameData": {
+    "bytes": 8028,
+    "sha256": "56a688973284bab7dbd6f2553dece98853f02ab35791bf6a60b195b479a612ed",
+    "format": "xonix-backup.v2"
+  },
+  "exactFrozenManifestMatches": [
+    {
+      "path": "game/presentation/compiled/assets/0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65.png",
+      "bytes": 46655,
+      "sha256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65"
+    },
+    {
+      "path": "game/presentation/compiled/assets/c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce.png",
+      "bytes": 40810,
+      "sha256": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce"
+    }
+  ]
+}

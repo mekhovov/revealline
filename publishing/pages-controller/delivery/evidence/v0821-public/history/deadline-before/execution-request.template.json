@@ -1,0 +1,67 @@
+{
+  "format": "revealline-main-v0821-http-request.v1",
+  "reviewed": false,
+  "controllerCommit": null,
+  "controllerTree": null,
+  "runId": null,
+  "deploymentId": null,
+  "deploymentStatusId": null,
+  "receiptArtifactId": null,
+  "inventory": {
+    "files": null,
+    "bytes": null,
+    "sha256": null
+  },
+  "pins": {
+    "main": {
+      "path": "authority/main.json",
+      "bytes": null,
+      "sha256": null
+    },
+    "commit": {
+      "path": "authority/commit.json",
+      "bytes": null,
+      "sha256": null
+    },
+    "run": {
+      "path": "authority/run.json",
+      "bytes": null,
+      "sha256": null
+    },
+    "jobs": {
+      "path": "authority/jobs.json",
+      "bytes": null,
+      "sha256": null
+    },
+    "deployment": {
+      "path": "authority/deployment.json",
+      "bytes": null,
+      "sha256": null
+    },
+    "statuses": {
+      "path": "authority/statuses.json",
+      "bytes": null,
+      "sha256": null
+    },
+    "artifacts": {
+      "path": "authority/artifacts.json",
+      "bytes": null,
+      "sha256": null
+    },
+    "receiptZIP": {
+      "path": "authority/receiptZIP.zip",
+      "bytes": null,
+      "sha256": null
+    },
+    "publication": {
+      "path": "authority/publication.json",
+      "bytes": null,
+      "sha256": null
+    },
+    "catalog": {
+      "path": "authority/catalog.json",
+      "bytes": null,
+      "sha256": null
+    }
+  }
+}

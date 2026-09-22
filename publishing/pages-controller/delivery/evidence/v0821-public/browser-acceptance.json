@@ -1,0 +1,188 @@
+{
+  "format": "revealline-public-browser-acceptance.v1",
+  "status": "PASS_SCOPED",
+  "checkedAt": "2026-09-22T15:25:41.985042+00:00",
+  "version": "v0.82.1",
+  "sourceRevision": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+  "controllerCommit": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+  "runId": 35745218885,
+  "deploymentId": 6594019441,
+  "origin": "https://mekhovov.github.io/revealline/releases/v0.82.1/site/",
+  "browser": "Chrome153 via agent-browser, fresh isolated persistent profile",
+  "checks": [
+    "Root /game/ resolves to canonical v0.82.1; title shows VERSION V0.82.1.",
+    "Two same-origin tabs: second visibly session-only. Ordinary ArrowDown completes First Signal at50%,7820 points,3lives; Next retains won results during original preparation and enters Relay Orchard without second Start.",
+    "Native session-originals104198-byte download contains2exactPNG originals87465bytes matching frozenmanifest. Separate8028-byte xonix-backup.v2 game data downloaded.",
+    "Closed holder and navigated to Workshop. Additive originals restore generation1\u21922 retains2records. Relay savedrevision previewed. Native re-export is byte-identical to sessionbundle (26496d7d88c23f08176dba7e6dcd73c6fa7608f5ee7c01fcdd05356a020146db).",
+    "Returned to game and natively imported game-dataJSON after originals. UI confirms one earnedpicture and saved Relay Orchard flight restored; Undo remains available.",
+    "Verified896corefiles, closedbrowser, reopened same isolatedprofile ataboutblank, disablednetwork before canonicalnavigation. Offline title loads with Continue and actualcanonicalserviceworker; navigator.onLine=false.",
+    "Continue resumes restored Relay flight. Native ArrowDown captures50% at7820points; pause works. OfflineCollection opens earnedFirstSignal original visibly. No browsererrors recorded; ownedbrowserclosed."
+  ],
+  "attempts": [
+    "Initial snapshots caught ordinary boot UI before title readiness; retained initial-boot.txt.",
+    "An automation wait for nonexistent text Trace a line was stopped by terminating only its ownedCLI process. Subsequent native keypress completed the mission;64-second result includes that harness delay. No game-state injection was used."
+  ],
+  "limits": [
+    "Scoped automated desktop browser acceptance; no physical iPhone/controller/assistive certification.",
+    "Offline scope is core game and restored picture/save data, not a new all-album offline or music-listening qualification.",
+    "Relay play reached50% capture; no Relay victory is claimed.",
+    "Full public inventory audit is separately running and not implied by this browser receipt."
+  ],
+  "files": [
+    {
+      "path": "browser/after-start-before-move.txt",
+      "bytes": 342,
+      "sha256": "65c10438dcbbe3d9accd45529bc7c98aa98fd4b03c02af062fe13094064827fa"
+    },
+    {
+      "path": "browser/cold-offline-after-move.txt",
+      "bytes": 142,
+      "sha256": "cc239d0c2e76885eba0f6216eebbfab1b3d3e8b7927f10c0ee14b81810779870"
+    },
+    {
+      "path": "browser/cold-offline-collection.txt",
+      "bytes": 563,
+      "sha256": "4e2e6a6e9a81b0aa368385122f57f760af3544d35e5c7873bc909aa2aa064313"
+    },
+    {
+      "path": "browser/cold-offline-earned-picture.txt",
+      "bytes": 742,
+      "sha256": "a640b843b683c880776fed8fbfad983f34c285666f1f41b6537bc80a552de458"
+    },
+    {
+      "path": "browser/cold-offline-play-paused.txt",
+      "bytes": 260,
+      "sha256": "34c70ae7dc76a1fc60d4d66de10bf8e68712b05f35077e9b77283cb140f939c0"
+    },
+    {
+      "path": "browser/cold-offline-restored-flight.txt",
+      "bytes": 134,
+      "sha256": "63b8b3da96aad2a475fd3e9b5558efbfb7e05f71d99599bc04c5d7f33fe3ec1c"
+    },
+    {
+      "path": "browser/cold-offline-title.txt",
+      "bytes": 779,
+      "sha256": "aba0bd250cb396c4da6515c41fbe80e3932047009966c302a3133bd1216f2872"
+    },
+    {
+      "path": "browser/downloads/RevealLine-session-originals.rlmedia",
+      "bytes": 104198,
+      "sha256": "26496d7d88c23f08176dba7e6dcd73c6fa7608f5ee7c01fcdd05356a020146db"
+    },
+    {
+      "path": "browser/downloads/game-data.json",
+      "bytes": 8028,
+      "sha256": "56a688973284bab7dbd6f2553dece98853f02ab35791bf6a60b195b479a612ed"
+    },
+    {
+      "path": "browser/downloads/roundtrip-originals.rlmedia",
+      "bytes": 104198,
+      "sha256": "26496d7d88c23f08176dba7e6dcd73c6fa7608f5ee7c01fcdd05356a020146db"
+    },
+    {
+      "path": "browser/errors-after-cold.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser/errors-before-cold.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser/errors-final.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser/first-signal-win.txt",
+      "bytes": 747,
+      "sha256": "3ab238bef3bc8e4ce4a6bb9282aa6b9ee6ac3e2147ff3c1c363757efa797d868"
+    },
+    {
+      "path": "browser/game-data-import-completed.txt",
+      "bytes": 3115,
+      "sha256": "48d1eab3bc0a2403ba4b8013de45bfea5fd179aa6c2c36aa78f8a4dfb36bdfc9"
+    },
+    {
+      "path": "browser/game-data-import-review.txt",
+      "bytes": 3115,
+      "sha256": "48d1eab3bc0a2403ba4b8013de45bfea5fd179aa6c2c36aa78f8a4dfb36bdfc9"
+    },
+    {
+      "path": "browser/initial-boot.txt",
+      "bytes": 921,
+      "sha256": "a4a81a7cb85d517fe2dcf4a0269a095937c63fa47c4c8774939d5aca920c40cc"
+    },
+    {
+      "path": "browser/next-preparation.txt",
+      "bytes": 829,
+      "sha256": "367b88f8c59f5bb039edebaa35c69b42574d9b99be5d9d84b8647a90b5a5cdb4"
+    },
+    {
+      "path": "browser/offline-prepared.txt",
+      "bytes": 1718,
+      "sha256": "d1305c60cb1054d87641f20653c0a409fac428262b3b43afeedd15d18456406a"
+    },
+    {
+      "path": "browser/offline-state.json",
+      "bytes": 492,
+      "sha256": "65ff4b5feb3dd1bf60ad4295f552ab3b00e3b5d58094b3b82c7a75ee064ee72b"
+    },
+    {
+      "path": "browser/relay-entered.txt",
+      "bytes": 312,
+      "sha256": "112e593a4a0e2fa3f616a34a4d073dada389b3ba48e41751f32d5ffa1e409fb1"
+    },
+    {
+      "path": "browser/restore-completed.txt",
+      "bytes": 5937,
+      "sha256": "291e62443bf68dbd16a99974b2a46bbf3227737b47853efc9b2deb297ff4b377"
+    },
+    {
+      "path": "browser/restore-review-pending.txt",
+      "bytes": 5819,
+      "sha256": "d77188ce6c1546f43ea9eea2d3648a9fd3a3c812432c2869ed69381715d133e6"
+    },
+    {
+      "path": "browser/restore-reviewed.txt",
+      "bytes": 6061,
+      "sha256": "63bb98f2f6457bb1e6564cc568e95d910a0f29bc6602162e6950822fad1429a0"
+    },
+    {
+      "path": "browser/restored-relay-preview.txt",
+      "bytes": 5757,
+      "sha256": "d35a882b949e5789d3d3245f533b47d01c1f289eb973e2a26a8b7fec31c71c31"
+    },
+    {
+      "path": "browser/roundtrip-byte-review.json",
+      "bytes": 1860,
+      "sha256": "da4445e0b55bc032574e33a7dbaa72b313b2a2140774dcb058e4e51b9273c3cb"
+    },
+    {
+      "path": "browser/screenshot-1790090436401.png",
+      "bytes": 130068,
+      "sha256": "892e4bf59b484697a27a10dbd1071dfc751d1327a2df75e4d979c7e8d1ed5028"
+    },
+    {
+      "path": "browser/screenshot-1790090660314.png",
+      "bytes": 30566,
+      "sha256": "2921e1716715b5c34cd0aefa6d06636f6e3614354bf8aec89c8f2a40613ba6cf"
+    },
+    {
+      "path": "browser/screenshot-1790090698569.png",
+      "bytes": 98340,
+      "sha256": "89d1e7b3a7dbfcd5670c97e729d54905d010a4278289e66e0108d84802e9d007"
+    },
+    {
+      "path": "browser/session-recovery-before.txt",
+      "bytes": 2900,
+      "sha256": "50d315bb9a1e45c65777cfe0f3fabc623f61081bb25cac26a4f98795503b5a7a"
+    },
+    {
+      "path": "browser/session-warning.txt",
+      "bytes": 1013,
+      "sha256": "09ab8a423ee0c1c46ed23af89ed7ff778f0d9c9a076332ec1a707eea3fcb7bcc"
+    }
+  ]
+}
