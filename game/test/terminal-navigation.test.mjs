@@ -29,6 +29,7 @@ function steps(page, count) {
 async function win(t) {
   const page = await soloPage(t);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   for (let i = 0; i < 1200 && page.rendered.run.status === 'running'; i++) page.frame();
   page.key('ArrowDown', false);
@@ -163,6 +164,7 @@ test('controller reaches results plus visible headers; Confirm opens picture and
 test('a legal terminal self-contact focuses Retry and keyboard retry starts only after preparation', async (t) => {
   const page = await soloPage(t, { campaign: failCampaign });
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   steps(page, 30);
   page.key('ArrowDown', false);
@@ -349,6 +351,7 @@ test('campaign-complete replay choice opens the visible Missions dialog without 
   campaign.levels[0].goal.coverage = 0.1;
   const page = await soloPage(t, { campaign });
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   for (let i = 0; i < 1200 && page.rendered.run.status === 'running'; i++) page.frame();
   page.key('ArrowDown', false);
@@ -373,6 +376,7 @@ for (const pointerId of [41, undefined])
     assert.equal(page.doc.body.dataset.inputMode, 'keyboard');
     page.$('start-button').focus();
     key(page, 'Enter');
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     controls.frame();
     controls.pad.buttons[15] = { pressed: true, value: 1 };
     controls.frame();
@@ -408,6 +412,7 @@ for (const mode of ['keyboard', 'controller']) {
     nativeModalBoundary(t);
     const page = await soloPage(t);
     key(page, 'Enter');
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.key('ArrowDown');
     steps(page, 30);
     page.key('ArrowDown', false);

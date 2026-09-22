@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
+import { releasedExternalOriginal } from './helpers/released-original.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { buildExternalPilot } from '../../authoring/library/external-chapter-pilot/build.mjs';
@@ -17,6 +19,11 @@ import { FORMATS, TOKEN_DEFAULTS } from '../presentation/model.mjs';
 import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
 import { COMPILED_PRESENTATION_FORMAT } from '../presentation/host.mjs';
 const pilot = await buildExternalPilot();
+const decodePNG = async (blob) => {
+  const bytes = Buffer.from(await blob.arrayBuffer());
+  assert.equal(bytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+  return { naturalWidth: bytes.readUInt32BE(16), naturalHeight: bytes.readUInt32BE(20) };
+};
 function releasePictureManifest() {
   const assets = {},
     bindings = {},
@@ -182,23 +189,12 @@ class Locks {
     }
   }
 }
-class Picture {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.url = value;
-    if (value) queueMicrotask(() => this.onload?.());
-  }
-  get src() {
-    return this.url;
-  }
-  async decode() {}
-  removeAttribute() {
-    this.url = '';
+class Picture extends PNGImage {
+  get url() {
+    return this.src;
   }
 }
+
 async function nativeAssets(memory) {
   const db = await new Promise((resolve, reject) => {
     const req = memory.indexedDB.open('revealline-assets-v1', 1);
@@ -242,8 +238,10 @@ async function page(t, f = {}) {
     String(url).includes('optional-worlds.json')
       ? new Response(await readFile(new URL('../content/optional-worlds.json', import.meta.url)))
       : fetchBefore(url, options);
+  const installedFetch = globalThis.fetch;
   t.after(() => {
-    globalThis.fetch = fetchBefore;
+    // The outer page fixture may already have restored browser globals.
+    if (globalThis.fetch === installedFetch) globalThis.fetch = fetchBefore;
   });
   return Object.assign(p, { fixture: f });
 }
@@ -390,6 +388,7 @@ test('source registry is exact compiled authority; public catalog remains five u
 test('native pair install preserves an unfinished unrelated flight, then explicit Play and legal route earn the exact original once', async (t) => {
   const p = await page(t);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   direction(p, 'down');
   ticks(p, 13);
   const run = p.rendered.run,
@@ -403,7 +402,10 @@ test('native pair install preserves an unfinished unrelated flight, then explici
   await play(p, { replaceFlight: true });
   assert.equal(p.rendered.run.tick, 0);
   assert.equal(p.rendered.paused, false);
-  assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[0].sha256);
+  assert.equal(
+    p.rendered.backdrop.pin.sha256,
+    releasedExternalOriginal(pilot.descriptor, 0).sha256,
+  );
   for (const segment of route.segments) {
     direction(p, segment.input.direction);
     ticks(p, segment.ticks);
@@ -414,7 +416,7 @@ test('native pair install preserves an unfinished unrelated flight, then explici
   assert.equal(library.pictureReceipts.length, 1);
   assert.equal(
     library.pictureReceipts[0].presentationPin.sha256,
-    pilot.descriptor.originals[0].sha256,
+    releasedExternalOriginal(pilot.descriptor, 0).sha256,
   );
   assert.equal(library.storyReceipts[0].storyPin, null);
   const saved = p.storage.getItem(profile);
@@ -454,6 +456,7 @@ test('stored external run reloads with exact saved pin and remains paused until 
     ticks(p, 10);
     assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
     p.$('start-button').click();
+    await settle(() => p.doc.body.dataset.flightState === 'running');
     ticks(p, 10);
     assert(p.rendered.run.tick > checkpoint.tick || p.rendered.run.tick > 151);
     assert.deepEqual(p.errors, []);
@@ -465,23 +468,32 @@ for (const journals of [
   ['external-chapter-journal.v1', 'backup-journal'],
 ])
   test(`startup preserves and refuses ${journals.join(' + ')} before any backup recovery`, async (t) => {
-    const f = { assets: managedIndexedDB(), storage: memoryStorage() };
+    const f = {
+      assets: managedIndexedDB(),
+      storage: memoryStorage(),
+      options: { waitForPictures: false },
+    };
     const assets = await nativeAssets(f.assets);
     t.after(() => assets.close());
     for (const suffix of journals) await assets.put(`${profile}.${suffix}`, { retained: suffix });
     const before = f.assets.allPuts.length;
     const p = await page(t, f);
+    await settle(() => /Picture unavailable: Pending/.test(p.$('run-message').textContent));
     assert.match(p.$('save-warning').textContent, /external-recovery|mixed-journals/);
     assert.equal(f.assets.allPuts.length, before);
     for (const suffix of journals)
       assert.deepEqual(await assets.read(`${profile}.${suffix}`), { retained: suffix });
     p.$('start-button').click();
+    await settle(() => p.$('flight-preparation-status').dataset.state === 'error');
     direction(p, 'down');
     ticks(p, 5);
+    assert.equal(p.rendered.run.tick, 0);
+    assert.equal(p.rendered.paused, true);
+    assert.equal(f.assets.allPuts.length, before);
     assert.equal(f.storage.getItem(profile), null);
   });
 
-test('cleared assignment still selects descriptor original; missing original refuses both new flight and Original artwork without generic fallback', async (t) => {
+test('cleared assignment selects the approved release picture; missing retained original refuses flight without generic fallback', async (t) => {
   const p = await page(t);
   await install(p);
   await play(p);
@@ -499,8 +511,7 @@ test('cleared assignment still selects descriptor original; missing original ref
     storyMedia: true,
     soundtrackCatalogue: true,
   });
-  const decodeImage = async () => ({ naturalWidth: 1774, naturalHeight: 887 });
-  const still = createStillMediaStore({ managedStore: manager, decodeImage });
+  const still = createStillMediaStore({ managedStore: manager, decodeImage: decodePNG });
   t.after(() => {
     still.close();
     manager.close();
@@ -509,6 +520,7 @@ test('cleared assignment still selects descriptor original; missing original ref
   await still.commit(
     await still.prepare({ ...prior.document.library, assignments: [] }, prior.assets, {
       executionCatalog: pilot.prepared.executionCatalog,
+      previous: prior.document,
     }),
     { expectedGeneration: prior.generation },
   );
@@ -516,7 +528,10 @@ test('cleared assignment still selects descriptor original; missing original ref
   await selectPack(pilot.descriptor.id);
   await settle(() => !p.$('pack-select').disabled && p.doc.body.dataset.pictureState === 'ready');
   p.frame(0);
-  assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[0].sha256);
+  assert.equal(
+    p.rendered.backdrop.pin.sha256,
+    releasedExternalOriginal(pilot.descriptor, 0).sha256,
+  );
   const request = p.fixture.media.indexedDB.open('revealline-soundtrack-v1', 5);
   const db = await new Promise((resolve, reject) => {
     request.onsuccess = () => resolve(request.result);
@@ -746,6 +761,7 @@ test('source install and unrelated chapter win preserve an earlier exact first-e
   };
   const p = await page(t, f);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   direction(p, 'down');
   for (let n = 0; n < 1000 && p.rendered.run.status === 'running'; n++) p.frame();
   p.frame(0);
@@ -872,7 +888,8 @@ test('native exact-pair recovery completes a retained published journal once; re
   await t.test(
     'explicit native recovery leaves existing generation and asks for reload',
     async (t) => {
-      const p = await page(t, f);
+      const p = await page(t, { ...f, options: { waitForPictures: false } });
+      await settle(() => /Picture unavailable: Pending/.test(p.$('run-message').textContent));
       assert.match(p.$('save-warning').textContent, /external-recovery/);
       await install(p);
       assert.equal((await still.readMetadata()).generation, generation);
@@ -889,11 +906,12 @@ test('native exact-pair recovery completes a retained published journal once; re
     'new host coherently adopts recovered index and permits explicit Play',
     async (t) => {
       const p = await page(t, f);
+      const reopenedGeneration = (await still.readMetadata()).generation;
       await worlds(p);
       await play(p);
       assert.equal(p.rendered.run.tick, 0);
       assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[0].sha256);
-      assert.equal((await still.readMetadata()).generation, generation);
+      assert.equal((await still.readMetadata()).generation, reopenedGeneration);
     },
   );
 });
@@ -962,7 +980,7 @@ test('explicit retained-picture review installs originals without fresh defaults
   });
   const still = createStillMediaStore({
     managedStore: manager,
-    decodeImage: async () => ({ naturalWidth: 1774, naturalHeight: 887 }),
+    decodeImage: decodePNG,
   });
   t.after(() => {
     still.close();
@@ -981,8 +999,8 @@ test('explicit retained-picture review installs originals without fresh defaults
     }),
     { expectedGeneration: 0 },
   );
-  const before = await still.read();
   const p = await page(t, f);
+  const before = await still.read();
   const run = p.rendered.run,
     checkpoint = authoritativeCheckpoint(run);
   await worlds(p);

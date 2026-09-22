@@ -10,7 +10,9 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
-import { campaignKey } from '../library.mjs';
+import { campaignKey, emptyLibrary } from '../library.mjs';
+import { emptyPackLibrary } from '../packs.mjs';
+import { BACKUP_FORMAT } from '../backup.mjs';
 const slot = 'revealline.suspended.dev.v1';
 const ticks = (h, n = 1) => {
   for (let i = 0; i < n; i++) h.frame();
@@ -478,3 +480,87 @@ for (const outcome of ['cancel', 'error'])
       assert.equal(h.storage.getItem(slot), saved);
       assert.deepEqual(h.errors, []);
     });
+
+test('an unavailable visual pin preserves flight and recovery without current-theme substitution', async (t) => {
+  const storage = memoryStorage();
+  await t.test('create an ordinary saved attempt', async (t) => {
+    const h = await flying(t, { storage });
+    h.$('pause-button').click();
+  });
+  const saved = JSON.parse(storage.getItem(slot));
+  assert.equal(saved.format, 'xonix-session.v5');
+  const originalVisualPin = saved.visualThemePin;
+  const choice = saved.presentationPins.choices.find(
+    (row) => (row.picture ?? row).identity.themeId === saved.themeId,
+  );
+  const identity = (choice.picture ?? choice).identity;
+  saved.format = 'xonix-session.v5';
+  saved.visualThemePin = {
+    format: 'revealline-visual-theme-pin.v1',
+    content: {
+      editionId: 'field-kit',
+      contentThemeId: saved.themeId,
+      mode: 'solo',
+      owner: { kind: 'campaign', baseCampaignKey: identity.baseCampaignKey },
+      level: {
+        id: identity.levelId,
+        revision: identity.levelRevision,
+        sha256: originalVisualPin.content.level.sha256,
+      },
+    },
+    selection: { id: 'field-kit', revision: 1 },
+    presentation: {
+      source: { id: 'field-kit', revision: 1 },
+      theme: { id: 'fpv', revision: 1 },
+      collection: null,
+      sha256: 'b'.repeat(64),
+    },
+  };
+  const bytes = JSON.stringify(saved);
+  storage.setItem(slot, bytes);
+  const h = await soloPage(t, { storage, titleScreen: true }),
+    before = snapshot(h);
+  activateTitle(h, 'shell-continue');
+  await settle(
+    () =>
+      !h.$('shell-continue').disabled &&
+      /saved theme/i.test(h.$('shell-flight-status').textContent),
+  );
+  assert.deepEqual(snapshot(h), before);
+  assert.equal(storage.getItem(slot), bytes);
+  assert.equal(h.$('shell-home').open, true);
+  assert.notEqual(h.doc.body.dataset.flightState, 'running');
+  h.$('shell-gallery').click();
+  h.$('collection-records').click();
+  h.doc.querySelector('button[data-library-panel="saves"]').click();
+  h.$('save-file').files = [
+    new Blob(
+      [
+        JSON.stringify({
+          format: BACKUP_FORMAT,
+          library: emptyLibrary(),
+          packs: emptyPackLibrary(),
+          session: saved,
+        }),
+      ],
+      { type: 'application/json' },
+    ),
+  ];
+  await h.$('save-file').onchange();
+  assert.match(h.$('save-status').textContent, /Game data restored/);
+  assert.match(
+    h.$('save-status').textContent,
+    /Loading verifies its required artwork and visual collection/,
+  );
+  assert.doesNotMatch(h.$('save-status').textContent, /ready to load/);
+  assert.deepEqual(JSON.parse(storage.getItem(slot)), saved);
+  assert.notEqual(h.doc.body.dataset.flightState, 'running');
+  const retained = storage.getItem(slot);
+  h.$('save-file').files = [new Blob([JSON.stringify(saved)], { type: 'application/json' })];
+  await h.$('save-file').onchange();
+  assert.match(h.$('save-status').textContent, /saved theme/i);
+  assert.equal(h.$('library-dialog').open, true);
+  assert.equal(storage.getItem(slot), retained);
+  assert.notEqual(h.doc.body.dataset.flightState, 'running');
+  assert.deepEqual(h.errors, []);
+});

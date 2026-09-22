@@ -12,6 +12,7 @@ function frames(page, count) {
 test('Pause offers a confirmed mission restart that replaces the attempt from tick zero', async (t) => {
   const page = await soloPage(t);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   frames(page, 24);
   page.key('ArrowDown', false);
@@ -64,11 +65,13 @@ test('Restart is limited to Pause and does not leak into briefings or result men
   assert.equal(page.$('game-overlay').dataset.kind, 'ready');
   assert.equal(page.$('overlay-restart').hidden, true);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('Escape');
   page.key('Escape', false);
   page.frame(0);
   assert.equal(page.$('overlay-restart').hidden, false);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   assert.equal(page.$('game-overlay').hidden, true);
   assert.equal(
     page.$('overlay-restart').hidden,

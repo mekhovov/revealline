@@ -6,8 +6,9 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { pngBytes, deferred } from './helpers/media-fixtures.mjs';
 import { encodeSpritePNG } from '../../scripts/produce-field-kit-sprites.mjs';
 import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
-import { FORMATS, TOKEN_DEFAULTS } from '../presentation/model.mjs';
-import { COMPILED_PRESENTATION_FORMAT } from '../presentation/host.mjs';
+import { FORMATS } from '../presentation/model.mjs';
+import { validateCompiledPresentation } from '../presentation/host.mjs';
+import { FRESH_SOLO_VISUAL_RELEASE } from '../presentation/fresh-visual-theme.mjs';
 import { importMediaBundle } from '../media-bundle.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 
@@ -88,20 +89,42 @@ test('session-only Next prepares a new exact original without persistent writes'
       CURRENT_PICTURES.find((row) => row.owner.levelId === level.id && row.owner.themeId === 'fpv'),
     );
   assert.ok(slots.every(Boolean));
-  const manifest = {
-    format: COMPILED_PRESENTATION_FORMAT,
-    source: { id: 'test.session-next', revision: 1 },
-    resolved: {
-      theme: { id: 'fpv-field-kit', revision: 1, name: 'Session Next fixture' },
-      collection: null,
-      tokens: TOKEN_DEFAULTS,
-      bindings: Object.fromEntries(
-        slots.map((slot, i) => [slot.id, { id: i ? nextAsset.id : asset.id, revision: 1 }]),
+  // The fresh-flight contract verifies a complete visual collection. Retain the
+  // shipped roles/codecs and replace only the two diagnostic picture payloads.
+  const catalogue = JSON.parse(
+    await readFile(new URL('../presentation/visual-themes.json', import.meta.url)),
+  );
+  const selected = catalogue.entries.find(
+    (entry) =>
+      entry.id === FRESH_SOLO_VISUAL_RELEASE.selection.id &&
+      entry.revision === FRESH_SOLO_VISUAL_RELEASE.selection.revision,
+  );
+  assert.ok(selected);
+  const manifest = JSON.parse(
+    await readFile(
+      new URL(
+        `../presentation/compiled/runtime.${selected.presentation.sha256}.json`,
+        import.meta.url,
       ),
-      assets: Object.fromEntries(slots.map((slot, i) => [slot.id, i ? nextAsset : asset])),
-    },
-    urls: { [sha256]: `./assets/${sha256}.png`, [nextHash]: `./assets/${nextHash}.png` },
-  };
+    ),
+  );
+  for (const [i, slot] of slots.entries()) {
+    const picture = i ? nextAsset : asset;
+    manifest.resolved.bindings[slot.id] = { id: picture.id, revision: picture.revision };
+    manifest.resolved.assets[slot.id] = picture;
+    manifest.urls[picture.file.sha256] = `./assets/${picture.file.sha256}.png`;
+  }
+  const usedHashes = new Set(
+    Object.values(manifest.resolved.assets).flatMap((entry) =>
+      entry.file ? [entry.file.sha256] : [],
+    ),
+  );
+  manifest.urls = Object.fromEntries(
+    Object.entries(manifest.urls).filter(([hash]) => usedHashes.has(hash)),
+  );
+  validateCompiledPresentation(manifest);
+  const manifestBytes = new TextEncoder().encode(JSON.stringify(manifest));
+  selected.presentation.sha256 = await hashPresentationBytes(manifestBytes);
   const memory = managedIndexedDB(),
     locks = new Locks();
   let reads = 0;
@@ -115,9 +138,12 @@ test('session-only Next prepares a new exact original without persistent writes'
     lockManager: locks,
     pictures: { Image: Picture },
     fetchResponse: async (url) => {
+      if (String(url).endsWith('/presentation/visual-themes.json'))
+        return new Response(JSON.stringify(catalogue));
       if (!String(url).includes('/presentation/compiled/')) return undefined;
-      if (String(url).endsWith('/runtime.json')) return new Response(JSON.stringify(manifest));
-      assert.ok([sha256, nextHash].some((hash) => String(url).endsWith(`/assets/${hash}.png`)));
+      if (String(url).endsWith('/runtime.json')) return new Response(manifestBytes);
+      if (![sha256, nextHash].some((hash) => String(url).endsWith(`/assets/${hash}.png`)))
+        return undefined;
       reads++;
       if (String(url).endsWith(`/assets/${nextHash}.png`)) await nextDownload.promise;
       return new Response(String(url).endsWith(`/assets/${nextHash}.png`) ? nextBytes : bytes);
@@ -126,11 +152,24 @@ test('session-only Next prepares a new exact original without persistent writes'
   page.$('shell-featured').click();
   await settle(() => {
     page.frame(0);
-    return page.doc.body.dataset.flightState === 'running';
+    return (
+      page.doc.body.dataset.flightState === 'running' ||
+      page.$('shell-flight-status').textContent.startsWith('Flight unavailable:')
+    );
   });
+  assert.equal(
+    page.doc.body.dataset.flightState,
+    'running',
+    page.$('shell-flight-status').textContent,
+  );
   assert.equal(page.rendered.run.levelId, campaign.levels[0].id);
   page.win.emit('pagehide', { persisted: true });
   await settle(() => !locks.held.has(writerKey));
+  const suspended = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
+  assert.equal(suspended.format, 'xonix-session.v5');
+  assert.deepEqual(suspended.visualThemePin.selection, FRESH_SOLO_VISUAL_RELEASE.selection);
+  assert.equal(suspended.visualThemePin.presentation.sha256, selected.presentation.sha256);
+  assert.ok(suspended.presentationPins, 'The retained visual pin accompanies the exact picture');
   page.win.emit('pageshow', { persisted: true });
   assert.match(page.$('save-warning').textContent, /session-only mode/);
   page.frame(0);

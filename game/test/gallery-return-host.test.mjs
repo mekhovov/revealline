@@ -11,6 +11,7 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { saveLibrary } from '../library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 
 function nativeDialogs(t) {
@@ -134,22 +135,11 @@ async function setup(t) {
   assert.equal(saveLibrary(storage, 'revealline.library.dev.v1', f.profile).ok, true);
   const reads = holdPresentationRead(memory),
     images = [];
-  class Image {
-    naturalWidth = 1;
-    naturalHeight = 1;
-    width = 1;
-    height = 1;
+  class Image extends PNGImage {
     released = 0;
     constructor() {
+      super();
       images.push(this);
-    }
-    set src(value) {
-      this.source = value;
-      if (value) queueMicrotask(() => this.onload?.());
-    }
-    async decode() {}
-    removeAttribute(name) {
-      if (name === 'src') this.source = '';
     }
     close() {
       this.released++;
@@ -166,6 +156,7 @@ async function setup(t) {
   Object.assign(h.win, h.doc.defaultView);
   h.doc.defaultView = h.win;
   h.$('start-button').click();
+  await settle(() => h.doc.body.dataset.flightState === 'running');
   h.key('ArrowDown');
   h.key('ArrowDown', false);
   for (let i = 0; i < 20; i++) h.frame();

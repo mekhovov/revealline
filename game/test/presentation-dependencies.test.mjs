@@ -300,3 +300,66 @@ test('retained manifest pins are checked before any dependency read with no late
   );
   assert.equal(reads, 2);
 });
+
+test('retained dependency inventories preserve every lazy original and describe the exact archived manifest', async () => {
+  const f = await fixture();
+  const pin = await hashPresentationBytes(f.bytes);
+  const current = await inspectPresentationDependencies(f.bytes);
+  const retained = await inspectPresentationDependencies(f.bytes, { retainedManifestSha256: pin });
+  assert.deepEqual(retained, {
+    ...current,
+    manifest: { ...current.manifest, path: `runtime.${pin}.json` },
+  });
+  const checked = [];
+  const verified = await verifyPresentationDependencies(f.bytes, {
+    retainedManifestSha256: pin,
+    expectedManifestSha256: pin,
+    read: async (file) => {
+      checked.push(file.path);
+      return f.files.get(file.path);
+    },
+  });
+  assert.deepEqual(verified.inventory, retained);
+  assert.deepEqual(
+    checked,
+    retained.files.map((file) => file.path),
+  );
+  assert.equal(verified.mediaDecoded, false);
+  assert.equal(retained.totalBytes, current.totalBytes);
+});
+
+test('retained dependency identity rejects changed bytes and conflicting pins before reading any files', async () => {
+  const f = await fixture();
+  const pin = await hashPresentationBytes(f.bytes);
+  const changed = new TextEncoder().encode(new TextDecoder().decode(f.bytes) + '\n');
+  let reads = 0;
+  const read = () => {
+    reads++;
+    throw new Error('Must not read assets');
+  };
+  for (const retainedManifestSha256 of [
+    '',
+    '../runtime.json',
+    `${pin}#fragment`,
+    {},
+    'A'.repeat(64),
+  ]) {
+    await assert.rejects(
+      inspectPresentationDependencies(f.bytes, { retainedManifestSha256 }),
+      /exact SHA-256/,
+    );
+  }
+  await assert.rejects(
+    verifyPresentationDependencies(changed, { read, retainedManifestSha256: pin }),
+    /differ from their exact manifest pin/,
+  );
+  await assert.rejects(
+    verifyPresentationDependencies(f.bytes, {
+      read,
+      retainedManifestSha256: pin,
+      expectedManifestSha256: '0'.repeat(64),
+    }),
+    /differ from the pinned manifest/,
+  );
+  assert.equal(reads, 0);
+});
