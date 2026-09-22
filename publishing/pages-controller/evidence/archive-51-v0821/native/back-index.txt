@@ -1,0 +1,8 @@
+- main
+  - heading "RevealLine archive 51" [level=1, ref=e1]
+  - paragraph
+    - StaticText "The original v0.82.1 build, preserved for comparison and historical play."
+  - paragraph
+    - link "Play v0.82.1" [ref=e2]
+  - paragraph
+    - link "Open the current release explorer" [ref=e3]

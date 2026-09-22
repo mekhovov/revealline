@@ -1,0 +1,15 @@
+{
+  "status": "ACTUAL_BINDING_CONDITIONALLY_VALIDATED_PENDING_ROOT_APPROVAL",
+  "actualCandidateReviewed": false,
+  "unapprovedCandidateRefusal": "Actual request requires explicit review",
+  "conditionalApprovalAssumption": "Only an in-memory copy of reviewed was true to exercise actual authority checks. No approved request was written and no HTTP audit ran.",
+  "runId": 35747012670,
+  "deploymentId": 6594278854,
+  "deploymentStatusId": 18683226213,
+  "archiveCommit": "8bf0ed6c3947ca8c47ad2d9246db3e57acd986cf",
+  "archiveTree": "c057f683ae6f7afcf3696120d9d5d65fb9fb38d7",
+  "files": 1059,
+  "bytes": 590404002,
+  "candidateSha256": "2e87858755458497adb2a512be95a7c668fbda218a473670480cd286b8d63ff5",
+  "publicHTTPRequests": 0
+}
