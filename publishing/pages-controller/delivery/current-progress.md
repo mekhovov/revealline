@@ -1,73 +1,100 @@
 # Current delivery register — 22 September 2026
 
-Current status for the approved six-hour window. Release execution resumed at 14:00 UTC. A newer user-approved priority in the 🔥UX task starts the successor window at 14:13:56 UTC, freezes its scope at 15:43:56 UTC and targets public delivery by 20:13:56 UTC (22:13:56 Europe/Berlin). **P0 v0.82.1 is delivered and publicly verified. P1 is release the default Journey as v0.83.0.** PR252 is now queued behind that user-selected successor. This is a bounded delivery window, not a promise to complete the whole game. Updated after public v0.82.1 acceptance at 15:27 UTC. Exact release evidence is linked below; subsequent delivery notes supersede earlier planning estimates.
+The current public release is **v0.83.0**. It is available at
+[Play](https://mekhovov.github.io/revealline/game/) and as an immutable
+[GitHub release](https://github.com/mekhovov/revealline/releases/tag/v0.83.0).
+The missing-levels issue is closed: queryless public entry now exposes the New
+Journey by default in every current mode.
 
-## Completed and available
+## Completed and publicly accepted
 
-- **v0.82.1 is live and verified on GitHub Pages.** [Play](https://mekhovov.github.io/revealline/game/) · [Release](https://github.com/mekhovov/revealline/releases/tag/v0.82.1) · [public acceptance](evidence/v0821-public/README.md). Source PR250 is merged at `64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e`; both source qualification families passed 11,722 tests. Selector PR264 merged at `1b16a858fdd4ab303629277b3cd1138fa2475f04` and Pages run35745218885 passed. All **3,777 deployed files / 613,632,131 bytes** matched the actual artifact inventory without failures or retries. Native desktop checks passed session-only win → Next, exact originals export/restore/re-export, game-data recovery and cold offline continuation/capture/earned-picture viewing after 896 core files were verified. Physical devices and music listening are separate gates.
-- **v0.82.0 is preserved in Archive50.** Its unchanged release, tag and original files remain available. The archive's full 1,056-file public audit and scoped native mission-win/navigation check passed; this is historical preservation, not a fresh all-feature qualification.
-- **Creator music:** 70 licensed hosted recordings in 15 built-in albums, with genre/mix/playlist playback, menu music, credits, MP3 imports and explicit offline installation. Fresh libraries default to 90s Synth; advanced tools are collapsed. [Independent public quick-control checks](evidence/v0821-public/music/REPORT.md) passed default selection, sampled hosted playback/Next, style, playlist and Shuffle all actions. The 70 songs total 167.4 minutes. Hosted Ukrainian, acoustic and cinematic categories currently have no cleared recordings; private UA-FPV imports remain available. Full musical suitability and listening review remain pending. All audio cannot fit simultaneously in the shared 256 MiB installed-media budget.
-- **Original music:** **0 of 36 approved**. Production is paused after rejected candidates; retained scores, recordings and measurements are not erased or counted as approved music. **UA-FPV:** 77 distinct recordings, 80 supplied filenames, four private local import packs; no public redistribution admission. See [music delivery](../../../docs/hosted-soundtracks.md), [original-production status](../../../docs/music-production-pause.md) and [UA-FPV guide](../../../docs/ua-fpv-upload-guide.md).
+| Item | Status | Acceptance evidence |
+| --- | --- | --- |
+| v0.83.0 default Journey | **Complete** | Source PR #263 merged at `01b189f64`; all 11,788 exact-source tests passed; immutable tag/release published; selector PR #271 and Pages run `35775874062` passed. |
+| Public mission discovery | **Complete** | 91 Solo, 91 Versus and 12 Team missions are visible without special query parameters; Legacy remains explicit. |
+| Public gameplay continuation | **Complete in scoped browser release** | Solo, Versus and Team wins advanced to named successors without a second Start action. Solo save/Continue survived reload. |
+| Legacy compatibility | **Complete in scoped browser release** | A real 10.2 MiB Legacy chapter downloaded, verified, launched and returned to the retained Journey flight. |
+| Public Pages bytes | **Complete within recorded bounds** | The authenticated artifact contains 3,809 files / 613,866,928 bytes. Public HTTP readback verified 135 affected files / 258,792,093 bytes, including all 103 Journey pictures. |
+| Historical preservation | **Complete** | v0.82.1 is retained in Archive 51 and its versioned game route returns successfully. |
+| Playground route | **Complete for the corrected path** | Workshop launched First Signal with `practice=1`; play/pause worked and no campaign reward was granted. |
+| Compact viewport spotchecks | **Complete as browser checks** | Team and Playground retained the whole arena and critical controls at 390×844 and 844×390. Physical touch remains a separate gate. |
 
-See the [source-pinned music progress audit](music-progress-20260922.md) for completed PR209/215/221, recovery/storage boundaries, prior cold-offline evidence and remaining music work.
+The complete bounded record is in
+[`evidence/v0830-public/`](evidence/v0830-public/README.md).
 
-v0.82.1 retains [frozen desktop-browser acceptance](evidence/v0821-frozen/README.md) separately from its actual public acceptance. PR264 preview35743815737 failed because three hash-pinned archive50 logs were present locally but ignored by Git. Corrected head513736ab committed the exact bytes, independently verified all 1,158 Git-blob references and passed fresh preview35744655331. The failed attempt is retained; release originals were not changed.
+PR #272 is an infrastructure-only policy change merged after v0.83.0. It did
+not alter v0.83.0 and did not waive any of its 11,788 passing tests. Future
+releases made while the temporary policy is active must label automated suites
+as **waived**, never passed, and still prove source identity, validation,
+build/integrity, immutable artifacts, deployment and public behavior.
 
-## Six-hour execution register
+## Active next release
 
-| Priority                                 | Current state                                                                                                                                                                                                                                     | Next work and completion condition                                                                                                                                                                                                                                                             |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **P0 — v0.82.1**                         | **Delivered.** Source qualification/freeze35729850339, inspection35738838201, original upload35740215428 and public Pages35745218885 passed. All nine release assets and immutable tag remain unchanged.                                          | Public byte, session recovery and cold offline evidence is retained. Publish this delivery record without triggering another Pages deployment. Preserve historical releases.                                                                                                                   |
-| **P1 — v0.83.0: new Journey by default** | PR263 is open at `70836db6ac7559791ef61ecfbf31c0785604ffc0`. Fresh source run35745717120 has passed preflight/build and is running four test shards; publisher preview35745716824 passed.                                                         | Default Solo/Versus to 91 Journey missions and Team to 12; preserve explicit Legacy/tool launches and current engines. Complete final-head CI, actual merged-source qualification/freeze, independent inspection, release, archive51/selector and public acceptance. No successor release yet. |
-| **Parallel implementation**              | Archive51 preservation of821 deployed successfully; its public audit and native admission are pending after exact template/PR review. Release B unified-selector implementation is authorized in an isolated worktree. Music guide PR265 is open. | Root remains sole game publisher. B promotion waits for accepted A; no B runtime is included in A. Keep unrelated drafts out and update estimates after any failed gate.                                                                                                                       |
+### R1 — v0.84.0 unified mission library
 
-**Queued PR252 evidence (not included in v0.83.0):** its predecessor focused cohort was 283 tests on each Node 20/22; the later Escape correction reran four affected files at 91 tests on each runtime. These overlap and are **not additive or substitutes for final-source qualification**. Native review covered replacement/Keep/Replace/Undo, compact layouts, repeated Escape, unavailable Undo and a controlled write-failure/retry. Simulated write failure is not physical disk exhaustion; mobile Back/assistive input, remaining failure matrices and public release checks remain separate.
+**Status: in progress. Priority: critical. Current conditional public target:
+20:50–21:30 UTC (22:50–23:30 Berlin), assuming no correction cycle.**
 
-**ETA:** budget roughly **3–5 hours for a small release from a stable integrated candidate through complete qualification and delivery**, assuming clean CI and no correction cycle. This is a planning range, not a wall-clock guarantee; the current v0.82.1 run has already consumed part of its cycle. P0 is complete. The remaining six-hour aim is to publicly release the one scoped v0.83.0 successor. The owner’s latest conditional delivery window is **18:20–19:20 UTC (20:20–21:20 Berlin)**, with the outer target 20:13:56 UTC; these estimates assume no new failing gate. Its source implementation and review must fit before 15:43:56 UTC; the subsequent complete-source families are still mandatory. Do not promise that two fresh release cycles, all draft work or the whole programme fit in that window. Failures require the appropriate new exact-source qualification, not shortened gates.
+Draft PR #268 already contains the large implementation: one native mission
+browser for Journey, Classic and Custom content across Solo, Versus and Team;
+search and filters; exact edition-aware launch; explicit download/readiness;
+safe replacement; retained focus/scroll; and owner-authored Next sequences.
 
-## Later queue and dependencies — outside this window
+Accepted main and the temporary release policy are integrated in `99ba045`; the
+v0.84.0 release preparation is committed in `29b70c14`. Mandatory validation,
+lint, formatting, motion syntax and Field Kit checks passed. The promotion owner
+has pushed qualification handoff `9ec1a793` and is retargeting PR #268 to main.
 
-**Next approved Release B:** a unified display-only mission selector with All/new-first ordering and Journey/Classic/Custom tags. It retains existing engines and dispatches using the selected catalogue owner and revision. Scope and estimate were confirmed by 🔥UX at its T+23-minute checkpoint: **4–8 technical hours after Release B starts; 7–11 hours for broader delivery**, Local B implementation now runs in parallel under explicit user approval; only promotion waits for accepted v0.83.0. No Release B runtime work is included in Release A; its version is not allocated yet.
+Remaining gates:
 
-Independent branch reconciliation maps all eight PR253/PR255 commits into current PR263. Close superseded drafts only after v0.83.0 public acceptance; any changed successor still requires comparison. Do not release the same fixes twice.
+1. Finish exact-head review and required hosted PR/build checks.
+2. Repeat release-aware paired-media and arbitrary Custom-raster preservation
+   checks on the exact integrated source.
+3. Merge the reviewed source PR and run the exact merged-source qualification,
+   build, integrity and focused browser checks. Record waived suites truthfully.
+4. Freeze the qualified source; create immutable release assets and tag.
+5. Merge a separate selector PR, deploy Pages, and verify public Solo, Versus,
+   Team, Legacy, Custom download/replacement and Next/Back journeys.
 
-A separate read-only branch/worktree reconciliation is in progress. The queued drafts below are not an approved bulk merge; PR262 does not expand P0/P1.
+## Prioritized remaining releases
 
-- **Retained presentation and Team chain:** PR252 → **PR256**, which recovers the closed PR233 work once. Rebase/retarget old presentation descendants onto that accepted recovery before continuing **PR234 → PR236 → PR238 → PR240 → PR243 → PR244 → PR245 → PR247**. PR239 is already incorporated by the later Team work and must not be applied twice; PR241 is the separate full-picture preview. Existing branch bases express dependency, not acceptance. Preserve exact historical assets and reviewed production records.
-- **Journey save warnings:** **PR253 → PR255** (Solo then Couch); PR257 adds Journey-backup focus recovery. Serial integration must retain the accepted session-only/replacement safeguards and recheck overlaps.
-- **Other bounded corrections:** PR230 chapter-download retry, PR231 replay preferences, PR235 superseded-PR CI, PR237 compact Studio toolbar, PR258 native Studio validation labels, and **PR262 Studio Undo/Redo focus**. Each needs review on its actual accepted base and its own required qualification; no bulk merge is implied.
-- **Audit/study work:** PR260 current Journey adaptation audit and PR261 Twin receiver-approach study remain distinct from shipped gameplay/production approval.
-- **Broader remaining programme:** complete cross-mode/input/readability journeys, actual-scale actor/effect parity, sustained human difficulty and two-player balance, campaign/reward/Studio coverage, full listening and culturally informed Ukrainian review, real touch/controller/lifecycle/offline and ordinary-device performance. Native-store releases and network multiplayer retain separate later gates. Neither campaign candidate counts nor passing tests establish complete human acceptance.
+Estimates start after their dependency is accepted. They are engineering ranges,
+not calendar promises; a failed gate adds a correction and requalification
+cycle.
 
-## Remaining delivery estimates
+| Order | Deliverable | State | ETA | Completion gate |
+| ---: | --- | --- | --- | --- |
+| 1 | **Unified mission library (PR #268)** | In promotion | **20:50–21:30 UTC conditional target** | v0.84.0 public and verified as described above. |
+| 2 | **Backup replacement and recovery (PRs #252, #257)** | Prepared, needs current-main reconciliation | **4–8 h** | Review-before-replace, Undo/failure recovery, restored focus, exact export/import and public proof. |
+| 3 | **Retained presentation recovery (PR #256)** | Prepared behind backup work | **6–12 h** | Fresh-origin transfer retains exact presentation/media revisions and session-only originals. |
+| 4 | **Chapter retry and Replay restoration (PRs #230, #231)** | Prepared, older base | **4–8 h each** | Current-main conflict resolution plus public keyboard/controller navigation and recovery. |
+| 5 | **Native input and compact HUD** | Partial foundations | **1–3 days** | One consistent touch control system in Solo/Versus/Team, reliable controller Start/A, one-row small-screen HUD, iPhone lifecycle and Steam Deck hardware evidence. |
+| 6 | **Shared pixel presentation and actors** | Partial foundations | **3–6 days** | Readable typography, native menus, role-specific animated enemies/crafts, scale parity, trails, impacts, pickups, loss/recovery and victory effects across modes. |
+| 7 | **Enemy intelligence and challenge** | Partial foundations | **3–6 days** | Faster but fair deterministic pressure, authored difficulty progression, role counters and measured human playtests. |
+| 8 | **Music/media completion** | Partial | **2–5 days technical**, plus listening | Shared master controls, custom MP3 playlists in every mode, qualified built-in catalogue, video/GIF victory media and offline/recovery proof. Human listening remains separate. |
+| 9 | **Creation and pack framework** | Partial | **2–5 days** | Asset/level/media/playlist editing, validation, import/export, exact-byte recovery and an independent fresh-workspace example. |
+| 10 | **Team presentation stack** | Prepared chain | **1–3 days** | Reconcile PRs #234/#236/#238/#240/#243/#244/#245/#247, then #241; prove two-player readability and recovery. |
+| 11 | **Campaign production slices** | Backlog | **3–7 days per reviewed slice** | Original maps, art, actors, audio, progression and rewards; each slice receives its own release and human review. |
+| 12 | **Whole browser qualification** | Partial evidence | **2–5 days after feature freeze** | Full regression, cold offline, accessibility, performance, actual touch/controllers and support matrix. |
+| Later | **Native iPhone/macOS/Steam/Steam Deck distribution** | Deferred | Separate estimates | Packaging, signing, lifecycle, files, audio sessions, stores and real hardware gates. |
+| Later | **Network multiplayer** | Deferred | Separate programme | Authoritative simulation, private sessions, reconnect and failure handling. |
 
-Estimates begin after each dependency is publicly accepted and assume no failing gate or runner queue. Small source releases normally need two complete hosted families plus artifact/public verification.
+## Work that must not be mistaken for completion
 
-| Item                                                       | Estimate                                              | Order / constraint                                                                                |
-| ---------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| v0.83.0 default Journey                                    | 4–6 hours from its 14:13:56 UTC start                 | One scoped successor; target 20:13:56 UTC, conditional on passing gates.                          |
-| v0.82.1 release cycle                                      | Complete                                              | Live byte/browser/recovery/offline acceptance passed; evidence PR remains.                        |
-| Release B unified tagged selector                          | 4–8 technical / 7–11 broader delivery hours           | Local implementation runs in parallel; promotion waits for accepted v0.83.0.                      |
-| PR252 backup replacement                                   | 3–5 additional hours                                  | Deferred behind the user-prioritized v0.83.0 successor.                                           |
-| PR253 / PR255 supersession                                 | Close after accepted v0.83.0                          | All eight commits mapped into PR263; no separate release currently planned.                       |
-| PR256 retained presentation                                | 4–6 hours                                             | Depends on PR252; fresh-origin transfer remains required.                                         |
-| PR257 backup focus                                         | 3–5 hours                                             | Final review and integrated qualification.                                                        |
-| PR230 chapter retry / PR231 Replay                         | 3–6 hours each                                        | Resolve current-main conflicts before new qualification.                                          |
-| PR258 validation / PR237 Studio toolbar / PR262 Undo focus | 3–5 hours each                                        | Final review and compact-layout/public verification.                                              |
-| PR234 Team catalogue focus                                 | 3–5 hours                                             | Rebase onto PR256.                                                                                |
-| Compatible Team stack #236/#238/#240/#243/#244/#245/#247   | 1–2 working days                                      | Ship a compatible runtime/ledger/assets composition.                                              |
-| PR241 Team full-picture preview                            | 3–5 hours                                             | After compatible Team presentation.                                                               |
-| PR235 CI supersession                                      | 0.5–1 hour                                            | Infrastructure; no game-version allocation.                                                       |
-| PR260 adaptation audit                                     | 3–5 hours                                             | Tooling qualification does not approve designs.                                                   |
-| PR261 receiver study                                       | 4–8 technical hours                                   | Human balance review has no committed ETA.                                                        |
-| Current music instructions                                 | Implemented and reviewed; hosted CI pending           | PR265 at838a29f7 updates four guides; no runtime/version change. Merge after required checks.     |
-| Current-release music browser checks                       | Quick controls passed; 1–3 hours for remaining checks | Current offline-album/recovery/long-session checks remain; human listening and hardware separate. |
-| First 12-song Synth listening review                       | 2–4 hours                                             | Requires an actual listener; all70 need roughly8–12hours over multiple sessions.                  |
-| Cleared Ukrainian music intake                             | 2–4 technical hours per3–6-song batch after rights    | Prioritize this empty hosted category; musical/cultural review has no fixed ETA.                  |
-| Small licensed music intake                                | 1 working day per reviewed batch                      | Exact-file rights, decode, credits and listening required.                                        |
-| UA-FPV public admission                                    | 4–8 hours after rights clearance                      | Clearance ETA unknown; local packs remain available.                                              |
-| 36 original compositions                                   | Paused; no ETA                                        | Resume only after an accepted production method/pilot.                                            |
+- The 132-mission campaign programme remains a production backlog; current
+  mission counts do not complete every planned theme or campaign.
+- Automated tests, browser viewport checks, human playtests, physical devices,
+  music listening and cultural review are distinct evidence classes.
+- Draft PRs are retained work, not accepted features. They ship only after
+  current-base review, an atomic PR, a versioned immutable release and public
+  verification.
+- The unrelated dirty root workspace remains untouched; release work uses
+  isolated worktrees and hunk/line-level staging.
 
-The final Playground correction replaces two implicit tool URLs with explicit `journey=legacy&focus=1`. Independent review and focused regressions passed. Superseded source35742940583 at74b was cancelled; it does not qualify70836.
+## Continuous-delivery rule
 
-Broader cultural, human-balance, physical-device/controller and whole-game acceptance remain unscheduled. Passing CI or publishing a bounded fix does not close those gates. At each release, update the actual PR/source/version, evidence links, remaining gate and next ETA.
+Finish one bounded item, review and stage only related hunks, merge its source
+PR, publish an immutable version, update the Pages selector through a separate
+PR, and verify the actual public bytes and player journey before marking it
+complete. Corrections receive new versions; published releases are never
+overwritten.
