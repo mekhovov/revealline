@@ -7,7 +7,6 @@ import { createBoardFootprints } from './board-footprint.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
-import { attachCouchCatalogue } from './couch-catalogue.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
@@ -205,7 +204,6 @@ let featured,
   pageSound,
   music,
   boardFootprints,
-  catalogue,
   candidateJourney,
   journeyPreferences;
 // Read-only fallback for remote Journey cards when this host runs Classic rules.
@@ -228,7 +226,6 @@ const releaseArtwork = (event) => {
   presentationPage.close();
   presentationFeedback.dispose();
   featured?.dispose();
-  catalogue?.dispose();
   installed?.dispose();
   staticPictures?.dispose();
   journeyPreferences?.dispose();
@@ -279,6 +276,7 @@ try {
     libraryInventory = null,
     libraryInventoryNotice = '',
     libraryInstaller = null,
+    libraryInstallerFactory = null,
     librarySoloPreview = null,
     libraryOpenEpoch = 0,
     libraryDecision = null,
@@ -410,7 +408,7 @@ try {
       });
   let installedStatus = candidateJourney
       ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? 'Open Legacy library for earlier missions and installed chapters.'
+        ? 'Open All missions for Journey, earlier missions and installed chapters.'
         : `${authoredRoute.label} test route; Legacy chapters stay in the ordinary race.`
       : 'Installed chapters have not been checked.',
     contentChannel = null;
@@ -436,7 +434,7 @@ try {
       maps.push(...rows);
       installedStatus = rows.length
         ? `${rows.length} installed maps available. Choose a map to check its original.`
-        : 'Open Chapters to download and play compatible campaigns here.';
+        : 'Open All missions to download compatible chapters, then choose Play.';
     }
   } catch (error) {
     installedStatus = `Installed chapters unavailable: ${error.message}`;
@@ -1287,7 +1285,7 @@ try {
       $('race-level').value = oldKey;
       installedStatus = rows.length
         ? `${rows.length} installed maps available.`
-        : 'Open Chapters to download and play compatible campaigns here.';
+        : 'Open All missions to download compatible chapters, then choose Play.';
       const ready = prepare();
       focusController = contentController;
       await ready;
@@ -1475,8 +1473,6 @@ try {
     onTransition: ({ to, back = false } = {}) => {
       ++libraryOpenEpoch;
       cancelLibraryDecision();
-      catalogue?.close();
-      catalogue?.cancel();
       clear();
       if (back || to !== contentScope) cancelContent();
     },
@@ -1706,8 +1702,8 @@ try {
         signal: controller.signal,
         inspect: async ({ signal }) => {
           const result = externalRow
-            ? await libraryInstaller.inspectExternal(externalRow, { signal })
-            : await libraryInstaller.inspect({ signal });
+            ? await missionInstaller().inspectExternal(externalRow, { signal })
+            : await missionInstaller().inspect({ signal });
           if (externalRow && !result.ready) throw new Error(result.reason);
           return result;
         },
@@ -1726,6 +1722,9 @@ try {
   function refreshLibraryWarning() {
     const notice = $('race-library-inventory-status');
     if (notice) notice.textContent = libraryInventory?.state().reason || libraryInventoryNotice;
+  }
+  function missionInstaller() {
+    return (libraryInstaller ??= libraryInstallerFactory());
   }
   async function getMissionLibrary() {
     if (missionLibrary) return missionLibrary;
@@ -1760,12 +1759,15 @@ try {
         launch: departLibraryMission,
         difficulty: () => (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
       });
-      libraryInstaller ??= createCouchChapterInstaller({
-        channel: contentChannel,
-        registeredEntries: [baseEntry],
-        missionIndex: index,
-        baseURL: new URL('../../', location.href),
-      });
+      // Browsing must survive a denied storage getter. Only deliberate verified
+      // installation/Play constructs this independent writer/decoder service.
+      libraryInstallerFactory ??= () =>
+        createCouchChapterInstaller({
+          channel: contentChannel,
+          registeredEntries: [baseEntry],
+          missionIndex: index,
+          baseURL: new URL('../../', location.href),
+        });
       if (!libraryInventory) {
         let reader = null;
         // Capability failures belong to the inventory's unavailable state, not
@@ -1918,10 +1920,10 @@ try {
           let installed;
           if (row.source === 'external') {
             installed = libraryInventory.getInventory().packs.some((pack) => pack.id === row.packId)
-              ? await libraryInstaller.inspectExternal(row, { signal })
-              : await libraryInstaller.installExternal(row, { signal });
+              ? await missionInstaller().inspectExternal(row, { signal })
+              : await missionInstaller().installExternal(row, { signal });
           } else if (['bundled', 'archived'].includes(row.source))
-            installed = await libraryInstaller.installIndexed(row, { signal });
+            installed = await missionInstaller().installIndexed(row, { signal });
           else {
             if (row.source !== 'optional') throw new Error('This chapter has no trusted download.');
             const catalog = await loadOptionalCatalog({
@@ -1931,7 +1933,7 @@ try {
             const summary = catalog.packs.find((item) => item.id === row.packId);
             if (!summary)
               throw new Error('This exact chapter is unavailable in the published catalogue.');
-            installed = await libraryInstaller.install(summary, { signal });
+            installed = await missionInstaller().install(summary, { signal });
           }
           // A durable commit remains real after cancellation. Read-only refresh
           // never adopts a match; it prevents stale download/ownership claims.
@@ -2204,7 +2206,7 @@ try {
           return {
             current: accepted,
             start() {
-              if (!accepted() || catalogue?.root()) return false;
+              if (!accepted() || $('journey-chooser')?.open) return false;
               clear({ resetDirection: true });
               if (!accepted()) return false;
               resumeDuel(nextMatch, { preserveContinuation: true });
@@ -2225,32 +2227,9 @@ try {
       throw error;
     }
   }
-  if (contentChannel) {
-    try {
-      catalogue = attachCouchCatalogue({
-        button: $('race-chapters'),
-        channel: contentChannel,
-        registeredEntries: [baseEntry],
-        getAttempt: catalogueAttempt,
-        isAttemptCurrent: catalogueAttemptCurrent,
-        stage: stageCataloguePack,
-        onOpen: () => {
-          clear();
-        },
-        onClose: () => {
-          clear();
-        },
-        onRead: (request) => navigation.beginReading(request),
-      });
-    } catch (error) {
-      // Storage access itself may be denied before a catalogue can be created.
-      // Keep the existing shipped-map fallback playable in that environment.
-      installedStatus = `Chapters unavailable: ${error.message || error}. You can still play shipped maps.`;
-    }
-  }
   $('race-chapters').onclick = () => {
-    if (disposed || contentBusy || match.status === 'running' || !catalogue) return;
-    return catalogue.open();
+    if (disposed || contentBusy || match.status === 'running') return;
+    return openMissionLibrary($('race-chapters'));
   };
 
   function couchScope() {
@@ -2259,7 +2238,7 @@ try {
     if (modal) return `couch:${modal.id}`;
     return match?.status === 'running'
       ? 'flight'
-      : `couch:${match?.status || 'loading'}:${generation}:${catalogue?.root()?.id || shell?.scope() || 'main'}`;
+      : `couch:${match?.status || 'loading'}:${generation}:${shell?.scope() || 'main'}`;
   }
   function readCachedPads() {
     if (frameReadError) throw frameReadError;
@@ -2377,7 +2356,7 @@ try {
     $('race-message').hidden = contentBusy;
     $('race-installed-status').hidden = contentBusy;
     $('race-start').disabled = running || contentBusy || !contentReady;
-    $('race-chapters').disabled = running || contentBusy || !catalogue;
+    $('race-chapters').disabled = running || contentBusy;
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
     $('race-picture-cancel').hidden = !contentBusy;
@@ -2482,7 +2461,6 @@ try {
     getScope: couchScope,
     getRoot: () =>
       music?.root() ||
-      catalogue?.root() ||
       [...document.querySelectorAll('dialog[open]')].at(-1) ||
       (candidateJourney && shell.scope() === 'main' ? $('couch-app') : shell.root()),
     getDefaultFocus: () =>
@@ -2490,13 +2468,11 @@ try {
         ? $('race-library-stay')
         : music?.root()
           ? music.primary()
-          : catalogue?.root()
-            ? catalogue.primary()
-            : $('journey-backup')?.open
-              ? $('journey-backup-export')
-              : $('journey-chooser')?.open
-                ? $('journey-search')
-                : shell.primary(),
+          : $('journey-backup')?.open
+            ? $('journey-backup-export')
+            : $('journey-chooser')?.open
+              ? $('journey-search')
+              : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
     ownsKeyboardEvent: (event) =>
@@ -2505,7 +2481,6 @@ try {
       music?.contains(element) ||
       (element.tagName === 'A' &&
         !!element.closest('#race-music-now-playing, #race-music-menu-now-playing')) ||
-      catalogue?.root()?.contains(element) ||
       menuIds.has(element.id) ||
       !!element.closest('#journey-chooser, #journey-backup'),
     getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
@@ -2516,25 +2491,21 @@ try {
         ? libraryDecision.finish(false)
         : music?.root()
           ? music.back()
-          : catalogue?.root()
-            ? catalogue.back()
-            : $('journey-backup')?.open
-              ? $('journey-backup-back').click()
-              : $('journey-chooser')?.open
-                ? journeyChooser.close()
-                : shell.back(),
+          : $('journey-backup')?.open
+            ? $('journey-backup-back').click()
+            : $('journey-chooser')?.open
+              ? journeyChooser.close()
+              : shell.back(),
     onMenu: () =>
       libraryDecision
         ? libraryDecision.finish(false)
         : music?.root()
           ? music.back()
-          : catalogue?.root()
-            ? catalogue.back()
-            : $('journey-backup')?.open
-              ? $('journey-backup-back').click()
-              : $('journey-chooser')?.open
-                ? journeyChooser.close()
-                : shell.back(),
+          : $('journey-backup')?.open
+            ? $('journey-backup-back').click()
+            : $('journey-chooser')?.open
+              ? journeyChooser.close()
+              : shell.back(),
     onHint: (message, context) => {
       if (
         context?.kind === 'reading' &&
@@ -2618,7 +2589,6 @@ try {
     ++libraryOpenEpoch;
     libraryIncomingController?.abort();
     cancelLibraryDecision();
-    catalogue?.cancel();
     if (disposed) return;
     shell?.cancelDeparture();
     pause();

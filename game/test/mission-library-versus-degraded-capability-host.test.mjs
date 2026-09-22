@@ -36,6 +36,17 @@ async function fixture(t, missing, journey = false) {
     initialLevel: null,
     href: `http://localhost/game/couch/?${journey ? incoming : 'journey=legacy'}`,
     storage: missing === 'storage' ? undefined : storage,
+    beforeImport:
+      missing === 'denied storage getter'
+        ? () => {
+            Object.defineProperty(globalThis, 'localStorage', {
+              configurable: true,
+              get() {
+                throw new DOMException('Storage denied', 'SecurityError');
+              },
+            });
+          }
+        : undefined,
     lockManager:
       missing === 'locks' ? undefined : { request: async (_key, _options, work) => work({}) },
     assetDatabase: {
@@ -61,17 +72,20 @@ const packWrites = (p) =>
     ),
   );
 
-for (const missing of ['storage', 'locks']) {
+for (const missing of ['storage', 'locks', 'denied storage getter']) {
   test(`missing ${missing} keeps the Base library usable and all installed downloads unavailable`, async (t) => {
     const p = await fixture(t, missing);
     const initialWrites = packWrites(p),
       initialRequests = p.requests.length;
-    p.$('race-library-switch').focus();
-    p.$('race-library-switch').click();
+    assert.equal(p.$('race-chapters').disabled, false);
+    p.$('race-chapters').focus();
+    p.$('race-chapters').click();
     await settle(() => p.$('journey-chooser')?.open);
     assert.match(
       p.$('race-library-inventory-status').textContent,
-      /Installed content could not be checked.*readable recovery markers and Web Locks.*Existing packs are kept/,
+      missing === 'denied storage getter'
+        ? /Installed content could not be checked.*Storage denied.*Existing packs are kept/
+        : /Installed content could not be checked.*readable recovery markers and Web Locks.*Existing packs are kept/,
     );
     p.$('journey-collection').value = 'Classic';
     p.$('journey-collection').emit('change');
@@ -112,7 +126,9 @@ for (const missing of ['storage', 'locks']) {
     assert.equal(p.$('journey-chooser').open, false);
     assert.match(
       p.$('race-library-inventory-status').textContent,
-      /readable recovery markers and Web Locks/,
+      missing === 'denied storage getter'
+        ? /Storage denied/
+        : /readable recovery markers and Web Locks/,
     );
     assert.deepEqual(packWrites(p), []);
     assert(!p.requests.some((url) => /optional\//.test(url)));
