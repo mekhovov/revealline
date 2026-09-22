@@ -99,3 +99,17 @@ test('loading and a pending ordinary save are not presented as storage failures'
     assert.equal(f.visits(), 0);
   }
 });
+
+test('background retry success preserves focused Save options until focus leaves', () => {
+  const f = fixture();
+  f.notice.update(failed);
+  f.options.focus();
+  f.notice.update({ ready: true, durable: true, error: null });
+  assert.equal(f.doc.activeElement, f.options);
+  assert.equal(f.options.hidden, false);
+  assert.equal(f.options.textContent, 'Progress saved · Game menu');
+  assert.equal(f.visits(), 0);
+  f.menu.focus();
+  f.options.dispatchEvent({ type: 'blur' });
+  assert.equal(f.options.hidden, true);
+});
