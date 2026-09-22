@@ -402,7 +402,7 @@ export async function soloPage(
   // Ordinary host tests begin at the briefing through real menu handlers.
   // Shell-specific cases can retain the title with titleScreen:true.
   if (!titleScreen && $('shell-home').open) {
-    $('shell-play').click();
+    $('overlay-brief').click();
     $('shell-briefing').click();
   }
   assert.ok(

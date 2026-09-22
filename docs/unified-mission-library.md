@@ -44,6 +44,8 @@ serialized; bounded local tests can run concurrently. Do not introduce new enemy
 systems, artwork, music, balance changes or unrelated recovery work into B.
 
 Current state: implementation in progress; no B release or public acceptance yet.
+The checkpoint sections below are historical; the latest Solo integration section
+supersedes earlier statements that the selector is not mounted.
 
 ### First local checkpoint
 
@@ -117,3 +119,54 @@ official verification. Original references are retained without freezing caller
 objects. Hosts must use the immutable selection after asynchronous work and
 re-resolve the prepared owner. Four added regressions pass; the fast cohort is
 now60 tests. The prior16 Solo host and8 full-index cases remain unchanged.
+
+### Solo integration checkpoint
+
+- Mounted the same lazy library in Solo Journey and Classic hosts: all91 current
+  Journey missions plus all110 retained Classic metadata rows, with installed
+  Custom editions added without deduplication by name. Ordinary Continue does not
+  compile the browsing library or fetch every optional pack.
+- Added exact incoming/outgoing owner handoffs and trusted Base launches. Late
+  Classic and second-campaign Custom choices are selectable on an empty profile;
+  no clears or mastery are invented. Existing runtime preparation, replacement,
+  artwork adoption and separate progression remain the launch authority.
+- Wired bundled/archive and optional chapter preparation into inline Download →
+  Play. Original-picture chapters retain separate managed-media readiness checks
+  on launch; browsing does not decode every original.
+- Independent review found and fixed late-menu revival after blur/history-cache
+  departure, stale failed-launch focus restoration, and loss of the original
+  Back destination after Stay. Added actual-host and shared-chooser regressions.
+- Updated pre-existing host fixtures to enter the briefing through actual Brief
+  controls; they no longer invoke the removed synchronous mission-menu flow.
+- Current focused registry/adapter/chooser cohort:76 tests pass. A clean combined
+  Solo host run passes53 tests; retained Legacy replacement callbacks pass25.
+  The latter explicitly mount their historical parent at the finite DOM boundary;
+  the53-test run covers actual unified menu routes. These are finite
+  DOM/storage/image boundaries, not browser layout, physical-controller, release
+  or public verification.
+
+### Remaining B work, in execution order
+
+| Work                                   | State / gate                                                                                                                         |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Solo integration regression checkpoint | Implemented; final bounded rerun and commit in progress                                                                              |
+| Versus integration                     | In parallel local implementation; retain paired-board rules and staged replacement                                                   |
+| Team integration                       | Pending;12 Journey +2 legacy arenas, exact visit-local import ownership                                                              |
+| Cross-mode and external downloads      | Complete receiving adapters, cancellation/retry and paired-original installation; no silent fallback                                 |
+| Card presentation                      | Restore Journey band/mastery/route text and all applicable tags; show only actual Classic difficulty support                         |
+| Sequence/return acceptance             | Prove late Classic/Custom Next, cross-owner return state, same-name editions and no search-driven progression                        |
+| Compatibility qualification            | Native browser, compact layouts, keyboard/controller, lazy loading, failed storage/download and full affected suite                  |
+| Release B promotion                    | Reconcile accepted A, assign new version, reviewed PR, frozen build, Pages and public journeys; publisher remains sole release owner |
+
+Versus and Team are not yet integrated at this checkpoint. No claim that all modes
+or the whole Release B acceptance list are complete. Release preparation remains
+serialized, while independent host work and bounded verification continue locally.
+
+Additional compatibility gates: audit retained setup/appearance entry points now
+that Missions opens the unified library, without adding a second mission browser.
+Investigate the broader cohort's intermittent immediate-Next receipt assertion
+(its isolated rerun passes). Post-adoption Next now retires its automatic-start
+intent synchronously when a lazy Missions opening wins. Three targeted
+continuation/setup regressions pass after this correction. Do not describe the
+broader continuation cohort as clean until it is repeated successfully; the
+intermittent receipt assertion remains a tracked qualification gate.

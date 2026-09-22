@@ -17,6 +17,7 @@ export function attachMissionLibraryChooser({
   onReturn,
   readState = () => null,
   writeState = () => {},
+  launchContext = () => ({}),
 }) {
   if (!LIBRARY_MODES.includes(mode)) throw new TypeError('Unknown mission library mode.');
   const node = (tag, id, text) => {
@@ -175,17 +176,25 @@ export function attachMissionLibraryChooser({
     // ticket. Keep filters/focus for an unsuccessful or cancelled handoff.
     const ticket = ++visit;
     remember();
-    dialog.close();
+    let context = null;
+    const mayRestore = () =>
+      ticket === visit &&
+      !destroyed &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      context?.isCurrent?.() !== false;
     try {
-      const accepted = await library.launch(row, { mode: activeMode });
-      if (accepted === false && ticket === visit && !destroyed) {
+      context = launchContext(row, { mode: activeMode });
+      dialog.close();
+      const accepted = await library.launch(row, { ...context, mode: activeMode });
+      if (accepted === false && mayRestore()) {
         message = 'Mission not opened. Your current game is kept.';
-        open(opener);
+        open(opener, { returnLabel: back.textContent });
       }
     } catch (error) {
-      if (ticket === visit && !destroyed) {
+      if (mayRestore()) {
         message = `Could not open ${row.name}: ${error.message}`;
-        open(opener);
+        open(opener, { returnLabel: back.textContent });
       }
     }
   }
@@ -373,8 +382,26 @@ export function attachMissionLibraryChooser({
   });
   return {
     open,
+    restore() {
+      open(opener, { returnLabel: back.textContent });
+    },
     close,
     state,
+    reveal(id) {
+      const row = library.find(id);
+      if (!row || !row.modes.includes(modeFilter.value)) return false;
+      if (!list.contains(cards.get(id)?.button)) {
+        search.value = '';
+        collection.value = '';
+        campaign.value = '';
+        render();
+      }
+      selectedId = id;
+      cards.get(id)?.button.focus({ preventScroll: true });
+      cards.get(id)?.button.scrollIntoView?.({ block: 'nearest' });
+      remember();
+      return true;
+    },
     refresh() {
       if (dialog.open) {
         invalidateDiagrams();
