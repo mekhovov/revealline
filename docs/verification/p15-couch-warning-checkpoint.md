@@ -94,11 +94,50 @@ or error console entries. The final shell SHA256 is
 `939be9744c7befd606fdc5cfb4c4b1f89f6394c3b77f1e8726806e5f271576f7`.
 Pointer tracing and the refused backend are diagnostic-only, not shipping code.
 
+## Additional independent review and native recovery
+
+Independent review of source `a37a651bce4ed8263943ae44a84257b4adff60f0`
+against parent `81729fc1` found no actionable regression. Six scoped Node20
+checks passed independently: three cue checks, stable Pause gesture, Versus
+recovery, and Team failed-save/export/successful-retry preservation. Fifty-seven
+unmatched host cases were intentionally filtered; this is not full-suite proof.
+
+The same unchanged source was inspected on isolated localhost8949. A diagnostic
+gate rejects Journey backend operations until explicitly restored, then delegates
+to the actual browser IndexedDB backend (including Team's supplied backend).
+Diagnostic profile SHA256:
+`a115819ef5cef14b7e835be9c2e962d63f62a3e6e70c99ceddfbe05597884644`.
+No simulation state, completed mission or browser storage was injected. This
+tests recoverable refusal, not recovery from actual disk exhaustion.
+
+- Versus: an ordinary down-cut earned First return at34.3%, three lives,
+  8160points while saving was refused. Save options focused Retry. Restoring
+  backend availability and activating Retry reported saved locally, retained
+  Retry focus and left the result intact. One Next started the next mission.
+  Reload retained Choose your share; the chooser showed First return Cleared.
+- Team: two-action Skip moved Twin landings to Stepping exchange without a
+  clear. An initial Escape while the transition was pending correctly cancelled
+  it; the repeated deliberate transition was allowed to settle before Pause.
+  Save options focused Retry. After backend restoration, Retry removed the
+  warning and returned focus to Resume together without starting play; elapsed
+  time remained0:06, coverage0.0%, reserves2. Reload selected Stepping exchange;
+  the chooser marked Twin landings Skipped and Stepping exchange Not cleared.
+- Legacy: bare Versus opened Orchard Crossing; native Start, pointer Pause,
+  explicit Resume and Escape Pause worked without Journey recovery controls.
+  Its existing Team link and discard confirmation opened First Connection.
+  Team Start, pointer Pause, Resume and Escape Pause likewise remained explicit,
+  with no Journey controls. This is the existing bare-entry behavior, not the
+  separately planned current/legacy alias implementation.
+- Team browser warning/error log was empty. Both test tabs were closed and the
+  diagnostic server stopped. No product source changed for these checks.
+
 Remaining gates:
 
-1. Complete exact source CI, additional Legacy and cold-entry native checks,
+1. Complete exact source CI, broader Legacy and cold-entry native checks,
    meaningful warning status transitions and geometry comparison.
-2. Real durable retry/export, controller/device/screen-reader/zoom, cross-release
-   persistence and independent review remain. No human enjoyment claim.
+2. Native export/file recovery, real storage-exhaustion recovery,
+   controller/device/screen-reader/zoom and cross-release persistence remain.
+   The bounded same-origin durable retry/reload and independent review above
+   do not establish those broader gates. No human enjoyment claim.
 3. Release-owner scheduling, fresh baseline/version, reviewed PR, immutable
    freeze, Pages publication and exact public verification are all still required.
