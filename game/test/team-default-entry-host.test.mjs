@@ -72,32 +72,32 @@ test('queryless Team offers all twelve original missions across five campaigns a
   assert.equal(f.$('coop-solo').getAttribute('href'), '../');
   assert.equal(f.$('coop-versus').getAttribute('href'), './');
   enter(f, 'coop-discovery-open');
-  const cards = [...f.$('coop-discovery-list').querySelectorAll('article')];
+  await waitFor(() => f.$('journey-chooser')?.open);
+  const cards = [...f.$('journey-cards').querySelectorAll('.journey-card')];
   assert.equal(cards.length, 14, 'Twelve new missions plus two retained legacy arenas');
-  const missionCards = cards.filter((card) => card.querySelector('.team-mission-diagram'));
+  const missionCards = cards.filter((card) =>
+    card.querySelector('.journey-card-tags').textContent.includes('Journey'),
+  );
   assert.equal(missionCards.length, 12);
   for (const card of missionCards) {
     assert.match(
-      card.querySelector('figcaption').textContent,
-      /Win to reveal the original artwork/,
+      card.querySelector('.journey-card-challenge').textContent,
+      /Band \d+\/12 · Standard/,
     );
+    assert(card.querySelector('.journey-card-route').textContent);
     assert.doesNotMatch(card.textContent, /candidate|test;|validation pending/);
   }
   for (const mission of source.missions)
     assert(
-      cards.some((card) =>
-        [...card.querySelectorAll('button')].some(
-          (button) => button.textContent === `Play ${mission.name}`,
-        ),
-      ),
+      cards.some((card) => card.querySelector('strong').textContent === mission.name),
       mission.id,
     );
   assert.equal(
-    f.$('coop-discovery-campaign').querySelectorAll('option').length,
+    f.$('journey-campaign').querySelectorAll('option').length,
     7,
     'All + five campaigns + legacy pack',
   );
-  enter(f, 'coop-discovery-back');
+  enter(f, 'journey-back');
   enter(f, 'coop-start');
   assert.equal(f.$('coop-menu').hidden, true);
   f.tick(2);
@@ -146,12 +146,10 @@ test('explicit spatial review entry retains its original review labels and exact
   );
   assert.match(f.$('coop-pack-status').textContent, /Original-art candidate.*not human validated/);
   enter(f, 'coop-discovery-open');
-  const caption = f
-    .$('coop-discovery-list')
-    .querySelector('.team-mission-diagram')
-    .querySelector('figcaption');
+  await waitFor(() => f.$('journey-chooser')?.open);
+  const caption = f.$('journey-cards').querySelector('.journey-card-edition');
   assert.match(caption.textContent, /Original-art test; visual qualification pending/);
-  enter(f, 'coop-discovery-back');
+  enter(f, 'journey-back');
   enter(f, 'coop-start');
   f.tick(2);
   const asset = source.assets.find(

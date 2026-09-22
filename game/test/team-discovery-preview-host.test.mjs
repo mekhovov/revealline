@@ -16,20 +16,23 @@ import { canonicalJSON } from '../data-json.mjs';
 const first = COOP_PICTURE_BINDINGS[0],
   yard = COOP_PICTURE_BINDINGS[1];
 const flush = () => new Promise((resolve) => setImmediate(resolve));
-const dialog = (f) => f.$('coop-discovery-dialog');
+const dialog = (f) => f.$('journey-chooser');
 const viewer = (f) => f.$('coop-discovery-preview');
 const previewStatus = (f) => f.$('coop-discovery-preview-status');
 const fullCanvas = (f) => f.$('coop-discovery-preview-canvas');
-const playButtons = (f) => [...f.$('coop-discovery-list').querySelectorAll('.team-discovery-play')];
+const playButtons = (f) => [...f.$('journey-cards').querySelectorAll('.journey-card')];
 const fullTrace = (f) => f.traces.get(fullCanvas(f));
 const lastDraw = (trace) => trace.operations.findLast((entry) => entry.name === 'drawImage');
-const previewButton = (f, title, last = false) => {
-  const choices = playButtons(f).filter((button) => button.textContent === `Play ${title}`);
+const previewButton = async (f, title, last = false) => {
+  const choices = playButtons(f).filter(
+    (button) => button.querySelector('strong').textContent === title,
+  );
   const play = last ? choices.at(-1) : choices[0];
   assert.ok(play, `Play card exists for ${title}`);
-  const button = [...play.closest('article').querySelectorAll('button')].find(
-    (entry) => entry.textContent === 'Preview picture',
-  );
+  play.focus();
+  play.emit('focus', { bubbles: false });
+  await flush();
+  const button = f.$('coop-library-preview');
   assert.ok(button, `${title} has a separate Preview action`);
   return button;
 };
@@ -39,20 +42,22 @@ function enter(f, element) {
   element.focus();
   f.tap('Enter');
 }
-function open(f, paused = false) {
+async function open(f, paused = false) {
   enter(f, f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open'));
-  assert.equal(dialog(f).open, true);
+  await waitFor(() => dialog(f)?.open);
 }
 const ready = (f, state = 'ready') =>
   waitFor(
     () => previewStatus(f).dataset.state === state,
     () => previewStatus(f).textContent,
   );
-async function teasersReady(f, count = 2) {
-  await waitFor(() => {
-    const canvases = [...f.$('coop-discovery-list').querySelectorAll('canvas')];
-    return canvases.length === count && canvases.every((canvas) => lastDraw(f.traces.get(canvas)));
-  });
+async function browsingReady(f, count = 2) {
+  assert.equal(playButtons(f).length, count + 12);
+  assert.equal(
+    f.$('journey-cards').querySelectorAll('canvas').length,
+    0,
+    'Browsing does not prepare reward-picture teasers',
+  );
   await flush();
 }
 
@@ -128,7 +133,8 @@ async function fixture(t, extra = {}) {
           value: {
             getItem: (key) => values.get(key) ?? null,
             setItem(key, value) {
-              writes.push([store, 'setItem', key]);
+              if (!key.startsWith('revealline.mission-library.selector.v1.'))
+                writes.push([store, 'setItem', key]);
               values.set(key, String(value));
             },
             removeItem(key) {
@@ -226,50 +232,21 @@ function retained(f) {
   };
 }
 
-test('Team cards show exact concealed teasers; expanded locked preview returns through both Back destinations without awards', async (t) => {
+test('Team cards browse without artwork; explicit locked preview returns directly without awards', async (t) => {
   const f = await fixture(t),
     writes = [...f.writes];
-  open(f);
-  await teasersReady(f);
-  const canvases = [...f.$('coop-discovery-list').querySelectorAll('canvas')];
-  for (const [index, canvas] of canvases.entries()) {
-    const trace = f.traces.get(canvas),
-      draw = lastDraw(trace);
-    assert.equal(canvas.width, 288);
-    assert.equal(canvas.height, 144);
-    assert.equal(draw.args[0].sha256, COOP_PICTURE_BINDINGS[index].picture.sha256);
-    assert.equal(draw.state.imageSmoothingEnabled, false);
-    for (const [x, y] of [
-      [12, 72],
-      [276, 72],
-      [144, 12],
-      [144, 132],
-    ])
-      assert.equal(pixelAt(trace, x, y), draw.args[0], 'The 24px teaser border shows the original');
-    for (const [x, y] of [
-      [25, 25],
-      [144, 72],
-      [262, 118],
-    ]) {
-      const pixel = pixelAt(trace, x, y);
-      assert.equal(pixel?.opaque, true, 'The teaser centre has opaque concealment');
-      assert.match(pixel.colour, /^#[0-9a-f]{3,8}$/i);
-    }
-  }
-  const origin = previewButton(f, 'Relay Yard');
+  await open(f);
+  await browsingReady(f);
+  const origin = await previewButton(f, 'Relay Yard');
   enter(f, origin);
   assert.equal(viewer(f).hidden, false);
   assert.equal(previewStatus(f).dataset.state, 'busy');
   assert.equal(fullCanvas(f).hidden, true);
-  assert.equal(f.$('coop-discovery-back').textContent, 'Back to arenas');
+  assert.equal(f.$('journey-back').textContent, 'Back to game');
   await ready(f);
   assertLockedPreview(f, yard.picture.sha256);
-  enter(f, f.$('coop-discovery-back'));
+  enter(f, f.$('journey-back'));
   assert.equal(viewer(f).hidden, true);
-  assert.equal(f.doc.activeElement === origin, true);
-  assert.equal(dialog(f).open, true);
-  assert.equal(f.$('coop-discovery-back').textContent, 'Back');
-  enter(f, f.$('coop-discovery-back'));
   assert.equal(dialog(f).open, false);
   assert.equal(f.doc.activeElement.id, 'coop-discovery-open');
   f.tick(20);
@@ -289,16 +266,15 @@ test('previewing a different arena keeps the paused attempt, original picture an
   const before = retained(f),
     writes = [...f.writes],
     acceptedURL = before.image.src;
-  open(f, true);
-  await teasersReady(f);
-  enter(f, previewButton(f, 'Relay Yard'));
+  await open(f, true);
+  await browsingReady(f);
+  enter(f, await previewButton(f, 'Relay Yard'));
   await ready(f);
   assertLockedPreview(f, yard.picture.sha256);
   f.tick(20);
   assert.deepEqual(retained(f), before);
   assert.equal(f.$('coop-overlay').hidden, false);
-  enter(f, f.$('coop-discovery-back'));
-  enter(f, f.$('coop-discovery-back'));
+  enter(f, f.$('journey-back'));
   assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
   assert.deepEqual(retained(f), before);
   assert.equal(f.artwork.calls.releases.includes(acceptedURL), false);
@@ -324,23 +300,22 @@ test('Back cancels a held full decode immediately; late completion cannot paint 
       },
     },
   });
-  open(f);
-  await teasersReady(f);
+  await open(f);
+  await browsingReady(f);
   hold = true;
-  const origin = previewButton(f, 'Relay Yard');
+  const origin = await previewButton(f, 'Relay Yard');
   enter(f, origin);
   await waitFor(() => held);
   assert.equal(previewStatus(f).dataset.state, 'busy');
-  enter(f, f.$('coop-discovery-back'));
+  enter(f, f.$('journey-back'));
   assert.equal(viewer(f).hidden, true);
-  assert.equal(f.doc.activeElement === origin, true);
-  assert.equal(origin.disabled, false);
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-open');
   const operations = fullTrace(f).operations.length;
   gate.resolve();
   await waitFor(() => f.artwork.calls.releases.includes(url));
   assert.equal(f.artwork.calls.releases.filter((entry) => entry === url).length, 1);
   assert.equal(fullTrace(f).operations.length, operations);
-  assert.equal(f.doc.activeElement === origin, true);
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-open');
   assert.equal(f.drawImages.length, 0);
 });
 
@@ -353,11 +328,11 @@ test('required preview read failure offers an exact Retry without starting play 
       },
     },
   });
-  open(f);
-  await teasersReady(f);
+  await open(f);
+  await browsingReady(f);
   fail = true;
   const original = f.previewDrawImages.at(-1);
-  enter(f, previewButton(f, 'Relay Yard'));
+  enter(f, await previewButton(f, 'Relay Yard'));
   await ready(f, 'error');
   assert.equal(fullCanvas(f).hidden, true);
   assert.equal(pixelAt(fullTrace(f), 576, 288), null);
@@ -389,16 +364,16 @@ test('a newer Back focus survives expanded preview readiness without automatic n
       },
     },
   });
-  open(f);
-  await teasersReady(f);
+  await open(f);
+  await browsingReady(f);
   hold = true;
-  enter(f, previewButton(f, 'Relay Yard'));
+  enter(f, await previewButton(f, 'Relay Yard'));
   await waitFor(() => held);
-  f.$('coop-discovery-back').focus();
+  f.$('journey-back').focus();
   gate.resolve();
   await ready(f);
   assertLockedPreview(f, yard.picture.sha256);
-  assert.equal(f.doc.activeElement.id, 'coop-discovery-back');
+  assert.equal(f.doc.activeElement.id, 'journey-back');
   assert.equal(dialog(f).open, true);
   assert.equal(viewer(f).hidden, false);
 });
@@ -417,20 +392,20 @@ test('a cancelled old visit cannot overwrite a newer expanded preview or its foc
       },
     },
   });
-  open(f);
-  await teasersReady(f);
+  await open(f);
+  await browsingReady(f);
   hold = true;
-  enter(f, previewButton(f, 'Relay Yard'));
+  enter(f, await previewButton(f, 'Relay Yard'));
   await waitFor(() => held);
-  enter(f, f.$('coop-discovery-back'));
-  enter(f, f.$('coop-discovery-back'));
-  open(f);
-  enter(f, previewButton(f, 'First Connection'));
-  f.$('coop-discovery-back').focus();
+  enter(f, f.$('journey-back'));
+  await open(f);
   gate.resolve();
+  await flush();
+  enter(f, await previewButton(f, 'First Connection'));
+  f.$('journey-back').focus();
   await ready(f);
   assertLockedPreview(f, first.picture.sha256);
-  assert.equal(f.doc.activeElement.id, 'coop-discovery-back');
+  assert.equal(f.doc.activeElement.id, 'journey-back');
   assert.equal(f.drawImages.length, 0);
   assert.equal(f.$('coop-level').value, 'first-connection');
 });
@@ -512,11 +487,9 @@ test('local .rlteam artwork with exact starter IDs keeps its own teaser and conc
   await input.onchange();
   assert.equal(f.$('coop-pack-status').dataset.state, 'ready', f.$('coop-pack-status').textContent);
   assert.equal(f.previewDrawImages.at(-1).sha256, yard.picture.sha256);
-  open(f);
-  await teasersReady(f, 4);
-  const origin = previewButton(f, 'First Connection', true);
-  const teaser = origin.closest('article').querySelector('canvas');
-  assert.equal(lastDraw(f.traces.get(teaser)).args[0].sha256, yard.picture.sha256);
+  await open(f);
+  await browsingReady(f, 4);
+  const origin = await previewButton(f, 'First Connection', true);
   const reads = f.artwork.calls.reads.length,
     writes = [...f.writes];
   enter(f, origin);
@@ -527,8 +500,8 @@ test('local .rlteam artwork with exact starter IDs keeps its own teaser and conc
     reads,
     'The owned local bytes do not read compiled artwork',
   );
-  enter(f, f.$('coop-discovery-back'));
-  assert.equal(f.doc.activeElement === origin, true);
+  enter(f, f.$('journey-back'));
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-open');
   assert.equal(f.drawImages.length, 0);
   assert.equal(f.earnedDrawImages.length, 0);
   assert.deepEqual(f.writes, writes);
@@ -548,17 +521,15 @@ test('an earned Team result survives another arena preview and its original Next
   assert.equal(f.$('coop-next').hidden, false);
   assert.equal(f.$('coop-next').disabled, false);
   assert.equal(earned.image.sha256, first.picture.sha256);
-  open(f, true);
-  await teasersReady(f);
-  const origin = previewButton(f, 'Relay Yard');
+  await open(f, true);
+  await browsingReady(f);
+  const origin = await previewButton(f, 'Relay Yard');
   enter(f, origin);
   await ready(f);
   assertLockedPreview(f, yard.picture.sha256);
   f.tick(20);
   assert.deepEqual(retained(f), earned);
-  enter(f, f.$('coop-discovery-back'));
-  assert.equal(f.doc.activeElement === origin, true);
-  enter(f, f.$('coop-discovery-back'));
+  enter(f, f.$('journey-back'));
   assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');

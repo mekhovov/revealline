@@ -172,14 +172,17 @@ test('optional chooser offers all twelve Team candidates and starts any selected
   });
   f.$('coop-discovery-open').focus();
   f.tap('Enter');
-  const cards = [...f.$('coop-discovery-list').querySelectorAll('.team-discovery-play')];
+  await waitFor(() => f.$('journey-chooser')?.open);
+  const cards = [...f.$('journey-cards').querySelectorAll('.journey-card')];
   for (const mission of source.missions)
-    assert(cards.some((card) => card.textContent === `Play ${mission.name}`));
-  const selected = cards.find((card) => card.textContent === 'Play Shared lookout');
+    assert(cards.some((card) => card.querySelector('strong').textContent === mission.name));
+  const selected = cards.find(
+    (card) => card.querySelector('strong').textContent === 'Shared lookout',
+  );
   selected.focus();
   f.tap('Enter');
   await waitFor(
-    () => !f.$('coop-discovery-dialog').open,
+    () => !f.$('journey-chooser').open && f.$('coop-menu').hidden,
     () => f.$('coop-discovery-status').textContent,
   );
   assert.equal(f.$('coop-menu').hidden, true);
@@ -622,15 +625,16 @@ test('a skipped Team mission remains selectable and a later command-earned clear
   f.$('coop-pause').click();
   f.$('coop-discovery-paused').focus();
   f.tap('Enter');
-  const card = [...f.$('coop-discovery-list').querySelectorAll('.team-discovery-play')].find(
-    (button) => button.textContent === 'Play Twin landings',
+  await waitFor(() => f.$('journey-chooser')?.open);
+  const card = [...f.$('journey-cards').querySelectorAll('.journey-card')].find(
+    (button) => button.querySelector('strong').textContent === 'Twin landings',
   );
   card.focus();
   f.tap('Enter');
   await waitFor(() => f.$('coop-discard-dialog').open);
   f.$('coop-discard-confirm').focus();
   f.tap('Enter');
-  await waitFor(() => !f.$('coop-discovery-dialog').open && f.$('coop-overlay').hidden);
+  await waitFor(() => !f.$('journey-chooser').open && f.$('coop-overlay').hidden);
   assert.equal(f.$('coop-level').value, 'twin-landings');
   clear(f, 'twin-landings');
   await new Promise((resolve) => setImmediate(resolve));

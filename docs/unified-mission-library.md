@@ -271,3 +271,24 @@ verification. It must receive a new pinned native check before acceptance.
 -20 shared chooser/compact tests and3 targeted existing Solo setup tests pass.
   Pinned native phone/landscape remeasurement remains mandatory; CSS assertions
   alone do not prove the reported82px viewport defect is resolved.
+
+### Team integration checkpoint
+
+- Mounted the shared selector in current and retained Team hosts with12 Journey
+  missions,2 Classic arenas and exact visit-local Custom imports. Same-ID imports
+  retain distinct generation-owned identities; incoming selections open the
+  requested mission and start only after its owned picture is ready.
+- Retained the atomic Team preparation/Stay/Replace path and separate concealed
+  picture preview. Browsing does not decode every original; preview is explicit,
+  cancels independently and cannot enter from a background page.
+- Root review found stale preparation cleanup could hide a newer Cancel control
+  or detach its input lease. Cleanup is now exact-owner scoped; the regression
+  holds old Play, cancels it, starts a new Play, settles the old work, then verifies
+  the new Cancel and input retirement remain effective.
+- All15 Team test files pass together:153 tests, zero failures/skips,203 seconds.
+  This includes13 existing host suites migrated to actual asynchronous shared UI,
+  two new source/host suites,12 command-earned Journey clears, imported originals,
+  historical pressure/timed routes, rollback, exact incoming Expert and preview.
+  Scoped lint/format/whitespace checks pass. Native/public evidence is separate.
+- Cross-mode library registration and final layout/release acceptance remain
+  incomplete; this checkpoint does not claim all Release B gates are closed.
