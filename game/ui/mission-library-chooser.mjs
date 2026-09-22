@@ -338,6 +338,7 @@ export function attachMissionLibraryChooser({
     restoreSelection();
   }
   search.addEventListener('input', () => {
+    ++visit; // Late preparation feedback belongs to the view that requested it.
     message = '';
     selectedId = '';
     savedScroll = 0;
@@ -347,6 +348,7 @@ export function attachMissionLibraryChooser({
   });
   for (const control of [collection, campaign, modeFilter])
     control.addEventListener('change', () => {
+      ++visit;
       message = '';
       selectedId = '';
       savedScroll = 0;

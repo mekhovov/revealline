@@ -301,6 +301,29 @@ test('switching mode during Solo preparation still offers ready Versus Play afte
   const card = $('journey-cards').children[0];
   assert.match(card.textContent, /Play/);
   assert(!card.textContent.includes('Unavailable'));
+  assert(!$('journey-chooser-status').textContent.includes('Solo unavailable'));
   assert.equal(card.disabled, false);
+  chooser.destroy();
+});
+
+test('a late download completion does not replace feedback after changing the search', async () => {
+  let finish;
+  const { $, chooser } = setup([
+    owner({
+      availability: () => ({ state: 'download', bytes: 4096 }),
+      prepare: () =>
+        new Promise((resolve) => {
+          finish = resolve;
+        }),
+    }),
+  ]);
+  $('journey-cards').children[0].click();
+  await tick();
+  $('journey-search').value = 'no matching mission';
+  $('journey-search').emit('input');
+  const status = $('journey-chooser-status').textContent;
+  finish();
+  await tick();
+  assert.equal($('journey-chooser-status').textContent, status);
   chooser.destroy();
 });
