@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
-import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 
 const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
 const profileKey = 'revealline.library.dev.v1';
@@ -24,6 +24,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const storage = storageWith({ turnPolicy, textSize: 'large' });
     const page = await soloPage(t, { campaign, storage });
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     for (let i = 0; i < 13; i++) page.frame();
@@ -57,6 +58,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     page.doc.querySelector('button[data-close="settings-dialog"]').click();
     const y = run.player.y;
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     for (let i = 0; i < 12; i++) page.frame();
     assert.ok(run.player.y > y);
     page.$('pause-button').click();

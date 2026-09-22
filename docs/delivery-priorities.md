@@ -1,5 +1,11 @@
 # RevealLine delivery plan
 
+## Current integration checkpoint — 23 September 2026
+
+v0.85.0 recovery is published and publicly accepted. PR256 remains a draft retained-presentation successor rebased onto that accepted source; this integration does not allocate a release or accept its remaining qualification. Difficulty/pressure work has the next release slot. The [original retained-presentation checkpoint](ux-delivery-status-20260922.md) preserves the earlier queue and evidence; its version/order statements are historical. Each feature still requires final source/version, qualification and public verification.
+
+The earlier checkpoints below are retained as historical evidence, including the original [default Journey plan](default-journey-release.md). They do not describe the current publication queue.
+
 ## Current priority — 2026-09-22 default Journey delivery
 
 The [six-hour default Journey release plan](default-journey-release.md) is the

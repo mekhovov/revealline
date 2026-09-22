@@ -278,8 +278,19 @@ export async function soloPage(
         super(doc, 'option', { label, text: label, textContent: label, value });
       }
     },
-    fetch: async (path, options) =>
-      (await fetchResponse?.(path, options)) ?? {
+    fetch: async (path, options) => {
+      const custom = await fetchResponse?.(path, options);
+      if (custom !== undefined && custom !== null) return custom;
+      const presentation = String(path).match(/(?:^|\/)presentation\/(.+)$/);
+      if (presentation) {
+        if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
+        const bytes = await readFile(
+          new URL(`../../presentation/${presentation[1]}`, import.meta.url),
+        );
+        if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
+        return new Response(bytes);
+      }
+      return {
         ok: path !== 'build-info.json' || !!buildInfo,
         json: async () => {
           if (path === 'build-info.json' && buildInfo) return structuredClone(buildInfo);
@@ -289,7 +300,8 @@ export async function soloPage(
             ? structuredClone(campaign)
             : JSON.parse(await readFile(new URL(path, new URL('../../', import.meta.url)), 'utf8'));
         },
-      },
+      };
+    },
     requestAnimationFrame(callback) {
       const id = ++nextFrame;
       frames.set(id, callback);
@@ -345,22 +357,76 @@ export async function soloPage(
       },
     },
   };
+  // Presentation bytes, manifests and header/hash validation remain real. Only
+  // browser codecs are modeled, as they are unavailable in the Node DOM host.
+  const pngDimensions = async (blob) => {
+    const bytes = new Uint8Array(await blob.arrayBuffer());
+    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    assert.deepEqual([...bytes.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+    return { width: view.getUint32(16), height: view.getUint32(20) };
+  };
+  if (typeof globalThis.createImageBitmap !== 'function')
+    globals.createImageBitmap = async (blob) => ({ ...(await pngDimensions(blob)), close() {} });
+  if (typeof globalThis.FontFace !== 'function')
+    globals.FontFace = class {
+      constructor(family) {
+        this.family = family;
+      }
+      async load() {
+        return this;
+      }
+    };
+  const codecBlobs = new Map();
+  globals.URL = class extends globalThis.URL {
+    static createObjectURL(blob) {
+      const url = audio?.URLImpl
+        ? audio.URLImpl.createObjectURL(blob)
+        : super.createObjectURL(blob);
+      codecBlobs.set(url, blob);
+      return url;
+    }
+    static revokeObjectURL(url) {
+      codecBlobs.delete(url);
+      if (audio?.URLImpl) audio.URLImpl.revokeObjectURL(url);
+      else super.revokeObjectURL(url);
+    }
+  };
   if (pictures?.Image || rendering?.Image) globals.Image = pictures?.Image ?? rendering.Image;
-  if (audio) {
+  else if (typeof globalThis.Image !== 'function')
+    globals.Image = class {
+      set src(value) {
+        this.source = value;
+        const blob =
+          codecBlobs.get(value) ??
+          (/^data:image\/png;base64,/.test(value)
+            ? new Blob([Buffer.from(value.split(',')[1], 'base64')], { type: 'image/png' })
+            : null);
+        if (!blob) {
+          queueMicrotask(() => this.onerror?.());
+          return;
+        }
+        void pngDimensions(blob).then(
+          ({ width, height }) => {
+            if (this.source !== value) return;
+            this.naturalWidth = this.width = width;
+            this.naturalHeight = this.height = height;
+            this.onload?.();
+          },
+          () => this.onerror?.(),
+        );
+      }
+      get src() {
+        return this.source;
+      }
+      removeAttribute(name) {
+        if (name === 'src') this.source = null;
+      }
+      async decode() {}
+    };
+  if (audio)
     globals.AudioContext = function () {
       return audio.context;
     };
-    if (audio.URLImpl) {
-      globals.URL = class extends globalThis.URL {
-        static createObjectURL(blob) {
-          return audio.URLImpl.createObjectURL(blob);
-        }
-        static revokeObjectURL(url) {
-          return audio.URLImpl.revokeObjectURL(url);
-        }
-      };
-    }
-  }
   win.location = globals.location;
   // Real browser Window and global sessionStorage refer to the same tab store.
   win.sessionStorage = previewStorage;
