@@ -4,9 +4,27 @@ import { campaignKey } from '../library.mjs';
 import { preparedPackIdentity } from './pack-identity.mjs';
 import { LIBRARY_MODES, LIBRARY_TAGS } from './library.mjs';
 
+const ENTRY_FIELDS = [
+  'campaign',
+  'classRecipes',
+  'themes',
+  'visualOverrides',
+  'levelVisuals',
+  'music',
+  'sourcePackFormat',
+  'masteries',
+  'sourcePackId',
+];
+function assertEntryCurrent(entry, original) {
+  if (ENTRY_FIELDS.some((field) => canonicalJSON(entry[field]) !== canonicalJSON(original[field])))
+    throw new Error('This Custom mission changed. Refresh the library before playing.');
+}
+
 /** owners: [{pack, entries}], using exact prepared installed pack objects and all
  * original resolved campaign entries. Do not pass Gentle execution projections.
- * Callbacks receive {pack,entry,level,levelIndex} with original references intact.
+ * Callbacks receive {pack,entry,level,levelIndex,selection} with original references
+ * intact. selection is an immutable scalar target; use it after asynchronous work
+ * and re-resolve through the exact prepared pack, not the mutable entry clones.
  * A host must explicitly return its supported modes; [] omits an unsupported map.
  * Official exclusion requires a positively verified boolean, never a name match.
  */
@@ -82,12 +100,33 @@ export async function customLibrarySources(
     if (official) continue;
     const { sha256: editionId } = await preparedPackIdentity(pack);
     const rows = [],
-      descriptions = new WeakMap();
+      descriptions = new WeakMap(),
+      originals = new WeakMap();
+    function assertBinding(binding) {
+      const original = originals.get(binding);
+      if (!original || binding.entry.campaign?.levels?.[binding.levelIndex] !== binding.level)
+        throw new Error('This Custom mission changed. Refresh the library before playing.');
+      // Full rule/presentation comparison happens only on deliberate action, not
+      // while browsing cards. Original references remain intact and are not frozen.
+      assertEntryCurrent(binding.entry, original);
+    }
     for (const reference of resolved) {
       const entry = byCampaign.get(reference.campaign.id);
-      const key = campaignKey(entry.campaign);
+      assertEntryCurrent(entry, reference); // Async verification cannot adopt mutated clones.
+      const key = campaignKey(reference.campaign);
       for (const [levelIndex, level] of entry.campaign.levels.entries()) {
-        const binding = Object.freeze({ pack, entry, level, levelIndex });
+        const authored = reference.campaign.levels[levelIndex];
+        const selection = Object.freeze({
+          sourcePackId: pack.id,
+          campaignId: reference.campaign.id,
+          campaignKey: key,
+          levelId: authored.id,
+          levelRevision: authored.revision,
+          levelIndex,
+          editionId,
+        });
+        const binding = Object.freeze({ pack, entry, level, levelIndex, selection });
+        originals.set(binding, reference);
         const modes = compatibility(binding);
         if (
           !Array.isArray(modes) ||
@@ -113,11 +152,12 @@ export async function customLibrarySources(
         descriptions.set(
           binding,
           Object.freeze({
-            id: level.id,
-            revision: level.revision,
+            id: selection.levelId,
+            revision: selection.levelRevision,
             campaignKey: key,
-            campaignTitle: entry.campaign.title || entry.campaign.name || entry.campaign.id,
-            name: level.name || level.id,
+            campaignTitle:
+              reference.campaign.title || reference.campaign.name || reference.campaign.id,
+            name: authored.name || authored.id,
             levelIndex,
             modes: Object.freeze([...modes]),
             rules: info.rules,
@@ -140,8 +180,18 @@ export async function customLibrarySources(
         return info;
       },
       availability,
-      prepare,
-      launch,
+      prepare: prepare
+        ? async (binding, context) => {
+            assertBinding(binding);
+            const result = await prepare(binding, context);
+            assertBinding(binding);
+            return result;
+          }
+        : undefined,
+      launch(binding, context) {
+        assertBinding(binding);
+        return launch(binding, context);
+      },
       progress,
       card,
     });
