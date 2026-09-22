@@ -1,5 +1,6 @@
 import { LIBRARY_COLLECTIONS, LIBRARY_MODES } from '../mission-library/library.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
+import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
 
 const modeLabel = (mode) => ({ solo: 'Solo', versus: 'Versus', team: 'Team' })[mode];
 const sizeLabel = (bytes) =>
@@ -97,6 +98,8 @@ export function attachMissionLibraryChooser({
   let opener = null,
     selectedId = '',
     savedScroll = 0,
+    pendingCampaign = '',
+    pendingSelection = null,
     visit = 0,
     destroyed = false,
     message = '';
@@ -109,17 +112,20 @@ export function attachMissionLibraryChooser({
   if (saved && typeof saved === 'object') {
     if (typeof saved.search === 'string') search.value = saved.search.slice(0, 512);
     if (LIBRARY_COLLECTIONS.includes(saved.collection)) collection.value = saved.collection;
-    // Opening another host starts in that host's mode; same-mode handoffs restore.
-    if (saved.mode === mode) {
+    // The caller scopes state by hosting mode. Its browsing filter can point at
+    // another mode and must survive a round trip back to this same host.
+    if (LIBRARY_MODES.includes(saved.mode)) {
+      modeFilter.value = saved.mode;
       selectedId = typeof saved.selectedId === 'string' ? saved.selectedId : '';
       savedScroll = Number.isFinite(saved.scroll) ? Math.max(0, saved.scroll) : 0;
+      pendingCampaign = typeof saved.campaign === 'string' ? saved.campaign : '';
     }
   }
   function state() {
     return {
       search: search.value || '',
       collection: collection.value || '',
-      campaign: campaign.value || '',
+      campaign: campaign.value || pendingCampaign,
       mode: modeFilter.value,
       selectedId,
       scroll: list.scrollTop || 0,
@@ -135,7 +141,7 @@ export function attachMissionLibraryChooser({
       /* Do not block play on browser storage. */
     }
   }
-  function rebuildCampaigns(requested = campaign.value) {
+  function rebuildCampaigns(requested = campaign.value || pendingCampaign) {
     const choices = new Map();
     for (const row of library.forMode(modeFilter.value))
       if (!collection.value || row.collection === collection.value)
@@ -145,15 +151,64 @@ export function attachMissionLibraryChooser({
       ...[...choices].map(([key, title]) => option(title, key)),
     );
     campaign.value = choices.has(requested) ? requested : '';
+    // Remote metadata arrives only after the deliberate open. Keep a saved
+    // campaign pending until that exact option exists, not as a hidden filter.
+    if (campaign.value) pendingCampaign = '';
   }
-  rebuildCampaigns(saved?.mode === mode ? saved.campaign : '');
+  rebuildCampaigns();
+  function retirePendingSelection() {
+    const pending = pendingSelection;
+    pendingSelection = null;
+    pending?.opening.dispose();
+  }
+  function currentSelectionButton(id) {
+    const card = cards.get(id);
+    return card?.button.isConnected &&
+      !card.button.disabled &&
+      list.contains(card.button) &&
+      library.find(id) === card.row
+      ? card.button
+      : null;
+  }
   function restoreSelection() {
-    const button = cards.get(selectedId)?.button;
-    if (button?.isConnected && !button.disabled && list.contains(button))
-      button.focus({ preventScroll: true });
+    const button = currentSelectionButton(selectedId);
+    if (button) button.focus({ preventScroll: true });
     else search.focus({ preventScroll: true });
     list.scrollTop = savedScroll;
+    if (!button && selectedId && !doc.hidden && doc.hasFocus?.() !== false) {
+      const opening = trackMissionLibraryOpening({
+        document: doc,
+        onRetire() {
+          if (pendingSelection?.opening === opening) pendingSelection = null;
+        },
+      });
+      pendingSelection = { opening, visit, id: selectedId, scroll: savedScroll };
+    }
   }
+  function restorePendingSelection() {
+    const pending = pendingSelection;
+    if (!pending) return;
+    if (
+      pending.visit !== visit ||
+      !dialog.open ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      !pending.opening.current()
+    ) {
+      retirePendingSelection();
+      return;
+    }
+    const button = currentSelectionButton(pending.id);
+    if (!button) return;
+    retirePendingSelection();
+    button.focus({ preventScroll: true });
+    list.scrollTop = pending.scroll;
+  }
+  function selectionVisibilityChanged() {
+    if (doc.hidden) retirePendingSelection();
+  }
+  doc.addEventListener('visibilitychange', selectionVisibilityChanged);
+  view.addEventListener?.('blur', retirePendingSelection);
   async function activate(row, button) {
     // Detached cards retain their event handlers. A past view (or a closed
     // chooser) must not launch or prepare content after its intent has ended.
@@ -168,6 +223,7 @@ export function attachMissionLibraryChooser({
       !row.modes.includes(modeFilter.value)
     )
       return;
+    retirePendingSelection();
     selectedId = row.id;
     remember();
     const activeMode = modeFilter.value;
@@ -333,6 +389,7 @@ export function attachMissionLibraryChooser({
         card.button.remove();
         cards.delete(id);
       }
+    restorePendingSelection();
     observeDiagrams();
   }
   // Only visible starting-map diagrams are built. Never request/decode reward
@@ -406,6 +463,7 @@ export function attachMissionLibraryChooser({
     else if (dialog.open) observeDiagrams();
   });
   function close() {
+    retirePendingSelection();
     ++visit;
     remember();
     for (const controller of downloads) controller.abort();
@@ -415,6 +473,7 @@ export function attachMissionLibraryChooser({
   }
   function open(origin = doc.activeElement, { returnLabel = 'Back to game' } = {}) {
     if (destroyed) return;
+    retirePendingSelection();
     ++visit;
     opener = origin;
     back.textContent = returnLabel;
@@ -426,6 +485,8 @@ export function attachMissionLibraryChooser({
     restoreSelection();
   }
   search.addEventListener('input', () => {
+    retirePendingSelection();
+    pendingCampaign = '';
     ++visit; // Late preparation feedback belongs to the view that requested it.
     message = '';
     selectedId = '';
@@ -436,17 +497,20 @@ export function attachMissionLibraryChooser({
   });
   for (const control of [collection, campaign, modeFilter])
     control.addEventListener('change', () => {
+      retirePendingSelection();
       ++visit;
       message = '';
       selectedId = '';
       savedScroll = 0;
       list.scrollTop = 0;
+      pendingCampaign = '';
       if (control !== campaign) rebuildCampaigns();
       if (control === modeFilter) invalidateDiagrams();
       render();
       remember();
     });
   back.onclick = close;
+  dialog.addEventListener('close', retirePendingSelection);
   dialog.addEventListener('cancel', (event) => {
     if (event.target === dialog) {
       event.preventDefault();
@@ -468,11 +532,19 @@ export function attachMissionLibraryChooser({
     state,
     reveal(id) {
       const row = library.find(id);
-      if (!row || !row.modes.includes(modeFilter.value)) return false;
-      if (!list.contains(cards.get(id)?.button)) {
+      if (!row || !row.modes.includes(mode)) return false;
+      retirePendingSelection();
+      // Exact incoming selections belong to this host, even when its last
+      // browsing session was looking at a different mode.
+      const modeChanged = modeFilter.value !== mode;
+      modeFilter.value = mode;
+      pendingCampaign = '';
+      if (modeChanged || !list.contains(cards.get(id)?.button)) {
         search.value = '';
         collection.value = '';
         campaign.value = '';
+        rebuildCampaigns();
+        if (modeChanged) invalidateDiagrams();
         render();
       }
       selectedId = id;
@@ -494,6 +566,8 @@ export function attachMissionLibraryChooser({
       unsubscribe();
       observer?.disconnect();
       media?.removeEventListener?.('change', resizeFilters);
+      doc.removeEventListener('visibilitychange', selectionVisibilityChanged);
+      view.removeEventListener?.('blur', retirePendingSelection);
       dialog.remove();
     },
   };

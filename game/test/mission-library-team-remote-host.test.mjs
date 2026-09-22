@@ -189,12 +189,12 @@ for (const interrupt of ['blur', 'Escape'])
     assert.equal(f.visits.length, 0);
   });
 
-test('saved other-mode browsing never overrides the initial Team-mode selector', async (t) => {
+test('saved other-mode browsing restores Team’s own filter and lazily loads matching missions', async (t) => {
   const values = new Map([
     [
       'revealline.mission-library.selector.v1.team',
       JSON.stringify({
-        search: '',
+        search: 'Two keepers',
         collection: '',
         campaign: '',
         mode: 'solo',
@@ -210,9 +210,68 @@ test('saved other-mode browsing never overrides the initial Team-mode selector',
     },
   });
   await open(f);
-  assert.equal(f.$('journey-mode').value, 'team');
-  assert.equal(cards(f).length, 14);
-  assert.equal(f.reads.length, 0);
+  assert.equal(f.$('journey-mode').value, 'solo');
+  assert.equal(f.$('journey-search').value, 'Two keepers');
+  await waitFor(() => cards(f).length === 3);
+  assert(cards(f).some((card) => card.querySelector('strong').textContent === 'Two keepers'));
+  assert.equal(f.$('coop-library-preview').hidden, true);
+  assert.equal(f.reads.length, 4);
+  assert.equal(f.visits.length, 0);
+  assert.equal(f.$('coop-stage').textContent, 'FIRST CONNECTION');
+  assert.equal(f.doc.activeElement.id, 'journey-search');
+});
+
+test('a Team page return restores the actual departing Solo search and campaign without another selection', async (t) => {
+  const values = new Map();
+  const returnStorage = {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+  };
+  let campaign, missionId;
+  await t.test('depart from Team’s Solo-filtered chooser', async (t) => {
+    const f = await fixture(t, { returnStorage });
+    await open(f);
+    mode(f, 'solo');
+    await loaded(f);
+    f.$('journey-search').value = 'Two keepers';
+    f.$('journey-search').emit('input');
+    assert.equal(cards(f).length, 3);
+    const button = cards(f).find(
+      (card) => card.querySelector('strong').textContent === 'Two keepers',
+    );
+    missionId = button.dataset.missionId;
+    campaign = JSON.stringify(JSON.parse(missionId).slice(0, 3));
+    assert(f.$('journey-campaign').children.some((option) => option.value === campaign));
+    f.$('journey-campaign').value = campaign;
+    f.$('journey-campaign').emit('change');
+    button.focus();
+    f.$('journey-cards').scrollTop = 37;
+    f.tap('Enter');
+    await waitFor(() => f.visits.length === 1);
+    assert.equal(new URL(f.visits[0]).searchParams.get('library-mission'), missionId);
+    const saved = JSON.parse(values.get('revealline.mission-library.selector.v1.team'));
+    assert.equal(saved.mode, 'solo');
+    assert.equal(saved.search, 'Two keepers');
+    assert.equal(saved.campaign, campaign);
+    assert.equal(saved.selectedId, missionId);
+    assert.equal(saved.scroll, 37);
+  });
+  await t.test('return to Team and deliberately reopen the same chooser', async (t) => {
+    const f = await fixture(t, { returnStorage });
+    const pictures = f.artwork.calls.reads.length;
+    await open(f);
+    assert.equal(f.$('journey-mode').value, 'solo');
+    assert.equal(f.$('journey-search').value, 'Two keepers');
+    await waitFor(() => cards(f).length === 1);
+    assert.equal(f.$('journey-campaign').value, campaign);
+    assert.equal(cards(f)[0].dataset.missionId, missionId);
+    assert.equal(f.reads.length, 4);
+    assert.equal(f.artwork.calls.reads.length, pictures);
+    assert.equal(f.visits.length, 0);
+    assert.equal(f.doc.activeElement, cards(f)[0]);
+    assert.equal(f.$('journey-cards').scrollTop, 37);
+    assert.equal(f.$('coop-library-preview').hidden, true);
+  });
 });
 
 test('Team remote feedback retains a bounded status row and 44px Retry target in short landscape', async () => {

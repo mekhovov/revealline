@@ -153,6 +153,12 @@ test('session state is stable across releases, isolated by host mode and touches
     true,
     'Filter mode may differ from the hosting mode.',
   );
+  assert.deepEqual(
+    createMissionLibrarySessionState({ mode: 'solo', storage }).read(),
+    state({ mode: 'team' }),
+    'A page return restores the source host’s selected filter, not the host mode.',
+  );
+  assert.equal(createMissionLibrarySessionState({ mode: 'team', storage }).read(), null);
 });
 
 test('failed storage retains an in-memory copy and malformed data never deletes other content', () => {
