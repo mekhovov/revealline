@@ -258,3 +258,16 @@ verification. It must receive a new pinned native check before acceptance.
   fixture case enters session-only storage recovery and omits the expected saved
   picture receipt. It is under investigation with assertions preserved. This is
   an open qualification gate, not a clean full-suite claim.
+
+### Compact library checkpoint
+
+- At narrow/short viewports, Search stays visible and Collection/Campaign/Mode
+  share an optional native Filters disclosure on the same screen. Active filters
+  remain indicated. Resizing preserves values and moves focus out of a collapsing
+  control rather than leaving it hidden.
+- Compact cards retain mission, campaign, edition, textual tags, actual rules and
+  availability. Detailed route/mastery/diagrams are optional; hidden diagrams are
+  not constructed.44px controls and a minimum card viewport are retained.
+-20 shared chooser/compact tests and3 targeted existing Solo setup tests pass.
+  Pinned native phone/landscape remeasurement remains mandatory; CSS assertions
+  alone do not prove the reported82px viewport defect is resolved.
