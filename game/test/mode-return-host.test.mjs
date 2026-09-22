@@ -61,6 +61,8 @@ for (const [kind, version, label] of [
       assert.equal(h.rendered.run.player.cutting, true);
     }
     h.$('shell-packs').click();
+    await settle(() => h.$('journey-chooser')?.open && h.$('journey-collection'));
+    h.$('mission-picker-setup').open = true;
     h.$('shell-mode-choice').open = true;
     h.$(entryId).focus();
   }
@@ -152,7 +154,7 @@ for (const [kind, version, label] of [
           const before = [...storage.map];
           const h = await host(t, { storage, previewStorage, search, titleScreen: true });
           assert.equal(
-            h.$('shell-missions').open,
+            h.$('journey-chooser')?.open,
             true,
             JSON.stringify({
               active: h.doc.activeElement.id,
@@ -163,9 +165,16 @@ for (const [kind, version, label] of [
               theme: h.$('theme-select').value,
             }),
           );
-          assert.equal(h.$('shell-home').open, false);
-          assert.equal(h.$('shell-mode-choice').open, true);
-          assert.equal(h.doc.activeElement.id, entryId);
+          assert.equal(
+            h.$('shell-home').open,
+            true,
+            'Unified selector keeps its Back-to-menu parent.',
+          );
+          assert.equal(h.$('journey-mode').value, 'solo');
+          assert.equal(h.doc.activeElement.classList.contains('journey-card'), true);
+          const identity = JSON.parse(h.doc.activeElement.dataset.missionId);
+          assert.deepEqual(JSON.parse(identity[0]), ['classic', 'base', null]);
+          assert.equal(identity[3], selected.level);
           assert.deepEqual(
             {
               pack: h.$('pack-select').value,
@@ -184,6 +193,7 @@ for (const [kind, version, label] of [
         const h = await host(t, { storage, previewStorage, search, titleScreen: true });
         assert.equal(h.$('shell-home').open, true);
         assert.equal(h.$('shell-missions').open, false);
+        assert.equal(h.$('journey-chooser')?.open ?? false, false);
         assert.equal(h.rendered.run.tick, 0);
       });
     });

@@ -31,6 +31,7 @@ import {
   createMissionLibrarySessionState,
   missionLibraryHref,
   readMissionLibraryHandoff,
+  readMissionLibraryReturn,
 } from '../mission-library/handoff.mjs';
 import { createCouchChapterInstaller } from './couch-chapter-install.mjs';
 import { loadOptionalCatalog } from '../optional-chapters.mjs';
@@ -204,6 +205,8 @@ let featured,
   catalogue,
   candidateJourney,
   journeyPreferences;
+// Read-only fallback for remote Journey cards when this host runs Classic rules.
+const browsingJourneyPreferences = createJourneyPreferences({ window });
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
@@ -226,6 +229,7 @@ const releaseArtwork = (event) => {
   installed?.dispose();
   staticPictures?.dispose();
   journeyPreferences?.dispose();
+  browsingJourneyPreferences.dispose();
   boardFootprints?.dispose();
   window.removeEventListener('pagehide', releaseArtwork);
 };
@@ -261,6 +265,9 @@ try {
   );
   const authoredJourney = !!authoredRoute;
   const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams);
+  const librarySourceReturn = readMissionLibraryReturn(new URL(location.href).searchParams, {
+    mode: 'versus',
+  });
   let journeyProfile = null,
     journeyChooser = null,
     journeySkipArmed = null,
@@ -1447,9 +1454,18 @@ try {
     onLeaveRequest: pause,
     onMissions: openMissionLibrary,
     getSoloReturnToken: () =>
-      readVersusSoloReturnToken({ href: location.href, storage: soloReturnStorage }),
+      !libraryHandoff ||
+      (librarySourceReturn?.mode === 'solo' && librarySourceReturn.journey === 'legacy')
+        ? readVersusSoloReturnToken({ href: location.href, storage: soloReturnStorage })
+        : null,
     getSoloJourneyRoute: () =>
-      candidateJourney?.owns(roundRecipe?.entry) ? authoredRoute.id : null,
+      librarySourceReturn?.mode === 'solo'
+        ? librarySourceReturn.journey
+        : candidateJourney?.owns(roundRecipe?.entry)
+          ? authoredRoute.id
+          : null,
+    getTeamJourneyRoute: () =>
+      librarySourceReturn?.mode === 'team' ? librarySourceReturn.journey : null,
     onTransition: ({ to, back = false } = {}) => {
       ++libraryOpenEpoch;
       cancelLibraryDecision();
@@ -1565,6 +1581,7 @@ try {
       mode: context.mode,
       journey: row.collection === 'Journey' ? row.editionId : 'legacy',
       missionId: row.id,
+      sourceJourney: authoredRoute?.id ?? 'legacy',
     });
     if (!(await confirmLibraryReplacement(context, `Open ${row.name}?`))) return false;
     if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
@@ -1662,7 +1679,7 @@ try {
       const { createRemoteTeamLibrarySources } = await import('../mission-library/remote-team.mjs');
       const teamSources = createRemoteTeamLibrarySources({
         launch: departLibraryMission,
-        difficulty: () => journeyPreferences?.snapshot().difficulty ?? 'standard',
+        difficulty: () => (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
       });
       libraryInstaller ??= createCouchChapterInstaller({
         channel: contentChannel,
@@ -1689,12 +1706,15 @@ try {
                   journeyMissionDetails(
                     preview.manifest(
                       mission,
-                      journeyPreferences?.snapshot().difficulty ?? 'standard',
+                      (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
                     ),
                   ),
                 tags: (mission) => authoredJourneyMissionTags(mission, preview.manifest(mission)),
                 card: (mission) =>
-                  preview.card(mission, journeyPreferences?.snapshot().difficulty ?? 'standard'),
+                  preview.card(
+                    mission,
+                    (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+                  ),
                 launch: async (mission, context) => {
                   if (!context.isCurrent()) return false;
                   if (!candidateJourney || context.mode !== 'versus')
@@ -1721,7 +1741,10 @@ try {
                 details: (mission) =>
                   journeyMissionDetails(
                     librarySoloPreview
-                      .select(mission, journeyPreferences?.snapshot().difficulty ?? 'standard')
+                      .select(
+                        mission,
+                        (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+                      )
                       ?.manifests.find((item) => item.missionId === mission.levelId),
                   ),
                 tags: (mission) =>
@@ -1734,7 +1757,7 @@ try {
                 card: (mission) =>
                   librarySoloPreview.card(
                     mission,
-                    journeyPreferences?.snapshot().difficulty ?? 'standard',
+                    (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
                   ),
                 launch: (_mission, context) => departLibraryMission(context),
               }),
@@ -1822,6 +1845,8 @@ try {
             opener.focus({ preventScroll: true });
         },
       });
+      if (!journeyPreferences)
+        browsingJourneyPreferences.subscribe(() => journeyChooser?.refresh());
       missionLibrary = result;
       return result;
     })();

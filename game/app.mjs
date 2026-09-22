@@ -36,6 +36,7 @@ import {
   createMissionLibrarySessionState,
   missionLibraryHref,
   readMissionLibraryHandoff,
+  readMissionLibraryReturn,
 } from './mission-library/handoff.mjs';
 import { createDuel } from './multiplayer.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
@@ -379,6 +380,9 @@ try {
       })
     : null;
   const journeyPreferences = authoredJourney ? createJourneyPreferences({ window }) : null;
+  // Legacy browsing reads the same next-attempt preset as receiving Journey
+  // hosts, without changing Legacy rules or writing a preference.
+  const browsingJourneyPreferences = journeyPreferences || createJourneyPreferences({ window });
   function difficultyLabel(entry) {
     return candidateHost?.owns(entry)
       ? entry.difficulty[0].toUpperCase() + entry.difficulty.slice(1)
@@ -687,13 +691,10 @@ try {
         { ...returnedSelection, format: 'revealline-selection.v1' },
         {
           select: (key) => executionCatalog.select(key, library.preferences.campaignDifficulty),
-          playable: (entry, index) =>
-            difficultyNavigation.playable(
-              entry,
-              library.campaigns,
-              progressFor(library, entry.campaign),
-              index,
-            ),
+          // A consumed, source-qualified return restores an exact selectable
+          // mission in the unified library. Earned unlocks are not required and
+          // no clear is invented; ordinary bookmark/Continue gates stay below.
+          playable: () => true,
         },
       )
     : null;
@@ -2237,6 +2238,7 @@ try {
       unifiedLibrary?.library.dispose();
       disposeUnifiedPreview?.();
       journeyPreferences?.dispose();
+      if (browsingJourneyPreferences !== journeyPreferences) browsingJourneyPreferences.dispose();
       missionThumbnails.close();
       libraryPanel.dispose();
       window.removeEventListener('beforeunload', protectSessionOriginals);
@@ -2568,11 +2570,16 @@ try {
   }
   const catalogueHref = authoredRoute ? './?journey=legacy' : './';
   const catalogueLabel = authoredRoute ? 'Legacy missions' : 'New Journey';
+  const librarySourceReturn = readMissionLibraryReturn(params, { mode: 'solo' });
+  const librarySourceDestination = librarySourceReturn
+    ? `${librarySourceReturn.mode === 'team' ? 'couch/relay-rescue.html' : 'couch/'}?${new URLSearchParams({ journey: librarySourceReturn.journey, return: 'solo' })}`
+    : null;
   const modeDestinations = Object.freeze({
     ...(authoredModeDestinations('solo', authoredRoute?.id ?? 'legacy') ?? {
       team: 'couch/relay-rescue.html?journey=legacy&return=solo',
       versus: 'couch/?journey=legacy&return=solo',
     }),
+    ...(librarySourceReturn ? { [librarySourceReturn.mode]: librarySourceDestination } : {}),
     catalogue: catalogueHref,
     library: './',
   });
@@ -2597,15 +2604,46 @@ try {
     candidateHost?.owns(activeEntry) ? authoredRoute.id : null;
   const modeDestination = (ticket) =>
     ticket.libraryHref ||
+    (librarySourceReturn?.mode === ticket.kind && librarySourceDestination) ||
     authoredJourneyModeHref(ticket.journeyRouteId, ticket.kind) ||
     modeDestinations[ticket.kind];
   function syncAuthoredModeLinks() {
     const href =
-      authoredJourneyModeHref(currentAuthoredModeRoute(), 'versus') || modeDestinations.versus;
+      (librarySourceReturn?.mode === 'versus' && librarySourceDestination) ||
+      authoredJourneyModeHref(currentAuthoredModeRoute(), 'versus') ||
+      modeDestinations.versus;
     for (const id of ['shell-versus', 'shell-title-versus']) $(id).setAttribute('href', href);
   }
   function prepareModeHint(ticket) {
-    if (ticket.kind === 'library') return { token: null, href: ticket.libraryHref };
+    if (ticket.kind === 'library') {
+      if (ticket.journeyRouteId || ticket.libraryMode === 'solo')
+        return { token: null, href: ticket.libraryHref };
+      const prepared =
+        ticket.libraryMode === 'versus'
+          ? modeReturnV2.prepare({
+              origin: 'solo-missions',
+              destination: 'versus',
+              selection: ticket.selection,
+            })
+          : modeReturn.prepare(ticket.selection);
+      return {
+        token: prepared.token,
+        href: missionLibraryHref({
+          baseURL: location.href,
+          currentMode: 'solo',
+          mode: ticket.libraryMode,
+          journey:
+            ticket.libraryTarget.collection === 'Journey'
+              ? ticket.libraryTarget.editionId
+              : 'legacy',
+          missionId: ticket.libraryTarget.id,
+          sourceJourney: 'legacy',
+          returnToken: prepared.token,
+        }),
+      };
+    }
+    if (librarySourceReturn?.mode === ticket.kind)
+      return { token: null, href: new URL(modeDestination(ticket), location.href).href };
     if (ticket.kind === 'catalogue')
       return { token: null, href: new URL(catalogueHref, location.href).href };
     // Authored progress and suspended attempts already have their own route.
@@ -2621,7 +2659,11 @@ try {
       : modeReturn.prepare(ticket.selection);
   }
   function clearModeHint(ticket) {
-    if (ticket.token) (ticket.kind === 'versus' ? modeReturnV2 : modeReturn).clear(ticket.token);
+    if (ticket.token)
+      ((ticket.kind === 'library' ? ticket.libraryMode : ticket.kind) === 'versus'
+        ? modeReturnV2
+        : modeReturn
+      ).clear(ticket.token);
   }
   function cancelModeDeparture({ close = false, restore = false, clearHint = false } = {}) {
     const ticket = modeDeparture;
@@ -2685,7 +2727,7 @@ try {
         : 'This current flight is session-only: it remains paused in this tab. Leaving may lose this attempt. This flight was not verified as safely saved.';
     $('mode-leave-status').textContent = `${flight} ${
       ticket.kind === 'library'
-        ? `This opens ${ticket.libraryTarget.name} directly. Its original rules and progression remain separate.`
+        ? `This opens ${ticket.libraryTarget.name} directly. Its original rules and progression remain separate.${ticket.fallback ? ' Return selection could not be saved. Back will open the original Solo edition title, not this exact menu selection.' : ''}`
         : ticket.kind === 'catalogue'
           ? `This opens ${catalogueLabel}. Its missions and progress stay separate. Returning does not resume a flight automatically.`
           : ticket.journeyRouteId
@@ -2804,6 +2846,7 @@ try {
       selection: modeSelection(),
       journeyRouteId: currentAuthoredModeRoute(),
       libraryTarget,
+      libraryMode,
       libraryHref:
         kind === 'library'
           ? missionLibraryHref({
@@ -2812,6 +2855,7 @@ try {
               mode: libraryMode,
               journey: libraryTarget.collection === 'Journey' ? libraryTarget.editionId : 'legacy',
               missionId: libraryTarget.id,
+              sourceJourney: currentAuthoredModeRoute() || 'legacy',
             })
           : null,
       unfinished: unfinishedFlight(),
@@ -8410,7 +8454,7 @@ try {
       if (!candidateHost) await profile.load();
       const manifestFor = (
         mission,
-        difficulty = journeyPreferences?.snapshot().difficulty ?? 'standard',
+        difficulty = browsingJourneyPreferences.snapshot().difficulty,
       ) =>
         host
           .select(mission, difficulty)
@@ -8422,8 +8466,7 @@ try {
         profile,
         details: (mission) => journeyMissionDetails(manifestFor(mission)),
         tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
-        card: (mission) =>
-          host.card(mission, journeyPreferences?.snapshot().difficulty ?? 'standard'),
+        card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
         launch: (mission, context) => {
           if (context.isCurrent?.() === false) return false;
           if (!candidateHost || context.mode !== 'solo') return departLibraryMission(context);
@@ -8438,20 +8481,17 @@ try {
         profile,
         details: (mission) =>
           journeyMissionDetails(
-            versusPreview.manifest(
-              mission,
-              journeyPreferences?.snapshot().difficulty ?? 'standard',
-            ),
+            versusPreview.manifest(mission, browsingJourneyPreferences.snapshot().difficulty),
           ),
         tags: (mission) => authoredJourneyMissionTags(mission, versusPreview.manifest(mission)),
         card: (mission) =>
-          versusPreview.card(mission, journeyPreferences?.snapshot().difficulty ?? 'standard'),
+          versusPreview.card(mission, browsingJourneyPreferences.snapshot().difficulty),
         launch: (_mission, context) => departLibraryMission(context),
       });
       const { createRemoteTeamLibrarySources } = await import('./mission-library/remote-team.mjs');
       const teamSources = createRemoteTeamLibrarySources({
         launch: departLibraryMission,
-        difficulty: () => journeyPreferences?.snapshot().difficulty ?? 'standard',
+        difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
       });
       const result = await createInstalledMissionLibrary({
         index,
@@ -8534,12 +8574,41 @@ try {
         if (!candidateHost) host.preparer.dispose();
       };
       const state = createMissionLibrarySessionState({ mode: 'solo' });
+      // A consumed checked return restores the original selection, not the
+      // remote card used to leave. Registry identities are compared only for
+      // display focus; runtime ownership still belongs to each source adapter.
+      const returnedRow = exactReturn
+        ? result.library.missions.find((row) => {
+            if (!['Classic', 'Custom'].includes(row.collection) || !row.modes.includes('solo'))
+              return false;
+            const owner = JSON.parse(row.ownerId);
+            const sourcePackId =
+              owner[0] === 'classic' ? owner[2] : owner[0] === 'custom' ? owner[1] : undefined;
+            return (
+              row.runtimeId === returnedSelection.levelId &&
+              JSON.parse(row.campaignKey)[2] === returnedSelection.campaignKey &&
+              sourcePackId === (activeEntry.sourcePackId ?? null) &&
+              row.modes.includes('solo') &&
+              result.library.availability(row, 'solo').state === 'ready'
+            );
+          })
+        : null;
       retiredJourneyChooser?.destroy();
       retiredJourneyChooser = null;
       unifiedChooser = attachJourneyChooser({
         library: result.library,
         profile,
-        readState: state.read,
+        readState: () =>
+          returnedRow
+            ? {
+                search: '',
+                collection: '',
+                campaign: '',
+                mode: 'solo',
+                selectedId: returnedRow.id,
+                scroll: 0,
+              }
+            : state.read(),
         writeState: state.write,
         launchContext: libraryActivationContext,
         onPause: () => {
@@ -8555,11 +8624,14 @@ try {
           });
         },
       });
+      if (!journeyPreferences)
+        browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());
       // Keep the native settings and their guarded handlers, but not the old
       // pack/level/campaign browser. Settings describe the current Solo host,
       // independently of the library's cross-mode browsing filter.
       const setup = $('mission-picker-setup');
       if (setup) {
+        setup.querySelector('.mission-picker-setup-fields').append($('shell-mode-choice'));
         setup.classList.add('mission-library-setup');
         setup.open = false;
         setup.querySelector('summary').textContent = 'Current Solo flight setup';
@@ -9069,7 +9141,9 @@ try {
         if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
       },
     });
-    void (async () => {
+    // Finish this owned incoming selection before normal boot focus runs. The
+    // opening lease still retires on genuinely newer input or lost foreground.
+    await (async () => {
       try {
         const host = await getUnifiedMissionLibrary();
         opening.dispose();
@@ -9120,10 +9194,9 @@ try {
     document.hasFocus?.() !== false &&
     (document.activeElement === document.body || !availableFocusTarget(document.activeElement))
   ) {
-    gameShell.openMissions();
-    $('shell-mode-choice').open = true;
-    const returnFocus = $(returnContext.focus === 'versus' ? 'shell-versus' : 'shell-team');
-    if (availableFocusTarget(returnFocus)) returnFocus.focus({ preventScroll: true });
+    // This selector is lazy. Await its owned opening so normal boot focus does
+    // not retire it; a real newer focus/visibility choice still cancels it.
+    await openUnifiedMissions($('shell-play'), { returnLabel: 'Back to menu' });
   }
   const workshopReturn = readWorkshopReturn(location.search);
   if (

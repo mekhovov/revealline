@@ -113,7 +113,9 @@ test('Team exact nonfirst Versus handoff keeps its attempt on Stay and only depa
   assert.equal(destination.pathname, '/game/couch/');
   assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
   assert.equal(destination.searchParams.get('library-mission'), exactId);
-  assert.equal(destination.searchParams.size, 2);
+  assert.equal(destination.searchParams.get('return'), 'team');
+  assert.equal(destination.searchParams.get('journey-return'), 'legacy');
+  assert.equal(destination.searchParams.size, 4);
 });
 
 test('late other-mode metadata cannot replace Team filter or newer focus; later deliberate selection uses it', async (t) => {

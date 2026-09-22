@@ -22,6 +22,26 @@ function modeId(value) {
   if (!LIBRARY_MODES.includes(value)) throw new TypeError('Unknown mission library mode.');
   return value;
 }
+const journeyForMode = (journey, mode) =>
+  journey === 'legacy' ||
+  (mode === 'team' ? journey === 'team-spatial-originals-1' : isAuthoredJourneyRouteId(journey));
+// These finite historical Team routes are retained by relay-rescue's entry
+// factory. Source navigation may return to them; this does not qualify any new
+// destination mission for the unified library or fabricate a Team edition.
+const TEAM_SOURCE_ROUTES = Object.freeze([
+  'team-greybox',
+  'team-originals',
+  'team-pressure-originals-1',
+  'team-spatial-originals-1',
+  'team-timed-originals',
+  'team-window-spatial-1',
+  'team-depot-spatial-1',
+]);
+export const isMissionLibrarySourceJourney = (journey, mode) =>
+  LIBRARY_MODES.includes(mode) &&
+  (journey === 'legacy' ||
+    (mode === 'team' ? TEAM_SOURCE_ROUTES.includes(journey) : isAuthoredJourneyRouteId(journey)));
+const returnTokenValid = (token) => typeof token === 'string' && /^[0-9a-f]{32}$/.test(token);
 
 /** An opaque lookup request, not runtime, installation, progress or award authority.
  * Missing is different from malformed: hosts must show explicit invalid intent
@@ -36,21 +56,75 @@ export function readMissionLibraryHandoff(params) {
   return missionId(values[0]);
 }
 
-/** Fixed same-game routes retain the selected release prefix. No inherited query,
- * fragment, arbitrary destination path, save token or historical pack intent is
- * transported. The receiving host must find the exact row and validate its owner.
+/** Independent, finite source navigation for an exact library handoff. Invalid
+ * hints fall back normally; they never change the selected destination owner.
+ * Token authenticity still belongs to the existing mode-return reader, not here.
  */
-export function missionLibraryHref({ baseURL, currentMode, mode, journey, missionId: id }) {
+export function readMissionLibraryReturn(params, { mode } = {}) {
+  try {
+    modeId(mode);
+    if (!readMissionLibraryHandoff(params)) return null;
+    const destinations = params.getAll('journey'),
+      sources = params.getAll('return'),
+      routes = params.getAll('journey-return');
+    if (
+      destinations.length !== 1 ||
+      !journeyForMode(destinations[0], mode) ||
+      sources.length !== 1 ||
+      !LIBRARY_MODES.includes(sources[0]) ||
+      sources[0] === mode ||
+      routes.length !== 1 ||
+      !isMissionLibrarySourceJourney(routes[0], sources[0]) ||
+      ['mode-return', 'mode-return-v2', 'practice'].some((key) => params.has(key))
+    )
+      return null;
+    const tokens = params.getAll('return-token'),
+      tokensV2 = params.getAll('return-token-v2');
+    if (tokens.length || tokensV2.length) {
+      const expected = mode === 'team' ? tokens : mode === 'versus' ? tokensV2 : [];
+      if (
+        sources[0] !== 'solo' ||
+        routes[0] !== 'legacy' ||
+        tokens.length + tokensV2.length !== 1 ||
+        expected.length !== 1 ||
+        !returnTokenValid(expected[0])
+      )
+        return null;
+    }
+    return Object.freeze({ mode: sources[0], journey: routes[0] });
+  } catch {
+    return null;
+  }
+}
+
+/** Fixed same-game routes retain the selected release prefix. No inherited query,
+ * arbitrary path or token is transported. Explicit source intent and an optional
+ * token issued by the checked mode-return flow are separate from mission owner.
+ */
+export function missionLibraryHref({
+  baseURL,
+  currentMode,
+  mode,
+  journey,
+  missionId: id,
+  sourceJourney,
+  returnToken,
+}) {
   modeId(currentMode);
   modeId(mode);
   missionId(id);
-  if (
-    !(
-      journey === 'legacy' ||
-      (mode === 'team' ? journey === 'team-spatial-originals-1' : isAuthoredJourneyRouteId(journey))
-    )
-  )
+  if (!journeyForMode(journey, mode))
     throw new TypeError('Mission handoff needs a registered destination Journey route.');
+  if (sourceJourney !== undefined && !isMissionLibrarySourceJourney(sourceJourney, currentMode))
+    throw new TypeError('Mission handoff needs a registered source Journey route.');
+  if (
+    returnToken !== undefined &&
+    (currentMode !== 'solo' ||
+      !['team', 'versus'].includes(mode) ||
+      sourceJourney !== 'legacy' ||
+      !returnTokenValid(returnToken))
+  )
+    throw new TypeError('Mission handoff needs an issued, mode-qualified return token.');
   const base = new URL(baseURL);
   if (!['http:', 'https:', 'file:'].includes(base.protocol) || base.username || base.password)
     throw new TypeError('Mission handoff needs a same-game HTTP or file URL.');
@@ -61,6 +135,12 @@ export function missionLibraryHref({ baseURL, currentMode, mode, journey, missio
   );
   target.searchParams.set('journey', journey);
   target.searchParams.set(MISSION_LIBRARY_HANDOFF_PARAM, id);
+  if (sourceJourney !== undefined && currentMode !== mode) {
+    target.searchParams.set('return', currentMode);
+    target.searchParams.set('journey-return', sourceJourney);
+    if (returnToken !== undefined)
+      target.searchParams.set(mode === 'team' ? 'return-token' : 'return-token-v2', returnToken);
+  }
   return target.href;
 }
 
