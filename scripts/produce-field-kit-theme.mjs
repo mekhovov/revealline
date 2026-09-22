@@ -17,6 +17,7 @@ import {
   TEAM_EQUIPMENT_DESCRIPTIONS,
   teamEquipmentArt,
 } from '../game/presentation/team-equipment-art.mjs';
+import { fieldKitTeamRecipeQuality } from './team-recipe-review.mjs';
 import { encodeSpritePNG, inspectSprite } from './produce-field-kit-sprites.mjs';
 import { compilePresentation } from './compile-presentation.mjs';
 import { writePresentation, retainedPresentationPath } from './write-presentation.mjs';
@@ -224,6 +225,25 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
       },
       await read(`game/assets/field-kit/sprites/${filePath}`),
     );
+  }
+  const teamReviewBytes = await read('docs/verification/team37/review.json');
+  const inheritedAssets = Object.fromEntries(
+    assets.filter((asset) => asset.kind === 'image').map((asset) => [asset.id, asset]),
+  );
+  for (const asset of assets) {
+    if (!asset.id.startsWith('team.') || asset.kind !== 'recipe') continue;
+    const slotId = asset.id.slice(0, -'.field-kit'.length);
+    const defaultAsset = baseline.assets.find(
+      (entry) => entry.id === asset.provenance.parent.id && entry.revision === 1,
+    );
+    asset.quality = fieldKitTeamRecipeQuality({
+      slotId,
+      source: recipeSources.team,
+      recipe: asset.recipe,
+      defaultAsset,
+      inheritedAssets,
+      reviewBytes: teamReviewBytes,
+    });
   }
   const equipmentSource = 'game/presentation/team-equipment-art.mjs';
   const equipmentHash = hash(await read(equipmentSource));

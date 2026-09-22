@@ -8,6 +8,7 @@ import { validateThemeBundle } from '../presentation/model.mjs';
 import { inspectPresentationDependencies } from '../presentation/dependencies.mjs';
 import {
   FIELD_KIT_RETAINED_RUNTIME as pin,
+  FIELD_KIT_RETAINED_RUNTIME_60 as pin60,
   readFieldKitRetainedOutput,
 } from '../../scripts/field-kit-retained-runtime.mjs';
 import { compileFieldKitProduction } from '../../scripts/produce-field-kit-theme.mjs';
@@ -127,21 +128,24 @@ function fixture() {
   })());
 }
 
-test('retained production input has one code-owned original path and validates raw bytes', async () => {
+test('retained production input has two code-owned original paths and validates raw bytes', async () => {
   const { original, production } = await fixture();
   const reads = [];
   const files = await readFieldKitRetainedOutput({
     assets: production.assets,
     read: async (path) => {
       reads.push(path);
-      return original;
+      return read(path);
     },
   });
-  assert.deepEqual(reads, [pin.path]);
+  assert.deepEqual(reads, [pin.path, pin60.path]);
   assert.equal(pin.commit, 'b810521a53af7be145acb8dedce0a01a747339cf');
   assert.equal(pin.originalPath, 'game/presentation/compiled/runtime.json');
-  assert.equal(sha(files.get('runtime.json')), pin.sha256);
-  assert.deepEqual(files.get('runtime.json'), original);
+  assert.equal(sha(files.get('runtime.json')), pin60.sha256);
+  assert.deepEqual(files.get('runtime.json'), await read(pin60.path));
+  assert.deepEqual(files.get(`runtime.${pin.sha256}.json`), original);
+  assert.equal(pin60.commit, 'bc8b7565f2c4277145b4763d76d928c45e024f1c');
+  assert.equal(pin60.sha256, '38a3c4cc207ee9b136d1cada405f74385c44f3a4a20bc21d91e09c4fc386e39f');
   await verifyPresentationOutput(files);
   const corrupt = Buffer.from(original);
   corrupt[10] ^= 1;
@@ -175,11 +179,11 @@ test('retained runtime refuses missing and corrupt lazy dependency originals', a
   );
 });
 
-test('production regeneration retains raw runtime54 and originals without changing current output or history', async () => {
+test('production regeneration retains raw runtime54 and60 and originals without changing current output or history', async () => {
   const { original, production, inventory, originals } = await fixture();
   const before = structuredClone(production.document);
   const payloads = await assertExactPayloadSet(production.assets, originals);
-  for (const revision of [54, 55, 56, 57, 58])
+  for (const revision of [54, 55, 56, 57, 58, 59, 60])
     assert(before.themes.some((theme) => theme.id === 'fpv' && theme.revision === revision));
   const config = JSON.parse(await read('.prettierrc.json'));
   const reads = [];
@@ -187,16 +191,20 @@ test('production regeneration retains raw runtime54 and originals without changi
     config,
     read: async (path) => {
       reads.push(path);
-      assert.equal(path, pin.path, 'no incidental compiled-output history read');
-      return original;
+      assert.ok(
+        [pin.path, pin60.path].includes(path),
+        'no incidental compiled-output history read',
+      );
+      return read(path);
     },
   };
   const first = await compileFieldKitProduction(production, options);
   const second = await compileFieldKitProduction(production, options);
-  assert.deepEqual(reads, [pin.path, pin.path]);
+  assert.deepEqual(reads, [pin.path, pin60.path, pin.path, pin60.path]);
   assert.deepEqual([...first.files], [...second.files], 'repeat generation is byte-identical');
   await verifyPresentationOutput(first.files);
   assert.deepEqual(first.files.get(`runtime.${pin.sha256}.json`), original);
+  assert.deepEqual(first.files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));
   for (const file of inventory.files)
     assert.equal(sha(first.files.get(file.path)), file.sha256, file.path);
   for (const name of ['runtime.json', 'studio.json', 'theme.css'])
@@ -207,8 +215,8 @@ test('production regeneration retains raw runtime54 and originals without changi
     );
   assert.equal(
     first.files.size,
-    137,
-    '127 originals, five exact equipment payloads, current output and one retained runtime',
+    138,
+    '127 originals, five exact equipment payloads, current output and two retained runtimes',
   );
   const reformatted = await compileFieldKitProduction(production, {
     ...options,
@@ -220,6 +228,7 @@ test('production regeneration retains raw runtime54 and originals without changi
     original,
     'current formatter changes never rewrite retained runtime bytes',
   );
+  assert.deepEqual(reformatted.files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));
   await verifyPresentationOutput(reformatted.files);
   assert.deepEqual(production.document, before, 'all immutable records including 54–58 remain');
   assert.equal(production.assets.size, payloads.size);
@@ -263,5 +272,35 @@ test('the authenticated exact payload set rejects missing, substituted, extra an
   await assert.rejects(
     authenticateCanonicalOriginals({ ...production, document: rewrittenHistory }),
     /canonical57 assets hash/,
+  );
+});
+
+test('explicit60 rejects changed raw bytes and missing or corrupt Team-only payloads', async () => {
+  const { production } = await fixture();
+  const original = await read(pin60.path);
+  for (const body of [Buffer.from(original), original.subarray(1)]) {
+    if (body.length === original.length) body[10] ^= 1;
+    await assert.rejects(
+      readFieldKitRetainedOutput({
+        assets: production.assets,
+        read: (path) => (path === pin60.path ? body : read(path)),
+      }),
+      /runtime input hash differs|runtime byte count differs/,
+    );
+  }
+  const hash = TEAM_EQUIPMENT_PAYLOADS[0].sha256;
+  const missing = new Map(production.assets);
+  missing.delete(hash);
+  await assert.rejects(
+    readFieldKitRetainedOutput({ assets: missing, read }),
+    /dependency is unavailable/,
+  );
+  const corrupt = new Map(production.assets);
+  const body = Buffer.from(await corrupt.get(hash).arrayBuffer());
+  body[0] ^= 1;
+  corrupt.set(hash, new Blob([body]));
+  await assert.rejects(
+    readFieldKitRetainedOutput({ assets: corrupt, read }),
+    /dependency hash differs/,
   );
 });

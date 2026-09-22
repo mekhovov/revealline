@@ -79,7 +79,7 @@ test('every reviewed art or renderer input change reopens only the equipment ima
     );
 });
 
-test('actual production assembly reviews only exact five image originals and leaves all37 Team recipes source', async () => {
+test('actual production assembly reviews only exact five image originals with the separately reviewed37 Team recipes', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const imageIds = new Set(originals.map(({ slot }) => slot));
@@ -89,7 +89,8 @@ test('actual production assembly reviews only exact five image originals and lea
   for (const [slot, asset] of team) {
     if (!imageIds.has(slot)) {
       assert.equal(asset.kind, 'recipe', slot);
-      assert.equal(asset.quality.stage, 'source', slot);
+      assert.equal(asset.quality.stage, 'reviewed', slot);
+      assert.ok(asset.quality.evidence[0].includes('docs/verification/team37/review.json'), slot);
       continue;
     }
     const expected = originals.find((image) => image.slot === slot);

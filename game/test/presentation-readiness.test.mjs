@@ -34,8 +34,13 @@ test('readiness accepts declared required revisions and retains optional histori
     ledger = await exportThemeBundle(document);
   const result = await checkFieldKitReadiness(ledger);
   assert.equal(result.requiredReviewed, 194);
-  assert.equal(result.optionalSlots, 99);
-  assert.deepEqual(result.coverage, { missing: 0, source: 99, produced: 0, reviewed: 194 });
+  assert.equal(document.slots.length, 335);
+  assert.equal(
+    document.slots.filter((slot) => slot.id.startsWith('team.') && !slot.required).length,
+    42,
+  );
+  assert.equal(result.optionalSlots, 141);
+  assert.deepEqual(result.coverage, { missing: 0, source: 141, produced: 0, reviewed: 194 });
   assert.equal(result.declarationOnly, true);
   assert.match(result.limitation, /no visual acceptance inferred/);
   assert.deepEqual(document, before);
