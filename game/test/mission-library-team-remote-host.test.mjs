@@ -158,6 +158,26 @@ test('typing and filtering in the open Team chooser filters arriving remote rows
   f.$('journey-campaign').value = '';
   f.$('journey-campaign').emit('change');
   const search = f.$('journey-search');
+  // The finite focus() helper emits focusin, but native select -> search also
+  // dispatches a non-bubbling blur through Window's capture listeners first.
+  const FocusEventType =
+    f.doc.defaultView.FocusEvent ??
+    class FocusEvent extends Event {
+      constructor(type, options) {
+        super(type, options);
+        this.relatedTarget = options.relatedTarget;
+      }
+    };
+  let descendantBlurCaptured = 0;
+  const observedBlur = (event) => {
+    if (event.target === f.$('journey-campaign')) descendantBlurCaptured++;
+  };
+  f.win.addEventListener('blur', observedBlur, true);
+  f.$('journey-campaign').dispatchEvent(
+    new FocusEventType('blur', { bubbles: false, relatedTarget: search }),
+  );
+  f.win.removeEventListener('blur', observedBlur, true);
+  assert.equal(descendantBlurCaptured, 1, 'The descendant blur reaches native Window capture.');
   search.focus();
   for (const key of 'Voltage Garden') {
     search.emit('keydown', { key });
