@@ -1,0 +1,45 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "archiveId": "archive-47",
+  "repository": "mekhovov/revealline-archive-47",
+  "infrastructureCommit": "d33b97b069a1ceacce42fd587bf9e522a0063694",
+  "deploymentId": 6581205693,
+  "status": "PASS",
+  "workflowRunId": 35674024402,
+  "versions": [
+    "v0.80.2"
+  ],
+  "expectedFiles": 886,
+  "expectedBytes": 423285313,
+  "httpAudit": {
+    "failedCount": 0,
+    "retryCount": 0,
+    "observedFiles": 886,
+    "observedBytes": 423285313
+  },
+  "scopedBrowserJourneyPassed": true,
+  "admitted": true,
+  "evidence": [
+    {
+      "path": "evidence/archive-47-v0802/http-report-original.json",
+      "sha256": "873797ee171e767af02e243ebfc86a30a9426e393d094866ecefc283137ab24a"
+    },
+    {
+      "path": "evidence/archive-47-v0802/deployments.json",
+      "sha256": "f1b09badbc4cb05dfd0e06c54de193fefee638d785b496d024196af8d009deb8"
+    },
+    {
+      "path": "evidence/archive-47-v0802/deployment-statuses.json",
+      "sha256": "6872fcd7843a219678e36484bbce9eac1c076ac5a7d403efc0895cb886030d9a"
+    },
+    {
+      "path": "evidence/archive-47-v0802/workflow-run.json",
+      "sha256": "95797383ec27c7a0a23b599c33faef9d44c3b44675e091900893bfe8c9d63032"
+    }
+  ],
+  "limits": [
+    "Historical online preservation and a scoped keyboard Start, Pause and explicit Resume journey only.",
+    "The browser reported another game tab owned saving; this archive check does not claim save writes.",
+    "No physical iPhone, Steam Deck, controller, multitouch, audible-listening, offline, victory or whole-phase acceptance is claimed."
+  ]
+}
