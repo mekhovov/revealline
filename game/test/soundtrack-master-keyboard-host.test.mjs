@@ -96,6 +96,7 @@ test('a Studio 13% master commit remains exactly 13% in native-sanitized Setting
   enter(page, 'shell-options');
   enter(page, 'settings-tab-audio');
   await studio(page);
+  enter(page, 'soundtrack-advanced-sound-toggle');
   const slider = nativeRangeValue(page.$('soundtrack-master-volume'));
   slider.focus();
   page.press('Enter');
@@ -158,6 +159,7 @@ test('changing-name master commands expose their next action without a toggle st
     assert.equal(page.doc.activeElement, page.$('settings-master-mute'));
   }
   await studio(page);
+  enter(page, 'soundtrack-advanced-sound-toggle');
   commands(true, true);
   for (const muted of [false, true]) {
     enter(page, 'soundtrack-master-mute');
@@ -187,6 +189,7 @@ for (const changeOnly of [false, true]) {
     page.press('Enter');
     assert.deepEqual(record(page), { muted: true, volume: 0.01 });
     await studio(page);
+    enter(page, 'soundtrack-advanced-sound-toggle');
     const slider = nativeInput(page.$('soundtrack-master-volume'));
     assert.equal(Number(slider.value), 0.01);
     slider.focus();

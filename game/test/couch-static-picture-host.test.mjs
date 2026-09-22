@@ -1078,8 +1078,9 @@ test('confirmed new setup owns a fresh race after a cancelled Next decoder settl
 
 for (const outcome of ['cancel', 'decode refusal'])
   test(`muted music and completed Results survive Next ${outcome}, Help reading and a fresh retry`, async (t) => {
-    // A non-authored fallback makes any second transport owner observable;
-    // choosing the authored track by chance would hide a queued-track mutation.
+    // Keep the fresh 90s Synth queue deterministic. The exact transport state,
+    // cursor and enable count below expose any second owner even when the
+    // map-authored track is also the first retro selection.
     t.mock.method(Math, 'random', () => 0);
     const a = audioHarness(),
       saved = new Map([[AUDIO_PREFERENCES_KEY, JSON.stringify({ muted: false, volume: 0.4 })]]),
@@ -1149,10 +1150,10 @@ for (const outcome of ['cancel', 'decode refusal'])
     };
     await action(p, 'race-start');
     await settleUntil(() => sound?.enabled && !sound.musicTransportPaused);
-    assert.notEqual(
+    assert.equal(
       sound.musicState().track.id,
       'signal-afterglow',
-      'The selected fallback must differ from the map-authored track.',
+      'Fresh v3 libraries start with the map-compatible 90s Synth selection.',
     );
     p.frames(151, 200);
     const result = completedResult(p);
