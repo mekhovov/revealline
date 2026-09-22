@@ -1,6 +1,6 @@
 # Xposed Reloaded movement observations — 23 September 2026
 
-Source candidate on `codex/xposed-motion-defaults`; not a released or human-balanced change. v0.86.0 source c311e91b remains frozen.
+v0.87.0 source candidate on `codex/xposed-motion-defaults`; not a released or human-balanced change. v0.86.0 source c311e91b remains frozen. The successor PR may qualify in parallel; its merge and publication follow v0.86.0 public acceptance through the sole publisher.
 
 ## Method and limits
 
