@@ -15,6 +15,11 @@
       "path": "game/ui/actor-presentation.mjs",
       "bytes": 23588,
       "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
+    },
+    {
+      "path": "game/enemy-catalog.mjs",
+      "bytes": 5837,
+      "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
     }
   ]
 }
