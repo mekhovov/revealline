@@ -30,7 +30,7 @@ const sources = {
   effects:
     'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs',
   audio:
-    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs',
+    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs',
 };
 
 // A recipe stays unreviewed whenever one of its source inputs changes. These
@@ -55,11 +55,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768',
+    sha256: '1128ede72e1d687690a3832d84b240bd8013be643bb9a21b430fe6875adcac94',
     evidence: [
-      'Scoped direct soundtrack functional review: docs/verification/hosted-soundtracks-2026-09-21/selection-cache/review.json sha256:6551c31a71e749e3f2d42fd6bd4d5fe33b6e2e99c619f1c819b5b277b8361e45. Thirteen ordered audio inputs have fingerprint sha256:8957f27d5b5b0d24c61773a7b068f026043e6fa9664c3f3a028742b030b6b768. Independent source review verifies private immutable library identity reuse and one bounded base-selection cache; dynamic rights, raw catalogue changes, failed tracks and playback intent remain live. Invalid constructor input is rejected before acquiring media ownership.',
-      'The final complete soundtrack and Couch audio cohort passed 453/453 with exact changed source/test pins and zero failures, cancellations, skips or todos. The original menu tests and deadlines remain unchanged. Four independent incremental probes pass. Prior direct-integration review remains immutable for the eleven unchanged audio inputs. Both failed preliminary hosted runs are retained with exact raw logs; local performance measurements are scoped diagnostics, not device or release qualification.',
-      'Functional source approval only. The 70 CC0/CC BY recordings retain audited rights and pending musical review; no recording, composition, Ukrainian authenticity, physical-device, frozen-offline or public-release approval is granted. Content ID remains unknown. Reviewed fpv52 and source-stage fpv53 remain immutable before this reviewed successor; all 127 original payloads and their bytes are preserved. Frozen and coordinated latest-main qualification remain required.',
+      'Scoped soundtrack-player source and browser review: docs/verification/soundtrack-player-ux-2026-09-21/review.json sha256:b35df30b1583a691852caaf5869e4b1f54a3656037057f156655e9b1f51adc3f. Fourteen ordered audio inputs have fingerprint sha256:1128ede72e1d687690a3832d84b240bd8013be643bb9a21b430fe6875adcac94; soundtrack-panel.css is now an explicit input. Fresh v3 libraries select 90s Synth while saved libraries keep their explicit mode.',
+      'The focused catalogue, player, panel, host, v3 compatibility, Couch-audio and modal-navigation cohort passed 274/274; the panel-only compatibility cohort passed 99/99. Browser review covered desktop and 390x844 layouts, style playback, all-style shuffle, visible credits/source links and seven closed advanced sections. Hosts without a catalogue retain visible playlist playback. The verified hosted synth object returned HTTP 200, CORS *, and its declared 1,740,382-byte length.',
+      'Functional player approval only. The 70 CC0/CC BY recordings retain audited rights and pending musical review; no recording, composition, Ukrainian authenticity, physical-device, frozen-offline or public-release approval is granted. UA-FPV remains excluded without redistribution permission. All earlier production history remains immutable before this reviewed successor.',
     ],
   },
   motion: {
@@ -67,15 +67,15 @@ const REVIEWED_RECIPE_INPUTS = {
     evidence: [
       'Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.',
       'Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.',
-      'Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. All prior source-stage metadata and all 127 original payloads remain preserved. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group.',
+      'Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. The unpublished Journey fpv55–58 lineage is preserved as an authenticated inert archive; canonical history starts from accepted main fpv56. See docs/verification/journey-main-reconciliation/README.md. All 127 original payloads remain unchanged. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group.',
     ],
   },
   effects: {
     sha256: '13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9',
     evidence: [
       'Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.',
-      'Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially reject stale exact theme bindings and are not counted as passes; exact fpv58 picture association and complete host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.',
-      'Functional source approval only. All 127 original payloads and historical records remain unchanged; source-stage fpv55/fpv56 stay in the immutable ledger before this reviewed successor. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group.',
+      'Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially rejected stale exact theme bindings and were repaired in the archived fpv58 checkpoint; those historical results do not qualify the new canonical binding. Complete reconciled host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.',
+      'Functional source approval only. All 127 original payloads remain unchanged. Accepted main fpv55/fpv56 records remain canonical and immutable; the differing unpublished Journey fpv55–58 lineage is separately archived, not silently reinterpreted. See docs/verification/journey-main-reconciliation/README.md. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group.',
     ],
   },
 };

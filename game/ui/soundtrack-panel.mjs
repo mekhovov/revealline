@@ -4,6 +4,7 @@ import {
   BUILTIN_SOUNDTRACK_PLAYLISTS,
   BUILTIN_SOUNDTRACK_TRACKS,
   SOUNDTRACK_LIMITS,
+  SOUNDTRACK_GENRES,
   SOUNDTRACK_GENRE_LABELS,
   emptySoundtrackLibrary,
   resolveSoundtrackLibrary,
@@ -146,11 +147,36 @@ export function attachSoundtrackPanel({
     element.append(node('h3', null, title), ...children);
     return element;
   };
+  const advancedSection = (id, title, description, ...children) => {
+    const element = node('section', `advanced-${id}`, null, { class: 'soundtrack-advanced' });
+    const toggle = node('button', `advanced-${id}-toggle`, null, {
+      type: 'button',
+      class: 'soundtrack-advanced-summary',
+      'aria-expanded': 'false',
+      'aria-controls': `soundtrack-advanced-${id}-body`,
+    });
+    toggle.append(
+      node('span', null, title, { class: 'soundtrack-advanced-title' }),
+      node('span', null, description, { class: 'soundtrack-advanced-description' }),
+    );
+    const body = node('div', `advanced-${id}-body`, null, { class: 'soundtrack-advanced-body' });
+    body.hidden = true;
+    body.append(...children);
+    toggle.onclick = () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      toggle.setAttribute('aria-expanded', String(open));
+      body.hidden = !open;
+      if (open) element.setAttribute('data-open', 'true');
+      else element.removeAttribute('data-open');
+    };
+    element.append(toggle, body);
+    return element;
+  };
   const dialog = node('dialog', 'dialog', null, {
     class: 'soundtrack-dialog',
     'aria-labelledby': 'soundtrack-title',
   });
-  const heading = node('h2', 'title', 'SOUND / STUDIO');
+  const heading = node('h2', 'title', 'MUSIC PLAYER');
   const status = node('p', 'status', 'Open the studio to load your local music.', {
     role: 'status',
     'aria-live': 'polite',
@@ -214,8 +240,10 @@ export function attachSoundtrackPanel({
     max: '1',
     step: '0.01',
   });
-  const masterControls = section(
-    'Master sound',
+  const masterControls = advancedSection(
+    'sound',
+    'Sound controls',
+    'Master volume and mute',
     row(masterToggle),
     masterVolume.field,
     masterStatus,
@@ -252,7 +280,7 @@ export function attachSoundtrackPanel({
   masterVolume.element.oninput = masterVolume.element.onchange = () =>
     changeMaster('volume', Number(masterVolume.element.value));
   if (audioMaster) bindings.push(audioMaster.subscribe(updateMaster));
-  function usePlaylist(chosen) {
+  function usePlaylist(chosen, { start = false } = {}) {
     return task('Saving your playlist choice…', async (signal) => {
       edit((value) => {
         value.selection.playlistId = chosen;
@@ -262,12 +290,16 @@ export function attachSoundtrackPanel({
       await stopAudition(false);
       wakeAudio();
       await player.selectPlaylist(draft.selection.playlistId);
+      if (start) await (musicSession ? musicSession.play() : player.play());
       await notifyPlayback();
-      setStatus(committed.warning || 'Playlist selected. Choose Play music if it is paused.');
+      setStatus(
+        committed.warning ||
+          (start ? 'Playlist selected and playing.' : 'Playlist selected. Playback is unchanged.'),
+      );
     });
   }
-  const useSelection = button('use-selection', 'Save & use playlist', () =>
-    usePlaylist(selection.element.value || null),
+  const useSelection = button('use-selection', 'Play this playlist', () =>
+    usePlaylist(selection.element.value || null, { start: true }),
   );
   const genreNames = Object.entries(SOUNDTRACK_GENRE_LABELS);
   const listeningMode = input('listening-mode', 'Music selection', { tag: 'select' });
@@ -290,13 +322,7 @@ export function attachSoundtrackPanel({
     { type: 'checkbox' },
   );
   const recordingStatus = node('p', 'recording-status', '', { class: 'micro-note' });
-  const applyListening = button('apply-listening', 'Save & use music selection', () => {
-    const chosen = {
-      mode: listeningMode.element.value,
-      genres: mixGenres.filter(({ element }) => element.checked).map(({ id }) => id),
-      installedOnly: installedOnly.element.checked,
-      recordingMode: recordingMode.element.checked,
-    };
+  const useListening = (chosen, { start = false } = {}) => {
     return task('Saving your music selection…', async (signal) => {
       edit((value) => {
         value.selection.playlistId = null;
@@ -307,15 +333,29 @@ export function attachSoundtrackPanel({
       await stopAudition(false);
       wakeAudio();
       await player.selectListening(draft.listening);
+      if (start) await (musicSession ? musicSession.play() : player.play());
       await notifyPlayback();
       setStatus(
         committed.warning ||
-          'Music selection saved. Play music to start; unavailable styles remain silent.',
+          (start
+            ? 'Music selection saved and playing. Unavailable styles remain silent.'
+            : 'Music selection saved. Playback is unchanged; unavailable styles remain silent.'),
       );
     });
+  };
+  const applyListening = button('apply-listening', 'Save listening preferences', () => {
+    const chosen = {
+      mode: listeningMode.element.value,
+      genres: mixGenres.filter(({ element }) => element.checked).map(({ id }) => id),
+      installedOnly: installedOnly.element.checked,
+      recordingMode: recordingMode.element.checked,
+    };
+    return useListening(chosen);
   });
-  const listeningSection = section(
-    'Choose your music',
+  const listeningSection = advancedSection(
+    'listening',
+    'Filters & custom mix',
+    'Installed music, recording mode and genre combinations',
     listeningMode.field,
     row(...mixGenres.map(({ field }) => field)),
     installedOnly.field,
@@ -324,6 +364,69 @@ export function attachSoundtrackPanel({
     applyListening,
   );
   listeningSection.hidden = !catalogue;
+  const quickStyle = input('quick-style', 'Music style', { tag: 'select' });
+  options(quickStyle.element, [
+    ...genreNames,
+    ['fusion', 'Fusion'],
+    ['auto', 'Automatic — match this world'],
+    ['mix', 'My Mix'],
+  ]);
+  const quickStatus = node('p', 'quick-status', '', {
+    class: 'soundtrack-quick-status',
+    role: 'status',
+    'aria-live': 'polite',
+  });
+  const playAll = button('play-all', 'Shuffle all music', () =>
+    useListening(
+      {
+        ...draft.listening,
+        mode: 'mix',
+        genres: [...SOUNDTRACK_GENRES],
+      },
+      { start: true },
+    ),
+  );
+  playAll.classList.add('soundtrack-primary-action');
+  const playStyle = button('play-style', 'Play this style', () =>
+    useListening(
+      {
+        ...draft.listening,
+        mode: quickStyle.element.value,
+      },
+      { start: true },
+    ),
+  );
+  const quickGrid = node('div', 'quick-grid', null, { class: 'soundtrack-quick-grid' });
+  const quickListen = section(
+    'Pick the music',
+    node('p', null, 'Start every song on shuffle, choose a style, or jump to a playlist.', {
+      class: 'soundtrack-lede',
+    }),
+    quickStatus,
+    quickGrid,
+  );
+  quickListen.classList.add('soundtrack-listen-card');
+  quickListen.hidden = !catalogue;
+  const allCard = node('div', null, null, { class: 'soundtrack-choice soundtrack-choice-all' });
+  allCard.append(
+    node('span', null, 'ALL TRACKS', { class: 'soundtrack-choice-kicker' }),
+    node('strong', null, 'Everything, shuffled'),
+    node('p', null, 'A no-repeat mix across every available style.'),
+    playAll,
+  );
+  const styleCard = node('div', null, null, { class: 'soundtrack-choice' });
+  styleCard.append(
+    node('span', null, 'STYLE', { class: 'soundtrack-choice-kicker' }),
+    quickStyle.field,
+    playStyle,
+  );
+  const playlistCard = node('div', null, null, { class: 'soundtrack-choice' });
+  playlistCard.append(
+    node('span', null, 'PLAYLIST', { class: 'soundtrack-choice-kicker' }),
+    selection.field,
+    useSelection,
+  );
+  quickGrid.append(allCard, styleCard, playlistCard);
   const transport = section(
     'Now playing',
     now,
@@ -341,10 +444,10 @@ export function attachSoundtrackPanel({
     ),
     seek.field,
     volume.field,
-    selection.field,
-    useSelection,
-    listeningSection,
   );
+  transport.classList.add('soundtrack-now-card');
+  // Hosts without the catalogue still expose built-in and imported playlists.
+  if (!catalogue) transport.append(selection.field, useSelection);
   const tracksSelect = input('tracks', 'Tracks', { tag: 'select', size: '7' });
   const fileInput = input('mp3-files', 'Add MP3 files', {
     type: 'file',
@@ -561,8 +664,10 @@ export function attachSoundtrackPanel({
     auditionVolume.field,
   );
   auditionControls.hidden = true;
-  const tracksSection = section(
-    'Music library',
+  const tracksSection = advancedSection(
+    'library',
+    'Add & edit music',
+    'Upload MP3s, edit credits and audition tracks',
     node(
       'p',
       null,
@@ -701,8 +806,10 @@ export function attachSoundtrackPanel({
       setStatus('Playlist removed from the draft.');
     }),
   );
-  const playlistSection = section(
-    'Playlist editor',
+  const playlistSection = advancedSection(
+    'playlists',
+    'Create playlists',
+    'Order, shuffle and repeat your own selections',
     playlistsSelect.field,
     row(createPlaylist, clonePlaylist),
     playlistTitle.field,
@@ -755,8 +862,10 @@ export function attachSoundtrackPanel({
       dirtyState();
     }),
   );
-  const assignmentSection = section(
-    'Authored music',
+  const assignmentSection = advancedSection(
+    'assignments',
+    'Match music to worlds',
+    'Map, campaign and theme assignments',
     node(
       'p',
       null,
@@ -926,8 +1035,10 @@ export function attachSoundtrackPanel({
   const backupInfo = node('p', 'backup-info', '', { class: 'micro-note' });
   const backupReady = node('div', 'backup-ready', null, { class: 'soundtrack-backup-ready' });
   backupReady.append(backupInfo, row(bundleDownload, discardBackup));
-  const transferSection = section(
-    'Local files & backup',
+  const transferSection = advancedSection(
+    'backup',
+    'Backups & album files',
+    'Import, export and restore .rlsound files',
     node(
       'p',
       null,
@@ -955,8 +1066,10 @@ export function attachSoundtrackPanel({
       );
     }),
   );
-  const albumSection = section(
-    'Community soundtracks',
+  const albumSection = advancedSection(
+    'community',
+    'Community downloads',
+    'Creator albums, credits and optional offline copies',
     node(
       'p',
       null,
@@ -981,8 +1094,10 @@ export function attachSoundtrackPanel({
     albumList,
   );
   const originalAlbums = node('div', 'original-albums');
-  const originalSection = section(
-    'Soundtrack collections',
+  const originalSection = advancedSection(
+    'offline',
+    'Offline album downloads',
+    'Install or remove verified recordings for offline play',
     node(
       'p',
       'original-status',
@@ -1141,6 +1256,7 @@ export function attachSoundtrackPanel({
   }
   const columns = node('div', null, null, { class: 'soundtrack-columns' });
   columns.append(
+    listeningSection,
     originalSection,
     tracksSection,
     playlistSection,
@@ -1153,9 +1269,10 @@ export function attachSoundtrackPanel({
   dialog.append(
     row(heading, closeButton),
     availability,
-    masterControls,
     operationRow,
     transport,
+    quickListen,
+    masterControls,
     columns,
     node('div', null, null, { class: 'soundtrack-footer' }),
   );
@@ -1643,7 +1760,7 @@ export function attachSoundtrackPanel({
     options(
       selection.element,
       [
-        ['', 'Automatic — follow map / campaign / theme'],
+        ['', catalogue ? 'Use selected style' : 'Automatic — follow map / campaign / theme'],
         ...playlists().map((item) => [item.id, item.title]),
       ],
       draft.selection.playlistId ?? '',
@@ -1653,6 +1770,7 @@ export function attachSoundtrackPanel({
     useSelection.disabled = busy || !saved;
     if (catalogue) {
       listeningMode.element.value = draft.listening.mode;
+      quickStyle.element.value = draft.listening.mode;
       installedOnly.element.checked = draft.listening.installedOnly;
       recordingMode.element.checked = draft.listening.recordingMode;
       const excluded = (catalogue.tracks ?? []).filter((track) => !recordingAllowed(track)).length;
@@ -1663,6 +1781,16 @@ export function attachSoundtrackPanel({
         element.checked = draft.listening.genres.includes(id);
       for (const control of listeningSection.querySelectorAll('button,input,select'))
         control.disabled = busy || !saved;
+      for (const control of quickListen.querySelectorAll('button,input,select'))
+        control.disabled = busy || !saved;
+      const explicitPlaylist = playlists().find((item) => item.id === draft.selection.playlistId);
+      const modeLabel =
+        [['fusion', 'Fusion'], ['mix', 'All styles'], ['auto', 'Automatic'], ...genreNames].find(
+          ([id]) => id === draft.listening.mode,
+        )?.[1] ?? 'Music';
+      quickStatus.textContent = explicitPlaylist
+        ? `Selected playlist: ${explicitPlaylist.title}`
+        : `Selected style: ${modeLabel} · shuffle · repeat all`;
     }
     cancelButton.hidden = !busy;
     closeButton.disabled = busy;

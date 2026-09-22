@@ -67,7 +67,7 @@ function fixture(index = 0) {
 test('the closed two-row authority is immutable and matches the complete authored starter pack', () => {
   assert.equal(validateCoopPack(COOP_STARTER_PACK).valid, true);
   assert.equal(COOP_PICTURE_BINDINGS.length, 2);
-  assert.equal(compiled.resolved.theme.revision, 58, 'Exact metadata successor, never latest');
+  assert.equal(compiled.resolved.theme.revision, 57, 'Exact canonical metadata, never latest');
   assert.deepEqual(
     COOP_PICTURE_BINDINGS.map((row) => row.levelId),
     ['first-connection', 'relay-yard'],
