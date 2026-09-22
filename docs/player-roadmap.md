@@ -45,7 +45,7 @@ This retained table maps phase scope and remaining gates; follow the [whole-game
 - A direction tap keeps a craft moving during a cut. A capture-stop craft stops when it banks that cut on revealed ground and waits for fresh steering. Immediate and Grid + buffer remain available. Returning focus never resumes play.
 - Arcade bonuses activate through play. Tactical actions appear only for an authored class/map that supports them; there is no universal Scan/Supply/Boost toolbar.
 - Touch controls appear when useful, respect safe areas and stay clear of the arena. All ordinary menus require keyboard, controller and touch journeys without mouse-only steps.
-- Hidden artwork is opaque black. Winning grants the complete picture without changing recorded coverage, followed by an optional skippable story. Lobby teasers must not expose an unearned complete reward.
+- Hidden artwork is opaque black. Winning grants the complete picture without changing recorded coverage, followed by an optional skippable story. Lobby/catalogue teasers conceal the centre; an explicit full picture preview is allowed and must not complete a mission, earn a picture or change progress.
 - Pictures, actor appearances and media remain independent of collision, score and campaign identity. New mechanics use compatible level/ruleset/replay/checkpoint versions; old outcomes remain reproducible.
 - Difficulty should create route choices and close escapes. Resolve unavoidable hits and unclear warnings before increasing enemy speed.
 

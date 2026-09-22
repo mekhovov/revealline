@@ -24,7 +24,7 @@ Fifteen HTTP bodies and local files match their exact authority before and after
 
 ## Lobby artwork preview
 
-The subsequent lobby teaser borrows the current prepared image from the same exact selection used by Start and Retry. A narrow one-cell border remains visible around an opaque black centre; the caption says that winning earns the full picture. The full 2:1 source mapping stays intact beneath the concealment. This is a visual teaser, not invented captured terrain or a collision map. Its passive 2:1 canvas and arena caption stay inside the lobby, outside the tools that move into Pause and results. It adds no image read, decode, URL, animation loop, simulation or focus stop. The caption describes artwork; scenic structures do not declare collisions.
+The lobby teaser borrows the current prepared image from the same exact selection used by Start and Retry. It shares the catalogue's broad border and concealed centre, preserving the full 2:1 source mapping. Browse Team arenas provides an explicit full Preview which does not complete an arena or earn a picture. The passive lobby canvas adds no read, decode, URL, animation, simulation or focus stop. Scenery does not declare collisions. This current policy supersedes the narrow one-cell teaser in historical receipts; fresh native recognition/layout acceptance remains separate.
 
 Changing arena clears old pixels immediately. Only current preparation may publish a new picture or error; stale callbacks may neither paint nor clear newer artwork. Cancel and required-art failures retain the existing status/Retry owner and readiness rules. Other imported namespaces show a labelled procedural/no-picture state. Modified starter content still requires its exact approved binding.
 

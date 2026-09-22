@@ -26,7 +26,17 @@ const settle = (f, expected = 'ready') =>
   );
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 const lastPreview = (f) => f.previewDrawImages.at(-1);
-const lastArena = (f) => f.drawImages.at(-1);
+function lastArena(f) {
+  f.drawImages.length = 0;
+  f.tick(1);
+  const image = f.drawImages[0];
+  assert.ok(
+    f.artwork.calls.decodes.includes(image),
+    'A fresh frame starts with an accepted decoded picture',
+  );
+  assert.equal(f.drawImages.filter((entry) => entry === image).length, 1);
+  return image;
+}
 function assertMysteryPreview(f) {
   const canvas = f.$('coop-preview-canvas'),
     image = lastPreview(f),
@@ -35,9 +45,9 @@ function assertMysteryPreview(f) {
   // Interpret the finite Canvas trace at actual picture coordinates. This checks
   // visible centre/border outcomes, not browser rasterization or a method count.
   const points = [
-    [width / 2, height / 2, '#000'],
-    [16, 16, '#000'],
-    [width - 16, height - 16, '#000'],
+    [width / 2, height / 2, '#0b1a24'],
+    [16, 16, image],
+    [width - 16, height - 16, image],
     [0.5, height / 2, image],
     [width - 0.5, height / 2, image],
     [width / 2, 0.5, image],
@@ -74,10 +84,13 @@ function assertMysteryPreview(f) {
     assert.equal(
       pixels[index],
       expected,
-      `Lobby picture at ${x},${y} preserves the mystery border policy.`,
+      `Lobby picture at ${x},${y} preserves the broad teaser border and concealed centre.`,
     ),
   );
-  assert.match(f.$('coop-preview-caption').textContent, /win to reveal the full picture/i);
+  assert.match(
+    f.$('coop-preview-caption').textContent,
+    /optional full preview; viewing earns no progress/i,
+  );
 }
 
 const previewClears = (f) =>

@@ -144,7 +144,7 @@ test('cancelled visits retain the single actual preparation permit until the old
   assert.equal(f.calls[1].row.key, 'new-0');
 });
 
-test('explicit locked preview has priority after cancelled teaser settles, then Back restores its exact opener', async (t) => {
+test('explicit full preview has priority after cancelled teaser settles, then Back restores its exact opener', async (t) => {
   const f = fixture(t);
   f.populate();
   f.pictures.start();
@@ -165,11 +165,11 @@ test('explicit locked preview has priority after cancelled teaser settles, then 
   assert.equal(f.calls[1].releases, 1);
   assert.equal(f.preview.canvas.width, 1152);
   assert.equal(f.preview.canvas.height, 576);
-  assert.deepEqual(f.traces.get(f.preview.canvas), [
-    ['image', { identity: 1 }, 0, 0, 1152, 576],
-    ['mask', '#0b1a24', 96, 96, 960, 384],
-  ]);
-  assert.match(f.preview.status.textContent, /Locked preview.*Win to reveal the full picture/i);
+  assert.deepEqual(f.traces.get(f.preview.canvas), [['image', { identity: 1 }, 0, 0, 1152, 576]]);
+  assert.match(
+    f.preview.status.textContent,
+    /Full picture preview.*does not complete an arena or earn a picture/i,
+  );
   assert.equal(f.pictures.back(), true);
   assert.equal(f.doc.activeElement === opener, true);
   assert.equal(f.preview.panel.hidden, true);
