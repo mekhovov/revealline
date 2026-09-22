@@ -9,7 +9,7 @@ import {
   createGameplayTuningController,
   GAMEPLAY_TUNING_STORAGE_KEY,
   GAMEPLAY_TUNING_DEFAULTS,
-} from '../gameplay-tuning.mjs';
+} from '../gameplay-tuning-v1.mjs';
 import { createRun, stepRun, FIXED_DT, validateLevel } from '../core/index.mjs';
 import { createCoop, validateCoopLevel } from '../coop/core.mjs';
 import { createDuel, resumeDuel, stepDuel } from '../multiplayer.mjs';

@@ -15,7 +15,11 @@ import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { DEFAULT_JOURNEY_ROUTES, resolveJourneyRequest } from '../content-design/default-entry.mjs';
 import { authoredJourneyUsesActorMaterials } from '../content-design/mode-href.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
-import { createGameplayTuningController, applyGameplayTuning } from '../gameplay-tuning.mjs';
+import {
+  createGameplayTuningController,
+  applyGameplayTuning,
+  gameplayTuningDescription,
+} from '../gameplay-tuning.mjs';
 import { mountGameplayTuning } from '../ui/gameplay-tuning.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from '../content-design/catalogs.mjs';
 import { createJourneyProfileStore } from '../journey/profile.mjs';
@@ -1360,6 +1364,19 @@ try {
     return prepare();
   };
   $('race-tap').onchange = clear;
+  function refreshGameplayTuningNote() {
+    const difficulty = (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty;
+    const tuning = gameplayTuning.snapshot(difficulty);
+    const preset =
+      candidateJourney && journeyPreset(difficulty, authoredRoute.source.difficultyCatalogId);
+    const rules = preset
+      ? tuning.version === 'gameplay-pressure.v2'
+        ? `${preset.lives} mission lives; ${preset.failingDeadline ? 'deadlines only on authored timed missions' : 'no failing countdown'}.`
+        : preset.description
+      : 'Authored lives and objectives stay unchanged.';
+    $('race-journey-difficulty-note').textContent =
+      `Next fresh race: ${difficulty}. ${gameplayTuningDescription(tuning)} ${rules} Both current boards keep their rules.`;
+  }
   if (candidateJourney) {
     let preferenceRevision = journeyPreferences.snapshot().revision,
       preferenceExportSequence = 0;
@@ -1372,8 +1389,7 @@ try {
         nextAttempt = null;
       }
       $('race-journey-difficulty').value = snapshot.difficulty;
-      $('race-journey-difficulty-note').textContent =
-        `Next fresh race: ${snapshot.difficulty}. ${journeyPreset(snapshot.difficulty, authoredRoute.source.difficultyCatalogId).description} Both current boards keep their rules.`;
+      refreshGameplayTuningNote();
       gameplayTuningPanel?.refresh();
       preferenceExportSequence++;
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
@@ -1463,8 +1479,7 @@ try {
     );
     browsingJourneyPreferences.subscribe((snapshot) => {
       $('race-journey-difficulty').value = snapshot.difficulty;
-      $('race-journey-difficulty-note').textContent =
-        `Next fresh race: ${snapshot.difficulty} enemy pressure. Authored lives and objectives stay unchanged; both current boards keep their rules.`;
+      refreshGameplayTuningNote();
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
       $('race-journey-preferences-message').textContent = snapshot.error;
       gameplayTuningPanel?.refresh();
@@ -1483,6 +1498,7 @@ try {
     controller: gameplayTuning,
     getDifficulty: () => (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
   });
+  gameplayTuning.subscribe(refreshGameplayTuningNote);
   const couchTouch = attachCouchTouch({
     controls: $('race-touch-0').closest('.race-fields'),
     clear: () => input?.clearPhysical(),
