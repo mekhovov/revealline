@@ -3702,12 +3702,18 @@ try {
   let candidateEntry;
   if (
     journeyRequests.length === 1 &&
-    ['team-greybox', 'team-originals', 'team-pressure-originals-1'].includes(journeyRequests[0])
+    [
+      'team-greybox',
+      'team-originals',
+      'team-pressure-originals-1',
+      'team-spatial-originals-1',
+    ].includes(journeyRequests[0])
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
     candidateEntry = await createTeamGreyboxEntry({
       artwork: journeyRequests[0] === 'team-originals',
       pressure: journeyRequests[0] === 'team-pressure-originals-1',
+      spatial: journeyRequests[0] === 'team-spatial-originals-1',
     });
   } else if (
     journeyRequests.length === 1 &&

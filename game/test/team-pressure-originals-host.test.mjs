@@ -6,6 +6,10 @@ import {
   createTeamPressureOriginalCandidates,
   TEAM_PRESSURE_PROFILE_KEY,
 } from '../content-design/team-pressure-originals.mjs';
+import {
+  createTeamSpatialOriginalCandidates,
+  TEAM_SPATIAL_PROFILE_KEY,
+} from '../content-design/team-spatial-originals.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
@@ -239,9 +243,105 @@ test('pressure difficulty, reversible Skip, chooser and reload use scoped bookma
   );
 });
 
+test('changing-return edition crosses into both revised maps and exits to the unchanged finale with isolated receipts', async (t) => {
+  const spatial = createTeamSpatialOriginalCandidates();
+  const journey = createCandidateTeamHost(spatial, { corePackIds: spatial.packs.map((p) => p.id) });
+  const revised = JSON.parse(
+    await readFile(new URL('./fixtures/team-roamer-spatial-routes.json', import.meta.url)),
+  ).rows;
+  const memory = managedIndexedDB(),
+    failures = new Set();
+  const pressure = createJourneyBackend({ ...memory, profileKey: TEAM_PRESSURE_PROFILE_KEY });
+  const historical = createJourneyBackend({ ...memory, profileKey: 'journey' });
+  const oldPressure = await pressure.commit([
+    { type: 'select', mode: 'team', missionId: journey.catalog.missions[9].id },
+  ]);
+  const oldHistorical = await historical.commit([
+    { type: 'select', mode: 'team', missionId: journey.catalog.missions[8].id },
+  ]);
+  const backend = createJourneyBackend({ ...memory, profileKey: TEAM_SPATIAL_PROFILE_KEY });
+  await backend.commit([
+    { type: 'select', mode: 'team', missionId: journey.catalog.missions[7].id },
+  ]);
+  const f = await pressurePage(t, {
+    memory,
+    failures,
+    href: 'http://localhost/game/couch/relay-rescue.html?journey=team-spatial-originals-1',
+  });
+  assert.equal(f.$('coop-level').value, 'weaver-crossing');
+  assert.match(f.$('coop-boot').textContent, /changing-return pressure edition/);
+  enter(f, f.$('coop-start'));
+  for (let index = 7; index < 12; index++) {
+    const mission = spatial.missions[index];
+    assert.equal(f.$('coop-level').value, mission.id);
+    assert.equal(f.$('coop-menu').hidden, true);
+    f.tick(2);
+    const row = [...revised, ...rows].find(
+      (r) => r.missionId === mission.id && r.difficulty === 'standard',
+    );
+    const picture = f.drawImages.at(-1),
+      asset = spatial.assets.find((a) => a.id === mission.presentation.backgroundAssetId);
+    assert.equal(picture.sha256, asset.sha256);
+    let previous = [null, null],
+      frames = 1;
+    for (const s of row.log) {
+      for (const [seat, d] of [s.a, s.b].entries())
+        if (d && d !== previous[seat]) f.tap(keys[seat][d]);
+      previous = [s.a, s.b];
+      for (let n = 0; n < s.ticks && f.$('coop-overlay').hidden; n++) {
+        f.tick();
+        frames++;
+      }
+      if (!f.$('coop-overlay').hidden) break;
+    }
+    assert.equal(
+      f.$('coop-overlay-kicker').textContent,
+      'A WORLD YOU REVEALED TOGETHER',
+      mission.id,
+    );
+    assert.equal(f.$('coop-reserves').textContent, '2 reserves');
+    const expected =
+      index === 8 ? [4422, '81.5%'] : index === 9 ? [4303, '76.3%'] : hostClears[index];
+    assert.deepEqual([frames, f.$('coop-coverage').textContent], expected, mission.id);
+    if (index === 7) {
+      const next = spatial.missions[8].presentation.backgroundAssetId;
+      failures.add(next);
+      enter(f, f.$('coop-next'));
+      await waitFor(() => f.$('coop-next-status').textContent.includes('Try Next again'));
+      assert.equal(f.$('coop-level').value, mission.id);
+      assert.equal(picture.releases, 0);
+      failures.delete(next);
+    }
+    if (index < 11) {
+      enter(f, f.$('coop-next'));
+      await waitFor(() => f.$('coop-overlay').hidden);
+      assert.equal(picture.releases, 1);
+    } else assert.equal(f.$('coop-next').hidden, true);
+  }
+  await new Promise((resolve) => setImmediate(resolve));
+  const profile = await backend.read();
+  assert.deepEqual(
+    Object.keys(profile.clears.team).sort(),
+    journey.catalog.missions
+      .slice(7)
+      .map((m) => m.id)
+      .sort(),
+  );
+  for (const mission of journey.catalog.missions.slice(7))
+    assert.equal(
+      profile.clears.team[mission.id].gameplayId,
+      journey.row(mission, 'standard').simulationIdentity,
+    );
+  assert.deepEqual(await pressure.read(), oldPressure);
+  assert.deepEqual(await historical.read(), oldHistorical);
+  assert.deepEqual(f.visits, []);
+});
+
 for (const query of [
   'team-pressure-originals-2',
   'team-pressure-originals-1&journey=team-originals',
+  'team-spatial-originals-2',
+  'team-spatial-originals-1&journey=team-pressure-originals-1',
 ])
   test(`unrecognized or duplicated entry does not enroll a pressure candidate: ${query}`, async (t) => {
     const f = await pressurePage(t, {
