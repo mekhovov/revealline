@@ -217,12 +217,14 @@
 .journey-footer button {
   min-height: 44px;
 }
-#journey-chooser #coop-library-status {
+#journey-chooser #coop-library-status,
+#journey-chooser #race-library-status {
   display: grid;
   gap: 0.25rem;
   min-width: 0;
 }
-#journey-chooser #coop-library-status p {
+#journey-chooser #coop-library-status p,
+#journey-chooser #race-library-status p {
   margin: 0;
   font-size: 0.8rem;
   line-height: 1.25;
@@ -421,7 +423,8 @@
   }
 }
 @media (max-height: 480px) {
-  #journey-chooser #coop-library-status {
+  #journey-chooser #coop-library-status,
+  #journey-chooser #race-library-status {
     max-height: 5rem;
     overflow: auto;
     scroll-padding: 4px;

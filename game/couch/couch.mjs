@@ -19,7 +19,11 @@ import { createJourneyPreferences } from '../journey/preferences.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from '../content-design/catalogs.mjs';
 import { createJourneyProfileStore } from '../journey/profile.mjs';
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
-import { createInstalledMissionLibrary } from '../mission-library/installed-library.mjs';
+import { createMetadataInstalledMissionLibrary } from '../mission-library/metadata-installed-library.mjs';
+import { createMissionLibraryInventory } from '../mission-library/installed-inventory.mjs';
+import { materializeMissionPack } from '../mission-library/materialize-pack.mjs';
+import { createExternalChapterInventoryReader } from '../external-chapter-pointer.mjs';
+import { libraryMissionId } from '../mission-library/library.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
 import { combineJourneyLibrarySources } from '../mission-library/cross-mode-journey.mjs';
@@ -35,7 +39,6 @@ import {
 } from '../mission-library/handoff.mjs';
 import { createCouchChapterInstaller } from './couch-chapter-install.mjs';
 import { loadOptionalCatalog } from '../optional-chapters.mjs';
-import { emptyPackLibrary } from '../packs.mjs';
 import { createRun } from '../core/index.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { dataIdentity } from '../data-json.mjs';
@@ -273,13 +276,16 @@ try {
     journeySkipArmed = null,
     missionLibrary = null,
     missionLibraryLoading = null,
-    libraryInventory = emptyPackLibrary(),
-    libraryInventoryError = '',
+    libraryInventory = null,
+    libraryInventoryNotice = '',
     libraryInstaller = null,
     librarySoloPreview = null,
     libraryOpenEpoch = 0,
     libraryDecision = null,
-    libraryLaunchController = null;
+    libraryLaunchController = null,
+    libraryIncomingController = null;
+  const libraryExternalProofs = new Map(),
+    libraryExternalSelections = new Map();
   const journeySessionId = authoredJourney ? crypto.randomUUID() : null;
   const journeySaveCue = attachJourneySaveCue({
     document,
@@ -1570,7 +1576,7 @@ try {
       if (!context.isCurrent()) decision.finish(false);
     });
   }
-  async function departLibraryMission(context) {
+  async function departLibraryMission(context, confirmInventory = null) {
     if (!context.isCurrent()) return false;
     const row = missionLibrary.library.find(context.libraryMissionId);
     if (!row || !row.modes.includes(context.mode))
@@ -1584,6 +1590,8 @@ try {
       sourceJourney: authoredRoute?.id ?? 'legacy',
     });
     if (!(await confirmLibraryReplacement(context, `Open ${row.name}?`))) return false;
+    if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
+    if (confirmInventory && !(await confirmInventory())) return false;
     if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
     location.href = href;
     return true;
@@ -1648,6 +1656,75 @@ try {
       if (libraryLaunchController === controller) libraryLaunchController = null;
     }
   }
+  async function launchMetadataSelection(metadataPack, selection, context, externalRow = null) {
+    if (!metadataPack) return launchLibrarySelection(null, selection, context);
+    if (!context.isCurrent()) return false;
+    const controller = new AbortController();
+    libraryLaunchController = controller;
+    const focus = trackMissionLibraryOpening({
+      onRetire: () => {
+        context.retire();
+        controller.abort();
+      },
+    });
+    const current = () =>
+      context.isCurrent() &&
+      focus.current() &&
+      libraryLaunchController === controller &&
+      !controller.signal.aborted;
+    try {
+      if (candidateJourney || context.mode !== 'versus') {
+        await libraryInventory.confirm(context.inventory, { signal: controller.signal });
+        if (!current()) return false;
+        focus.dispose();
+        return await departLibraryMission(context, async () => {
+          const acceptedInput = trackMissionLibraryOpening({
+            onRetire: () => {
+              context.retire();
+              controller.abort();
+            },
+          });
+          try {
+            await libraryInventory.confirm(context.inventory, { signal: controller.signal });
+            return (
+              context.isCurrent() &&
+              acceptedInput.current() &&
+              !controller.signal.aborted &&
+              libraryLaunchController === controller
+            );
+          } finally {
+            acceptedInput.dispose();
+          }
+        });
+      }
+      const pack = await materializeMissionPack({
+        inventory: libraryInventory,
+        metadata: context.inventory,
+        metadataPack,
+        signal: controller.signal,
+        inspect: async ({ signal }) => {
+          const result = externalRow
+            ? await libraryInstaller.inspectExternal(externalRow, { signal })
+            : await libraryInstaller.inspect({ signal });
+          if (externalRow && !result.ready) throw new Error(result.reason);
+          return result;
+        },
+      });
+      if (!current()) return false;
+      // Existing staging owns the next input lease, both boards, exact picture
+      // and Stay/Replace. No metadata object becomes runtime ownership.
+      focus.dispose();
+      return launchLibrarySelection(pack, selection, context);
+    } finally {
+      focus.dispose();
+      if (libraryLaunchController === controller) libraryLaunchController = null;
+      refreshLibraryWarning();
+    }
+  }
+  function refreshLibraryWarning() {
+    const notice = $('race-library-inventory-status');
+    if (notice) notice.textContent = libraryInventory?.state().reason || libraryInventoryNotice;
+  }
   async function getMissionLibrary() {
     if (missionLibrary) return missionLibrary;
     if (missionLibraryLoading) return missionLibraryLoading;
@@ -1687,12 +1764,21 @@ try {
         missionIndex: index,
         baseURL: new URL('../../', location.href),
       });
+      libraryInventory ??= await createMissionLibraryInventory({
+        reader: createExternalChapterInventoryReader({
+          profileKey: `revealline.library.${contentChannel}.v1`,
+          packsKey: `revealline.packs.${contentChannel}.v1`,
+        }),
+      });
+      if (disposed || artworkLifetime.signal.aborted) {
+        libraryInventory.close();
+        throw new DOMException('Mission library closed.', 'AbortError');
+      }
       await refreshLibraryInventory();
-      const result = await createInstalledMissionLibrary({
+      const result = await createMetadataInstalledMissionLibrary({
         index,
-        mode: 'versus',
         baseEntry,
-        getPacks: () => libraryInventory,
+        getInventory: libraryInventory.getInventory,
         journeySources: [
           combineJourneyLibrarySources([
             {
@@ -1789,39 +1875,79 @@ try {
             rules: `${Math.round(actual.goal.coverage * 100)}% coverage · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
           };
         },
-        unavailableClassic: () => libraryInventoryError || null,
-        availabilityExternal: (row, pack) =>
-          pack && maps.some((entry) => entry.sourcePackId === row.packId && entry.external)
-            ? { state: 'ready' }
-            : {
-                state: 'unavailable',
-                reason:
-                  'Open this installed original-picture chapter from Legacy Versus. Paired-media downloads in this library are not yet available.',
-              },
-        prepareClassic: async (row, { signal }) => {
-          if (['bundled', 'archived'].includes(row.source)) {
-            const installed = await libraryInstaller.installIndexed(row, { signal });
-            libraryInventory = installed.library;
-            return;
+        availabilityClassic: (row, pack) => {
+          if (!libraryInventory.state().ready)
+            return { state: 'unavailable', reason: libraryInventory.state().reason };
+          if (row.source === 'external' && pack) {
+            const proof = libraryExternalProofs.get(row.packId);
+            return proof?.inventory === libraryInventory.getInventory() &&
+              proof.epoch === libraryOpenEpoch
+              ? { state: 'ready' }
+              : {
+                  state: 'unavailable',
+                  retry: true,
+                  reason:
+                    'Installed originals need checking. Retry verifies them without downloading.',
+                };
           }
-          if (row.source !== 'optional')
-            throw new Error(
-              'Install this chapter in Solo first. This download is not yet supported in Versus.',
-            );
-          const catalog = await loadOptionalCatalog({
-            signal,
-            baseURL: new URL('../../', location.href),
+          return pack
+            ? { state: 'ready' }
+            : { state: 'download', bytes: row.download?.bytes ?? row.sourceFile.bytes };
+        },
+        availabilityCustom: () =>
+          libraryInventory.state().ready
+            ? { state: 'ready' }
+            : { state: 'unavailable', reason: libraryInventory.state().reason },
+        prepareClassic: async (row, { signal }) => {
+          if (!libraryInventory.state().ready) throw new Error(libraryInventory.state().reason);
+          const epoch = libraryOpenEpoch;
+          let installed;
+          if (row.source === 'external') {
+            installed = libraryInventory.getInventory().packs.some((pack) => pack.id === row.packId)
+              ? await libraryInstaller.inspectExternal(row, { signal })
+              : await libraryInstaller.installExternal(row, { signal });
+          } else if (['bundled', 'archived'].includes(row.source))
+            installed = await libraryInstaller.installIndexed(row, { signal });
+          else {
+            if (row.source !== 'optional') throw new Error('This chapter has no trusted download.');
+            const catalog = await loadOptionalCatalog({
+              signal,
+              baseURL: new URL('../../', location.href),
+            });
+            const summary = catalog.packs.find((item) => item.id === row.packId);
+            if (!summary)
+              throw new Error('This exact chapter is unavailable in the published catalogue.');
+            installed = await libraryInstaller.install(summary, { signal });
+          }
+          // A durable commit remains real after cancellation. Read-only refresh
+          // never adopts a match; it prevents stale download/ownership claims.
+          await refreshLibraryInventory({
+            signal: installed.committed ? artworkLifetime.signal : signal,
           });
-          const summary = catalog.packs.find((item) => item.id === row.packId);
-          if (!summary)
-            throw new Error('This exact chapter is unavailable in the published catalogue.');
-          const installed = await libraryInstaller.install(summary, { signal });
-          libraryInventory = installed.library;
+          if (row.source === 'external') {
+            if (!installed.ready) {
+              libraryInventoryNotice = installed.reason;
+              refreshLibraryWarning();
+              throw new Error(installed.reason);
+            }
+            if (!signal.aborted && epoch === libraryOpenEpoch && libraryInventory.state().ready)
+              libraryExternalProofs.set(row.packId, {
+                inventory: libraryInventory.getInventory(),
+                epoch,
+              });
+            libraryInventoryNotice = '';
+            refreshLibraryWarning();
+          }
         },
         launchClassic: (row, context) =>
-          launchLibrarySelection(context.pack, context.selection, context),
+          launchMetadataSelection(
+            context.metadataPack,
+            context.selection,
+            context,
+            row.source === 'external' ? row : null,
+          ),
         launchCustom: (binding, context) =>
-          launchLibrarySelection(binding.pack, binding.selection, context),
+          launchMetadataSelection(binding.pack, binding.selection, context),
       });
       if (disposed || artworkLifetime.signal.aborted) {
         result.library.dispose();
@@ -1845,6 +1971,25 @@ try {
             opener.focus({ preventScroll: true });
         },
       });
+      for (const row of index.missions.filter((item) => item.source === 'external')) {
+        const id = libraryMissionId({
+          owner: JSON.stringify(['classic', 'external', row.packId]),
+          edition: row.sourceFile.sha256,
+          campaign: row.campaignKey,
+          mission: row.levelId,
+          revision: row.levelRevision,
+        });
+        if (result.library.find(id)) libraryExternalSelections.set(id, row);
+      }
+      const inventoryNotice = document.createElement('p');
+      inventoryNotice.id = 'race-library-inventory-status';
+      inventoryNotice.setAttribute('role', 'status');
+      const statusRow = document.createElement('div'),
+        status = $('journey-chooser-status');
+      statusRow.id = 'race-library-status';
+      status.after(statusRow);
+      statusRow.append(status, inventoryNotice);
+      refreshLibraryWarning();
       if (!journeyPreferences)
         browsingJourneyPreferences.subscribe(() => journeyChooser?.refresh());
       missionLibrary = result;
@@ -1876,7 +2021,7 @@ try {
       if (visit !== libraryOpenEpoch || !opening.current() || !context.isCurrent()) return;
       await refreshLibraryInventory();
       if (visit !== libraryOpenEpoch || !opening.current() || !context.isCurrent()) return;
-      await owner.refreshInstalled();
+      if (libraryInventory.state().ready) await owner.refreshInstalled();
       opening.dispose();
       if (visit !== libraryOpenEpoch || !opening.current() || !context.isCurrent()) return;
       journeyChooser.open(opener, { returnLabel: 'Back to race' });
@@ -1889,17 +2034,16 @@ try {
         $('race-message').textContent = previousMessage;
     }
   }
-  async function refreshLibraryInventory() {
+  async function refreshLibraryInventory({ signal = artworkLifetime.signal } = {}) {
+    libraryExternalProofs.clear();
     try {
-      libraryInventory = (await libraryInstaller.inspect({ signal: artworkLifetime.signal }))
-        .library;
-      libraryInventoryError = '';
+      await libraryInventory.refresh({ signal });
     } catch (error) {
       if (disposed || artworkLifetime.signal.aborted || error.name === 'AbortError') throw error;
-      // Unreadable retained content is not trusted or removed. Core Journey and
-      // Base missions remain browseable; a fresh open retries the installed store.
-      libraryInventory = emptyPackLibrary();
-      libraryInventoryError = `Installed content is unavailable: ${error.message}. Reopen missions to retry; existing data is kept.`;
+      // Controller retires current authority without deleting stored bytes or
+      // existing Custom cards. Only a checked refresh may reconcile the rows.
+    } finally {
+      refreshLibraryWarning();
     }
   }
   async function stageCataloguePack(
@@ -2458,6 +2602,7 @@ try {
   }
   function suspend() {
     ++libraryOpenEpoch;
+    libraryIncomingController?.abort();
     cancelLibraryDecision();
     catalogue?.cancel();
     if (disposed) return;
@@ -2497,6 +2642,7 @@ try {
     journeyChooser?.destroy();
     missionLibrary?.library.dispose();
     libraryInstaller?.dispose();
+    libraryInventory?.close();
     librarySoloPreview?.preparer.dispose();
     preparationStatus.dispose();
     couchTouch.destroy();
@@ -2705,10 +2851,14 @@ try {
   finishBoot();
   document.documentElement.dataset.toolState = 'ready';
   const incomingEpoch = libraryHandoff ? ++libraryOpenEpoch : null,
+    incomingController = (libraryIncomingController = libraryHandoff
+      ? new AbortController()
+      : null),
     incomingOpening = libraryHandoff
       ? trackMissionLibraryOpening({
           onRetire: () => {
             if (incomingEpoch === libraryOpenEpoch) ++libraryOpenEpoch;
+            incomingController.abort();
           },
         })
       : null;
@@ -2729,6 +2879,18 @@ try {
           throw new Error(
             'This mission belongs to a different gameplay host. Choose it from All missions.',
           );
+        const paired = libraryExternalSelections.get(row.id);
+        if (
+          paired &&
+          libraryInventory.state().ready &&
+          libraryInventory.getInventory().packs.some((pack) => pack.id === paired.packId)
+        ) {
+          // Incoming Play is deliberate. Check installed paired originals under
+          // its original opening lease, never download or choose a substitute.
+          await owner.library.prepare(row, { mode: 'versus', signal: incomingController.signal });
+          if (epoch !== libraryOpenEpoch || !opening.current() || !context.isCurrent())
+            throw new DOMException('Requested mission cancelled.', 'AbortError');
+        }
         // The metadata request relinquishes input before the exact launch or
         // chooser adopts focus. Later staged work owns its own cancellation.
         opening.dispose();
@@ -2748,6 +2910,8 @@ try {
         $('race-message').textContent = `Requested mission could not open: ${error.message}`;
     } finally {
       opening.dispose();
+      if (libraryIncomingController === incomingController) libraryIncomingController = null;
+      incomingController.abort();
     }
   }
   const start = $('race-start');
