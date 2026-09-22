@@ -18,6 +18,10 @@ import { journeyActorThemeCandidates } from './presentation/journey-actor-materi
 import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
 import { attachJourneyChooser } from './ui/journey-chooser.mjs';
+import {
+  resolveInstalledMissionTarget,
+  installedMissionExecutionIndex,
+} from './mission-library/installed-target.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
 import {
   createReleasePictureDefaults,
@@ -2990,11 +2994,14 @@ try {
       );
     return intent;
   }
-  async function requestWorldPlay(pack, { signal, launch, onStatus }) {
+  async function requestWorldPlay(
+    pack,
+    { signal, launch, onStatus, campaignId, levelId, levelRevision },
+  ) {
     assertWorldPlay(launch);
     if (signal?.aborted || !packs.packs.includes(pack))
       throw new Error('Installed content changed. Choose Play again.');
-    const entry = resolvePackCampaign(pack, pack.campaigns[0].id);
+    const entry = resolvePackCampaign(pack, campaignId ?? pack.campaigns[0].id);
     const request = {
       kind: 'world-play',
       id: campaignKey(entry.campaign),
@@ -3003,6 +3010,8 @@ try {
       launch,
       signal,
       onStatus,
+      ...(levelId !== undefined ? { levelId } : {}),
+      ...(levelRevision !== undefined ? { levelRevision } : {}),
     };
     const selected = await requestMissionReplacement(request, launch.opener, launch);
     if (!selected && launch.isCurrent()) {
@@ -3097,7 +3106,7 @@ try {
       library.campaigns,
       progressFor(library, entry.campaign),
     );
-    const destinationIndex = selection.levelIndex;
+    const destinationIndex = installedMissionExecutionIndex(target, entry, selection.levelIndex);
     const level = entry.campaign.levels[destinationIndex];
     const nextTheme =
       entry.themes.find((item) => item.id === (level.themeId || entry.campaign.themeId)) ||
@@ -3299,24 +3308,21 @@ try {
   }
   function resolveMissionRequest(request) {
     if (request.kind === 'world-play') {
-      if (!packs.packs.includes(request.pack) || request.pack.id !== request.sourcePackId)
-        throw new Error('This installed chapter changed. Choose Play again.');
-      const authored = request.pack.campaigns
-        .map((source) => resolvePackCampaign(request.pack, source.id))
-        .find((entry) => campaignKey(entry.campaign) === request.id);
-      if (!authored) throw new Error('That exact chapter is no longer available.');
+      const target = resolveInstalledMissionTarget({
+        packs,
+        pack: request.pack,
+        sourcePackId: request.sourcePackId,
+        campaignIdentity: request.id,
+        levelId: request.levelId,
+        levelRevision: request.levelRevision,
+      });
       return {
+        ...target,
         same:
           unfinishedFlight() &&
           activeEntry.sourcePackId === request.sourcePackId &&
-          modeSelection().campaignKey === campaignKey(authored.campaign),
-        title: authored.campaign.title || authored.campaign.name || authored.campaign.id,
-        entry: authored,
-        identity: {
-          kind: request.kind,
-          campaignKey: request.id,
-          sourcePackId: request.sourcePackId,
-        },
+          modeSelection().campaignKey === campaignKey(target.entry.campaign) &&
+          (target.levelIndex === null || levelIndex === target.levelIndex),
       };
     }
     if (request.kind === 'library-installed') {
