@@ -497,3 +497,23 @@ verification. It must receive a new pinned native check before acceptance.
   using actual trusted source payloads with modeled browser/transaction boundaries.
   Source review found no blocker. Inline host adoption and native/public tests
   remain required before paired-download functionality is marked complete.
+
+### Cross-mode return and incoming-focus repair candidate
+
+- Exact handoffs now carry finite source-mode/edition navigation separately from
+  their selected destination identity. Checked Legacy Solo return tokens retain
+  priority; malformed/duplicate hints cannot nominate arbitrary destinations.
+- Legacy remote cards use read-only saved Journey presets and refresh on storage
+  changes. Returning late Classic selections no longer applies obsolete unlock
+  gates or invents clears. Existing optional mode controls remain in the same
+  collapsed Solo setup scroll panel, not an extra selector.
+- Checked Solo returns await the real unified selector. Native-inert startup
+  testing reproduced the Team→Solo failure: final boot focus retired the pending
+  incoming launch. Awaiting that owned launch fixes the race without relaxing
+  genuine new-input, hidden-page or exact-owner guards.
+-38 combined return/handoff/Solo-lifecycle cases pass with zero skips; two
+  additional Team→Versus incoming cases pass. The full68 checked-return cases
+  passed before the final incoming-await-only fix. Team's15 return cases,8 remote
+  cases and48 prior navigation/route cases passed in bounded cohorts.
+- This is a pinned native-retest candidate, not accepted Release B. Source-route,
+  saved-preset and exact incoming launch must now be repeated in the browser.

@@ -4,6 +4,7 @@ import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { attachSettingsPanels } from '../ui/settings-panels.mjs';
 import { authoredJourneyModeHref, isAuthoredJourneyRouteId } from '../content-design/mode-href.mjs';
+import { isMissionLibrarySourceJourney } from '../mission-library/handoff.mjs';
 
 const ABILITY = Object.freeze({
   scan: 'Scan',
@@ -47,6 +48,7 @@ export function createCouchShell({
   getSoloReturnToken = () => null,
   authoredRoute = 'legacy',
   getSoloJourneyRoute = () => null,
+  getTeamJourneyRoute = () => null,
   onMissions = null,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
@@ -271,16 +273,26 @@ export function createCouchShell({
   function soloJourneyRoute() {
     try {
       const id = getSoloJourneyRoute();
-      return isAuthoredJourneyRouteId(id) ? id : null;
+      return id === 'legacy' || isAuthoredJourneyRouteId(id) ? id : null;
     } catch {
       return null;
     }
   }
-  const destinationHref = (kind, token, routeId) =>
+  function teamJourneyRoute() {
+    try {
+      const id = getTeamJourneyRoute();
+      return isMissionLibrarySourceJourney(id, 'team') ? id : null;
+    } catch {
+      return null;
+    }
+  }
+  const destinationHref = (kind, token, routeId, teamRouteId = teamJourneyRoute()) =>
     (kind === 'library' && libraryHref) ||
     (kind === 'solo' && token && `../?mode-return-v2=${token}`) ||
-    (isJourney && authoredDestinations?.[kind]) ||
+    (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
     (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
+    (kind === 'team' && teamRouteId && `relay-rescue.html?journey=${teamRouteId}&return=versus`) ||
+    (isJourney && authoredDestinations?.[kind]) ||
     authoredDestinations?.[kind] ||
     DESTINATIONS[kind];
   function departureCurrent(ticket) {
@@ -291,6 +303,7 @@ export function createCouchShell({
       current?.match === ticket.match &&
       current.generation === ticket.generation &&
       soloJourneyRoute() === ticket.journeyRouteId &&
+      teamJourneyRoute() === ticket.teamJourneyRouteId &&
       current.match.status === 'paused'
     );
   }
@@ -318,9 +331,13 @@ export function createCouchShell({
       return;
     }
     // Fixed routes are owned here; no target is accepted from a URL or control.
-    const returnToken = kind === 'solo' && !isJourney ? soloReturnToken() : null;
+    const returnToken = kind === 'solo' ? soloReturnToken() : null;
     const journeyRouteId = soloJourneyRoute();
-    element.setAttribute('href', destinationHref(kind, returnToken, journeyRouteId));
+    const teamJourneyRouteId = teamJourneyRoute();
+    element.setAttribute(
+      'href',
+      destinationHref(kind, returnToken, journeyRouteId, teamJourneyRouteId),
+    );
     const before = getDepartureState();
     if (destroyed || departure || screen !== 'main' || !foreground() || !before?.match) {
       event.preventDefault();
@@ -343,6 +360,7 @@ export function createCouchShell({
       kind,
       returnToken,
       journeyRouteId,
+      teamJourneyRouteId,
       opener: element,
       match: current.match,
       generation: current.generation,
@@ -373,7 +391,10 @@ export function createCouchShell({
           ? 'Discard and go to Team'
           : 'Discard and return to Solo',
     );
-    $('race-leave').setAttribute('href', destinationHref(kind, returnToken, journeyRouteId));
+    $('race-leave').setAttribute(
+      'href',
+      destinationHref(kind, returnToken, journeyRouteId, teamJourneyRouteId),
+    );
     show('leave', { remember: element });
     if (!departureCurrent(ticket)) cancelDeparture();
   }
@@ -412,7 +433,12 @@ export function createCouchShell({
     }
     $('race-leave').setAttribute(
       'href',
-      destinationHref(ticket.kind, ticket.returnToken, ticket.journeyRouteId),
+      destinationHref(
+        ticket.kind,
+        ticket.returnToken,
+        ticket.journeyRouteId,
+        ticket.teamJourneyRouteId,
+      ),
     );
     // Preserve native anchor activation. If the browser cannot leave, the
     // original paused attempt stays intact and another decision remains explicit.

@@ -23,7 +23,8 @@ for (const transition of ['newer focus', 'newer key', 'newer pointer'])
     const gate = new Promise((resolve) => {
       release = resolve;
     });
-    const p = await soloPage(t, {
+    t.after(() => release());
+    const page = soloPage(t, {
       titleScreen: true,
       search: `?journey=legacy&library-mission=${encodeURIComponent(exact.id)}`,
       fetchResponse: async (path) => {
@@ -34,19 +35,22 @@ for (const transition of ['newer focus', 'newer key', 'newer pointer'])
       },
     });
     await settle(() => requested);
-    const run = p.rendered.run;
-    if (transition === 'newer focus') p.$('shell-featured').focus();
+    const doc = globalThis.document;
+    const control = doc.getElementById('overlay-menu');
+    if (transition === 'newer focus') control.focus();
     else
-      p.$('shell-play').emit(
+      control.emit(
         transition === 'newer key' ? 'keydown' : 'pointerdown',
         transition === 'newer key' ? { key: 'Tab' } : {},
       );
-    const focused = p.doc.activeElement;
+    const focused = doc.activeElement;
     release();
+    const p = await page;
     await settle(() => p.$('journey-collection'));
     await new Promise((resolve) => setImmediate(resolve));
     p.frame(0);
-    assert.equal(p.rendered.run, run);
+    assert.equal(p.rendered.run.levelId, 'signal-01');
+    assert.equal(p.rendered.run.tick, 0);
     assert.equal(p.$('journey-chooser').open, false);
     assert.equal(p.doc.activeElement, focused);
     assert.notEqual(p.doc.body.dataset.flightState, 'running');

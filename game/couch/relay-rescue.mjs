@@ -76,6 +76,8 @@ import {
   createMissionLibrarySessionState,
   missionLibraryHref,
   readMissionLibraryHandoff,
+  readMissionLibraryReturn,
+  isMissionLibrarySourceJourney,
 } from '../mission-library/handoff.mjs';
 import {
   teamJourneyLibrarySource,
@@ -139,16 +141,25 @@ export function bootCoop({
   // Older/direct links and ambiguous contexts retain the existing Versus return.
   const entryParams = new URL(location.href).searchParams;
   const incomingLibraryMission = readMissionLibraryHandoff(entryParams);
+  const libraryReturn = readMissionLibraryReturn(entryParams, { mode: 'team' });
   const libraryEdition = resolveJourneyRequest(entryParams, { mode: 'team' });
   const returns = entryParams.getAll('return');
-  const fromSolo = returns.length === 1 && returns[0] === 'solo';
+  const fromSolo = libraryReturn
+    ? libraryReturn.mode === 'solo'
+    : returns.length === 1 && returns[0] === 'solo';
   let returnStorage;
   try {
     returnStorage = sessionStorage;
   } catch {
     /* Fixed title fallback remains available. */
   }
-  const authoredReturn = authoredTeamReturn(location.href);
+  const authoredReturn = libraryReturn
+    ? {
+        solo: `../?journey=${libraryReturn.journey}`,
+        versus: `./?journey=${libraryReturn.journey}`,
+        origin: libraryReturn.mode,
+      }
+    : authoredTeamReturn(location.href);
   // Keep the actual host selection across mode changes, including rejected or
   // legacy launch intents. An authored return or valid save token still wins.
   const legacyEntry = !candidateJourney;
@@ -163,9 +174,27 @@ export function bootCoop({
   $('coop-catalogue').setAttribute('href', catalogueHref);
   $('coop-catalogue').textContent = candidateJourney ? 'Legacy arenas' : 'New journey';
   const returnHref = () => {
+    // Mission identity and source navigation are independent. A checked Solo
+    // return ticket remains stronger than the finite edition-navigation hint.
+    if (libraryReturn) {
+      if (libraryReturn.mode === 'solo' && libraryReturn.journey === 'legacy') {
+        const checked = teamReturnHref({ href: location.href, storage: returnStorage });
+        if (checked.startsWith('../?mode-return=')) return checked;
+      }
+      return authoredReturn[libraryReturn.mode];
+    }
+    const invalidLibraryHint =
+      incomingLibraryMission &&
+      ['journey-return', 'return-token-v2', 'mode-return', 'mode-return-v2', 'practice'].some(
+        (key) => entryParams.has(key),
+      );
     const destination =
       authoredReturn?.[authoredReturn.origin] ??
-      teamReturnHref({ href: location.href, storage: returnStorage });
+      (invalidLibraryHint
+        ? fromSolo
+          ? '../'
+          : './'
+        : teamReturnHref({ href: location.href, storage: returnStorage }));
     return legacyEntry && ['../', './'].includes(destination)
       ? `${destination}?journey=legacy`
       : destination;
@@ -2594,6 +2623,11 @@ export function bootCoop({
       mode: context.mode,
       journey: row.collection === 'Journey' ? row.editionId : 'legacy',
       missionId: context.libraryMissionId,
+      sourceJourney: candidateJourney
+        ? isMissionLibrarySourceJourney(libraryEdition, 'team')
+          ? libraryEdition
+          : undefined
+        : 'legacy',
     });
     const attempt = run,
       epoch = generation;
