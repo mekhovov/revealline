@@ -16,6 +16,6 @@ Native browser verification ran against PR236 source 516e9e60faeb688cd194eababd5
 
 The serialized local native receipt is `.cache/p08-studio-mobile-toolbar-516e-r1/native-review-root-r3.json`, SHA256 `0193bd5f1e78f98fda7df986318679d33c170d2cd0e5073e1e28796f0af64609`; its request log SHA256 is 98ea4686068f32362e9d0b540839be1db9d3f8eec7bb4aed7d1f3e89f5f9504b. The source CSS passed Prettier parsing/format checks and exact forward/reverse patch checks. No CSS-only mirror test was added; repository ESLint targets JavaScript.
 
-The final generator read audit and declared recipe-source inputs exclude studio.css. This correction requires no production regeneration, version assignment or Team quality promotion. The separate Team inventory count correction is not included.
+The final generator read audit and declared recipe-source inputs exclude studio.css. No production regeneration or Team quality promotion is needed. Assign the next unused game patch version during final release integration. The separate Team inventory count correction is not included.
 
 This is responsive viewport evidence with pointer setup and actual Tab checks. It is not an entirely keyboard-only authoring journey, physical touch/controller certification, 200% browser-zoom verification, full Studio workflow acceptance or a public release. Follow the [responsive authoring prompt](../../authoring/prompts/studio-responsive-toolbar.md) for future changes.
