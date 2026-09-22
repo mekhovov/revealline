@@ -3,7 +3,8 @@ import { inspectImageDataUrl } from '../content.mjs';
 import { browserDecodeImage } from '../imports.mjs';
 import { LIMITS, validateThemeBundle } from './model.mjs';
 
-const MAGIC = new TextEncoder().encode('RLTHM1\r\n');
+const MAGIC_V1 = new TextEncoder().encode('RLTHM1\r\n');
+const MAGIC_V2 = new TextEncoder().encode('RLTHM2\r\n');
 export const THEME_BUNDLE_MIME = 'application/vnd.revealline.theme';
 const nativeSize = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get;
 const abort = (signal) => {
@@ -81,6 +82,19 @@ function inspectAudio(bytes, mime) {
       'Invalid MPEG audio header.',
     );
 }
+// validateThemeBundle already rejects inconsistent file facts for a shared hash.
+// V2 derives its table only after that complete document validation.
+function payloadTable(document) {
+  return [
+    ...new Map(
+      document.assets
+        .filter((asset) => asset.file)
+        .map((asset) => [asset.file.sha256, asset.file.bytes]),
+    ),
+  ]
+    .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+    .map(([sha256, bytes]) => ({ sha256, bytes }));
+}
 /** Hashes and headers are always verified. An optional decoder adds real image
  * decoding; font loading and audio audition remain separate host checks. */
 export async function verifyThemeAssets(source, sourceAssets, { signal, decodeImage = null } = {}) {
@@ -141,12 +155,14 @@ export async function exportThemeBundle(source, sourceAssets = new Map(), option
   const document = validateThemeBundle(source),
     assets = await verifyThemeAssets(document, sourceAssets, options);
   const table = [...assets].map(([sha256, blob]) => ({ sha256, bytes: nativeSize.call(blob) }));
-  const manifest = new TextEncoder().encode(canonicalJSON({ document, assets: table }));
+  let manifest = new TextEncoder().encode(canonicalJSON({ document, assets: table }));
+  const compact = manifest.length > LIMITS.manifestBytes;
+  if (compact) manifest = new TextEncoder().encode(canonicalJSON({ document }));
   required(manifest.length <= LIMITS.manifestBytes, 'Bundle manifest exceeds its budget.');
   const total = 12 + manifest.length + table.reduce((sum, row) => sum + row.bytes, 0);
   required(total <= LIMITS.bundleBytes, 'Theme bundle exceeds 32 MiB.');
   const header = new Uint8Array(12);
-  header.set(MAGIC);
+  header.set(compact ? MAGIC_V2 : MAGIC_V1);
   new DataView(header.buffer).setUint32(8, manifest.length);
   abort(options.signal);
   return new Blob([header, manifest, ...assets.values()], { type: THEME_BUNDLE_MIME });
@@ -161,10 +177,8 @@ export async function importThemeBundle(
   const blob = ownBlob(source, LIMITS.bundleBytes);
   required(blob.size >= 12, 'Truncated theme bundle.');
   const header = new Uint8Array(await blob.slice(0, 12).arrayBuffer());
-  required(
-    MAGIC.every((byte, i) => header[i] === byte),
-    'Unsupported theme bundle.',
-  );
+  const compact = MAGIC_V2.every((byte, i) => header[i] === byte);
+  required(compact || MAGIC_V1.every((byte, i) => header[i] === byte), 'Unsupported theme bundle.');
   const length = new DataView(header.buffer).getUint32(8);
   required(
     length > 0 && length <= LIMITS.manifestBytes && 12 + length <= blob.size,
@@ -182,16 +196,14 @@ export async function importThemeBundle(
       maxString: 8192,
     },
   );
-  exactKeys(manifest, ['document', 'assets'], 'theme transfer');
+  exactKeys(manifest, compact ? ['document'] : ['document', 'assets'], 'theme transfer');
   const document = validateThemeBundle(manifest.document, { previous, expectedRevision });
-  required(
-    Array.isArray(manifest.assets) && manifest.assets.length <= LIMITS.assets,
-    'Invalid theme asset table.',
-  );
+  const table = compact ? payloadTable(document) : manifest.assets;
+  required(Array.isArray(table) && table.length <= LIMITS.assets, 'Invalid theme asset table.');
   const assets = new Map();
   let offset = 12 + length,
     last = '';
-  for (const row of manifest.assets) {
+  for (const row of table) {
     exactKeys(row, ['sha256', 'bytes'], 'payload row');
     required(
       typeof row.sha256 === 'string' &&
