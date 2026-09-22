@@ -1,5 +1,6 @@
 import { captureOperationFocus } from './operation-focus.mjs';
 import { createOperationStatus } from './operation-status.mjs';
+import { attachSessionOriginalsExport } from './session-originals-export.mjs';
 import { attachBackupSetPanel } from './backup-set-panel.mjs';
 import { prepareBackup, exportBackup, MAX_BACKUP_BYTES } from '../backup.mjs';
 import { importLibrary, exportLibrary, libraryCapacity, campaignKey } from '../library.mjs';
@@ -166,6 +167,7 @@ export function attachLibraryPanel(api) {
   let libraryTask = null;
   let libraryTaskGeneration = 0;
   let backupSetPanel = null;
+  let sessionOriginals = null;
   let clearBackupFeedbackOnSettle = false;
   let previousLibrary = null,
     previousBackup = null,
@@ -483,6 +485,7 @@ export function attachLibraryPanel(api) {
     populateGallery();
   };
   function refresh() {
+    sessionOriginals?.refresh();
     backupSetPanel?.checkCurrent();
     transferPanel?.refresh();
     renderScores();
@@ -626,6 +629,7 @@ export function attachLibraryPanel(api) {
     if (!$('library-dialog').open) {
       endAttemptExport(false);
       cancelLibraryTask(false);
+      sessionOriginals?.invalidate();
       feedbackRail.clear();
     }
   });
@@ -1015,6 +1019,18 @@ export function attachLibraryPanel(api) {
       refresh,
       presentFeedback: () => feedbackRail.present('backup-set-status', ['cancel-backup-set']),
     });
+  sessionOriginals =
+    api.sessionPictures && $('session-originals')
+      ? attachSessionOriginalsExport({
+          registry: api.sessionPictures,
+          root: $('session-originals'),
+          note: $('session-originals-note'),
+          prepare: $('prepare-session-originals'),
+          download: $('download-session-originals'),
+          task: (work) => task('save-status', work, 'Preparing session-only picture originals…'),
+          setStatus: (message) => status('save-status', message),
+        })
+      : null;
   $('export-backup').onclick = () =>
     task('save-status', async (operation) => {
       operation.phase('Reading saved game data and original references…');
@@ -1053,7 +1069,7 @@ export function attachLibraryPanel(api) {
       const exported = await downloadJSON(JSON.parse(text), 'revealline-player-library.json');
       status(
         'save-status',
-        `Library prepared. ${exported.message} Keep packs and attempt files alongside it.`,
+        `Library prepared. ${exported.message} Keep packs and attempt files alongside it. ${api.sessionNote?.() || ''}`,
       );
     });
   $('import-save').onclick = () => importSave($('save-json').value);
@@ -1192,7 +1208,7 @@ export function attachLibraryPanel(api) {
       if (picture.receipt?.presentationPin.kind === 'still') {
         if (!picture.media) throw new Error('Restore the original picture media before viewing.');
         onPhase('Reading and decoding the exact earned original…');
-        backdrop = await acquirePresentationImage({
+        backdrop = await (picture.media.acquire ?? acquirePresentationImage)({
           pin: picture.receipt.presentationPin,
           metadata: picture.media.metadata,
           store: picture.media.store,
@@ -1757,5 +1773,12 @@ export function attachLibraryPanel(api) {
       }
     }
   });
-  return { open, refresh, populateGallery, refreshMasteries, cancelAttemptExport };
+  return {
+    open,
+    refresh,
+    populateGallery,
+    refreshMasteries,
+    cancelAttemptExport,
+    dispose: () => sessionOriginals?.dispose(),
+  };
 }

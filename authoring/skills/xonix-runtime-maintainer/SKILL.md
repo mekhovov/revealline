@@ -1191,3 +1191,10 @@ Keep built-in and imported playlist selection visible when attachSoundtrackPanel
 ## Frozen distribution size authority
 
 Keep artifact inspection, reviewed release descriptors and streamed `distribution.zip` uploads bound to the same exact 950,000,000-byte Pages cap. Direct inspection may retain its bounded 1 GiB default, but the hosted release utility must pass the exact cap explicitly. Never raise a bound just because a snapshot failed: first preserve the failed evidence, confirm the current publication budget, and retain all ZIP, manifest, hash-chain, source and final assembled-Pages checks. Infrastructure-only utility corrections do not change frozen game bytes or reserve a game version; re-inspect the original immutable artifact after the reviewed utility PR merges.
+
+
+## Session-only released pictures
+
+Follow `docs/session-only-release-originals.md`. Known writer loss may stage exact code-owned release originals in a bounded tab registry; never reinterpret an arbitrary durable write exception as permission to switch storage. Preserve imported/manual originals, complete pins and branded durable metadata. Accept only after display readiness and current-operation checks. Keep earned originals until page retirement, with explicit .rlmedia plus game-data export.
+
+Prompt: “Open two tabs on an isolated origin, keep the writer in one and complete First Signal in the session-only tab. Delay the new Relay Orchard original and verify results stay usable, then Next enters play without another Start. Test Retry, world changes, Collection, cancellation and exact original export/restore. Assert no modeled media writes or writer reacquisition; separately record native decoding and browser leave behavior. Do not call a download saved or a candidate publicly delivered.”
