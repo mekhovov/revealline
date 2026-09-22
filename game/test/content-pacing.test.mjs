@@ -8,6 +8,84 @@ import { compileContentProject } from '../content-design/project.mjs';
 import { resolveContentJourney } from '../content-design/journey.mjs';
 import { inspectContentPacing } from '../content-design/pacing.mjs';
 
+test('learning-order advice follows the playable sequence without inferring mastery or label aliases', () => {
+  const source = createOpeningCandidates();
+  const ids = ['first-return', 'choose-your-share', 'two-keepers'];
+  source.campaigns = [{ ...source.campaigns[0], missionIds: ids }];
+  source.packs = [{ ...source.packs[0], campaignIds: [source.campaigns[0].id] }];
+  const [intro, practice, combination] = ids.map((id) =>
+    source.missions.find((mission) => mission.id === id),
+  );
+  intro.design.introduces = ['test-lesson'];
+  intro.design.practices = [];
+  intro.design.combines = [];
+  practice.design.introduces = [];
+  practice.design.practices = ['test-lesson'];
+  practice.design.combines = [];
+  combination.design.introduces = [];
+  combination.design.practices = [];
+  combination.design.combines = ['test-lesson', 'unknown-actor-label'];
+  const lessonWarnings = (report) =>
+    report.diagnostics.filter((item) => item.code.includes('-selected-'));
+  assert.deepEqual(lessonWarnings(inspectContentPacing(source)), []);
+
+  source.campaigns[0].missionIds = [ids[2], ids[1], ids[0]];
+  const before = structuredClone(source);
+  const reversed = inspectContentPacing(source);
+  assert.deepEqual(
+    lessonWarnings(reversed).map((item) => [item.missionId, item.code, item.lessons]),
+    [
+      [ids[2], 'combination-before-selected-introduction', ['test-lesson']],
+      [ids[1], 'practice-before-selected-introduction', ['test-lesson']],
+    ],
+  );
+  assert.deepEqual(source, before, 'advice cannot reorder or retune the project');
+
+  source.campaigns[0].missionIds = [ids[1], ids[0], ids[2]];
+  assert.equal(
+    lessonWarnings(inspectContentPacing(source)).at(-1).code,
+    'combination-before-selected-practice',
+    'practice before the introduction is not retroactively qualified',
+  );
+  source.campaigns[0].missionIds = ids;
+  practice.design.practices = [];
+  combination.design.practices = ['test-lesson'];
+  assert.equal(
+    lessonWarnings(inspectContentPacing(source))[0].code,
+    'combination-before-selected-practice',
+    'same-mission practice is not earlier practice',
+  );
+  intro.design.combines = ['test-lesson'];
+  assert.equal(
+    lessonWarnings(inspectContentPacing(source))[0].code,
+    'combination-before-selected-introduction',
+    'same-mission introduction is not an earlier exposure',
+  );
+});
+
+test('excluded, archived and mode-incompatible introductions do not silently prepare a selected route', () => {
+  const source = createOpeningCandidates();
+  const lessonWarnings = (report) =>
+    report.diagnostics.filter((item) => item.code.includes('-selected-'));
+  const prologue = source.campaigns[0];
+  const filtered = inspectContentPacing(source, { excludedCampaignIds: [prologue.id] });
+  assert(lessonWarnings(filtered).some((item) => item.lessons.includes('enemy-seeded-closure')));
+  assert.equal(filtered.rows[0].missionId, 'nearby-shore');
+  const first = source.missions.find((mission) => mission.id === 'first-return');
+  first.archived = true;
+  assert.equal(
+    lessonWarnings(inspectContentPacing(source))[0].code,
+    'practice-before-selected-introduction',
+  );
+  first.archived = false;
+  first.modes = ['solo'];
+  assert.deepEqual(lessonWarnings(inspectContentPacing(source, { mode: 'solo' })), []);
+  assert.equal(
+    lessonWarnings(inspectContentPacing(source, { mode: 'versus' }))[0].code,
+    'practice-before-selected-introduction',
+  );
+});
+
 test('pacing inspection shares exact gameplay membership, order, mode and archive handling', () => {
   const source = createOpeningCandidates();
   for (const next of [

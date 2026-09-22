@@ -1,5 +1,42 @@
 # P08 Livewire Foundry — source preparation, not release acceptance
 
+## September21 original-art continuation
+
+All seven Livewire missions now have distinct original foundry compositions,
+17,247,834bytes total. Their1774×887 opaque PNGs have immutable byte/hash/dimension
+pins and complete generation prompts in
+`../research/livewire-original-art-prompts.json`. They are detailed stylized
+environmental illustrations, not strict low-resolution pixel art or collision maps.
+The opt-in factory and Studio Inspect → Apply path use the shared asset registry;
+default greyboxes, mission geometry, rules, replay identities and receipts are unchanged.
+
+The six-file art/catalogue/candidate/presentation/registry/whole-library cohort
+passes38/38 on Node20.19.5 and22.22.2, with zero failures, skips or cancellations.
+It verifies exact pins, decoded-preview inputs, all42 historical Livewire clear
+checkpoints, shared-registry uniqueness and the498 whole-library manifests.
+Scoped ESLint, formatting and diff checks pass. These are local candidates:
+native artwork/attack-overlay checks, broad-area/victory presentation, devices,
+human qualification, accepted-source integration and deployment remain open.
+No version or release is allocated by this continuation.
+
+Native exact8eda2234148815408e616e3ee9b27a4ecc13b119 on ownedlocalhost8813/tab38:
+Studio Inspect compiled all seven pictured candidates; explicit Apply created
+checkpoint2. Every original loaded in real Standard Solo Practice. First returns
+all retained3lives and stopped on reclaimed ground: Read the lock Down1.2%/270score;
+Cross the afterglow Left0.6%/140; Switchyard Up0.7%/150; Split junction Down0.6%/140;
+Crossbar depot Up0.2%/40; Cooling loop Up0.3%/70; Windows in the wire Up0.3%/70.
+Read the lock's subsequent Left closure reached2.6%/610 with3lives, paused at23s.
+
+Screenshots show original picture fragments, distinct functional terrain and actors,
+a dashed vertical warning over Afterglow's pictured foundation, a solid active lane
+over Split junction's connector at9s, and both warning axes over Crossbar's foundations.
+Cooling's eroder was visible; no erosion-restoration claim. Remix's roamer remained
+dormant; no activation or travelling-impact claim. Every preview closed normally,
+with final focus returned to Play. Ordinary viewport and native controls only:
+no forced document visibility, injected state, full native clear, broad-area/victory,
+physical device, muted/reduced-effects, human or public-release acceptance is inferred.
+The remaining visual matrix is retained in the prompt record.
+
 Provisional version0.76.0, stacked on P07 source96dd5cdd. Earlier phase release,
 human and production-review gates remain open; this does not bypass promotion.
 

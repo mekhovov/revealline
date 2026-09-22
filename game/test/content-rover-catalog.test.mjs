@@ -102,7 +102,7 @@ test('roamer authoring uses bounded shared tiers and fails closed for unqualifie
   team.actorCatalogId = ROVER_ACTOR_CATALOG.id;
   assert.throws(
     () => editContentActor(team, 'twin-landings', { action: 'add', id: rover.id, actor: rover }),
-    /currently support field keepers/,
+    /qualified actor roles/,
   );
 });
 

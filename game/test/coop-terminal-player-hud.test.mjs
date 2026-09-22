@@ -191,7 +191,7 @@ for (const level of ['first-connection', 'relay-yard'])
     assert.equal(f.$('coop-resume').hidden, true);
     assertFinishedPlayers(f, 'won');
     assert.deepEqual(messages.terminalWrites, [terminalMessage('won')]);
-    assert.ok(messages.writes.some((text) => /Joint Cut! Both lines are safe/.test(text)));
+    assert.ok(messages.writes.some((text) => /Joint Cut! Both lines are banked/.test(text)));
     const terminal = snapshot(f);
     f.tick(60);
     assert.deepEqual(snapshot(f), terminal);

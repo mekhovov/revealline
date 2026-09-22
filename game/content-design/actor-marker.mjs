@@ -2,7 +2,25 @@
  * Adds a path only; the caller owns ink, fill and frozen capture overlays.
  */
 export function traceContentActor(ctx, type, x, y, radius) {
-  if (type === 'impact-carrier') {
+  if (['optional-scout', 'optional-sentry'].includes(type)) {
+    // Bracketed biped: intentionally different from a retaining keeper circle.
+    ctx.rect(x - radius * 0.3, y - radius, radius * 0.6, radius * 0.5);
+    ctx.rect(x - radius * 0.5, y - radius * 0.35, radius, radius * 0.7);
+    ctx.rect(x - radius * 0.5, y + radius * 0.35, radius * 0.3, radius * 0.65);
+    ctx.rect(x + radius * 0.2, y + radius * 0.35, radius * 0.3, radius * 0.65);
+    if (type === 'optional-sentry')
+      ctx.rect(x + radius * 0.5, y - radius * 0.2, radius * 0.6, radius * 0.2);
+  } else if (type === 'relay-sentinel') {
+    // A three-point crown remains distinct from emitter posts and patrol arrows.
+    ctx.moveTo(x - radius, y - radius);
+    ctx.lineTo(x - radius * 0.35, y);
+    ctx.lineTo(x, y - radius);
+    ctx.lineTo(x + radius * 0.35, y);
+    ctx.lineTo(x + radius, y - radius);
+    ctx.lineTo(x + radius * 0.7, y + radius);
+    ctx.lineTo(x - radius * 0.7, y + radius);
+    ctx.closePath();
+  } else if (type === 'impact-carrier') {
     // A split lightning bolt is readable without motion or color cues.
     ctx.moveTo(x + radius * 0.2, y - radius);
     ctx.lineTo(x - radius, y + radius * 0.15);
@@ -51,8 +69,27 @@ export function contentActorMarkerType(level, actor) {
     : actor.type;
 }
 
+/** Initial authored positions are also shown when the gameplay modifier is off. */
+export function contentCombatMarkers(level) {
+  return (level.classic?.combatPatrols?.actors ?? []).map(({ id, role, x, y }) => ({
+    id,
+    type: `optional-${role}`,
+    x,
+    y,
+    inactive: !level.classic.combatPatrols.enabled,
+  }));
+}
+
 /** Initial authoring facts come from the resolved descriptor, not map-marker guesses. */
 export function contentActorDescription(level, actor) {
+  if (['optional-scout', 'optional-sentry'].includes(actor.type)) {
+    const recipe = level.classic.combatPatrols.actors.find((entry) => entry.id === actor.id);
+    return `${level.classic.combatPatrols.enabled ? 'active' : 'inactive authored'} optional ${recipe.role}, ${recipe.speed} cells/s, removed by contact/capture, never retains field${recipe.role === 'sentry' ? `; ${recipe.openingTicks / 120}s opening / ${recipe.warningTicks / 120}s locked warning / ${recipe.recoveryTicks / 120}s recovery / ${recipe.restTicks / 120}s rest; only projectile harms` : '; no contact damage'}`;
+  }
+  if (actor.type === 'relay-sentinel' && level.encounter?.version === 'xonix-encounter.v2') {
+    const recipe = level.encounter;
+    return `stationary Sentinel, ${recipe.shieldObjectiveIds.length} shield relay${recipe.shieldObjectiveIds.length === 1 ? '' : 's'}; ${recipe.shielded.warningTicks / 120}s lane warning; close ${recipe.minReleaseCutCells} new trail cells during CORE OPEN or isolate the core`;
+  }
   if (actor.type === 'lane-boss') {
     const recipe = level.enemies.find((entry) => entry.id === actor.id);
     return `stationary lane emitter, ${recipe.axis} lane, ${recipe.warningSeconds}s warning / ${recipe.activeSeconds}s active / ${recipe.period}s cycle`;

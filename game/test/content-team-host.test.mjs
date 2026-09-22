@@ -40,7 +40,7 @@ test('real Team terrain import explains materials, applies lethal contact and re
   f.tap('KeyD');
   f.tick(18);
   assert.match(f.$('coop-state-0').textContent, /Rescue/);
-  assert.equal(f.$('coop-state-1').textContent, 'On safe ground');
+  assert.equal(f.$('coop-state-1').textContent, 'On reclaimed ground');
   assert.match(f.$('coop-message').textContent, /Unclaimed lethal field caught a craft/);
   assert.equal(f.$('coop-coverage').textContent, '0.0%');
   f.$('coop-pause').click();
@@ -49,7 +49,7 @@ test('real Team terrain import explains materials, applies lethal contact and re
   f.$('coop-discard-confirm').click();
   f.tick(3);
   assert.equal(f.$('coop-reserves').textContent, '1 reserve');
-  assert.equal(f.$('coop-state-0').textContent, 'On safe ground');
+  assert.equal(f.$('coop-state-0').textContent, 'On reclaimed ground');
   f.tap('KeyD');
   f.tick(18);
   assert.match(f.$('coop-state-0').textContent, /Rescue/);

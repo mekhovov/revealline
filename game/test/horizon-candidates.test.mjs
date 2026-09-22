@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { createOpeningCandidates, OPENING_ARCS } from '../content-design/horizon-candidates.mjs';
+import {
+  createOpeningCandidates,
+  OPENING_ARCS,
+  HORIZON_FIRST_RETURNS,
+} from '../content-design/horizon-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
@@ -89,18 +93,11 @@ test('all ten Standard candidates have replay-verifiable complete legal routes, 
 
 test('each greybox has a deterministic legal first return; this is not a full-clear or duration claim', () => {
   const project = compileContentProject(createOpeningCandidates());
-  const departures = {
-    'first-return': 'down',
-    'choose-your-share': 'down',
-    'two-keepers': 'down',
-    'nearby-shore': 'down',
-    'island-outpost': 'left',
-    'stepping-stones': 'down',
-    'two-bays': 'left',
-    'courtyard-return': 'left',
-    'long-way-home': 'left',
-    'horizon-remix': 'left',
-  };
+  const departures = HORIZON_FIRST_RETURNS;
+  assert.deepEqual(
+    Object.keys(departures),
+    project.missions.map((mission) => mission.id),
+  );
   for (const mission of project.missions) {
     const manifest = resolveMission(project, mission.id);
     const run = createRun(manifest.level, { seed: 1 });

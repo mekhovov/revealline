@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
+import { createTeamRoamerCandidates } from '../content-design/team-roamer-candidates.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createDraftHistory } from '../content-design/drafts.mjs';
@@ -95,7 +96,7 @@ test('Team actor commands use the same compiler and do not change seats or lives
         id: 'outer',
         actor: patrol,
       }),
-    /currently support field keepers/,
+    /qualified actor roles/,
   );
   const next = editContentActor(source, 'twin-landings', {
     action: 'add',
@@ -199,6 +200,56 @@ function editorFixture({ deferredSource = false } = {}) {
   };
 }
 const submit = (f) => f.node('form').onsubmit({ preventDefault() {} });
+test('Studio authors registered pursuit roles, shows exact cooldown and retains undo-safe commands', () => {
+  const f = editorFixture();
+  const next = structuredClone(f.source());
+  next.actorCatalogId = 'journey-actors-v7';
+  next.difficultyCatalogId = 'journey-difficulty-v2';
+  f.update(next);
+  for (const role of ['trail-pursuer', 'heading-interceptor']) {
+    f.node('role').value = role;
+    f.node('role').onchange();
+    assert.equal(f.node('heading-row').hidden, false);
+    assert.equal(f.node('clockwise-row').hidden, true);
+    assert.match(
+      f.node('position-help').textContent,
+      /1s warning \/ 1.5s commitment \/ 2.55s recovery/,
+    );
+    assert.match(f.node('description').textContent, /Retains its field region/);
+  }
+  const history = createDraftHistory(f.source()),
+    original = structuredClone(f.source());
+  f.node('id').value = 'intercept';
+  f.node('x').value = '45.5';
+  f.node('y').value = '15.5';
+  f.node('heading').value = '1,1';
+  submit(f);
+  assert.equal(f.source().missions[0].actors.at(-1).role, 'heading-interceptor');
+  history.replace(f.source());
+  assert.deepEqual(history.undo(), original);
+  f.preset('expert');
+  assert.match(f.node('position-help').textContent, /1.95s recovery/);
+  assert.match(f.node('tier').children[0].textContent, /4.2 cells\/s/);
+});
+test('Studio reads the pinned difficulty catalog for effective movement and attack rests', () => {
+  const f = editorFixture();
+  const next = structuredClone(f.source());
+  next.difficultyCatalogId = 'journey-difficulty-v2';
+  next.actorCatalogId = 'journey-actors-v5';
+  f.update(next);
+  assert.match(f.node('tier').children[0].textContent, /3.36 cells\/s/);
+  f.node('role').value = 'lane-emitter';
+  f.node('role').onchange();
+  assert.match(
+    f.node('tier').children[0].textContent,
+    /1.5s warning \/ 0.7s active \/ 5.4333s cycle/,
+  );
+  f.preset('expert');
+  assert.match(f.node('tier').children[0].textContent, /4.2 cells\/s/);
+  f.node('role').value = 'lane-emitter';
+  f.node('role').onchange();
+  assert.match(f.node('tier').children[0].textContent, /4.6667s cycle/);
+});
 test('Studio emitter controls use shared cadence and an explicit axis without motion overrides', () => {
   const f = editorFixture();
   assert(!f.node('role').children.some((row) => row.value === 'lane-emitter'));
@@ -285,6 +336,55 @@ test('Studio exposes roamer fields only for the exact v2 Solo catalogue and reje
     f.node('role').children.map((row) => row.value),
     ['field-keeper'],
   );
+});
+
+test('Team v3 actor picker and compiler share roamer qualification without upgrading earlier missions', () => {
+  const source = createTeamRoamerCandidates(),
+    before = structuredClone(source),
+    f = editorFixture();
+  f.update(source);
+  f.mission('shared-lookout');
+  assert.deepEqual(
+    f.node('role').children.map((row) => row.value),
+    ['field-keeper', 'reclaimed-roamer'],
+  );
+  f.node('select').value = 'roamer-1';
+  f.node('select').onchange();
+  assert.equal(f.node('role').value, 'reclaimed-roamer');
+  assert.equal(f.node('tier').children[0].textContent, 'measured · 1.6 cells/s');
+  assert.match(f.node('description').textContent, /Does not retain field regions/);
+  assert.match(f.node('position-help').textContent, /120 actor ticks/);
+  f.node('x').value = '28.5';
+  submit(f);
+  assert.match(f.node('result').textContent, /Actor applied/);
+  assert.equal(f.source().missions[0].actors.find((actor) => actor.id === 'roamer-1').x, 28.5);
+  assert.deepEqual(f.source().maps, before.maps);
+  assert.deepEqual(source, before);
+  for (const difficulty of ['gentle', 'standard', 'expert'])
+    assert.equal(
+      resolveMission(compileContentProject(f.source()), 'shared-lookout', {
+        mode: 'team',
+        difficulty,
+      }).level.version,
+      'revealline-coop-level.v4',
+    );
+  const accepted = f.source();
+  f.node('role').value = 'perimeter-patrol';
+  f.node('role').onchange();
+  submit(f);
+  assert.match(f.node('result').textContent, /Not applied.*qualified actor roles/);
+  assert.deepEqual(f.source(), accepted);
+  for (const format of ['TeamMissionV1', 'TeamMissionV2']) {
+    const old = createTeamOpeningCandidates();
+    old.actorCatalogId = 'journey-actors-v2';
+    old.missions[0].team.format = format;
+    f.update(old);
+    f.mission('twin-landings');
+    assert.deepEqual(
+      f.node('role').children.map((row) => row.value),
+      ['field-keeper'],
+    );
+  }
 });
 
 test('a same-revision map replacement rejects stale actor coordinates', () => {

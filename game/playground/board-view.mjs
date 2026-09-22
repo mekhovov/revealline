@@ -3,6 +3,8 @@ import { boardPaintSizeForLevel } from '../ui/render.mjs';
 import { createRun } from '../core/index.mjs';
 import { drawClassicTerrain, drawClassicPickups, drawClassicEnemy } from '../ui/classic-view.mjs';
 import { foundationCompatibleView as classicView } from '../ui/foundation-view.mjs';
+import { drawRelayGates, drawRelayTriggers, relayView } from '../ui/relay-view.mjs';
+import { drawDirectionalFields, directionalView } from '../ui/directional-view.mjs';
 
 export function paintEditorMap(canvas, current) {
   const { width, height } = boardPaintSizeForLevel(current.level);
@@ -10,11 +12,17 @@ export function paintEditorMap(canvas, current) {
   if (canvas.height !== height) canvas.height = height;
   const c = canvas.getContext('2d'),
     s = 16;
-  const classic = ['xonix-level.v4', 'xonix-level.v5'].includes(current.level.version)
-    ? classicView(
-        createRun(current.level, { ...current.settings, classRecipes: current.classRecipes }),
-      )
+  const run = [
+    'xonix-level.v4',
+    'xonix-level.v5',
+    'xonix-level.v6',
+    'xonix-level.v7',
+    'xonix-level.v8',
+  ].includes(current.level.version)
+    ? createRun(current.level, { ...current.settings, classRecipes: current.classRecipes })
     : null;
+  const classic = run ? classicView(run) : null;
+  const relays = run ? relayView(run) : null;
   c.fillStyle = current.theme.palette.field;
   c.fillRect(0, 0, width, height);
   c.fillStyle = current.theme.palette.safe;
@@ -64,7 +72,11 @@ export function paintEditorMap(canvas, current) {
   }
   c.fillStyle = '#849496';
   for (const w of current.level.walls) c.fillRect(w.x * s, w.y * s, w.w * s, w.h * s);
+  for (const gate of current.level.relayGates?.gates ?? [])
+    c.fillRect(gate.x * s, gate.y * s, gate.w * s, gate.h * s);
+  drawRelayGates(c, relays, current.theme.palette, s);
   drawClassicTerrain(c, classic, current.theme.palette);
+  if (run) drawDirectionalFields(c, directionalView(run), s);
   drawClassicPickups(c, classic, current.theme.palette);
   for (const e of current.level.enemies) {
     if (
@@ -85,6 +97,7 @@ export function paintEditorMap(canvas, current) {
     c.lineWidth = 2;
     c.strokeRect(o.x * s - 5, o.y * s - 5, 10, 10);
   }
+  drawRelayTriggers(c, relays, s);
   for (const p of current.level.supplies) {
     c.fillStyle = '#ffffff';
     c.fillRect(p.x * s - 3, p.y * s - 1, 6, 2);

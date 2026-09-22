@@ -1,5 +1,6 @@
 import { CELL } from './registry.mjs';
 import { isClassicRuleset } from './versions.mjs';
+import { createTimedBonusState } from './timed-bonuses.mjs';
 
 export const CLASSIC_MATERIAL = Object.freeze({ normal: 0, slow: 1, lethal: 2 });
 export const CLASSIC_EFFECTS = Object.freeze({
@@ -7,6 +8,7 @@ export const CLASSIC_EFFECTS = Object.freeze({
   'enemy-slow': 720,
   'enemy-freeze': 360,
 });
+export const CLASSIC_EFFECT_FACTORS = Object.freeze({ 'player-speed': 1.25, 'enemy-slow': 0.5 });
 
 export function createClassicState(level, cells) {
   const terrain = new Uint8Array(cells.length);
@@ -31,6 +33,9 @@ export function createClassicState(level, cells) {
     anchors: [],
     departure: null,
     tickClaims: [],
+    ...(level.classic.timedBonuses
+      ? { timedBonuses: createTimedBonusState(level.classic.timedBonuses) }
+      : {}),
     ...(level.classic.lineImpact
       ? {
           lineImpact: {

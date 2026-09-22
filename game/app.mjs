@@ -5,9 +5,15 @@ import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs'
 import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
-import { createAuthoredJourneyRoute } from './content-design/route.mjs';
+import { loadAuthoredJourneyRoute } from './content-design/route-loader.mjs';
+import {
+  authoredJourneyModeHref,
+  authoredJourneyUsesActorMaterials,
+} from './content-design/mode-href.mjs';
+import { attachJourneyReactions } from './ui/journey-reactions.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
-import { DIFFICULTY_CATALOG, journeyPreset } from './content-design/catalogs.mjs';
+import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';
+import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
 import { attachJourneyChooser } from './ui/journey-chooser.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
@@ -50,6 +56,8 @@ import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui
 import { encounterView } from './ui/encounter-view.mjs';
 import { foundationCompatibleView as classicView } from './ui/foundation-view.mjs';
 import { terrainTransitionCaption } from './ui/terrain-feedback.mjs';
+import { foundationReturnCaption } from './ui/foundation-feedback.mjs';
+import { laneWarningCaption } from './ui/lane-presentation.mjs';
 import { attachFlightInformation } from './ui/flight-information-host.mjs';
 import { attachFlightDetails } from './ui/flight-information-details.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
@@ -328,13 +336,18 @@ try {
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
   // P00 technical preview. Historical editions keep their original navigation.
-  const authoredRoute = !practiceSession && createAuthoredJourneyRoute(params.get('journey'));
+  const authoredRoute = !practiceSession && (await loadAuthoredJourneyRoute(params.get('journey')));
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? createCandidateSoloHost(authoredRoute.source, {
-        themes: (await getJSON('content-design/themes.json')).themes,
+        themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
+          ? journeyActorThemeCandidates((await getJSON('content-design/themes.json')).themes, {
+              includeOriginals: authoredRoute.preserveOriginalThemes === true,
+            })
+          : (await getJSON('content-design/themes.json')).themes,
         buildVersion,
         corePackIds: authoredRoute.corePackIds,
+        optionalCampaignIds: authoredRoute.optionalCampaignIds,
       })
     : null;
   const journeyPreferences = authoredJourney ? createJourneyPreferences({ window }) : null;
@@ -356,6 +369,7 @@ try {
     journeyFromPackCatalog(baseCampaign, preparePackCatalog(packCatalogSource));
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
+        profileKey: authoredRoute?.profileKey,
         onStatus({ ready, durable, error }) {
           show('journey-save-status', ready && !durable && !!error);
           $('journey-save-message').textContent = error
@@ -753,6 +767,7 @@ try {
     backupBusy = false,
     flightDetails = null;
   const worldPlayIntents = new WeakMap();
+  const journeyReactions = attachJourneyReactions();
   const flightInformation = attachFlightInformation({
     element: $('run-message'),
     getState: () => ({ started, paused }),
@@ -2141,6 +2156,7 @@ try {
       flightInformation.dispose();
       document.removeEventListener('pointerdown', startRememberedMenuMusic);
       document.removeEventListener('keydown', startRememberedMenuMusic);
+      journeyReactions.dispose();
       soundtrackDisposed = true;
       soundtrackLoad.abort();
       enemyGuide.dispose();
@@ -2499,9 +2515,20 @@ try {
     $('shell-team').textContent = 'Separate Team arenas · 2 players';
   }
   const modeLabel = (kind) => (kind === 'versus' ? 'Versus' : 'Team');
+  const currentAuthoredModeRoute = () =>
+    candidateHost?.owns(activeEntry) ? authoredRoute.id : null;
+  const modeDestination = (ticket) =>
+    authoredJourneyModeHref(ticket.journeyRouteId, ticket.kind) || modeDestinations[ticket.kind];
+  function syncAuthoredModeLinks() {
+    const href =
+      authoredJourneyModeHref(currentAuthoredModeRoute(), 'versus') || modeDestinations.versus;
+    for (const id of ['shell-versus', 'shell-title-versus']) $(id).setAttribute('href', href);
+  }
   function prepareModeHint(ticket) {
-    if (authoredRoute)
-      return { href: new URL(modeDestinations[ticket.kind], location.href).href, token: null };
+    // Authored progress and suspended attempts already have their own route.
+    // Do not write a Legacy selection bookmark for a candidate execution.
+    if (ticket.journeyRouteId)
+      return { token: null, href: new URL(modeDestination(ticket), location.href).href };
     return ticket.kind === 'versus'
       ? modeReturnV2.prepare({
           origin: 'solo-missions',
@@ -2548,6 +2575,7 @@ try {
       recorder !== ticket.recorder ||
       runId !== ticket.runId ||
       campaign !== ticket.campaign ||
+      currentAuthoredModeRoute() !== ticket.journeyRouteId ||
       libraryGeneration !== ticket.generation ||
       canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
     )
@@ -2562,7 +2590,7 @@ try {
         ? 'Your paused flight was saved and verified. Continue can restore it after returning.'
         : 'This current flight is session-only: it remains paused in this tab. Leaving may lose this attempt. This flight was not verified as safely saved.';
     $('mode-leave-status').textContent = `${flight} ${
-      authoredRoute
+      ticket.journeyRouteId
         ? `This opens ${ticket.kind === 'team' ? 'the separate Team arenas' : 'Versus with its own Journey progress'}. Returning opens this Solo Journey title; Continue stays explicit.`
         : ticket.origin === 'solo-title'
           ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
@@ -2670,6 +2698,7 @@ try {
       campaign,
       generation: libraryGeneration,
       selection: modeSelection(),
+      journeyRouteId: currentAuthoredModeRoute(),
       unfinished: unfinishedFlight(),
       savedRaw: null,
       fallback: false,
@@ -2679,7 +2708,7 @@ try {
     if (origin === 'solo-title' && !ticket.unfinished) {
       try {
         modeDepartureCurrent(ticket);
-        location.href = new URL(modeDestinations[kind], location.href).href;
+        location.href = new URL(modeDestination(ticket), location.href).href;
       } catch (error) {
         cancelModeDeparture({ restore: true });
         warning(`${modeLabel(kind)} could not open. Your flight remains here. ${error.message}`);
@@ -2771,7 +2800,7 @@ try {
           return;
         }
       }
-      let destination = new URL(modeDestinations[ticket.kind], location.href).href;
+      let destination = new URL(modeDestination(ticket), location.href).href;
       if (ticket.origin === 'solo-missions' && !ticket.fallback) {
         try {
           const prepared = prepareModeHint(ticket);
@@ -3836,18 +3865,19 @@ try {
   function refreshDifficulty() {
     if (candidateHost?.owns(activeEntry)) {
       const next = journeyPreferences.snapshot();
+      const catalogId = authoredRoute.source.difficultyCatalogId;
       $('difficulty-select').replaceChildren(
-        ...Object.keys(DIFFICULTY_CATALOG.presets).map(
+        ...Object.keys(journeyDifficultyCatalog(catalogId).presets).map(
           (id) => new Option(id[0].toUpperCase() + id.slice(1), id),
         ),
       );
       $('difficulty-select').value = next.difficulty;
       $('difficulty-select').disabled = contentSwitchBusy || backupBusy || sessionBusy;
       $('difficulty-note').textContent =
-        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${journeyPreset(next.difficulty).description} Resume and Load preserve this flight. ${next.error}`;
+        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${journeyPreset(next.difficulty, catalogId).description} Resume and Load preserve this flight. ${next.error}`;
       show('difficulty-details', false);
       $('overlay-difficulty').textContent =
-        `Journey ${activeEntry.difficulty}. ${journeyPreset(activeEntry.difficulty).description}`;
+        `Journey ${activeEntry.difficulty}. ${journeyPreset(activeEntry.difficulty, catalogId).description}`;
       show('overlay-difficulty', true);
       return;
     }
@@ -4068,6 +4098,19 @@ try {
       ? nextJourneyMission(current.id) || current
       : current || (candidateHost ? journeyCatalog.missions[0] : null);
   }
+  function journeySkipMission() {
+    return journeyEnabled && !practice && !scenario && !courseSession && !campaignOverview
+      ? journeyMission()
+      : null;
+  }
+  function refreshJourneySkip() {
+    const mission = journeySkipMission();
+    show('journey-skip', !!mission);
+    if (!mission) journeySkipArmed = null;
+    if (journeySkipArmed === null)
+      $('journey-skip').textContent =
+        mission && !nextJourneyMission(mission.id) ? 'Find missions' : 'Skip mission';
+  }
   function nextJourneyMission(id) {
     return candidateHost ? candidateHost.next(id) : journeyCatalog.next(id);
   }
@@ -4183,8 +4226,11 @@ try {
     if (courseSession || courseEntry)
       throw new Error('End First Flight before selecting a campaign.');
     if (!entry) throw new Error('This campaign is not installed.');
-    if (difficulty !== undefined)
-      (candidateHost?.owns(entry) ? journeyPreset : resolveCampaignDifficulty)(difficulty);
+    if (difficulty !== undefined) {
+      if (candidateHost?.owns(entry))
+        journeyPreset(difficulty, authoredRoute.source.difficultyCatalogId);
+      else resolveCampaignDifficulty(difficulty);
+    }
     if (selectedSeed !== undefined) {
       if (!Number.isInteger(selectedSeed) || selectedSeed < 0 || selectedSeed > 0xffffffff)
         throw new Error('Picture seed is invalid.');
@@ -5671,6 +5717,7 @@ try {
     return overrides;
   }
   function setTheme() {
+    syncAuthoredModeLinks();
     if (library.preferences.matchClassAppearance) {
       const candidate = characterPresentations.recommendedBody(
         theme,
@@ -6040,7 +6087,9 @@ try {
         : journeyEnabled && journeyMission()
           ? nextJourneyMission(journeyMission().id)
             ? 'Next mission →'
-            : 'Journey complete · replay or exit'
+            : candidateHost?.isOptionalSequence(journeyMission().id)
+              ? 'End of sequence · find missions'
+              : 'Journey complete · replay or exit'
           : currentSelection().complete
             ? 'Campaign complete →'
             : 'Next uncleared mission →';
@@ -6838,6 +6887,16 @@ try {
   }
   function refreshHUD() {
     profileRecovery?.refresh();
+    refreshJourneySkip();
+    const reactionMission = journeySkipMission();
+    journeyReactions.present({
+      owned: !!reactionMission,
+      mode: 'solo',
+      outcome: run?.status,
+      missionId: reactionMission?.id,
+      encounter: !!run?.level.encounter,
+      relays: !!run?.level.relayGates?.gates?.length,
+    });
     show(
       'pause-button',
       started &&
@@ -6911,7 +6970,9 @@ try {
                   ? run.player.speed === 0
                     ? 'LINE EXPOSED / CHOOSE A TURN'
                     : 'LIVE LINE / EXPOSED'
-                  : run.ruleset === 'xonix-core.v6'
+                  : ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
+                        run.ruleset,
+                      )
                     ? 'Reclaimed ground'
                     : 'Safe ground';
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
@@ -6971,9 +7032,16 @@ try {
       const anchors = occupied.flatMap((region) => region.enemyIds);
       return `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`;
     };
-    const captureTerrain = events
-      .filter((event) => event.type === 'cells.claimed')
-      .map((event) => terrainTransitionCaption(run, event))
+    const openedGates = events.filter((event) => event.type === 'relay.opened').length;
+    const captureTerrain = [
+      foundationReturnCaption(run, events),
+      ...events
+        .filter((event) => event.type === 'cells.claimed')
+        .map((event) => terrainTransitionCaption(run, event)),
+      openedGates
+        ? `${openedGates} relay connector${openedGates === 1 ? '' : 's'} opened permanently. Reclaimed ground, not earned coverage.`
+        : '',
+    ]
       .filter(Boolean)
       .join(' ');
     try {
@@ -7008,7 +7076,7 @@ try {
             run.player.cutting
           )
             warning(
-              `Live line exposed. Reach ${run.ruleset === 'xonix-core.v6' ? 'reclaimed' : 'safe'} ground to secure it.`,
+              `Live line exposed. Reach ${['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground to secure it.`,
             );
           if (event.type === 'player.failed')
             warning(
@@ -7023,7 +7091,7 @@ try {
             );
           if (event.type === 'lineImpact.seeded')
             warning(
-              `Line struck! Reach ${run.ruleset === 'xonix-core.v6' ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
+              `Line struck! Reach ${['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
             );
           if (event.type === 'lineImpact.arrived')
             warning('The travelling impact reached your craft. One life lost.');
@@ -7098,7 +7166,7 @@ try {
             if (cue) warning(`${cue.title}. ${cue.instruction}`, 'encounter');
           }
           if (event.type === 'boss.warning')
-            warning(`${theme.labels.boss}: the marked lane will activate shortly.`);
+            warning(laneWarningCaption(run, event, theme.labels.boss));
         });
       }
       painter.effectsFor(events, run);
@@ -8118,10 +8186,11 @@ try {
         (availableFocusTarget(opener) ? opener : controllerFocus())?.focus({ preventScroll: true });
       },
     });
-    $('journey-skip').hidden = false;
+    refreshJourneySkip();
     $('journey-skip').onclick = () => {
-      const mission = !practice && !scenario && journeyMission();
-      const next = mission && nextJourneyMission(mission.id);
+      const mission = journeySkipMission();
+      if (!mission) return;
+      const next = nextJourneyMission(mission.id);
       if (!next) {
         journeyChooser.open($('journey-skip'));
         return;
@@ -8144,7 +8213,7 @@ try {
     $('journey-save-retry').onclick = () => void journeyProfile.flush();
     $('journey-save-export').onclick = async () => {
       try {
-        await downloadJSON(JSON.parse(journeyProfile.export()), 'revealline-journey-progress.json');
+        await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
       } catch (error) {
         $('journey-save-message').textContent =
           `Export failed: ${error.message}. Your session progress is still here.`;

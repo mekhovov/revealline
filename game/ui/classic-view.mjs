@@ -1,7 +1,9 @@
 import { CELL, FIXED_DT } from '../core/registry.mjs';
+import { TIMED_BONUS_VERSIONS } from '../core/timed-bonuses.mjs';
 import { drawPresentedActor, PRESENTATION_INK, PRESENTATION_PLATE } from './actor-presentation.mjs';
 import { drawPresentationImage } from './presentation-draw-image.mjs';
 import { traceContentActor } from '../content-design/actor-marker.mjs';
+import { enemyCatalogRecord } from '../enemy-catalog.mjs';
 
 const SIZE = 16;
 const KINDS = ['extra-life', 'player-speed', 'enemy-slow', 'enemy-freeze'];
@@ -113,7 +115,10 @@ export function classicView(run) {
     const active = (kind) =>
       effects.some((effect) => effect.kind === kind && effect.phase === 'active');
     const powerups = [];
-    for (const item of dense(own(state, 'powerups'), 64)) {
+    for (const item of dense(
+      own(state, 'powerups'),
+      own(state, 'timedBonuses') === undefined ? 64 : 72,
+    )) {
       const kind = own(item, 'kind'),
         collectedTick = own(item, 'collectedTick');
       check(
@@ -146,6 +151,63 @@ export function classicView(run) {
     }
     const level = own(run, 'level');
     const definition = level == null ? null : own(level, 'classic');
+    const timedState = own(state, 'timedBonuses');
+    const timedBonuses = [];
+    if (timedState !== undefined) {
+      check(own(timedState, 'version') === 'timed-bonus-state.v1');
+      const clock = own(timedState, 'clock');
+      check(integer(clock) && clock <= tick);
+      const timedDefinition = own(definition, 'timedBonuses');
+      check(TIMED_BONUS_VERSIONS.includes(own(timedDefinition, 'version')));
+      const definitions = dense(own(timedDefinition, 'schedules'), 8);
+      const schedules = dense(own(timedState, 'schedules'), 8);
+      check(definitions.length > 0 && definitions.length === schedules.length);
+      const ids = new Set();
+      for (const schedule of schedules) {
+        const id = identity(schedule),
+          phase = own(schedule, 'phase');
+        check(!ids.has(id) && ['cooldown', 'announce', 'available', 'exhausted'].includes(phase));
+        ids.add(id);
+        const recipe = definitions.find((entry) => identity(entry) === id);
+        check(!!recipe);
+        const kind = own(recipe, 'kind'),
+          deadline = own(schedule, 'deadline');
+        check(
+          KINDS.includes(kind) && (phase === 'exhausted' ? deadline === null : integer(deadline)),
+        );
+        const current = own(schedule, 'currentAnchor');
+        if (!['announce', 'available'].includes(phase)) {
+          check(current === null);
+          continue;
+        }
+        const anchors = dense(own(recipe, 'anchors'), 16);
+        check(integer(current) && current < anchors.length && deadline > clock);
+        const point = position(anchors[current]);
+        const duration = own(recipe, phase === 'announce' ? 'announcementTicks' : 'availableTicks');
+        check(
+          integer(duration) && duration > 0 && duration <= 2400 && deadline - clock <= duration,
+        );
+        const visual = {
+          id,
+          kind,
+          label: LABELS[kind],
+          ...point,
+          timed: true,
+          phase,
+          seconds: (deadline - clock) * FIXED_DT,
+          remainingFraction: (deadline - clock) / duration,
+        };
+        const pickup = powerups.find((item) => item.id === id);
+        if (phase === 'available') {
+          check(!!pickup && pickup.kind === kind && pickup.x === point.x && pickup.y === point.y);
+          Object.assign(pickup, visual);
+        } else check(!pickup);
+        if (!['won', 'lost'].includes(status)) timedBonuses.push(visual);
+      }
+      if (['won', 'lost'].includes(status))
+        for (let i = powerups.length - 1; i >= 0; i--)
+          if (ids.has(powerups[i].id)) powerups.splice(i, 1);
+    }
     const impactDefinition = definition == null ? null : own(definition, 'lineImpact');
     const carrierIds = new Set();
     if (impactDefinition && own(impactDefinition, 'version') === 'line-impact.v2') {
@@ -199,6 +261,11 @@ export function classicView(run) {
       let pressure;
       if (rawPressure !== undefined) {
         check(type === 'bouncer' && own(rawPressure, 'version') === 'enemy-pressure-state.v1');
+        const recipe = dense(own(own(definition, 'enemyPressure'), 'actors'), 8).find(
+          (entry) => identity(entry) === id,
+        );
+        const pressureMode = own(recipe, 'mode');
+        check(['trail-pursuit', 'head-intercept'].includes(pressureMode));
         const phase = own(rawPressure, 'phase');
         check(['patrol', 'warning', 'committed', 'cooldown'].includes(phase));
         const rawTarget = own(rawPressure, 'target');
@@ -213,6 +280,7 @@ export function classicView(run) {
         const deadline = deadlineKey ? own(rawPressure, deadlineKey) : null;
         check(deadline === null ? phase === 'patrol' : integer(deadline));
         pressure = {
+          mode: pressureMode,
           phase,
           target,
           seconds: deadline === null ? 0 : Math.max(0, deadline - actorTick) * FIXED_DT,
@@ -234,16 +302,10 @@ export function classicView(run) {
     });
     for (const id of carrierIds)
       check(enemies.some((enemy) => enemy.id === id && enemy.type === 'bouncer'));
-    const roles = [
-      ['bouncer', 'field enemy'],
-      ['contour-patrol', 'contour patrol'],
-      ['claimed-rover', 'claimed rover'],
-      ['eroder', 'eroder'],
-      ['lane-boss', 'lane emitter'],
-    ].flatMap(([type, label]) => {
+    const roles = TYPES.flatMap((type) => {
+      const label = enemyCatalogRecord(type).label.toLowerCase();
       const count = enemies.filter((enemy) => enemy.type === type && !enemy.impactCarrier).length;
-      const plural = label.endsWith('enemy') ? `${label.slice(0, -5)}enemies` : `${label}s`;
-      return count ? [`${count} ${count === 1 ? label : plural}`] : [];
+      return count ? [`${count} ${label}${count === 1 ? '' : 's'}`] : [];
     });
     return freeze({
       actorTick,
@@ -251,6 +313,7 @@ export function classicView(run) {
       lineImpacts,
       terrain,
       powerups,
+      ...(timedState === undefined ? {} : { timedBonuses }),
       effects,
       enemies,
       erosion,
@@ -264,6 +327,10 @@ export function classicView(run) {
         ...(powerups.length
           ? [`${powerups.length} contact pickup${powerups.length === 1 ? '' : 's'}`]
           : []),
+        ...timedBonuses.map(
+          (item) =>
+            `${item.label} ${item.phase === 'announce' ? 'appears' : 'expires'} in ${item.seconds.toFixed(1)}s`,
+        ),
         ...enemies
           .filter((enemy) => enemy.mode === 'warning')
           .map(
@@ -374,52 +441,73 @@ export function drawClassicTerrain(ctx, view, palette, images = {}) {
 
 export function drawClassicPickups(ctx, view, palette, images = {}, options = {}) {
   if (!view) return;
-  for (const item of view.powerups) {
+  for (const item of [
+    ...view.powerups,
+    ...(view.timedBonuses ?? []).filter((bonus) => bonus.phase === 'announce'),
+  ]) {
     const diameter = pickupDiameter(options),
       color = PICKUP_COLORS[item.kind];
     ctx.save();
-    ctx.translate(item.x * SIZE, item.y * SIZE);
-    ctx.scale(diameter / 24, diameter / 24);
-    ctx.fillStyle = '#0c1423';
-    ctx.fillRect(-12, -12, 24, 24);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    ctx.strokeRect(-11, -11, 22, 22);
-    const role = {
-      'extra-life': 'lifePickup',
-      'player-speed': 'speedPickup',
-      'enemy-slow': 'slowPickup',
-      'enemy-freeze': 'freezePickup',
-    }[item.kind];
-    if (images[role]) {
-      drawPresentationImage(ctx, images[role], 0, 0, 22, 22, images.presentationSprites?.[role]);
-      ctx.translate(8, 8);
-      ctx.scale(0.65, 0.65);
-      ctx.fillRect(-10, -10, 20, 20);
+    try {
+      ctx.translate(item.x * SIZE, item.y * SIZE);
+      ctx.scale(diameter / 24, diameter / 24);
+      ctx.fillStyle = '#0c1423';
+      if (item.phase !== 'announce') ctx.fillRect(-12, -12, 24, 24);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      if (item.phase === 'announce') ctx.setLineDash([3, 3]);
+      ctx.strokeRect(-11, -11, 22, 22);
+      if (item.timed) {
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.arc(0, 0, 16, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * item.remainingFraction);
+        ctx.stroke();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 10px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(`${item.phase === 'announce' ? '+' : ''}${Math.ceil(item.seconds)}s`, 0, -18);
+      }
+      const role = {
+        'extra-life': 'lifePickup',
+        'player-speed': 'speedPickup',
+        'enemy-slow': 'slowPickup',
+        'enemy-freeze': 'freezePickup',
+      }[item.kind];
+      if (images[role]) {
+        drawPresentationImage(ctx, images[role], 0, 0, 22, 22, images.presentationSprites?.[role]);
+        ctx.translate(8, 8);
+        ctx.scale(0.65, 0.65);
+        ctx.fillRect(-10, -10, 20, 20);
+      }
+      ctx.fillStyle = color;
+      icon(ctx, item.kind);
+    } finally {
+      ctx.restore();
     }
-    ctx.fillStyle = color;
-    icon(ctx, item.kind);
-    ctx.restore();
   }
   ctx.save();
-  ctx.strokeStyle = palette.danger;
-  ctx.lineWidth = 2;
-  for (const cell of view.erosion) {
-    const x = cell.x * SIZE,
-      y = cell.y * SIZE;
-    ctx.strokeRect(x + 1, y + 1, 14, 14);
-    lines(ctx, [
-      [
-        [x + 4, y + 4],
-        [x + 12, y + 12],
-      ],
-      [
-        [x + 12, y + 4],
-        [x + 4, y + 12],
-      ],
-    ]);
+  try {
+    ctx.strokeStyle = palette.danger;
+    ctx.lineWidth = 2;
+    for (const cell of view.erosion) {
+      const x = cell.x * SIZE,
+        y = cell.y * SIZE;
+      ctx.strokeRect(x + 1, y + 1, 14, 14);
+      lines(ctx, [
+        [
+          [x + 4, y + 4],
+          [x + 12, y + 12],
+        ],
+        [
+          [x + 12, y + 4],
+          [x + 4, y + 12],
+        ],
+      ]);
+    }
+  } finally {
+    ctx.restore();
   }
-  ctx.restore();
 }
 
 /** The new role silhouette remains stable across themes and reduced effects. */
@@ -647,10 +735,17 @@ export function drawEnemyPressure(
   const unit = Math.min(4, Math.max(1, 1 / Math.max(0.1, screenScale)));
   for (const enemy of view.enemies) {
     const pressure = enemy.pressure;
-    if (!pressure || pressure.phase === 'patrol') continue;
+    if (!pressure) continue;
     const warning = pressure.phase === 'warning',
       cooldown = pressure.phase === 'cooldown',
-      color = cooldown ? palette.safe : warning ? '#ffd17a' : '#ff866e';
+      color =
+        pressure.phase === 'patrol'
+          ? '#b9d5dc'
+          : cooldown
+            ? palette.safe
+            : warning
+              ? '#ffd17a'
+              : '#ff866e';
     ctx.save();
     ctx.strokeStyle = color;
     ctx.lineWidth = unit;
@@ -685,7 +780,11 @@ export function drawEnemyPressure(
           ],
         ]);
     }
-    const label = cooldown ? 'REST' : warning ? 'AIM' : 'CHASE',
+    const role = pressure.mode === 'trail-pursuit' ? 'TRAIL' : 'HEAD';
+    const label =
+        pressure.phase === 'patrol'
+          ? role
+          : `${cooldown ? 'REST' : warning ? 'AIM' : 'CHASE'} ${role}`,
       textWidth = (label.length * 8.4 + 8) * unit,
       x = Math.max(0, Math.min(1152 - textWidth, enemy.x * SIZE - textWidth / 2)),
       y = Math.max(

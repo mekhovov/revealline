@@ -1,0 +1,1204 @@
+{
+  "format": "TeamCoolantRelocationEvidenceV1",
+  "missionId": "coolant-crossing",
+  "methodology": "Public directional inputs at production seed17, one initial idle tick. Real captures during the missed window and recovery; relocated contact and effect-active return. No parking wait or required pickup. Direct-core hashes are not an official Team replay or a native input transcript.",
+  "limitations": [
+    "One seed/start per preset, not universal robustness or human pacing.",
+    "Partner is not cutting at contact; this is recovery feasibility, not cooperation mastery.",
+    "Expert reclaims the live pickup before touching it; enclosure itself grants nothing.",
+    "No map, physics, schedule or quota changes; historical failed controls remain unchanged."
+  ],
+  "rows": [
+    {
+      "difficulty": "gentle",
+      "simulationIdentity": "f1f3bd829987e9ab",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 276
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 324
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 276
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 156
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 402
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 564
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 468
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 114
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 18
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 576
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 144
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 174
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 156
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 90
+        }
+      ],
+      "bonusWindows": [
+        {
+          "type": "bonus.announced",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 359,
+          "time": 2.9916666666666667,
+          "x": 54.5,
+          "y": 29.5,
+          "coverageBefore": 0.006346328195829556,
+          "coverageAfter": 0.006346328195829556,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        },
+        {
+          "type": "bonus.appeared",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 479,
+          "time": 3.9916666666666667,
+          "x": 54.5,
+          "y": 29.5,
+          "coverageBefore": 0.006346328195829556,
+          "coverageAfter": 0.006346328195829556,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        },
+        {
+          "type": "bonus.expired",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 1679,
+          "time": 13.991666666666667,
+          "x": 54.5,
+          "y": 29.5,
+          "coverageBefore": 0.2787851314596555,
+          "coverageAfter": 0.2787851314596555,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        },
+        {
+          "type": "bonus.announced",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 2639,
+          "time": 21.991666666666667,
+          "x": 17.5,
+          "y": 6.5,
+          "coverageBefore": 0.4782411604714415,
+          "coverageAfter": 0.4782411604714415,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        },
+        {
+          "type": "bonus.appeared",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 2759,
+          "time": 22.991666666666667,
+          "x": 17.5,
+          "y": 6.5,
+          "coverageBefore": 0.4782411604714415,
+          "coverageAfter": 0.4782411604714415,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5113,
+            "coverage": 0.7951042611060744,
+            "returns": [4, 4],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3515,
+                "time": 29.295333333333335,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [0],
+                "gain": null,
+                "activationTick": 3516,
+                "untilTick": 3876,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 29,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "2f088d896b9e65bd176526c9fbb5bc71081aa8664db4095b65c219278080fbd7"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5113,
+            "coverage": 0.7951042611060744,
+            "returns": [4, 4],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3515,
+                "time": 29.295333333333335,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [0],
+                "gain": null,
+                "activationTick": 3516,
+                "untilTick": 3876,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 29,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "15d483336a1431836c30bc66ec150072a921b1723df58df66c41c0116e3a69e5"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5113,
+            "coverage": 0.7951042611060744,
+            "returns": [4, 4],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3515,
+                "time": 29.295333333333335,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [1],
+                "gain": null,
+                "activationTick": 3516,
+                "untilTick": 3876,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 29,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "2cc6045d1de6316f4e0da6b0ae1f19c4d78605ab233b7c8e7dc6f08dc463ac31"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5113,
+            "coverage": 0.7951042611060744,
+            "returns": [4, 4],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3515,
+                "time": 29.295333333333335,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [1],
+                "gain": null,
+                "activationTick": 3516,
+                "untilTick": 3876,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 29,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "c4c143a30354694a33880a63b85eeb8324a914594848a15e72bab59a8359b18a"
+          }
+        }
+      ]
+    },
+    {
+      "difficulty": "standard",
+      "simulationIdentity": "dc492b31c1206801",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 612
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 594
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 228
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 468
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 186
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 192
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 348
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 66
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 336
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 366
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 84
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 336
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 270
+        }
+      ],
+      "bonusWindows": [
+        {
+          "type": "bonus.announced",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 359,
+          "time": 2.9916666666666667,
+          "x": 54.5,
+          "y": 29.5,
+          "coverageBefore": 0.006346328195829556,
+          "coverageAfter": 0.006346328195829556,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        },
+        {
+          "type": "bonus.appeared",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 479,
+          "time": 3.9916666666666667,
+          "x": 54.5,
+          "y": 29.5,
+          "coverageBefore": 0.006346328195829556,
+          "coverageAfter": 0.006346328195829556,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        },
+        {
+          "type": "bonus.expired",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 1679,
+          "time": 13.991666666666667,
+          "x": 54.5,
+          "y": 29.5,
+          "coverageBefore": 0.27787851314596557,
+          "coverageAfter": 0.27787851314596557,
+          "anchorBefore": 1,
+          "anchorAfter": 1
+        },
+        {
+          "type": "bonus.announced",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 2639,
+          "time": 21.991666666666667,
+          "x": 17.5,
+          "y": 6.5,
+          "coverageBefore": 0.27787851314596557,
+          "coverageAfter": 0.27787851314596557,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        },
+        {
+          "type": "bonus.appeared",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 2759,
+          "time": 22.991666666666667,
+          "x": 17.5,
+          "y": 6.5,
+          "coverageBefore": 0.37262012692656393,
+          "coverageAfter": 0.37262012692656393,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 6067,
+            "coverage": 0.8848594741613781,
+            "returns": [4, 5],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3245,
+                "time": 27.045333333333335,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [1],
+                "gain": null,
+                "activationTick": 3246,
+                "untilTick": 3606,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 24,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "9ba519363fd8bb0a91025538f7198597e2fbfe6011845282e97e50dfe8884770"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 6067,
+            "coverage": 0.8848594741613781,
+            "returns": [4, 5],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3245,
+                "time": 27.045333333333335,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [1],
+                "gain": null,
+                "activationTick": 3246,
+                "untilTick": 3606,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 24,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "79f16630250f44af58e2f12ab4d409a81d622e5e3adebb5d55353541edd80bf2"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 6067,
+            "coverage": 0.8848594741613781,
+            "returns": [5, 4],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3245,
+                "time": 27.045333333333335,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [0],
+                "gain": null,
+                "activationTick": 3246,
+                "untilTick": 3606,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 24,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "01cf89df9910e9f875f437854b7b72572fd2154932be626375210b033674c714"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 6067,
+            "coverage": 0.8848594741613781,
+            "returns": [5, 4],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3245,
+                "time": 27.045333333333335,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [0],
+                "gain": null,
+                "activationTick": 3246,
+                "untilTick": 3606,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 24,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "28fa02addd7716e5505d8d70874b47af17a9ceeeafb69e45625a6f2138608ac7"
+          }
+        }
+      ]
+    },
+    {
+      "difficulty": "expert",
+      "simulationIdentity": "86f9b18105f36dec",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 156
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 684
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 480
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 684
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 3
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 3
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 366
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 228
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 372
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 132
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 198
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 16
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 180
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 252
+        }
+      ],
+      "bonusWindows": [
+        {
+          "type": "bonus.announced",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 359,
+          "time": 2.9916666666666667,
+          "x": 54.5,
+          "y": 29.5,
+          "coverageBefore": 0.006346328195829556,
+          "coverageAfter": 0.006346328195829556,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        },
+        {
+          "type": "bonus.appeared",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 479,
+          "time": 3.9916666666666667,
+          "x": 54.5,
+          "y": 29.5,
+          "coverageBefore": 0.006346328195829556,
+          "coverageAfter": 0.006346328195829556,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        },
+        {
+          "type": "bonus.expired",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 1679,
+          "time": 13.991666666666667,
+          "x": 54.5,
+          "y": 29.5,
+          "coverageBefore": 0.28558476881233,
+          "coverageAfter": 0.28558476881233,
+          "anchorBefore": 1,
+          "anchorAfter": 1
+        },
+        {
+          "type": "bonus.announced",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 2639,
+          "time": 21.991666666666667,
+          "x": 17.5,
+          "y": 6.5,
+          "coverageBefore": 0.4882139619220308,
+          "coverageAfter": 0.4882139619220308,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        },
+        {
+          "type": "bonus.appeared",
+          "id": "coolant-freeze",
+          "kind": "enemy-freeze",
+          "tick": 2759,
+          "time": 22.991666666666667,
+          "x": 17.5,
+          "y": 6.5,
+          "coverageBefore": 0.4882139619220308,
+          "coverageAfter": 0.4882139619220308,
+          "anchorBefore": 0,
+          "anchorAfter": 0
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5909,
+            "coverage": 0.8739800543970988,
+            "returns": [6, 3],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3302,
+                "time": 27.520333333333333,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [0],
+                "gain": null,
+                "activationTick": 3303,
+                "untilTick": 3663,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": true,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 13,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "fcc5845709400d461c57aeff8029f4aed32159dd387390c6fd48510fc8707ffe"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5909,
+            "coverage": 0.8739800543970988,
+            "returns": [6, 3],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3302,
+                "time": 27.520333333333333,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [0],
+                "gain": null,
+                "activationTick": 3303,
+                "untilTick": 3663,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": true,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 13,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "752cc586ce75b5f595f6fa11b085ed930e78d8757922923caf3bbf8d9b96a539"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5909,
+            "coverage": 0.8739800543970988,
+            "returns": [3, 6],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3302,
+                "time": 27.520333333333333,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [1],
+                "gain": null,
+                "activationTick": 3303,
+                "untilTick": 3663,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": true,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 13,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "15fadf7b7f7ed258b7fd9e0f2b422ffa7de3ec9e78b42b3dca0ffbba5dded4f6"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true,
+            "observeBonusWindows": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 5909,
+            "coverage": 0.8739800543970988,
+            "returns": [3, 6],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 3302,
+                "time": 27.520333333333333,
+                "id": "coolant-freeze",
+                "kind": "enemy-freeze",
+                "players": [1],
+                "gain": null,
+                "activationTick": 3303,
+                "untilTick": 3663,
+                "x": 17.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": true,
+                "partnerCutting": false
+              }
+            ],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 13,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "0d2e5deca9acf777ddc3b59341f4f1fafe73286403410d3625334150c111d3ca"
+          }
+        }
+      ]
+    }
+  ]
+}

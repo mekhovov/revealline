@@ -1,5 +1,9 @@
 import { enemyCatalogRecord, resolveEnemySkin } from '../enemy-catalog.mjs';
 import { drawEnemyBodyMotion } from './enemy-body-motion.mjs';
+import {
+  journeyActorThemeMaterial,
+  drawJourneyActorMaterial,
+} from '../presentation/journey-actor-materials.mjs';
 // Cosmetic poses, pixel silhouettes and cut effects. No simulation objects are changed.
 const TAU = Math.PI * 2;
 const CELL = 16;
@@ -96,6 +100,7 @@ export function createActorPresentation() {
         frames = new Map(),
         details = new Map((classic?.enemies ?? []).map((e) => [e.id, e]));
       const elapsed = clamp(finite(dt), 0, 0.1);
+      const journeyMaterial = journeyActorThemeMaterial(themeId);
       for (const actor of enemies.slice(0, ACTOR_PRESENTATION_LIMITS.actors)) {
         if (!Number.isFinite(actor.x) || !Number.isFinite(actor.y)) continue;
         const old = prior.get(actor.id),
@@ -164,6 +169,9 @@ export function createActorPresentation() {
             type: actor.type,
             themeId:
               resolveEnemySkin(actor.type, actorSkins[actor.type]) ?? family(themeId, themeFamily),
+            ...(journeyMaterial && !resolveEnemySkin(actor.type, actorSkins[actor.type])
+              ? { journeyMaterial: journeyMaterial.id }
+              : {}),
             style,
             heading,
             phase,
@@ -575,6 +583,7 @@ function distinctBody(c, f, k) {
 
 /** Original body-only skin; caller owns placement/size and functional badges. */
 export function drawEnemySilhouette(ctx, frame, colors) {
+  if (drawJourneyActorMaterial(ctx, frame, colors)) return;
   if (!distinctBody(ctx, frame, colors))
     (({ fpv, ukraine, retro, coupa })[frame.themeId] ?? retro)(ctx, frame, colors);
 }

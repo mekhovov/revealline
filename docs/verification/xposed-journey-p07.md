@@ -217,3 +217,105 @@ ready card contained the new carrier-only warning. Close restored Play focus.
 Visual capture subsequently reported zero width, so no screenshot or device
 layout acceptance is inferred. These scoped checks are not a production recipe
 review, full-source hosted qualification, immutable release or Pages deployment.
+
+## First original reveal-art candidate
+
+The isolated continuation adds one original for A return in reserve: an empty
+stone landing, short bridge and suspended brass instrument in an observatory.
+The built-in image tool generated the composition, then a targeted edit removed
+an unintended vehicle, banner symbols, wall diagram and floor markings. Exact
+generation/edit prompts and assistant-only review limitations are preserved in
+`docs/research/phase-original-art-prompts.json`. The unchanged final PNG is
+1774×887,2,105,440bytes,SHA256
+`3759447c5d88634d7de4e075183faeb3836f11996adb68997831ad917301692d`, at
+`game/content-design/assets/phase-observatory-r1/return-in-reserve.png`.
+
+`createPhaseCandidates({artwork:true})` binds this one immutable candidate through
+the shared registry, compiler and verified preview. Six missing compositions stay
+null; the default factory remains the historical greybox. Studio's existing
+Inspect → Apply → Play flow opts into the pictured draft without publication or
+awards. No simulation, historical receipt or earned-coverage rule changes.
+
+The28-test art/candidate/catalogue/Border/whole-library cohort passes on
+Node20.19.5 and22.22.2. Exact bytes/PNG dimensions/prompt pins, preview fail-closed
+behavior, six Solo/Versus preset identities, all42 Phase clear checkpoints and
+all498 composed manifests remain verified. Scoped lint/format/diff checks pass.
+The first test invocation named a nonexistent phase-preview test and exited
+before running; the corrected cohort above uses the actual candidate/catalogue
+tests and is the reported result.
+
+This is one composition, not complete Phaseworks art. Brass railings/reflections
+still need native reveal/overlay contrast checks; all six other originals,
+campaign-specific actor presentation/audio, full visual/device/human qualification,
+accepted-source integration, aggregate offline budget and release/Pages remain.
+
+Native exact538fef0410bfbee38be95425093f2fff0243905c, owned server8813/tab38:
+Inspect → Apply retained seven missions and saved checkpoint2 with the explicit
+candidate-art warning. The ready card distinguished bolt-carried sparks from
+instant ordinary trail hits. Start plus fresh Down reached the central landing
+at0.6%,3lives,score130; fresh Left later returned to the perimeter at2.0%,3lives,
+score470. Screenshots showed the original through foundations, border and thin
+captured trails with distinct bolt/circle/patrol symbols. A paused state was
+observed after the second closure; Resume retained those values and the stopped
+craft. Its cause was not established, so this is not an input/focus acceptance
+claim. Close preview returned focus to Play with the draft intact. These small
+fragments do not qualify broad-area contrast, victory, other presets/modes or
+physical devices, and are not a human playtest.
+
+## Complete seven-composition local candidate set
+
+The six remaining original compositions are now produced: Two ways home uses an
+open reflecting-pool courtyard with two galleries; Dogleg transfer reveals a
+stepped lens/counterweight hall; Crossed bands uses soft fabric sunshades over an
+optical workshop; Pressure ladder reveals staggered service landings; Signal
+channels follows covered cable channels past an acoustic resonator and mirror;
+Close the circuit presents a dusk roof chamber and connected regulator gallery.
+All seven share observatory materials but have distinct focal objects/viewpoints.
+They are independent compositions, not crops or recolors. A targeted courtyard
+edit removed an incidental star-chart panel. Prompts and edits are preserved in
+the original prompt record; all outputs were visually inspected by the assistant.
+
+The seven unchanged1774×887 PNGs total15,168,484bytes. The existing opt-in factory
+now binds one unique immutable original to every Phaseworks mission; the default
+greybox, runtime policy, maps and receipts are unchanged. Exact pin/dimension/
+prompt/consumer parity and verified preview checks cover every picture. The same
+28-test cohort passes on both Node20.19.5 and22.22.2, including all42 Phase clear
+checkpoints and498 whole-library manifests. Scoped lint/format/diff pass.
+
+The prior native538fef04 observation covers only A return in reserve. The six new
+pictures have image inspection and technical preview evidence, not native overlay
+qualification yet. Broad-area/victory contrast, campaign actor/audio identity,
+device/human acceptance, aggregate offline budgeting, accepted-source integration
+and release/Pages remain open. Completing original compositions is not P07 phase
+acceptance or permission to enroll unqualified content in the public Journey.
+
+## Native seven-picture continuation
+
+Owned server8813 was repinned to
+`133b6d5d784cdf7cdcd203fdfe5f3cd18831c332`. Reload retained checkpoint2; explicit
+Inspect → Apply stored the seven-picture draft as checkpoint3. In native tab38,
+each remaining Standard Solo practice loaded its correct original and briefing.
+Fresh Up inputs completed the following first returns, with3lives throughout:
+
+| Mission | Earned coverage | Target | Score |
+|---|---|---|---|
+| Two ways home | 0.3% | 78% | 60 |
+| Dogleg transfer | 0.7% | 79% | 160 |
+| Crossed bands | 0.6% | 79% | 130 |
+| Pressure ladder | 0.6% | 80% | 130 |
+| Signal channels | 0.6% | 80% | 140 |
+| Close the circuit | 0.3% | 81% | 60 |
+
+Screenshots showed distinct originals through the permanent foundation fragments
+and border: courtyard/mountains, stepped hall, ceramic optical mount, maintenance
+shaft, resonator gallery and brass flywheel. Active trails, bolt carriers, keepers,
+frontier patrols and paired-dash versus framed-cross terrain remained distinct in
+these initial states. The last two roamers stayed dormant; their later activation
+and caption layout were not exercised. Every closure stopped the craft; closing
+the final preview restored Play focus and preserved checkpoint3.
+
+This supersedes the six-without-native-observation limitation above. Alongside
+the first mission's538fef04 evidence, all seven originals have initial native
+picture-binding evidence. No full clear, broad-area/victory contrast, all-mode or
+all-preset visual qualification, physical-device validation, human playtest,
+duration/performance acceptance or public deployment is inferred.

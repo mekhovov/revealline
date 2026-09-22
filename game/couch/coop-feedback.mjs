@@ -1,3 +1,21 @@
+import { coopGroundName } from './coop-ground.mjs';
+import { isJourneyTeamLevel } from '../coop/foundations.mjs';
+import { foundationCaptionForCell } from '../ui/foundation-feedback.mjs';
+
+/** Team stores its accepted return cell directly; joint/assisted banking is not
+ * a physical foundation return. Keep the same explanation as Solo and Versus. */
+export function coopFoundationReturnCaption(run, events = run.events) {
+  if (!isJourneyTeamLevel(run.level) || run.status !== 'running') return '';
+  for (const event of events) {
+    if (event.type !== 'cut.closed' || event.reason !== 'return') continue;
+    const player = run.players[event.player];
+    if (!player || player.status !== 'active') continue;
+    const caption = foundationCaptionForCell(run.level.safeRects, player.cellIndex, run.width);
+    if (caption) return caption;
+  }
+  return '';
+}
+
 /** Describe observed failures without assigning blame or changing game state. */
 export function coopFailureFeedback(run, event) {
   if (event?.cause === 'lethal-terrain')
@@ -8,7 +26,7 @@ export function coopFailureFeedback(run, event) {
   if (event?.cause === 'self-trail')
     return {
       cause: 'An unfinished line crossed itself.',
-      advice: 'Close your loop on safe ground before crossing your own line.',
+      advice: `Close your loop on ${coopGroundName(run.level)} before crossing your own line.`,
     };
   if (event?.cause === 'line-impact')
     return {
@@ -17,6 +35,12 @@ export function coopFailureFeedback(run, event) {
     };
   if (event?.cause === 'enemy-trail' || event?.cause === 'enemy-player') {
     const hunter = run.enemies.some((enemy) => enemy.id === event.enemy && enemy.type === 'hunter');
+    if (run.enemies.some((enemy) => enemy.id === event.enemy && enemy.type === 'claimed-rover'))
+      return {
+        cause: `An active reclaimed-ground roamer caught ${event.cause === 'enemy-trail' ? 'an unfinished line' : 'a craft'}.`,
+        advice:
+          'Reclaimed ground closes cuts but does not protect you from roamers. Keep an escape corridor or use Support to slow one.',
+      };
     return {
       cause: `${hunter ? 'A Hunter' : 'A roaming enemy'} caught ${event.cause === 'enemy-trail' ? 'an unfinished line' : 'an exposed craft'}.`,
       advice: hunter
@@ -28,6 +52,22 @@ export function coopFailureFeedback(run, event) {
     cause: event ? 'A craft was knocked down.' : 'Both craft need a rescue.',
     advice: 'Try smaller loops and keep a safe route back to your partner.',
   };
+}
+
+export function coopRoamerCaption(event) {
+  if (event.type === 'rover.warning')
+    return 'Roamer waking: one active second to move away. Keep a reclaimed escape corridor.';
+  if (event.type === 'rover.activated')
+    return 'Roamer active on reclaimed ground. Watch both craft; Support can slow it.';
+  return null;
+}
+
+/** Recovery must not erase its explanation, including two same-tick revivals.
+ * Empty/unknown history contributes no invented cause; repeated causes read once. */
+export function coopRecoveryCause(run, knockdowns) {
+  return [
+    ...new Set(knockdowns.filter(Boolean).map((event) => coopFailureFeedback(run, event).cause)),
+  ].join(' ');
 }
 
 export function coopRetryFeedback(run, knockdowns = []) {

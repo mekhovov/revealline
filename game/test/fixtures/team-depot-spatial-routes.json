@@ -1,0 +1,1675 @@
+{
+  "format": "TeamDepotSpatialEvidenceV1",
+  "missionId": "depot-dash",
+  "circuit": [
+    {
+      "a": "left",
+      "b": "right",
+      "ticks": 132
+    },
+    {
+      "a": "down",
+      "b": "up",
+      "ticks": 168
+    },
+    {
+      "a": "right",
+      "b": "left",
+      "ticks": 354
+    },
+    {
+      "a": "left",
+      "b": "right",
+      "ticks": 186
+    },
+    {
+      "a": "up",
+      "b": "down",
+      "ticks": 126
+    }
+  ],
+  "rows": [
+    {
+      "difficulty": "gentle",
+      "kind": "pickup-free",
+      "simulationIdentity": "5f3f62d1644f3a2f",
+      "log": [
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 198
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 396
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 60
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 408
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 342
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 342
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 270
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2527,
+            "coverage": 0.818785578747628,
+            "returns": [3, 4],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 13,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "530244b1395d9f4c47e7d9f4e654da1d6ce72a7be0369f1144d4e5fe468458d0"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2527,
+            "coverage": 0.818785578747628,
+            "returns": [3, 4],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 13,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "5f4985769a1bdb93eaf72eed8629f505220b626e46936bf2657652a31694c65d"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2527,
+            "coverage": 0.818785578747628,
+            "returns": [4, 3],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 13,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "03591ad66e5616038d250d5ad9886afb2084b47e795ff3d70b40140a380649b5"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 2527,
+            "coverage": 0.818785578747628,
+            "returns": [4, 3],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 13,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "d6458a503725e4a2c24bf2bd522c43850cad6fb05d88b9d011f1633617f899f8"
+          }
+        }
+      ]
+    },
+    {
+      "difficulty": "standard",
+      "kind": "pickup-free",
+      "simulationIdentity": "ac89a609fdc609a1",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 168
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 354
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 186
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 264
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 366
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 30
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 96
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 378
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 138
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 90
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3217,
+            "coverage": 0.7870018975332068,
+            "returns": [6, 6],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 19,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "2356e454291e43a6e39bfe84be1363adaff7056c099a1a45986a0a4aaf15b599"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3217,
+            "coverage": 0.7870018975332068,
+            "returns": [6, 6],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 19,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "b0fa71761eafd136e4040b13e40f74d4be98ef8ba2a85ca65ec7d6263078c4bd"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3217,
+            "coverage": 0.7870018975332068,
+            "returns": [6, 6],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 19,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "39d67bb973233642f72332cf4e6d1a4966f439b0e7df7995bf542b97d8412c73"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3217,
+            "coverage": 0.7870018975332068,
+            "returns": [6, 6],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 19,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "49a0832b6a2ab9cf47dd6e0efbacc73023a470185ce90d3d08f395e0a941e521"
+          }
+        }
+      ]
+    },
+    {
+      "difficulty": "expert",
+      "kind": "pickup-free",
+      "simulationIdentity": "da37bc7dfec85877",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 168
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 354
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 186
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 264
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 324
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 384
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 324
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 132
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 126
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3985,
+            "coverage": 0.8320683111954459,
+            "returns": [5, 5],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 19,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "456cf056d86a7b4546ce8529693b5655007af7af3942d8f3884b3fa0585cb7aa"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3985,
+            "coverage": 0.8320683111954459,
+            "returns": [5, 5],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 19,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "8c165bfe296b9db83f596280c8c551b5128491fb99d159b7a3715e47a895fb4f"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3985,
+            "coverage": 0.8320683111954459,
+            "returns": [5, 5],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 19,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "b76c494694deabe1e938ad1e37063f24590b5b6e41692a7e57cb9ef89e7377b9"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3985,
+            "coverage": 0.8320683111954459,
+            "returns": [5, 5],
+            "firstDown": null,
+            "collected": [],
+            "activated": ["east-rover", "west-rover"],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 19,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "59073fe8b2a6ceeec7013df13b16c32b184252158e0dc5b43ed37b0f6ec67ff2"
+          }
+        }
+      ]
+    },
+    {
+      "difficulty": "gentle",
+      "kind": "relocation",
+      "simulationIdentity": "5f3f62d1644f3a2f",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 168
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 354
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 186
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 264
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 222
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 276
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 456
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 115
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 8
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 232
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 18
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 300
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 54
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 84
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 198
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4035,
+            "coverage": 0.8970588235294118,
+            "returns": [5, 7],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "0c5881a7658c404b12bcf55b32b4fd17b671285a66f1337f3d58b6dd4ea32fbe"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4035,
+            "coverage": 0.8970588235294118,
+            "returns": [5, 7],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "80f655070b0b8fff8424e5bbf6ef89bc736c4d8180c5cd1ba9ef5d7e28f92530"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4035,
+            "coverage": 0.8970588235294118,
+            "returns": [7, 5],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "23b79bc18445a6a9f0d930240d9ae7d617629c31cde2e9d321b6ff1738641fe9"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 4035,
+            "coverage": 0.8970588235294118,
+            "returns": [7, 5],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 4,
+            "finalReserves": 4,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "12088c8a6e7a43c27f31f9b8c818e96fc8e81c7d99d10c385384f4cceedbf2d1"
+          }
+        }
+      ],
+      "recoveryAllowance": "Incoming bank direction is held one additional tick at each platform return so the host consumes its individual post-capture release before the fresh turn. Expert final approach also includes its actual return after speed expires."
+    },
+    {
+      "difficulty": "standard",
+      "kind": "relocation",
+      "simulationIdentity": "ac89a609fdc609a1",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 168
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 354
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 186
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 264
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 222
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 276
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 456
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 115
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 8
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 232
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 5
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 100
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 29
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 87
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 90
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3560,
+            "coverage": 0.9122390891840607,
+            "returns": [5, 7],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "dda25616287c91a20b66fafce241d8b3cbc4347a95e867f1ab5d09d5078aaf7e"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3560,
+            "coverage": 0.9122390891840607,
+            "returns": [5, 7],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "6247c3fc738c54685c31718793bc75a3ad5d6b6efd08b7c9134c924ff76a09e6"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3560,
+            "coverage": 0.9122390891840607,
+            "returns": [7, 5],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "3f990716f3e563a7072447ee853f63dd5cababd8b75bd2edfc18ecd4d2e1eec9"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3560,
+            "coverage": 0.9122390891840607,
+            "returns": [7, 5],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 2,
+            "finalReserves": 2,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "8329377fdf438dae9327bc327b4124f424fb11a7530e5cf74bf25e2a89d46fbb"
+          }
+        }
+      ],
+      "recoveryAllowance": "Incoming bank direction is held one additional tick at each platform return so the host consumes its individual post-capture release before the fresh turn. Expert final approach also includes its actual return after speed expires."
+    },
+    {
+      "difficulty": "expert",
+      "kind": "relocation",
+      "simulationIdentity": "da37bc7dfec85877",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 168
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 354
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 186
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 264
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 222
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 276
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 456
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 115
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 8
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 232
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 5
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 90
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 58
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 100
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 42
+        }
+      ],
+      "checks": [
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3496,
+            "coverage": 0.8994307400379506,
+            "returns": [5, 7],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "4640ea6c8a1bbba90431f757b1df6741f3921758b8d40bf6fd788c995af5a36c"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": false,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3496,
+            "coverage": 0.8994307400379506,
+            "returns": [5, 7],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [1],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "0cbcae6ec44e1a3ceda5a850d43612b3a0308c350d2fa7005bdcd8213870abc3"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": false
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3496,
+            "coverage": 0.8994307400379506,
+            "returns": [7, 5],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "6fecad0b0ae02a80c603c7a754f27bfd666c67c57fcf6717161f3e2f2ec6bbf3"
+          }
+        },
+        {
+          "options": {
+            "seed": 17,
+            "delayTicks": 1,
+            "swapped": true,
+            "jointCuts": true
+          },
+          "result": {
+            "status": "shared-no-loss-clear",
+            "tick": 3496,
+            "coverage": 0.8994307400379506,
+            "returns": [7, 5],
+            "firstDown": null,
+            "collected": [
+              {
+                "type": "powerup.collected",
+                "tick": 2747,
+                "time": 22.895333333333333,
+                "id": "depot-speed",
+                "kind": "player-speed",
+                "players": [0],
+                "gain": null,
+                "activationTick": 2748,
+                "untilTick": 3348,
+                "x": 19.5,
+                "y": 6.5,
+                "reclaimedBeforeContactStep": false,
+                "partnerCutting": false
+              }
+            ],
+            "activated": ["east-rover"],
+            "initialReserves": 1,
+            "finalReserves": 1,
+            "bothIdleTicks": 21,
+            "longestJointIdleTicks": 6,
+            "checkpoint": "31a76986a67cb2a5f040d89c1c199f409c27b3b20d7a8a285a555061ca8f7a83"
+          }
+        }
+      ],
+      "recoveryAllowance": "Incoming bank direction is held one additional tick at each platform return so the host consumes its individual post-capture release before the fresh turn. Expert final approach also includes its actual return after speed expires."
+    }
+  ]
+}

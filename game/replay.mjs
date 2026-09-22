@@ -5,6 +5,9 @@ import {
   WIDE_VERSIONS,
   CLASSIC_VERSIONS,
   FOUNDATION_VERSIONS,
+  isDirectionalRuleset,
+  isRelayRuleset,
+  isFoundationRuleset,
   isClassicRuleset,
   resolveVersions,
   versionsForLevel,
@@ -47,13 +50,22 @@ const SECTIONS = [
 ];
 const encoder = new TextEncoder();
 const sectionNames = (versions) =>
-  versions.ruleset === FOUNDATION_VERSIONS.ruleset
-    ? [...SECTIONS, 'encounter', 'classic', 'foundations']
-    : versions.ruleset === CLASSIC_VERSIONS.ruleset
-      ? [...SECTIONS, 'encounter', 'classic']
-      : versions.ruleset !== LEGACY_VERSIONS.ruleset
-        ? [...SECTIONS, 'encounter']
-        : SECTIONS;
+  isRelayRuleset(versions.ruleset)
+    ? [
+        ...SECTIONS,
+        'encounter',
+        'classic',
+        'foundations',
+        'relays',
+        ...(isDirectionalRuleset(versions.ruleset) ? ['directionalFields'] : []),
+      ]
+    : versions.ruleset === FOUNDATION_VERSIONS.ruleset
+      ? [...SECTIONS, 'encounter', 'classic', 'foundations']
+      : versions.ruleset === CLASSIC_VERSIONS.ruleset
+        ? [...SECTIONS, 'encounter', 'classic']
+        : versions.ruleset !== LEGACY_VERSIONS.ruleset
+          ? [...SECTIONS, 'encounter']
+          : SECTIONS;
 function replayVersions(value) {
   try {
     return resolveVersions({
@@ -340,7 +352,7 @@ function authoritativeSections(state, versions) {
     result: state.result,
     ...(versions.ruleset !== LEGACY_VERSIONS.ruleset ? { encounter: state.encounter } : {}),
     ...(isClassicRuleset(versions.ruleset) ? { classic: projectClassicState(state) } : {}),
-    ...(versions.ruleset === FOUNDATION_VERSIONS.ruleset
+    ...(isFoundationRuleset(versions.ruleset)
       ? {
           foundations: {
             definition: structuredClone(state.level.foundations),
@@ -348,6 +360,17 @@ function authoritativeSections(state, versions) {
             permanent: Array.from(state.foundation.permanent),
           },
         }
+      : {}),
+    ...(isRelayRuleset(versions.ruleset)
+      ? {
+          relays: {
+            definition: structuredClone(state.level.relayGates),
+            state: structuredClone(state.relay),
+          },
+        }
+      : {}),
+    ...(isDirectionalRuleset(versions.ruleset)
+      ? { directionalFields: structuredClone(state.level.directionalFields) }
       : {}),
   };
 }
