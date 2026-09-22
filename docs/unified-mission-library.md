@@ -43,9 +43,19 @@ CI, release and public verification separately. Heavy release jobs remain
 serialized; bounded local tests can run concurrently. Do not introduce new enemy
 systems, artwork, music, balance changes or unrelated recovery work into B.
 
-Current state: implementation in progress; no B release or public acceptance yet.
-The checkpoint sections below are historical; the latest Solo integration section
-supersedes earlier statements that the selector is not mounted.
+Current state: all three hosts are implemented; final qualification is in progress.
+There is no B release or public acceptance yet. The current table and final
+checkpoint sections supersede historical statements that hosts are not mounted.
+
+The user's latest delivery priority is to complete PR268, merge it and publish
+it to Pages. Defer unrelated follow-ups and efficiency-only PR235; it is not a
+correctness prerequisite. A public acceptance still precedes B promotion. Keep
+required B product verification, independent review, immutable version and public
+checks. The publisher subsequently confirmed the user's temporary optional-test
+policy: preserve actual failures and explicitly record waived/skipped test gates;
+never report them as passed. Source identity, build, immutable asset integrity,
+conflict checks, deployment and public acceptance are not waived. Coordinate the
+landed policy before dispatching another full suite solely under the older plan.
 
 ### First local checkpoint
 
@@ -162,13 +172,16 @@ records the evidence at that time, not the current remaining list.
 | Trusted bundled/archive Versus downloads                                      | Implemented;53 installer +actual-host tests pass together                       | Native/public verification                         |
 | Paired-original downloads/readiness across hosts                              | Implemented; real optional/paired remote5-case recovery cohort passes           | Release-aware native/public verification           |
 | Installed Custom metadata/readiness without eager artwork decoding            | Team and Versus integrations reviewed; local host regressions pass              | Native qualification and failure-matrix completion |
-| Compact library and selector return                                           | Final nativec9ea focused-card/typing/compact gates pass; modeled pads8/8        | Frozen repeat and physical-device limits           |
-| Full navigation, failure, storage and accessibility/performance qualification | Combined mission-library cohort301/301 passes; lint/format/source validation pass | 2–4h plus device availability                      |
+| Compact library and selector return                                           | Final6e native repeat preserves490 scroll, visible focused card, both Versus openers and saved Solo flight | Frozen/public repeat; physical-device limits remain explicit |
+| Full navigation, failure, storage and accessibility/performance qualification | Final6e cohort314/315; startup fixture repaired and targeted3/3 pass, runtime unchanged | Document optional-test waiver or rerun; build/integrity/public gates remain |
 | Release B promotion                                                           | Waits only for accepted A and B technical gates; local work continues           | 2–4h after qualification, CI/Pages queues variable |
 
 Estimates are remaining engineering ranges, not guaranteed release times or
 permission to skip gates. Parallel work overlaps; provisional B delivery range is
-6–12h from this checkpoint, with external media and CI the main risks. Publish
+6–12h at the earlier integration checkpoint, not a newly restarted deadline.
+Current delivery timing depends on A public acceptance, final B native/tests and
+the mandatory hosted qualification/publication queue; a new clock-time ETA is
+not yet supported. External media and CI remain the main risks. Publish
 actual delivery and remaining gates after each release. One publisher retains
 main/tag/Pages ownership; implementation stays isolated from A and the dirty tree.
 
@@ -804,3 +817,36 @@ verification. It must receive a new pinned native check before acceptance.
   controllers8/8 and source-return40/40 pass, with independent review complete.
   Native nonzero-scroll/visible-focus repetition is still required. The earlier
   312-case pass does not waive this separate native acceptance gate.
+
+### Prioritized completion: final native source acceptance
+
+- Native `6eebeb9e0` repetition now passes the exact formerly failing round trip.
+  Night Shift search, Versus mode and Custom Voltage Garden remain selected;
+  scroll490 is retained. The focused card lies fully inside the compact list
+  (card146.23–309.34; list113.77–313.41) at844×390 with Plain and Large text.
+- Both visible Versus All missions entries open the shared selector and Back
+  restores their actual opener. Installed original-media readiness decodes the
+  genuine pictures; Play remains separate, Stay preserves the Custom match and
+  explicit replacement selects Orchard Crossing on both boards.
+- Checked Solo return restores the original flight paused at1:32 with one life,
+  target68%, zero score/coverage and an explicit Resume. The failed70f receipt is
+  retained alongside `b-return-scroll-native-6e-pass.json` in the local delivery
+  evidence directory. This is source-native development-channel proof, not
+  actual release-channel absent-pair, arbitrary Custom raster, frozen/public or
+  physical-device qualification.
+- The final combined local test run encountered a boot-to-held-metadata timeout
+  before its visibility-interruption action. The exact isolated case passes in
+  3.873s. Failure cleanup allowed a late page continuation after fixture globals
+  were restored. Preserve this failure; a narrow startup-budget/cleanup repair
+  does not change runtime behavior or weaken the post-action assertions.
+- That fixed-source combined run completed315 tests:314 passed, one failed,
+  zero skipped/cancelled, in436.094s. This is a failed combined result, not a
+  replacement315-pass qualification claim. Only the startup/cleanup fixture is
+  being corrected; final runtime remains the natively verified6e revision.
+- The test-only correction now passes all three held-metadata cases in11.422s
+  with13 unrelated name-filter skips. Only boot-to-request preparation receives
+  a45s bound; all existing10s action waits and exact assertions remain. Finally
+  releases and awaits page initialization before fixture globals are restored,
+  including assertion-failure paths. Scoped lint/format/diff checks pass, and
+  independent review confirms no runtime change. No full-suite rerun is claimed;
+  retain the314/315 result when recording the temporary test-gate exception.

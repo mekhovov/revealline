@@ -26,6 +26,13 @@ class Picture {
   }
 }
 const settle = (condition) => waitFor(condition, { timeoutMs: 10000 });
+// Compiling the real Journey before the held request is a boot precondition,
+// not the post-action response under test. Keep those action waits at ten seconds.
+const settleBoot = (condition) =>
+  waitFor(condition, {
+    timeoutMs: 45000,
+    message: 'The real host must finish boot preparation and reach the held metadata request.',
+  });
 const expert = JSON.stringify({ format: JOURNEY_PREFERENCES_VERSION, difficulty: 'expert' });
 // Native boot keeps controls inert until ready. This is the same finite focus
 // boundary used by the existing checked mode-return host tests.
@@ -139,7 +146,6 @@ for (const interruption of ['focus', 'hidden'])
     const gate = new Promise((resolve) => {
       release = resolve;
     });
-    t.after(() => release());
     const page = solo(t, {
       search: incomingSoloSearch(),
       fetchResponse: async (path) => {
@@ -151,28 +157,36 @@ for (const interruption of ['focus', 'hidden'])
         }
       },
     });
-    await settle(() => entered);
-    const doc = globalThis.document;
-    assert.equal(doc.activeElement, doc.body, 'The boot surface has not claimed focus.');
-    if (interruption === 'focus') {
-      doc.getElementById('overlay-menu').focus();
-      assert.equal(
-        doc.activeElement.id,
-        'overlay-menu',
-        'Newer focus must reach a visible control.',
-      );
-    } else {
-      doc.hidden = true;
-      doc.emit('visibilitychange');
+    const pageSettled = page.catch(() => {});
+    try {
+      await settleBoot(() => entered);
+      const doc = globalThis.document;
+      assert.equal(doc.activeElement, doc.body, 'The boot surface has not claimed focus.');
+      if (interruption === 'focus') {
+        doc.getElementById('overlay-menu').focus();
+        assert.equal(
+          doc.activeElement.id,
+          'overlay-menu',
+          'Newer focus must reach a visible control.',
+        );
+      } else {
+        doc.hidden = true;
+        doc.emit('visibilitychange');
+      }
+      release();
+      const p = await page;
+      p.frame(0);
+      assert.equal(p.rendered.run.levelId, 'first-return');
+      assert.notEqual(p.doc.body.dataset.flightState, 'running');
+      assert.equal(p.$('journey-chooser').open, false);
+      if (interruption === 'focus') assert.equal(doc.activeElement.id, 'overlay-menu');
+      assert.deepEqual(p.errors, []);
+    } finally {
+      // Settle the original page before its fixture restores global DOM state,
+      // even when interception or an assertion fails. Keep the original failure.
+      release();
+      await pageSettled;
     }
-    release();
-    const p = await page;
-    p.frame(0);
-    assert.equal(p.rendered.run.levelId, 'first-return');
-    assert.notEqual(p.doc.body.dataset.flightState, 'running');
-    assert.equal(p.$('journey-chooser').open, false);
-    if (interruption === 'focus') assert.equal(doc.activeElement.id, 'overlay-menu');
-    assert.deepEqual(p.errors, []);
   });
 
 test('Team-to-Versus incoming selection finishes before normal lobby focus and starts both exact boards', async (t) => {
@@ -196,7 +210,6 @@ test('Team-to-Versus incoming selection cannot start while hidden after held met
   const gate = new Promise((resolve) => {
     release = resolve;
   });
-  t.after(() => release());
   const page = versus(t, {
     href: `http://localhost/game/couch/${incomingSoloSearch()}`,
     fetchResponse: async (path) => {
@@ -208,17 +221,23 @@ test('Team-to-Versus incoming selection cannot start while hidden after held met
       }
     },
   });
-  await settle(() => entered);
-  globalThis.document.hidden = true;
-  globalThis.document.emit('visibilitychange');
-  release();
-  const p = await page;
-  p.frame(0);
-  assert.equal(p.renders[0].level.id, 'first-return');
-  assert.equal(p.renders[1].level.id, 'first-return');
-  assert.equal(p.state(), 'ready');
-  assert.equal(p.$('journey-chooser').open, false);
-  assert.equal(p.doc.documentElement.dataset.toolState, 'ready');
+  const pageSettled = page.catch(() => {});
+  try {
+    await settleBoot(() => entered);
+    globalThis.document.hidden = true;
+    globalThis.document.emit('visibilitychange');
+    release();
+    const p = await page;
+    p.frame(0);
+    assert.equal(p.renders[0].level.id, 'first-return');
+    assert.equal(p.renders[1].level.id, 'first-return');
+    assert.equal(p.state(), 'ready');
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.equal(p.doc.documentElement.dataset.toolState, 'ready');
+  } finally {
+    release();
+    await pageSettled;
+  }
 });
 
 for (const source of ['legacy', 'whole-spatial-v5', 'opening'])
