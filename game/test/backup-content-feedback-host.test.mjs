@@ -203,6 +203,50 @@ for (const action of ['keep', 'escape', 'close', 'pagehide', 'changed storage'])
   });
 }
 
+test('repeated Escape cancels only the active replacement review before native close', async (t) => {
+  const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true });
+  savesFromCollection(page);
+  const before = new Map(page.storage.map);
+  const dialog = page.$('library-dialog');
+  for (const focused of ['library-operation-cancel', 'library-operation-message']) {
+    page.$('save-file').focus();
+    const pending = importOwnedFile(page, { accept: false });
+    await settle(() => !page.$('library-operation-confirm').hidden);
+    page.$(focused).focus();
+    for (const fields of [
+      { defaultPrevented: true },
+      { repeat: true },
+      { isComposing: true },
+      { shiftKey: true },
+      { cancelable: false },
+      { ctrlKey: true },
+      { altKey: true },
+      { metaKey: true },
+    ]) {
+      page.$(focused).emit('keydown', { key: 'Escape', ...fields });
+      assert.equal(page.$('library-operation-confirm').hidden, false);
+    }
+    const nested = page.doc.createElement('dialog');
+    dialog.append(nested);
+    nested.showModal();
+    assert.equal(nested.emit('keydown', { key: 'Escape' }).defaultPrevented, false);
+    assert.equal(page.$('library-operation-confirm').hidden, false);
+    nested.close();
+    nested.remove();
+    page.$(focused).focus();
+    const event = page.$(focused).emit('keydown', { key: 'Escape' });
+    assert.equal(event.defaultPrevented, true, 'Review consumes the key before native close');
+    await pending;
+    assert.equal(dialog.open, true);
+    assert.equal(page.$('library-operation-confirm').hidden, true);
+    assert.deepEqual(page.storage.map, before);
+  }
+  // A later Back with no review still belongs to the ordinary modal lifecycle.
+  const event = dialog.emit('keydown', { key: 'Escape' });
+  assert.equal(event.defaultPrevented, false);
+  assert.deepEqual(page.errors, []);
+});
+
 for (const choice of ['Back', 'Confirm']) {
   test(`modeled controller ${choice} routes the replacement decision through the current Library owner`, async (t) => {
     const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true });

@@ -621,6 +621,26 @@ export function attachLibraryPanel(api) {
       },
     };
   }
+  $('library-dialog').addEventListener('keydown', (event) => {
+    if (
+      event.key !== 'Escape' ||
+      event.defaultPrevented ||
+      event.cancelable === false ||
+      event.isComposing ||
+      event.shiftKey ||
+      event.ctrlKey ||
+      event.altKey ||
+      event.metaKey ||
+      !libraryTask?.reviewing ||
+      !$('library-dialog').open ||
+      event.target?.closest?.('dialog') !== $('library-dialog')
+    )
+      return;
+    // Review is an operation inside this dialog. Consume its Back action before
+    // the native close watcher: repeated native cancel events may be uncancelable.
+    event.preventDefault();
+    cancelLibraryTask();
+  });
   $('library-dialog').addEventListener('cancel', (e) => {
     if (e.target !== $('library-dialog')) return;
     if (cancelAttemptExport() || busy) e.preventDefault();
