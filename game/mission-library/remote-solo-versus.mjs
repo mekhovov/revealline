@@ -13,12 +13,19 @@ import { externalChapterHash } from '../external-chapter.mjs';
 import { campaignKey } from '../library.mjs';
 import { createRun } from '../core/index.mjs';
 import { createDuel } from '../multiplayer.mjs';
+import { normalizedLevel } from '../core/level.mjs';
+import { createMetadataInstalledMissionLibrary } from './metadata-installed-library.mjs';
+import { createMissionLibraryInventory } from './installed-inventory.mjs';
+import { createExternalChapterInventoryReader } from '../external-chapter-pointer.mjs';
+import { inspectPackLibraryMetadata, PACK_LIBRARY_VERSION } from '../packs.mjs';
+import { createCouchChapterInstaller } from '../couch/couch-chapter-install.mjs';
+import { loadOptionalCatalog } from '../optional-chapters.mjs';
 
-/** Read-only remote browsing. Compiler-qualified Journey objects and checked
- * Base metadata grant an exact receiving-host lookup, never an in-Team run.
- * Retained packs remain Unavailable until a separate installation/readiness
- * adapter can prove their ownership. No fake image decoder or prepared pack is
- * used to turn browsing metadata into launch authority.
+/** Read-only remote browsing, with deliberate verified chapter preparation.
+ * Compiler-qualified Journey and inspected installed metadata grant an exact
+ * receiving-host lookup, never an in-Team run. Downloads use the existing
+ * transactional installer; paired originals require explicit readiness checks.
+ * No fake image decoder or prepared pack turns browsing into runtime authority.
  */
 export async function createRemoteSoloVersusLibrarySources({
   baseURL,
@@ -26,6 +33,7 @@ export async function createRemoteSoloVersusLibrarySources({
   launch,
   difficulty = () => 'standard',
   signal,
+  installed,
 }) {
   if (typeof launch !== 'function' || typeof request !== 'function')
     throw new TypeError('Remote browsing needs a metadata reader and exact handoff.');
@@ -123,6 +131,39 @@ export async function createRemoteSoloVersusLibrarySources({
       readyBase.set(row.id, modes);
     }
     check();
+    if (installed) {
+      // The Base execution wrapper is authored, not reconstructed from card
+      // metadata or Journey materials. No pictures are decoded by this read.
+      const owner = await installedSources({
+        index,
+        journey,
+        baseEntry: {
+          campaign: baseCampaign,
+          classRecipes: classesFile.value,
+          visualOverrides: {},
+          levelVisuals: [],
+          music: [],
+          sourcePackId: null,
+        },
+        installed,
+        loadBaseThemes: async () => (await read('content/themes.json')).value.themes,
+        baseURL: new URL('../', root),
+        request,
+        launch,
+        signal,
+      });
+      return Object.freeze({
+        get sources() {
+          return owner.sources();
+        },
+        refresh: owner.refresh,
+        state: owner.state,
+        dispose() {
+          owner.dispose();
+          solo.preparer.dispose();
+        },
+      });
+    }
     const retained = classicLibrarySources(index, {
       availability: (row, mode) =>
         readyBase.get(row.id)?.has(mode)
@@ -137,10 +178,223 @@ export async function createRemoteSoloVersusLibrarySources({
     });
     return Object.freeze({
       sources: Object.freeze([journey, ...retained]),
+      refresh: async () => {},
+      state: () => ({ ready: false, reason: 'Installed chapters have not been checked.' }),
       dispose: () => solo.preparer.dispose(),
     });
   } catch (error) {
     solo.preparer.dispose();
     throw error;
   }
+}
+
+/** Remote ownership ends at an exact handoff. Genuine pack/picture preparation
+ * stays with the receiving host; this owner never treats a DTO as a runtime. */
+async function installedSources({
+  index,
+  journey,
+  baseEntry,
+  installed,
+  loadBaseThemes,
+  baseURL,
+  request,
+  launch,
+  signal,
+}) {
+  const empty = await inspectPackLibraryMetadata({ format: PACK_LIBRARY_VERSION, packs: [] });
+  let inventory = null,
+    installer = null,
+    factory = null,
+    error = '',
+    closed = false,
+    refreshEpoch = 0;
+  const externalProofs = new Map();
+  const currentInventory = () => inventory?.getInventory() ?? empty;
+  const check = (operationSignal) => {
+    if (closed || signal?.aborted || operationSignal?.aborted)
+      throw new DOMException('Mission browsing cancelled.', 'AbortError');
+  };
+  const state = () =>
+    error
+      ? { ready: false, reason: error }
+      : (inventory?.state() ?? {
+          ready: false,
+          reason: error || 'Installed chapter metadata has not been checked.',
+        });
+  async function refresh({ signal: operationSignal = signal } = {}) {
+    check(operationSignal);
+    const ticket = ++refreshEpoch;
+    externalProofs.clear();
+    try {
+      inventory ??= await createMissionLibraryInventory({
+        reader: createExternalChapterInventoryReader({
+          ...installed,
+          profileKey: `revealline.library.${installed.channel}.v1`,
+          packsKey: `revealline.packs.${installed.channel}.v1`,
+        }),
+      });
+      if (ticket !== refreshEpoch) return state();
+      await inventory.refresh({ signal: operationSignal });
+      check(operationSignal);
+      if (ticket !== refreshEpoch) return state();
+      if (!baseEntry.themes) {
+        const themes = await loadBaseThemes();
+        check(operationSignal);
+        if (ticket !== refreshEpoch) return state();
+        baseEntry.themes = themes;
+      }
+      check(operationSignal);
+      if (ticket !== refreshEpoch) return state();
+      error = '';
+      if (factory) await factory.refreshInstalled();
+      if (ticket !== refreshEpoch) return state();
+    } catch (failure) {
+      if (ticket !== refreshEpoch) return state();
+      error = `Installed chapters could not be checked: ${failure.message}. Existing packs are kept. Reopen missions to retry.`;
+      check(operationSignal);
+      // Keep previously registered Custom owners stale, rather than removing
+      // them because an unknown/locked inventory resembles an empty library.
+    }
+    return state();
+  }
+  function getInstaller() {
+    return (installer ??= createCouchChapterInstaller({
+      ...installed,
+      registeredEntries: [baseEntry],
+      missionIndex: index,
+      baseURL,
+      fetch: request,
+    }));
+  }
+  function proofCurrent(row) {
+    const proof = externalProofs.get(row.packId);
+    return Boolean(proof && proof.epoch === refreshEpoch && proof.inventory === currentInventory());
+  }
+  async function confirm(row, context) {
+    check(context.signal);
+    if (context.isCurrent?.() === false) return false;
+    if (row?.source === 'base') return true;
+    await inventory.confirm(context.inventory, { signal: context.signal });
+    check(context.signal);
+    if (context.isCurrent?.() === false) return false;
+    if (row?.source === 'external') {
+      const ready = await getInstaller().inspectExternal(row, { signal: context.signal });
+      check(context.signal);
+      if (!ready.ready) throw new Error(ready.reason || 'Original pictures need preparation.');
+      await inventory.confirm(context.inventory, { signal: context.signal });
+    }
+    return context.isCurrent?.() !== false;
+  }
+  const handoff = (row, context) =>
+    launch({
+      ...context,
+      // The Team host invokes this again after its Stay/Replace decision. Keeping
+      // it next to assign prevents a changed inventory from gaining authority.
+      confirmInventory: () => confirm(row, context),
+    });
+  try {
+    await refresh();
+    factory = await createMetadataInstalledMissionLibrary({
+      index,
+      journeySources: [journey],
+      getInventory: currentInventory,
+      baseEntry,
+      compatibility({ entry, level }) {
+        const modes = [],
+          config = { classRecipes: entry.classRecipes, classId: entry.classRecipes[0].id };
+        try {
+          createRun(level, config);
+          modes.push('solo');
+        } catch {}
+        try {
+          createDuel(level, config);
+          modes.push('versus');
+        } catch {}
+        return modes;
+      },
+      describe({ level }) {
+        const actual = normalizedLevel(level);
+        return {
+          rules: `${Math.round(actual.goal.coverage * 100)}% coverage · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
+        };
+      },
+      availabilityClassic(row, pack) {
+        if (!state().ready) return { state: 'unavailable', reason: state().reason };
+        if (row.source === 'external' && pack)
+          return proofCurrent(row)
+            ? { state: 'ready' }
+            : {
+                state: 'unavailable',
+                reason:
+                  'Original pictures need checking. Retry checks the installed pair without starting a mission.',
+                retry: true,
+              };
+        return pack
+          ? { state: 'ready' }
+          : { state: 'download', bytes: row.download?.bytes ?? row.sourceFile.bytes };
+      },
+      availabilityCustom() {
+        return state().ready
+          ? { state: 'ready' }
+          : { state: 'unavailable', reason: state().reason };
+      },
+      async prepareClassic(row, context) {
+        check(context.signal);
+        if (!state().ready) throw new Error(state().reason);
+        const before = currentInventory(),
+          epoch = refreshEpoch;
+        await inventory.confirm(before, { signal: context.signal });
+        let result;
+        if (['bundled', 'archived'].includes(row.source))
+          result = await getInstaller().installIndexed(row, { signal: context.signal });
+        else if (row.source === 'optional') {
+          const catalog = await loadOptionalCatalog({
+            baseURL,
+            fetch: request,
+            signal: context.signal,
+          });
+          const summary = catalog.packs.find((entry) => entry.id === row.packId);
+          if (!summary) throw new Error('This chapter is absent from the exact release catalogue.');
+          result = await getInstaller().install(summary, { signal: context.signal });
+        } else if (row.source === 'external')
+          result = before.packs.some((pack) => pack.id === row.packId)
+            ? await getInstaller().inspectExternal(row, { signal: context.signal })
+            : await getInstaller().installExternal(row, { signal: context.signal });
+        else throw new Error('This mission does not need installation.');
+        // A durable commit can outlive cancellation. Refresh metadata using this
+        // owner's lifetime, but never launch or manufacture a cancelled proof.
+        if (result.committed) await refresh();
+        check(context.signal);
+        if (!result.committed && epoch !== refreshEpoch)
+          throw new Error('Installed inventory changed while preparing. Retry this mission.');
+        if (!result.committed) await inventory.confirm(before, { signal: context.signal });
+        if (!state().ready) throw new Error(state().reason);
+        if (row.source === 'external') {
+          if (!result.ready) throw new Error(result.reason || 'Original pictures need checking.');
+          externalProofs.set(row.packId, { inventory: currentInventory(), epoch: refreshEpoch });
+        }
+      },
+      launchClassic: handoff,
+      launchCustom: (_binding, context) => handoff(null, context),
+      progressClassic: () => '',
+      progressCustom: () => '',
+    });
+  } catch (failure) {
+    inventory?.close();
+    installer?.dispose();
+    throw failure;
+  }
+  return Object.freeze({
+    sources: () => factory.sources(),
+    refresh,
+    state,
+    dispose() {
+      closed = true;
+      ++refreshEpoch;
+      externalProofs.clear();
+      factory.library.dispose();
+      inventory?.close();
+      installer?.dispose();
+    },
+  });
 }

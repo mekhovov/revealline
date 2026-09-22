@@ -184,7 +184,12 @@ for (const interrupt of ['blur', 'Escape'])
     assert.equal(f.$('journey-mode').value, 'solo');
     await loaded(f);
     assert.equal(f.reads.length, 4, 'Reopening reuses checked metadata, not a second fetch.');
-    assert.equal(f.$('coop-library-remote-retry').hidden, true);
+    assert.equal(f.$('coop-library-remote-retry').hidden, false);
+    assert.match(f.$('coop-library-remote-status').textContent, /Installed content unavailable/);
+    assert.match(
+      f.$('coop-library-remote-status').getAttribute('aria-description'),
+      /storage access/,
+    );
     assert.equal(f.doc.activeElement.id, 'journey-search');
     assert.equal(f.visits.length, 0);
   });
@@ -276,11 +281,14 @@ test('a Team page return restores the actual departing Solo search and campaign 
 
 test('Team remote feedback retains a bounded status row and 44px Retry target in short landscape', async () => {
   const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8');
-  assert.match(css, /#journey-chooser #coop-library-status p \{[^}]*margin: 0;/s);
+  assert.match(
+    css,
+    /#journey-chooser #coop-library-status p(?:,\s*#journey-chooser #race-library-status p)? \{[^}]*margin: 0;/s,
+  );
   assert.match(css, /#journey-chooser #coop-library-remote-feedback\[hidden\] \{\s*display: none;/);
   assert.match(css, /#journey-chooser #coop-library-remote-retry \{[^}]*min-block-size: 44px;/s);
   assert.match(
     css,
-    /@media \(max-height: 480px\) \{\s*#journey-chooser #coop-library-status \{[^}]*max-height: 5rem;[^}]*overflow: auto;/s,
+    /@media \(max-height: 480px\) \{\s*#journey-chooser #coop-library-status(?:,\s*#journey-chooser #race-library-status)? \{[^}]*max-height: 5rem;[^}]*overflow: auto;/s,
   );
 });

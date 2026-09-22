@@ -158,11 +158,11 @@ records the evidence at that time, not the current remaining list.
 | Versus host and supported Classic/Custom/optional launches                    | Pushed; independent fixes and17-case root repeat passed                       | Downloads/readiness work below                     |
 | Team host,12 Journey +2 Classic +visit-local Custom                           | Pushed;153 tests passed together                                              | Cross-mode/native work below                       |
 | Solo↔Versus Journey modes without duplicate identities                       | Pushed;7 adapter +32 actual-host cases passed                                 | Cross-mode public verification                     |
-| Team↔Solo/Versus catalogue and exact handoffs                                | Pushed; exact incoming Solo launch now passes pinned native entry/reload      | Final round-trip qualification                     |
+| Team↔Solo/Versus catalogue and exact handoffs                                | Pushed; pinned native source-return and saved-flight round trips pass         | Final downloaded/Custom cross-mode qualification   |
 | Trusted bundled/archive Versus downloads                                      | Implemented;53 installer +actual-host tests pass together                     | Native/public verification                         |
 | Paired-original downloads/readiness across hosts                              | Service pushed,41 tests pass; Versus and Team integrations in parallel review | 2–4h plus native verification                      |
-| Installed Custom metadata/readiness without eager artwork decoding            | Read-only controller/materializer pushed; host integrations under test        | 2–4h overlapping paired-original work              |
-| Compact library and selector return                                           | Pinned Solo/Team layouts pass; filter/focus/scroll restoration tested         | 0.5–2h targeted native recheck                     |
+| Installed Custom metadata/readiness without eager artwork decoding            | Team integration reviewed and tested; Versus final regression in progress     | Native qualification and failure-matrix completion |
+| Compact library and selector return                                           | Pinned Solo/Team layouts and filter/card-focus return pass                    | New inventory feedback native recheck              |
 | Full navigation, failure, storage and accessibility/performance qualification | Bounded cohorts pass; whole affected/native gates remain                      | 2–4h plus device availability                      |
 | Release B promotion                                                           | Waits only for accepted A and B technical gates; local work continues         | 2–4h after qualification, CI/Pages queues variable |
 
@@ -174,12 +174,11 @@ main/tag/Pages ownership; implementation stays isolated from A and the dirty tre
 
 Additional compatibility gates: audit retained setup/appearance entry points now
 that Missions opens the unified library, without adding a second mission browser.
-Investigate the broader cohort's intermittent immediate-Next receipt assertion
-(its isolated rerun passes). Post-adoption Next now retires its automatic-start
-intent synchronously when a lazy Missions opening wins. Three targeted
-continuation/setup regressions pass after this correction. Do not describe the
-broader continuation cohort as clean until it is repeated successfully; the
-intermittent receipt assertion remains a tracked qualification gate.
+The earlier immediate-Next receipt fixture gate is closed: the corrected
+named-database boundary and actual async supersession test pass together17/17.
+Post-adoption Next retires its automatic-start intent when a lazy Missions
+opening wins. Keep these cases in final whole-branch qualification; this bounded
+pass is not a substitute for the complete release suite.
 
 ### Solo review follow-up: opening intent and truthful card text
 
@@ -534,3 +533,27 @@ verification. It must receive a new pinned native check before acceptance.
   reload, with its exact mission brief and60% target. This is local evidence,
   not Pages acceptance. Release A merged-source qualification remains in progress;
   Release B stays draft, with no version bump, merge, tag or deployment.
+- Independent root repeat passes63 shared selector/controller/materializer cases.
+  Native `c073fdabe` also preserves the Classic Relay Storm saved flight across
+  Team Twin landings and checked return, and preserves Journey return intent.
+- Native `1cbb1bd1f` confirms Team→Solo→browser Back→Team chooser restores Solo,
+  Prologue, Two keepers search and exact card focus in844×390 and390×844.
+  Escape restores the Browse opener. Held-request/newer-input behavior has
+  automated coverage but is not claimed as native or physical-controller evidence.
+
+### Team installed inventory and inline preparation checkpoint
+
+- Team's same selector now lists checked installed Solo/Versus Classic and Custom
+  editions using read-only metadata; explicit trusted downloads remain inline.
+  The receiving gameplay host still owns genuine runtime/image preparation.
+- Exact storage is checked again after the player's Stay/Replace decision before
+  leaving Team. Failed reads retain stale unavailable Custom cards and block
+  invented downloads; delayed refreshes cannot overwrite newer readiness.
+- Reopening refreshes installed state. Interrupted later refreshes offer truthful
+  Retry, never publish late owners over newer input, and require deliberate retry.
+  Gameplay without paired originals remains unavailable rather than falsely ready.
+- Independent final adapter/actual-Team repeat passes11/11. The preceding combined
+  cohort passed23 cases; final affected host run passed14 runtime cases, with its
+  CSS grouping assertion then updated and independently passing. Scoped lint,
+  formatting and whitespace checks pass. Native installed/download journeys,
+  successful optional/paired preparation and public verification remain gates.
