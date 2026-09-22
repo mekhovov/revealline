@@ -1,0 +1,41 @@
+{
+  "parent": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+  "recovered": "0c241f73def4755627d73b66c1aca17e8c3f32e9",
+  "tree": "8673674a05a96729bce85ffc3cce4ecdce05e859",
+  "paths": [
+    "authoring/prompts/studio-validation-labels.md",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "docs/studio-validation-labels.md",
+    "game/studio/form-focus.mjs",
+    "game/studio/studio.css",
+    "game/studio/timed-bonus-editor.mjs",
+    "game/test/content-timed-bonuses.test.mjs",
+    "game/test/studio-form-focus.test.mjs"
+  ],
+  "resolution": "Only maintainer appended-text conflict; preserved current HEAD guide verbatim and appended exact feature suffix. Seven other postimages identical to original feature.",
+  "tests": [
+    {
+      "node": "20.19.5",
+      "file": "pr242-recovery-node20.19.5.log",
+      "bytes": 3237,
+      "sha256": "adfb818b2f3ca5a07606cebee2afa3f1e4f07f0c62ff4acac88bd906cd18d52e",
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "node": "22.22.2",
+      "file": "pr242-recovery-node22.22.2.log",
+      "bytes": 3428,
+      "sha256": "31c7e09db96550dd8eb04372303ae52b1b4e871c78684b8807a449dce55c00e2",
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "scope": "Two complete affected test files; exact source integration changes only guide append relative to original feature. Not complete-source, native final integration, device or public qualification.",
+  "checks": [
+    "Scoped ESLint and Prettier passed",
+    "All seven non-guide feature postimages match original PR242; current guide retained with exact suffix"
+  ]
+}
