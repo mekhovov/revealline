@@ -786,3 +786,21 @@ verification. It must receive a new pinned native check before acceptance.
   Repository-wide lint and formatting pass on this production. Release A source
   qualification and freezing have succeeded; public acceptance, the coordinated
   CI baseline and B version/full release qualification are still separate gates.
+
+### Final combined run and native scroll follow-up
+
+- The combined mission-library run on `70f99283e` production passes312/312 in
+  352.784s, with zero failures, skips or cancellations. Source validation again
+  passes1029 files with the same four distribution-root navigation warnings.
+- Native return testing confirms the repaired mode/query/Custom-card identity
+  and exact retained Solo flight, but still reproduces scroll490→0: the focused
+  card is below the visible compact viewport. This is not native acceptance.
+  Two new unit reproductions model the browser's zero scroll reading from a
+  closed dialog: Play/Back saves490, then repeated closed cleanup overwrites it.
+  `6eebeb9e0` repairs this: closed cleanup retains the last visible scroll and
+  does not request stale return focus, while visit invalidation and download
+  cancellation remain active. The two reproductions and an additional closed-
+  cleanup cancellation regression pass. Shared UI56/56, actual-host modeled
+  controllers8/8 and source-return40/40 pass, with independent review complete.
+  Native nonzero-scroll/visible-focus repetition is still required. The earlier
+  312-case pass does not waive this separate native acceptance gate.
