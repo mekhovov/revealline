@@ -1,3 +1,4 @@
+import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
 // Actual app/Library/core with finite DOM, locks and IndexedDB. Prepared JSON
 // authority is real; this does not claim native file download or disk recovery.
 import test from 'node:test';
@@ -221,7 +222,9 @@ async function exportCurrent(p) {
 async function importCurrent(p, value) {
   p.$('library-button').click();
   p.$('save-json').value = JSON.stringify(value);
-  await p.$('import-save').onclick();
+  const pendingImport = p.$('import-save').onclick();
+  await acceptGameDataReplacement(p);
+  await pendingImport;
   assert.match(
     p.$('save-status').textContent,
     /Game data restored/,
@@ -312,7 +315,9 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
         assets = p.fixture.assets.contents();
       const puts = p.fixture.assets.allPuts.length;
       p.$('save-json').value = JSON.stringify(backup);
-      await p.$('import-save').onclick();
+      const pendingImport = p.$('import-save').onclick();
+      await acceptGameDataReplacement(p);
+      await pendingImport;
       assert.match(p.$('save-status').textContent, /original|presentation|missing/i);
       assert.doesNotMatch(p.$('save-status').textContent, /Game data restored/);
       assert.deepEqual(p.storage.map, local);
@@ -330,7 +335,9 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
         assets = p.fixture.assets.contents();
       p.fixture.assets.failAnyPutAt = 1;
       p.$('save-json').value = JSON.stringify(backup);
-      await p.$('import-save').onclick();
+      const pendingImport = p.$('import-save').onclick();
+      await acceptGameDataReplacement(p);
+      await pendingImport;
       p.fixture.assets.failAnyPutAt = null;
       assert.doesNotMatch(p.$('save-status').textContent, /Game data restored/);
       assert.match(p.$('save-status').textContent, /fail|write|storage/i);
@@ -376,7 +383,9 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
       });
       p.$('library-button').click();
       p.$('save-json').value = JSON.stringify(backup);
-      await p.$('import-save').onclick();
+      const pendingImport = p.$('import-save').onclick();
+      await acceptGameDataReplacement(p);
+      await pendingImport;
       assert(deletion, 'Lose the physical original only after the final native commit.');
       await deletion;
       assert.match(p.$('save-status').textContent, /Game data committed.*exact originals/);

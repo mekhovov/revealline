@@ -104,6 +104,9 @@ export function attachJourneyBackup({
     const backup = inspected,
       ticket = revision;
     inspected = null;
+    // Disabling the focused action drops native keyboard focus to the page.
+    // Hand it off only during this deliberate activation, never after saving.
+    if (dialog.open && doc.activeElement === apply) back.focus();
     apply.disabled = true;
     try {
       profile.restore(backup);
