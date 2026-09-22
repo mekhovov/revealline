@@ -26,6 +26,7 @@ import {
 import { createInstalledMissionLibrary } from './mission-library/installed-library.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
 import { trackMissionLibraryOpening } from './mission-library/opening-intent.mjs';
+import { authoredMissionSuccessor } from './mission-library/authored-continuation.mjs';
 import {
   journeyMissionDetails,
   authoredJourneyMissionTags,
@@ -6196,10 +6197,13 @@ try {
     }
     if (kind === 'campaign-complete') {
       const completion = currentSelection();
-      $('overlay-eyebrow').textContent = 'CAMPAIGN COMPLETE';
-      $('overlay-title').textContent = 'Every mission revealed.';
+      const allCleared = completion.completed === completion.total;
+      $('overlay-eyebrow').textContent = allCleared ? 'CAMPAIGN COMPLETE' : 'CAMPAIGN END';
+      $('overlay-title').textContent = allCleared
+        ? 'Every mission revealed.'
+        : 'End of this campaign.';
       $('overlay-copy').textContent =
-        `${campaign.title || campaign.name || campaign.id}: ${completion.completed} / ${completion.total} missions complete. Enjoy your collection, choose a mission to replay, or select another campaign in the flight deck.`;
+        `${campaign.title || campaign.name || campaign.id}: ${completion.completed} / ${completion.total} missions complete. Enjoy your collection or find any mission in the shared library. Skipped missions remain available.`;
       $('next-button').textContent = 'View collection →';
       $('overlay-footnote').textContent = 'Your earned pictures and best results are kept.';
     }
@@ -7941,13 +7945,13 @@ try {
       }
     } else {
       if (run?.status !== 'won') return;
-      const selection = currentSelection();
-      if (!selection.overview && !scenario && run?.status === 'won') {
+      const selection = authoredMissionSuccessor(activeEntry, levelIndex);
+      if (!selection.atEnd && !scenario && run?.status === 'won') {
         void prepareResultAttempt('next', selection.levelIndex);
         return;
       }
       cancelResultAttempt();
-      campaignOverview = selection.overview;
+      campaignOverview = selection.atEnd;
       if (campaignOverview) {
         clearInput();
         sound.pause();
@@ -9022,11 +9026,18 @@ try {
     const revision = ++unifiedOpenRevision;
     const incomingRun = run,
       incomingStarted = started;
+    const opening = trackMissionLibraryOpening({
+      onRetire: () => {
+        if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
+      },
+    });
     void (async () => {
       try {
         const host = await getUnifiedMissionLibrary();
+        opening.dispose();
         if (
           revision !== unifiedOpenRevision ||
+          !opening.current() ||
           run !== incomingRun ||
           started !== incomingStarted ||
           !paused ||
@@ -9048,17 +9059,20 @@ try {
           unifiedChooser.reveal(row.id);
           return;
         }
+        const context = libraryActivationContext();
         const selected = await host.library.launch(row, {
           mode: 'solo',
-          ...libraryActivationContext(),
+          ...context,
         });
-        if (selected === false && revision === unifiedOpenRevision) {
+        if (selected === false && revision === unifiedOpenRevision && context.isCurrent()) {
           unifiedChooser.open($('shell-missions'));
           unifiedChooser.reveal(row.id);
         }
       } catch (error) {
         if (revision === unifiedOpenRevision)
           warning(`Requested mission could not open: ${error.message}`);
+      } finally {
+        opening.dispose();
       }
     })();
   }
