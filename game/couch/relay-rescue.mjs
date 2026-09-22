@@ -5,6 +5,7 @@ import {
   createGameplayTuningController,
   applyGameplayTuning,
   resolveGameplayTuning,
+  gameplayTuningDescription,
 } from '../gameplay-tuning.mjs';
 import { mountGameplayTuning } from '../ui/gameplay-tuning.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
@@ -3880,10 +3881,18 @@ export function bootCoop({
     $('coop-menu-goal').textContent = coopGoalText(level);
     $('coop-briefing-title').textContent = guidance.briefingTitle;
     $('coop-stage').textContent = level.name.toUpperCase();
-    $('coop-level-note').textContent = guidance.levelNote;
+    refreshGameplayTuningNote(level, experiment);
     $('coop-setup-note').textContent = experiment.advancedCooperation
       ? 'Captures recharge both players’ Support and can rescue a downed partner.'
       : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
+  }
+  function refreshGameplayTuningNote(
+    level = selectedLevel(),
+    experiment = selectedConfiguration(),
+  ) {
+    const difficulty = level.journeyDifficulty ?? gameplayPreferences.snapshot().difficulty;
+    $('coop-level-note').textContent =
+      `${coopArenaGuidance(level, experiment).levelNote} Next fresh attempt: ${gameplayTuningDescription(gameplayTuning.snapshot(difficulty))} Resume keeps its rules.`;
   }
   function showPackStatus() {
     const candidate = candidateJourney?.rows.find((row) => row.pack === pack);
@@ -4289,11 +4298,13 @@ export function bootCoop({
   } else if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
   showPackStatus();
   setupNote();
+  gameplayTuning.subscribe(() => refreshGameplayTuningNote());
   if (!candidatePreferences)
     gameplayPreferences.subscribe((snapshot) => {
       if (!run && !selectedLevel().journeyDifficulty)
         $('coop-difficulty').value = snapshot.difficulty;
       gameplayTuningPanel?.refresh();
+      refreshGameplayTuningNote();
     });
   $('coop-touch').value = 'auto';
   $('coop-touch').onchange = () => {

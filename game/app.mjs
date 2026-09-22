@@ -203,6 +203,7 @@ import {
   applyGameplayTuning,
   createGameplayTuningController,
   recoverGameplayTuning,
+  gameplayTuningDescription,
 } from './gameplay-tuning.mjs';
 import { mountGameplayTuning } from './ui/gameplay-tuning.mjs';
 import { savedFlightPreview } from './continuation.mjs';
@@ -4058,8 +4059,8 @@ try {
     $('menu-difficulty').value = nextPressure.difficulty;
     $('menu-difficulty').disabled = contentSwitchBusy || backupBusy || sessionBusy;
     $('menu-difficulty-note').textContent =
-      `${nextPressure.difficulty}: enemy speed ×${nextPressure.enemySpeed.toFixed(2)}, craft speed ×${nextPressure.playerSpeed.toFixed(2)}, target +${Math.round(nextPressure.enemyDensity * 100)}% field keepers (rounded up where safe). ` +
-      'Relative to the authored preset. Next fresh attempt only; Resume keeps its rules. ' +
+      `${nextPressure.difficulty}: ${gameplayTuningDescription(nextPressure)} ` +
+      'Next fresh attempt only; Resume keeps its rules. ' +
       (nextPressure.adminOverride ? 'Admin playtest · no normal clears or awards. ' : '') +
       (browsingJourneyPreferences.snapshot().error || gameplayTuning.status().error || '');
     gameplayTuningPanel?.refresh();
@@ -4073,11 +4074,22 @@ try {
       );
       $('difficulty-select').value = next.difficulty;
       $('difficulty-select').disabled = contentSwitchBusy || backupBusy || sessionBusy;
+      const nextPreset = journeyPreset(next.difficulty, catalogId);
+      const nextRules =
+        nextPressure.version === 'gameplay-pressure.v2'
+          ? `${nextPreset.lives} mission lives; ${nextPreset.failingDeadline ? 'deadlines only on authored timed missions' : 'no failing countdown'}.`
+          : nextPreset.description;
       $('difficulty-note').textContent =
-        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${journeyPreset(next.difficulty, catalogId).description} Additional pressure: enemies ×${nextPressure.enemySpeed.toFixed(2)}, craft ×${nextPressure.playerSpeed.toFixed(2)}; target +${Math.round(nextPressure.enemyDensity * 100)}% field keepers, rounded up where safe. Resume and Load preserve this flight. ${next.error}`;
+        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${nextRules} ${gameplayTuningDescription(nextPressure)} Resume and Load preserve this flight. ${next.error}`;
       show('difficulty-details', false);
+      const currentTuning = recoverGameplayTuning(run?.level);
+      const currentPreset = journeyPreset(activeEntry.difficulty, catalogId);
+      const currentRules =
+        currentTuning?.version === 'gameplay-pressure.v2'
+          ? `${run.level.rules.lives ?? currentPreset.lives} starting lives; ${run.level.rules.timeLimitSeconds > 0 ? `${run.level.rules.timeLimitSeconds}s deadline` : 'no failing countdown'}.`
+          : currentPreset.description;
       $('overlay-difficulty').textContent =
-        `Journey ${activeEntry.difficulty}. ${journeyPreset(activeEntry.difficulty, catalogId).description} ${recoverGameplayTuning(run?.level) ? `${run.enemies.length} enemies · ${run.level.rules.moveSpeed.toFixed(1)} craft cells/s${recoverGameplayTuning(run.level).adminOverride ? ' · ADMIN PLAYTEST' : ''}.` : ''}`;
+        `Journey ${activeEntry.difficulty}. ${currentRules} ${currentTuning ? `${run.enemies.length} enemies · ${run.level.rules.moveSpeed.toFixed(1)} craft cells/s${currentTuning.adminOverride ? ' · ADMIN PLAYTEST' : ''}.` : ''}`;
       show('overlay-difficulty', true);
       return;
     }
@@ -4092,7 +4104,7 @@ try {
     $('difficulty-select').disabled =
       !cue.available || courseSession || !!courseEntry || contentSwitchBusy || backupBusy;
     $('difficulty-note').textContent =
-      `${cue.copy} Main-menu pressure: ${nextPressure.difficulty}; enemy speed ×${nextPressure.enemySpeed.toFixed(2)}, craft ×${nextPressure.playerSpeed.toFixed(2)} relative to this authored preset.`;
+      `${cue.copy} Main-menu pacing: ${nextPressure.difficulty}. ${gameplayTuningDescription(nextPressure)}`;
     const standard = executionCatalog.select(activeEntry.baseCampaignKey, 'standard'),
       gentle = executionCatalog.select(activeEntry.baseCampaignKey, 'gentle');
     show('difficulty-details', cue.available && !!standard && !!gentle);
