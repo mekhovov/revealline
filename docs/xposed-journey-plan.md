@@ -6,6 +6,12 @@ now resolves the 48 numbered reference crosswalks against explicit
 remain intact; selected-edition design review and all final dispositions are
 still pending. This closes an audit-selector gap, not P00 acceptance.
 
+The [Twin inner-receiver study](verification/journey-sentinel-inner-study.md)
+keeps the existing rules and geometry while moving one receiver into the retained
+core court. The known shared-mouth closure no longer captures both objectives;
+ordinary and inner-first routes remain legal on all presets. This is an explicit
+Studio study, not automatic Journey adoption or final human balance acceptance.
+
 Current checkpoint: [2026-09-22 item-by-item completion audit](verification/journey-completion-2026-09-22.md).
 The [shared-return follow-up](verification/journey-team-partner-returns.md) now
 qualifies a simultaneous Shared Lookout opening where each pilot banks on the
