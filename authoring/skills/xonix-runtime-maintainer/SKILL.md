@@ -1186,3 +1186,8 @@ In landscape, reserve the actual HUD, objective, footer and both complete player
 ## Music player without a catalogue
 
 Keep built-in and imported playlist selection visible when attachSoundtrackPanel receives no catalogue. Genre/style cards can be hidden, but the shared playlist field and Play action must move into the visible transport. Label the null selection as automatic map/campaign/theme matching rather than a nonexistent style selector. Assert visible ancestor chains as well as calling handlers: a detached or hidden control can pass a synthetic click test. Keep catalogue and legacy-library journeys separate.
+
+
+## Replay Theater history-restored display controls
+
+When a browser restores form values, an unchanged shared preference owner may legitimately emit no subscription update. Replay Theater must use the shared view-only preference-restoration adapter after its owner listeners. Repaint current snapshots immediately and in the next task; never treat restored controls as explicit intent. Preserve denied-save session choices, raw effects choice, system reduction, focus, warnings, input and paused recording checkpoints. Cancel pending repaint on departure and dispose on terminal exit. Test unchanged saved/session-only values and stale controls both before and after pageshow, separately from physical browser/device qualification. See `docs/replay-display-restoration.md` and `authoring/prompts/replay-display-restoration.md`.
