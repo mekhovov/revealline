@@ -600,6 +600,7 @@ test('opening Settings during a flight keeps its paused-flight return instead of
   const h = await soloPage(t, { titleScreen: false }),
     pad = controllerPad(h, t);
   h.$('start-button').click();
+  await settle(() => h.doc.body.dataset.flightState === 'running');
   pad.frame();
   h.$('shell-settings').click();
   pad.frame();
@@ -674,6 +675,7 @@ test('Main menu Workshop Field Guide returns through both menus over an unchange
     pad = controllerPad(h, t);
   h.win.crypto = globalThis.crypto;
   h.$('start-button').click();
+  await settle(() => h.doc.body.dataset.flightState === 'running');
   pad.frame();
   h.$('overlay-menu').click();
   assert.equal(h.$('shell-home').open, true);
@@ -878,6 +880,7 @@ test('Collection resets its return label from title to a direct paused-flight vi
   h.$('shell-play').click();
   h.$('shell-briefing').click();
   h.$('start-button').click();
+  await settle(() => h.doc.body.dataset.flightState === 'running');
   h.key('ArrowDown');
   h.key('ArrowDown', false);
   for (let i = 0; i < 20; i++) h.frame();
@@ -909,6 +912,7 @@ test('programmatic Collection after a real win does not refocus a hidden opener'
   h.$('gallery-replay').click();
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
   h.$('start-button').click();
+  await settle(() => h.doc.body.dataset.flightState === 'running');
   h.key('ArrowDown');
   for (let i = 0; i < 1000 && h.rendered.run.status === 'running'; i++) h.frame();
   h.key('ArrowDown', false);
@@ -961,6 +965,7 @@ for (const origin of ['title', 'paused flight'])
         pad = controllerPad(h, t);
       if (origin === 'paused flight') {
         h.$('start-button').click();
+        await settle(() => h.doc.body.dataset.flightState === 'running');
         h.key('ArrowDown');
         for (let i = 0; i < 24; i++) h.frame();
         h.key('ArrowDown', false);
@@ -1016,6 +1021,7 @@ for (const origin of ['title', 'paused flight'])
     const h = await soloPage(t, { titleScreen: origin === 'title' });
     if (origin === 'paused flight') {
       h.$('start-button').click();
+      await settle(() => h.doc.body.dataset.flightState === 'running');
       h.key('ArrowDown');
       for (let i = 0; i < 24; i++) h.frame();
       h.key('ArrowDown', false);
@@ -1058,6 +1064,7 @@ for (const action of ['resume-save', 'import-save'])
     nativeDialogs(t);
     const h = await soloPage(t, { titleScreen: false });
     h.$('start-button').click();
+    await settle(() => h.doc.body.dataset.flightState === 'running');
     h.key('ArrowDown');
     for (let i = 0; i < 24; i++) h.frame();
     h.key('ArrowDown', false);
@@ -1097,6 +1104,7 @@ for (const exit of ['button', 'escape', 'controller'])
     const h = await soloPage(t),
       pad = controllerPad(h, t);
     h.$('start-button').click();
+    await settle(() => h.doc.body.dataset.flightState === 'running');
     h.key('ArrowDown');
     for (let i = 0; i < 24; i++) h.frame();
     h.key('ArrowDown', false);

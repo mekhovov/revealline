@@ -4,6 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { releasedExternalOriginal as selectedOriginal } from './helpers/released-original.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { buildFractureTheme } from '../../authoring/library/fracture-theme-chapters/build.mjs';
@@ -200,8 +201,10 @@ async function page(t, f = {}, release = false) {
     if (e) return new Response(u.endsWith('/pack.json') ? e.payloads.pack : e.payloads.media);
     return prior(url, options);
   };
+  const installedFetch = globalThis.fetch;
   t.after(() => {
-    globalThis.fetch = prior;
+    // The outer page fixture may already have restored browser globals.
+    if (globalThis.fetch === installedFetch) globalThis.fetch = prior;
   });
   return Object.assign(p, { fixture: f, requests });
 }
@@ -349,6 +352,7 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
     async (t) => {
       const p = await page(t, f, true);
       p.$('start-button').click();
+      await settle(() => p.doc.body.dataset.flightState === 'running');
       direction(p, 'down');
       ticks(p, 13);
       p.$('pause-button').click();
@@ -387,7 +391,7 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
         if (!p.$('optional-worlds-dialog').open) await open(p);
         await play(p, e, { replaceFlight: e === allEditions[0] });
         assert.equal(p.rendered.backdrop.pin.identity.baseCampaignKey, e.descriptor.campaignKey);
-        assert.equal(p.rendered.backdrop.pin.sha256, e.descriptor.originals[0].sha256);
+        assert.equal(p.rendered.backdrop.pin.sha256, selectedOriginal(e.descriptor, 0).sha256);
         const route = routeFor(e.descriptor.originals[0].levelId);
         playPrefix(p, route);
         assert.equal(p.rendered.run.status, 'won');
@@ -407,7 +411,7 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
           receipts.find(
             (r) => r.presentationPin.identity.baseCampaignKey === e.descriptor.campaignKey,
           ).presentationPin.sha256,
-          e.descriptor.originals[0].sha256,
+          selectedOriginal(e.descriptor, 0).sha256,
         );
       assert(stories.every((r) => r.storyPin === null));
       assert.deepEqual(p.errors, []);
@@ -430,7 +434,7 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
         p.rendered.backdrop.pin.identity.baseCampaignKey,
         selected.descriptor.campaignKey,
       );
-      assert.equal(p.rendered.backdrop.pin.sha256, selected.descriptor.originals[1].sha256);
+      assert.equal(p.rendered.backdrop.pin.sha256, selectedOriginal(selected.descriptor, 1).sha256);
       const route = routeFor(selected.descriptor.originals[1].levelId);
       const boundary = route.saved.find((s) => s.trailCells > 0 && s.tick < route.expected.tick);
       assert.ok(boundary);
@@ -473,6 +477,7 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
       assert.equal(p.fixture.assets.allPuts.length, writes);
       p.$('library-dialog').close();
       p.$('start-button').click();
+      await settle(() => p.doc.body.dataset.flightState === 'running');
       direction(p, 'down');
       ticks(p, 13);
       p.$('pause-button').click();
@@ -485,7 +490,11 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
       p.$('save-json').value = JSON.stringify(backup);
       await p.$('import-save').onclick();
       assert.match(p.$('save-status').textContent, /Game data restored/);
-      assert.match(p.$('save-status').textContent, /saved flight is ready to load/);
+      assert.match(
+        p.$('save-status').textContent,
+        /saved flight is restored\. Loading verifies its required artwork and visual collection/,
+      );
+      assert.doesNotMatch(p.$('save-status').textContent, /ready to load/);
       p.$('library-dialog').close();
       p.$('continue-saved').click();
       await settle(

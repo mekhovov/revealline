@@ -65,6 +65,7 @@ async function setup(t, options = {}) {
 async function flight(h, paused = true) {
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
   h.$('start-button').click();
+  await settle(() => h.doc.body.dataset.flightState === 'running');
   h.key('ArrowDown');
   for (let n = 0; n < 27; n++) h.frame();
   h.key('ArrowDown', false);

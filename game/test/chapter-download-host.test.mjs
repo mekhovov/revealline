@@ -5,6 +5,7 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { waitForChapterSelection } from './helpers/chapter-install-wait.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 const load = async (name) =>
@@ -15,8 +16,10 @@ const featured = await load('fpv-arcade-r5');
 function chapterFetch(t, intercept) {
   const actual = globalThis.fetch;
   globalThis.fetch = (url, ...args) => intercept(url, () => actual(url, ...args));
+  const installedFetch = globalThis.fetch;
   t.after(() => {
-    globalThis.fetch = actual;
+    // The outer page fixture may already have restored browser globals.
+    if (globalThis.fetch === installedFetch) globalThis.fetch = actual;
   });
 }
 
@@ -77,16 +80,16 @@ function originalImageBoundary(t) {
     }),
   );
   const previous = globalThis.Image;
-  globalThis.Image = class {
-    async decode() {
-      assert.ok(this.width > 0 && this.height > 0);
-    }
+  globalThis.Image = class extends PNGImage {
     set src(url) {
-      const size = sizes.get(url);
-      assert.ok(size, 'Only the exact existing First Light originals may decode');
-      [this.width, this.height] = size;
-      [this.naturalWidth, this.naturalHeight] = size;
-      queueMicrotask(() => this.onload());
+      // Installed legacy data URLs still have their exact allowlist; released
+      // picture blobs now use their real PNG dimensions as the browser does.
+      if (!url.startsWith('blob:'))
+        assert.ok(sizes.has(url), 'Only the exact existing First Light originals may decode');
+      super.src = url;
+    }
+    get src() {
+      return super.src;
     }
   };
   t.after(() => {
