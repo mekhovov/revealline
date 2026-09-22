@@ -1,4 +1,5 @@
 import { createDisplayPreferences } from '../display-preferences.mjs';
+import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 
 /** The theater's interface follows the shared display policy. This owner has
  * no access to recordings, playback, themes, imports or player progress. */
@@ -43,6 +44,11 @@ export function mountReplayDisplay({
     cap.hidden = !systemCap;
   };
   const stopView = preferences.subscribe(render);
+  const restoration = attachPreferenceRestoration({
+    window: host,
+    getSnapshot: preferences.snapshot,
+    render,
+  });
   warning(preferences.getWarning());
   const change = (patch) => {
     if (disposed) return;
@@ -63,6 +69,7 @@ export function mountReplayDisplay({
     if (disposed) return;
     disposed = true;
     for (const [element, listener] of bindings) element.removeEventListener('change', listener);
+    restoration.dispose();
     stopView();
     preferences.dispose();
     host.removeEventListener?.('pagehide', pagehide);
