@@ -451,3 +451,16 @@ verification. It must receive a new pinned native check before acceptance.
   These are independent clocks, not an altered map rule. Classic Versus cards
   now explicitly say a separate race timer also applies; Solo wording stays
   unchanged.35 relevant source/chooser/metadata-registry tests pass together.
+
+### Installed inventory lifecycle checkpoint
+
+- Composed the read-only snapshot and metadata validator with a bounded cache,
+  exact private snapshot bindings and per-action generations. Confirmations run
+  before and after genuine preparation; retired results must release resources.
+- A failed refresh marks installed content unknown, not absent. Hosts must keep
+  stale cards visibly Unavailable, explain the error and veto misleading downloads
+  while leaving Base/Journey browsing available. Existing stored data is kept.
+-56 combined controller/storage/metadata tests pass, including stale same-hash
+  generations, overlapping reads, cleanup failure and explicit download veto.
+  This controller performs no downloads or decoding; host integration follows
+  the separately reviewed return-route checkpoint.
