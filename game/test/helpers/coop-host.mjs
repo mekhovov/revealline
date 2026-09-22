@@ -39,7 +39,7 @@ export async function page(
   t,
   {
     touch = false,
-    href = 'http://localhost/game/couch/relay-rescue.html',
+    href = 'http://localhost/game/couch/relay-rescue.html?journey=legacy',
     returnStorage = null,
     beforeImport = () => {},
     nativeFocus = false,

@@ -29,11 +29,10 @@ body.race-focus #couch-app {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
 }
-/* Candidate Journey adds navigation without taking either board's arena slot.
-   Named rows keep the optional save warning at zero height when hidden. */
+/* Save recovery lives in the menu, never in a running board's grid row. */
 body.race-focus.candidate-journey #couch-app {
-  grid-template-rows: auto auto auto minmax(0, 1fr);
-  grid-template-areas: 'journey' 'save' 'hud' 'boards';
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas: 'journey' 'hud' 'boards';
 }
 body.candidate-journey #race-journey-controls {
   grid-area: journey;
@@ -50,7 +49,6 @@ body.race-focus.candidate-journey #race-journey-controls {
   position: static;
 }
 body.candidate-journey #race-journey-save {
-  grid-area: save;
   margin: 0;
   padding: 8px 14px;
 }

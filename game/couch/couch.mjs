@@ -2,6 +2,7 @@ import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
+import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
 import { createBoardFootprints } from './board-footprint.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
@@ -12,6 +13,7 @@ import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
+import { DEFAULT_JOURNEY_ROUTES, resolveJourneyRequest } from '../content-design/default-entry.mjs';
 import { authoredJourneyUsesActorMaterials } from '../content-design/mode-href.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from '../content-design/catalogs.mjs';
@@ -237,13 +239,24 @@ try {
     sourcePackId: null,
   };
   const authoredRoute = await loadAuthoredJourneyRoute(
-    new URL(location.href).searchParams.get('journey'),
+    resolveJourneyRequest(new URL(location.href).searchParams, { mode: 'versus' }),
   );
   const authoredJourney = !!authoredRoute;
   let journeyProfile = null,
     journeyChooser = null,
     journeySkipArmed = null;
   const journeySessionId = authoredJourney ? crypto.randomUUID() : null;
+  const journeySaveCue = attachJourneySaveCue({
+    document,
+    target: $('race-pause'),
+    action: $('race-journey-save-options'),
+    announcement: $('race-journey-save-announcement'),
+    onOpen() {
+      if (shell.scope() !== 'main') return;
+      const target = $('race-journey-save').hidden ? $('race-start') : $('race-journey-save-retry');
+      if (!target.disabled && !target.hidden) target.focus();
+    },
+  });
   if (authoredJourney) {
     document.body.classList.add('candidate-journey');
     candidateJourney = createCandidateVersusHost(authoredRoute.source, {
@@ -258,7 +271,9 @@ try {
     journeyPreferences = createJourneyPreferences({ window });
     $('race-journey-note').hidden = false;
     $('race-journey-note').textContent =
-      `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
+      authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
+        ? `New Journey / ${candidateJourney.catalog.missions.length} missions. Original pictures need a connection; core offline preparation does not save them.`
+        : `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
       ...Object.keys(
@@ -269,10 +284,14 @@ try {
     journeyProfile = createJourneyProfileStore({
       profileKey: authoredRoute.profileKey,
       onStatus({ ready, durable, error }) {
-        $('race-journey-save').hidden = !ready || durable || !error;
+        const unsaved = journeySaveCue.update({ ready, durable, error });
+        const notice = $('race-journey-save');
+        notice.hidden = !unsaved && !notice.contains(document.activeElement);
         $('race-journey-save-message').textContent = error
           ? `Journey race progress is session-only. Retry saving or export before closing. ${error}`
-          : '';
+          : ready && durable
+            ? 'Journey race progress saved locally. You can continue playing.'
+            : '';
       },
     });
     await journeyProfile.load();
@@ -349,7 +368,9 @@ try {
         presentationPage,
       });
   let installedStatus = candidateJourney
-      ? `${authoredRoute.label} test route; Legacy chapters stay in the ordinary race.`
+      ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
+        ? 'Open Legacy library for earlier missions and installed chapters.'
+        : `${authoredRoute.label} test route; Legacy chapters stay in the ordinary race.`
       : 'Installed chapters have not been checked.',
     contentChannel = null;
   if (!candidateJourney)
@@ -1400,7 +1421,7 @@ try {
     /* The fixed Solo title route remains available. */
   }
   shell = createCouchShell({
-    authoredRoute: authoredRoute?.id,
+    authoredRoute: authoredRoute?.id ?? 'legacy',
     coarse: matchMedia('(pointer: coarse)').matches,
     getDepartureState: () => ({ match, generation }),
     onLeaveRequest: pause,
@@ -1770,13 +1791,17 @@ try {
     // lease, including an update reentered from prior-image cleanup.
     const focusTransition = match !== preparedFocusMatch;
     preparedFocusMatch = null;
+    const themeName =
+      authoredRoute?.id === DEFAULT_JOURNEY_ROUTES.versus
+        ? theme.name.replace(/ · material review$/, '')
+        : theme.name;
     shell?.update({
       match,
       won,
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
-      summary: `${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${roundRecipe.turnPolicy === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${roundRecipe.seconds === 0 ? 'No race countdown' : `${roundRecipe.seconds} seconds`}`,
+      summary: `${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${themeName} · ${roundRecipe.turnPolicy === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${roundRecipe.seconds === 0 ? 'No race countdown' : `${roundRecipe.seconds} seconds`}`,
     });
     $('race-time-field').hidden = !!candidateJourney;
     // Reconcile deliberate layout transitions immediately, including browsers
@@ -1800,6 +1825,7 @@ try {
     'race-journey-preferences-retry',
     'race-journey-preferences-export',
     'race-journey-save-retry',
+    'race-journey-save-options',
     'race-journey-save-export',
     'race-chapter-retry',
     'race-picture-cancel',
@@ -1816,6 +1842,7 @@ try {
     'race-data-reading',
     'race-help',
     'race-solo-return',
+    'race-library-switch',
     'race-level',
     'race-theme',
     'race-class',
@@ -2126,9 +2153,11 @@ try {
           roundRecipe.entry.mission.id,
         )
           ? ' End of this optional sequence. Choose Find missions, Rematch, or leave whenever you like.'
-          : authoredRoute.optionalCampaignIds?.length
-            ? ' End of this test route. Choose Find missions for optional Remixes and sequences, Rematch, or leave whenever you like.'
-            : ' End of this test route. Choose Find missions for optional Remixes, Rematch, or leave whenever you like.';
+          : authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
+            ? ' End of the main Journey. Choose Find missions for optional Remixes and sequences, Rematch, or leave whenever you like.'
+            : authoredRoute.optionalCampaignIds?.length
+              ? ' End of this test route. Choose Find missions for optional Remixes and sequences, Rematch, or leave whenever you like.'
+              : ' End of this test route. Choose Find missions for optional Remixes, Rematch, or leave whenever you like.';
       $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
@@ -2239,7 +2268,7 @@ try {
     start.getClientRects().length > 0 &&
     document.defaultView?.getComputedStyle(start)?.visibility !== 'hidden'
   )
-    start.focus({ preventScroll: true });
+    shell.focus(start);
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootFailed = true;
