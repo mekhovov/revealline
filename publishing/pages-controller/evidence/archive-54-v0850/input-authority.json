@@ -1,0 +1,78 @@
+{
+  "version": "v0.85.0",
+  "releaseId": 394140126,
+  "source": "f6e592bacda85db5efcf68f5be3ad2240073b661",
+  "tree": "15dcbb22f845ad9825316c54321efa22e5a0054e",
+  "tagObject": "398c3d07d840b35c7dbc92ec1a63a04da9c22591",
+  "donorCommit": "9ebb2c397b6db59561129147b8758ad24e0489c2",
+  "toolingCommit": "30530b3436a1a9737be93f67f308587f89b2f8bc",
+  "donorDeploymentMerge": null,
+  "priorAcceptedPaths": 0,
+  "mainPublisherRun": null,
+  "archivePublicAcceptance": false,
+  "releaseUrl": "https://github.com/mekhovov/revealline/releases/tag/v0.85.0",
+  "publishedAt": "2026-09-22T21:46:43Z",
+  "originalAssets": [
+    {
+      "id": 582316907,
+      "name": "distribution.zip",
+      "bytes": 591017758,
+      "sha256": "22935ce25164a6239301597cbdba58aa0a9a918432f0e16aadd212ab45e71bbc"
+    },
+    {
+      "id": 582306159,
+      "name": "distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "9bfe99becf7e00c7e1db60022f319e641f546d1059ad409a1c02998a7fb0df12"
+    },
+    {
+      "id": 582306158,
+      "name": "manifest.json",
+      "bytes": 196646,
+      "sha256": "8e830f67352fb76af41904b8a38d98e25b66a1bdc8ce71d729572d4af5583be5"
+    },
+    {
+      "id": 582306162,
+      "name": "qualification-evidence-record.json",
+      "bytes": 1987,
+      "sha256": "33351ef9a98c3caf06c65bbb7b9229ca7dbe8d85823d66f599dc1617ccbab26c"
+    },
+    {
+      "id": 582306157,
+      "name": "release.json",
+      "bytes": 465,
+      "sha256": "eefe1495aa5f43178e1e92c25a3ffe104aeeb0528a9775f6fcc9d7ef87f0fc80"
+    },
+    {
+      "id": 582306156,
+      "name": "source-qualification-evidence.zip",
+      "bytes": 1096098,
+      "sha256": "af8717c54830097d6219e8cbac196ccc6aeb25c7ea4bdf0c2bfc56135805e300"
+    },
+    {
+      "id": 582306171,
+      "name": "source-qualification.json",
+      "bytes": 14169,
+      "sha256": "576ca7669096c514df3ada64fef6e5110e097166b5ad494093674e0da9b47601"
+    },
+    {
+      "id": 582315747,
+      "name": "source.tar",
+      "bytes": 1610905600,
+      "sha256": "067bc28e478196fd085e551108d699388ea7e42bae1918ec01e690f6e31dc5ef"
+    },
+    {
+      "id": 582306172,
+      "name": "verification.json",
+      "bytes": 1915,
+      "sha256": "a9e63d4ed373566f579da464948efb71995e9a796c1d6f84b878c16ea5b8018d"
+    }
+  ],
+  "authorityFiles": {
+    "release-original.json": "50286e061afe9ecfd351eb3668d1740464f8132aab183a6dbfd70c9e27bb154f",
+    "reviewed-release-descriptors.json": "5e2937c24636f079ac5c9839a5eb139aafbb24714bf52805426340cdafd8edaf",
+    "source-identity-local.json": "f53901f398efe10238df0b344eeb2d8a546e8a38eda6d6214910a973866f3804",
+    "tag-original.json": "f09dcc3533e845a86c8b945b56fd81e0185289a3aaa664760800db639f99de70",
+    "tag-ref-original.json": "a662a448a6fe0316e700ee786ded29a1da558256edb6210bb196b29f441adfa4"
+  }
+}
