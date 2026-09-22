@@ -1,8 +1,8 @@
 {
   "format": "revealline-pages-controller.v1",
-  "currentVersion": "v0.81.0",
-  "catalogSha256": "9e5678882d4df6b1474994ca4c6c27378a2ff6998a28a2e5bee759dd261bf49b",
-  "allocationSha256": "10dc6f25edc8d61c17d4a664f5bfcfbcadece01ec48e7b7dae6333243e0be857",
+  "currentVersion": "v0.82.0",
+  "catalogSha256": "f45c39b8d61aa3cdca93fa844939105a2ac3f04e981817c168e3fb1dc5b3d7df",
+  "allocationSha256": "307daddcb2ea9ab5c3babcb4af314938eb733fd7adb9b60f6c2a799f9a469a29",
   "admissions": [
     {
       "id": "archive-01",
@@ -5859,12 +5859,54 @@
           "kind": "reference"
         }
       ]
+    },
+    {
+      "id": "archive-49",
+      "infrastructureCommit": "ed365ddac3aacc67b4d65659223439b79cf71c2f",
+      "deploymentId": 6588180836,
+      "evidence": [
+        {
+          "path": "evidence/archive-49-v0810/browser-admission.json",
+          "sha256": "4380dfd4a994ec5898c2ca5821e44212b82a0409e708057a030e91453596fd18",
+          "kind": "browser"
+        },
+        {
+          "path": "evidence/archive-49-v0810/deployment-statuses.json",
+          "sha256": "8bf479b1d99c144eb23e15d2d1aac77beb76b7ea2bbb448a9615fe8c34ad17e0",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-49-v0810/deployments.json",
+          "sha256": "99c1d52f1a244fe7fb08ddd4226fb4c8bd2d30332d9d8ea90330b925d1c10cbf",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-49-v0810/expected-inventory.json",
+          "sha256": "03f2bdc01d11dc26e24b68d11238ab78f9c6220a9482ae5d0b609612dfd60358",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-49-v0810/http-report-original.json",
+          "sha256": "f77171bfca52f52ae7639ab80323fc19ca1b858e1861ec692d149c2d1abe3ee7",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-49-v0810/http-report.json",
+          "sha256": "cd4d4b6936feec2907b76d38f941b1b07c79f6965f09c52596b88c0a9d7f7a50",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-49-v0810/workflow-run.json",
+          "sha256": "5bc603a79a80bc87df722d00a33453f5863a8012d09c3411df58eb2946fe46d9",
+          "kind": "reference"
+        }
+      ]
     }
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v0810/source-qualification.json",
-    "sha256": "facf51438678a823fb4d724471bb0ae1b7168981ff27a3e043822c5384b8c089"
+    "path": "evidence/current-v0820/source-qualification.json",
+    "sha256": "eed6af4fc0e1bc8fdc8d2b9249f989e71ba2872827b9e29ec2cd2b8279b3d1b8"
   },
   "retainedReleasesPerMajor": "all",
   "testingRoutes": {}
