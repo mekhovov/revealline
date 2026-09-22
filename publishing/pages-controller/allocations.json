@@ -432,6 +432,13 @@
       "versions": [
         "v0.82.1"
       ]
+    },
+    {
+      "id": "archive-52",
+      "repository": "mekhovov/revealline-archive-52",
+      "versions": [
+        "v0.83.0"
+      ]
     }
   ]
 }
