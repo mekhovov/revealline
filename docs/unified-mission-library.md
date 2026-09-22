@@ -850,3 +850,9 @@ verification. It must receive a new pinned native check before acceptance.
   including assertion-failure paths. Scoped lint/format/diff checks pass, and
   independent review confirms no runtime change. No full-suite rerun is claimed;
   retain the314/315 result when recording the temporary test-gate exception.
+- The bounded native Custom raster check also passes: native file import of a
+  unique qualification pack, exact Custom identity in the shared selector and
+  actual captures in both Versus boards and Solo reveal the uploaded reviewed
+  raster. No new mission or art ships with this fixture. This is not a complete
+  export/reimport byte-preservation or public-build claim. The retained native
+  failure and both passing source receipts are now [reviewable in this PR](verification/unified-mission-library/native-source/README.md).
