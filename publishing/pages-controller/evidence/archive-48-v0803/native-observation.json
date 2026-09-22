@@ -1,0 +1,21 @@
+{
+  "format": "revealline-archive-native-observation.v1",
+  "recordedAt": "2026-09-22T03:56:00Z",
+  "observer": "root via Codex in-app browser accessibility UI",
+  "url": "https://mekhovov.github.io/revealline-archive-48/releases/v0.80.3/site/game/",
+  "versionObserved": "V0.80.3",
+  "journey": [
+    "Loaded the public archived title menu",
+    "Opened Missions",
+    "Deployed Relay Orchard",
+    "Paused at 0:05 with the visible PAUSED overlay",
+    "Activated Resume and observed gameplay return",
+    "Paused again at 0:09"
+  ],
+  "result": "PASS_SCOPED",
+  "limitations": [
+    "Historical online preservation journey only.",
+    "No save-write, victory, offline, sound, physical-device, controller or multitouch acceptance is claimed.",
+    "Accessibility UI observation; no exported screenshot file or visual-design approval."
+  ]
+}
