@@ -504,6 +504,7 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   const tracks = h.$('soundtrack-tracks'),
     volume = h.$('soundtrack-volume');
   assert.equal(tracks.size, '7', 'The actual multirow listbox uses the select editor');
+  h.$('soundtrack-advanced-library-toggle').click();
   for (const [element, direction] of [
     [tracks, 13],
     [volume, 15],
