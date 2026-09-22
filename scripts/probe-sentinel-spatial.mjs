@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { SENTINEL_FIRST_RETURNS } from '../game/content-design/sentinel-candidates.mjs';
 import { createSentinelSpatialCandidates } from '../game/content-design/sentinel-spatial-candidates.mjs';
+import { createSentinelInnerCandidates } from '../game/content-design/sentinel-inner-candidates.mjs';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import { createRun, stepRun, FIXED_DT, CELL, DIRECTIONS } from '../game/core/index.mjs';
 import { inspectCaptureSnapshot } from '../game/core/capture-regions.mjs';
@@ -17,7 +18,11 @@ import {
   observeSentinelGoal,
   inspectSentinelGoal,
 } from '../game/test/helpers/sentinel-goal.mjs';
-const project = compileContentProject(createSentinelSpatialCandidates());
+const project = compileContentProject(
+  process.argv.includes('--inner-receiver')
+    ? createSentinelInnerCandidates()
+    : createSentinelSpatialCandidates(),
+);
 const difficulty = process.argv[3] ?? 'standard',
   turnPolicy = process.argv[4] ?? 'immediate';
 const delaySeconds = Number(process.argv.find((a) => a.startsWith('--delay='))?.slice(8) ?? 0);
