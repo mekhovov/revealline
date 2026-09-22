@@ -162,11 +162,12 @@ test('corrupt durable data is not replaced by a valid imported backup', async ()
   assert.equal(store.snapshot().clears.team.missing.runId, 'missing-run');
 });
 
-function dialogFixture() {
+function dialogFixture({ flush } = {}) {
   const document = new Document();
   document.createElement = (tag) => new SoloElement(document, tag);
   const memory = managedIndexedDB(),
     profile = createJourneyProfileStore({ backend: createJourneyBackend(memory) });
+  if (flush) profile.flush = flush;
   let restored = 0,
     exported = null;
   const api = attachJourneyBackup({
@@ -180,6 +181,7 @@ function dialogFixture() {
   });
   return {
     api,
+    document,
     profile,
     $: (id) => document.getElementById(id),
     restored: () => restored,
@@ -205,6 +207,69 @@ test('backup dialog inspects without mutation, restores only on Apply, and expor
   api.close();
   assert.equal($('journey-backup').open, false);
 });
+
+test('explicit Restore hands focus to Back before disabling Apply and never reclaims it later', async () => {
+  let finish;
+  const { api, document, $, profile } = dialogFixture({
+    flush: () => new Promise((resolve) => (finish = resolve)),
+  });
+  await profile.load();
+  api.open();
+  $('journey-backup-file').files = [{ size: 1000, text: async () => JSON.stringify(backup()) }];
+  await $('journey-backup-file').onchange();
+  $('journey-backup-apply').focus();
+  const restoring = $('journey-backup-apply').onclick();
+  assert.equal($('journey-backup-apply').disabled, true);
+  assert.equal(document.activeElement, $('journey-backup-back'));
+  assert.equal(document.activeElement.disabled, false);
+  $('journey-backup-export').focus();
+  finish(true);
+  await restoring;
+  assert.equal(document.activeElement, $('journey-backup-export'));
+  assert.match($('journey-backup-status').textContent, /saved locally/);
+});
+
+test('Restore does not take focus from another control or a later reopened dialog', async () => {
+  let finish;
+  const { api, document, $, profile } = dialogFixture({
+    flush: () => new Promise((resolve) => (finish = resolve)),
+  });
+  await profile.load();
+  api.open();
+  $('journey-backup-file').files = [{ size: 1000, text: async () => JSON.stringify(backup()) }];
+  await $('journey-backup-file').onchange();
+  $('journey-backup-file').focus();
+  const restoring = $('journey-backup-apply').onclick();
+  assert.equal(document.activeElement, $('journey-backup-file'));
+  api.close();
+  api.open();
+  finish(false);
+  await restoring;
+  assert.equal(document.activeElement, $('journey-backup-export'));
+  assert.match($('journey-backup-status').textContent, /Nothing is restored automatically/);
+});
+
+for (const failure of ['storage', 'restore']) {
+  test(`${failure} failure leaves the deliberate Restore successor enabled and focused`, async () => {
+    const { api, document, $, profile } = dialogFixture({ flush: async () => false });
+    await profile.load();
+    api.open();
+    $('journey-backup-file').files = [{ size: 1000, text: async () => JSON.stringify(backup()) }];
+    await $('journey-backup-file').onchange();
+    if (failure === 'restore')
+      profile.restore = () => {
+        throw new Error('Rejected fixture');
+      };
+    $('journey-backup-apply').focus();
+    await $('journey-backup-apply').onclick();
+    assert.equal(document.activeElement, $('journey-backup-back'));
+    assert.equal(document.activeElement.disabled, false);
+    assert.match(
+      $('journey-backup-status').textContent,
+      failure === 'storage' ? /Merged in this session only/ : /Restore failed: Rejected fixture/,
+    );
+  });
+}
 
 test('closed dialogs and later file choices invalidate in-flight inspection; failed imports leave no Apply', async () => {
   const { api, profile, $ } = dialogFixture();
