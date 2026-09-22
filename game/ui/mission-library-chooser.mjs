@@ -471,6 +471,17 @@ export function attachMissionLibraryChooser({
     if (compact && !detailedCards.checked) observer?.disconnect();
     else if (dialog.open) observeDiagrams();
   });
+  dialog.addEventListener('focusin', (event) => {
+    // The compact filters float above cards. Once keyboard/controller focus
+    // reaches an action below them, remove that cover without moving focus or
+    // changing a filter. Focus and select previews inside the popover stay put.
+    if (
+      compact &&
+      filterDetails.open &&
+      (list.contains(event.target) || footer.contains(event.target))
+    )
+      filterDetails.open = false;
+  });
   function close() {
     retirePendingSelection();
     ++visit;

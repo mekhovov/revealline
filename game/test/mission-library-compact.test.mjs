@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { Document } from './helpers/couch-dom.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 
 function setup({ compact = true } = {}) {
   const doc = new Document(),
@@ -127,6 +128,81 @@ test('clearing search with an empty mode keeps compact filters and sends focus t
   assert.equal(p.$('journey-filter-details').open, false);
   assert.equal(p.doc.activeElement, p.$('journey-filter-summary'));
   assert.equal(p.launches, 0);
+  p.chooser.destroy();
+});
+
+test('compact Filters close when checkbox focus moves to a card or footer, retaining values and focus', () => {
+  const p = setup();
+  const filters = p.$('journey-filter-details'),
+    detail = p.$('journey-detailed-cards');
+  filters.open = true;
+  p.$('journey-collection').value = 'Classic';
+  p.$('journey-collection').emit('change');
+  p.$('journey-mode').value = 'versus';
+  p.$('journey-mode').emit('change');
+  detail.checked = true;
+  detail.emit('change');
+  detail.focus();
+  assert.equal(filters.open, true);
+  const card = p.$('journey-cards').children[0];
+  card.focus();
+  assert.equal(filters.open, false);
+  assert.equal(p.doc.activeElement, card);
+  p.$('journey-back').focus();
+  assert.equal(filters.open, false);
+  assert.equal(p.doc.activeElement, p.$('journey-back'));
+  filters.open = true;
+  detail.focus();
+  p.$('journey-back').focus();
+  assert.equal(filters.open, false);
+  assert.equal(p.doc.activeElement, p.$('journey-back'));
+  assert.equal(p.$('journey-collection').value, 'Classic');
+  assert.equal(p.$('journey-mode').value, 'versus');
+  assert.equal(detail.checked, true);
+  assert.equal(p.$('journey-cards').children[0], card);
+  assert.equal(p.launches, 0);
+  p.chooser.destroy();
+});
+
+test('compact filter traversal and controller select preview stay open until focus reaches a card', () => {
+  const p = setup();
+  const filters = p.$('journey-filter-details');
+  filters.open = true;
+  const navigation = attachControllerNavigation({
+    document: p.doc,
+    getRoot: () => p.$('journey-chooser'),
+    getScope: () => 'missions',
+  });
+  for (const id of ['journey-collection', 'journey-campaign', 'journey-mode']) {
+    p.$(id).focus();
+    assert.equal(filters.open, true);
+  }
+  navigation.handle({ confirm: true });
+  assert.equal(p.$('journey-mode').hasAttribute('data-controller-editing'), true);
+  navigation.handle({ direction: 'down' });
+  assert.equal(filters.open, true);
+  assert.equal(p.$('journey-mode').value, 'solo', 'Preview has not committed a filter.');
+  navigation.handle({ confirm: true });
+  assert.equal(filters.open, true);
+  assert.equal(p.$('journey-mode').value, 'versus');
+  navigation.handle({ direction: 'down' });
+  assert.equal(p.doc.activeElement, p.$('journey-detailed-cards'));
+  assert.equal(filters.open, true);
+  navigation.handle({ direction: 'down' });
+  assert.equal(p.doc.activeElement, p.$('journey-cards').children[0]);
+  assert.equal(filters.open, false);
+  assert.equal(p.launches, 0);
+  navigation.destroy();
+  p.chooser.destroy();
+});
+
+test('wide filters remain expanded when focus moves to cards and footer', () => {
+  const p = setup({ compact: false });
+  p.$('journey-detailed-cards').focus();
+  p.$('journey-cards').children[0].focus();
+  assert.equal(p.$('journey-filter-details').open, true);
+  p.$('journey-back').focus();
+  assert.equal(p.$('journey-filter-details').open, true);
   p.chooser.destroy();
 });
 
