@@ -24,6 +24,7 @@ import zipfile
 import inspect_qualified_artifact as inspector
 import upload_source
 import upload_distribution
+from release_limits import MAX_DISTRIBUTION_BYTES
 
 MIB = 1024**2
 RESERVE = 512 * MIB
@@ -102,7 +103,8 @@ def validate_binding(body, mode, repository):
                 'Exactly nine unique reviewed asset descriptors required')
         for row in rows:
             limit = 64 * MIB if row['name'] == 'source-qualification-evidence.zip' else (
-                2_000_000_000 if row['name'] == 'source.tar' else 512 * MIB if row['name'] == 'distribution.zip' else 4 * MIB)
+                2_000_000_000 if row['name'] == 'source.tar' else
+                MAX_DISTRIBUTION_BYTES if row['name'] == 'distribution.zip' else 4 * MIB)
             require(set(row) == {'name', 'bytes', 'sha256'} and positive(row['bytes'], limit) and
                     HEX.fullmatch(row['sha256']), 'Invalid asset descriptor or bounded length')
     return binding
