@@ -4,6 +4,11 @@ Status: implementation specification, not release or balance approval. Supersede
 the difficulty/variety assumptions in the original Journey plan, not its capture,
 progress, accessibility, publication or evidence requirements.
 
+Current status: [September22 per-item ledger](../../verification/journey-completion-2026-09-22.md).
+Later successor evidence closes specific timed-relocation, pressure enrollment
+and eastern inner-landing-use gaps described below. Historical route counts and
+open findings remain provenance; use the current ledger for remaining acceptance.
+
 Independent skill-required specification review: approved for slice A on
 2026-09-21; no blocking consistency/completeness issues. Later slices require
 their own detailed runtime/authoring integration before implementation.

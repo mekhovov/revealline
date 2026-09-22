@@ -1,6 +1,10 @@
 # Xposed-led Journey — implementation contract
 
 Current checkpoint: [2026-09-22 item-by-item completion audit](verification/journey-completion-2026-09-22.md).
+The [Team automatic-recovery caption](verification/journey-team-recovery-cause.md)
+now retains the actual failure cause after a reserve is spent, including
+same-step shared recovery. No new dialog, pause or gameplay change is introduced;
+native/human explanation acceptance remains open.
 The [Team changing-return integration](verification/journey-team-spatial-player.md)
 now brings two revised roamer layouts into the pictured twelve-mission route,
 preserving the other ten missions and all old editions. Twin Depots' eastern

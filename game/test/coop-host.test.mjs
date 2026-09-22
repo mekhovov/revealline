@@ -294,6 +294,8 @@ test('real keyboard self-crossings explain the shared recovery and cause-aware r
   };
   loop();
   assert.match(f.$('coop-message').textContent, /Both craft are back\. One team reserve used/);
+  assert.match(f.$('coop-message').textContent, /An unfinished line crossed itself\./);
+  assert.equal(f.$('coop-message').textContent.match(/unfinished line crossed itself/g).length, 1);
   assert.equal(f.$('coop-reserves').textContent, '0 reserves');
   loop();
   assert.equal(f.$('coop-overlay').hidden, false);

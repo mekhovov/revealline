@@ -34,6 +34,7 @@ import { createCoopPresentationImport } from './coop-import-source.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
 import {
   coopFailureFeedback,
+  coopRecoveryCause,
   coopRetryFeedback,
   coopRoamerCaption,
   coopFoundationReturnCaption,
@@ -2904,6 +2905,11 @@ export function bootCoop({
     ]
       .filter(Boolean)
       .join(' ');
+    // Revivals clear stored knockdowns below. Preserve this step's observed
+    // causes first, so immediate shared recovery cannot erase its own reason.
+    const recoveryFailures = [...knockdowns];
+    for (const event of run.events)
+      if (event.type === 'player.downed') recoveryFailures[event.player] = event;
     for (const event of run.events) {
       if (event.type === 'cells.claimed' && captureCaption)
         message(captureCaption, { foundationPlayers });
@@ -2930,15 +2936,23 @@ export function bootCoop({
         );
       }
       if (event.type === 'player.revived') {
+        const cause =
+          event.reason === 'reserve'
+            ? coopRecoveryCause(run, [recoveryFailures[event.player]])
+            : '';
         knockdowns[event.player] = null;
         input.clearPlayer(event.player);
         batch.release(event.player);
         message(
-          `${names[event.player]} is back.${event.reason === 'reserve' ? ' One team reserve used.' : ''} Choose a fresh direction.`,
+          `${cause ? `${cause} ` : ''}${names[event.player]} is back.${event.reason === 'reserve' ? ' One team reserve used.' : ''} Choose a fresh direction.`,
         );
       }
-      if (event.type === 'team.recovery')
-        message('Both craft are back. One team reserve used. Choose fresh directions together.');
+      if (event.type === 'team.recovery') {
+        const cause = coopRecoveryCause(run, recoveryFailures);
+        message(
+          `${cause ? `${cause} ` : ''}Both craft are back. One team reserve used. Choose fresh directions together.`,
+        );
+      }
       if (event.type === 'shield.disabled')
         message('Both anchors secured! Now capture the exposed core in a new cut.');
       if (event.type === 'core.defeated')

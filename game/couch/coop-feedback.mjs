@@ -62,6 +62,14 @@ export function coopRoamerCaption(event) {
   return null;
 }
 
+/** Recovery must not erase its explanation, including two same-tick revivals.
+ * Empty/unknown history contributes no invented cause; repeated causes read once. */
+export function coopRecoveryCause(run, knockdowns) {
+  return [
+    ...new Set(knockdowns.filter(Boolean).map((event) => coopFailureFeedback(run, event).cause)),
+  ].join(' ');
+}
+
 export function coopRetryFeedback(run, knockdowns = []) {
   const percent = (fraction) => (fraction * 100).toFixed(1).replace(/\.0$/, '');
   let progress;
