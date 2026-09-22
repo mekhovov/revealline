@@ -12,6 +12,7 @@ import { createTeamJourneyCandidates } from '../content-design/team-journey-cand
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
 import { createCoop } from '../coop/core.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 
 const source = createTeamJourneyCandidates({ artwork: true });
 const host = createCandidateTeamHost(source, { corePackIds: source.packs.map((p) => p.id) });
@@ -69,6 +70,49 @@ const lease = (extra = {}) =>
     acquire: picture,
     ...extra,
   });
+
+test('tuned Team gameplay retains only its explicit authenticated authored picture edition', async () => {
+  const owner = lease(),
+    binding = await owner.select(request());
+  const level = applyGameplayTuning(row.level, resolveGameplayTuning(row.difficulty));
+  const run = createCoop(level),
+    before = structuredClone(run);
+  const context = new Proxy({}, { get: () => () => {} });
+  const painter = createCoopPainter({ width: 1152, height: 576, getContext: () => context });
+  painter.setPresentation(snapshot);
+  assert.throws(() => painter.paint(run, { picture: binding }), /verified owner/);
+  painter.paint(run, { picture: binding, pictureLevel: row.level });
+  assert.deepEqual(run, before, 'Original-picture presentation does not change tuned rules.');
+  assert.throws(
+    () =>
+      painter.paint(run, {
+        picture: binding,
+        pictureLevel: { ...row.level, revision: 'other' },
+      }),
+    /verified owner/,
+  );
+  assert.throws(
+    () =>
+      painter.paint(run, {
+        picture: binding,
+        pictureLevel: { ...row.level, id: 'other' },
+      }),
+    /source does not match/,
+  );
+  assert.throws(
+    () =>
+      painter.paint(run, {
+        picture: { ...binding },
+        pictureLevel: row.level,
+      }),
+    /verified owner/,
+  );
+  owner.dispose();
+  assert.throws(
+    () => painter.paint(run, { picture: binding, pictureLevel: row.level }),
+    /verified owner/,
+  );
+});
 
 test('Team candidate verifies exact source and owns original-size draw until disposal', async () => {
   const owner = lease(),

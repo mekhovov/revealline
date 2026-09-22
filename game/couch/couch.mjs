@@ -15,6 +15,8 @@ import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { DEFAULT_JOURNEY_ROUTES, resolveJourneyRequest } from '../content-design/default-entry.mjs';
 import { authoredJourneyUsesActorMaterials } from '../content-design/mode-href.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
+import { createGameplayTuningController, applyGameplayTuning } from '../gameplay-tuning.mjs';
+import { mountGameplayTuning } from '../ui/gameplay-tuning.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from '../content-design/catalogs.mjs';
 import { createJourneyProfileStore } from '../journey/profile.mjs';
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
@@ -208,6 +210,8 @@ let featured,
   journeyPreferences;
 // Read-only fallback for remote Journey cards when this host runs Classic rules.
 const browsingJourneyPreferences = createJourneyPreferences({ window });
+const gameplayTuning = createGameplayTuningController({ eventTarget: window });
+let gameplayTuningPanel;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
@@ -230,6 +234,8 @@ const releaseArtwork = (event) => {
   staticPictures?.dispose();
   journeyPreferences?.dispose();
   browsingJourneyPreferences.dispose();
+  gameplayTuningPanel?.dispose();
+  gameplayTuning.dispose();
   boardFootprints?.dispose();
   window.removeEventListener('pagehide', releaseArtwork);
 };
@@ -738,8 +744,12 @@ try {
     return loadPreparedPicture(entry);
   }
   function createRound(recipe) {
+    recipe.tuning ??= gameplayTuning.snapshot(
+      recipe.entry.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
+    );
+    recipe.runtimeLevel = applyGameplayTuning(recipe.entry.level, recipe.tuning);
     return createDuel(
-      recipe.entry.level,
+      recipe.runtimeLevel,
       {
         seed: recipe.seed,
         turnPolicy: recipe.turnPolicy,
@@ -858,7 +868,7 @@ try {
   }
   async function prepareNext(destination = null, focusOrigin = $('race-start')) {
     const target = destination ?? roundRecipe.entry;
-    const recipe =
+    const baseRecipe =
       target === roundRecipe.entry
         ? roundRecipe
         : {
@@ -873,11 +883,18 @@ try {
                 : target.classes[0].id,
             seed: candidateJourney ? 1 : roundRecipe.seed,
           };
+    const recipe = {
+      ...baseRecipe,
+      tuning: gameplayTuning.snapshot(
+        target.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
+      ),
+    };
     if (
       !nextAttempt ||
       nextAttempt.previous !== match ||
       nextAttempt.previousRecipe !== roundRecipe ||
-      nextAttempt.recipe.entry !== target
+      nextAttempt.recipe.entry !== target ||
+      dataIdentity(nextAttempt.recipe.tuning) !== dataIdentity(recipe.tuning)
     ) {
       nextAttempt?.lease?.cancel();
       nextAttempt = {
@@ -1045,6 +1062,19 @@ try {
       shell.scope() !== 'main'
     )
       return;
+    // A ready preview is not a resumed attempt. A preference changed after its
+    // picture was prepared is admitted only by a newly staged, equal-board race.
+    if (
+      match.status === 'ready' &&
+      !destination &&
+      dataIdentity(roundRecipe.tuning) !==
+        dataIdentity(
+          gameplayTuning.snapshot(
+            roundRecipe.entry.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
+          ),
+        )
+    )
+      destination = roundRecipe.entry;
     const intent = ++startIntentEpoch,
       ownsStartIntent = () =>
         !disposed && intent === startIntentEpoch && !document.hidden && document.hasFocus();
@@ -1344,6 +1374,7 @@ try {
       $('race-journey-difficulty').value = snapshot.difficulty;
       $('race-journey-difficulty-note').textContent =
         `Next fresh race: ${snapshot.difficulty}. ${journeyPreset(snapshot.difficulty, authoredRoute.source.difficultyCatalogId).description} Both current boards keep their rules.`;
+      gameplayTuningPanel?.refresh();
       preferenceExportSequence++;
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
       $('race-journey-preferences-message').textContent = snapshot.error;
@@ -1423,6 +1454,35 @@ try {
       }
     };
   }
+  if (!candidateJourney) {
+    $('race-journey-difficulty-field').hidden = false;
+    $('race-journey-difficulty').replaceChildren(
+      ...['gentle', 'standard', 'expert'].map(
+        (id) => new Option(id[0].toUpperCase() + id.slice(1), id),
+      ),
+    );
+    browsingJourneyPreferences.subscribe((snapshot) => {
+      $('race-journey-difficulty').value = snapshot.difficulty;
+      $('race-journey-difficulty-note').textContent =
+        `Next fresh race: ${snapshot.difficulty} enemy pressure. Authored lives and objectives stay unchanged; both current boards keep their rules.`;
+      $('race-journey-preferences-recovery').hidden = snapshot.durable;
+      $('race-journey-preferences-message').textContent = snapshot.error;
+      gameplayTuningPanel?.refresh();
+    });
+    $('race-journey-difficulty').onchange = () =>
+      browsingJourneyPreferences.choose($('race-journey-difficulty').value);
+    $('race-journey-preferences-retry').onclick = () => browsingJourneyPreferences.retry();
+    $('race-journey-preferences-export').onclick = () =>
+      downloadJSON(
+        JSON.parse(browsingJourneyPreferences.export()),
+        'revealline-journey-difficulty.json',
+      );
+  }
+  gameplayTuningPanel = mountGameplayTuning({
+    root: $('race-gameplay-tuning'),
+    controller: gameplayTuning,
+    getDifficulty: () => (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+  });
   const couchTouch = attachCouchTouch({
     controls: $('race-touch-0').closest('.race-fields'),
     clear: () => input?.clearPhysical(),
@@ -2066,6 +2126,7 @@ try {
     pack,
     { signal, onStatus, attempt, isCurrent, selection = null },
   ) {
+    const tuning = gameplayTuning.snapshot(browsingJourneyPreferences.snapshot().difficulty);
     const candidateReader = createCouchInstalledChapters({
       channel: contentChannel,
       registeredEntries: [baseEntry],
@@ -2113,6 +2174,7 @@ try {
         seconds: attempt.recipe.seconds,
         format: attempt.recipe.format,
         seed: attempt.recipe.seed,
+        tuning,
       };
       const nextMatch = createRound(recipe),
         raceId = ++raceSequence;
@@ -2382,7 +2444,7 @@ try {
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
-      summary: `${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${themeName} · ${roundRecipe.turnPolicy === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${roundRecipe.seconds === 0 ? 'No race countdown' : `${roundRecipe.seconds} seconds`}`,
+      summary: `${roundRecipe.tuning.adminOverride ? 'ADMIN PLAYTEST · ' : ''}${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${themeName} · ${roundRecipe.turnPolicy === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${roundRecipe.seconds === 0 ? 'No race countdown' : `${roundRecipe.seconds} seconds`}`,
     });
     $('race-time-field').hidden = !!candidateJourney;
     // Reconcile deliberate layout transitions immediately, including browsers
@@ -2482,7 +2544,7 @@ try {
       (element.tagName === 'A' &&
         !!element.closest('#race-music-now-playing, #race-music-menu-now-playing')) ||
       menuIds.has(element.id) ||
-      !!element.closest('#journey-chooser, #journey-backup'),
+      !!element.closest('#journey-chooser, #journey-backup, #race-gameplay-tuning'),
     getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
@@ -2713,7 +2775,11 @@ try {
       finished = true;
       clear();
       if (match.winner !== null) won[match.winner]++;
-      if (candidateJourney && match.runs.some((run) => run.status === 'won'))
+      if (
+        candidateJourney &&
+        !roundRecipe.tuning.adminOverride &&
+        match.runs.some((run) => run.status === 'won')
+      )
         journeyProfile.record({
           type: 'complete',
           mode: 'versus',
@@ -2722,7 +2788,7 @@ try {
           difficulty: roundRecipe.entry.difficulty,
           gameplayId: dataIdentity({
             ruleset: match.ruleset,
-            level: roundRecipe.entry.level,
+            level: roundRecipe.runtimeLevel,
             classes: roundRecipe.entry.classes,
           }),
         });

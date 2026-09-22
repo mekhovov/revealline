@@ -11,6 +11,7 @@ import {
 } from './replay.mjs';
 import { boundedJSON, exactKeys, stableId, required } from './data-json.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
+import { applyGameplayTuning, recoverGameplayTuning } from './gameplay-tuning.mjs';
 import { PRESENTATION_PINS_FORMAT } from './presentation-pins.mjs';
 import {
   FLIGHT_MEDIA_PINS_FORMAT,
@@ -144,6 +145,7 @@ export function suspendSession({
   savedAt = new Date().toISOString(),
   continuation,
   presentationPins,
+  presentationLevel,
 }) {
   if (!run || !['running', 'respawning'].includes(run.status))
     throw new Error('Only an unfinished attempt can be suspended.');
@@ -155,12 +157,24 @@ export function suspendSession({
   const intent = continuation === undefined ? undefined : continuationValue(continuation);
   const pictures =
     presentationPins === undefined ? undefined : snapshotFlightPresentationPins(presentationPins);
+  let pictureRevision = run.level.revision;
+  if (presentationLevel && recoverGameplayTuning(run.level)) {
+    const expected = createRun(
+      applyGameplayTuning(presentationLevel, recoverGameplayTuning(run.level)),
+      { classId: run.classId, classRecipes: run.classRecipes },
+    );
+    required(
+      canonical(expected.level) === canonical(run.level),
+      'Tuned picture source differs from this flight.',
+    );
+    pictureRevision = presentationLevel.revision;
+  }
   if (pictures !== undefined)
     required(
       intent !== undefined &&
         pictures.executionKey === campaignKey &&
         pictures.levelId === run.level.id &&
-        pictures.levelRevision === run.level.revision &&
+        pictures.levelRevision === pictureRevision &&
         presentationPicturePins(pictures).choices.some(
           (choice) => choice.identity.themeId === themeId,
         ),
@@ -227,7 +241,8 @@ export async function restoreSession(
     throw new Error('This attempt has already ended.');
   const level = installed.levels.find((l) => l.id === checked.state.levelId);
   if (!level) throw new Error('Install the matching campaign pack before loading this attempt.');
-  const expected = createRun(level, {
+  const tuning = recoverGameplayTuning(checked.state.level);
+  const expected = createRun(tuning ? applyGameplayTuning(level, tuning) : level, {
     ...session.replay.options,
     classRecipes: installed.classRecipes,
   });

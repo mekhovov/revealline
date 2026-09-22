@@ -1,6 +1,14 @@
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
+import {
+  createGameplayTuningController,
+  applyGameplayTuning,
+  resolveGameplayTuning,
+} from '../gameplay-tuning.mjs';
+import { mountGameplayTuning } from '../ui/gameplay-tuning.mjs';
+import { createJourneyPreferences } from '../journey/preferences.mjs';
+import { dataIdentity } from '../data-json.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
@@ -340,6 +348,18 @@ export function bootCoop({
   let candidatePresetIntent = 0;
   let candidatePreferenceRestoration = null;
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
+  const gameplayTuning = createGameplayTuningController({ eventTarget: window });
+  const gameplayPreferences = candidatePreferences ?? createJourneyPreferences({ window });
+  const attemptTuning = new WeakMap();
+  const normalGameplayIdentities = new WeakMap();
+  if (!candidatePreferences) $('coop-difficulty').value = gameplayPreferences.snapshot().difficulty;
+  const gameplayTuningPanel = mountGameplayTuning({
+    root: $('coop-gameplay-tuning'),
+    controller: gameplayTuning,
+    getDifficulty: () =>
+      attemptLevel?.journeyDifficulty ??
+      (run ? gameplayPreferences.snapshot().difficulty : $('coop-difficulty').value),
+  });
   let inactive = !foreground();
   let previousPads = new Map();
   let pack = COOP_STARTER_PACK;
@@ -1111,6 +1131,8 @@ export function bootCoop({
   }
   function render() {
     if (!run) return;
+    $('coop-stage').textContent =
+      `${attemptTuning.get(run)?.adminOverride ? 'ADMIN PLAYTEST · ' : ''}${run.level.name.toUpperCase()}`;
     const bonusView = coopBonusView(run),
       bonusLive = coopBonusLive(bonusView);
     $('coop-bonus-live').textContent = bonusLive;
@@ -1123,6 +1145,7 @@ export function bootCoop({
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
       textFace: displayPreferences.snapshot().textFace,
       picture: acceptedPicture?.binding ?? null,
+      pictureLevel: attemptTuning.get(run)?.pictureLevel ?? run.level,
     });
     const coverage = run.coverage * 100;
     $('coop-coverage').textContent = `${coverage.toFixed(1)}%`;
@@ -1679,7 +1702,7 @@ export function bootCoop({
       (skipRow && (navigation.row !== skipRow || !['paused', 'lost'].includes(run?.status)))
     )
       return;
-    const recipe = { level: structuredClone(destination), options: currentRecipe().options };
+    const recipe = freshRecipe(structuredClone(destination), currentRecipe().options);
     const selection = newPictureSelection(
       recipe,
       navigation.nextRow?.pack ?? acceptedPicture.sourcePack,
@@ -1755,7 +1778,7 @@ export function bootCoop({
       if (!current()) return;
       selection.binding = selection.lease.confirm(selection.request);
       selection.state = 'ready';
-      const candidate = createCoop(structuredClone(recipe.level), recipe.options);
+      const candidate = createTunedCoop(recipe);
       startCoop(candidate);
       if (!current()) return;
       // First paint is tested while the completed attempt still owns its image.
@@ -1763,6 +1786,7 @@ export function bootCoop({
         reduced: displayPreferences.snapshot().effectiveReducedEffects,
         textFace: displayPreferences.snapshot().textFace,
         picture: selection.binding,
+        pictureLevel: attemptTuning.get(candidate).pictureLevel,
       });
       if (!current()) {
         if (!disposed && run === operation.run) render();
@@ -1866,7 +1890,10 @@ export function bootCoop({
       if (acceptedPicture !== previous.picture && pictureSelection !== previous.picture)
         previous.picture.lease?.dispose();
       if (!adopted(candidate)) return;
-      candidateProgress?.started(selection.journeyRow, candidate, { skipped: skipRow });
+      candidateProgress?.started(selection.journeyRow, candidate, {
+        ...attemptTuning.get(candidate),
+        skipped: skipRow,
+      });
       if (!adopted(candidate)) return;
       message(`${destination.name}. Choose fresh directions when you are ready.`);
       input.focus();
@@ -2175,13 +2202,10 @@ export function bootCoop({
   async function activateDiscovery(row, { signal, isCurrent, onStatus, opener }) {
     if (!canOpenDiscovery() || !currentDiscoveryRows().includes(row))
       throw new DOMException('Arena selection is no longer current.', 'AbortError');
-    const recipe = {
-      level: structuredClone(row.level),
-      options: {
-        ...currentRecipe().options,
-        ...(row.journeyRow ? { difficulty: row.journeyRow.difficulty } : {}),
-      },
-    };
+    const recipe = freshRecipe(structuredClone(row.level), {
+      ...currentRecipe().options,
+      ...(row.journeyRow ? { difficulty: row.journeyRow.difficulty } : {}),
+    });
     const selection = newPictureSelection(recipe, row.pack, row.pack, row.artworkSource);
     const previous = {
       run,
@@ -2354,7 +2378,7 @@ export function bootCoop({
       check();
       selection.binding = selection.lease.confirm(selection.request);
       selection.state = 'ready';
-      candidate = createCoop(structuredClone(recipe.level), recipe.options);
+      candidate = createTunedCoop(recipe);
       startCoop(candidate);
       check();
       if (previous.run?.status === 'paused') {
@@ -2394,6 +2418,7 @@ export function bootCoop({
         reduced: displayPreferences.snapshot().effectiveReducedEffects,
         textFace: displayPreferences.snapshot().textFace,
         picture: selection.binding,
+        pictureLevel: attemptTuning.get(candidate).pictureLevel,
       });
       check();
       clear();
@@ -2453,7 +2478,7 @@ export function bootCoop({
       for (const old of new Set([previous.picture, previous.selection]))
         if (old && old !== acceptedPicture && old !== pictureSelection) old.lease?.dispose();
       if (run === candidate && running() && foreground() && !disposed)
-        candidateProgress?.started(selection.journeyRow, candidate);
+        candidateProgress?.started(selection.journeyRow, candidate, attemptTuning.get(candidate));
       return run === candidate && running() && foreground() && !disposed;
     } finally {
       if (discoveryOperation === operation) discoveryOperation = null;
@@ -2680,6 +2705,7 @@ export function bootCoop({
                       : 'Geometry test; human validation pending'
                   }`,
             progress: candidateProgress,
+            gameplayIdentity: normalGameplayIdentity,
             difficulty: libraryDifficulty,
             launch: (row, context) =>
               launchTeamLibraryRow(
@@ -3065,24 +3091,51 @@ export function bootCoop({
   $('coop-discovery-open').onclick = () => discovery.open($('coop-discovery-open'));
   $('coop-discovery-paused').onclick = () => discovery.open($('coop-discovery-paused'));
 
-  function currentRecipe() {
-    if (run)
-      return {
-        level: structuredClone(attemptLevel),
-        options: { seed: run.seed, difficulty: run.difficulty, ...run.config },
-      };
-    const experiment = selectedConfiguration();
-    const level = selectedLevel();
+  function freshRecipe(level, options) {
     return {
       level,
-      options: {
-        seed: 17,
-        difficulty: level.journeyDifficulty ?? $('coop-difficulty').value,
-        jointCuts: experiment.jointCuts,
-        assistCaptures: experiment.assistCaptures,
-        advancedCooperation: experiment.advancedCooperation,
-      },
+      options,
+      tuning: gameplayTuning.snapshot(level.journeyDifficulty ?? options.difficulty),
     };
+  }
+  function normalGameplayIdentity(row) {
+    if (!candidateJourney.owns(row)) return null;
+    if (!normalGameplayIdentities.has(row))
+      normalGameplayIdentities.set(
+        row,
+        dataIdentity({
+          ruleset: row.pack.ruleset,
+          level: applyGameplayTuning(row.level, resolveGameplayTuning(row.difficulty)),
+        }),
+      );
+    return normalGameplayIdentities.get(row);
+  }
+  function createTunedCoop(recipe) {
+    const level = applyGameplayTuning(recipe.level, recipe.tuning);
+    const next = createCoop(level, recipe.options);
+    attemptTuning.set(next, {
+      pictureLevel: recipe.level,
+      adminOverride: recipe.tuning.adminOverride,
+      gameplayId: dataIdentity({ ruleset: next.ruleset, level }),
+    });
+    return next;
+  }
+  function currentRecipe() {
+    if (run)
+      return freshRecipe(structuredClone(attemptLevel), {
+        seed: run.seed,
+        difficulty: attemptLevel.journeyDifficulty ?? gameplayPreferences.snapshot().difficulty,
+        ...run.config,
+      });
+    const experiment = selectedConfiguration();
+    const level = selectedLevel();
+    return freshRecipe(level, {
+      seed: 17,
+      difficulty: level.journeyDifficulty ?? $('coop-difficulty').value,
+      jointCuts: experiment.jointCuts,
+      assistCaptures: experiment.assistCaptures,
+      advancedCooperation: experiment.advancedCooperation,
+    });
   }
   function start(recipe = currentRecipe(), prepared = null) {
     cancelJourneySkip();
@@ -3113,7 +3166,7 @@ export function bootCoop({
     // The core's live level shares enemy objects with its mutable threat state.
     // Keep the validated starting level separately for an exact fresh Retry.
     const startingLevel = structuredClone(recipe.level);
-    const next = prepared || createCoop(startingLevel, recipe.options);
+    const next = prepared || createTunedCoop(recipe);
     const rememberVisibleArena =
       !run && pack === COOP_STARTER_PACK && arenaPreference.current() !== startingLevel.id;
     cancelImport({ forget: true });
@@ -3157,7 +3210,7 @@ export function bootCoop({
     if (!disposed && run === next && running() && foreground())
       acceptMusic(selection, { play: true });
     if (!disposed && run === next && running() && foreground())
-      candidateProgress?.started(selection.journeyRow, next);
+      candidateProgress?.started(selection.journeyRow, next, attemptTuning.get(next));
     if (disposed || run !== next || !running() || !foreground()) return;
     input.focus();
     if (loopStopped) {
@@ -3453,7 +3506,7 @@ export function bootCoop({
     let prepared;
     try {
       if (ticket.kind === 'retry') {
-        prepared = createCoop(ticket.recipe.level, ticket.recipe.options);
+        prepared = createTunedCoop(ticket.recipe);
       }
       const destination =
         ticket.kind === 'return'
@@ -3802,6 +3855,7 @@ export function bootCoop({
       Boolean(level.journeyDifficulty) &&
       (Boolean(run) || !candidatePreferences || !selectedCandidateRow());
     if (level.journeyDifficulty) $('coop-difficulty').value = level.journeyDifficulty;
+    gameplayTuningPanel?.refresh();
   }
   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
     difficultyControls(level);
@@ -4170,6 +4224,11 @@ export function bootCoop({
   $('coop-difficulty').onchange = () => {
     const previous = selectedCandidateRow(),
       requested = $('coop-difficulty').value;
+    if (!selectedLevel().journeyDifficulty && !run && !departure && !disposed && foreground()) {
+      gameplayPreferences.choose(requested);
+      gameplayTuningPanel?.refresh();
+      return;
+    }
     if (!previous || !candidatePreferences || run || departure || disposed || !foreground()) {
       difficultyControls();
       return;
@@ -4230,6 +4289,12 @@ export function bootCoop({
   } else if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
   showPackStatus();
   setupNote();
+  if (!candidatePreferences)
+    gameplayPreferences.subscribe((snapshot) => {
+      if (!run && !selectedLevel().journeyDifficulty)
+        $('coop-difficulty').value = snapshot.difficulty;
+      gameplayTuningPanel?.refresh();
+    });
   $('coop-touch').value = 'auto';
   $('coop-touch').onchange = () => {
     input.clearPhysical();
@@ -4302,6 +4367,9 @@ export function bootCoop({
     arenaPreference.dispose();
     candidateProgress?.dispose();
     candidatePreferences?.dispose();
+    if (!candidatePreferences) gameplayPreferences.dispose();
+    gameplayTuningPanel?.dispose();
+    gameplayTuning.dispose();
     candidatePreferenceRestoration?.dispose();
     importRequest++;
     disposed = true;
