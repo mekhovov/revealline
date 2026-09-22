@@ -8574,9 +8574,10 @@ try {
         if (!candidateHost) host.preparer.dispose();
       };
       const state = createMissionLibrarySessionState({ mode: 'solo' });
-      // A consumed checked return restores the original selection, not the
-      // remote card used to leave. Registry identities are compared only for
-      // display focus; runtime ownership still belongs to each source adapter.
+      // Checked return restores the retained runtime independently of browsing.
+      // Preserve the source chooser's validated filters/card; use its runtime
+      // selection only as a fallback for older returns without browse state.
+      // Neither UI state grants runtime ownership or launch authority.
       const returnedRow = exactReturn
         ? result.library.missions.find((row) => {
             if (!['Classic', 'Custom'].includes(row.collection) || !row.modes.includes('solo'))
@@ -8599,7 +8600,8 @@ try {
         library: result.library,
         profile,
         readState: () =>
-          returnedRow
+          state.read() ??
+          (returnedRow
             ? {
                 search: '',
                 collection: '',
@@ -8608,7 +8610,7 @@ try {
                 selectedId: returnedRow.id,
                 scroll: 0,
               }
-            : state.read(),
+            : null),
         writeState: state.write,
         launchContext: libraryActivationContext,
         onPause: () => {

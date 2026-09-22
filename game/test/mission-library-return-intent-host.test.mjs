@@ -293,20 +293,37 @@ for (const source of ['legacy', 'opening'])
     assert.equal(storage.getItem(JOURNEY_PREFERENCES_KEY), expert);
   });
 
-test('Legacy Solo → Journey Versus → Solo retains and consumes the exact checked return token', async (t) => {
+test('Legacy Solo → Journey Versus → Solo restores browsing independently of the checked retained runtime', async (t) => {
   const storage = memoryStorage(),
     previewStorage = memoryStorage();
-  let target, selected, returnHref, originalSelection;
+  let target, selected, returnHref, originalSelection, browse;
   await t.test('depart actual Solo library', async (t) => {
     const p = await solo(t, { storage, previewStorage });
     const cards = await open(p, 'solo', 'versus');
-    selected = cards[0].dataset.missionId;
-    cards[0].click();
+    const card = cards.find((row) =>
+      JSON.parse(row.dataset.missionId)[3].endsWith('/choose-your-share'),
+    );
+    assert(card);
+    selected = card.dataset.missionId;
+    p.$('journey-collection').value = 'Journey';
+    p.$('journey-collection').emit('change');
+    const campaign = JSON.stringify(JSON.parse(selected).slice(0, 3));
+    assert([...p.$('journey-campaign').children].some((option) => option.value === campaign));
+    p.$('journey-campaign').value = campaign;
+    p.$('journey-campaign').emit('change');
+    p.$('journey-search').value = 'Choose your share';
+    p.$('journey-search').emit('input');
+    p.$('journey-cards').scrollTop = 120;
+    assert(p.$('journey-cards').contains(card), 'Activate the visible filtered card.');
+    card.click();
     await settle(() => globalThis.location.href.includes('/couch/'));
     target = globalThis.location.href;
     originalSelection = JSON.parse(
       previewStorage.getItem('revealline.mode-return.v2:/game/'),
     ).selection;
+    browse = JSON.parse(previewStorage.getItem('revealline.mission-library.selector.v1.solo'));
+    assert.equal(browse.selectedId, selected);
+    assert.equal(browse.mode, 'versus');
     assert.equal(new URL(target).searchParams.get('library-mission'), selected);
     assert.equal(new URL(target).searchParams.get('journey'), 'whole-spatial-v5');
     assert.match(new URL(target).searchParams.get('return-token-v2'), /^[0-9a-f]{32}$/);
@@ -358,9 +375,14 @@ test('Legacy Solo → Journey Versus → Solo retains and consumes the exact che
             .map((card) => [card.dataset.missionId, card.textContent]),
         }),
       );
-      const identity = JSON.parse(p.doc.activeElement.dataset.missionId);
-      assert.deepEqual(JSON.parse(identity[0]), ['classic', 'base', null]);
-      assert.equal(identity[3], p.$('level-select').value);
+      assert.equal(p.doc.activeElement.dataset.missionId, selected);
+      assert.equal(p.$('journey-mode').value, browse.mode);
+      assert.equal(p.$('journey-search').value, browse.search);
+      assert.equal(p.$('journey-collection').value, browse.collection);
+      assert.equal(p.$('journey-campaign').value, browse.campaign);
+      assert.equal(p.$('journey-cards').scrollTop, browse.scroll);
+      assert.equal(p.$('level-select').value, originalSelection.levelId);
+      assert.equal(p.rendered.run.levelId, originalSelection.levelId);
       assert.equal(p.rendered.run.tick, 0);
       assert.equal(previewStorage.getItem('revealline.mode-return.v2:/game/'), null);
       assert.deepEqual(p.errors, []);
@@ -458,7 +480,7 @@ for (const host of ['solo', 'versus'])
     );
   });
 
-test('empty-profile late Classic selection survives Team return without invented clears or automatic resume', async (t) => {
+test('late Classic checked return without saved browse state uses the retained mission as a focus fallback', async (t) => {
   const storage = memoryStorage(),
     previewStorage = memoryStorage();
   let target, missionId, before;
@@ -500,6 +522,7 @@ test('empty-profile late Classic selection survives Team return without invented
       nativeSoloBoot(t);
       const search = new URL(teamReturnHref({ href: target, storage: previewStorage }), target)
         .search;
+      previewStorage.removeItem('revealline.mission-library.selector.v1.solo');
       const p = await solo(t, { search, storage, previewStorage });
       assert.equal(p.$('journey-chooser').open, true);
       assert.equal(p.doc.activeElement.dataset.missionId, missionId);
