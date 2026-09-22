@@ -64,6 +64,10 @@ export function createCandidateTeamHost(source, { corePackIds } = {}) {
     owns: (row) => owned.has(row),
     row: rowFor,
     officialProgressEligible: false,
+    manifest(mission, difficulty = 'standard') {
+      const row = rowFor(mission, difficulty);
+      return row ? manifests.get(row) : null;
+    },
     card(mission, difficulty = 'standard') {
       const row = rowFor(mission, difficulty);
       return row ? createMissionCard(manifests.get(row)) : null;

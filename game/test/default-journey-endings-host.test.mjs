@@ -6,7 +6,7 @@ import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { playKeyboardRoute } from './helpers/keyboard-route.mjs';
 import { VARIETY_ROUTES } from './helpers/variety-routes.mjs';
-import { createJourneyBackend } from '../journey/profile.mjs';
+import { createJourneyBackend, JOURNEY_PROFILE_DATABASE } from '../journey/profile.mjs';
 import { createWholeSortingCandidates } from '../content-design/whole-spatial-candidates.mjs';
 import { createSpatialBalanceCandidates } from '../content-design/spatial-balance-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
@@ -66,6 +66,7 @@ for (const mode of ['solo', 'versus'])
   for (const ending of ['optional', 'core'])
     test(`default v5 ${mode} ${ending} ending retains its earned run and offers a deliberate next destination`, async (t) => {
       const memory = managedIndexedDB();
+      const databases = new Map([[JOURNEY_PROFILE_DATABASE, memory]]);
       const backend = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v5' });
       const oldBackend = createJourneyBackend({
         ...memory,
@@ -86,7 +87,12 @@ for (const mode of ['solo', 'versus'])
               href: 'http://localhost/game/couch/',
               initialLevel: null,
               storage: memoryStorage(),
-              assetDatabase: memory.indexedDB,
+              assetDatabase: {
+                open(name, ...args) {
+                  if (!databases.has(name)) databases.set(name, managedIndexedDB());
+                  return databases.get(name).indexedDB.open(name, ...args);
+                },
+              },
               fetchResponse: assets,
             });
       const id =
@@ -97,12 +103,13 @@ for (const mode of ['solo', 'versus'])
             : 'toolbench-weave';
       const runs = () => (mode === 'solo' ? [p.rendered.run] : p.renders);
       p.$(mode === 'solo' ? 'shell-packs' : 'race-journey-find').click();
-      assert.equal(p.$('journey-cards').children.length, 91);
+      await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+      assert.equal(p.$('journey-cards').children.length, 201);
       const card = p
         .$('journey-cards')
-        .children.find((node) => node.dataset.missionId.endsWith('/' + id));
+        .children.find((node) => JSON.parse(node.dataset.missionId)[3].endsWith('/' + id));
       assert(card);
-      const missionId = card.dataset.missionId;
+      const missionId = JSON.parse(card.dataset.missionId)[3];
       card.click();
       await settle(() => {
         p.frame(0);
@@ -151,6 +158,7 @@ for (const mode of ['solo', 'versus'])
         assert.match(p.$('race-start').textContent, /Rematch/);
         p.$('race-journey-find').click();
       }
+      await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
       assert.equal(p.$('journey-chooser').open, true);
       p.frame(0);
       assert(runs().every((run, index) => run === previous[index]));

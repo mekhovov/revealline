@@ -209,7 +209,8 @@ async function setup(
 
 async function openWorlds(p) {
   p.$('shell-menu').click();
-  p.$('shell-play').click();
+  // Invoke the retained Worlds host boundary directly. Mission navigation now
+  // opens the unified library and must not start an unrelated lazy load here.
   p.$('shell-mode-choice').open = true;
   p.$('shell-worlds').click();
   try {
@@ -274,7 +275,19 @@ async function win(p) {
   p.key('ArrowDown');
   p.key('ArrowDown', false);
   for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
-  assert.equal(p.rendered.run.status, 'won');
+  assert.equal(
+    p.rendered.run.status,
+    'won',
+    JSON.stringify({
+      tick: p.rendered.run.tick,
+      paused: p.rendered.paused,
+      chooser: p.$('journey-chooser')?.open,
+      home: p.$('shell-home').open,
+      missions: p.$('shell-missions').open,
+      player: p.rendered.run.player,
+      message: p.$('run-message').textContent,
+    }),
+  );
   if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
   await settle(() =>
     [...p.$('missions').children].every((b) => b.dataset.pictureState !== 'loading'),

@@ -40,18 +40,20 @@ for (const journey of [false, true]) {
     const f = await fixture(t),
       mission = f.$('coop-level').value;
     f.$('coop-discovery-paused').click();
-    const target = [...f.$('coop-discovery-list').querySelectorAll('.team-discovery-play')].find(
-      (button) => button.textContent === `Play ${journey ? 'Shared lookout' : 'Relay Yard'}`,
+    await waitFor(() => f.$('journey-chooser')?.open);
+    const target = [...f.$('journey-cards').querySelectorAll('.journey-card')].find(
+      (button) =>
+        button.querySelector('strong').textContent === (journey ? 'Shared lookout' : 'Relay Yard'),
     );
     target.focus();
     f.tap('Enter');
     await waitFor(() => f.$('coop-discard-dialog').open);
     wording(f);
     f.$('coop-discard-stay').click();
-    await waitFor(() => !target.disabled);
+    await waitFor(() => f.$('journey-chooser').open);
     assert.equal(f.$('coop-level').value, mission);
-    assert.equal(f.$('coop-discovery-dialog').open, true);
-    f.$('coop-discovery-back').click();
+    assert.equal(f.$('journey-chooser').open, true);
+    f.$('journey-back').click();
     assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
   });
 }

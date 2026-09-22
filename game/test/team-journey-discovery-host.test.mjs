@@ -6,71 +6,49 @@ import { createTeamJourneyCandidates } from '../content-design/team-journey-cand
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 
 const href = 'http://localhost/game/couch/relay-rescue.html?journey=team-greybox';
-const cards = (f) => [...f.$('coop-discovery-list').querySelectorAll('article')];
+const cards = (f) => [...f.$('journey-cards').querySelectorAll('.journey-card')];
 const enter = (f, element) => {
   element.focus();
   f.tap('Enter');
 };
-function diagrams(f) {
-  const create = f.doc.createElement.bind(f.doc),
-    labels = [];
-  f.doc.createElement = (tag) => {
-    const element = create(tag);
-    if (tag === 'canvas') {
-      const get = element.getContext?.bind(element);
-      element.getContext = (...args) =>
-        element.closest('.team-mission-diagram')
-          ? get?.(...args)
-          : new Proxy(
-              {},
-              {
-                get:
-                  (_, name) =>
-                  (...values) => {
-                    if (name === 'fillText') labels.push(values[0]);
-                  },
-              },
-            );
-    }
-    return element;
-  };
-  return labels;
+async function open(f, paused = false) {
+  enter(f, f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open'));
+  await waitFor(() => f.$('journey-chooser')?.open);
 }
 
-test('actual Team chooser displays all12 exact candidate maps and preserves legacy picture previews', async (t) => {
+test('actual Team chooser displays all12 exact candidates with cheap route/preset details and explicit previews', async (t) => {
   const f = await page(t, {
-      href,
-      nativeFocus: true,
-      nativeVisibility: true,
-      retainInitialDifficulty: true,
-    }),
-    labels = diagrams(f);
-  enter(f, f.$('coop-discovery-open'));
+    href,
+    nativeFocus: true,
+    nativeVisibility: true,
+    retainInitialDifficulty: true,
+  });
+  await open(f);
   const all = cards(f),
-    candidates = all.filter((card) => card.querySelector('.team-mission-diagram'));
+    candidates = all.filter((card) =>
+      card.querySelector('.journey-card-tags').textContent.includes('Journey'),
+    );
   assert.equal(all.length, 14);
   assert.equal(candidates.length, 12);
-  assert.deepEqual(labels, Array.from({ length: 12 }, () => ['1', '2']).flat());
   for (const card of candidates) {
-    assert.match(card.querySelector('figcaption').textContent, /^Starting map/);
-    assert.match(card.querySelector('.team-mission-difficulty').textContent, /Standard$/);
-    assert.equal(card.querySelector('.team-discovery-preview-button'), null);
+    assert.match(
+      card.querySelector('.journey-card-challenge').textContent,
+      /Band \d+\/12 · Standard$/,
+    );
+    assert(card.querySelector('.journey-card-route').textContent);
+    assert.equal(card.querySelector('.journey-card-action').textContent, 'Play');
     assert.equal(
-      card.querySelectorAll('button').length,
-      1,
-      'One direct Play, no misleading picture preview',
+      card.querySelector('canvas'),
+      null,
+      'No eager diagram without an intersection observer',
     );
   }
-  assert.equal(
-    f.$('coop-discovery-list').querySelectorAll('.team-discovery-preview-button').length,
-    2,
-  );
-  assert.equal(f.doc.activeElement.textContent, 'Play Twin landings');
+  assert.equal(f.doc.activeElement.id, 'journey-search');
   const target = candidates.find(
-    (card) => card.querySelector('button').textContent === 'Play Shared lookout',
+    (card) => card.querySelector('strong').textContent === 'Shared lookout',
   );
-  enter(f, target.querySelector('button'));
-  await waitFor(() => !f.$('coop-discovery-dialog').open);
+  enter(f, target);
+  await waitFor(() => f.$('coop-stage').textContent === 'SHARED LOOKOUT');
   assert.equal(f.$('coop-stage').textContent, 'SHARED LOOKOUT');
   assert.equal(f.$('coop-reserves').textContent, '2 reserves');
   assert.equal(f.$('coop-menu').hidden, true);
@@ -83,15 +61,12 @@ test('reopened Team chooser reports a genuine Skip without claiming a clear', as
   enter(f, f.$('coop-journey-skip-confirm'));
   await waitFor(() => f.$('coop-overlay').hidden);
   enter(f, f.$('coop-pause'));
-  enter(f, f.$('coop-discovery-paused'));
+  await open(f, true);
   const first = cards(f)[0];
-  assert.equal(first.querySelector('button').textContent, 'Play Twin landings');
-  assert.equal(
-    first.querySelector('.team-mission-completion').textContent,
-    'Skipped · revisit whenever you like',
-  );
-  assert.equal(first.querySelector('button').disabled, false);
-  enter(f, f.$('coop-discovery-back'));
+  assert.equal(first.querySelector('strong').textContent, 'Twin landings');
+  assert.equal(first.querySelector('.journey-card-progress').textContent, 'Skipped · try again');
+  assert.equal(first.disabled, false);
+  enter(f, f.$('journey-back'));
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
 });
@@ -101,10 +76,15 @@ test('same-ID imported edition retains its independent artwork preview and canno
   await f.selectFile(
     JSON.stringify(createTeamTestPack(createTeamJourneyCandidates(), 'twin-landings', 'expert')),
   );
-  enter(f, f.$('coop-discovery-open'));
-  const local = cards(f).find((card) => card.textContent.includes('Local pack · this visit'));
+  await open(f);
+  const local = cards(f).find(
+    (card) => card.querySelector('.journey-card-tags').textContent === 'Custom',
+  );
   assert(local);
-  assert.equal(local.querySelector('.team-mission-diagram'), null);
-  assert.equal(local.querySelector('.team-mission-completion'), null);
-  assert(local.querySelector('.team-discovery-preview-button'));
+  assert.equal(local.querySelector('canvas'), null);
+  assert.equal(local.querySelector('.journey-card-progress').textContent, '');
+  local.focus();
+  local.emit('focus', { bubbles: false });
+  await new Promise((resolve) => queueMicrotask(resolve));
+  assert.equal(f.$('coop-library-preview').disabled, false);
 });

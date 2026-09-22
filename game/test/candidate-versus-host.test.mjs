@@ -6,19 +6,25 @@ import { memoryStorage } from './helpers/solo-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
-import { createJourneyBackend } from '../journey/profile.mjs';
+import { createJourneyBackend, JOURNEY_PROFILE_DATABASE } from '../journey/profile.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 async function setup(t, difficulty = 'standard', options = {}) {
   const memory = managedIndexedDB();
+  const databases = new Map([[JOURNEY_PROFILE_DATABASE, memory]]);
   const storage = memoryStorage({
     [JOURNEY_PREFERENCES_KEY]: JSON.stringify({ format: 'JourneyPreferencesV1', difficulty }),
   });
   const p = await couchPage(t, {
     href: 'http://localhost/game/couch/?journey=opening',
     initialLevel: null,
-    assetDatabase: memory.indexedDB,
+    assetDatabase: {
+      open(name, ...args) {
+        if (!databases.has(name)) databases.set(name, managedIndexedDB());
+        return databases.get(name).indexedDB.open(name, ...args);
+      },
+    },
     seconds: '90',
     storage,
     fetchResponse: async (url) => {
@@ -29,6 +35,17 @@ async function setup(t, difficulty = 'standard', options = {}) {
   p.journeyBackend = createJourneyBackend(memory);
   p.preferencesStorage = storage;
   return p;
+}
+async function openMissions(p) {
+  p.$('race-journey-find').click();
+  try {
+    await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  } catch (error) {
+    error.message += ` ${p.$('race-message').textContent}`;
+    throw error;
+  }
+  p.$('journey-collection').value = 'Journey';
+  p.$('journey-collection').emit('change');
 }
 
 test('Versus save warning uses existing pause and recovery without changing either board', async (t) => {
@@ -180,14 +197,16 @@ test('cross-campaign theme controls commit with the accepted picture, never a fa
   });
   const previous = [...p.renders],
     picture = p.drawOptions[0].backdrop;
-  const chooseBorder = () => {
-    p.$('race-journey-find').click();
+  const chooseBorder = async () => {
+    await openMissions(p);
     p.$('journey-cards')
-      .children.find((card) => card.dataset.missionId.endsWith('/behind-the-patrol'))
+      .children.find((card) => JSON.parse(card.dataset.missionId)[3].endsWith('/behind-the-patrol'))
       .click();
+    await waitFor(() => p.$('race-library-replace')?.open);
+    p.$('race-library-play').click();
   };
   assert.equal(p.$('race-theme').value, 'horizon');
-  chooseBorder();
+  await chooseBorder();
   await waitFor(() => p.$('race-preparation').dataset.state === 'error');
   p.frame(0);
   assert.equal(p.renders[0], previous[0]);
@@ -199,7 +218,7 @@ test('cross-campaign theme controls commit with the accepted picture, never a fa
     ['horizon'],
   );
   refuse = false;
-  chooseBorder();
+  await chooseBorder();
   await waitFor(() => {
     p.frame(0);
     return p.renders[0].levelId === 'behind-the-patrol' && !p.$('race-pause').disabled;
@@ -233,14 +252,18 @@ test('Versus Skip requires two actions and flat chooser can launch an island mis
     return p.renders[0] !== previous && !p.$('race-pause').disabled;
   });
   assert.equal(p.renders[0].levelId, 'choose-your-share');
-  p.$('race-journey-find').click();
+  await openMissions(p);
   assert.equal(p.$('journey-chooser').open, true);
   const cards = p.$('journey-cards').children;
   assert.equal(cards.length, 10);
   assert.match(cards[0].textContent, /Skipped/);
   assert.doesNotMatch(cards[0].textContent, /Cleared/);
-  const island = [...cards].find((card) => card.dataset.missionId.endsWith('/nearby-shore'));
+  const island = [...cards].find((card) =>
+    JSON.parse(card.dataset.missionId)[3].endsWith('/nearby-shore'),
+  );
   island.click();
+  await waitFor(() => p.$('race-library-replace')?.open);
+  p.$('race-library-play').click();
   await waitFor(() => {
     p.frame(0);
     return p.renders[0].levelId === 'nearby-shore' && !p.$('race-pause').disabled;
@@ -263,8 +286,10 @@ test('controller can open and leave the flat chooser without starting or clearin
   p.join(0);
   p.focus('race-journey-find');
   p.pulse(0, 0);
+  await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  p.frame(); // The asynchronously mounted scope observes a neutral controller frame.
   assert.equal(p.$('journey-chooser').open, true);
-  assert.equal(p.$('journey-cards').children.length, 10);
+  assert.equal(p.$('journey-cards').children.length, 120);
   const card = p.$('journey-cards').children[0];
   assert.match(card.textContent, /Band 1\/12.*Standard.*Optional challenge/);
   card.focus();
@@ -297,7 +322,7 @@ test('authored races ignore the Legacy timer and do not mint an idle clear after
   assert.equal(p.$('race-clock').dataset.compact, '∞');
   assert.doesNotMatch(p.$('race-message').textContent, /Time/);
   assert.equal(p.$('race-journey-next').hidden, true);
-  p.$('race-journey-find').click();
+  await openMissions(p);
   assert.doesNotMatch(p.$('journey-cards').children[0].textContent, /Cleared/);
   assert.equal(p.renders[0].levelId, 'first-return');
 });
@@ -492,7 +517,7 @@ for (const route of ['opening', 'authored'])
         authoritativeCheckpoint(p.renders[1]).hash,
         id,
       );
-      assert.equal(p.$('journey-chooser').open, false);
+      assert.equal(p.$('journey-chooser')?.open ?? false, false);
       if (id !== rows.at(-1)[0]) {
         const previous = p.renders[0];
         p.$('race-journey-next').click();

@@ -40,7 +40,7 @@ test('queryless Versus exposes all 91 current missions and starts from its focus
   assert.doesNotMatch(p.$('race-summary').textContent, /material review/);
   assert.equal(
     p.$('race-installed-status').textContent,
-    'Open Legacy library for earlier missions and installed chapters.',
+    'Open All missions for Journey, earlier missions and installed chapters.',
   );
   assert.equal(
     p.$('race-coop').querySelector('.game-mode-description').textContent,
@@ -52,7 +52,7 @@ test('queryless Versus exposes all 91 current missions and starts from its focus
     'relay-rescue.html?return=versus&journey-return=whole-spatial-v5',
   );
   assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=legacy');
-  assert.equal(p.$('race-library-switch').textContent, 'Legacy library');
+  assert.equal(p.$('race-library-switch').textContent, 'All missions');
   assert.equal(p.doc.activeElement.id, 'race-start');
   assert.equal(p.$('race-setup').hidden, true);
   p.key('Enter', true, p.doc.activeElement);
@@ -71,12 +71,14 @@ test('queryless Versus exposes all 91 current missions and starts from its focus
   p.join(0);
   p.focus('race-library-switch');
   p.pulse(0, 0);
-  assert.equal(p.$('race-leave-panel').hidden, false);
-  assert.equal(p.$('race-leave').getAttribute('href'), '?journey=legacy');
-  assert.match(p.$('race-leave-title').textContent, /Legacy library/);
-  assert.equal(p.doc.activeElement.id, 'race-leave-back');
-  p.pulse(0, 1);
+  await settle(() => p.$('journey-chooser')?.open);
   assert.equal(p.$('race-leave-panel').hidden, true);
+  assert.equal(p.$('journey-mode').value, 'versus');
+  assert.equal(p.$('journey-collection').value, '');
+  assert.equal(p.$('journey-cards').children.length, 201);
+  p.frame(0); // The newly opened dialog observes neutral before accepting Back.
+  p.pulse(0, 1);
+  assert.equal(p.$('journey-chooser').open, false);
   assert.equal(p.doc.activeElement.id, 'race-library-switch');
   assert.deepEqual(p.checkpoint(), checkpoint);
   assert.equal(
@@ -84,14 +86,16 @@ test('queryless Versus exposes all 91 current missions and starts from its focus
     true,
   );
   assert.equal(p.state(), 'paused');
-  p.$('race-library-switch').click();
+  // Mode departure still uses the retained guarded link. Browsing does not.
+  p.$('race-solo-return').click();
+  assert.equal(p.$('race-leave-panel').hidden, false);
   p.$('race-leave').setAttribute('href', 'https://untrusted.invalid/');
   assert.equal(p.$('race-leave').emit('click').defaultPrevented, false);
-  assert.equal(p.$('race-leave').getAttribute('href'), '?journey=legacy');
+  assert.equal(p.$('race-leave').getAttribute('href'), '../?journey=whole-spatial-v5');
   assert.deepEqual(p.checkpoint(), checkpoint);
 });
 
-test('explicit Legacy Versus keeps its own mode links and offers a guarded return to New Journey', async (t) => {
+test('explicit Legacy Versus keeps its mode links and guards an exact New Journey library selection', async (t) => {
   const p = await page(t, '?journey=legacy');
   assert.equal(p.doc.body.classList.contains('candidate-journey'), false);
   assert.equal(p.$('race-level').children.length, 15);
@@ -100,9 +104,11 @@ test('explicit Legacy Versus keeps its own mode links and offers a guarded retur
     p.$('race-coop').getAttribute('href'),
     'relay-rescue.html?journey=legacy&return=versus',
   );
-  assert.equal(p.$('race-library-switch').textContent, 'New Journey');
+  assert.equal(p.$('race-library-switch').textContent, 'All missions');
   assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v5');
-  assert.equal(p.$('race-library-switch').emit('click').defaultPrevented, false);
+  assert.equal(p.$('race-library-switch').emit('click').defaultPrevented, true);
+  await settle(() => p.$('journey-chooser')?.open);
+  p.$('journey-back').click();
   p.$('race-start').click();
   await settle(() => {
     p.frame(0);
@@ -113,10 +119,19 @@ test('explicit Legacy Versus keeps its own mode links and offers a guarded retur
   p.frame(0);
   const checkpoint = p.checkpoint();
   p.$('race-library-switch').click();
-  assert.equal(p.$('race-leave-panel').hidden, false);
-  assert.match(p.$('race-leave-title').textContent, /New Journey/);
-  assert.equal(p.$('race-leave').getAttribute('href'), '?journey=whole-spatial-v5');
-  p.$('race-leave-back').click();
+  await settle(() => p.$('journey-chooser')?.open);
+  const target = [...p.$('journey-cards').children].find((card) =>
+    JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
+  );
+  assert(target, 'An exact New Journey mission is available alongside Classic.');
+  target.click();
+  await settle(() => p.$('race-library-replace')?.open);
+  assert.match(p.$('race-library-replace-title').textContent, /Choose your share/i);
+  assert.deepEqual(p.checkpoint(), checkpoint);
+  p.$('race-library-stay').click();
+  await settle(() => p.$('journey-chooser')?.open);
+  assert.equal(p.doc.activeElement, target);
+  p.$('journey-back').click();
   assert.equal(p.doc.activeElement.id, 'race-library-switch');
   assert.deepEqual(p.checkpoint(), checkpoint);
   assert.equal(p.state(), 'paused');
@@ -134,7 +149,7 @@ for (const query of [
     const p = await page(t, query);
     assert.equal(p.doc.body.classList.contains('candidate-journey'), false);
     assert.equal(p.$('race-level').children.length, 15);
-    assert.equal(p.$('race-library-switch').textContent, 'New Journey');
+    assert.equal(p.$('race-library-switch').textContent, 'All missions');
     assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v5');
     assert.equal(p.$('race-journey-note').hidden, true);
   });

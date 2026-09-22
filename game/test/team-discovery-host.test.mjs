@@ -9,11 +9,11 @@ import { TEAM_ARENA_PREFERENCE_KEY } from '../couch/team-arena-preference.mjs';
 // Actual Team markup, host, prepared originals and simulation. Finite DOM/Image
 // boundaries do not establish native layout, physical devices or public play.
 const options = { nativeFocus: true, nativeVisibility: true, capturePaint: true };
-const dialog = (f) => f.$('coop-discovery-dialog');
+const dialog = (f) => f.$('journey-chooser');
 const status = (f) => f.$('coop-discovery-status');
-const cards = (f) => [...f.$('coop-discovery-list').querySelectorAll('.team-discovery-play')];
+const cards = (f) => [...f.$('journey-cards').querySelectorAll('.journey-card')];
 const card = (f, title) => {
-  const button = cards(f).find((entry) => entry.textContent === `Play ${title}`);
+  const button = cards(f).find((entry) => entry.querySelector('strong').textContent === title);
   assert.ok(button, `A playable card exists for ${title}.`);
   return button;
 };
@@ -21,13 +21,16 @@ function enter(f, button) {
   button.focus();
   f.tap('Enter');
 }
-function open(f, paused = false) {
+async function open(f, paused = false) {
   enter(f, f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open'));
-  assert.equal(dialog(f).open, true);
+  await waitFor(() => dialog(f)?.open);
 }
 const settled = (f, state = 'ready') =>
   waitFor(
-    () => status(f).dataset.state === state,
+    () =>
+      state === 'error'
+        ? /Could not open/.test(f.$('journey-chooser-status')?.textContent)
+        : status(f).dataset.state === state,
     () => status(f).textContent,
   );
 const started = (f, title) =>
@@ -52,14 +55,18 @@ test('Team discovery opens through keyboard and Back restores the exact lobby op
   });
   assert.equal(f.$('coop-discovery-open').disabled, false);
   const before = f.previewDrawImages.at(-1);
-  open(f);
+  await open(f);
   assert.deepEqual(
-    cards(f).map((button) => button.textContent),
-    ['Play First Connection', 'Play Relay Yard'],
+    cards(f)
+      .filter((button) =>
+        button.querySelector('.journey-card-tags').textContent.includes('Classic'),
+      )
+      .map((button) => button.querySelector('strong').textContent),
+    ['First Connection', 'Relay Yard'],
   );
-  assert.equal(f.doc.activeElement === cards(f)[0], true);
+  assert.equal(f.doc.activeElement.id, 'journey-search');
   assert.equal(f.$('coop-menu').hidden, false);
-  enter(f, f.$('coop-discovery-back'));
+  enter(f, f.$('journey-back'));
   assert.equal(dialog(f).open, false);
   assert.equal(f.doc.activeElement.id, 'coop-discovery-open');
   assert.equal(f.previewDrawImages.at(-1), before);
@@ -68,7 +75,7 @@ test('Team discovery opens through keyboard and Back restores the exact lobby op
 
 test('one deliberate Play prepares Relay Yard and starts it without another Start screen', async (t) => {
   const f = await page(t, options);
-  open(f);
+  await open(f);
   enter(f, card(f, 'Relay Yard'));
   await started(f, 'Relay Yard');
   assert.equal(f.$('coop-menu').hidden, true);
@@ -80,24 +87,19 @@ test('one deliberate Play prepares Relay Yard and starts it without another Star
 
 test('a newer Back focus during Play admission prevents preparation and keeps the current setup', async (t) => {
   const f = await page(t, options);
-  open(f);
-  await waitFor(() =>
-    [...f.$('coop-discovery-list').querySelectorAll('figcaption')].every(
-      (caption) => !caption.textContent.startsWith('Preparing'),
-    ),
-  );
+  await open(f);
   const reads = f.artwork.calls.reads.length;
   let redirect = true;
   f.$('coop-discovery-cancel').addEventListener('focusin', () => {
     if (!redirect) return;
     redirect = false;
-    f.$('coop-discovery-back').focus();
+    f.$('coop-level').focus();
   });
   enter(f, card(f, 'Relay Yard'));
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(f.artwork.calls.reads.length, reads);
-  assert.equal(f.doc.activeElement.id, 'coop-discovery-back');
-  assert.equal(dialog(f).open, true);
+  assert.equal(f.doc.activeElement.id, 'coop-level');
+  assert.equal(dialog(f).open, false);
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-level').value, 'first-connection');
 });
@@ -118,7 +120,7 @@ test('successful built-in discovery updates only the existing Team arena bookmar
         },
       }),
   });
-  open(f);
+  await open(f);
   enter(f, card(f, 'Relay Yard'));
   await started(f, 'Relay Yard');
   assert.deepEqual(writes, [TEAM_ARENA_PREFERENCE_KEY]);
@@ -141,7 +143,7 @@ test('a bookmark callback with a newer focus choice is not overwritten after acc
         },
       }),
   });
-  open(f);
+  await open(f);
   enter(f, card(f, 'Relay Yard'));
   await started(f, 'Relay Yard');
   assert.equal(f.doc.activeElement.id, 'coop-pause');
@@ -165,7 +167,7 @@ test('cancelling held preparation keeps the paused attempt and exact picture ava
   pause(f);
   const image = currentImage(f);
   const coverage = f.$('coop-coverage').textContent;
-  open(f, true);
+  await open(f, true);
   enter(f, card(f, 'Relay Yard'));
   await waitFor(() => held);
   enter(f, f.$('coop-discovery-cancel'));
@@ -176,8 +178,8 @@ test('cancelling held preparation keeps the paused attempt and exact picture ava
   gate.resolve();
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(dialog(f).open, true);
-  assert.match(status(f).textContent, /cancelled/i);
-  enter(f, f.$('coop-discovery-back'));
+  assert.match(status(f).textContent, /current Team attempt is kept/i);
+  enter(f, f.$('journey-back'));
   assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
   assert.equal(f.$('coop-overlay').hidden, false);
   enter(f, f.$('coop-resume'));
@@ -188,7 +190,7 @@ test('paused Stay preserves the old arena; a later Replace starts the prepared d
   const f = await page(t, options);
   pause(f);
   const image = currentImage(f);
-  open(f, true);
+  await open(f, true);
   enter(f, card(f, 'Relay Yard'));
   await waitFor(() => f.$('coop-discard-dialog').open);
   enter(f, f.$('coop-discard-stay'));
@@ -218,7 +220,7 @@ test('failed artwork preparation keeps the paused attempt and offers Play again'
   });
   pause(f);
   const image = currentImage(f);
-  open(f, true);
+  await open(f, true);
   enter(f, card(f, 'Relay Yard'));
   await settled(f, 'error');
   assert.equal(currentImage(f), image);
@@ -241,13 +243,13 @@ test('an opened local Team pack stays discoverable after playing a built-in aren
     level.name = `Local route ${index + 1}`;
   });
   await f.selectFile(JSON.stringify(pack));
-  open(f);
-  assert.equal(cards(f).length, 4);
+  await open(f);
+  assert.equal(cards(f).length, 16);
   enter(f, card(f, 'First Connection'));
   await started(f, 'First Connection');
   f.tap('Escape');
-  open(f, true);
-  assert.equal(cards(f).length, 4);
+  await open(f, true);
+  assert.equal(cards(f).length, 16);
   enter(f, card(f, 'Local route 2'));
   await waitFor(() => f.$('coop-discard-dialog').open);
   enter(f, f.$('coop-discard-confirm'));
@@ -270,7 +272,7 @@ test('foreground loss cancels pending discovery immediately before decoder compl
       },
     },
   });
-  open(f);
+  await open(f);
   enter(f, card(f, 'Relay Yard'));
   await waitFor(() => held);
   f.win.emit('blur');

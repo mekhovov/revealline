@@ -65,15 +65,25 @@ async function running(p, levelId) {
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
   });
 }
+async function missions(p, opener = 'shell-play') {
+  p.$(opener).focus();
+  p.$(opener).click();
+  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+}
+function collection(p, value) {
+  p.$('journey-collection').value = value;
+  p.$('journey-collection').emit('change');
+  return [...p.$('journey-cards').children];
+}
 
-test('ordinary Solo entry offers all 91 missions and direct Start, Retry and Next', async (t) => {
+test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct Start, Retry and Next', async (t) => {
   const p = await page(t);
   assert.equal(p.$('shell-featured').hidden, false);
   assert.equal(p.$('shell-continue').hidden, true);
   assert.equal(p.$('shell-title-edition').textContent, 'NEW JOURNEY / 91 MISSIONS');
   assert.match(p.$('shell-destination').textContent, /Start · First return/);
   assert.equal(new URL(p.$('shell-playground').href).search, '?journey=whole-spatial-v5');
-  assert.equal(p.$('shell-catalogue').textContent, 'Legacy missions');
+  assert.equal(p.$('shell-catalogue').textContent, 'All missions');
   assert.equal(p.$('shell-catalogue').getAttribute('href'), './?journey=legacy');
   assert.equal(
     p.$('shell-title-versus').getAttribute('href'),
@@ -87,12 +97,14 @@ test('ordinary Solo entry offers all 91 missions and direct Start, Retry and Nex
     p.$('journey-artwork-availability').textContent,
     /^Mission pictures need an internet connection/,
   );
-  p.$('shell-play').click();
-  assert.equal(p.$('journey-chooser').open, true);
-  assert.equal(p.$('journey-cards').children.length, 91);
-  assert.equal(p.$('journey-chooser').contains(p.$('missions-catalogue')), true);
-  assert.equal(p.$('missions-catalogue').hidden, false);
-  const ids = [...p.$('journey-cards').children].map((card) => card.dataset.missionId);
+  await missions(p);
+  assert.equal(p.$('journey-collection').value, '');
+  assert.equal(p.$('journey-cards').children.length, 201);
+  assert.equal(p.$('journey-chooser').contains(p.$('missions-catalogue')), false);
+  assert.equal(collection(p, 'Classic').length, 110);
+  const journeyCards = collection(p, 'Journey');
+  assert.equal(journeyCards.length, 91);
+  const ids = journeyCards.map((card) => JSON.parse(card.dataset.missionId)[3]);
   for (const id of ['sorting-yard', 'home-signal', 'cross-stitch-crossings', 'four-motor-landings'])
     assert(
       ids.some((candidate) => candidate.endsWith(`/${id}`)),
@@ -146,19 +158,26 @@ test('ordinary Solo Continue uses its current Journey bookmark without convertin
   assert.deepEqual(p.errors, []);
 });
 
-test('Legacy is explicitly accessible and its New Journey action returns to the ordinary default', async (t) => {
+test('Legacy is explicitly accessible and its unified selector opens an exact New Journey mission', async (t) => {
   const p = await page(t, { search: '?journey=legacy' });
   assert.equal(p.doc.body.classList.contains('journey-preview'), false);
-  assert.equal(p.$('shell-catalogue').textContent, 'New Journey');
+  assert.equal(p.$('shell-catalogue').textContent, 'All missions');
   assert.equal(p.$('shell-catalogue').getAttribute('href'), './');
   for (const id of ['shell-title-versus', 'shell-title-team'])
     assert.match(p.$(id).getAttribute('href'), /journey=legacy/);
-  p.$('shell-play').click();
-  assert.equal(p.$('shell-missions').open, true);
-  assert.equal(p.$('shell-missions').contains(p.$('missions-catalogue')), true);
-  assert.equal(p.$('pack-select').options.length > 1, true);
-  p.$('missions-catalogue').click();
-  assert.equal(globalThis.location.href, 'http://localhost/game/');
+  await missions(p, 'shell-catalogue');
+  assert.equal(p.$('journey-collection').value, '');
+  assert.equal(p.$('journey-cards').children.length, 201);
+  const card = collection(p, 'Journey').find((candidate) =>
+    JSON.parse(candidate.dataset.missionId)[3].endsWith('/choose-your-share'),
+  );
+  assert(card);
+  card.click();
+  await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
+  const target = new URL(globalThis.location.href);
+  assert.equal(target.origin + target.pathname, 'http://localhost/game/');
+  assert.equal(target.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
   assert.deepEqual(p.errors, []);
 });
 
@@ -173,21 +192,33 @@ test('switching from a running default Journey to Legacy has an explicit Stay or
   p.$('shell-menu').click();
   p.frame(0);
   const checkpoint = authoritativeCheckpoint(p.rendered.run);
-  p.$('shell-catalogue').focus();
-  p.$('shell-catalogue').click();
+  await missions(p, 'shell-catalogue');
+  const card = collection(p, 'Classic').find(
+    (candidate) => JSON.parse(candidate.dataset.missionId)[3] === 'signal-01',
+  );
+  assert(card);
+  card.click();
   await settle(() => !p.$('mode-leave-confirm').disabled);
   assert.equal(p.$('mode-leave-dialog').open, true);
-  assert.match(p.$('mode-leave-title').textContent, /Legacy missions/);
+  assert.equal(p.$('mode-leave-title').textContent, 'Open selected mission?');
   assert.match(p.$('mode-leave-status').textContent, /saved and verified/);
   p.$('mode-leave-stay').click();
   assert.equal(p.$('mode-leave-dialog').open, false);
   p.frame(0);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
   assert.equal(globalThis.location.href, 'http://localhost/game/');
-  p.$('shell-catalogue').click();
+  await missions(p, 'shell-catalogue');
+  const selected = [...p.$('journey-cards').children].find(
+    (candidate) => candidate.dataset.missionId === card.dataset.missionId,
+  );
+  assert(selected);
+  selected.click();
   await settle(() => !p.$('mode-leave-confirm').disabled);
   p.$('mode-leave-confirm').click();
-  assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
+  const target = new URL(globalThis.location.href);
+  assert.equal(target.origin + target.pathname, 'http://localhost/game/');
+  assert.equal(target.searchParams.get('journey'), 'legacy');
+  assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
   assert(storage.getItem('revealline.suspended.journey-whole-spatial.v5'));
   assert.deepEqual(p.errors, []);
 });
@@ -196,9 +227,9 @@ for (const search of ['?journey=', '?journey=unknown', '?mode-return=unknown'])
   test(`explicit historical or unknown Solo request keeps Legacy behavior: ${search}`, async (t) => {
     const p = await page(t, { search });
     assert.equal(p.doc.body.classList.contains('journey-preview'), false);
-    assert.equal(p.$('shell-catalogue').textContent, 'New Journey');
-    p.$('shell-play').click();
-    assert.equal(p.$('shell-missions').open, true);
+    assert.equal(p.$('shell-catalogue').textContent, 'All missions');
+    await missions(p);
+    assert.equal(p.$('journey-cards').children.length, 201);
     assert.deepEqual(p.errors, []);
   });
 

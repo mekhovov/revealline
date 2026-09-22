@@ -1,0 +1,97 @@
+{
+  "status": "PASS",
+  "source": "6eebeb9e039001f16972f5c92c237e03793f8313",
+  "checkedAt": "2026-09-22T19:35:30.020937+00:00",
+  "scope": "Native browser source-route repeat, not frozen/public/hardware qualification",
+  "url": "http://127.0.0.1:49400/game/",
+  "viewport": {
+    "width": 844,
+    "height": 390
+  },
+  "preferences": [
+    "Plain text",
+    "Large text"
+  ],
+  "scenario": "Paused Solo Orchard Crossing \u2192 Missions Night Shift,Mode Versus \u2192 Custom Voltage Garden \u2192 Stay \u2192 leave \u2192 both Versus All missions openers/Back \u2192 installed Orchard Retry/readiness/Play/Stay \u2192 Replace & play \u2192 explicit Solo return \u2192 Load saved flight",
+  "before": {
+    "search": "Night Shift",
+    "mode": "versus",
+    "scroll": 490,
+    "focusedMission": "Voltage Garden",
+    "edition": "Native Custom Night Shift \u00b7 1.0.0",
+    "card": {
+      "x": 22,
+      "y": 146.2265625,
+      "width": 396,
+      "height": 163.1171875,
+      "bottom": 309.34375
+    },
+    "list": {
+      "x": 18,
+      "y": 113.7734375,
+      "width": 808,
+      "height": 199.6328125,
+      "bottom": 313.40625
+    }
+  },
+  "after": {
+    "search": "Night Shift",
+    "mode": "versus",
+    "scroll": 490,
+    "focusedMission": "Voltage Garden",
+    "edition": "Native Custom Night Shift \u00b7 1.0.0",
+    "card": {
+      "x": 22,
+      "y": 146.2265625,
+      "width": 396,
+      "height": 163.1171875,
+      "bottom": 309.34375
+    },
+    "list": {
+      "x": 18,
+      "y": 113.7734375,
+      "width": 808,
+      "height": 199.6328125,
+      "bottom": 313.40625
+    },
+    "focusedCardFullyVisible": true
+  },
+  "soloSavedBeforeAndAfter": {
+    "mission": "Orchard Crossing",
+    "paused": true,
+    "time": "1:32",
+    "lives": 1,
+    "targetPercent": 68,
+    "score": 0,
+    "coveragePercent": 0,
+    "explicitResumeRequired": true
+  },
+  "versusOpeners": [
+    {
+      "id": "race-chapters",
+      "label": "All missions",
+      "backRestoresFocus": true
+    },
+    {
+      "id": "race-library-switch",
+      "label": "All missions",
+      "backRestoresFocus": true
+    }
+  ],
+  "replacement": {
+    "installedOriginalsDecoded": true,
+    "readinessSeparateFromPlay": true,
+    "StayRetainsCustomVoltageGarden": true,
+    "explicitReplacementOpensOrchardBothBoards": true
+  },
+  "failedPredecessorReceipt": "b-return-scroll-native-70f-failure.json",
+  "screenshot": "Inline visually inspected restored focused card; screenshot not exported",
+  "limitations": [
+    "development storage channel; actual release-channel absent-pair download still separate",
+    "uses authentic paired artwork previously installed via native flow, no new upload this repeat",
+    "no new win/capture or arbitrary custom raster original preservation proved",
+    "no frozen/public acceptance or physical controller/touch"
+  ],
+  "consoleWarningsAndErrors": [],
+  "viewportResetAfterTest": true
+}
