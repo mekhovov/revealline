@@ -1,6 +1,7 @@
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { freezeDesign } from './catalogs.mjs';
+import { CONTENT_ASSET_MAX_BYTES } from './limits.mjs';
 
 const verified = new WeakMap();
 export function compileAssetRevision(source) {
@@ -41,7 +42,7 @@ export function compileAssetRevision(source) {
     'Asset needs its original SHA-256.',
   );
   required(
-    Number.isSafeInteger(asset.bytes) && asset.bytes > 0 && asset.bytes <= 4 * 1024 * 1024,
+    Number.isSafeInteger(asset.bytes) && asset.bytes > 0 && asset.bytes <= CONTENT_ASSET_MAX_BYTES,
     'Asset exceeds the 4 MiB image budget.',
   );
   required(

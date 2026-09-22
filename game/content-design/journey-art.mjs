@@ -12,6 +12,7 @@ import { SENTINEL_ART_CANDIDATES } from './sentinel-art.mjs';
 import { APEX_ART_CANDIDATES } from './apex-art.mjs';
 import { TEAM_ART_CANDIDATES } from './team-art.mjs';
 import { TEAM_TIMED_ART_CANDIDATES } from './team-timed-art.mjs';
+import { CULTURAL_WORKSHOP_ART_CANDIDATES } from './cultural-workshop-art.mjs';
 import {
   SIGNAL_ILLUSTRATED_ART_CANDIDATES,
   SIGNAL_PIXEL_ART_CANDIDATES,
@@ -37,4 +38,5 @@ export const JOURNEY_ART_CANDIDATES = freezeDesign([
   ...APEX_ART_CANDIDATES,
   ...TEAM_ART_CANDIDATES,
   ...TEAM_TIMED_ART_CANDIDATES,
+  ...CULTURAL_WORKSHOP_ART_CANDIDATES,
 ]);

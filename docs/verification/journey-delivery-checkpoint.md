@@ -85,3 +85,29 @@ scan found no other unretained changed source pins. New tests reject absent,
 modified and symlinked catalogue history even when live bytes match the old pin.
 All 71 production tests pass on Node 20.19.5 and 22.22.2, both locally and under
 independent review. Hosted full-suite/build gates must still pass on this fix.
+
+The third run, `35673216761`, passed preflight and exposed an offline packaging
+budget failure. Eight existing ornament/workshop originals were missing from
+the optional-art registry, so 16,011,991 image bytes incorrectly entered the core
+cache. The registry now includes all 109 original images (273,109,569 bytes),
+without changing their descriptors, hashes or image bytes. A new test compares
+the registry against the actual authored PNG tree to catch future omissions.
+The core cache still has its original 2,000-file / 64 MiB hard limits; all original
+images remain in the downloadable distribution and are labelled online-only.
+
+The first repair test run retained a useful failure: 45/46 checks passed on each
+Node version because the offline screen's old 128 MiB descriptive-artwork bound
+rejected the larger excluded library. That metadata bound now uses the existing
+512-image capacity and unchanged 4 MiB per-image limit. It does not allocate a
+cache or change the worker budget. Tests cover counts 1, 33, 109 and 512 at their
+exact bounds, one byte over each bound, malformed values, and truthful offline
+availability. The final six-file cohort passed independently **89/89** on Node
+20.19.5 and 22.22.2, with no failures, skips or cancellations; the local focused
+offline/asset/packaging cohort also passed **51/51** on each version.
+
+A controlled real-source distribution test passed (2 tests; 2 unmatched tests
+skipped), verifying the loose files, ZIP, manifest, original-image pins and core
+cache budget. It began before the final metadata-reader edits and is therefore
+packaging evidence, **not** an exact-final-source freeze. The final committed
+head still requires fresh hosted preflight, all test shards and build gates.
+The failed runs remain part of the record. No v0.82.0 deployment is claimed.

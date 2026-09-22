@@ -202,6 +202,12 @@ test('selected real source authenticates every registered original without produ
     JOURNEY_ART_CANDIDATES.reduce((sum, asset) => sum + asset.bytes, 0),
   );
   assert.equal(new Set(artwork.files.map((file) => file.path)).size, JOURNEY_ART_CANDIDATES.length);
+  // Compare against the actual shipped tree, not only the registry itself:
+  // an omitted chapter must not silently enter the bounded core offline cache.
+  assert.deepEqual(
+    artwork.files.map((file) => file.path).sort(),
+    files.filter((file) => /^game\/content-design\/assets\/.+\.png$/.test(file)).sort(),
+  );
   const availability = offlineAvailability({
     documentRef: {
       querySelector: () => ({

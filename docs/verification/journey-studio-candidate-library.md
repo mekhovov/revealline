@@ -79,3 +79,35 @@ Do not convert finite-DOM coverage into those claims.
 No runtime/catalogue/save identity, public mission count, release version or Pages
 selector changes. Human usability, final integrated-source checks and coordinated
 PR/release/Pages remain separate gates.
+
+## Integrated-source follow-up
+
+On September 22, exact PR #225 source `7faa84cbd293518a82b7341760fb0f39345b725b`
+was served on the isolated local port8858. These native observations narrow the
+open list above without claiming full Studio acceptance:
+
+- In the filtered Neon library, Tab reached Inspect and Space compiled seven
+  missions. The applied Nearby shore and saved checkpoint1 stayed unchanged.
+- Review inspected source closed discovery and focused the source textarea.
+- Explicit Apply changed the workbench to Folded corner in a separate Neon
+  candidate project. A same-project temporary name edit required Inspect/Apply;
+  Undo restored the exact original JSON, Redo restored the edited name, and a
+  second Undo restored the original again. No gameplay geometry was edited.
+- Jump to map focused `map-workbench`, with its top at0 in the viewport.
+- At390×844, document width remained390, the search input was44pixels high,
+  and discovery controls stayed inside the viewport. A native screenshot showed
+  readable inspection feedback and its source-review link. Activating that link
+  still closed discovery and focused source at this width. The viewport override
+  was reset and both temporary tabs were closed.
+
+Cancellation remains **unverified**: the discard confirmation again blocked
+browser input, and the documented dialog getter returned no accessible dialog.
+Only the agent-created blocked tab was closed; this is not a successful Cancel
+test. Reloading the separate local workbench still showed the original saved
+Nearby shore. No user work or public storage was changed.
+
+Remaining native scope includes actual cancellation, bottom-card sticky feedback,
+zoom, screen-reader navigation, physical devices and broader conflict/crash
+usability. These checks do not replace human authoring feedback or public
+deployment verification. Evidence is also recorded on
+[PR #225](https://github.com/mekhovov/revealline/pull/225#issuecomment-5769720556).
