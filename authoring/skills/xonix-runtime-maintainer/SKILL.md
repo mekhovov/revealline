@@ -1375,3 +1375,7 @@ When a reviewed host imports another feature's admission contract, fingerprint t
 ## 2026-09-22: Scoped UI review continuation and independent navigation findings
 
 A scoped review continuation may carry forward unchanged UI recipe payloads only with exact functional-record/token comparison and a closed dependency fingerprint. Tie runtime and native receipts to the actual pre-approval source/output, preserve discovered navigation defects, and exclude unrelated Team artwork or whole-phase acceptance. Update only the applicable reviewed group and its exact current-review assertions; append immutable production history after review rather than rewriting earlier evidence. Keep stale accepted-audio test reconciliation separate from any new audio approval.
+
+## 2026-09-22 — Same-tick authoring counters
+
+For [Studio progress counters](../../prompts/studio-same-tick-counters.md), compare HUD, painter and description from the same authoritative simulation tick. Reuse the established clamped progress helper and percentage convention; contact rescue floors completed whole percent and must not show 100% before real completion. Preserve rescuer/target identity, cancellation and core timing. Use both command-earned rescue traces across fractional ticks and completion, not only a paused 50% specimen. Record same-render display assertions, complete-file RED/green evidence and exact read bindings. Keep text-only corrections separate from gameplay or production-quality changes.
