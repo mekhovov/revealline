@@ -173,7 +173,7 @@ async function teamPage(t, store, { audio = null, assetDatabase, pads = [] } = {
     window: win,
     localStorage: store,
     navigator: { getGamepads: () => pads },
-    location: { href: 'http://localhost/game/couch/relay-rescue.html' },
+    location: { href: 'http://localhost/game/couch/relay-rescue.html?journey=legacy' },
     matchMedia: () => ({ matches: false }),
     indexedDB: assetDatabase,
     AudioContext:

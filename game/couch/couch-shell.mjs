@@ -1,5 +1,6 @@
 import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { authoredModeDestinations } from '../ui/authored-mode-routes.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { attachSettingsPanels } from '../ui/settings-panels.mjs';
 import { authoredJourneyModeHref, isAuthoredJourneyRouteId } from '../content-design/mode-href.mjs';
@@ -44,7 +45,7 @@ export function createCouchShell({
   getDepartureState = () => null,
   onLeaveRequest = () => {},
   getSoloReturnToken = () => null,
-  authoredRoute = null,
+  authoredRoute = 'legacy',
   getSoloJourneyRoute = () => null,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
@@ -56,6 +57,11 @@ export function createCouchShell({
     removers = [],
     settings = attachSettingsPanels({ root: $('race-options-panel'), document: doc });
   const authoredDestinations = authoredModeDestinations('versus', authoredRoute);
+  const isJourney = isAuthoredJourneyRouteId(authoredRoute);
+  const libraryHref = isJourney ? '?journey=legacy' : `?journey=${DEFAULT_JOURNEY_ROUTES.versus}`;
+  const libraryLabel = isJourney ? 'Legacy library' : 'New Journey';
+  $('race-library-switch').setAttribute('href', libraryHref);
+  $('race-library-switch').textContent = libraryLabel;
   if (authoredDestinations) {
     $('race-solo-return').setAttribute('href', authoredDestinations.solo);
     $('race-coop').setAttribute('href', authoredDestinations.team);
@@ -63,9 +69,11 @@ export function createCouchShell({
   mountModeChoices({
     root: $('race-mode-choices'),
     current: 'versus',
-    separateTeam: !!authoredDestinations,
+    separateTeam: isJourney,
     actions: { solo: $('race-solo-return'), team: $('race-coop') },
   });
+  if (authoredRoute === DEFAULT_JOURNEY_ROUTES.versus)
+    $('race-coop').querySelector('.game-mode-description').textContent = '12 Team missions';
   let screen = 'main',
     status = null,
     opener = null,
@@ -114,8 +122,21 @@ export function createCouchShell({
     element.focus({ preventScroll: true });
     // The screen is installed first. Reveal its actual focused action without
     // letting a synchronous focus callback scroll a replacement/background view.
-    if (eligible() && doc.activeElement === element)
-      element.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
+    if (eligible() && doc.activeElement === element) {
+      // Keep the adjacent save-recovery shortcut in view with primary play.
+      // This only changes a deliberate menu transition's scroll, never flight
+      // geometry or focus in response to a background storage status change.
+      const warning = $('race-journey-save-options');
+      const block =
+        screen === 'main' &&
+        (status === 'paused' || status === 'finished') &&
+        element === $('race-start') &&
+        warning &&
+        !warning.hidden
+          ? 'center'
+          : 'nearest';
+      element.scrollIntoView({ block, inline: 'nearest', behavior: 'auto' });
+    }
   }
   function revealResizedAction(event) {
     if (revealingResize || event.target !== view) return;
@@ -171,7 +192,7 @@ export function createCouchShell({
     $('race-shell').inert = running;
     $('race-hud').hidden = !running;
     $('race-pause').disabled = !running;
-    $('race-pause').textContent = screen === 'review' ? 'Results' : 'Pause';
+    setText('race-pause', screen === 'review' ? 'Results' : 'Pause');
     $('race-boards').hidden = !running;
     $('race-boards').inert = !running;
     doc.body.classList.toggle('race-focus', running);
@@ -255,9 +276,12 @@ export function createCouchShell({
     }
   }
   const destinationHref = (kind, token, routeId) =>
-    authoredDestinations?.[kind] ||
+    (kind === 'library' && libraryHref) ||
+    (kind === 'solo' && token && `../?mode-return-v2=${token}`) ||
+    (isJourney && authoredDestinations?.[kind]) ||
     (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
-    (kind === 'solo' && token ? `../?mode-return-v2=${token}` : DESTINATIONS[kind]);
+    authoredDestinations?.[kind] ||
+    DESTINATIONS[kind];
   function departureCurrent(ticket) {
     const current = getDepartureState();
     return (
@@ -288,7 +312,7 @@ export function createCouchShell({
     )
       return;
     // Fixed routes are owned here; no target is accepted from a URL or control.
-    const returnToken = kind === 'solo' && !authoredDestinations ? soloReturnToken() : null;
+    const returnToken = kind === 'solo' && !isJourney ? soloReturnToken() : null;
     const journeyRouteId = soloJourneyRoute();
     element.setAttribute('href', destinationHref(kind, returnToken, journeyRouteId));
     const before = getDepartureState();
@@ -318,11 +342,18 @@ export function createCouchShell({
       generation: current.generation,
     };
     departure = ticket;
-    setText('race-leave-title', kind === 'team' ? 'Go to Couch Team?' : 'Return to Solo?');
+    setText(
+      'race-leave-title',
+      kind === 'library'
+        ? `Open ${libraryLabel}?`
+        : kind === 'team'
+          ? 'Go to Couch Team?'
+          : 'Return to Solo?',
+    );
     setText(
       'race-leave-copy',
       'This Versus attempt exists only on this page and is not saved. Stay keeps both boards paused. Leaving discards this attempt.' +
-        (authoredDestinations
+        (isJourney && kind !== 'library'
           ? kind === 'team'
             ? ' Team opens its separate arenas.'
             : ' Solo opens its own Journey progress; Continue remains explicit.'
@@ -330,7 +361,11 @@ export function createCouchShell({
     );
     setText(
       'race-leave',
-      kind === 'team' ? 'Discard and go to Team' : 'Discard and return to Solo',
+      kind === 'library'
+        ? `Discard and open ${libraryLabel}`
+        : kind === 'team'
+          ? 'Discard and go to Team'
+          : 'Discard and return to Solo',
     );
     $('race-leave').setAttribute('href', destinationHref(kind, returnToken, journeyRouteId));
     show('leave', { remember: element });
@@ -359,6 +394,7 @@ export function createCouchShell({
   for (const [id, kind] of [
     ['race-solo-return', 'solo'],
     ['race-coop', 'team'],
+    ['race-library-switch', 'library'],
   ])
     listen($(id), 'click', (event) => requestLeave(kind, $(id), event));
   listen($('race-leave'), 'click', (event) => {
@@ -456,7 +492,8 @@ export function createCouchShell({
     );
     $('race-review').hidden = status !== 'finished';
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
-    $('race-pause').textContent = screen === 'review' ? 'Results' : 'Pause';
+    // Do not replace the native click target's content on every flight frame.
+    setText('race-pause', screen === 'review' ? 'Results' : 'Pause');
     $('race-focus').textContent = status === 'ready' ? 'Race setup' : 'New match · setup';
     $('race-class-field').hidden = !equipment[0].action;
     $('race-class').disabled = !equipment[0].action || status !== 'ready';

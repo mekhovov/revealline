@@ -93,7 +93,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
     window: win,
     localStorage: store,
     navigator: { getGamepads: () => [] },
-    location: { href: 'http://localhost/game/couch/relay-rescue.html' },
+    location: { href: 'http://localhost/game/couch/relay-rescue.html?journey=legacy' },
     matchMedia: (query) =>
       query === '(prefers-reduced-motion: reduce)' ? media : { matches: false },
     requestAnimationFrame(fn) {

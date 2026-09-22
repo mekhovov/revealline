@@ -16,14 +16,15 @@ import {
   TEAM_SPATIAL_PROFILE_KEY,
 } from './team-spatial-originals.mjs';
 
-/** Explicit candidate-review entry only. Originals require a separate opt-in;
- * no variant grants default enrollment, official awards, artwork qualification
- * or changes to legacy Team arena preferences.
+/** Prepare the exact Team edition selected by the host's entry policy.
+ * Player-facing copy does not grant official awards, artwork qualification
+ * or change legacy Team arena preferences.
  * Pressure has a separate progress scope; only admitted play records events. */
 export async function createTeamGreyboxEntry({
   artwork = false,
   pressure = false,
   spatial = false,
+  reviewCopy = true,
 } = {}) {
   const source = spatial
     ? createTeamSpatialOriginalCandidates()
@@ -48,7 +49,9 @@ export async function createTeamGreyboxEntry({
     candidateJourney,
     candidateProgress,
     candidatePreferences: preferences,
-    candidateCardPresenter: createTeamMissionCardPresenter(candidateJourney, candidateProgress),
+    candidateCardPresenter: createTeamMissionCardPresenter(candidateJourney, candidateProgress, {
+      reviewCopy,
+    }),
     candidateCaptureTeaching: createTeamCaptureTeaching(
       candidateJourney,
       TEAM_JOURNEY_LEARNING_ARCS[0].missionIds,

@@ -290,6 +290,40 @@ test('actual Playground entry blocks Play/open/mode launch during chosen pack de
   assert.notEqual(f.$('preview-frame').src, source);
 });
 
+test('Couch preview opens the Legacy installed library without changing the editor, history or saved Solo configuration', async (t) => {
+  const f = await harness(t),
+    original = f.current();
+  await f.teaching('tactical-read-clearing').onclick();
+  f.$('preview-button').click();
+  const editor = f.$('level-json').value,
+    classId = f.$('class-select').value,
+    turnPolicy = f.$('turn-select').value,
+    storage = [...f.storage.entries()],
+    writes = f.writes.length;
+  assert.equal(f.current().id, 'tactical-read-clearing');
+  assert.match(f.$('preview-frame').src, /^\.\.\/\?practice=1&revision=/);
+
+  f.$('preview-mode').value = 'couch';
+  f.$('preview-mode').onchange();
+
+  assert.equal(f.$('preview-frame').src, '../couch/?journey=legacy&focus=1');
+  assert.equal(f.$('open-preview').href, '../couch/?journey=legacy&focus=1');
+  assert.match(f.$('editor-status').textContent, /Couch preview uses installed maps and packs/);
+  assert.equal(f.$('level-json').value, editor);
+  assert.equal(f.$('class-select').value, classId);
+  assert.equal(f.$('turn-select').value, turnPolicy);
+  assert.deepEqual([...f.storage.entries()], storage);
+  assert.equal(f.writes.length, writes, 'Couch preview does not overwrite the Solo scenario');
+
+  f.$('undo-button').click();
+  assert.deepEqual(f.current(), original, 'preview selection creates no editor-history entry');
+  assert.deepEqual(
+    [...f.storage.entries()],
+    storage,
+    'Undo does not alter the saved Solo scenario',
+  );
+});
+
 test('three native teaching buttons adopt exact scenarios only through import and explicit practice launch', async (t) => {
   const f = await harness(t);
   assert.equal(f.$('teaching-examples').children.length, 3);

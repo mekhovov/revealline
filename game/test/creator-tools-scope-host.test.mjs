@@ -21,7 +21,7 @@ for (const mode of ['ordinary', 'practice', 'course']) {
           ? '?practice=1'
           : mode === 'course'
             ? '?course=first-flight&lesson=close-line'
-            : '',
+            : '?journey=legacy',
       previewStorage: memoryStorage({ 'revealline.playground.current': JSON.stringify(scenario) }),
     });
     const checkpoint = authoritativeCheckpoint(page.rendered.run);

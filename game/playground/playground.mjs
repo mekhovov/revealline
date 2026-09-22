@@ -512,8 +512,8 @@ function preview() {
   }
   if ($('preview-mode').value === 'couch') {
     beginPreview();
-    $('preview-frame').src = '../couch/?focus=1';
-    $('open-preview').href = '../couch/?focus=1';
+    $('preview-frame').src = '../couch/?journey=legacy&focus=1';
+    $('open-preview').href = '../couch/?journey=legacy&focus=1';
     status('Couch preview uses installed maps and packs. Solo configuration stays in the editor.');
     showFeedback('preview');
     return true;

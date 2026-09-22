@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createHash, webcrypto } from 'node:crypto';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { page as teamPage } from './helpers/coop-host.mjs';
@@ -8,6 +9,42 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { authoredModeDestinations, authoredTeamReturn } from '../ui/authored-mode-routes.mjs';
+import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
+
+const defaultTeam = createTeamSpatialOriginalCandidates();
+const teamOriginals = new Map(
+  await Promise.all(
+    defaultTeam.assets.map(async (asset) => [
+      asset.path,
+      await readFile(new URL('../' + asset.path, import.meta.url)),
+    ]),
+  ),
+);
+
+function teamPictures({ install }) {
+  const BaseImage = globalThis.Image;
+  install('Image', {
+    value: class extends BaseImage {
+      async decode() {
+        if (!this.source.startsWith('data:image/png;base64,')) return super.decode();
+        const bytes = Buffer.from(this.source.split(',')[1], 'base64');
+        this.width = this.naturalWidth = bytes.readUInt32BE(16);
+        this.height = this.naturalHeight = bytes.readUInt32BE(20);
+        this.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }
+    },
+  });
+  install('crypto', { value: webcrypto });
+  install('fetch', {
+    value: async (url) => {
+      const asset = defaultTeam.assets.find((row) =>
+        new URL(url).pathname.endsWith('/' + row.path),
+      );
+      assert(asset, 'Team fetch uses a registered original');
+      return new Response(teamOriginals.get(asset.path));
+    },
+  });
+}
 
 class CandidateImage {
   width = 1774;
@@ -200,11 +237,12 @@ test('unfinished Versus stays paused through Stay and requires deliberate discar
   assert.deepEqual(p.checkpoint(), before);
 });
 for (const origin of ['solo', 'versus'])
-  test(`separate Team retains only bounded ${origin} navigation, with unchanged arenas`, async (t) => {
+  test(`default Team retains bounded ${origin} navigation and selects its new mission library`, async (t) => {
     const p = await teamPage(t, {
       href: `http://localhost/game/couch/relay-rescue.html?return=${origin}&journey-return=opening`,
       nativeFocus: true,
       capturePaint: true,
+      beforeImport: teamPictures,
     });
     assert.equal(
       p.$('coop-race').getAttribute('href'),
@@ -212,7 +250,7 @@ for (const origin of ['solo', 'versus'])
     );
     assert.equal(p.$('coop-solo').getAttribute('href'), '../?journey=opening');
     assert.equal(p.$('coop-versus').getAttribute('href'), './?journey=opening');
-    assert.match(p.$('coop-stage').textContent, /FIRST CONNECTION/i);
+    assert.equal(p.$('coop-level').value, defaultTeam.missions[0].id);
   });
 test('route hints reject unknown, ambiguous and competing launch owners', () => {
   assert.equal(authoredModeDestinations('solo', 'https://other.invalid/'), null);
@@ -271,6 +309,7 @@ for (const origin of ['solo', 'versus'])
       href: `http://localhost/game/couch/relay-rescue.html?return=${origin}&journey-return=authored`,
       nativeFocus: true,
       capturePaint: true,
+      beforeImport: teamPictures,
     });
     p.$('coop-start').click();
     p.tick();

@@ -24,8 +24,8 @@ const pad = () => ({
   buttons: Array.from({ length: 16 }, () => ({ value: 0, pressed: false })),
 });
 const routes = [
-  ['race-coop', 'relay-rescue.html?return=versus'],
-  ['race-solo-return', '../'],
+  ['race-coop', 'relay-rescue.html?journey=legacy&return=versus'],
+  ['race-solo-return', '../?journey=legacy'],
 ];
 
 for (const [id, href] of routes) {
@@ -228,7 +228,10 @@ test('Solo departure captures one validated scalar token and never adopts a newe
   );
   f.$('race-leave-back').click();
   f.$('race-coop').click();
-  assert.equal(f.$('race-leave').getAttribute('href'), 'relay-rescue.html?return=versus');
+  assert.equal(
+    f.$('race-leave').getAttribute('href'),
+    'relay-rescue.html?journey=legacy&return=versus',
+  );
   assert.equal(reads, 1, 'Going to Team never forwards a Solo origin or nests a return stack.');
 });
 
@@ -244,7 +247,7 @@ for (const reader of [
     const f = await shellFixture(t, { getSoloReturnToken: reader });
     f.$('race-solo-return').click();
     assert.equal(f.$('race-leave').emit('click').defaultPrevented, false);
-    assert.equal(f.$('race-leave').getAttribute('href'), '../');
+    assert.equal(f.$('race-leave').getAttribute('href'), '../?journey=legacy');
   });
 
 test('an authored departure cannot adopt a different Journey edition at confirmation', async (t) => {
@@ -267,8 +270,8 @@ for (const reader of [
 ])
   test(`an invalid Journey reader cannot rewrite the fixed Solo destination: ${reader}`, async (t) => {
     const f = await shellFixture(t, { getSoloJourneyRoute: reader });
-    assert.equal(f.$('race-solo-return').getAttribute('href'), '../');
+    assert.equal(f.$('race-solo-return').getAttribute('href'), '../?journey=legacy');
     f.$('race-solo-return').click();
     assert.equal(f.$('race-leave').emit('click').defaultPrevented, false);
-    assert.equal(f.$('race-leave').getAttribute('href'), '../');
+    assert.equal(f.$('race-leave').getAttribute('href'), '../?journey=legacy');
   });
