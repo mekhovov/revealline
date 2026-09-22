@@ -1,0 +1,3 @@
+# Verify sprite history focus
+
+Open an isolated Asset Studio workspace and edit a supported raster. Draw through the keyboard canvas controls, activate Undo pixels with Enter, and continue with Enter through Redo and Undo. Keep focus on an enabled editing control. Intermediate Undo and canvas Ctrl/Cmd+Z must retain their existing owners. Rotate portrait to short landscape and verify the focused successor becomes visible; do not suppress scrolling merely to preserve focus identity. Check unchanged pixels after Undo and retained history after Redo. Keep the upload, local save, collection import and player-save stores separate. Record exact source/runtime hashes, failed attempts, modeled tests, native viewports and public-release limitations.

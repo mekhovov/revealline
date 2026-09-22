@@ -1,0 +1,75 @@
+{
+  "source": "20370a67892e5d48d65b0be9277c715d297b9f47",
+  "equalDocumentFields": {
+    "assets": false,
+    "collections": false,
+    "format": true,
+    "id": true,
+    "revision": true,
+    "selection": false,
+    "slots": true,
+    "themes": false
+  },
+  "assetCount": 133,
+  "originalBytes": 4009983,
+  "allOriginalBytesPreserved": true,
+  "sourceBundleSha256": "6ec48c3264573bb06a740caaeb96c4ae708293d9acfeeaa619b57dd1bc54ad35",
+  "destinationBundleSha256": "1f552157fb505deaf58a0b7526500b49ce4c663dbc7e17086bd07bf1867cbef6",
+  "assetRevisionCount": 1694,
+  "identicalAssetRevisionIdentities": 1692,
+  "allAssetMetadataAndParentContentPreserved": true,
+  "documentedNamespaceRemaps": [
+    {
+      "from": [
+        "player.scout.compact.custom.source",
+        1
+      ],
+      "to": [
+        [
+          "import-62-1692",
+          1
+        ]
+      ]
+    },
+    {
+      "from": [
+        "player.scout.compact.custom",
+        1
+      ],
+      "to": [
+        [
+          "import-62-1693",
+          1
+        ]
+      ]
+    }
+  ],
+  "comparisonCorrection": "Initial exact ID-list equality failed because adoptStudioBundle intentionally namespaces new/imported IDs and creates a target collection/theme successor. Corrected to verify all original byte payloads and all asset record fields including recursive parent content. This is collection adoption, not byte-identical document or exact historical theme-pin restoration.",
+  "selectionChange": {
+    "before": {
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
+      "collection": null,
+      "theme": {
+        "id": "fpv",
+        "revision": 62
+      }
+    },
+    "after": {
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
+      "collection": {
+        "id": "import-62",
+        "revision": 1
+      },
+      "theme": {
+        "id": "fpv",
+        "revision": 62
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "base": "20370a67892e5d48d65b0be9277c715d297b9f47",
+  "runtimeSHA256": "f7800e5dcb7d8b65d2ee78fe247ad7768019731c536a702b605fe1a356efe425",
+  "baseRuntimeMatchesMain": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+  "native": {
+    "baseline": "Focused Undo/Redo disabled at endpoint drops to WebArea.",
+    "firstCandidate": "Endpoint focus fixed, but preventScroll:true left successor offscreen after390x844\u2192844x390 rotation. Runtime5999fdb99e51d29cbdce827b729cb129282b28c251514be0e7de44d2c7a9bf4a preserved.",
+    "final": "Normal focus reveals successor. Native keyboard Undo\u2192Redo\u2192Undo succeeds and target remains visible in portrait and after landscape rotation.",
+    "intermediateAndShortcut": "Firstcandidate tested intermediateUndo staysowned andCtrlZkeepscanvas; unchanged finalfocused tests cover both.",
+    "viewports": [
+      "1280x720 baseline",
+      "390x844",
+      "844x390"
+    ],
+    "consoleWarningsErrors": [],
+    "screenshots": "inline only",
+    "unsupportedMeasurements": "Two final-UI DOM-rectangle reads timed out; screenshots and AX independently established visible focus. No numeric target measurements claimed for this correction."
+  },
+  "http": {
+    "responses": 185,
+    "paths": 185,
+    "mismatches": [],
+    "receiptSha256": "774756a34c78793a9b975c60cf795cc525f239d5d1f53c910173309fef5aa4e8"
+  },
+  "tests": {
+    "runtimes": [
+      "20.19.5",
+      "22.22.2"
+    ],
+    "baseline": {
+      "pass": 11,
+      "expectedFocusFailures": 4
+    },
+    "final": {
+      "pass": 15,
+      "fail": 0
+    }
+  },
+  "scope": "Controlled source preview overrides only sprite-panel on exactPR247. Not final integratedsource/fullrelease/public or physicaldevice qualification.",
+  "cleanup": "Native tabsclosed,viewportreset,serversstopped.",
+  "createdAt": "2026-09-22T13:47:21.092319+00:00"
+}
