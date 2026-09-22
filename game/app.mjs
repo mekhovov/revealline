@@ -5269,6 +5269,19 @@ try {
     },
     currentSession: () => currentBackupSession(),
     canSnapshotBackup: () => storedStateAdopted,
+    profileReplacementIdentity: () =>
+      canonicalJSON({
+        library,
+        packs,
+        libraryGeneration,
+        runId,
+        storedStateAdopted,
+        persistenceReady,
+        session: currentBackupSession('2000-01-01T00:00:00.000Z'),
+        profile: localStorage.getItem(libraryKey),
+        saved: localStorage.getItem(sessionKey),
+        backupMarker: localStorage.getItem(`${libraryKey}.backup-lock`),
+      }),
     sessionNote: () =>
       [
         sessionPictures.status().originals
@@ -5284,6 +5297,10 @@ try {
         .filter(Boolean)
         .join(' '),
     restore: restoreAttempt,
+    checkProfileReplacement: () => {
+      if (courseSession || courseEntry)
+        throw new Error('End First Flight before replacing player data.');
+    },
     beforeProfileReplacement: () => {
       if (courseSession || courseEntry)
         throw new Error('End First Flight before replacing player data.');
@@ -5308,64 +5325,80 @@ try {
     applyBackup: async (prepared) => {
       if (courseSession || courseEntry)
         throw new Error('End First Flight before importing a backup.');
-      await assertExternalBackupSupported({ kind: 'backup' });
-      backupBusy = true;
-      invalidateContentSwitch();
-      packCommits.markIntent();
-      contentSwitchBusy = true;
-      let committed = false;
+      // Hold synchronously after the panel's final identity check, before any
+      // preparation can yield and let a pending seal escape the Undo snapshot.
+      const releaseAwards = masteryAwards.holdCommits();
       try {
-        refreshContentSelectors();
-        if (!writer.writable) throw new Error(writer.reason);
-        if (!persistenceReady) {
-          const recovered = await recoverBackupImport(backupAdapters());
-          if (!recovered.ok) throw new Error(recovered.warning);
-        } else assertWriter();
-        pause(true);
-        cancelRestore();
-        masteryAwards.cancelAll();
-        const result = await commitBackup(prepared, backupAdapters());
-        if (!result.ok) {
-          if (result.recoveryRequired) persistenceReady = false;
-          throw new Error(result.warning);
+        await assertExternalBackupSupported({ kind: 'backup' });
+        backupBusy = true;
+        invalidateContentSwitch();
+        packCommits.markIntent();
+        contentSwitchBusy = true;
+        let committed = false;
+        try {
+          refreshContentSelectors();
+          if (!writer.writable) throw new Error(writer.reason);
+          if (!persistenceReady) {
+            const recovered = await recoverBackupImport(backupAdapters());
+            if (!recovered.ok) throw new Error(recovered.warning);
+          } else assertWriter();
+          pause(true);
+          cancelRestore();
+          const result = await commitBackup(prepared, backupAdapters());
+          if (!result.ok) {
+            if (result.recoveryRequired) persistenceReady = false;
+            throw new Error(result.warning);
+          }
+          committed = true;
+          masteryAwards.cancelAll();
+          const checked = await checkedChapters();
+          for (const descriptor of checked.index?.chapters ?? [])
+            await externalChapters.readiness(checked, descriptor.id);
+          const content = contentFromChapters(checked);
+          persistenceReady = true;
+          storedStateAdopted = true;
+          saveSucceeded = true;
+          if (result.warning) {
+            $('save-warning').textContent = result.warning;
+            show('save-warning', true);
+          } else show('save-warning', false);
+          library = result.profile.library;
+          libraryBaseline = library;
+          libraryGeneration = result.profile.generation;
+          recovery = null;
+          adoptContentCatalog(content);
+          packCommits.acceptCurrent();
+          selectEntry(baseEntry);
+          adoptPreferences();
+          refreshCampaigns();
+          return result;
+        } catch (error) {
+          if (committed) {
+            persistenceReady = false;
+            storedStateAdopted = false;
+            void packCommits.noteStaleCommit();
+            throw new Error(
+              `Game data committed. Reload and restore its exact originals before continuing. ${error.message}`,
+            );
+          }
+          throw error;
+        } finally {
+          backupBusy = false;
+          contentSwitchBusy = false;
+          refreshContentSelectors();
+          await packCommits.reconcile();
         }
-        committed = true;
-        const checked = await checkedChapters();
-        for (const descriptor of checked.index?.chapters ?? [])
-          await externalChapters.readiness(checked, descriptor.id);
-        const content = contentFromChapters(checked);
-        persistenceReady = true;
-        storedStateAdopted = true;
-        saveSucceeded = true;
-        if (result.warning) {
-          $('save-warning').textContent = result.warning;
-          show('save-warning', true);
-        } else show('save-warning', false);
-        library = result.profile.library;
-        libraryBaseline = library;
-        libraryGeneration = result.profile.generation;
-        recovery = null;
-        adoptContentCatalog(content);
-        packCommits.acceptCurrent();
-        selectEntry(baseEntry);
-        adoptPreferences();
-        refreshCampaigns();
-        return result;
-      } catch (error) {
-        if (committed) {
-          persistenceReady = false;
-          storedStateAdopted = false;
-          void packCommits.noteStaleCommit();
-          throw new Error(
-            `Game data committed. Reload and restore its exact originals before continuing. ${error.message}`,
-          );
-        }
-        throw error;
       } finally {
-        backupBusy = false;
-        contentSwitchBusy = false;
-        refreshContentSelectors();
-        await packCommits.reconcile();
+        // An uncertain rollback or failed adoption cannot authorize old-profile
+        // writes. A verified unchanged failure resumes the same verifier jobs.
+        let safeOriginal = persistenceReady && storedStateAdopted && writer.writable;
+        try {
+          safeOriginal = safeOriginal && localStorage.getItem(`${libraryKey}.backup-lock`) === null;
+        } catch {
+          safeOriginal = false;
+        }
+        if (!safeOriginal) masteryAwards.cancelAll();
+        releaseAwards();
       }
     },
     setPacks: replacePackLibrary,

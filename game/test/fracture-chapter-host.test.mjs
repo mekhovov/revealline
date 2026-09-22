@@ -1,3 +1,4 @@
+import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
 // Actual app/core/store source. DOM, IndexedDB and image dimensions are finite
 // modeled boundaries; original compiler bytes/hashes are real, not native browser proof.
 import test from 'node:test';
@@ -465,7 +466,9 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
         assets = p.fixture.assets.contents(),
         writes = p.fixture.assets.allPuts.length;
       p.$('save-json').value = JSON.stringify(backup);
-      await p.$('import-save').onclick();
+      const missingOriginalImport = p.$('import-save').onclick();
+      await acceptGameDataReplacement(p);
+      await missingOriginalImport;
       assert.match(p.$('save-status').textContent, /original|presentation|missing/i);
       assert.doesNotMatch(p.$('save-status').textContent, /Game data restored/);
       assert.deepEqual(p.storage.map, local);
@@ -483,7 +486,9 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
       p.$('optional-worlds-dialog').close();
       p.$('library-button').click();
       p.$('save-json').value = JSON.stringify(backup);
-      await p.$('import-save').onclick();
+      const pendingImport = p.$('import-save').onclick();
+      await acceptGameDataReplacement(p);
+      await pendingImport;
       assert.match(p.$('save-status').textContent, /Game data restored/);
       assert.match(p.$('save-status').textContent, /saved flight is ready to load/);
       p.$('library-dialog').close();

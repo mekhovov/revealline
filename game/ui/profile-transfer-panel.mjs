@@ -140,7 +140,24 @@ export function attachProfileTransferPanel({
         cancel.disabled = true;
         cancel.hidden = true;
         operation.phase('Preparing the verified collection copy…');
-        const result = await applyPrepared(fresh.prepared, operation);
+        const result = await applyPrepared(fresh.prepared, operation, {
+          verifySource: async () => {
+            operation.phase('Rechecking the earlier release before replacement…');
+            const latest = await prepareProfileTransfer(fresh.source.id, {
+              ...api.profileTransfer,
+              ...options,
+              signal: operation.signal,
+            });
+            operation.check();
+            if (latest.fingerprint !== fresh.fingerprint) {
+              reviewed = latest;
+              showPreview(latest);
+              throw new Error(
+                'The earlier release changed during replacement review. Nothing was copied; review the updated source before copying again.',
+              );
+            }
+          },
+        });
         operation.check();
         report(
           `Copied from ${fresh.source.version}. ${result.undo ? 'Undo game-data import restores the previous collection.' : 'The previous collection could not form a verified backup; Undo is unavailable.'} ${fresh.preview.hasSession ? 'Your saved flight is ready to load, paused.' : ''} ${result.warning || ''}`,

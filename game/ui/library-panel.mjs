@@ -775,16 +775,18 @@ export function attachLibraryPanel(api) {
   }
   function releaseTask(owner, restoreFocus = true) {
     if (libraryTask !== owner) return;
-    owner.focusReturn?.beforeRefresh();
+    owner.focusReturn?.beforeRefresh?.();
     libraryTask = null;
     busy = false;
     for (const { element, disabled } of owner.controls)
       if (element.isConnected) element.disabled = disabled;
+    const confirm = $('library-operation-confirm');
+    confirm.hidden = confirm.disabled = true;
     const cancel = $('library-operation-cancel');
     cancel.hidden = true;
     cancel.disabled = true;
     refresh();
-    owner.focusReturn?.afterRefresh();
+    owner.focusReturn?.afterRefresh?.();
     if (restoreFocus && !owner.detached) owner.focus.restore();
     else owner.focus.cancel();
   }
@@ -834,19 +836,37 @@ export function attachLibraryPanel(api) {
       ),
     };
     owner.focus = captureOperationFocus(owner.opener, {
-      owned: [$('library-operation-cancel')],
-      resolveTarget: focusReturn?.resolve,
+      owned: [$('library-operation-cancel'), $('library-operation-confirm')],
+      resolveTarget: () =>
+        owner.reviewing
+          ? $('library-operation-cancel')
+          : focusReturn?.resolve
+            ? focusReturn.resolve()
+            : owner.opener,
     });
     libraryTask = owner;
     busy = true;
     feedbackRail.present(id, id === 'transfer-status' ? ['transfer-cancel'] : []);
     status(id, label, 'busy');
-    for (const { element } of owner.controls)
-      if (!element.hasAttribute('data-close')) element.disabled = true;
     const cancel = $('library-operation-cancel');
     cancel.textContent = 'Cancel operation';
     cancel.hidden = false;
     cancel.disabled = false;
+    // Keep the operation's return ticket intact. A separate, synchronous ticket
+    // moves only the actual focused control that this task is about to disable.
+    if (
+      owner.controls.some(
+        ({ element, disabled }) =>
+          element === owner.opener && !disabled && !element.hasAttribute('data-close'),
+      )
+    )
+      captureOperationFocus(owner.opener, { restoreTo: cancel }).restore();
+    // Native close() changes open before its queued close event retires the task.
+    // Focus listeners can close the dialog or replace this operation synchronously.
+    if (libraryTask === owner && !$('library-dialog').open) cancelLibraryTask(false);
+    if (libraryTask !== owner || owner.controller.signal.aborted) return;
+    for (const { element } of owner.controls)
+      if (element !== cancel && !element.hasAttribute('data-close')) element.disabled = true;
     const check = () => {
       if (libraryTask !== owner || owner.controller.signal.aborted)
         throw new DOMException('Library operation cancelled.', 'AbortError');
@@ -859,6 +879,48 @@ export function attachLibraryPanel(api) {
         check();
         if (!owner.detached) status(id, message, 'busy');
       },
+      async reviewReplacement(
+        message,
+        { keepLabel = 'Keep current data', replaceLabel = 'Replace game data' } = {},
+      ) {
+        check();
+        const confirm = $('library-operation-confirm');
+        owner.reviewing = true;
+        status(id, message);
+        cancel.textContent = keepLabel;
+        confirm.textContent = replaceLabel;
+        confirm.hidden = confirm.disabled = false;
+        // Move only an operation-owned focus; a newer Close or other focus wins.
+        owner.focus.restore();
+        owner.focus = captureOperationFocus(cancel, {
+          owned: [cancel, confirm],
+          restoreTo: owner.opener,
+        });
+        try {
+          await new Promise((resolve, reject) => {
+            const stop = () => {
+              confirm.onclick = null;
+              owner.controller.signal.removeEventListener('abort', stop);
+              reject(new DOMException('Replacement cancelled.', 'AbortError'));
+            };
+            confirm.onclick = () => {
+              if (libraryTask !== owner || owner.controller.signal.aborted) return;
+              owner.controller.signal.removeEventListener('abort', stop);
+              confirm.onclick = null;
+              resolve();
+            };
+            owner.controller.signal.addEventListener('abort', stop, { once: true });
+            if (owner.controller.signal.aborted) stop();
+          });
+          check();
+        } finally {
+          owner.reviewing = false;
+          if (libraryTask === owner) {
+            confirm.hidden = confirm.disabled = true;
+            cancel.textContent = 'Cancel operation';
+          }
+        }
+      },
       commit(message) {
         check();
         owner.committing = true;
@@ -867,6 +929,7 @@ export function attachLibraryPanel(api) {
       },
     };
     try {
+      check();
       await fn(context);
       check();
       if (['busy', 'detached'].includes($(id).dataset.state))
@@ -957,9 +1020,24 @@ export function attachLibraryPanel(api) {
     };
     return context ? work(context) : task('save-status', work, 'Validating imported game data…');
   }
-  async function applyPrepared(prepared, operation) {
+  async function applyPrepared(prepared, operation, { verifySource } = {}) {
     operation?.phase('Preparing an undo copy of the current collection…');
-    api.beforeProfileReplacement?.();
+    api.checkProfileReplacement?.();
+    const identity = () =>
+      api.profileReplacementIdentity?.() ??
+      canonicalJSON({
+        library: api.get().library,
+        packs: api.get().packs,
+        session: api.saved(),
+      });
+    const priorIdentity = identity();
+    const checkIdentity = () => {
+      operation.check();
+      if (identity() !== priorIdentity)
+        throw new Error(
+          'Current game data changed during review. Nothing was replaced; prepare the import again.',
+        );
+    };
     let old = null;
     try {
       if (api.canSnapshotBackup()) {
@@ -976,8 +1054,18 @@ export function attachLibraryPanel(api) {
         );
       }
     } catch {}
-    operation?.check();
-    operation?.commit('Saving the verified collection and saved flight…');
+    checkIdentity();
+    await operation.reviewReplacement(
+      'Replace this release’s pictures, scores, preferences, installed packs and saved flight? ' +
+        (old
+          ? 'Undo will restore the current game data. '
+          : 'Undo is unavailable: the current data could not form a verified backup. Keep current data to export or repair it first. ') +
+        'Embedded pack artwork is included. Separately stored picture originals, stories and custom music are not replaced by this game-data import.',
+    );
+    checkIdentity();
+    if (verifySource) await verifySource();
+    checkIdentity();
+    operation.commit('Saving the verified collection and saved flight…');
     const applied = await api.applyBackup(prepared);
     operation?.check();
     previousBackup = old;
@@ -1049,18 +1137,25 @@ export function attachLibraryPanel(api) {
       );
     });
   $('undo-backup').onclick = () =>
-    task('save-status', async (operation) => {
-      if (!previousBackup) return;
-      operation.commit('Restoring the previous collection and saved flight…');
-      await api.applyBackup(previousBackup);
-      operation.check();
-      previousBackup = null;
-      previousLibrary = null;
-      $('undo-backup').disabled = true;
-      $('undo-library').disabled = true;
-      refresh();
-      status('save-status', 'Previous collection, packs and saved flight restored.');
-    });
+    task(
+      'save-status',
+      async (operation) => {
+        if (!previousBackup) return;
+        operation.commit('Restoring the previous collection and saved flight…');
+        await api.applyBackup(previousBackup);
+        operation.check();
+        previousBackup = null;
+        previousLibrary = null;
+        $('undo-backup').disabled = true;
+        $('undo-library').disabled = true;
+        refresh();
+        status('save-status', 'Previous collection, packs and saved flight restored.');
+      },
+      'Restoring the previous game data…',
+      {
+        resolve: () => ($('undo-backup').disabled ? $('export-backup') : $('undo-backup')),
+      },
+    );
   $('export-library').onclick = () =>
     task('save-status', async (operation) => {
       const text = exportLibrary(api.get().library);

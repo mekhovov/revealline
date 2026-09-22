@@ -196,7 +196,11 @@ async function setup(t, count = 30, hostOverrides = {}) {
     node('library-operation-message'),
     node('library-operation-controls'),
   );
-  node('library-operation-controls').append(node('library-operation-cancel'));
+  node('library-operation-controls').append(
+    node('library-operation-cancel'),
+    node('library-operation-confirm'),
+  );
+  node('library-operation-confirm').hidden = node('library-operation-confirm').disabled = true;
   node('library-operation-rail').hidden = true;
   node('library-saves').append(node('save-status'), node('cancel-attempt-export'));
   node('collection-dialog').append(
@@ -730,20 +734,19 @@ test('busy library import still prevents cancel until its guarded task finishes'
   assert.equal(h.node('library-dialog').open, false);
 });
 
-test('profile replacement cancels pending writes before its Undo snapshot and restores the prior profile', async (t) => {
+test('backup review preserves pending writes and restores a stable prior profile with Undo', async (t) => {
   const order = [];
   let pendingWrite = true,
     h;
   h = await setup(t, 1, {
-    beforeProfileReplacement() {
-      order.push('boundary');
-      pendingWrite = false;
+    checkProfileReplacement() {
+      order.push('eligibility');
     },
     canSnapshotBackup: () => true,
     currentSession() {
-      // backupContents is the point where the previous profile is captured.
-      // A later cancellation could omit a just-earned seal from Undo.
-      assert.equal(pendingWrite, false, 'cancel pending profile writes before taking the snapshot');
+      // The review is read-only. A later earned seal invalidates this snapshot
+      // through profileReplacementIdentity before replacement can commit.
+      assert.equal(pendingWrite, true, 'review must not cancel pending profile writes');
       order.push('snapshot');
       return null;
     },
@@ -765,17 +768,23 @@ test('profile replacement cancels pending writes before its Undo snapshot and re
   };
   incoming.library.preferences.musicEnabled = true;
   h.node('save-json').value = JSON.stringify(incoming);
-  await h.node('import-save').onclick();
-  assert.deepEqual(order, ['boundary', 'snapshot', 'apply']);
+  const pending = h.node('import-save').onclick();
+  await waitFor(() => !h.node('library-operation-confirm').hidden);
+  assert.deepEqual(order, ['eligibility', 'snapshot']);
+  assert.match(h.node('save-status').textContent, /Undo will restore/);
+  assert.equal(h.library.preferences.musicEnabled, false);
+  h.node('library-operation-confirm').onclick();
+  await pending;
+  assert.deepEqual(order, ['eligibility', 'snapshot', 'apply']);
   assert.equal(h.library.preferences.musicEnabled, true);
   assert.match(h.node('save-status').textContent, /Game data restored/);
   assert.equal(h.node('undo-backup').disabled, false);
   await h.node('undo-backup').onclick();
-  assert.deepEqual(order, ['boundary', 'snapshot', 'apply', 'apply']);
+  assert.deepEqual(order, ['eligibility', 'snapshot', 'apply', 'apply']);
   assert.deepEqual(
     h.library,
     previous,
-    'Undo returns the full profile captured after cancellation',
+    'Undo returns the unchanged profile reviewed before acceptance',
   );
   assert.equal(h.node('undo-backup').disabled, true);
 });
@@ -784,7 +793,7 @@ test('a rejected replacement boundary preserves the active profile without takin
   let snapshots = 0,
     applications = 0;
   const h = await setup(t, 1, {
-    beforeProfileReplacement() {
+    checkProfileReplacement() {
       throw new Error('Profile replacement is temporarily unavailable.');
     },
     canSnapshotBackup: () => true,
@@ -1348,4 +1357,148 @@ test('Collection labels the retained score run separately from a later best meda
     /SILVER · 55\.77s · Level best medal: GOLD/,
   );
   assert.deepEqual(h.library, before);
+});
+
+for (const undoFailure of ['unavailable', 'invalid snapshot']) {
+  for (const choice of ['keep', 'replace']) {
+    test(`backup preflight reports ${undoFailure} before ${choice} and never writes implicitly`, async (t) => {
+      let writes = 0;
+      const h = await setup(t, 1, {
+        beforeProfileReplacement() {},
+        canSnapshotBackup: () => undoFailure !== 'unavailable',
+        currentSession() {
+          throw new Error('Cannot verify previous flight');
+        },
+        async applyBackup() {
+          writes++;
+          return { ok: true };
+        },
+      });
+      h.setLibrary(emptyLibrary());
+      const prior = h.library;
+      h.api.open('saves');
+      h.node('save-json').value = JSON.stringify({
+        format: 'xonix-backup.v1',
+        library: emptyLibrary(),
+        packs: { format: 'xonix-pack-library.v1', packs: [] },
+        session: null,
+      });
+      const pending = h.node('import-save').onclick();
+      await waitFor(() => !h.node('library-operation-confirm').hidden);
+      assert.equal(writes, 0);
+      assert.equal(h.library, prior);
+      assert.match(h.node('save-status').textContent, /Undo is unavailable/);
+      assert.match(h.node('save-status').textContent, /Embedded pack artwork is included/);
+      assert.match(
+        h.node('save-status').textContent,
+        /Separately stored picture originals, stories and custom music are not replaced/,
+      );
+      assert.equal(h.node('library-operation-cancel').textContent, 'Keep current data');
+      h.node(
+        choice === 'keep' ? 'library-operation-cancel' : 'library-operation-confirm',
+      ).onclick();
+      await pending;
+      assert.equal(writes, choice === 'keep' ? 0 : 1);
+      assert.equal(h.node('library-operation-confirm').hidden, true);
+      assert.equal(h.node('undo-backup').disabled, true);
+    });
+  }
+}
+
+test('backup review rejects changed current data instead of restoring an outdated Undo copy', async (t) => {
+  let writes = 0;
+  const h = await setup(t, 1, {
+    beforeProfileReplacement() {},
+    canSnapshotBackup: () => true,
+    currentSession: () => null,
+    applyBackup() {
+      writes++;
+      return { ok: true };
+    },
+  });
+  h.setLibrary(emptyLibrary());
+  h.api.open('saves');
+  h.node('save-json').value = JSON.stringify({
+    format: 'xonix-backup.v1',
+    library: emptyLibrary(),
+    packs: { format: 'xonix-pack-library.v1', packs: [] },
+    session: null,
+  });
+  const pending = h.node('import-save').onclick();
+  await waitFor(() => !h.node('library-operation-confirm').hidden);
+  const newer = emptyLibrary();
+  newer.preferences.musicEnabled = true;
+  h.setLibrary(newer);
+  h.node('library-operation-confirm').onclick();
+  await pending;
+  assert.equal(writes, 0);
+  assert.equal(h.library, newer);
+  assert.match(h.node('save-status').textContent, /Current game data changed/);
+  assert.equal(h.node('undo-backup').disabled, true);
+});
+
+test('closing a replacement review cancels it and a delayed acceptance cannot write', async (t) => {
+  let writes = 0;
+  const h = await setup(t, 1, {
+    beforeProfileReplacement() {},
+    canSnapshotBackup: () => false,
+    applyBackup() {
+      writes++;
+      return { ok: true };
+    },
+  });
+  h.setLibrary(emptyLibrary());
+  h.api.open('saves');
+  h.node('save-json').value = JSON.stringify({
+    format: 'xonix-backup.v1',
+    library: emptyLibrary(),
+    packs: { format: 'xonix-pack-library.v1', packs: [] },
+    session: null,
+  });
+  const pending = h.node('import-save').onclick();
+  await waitFor(() => !h.node('library-operation-confirm').hidden);
+  const delayed = h.node('library-operation-confirm').onclick;
+  h.node('library-dialog').close();
+  h.setLibrary(emptyLibrary());
+  h.api.open('saves');
+  delayed();
+  await pending;
+  assert.equal(writes, 0);
+  assert.equal(h.node('library-operation-confirm').hidden, true);
+});
+
+test('a cancelled review cannot dismiss or accept a newer replacement decision', async (t) => {
+  let writes = 0;
+  const h = await setup(t, 1, {
+    beforeProfileReplacement() {},
+    canSnapshotBackup: () => false,
+    applyBackup() {
+      writes++;
+      return { ok: true };
+    },
+  });
+  h.setLibrary(emptyLibrary());
+  h.api.open('saves');
+  h.node('save-json').value = JSON.stringify({
+    format: 'xonix-backup.v1',
+    library: emptyLibrary(),
+    packs: { format: 'xonix-pack-library.v1', packs: [] },
+    session: null,
+  });
+  const first = h.node('import-save').onclick();
+  await waitFor(() => !h.node('library-operation-confirm').hidden);
+  const stale = h.node('library-operation-confirm').onclick;
+  h.node('library-operation-cancel').onclick();
+  const second = h.node('import-save').onclick();
+  await first;
+  await waitFor(() => !h.node('library-operation-confirm').hidden);
+  stale();
+  await Promise.resolve();
+  assert.equal(writes, 0);
+  assert.equal(h.node('library-operation-confirm').hidden, false);
+  assert.equal(h.node('library-operation-confirm').disabled, false);
+  h.node('library-operation-confirm').onclick();
+  await waitFor(() => writes === 1);
+  await second;
+  assert.equal(writes, 1);
 });

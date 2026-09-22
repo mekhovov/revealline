@@ -374,6 +374,7 @@ test('real transfer panel reviews empty-profile meaning, rechecks source and app
       return { ok: true };
     },
   };
+  let changeDuringReplacement = false;
   attachProfileTransferPanel({
     api: { profileTransfer: f.options },
     container: doc.body,
@@ -390,7 +391,14 @@ test('real transfer panel reviews empty-profile meaning, rechecks source and app
         commit() {},
       });
     },
-    applyPrepared: async (prepared) => {
+    applyPrepared: async (prepared, _operation, { verifySource }) => {
+      if (changeDuringReplacement) {
+        f.local.set(
+          f.k.profileKey,
+          exportLibrary(updatePreferences(emptyLibrary(), { textSize: 'standard' })),
+        );
+      }
+      await verifySource();
       const result = await commitBackup(prepared, adapters);
       assert.equal(result.ok, true, result.warning);
       return { ...result, undo: false };
@@ -425,6 +433,22 @@ test('real transfer panel reviews empty-profile meaning, rechecks source and app
   assert.equal(JSON.parse(target.get(targetKeys.profileKey)).preferences.textSize, 'large');
   assert.deepEqual(f.local, before);
   assert.equal(assets.get(targetKeys.journalKey), null);
+  await $('transfer-review').onclick();
+  changeDuringReplacement = true;
+  const writesBefore = events.length;
+  await assert.rejects(
+    $('transfer-copy').onclick(),
+    /earlier release changed during replacement review/,
+  );
+  assert.equal(
+    events.length,
+    writesBefore,
+    'Source changes during replacement review cannot commit stale data',
+  );
+  assert.equal(JSON.parse(target.get(targetKeys.profileKey)).preferences.textSize, 'large');
+  changeDuringReplacement = false;
+  await $('transfer-copy').onclick();
+  assert.equal(JSON.parse(target.get(targetKeys.profileKey)).preferences.textSize, 'standard');
 });
 
 test('a cancelled transfer read cannot hide the next review controls or publish its preview', async (t) => {
