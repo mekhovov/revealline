@@ -139,6 +139,23 @@ for (const query of [
     assert.equal(p.$('race-journey-note').hidden, true);
   });
 
+test('Playground installed-map preview keeps the Legacy catalogue and chapter access', async (t) => {
+  const p = await page(t, '?journey=legacy&focus=1');
+  assert.equal(p.doc.body.classList.contains('candidate-journey'), false);
+  assert.equal(p.$('race-level').children.length, 15);
+  assert.equal(p.$('race-chapters').disabled, false);
+  assert.equal(p.$('race-journey-note').hidden, true);
+  assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=legacy');
+  p.$('race-start').click();
+  await settle(() => {
+    p.frame(0);
+    return !p.$('race-pause').disabled;
+  });
+  assert.equal(p.state(), 'running');
+  assert.equal(p.renders[0].levelId, 'orchard-crossing');
+  assert.equal(p.renders[1].levelId, 'orchard-crossing');
+});
+
 test('an explicit prior Journey remains its exact edition with Legacy access', async (t) => {
   const p = await page(t, '?journey=opening');
   assert.equal(p.doc.body.classList.contains('candidate-journey'), true);

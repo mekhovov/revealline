@@ -268,6 +268,9 @@ queryless public root, direct Solo/Versus and Team (91/91/12), then explicit Leg
 and return paths. Preserve parameter-owned practice, course, pack and mode-return
 entry and Workshop catalogue context. Keep one publisher/one prepared successor;
 reserve the version before committing. No migration or new artwork is required.
+Check nested tool launches as well as tool return links: Playground's installed-map
+Couch preview must explicitly carry `journey=legacy` in both its frame and open
+link. An editor-only test does not prove the child host selected that catalogue.
 Legacy fixture helpers must explicitly request Legacy; dedicated default-entry
 tests must pass an actually empty query. Never change behavioral assertions merely
 to hide a navigation regression. Keep balance/device/offline limits in evidence.
