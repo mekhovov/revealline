@@ -412,3 +412,18 @@ verification. It must receive a new pinned native check before acceptance.
 - Native cross-mode checking separately found lost return-route context and a
   saved-difficulty mismatch in Legacy remote cards. Their fixes are in progress;
   successful exact forward handoffs alone do not close the round-trip gate.
+
+### Read-only installed inventory checkpoint
+
+- Added an exact-channel inventory reader using the existing no-upgrade asset
+  reader. Absent databases remain absent; no schema, media, profile or artwork
+  writes occur. Pointer/index/journal data is read atomically under the existing
+  recovery lock, with exact raw-snapshot hashing and owner-bound confirmation.
+- Backup markers, active journals, malformed storage, unsupported schemas and
+  unavailable locks fail closed without deleting data. Stored null journal
+  tombstones remain valid cleared states. Cancellation/close and stalled lock
+  acquisition are bounded; a later snapshot cannot impersonate an earlier owner.
+- The reader plus existing no-upgrade assets, external installation and host
+  regressions passes70/70, zero skipped/failures; final focused22-case rerun also
+  passes. Publisher behavior remains unchanged. Host adoption/native evidence
+  are pending, so this does not yet close lazy browsing across gameplay hosts.
