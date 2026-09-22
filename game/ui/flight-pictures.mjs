@@ -59,11 +59,22 @@ export function createFlightPictures({
     readyTheme = legacy ? context.themeId : null,
     pending = null,
     generation = 0,
-    disposed = false;
+    disposed = false,
+    pendingSelection = null;
+  function discardSelection(stage = pendingSelection) {
+    if (!stage) return;
+    if (pendingSelection === stage) {
+      pendingSelection = null;
+      // An unaccepted session selection is not yet an attempt pin.
+      pins = undefined;
+    }
+    stage.discard();
+  }
   function cancel() {
     generation++;
     pending?.abort();
     pending = null;
+    discardSelection();
   }
   async function ensure(themeId = ownContext.themeId, { signal, onStatus = () => {} } = {}) {
     if (disposed) throw new Error('This picture attempt is closed.');
@@ -76,7 +87,8 @@ export function createFlightPictures({
     const abort = () => controller.abort();
     signal?.addEventListener('abort', abort, { once: true });
     if (signal?.aborted) abort();
-    let candidate = null;
+    let candidate = null,
+      selectionStage = null;
     const check = () => {
       if (disposed || controller.signal.aborted || ticket !== generation)
         throw new DOMException('Picture preparation cancelled.', 'AbortError');
@@ -114,7 +126,13 @@ export function createFlightPictures({
             signal: controller.signal,
             onStatus: report,
           });
-          check();
+          try {
+            check();
+          } catch (error) {
+            prepared.stage?.discard();
+            throw error;
+          }
+          if (prepared.stage) pendingSelection = selectionStage = prepared.stage;
           media = prepared.media;
           selection = { ...selection, library: prepared.library };
         }
@@ -149,7 +167,12 @@ export function createFlightPictures({
         report({ stage: 'reading', message: 'Reading the saved picture original…' });
         media ??= await readMedia({ signal: controller.signal });
         check();
-        candidate = createPresentationImageSlot(acquire ? { acquire } : {});
+        const acquireSelected = selectionStage?.has(pin)
+          ? ({ pin }, options) => selectionStage.acquire(pin, options)
+          : acquire;
+        candidate = createPresentationImageSlot(
+          acquireSelected ? { acquire: acquireSelected } : {},
+        );
         const next = { ...ownContext, themeId };
         candidate.setContext(next);
         report({ stage: 'decoding', message: 'Opening this flight’s original picture…' });
@@ -168,6 +191,10 @@ export function createFlightPictures({
           : null;
       }
       check();
+      // The original is verified and the requested display is ready. Accept
+      // session history synchronously only while this attempt still owns it.
+      selectionStage?.accept();
+      if (pendingSelection === selectionStage) pendingSelection = null;
       const prior = slot;
       slot = candidate;
       candidate = null;
@@ -176,6 +203,7 @@ export function createFlightPictures({
       report({ status: 'ready', stage: 'ready', message: 'This flight’s picture is ready.' });
       return true;
     } catch (error) {
+      discardSelection(selectionStage);
       if (error.name !== 'AbortError')
         report({
           status: 'error',

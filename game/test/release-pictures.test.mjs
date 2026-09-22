@@ -6,6 +6,7 @@ import { createMediaIdentityCatalog, validateMediaLibrary } from '../media-libra
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { createFlightPictures } from '../ui/flight-pictures.mjs';
+import { createSessionReleasePictures } from '../presentation/session-release-pictures.mjs';
 import { presentationPicturePins } from '../flight-media-pins.mjs';
 import { exportMediaBundle, importMediaBundle } from '../media-bundle.mjs';
 import {
@@ -108,6 +109,9 @@ async function fixture(t, options = {}) {
     executionCatalog: () => catalog,
     readMedia,
     ...(options.commit ? { commit: options.commit } : {}),
+    ...(options.assertWritable ? { assertWritable: options.assertWritable } : {}),
+    sessionPictures: options.sessionPictures,
+    sessionOnly: options.sessionOnly,
   });
   const flight = (overrides = {}) =>
     createFlightPictures({
@@ -118,6 +122,8 @@ async function fixture(t, options = {}) {
       readMedia,
       prepareSelection: (args) => defaults.prepareSelection(args),
       acquire: async ({ pin, metadata, store }, { signal }) => {
+        if (options.sessionPictures?.has(pin))
+          return options.sessionPictures.acquire(pin, { signal });
         const original = await store.readAsset(metadata, pin.assetId, { signal });
         assert.equal(original.asset.sha256, pin.sha256);
         return { image: {}, pin, fit: 'contain', release() {} };
@@ -543,5 +549,317 @@ test('picture feedback keeps Finishing save through an actual commit and cancell
   assert.equal(f.reads(), 1, 'retry reuses the completed original');
   assert.equal((await f.store.read()).generation, saved.generation);
   retry.dispose();
+  flight.dispose();
+});
+
+function sessionFixture(t, options = {}) {
+  const urls = new Map();
+  let serial = 0;
+  class Image {
+    set src(url) {
+      void urls
+        .get(url)
+        .arrayBuffer()
+        .then(async (raw) => {
+          const bytes = Buffer.from(raw);
+          this.sha256 = await hashPresentationBytes(bytes);
+          this.width = this.naturalWidth = bytes.readUInt32BE(16);
+          this.height = this.naturalHeight = bytes.readUInt32BE(20);
+          this.onload?.();
+        });
+    }
+    decode() {
+      return Promise.resolve();
+    }
+    removeAttribute() {}
+  }
+  const registry = createSessionReleasePictures({
+    decodeImage,
+    ImageClass: Image,
+    URLImpl: {
+      createObjectURL(blob) {
+        const url = `blob:release-${++serial}`;
+        urls.set(url, blob);
+        return url;
+      },
+      revokeObjectURL(url) {
+        assert(urls.delete(url), 'Release each session URL once');
+      },
+    },
+    ...options,
+  });
+  t.after(() => {
+    registry.dispose();
+    assert.equal(urls.size, 0);
+  });
+  return registry;
+}
+const newerPNG = () =>
+  Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+    'base64',
+  );
+const selectionFor = (media) => ({
+  ...request,
+  themeIds: ['fpv', 'ukraine'],
+  identityCatalog,
+  library: media.metadata.document.library,
+});
+
+test('explicit session-only flights accept exact originals without durable writes, and retry retains the old pin after artwork changes', async (t) => {
+  const sessionPictures = sessionFixture(t);
+  const f = await fixture(t, {
+    sessionPictures,
+    sessionOnly: () => true,
+    assertWritable: () => assert.fail('Session preparation must not claim the durable writer'),
+    commit: () => assert.fail('Session preparation must not commit durable media'),
+  });
+  const first = f.flight({
+    prepareSelection: async (args) => {
+      const result = await f.defaults.prepareSelection(args);
+      assert.equal(result.media, args.media, 'Raw durable media authority is unchanged');
+      assert.equal(result.media.metadata.generation, 0);
+      assert.equal(result.library.presentations.length, 1);
+      assert.equal(sessionPictures.status().revision, 0, 'Resolver only stages; flight accepts');
+      return result;
+    },
+  });
+  await first.ensure();
+  const oldPins = first.pins(),
+    old = first.current().pin;
+  assert.equal(first.current().image.sha256, old.sha256);
+  assert.equal(sessionPictures.status().revision, 1);
+  assert.equal(presentationPicturePins(oldPins).choices[1].kind, 'legacy');
+  assert.deepEqual(sessionPictures.metadata().document.library.assignments, []);
+  first.dispose();
+  const repeated = f.flight();
+  await repeated.ensure();
+  assert.equal(f.reads(), 1, 'Accepted session hashes do not download again');
+  repeated.dispose();
+  await f.replace(newerPNG());
+  const next = f.flight();
+  await next.ensure();
+  assert.notEqual(next.current().pin.sha256, old.sha256);
+  const retry = f.flight({
+    pins: oldPins,
+    prepareSelection: () => assert.fail('Retry keeps its exact accepted choice'),
+  });
+  await retry.ensure();
+  assert.deepEqual(retry.current().pin, old);
+  assert.equal(retry.current().image.sha256, old.sha256);
+  assert.equal(f.reads(), 2);
+  const saved = await f.store.read();
+  assert.equal(saved.generation, 0);
+  assert.deepEqual(saved.document.library.assets, []);
+  assert.equal(sessionPictures.status().originals, 2);
+  retry.dispose();
+  next.dispose();
+});
+
+test('session staging combines durable history without replacing raw metadata and leaves accepted durable defaults read-only', async (t) => {
+  const sessionPictures = sessionFixture(t);
+  let unavailable = false,
+    checks = 0;
+  const f = await fixture(t, {
+    sessionPictures,
+    sessionOnly: () => unavailable,
+    assertWritable: () => {
+      checks++;
+      assert.equal(unavailable, false);
+    },
+  });
+  const initial = f.flight();
+  await initial.ensure();
+  initial.dispose();
+  const media = await f.readMedia(),
+    before = structuredClone(media.metadata.document);
+  unavailable = true;
+  const reused = await f.defaults.prepareSelection({ media, selection: selectionFor(media) });
+  assert.equal(reused.stage, undefined);
+  assert.equal(reused.media, media);
+  assert.equal(sessionPictures.status().revision, 0);
+  await f.replace(newerPNG());
+  const prepared = await f.defaults.prepareSelection({ media, selection: selectionFor(media) });
+  assert.equal(prepared.media, media);
+  assert.equal(prepared.library.presentations.length, 2);
+  assert.deepEqual(prepared.library.presentations[0], before.library.presentations[0]);
+  assert.equal(
+    prepared.stage.document.library.presentations.length,
+    1,
+    'Session ledger does not copy durable originals',
+  );
+  assert.deepEqual(media.metadata.document, before);
+  prepared.stage.discard();
+  assert.equal(sessionPictures.status().pendingStages, 0);
+  assert.equal(sessionPictures.status().originals, 0);
+  assert.equal((await f.store.read()).generation, 1);
+  assert.equal(checks, 1);
+  const saved = await f.store.read(),
+    original = saved.document.library.presentations[0];
+  const manual = await f.store.prepare(
+    {
+      ...saved.document.library,
+      assignments: [{ identity, presentationId: original.id, revision: 1 }],
+    },
+    saved.assets,
+    { executionCatalog: catalog, previous: saved.document },
+  );
+  await f.store.commit(manual, { expectedGeneration: saved.generation });
+  const reads = f.reads(),
+    assigned = f.flight();
+  await assigned.ensure();
+  assert.equal(assigned.current().pin.presentationId, original.id);
+  assert.equal(
+    f.reads(),
+    reads,
+    'Manual durable assignment wins over current release and session policy',
+  );
+  assert.equal(sessionPictures.status().originals, 0);
+  assigned.dispose();
+});
+
+test('canceled session download preserves prior history and the next explicit retry can prepare', async (t) => {
+  const sessionPictures = sessionFixture(t),
+    started = deferred(),
+    gate = deferred();
+  let held = false;
+  const f = await fixture(t, {
+    sessionPictures,
+    sessionOnly: () => true,
+    onRead: async () => {
+      if (held) {
+        started.resolve();
+        await gate.promise;
+      }
+    },
+  });
+  const first = f.flight();
+  await first.ensure();
+  first.dispose();
+  const before = sessionPictures.metadata();
+  await f.replace(newerPNG());
+  held = true;
+  const next = f.flight(),
+    loading = next.ensure();
+  await started.promise;
+  next.cancel();
+  gate.resolve();
+  await assert.rejects(loading, { name: 'AbortError' });
+  assert.equal(next.pins(), undefined);
+  assert.deepEqual(sessionPictures.metadata(), before);
+  assert.equal(sessionPictures.status().pendingStages, 0);
+  held = false;
+  await next.ensure();
+  assert.equal(next.ready('fpv'), true);
+  assert.equal(sessionPictures.status().originals, 2);
+  assert.equal((await f.store.read()).generation, 0);
+  next.dispose();
+});
+
+test('source replacement during session verification discards the fully verified stage without accepting it', async (t) => {
+  const started = deferred(),
+    gate = deferred();
+  const sessionPictures = sessionFixture(t, {
+    decodeImage: async () => {
+      started.resolve();
+      await gate.promise;
+      return decodeImage();
+    },
+  });
+  const f = await fixture(t, { sessionPictures, sessionOnly: () => true });
+  const flight = f.flight(),
+    loading = flight.ensure();
+  await started.promise;
+  await f.replace(newerPNG());
+  gate.resolve();
+  await assert.rejects(loading, /changed during preparation/);
+  assert.equal(flight.pins(), undefined);
+  assert.equal(sessionPictures.status().pendingStages, 0);
+  assert.equal(sessionPictures.status().reservedBytes, 0);
+  assert.equal(sessionPictures.status().originals, 0);
+  assert.equal((await f.store.read()).generation, 0);
+  flight.dispose();
+});
+
+test('aborting a completed staged result before resolver adoption discards its reservation', async (t) => {
+  const registry = sessionFixture(t),
+    controller = new AbortController();
+  const sessionPictures = {
+    ...registry,
+    async stage(...args) {
+      const stage = await registry.stage(...args);
+      controller.abort();
+      return stage;
+    },
+  };
+  const f = await fixture(t, { sessionPictures, sessionOnly: () => true });
+  const flight = f.flight();
+  await assert.rejects(flight.ensure(undefined, { signal: controller.signal }), {
+    name: 'AbortError',
+  });
+  assert.equal(flight.pins(), undefined);
+  assert.equal(registry.status().originals, 0);
+  assert.equal(registry.status().reservedBytes, 0);
+  assert.equal(registry.status().pendingStages, 0);
+  assert.equal((await f.store.read()).generation, 0);
+  flight.dispose();
+});
+
+test('writer refusal and failed durable commit never become a session fallback', async (t) => {
+  const sessionPictures = sessionFixture(t);
+  for (const predicate of [undefined, () => false, () => 'unknown']) {
+    const f = await fixture(t, {
+      sessionPictures,
+      sessionOnly: predicate,
+      assertWritable: () => {
+        throw new Error('Writer unavailable');
+      },
+    });
+    const flight = f.flight();
+    await assert.rejects(flight.ensure(), /Writer unavailable/);
+    assert.equal(f.reads(), 0);
+    assert.equal(flight.pins(), undefined);
+    flight.dispose();
+  }
+  let unavailable = false;
+  const error = new Error('Uncertain durable storage failure');
+  const f = await fixture(t, {
+    sessionPictures,
+    sessionOnly: () => unavailable,
+    commit: () => {
+      unavailable = true;
+      throw error;
+    },
+  });
+  const flight = f.flight();
+  await assert.rejects(flight.ensure(), (actual) => actual === error);
+  assert.equal(flight.pins(), undefined);
+  assert.equal(f.reads(), 1);
+  assert.equal(sessionPictures.status().originals, 0);
+  assert.equal(sessionPictures.status().pendingStages, 0);
+  assert.equal((await f.store.read()).generation, 0);
+  flight.dispose();
+});
+
+test('a non-FPV selected world accepts verified session history for the other flight world without forcing its display', async (t) => {
+  const sessionPictures = sessionFixture(t),
+    f = await fixture(t, {
+      sessionPictures,
+      sessionOnly: () => true,
+      assertWritable: () => assert.fail('No durable writer'),
+    });
+  const flight = f.flight({ context: { runId: 'other-world', ...request, themeId: 'ukraine' } });
+  await flight.ensure();
+  assert.equal(flight.ready('ukraine'), true);
+  assert.equal(flight.current(), null);
+  const accepted = presentationPicturePins(flight.pins()).choices.find(
+    (pin) => pin.identity.themeId === 'fpv',
+  );
+  assert.equal(sessionPictures.has(accepted), true);
+  assert.equal(sessionPictures.status().originals, 1);
+  await flight.ensure('fpv');
+  assert.equal(flight.current().image.sha256, accepted.sha256);
+  assert.equal(f.reads(), 1);
+  assert.equal((await f.store.read()).generation, 0);
   flight.dispose();
 });
