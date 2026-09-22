@@ -13,6 +13,13 @@ test('all Phaseworks ready cards distinguish selective carrier grace from immedi
     assert.match(card.copy, /Only bolts send sparks/);
     assert.match(card.copy, /other trail hits are instant/);
     assert.match(card.copy, /Closing a cut stops your craft/);
+    if (mission.id === 'two-ways-home') {
+      assert(level.enemies.some((enemy) => enemy.type === 'contour-patrol'));
+      assert.match(
+        card.copy,
+        /Contour crawlers follow new frontiers after captures\. Check your return\./,
+      );
+    }
     assert(card.copy.length <= 240, `${mission.id}: ${card.copy.length}`);
     assert.deepEqual(level, before);
   }

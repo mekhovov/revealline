@@ -4,6 +4,23 @@ import { readFile } from 'node:fs/promises';
 import { contentStudioLinks, mountContentStudioLinks } from '../ui/content-studio-navigation.mjs';
 import { WORKSHOP_TOOLS, workshopToolHref } from '../ui/workshop-return.mjs';
 
+const anchorAttributes = (html) =>
+  [...html.matchAll(/<a\b[^>]*>/g)].map(([tag]) =>
+    Object.fromEntries(
+      [...tag.matchAll(/\s+([^\s=/>]+)\s*=\s*"([^"]*)"/g)].map(([, name, value]) => [name, value]),
+    ),
+  );
+
+test('new-tab link assertions distinguish real attributes from data-prefixed substitutes', () => {
+  const [attributes] = anchorAttributes(
+    '<a data-href="../?journey=authored" data-target="_blank" target="_self" data-rel="noopener" data-aria-label="Solo · authored (new tab)">',
+  );
+  assert.equal(attributes.href, undefined);
+  assert.equal(attributes.target, '_self');
+  assert.equal(attributes.rel, undefined);
+  assert.equal(attributes['aria-label'], undefined);
+});
+
 for (const prefix of [
   'http://localhost/',
   'https://example.test/releases/v0.73.0/site/',
@@ -96,8 +113,17 @@ test('Studio preview has an exact owner and nearby returns while intentional new
   );
   for (const html of [studio, playground])
     assert.match(html, /content-studio-navigation-entry\.mjs/);
-  assert.match(studio, /href="\.\.\/\?journey=authored" target="_blank"/);
-  assert.match(studio, /href="\.\.\/couch\/\?journey=authored" target="_blank"/);
+  const anchors = anchorAttributes(studio);
+  for (const [href, label] of [
+    ['../?journey=authored', 'Solo'],
+    ['../couch/?journey=authored', 'Versus'],
+  ]) {
+    const links = anchors.filter((anchor) => anchor.href === href);
+    assert.equal(links.length, 1, `Exactly one authored ${label} link.`);
+    assert.equal(links[0].target, '_blank');
+    assert.equal(links[0].rel, 'noopener');
+    assert.equal(links[0]['aria-label'], `${label} · authored (new tab)`);
+  }
   const source = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   assert.match(source, /\$\('close-preview'\)\.onclick = closePreview;/);
   assert.match(source, /\$\('preview-return'\)\.onclick = closePreview;/);
