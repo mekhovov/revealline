@@ -156,6 +156,13 @@ class UploaderTests(unittest.TestCase):
         finally:
             server.close()
 
+    def test_distribution_upload_uses_exact_pages_cap(self):
+        self.assertEqual(u.MAX_DISTRIBUTION_BYTES, 950_000_000)
+        wrong = copy.copy(self.args)
+        wrong.member_bytes = u.MAX_DISTRIBUTION_BYTES + 1
+        with self.assertRaisesRegex(u.Refusal, 'Invalid source byte length'):
+            u.PinnedDistribution(wrong)
+
     def test_stream_upload_exact_length_hash_and_readback(self):
         with self.server() as server, contextlib.closing(u.PinnedDistribution(self.args)) as source:
             result = u.perform(source, server.api(), REPO, RELEASE, TAG)

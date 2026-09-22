@@ -240,7 +240,8 @@ def inspect_original(binding, repo, out, api):
     with (out / 'evidence/inspection.log').open('xb') as log:
         subprocess.run([sys.executable, str(Path(__file__).with_name('inspect_qualified_artifact.py')), str(original),
                         '--repo', str(repo), '--expected-commit', source['commit'], '--expected-version', source['version'],
-                        '--artifact-sha256', artifact['sha256'], '--out', str(verified)],
+                        '--artifact-sha256', artifact['sha256'], '--max-distribution-bytes',
+                        str(MAX_DISTRIBUTION_BYTES), '--out', str(verified)],
                        stdout=log, stderr=subprocess.STDOUT, check=True, timeout=7200)
     inspection = parse((verified / 'inspection.json').read_bytes())
     require(inspection['gitTree'] == source['tree'], 'Inspected Git tree differs')

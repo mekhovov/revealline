@@ -77,6 +77,16 @@ class BindingTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             utility.validate_binding(b'{"format":1,"format":2}', 'inspect-artifact', 'example/project')
 
+    def test_distribution_descriptor_uses_exact_pages_cap(self):
+        self.assertEqual(utility.MAX_DISTRIBUTION_BYTES, 950_000_000)
+        value = binding('upload-originals')
+        row = next(row for row in value['release']['assets'] if row['name'] == 'distribution.zip')
+        row['bytes'] = utility.MAX_DISTRIBUTION_BYTES
+        self.assertEqual(utility.validate_binding(encoded(value), 'upload-originals', 'example/project'), value)
+        row['bytes'] += 1
+        with self.assertRaisesRegex(ValueError, 'bounded length'):
+            utility.validate_binding(encoded(value), 'upload-originals', 'example/project')
+
     def test_qualification_refuses_incomplete_failed_or_different_family(self):
         value = binding(); q = qualification(value)
         utility.qualification_check(q, value)
@@ -128,6 +138,13 @@ class BindingTests(unittest.TestCase):
             self.assertEqual(api.upload('/repos/e/p/releases/1/assets?name=distribution.zip', None, 1, 'a' * 64), 'zip')
             zipped.assert_called_once()
         with self.assertRaises(ValueError): api.upload('/repos/e/p/releases/1/assets?name=other', None, 1, 'a' * 64)
+
+
+class InspectionCommandTests(unittest.TestCase):
+    def test_release_utility_passes_exact_distribution_cap(self):
+        text = Path(utility.__file__).read_text()
+        self.assertIn("'--max-distribution-bytes'", text)
+        self.assertIn('str(MAX_DISTRIBUTION_BYTES)', text)
 
 
 class EvidenceTests(unittest.TestCase):
@@ -209,7 +226,8 @@ class OriginalFixtureTests(unittest.TestCase):
             verified = base / 'qualified-artifact-verified'
             result = subprocess.run([sys.executable, str(inspector), str(original), '--repo', str(repo),
                        '--expected-commit', commit, '--expected-version', version, '--artifact-sha256', digest,
-                       '--out', str(verified)], capture_output=True, text=True)
+                       '--max-distribution-bytes', str(len(inner.getvalue())), '--out', str(verified)],
+                       capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             inspection = json.loads((verified / 'inspection.json').read_text())
             self.assertTrue(inspection['distribution']['allManifestBytesVerified'])
@@ -232,6 +250,11 @@ class OriginalFixtureTests(unittest.TestCase):
                 bad[bad.index(option) + 1] = value
                 rejected = subprocess.run(bad, capture_output=True)
                 self.assertNotEqual(rejected.returncode, 0); self.assertFalse((base / 'refused/inspection.json').exists())
+            too_small = [sys.executable, str(inspector), str(original), '--repo', str(repo),
+                         '--expected-commit', commit, '--expected-version', version, '--artifact-sha256', digest,
+                         '--max-distribution-bytes', str(len(inner.getvalue()) - 1), '--out', str(base / 'refused')]
+            rejected = subprocess.run(too_small, capture_output=True)
+            self.assertNotEqual(rejected.returncode, 0); self.assertFalse((base / 'refused/inspection.json').exists())
 
 
 class WorkflowTests(unittest.TestCase):
