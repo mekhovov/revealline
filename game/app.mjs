@@ -8446,6 +8446,11 @@ try {
           versusPreview.card(mission, journeyPreferences?.snapshot().difficulty ?? 'standard'),
         launch: (_mission, context) => departLibraryMission(context),
       });
+      const { createRemoteTeamLibrarySources } = await import('./mission-library/remote-team.mjs');
+      const teamSources = createRemoteTeamLibrarySources({
+        launch: departLibraryMission,
+        difficulty: () => journeyPreferences?.snapshot().difficulty ?? 'standard',
+      });
       const result = await createInstalledMissionLibrary({
         index,
         journeySources: [
@@ -8453,6 +8458,7 @@ try {
             { mode: 'solo', source },
             { mode: 'versus', source: versusSource },
           ]),
+          ...teamSources,
         ],
         getPacks: () => packs,
         baseEntry,
