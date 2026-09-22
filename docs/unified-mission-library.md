@@ -68,3 +68,15 @@ Current state: implementation in progress; no B release or public acceptance yet
   exact launch handoffs, native/browser verification, final version and release.
   The new selector is not enabled in gameplay hosts yet. No public UI change is
   claimed by this checkpoint.
+
+### Parallel integration checkpoint
+
+- Added fixed same-game Solo/Versus/Team mission handoff URLs. Requests retain the
+  release prefix, carry an opaque exact display identity, and reject malformed or
+  duplicate intent. They grant no installation or runtime authority.
+- Added release-independent, per-host session storage for selector search, filters,
+  focus and scroll, with an in-memory fallback when storage fails.
+- Fixed a reviewed asynchronous status leak: a download completing after a mode,
+  campaign or search change no longer overwrites the new view's status.
+- All39 fast registry, chooser, adapter, handoff and existing-chooser checks pass.
+  Host mounting, exact receiving-host lookup and public acceptance remain pending.
