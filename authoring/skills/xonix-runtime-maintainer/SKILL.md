@@ -1183,3 +1183,13 @@ For [Team terminal feedback](../../../docs/team-terminal-player-hud.md), finish 
 ## Team complete touch-layout qualification
 
 In landscape, reserve the actual HUD, objective, footer and both complete player control groups before fitting the unchanged 2:1 board. The large pad includes its action row; seeing four direction targets is not proof that Boost and Support fit. Inspect Standard/Large text, Plain/theme fonts, Regular/Large pad sizes, visible/hidden/one-seat touch states, and paused/settings return. Measure every visible action against the actual viewport and 44 CSS-pixel minimum, and confirm board/control rectangles do not intersect. Requested viewport dimensions are not evidence until DOM measurements confirm them. Preserve portrait behavior and explicit pause semantics. In short landscape, reserve the actual visible pad width on each side of the board, including when only one seat is visible; floating controls must not cover playable cells. This supersedes the older no-gutters guidance above.
+
+
+For bundled-chapter recovery, describe the existing explicit retry path accurately.
+HTTP and unreadable-body failures permit selecting the same uninstalled chapter
+again while online; do not require reload when each selection creates a new
+request. Preserve the current flight, library, status code, diagnostic cause,
+abort semantics and ordinary pack validation. Verify controlled failure then
+success in the same page without reload. See `docs/chapter-download-retry.md` and
+`authoring/prompts/chapter-download-retry.md`; local faults do not qualify public
+network recovery or physical-device input.
