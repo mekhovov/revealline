@@ -20,6 +20,7 @@ import { createRelayCandidates } from '../content-design/relay-candidates.mjs';
 import { createCrosswindCandidates } from '../content-design/crosswind-candidates.mjs';
 import { createSentinelCandidates } from '../content-design/sentinel-candidates.mjs';
 import { createSentinelSpatialCandidates } from '../content-design/sentinel-spatial-candidates.mjs';
+import { createSentinelInnerCandidates } from '../content-design/sentinel-inner-candidates.mjs';
 import { withPressureDifficulty } from '../content-design/pressure-candidates.mjs';
 import { createApexCandidates } from '../content-design/apex-candidates.mjs';
 import { createApexSpatialCandidates } from '../content-design/apex-spatial-candidates.mjs';
@@ -885,7 +886,13 @@ $('sentinel').onclick = guarded(() => {
 });
 $('sentinel-spatial').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createSentinelSpatialCandidates(), null, 2);
+  $('source').value = JSON.stringify(
+    $('sentinel-spatial-edition').value === 'inner'
+      ? createSentinelInnerCandidates()
+      : createSentinelSpatialCandidates(),
+    null,
+    2,
+  );
   sourceChanged = true;
   inspectSource();
 });
