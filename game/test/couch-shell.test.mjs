@@ -23,6 +23,26 @@ const change = (f, id, value) => {
 const press = (f, key, target = f.doc.activeElement, extra = {}) =>
   target.emit('keydown', { key, code: key, repeat: false, ...extra });
 
+test('ordinary running frames retain the Pause label node between pointer edges', async (t) => {
+  const f = await couchPage(t);
+  f.$('race-start').click();
+  f.frame();
+  const pause = f.$('race-pause'),
+    label = f.doc.createElement('span');
+  label.textContent = 'Pause';
+  pause.replaceChildren(label);
+  const checkpoint = f.checkpoint();
+  pause.emit('pointerdown', { pointerType: 'mouse', button: 0 });
+  f.frames(3, 0);
+  assert.equal(label.parentNode, pause, 'unchanged labels must not be replaced during a gesture');
+  assert.equal(pause.disabled, false);
+  pause.emit('pointerup', { pointerType: 'mouse', button: 0 });
+  pause.click();
+  f.frame(0);
+  assert.equal(f.state(), 'paused');
+  assert.deepEqual(f.checkpoint(), checkpoint);
+});
+
 // These assert the real shell's scrolling intent and owner checks, not viewport
 // geometry. Root's separate browser samples qualify actual visible focus.
 for (const interruption of [
