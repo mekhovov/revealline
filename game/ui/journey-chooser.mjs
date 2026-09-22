@@ -1,5 +1,6 @@
 import { attachJourneyBackup } from './journey-backup.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
+import { attachMissionLibraryChooser } from './mission-library-chooser.mjs';
 
 /** One optional surface: global search and campaign filters, never a chapter drill-down. */
 export function attachJourneyChooser({
@@ -11,7 +12,44 @@ export function attachJourneyChooser({
   onPause,
   onReturn,
   getCard,
+  library,
+  readState,
+  writeState,
 }) {
+  if (library) {
+    const chooser = attachMissionLibraryChooser({
+      document: doc,
+      library,
+      mode,
+      onPause,
+      onReturn,
+      readState,
+      writeState,
+    });
+    if (profile) {
+      const button = doc.createElement('button');
+      button.id = 'journey-backup-open';
+      button.type = 'button';
+      button.className = 'button secondary';
+      button.textContent = 'Progress backup';
+      const backup = attachJourneyBackup({
+        document: doc,
+        profile,
+        onRestore: () => chooser.refresh(),
+      });
+      button.onclick = () => backup.open(button);
+      doc.getElementById('journey-chooser').querySelector('.journey-footer').append(button);
+      return {
+        ...chooser,
+        destroy() {
+          backup.close();
+          chooser.destroy();
+          doc.getElementById('journey-backup')?.remove();
+        },
+      };
+    }
+    return chooser;
+  }
   const dialog = doc.createElement('dialog');
   dialog.id = 'journey-chooser';
   dialog.className = 'journey-chooser';
