@@ -147,28 +147,28 @@ now60 tests. The prior16 Solo host and8 full-index cases remain unchanged.
 
 ### Current implementation and remaining B work
 
-Updated after the trusted-download checkpoint. “Pushed” means implemented and locally verified in
+Updated after the guarded inventory and selector-return checkpoints. “Pushed” means implemented and locally verified in
 draft PR268, **not released or publicly accepted**. Earlier checkpoint prose below
 records the evidence at that time, not the current remaining list.
 
-| Work                                                                          | Current state                                                         | Remaining effort estimate                          |
-| ----------------------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------- |
-| Shared registry, trusted110-mission index, tags and exact owner identity      | Pushed; no name/geometry deduplication                                | Final release reconciliation                       |
-| Solo host, native setup, exact launches and authored Next                     | Pushed;27 combined host/helper cases passed                           | Full regression/native qualification               |
-| Versus host and supported Classic/Custom/optional launches                    | Pushed; independent fixes and17-case root repeat passed               | Downloads/readiness work below                     |
-| Team host,12 Journey +2 Classic +visit-local Custom                           | Pushed;153 tests passed together                                      | Cross-mode/native work below                       |
-| Solo↔Versus Journey modes without duplicate identities                       | Pushed;7 adapter +32 actual-host cases passed                         | Cross-mode public verification                     |
-| Team↔Solo/Versus catalogue and exact handoffs                                | Solo/Versus→Team pushed; reverse direction under lifecycle review      | 1–3h                                               |
-| Trusted bundled/archive Versus downloads                                      | Implemented;53 installer +actual-host tests pass together             | Native/public verification                         |
-| Paired-original downloads/readiness across hosts                              | Incomplete; retain existing media transactions                        | 3–5h                                               |
-| Installed Custom metadata/readiness without eager artwork decoding            | Validation and read-only storage boundaries in parallel development  | 3–5h                                               |
-| Compact library                                                               | Pinned Solo portrait/landscape pass; new Team controls need review    | 0.5–2h targeted recheck                            |
-| Full navigation, failure, storage and accessibility/performance qualification | Bounded cohorts pass; whole affected/native gates remain              | 2–4h plus device availability                      |
-| Release B promotion                                                           | Waits only for accepted A and B technical gates; local work continues | 2–4h after qualification, CI/Pages queues variable |
+| Work                                                                          | Current state                                                                 | Remaining effort estimate                          |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------- |
+| Shared registry, trusted110-mission index, tags and exact owner identity      | Pushed; no name/geometry deduplication                                        | Final release reconciliation                       |
+| Solo host, native setup, exact launches and authored Next                     | Pushed;27 combined host/helper cases passed                                   | Full regression/native qualification               |
+| Versus host and supported Classic/Custom/optional launches                    | Pushed; independent fixes and17-case root repeat passed                       | Downloads/readiness work below                     |
+| Team host,12 Journey +2 Classic +visit-local Custom                           | Pushed;153 tests passed together                                              | Cross-mode/native work below                       |
+| Solo↔Versus Journey modes without duplicate identities                       | Pushed;7 adapter +32 actual-host cases passed                                 | Cross-mode public verification                     |
+| Team↔Solo/Versus catalogue and exact handoffs                                | Pushed; exact incoming Solo launch now passes pinned native entry/reload      | Final round-trip qualification                     |
+| Trusted bundled/archive Versus downloads                                      | Implemented;53 installer +actual-host tests pass together                     | Native/public verification                         |
+| Paired-original downloads/readiness across hosts                              | Service pushed,41 tests pass; Versus and Team integrations in parallel review | 2–4h plus native verification                      |
+| Installed Custom metadata/readiness without eager artwork decoding            | Read-only controller/materializer pushed; host integrations under test        | 2–4h overlapping paired-original work              |
+| Compact library and selector return                                           | Pinned Solo/Team layouts pass; filter/focus/scroll restoration tested         | 0.5–2h targeted native recheck                     |
+| Full navigation, failure, storage and accessibility/performance qualification | Bounded cohorts pass; whole affected/native gates remain                      | 2–4h plus device availability                      |
+| Release B promotion                                                           | Waits only for accepted A and B technical gates; local work continues         | 2–4h after qualification, CI/Pages queues variable |
 
 Estimates are remaining engineering ranges, not guaranteed release times or
 permission to skip gates. Parallel work overlaps; provisional B delivery range is
-8–16h from this checkpoint, with external media and CI the main risks. Publish
+6–12h from this checkpoint, with external media and CI the main risks. Publish
 actual delivery and remaining gates after each release. One publisher retains
 main/tag/Pages ownership; implementation stays isolated from A and the dirty tree.
 
@@ -407,7 +407,7 @@ verification. It must receive a new pinned native check before acceptance.
 - Status feedback shares the existing bounded status row, not the action footer;
   Team preview hides in other modes. Current Team edition labels are player-facing
   and retain exact opaque IDs and chapter titles.
--49 Team cases,22 shared chooser/compact cases and3 Team-source cases pass in
+  -49 Team cases,22 shared chooser/compact cases and3 Team-source cases pass in
   bounded cohorts. New pinned native Team compact verification is still required.
 - Native cross-mode checking separately found lost return-route context and a
   saved-difficulty mismatch in Legacy remote cards. Their fixes are in progress;
@@ -437,7 +437,7 @@ verification. It must receive a new pinned native check before acceptance.
 - It passes metadata-only bindings and immutable targets, never a prepared pack.
   Review hardened the callback boundary to strip leftover caller `pack` fields;
   stale snapshots cannot register or launch replacement content.
--26 source/factory and existing prepared-registry tests pass together, including
+  -26 source/factory and existing prepared-registry tests pass together, including
   edition changes, exact late selection, stable download cards and no autolaunch.
   This is the final browsing-layer foundation; gameplay-host adoption is next.
 
@@ -460,7 +460,7 @@ verification. It must receive a new pinned native check before acceptance.
 - A failed refresh marks installed content unknown, not absent. Hosts must keep
   stale cards visibly Unavailable, explain the error and veto misleading downloads
   while leaving Base/Journey browsing available. Existing stored data is kept.
--56 combined controller/storage/metadata tests pass, including stale same-hash
+  -56 combined controller/storage/metadata tests pass, including stale same-hash
   generations, overlapping reads, cleanup failure and explicit download veto.
   This controller performs no downloads or decoding; host integration follows
   the separately reviewed return-route checkpoint.
@@ -511,9 +511,26 @@ verification. It must receive a new pinned native check before acceptance.
   testing reproduced the Team→Solo failure: final boot focus retired the pending
   incoming launch. Awaiting that owned launch fixes the race without relaxing
   genuine new-input, hidden-page or exact-owner guards.
--38 combined return/handoff/Solo-lifecycle cases pass with zero skips; two
+  -38 combined return/handoff/Solo-lifecycle cases pass with zero skips; two
   additional Team→Versus incoming cases pass. The full68 checked-return cases
   passed before the final incoming-await-only fix. Team's15 return cases,8 remote
   cases and48 prior navigation/route cases passed in bounded cohorts.
 - This is a pinned native-retest candidate, not accepted Release B. Source-route,
   saved-preset and exact incoming launch must now be repeated in the browser.
+
+### Saved selector restoration checkpoint
+
+- Host-scoped selector state now preserves a valid other-mode filter across page
+  returns. Remote campaign selection waits for its exact metadata option; new
+  input retires pending restoration rather than unexpectedly narrowing a new query.
+- An untouched lazy return restores its exact card and scroll once. New input,
+  focus changes, hiding, closing or direct mission reveal cancel that restoration.
+  Exact incoming selections override stale filters without selecting another mission.
+- Initial four-file cohort passed56 tests. Review added a reproduced pending-search
+  regression and visible-campaign preservation check; the final focused chooser,
+  compact and handoff cohort passes47 tests. Team's11 return cases passed before
+  that final one-line search correction. Native return/focus verification remains.
+- Pinned native `c073fdabe` now opens Team→Solo Two keepers directly and after
+  reload, with its exact mission brief and60% target. This is local evidence,
+  not Pages acceptance. Release A merged-source qualification remains in progress;
+  Release B stays draft, with no version bump, merge, tag or deployment.

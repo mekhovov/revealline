@@ -6,6 +6,7 @@ import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
 import { createJourneyCatalog } from '../journey/catalog.mjs';
 import { emptyJourneyProfile } from '../journey/profile.mjs';
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
+import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
 
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
@@ -326,6 +327,205 @@ test('restores validated same-mode state across host handoff, tolerates unavaila
   assert.equal(next.doc.activeElement, next.$('journey-cards').children[0]);
   assert.equal(next.$('journey-cards').scrollTop, 25);
   next.chooser.destroy();
+});
+
+test('restores another-mode filters only from the same host session key', () => {
+  const values = new Map();
+  const storage = {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+  };
+  const session = (mode) => createMissionLibrarySessionState({ mode, storage });
+  const firstState = session('team');
+  const first = setup([owner()], {
+    mode: 'team',
+    readState: firstState.read,
+    writeState: firstState.write,
+  });
+  first.$('journey-mode').value = 'versus';
+  first.$('journey-mode').emit('change');
+  first.$('journey-search').value = 'Last';
+  first.$('journey-search').emit('input');
+  first.$('journey-collection').value = 'Classic';
+  first.$('journey-collection').emit('change');
+  const campaign = first.library.missions[0].campaignKey;
+  first.$('journey-campaign').value = campaign;
+  first.$('journey-campaign').emit('change');
+  first.$('journey-cards').children[0].focus();
+  first.$('journey-cards').scrollTop = 25;
+  first.chooser.destroy();
+
+  const restoredState = session('team');
+  const restored = setup([owner()], {
+    mode: 'team',
+    readState: restoredState.read,
+    writeState: restoredState.write,
+  });
+  assert.equal(restored.$('journey-mode').value, 'versus');
+  assert.equal(restored.$('journey-search').value, 'Last');
+  assert.equal(restored.$('journey-collection').value, 'Classic');
+  assert.equal(restored.$('journey-campaign').value, campaign);
+  assert.equal(restored.doc.activeElement, restored.$('journey-cards').children[0]);
+  assert.equal(restored.$('journey-cards').scrollTop, 25);
+  restored.chooser.destroy();
+
+  const otherState = session('solo');
+  const other = setup([owner()], {
+    mode: 'solo',
+    readState: otherState.read,
+    writeState: otherState.write,
+  });
+  assert.equal(other.$('journey-mode').value, 'solo');
+  assert.equal(other.$('journey-search').value, '');
+  assert.equal(other.$('journey-collection').value, '');
+  assert.equal(other.$('journey-campaign').value, '');
+  other.chooser.destroy();
+});
+
+test('an untouched saved other-mode selection restores exact card and scroll after lazy metadata', async () => {
+  const expected = createMissionLibrary([owner()]).missions[0];
+  const { doc, $, library, chooser } = setup([], {
+    mode: 'team',
+    readState: () => ({
+      mode: 'versus',
+      search: 'Last',
+      collection: 'Classic',
+      campaign: expected.campaignKey,
+      selectedId: expected.id,
+      scroll: 123,
+    }),
+  });
+  assert.equal($('journey-mode').value, 'versus');
+  assert.equal($('journey-campaign').value, '');
+  assert.equal(chooser.state().campaign, expected.campaignKey);
+  assert.equal($('journey-cards').children.length, 0);
+  await tick();
+  // A real empty scroll container clamps the initial scroll position to zero.
+  $('journey-cards').scrollTop = 0;
+  library.register(owner());
+  assert.equal($('journey-campaign').value, expected.campaignKey);
+  assert.equal($('journey-cards').children.length, 1);
+  assert.equal(chooser.state().selectedId, expected.id);
+  assert.equal(doc.activeElement, $('journey-cards').children[0]);
+  assert.equal($('journey-cards').scrollTop, 123);
+  assert.equal(doc.captureListeners.get('focusin')?.size, 0);
+  chooser.destroy();
+});
+
+for (const action of ['keydown', 'pointerdown', 'click', 'focus', 'input', 'hidden', 'close'])
+  test(`lazy saved selection cannot steal focus or scroll after ${action}`, async () => {
+    const expected = createMissionLibrary([owner()]).missions[0];
+    const { doc, $, library, chooser, opener } = setup([], {
+      mode: 'team',
+      readState: () => ({ mode: 'solo', selectedId: expected.id, scroll: 123 }),
+    });
+    await tick();
+    if (action === 'focus') $('journey-mode').focus();
+    else if (action === 'hidden') {
+      doc.hidden = true;
+      doc.emit('visibilitychange');
+      doc.hidden = false;
+    } else if (action === 'close') chooser.close();
+    else $('journey-search').emit(action, { key: 'Shift' });
+    const focused = action === 'close' ? opener : doc.activeElement;
+    $('journey-cards').scrollTop = 9;
+    library.register(owner());
+    assert.equal(doc.activeElement, focused);
+    assert.equal($('journey-cards').scrollTop, 9);
+    assert.equal(doc.captureListeners.get('focusin')?.size, 0);
+    chooser.destroy();
+  });
+
+test('repeated lazy opens replace the pending lease and exact reveal retires it', async () => {
+  const expected = createMissionLibrary([owner()]).missions[0];
+  const { doc, library, chooser, opener } = setup([], {
+    readState: () => ({ mode: 'solo', selectedId: expected.id, scroll: 123 }),
+  });
+  chooser.open(opener);
+  await tick();
+  assert.equal(doc.captureListeners.get('focusin')?.size, 1);
+  assert.equal(doc.captureListeners.get('keydown')?.size, 1);
+  chooser.close();
+  assert.equal(doc.captureListeners.get('focusin')?.size, 0);
+  chooser.open(opener);
+  await tick();
+  library.register(owner({ id: 'other' }));
+  assert.equal(chooser.reveal(library.missions[0].id), true);
+  const revealed = doc.activeElement;
+  assert.equal(doc.captureListeners.get('focusin')?.size, 0);
+  library.register(owner());
+  assert.equal(doc.activeElement, revealed);
+  chooser.destroy();
+  assert.equal(doc.listeners.get('visibilitychange')?.size, 0);
+});
+
+for (const action of ['mode', 'campaign', 'collection', 'search', 'reveal'])
+  test(`a deliberate ${action} choice retires a pending restored campaign`, () => {
+    const pending = owner({ id: 'later' });
+    const expected = createMissionLibrary([pending]).missions[0];
+    const { $, library, chooser } = setup([owner()], {
+      mode: action === 'reveal' ? 'solo' : 'team',
+      readState: () => ({ mode: 'solo', campaign: expected.campaignKey }),
+    });
+    if (action === 'reveal') assert.equal(chooser.reveal(library.missions[0].id), true);
+    else {
+      const control = $(`journey-${action}`);
+      control.value = action === 'mode' ? 'versus' : action === 'search' ? 'Last' : '';
+      control.emit(action === 'search' ? 'input' : 'change');
+    }
+    library.register(pending);
+    assert.equal($('journey-campaign').value, '');
+    assert.equal(chooser.state().campaign, '');
+    assert.equal($('journey-cards').children.length, 2);
+    chooser.destroy();
+  });
+
+test('a new search keeps an already-visible explicitly selected campaign', () => {
+  const { $, library, chooser } = setup([owner(), owner({ id: 'other' })]);
+  const campaign = library.missions[0].campaignKey;
+  $('journey-campaign').value = campaign;
+  $('journey-campaign').emit('change');
+  $('journey-search').value = 'Last';
+  $('journey-search').emit('input');
+  assert.equal($('journey-campaign').value, campaign);
+  assert.equal(chooser.state().campaign, campaign);
+  assert.equal($('journey-cards').children.length, 1);
+  chooser.destroy();
+});
+
+test('an exact host-local reveal overrides a restored remote filter without launching', () => {
+  let launches = 0;
+  const { doc, $, library, chooser } = setup(
+    [owner({ launch: () => ++launches }), owner({ id: 'team', entries: [row('team', ['team'])] })],
+    {
+      mode: 'solo',
+      readState: () => ({ mode: 'team', search: 'Last', campaign: 'not loaded' }),
+    },
+  );
+  const selected = library.forMode('solo')[0];
+  assert.equal(chooser.reveal(selected.id), true);
+  assert.equal($('journey-mode').value, 'solo');
+  assert.equal($('journey-search').value, '');
+  assert.equal(chooser.state().campaign, '');
+  assert.equal(doc.activeElement.dataset.missionId, selected.id);
+  assert.equal(launches, 0);
+  assert.equal(chooser.reveal(library.forMode('team')[0].id), false);
+  assert.equal($('journey-mode').value, 'solo');
+  assert.equal(doc.activeElement.dataset.missionId, selected.id);
+  chooser.destroy();
+});
+
+test('an invalid saved mode cannot override the current host default or restore stale selection', () => {
+  const { doc, $, chooser } = setup([owner()], {
+    mode: 'solo',
+    readState: () => ({ mode: 'online', selectedId: 'stale', campaign: 'stale', scroll: 25 }),
+  });
+  assert.equal($('journey-mode').value, 'solo');
+  assert.equal(chooser.state().selectedId, '');
+  assert.equal(chooser.state().campaign, '');
+  assert.equal($('journey-cards').scrollTop, 0);
+  assert.equal(doc.activeElement.id, 'journey-search');
+  chooser.destroy();
 });
 
 test('Journey adapter retains exact runtime objects and independent mode progress', () => {
