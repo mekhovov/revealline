@@ -1,10 +1,12 @@
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
+import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { authoredTeamReturn } from '../ui/authored-mode-routes.mjs';
+import { resolveJourneyRequest } from '../content-design/default-entry.mjs';
 import {
   createCoop,
   startCoop,
@@ -123,7 +125,8 @@ export function bootCoop({
 } = {}) {
   // Entry links select a code-owned destination, never a supplied URL or referrer.
   // Older/direct links and ambiguous contexts retain the existing Versus return.
-  const returns = new URL(location.href).searchParams.getAll('return');
+  const entryParams = new URL(location.href).searchParams;
+  const returns = entryParams.getAll('return');
   const fromSolo = returns.length === 1 && returns[0] === 'solo';
   let returnStorage;
   try {
@@ -132,11 +135,27 @@ export function bootCoop({
     /* Fixed title fallback remains available. */
   }
   const authoredReturn = authoredTeamReturn(location.href);
-  const homeHref = authoredReturn?.solo ?? '../';
-  const versusHref = authoredReturn?.versus ?? './';
-  const returnHref = () =>
-    authoredReturn?.[authoredReturn.origin] ??
-    teamReturnHref({ href: location.href, storage: returnStorage });
+  // Keep the actual host selection across mode changes, including rejected or
+  // legacy launch intents. An authored return or valid save token still wins.
+  const legacyEntry = !candidateJourney;
+  const defaultJourney = Boolean(candidateJourney) && !entryParams.has('journey');
+  const homeHref = authoredReturn?.solo ?? (legacyEntry ? '../?journey=legacy' : '../');
+  const versusHref = authoredReturn?.versus ?? (legacyEntry ? './?journey=legacy' : './');
+  const catalogueParams = new URLSearchParams();
+  if (candidateJourney) catalogueParams.set('journey', 'legacy');
+  if (returns.length === 1 && ['solo', 'versus'].includes(returns[0]))
+    catalogueParams.set('return', returns[0]);
+  const catalogueHref = `relay-rescue.html${catalogueParams.size ? `?${catalogueParams}` : ''}`;
+  $('coop-catalogue').setAttribute('href', catalogueHref);
+  $('coop-catalogue').textContent = candidateJourney ? 'Legacy arenas' : 'New journey';
+  const returnHref = () => {
+    const destination =
+      authoredReturn?.[authoredReturn.origin] ??
+      teamReturnHref({ href: location.href, storage: returnStorage });
+    return legacyEntry && ['../', './'].includes(destination)
+      ? `${destination}?journey=legacy`
+      : destination;
+  };
   $('coop-home').setAttribute('href', homeHref);
   $('coop-versus').setAttribute('href', versusHref);
   $('coop-race').setAttribute('href', returnHref());
@@ -309,7 +328,9 @@ export function bootCoop({
         key: row.key,
         title: row.level.name,
         packName: row.pack.name,
-        sourceLabel: `Team Journey · ${row.background ? 'original-art candidate' : 'geometry test'} · not human validated`,
+        sourceLabel: defaultJourney
+          ? 'Team Journey · original artwork'
+          : `Team Journey · ${row.background ? 'original-art candidate' : 'geometry test'} · not human validated`,
         goal: coopGoalText(row.level),
         levelId: row.level.id,
         level: row.level,
@@ -2721,6 +2742,7 @@ export function bootCoop({
     return: 'Discard and leave',
     home: 'Discard and leave',
     versus: 'Discard and go to Versus',
+    catalogue: 'Discard and switch journey',
   };
   function visibleAction(element) {
     return (
@@ -2792,7 +2814,9 @@ export function bootCoop({
           ? 'Discard and retry starts this same arena again from the beginning.'
           : kind === 'setup'
             ? 'Discard and change setup clears this attempt without starting another.'
-            : 'Discard and leave returns to the linked mode and loses this Team attempt.'
+            : kind === 'catalogue'
+              ? 'Discard and switch journey opens the other Team catalogue and loses this attempt.'
+              : 'Discard and leave returns to the linked mode and loses this Team attempt.'
       }`;
     $('coop-discard-confirm').textContent = departureLabels[kind];
     try {
@@ -2834,7 +2858,9 @@ export function bootCoop({
             ? new URL(homeHref, location.href).href
             : ticket.kind === 'versus'
               ? new URL(versusHref, location.href).href
-              : null;
+              : ticket.kind === 'catalogue'
+                ? new URL(catalogueHref, location.href).href
+                : null;
       closeDeparture(ticket, { restore: false });
       if (ticket.kind === 'setup') lobby();
       else if (ticket.kind === 'retry') start(ticket.recipe, prepared);
@@ -2864,6 +2890,7 @@ export function bootCoop({
     ['coop-home', 'home'],
     ['coop-solo', fromSolo ? 'return' : 'home'],
     ['coop-versus', 'versus'],
+    ['coop-catalogue', 'catalogue'],
   ])
     $(id).addEventListener('click', (event) => {
       if (
@@ -2878,7 +2905,13 @@ export function bootCoop({
       cancelNext();
       $(id).setAttribute(
         'href',
-        kind === 'return' ? returnHref() : kind === 'versus' ? versusHref : homeHref,
+        kind === 'return'
+          ? returnHref()
+          : kind === 'versus'
+            ? versusHref
+            : kind === 'catalogue'
+              ? catalogueHref
+              : homeHref,
       );
       if (departure || pictureOperation) {
         event.preventDefault();
@@ -3196,7 +3229,7 @@ export function bootCoop({
   }
   function showPackStatus() {
     const candidate = candidateJourney?.rows.find((row) => row.pack === pack);
-    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}${candidate ? ` · ${candidate.background ? 'Original-art candidate' : 'Geometry test'} · not human validated` : ''}`;
+    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}${candidate ? (defaultJourney ? ' · Original artwork' : ` · ${candidate.background ? 'Original-art candidate' : 'Geometry test'} · not human validated`) : ''}`;
     packStatus.begin({ message: label }).finish({ message: label });
   }
   function showPack(next, preferred = next.levels[0].id, isCurrent = () => true) {
@@ -3685,10 +3718,22 @@ export function bootCoop({
     suspend();
   });
   window.addEventListener('pageshow', returned);
+  const journeySaveCue = attachJourneySaveCue({
+    document,
+    target: $('coop-pause'),
+    action: $('coop-journey-save-options'),
+    announcement: $('coop-journey-save-announcement'),
+    onOpen() {
+      if (disposed || running()) return;
+      const target = $('coop-journey-save').hidden ? primary() : $('coop-journey-save-retry');
+      if (visibleAction(target)) target.focus();
+    },
+  });
   function attachJourneyRecovery(owner, prefix, label, filename) {
     let exportSequence = 0;
     owner?.subscribe(({ ready = true, durable, error }) => {
       if (disposed) return;
+      if (prefix === 'coop-journey-save') journeySaveCue.update({ ready, durable, error });
       const notice = $(prefix),
         focus = document.activeElement,
         ownedFocus = !notice.hidden && notice.contains(focus),
@@ -3757,9 +3802,11 @@ export function bootCoop({
   $('coop-start').disabled = false;
   $('coop-start').textContent = 'Start together →';
   bootDisplay.finish({
-    message: candidateJourney
-      ? `Team Journey ${candidateEditionLabel ? `${candidateEditionLabel} · ` : ''}${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
-      : 'Two players · one screen · a shared victory',
+    message: defaultJourney
+      ? `Team Journey · ${candidateJourney.catalog.missions.length} missions · original artwork. Start together or browse another mission. Pictures need a connection; core offline preparation does not save them.`
+      : candidateJourney
+        ? `Team Journey ${candidateEditionLabel ? `${candidateEditionLabel} · ` : ''}${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
+        : 'Two players · one screen · a shared victory',
   });
   document.documentElement.dataset.toolState = 'ready';
   startPermitted = !$('coop-start').disabled;
@@ -3778,33 +3825,34 @@ try {
   document.addEventListener('focusin', initialFocusChoice, true);
   document.addEventListener('visibilitychange', initialVisibility);
   window.addEventListener('blur', initialFocusLost);
-  const journeyRequests = new URL(location.href).searchParams.getAll('journey');
+  const journeyRequest = resolveJourneyRequest(new URL(location.href).searchParams, {
+    mode: 'team',
+  });
   let candidateEntry;
   if (
-    journeyRequests.length === 1 &&
     [
       'team-greybox',
       'team-originals',
       'team-pressure-originals-1',
       'team-spatial-originals-1',
-    ].includes(journeyRequests[0])
+    ].includes(journeyRequest)
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
     candidateEntry = await createTeamGreyboxEntry({
-      artwork: journeyRequests[0] === 'team-originals',
-      pressure: journeyRequests[0] === 'team-pressure-originals-1',
-      spatial: journeyRequests[0] === 'team-spatial-originals-1',
+      artwork: journeyRequest === 'team-originals',
+      pressure: journeyRequest === 'team-pressure-originals-1',
+      spatial: journeyRequest === 'team-spatial-originals-1',
+      reviewCopy: new URL(location.href).searchParams.has('journey'),
     });
   } else if (
-    journeyRequests.length === 1 &&
     ['team-timed-originals', 'team-window-spatial-1', 'team-depot-spatial-1'].includes(
-      journeyRequests[0],
+      journeyRequest,
     )
   ) {
     const { createTeamTimedEntry } = await import('../content-design/team-timed-entry.mjs');
     candidateEntry = await createTeamTimedEntry({
-      spatial: journeyRequests[0] === 'team-window-spatial-1',
-      depot: journeyRequests[0] === 'team-depot-spatial-1',
+      spatial: journeyRequest === 'team-window-spatial-1',
+      depot: journeyRequest === 'team-depot-spatial-1',
     });
   }
   bootCoop(candidateEntry);

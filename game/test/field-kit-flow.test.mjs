@@ -81,6 +81,7 @@ test('title keeps five game destinations and quick sound; About lives in Worksho
   assert.deepEqual(visibleActions(page), [
     'shell-featured',
     'shell-play',
+    'shell-catalogue',
     'shell-gallery',
     'shell-options',
     'shell-workshop',
@@ -175,6 +176,7 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a 
   assert.deepEqual(visibleActions(page), [
     'shell-continue',
     'shell-play',
+    'shell-catalogue',
     'shell-gallery',
     'shell-options',
     'shell-workshop',

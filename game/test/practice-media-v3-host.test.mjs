@@ -107,7 +107,7 @@ async function journey(t, mode, version) {
         ? '?practice=1'
         : mode === 'course'
           ? '?course=first-flight&lesson=close-line'
-          : '',
+          : '?journey=legacy',
     previewStorage: memoryStorage({ 'revealline.playground.current': JSON.stringify(scenario) }),
     storage,
     audio,

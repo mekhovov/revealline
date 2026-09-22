@@ -226,7 +226,7 @@ for (const route of [
 
 test('the Legacy-backed Journey preview does not acquire authored navigation authority', async (t) => {
   const p = await solo(t, { search: '?journey=1' });
-  assert.equal(p.$('shell-title-versus').getAttribute('href'), 'couch/?return=solo');
+  assert.equal(p.$('shell-title-versus').getAttribute('href'), 'couch/?journey=legacy&return=solo');
   await activate(p.$('shell-title-versus'));
-  assert.equal(globalThis.location.href, 'http://localhost/game/couch/?return=solo');
+  assert.equal(globalThis.location.href, 'http://localhost/game/couch/?journey=legacy&return=solo');
 });

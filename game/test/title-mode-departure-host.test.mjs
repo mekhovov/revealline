@@ -14,9 +14,13 @@ import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { campaignKey } from '../library.mjs';
 
 const slot = 'revealline.suspended.dev.v1';
-const homeURL = 'http://localhost/game/';
+const gameURL = 'http://localhost/game/';
+const homeURL = `${gameURL}?journey=legacy`;
 const hintKeys = ['revealline.mode-return.v1:/game/', 'revealline.mode-return.v2:/game/'];
-const destinations = { team: 'couch/relay-rescue.html?return=solo', versus: 'couch/?return=solo' };
+const destinations = {
+  team: 'couch/relay-rescue.html?journey=legacy&return=solo',
+  versus: 'couch/?journey=legacy&return=solo',
+};
 // Model native top-layer focus and cancel defaults only. Actual app, shell,
 // controller navigation, replay, storage and mode presenter execute unchanged.
 function nativeDialogs(t) {
@@ -146,7 +150,7 @@ for (const kind of ['versus', 'team']) {
       assert.equal(h.$(`shell-title-${kind}`).getAttribute('href'), destinations[kind]);
       await request(h, kind);
       target = globalThis.location.href;
-      assert.equal(target, homeURL + destinations[kind]);
+      assert.equal(target, gameURL + destinations[kind]);
       assert.equal(h.$('mode-leave-dialog').open, false);
       assert.equal(h.$('shell-missions').open, false);
       assert.equal(storage.getItem(slot), null);
@@ -188,7 +192,7 @@ for (const kind of ['versus', 'team']) {
       const retained = h.storage.getItem(slot);
       h.$('mode-leave-confirm').focus();
       await press(h, 'Enter');
-      assert.equal(globalThis.location.href, homeURL + destinations[kind]);
+      assert.equal(globalThis.location.href, gameURL + destinations[kind]);
       h.win.emit('pagehide', { persisted: true });
       assert.equal(h.storage.getItem(slot), retained);
       assert.deepEqual(calls, []);
@@ -331,7 +335,7 @@ for (const reason of ['quota', 'readback', 'newer-before', 'newer-after'])
     assert.doesNotMatch(h.$('mode-leave-status').textContent, /saved and verified/);
     if (newer) assert.equal(get(slot), newer);
     h.$('mode-leave-confirm').click();
-    assert.equal(globalThis.location.href, homeURL + destinations.team);
+    assert.equal(globalThis.location.href, gameURL + destinations.team);
     if (newer) assert.equal(get(slot), newer);
     frozen(h, before);
   });
@@ -360,7 +364,7 @@ test('modified Title links retain native defaults; rejected direct navigation le
     },
   });
   await request(h, 'versus');
-  assert.equal(current, homeURL + destinations.versus);
+  assert.equal(current, gameURL + destinations.versus);
 });
 
 class Picture {
@@ -442,7 +446,7 @@ for (const kind of ['versus', 'team'])
     const starting = press(h, 'Enter');
     assert.equal(h.$('shell-flight-cancel').hidden, false);
     await request(h, kind);
-    assert.equal(globalThis.location.href, homeURL + destinations[kind]);
+    assert.equal(globalThis.location.href, gameURL + destinations[kind]);
     const chosen = h.doc.activeElement;
     gate.resolve();
     await starting;
@@ -503,7 +507,7 @@ for (const kind of ['versus', 'team'])
       frozen(h, before);
       assert.equal(h.doc.activeElement.id, `shell-title-${kind}`);
       await request(h, kind);
-      assert.equal(globalThis.location.href, homeURL + destinations[kind]);
+      assert.equal(globalThis.location.href, gameURL + destinations[kind]);
       assert.equal(storage.getItem(slot), captured);
       frozen(h, before);
     });
@@ -572,7 +576,7 @@ for (const kind of ['versus', 'team'])
       assert.equal(storage.getItem(slot), captured);
       frozen(h, before);
       await request(h, kind);
-      assert.equal(globalThis.location.href, homeURL + destinations[kind]);
+      assert.equal(globalThis.location.href, gameURL + destinations[kind]);
       assert.equal(storage.getItem(slot), captured);
       assert.equal(h.$('mode-leave-dialog').open, false);
       frozen(h, before);

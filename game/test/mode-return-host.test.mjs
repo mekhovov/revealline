@@ -99,7 +99,7 @@ for (const [kind, version, label] of [
         await request(h);
         if (flight) {
           assert.match(h.$('mode-leave-status').textContent, /saved and verified/);
-          assert.equal(globalThis.location.href, 'http://localhost/game/');
+          assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
           h.$('mode-leave-confirm').click();
         } else assert.equal(h.$('mode-leave-dialog').open, false);
         target = globalThis.location.href;
@@ -205,7 +205,7 @@ for (const [kind, version, label] of [
       await request(h);
       assert.match(h.$('mode-leave-status').textContent, /session-only.*Leaving may lose/);
       assert.match(h.$('mode-leave-status').textContent, /last verified save/);
-      assert.equal(globalThis.location.href, 'http://localhost/game/');
+      assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
       assert.equal(storage.getItem(slot), newest);
       h.$('mode-leave-confirm').click();
       assert.ok(globalThis.location.href.includes(`${destination}?return=solo&${outgoingQuery}=`));
@@ -222,7 +222,7 @@ for (const [kind, version, label] of [
     const raw = h.storage.getItem(slot);
     h.storage.setItem(slot, `${raw} `);
     h.$('mode-leave-confirm').click();
-    assert.equal(globalThis.location.href, 'http://localhost/game/');
+    assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
     assert.match(h.$('mode-leave-status').textContent, /changed.*Leave again/);
     assert.match(h.$('mode-leave-status').textContent, /session-only/);
   });
@@ -247,14 +247,17 @@ for (const [kind, version, label] of [
           assert.match(h.$('mode-leave-status').textContent, /saved and verified/);
           h.$('mode-leave-confirm').click();
         }
-        assert.equal(globalThis.location.href, 'http://localhost/game/');
+        assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
         assert.ok(
           h
             .$('mode-leave-status')
             .textContent.includes(`Back from ${label} will open Solo’s title`),
         );
         h.$('mode-leave-confirm').click();
-        assert.equal(globalThis.location.href, `http://localhost/game/${destination}?return=solo`);
+        assert.equal(
+          globalThis.location.href,
+          `http://localhost/game/${destination}?journey=legacy&return=solo`,
+        );
         saved = storage.getItem(slot);
         unchanged(h, checkpoint);
       });
@@ -281,14 +284,14 @@ for (const [kind, version, label] of [
     await settle(() => !!finish);
     assert.equal(h.$('mode-leave-confirm').disabled, true);
     h.$('mode-leave-confirm').click();
-    assert.equal(globalThis.location.href, 'http://localhost/game/');
+    assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
     h.$('mode-leave-stay').click();
     assert.equal(h.$('mode-leave-dialog').open, false);
     assert.equal(h.doc.activeElement.id, entryId);
     finish();
     await pending;
     assert.equal(h.storage.getItem(slot), saved);
-    assert.equal(globalThis.location.href, 'http://localhost/game/');
+    assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
     unchanged(h, checkpoint);
   });
 
@@ -341,7 +344,7 @@ for (const [kind, version, label] of [
       h.storage.getItem = (key) =>
         key === slot && written && failure === 'readback' ? '{}' : get(key);
       await request(h);
-      assert.equal(globalThis.location.href, 'http://localhost/game/');
+      assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
       assert.match(h.$('mode-leave-status').textContent, /session-only.*Leaving may lose/);
       assert.doesNotMatch(
         h.$('mode-leave-status').textContent,
@@ -375,7 +378,7 @@ for (const [kind, version, label] of [
     assert.equal(h.storage.getItem(slot), newer);
     assert.match(h.$('mode-leave-status').textContent, /session-only/);
     assert.match(h.$('mode-leave-status').textContent, /changed before departure/);
-    assert.equal(globalThis.location.href, 'http://localhost/game/');
+    assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
   });
 
   test('pending theme preparation cannot depart with a stale visible selection', async (t) => {
@@ -385,7 +388,7 @@ for (const [kind, version, label] of [
     h.$('theme-select').value = 'retro';
     const preparing = h.$('theme-select').onchange();
     await h.$(entryId).onclick({ preventDefault() {} });
-    assert.equal(globalThis.location.href, 'http://localhost/game/');
+    assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
     assert.equal(h.$('mode-leave-dialog').open, false);
     assert.match(h.$('run-message').textContent, /Finish the current operation/);
     assert.equal(previewStorage.getItem(recordKey), null);
@@ -425,12 +428,12 @@ for (const [kind, version, label] of [
       await pending;
       assert.equal(h.storage.getItem(slot), before);
       assert.equal(previewStorage.getItem(recordKey), null);
-      assert.equal(globalThis.location.href, 'http://localhost/game/');
+      assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
       h.doc.focused = true;
       h.doc.hidden = false;
       h.win.emit('focus');
       h.$('mode-leave-confirm').click();
-      assert.equal(globalThis.location.href, 'http://localhost/game/');
+      assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
       unchanged(h, checkpoint);
     });
 
@@ -445,7 +448,7 @@ for (const [kind, version, label] of [
       h.win.emit('blur');
     };
     await h.$(entryId).onclick({ preventDefault() {} });
-    assert.equal(globalThis.location.href, 'http://localhost/game/');
+    assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
     assert.equal(previewStorage.getItem(recordKey), null);
     assert.equal(h.$('mode-leave-dialog').open, false);
   });
