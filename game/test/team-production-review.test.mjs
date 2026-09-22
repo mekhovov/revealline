@@ -9,15 +9,15 @@ import {
 import { resolvePresentation } from '../presentation/model.mjs';
 import { TEAM_EQUIPMENT_IDS } from '../presentation/team-equipment-art.mjs';
 
-test('Team recipes stay source-stage while original equipment retains its separate five-image review', async () => {
+test('current Team assembly uses separate exact recipe and equipment reviews', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const roles = production.document.slots.filter((slot) => slot.id.startsWith('team.'));
   assert.equal(roles.length, 42);
   assert.equal(
     resolved.assets['team.support.pulse'].quality.stage,
-    'source',
-    'Team Support cannot borrow the reviewed Solo effects declaration',
+    'reviewed',
+    'Team Support has its own scoped functional declaration',
   );
   const fingerprints = await fieldKitRecipeSources((name) =>
     readFile(new URL(`../../${name}`, import.meta.url)),
@@ -34,7 +34,8 @@ test('Team recipes stay source-stage while original equipment retains its separa
       continue;
     }
     assert.equal(asset.kind, 'recipe', slot.id);
-    assert.equal(asset.quality.stage, 'source', `${slot.id} cannot borrow a Solo review`);
+    assert.equal(asset.quality.stage, 'reviewed', slot.id);
+    assert.ok(asset.quality.evidence[0].includes('docs/verification/team37/review.json'), slot.id);
     assert.equal(asset.provenance.source, fingerprints.team, slot.id);
     assert.ok(!asset.quality.evidence.some((line) => line.includes('Scoped v0.76')), slot.id);
   }

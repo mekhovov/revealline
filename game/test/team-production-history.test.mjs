@@ -82,11 +82,7 @@ test('explicit Team migration retains the complete canonical57 ledger and repeat
   assert.equal(canonicalJSON(production.document), desired);
   const resolved = resolvePresentation(next);
   for (const slot of next.slots.filter((slot) => slot.id.startsWith('team.')))
-    assert.equal(
-      resolved.assets[slot.id].quality.stage,
-      TEAM_EQUIPMENT_IDS.includes(slot.id) ? 'reviewed' : 'source',
-      slot.id,
-    );
+    assert.equal(resolved.assets[slot.id].quality.stage, 'reviewed', slot.id);
   const repeated = retainFieldKitProductionHistory(production.document, next);
   assert.equal(canonicalJSON(repeated), canonicalJSON(next));
   const assets = new Map([...prior.assets, ...production.assets]);
@@ -163,6 +159,25 @@ test('current-ledger Team reproduction retains its prefix and is a no-op after m
         prior,
         'The produced ancestor retains its original quality evidence.',
       );
+    }
+  }
+  for (const slot of next.slots.filter(
+    (entry) => entry.id.startsWith('team.') && !TEAM_EQUIPMENT_IDS.includes(entry.id),
+  )) {
+    const prior = priorAssets[slot.id],
+      accepted = nextAssets[slot.id];
+    assert.equal(accepted.kind, 'recipe');
+    assert.equal(accepted.quality.stage, 'reviewed', slot.id);
+    assert.deepEqual(accepted.recipe, prior.recipe, 'Review preserves the default payload.');
+    assert.deepEqual(
+      next.assets.find((asset) => asset.id === prior.id && asset.revision === prior.revision),
+      prior,
+      'The exact prior recipe record and its original quality evidence remain immutable.',
+    );
+    if (prior.quality.stage === 'source') {
+      assert.equal(accepted.id, prior.id);
+      assert.equal(accepted.revision, prior.revision + 1, 'Functional review adds a successor.');
+      assert.equal(prior.quality.stage, 'source', 'The pre-review ancestor remains source.');
     }
   }
   const repeated = retainFieldKitProductionHistory(production.document, next);

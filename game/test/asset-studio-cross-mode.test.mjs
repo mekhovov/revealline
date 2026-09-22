@@ -11,6 +11,8 @@ import {
 import { CURRENT_ART_SOURCES } from '../presentation/current-art-sources.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 import { stepDuel } from '../multiplayer.mjs';
+import { FIXED_DT } from '../coop/core.mjs';
+import { teamRescueProgress } from '../couch/coop-rescue-presentation.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { createStudioTeamFixture } from '../../authoring/asset-studio/team-preview-fixture.mjs';
 
@@ -144,6 +146,7 @@ test('each Versus painter receives its selected capture and failure effect', () 
 
 function fakeDocument() {
   const draws = [],
+    texts = [],
     nodes = [];
   class Node {
     constructor(tag) {
@@ -169,7 +172,14 @@ function fakeDocument() {
           get: (target, name) => {
             if (name in target) return target[name];
             if (name === 'drawImage') return (image) => draws.push({ canvas: this, image });
-            if (name === 'measureText') return (text) => ({ width: String(text).length * 7 });
+            if (name === 'fillText') return (text) => texts.push(String(text));
+            if (name === 'measureText')
+              return (text) => ({
+                width:
+                  String(text).length *
+                  Number(String(target.font).match(/([\d.]+)px/)?.[1] ?? 12) *
+                  0.6,
+              });
             if (name === 'createLinearGradient' || name === 'createRadialGradient')
               return () => ({ addColorStop() {} });
             return () => {};
@@ -179,7 +189,7 @@ function fakeDocument() {
       return this.context;
     }
   }
-  return { document: { createElement: (tag) => new Node(tag) }, Node, draws, nodes };
+  return { document: { createElement: (tag) => new Node(tag) }, Node, draws, texts, nodes };
 }
 const palette = Object.fromEntries(
   ['ink', 'paper', 'muted', 'accent', 'safe', 'danger', 'field', 'grid', 'sky', 'land'].map(
@@ -377,6 +387,94 @@ test('real Team painter consumes distinct compact/detailed sprites, picture and 
   assert.equal(disconnected, true);
   assert.ok(images.every((image) => image.src === ''));
 });
+for (const target of [1, 2]) {
+  test(`Team rescue ${target} HUD, board and note agree through fractional ticks and completion`, async (t) => {
+    const dom = fakeDocument(),
+      previous = globalThis.document;
+    globalThis.document = dom.document;
+    t.after(() => {
+      globalThis.document = previous;
+    });
+    const view = resolved(),
+      slot = { id: 'team.rescue.progress', group: 'effects' },
+      scenario = `rescue-p${target}`,
+      expected = createStudioTeamFixture({ arena: 'relay-yard', scenario }),
+      cleanups = [];
+    view.assets[slot.id] = {
+      id: `${slot.id}.default`,
+      revision: 1,
+      kind: 'recipe',
+      recipe: { id: 'team.rescue.v1' },
+    };
+    let render;
+    await crossModeContextPreview(
+      new dom.Node('section'),
+      slot,
+      view.assets[slot.id],
+      view,
+      new Map(),
+      {
+        fieldMode: 'team',
+        teamArena: 'relay-yard',
+        teamScenario: scenario,
+        motion: 'playing',
+        isCurrent: () => true,
+      },
+      (cleanup) => cleanups.push(cleanup),
+      {
+        decode: async (asset) => decodedImage(asset),
+        presentation: snapshot,
+        loop: (_own, draw) => {
+          render = draw;
+        },
+      },
+    );
+    t.after(() => cleanups.forEach((cleanup) => cleanup()));
+    const hud = dom.nodes.find((node) => node.className === 'context-hud'),
+      rescuer = 3 - target,
+      shown = [];
+    let completed = false;
+    for (let tick = 0; tick <= 61; tick++) {
+      const dt = tick === 0 ? 0 : FIXED_DT;
+      expected.advance(dt);
+      dom.texts.length = 0;
+      render(dt, false);
+      const progress = teamRescueProgress(expected.run, expected.run.players[rescuer - 1]);
+      if (progress) {
+        const percent = Math.floor(progress.progress * 100);
+        shown.push(percent);
+        assert.match(hud.textContent, new RegExp(`P${rescuer} rescuing ${percent}%`));
+        assert.deepEqual(
+          dom.texts.filter((text) => text.startsWith('RESCUE ')),
+          [`RESCUE ${target} · ${percent}%`],
+          `same simulation tick ${expected.run.tick} must have one matching board cue`,
+        );
+        assert.ok(
+          dom.nodes.some((node) =>
+            (node.textContent || '').includes(
+              `Player ${rescuer} rescuing player ${target}: ${percent}%`,
+            ),
+          ),
+        );
+        assert.ok(percent < 100, 'Active rescue must not announce completion early.');
+      } else {
+        completed = true;
+        assert.equal(expected.run.players[target - 1].status, 'active');
+        assert.doesNotMatch(hud.textContent, /rescuing/);
+        assert.equal(
+          dom.texts.some((text) => text.startsWith('RESCUE ')),
+          false,
+        );
+        assert.ok(
+          dom.nodes.some((node) => /^No active contact rescue/.test(node.textContent || '')),
+        );
+      }
+    }
+    assert.ok(shown.includes(50) && shown.includes(71) && shown.includes(99));
+    assert.equal(completed, true, 'Public-command rescue completes on the ordinary core timer.');
+  });
+}
+
 test('replacement during decode cannot attach a stale Team scene or leak its image', async (t) => {
   const dom = fakeDocument(),
     previous = globalThis.document;

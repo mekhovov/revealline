@@ -2,33 +2,51 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { fieldKitRecipeSources } from './produce-field-kit-theme.mjs';
 
-test('functional helper changes invalidate only their explicit recipe group', async () => {
+test('every declared helper invalidates all sharing groups and leaves nonconsumers unchanged', async () => {
   const inputs = new Map();
   const before = await fieldKitRecipeSources(async (name) => {
-    assert(!inputs.has(name) || name === 'game/ui/field-kit-compiled.css');
     inputs.set(name, Buffer.from(name));
     return inputs.get(name);
   });
-  for (const [name, group] of [
-    ['game/presentation/dom-ownership.mjs', 'ui'],
-    ['game/presentation/host.mjs', 'ui'],
-    ['game/content-design/actor-marker.mjs', 'effects'],
-    ['game/ui/lane-presentation.mjs', 'effects'],
-    ['game/ui/render.mjs', 'effects'],
-    ['game/ui/relay-view.mjs', 'effects'],
-    ['game/ui/directional-view.mjs', 'effects'],
-    ['game/enemy-catalog.mjs', 'effects'],
-    ['game/presentation/journey-actor-materials.mjs', 'motion'],
-    ['game/soundtrack-portable.mjs', 'audio'],
-    ['game/content/soundtrack-catalogue.mjs', 'audio'],
-  ]) {
-    assert(inputs.has(name), `${name}: missing dependency`);
+  const consumers = new Map();
+  for (const [group, source] of Object.entries(before)) {
+    const paths = source.split(' sha256:')[0].split('; ');
+    assert.equal(new Set(paths).size, paths.length, `${group}: duplicate input`);
+    for (const name of paths) {
+      assert(inputs.has(name), `${group}: unread input ${name}`);
+      if (!consumers.has(name)) consumers.set(name, []);
+      consumers.get(name).push(group);
+    }
+  }
+  // These independent sharing contracts guard against a missing dependency
+  // being accepted just because it vanished from the declaration under test.
+  for (const [name, groups] of [
+    ['game/presentation/dom-ownership.mjs', ['ui']],
+    ['game/presentation/host.mjs', ['ui']],
+    ['game/ui/field-kit-compiled.css', ['screens', 'ui']],
+    ['game/presentation/team-runtime-slots.mjs', ['team', 'ui']],
+    ['game/content-design/actor-marker.mjs', ['effects', 'team']],
+    ['game/ui/lane-presentation.mjs', ['effects']],
+    ['game/ui/render.mjs', ['effects']],
+    ['game/ui/relay-view.mjs', ['effects']],
+    ['game/ui/directional-view.mjs', ['effects']],
+    ['game/enemy-catalog.mjs', ['effects', 'team']],
+    ['game/presentation/journey-actor-materials.mjs', ['motion', 'team']],
+    ['game/ui/actor-presentation.mjs', ['motion', 'team']],
+    ['authoring/motion-lab/render-character.mjs', ['motion', 'team']],
+    ['game/ui/classic-view.mjs', ['effects', 'team']],
+    ['game/couch/coop-view.mjs', ['team']],
+    ['game/soundtrack-portable.mjs', ['audio']],
+    ['game/content/soundtrack-catalogue.mjs', ['audio']],
+  ])
+    assert.deepEqual([...(consumers.get(name) ?? [])].sort(), groups, name);
+  assert.equal(consumers.size, inputs.size, 'Every read belongs to a declared group');
+  for (const [name, groups] of consumers) {
     const after = await fieldKitRecipeSources(async (file) =>
       file === name ? Buffer.from(`${file}: changed`) : inputs.get(file),
     );
-    for (const key of Object.keys(before))
-      assert.equal(before[key] === after[key], key !== group, `${name}/${key}`);
-    assert(after[group].includes(name));
+    for (const group of Object.keys(before))
+      assert.equal(before[group] !== after[group], groups.includes(group), `${name}/${group}`);
   }
   assert.deepEqual(await fieldKitRecipeSources(async (file) => inputs.get(file)), before);
 });
