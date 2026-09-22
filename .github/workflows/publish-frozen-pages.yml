@@ -6,6 +6,7 @@ on:
     paths:
       - 'publishing/pages-controller/**'
       - '!publishing/pages-controller/delivery/**'
+      - 'publishing/test-policy.*'
       - '.github/workflows/publish-frozen-pages.yml'
       - '.github/workflows/deploy-pages.yml'
       - '.cursor/skills/deploy-release-pages/**'
@@ -14,6 +15,7 @@ on:
     branches: [main]
     paths:
       - 'publishing/pages-controller/**'
+      - 'publishing/test-policy.*'
       - '.github/workflows/publish-frozen-pages.yml'
       - '.github/workflows/deploy-pages.yml'
       - '.cursor/skills/deploy-release-pages/**'
@@ -51,9 +53,14 @@ jobs:
         with:
           node-version: 22.22.2
 
+      - name: Read explicit automated-suite policy
+        id: test_policy
+        run: node publishing/test-policy.mjs
+
       - name: Verify metadata bridges and bounded ZIP extraction
+        if: steps.test_policy.outputs.runTests == 'true'
         run: |
-          node --test publishing/pages-controller/*.test.mjs
+          node --test publishing/test-policy.test.mjs publishing/pages-controller/*.test.mjs
           python3 -m unittest discover -s publishing/pages-controller -p 'test_*.py' -v
 
       - name: Require publication workspace capacity
