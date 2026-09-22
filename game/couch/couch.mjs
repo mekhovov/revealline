@@ -2256,7 +2256,7 @@ try {
     start.getClientRects().length > 0 &&
     document.defaultView?.getComputedStyle(start)?.visibility !== 'hidden'
   )
-    start.focus({ preventScroll: true });
+    shell.focus(start);
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootFailed = true;

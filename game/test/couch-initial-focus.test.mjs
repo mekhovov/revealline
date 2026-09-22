@@ -42,9 +42,13 @@ function untouched(page) {
 
 test('untouched prepared lobby focuses enabled Start once without controller ownership or starting', async (t) => {
   let focusObservations;
+  const reveals = [];
   const page = await ready(t, {
     beforeImport({ document }) {
       focusObservations = observeStartFocus(document);
+      t.mock.method(document.getElementById('race-start'), 'scrollIntoView', (options) =>
+        reveals.push(options),
+      );
     },
     pads: [
       {
@@ -60,6 +64,7 @@ test('untouched prepared lobby focuses enabled Start once without controller own
   assert.equal(page.doc.activeElement.id, 'race-start');
   assert.equal(page.$('race-start').disabled, false);
   clearedBeforeFocus(focusObservations);
+  assert.deepEqual(reveals, [{ block: 'nearest', inline: 'nearest', behavior: 'auto' }]);
   untouched(page);
   page.focus('race-coop');
   page.frames(8);
@@ -103,6 +108,7 @@ test('delayed initial preparation leaves loading focus alone, then hands off to 
   const page = await pending.finish();
   assert.equal(page.doc.activeElement.id, 'race-start');
   clearedBeforeFocus(pending.focusObservations);
+  assert.equal(page.$('race-start').scrolled, 1);
   untouched(page);
 });
 
@@ -131,6 +137,7 @@ for (const choice of ['current', 'moved-away', 'pre-attached-recovery'])
     }
     const page = await pending.finish();
     assert.notEqual(page.doc.activeElement.id, 'race-start');
+    assert.equal(page.$('race-start').scrolled ?? 0, 0);
     untouched(page);
   });
 
@@ -154,6 +161,7 @@ for (const reason of ['initial-background', 'blur-return', 'hidden-return', 'pag
     pending.document.focused = true;
     const page = await pending.finish();
     assert.equal(page.doc.activeElement === page.doc.body, true);
+    assert.equal(page.$('race-start').scrolled ?? 0, 0);
     untouched(page);
   });
 
@@ -175,6 +183,7 @@ for (const hidden of ['disabled', 'no-rect', 'css-hidden', 'aria-hidden'])
       },
     });
     assert.notEqual(page.doc.activeElement.id, 'race-start');
+    assert.equal(page.$('race-start').scrolled ?? 0, 0);
     untouched(page);
   });
 
