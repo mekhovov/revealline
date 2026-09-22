@@ -724,6 +724,19 @@ export async function buildProject({
         ).readExternalDistributionEntries(root, config.externalChapters);
   if (config.externalChapters && !files.includes(config.externalChapters.catalog))
     fail('External chapter catalog must be included in the core build');
+  let missionIndexSnapshot = null;
+  if (files.includes('game/content/mission-library-index.json')) {
+    const { buildMissionLibraryIndex, assertMissionLibraryIndex, MISSION_LIBRARY_INDEX_PATH } =
+      await import('./mission-library-index.mjs');
+    const bytes = await fs.readFile(path.join(root, MISSION_LIBRARY_INDEX_PATH));
+    // Reuse already verified external bodies: browsing metadata must match the
+    // released content without running expensive artwork producers twice.
+    assertMissionLibraryIndex(
+      JSON.parse(bytes),
+      await buildMissionLibraryIndex({ root, externalEntries }),
+    );
+    missionIndexSnapshot = { path: MISSION_LIBRARY_INDEX_PATH, bytes };
+  }
   const declared = new Set([...files, ...optionalEntries.map((entry) => entry.name)]);
   for (const entry of externalEntries) {
     if (declared.has(entry.name))
@@ -752,6 +765,13 @@ export async function buildProject({
     const entries = [];
     for (const name of files)
       entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
+    if (
+      missionIndexSnapshot &&
+      !entries
+        .find((entry) => entry.name === missionIndexSnapshot.path)
+        ?.bytes.equals(missionIndexSnapshot.bytes)
+    )
+      fail('Mission library index changed after validation; rebuild from stable source');
     for (const snapshot of contentSnapshots) {
       const entry = entries.find((candidate) => candidate.name === snapshot.file);
       if (

@@ -192,24 +192,23 @@ test('pressure difficulty, reversible Skip, chooser and reload use scoped bookma
       assert.equal(f.$('coop-difficulty').value, 'expert');
       enter(f, f.$('coop-pause'));
       enter(f, f.$('coop-discovery-paused'));
-      const cards = [...f.$('coop-discovery-list').querySelectorAll('article')].filter((c) =>
-        c.querySelector('.team-mission-diagram'),
+      await waitFor(() => f.$('journey-chooser')?.open);
+      const cards = [...f.$('journey-cards').querySelectorAll('.journey-card')].filter((c) =>
+        c.querySelector('.journey-card-tags').textContent.includes('Journey'),
       );
       assert.equal(cards.length, 12);
-      const first = cards.find(
-        (c) => c.querySelector('button').textContent === 'Play Twin landings',
-      );
+      const first = cards.find((c) => c.querySelector('strong').textContent === 'Twin landings');
       assert.equal(
-        first.querySelector('.team-mission-completion').textContent,
-        'Skipped · revisit whenever you like',
+        first.querySelector('.journey-card-progress').textContent,
+        'Skipped · try again',
       );
       const destination = cards.find(
-        (c) => c.querySelector('button').textContent === 'Play Twin depots',
+        (c) => c.querySelector('strong').textContent === 'Twin depots',
       );
-      enter(f, destination.querySelector('button'));
+      enter(f, destination);
       await waitFor(() => f.$('coop-discard-dialog').open);
       enter(f, f.$('coop-discard-confirm'));
-      await waitFor(() => !f.$('coop-discovery-dialog').open);
+      await waitFor(() => !f.$('journey-chooser').open && f.$('coop-overlay').hidden);
       assert.equal(f.$('coop-level').value, 'twin-depots');
       await new Promise((resolve) => setImmediate(resolve));
       const profile = await backend.read();

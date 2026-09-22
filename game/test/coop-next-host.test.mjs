@@ -49,8 +49,8 @@ test('earned First Connection focuses Next and one explicit action prepares and 
   assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
   assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/i);
   f.tap('Enter');
-  assert.equal(f.$('coop-discovery-dialog').open, true);
-  f.$('coop-discovery-back').focus();
+  await waitFor(() => f.$('journey-chooser')?.open);
+  f.$('journey-back').focus();
   f.tap('Enter');
   f.$('coop-lobby').focus();
   f.tap('Enter');
@@ -425,9 +425,9 @@ test('a completed Team pack focuses Browse Team arenas and keeps the earned resu
   f.tick(5);
   assertResult(f, result);
   f.tap('Enter');
-  assert.equal(f.$('coop-discovery-dialog').open, true);
+  await waitFor(() => f.$('journey-chooser')?.open);
   assertResult(f, result);
-  f.$('coop-discovery-back').focus();
+  f.$('journey-back').focus();
   f.tap('Enter');
   assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
   assertResult(f, result);
