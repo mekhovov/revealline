@@ -1,9 +1,15 @@
 import { readFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { waitFor as elapsedWaitFor } from './wait-for.mjs';
 import { validateCompiledPresentation } from '../../presentation/host.mjs';
-import { canvasPresentation, presentationCSSVariables } from '../../presentation/runtime.mjs';
+import {
+  canvasPresentation,
+  presentationCSSVariables,
+  imagePresentation,
+} from '../../presentation/runtime.mjs';
 import { mountPresentationPage } from '../../presentation/page.mjs';
+import { isTeamRuntimeImageSlot } from '../../presentation/team-runtime-slots.mjs';
 import { COOP_PICTURE_BINDINGS } from '../../couch/coop-picture-bindings.mjs';
 
 const compiled = validateCompiledPresentation(
@@ -44,11 +50,34 @@ export async function waitFor(check, diagnostic = () => '') {
 // Exact compiled metadata/original PNG bytes are real; browser decode is finite.
 export function installCoopPresentation({ doc, win, install, read, decode, load } = {}) {
   const css = presentationCSSVariables(compiled.resolved);
+  // Match the real host eager-image boundary. Pictures and scenes remain lazy:
+  // their bytes must pass through readPicture and the normal decoder below.
+  const prepared = new Map(
+    Object.entries(compiled.resolved.assets)
+      .filter(
+        ([slot, asset]) =>
+          asset.kind === 'image' &&
+          (/^(ui|icon|hud|reward|control|screen|player|enemy|terrain|pickup)\./.test(slot) ||
+            isTeamRuntimeImageSlot(slot)),
+      )
+      .map(([slot, asset]) => [
+        slot,
+        {
+          asset,
+          image: Object.freeze({ slot, width: asset.file.width, height: asset.file.height }),
+          geometry: imagePresentation(asset),
+        },
+      ]),
+  );
   const snapshot = {
     resolved: structuredClone(compiled.resolved),
     canvas: canvasPresentation(compiled.resolved),
     fonts: { ui: css['--fk-font-ui'], numeric: css['--fk-font-mono'] },
+    image: (slot) => prepared.get(slot) ?? null,
   };
+  for (const { picture } of COOP_PICTURE_BINDINGS) {
+    assert.equal(snapshot.image(picture.slot), null, 'Arena pictures require lazy acquisition');
+  }
   const calls = { loads: 0, reads: [], decodes: [], urls: [], releases: [], closes: 0 },
     blobs = new Map();
   let sequence = 0;

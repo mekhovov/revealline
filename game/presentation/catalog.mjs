@@ -1,3 +1,5 @@
+import { TEAM_ENEMY_SLOTS, teamEnemyInheritance } from '../couch/coop-enemy-slots.mjs';
+import { TEAM_PILOT_STATES } from '../couch/coop-pilot-slots.mjs';
 import { FORMATS, TOKEN_DEFAULTS, freezePresentation, validateThemeBundle } from './model.mjs';
 import { CURRENT_PICTURES } from './current-pictures.mjs';
 
@@ -344,6 +346,27 @@ for (const id of [
       ],
     },
   );
+for (const id of TEAM_ENEMY_SLOTS)
+  slot(
+    id,
+    `Team ${id === 'team.enemy.drifter' ? 'drifter' : `hunter ${id.split('.').at(-1)}`} body`,
+    'enemies',
+    'team.enemy.v1',
+    [32, 32],
+    ['couch', 'studio'],
+    {
+      required: false,
+      dependencies: [teamEnemyInheritance(id)],
+      prompt: `Original FPV pixel art: ${id}, 32×32 transparent PNG. Follow palette, geometry and all role requirements.`,
+      requirements: [
+        'North-facing, binary alpha, crisp pixels; no text, target lines, glow or background.',
+        'Distinct drifter; consistent hunter silhouette. Real hunter phases: patrol, warning, commit→charge, recovery.',
+        'The team.enemy.v1 recipe inherits the declared body image, not its Solo behavior.',
+        'Keep contact, warning, phase and Support cues game-owned. Geometry and optional rotors are cosmetic; preserve all mechanics.',
+        'Review both arenas, matching scenes, native32px, playing scale and reduced effects. Label inactive states honestly.',
+      ],
+    },
+  );
 for (const id of ['wall', 'slow', 'lethal'])
   slot(
     `terrain.${id}`,
@@ -370,6 +393,140 @@ for (const id of ['objective', 'supply', 'life', 'speed', 'slow', 'freeze'])
     id === 'objective' || id === 'supply' ? [16, 16] : [24, 24],
     ['flight', 'guide'],
   );
+for (const state of ['available', 'captured'])
+  slot(
+    `team.anchor.${state}`,
+    `${state} Team relay anchor`,
+    'objectives',
+    'team.anchor.v1',
+    [24, 24],
+    ['couch', 'studio'],
+    {
+      required: false, // Historical themes keep their recorded appearance until explicitly upgraded.
+      requirements: [
+        'Team relay anchor only: never an ordinary pickup or a Support action.',
+        'Export a centered 24×24 transparent frame with pivot (0.5, 0.5).',
+        'The game draws the fixed square boundary and anchor label above this decoration.',
+        'Do not bake letters, numbers or capture checkmarks into the artwork.',
+        'Artwork never changes anchor location, capture rules or collision geometry.',
+        'Inspect available and captured anchors in Relay Yard; preserve distinction without color alone.',
+      ],
+    },
+  );
+for (const state of ['shielded', 'exposed', 'secured'])
+  slot(
+    `team.core.${state}`,
+    `${state} Team relay core`,
+    'objectives',
+    'team.core.v1',
+    [64, 64],
+    ['couch', 'studio'],
+    {
+      required: false,
+      requirements: [
+        'Team relay-core body only: not an ordinary enemy, pickup or player.',
+        'Export a centered 64×64 transparent frame with pivot (0.5, 0.5); keep every attachment inside it.',
+        'Give shielded, exposed and secured states distinct silhouettes or surface treatment, not color alone.',
+        'The game draws the fixed state ring, center cue and SHIELD/CAPTURE/SECURED labels above the body.',
+        'No embedded text or logos. Do not imply an attack, hitbox or mechanic that the arena does not have.',
+        'Artwork cannot change anchor capture, core exposure, Support, rescue, timing or collision geometry.',
+        'Inspect Relay Yard initial, exposed-core and completed scenarios. Victory artwork replaces the board in normal results.',
+      ],
+    },
+  );
+for (const [id, label, size] of [
+  ['team.support.pulse', 'Team Support pulse', 64],
+  ['team.enemy.slowed', 'Team slowed enemy decoration', 24],
+])
+  slot(id, label, 'effects', 'team.support.v1', [size, size], ['couch', 'studio'], {
+    required: false,
+    requirements: [
+      `Export a centered ${size}×${size} transparent frame with pivot (0.5, 0.5).`,
+      'Support is a nearby team assist, not Scan, damage, capture or invulnerability.',
+      'Use sparse pixel decoration, no text, background, sweep, blur or baked glow.',
+      'Keep actors, trails and warnings readable. The game limits decoration opacity and retains fixed functional rings and labels.',
+      'Pulse artwork clips to the existing radius. Artwork changes no radius, duration, cooldown, slowdown, rescue priority or collision.',
+      'Inspect Support pulse in First Connection and Relay Yard, Paused, Play preview and Reduced effects. Inactive states are not drawn.',
+    ],
+  });
+for (const [id, label, size] of [
+  ['team.emitter.warning', 'Team emitter warning target', 24],
+  ['team.emitter.spark', 'Team travelling spark', 16],
+])
+  slot(id, label, 'effects', 'team.emitter.v1', [size, size], ['couch', 'studio'], {
+    required: false,
+    requirements: [
+      `Export a centered ${size}×${size} transparent frame with pivot (0.5, 0.5).`,
+      'Emitter warning marks an actual exposed-trail target. The spark travels on that trail; it is not a homing projectile or a new attack.',
+      'Use sparse crisp pixels. No text, background, blur, baked glow or extra targets.',
+      'The game retains the warning line, fixed target square and spark center/outline above artwork.',
+      'Artwork changes no warning time, target, speed, collision, Support interception or clearing rules.',
+      'Inspect Relay Yard Emitter warning and Travelling spark scenes, with reduced effects and actual-size previews.',
+    ],
+  });
+for (const [id, label] of [
+  ['team.rescue.progress', 'Team contact rescue'],
+  ['team.player.recovery', 'Team player recovery'],
+])
+  slot(id, label, 'effects', 'team.rescue.v1', [32, 32], ['couch', 'studio'], {
+    required: false,
+    requirements: [
+      'Export a centered 32×32 transparent frame with pivot (0.5, 0.5).',
+      'Use sparse corner pixels and an empty center; decoration appears underneath actor bodies, numbers, shapes and status labels.',
+      'Contact rescue decorates the rescuer, not the downed target. Its percentage uses the actual one-second contact-rescue timer.',
+      'Player recovery is temporary grace after revival, not a shield pickup or Support pulse. The fixed dashed ring remains game-owned.',
+      'No text, background, blur, baked glow, progress painted into the image or new mechanical claims.',
+      'Artwork changes no rescue eligibility, duration, cancellation, reserves, grace, collision or input-release rules.',
+      'Inspect both Rescuing player and Player recovered scenes, normal/reduced effects, paused/play and Native size.',
+    ],
+  });
+for (const [id, label] of [
+  ['team.capture.joint', 'Team joint capture'],
+  ['team.recovery', 'Team reserve recovery'],
+])
+  slot(id, label, 'effects', 'team.outcome.v1', [32, 32], ['couch', 'studio'], {
+    required: false,
+    requirements: [
+      'Centered32×32 transparent badge, pivot(0.5,0.5), crisp sparse pixels; no text, background or glow.',
+      'Joint capture marks an actual joined cut. Team recovery marks both craft revived using one team reserve. No extra reward or new ability.',
+      'The engine retains player numbers, distinct shapes and outcome text; critical warnings take placement priority.',
+      'One second of active game time, paused with the run. Reduced effects keeps a static badge and the same meaning/timing.',
+      'Review actual command-earned scenes in both arenas and native size; victory artwork remains unobscured.',
+    ],
+  });
+for (const seat of [1, 2])
+  for (const state of TEAM_PILOT_STATES)
+    for (const [treatment, size] of [
+      ['compact', 32],
+      ['detailed', 64],
+    ])
+      slot(
+        `team.pilot.p${seat}.${state}.${treatment}`,
+        `Team player ${seat} ${state} ${treatment} body`,
+        'players',
+        'team.pilot.v1',
+        [size, size],
+        ['couch', 'studio'],
+        {
+          required: false,
+          occupiedBounds: { x: 0.125, y: 0.125, width: 0.75, height: 0.75 },
+          rotorAnchors: [
+            [0.25, 0.25],
+            [0.75, 0.25],
+            [0.25, 0.75],
+            [0.75, 0.75],
+          ].map(([x, y]) => ({ x, y, radius: 0.12, blades: 3 })),
+          dependencies: [`player.scout.${treatment}`, 'player.scout.rotors'],
+          requirements: [
+            `North-facing ${size}×${size} transparent body for Player ${seat}, state ${state}. No baked propellers, labels, numbers or effects.`,
+            'The default team.pilot.v1 recipe explicitly inherits the matching shared Scout body. Uploads replace only this seat/state/treatment.',
+            'Keep four bounded motor hubs and the approved silhouette. Pivots and rotor anchors are visual geometry; they never change collision or movement.',
+            'Downed and crawling freeze rotors. Crawling follows actual displacement; rescue and recovery preserve real input/state rules.',
+            'The game retains number plus circle/diamond identity, contact center, trails, rescue progress and recovery cues above artwork.',
+            'Compact applies below480 CSS pixels or Microtile style; detailed otherwise. Inspect the matching Team state and actual-size20/24/32 CSS-pixel readability.',
+          ],
+        },
+      );
 for (const id of ['active', 'secured', 'head'])
   slot(`trail.${id}`, `${id} trail`, 'effects', 'trail.signal.v1', null, ['flight', 'couch'], {
     kinds: ['recipe'],
@@ -446,12 +603,16 @@ export function createDefaultThemeBundle() {
     id: `${entry.id}.default`,
     revision: 1,
     kind: 'recipe',
-    description: `${entry.label}: registered baseline component; no new raster or audio production is claimed.`,
+    description: entry.id.startsWith('team.')
+      ? `${entry.label}: registered recipe; no new art.`
+      : `${entry.label}: registered baseline component; no new raster or audio production is claimed.`,
     provenance: {
       creator: 'Reveal Line',
       source: 'Existing runtime presentation and Field Kit specification',
-      license: 'Project-authored component; bundled font licenses remain separate',
-      prompt: entry.prompt,
+      license: entry.id.startsWith('team.')
+        ? 'Project-authored component'
+        : 'Project-authored component; bundled font licenses remain separate',
+      prompt: entry.id.startsWith('team.') ? 'Existing recipe; no generated art.' : entry.prompt,
       parent: null,
     },
     file: null,

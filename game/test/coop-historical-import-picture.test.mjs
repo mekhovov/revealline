@@ -83,7 +83,7 @@ test('the versioned historical policy names only the exact reviewed FPV wide sce
     'revealline-team-historical-import-picture.v1',
   );
   assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeId, 'fpv');
-  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeRevision, 58);
+  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeRevision, 59);
   assert.equal(
     COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeRevision,
     compiled.resolved.theme.revision,
@@ -116,7 +116,7 @@ test('valid coverage and multi-core imports bind their complete content to the a
       levelRevision: level.revision,
       levelSha256: sha(canonicalJSON(level)),
       themeId: 'fpv',
-      themeRevision: 58,
+      themeRevision: 59,
       collection: null,
       picture: approved,
       kind: 'image',
@@ -314,6 +314,9 @@ test('missing, substituted, source-quality or cropped required scenery refuses b
     },
     (resolved) => {
       resolved.theme.revision++;
+    },
+    (resolved) => {
+      resolved.theme.revision--;
     },
     (resolved) => {
       resolved.theme.revision = 54;

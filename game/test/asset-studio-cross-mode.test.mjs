@@ -51,8 +51,15 @@ test('Team compatibility requires real bound roles and complete arena artwork', 
   );
   assert.equal(teamPreviewBinding('terrain.wall', view, 'relay-yard').roles.length, 6);
   assert.throws(() => teamPreviewBinding('terrain.wall', view, 'first-connection'), /not bound/);
+  assert.throws(
+    () => teamPreviewBinding('team.emitter.spark', view, 'first-connection'),
+    (error) => /Native size/.test(error.message) && !/Solo\/Versus/.test(error.message),
+  );
   assert.throws(() => teamPreviewBinding('pickup.life', view, 'relay-yard'), /not bound/);
-  assert.throws(() => teamPreviewBinding('trail.active', view, 'relay-yard'), /procedural/);
+  assert.throws(
+    () => teamPreviewBinding('trail.active', view, 'relay-yard'),
+    /not bound.*Native size/,
+  );
   assert.throws(() => teamPreviewBinding('player.scout.compact', view, 'invented'), /registered/);
   view.theme.id = 'retro';
   assert.throws(
@@ -205,6 +212,90 @@ const decodedImage = (asset) => ({
   src: 'owned-image',
   width: asset.file.width,
   height: asset.file.height,
+});
+test('secured scene shows role bodies on a neutral backdrop and refuses canonical picture inspection', async (t) => {
+  const dom = fakeDocument(),
+    previous = globalThis.document;
+  globalThis.document = dom.document;
+  t.after(() => {
+    globalThis.document = previous;
+  });
+  const view = resolved();
+  for (const id of ['team.core.secured', 'team.core.shielded'])
+    view.assets[id] = {
+      id,
+      kind: 'image',
+      revision: 1,
+      file: { width: 64, height: 64, sha256: id },
+      geometry: { frame: { x: 0, y: 0, width: 64, height: 64 } },
+    };
+  const options = {
+    fieldMode: 'team',
+    teamArena: 'relay-yard',
+    teamScenario: 'secured',
+    motion: 'paused',
+    isCurrent: () => true,
+  };
+  const decoded = [],
+    cleanups = [],
+    surface = new dom.Node('section');
+  const services = {
+    decode: async (asset) => {
+      const image = decodedImage(asset);
+      decoded.push(image);
+      return image;
+    },
+    presentation: snapshot,
+    loop: (own, draw) => draw(0, true),
+  };
+  const slot = { id: 'team.core.secured', group: 'actors' };
+  await crossModeContextPreview(
+    surface,
+    slot,
+    view.assets[slot.id],
+    view,
+    new Map(),
+    options,
+    (cleanup) => cleanups.push(cleanup),
+    services,
+  );
+  for (const id of ['team.core.secured', 'team.core.shielded'])
+    assert.ok(dom.draws.some(({ image }) => image.id === id));
+  assert.ok(
+    decoded.every((image) => !COOP_PICTURE_BINDINGS.some((row) => row.picture.slot === image.id)),
+  );
+  assert.ok(
+    dom.nodes.some((node) =>
+      /Authored two-relay specimen · neutral backdrop/.test(node.textContent || ''),
+    ),
+  );
+  assert.ok(dom.nodes.some((node) => /^Showing 1 secured core/.test(node.textContent || '')));
+  assert.ok(
+    dom.nodes.some((node) => /Studio Two Relays/.test(node.attributes?.['aria-label'] || '')),
+  );
+  const { level } = createStudioTeamFixture({ arena: 'relay-yard', scenario: 'secured' });
+  await assert.rejects(
+    validateTeamPreviewIdentity(COOP_PICTURE_BINDINGS[1], level),
+    /identity or revision/,
+  );
+  const count = decoded.length,
+    pictureSlot = { id: COOP_PICTURE_BINDINGS[1].picture.slot, group: 'pictures' };
+  await assert.rejects(
+    crossModeContextPreview(
+      new dom.Node('section'),
+      pictureSlot,
+      view.assets[pictureSlot.id],
+      view,
+      new Map(),
+      options,
+      (cleanup) => cleanups.push(cleanup),
+      services,
+    ),
+    /neutral backdrop/,
+  );
+  assert.equal(decoded.length, count, 'picture inspection fails before any resource decode');
+  cleanups.forEach((cleanup) => cleanup());
+  assert.ok(decoded.every((image) => image.src === ''));
 });
 test('real Team painter consumes distinct compact/detailed sprites, picture and held rescue', async (t) => {
   const dom = fakeDocument(),
