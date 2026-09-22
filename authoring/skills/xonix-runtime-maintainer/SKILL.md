@@ -1186,3 +1186,7 @@ In landscape, reserve the actual HUD, objective, footer and both complete player
 ## Music player without a catalogue
 
 Keep built-in and imported playlist selection visible when attachSoundtrackPanel receives no catalogue. Genre/style cards can be hidden, but the shared playlist field and Play action must move into the visible transport. Label the null selection as automatic map/campaign/theme matching rather than a nonexistent style selector. Assert visible ancestor chains as well as calling handlers: a detached or hidden control can pass a synthetic click test. Keep catalogue and legacy-library journeys separate.
+
+## 2026-09-22 — Native validation keeps its field label visible
+
+For [Studio validation labels](../../prompts/studio-validation-labels.md), keep the browser’s chosen invalid field and native error behavior. Reveal the complete associated label plus outline clearance after one bounded animation frame; a tall wrapper falls back to the control. Bind queued scrolling to the live connected form, current focus and foreground, and recheck ownership after layout reads. Background, disposal or stale focus must not move another field. Keep the adapter scoped to the affected form rather than broadening modal helpers. Qualify both real form editing semantics and native invalid-submission geometry, preserve draft JSON, and distinguish narrow local keyboard evidence from physical-device, actual zoom, all-form and public acceptance. See [verification and limits](../../../docs/studio-validation-labels.md).
