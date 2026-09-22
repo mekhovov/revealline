@@ -158,3 +158,41 @@ test('compact CSS reserves mission space and retains accessible target sizing', 
   assert.match(css, /mission-library-chooser \.journey-filter-options \{[^}]*overflow: auto/s);
   assert.match(css, /mission-library-chooser:not\(\.mission-library-detailed\) \.journey-card-map/);
 });
+
+test('compact controls override inherited dialog panel spacing without shrinking targets', async () => {
+  const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8');
+  const compact = css.slice(css.indexOf('@media (max-width: 600px), (max-height: 480px)'));
+  assert.match(
+    compact,
+    /#journey-chooser\.mission-library-chooser \.journey-filter-details,\s*#journey-chooser\.mission-library-chooser \.mission-library-setup \{[^}]*margin: 0;[^}]*padding: 0;[^}]*border: 0;/s,
+    'Both compact details controls must beat the later Field Kit dialog details spacing.',
+  );
+  assert.match(compact, /#journey-chooser\.mission-library-chooser h2 \{[^}]*margin: 0;/s);
+  for (const control of ['journey-filter-details', 'mission-library-setup'])
+    assert.match(
+      compact,
+      new RegExp(
+        `#journey-chooser\\.mission-library-chooser \\.${control} > summary \\{[^}]*box-sizing: border-box;[^}]*min-height: 44px;[^}]*min-block-size: 44px;`,
+        's',
+      ),
+    );
+  assert.match(
+    compact,
+    /#journey-chooser\.mission-library-chooser \.journey-footer > button \{[^}]*min-block-size: 44px;[^}]*margin: 0;/s,
+  );
+});
+
+test('short landscape setup fields scroll above an unchanged reachable footer', async () => {
+  const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8');
+  const landscape = css.slice(css.lastIndexOf('@media (max-height: 480px)'));
+  assert.match(landscape, /\.journey-footer \{\s*position: relative;/);
+  assert.match(
+    landscape,
+    /\.mission-library-setup\[open\] \{\s*flex-basis: 13rem;\s*max-height: none;\s*overflow: visible;/,
+  );
+  assert.match(
+    landscape,
+    /\.mission-library-setup > \.mission-picker-setup-fields \{[^}]*position: absolute;[^}]*bottom: calc\(100% \+ 0\.35rem\);[^}]*max-height: min\(24rem, calc\(100dvh - 8rem\)\);[^}]*overflow: auto;/s,
+    'Opening settings must not grow the footer beyond the short viewport.',
+  );
+});
