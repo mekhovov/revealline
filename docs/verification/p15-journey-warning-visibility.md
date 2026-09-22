@@ -28,7 +28,8 @@ Base: accepted selector source `0816c8051cf6a2294f07718284036365ceaeefa1`.
 
 - Node 20.19.5: `node --test game/test/journey-host.test.mjs
   game/test/journey-save-notice.test.mjs game/test/journey-backup.test.mjs`:
-  **25 passed**, zero failed/cancelled/skipped/todo, 159218 ms. Includes ten
+  **26 passed**, zero failed/cancelled/skipped/todo, 155292 ms after independent
+  review corrections (initial candidate: 25 passed in 159218 ms). Includes ten
   consecutive mission clears, cross-pack failure/retry, Skip, backup restoration,
   failed saving, result preservation and deliberate Next.
 - Scoped ESLint with zero warnings, scoped Prettier check and `git diff --check`
@@ -80,14 +81,32 @@ Observed journeys:
 - Earlier compact pause → Save options → menu and result → Save options →
   Escape journeys retained their exact paused/result state. No automatic resume.
 
-Final diagnostic UI SHA-256 pins:
+Independent review of initial PR253 head `fa092389` found two additional issues:
+
+4. The 320×568 result check did not cover running portrait mode. Its more
+   specific handheld branding rule still hid the badge. A native running
+   reproduction confirmed `display:none`, 0×0. The corrected selector now
+   yields `display:grid`, 16×16 at x=38,y=2. The arena remains exactly
+   296×480.6015625 at x=12,y=56 before and after this source correction.
+5. A successful background retry could remove focused Save options. It now
+   retains that target until blur, changes its label to truthful saved/Game menu
+   text, and never moves focus automatically. A dedicated failed-to-success
+   unit test covers the case. This is modeled focus evidence, not native
+   successful storage recovery.
+
+After these corrections, actual 600×400 running still showed a 16×16 badge;
+Escape retained Resume as primary. At 1280×720, pause showed Resume and Save
+options together, and the latter opened the existing menu with Retry focused.
+The original diagnostic refusal and no-state-injection limits still apply.
+
+Corrected diagnostic UI SHA-256 pins:
 
 | File | SHA-256 |
 | --- | --- |
 | game/app.mjs | cd5853b3b00bf8a487225830f3499eb6e70673f1cecae9e83f30a650277b0f8e |
 | game/index.html | 3d4a98ca91a4c4ff248629fe4a85eaaad8c372d74c59297a8101bd651b638348 |
-| game/ui/journey.css | 87bf6f83193092bb72efcd9b797234fc1156aa85b9f43b9795f7633bac32dc48 |
-| game/ui/journey-save-notice.mjs | cebe56f06dc8dfb3925ade91634432bba6163f58bd7ab6cc87156d4dd1f80995 |
+| game/ui/journey.css | ca204294db12ec6692a7a6d192d42fdb2ea582cc2f310f2a3851287b584c8f73 |
+| game/ui/journey-save-notice.mjs | 42620aff615df4359953806cb59b5d59513a2421752cb250c8bf0156f7ae946a |
 
 Diagnostic-only refused-backend profile module:
 `d530565b4a5a4130069ee5c1b0b4cc3f8c641f371baa9a629026951f58307b1d`.
@@ -95,7 +114,7 @@ It is not a shipping change.
 
 ## Remaining gates
 
-Final desktop and additional viewport review; live status-transition geometry;
+Final desktop result and additional viewport review; live status-transition geometry;
 native successful retry/export-to-disk; modeled and physical controllers;
 screen-reader/zoom and actual devices; matching Versus/Team presentation;
 independent PR review; full exact-source CI; coordinated version allocation,

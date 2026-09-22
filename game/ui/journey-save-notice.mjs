@@ -9,9 +9,13 @@ export function attachJourneySaveNotice({ document: doc = globalThis.document } 
     badge = $('journey-save-badge'),
     announcement = $('journey-save-announcement');
   const menuLabel = menu.getAttribute('aria-label');
+  let unsaved = false;
   const text = (node, value) => {
     if (node.textContent !== value) node.textContent = value;
   };
+  action.addEventListener('blur', () => {
+    if (!unsaved) action.hidden = true;
+  });
   action.onclick = () => {
     // Use the shell's existing explicit pause/input path, not another modal.
     menu.click();
@@ -21,8 +25,19 @@ export function attachJourneySaveNotice({ document: doc = globalThis.document } 
   };
   return {
     update({ ready, durable, error }) {
-      const unsaved = !!(ready && !durable && error);
-      badge.hidden = action.hidden = !unsaved;
+      unsaved = !!(ready && !durable && error);
+      badge.hidden = !unsaved;
+      // An online retry may succeed while this action owns keyboard/controller
+      // focus. Keep that focus target until the player deliberately leaves it.
+      action.hidden = !unsaved && doc.activeElement !== action;
+      text(
+        action,
+        unsaved
+          ? 'Progress not saved · Save options'
+          : ready && durable
+            ? 'Progress saved · Game menu'
+            : 'Save options · Game menu',
+      );
       menu.dataset.journeyUnsaved = String(unsaved);
       menu.setAttribute(
         'aria-label',
