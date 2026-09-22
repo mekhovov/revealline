@@ -1,5 +1,6 @@
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
+import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
@@ -3685,10 +3686,22 @@ export function bootCoop({
     suspend();
   });
   window.addEventListener('pageshow', returned);
+  const journeySaveCue = attachJourneySaveCue({
+    document,
+    target: $('coop-pause'),
+    action: $('coop-journey-save-options'),
+    announcement: $('coop-journey-save-announcement'),
+    onOpen() {
+      if (disposed || running()) return;
+      const target = $('coop-journey-save').hidden ? primary() : $('coop-journey-save-retry');
+      if (visibleAction(target)) target.focus();
+    },
+  });
   function attachJourneyRecovery(owner, prefix, label, filename) {
     let exportSequence = 0;
     owner?.subscribe(({ ready = true, durable, error }) => {
       if (disposed) return;
+      if (prefix === 'coop-journey-save') journeySaveCue.update({ ready, durable, error });
       const notice = $(prefix),
         focus = document.activeElement,
         ownedFocus = !notice.hidden && notice.contains(focus),

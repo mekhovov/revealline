@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../ui/menu-appearance.css" />
     <link rel="stylesheet" href="../ui/settings.css" />
     <link rel="stylesheet" href="../ui/handheld-play.css" />
+    <link rel="stylesheet" href="../ui/journey-save-cue.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <main id="coop-app">
@@ -172,6 +173,9 @@
                   <button id="coop-resume" class="primary field-kit-primary" type="button">
                     Resume together
                   </button>
+                  <button id="coop-journey-save-options" type="button" hidden>
+                    Progress not saved · Save options
+                  </button>
                   <button id="coop-view-picture" type="button" hidden>View picture</button>
                   <button id="coop-retry" type="button">Retry same arena</button>
                   <button id="coop-discovery-paused" type="button">Browse Team arenas</button>
@@ -192,6 +196,12 @@
             Try a cut from opposite edges. Agree on a meeting point first.
           </p>
           <span id="coop-clock">0:00</span><button id="coop-pause" type="button">Pause</button>
+          <span
+            id="coop-journey-save-announcement"
+            class="journey-save-announcement"
+            role="status"
+            aria-live="polite"
+          ></span>
           <div
             id="coop-music-now-playing"
             class="couch-music-credit"
