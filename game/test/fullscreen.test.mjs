@@ -24,6 +24,9 @@ class Button extends Target {
   getAttribute(name) {
     return this.attributes.get(name) ?? null;
   }
+  removeAttribute(name) {
+    this.attributes.delete(name);
+  }
 }
 
 function fullscreenDocument() {
@@ -100,6 +103,51 @@ test('iOS Home Screen games report standalone display state', (t) => {
 
   assert.equal(button.hidden, true);
   assert.equal(doc.documentElement.dataset.gameFullscreen, 'true');
+});
+
+test('iPhone Safari offers the truthful Home Screen route instead of a dead fullscreen control', async (t) => {
+  const button = new Button();
+  const close = new Button();
+  close.focus = (options) => (close.focusOptions = options);
+  const dialog = {
+    open: false,
+    showModal() {
+      this.open = true;
+    },
+  };
+  const doc = new Target();
+  doc.fullscreenEnabled = false;
+  doc.documentElement = { dataset: {} };
+  doc.defaultView = {
+    navigator: { platform: 'iPhone', maxTouchPoints: 5, standalone: false },
+  };
+  doc.getElementById = (id) =>
+    id === 'ios-home-screen-dialog' ? dialog : id === 'ios-home-screen-close' ? close : null;
+  t.after(attachFullscreen(button, doc));
+
+  assert.equal(button.hidden, false);
+  assert.equal(button.getAttribute('aria-label'), 'Use full screen on iPhone or iPad');
+  assert.equal(button.getAttribute('aria-pressed'), null);
+  await button.emit('click');
+  assert.equal(dialog.open, true);
+  assert.deepEqual(close.focusOptions, { preventScroll: true });
+  assert.equal(doc.documentElement.dataset.gameFullscreen, undefined);
+});
+
+test('touch-capable iPad desktop identity receives the same Home Screen route', () => {
+  const button = new Button();
+  const dialog = { open: false, showModal() {} };
+  const doc = new Target();
+  doc.fullscreenEnabled = false;
+  doc.documentElement = { dataset: {} };
+  doc.defaultView = {
+    navigator: { platform: 'MacIntel', maxTouchPoints: 5, standalone: false },
+  };
+  doc.getElementById = (id) => (id === 'ios-home-screen-dialog' ? dialog : null);
+  const detach = attachFullscreen(button, doc);
+  assert.equal(button.hidden, false);
+  detach();
+  assert.equal(button.listeners.size, 0);
 });
 
 test('display-mode changes update state and detach releases the listener', async () => {
