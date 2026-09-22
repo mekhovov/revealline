@@ -48,6 +48,10 @@ class Picture {
   }
 }
 async function pageFor(t, { read, Image = Picture, waitForPictures = true, inspectMemory } = {}) {
+  const releaseBytes = await readFile(
+    new URL('../presentation/compiled/runtime.json', import.meta.url),
+  );
+  const releaseHash = await hashPresentationBytes(releaseBytes);
   const bytes = pngBytes(),
     sha256 = await hashPresentationBytes(bytes),
     slot = CURRENT_PICTURES.find(
@@ -103,7 +107,11 @@ async function pageFor(t, { read, Image = Picture, waitForPictures = true, inspe
     fetchResponse: async (url, options) => {
       if (!String(url).includes('/presentation/compiled/')) return undefined;
       if (String(url).endsWith('/runtime.json')) return new Response(JSON.stringify(manifest));
-      assert.ok(String(url).endsWith(`/assets/${sha256}.png`));
+      // The page picture fixture is independent of the accepted full theme.
+      // Model retention of the real released manifest under its exact hash;
+      // all its actual assets continue through the ordinary byte-serving host.
+      if (String(url).endsWith(`/runtime.${releaseHash}.json`)) return new Response(releaseBytes);
+      if (!String(url).endsWith(`/assets/${sha256}.png`)) return undefined;
       reads++;
       await read?.(options.signal);
       return new Response(bytes);
@@ -258,6 +266,7 @@ test('a world change cancels pending session preparation and late completion can
 test('history Load saved flight and explicit Resume keep the saved pin and checkpoint without reacquiring or writing', async (t) => {
   const { page, memory, locks, sha256, reads } = await pageFor(t);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   ticks(page, 13);
   page.key('ArrowDown', false);

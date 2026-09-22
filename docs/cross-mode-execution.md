@@ -1,5 +1,13 @@
 # Reveal Line cross-mode execution register
 
+## Status reconciliation — 22 September 2026
+
+The [current remaining-work checkpoint](ux-delivery-status-20260922.md) records public v0.82.0, the qualifying v0.82.1 candidate and the remaining feature queue. This update does not accept unfinished phases or qualify draft PRs. Each candidate requires its final source/version, immutable release and public verification.
+
+The dated snapshots below are retained verbatim. Their earlier “current” and “next” descriptions are historical; use the checkpoint above and its linked live PRs for the newer delivery state.
+
+## Historical checkpoint retained below
+
 ## Current delivery — v0.76.1 publicly verified; v0.77.0 device candidate
 
 **Public default: [v0.76.1](https://mekhovov.github.io/revealline/releases/v0.76.1/site/game/).**

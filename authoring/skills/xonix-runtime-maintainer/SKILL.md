@@ -1220,3 +1220,88 @@ Before a Library task disables its focused opener, reveal and enable Cancel and 
 When integrating historical preflight changes, include the Undo handler’s logical successor, not only the shared rail. A successful Undo disables its own opener and must resolve Export game data through the existing focus lease. Model native beforetoggle at the test DOM boundary and compare element identity as a boolean to keep failed assertions bounded; never relax ownership or interruption expectations to obtain a pass. Retain failure evidence and requalify affected files after runtime corrections.
 
 During an active Library replacement review, handle an unmodified, unhandled keyboard Escape in the review owner before the browser dialog close request. Native close-watcher cancel events may be non-cancelable after a previous request; do not rely only on cancel.preventDefault or reopen a closed dialog. Preserve nested dialog, composition, reader/edit and repeat ownership. After the review ends, the next Escape uses ordinary modal closing. Retain native failure traces and verify repeated review cycles; keyboard evidence does not certify mobile Back or assistive-technology gestures.
+
+## Retained presentation publication
+
+When a release must preserve complete saved-attempt visuals, pass the verified previous compiler output explicitly as `previousOutput`; see `docs/retained-presentation-output.md`. Preserve exact hash-named runtime manifests and their lazy dependencies. The controlled writer refuses removal of admitted history or bad manifest/dependency bytes before staging. Capacity failures require an explicit retention design, never pruning. Run retained-output, output, dependency, host and compiler-system tests, then full reproduction/release and actual restoration/offline journeys. Do not equate this transport with a completed theme catalogue or player-save migration. Use `authoring/prompts/retained-presentation-output.md` for release work.
+
+
+## Exact retained presentation reader
+
+Restore complete visual pins with a fresh host configured with the same `retainedManifestSha256` and `expectedManifestSha256`. Read only the hash-named retained runtime and its exact dependencies; never substitute current runtime after a missing/corrupt historical file. Keep an accepted attempt's resources independently owned while staging and release them only after replacement succeeds. Qualify the reader together with `previousOutput` compilation and controlled writer adoption: the real output-directory update test must restore the old original after current image/token changes and leave accepted owners alive after corrupt-history failure. Transport qualification is not live attempt integration, offline cold-start or public acceptance.
+
+
+### Complete visual save references
+
+`xonix-session.v5` retains a full `visualThemePin` alongside existing still/story pins and explicit continuation. Treat this as owned metadata, never as decoded or approved assets. Bind Solo mode, content theme, original picture owner and original level revision separately from the difficulty execution identity. Preserve v1-v4 readers and ordinary writers. `restoreSession` verifies replay and picture ownership; the live attempt owner must separately verify the exact content hash, catalogue declaration, retained manifest and decoded dependencies before adoption. Until that staged owner is connected, the Solo host must refuse v5 playback visibly while preserving the current run and original saved bytes. File export and backup may retain verified references; they do not bundle the referenced assets or prove offline readiness. See [Visual session references](../../../docs/visual-session-references.md) and [verification prompt](../../prompts/visual-session-references.md).
+
+
+### Live saved-presentation ownership
+
+The live restore owner supersedes the temporary v5 playback refusal described above for shipped FPV/First Signal catalogue coverage. Follow [Live visual restoration](../../../docs/saved-visual-restoration.md) and its [prompt](../../prompts/saved-visual-restoration.md). Keep the shipped declaration, original authored context, exact manifest, decoded assets and retained picture as separate verified boundaries. Stage a fresh lease; never reuse the page owner. A slow page load must neither block restore nor overwrite its accepted lease. Retry and explicit Restart keep visual/picture choices; fresh mission selection retires the lease. Save on pagehide before disposal. Keep audio source replacement generation-safe and preserve master mute/manual playlists. Catalogue availability does not enable fresh theme selection or prove the two-collection benchmark; those remain separate acceptance work.
+
+
+### Campaign snapshot memory
+
+For large installed campaign pointers, follow `docs/pack-snapshot-memory.md` and `authoring/prompts/pack-snapshot-memory.md`. Compare already serialized pointers byte-exactly without serializing their embedded originals again; keep canonical legacy-object equality, journal/lock checks, ownership validation and single-use stale-write protection. Separate filtered diagnostics from full-file, browser and public release evidence.
+
+
+## Fresh complete presentation benchmark
+
+`game/presentation/fresh-visual-theme.mjs` declares exact First Signal FPV coverage for new attempts. Read `docs/fresh-visual-preparation.md` before advancing its campaign key or collection reference. Initial Start, staged result/mission/chapter preparation must verify an independent visual lease and picture before play; v5 records both. Retain accepted visuals on Retry/Restart and historical Continue. Cancellation/stale completion releases staged ownership without replacing results. Keep source simulation hashes and earned-original owners unchanged. Update the immutable catalogue and controlled retained output with a reviewed policy revision; do not select a latest theme by name. Follow `authoring/prompts/fresh-visual-preparation.md` and distinguish modeled codecs from native/public qualification.
+
+Host regression drivers must await actual flight readiness after an initial Start before injecting movement. Do not auto-start or suppress real presentation loading in the shared test harness. Pending, cancelled and failed-start tests retain their explicit asynchronous gates. Model PNG decoding with real blob/data bytes and header dimensions; keep custom failure fixtures authoritative. File-system-bound authoring checks require real source ancestors or an ordinary composed checkout, and thin-loader discovery failures are not production qualification.
+
+External-content drivers must distinguish authenticated descriptor originals from exact approved fresh-release bindings. Use the registered owner, asset ID/revision and compiled file hash, retaining historical save/receipt assertions. Media edits carry prior immutable history rather than discarding unrelated owners. Intentionally blocked journal recovery must wait for visible refusal and prove no writes or simulation advance; normal picture readiness is not its success condition. Complete corrected files on both supported runtimes and bind each accepted result to its actual source reads.
+
+When reviewing large campaign installs, avoid serializing an already serialized pack pointer solely for equality. Preserve byte-exact string comparison, canonical legacy object comparison, every journal/lock field, and the existing stale-write refusal. A low-memory regression must run the real multi-pack download/prepare/start path at the unchanged heap limit.
+
+For nested browser test fixtures, restore a global override only if the fixture still owns the current value. A later download hook must not reinstall a closed page's fetch after outer page cleanup. Use heap retention evidence and a full-file low-memory rerun; do not replace memory failures with skipped acceptance tests.
+
+Node retains evaluated top-level-await game modules and completed test hooks until process exit. Keep independent large optional-chapter journeys in separate test entry files, retaining their complete scenario bodies and a post-journey global-fetch check. Qualify every wrapper on both runtimes without filtered skips; use ordinary release gates to confirm test discovery.
+
+For fresh-presentation audio regression, browser object URLs include both images and music. Count audio-MIME allocations, assert the exact music URL is retained and not revoked, and keep playback count/position checks through results, Next and Collection. Never weaken continuity checks by merely allowing another arbitrary URL.
+
+
+Keep confirmed-Restart picture retention independent of complete-theme leases.
+Capture both the existing picture pins and its legacy-reader flag before disposal.
+Exercise imported v4 and v2 attempts after assignment A changes to B: Restart must
+retain A or the historical legacy reader, preserve session format, and begin a
+fresh verified simulation. A complete visual pin is not required for picture
+ownership. See `game/test/restart-picture-retention.test.mjs`.
+
+
+Optional-world Play host qualification includes all sixteen independent
+`optional-world-play-*.test.mjs` wrappers plus their fetch-cleanup assertions.
+Keep the 512 MiB limit and every original scenario body. Multi-scenario Node
+module retention and single-journey allocation failures are different findings;
+a failing isolated journey is not resolved by process separation. Whole-browser
+memory, physical input and public release remain separate gates.
+
+
+The optional-world family now adds a separate approved-release-original entry
+to the sixteen scenario wrappers. An unassigned shipped original can select an
+approved release asset; use a separately identified imported campaign to test
+raw authored decode/failure/Retry. Derive modeled object-URL PNG dimensions from
+actual bytes and retain runtime header/hash/frame guards. Assert exact released
+SHA and frame separately. Verify test discovery: a loader-only source with no
+entry file on disk is not a completed regression. Preserve every original case.
+
+
+## Immutable retained production runtime input
+
+When a fixed visual policy outlives its current compiled runtime, retain the original raw runtime as an explicit code-owned authoring input. Follow [Retained Field Kit production](../../../docs/field-kit-retained-production.md) and its [prompt](../../prompts/field-kit-retained-production.md). Pin provenance, path, byte count and hash; validate compiled schema and every lazy dependency against the immutable production ledger. Pass verified explicit history to the compiler, never incidental output-directory contents. Skip hash-named retained runtime files in the generator and broad Prettier commands, keeping ordinary runtime.json checked; rebuild the ownership inventory afterward. Refuse missing or corrupt history before adoption. Preserve all existing records and originals; exact input retention does not advance fresh policy, inherit recipe approval or establish native/offline/public acceptance.
+
+
+
+## Preparation live status follows the Resume owner
+
+Finishing asynchronous asset preparation is not proof that play resumed: focus, dialogs or a newer operation may still keep the flight paused. Keep the ready/Resume instruction while that pause remains, then clear the preparation live region only at the actual synchronous Resume commit after readiness and ownership gates. Do not hide it only at victory or erase useful paused readiness feedback. Preserve the accepted visual/picture pins, checkpoint, input and persistence behavior. Regress confirmed Restart directly into a real win without an intervening pause that could mask stale feedback; separately prove returning focus grants no automatic Resume and an explicit Resume clears the message without advancing simulation. Bind red/green results to final test bytes and actual source reads; modeled focus is not native device evidence.
+
+### Re-review unchanged recipes after reader lifecycle changes
+
+When a reader dependency changes, reopen its recipe group and compare each selected asset, its immutable parent, exact recipe, tokens, compiled CSS and original payloads. A new source-bound functional approval may continue an existing functional approval when the recipes are unchanged and the changed ownership/cancellation behavior is reviewed and tested. Preserve the prior approval’s scope: recipe-only themes cannot prove custom audio-file decoding, native listening, musical suitability, physical-device or public acceptance. Record exact changed inputs and retained originals; never promote from a zero-missing-slot count alone.
+
+## Session-only tests with complete retained visuals
+
+When integrating complete visual retention with session-only original recovery, keep a valid full visual manifest in the host fixture. Derive the diagnostic picture bindings and exact URL closure from that manifest, validate it, and bind the fixture catalogue to the exact resulting hash. Preserve real role/font dependencies and all original Next, retained-result, no-write and exported-byte assertions. Assert the v5 visual pin before releasing writer authority. A two-picture-only manifest that rejects a required retained-manifest request is an obsolete fixture, not evidence to disable theme verification. Preserve the failed integration run, then rerun the complete affected file on both supported Node versions. Modeled codecs and synthetic pictures do not certify production artwork, native restoration or public acceptance.

@@ -622,3 +622,43 @@ test('explicit retained-picture review crosses temporary installer ownership and
   assert.equal((await h.still.read()).document.library.assignments[0].revision, 2);
   assert.equal(h.values.size, 0);
 });
+
+test('serialized pack snapshots retain byte-exact stale-write protection', async (t) => {
+  const h = await setup(t);
+  const packs = installPack(emptyPackLibrary(), await ordinary());
+  const text = exportPackLibrary(packs);
+  await h.put(h.pointer.keys.packsKey, text);
+  const before = await h.host.inspect();
+  const review = await h.host.prepareMutation(before, before.packs);
+  // The contents are equivalent JSON, but a changed serialized pointer is stale.
+  await h.put(h.pointer.keys.packsKey, `${text}\n`);
+  const writes = h.assets.allPuts.length;
+  await assert.rejects(h.host.commitMutation(review), /snapshot changed/);
+  assert.equal(h.assets.allPuts.length, writes);
+  assert.equal((await h.pointer.snapshot()).packs, `${text}\n`);
+  const fresh = await h.host.inspect();
+  const accepted = await h.host.commitMutation(await h.host.prepareMutation(fresh, fresh.packs));
+  assert.equal(accepted.status, 'committed');
+  assert.equal(accepted.packLibrary, text);
+});
+
+test('legacy object pack snapshots retain canonical equality and reject changed contents', async (t) => {
+  const h = await setup(t);
+  const value = JSON.parse(exportPackLibrary(installPack(emptyPackLibrary(), await ordinary())));
+  await h.put(h.pointer.keys.packsKey, value);
+  const before = await h.host.inspect();
+  const review = await h.host.prepareMutation(before, before.packs);
+  const reordered = Object.fromEntries(Object.entries(value).reverse());
+  await h.put(h.pointer.keys.packsKey, reordered);
+  assert.equal((await h.host.commitMutation(review)).status, 'committed');
+  await h.put(h.pointer.keys.packsKey, value);
+  const fresh = await h.host.inspect();
+  const next = await h.host.prepareMutation(fresh, fresh.packs);
+  const changed = structuredClone(value);
+  changed.packs[0].description += ' changed elsewhere';
+  await h.put(h.pointer.keys.packsKey, changed);
+  const writes = h.assets.allPuts.length;
+  await assert.rejects(h.host.commitMutation(next), /snapshot changed/);
+  assert.equal(h.assets.allPuts.length, writes);
+  assert.deepEqual((await h.pointer.snapshot()).packs, changed);
+});

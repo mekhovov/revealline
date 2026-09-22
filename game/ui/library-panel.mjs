@@ -1008,14 +1008,18 @@ export function attachLibraryPanel(api) {
         const applied = await applyPrepared(prepared, operation);
         status(
           'save-status',
-          `Game data restored. ${prepared.session ? 'Your saved flight is ready to load.' : 'This backup has no saved flight.'} ${applied.undo ? 'Undo restores the previous collection, packs and saved flight.' : 'The previous data could not form a verified backup, so Undo is unavailable.'} ${applied.warning || ''}`,
+          `Game data restored. ${prepared.session ? 'Your saved flight is restored. Loading verifies its required artwork and visual collection.' : 'This backup has no saved flight.'} ${applied.undo ? 'Undo restores the previous collection, packs and saved flight.' : 'The previous data could not form a verified backup, so Undo is unavailable.'} ${applied.warning || ''}`,
         );
         return;
       }
       if (
-        ['xonix-session.v1', 'xonix-session.v2', 'xonix-session.v3', 'xonix-session.v4'].includes(
-          parsed.format,
-        )
+        [
+          'xonix-session.v1',
+          'xonix-session.v2',
+          'xonix-session.v3',
+          'xonix-session.v4',
+          'xonix-session.v5',
+        ].includes(parsed.format)
       ) {
         operation.commit('Restoring the verified saved flight…');
         await api.restore(parsed);
