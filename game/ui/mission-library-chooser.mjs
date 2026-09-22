@@ -137,13 +137,13 @@ export function attachMissionLibraryChooser({
       campaign: campaign.value || pendingCampaign,
       mode: modeFilter.value,
       selectedId,
-      scroll: list.scrollTop || 0,
+      scroll: dialog.open ? list.scrollTop || 0 : savedScroll,
     };
   }
   function remember() {
     const focusedId = doc.activeElement?.closest('.journey-card')?.dataset.missionId;
     if (focusedId && list.contains(doc.activeElement)) selectedId = focusedId;
-    savedScroll = list.scrollTop || 0;
+    if (dialog.open) savedScroll = list.scrollTop || 0;
     try {
       writeState(state());
     } catch {
@@ -527,8 +527,13 @@ export function attachMissionLibraryChooser({
   function close() {
     retirePendingSelection();
     ++visit;
-    remember();
+    const wasOpen = dialog.open;
+    // Play already saved the visible position before closing. Native hidden
+    // layout reports zero; later disposal must not overwrite that position or
+    // return focus away from the action that now owns this page.
+    if (wasOpen) remember();
     for (const controller of downloads) controller.abort();
+    if (!wasOpen) return;
     dialog.close();
     if (onReturn) onReturn(opener);
     else if (opener?.isConnected) opener.focus({ preventScroll: true });
