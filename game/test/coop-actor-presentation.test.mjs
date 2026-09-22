@@ -15,6 +15,7 @@ import {
 import { createCoopPainter } from '../couch/coop-view.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 
 const compiled = validateCompiledPresentation(
   JSON.parse(await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url))),
@@ -144,6 +145,22 @@ const poses = (adapter, run) => [
   ...run.strongholds.map((actor) => adapter.frame('core', actor.id)),
 ];
 const labels = (calls) => calls.filter((call) => call.name === 'fillText');
+
+test('tuned Team revisions keep both prepared pilot bodies and every extra keeper visible', () => {
+  const level = applyGameplayTuning(FIRST_CONNECTION, resolveGameplayTuning('expert'));
+  const run = createCoop(level),
+    before = structuredClone(run);
+  const p = prepared(),
+    view = surface(),
+    painter = createCoopPainter(view.canvas);
+  painter.setPresentation(p.snapshot);
+  painter.paint(run, { reduced: true, pictureLevel: FIRST_CONNECTION });
+  const bodies = view.calls.filter((call) => call.name === 'drawImage');
+  assert.equal(bodies.filter((call) => call.args[0].slot === 'player.scout.detailed').length, 2);
+  assert.equal(bodies.length, run.players.length + run.enemies.length + run.strongholds.length);
+  assert(run.enemies.length > FIRST_CONNECTION.enemies.length);
+  assert.deepEqual(run, before);
+});
 
 // The source slots are existing artwork, not newly produced Team character sets.
 test('six approved source frames retain exact IDs, revisions, PNG hashes and dimensions', async () => {

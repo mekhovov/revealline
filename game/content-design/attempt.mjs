@@ -7,6 +7,7 @@ import { freezeDesign } from './catalogs.mjs';
 import { createContentExecutionCatalog } from './execution.mjs';
 import { loadPreviewArtwork, verifiedPreviewBackground } from './assets.mjs';
 import { acquireCandidatePicture } from './picture.mjs';
+import { applyGameplayTuning, validateGameplayTuning } from '../gameplay-tuning.mjs';
 
 const cancelled = () => new DOMException('Candidate preparation cancelled.', 'AbortError');
 
@@ -66,7 +67,7 @@ export function createContentAttemptPreparer(
     previous?.abort();
     retired?.picture?.release();
   };
-  async function prepare(request, { signal, onStatus = () => {} } = {}) {
+  async function prepare(request, { signal, onStatus = () => {}, gameplayTuning } = {}) {
     required(!disposed, 'Candidate preparer is disposed.');
     const selected = boundedJSON(request, { maxBytes: 4096, maxNodes: 12, maxDepth: 1 });
     exactKeys(selected, ['missionId', 'difficulty', 'seed', 'turnPolicy'], 'candidate attempt');
@@ -78,6 +79,11 @@ export function createContentAttemptPreparer(
     );
     required(TURN_POLICIES.includes(selected.turnPolicy), 'Unsupported candidate steering policy.');
     required(typeof selected.difficulty === 'string', 'Choose an explicit candidate difficulty.');
+    const tuning = gameplayTuning === undefined ? null : validateGameplayTuning(gameplayTuning);
+    required(
+      !tuning || tuning.difficulty === selected.difficulty,
+      'Candidate tuning difficulty must match its selection.',
+    );
     const entry = catalog.select(mission.packId, mission.campaignId, selected.difficulty);
     const levelIndex = entry.campaign.levels.findIndex((level) => level.id === mission.levelId);
     const manifest = entry.manifests[levelIndex];
@@ -146,7 +152,10 @@ export function createContentAttemptPreparer(
             classId: 'scout',
             classRecipes: CLASSES,
           };
-          const run = createRun(manifest.level, options);
+          const run = createRun(
+            tuning ? applyGameplayTuning(manifest.level, tuning) : manifest.level,
+            options,
+          );
           const recorder = createRecorder(run.level, options, buildVersion);
           check();
           return Object.freeze({
@@ -161,6 +170,7 @@ export function createContentAttemptPreparer(
             picture: candidatePicture,
             run,
             recorder,
+            ...(tuning ? { tuning } : {}),
             officialProgressEligible: false,
           });
         }),

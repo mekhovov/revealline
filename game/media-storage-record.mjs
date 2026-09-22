@@ -232,15 +232,25 @@ export async function verifyStoredStillAssets(document, assets, { decodeImage, s
     abort(signal);
     const expected = safe.library.assets.find((a) => a.sha256 === item.sha256);
     if (expected) {
-      const checked = await prepareStillAsset(
-        item.blob,
-        { id: expected.id, provenance: expected.provenance },
-        { decodeImage, signal },
-      );
-      required(
-        canonicalJSON(checked.asset) === canonicalJSON(expected),
-        'Stored still metadata/hash differs from decoded original bytes.',
-      );
+      try {
+        const checked = await prepareStillAsset(
+          item.blob,
+          { id: expected.id, provenance: expected.provenance },
+          { decodeImage, signal },
+        );
+        required(
+          canonicalJSON(checked.asset) === canonicalJSON(expected),
+          'Stored still metadata/hash differs from decoded original bytes.',
+        );
+      } catch (error) {
+        // Identify the exact original in multi-image imports/history merges.
+        // This is diagnostic only: no format bypass, cache eviction or repair.
+        if (error?.name === 'AbortError') throw error;
+        throw new TypeError(
+          `Still original "${expected.id}" failed byte/header/decode verification: ${error?.message || 'Original validation failed.'}`,
+          { cause: error },
+        );
+      }
     } else {
       // Preserved generic v2 bytes may be nonimages. Never invent image metadata.
       const bytes = await item.blob.arrayBuffer();
