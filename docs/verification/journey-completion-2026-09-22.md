@@ -145,6 +145,16 @@ playable editions and existing capacity guard.
 
 ## Next work, in order
 
+Integrated-source verification has since confirmed Studio Space activation,
+inspection isolation, source-review focus, explicit Apply, exact-source Undo/Redo,
+map-anchor focus and 390-pixel reflow. The detailed
+[Studio follow-up](journey-studio-candidate-library.md#integrated-source-follow-up)
+supersedes those particular pending checks above; native cancellation, zoom,
+screen-reader/device and broader recovery checks remain open. A fresh replay of
+all twelve Sentinel spatial routes against the pictured whole-spatial-v5 source
+reproduces their exact checkpoints, confirming the 21.35-second Twin clear and seven
+non-mastery routes remain current-edition priorities, not only historical issues.
+
 1. Integrate reviewed ready source through the existing release owner; verify exact
    builds and Pages without relabelling candidates as human-validated.
 2. Close concrete spatial/mastery defects: short finales, late roamer pressure,

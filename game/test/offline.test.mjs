@@ -8,7 +8,7 @@ import { createServer } from 'node:http';
 import { gzipSync, brotliCompressSync } from 'node:zlib';
 import { setImmediate as nextTurn } from 'node:timers/promises';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
-import { CONTENT_PROJECT_ITEM_LIMITS } from '../content-design/limits.mjs';
+import { CONTENT_PROJECT_ITEM_LIMITS, CONTENT_ASSET_MAX_BYTES } from '../content-design/limits.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 const template = await fs.readFile(
   new URL('../offline/service-worker.template.js', import.meta.url),
@@ -1005,11 +1005,31 @@ test('optional Journey artwork never receives a core-offline readiness claim', a
   }
   for (const report of reports.filter((report) => report.status === 'ready'))
     assert.match(report.message, /not included in offline preparation/);
+  // Metadata describes excluded originals; even a library above 128 MiB must
+  // not disable preparation of the separately bounded core cache.
+  for (const count of [1, 33, 109, CONTENT_PROJECT_ITEM_LIMITS.assets]) {
+    artworkMarker.optionalArtwork = {
+      ...optionalArtwork,
+      count,
+      bytes: count * CONTENT_ASSET_MAX_BYTES,
+    };
+    assert.equal(offlineAvailability(env).available, true);
+    assert.match(offlineAvailability(env).note, /not included in offline preparation/);
+    artworkMarker.optionalArtwork.bytes++;
+    assert.equal(offlineAvailability(env).available, false);
+  }
   for (const bad of [
     null,
     {},
+    { ...optionalArtwork, count: 0 },
+    { ...optionalArtwork, count: 1.5 },
     { ...optionalArtwork, count: CONTENT_PROJECT_ITEM_LIMITS.assets + 1 },
     { ...optionalArtwork, bytes: 0 },
+    { ...optionalArtwork, bytes: -1 },
+    { ...optionalArtwork, bytes: 1.5 },
+    { ...optionalArtwork, bytes: Number.MAX_SAFE_INTEGER + 1 },
+    { ...optionalArtwork, bytes: Infinity },
+    { ...optionalArtwork, bytes: '273109569' },
     { ...optionalArtwork, availability: 'ready' },
     { ...optionalArtwork, name: 'Unknown artwork' },
   ]) {
