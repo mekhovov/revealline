@@ -1,6 +1,6 @@
 # P15 couch save-warning follow-up: local checkpoint
 
-22 September 2026. Separate from PR253; not delivery-ready, versioned or published.
+22 September 2026. Separate source candidate from PR253; not versioned or published.
 Parent: reviewed PR253 head `81729fc1ec979a88a7e4950570eae577d32f032e`.
 Do not sweep this follow-up into PR253's post-P07 rebase.
 
@@ -57,15 +57,48 @@ This diagnostic module is not part of the shipping changes.
 
 ## Open issues / gates
 
-1. Versus compact pause scrolls Resume to the bottom of the viewport, leaving
-   Save options initially below the fold. It is reachable but has not met the
-   intended simultaneous visibility target. Review compact menu placement.
-2. One native AX Pause click left the visible running state unchanged; Escape
-   paused normally. The cause is unproven. Reproduce with actual pointer and
-   keyboard activation before acceptance; do not call Pause fully qualified.
-3. Complete exact source CI, additional portrait/result/Legacy
-   native checks, meaningful warning status transitions and geometry comparison.
-4. Real durable retry/export, controller/device/screen-reader/zoom, cross-release
+The initial two source issues were followed up rather than waived:
+
+1. Versus compact pause scrolled Resume to the bottom, leaving Save options
+   below view. The existing transition-owned focus now centers primary play only
+   in paused/results main menus with a visible save shortcut. Ready entry, Legacy
+   and other controls retain nearest scrolling; status changes never focus or
+   scroll. Native 600×400 shows Resume at y174.6–225.3 and the full warning at
+   y229.3–279.0. At 320×568, they occupy y258.7–309.4 and y313.4–392.8. A temporary
+   broader centering candidate exposed late initial-layout focus below view;
+   centering was consequently restricted to paused/results, not initial entry.
+   This does not claim full cold-launch/font-loading qualification.
+2. Intermittent native Pause failure reproduced with both AX and pointer clicks.
+   Temporary source tracing captured pointerdown and pointerup on race-pause
+   while running, but no click event or Pause handler. The shell unconditionally
+   replaced its unchanged label every frame. A regression test failed because a
+   label child was detached between pointer edges. Using its existing `setText`
+   helper preserves the label; the regression passes. Five consecutive traced
+   native cycles and three uninstrumented cycles then paused successfully. This
+   supports the DOM-churn correction, not universal hardware/browser proof.
+
+Final expanded cohort: **72 passed**, zero failed/skipped/cancelled, 76872 ms
+on Node20.19.5 across couch-shell, resize-focus, initial-focus, candidate-versus
+and shared cue tests. Together with the unchanged Team cohort, 99 distinct
+focused cases pass. An additional Ready-versus-paused scroll-policy assertion
+passes separately in its focused case. Initial red tests and sparse failures
+remain recorded above. Scoped lint/format/diff checks pass.
+
+Final uninstrumented native result: ordinary keyboard down-cuts produced a
+Sunflower win at 34.3%, three lives and 8160 points; Skyline remained 0%, three
+lives (sequential inputs, not a simultaneous tie claim). Rematch and Save options
+were visible together, with Next visible in the sticky Journey row. Save options
+focused Retry; a refused retry retained the result; one Next opened Choose your
+share. Portrait running badge and subsequent pointer Pause worked. No warning
+or error console entries. The final shell SHA256 is
+`939be9744c7befd606fdc5cfb4c4b1f89f6394c3b77f1e8726806e5f271576f7`.
+Pointer tracing and the refused backend are diagnostic-only, not shipping code.
+
+Remaining gates:
+
+1. Complete exact source CI, additional Legacy and cold-entry native checks,
+   meaningful warning status transitions and geometry comparison.
+2. Real durable retry/export, controller/device/screen-reader/zoom, cross-release
    persistence and independent review remain. No human enjoyment claim.
-5. Release-owner scheduling, fresh baseline/version, reviewed PR, immutable
+3. Release-owner scheduling, fresh baseline/version, reviewed PR, immutable
    freeze, Pages publication and exact public verification are all still required.
