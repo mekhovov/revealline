@@ -640,3 +640,15 @@ verification. It must receive a new pinned native check before acceptance.
 - Two new regressions reproduced the old failure. The final shared chooser,
   compact and controller cohort passes191/191. Native focus visibility must be
   rechecked on this repair before the compact gate is considered complete.
+
+### Actual-host modeled controller qualification
+
+- Five new tests drive standard controller buttons through each real host's
+  gamepad polling/frame path, not direct selector callbacks. Solo, Versus and
+  Team cover compact Filters, select Confirm/Back, persisted no-match Clear and
+  return to the exact opener. Versus additionally covers two-board Play,
+  replacement Stay and bundled503→Retry→held Cancel→Retry→separate Play readiness.
+- All5 pass; scoped lint/format/diff checks pass. Only missing native SUMMARY
+  activation is modeled. These checks do not claim physical-controller behavior
+  or native layout. Source validation also passes1029 files, retaining its four
+  distribution-root navigation warnings; no new build artifact was produced.
