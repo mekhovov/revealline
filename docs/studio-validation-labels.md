@@ -15,3 +15,5 @@ Native receipt: `.cache/studio-timed-focus-af3-r1/native-validation-review.json`
 ## Recovery onto the current release line
 
 The closed, unmerged PR242 is recovered onto main64ec9fd2 without changing its product bytes. [Integrated focused qualification](verification/studio-validation-recovery-20260922/README.md) passes13 checks per Node20/22; final native/source/version/public gates remain separate. Earlier native observations above retain their original source attribution.
+
+The recovered source46dcdcdb also passes the [integrated native portrait/landscape follow-up](verification/studio-validation-recovery-20260922/README.md): native invalid-field messages and labels remain visible, reverse navigation works, project JSON is unchanged, and all173 served paths match source. This is candidate evidence, not public acceptance.
