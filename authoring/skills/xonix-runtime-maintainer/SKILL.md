@@ -1201,3 +1201,9 @@ disjoint full-source shard discovery; never substitute sparse checkout counts.
 A structural split is not a traversal pass or a speed measurement: require all
 four hosted traversals and exact-source gates before acceptance. See
 [the traversal contract](../../../docs/ci-whole-originals-traversals.md).
+
+## Session-only released pictures
+
+Follow `docs/session-only-release-originals.md`. Known writer loss may stage exact code-owned release originals in a bounded tab registry; never reinterpret an arbitrary durable write exception as permission to switch storage. Preserve imported/manual originals, complete pins and branded durable metadata. Accept only after display readiness and current-operation checks. Keep earned originals until page retirement, with explicit .rlmedia plus game-data export.
+
+Prompt: “Open two tabs on an isolated origin, keep the writer in one and complete First Signal in the session-only tab. Delay the new Relay Orchard original and verify results stay usable, then Next enters play without another Start. Test Retry, world changes, Collection, cancellation and exact original export/restore. Assert no modeled media writes or writer reacquisition; separately record native decoding and browser leave behavior. Do not call a download saved or a candidate publicly delivered.”

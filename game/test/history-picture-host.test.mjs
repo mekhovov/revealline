@@ -159,10 +159,10 @@ test('history return retires same-owner speculative work before a late ordinary 
   assert.deepEqual(page.errors, []);
 });
 
-test('an unfinished new original offers reload and export without another download or a legacy choice', async (t) => {
+test('an unfinished original can be prepared explicitly after history return without durable writes or writer reacquisition', async (t) => {
   const gate = deferred();
   let signal;
-  const { page, memory, locks, reads } = await pageFor(t, {
+  const { page, memory, locks, sha256, reads } = await pageFor(t, {
     waitForPictures: false,
     async read(nextSignal) {
       signal = nextSignal;
@@ -176,99 +176,82 @@ test('an unfinished new original offers reload and export without another downlo
   const checkpoint = authoritativeCheckpoint(page.rendered.run),
     writes = memory.allPuts.length,
     storage = new Map(page.storage.map);
-  let reloads = 0;
-  page.win.location.reload = () => reloads++;
+  assert.equal(page.rendered.paused, true);
   page.$('start-button').click();
-  await settle(() => page.$('flight-preparation-status').dataset.state === 'error');
-  assert.match(page.$('run-message').textContent, /cannot save a new picture.*Export.*reloading/);
-  assert.doesNotMatch(
-    page.$('flight-preparation-status').textContent,
-    /unavailable|missing|restore/i,
-  );
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
+  assert.equal(page.rendered.backdrop.pin.sha256, sha256);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(reads(), 2, 'The canceled speculative read did not retain its bytes');
   assert.equal(page.$('picture-use-legacy').hidden, true);
-  assert.equal(page.$('picture-export-data').hidden, false);
-  assert.equal(page.$('picture-reload').hidden, false);
-  assert.equal(reads(), 1);
-  assert.equal(reloads, 0, 'Recovery never navigates automatically.');
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(page.$('picture-reload').hidden, true);
   assert.deepEqual(page.storage.map, storage);
   assert.equal(memory.allPuts.length, writes);
-  const recoveryMessage = page.$('flight-preparation-status').textContent;
-  page.$('picture-export-data').focus();
-  const escape = page.doc.activeElement.emit('keydown', {
-    key: 'Escape',
-    code: 'Escape',
-    repeat: false,
-  });
-  page.doc.activeElement.emit('keyup', { key: 'Escape', code: 'Escape' });
-  assert.equal(escape.defaultPrevented, true, 'Back reaches actual controller navigation.');
-  assert.equal(page.doc.activeElement, page.$('start-button'));
-  assert.equal(
-    page.$('picture-export-data').hidden,
-    false,
-    'Settled recovery has no pending launch owner.',
-  );
-  assert.equal(page.$('picture-reload').hidden, false);
-  assert.equal(page.$('flight-preparation-status').textContent, recoveryMessage);
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-  assert.deepEqual(page.storage.map, storage);
-  page.$('picture-export-data').focus();
-  page.$('picture-export-data').click();
-  assert.equal(page.$('library-dialog').open, true);
-  assert.equal(page.$('library-saves').hidden, false);
-  assert.equal(page.$('picture-export-data').hidden, false);
-  assert.equal(page.$('picture-reload').hidden, false);
-  assert.equal(page.$('flight-preparation-status').textContent, recoveryMessage);
-  page.$('library-dialog').close();
-  await settle(() => page.doc.activeElement === page.$('picture-export-data'));
-  assert.equal(page.$('picture-reload').hidden, false, 'Export returns directly to Reload.');
-  assert.equal(page.$('flight-preparation-status').textContent, recoveryMessage);
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-  assert.deepEqual(page.storage.map, storage);
-  assert.equal(memory.allPuts.length, writes);
-  page.$('picture-reload').click();
-  assert.equal(reloads, 1);
-  assert.equal(reads(), 1);
   assert.equal(locks.calls.filter((key) => key === writerKey).length, 1);
+  page.$('pause-button').click();
+  page.$('library-button').click();
+  await settle(() => !page.$('session-originals').hidden);
+  assert.equal(page.$('prepare-session-originals').disabled, false);
+  assert.match(page.$('session-originals-note').textContent, /session|tab/i);
+  page.$('library-dialog').close();
+  page.frame(0);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.storage.map, storage);
+  assert.equal(memory.allPuts.length, writes);
   assert.deepEqual(page.errors, []);
 });
 
-test('settled writer recovery clears on explicit retry, world change and page retirement', async (t) => {
-  const gate = deferred();
-  let signal;
+test('a world change cancels pending session preparation and late completion cannot start or replace the newer choice', async (t) => {
+  const initial = deferred(),
+    late = deferred();
+  t.after(() => {
+    initial.resolve();
+    late.resolve();
+  });
+  let calls = 0,
+    signal;
   const { page, memory, locks, reads } = await pageFor(t, {
     waitForPictures: false,
     async read(nextSignal) {
       signal = nextSignal;
-      await gate.promise;
+      calls++;
+      if (calls === 1) await initial.promise;
+      if (calls === 2) await late.promise;
     },
   });
   await settle(() => signal);
   await historyReturn(page, locks);
-  gate.resolve();
+  initial.resolve();
   await new Promise((resolve) => setImmediate(resolve));
   const writes = memory.allPuts.length,
     storage = new Map(page.storage.map),
     checkpoint = authoritativeCheckpoint(page.rendered.run);
   page.$('start-button').click();
-  await settle(() => !page.$('picture-reload').hidden);
-
-  page.$('start-button').click();
-  assert.equal(page.$('picture-reload').hidden, true, 'An explicit retry replaces recovery.');
+  await settle(() => calls === 2);
+  const oldSignal = signal;
   assert.equal(page.$('flight-preparation-status').dataset.state, 'busy');
-  await settle(() => !page.$('picture-reload').hidden);
-
-  page.$('theme-select').value = 'ukraine';
-  const changingWorld = page.$('theme-select').onchange();
-  assert.equal(page.$('picture-reload').hidden, true, 'The previous world cannot retain actions.');
-  await changingWorld;
-  await historyReturn(page, locks);
-  assert.equal(page.$('picture-export-data').hidden, true);
-  assert.equal(page.$('picture-reload').hidden, true);
+  assert.equal(page.rendered.paused, true);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  page.$('theme-select').value = 'ukraine';
+  await page.$('theme-select').onchange();
+  assert.equal(oldSignal.aborted, true);
+  assert.match(page.$('theme-preparation-status').textContent, /artwork ready/);
+  page.frame(0);
+  const newerRun = page.rendered.run,
+    newerCheckpoint = authoritativeCheckpoint(newerRun);
+  late.resolve();
+  await new Promise((resolve) => setImmediate(resolve));
+  await historyReturn(page, locks);
+  ticks(page, 3);
+  assert.equal(page.rendered.run, newerRun);
+  assert.deepEqual(authoritativeCheckpoint(newerRun), newerCheckpoint);
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.$('theme-select').value, 'ukraine');
+  assert.equal(page.$('picture-reload').hidden, true);
+  assert.equal(reads(), 3, 'The newer world prepares the FPV choice for its own all-world pin set');
   assert.deepEqual(page.storage.map, storage);
   assert.equal(memory.allPuts.length, writes);
-  assert.equal(reads(), 1);
+  assert.equal(locks.calls.filter((key) => key === writerKey).length, 1);
   assert.deepEqual(page.errors, []);
 });
 
@@ -383,11 +366,11 @@ test('history cancellation preserves selected pins while a new explicit Start re
   assert.deepEqual(page.errors, []);
 });
 
-test('unjoined picture prewarm exposes its recovery reason beside Export and Reload', async (t) => {
+test('unjoined session prewarm becomes ready without starting and exposes export of its exact originals', async (t) => {
   const gate = deferred();
   t.after(() => gate.resolve());
   let signal;
-  const { page, memory, locks, reads } = await pageFor(t, {
+  const { page, memory, locks, sha256, reads } = await pageFor(t, {
     waitForPictures: false,
     async read(nextSignal) {
       signal = nextSignal;
@@ -400,30 +383,26 @@ test('unjoined picture prewarm exposes its recovery reason beside Export and Rel
   await new Promise((resolve) => setImmediate(resolve));
   const storage = new Map(page.storage.map),
     writes = memory.allPuts.length;
-  // A normal setup selection prepares the current mission, without Start.
   page.$('class-select').value = 'bomber';
   page.$('class-select').onchange();
-  await settle(() => !page.$('picture-reload').hidden);
+  await settle(() => page.doc.body.dataset.pictureState === 'ready');
   page.frame(0);
-  const checkpoint = authoritativeCheckpoint(page.rendered.run),
-    status = page.$('flight-preparation-status');
-  assert.equal(status.hidden, false, 'Recovery reason belongs inside the visible overlay.');
-  assert.equal(status.dataset.state, 'error');
-  assert.match(status.textContent, /cannot save a new picture.*Export.*reloading/);
-  assert.equal(page.$('flight-preparation-cancel').hidden, true);
-  assert.equal(page.$('picture-export-data').hidden, false);
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  assert.equal(page.rendered.backdrop.pin.sha256, sha256);
+  assert.equal(page.rendered.paused, true);
   assert.notEqual(page.doc.body.dataset.flightState, 'running');
-  page.$('picture-export-data').focus();
-  page.$('picture-export-data').click();
+  assert.equal(page.$('flight-preparation-cancel').hidden, true);
+  assert.equal(page.$('picture-reload').hidden, true);
+  page.$('library-button').click();
+  await settle(() => !page.$('session-originals').hidden);
+  assert.equal(page.$('prepare-session-originals').disabled, false);
   page.$('library-dialog').close();
-  await settle(() => page.doc.activeElement === page.$('picture-export-data'));
-  assert.equal(status.hidden, false);
-  assert.equal(status.dataset.state, 'error');
-  assert.equal(page.$('picture-reload').hidden, false);
+  ticks(page, 3);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(page.rendered.paused, true);
   assert.deepEqual(page.storage.map, storage);
   assert.equal(memory.allPuts.length, writes);
-  assert.equal(reads(), 1);
+  assert.equal(reads(), 2);
   assert.equal(locks.calls.filter((key) => key === writerKey).length, 1);
   assert.deepEqual(page.errors, []);
 });
