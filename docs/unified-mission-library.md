@@ -427,3 +427,16 @@ verification. It must receive a new pinned native check before acceptance.
   regressions passes70/70, zero skipped/failures; final focused22-case rerun also
   passes. Publisher behavior remains unchanged. Host adoption/native evidence
   are pending, so this does not yet close lazy browsing across gameplay hosts.
+
+### Metadata-backed registry checkpoint
+
+- Added a sibling installed registry for inspected metadata, leaving the existing
+  prepared-runtime registry contract intact. Exact Classic rows survive refresh
+  and Download→Play; modified editions remain separate Custom sources. Runtime
+  preparation and original-picture readiness remain explicit host responsibilities.
+- It passes metadata-only bindings and immutable targets, never a prepared pack.
+  Review hardened the callback boundary to strip leftover caller `pack` fields;
+  stale snapshots cannot register or launch replacement content.
+-26 source/factory and existing prepared-registry tests pass together, including
+  edition changes, exact late selection, stable download cards and no autolaunch.
+  This is the final browsing-layer foundation; gameplay-host adoption is next.
