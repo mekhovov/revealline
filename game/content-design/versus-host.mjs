@@ -74,6 +74,14 @@ export function createCandidateVersusHost(
     catalog,
     rows: Object.freeze(rows),
     owns: (row) => owned.has(row),
+    manifest(mission, difficulty = 'standard') {
+      if (!mission || catalog.find(mission.id) !== mission) return null;
+      return (
+        executions
+          .select(mission.packId, mission.campaignId, difficulty)
+          ?.manifests.find((item) => item.missionId === mission.levelId) ?? null
+      );
+    },
     visualThemeSelection(row, level) {
       if (!owned.has(row) || row.level !== level) return null;
       return Object.freeze({ entry: rawEntries.get(row), level });

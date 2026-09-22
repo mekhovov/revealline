@@ -216,3 +216,28 @@ intermittent receipt assertion remains a tracked qualification gate.
 - Release A qualification is running separately. Release B is not promoted,
   versioned or publicly accepted; known download/cross-mode, full regression,
   accessibility/layout and public verification gates still apply.
+
+### Versus integration checkpoint
+
+- Mounted the shared tagged library in Journey and Classic Versus, with exact
+  Base, verified installed Classic and modified Custom targets. Existing paired
+  boards, series settings and staged artwork replacement remain runtime-owned.
+- Optional chapter download/failure/retry/cancel remains inline; successful
+  preparation requires a separate Play. Stay preserves both boards and their
+  accepted picture. Opaque owner handoffs preserve the frozen-release URL prefix.
+- Independent review reproduced three defects before checkpoint: incoming
+  metadata overriding newer input, Journey replacement bypassing Stay, and a
+  failed unused opener picture losing the requested mission. Repaired all three;
+  regression tests cover the exact target, retained boards and focus ownership.
+- A74-test bounded cohort passed before the final earlier-input regression was
+  added. Root then repeated all16 actual-library host cases plus the exact
+  manifest authority test:17/17 pass. Earlier Solo/Versus ending sequence4/4
+  passed. These are modeled host tests, not public/hardware acceptance.
+- Still incomplete: trusted bundled/archive and paired-original download
+  adapters, cross-mode Journey inventory, eliminating repeated installed-art
+  validation on browsing, full/native qualification and public deployment.
+
+Native review additionally found a compact-layout blocker: filters/footer leave
+too little card viewport on narrow or short screens. A dedicated shared-selector
+responsive pass is in progress alongside Team regressions and Solo sequence
+verification. It must receive a new pinned native check before acceptance.

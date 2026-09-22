@@ -47,6 +47,7 @@ export function createCouchShell({
   getSoloReturnToken = () => null,
   authoredRoute = 'legacy',
   getSoloJourneyRoute = () => null,
+  onMissions = null,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
     view = doc.defaultView,
@@ -61,7 +62,7 @@ export function createCouchShell({
   const libraryHref = isJourney ? '?journey=legacy' : `?journey=${DEFAULT_JOURNEY_ROUTES.versus}`;
   const libraryLabel = isJourney ? 'Legacy library' : 'New Journey';
   $('race-library-switch').setAttribute('href', libraryHref);
-  $('race-library-switch').textContent = libraryLabel;
+  $('race-library-switch').textContent = onMissions ? 'All missions' : libraryLabel;
   if (authoredDestinations) {
     $('race-solo-return').setAttribute('href', authoredDestinations.solo);
     $('race-coop').setAttribute('href', authoredDestinations.team);
@@ -311,6 +312,11 @@ export function createCouchShell({
       (event.button !== undefined && event.button !== 0)
     )
       return;
+    if (kind === 'library' && onMissions) {
+      event.preventDefault();
+      if (!destroyed && screen === 'main' && foreground()) onMissions(element);
+      return;
+    }
     // Fixed routes are owned here; no target is accepted from a URL or control.
     const returnToken = kind === 'solo' && !isJourney ? soloReturnToken() : null;
     const journeyRouteId = soloJourneyRoute();
