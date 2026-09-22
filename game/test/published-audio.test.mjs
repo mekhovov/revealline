@@ -324,3 +324,190 @@ test('music-only disposal cannot replace an existing cue owner or attach after l
     );
   }
 });
+
+test('explicit retained audio adoption defeats late page readiness and invalidates stale readers', async () => {
+  let finish;
+  const pageReady = new Promise((resolve) => {
+    finish = resolve;
+  });
+  const old = {
+    resolved: {
+      assets: {
+        'audio.music': { kind: 'audio', file: { sha256: 'a'.repeat(64) }, description: 'Retained' },
+      },
+    },
+  };
+  const current = {
+    resolved: {
+      assets: {
+        'audio.music': { kind: 'audio', file: { sha256: 'b'.repeat(64) }, description: 'Current' },
+      },
+    },
+  };
+  const tracks = [],
+    cues = [],
+    reads = [];
+  let host = {
+    readAudio: async (slot, options) => {
+      reads.push({ slot, options });
+      return { blob };
+    },
+  };
+  const owner = attachPublishedAudio({
+    sound: { setPublishedAudio: (read) => cues.push(read), publishedCue() {} },
+    ready: pageReady,
+    getHost: () => host,
+    document: new Events(),
+  });
+  owner.setPlayer({ setPublishedTrack: (track) => tracks.push(track) });
+  owner.setPresentation(old);
+  const retained = tracks.at(-1);
+  finish(current);
+  await owner.ready;
+  assert.equal(tracks.at(-1), retained);
+  assert.equal(await retained.readBlob({}), blob);
+  assert.equal(reads[0].options.snapshot, old);
+  const count = cues.length;
+  owner.setPresentation(old);
+  assert.equal(cues.length, count, 'Identical adoption must not discard cue cache.');
+  host = {
+    readAudio: async () => {
+      throw Error('Stale reader cannot access replacement host');
+    },
+  };
+  owner.setPresentation(current);
+  await assert.rejects(retained.readBlob({}), { name: 'AbortError' });
+  owner.close();
+  owner.setPresentation(old);
+  assert.equal(tracks.at(-1), null);
+  assert.equal(cues.at(-1), null);
+});
+
+test('switching presentation rejects an in-flight music read before the real player adopts old bytes', async () => {
+  const h = playerFixture(),
+    reads = [],
+    tracks = [];
+  const presentation = (sha, title) => ({
+    resolved: {
+      assets: {
+        'audio.music': { kind: 'audio', file: { sha256: sha }, description: title },
+      },
+    },
+  });
+  const old = presentation('a'.repeat(64), 'Retained music'),
+    current = presentation('b'.repeat(64), 'Current music'),
+    currentBlob = new Blob(['new accepted music'], { type: 'audio/wav' });
+  let host = {
+    readAudio: (slot, options) => new Promise((resolve) => reads.push({ slot, options, resolve })),
+  };
+  const owner = attachPublishedAudio({
+    sound: h.soundscape,
+    ready: Promise.resolve(old),
+    getHost: () => host,
+    document: new Events(),
+  });
+  try {
+    await owner.ready;
+    owner.setPlayer({
+      setPublishedTrack(track) {
+        tracks.push(track);
+        h.player.setPublishedTrack(track);
+      },
+    });
+    const oldPlaying = h.player.play();
+    await settleUntil(() => reads.length === 1);
+    const oldReader = tracks.at(-1).readBlob({});
+    const rejected = assert.rejects(oldReader, { name: 'AbortError' });
+    await settleUntil(() => reads.length === 2);
+    assert(reads.every((read) => read.options.snapshot === old));
+    let currentReads = 0;
+    host = {
+      async readAudio(slot, options) {
+        currentReads++;
+        assert.equal(slot, 'audio.music');
+        assert.equal(options.snapshot, current);
+        return { blob: currentBlob };
+      },
+    };
+    owner.setPresentation(current);
+    for (const read of reads) read.resolve({ blob });
+    await rejected;
+    assert.equal(await oldPlaying, false);
+    assert.equal(h.created.length, 0, 'Obsolete bytes must never receive an object URL.');
+    assert.equal(h.media.plays, 0, 'An obsolete read must never start media playback.');
+    assert.equal(currentReads, 0, 'Changing the accepted owner is not a Play gesture.');
+    await h.player.play();
+    assert.equal(currentReads, 1);
+    assert.equal(h.created.length, 1);
+    assert.equal(h.created[0].blob, currentBlob);
+    assert.equal(h.media.plays, 1);
+    assert.equal(h.player.snapshot().track.id, `published.${'b'.repeat(64)}`);
+  } finally {
+    owner.close();
+    h.player.dispose();
+    await h.soundscape.dispose();
+  }
+});
+
+test('switching presentation during cue decoding discards the old cache and uses the new Soundscape owner', async () => {
+  const h = audioHarness(),
+    decodes = [],
+    reads = [];
+  h.context.decodeAudioData = () => new Promise((resolve) => decodes.push(resolve));
+  const presentation = (sha) => ({
+    resolved: {
+      assets: { 'audio.confirm': { kind: 'audio', file: { sha256: sha } } },
+    },
+  });
+  const old = presentation('a'.repeat(64)),
+    current = presentation('b'.repeat(64)),
+    oldBuffer = { duration: 0.1, length: 800, numberOfChannels: 1 },
+    currentBuffer = { duration: 0.2, length: 1600, numberOfChannels: 1 };
+  let host = {
+    async readAudio(slot, options) {
+      reads.push({ slot, options, owner: old });
+      return { blob };
+    },
+  };
+  const owner = attachPublishedAudio({
+    sound: h.soundscape,
+    ready: Promise.resolve(old),
+    getHost: () => host,
+    document: new Events(),
+  });
+  try {
+    await owner.ready;
+    await h.soundscape.enable();
+    assert.equal(h.soundscape.publishedCue('confirm'), false);
+    await settleUntil(() => decodes.length === 1);
+    const before = h.sources.length;
+    host = {
+      async readAudio(slot, options) {
+        reads.push({ slot, options, owner: current });
+        return { blob };
+      },
+    };
+    owner.setPresentation(current);
+    assert.equal(reads[0].options.signal.aborted, true);
+    decodes[0](oldBuffer);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    assert.equal(h.sources.length, before, 'Old decode completion cannot play a voice.');
+    assert.equal(h.soundscape.publishedCue('confirm'), false, 'The old buffer is not cached.');
+    await settleUntil(() => decodes.length === 2);
+    assert.equal(reads.length, 2);
+    assert.equal(reads[1].owner, current);
+    assert.equal(reads[1].options.snapshot, current);
+    decodes[1](currentBuffer);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    assert.equal(h.sources.length, before, 'Decode completion must not replay the event.');
+    assert.equal(h.soundscape.publishedCue('confirm'), true);
+    assert.equal(h.sources.length, before + 1);
+    assert.equal(h.sources.at(-1).buffer, currentBuffer);
+    assert.equal(h.soundscape.voices.size, 1);
+    owner.close();
+    assert.equal(h.soundscape.voices.size, 0);
+  } finally {
+    owner.close();
+    await h.soundscape.dispose();
+  }
+});

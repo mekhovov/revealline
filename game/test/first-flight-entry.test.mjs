@@ -223,3 +223,15 @@ test('an unavailable recorder and a tampered recording preserve the stored attem
     assert.equal(f.writes(), 0);
   }
 });
+
+test('an invalid explicit full-theme reference cannot silently downgrade a checked save', async () => {
+  for (const visualThemePin of [null, {}]) {
+    const f = fixture();
+    const previous = f.oldSlot();
+    const checkpoint = authoritativeCheckpoint(f.request.run);
+    await assert.rejects(retainFlightForFirstFlight({ ...f.request, visualThemePin }));
+    assert.equal(f.bytes.get('attempt'), previous);
+    assert.equal(f.writes(), 0);
+    assert.deepEqual(authoritativeCheckpoint(f.request.run), checkpoint);
+  }
+});

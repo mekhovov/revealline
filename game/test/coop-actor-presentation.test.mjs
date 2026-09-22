@@ -166,7 +166,7 @@ test('tuned Team revisions keep both prepared pilot bodies and every extra keepe
 test('six approved source frames retain exact IDs, revisions, PNG hashes and dimensions', async () => {
   assert.deepEqual(compiled.resolved.theme, {
     id: 'fpv',
-    revision: 57,
+    revision: 58,
     name: compiled.resolved.theme.name,
   });
   assert.equal(compiled.resolved.collection, null);
