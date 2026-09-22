@@ -131,11 +131,35 @@ tests recoverable refusal, not recovery from actual disk exhaustion.
 - Team browser warning/error log was empty. Both test tabs were closed and the
   diagnostic server stopped. No product source changed for these checks.
 
+## Actual backup file round trip
+
+The unchanged source exported the retained Versus profile through the native
+backup dialog on localhost8949. The actual downloaded file
+`revealline-journey-whole-spatial-v5-progress.json` is492bytes, modified at
+2026-09-22T14:40:39+0200, SHA256
+`2a9e19f8307c67de3a446be93e36ece4d6bb23ec76add9b76d68f270f58a1dc8`.
+The real profile importer validates its scoped v2 envelope, one First return
+Versus receipt and Choose your share cursor; Solo/Team progress is empty.
+
+On a separate localhost8950 origin, First return was initially Ready to play.
+Native file selection inspected the actual downloaded bytes and reported exactly
+one missing Versus clear, zero other additions or conflicts, and required Apply.
+Explicit Restore reported merged and saved locally. Back showed First return
+Cleared without starting a match. Reload selected Choose your share and retained
+the clear in the chooser. The destination browser warning/error log was empty.
+Both temporary tabs and servers were closed; the tiny exported test backup is
+retained in Downloads. This is a same-edition web backup round trip, not a
+cross-release, native-wrapper or actual disk-exhaustion recovery claim.
+
+Retained new finding: Restore disables its focused Apply button and native AX
+focus falls to the WebArea. This pre-existing Journey backup dialog issue is
+outside PR255's unchanged source scope and is being corrected separately.
+
 Remaining gates:
 
 1. Complete exact source CI, broader Legacy and cold-entry native checks,
    meaningful warning status transitions and geometry comparison.
-2. Native export/file recovery, real storage-exhaustion recovery,
+2. Other-mode/native-wrapper export and failure paths, real storage-exhaustion recovery,
    controller/device/screen-reader/zoom and cross-release persistence remain.
    The bounded same-origin durable retry/reload and independent review above
    do not establish those broader gates. No human enjoyment claim.
