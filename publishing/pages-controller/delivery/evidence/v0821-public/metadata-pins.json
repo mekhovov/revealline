@@ -1,0 +1,14 @@
+{
+  "release.json": {
+    "bytes": 465,
+    "sha256": "bba2db9c5ed2c0d136224472dde33117cae6c8518c6d162f279f1cb5ed27bb5e"
+  },
+  "manifest.json": {
+    "bytes": 192123,
+    "sha256": "f28ad08403db215de393ac562ca1d3fe7dfc6791f49194513af60bf5db1b7e3d"
+  },
+  "distribution.zip.sha256": {
+    "bytes": 83,
+    "sha256": "cd471011a9f229a656943a4b9e37363e86b2fc4660fe762dc3e3e158b9bc3588"
+  }
+}

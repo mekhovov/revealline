@@ -1,0 +1,87 @@
+{
+  "format": "revealline-main-http-auditor-preparation.v2",
+  "status": "PREPARED_NOT_BOUND_NOT_EXECUTED",
+  "preparedAt": "2026-09-22T14:45:17.470723+00:00",
+  "version": "v0.82.1",
+  "supersedes": "helper-preparation.json",
+  "correction": "Expired responses fail after each body read, including EOF, and final response close; read1 preferred. Blocking transport overruns are explicitly not claimed to be a hard wall bound.",
+  "tests": {
+    "tests": 29,
+    "passed": 29,
+    "failures": 0,
+    "networkRequests": 0
+  },
+  "redRegressionRetained": true,
+  "actualInventory": null,
+  "actualRun": null,
+  "publicNetworkRequests": 0,
+  "repositoryWrites": false,
+  "requiresActualDeploymentReview": true,
+  "files": [
+    {
+      "path": "tools/binding.py",
+      "bytes": 13158,
+      "sha256": "7431d7b7e286d75e186d6ca5da9f48ee8680dd3d06afc6947f4473a9f6f2f623"
+    },
+    {
+      "path": "tools/http_audit.py",
+      "bytes": 14555,
+      "sha256": "861c0b17808b0b4d8d57c84eec4ad2dc1b66e1f9a6dea908af07c27e12beac96"
+    },
+    {
+      "path": "tools/test_binding.py",
+      "bytes": 10977,
+      "sha256": "0c8f418553a27123d33102a650e28ec6268025b0b497fe54442b89e4dd686b3b"
+    },
+    {
+      "path": "tools/test_http_audit.py",
+      "bytes": 9847,
+      "sha256": "630da51fecbf077a0bad59c275e0a64bd23df412efd1f4beaa0a62bc63e62e4d"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6505,
+      "sha256": "4d8bfc1815fb48f30b83d73b0abd102cce9f510bc3f31d11b841ff210a2b444d"
+    },
+    {
+      "path": "execution-request.template.json",
+      "bytes": 1389,
+      "sha256": "653329e58ef8857b3e3667af497dbc4fc85bd56946bc2884e55e63ee4b6ebb39"
+    },
+    {
+      "path": "metadata-pins.json",
+      "bytes": 389,
+      "sha256": "924024d37a4c91d0eafd9cac2efb5749065b032ab72ecf4c7d72d75e25d1baef"
+    },
+    {
+      "path": "local-tests-v2.log",
+      "bytes": 4202,
+      "sha256": "09c69760407a6ad0776d6c2c3ca87449e8b04058c062fdeaf4030251f306f81f"
+    },
+    {
+      "path": "preparation-v2.json",
+      "bytes": 315,
+      "sha256": "a15fdf011064162ffe3b21679529cd998be3b8764afd22979daf2dd7d8df2948"
+    },
+    {
+      "path": "independent-deadline-probe.json",
+      "bytes": 867,
+      "sha256": "eb22d21d6ec2a7506ba9443cbbad1d848199e2c2371097fd6c47a59aad405e0c"
+    },
+    {
+      "path": "deadline-regression-before.log",
+      "bytes": 5094,
+      "sha256": "8f2c9d86e403365469a481cd69bdbd6f7978554272a626086a25654eb7ccfe6e"
+    },
+    {
+      "path": "deadline-regression-before-complete.log",
+      "bytes": 5919,
+      "sha256": "0409f4bffce1bfbb7ef710c76dafd4e57c8dd6b8f075b08203e715837ed35e65"
+    },
+    {
+      "path": "history/deadline-before/history-manifest.json",
+      "bytes": 1504,
+      "sha256": "24072986011f98b32cb534e68b7db53953e7161b43237f601e41040ddb470f02"
+    }
+  ]
+}
