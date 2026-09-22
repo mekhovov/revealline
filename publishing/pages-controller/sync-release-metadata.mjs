@@ -8,6 +8,7 @@ import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { COMMIT, digest, validateMetadata, VERSION } from './metadata.mjs';
+import { validateWaivedSourceQualification } from './source-qualification.mjs';
 
 const controllerDirectory = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(controllerDirectory, '../..');
@@ -23,6 +24,16 @@ function git(...args) {
   const result = spawnSync('git', args, { cwd: root, encoding: 'utf8' });
   if (result.status !== 0) throw new Error(result.stderr || `git ${args[0]} failed`);
   return result.stdout.trim();
+}
+
+function gitFile(revision, relative) {
+  const result = spawnSync('git', ['show', `${revision}:${relative}`], {
+    cwd: root,
+    encoding: null,
+    maxBuffer: 64 * 1024,
+  });
+  if (result.status !== 0) throw new Error('Cannot read policy evidence from release source.');
+  return Buffer.from(result.stdout);
 }
 
 function compareVersions(left, right) {
@@ -74,7 +85,9 @@ export async function syncReleaseMetadata({
   resolveTag = (version) => ({
     sourceRevision: git('rev-parse', `${version}^{commit}`),
     tagObject: git('rev-parse', `refs/tags/${version}`),
+    sourceTree: git('rev-parse', `${version}^{tree}`),
   }),
+  readSourceFile = gitFile,
 }) {
   if (
     !Array.isArray(versions) ||
@@ -185,16 +198,27 @@ export async function syncReleaseMetadata({
         parsed = parseJSON(qualification, `${qualificationVersion}/source-qualification.json`),
         tag = await pinTag(qualificationVersion),
         pin = releases.get(qualificationVersion);
+      const legacy = parsed.format === 'revealline-source-qualification.v1';
       if (
         !pin ||
         pin.sourceRevision !== tag.sourceRevision ||
         pin.tagObject !== tag.tagObject ||
-        parsed.format !== 'revealline-source-qualification.v1' ||
         parsed.version !== qualificationVersion ||
         parsed.sourceRevision !== tag.sourceRevision ||
-        parsed.passed !== true
+        (legacy && parsed.passed !== true)
       )
         throw new Error(`Published source qualification mismatch for ${qualificationVersion}.`);
+      if (!legacy) {
+        if (parsed.format !== 'revealline-source-qualification.v2' || !COMMIT.test(tag.sourceTree))
+          throw new Error(`Published source qualification mismatch for ${qualificationVersion}.`);
+        await validateWaivedSourceQualification({
+          qualification: parsed,
+          version: qualificationVersion,
+          sourceRevision: tag.sourceRevision,
+          sourceTree: tag.sourceTree,
+          readPolicyEvidence: readSourceFile,
+        });
+      }
       const target = path.join(
         directory,
         'evidence',

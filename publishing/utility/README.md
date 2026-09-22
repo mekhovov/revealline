@@ -4,6 +4,36 @@ This utility runs on a hosted runner when the original five-file qualification a
 
 The registered `qualify-release-source.yml` workflow can be dispatched at the reviewed feature-branch commit that contains this utility. Its default `qualify` operation retains the existing six source gates, four test shards and optional freeze. The utility modes skip those jobs and operate only on an already completed successful qualification/freeze run. The utility revision and frozen game source are separate authorities: a reviewed infrastructure correction may execute against the unchanged qualified source without a second freeze or version/tag change.
 
+## Temporary automated-suite exception (2026-09-22)
+
+The user explicitly authorized skipping automated test suites temporarily to
+accelerate releases. `publishing/test-policy.json` records that authorization.
+While its mode is `waived`, PR shards, manual qualification shards, and utility
+and controller self-tests are skipped by default. Manual qualification can opt
+back in with `run_tests=true`. Restore mandatory suites globally by changing
+the policy mode to `required` in a reviewed PR; do not remove the tests.
+
+This exception is **not a passing test result** and increases regression risk.
+Skipped releases use `revealline-source-qualification.v2`, status
+`qualified-with-test-waiver`, and `tests: {status: "waived", counts: null}`.
+The evidence ZIP retains the exact committed authorization and actual completed
+run/job originals showing skipped test jobs. Legacy v1 qualifications, including
+v0.83.0, retain their original successful evidence without rewriting it.
+
+The six-gate/two-shard-family descriptions below apply to legacy v1 and full-test
+runs. Waived v2 instead requires the five successful non-test source gates plus
+an actual successful build, exact source/tree identity, completed frozen-source
+run, and all immutable artifact and publication checks. Failed or cancelled jobs
+cannot be relabeled as skipped. Missing or malformed policy does not grant a
+waiver. Upload compares policy evidence with the exact qualified source commit.
+
+Builds, source validation/lint/format checks, production provenance, complete
+artifact byte verification, immutable tags/assets, archive preservation, and
+public deployment verification remain required. Owner-held incomplete drafts
+are not automatically ready. No game version is allocated for this CI-only
+policy change. The first release using the waiver must retain its actual
+skipped-job evidence; synthetic fixtures only verify the implementation.
+
 ## Review and execution order
 
 1. Qualify and freeze the intended source using the normal workflow. Retain its actual run/artifact API metadata and original GitHub artifact SHA-256.
@@ -58,7 +88,6 @@ python3 -m unittest discover -s publishing/utility -p 'test_*.py'
 ```
 
 These use tiny local Git/TAR/ZIP fixtures, mocked metadata/orchestration and loopback HTTP servers for the preserved upload engines. They do not qualify a real artifact or perform a GitHub write. `provenance.json` retains the original reviewed engine pins and records later scoped adaptations separately; historical originals are not relabeled as current bytes.
-
 
 ## Safe evidence for an ambiguous upload
 
