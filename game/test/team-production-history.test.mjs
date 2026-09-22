@@ -84,7 +84,7 @@ test('explicit Team migration retains the complete canonical57 ledger and repeat
   for (const slot of next.slots.filter((slot) => slot.id.startsWith('team.')))
     assert.equal(
       resolved.assets[slot.id].quality.stage,
-      TEAM_EQUIPMENT_IDS.includes(slot.id) ? 'produced' : 'source',
+      TEAM_EQUIPMENT_IDS.includes(slot.id) ? 'reviewed' : 'source',
       slot.id,
     );
   const repeated = retainFieldKitProductionHistory(production.document, next);
@@ -147,6 +147,24 @@ test('current-ledger Team reproduction retains its prefix and is a no-op after m
     );
   assert.equal(canonicalJSON(current.document), before);
   assert.equal(next.slots.length, 335);
+  const priorAssets = resolvePresentation(current.document).assets;
+  const nextAssets = resolvePresentation(next).assets;
+  for (const slot of TEAM_EQUIPMENT_IDS) {
+    const prior = priorAssets[slot],
+      accepted = nextAssets[slot];
+    assert.equal(accepted.quality.stage, 'reviewed', slot);
+    assert.equal(accepted.file.sha256, prior.file.sha256, 'Review preserves original bytes.');
+    assert.deepEqual(accepted.geometry, prior.geometry);
+    if (prior.quality.stage === 'produced') {
+      assert.equal(accepted.id, prior.id);
+      assert.equal(accepted.revision, prior.revision + 1, 'Review adds an immutable successor.');
+      assert.deepEqual(
+        next.assets.find((asset) => asset.id === prior.id && asset.revision === prior.revision),
+        prior,
+        'The produced ancestor retains its original quality evidence.',
+      );
+    }
+  }
   const repeated = retainFieldKitProductionHistory(production.document, next);
   assert.equal(canonicalJSON(repeated), canonicalJSON(next));
   // The generic writer accepts the already-installed contract; it still must

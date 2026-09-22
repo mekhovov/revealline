@@ -24,7 +24,15 @@ const hud = (f) =>
     'coop-state-0',
     'coop-state-1',
   ].map((id) => f.$(id).textContent);
-const lastImage = (f) => f.drawImages.at(-1);
+function acceptedFrameImage(f) {
+  const decodedPicture = f.artwork.calls.decodes.at(-1);
+  f.drawImages.length = 0;
+  f.tick(1);
+  assert.equal(f.drawImages[0], decodedPicture, 'The accepted picture paints before actors');
+  assert.equal(f.drawImages.filter((image) => image === decodedPicture).length, 1);
+  assert.ok(f.drawImages.length > 1, 'Prepared actor artwork follows the accepted picture');
+  return f.drawImages[0];
+}
 const options = { nativeFocus: true, nativeVisibility: true, capturePaint: true };
 function start(f) {
   f.$('coop-start').focus();
@@ -64,7 +72,7 @@ test('initial exact Relay Yard preparation exposes Cancel, then Ready and only e
   assert.equal(f.artwork.calls.loads, 1);
   assert.equal(f.artwork.calls.reads.length, 1);
   start(f);
-  assert.equal(lastImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+  assert.equal(acceptedFrameImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   assert.equal(f.$('coop-stage').textContent, 'RELAY YARD');
 });
 
@@ -77,7 +85,7 @@ test('actual arena selection prepares Relay Yard independently and releases the 
   assert.deepEqual(f.artwork.calls.releases, [first]);
   assert.equal(f.$('coop-menu').hidden, false);
   start(f);
-  assert.equal(lastImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+  assert.equal(acceptedFrameImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   assert.equal(f.$('coop-stage').textContent, 'RELAY YARD');
 });
 
@@ -131,7 +139,7 @@ test('Cancel during decode releases only that image; its late decode cannot repl
   assert.deepEqual(f.artwork.calls.releases, [old]);
   assert.equal(state(f), 'ready');
   start(f);
-  assert.equal(lastImage(f).source, next);
+  assert.equal(acceptedFrameImage(f).source, next);
 });
 
 test('a new actual arena choice supersedes a held old read without adopting or focusing from its late completion', async (t) => {
@@ -151,7 +159,7 @@ test('a new actual arena choice supersedes a held old read without adopting or f
   assert.equal(state(f), 'ready');
   assert.equal(f.artwork.calls.decodes.length, 1);
   start(f);
-  assert.equal(lastImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+  assert.equal(acceptedFrameImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
 });
 
 for (const interruption of ['blur', 'hidden', 'pagehide']) {
@@ -265,7 +273,7 @@ test('confirmed Retry retains the immutable authored arena and exact accepted pi
   await f.choose('coop-level', 'relay-yard');
   f.$('coop-start').click();
   const firstPaint = f.lastPaint,
-    image = lastImage(f);
+    image = acceptedFrameImage(f);
   f.tick(120);
   pause(f);
   const before = hud(f),
@@ -282,7 +290,7 @@ test('confirmed Retry retains the immutable authored arena and exact accepted pi
   f.tap('Enter');
   assert.equal(f.$('coop-clock').textContent, '0:00');
   assert.equal(f.lastPaint, firstPaint);
-  assert.equal(lastImage(f), image);
+  assert.equal(acceptedFrameImage(f), image);
   assert.equal(f.artwork.calls.reads.length, 2);
   assert.deepEqual(f.artwork.calls.releases, [f.artwork.calls.urls[0]]);
 });
@@ -294,7 +302,7 @@ test('changed accepted asset authority refuses Retry before replacing the paused
   f.tick(90);
   pause(f);
   const before = hud(f),
-    image = lastImage(f);
+    image = acceptedFrameImage(f);
   const asset = f.artwork.snapshot.resolved.assets[COOP_PICTURE_BINDINGS[1].picture.slot];
   const old = asset.revision;
   asset.revision++;
@@ -303,7 +311,7 @@ test('changed accepted asset authority refuses Retry before replacing the paused
   assert.match(f.$('coop-message').textContent, /could not be replaced/);
   f.tick(90);
   assert.deepEqual(hud(f), before);
-  assert.equal(lastImage(f), image);
+  assert.equal(acceptedFrameImage(f), image);
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.artwork.calls.reads.length, 2);
   asset.revision = old;
@@ -338,9 +346,12 @@ test('BFCache suspension keeps accepted artwork and shared preferences; terminal
   const f = await page(t, options);
   start(f);
   f.tick(90);
+  const image = acceptedFrameImage(f);
   f.win.emit('pagehide', { persisted: true });
-  const before = hud(f),
-    image = lastImage(f);
+  const before = hud(f);
+  f.drawImages.length = 0;
+  f.tick(5);
+  assert.equal(f.drawImages.length, 0, 'Suspended pages do not repaint');
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.artwork.calls.releases.length, 0);
   assert.equal(f.artwork.calls.closes, 0);
@@ -353,7 +364,7 @@ test('BFCache suspension keeps accepted artwork and shared preferences; terminal
   f.$('coop-settings-close').click();
   f.$('coop-resume').click();
   f.tick(90);
-  assert.equal(lastImage(f), image);
+  assert.equal(acceptedFrameImage(f), image);
   assert.notDeepEqual(hud(f), before);
   f.win.emit('pagehide', { persisted: false });
   f.win.emit('pagehide', { persisted: false });
@@ -391,7 +402,7 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
   f.tick(90);
   pause(f);
   const before = hud(f),
-    image = lastImage(f),
+    image = acceptedFrameImage(f),
     reads = f.artwork.calls.reads.length;
   f.$('coop-settings-open').click();
   f.choose('coop-text-face', 'plain');
@@ -407,7 +418,7 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
   f.$('coop-reduced').onchange();
   f.tick(90);
   assert.deepEqual(hud(f), before);
-  assert.equal(lastImage(f), image);
+  assert.equal(acceptedFrameImage(f), image);
   assert.equal(f.artwork.calls.reads.length, reads);
   assert.equal(f.doc.body.dataset.textFace, 'plain');
   assert.equal(f.doc.body.dataset.textSize, 'large');

@@ -576,7 +576,7 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
   // fixture files may be changed; links to the real project are read-only inputs.
   await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
   await fs.mkdir(path.join(fixture, 'game', 'content'), { recursive: true });
-  for (const entry of ['authoring', 'site'])
+  for (const entry of ['authoring', 'site', 'scripts'])
     await fs.symlink(path.join(root, entry), path.join(fixture, entry));
   for (const directory of ['', 'ui', 'content'])
     for (const entry of await fs.readdir(path.join(root, 'game', directory))) {

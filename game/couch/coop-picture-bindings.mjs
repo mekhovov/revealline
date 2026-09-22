@@ -4,10 +4,11 @@ import { freezePresentation } from '../presentation/model.mjs';
  * The injected lease verifies these identities before reading or decoding; other
  * imports/themes have no implicit procedural or wider FPV-picture fallback.
  * Lease output retains the complete frame with contain fit and nearest sampling.
- * Canonical fpv59 retains the exact fpv58 scenery while adding separate Team
- * roles. This picture association does not approve those new roles or equipment.
+ * Canonical fpv60 reviews only five equipment originals and retains the exact
+ * fpv59 scenery and actor originals. Retained attempts may still select fpv59.
+ * This picture association does not approve any Team recipe.
  * The archived unpublished fpv55–58 lineage is not a runtime fallback. All 127 original
- * payloads, including these two derivatives, remain byte-identical. No other revision is admitted.
+ * payloads, including these two derivatives, remain byte-identical. Only the explicit current60 and retained59 authorities below are admitted.
  */
 export const COOP_PICTURE_BINDINGS = freezePresentation([
   {
@@ -18,7 +19,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     levelRevision: 2,
     levelSha256: '31041ad693f59418fb34e91f6f7bdae4d46fb6294b5e4ba49f8035aab4e79246',
     themeId: 'fpv',
-    themeRevision: 59,
+    themeRevision: 60,
     collection: null,
     picture: {
       slot: 'scene.reveal.wide',
@@ -39,7 +40,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     levelRevision: 2,
     levelSha256: 'fcb1014f8b2c60047a2d10e4c0558b9ca03dcfe50c23ad48a5d2dabf9852c2a7',
     themeId: 'fpv',
-    themeRevision: 59,
+    themeRevision: 60,
     collection: null,
     picture: {
       slot: 'picture.fpv.adf5c9eea274ba7f',
@@ -61,7 +62,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
 export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
   version: 'revealline-team-historical-import-picture.v1',
   themeId: 'fpv',
-  themeRevision: 59,
+  themeRevision: 60,
   collection: null,
   picture: {
     slot: 'scene.reveal.wide',
@@ -74,3 +75,22 @@ export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
     width: 1152,
   },
 });
+
+/** Retained attempts use the same immutable content/picture identities under the
+ * explicitly preserved59 theme. Current-only callers keep the two-row exports.
+ */
+export const COOP_RETAINED_PICTURE_BINDINGS = freezePresentation(
+  COOP_PICTURE_BINDINGS.map((row) => ({ ...row, themeRevision: 59 })),
+);
+export const COOP_SUPPORTED_PICTURE_BINDINGS = freezePresentation([
+  ...COOP_PICTURE_BINDINGS,
+  ...COOP_RETAINED_PICTURE_BINDINGS,
+]);
+export const COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
+  ...COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+  themeRevision: 59,
+});
+export const COOP_HISTORICAL_IMPORT_PICTURE_POLICIES = freezePresentation([
+  COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+  COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY,
+]);
