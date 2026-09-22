@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="../ui/menu-appearance.css" />
     <link rel="stylesheet" href="../ui/journey.css" />
     <link rel="stylesheet" href="../ui/handheld-play.css" />
+    <link rel="stylesheet" href="../ui/journey-save-cue.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
     <p id="boot-status" class="operation-status" data-state="busy" role="status">
@@ -39,11 +40,12 @@
         <button id="race-journey-skip" type="button">Skip mission</button>
         <button id="race-journey-find" type="button">Find missions</button>
       </nav>
-      <aside id="race-journey-save" class="journey-status" hidden>
-        <p id="race-journey-save-message" role="status"></p>
-        <button id="race-journey-save-retry" type="button">Retry progress save</button>
-        <button id="race-journey-save-export" type="button">Export Journey progress</button>
-      </aside>
+      <p
+        id="race-journey-save-announcement"
+        class="journey-save-announcement"
+        role="status"
+        aria-live="polite"
+      ></p>
       <div id="race-hud" class="race-hud" hidden>
         <button id="race-pause" type="button" disabled>Pause</button>
         <span class="race-score"
@@ -190,6 +192,9 @@
               >Relay Rescue · team up</a
             >
             <button id="race-start" class="race-primary" type="button">Start race</button>
+            <button id="race-journey-save-options" type="button" hidden>
+              Progress not saved · Save options
+            </button>
             <button id="race-chapter-retry" type="button" hidden>Retry picture</button>
             <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
             <button id="race-chapters" type="button">Chapters</button>
@@ -206,6 +211,16 @@
             One race. Choose First to two in Race setup for a longer match. Couch races do not
             change your solo progress.
           </p>
+          <aside
+            id="race-journey-save"
+            class="journey-status"
+            aria-label="Journey race progress saving"
+            hidden
+          >
+            <p id="race-journey-save-message" role="status"></p>
+            <button id="race-journey-save-retry" type="button">Retry progress save</button>
+            <button id="race-journey-save-export" type="button">Export Journey progress</button>
+          </aside>
           <div
             id="race-music-menu-now-playing"
             class="couch-music-credit"
