@@ -1,3 +1,4 @@
+import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -82,7 +83,9 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       packs: emptyPackLibrary(),
       session: original,
     });
-    await page.$('import-save').onclick();
+    const pendingImport = page.$('import-save').onclick();
+    await acceptGameDataReplacement(page);
+    await pendingImport;
     assert.match(page.$('save-status').textContent, /Game data restored/);
     assert.equal(page.$('undo-backup').disabled, false);
     assert.equal(page.doc.body.dataset.textSize, 'large');
@@ -130,7 +133,9 @@ test('a real backup commit failure keeps Details and both page lifecycles usable
     packs: emptyPackLibrary(),
     session: original,
   });
-  await page.$('import-save').onclick();
+  const pendingImport = page.$('import-save').onclick();
+  await acceptGameDataReplacement(page);
+  await pendingImport;
   assert.equal(rejected, 1, 'The real commit reached storage, not just JSON validation');
   assert.match(page.$('save-status').textContent, /Test backup marker capacity failure/);
   assert.equal(storage.getItem(profileKey), rawProfile);

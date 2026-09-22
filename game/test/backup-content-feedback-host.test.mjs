@@ -1,10 +1,28 @@
+import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { BACKUP_FORMAT } from '../backup.mjs';
 import { emptyLibrary, loadLibrary, saveLibrary, updatePreferences } from '../library.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
-import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import {
+  soloPage as rawSoloPage,
+  SoloElement,
+  memoryStorage,
+  settle,
+} from './helpers/solo-dom.mjs';
+
+// Opening order belongs to the real modal owner. Model the native event at
+// the DOM boundary rather than bypassing the owner's return-focus protection.
+async function soloPage(t, options) {
+  const show = SoloElement.prototype.showModal;
+  t.mock.method(SoloElement.prototype, 'showModal', function () {
+    if (this.open) return;
+    this.emit('beforetoggle', { oldState: 'closed', newState: 'open', bubbles: false });
+    show.call(this);
+  });
+  return rawSoloPage(t, options);
+}
 
 const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
 const profileKey = 'revealline.library.dev.v1';
@@ -31,7 +49,7 @@ function savesFromCollection(page) {
   assert.equal(page.$('library-dialog').open, true);
   assert.equal(page.$('library-saves').hidden, false);
 }
-function importOwnedFile(page) {
+async function importOwnedFile(page, { accept = true } = {}) {
   // Chooser/decoding is modeled; production onchange, transaction and adoption run.
   const body = JSON.stringify({
     format: BACKUP_FORMAT,
@@ -40,7 +58,9 @@ function importOwnedFile(page) {
     session: null,
   });
   page.$('save-file').files = [new Blob([body], { type: 'application/json' })];
-  return page.$('save-file').onchange();
+  const pending = page.$('save-file').onchange();
+  if (accept) await acceptGameDataReplacement(page);
+  return pending;
 }
 function returnHome(page) {
   page.doc.querySelector('button[data-close="library-dialog"]').click();
@@ -70,7 +90,13 @@ test('Collection file Import and Undo return Home without inventing a cancelled 
   noPackCancellation(page);
   savesFromCollection(page);
   assert.equal(page.$('undo-backup').disabled, false);
+  page.$('undo-backup').focus();
   await page.$('undo-backup').onclick();
+  assert.equal(
+    page.doc.activeElement === page.$('export-backup'),
+    true,
+    'Successful Undo restores focus to Export game data',
+  );
   assert.match(
     page.$('save-status').textContent,
     /Previous collection, packs and saved flight restored/,
@@ -129,3 +155,145 @@ test('blur during the actual held backup lock does not announce a pack cancellat
   noPackCancellation(page);
   assert.deepEqual(page.errors, []);
 });
+
+for (const action of ['keep', 'escape', 'close', 'pagehide', 'changed storage']) {
+  test(`backup replacement review: ${action} preserves current data and never commits implicitly`, async (t) => {
+    // The Node host has a separate Window; bridge global listeners as browsers do.
+    const listeners = [];
+    const previous = Object.getOwnPropertyDescriptor(globalThis, 'addEventListener');
+    Object.defineProperty(globalThis, 'addEventListener', {
+      configurable: true,
+      value: (...args) => listeners.push(args),
+    });
+    t.after(() =>
+      previous
+        ? Object.defineProperty(globalThis, 'addEventListener', previous)
+        : delete globalThis.addEventListener,
+    );
+    const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true });
+    for (const args of listeners) page.win.addEventListener(...args);
+    savesFromCollection(page);
+    page.$('save-file').focus();
+    const before = new Map(page.storage.map);
+    const pending = importOwnedFile(page, { accept: false });
+    await settle(() => !page.$('library-operation-confirm').hidden);
+    assert.deepEqual(page.storage.map, before, 'Review must not write game data');
+    assert.equal(page.doc.activeElement, page.$('library-operation-cancel'));
+    assert.equal(page.$('library-operation-cancel').textContent, 'Keep current data');
+    assert.match(page.$('save-status').textContent, /Undo will restore/);
+    if (action === 'keep') page.$('library-operation-cancel').click();
+    // DOM adapter omits the browser default Escape-to-dialog-cancel action.
+    if (action === 'escape') page.$('library-dialog').emit('cancel');
+    if (action === 'close') page.doc.querySelector('button[data-close="library-dialog"]').click();
+    if (action === 'pagehide') page.win.emit('pagehide');
+    if (action === 'changed storage') {
+      page.storage.setItem(profileKey, 'changed by another page');
+      before.set(profileKey, 'changed by another page');
+      page.$('library-operation-confirm').click();
+    }
+    await pending;
+    assert.deepEqual(page.storage.map, before);
+    assert.equal(page.$('library-operation-confirm').hidden, true);
+    assert.equal(page.$('undo-backup').disabled, true);
+    if (action === 'changed storage')
+      assert.match(page.$('save-status').textContent, /Current game data changed/);
+    if (action === 'keep' || action === 'escape')
+      assert.equal(page.doc.activeElement, page.$('save-file'));
+    assert.deepEqual(page.errors, []);
+  });
+}
+
+test('repeated Escape cancels only the active replacement review before native close', async (t) => {
+  const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true });
+  savesFromCollection(page);
+  const before = new Map(page.storage.map);
+  const dialog = page.$('library-dialog');
+  for (const focused of ['library-operation-cancel', 'library-operation-message']) {
+    page.$('save-file').focus();
+    const pending = importOwnedFile(page, { accept: false });
+    await settle(() => !page.$('library-operation-confirm').hidden);
+    page.$(focused).focus();
+    for (const fields of [
+      { defaultPrevented: true },
+      { repeat: true },
+      { isComposing: true },
+      { shiftKey: true },
+      { cancelable: false },
+      { ctrlKey: true },
+      { altKey: true },
+      { metaKey: true },
+    ]) {
+      page.$(focused).emit('keydown', { key: 'Escape', ...fields });
+      assert.equal(page.$('library-operation-confirm').hidden, false);
+    }
+    const nested = page.doc.createElement('dialog');
+    dialog.append(nested);
+    nested.showModal();
+    assert.equal(nested.emit('keydown', { key: 'Escape' }).defaultPrevented, false);
+    assert.equal(page.$('library-operation-confirm').hidden, false);
+    nested.close();
+    nested.remove();
+    page.$(focused).focus();
+    const event = page.$(focused).emit('keydown', { key: 'Escape' });
+    assert.equal(event.defaultPrevented, true, 'Review consumes the key before native close');
+    await pending;
+    assert.equal(dialog.open, true);
+    assert.equal(page.$('library-operation-confirm').hidden, true);
+    assert.deepEqual(page.storage.map, before);
+  }
+  // A later Back with no review still belongs to the ordinary modal lifecycle.
+  const event = dialog.emit('keydown', { key: 'Escape' });
+  assert.equal(event.defaultPrevented, false);
+  assert.deepEqual(page.errors, []);
+});
+
+for (const choice of ['Back', 'Confirm']) {
+  test(`modeled controller ${choice} routes the replacement decision through the current Library owner`, async (t) => {
+    const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true });
+    savesFromCollection(page);
+    page.$('save-file').focus();
+    const pending = importOwnedFile(page, { accept: false });
+    await settle(() => !page.$('library-operation-confirm').hidden);
+    const prior = Object.getOwnPropertyDescriptor(performance, 'now');
+    let now = 1000;
+    Object.defineProperty(performance, 'now', { configurable: true, value: () => now });
+    t.after(() =>
+      prior ? Object.defineProperty(performance, 'now', prior) : delete performance.now,
+    );
+    const pad = {
+      index: 0,
+      id: 'Backup review controller fixture',
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+    };
+    navigator.getGamepads = () => [pad];
+    const frame = () => {
+      now += 16;
+      page.frame(16);
+    };
+    const pulse = (index) => {
+      pad.buttons[index] = { pressed: true, value: 1 };
+      frame();
+      pad.buttons[index] = { pressed: false, value: 0 };
+      frame();
+    };
+    frame();
+    frame();
+    assert.equal(page.doc.activeElement, page.$('library-operation-cancel'));
+    if (choice === 'Confirm') {
+      pulse(12);
+      assert.equal(page.doc.activeElement, page.$('library-operation-confirm'));
+      pulse(0);
+    } else pulse(1);
+    await pending;
+    assert.equal(
+      profile(page).library.preferences.textSize,
+      choice === 'Confirm' ? 'large' : 'standard',
+    );
+    assert.equal(page.$('library-dialog').open, true);
+    assert.equal(page.doc.activeElement, page.$('save-file'));
+    assert.deepEqual(page.errors, []);
+  });
+}
