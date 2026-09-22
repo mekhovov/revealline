@@ -619,3 +619,14 @@ verification. It must receive a new pinned native check before acceptance.
   controller-navigation activation. This does not establish all three gameplay
   hosts' gamepad wiring or physical-device behavior. Native layout recheck and
   actual-host modeled controller journeys remain explicit qualification gates.
+
+### Search during Team metadata loading
+
+- An already-open Team selector now owns a read-only view rather than an automatic
+  launch input turn. Search and filter edits can narrow arriving rows without
+  triggering an unnecessary Retry or moving focus. Automatic opening/launch
+  safeguards are unchanged.
+- Outside focus/input, mode changes, Escape/close and backgrounding still retire
+  the pending view. Completion/error removes listeners so idle status is not
+  later relabelled interrupted. The affected Team cohorts pass17/17, with two
+  final cleanup regressions repeated. Native verification remains required.

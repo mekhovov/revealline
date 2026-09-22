@@ -140,6 +140,73 @@ test('late other-mode metadata cannot replace Team filter or newer focus; later 
   assert.equal(f.reads.length, 4);
 });
 
+test('typing and filtering in the open Team chooser filters arriving remote rows without retiring the read', async (t) => {
+  const gate = deferred();
+  t.after(() => gate.resolve());
+  const f = await fixture(t, {
+    read: async (path) => {
+      if (path.includes('index')) await gate.promise;
+    },
+  });
+  await open(f);
+  mode(f, 'solo');
+  await waitFor(() => f.reads.length === 4);
+  f.$('journey-collection').focus();
+  f.$('journey-collection').value = 'Classic';
+  f.$('journey-collection').emit('change');
+  f.$('journey-campaign').focus();
+  f.$('journey-campaign').value = '';
+  f.$('journey-campaign').emit('change');
+  const search = f.$('journey-search');
+  search.focus();
+  for (const key of 'Voltage Garden') {
+    search.emit('keydown', { key });
+    search.value += key;
+    search.emit('input');
+  }
+  assert.match(f.$('coop-library-remote-status').textContent, /Loading/);
+  assert.equal(f.$('coop-library-remote-retry').hidden, true);
+  gate.resolve();
+  await waitFor(() => cards(f).length === 1);
+  assert.match(cards(f)[0].textContent, /Voltage Garden/);
+  assert.equal(search.value, 'Voltage Garden');
+  assert.equal(f.$('journey-collection').value, 'Classic');
+  assert.equal(f.doc.activeElement, search);
+  assert.equal(f.visits.length, 0);
+  // This fixture deliberately denies storage: its independent inventory warning
+  // remains truthful, but ordinary search must not cause an interrupted load.
+  assert.doesNotMatch(f.$('coop-library-remote-status').textContent, /interrupted/i);
+  assert.match(f.$('coop-library-remote-status').textContent, /Installed content unavailable/);
+  const completedStatus = f.$('coop-library-remote-status').textContent;
+  f.doc.body.focus();
+  assert.equal(
+    f.$('coop-library-remote-status').textContent,
+    completedStatus,
+    'A completed read removes its outside-focus listener.',
+  );
+});
+
+test('focus leaving the Team chooser still retires held remote metadata', async (t) => {
+  const gate = deferred();
+  t.after(() => gate.resolve());
+  const f = await fixture(t, {
+    read: async (path) => {
+      if (path.includes('index')) await gate.promise;
+    },
+  });
+  await open(f);
+  mode(f, 'solo');
+  await waitFor(() => f.reads.length === 4);
+  f.doc.body.focus();
+  assert.match(f.$('coop-library-remote-status').textContent, /interrupted/i);
+  gate.resolve();
+  await new Promise((resolve) => setTimeout(resolve, 200));
+  assert.equal(cards(f).length, 0);
+  assert.equal(f.doc.activeElement, f.doc.body);
+  assert.equal(f.visits.length, 0);
+  assert.equal(f.$('coop-library-remote-retry').hidden, false);
+});
+
 test('failed remote metadata has an explicit Retry that retains focus and never starts a mission', async (t) => {
   let fail = true;
   const f = await fixture(t, {
@@ -150,6 +217,13 @@ test('failed remote metadata has an explicit Retry that retains focus and never 
   mode(f, 'solo');
   await waitFor(() => !f.$('coop-library-remote-retry').hidden);
   assert.match(f.$('coop-library-remote-status').textContent, /503/);
+  const failedStatus = f.$('coop-library-remote-status').textContent;
+  f.doc.body.focus();
+  assert.equal(
+    f.$('coop-library-remote-status').textContent,
+    failedStatus,
+    'A failed read removes its outside-focus listener.',
+  );
   fail = false;
   f.$('coop-library-remote-retry').focus();
   f.tap('Enter');
