@@ -162,8 +162,8 @@ records the evidence at that time, not the current remaining list.
 | Trusted bundled/archive Versus downloads                                      | Implemented;53 installer +actual-host tests pass together                       | Native/public verification                         |
 | Paired-original downloads/readiness across hosts                              | Implemented; real optional/paired remote5-case recovery cohort passes           | Release-aware native/public verification           |
 | Installed Custom metadata/readiness without eager artwork decoding            | Team and Versus integrations reviewed; local host regressions pass              | Native qualification and failure-matrix completion |
-| Compact library and selector return                                           | Final nativec9ea focused-card/typing/compact gates pass; modeled pads5/5        | Frozen repeat and physical-device limits           |
-| Full navigation, failure, storage and accessibility/performance qualification | Full mission-library cohort running; lint/format/source validation pass         | 2–4h plus device availability                      |
+| Compact library and selector return                                           | Final nativec9ea focused-card/typing/compact gates pass; modeled pads8/8        | Frozen repeat and physical-device limits           |
+| Full navigation, failure, storage and accessibility/performance qualification | Combined mission-library cohort301/301 passes; lint/format/source validation pass | 2–4h plus device availability                      |
 | Release B promotion                                                           | Waits only for accepted A and B technical gates; local work continues           | 2–4h after qualification, CI/Pages queues variable |
 
 Estimates are remaining engineering ranges, not guaranteed release times or
@@ -677,6 +677,26 @@ verification. It must receive a new pinned native check before acceptance.
   with a48.59px Back target and Escape returning to Browse. These receipts
   supersede the earlier `d637f1f54` and `2f6ff4746` failures, not public testing.
 - Repository-wide lint and formatting checks pass. The complete affected
-  `mission-library-*.test.mjs` cohort is running with concurrency2 and no build
-  output. Release A has two successful test groups and two still running; B
-  remains draft/unversioned until A public acceptance and all B release gates.
+  `mission-library-*.test.mjs` cohort passes301/301 with concurrency2 in332.097s,
+  with no failures, skips or cancellations and no build output. This run used
+  `c9eab07f0` production code and the original five controller-host tests; the
+  three subsequently added default-entry checks have separate evidence below.
+- At this checkpoint Release A has three successful test groups and one still
+  running. B remains draft/unversioned until A public acceptance and all B
+  release gates. Native compact evidence covers Team remote-Solo browsing with
+  keyboard/pointer at844×390 and390×844, not200% zoom, Large/Plain appearance,
+  physical controllers or the eventual frozen/public build.
+
+### Queryless default-entry controller checks
+
+- Three additional tests enter the actual queryless Solo, Versus and Team hosts.
+  Each selects the redesigned edition through the normal route loader, opens All
+  missions through gamepad polling, reaches a ready Journey card, and returns to
+  the exact opener with East. Gameplay snapshots remain unchanged after neutral
+  frames; browsing and transition inputs neither start nor advance a mission.
+- All eight actual-host controller tests pass together in36.124s, including the
+  original five unchanged assertions. Real registered artwork bytes are supplied
+  through finite image-decoder boundaries. This is modeled-controller evidence,
+  not native image decoding, physical-device or public qualification.
+- Paired-original native decoding, retained-original/Custom journeys in a
+  release-aware setup, full release CI and frozen/public repetitions remain open.

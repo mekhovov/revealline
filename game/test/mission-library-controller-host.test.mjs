@@ -1,12 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createHash, webcrypto } from 'node:crypto';
 import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { page as teamPage } from './helpers/coop-host.mjs';
 import { Element } from './helpers/couch-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
 
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 15000 });
 const device = () => ({
@@ -18,7 +21,24 @@ const device = () => ({
   buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
 });
 
-async function host(t, mode, { fetchResponse } = {}) {
+// Registered picture bytes cross the real host boundary; this finite image
+// decoder is not a native artwork or physical-controller qualification.
+class JourneyPicture {
+  width = 1774;
+  height = 887;
+  naturalWidth = 1774;
+  naturalHeight = 887;
+  set src(value) {
+    this.source = value;
+    queueMicrotask(() => this.onload?.());
+  }
+  async decode() {}
+  removeAttribute() {
+    this.source = '';
+  }
+}
+
+async function host(t, mode, { fetchResponse, defaultEntry = false } = {}) {
   // Native SUMMARY activation is the only missing browser default modeled here.
   // Real host routing, gamepad polling, navigation and callbacks stay installed.
   const click = Element.prototype.click;
@@ -31,16 +51,20 @@ async function host(t, mode, { fetchResponse } = {}) {
     }
   });
 
-  const session = memoryStorage({
-    [`revealline.mission-library.selector.v1.${mode}`]: JSON.stringify({
-      mode,
-      search: 'saved query with no matching mission',
-      collection: 'Classic',
-      campaign: '',
-      selectedId: '',
-      scroll: 0,
-    }),
-  });
+  const session = memoryStorage(
+    defaultEntry
+      ? {}
+      : {
+          [`revealline.mission-library.selector.v1.${mode}`]: JSON.stringify({
+            mode,
+            search: 'saved query with no matching mission',
+            collection: 'Classic',
+            campaign: '',
+            selectedId: '',
+            scroll: 0,
+          }),
+        },
+  );
   const pads = [],
     databases = new Map();
   const indexedDB = {
@@ -53,14 +77,25 @@ async function host(t, mode, { fetchResponse } = {}) {
   if (mode === 'solo')
     p = await soloPage(t, {
       titleScreen: true,
-      search: '?journey=legacy',
+      search: defaultEntry ? '' : '?journey=legacy',
       previewStorage: session,
       readPads: () => pads,
       assetIndexedDB: indexedDB,
+      ...(defaultEntry
+        ? {
+            journeyIndexedDB: indexedDB,
+            pictures: { Image: JourneyPicture },
+            fetchResponse: async (path) =>
+              String(path).includes('/content-design/assets/')
+                ? new Response(await readFile(path))
+                : undefined,
+          }
+        : {}),
     });
   else if (mode === 'versus')
     p = await couchPage(t, {
       pads,
+      ...(defaultEntry ? { href: 'http://localhost/game/couch/' } : {}),
       initialLevel: null,
       previewStorage: session,
       storage: memoryStorage(),
@@ -75,7 +110,64 @@ async function host(t, mode, { fetchResponse } = {}) {
           return new Response('', { status: 503 });
       },
     });
-  else p = await teamPage(t, { returnStorage: session, nativeFocus: true, nativeVisibility: true });
+  else {
+    const source = defaultEntry ? createTeamSpatialOriginalCandidates() : null;
+    const originals = new Map(
+      await Promise.all(
+        (source?.assets ?? []).map(async (asset) => [
+          asset.path,
+          await readFile(new URL('../' + asset.path, import.meta.url)),
+        ]),
+      ),
+    );
+    p = await teamPage(t, {
+      returnStorage: session,
+      nativeFocus: true,
+      nativeVisibility: true,
+      ...(defaultEntry
+        ? {
+            href: 'http://localhost/game/couch/relay-rescue.html',
+            beforeImport({ install }) {
+              const BaseImage = globalThis.Image;
+              install('Image', {
+                value: class extends BaseImage {
+                  async decode() {
+                    if (!this.source.startsWith('data:image/png;base64,')) return super.decode();
+                    const bytes = Buffer.from(this.source.split(',')[1], 'base64');
+                    this.width = this.naturalWidth = bytes.readUInt32BE(16);
+                    this.height = this.naturalHeight = bytes.readUInt32BE(20);
+                    this.sha256 = createHash('sha256').update(bytes).digest('hex');
+                  }
+                },
+              });
+              install('crypto', { value: webcrypto });
+              install('fetch', {
+                value: async (url) => {
+                  const asset = source.assets.find((row) =>
+                    new URL(url).pathname.endsWith('/' + row.path),
+                  );
+                  assert(asset, 'Only registered Team artwork is fetched');
+                  return new Response(originals.get(asset.path));
+                },
+              });
+            },
+          }
+        : {}),
+    });
+  }
+  const snapshot = () =>
+    mode === 'solo'
+      ? { run: authoritativeCheckpoint(p.rendered.run), state: p.doc.body.dataset.flightState }
+      : mode === 'versus'
+        ? { run: p.checkpoint(), state: p.state() }
+        : {
+            level: p.$('coop-level').value,
+            clock: p.$('coop-clock').textContent,
+            stage: p.$('coop-stage').textContent,
+            overlay: p.$('coop-overlay').hidden,
+            menu: p.$('coop-menu').hidden,
+          };
+  const before = snapshot();
   p.doc.defaultView.matchMedia = () => ({ matches: true });
   const pad = device();
   (mode === 'team' ? p.pads : pads).push(pad);
@@ -104,7 +196,9 @@ async function host(t, mode, { fetchResponse } = {}) {
   }
   const opener = p.$(
     mode === 'solo'
-      ? 'shell-play'
+      ? defaultEntry
+        ? 'shell-catalogue'
+        : 'shell-play'
       : mode === 'versus'
         ? 'race-library-switch'
         : 'coop-discovery-open',
@@ -113,7 +207,7 @@ async function host(t, mode, { fetchResponse } = {}) {
   pulse(0);
   await settle(() => p.$('journey-chooser')?.open);
   frame();
-  return { p, pulse, reach, frame, opener };
+  return { p, pulse, reach, frame, opener, before, snapshot };
 }
 
 test('Versus controller Play and replacement Stay preserve both paused boards and the real opener', async (t) => {
@@ -127,6 +221,7 @@ test('Versus controller Play and replacement Stay preserve both paused boards an
     p.frame(0);
     return p.state() === 'running';
   });
+
   assert.equal(p.renders[0].level.id, 'signal-01');
   assert.equal(p.renders[1].level.id, 'signal-01');
   pulse(9);
@@ -241,4 +336,40 @@ for (const mode of ['solo', 'versus', 'team'])
     pulse(1);
     assert.equal(p.$('journey-chooser').open, false);
     assert.equal(p.doc.activeElement, opener);
+  });
+
+for (const mode of ['solo', 'versus', 'team'])
+  test(`${mode} queryless default entry controller browses a ready New Journey mission and returns without starting`, async (t) => {
+    const { p, pulse, reach, frame, opener, before, snapshot } = await host(t, mode, {
+      defaultEntry: true,
+    });
+    assert.equal(
+      new URL(globalThis.location.href).search,
+      '',
+      'Actual entry uses no Journey override.',
+    );
+    if (mode === 'solo') assert.equal(p.rendered.run.level.id, 'first-return');
+    else if (mode === 'versus') {
+      assert.equal(p.renders[0].level.id, 'first-return');
+      assert.equal(p.renders[1].level.id, 'first-return');
+    } else assert.equal(p.$('coop-level').value, 'twin-landings');
+    const edition = mode === 'team' ? 'team-spatial-originals-1' : 'whole-spatial-v5';
+    const card = [...p.$('journey-cards').children].find((row) => {
+      const identity = JSON.parse(row.dataset.missionId);
+      return identity[0] === `journey:${edition}` && identity[1] === edition;
+    });
+    assert(card, 'The normal host offers its current, not Classic, mission edition.');
+    assert.equal(card.querySelector('.journey-card-action').textContent, 'Play');
+    assert.equal(card.disabled, false);
+    reach(card);
+    assert.deepEqual(snapshot(), before, 'Browsing must not start or advance a mission.');
+    pulse(1);
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.equal(p.doc.activeElement, opener, 'East returns to the exact All missions opener.');
+    for (let index = 0; index < 6; index++) frame();
+    assert.deepEqual(snapshot(), before, 'Controller confirm/back input must not leak into play.');
+    if (mode === 'team') {
+      assert.equal(p.$('coop-menu').hidden, false, 'The Team lobby remains open, not a live run.');
+      assert.deepEqual(p.visits, []);
+    } else assert.notEqual(snapshot().state, 'running');
   });
