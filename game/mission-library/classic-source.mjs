@@ -105,7 +105,7 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
         progress,
         card,
         details: (row, mode) => ({
-          challenge: `Authored Standard rules · ${row.rules}`,
+          challenge: `Authored Standard rules · ${row.rules}${mode === 'versus' ? ' · Separate Versus race timer also applies' : ''}`,
           route: `Difficulty settings: ${row.difficultiesByMode[mode]
             .map((preset) => `${preset[0].toUpperCase()}${preset.slice(1)}`)
             .join(', ')}`,
