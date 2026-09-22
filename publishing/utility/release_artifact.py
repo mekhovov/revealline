@@ -27,6 +27,7 @@ import upload_distribution
 
 MIB = 1024**2
 RESERVE = 512 * MIB
+MAX_DISTRIBUTION_BYTES = upload_distribution.MAX_DISTRIBUTION_BYTES
 SMALL_NAMES = {'manifest.json', 'release.json', 'distribution.zip.sha256',
                'source-qualification.json', 'source-qualification-evidence.zip',
                'verification.json', 'qualification-evidence-record.json'}
@@ -102,7 +103,7 @@ def validate_binding(body, mode, repository):
                 'Exactly nine unique reviewed asset descriptors required')
         for row in rows:
             limit = 64 * MIB if row['name'] == 'source-qualification-evidence.zip' else (
-                2_000_000_000 if row['name'] == 'source.tar' else 512 * MIB if row['name'] == 'distribution.zip' else 4 * MIB)
+                2_000_000_000 if row['name'] == 'source.tar' else MAX_DISTRIBUTION_BYTES if row['name'] == 'distribution.zip' else 4 * MIB)
             require(set(row) == {'name', 'bytes', 'sha256'} and positive(row['bytes'], limit) and
                     HEX.fullmatch(row['sha256']), 'Invalid asset descriptor or bounded length')
     return binding
@@ -238,7 +239,8 @@ def inspect_original(binding, repo, out, api):
     with (out / 'evidence/inspection.log').open('xb') as log:
         subprocess.run([sys.executable, str(Path(__file__).with_name('inspect_qualified_artifact.py')), str(original),
                         '--repo', str(repo), '--expected-commit', source['commit'], '--expected-version', source['version'],
-                        '--artifact-sha256', artifact['sha256'], '--out', str(verified)],
+                        '--artifact-sha256', artifact['sha256'], '--max-distribution-bytes',
+                        str(MAX_DISTRIBUTION_BYTES), '--out', str(verified)],
                        stdout=log, stderr=subprocess.STDOUT, check=True, timeout=7200)
     inspection = parse((verified / 'inspection.json').read_bytes())
     require(inspection['gitTree'] == source['tree'], 'Inspected Git tree differs')

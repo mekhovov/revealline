@@ -7,7 +7,9 @@ Usage:
     --out .cache/cross-mode/p01/v0571/qualified-artifact-verified
 
 The output folder must not exist. Defaults retain 512 MiB free after writing
-only small original metadata. No network or Git writes occur.
+only small original metadata. The release utility supplies the exact
+950,000,000-byte Pages distribution cap; direct invocations retain the historical
+512 MiB default. No network or Git writes occur.
 This validates bytes/Git identity, not workflow success or release acceptance.
 """
 import argparse
@@ -339,11 +341,18 @@ def main():
     parser.add_argument('--out', required=True, type=Path)
     parser.add_argument('--artifact-sha256', help='Optional externally trusted downloaded artifact digest')
     parser.add_argument('--reserve-mib', type=int, default=512)
-    parser.add_argument('--max-distribution-mib', type=int, default=512)
+    distribution_bound = parser.add_mutually_exclusive_group()
+    distribution_bound.add_argument('--max-distribution-mib', type=int)
+    distribution_bound.add_argument('--max-distribution-bytes', type=int)
     args = parser.parse_args()
     require(re.fullmatch(r'[0-9a-f]{40}|[0-9a-f]{64}', args.expected_commit), 'Use full lowercase commit hash')
     require(re.fullmatch(r'v\d+\.\d+\.\d+', args.expected_version), 'Use stable vX.Y.Z release version')
-    require(args.reserve_mib >= 256 and 1 <= args.max_distribution_mib <= 2048, 'Invalid reserve/distribution bounds')
+    max_distribution_bytes = args.max_distribution_bytes
+    if max_distribution_bytes is None:
+        max_distribution_mib = 512 if args.max_distribution_mib is None else args.max_distribution_mib
+        max_distribution_bytes = max_distribution_mib * CHUNK
+    require(args.reserve_mib >= 256 and 1 <= max_distribution_bytes <= 2048 * CHUNK,
+            'Invalid reserve/distribution bounds')
     if args.artifact_sha256:
         require(HEX256.fullmatch(args.artifact_sha256), 'Invalid expected artifact SHA256')
     require(args.artifact.is_file() and not args.artifact.is_symlink(), 'Artifact must be an existing regular file')
@@ -388,7 +397,7 @@ def main():
             match = re.fullmatch(r'([0-9a-f]{64})  distribution\.zip\n', checksum)
             require(match and match[1] == release['distributionSha256'], 'Distribution checksum/release hash differ')
             distribution = actual[prefix + 'site/distribution.zip']
-            require(distribution.file_size <= args.max_distribution_mib * CHUNK, 'Distribution exceeds extraction bound')
+            require(distribution.file_size <= max_distribution_bytes, 'Distribution exceeds extraction bound')
             needed = sum(map(len, small.values())) + CHUNK
             reserve = args.reserve_mib * CHUNK
             require(shutil.disk_usage(parent).free >= needed + reserve,
