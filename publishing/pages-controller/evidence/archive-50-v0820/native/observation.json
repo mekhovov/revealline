@@ -1,0 +1,58 @@
+{
+  "format": "revealline-scoped-browser-observation.v1",
+  "checkedAt": "2026-09-22T14:23:42.223424+00:00",
+  "status": "PASS_SCOPED",
+  "browser": "agent-browser isolated Chromium session revealline-archive50 / persistent QA profile only",
+  "version": "v0.82.0",
+  "url": "https://mekhovov.github.io/revealline-archive-50/releases/v0.82.0/site/game/",
+  "infrastructureCommit": "b1f11e438e112ea09c3bec77cb10e0b2d68e658d",
+  "workflowRunId": 35738900186,
+  "observations": [
+    "Fresh canonical title displayed VERSION V0.82.0 and Start.",
+    "Ordinary Start then keyboard ArrowDown completed First Signal: 52.2%, 8160 points, 3 lives, full earned picture and Next control visible.",
+    "Main menu and Settings / Game data opened through ordinary buttons.",
+    "Archive index Open the current release explorer navigated to main /revealline/releases/; Playable versions and current v0.82.0 displayed. Browser Back returned to archive index.",
+    "No page errors recorded."
+  ],
+  "retainedAttempts": [
+    "Initial ArrowDown issued before the ready canvas did not produce a win within the 20-second wait. A later ordinary ArrowDown produced the recorded win.",
+    "Explorer wait for literal Release explorer timed out because actual heading is Playable versions; actual URL and snapshot confirm successful navigation."
+  ],
+  "limits": [
+    "Historical online preservation only; no new offline restart, physical iPhone, controller, multitouch, listening-quality or whole-phase acceptance.",
+    "Main-menu title has no Release explorer action in this exact frozen edition; archive index link was exercised.",
+    "Browser observations are separate from the complete public byte audit."
+  ],
+  "files": [
+    {
+      "path": "archive-index-return.txt",
+      "bytes": 135,
+      "sha256": "449533d22321495e51beae131bc8cd9ecac3c2b19f570c78056f85d9e55051a1"
+    },
+    {
+      "path": "errors.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "first-signal-win.txt",
+      "bytes": 2037,
+      "sha256": "38ecb188e583eb1540f2e6d4ca6a2c6d9116991e11c890cae15b818df16b98ab"
+    },
+    {
+      "path": "main-explorer.txt",
+      "bytes": 21945,
+      "sha256": "580f73315b6e24df5393a3e2fb4cc51ababde0c4a48495bcb81ede2f79467fba"
+    },
+    {
+      "path": "screenshot-1790086916234.png",
+      "bytes": 112478,
+      "sha256": "f49d53ad3e34e9fc11ec57d4c50def9a861973def9caad8a282dfd0c4d643b13"
+    },
+    {
+      "path": "title.txt",
+      "bytes": 1103,
+      "sha256": "51edf19331357d0b242d738698bb1347429eb60696ae200fbb3f2462af5dd569"
+    }
+  ]
+}

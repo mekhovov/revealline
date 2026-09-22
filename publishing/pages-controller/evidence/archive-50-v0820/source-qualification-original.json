@@ -1,0 +1,646 @@
+{
+  "format": "revealline-source-qualification.v1",
+  "version": "v0.82.0",
+  "sourceRevision": "9b26f2a02fb621a6f023422768e34605ae103739",
+  "sourceTree": "283866fee55d100d68e4770b3330874b743f8583",
+  "actualCheckoutCommit": "9b26f2a02fb621a6f023422768e34605ae103739",
+  "actualCheckoutTree": "283866fee55d100d68e4770b3330874b743f8583",
+  "sourceMerge": "9b26f2a02fb621a6f023422768e34605ae103739",
+  "sourceMergeTree": "283866fee55d100d68e4770b3330874b743f8583",
+  "sourcePR": 225,
+  "qualifiedAt": "2026-09-22T09:21:00Z",
+  "passed": true,
+  "qualificationBasis": "exact merged-source hosted qualification plus a prior PR family over identical game, build, and test inputs",
+  "allTrackedSourceContentsAndModesMatch": true,
+  "sourceIdentity": {
+    "format": "revealline-source-identity.v1",
+    "sourceRevision": "9b26f2a02fb621a6f023422768e34605ae103739",
+    "sourceTree": "283866fee55d100d68e4770b3330874b743f8583",
+    "files": 16484,
+    "bytes": 1569853390,
+    "allTrackedSourceContentsAndModesMatch": true,
+    "authority": "retained frozen-artifact inspection"
+  },
+  "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/35699607640",
+  "runId": 35699607640,
+  "workflowPath": ".github/workflows/qualify-release-source.yml",
+  "gates": [
+    {
+      "gate": "validate",
+      "command": "npm run validate",
+      "jobId": 106654235179,
+      "step": {
+        "completedAt": "2026-09-22T07:29:13Z",
+        "conclusion": "success",
+        "name": "Validate source",
+        "number": 7,
+        "startedAt": "2026-09-22T07:27:43Z",
+        "status": "completed"
+      }
+    },
+    {
+      "gate": "lint",
+      "command": "npm run lint",
+      "jobId": 106654235179,
+      "step": {
+        "completedAt": "2026-09-22T07:29:27Z",
+        "conclusion": "success",
+        "name": "Lint source",
+        "number": 8,
+        "startedAt": "2026-09-22T07:29:13Z",
+        "status": "completed"
+      }
+    },
+    {
+      "gate": "format",
+      "command": "npm run format:check",
+      "jobId": 106654235179,
+      "step": {
+        "completedAt": "2026-09-22T07:29:58Z",
+        "conclusion": "success",
+        "name": "Check formatting",
+        "number": 9,
+        "startedAt": "2026-09-22T07:29:27Z",
+        "status": "completed"
+      }
+    },
+    {
+      "gate": "native-format",
+      "command": "npm run format:native:check",
+      "jobId": 106654235179,
+      "step": {
+        "completedAt": "2026-09-22T07:29:59Z",
+        "conclusion": "success",
+        "name": "Check native formatting",
+        "number": 10,
+        "startedAt": "2026-09-22T07:29:58Z",
+        "status": "completed"
+      }
+    },
+    {
+      "gate": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "jobId": 106654235179,
+      "step": {
+        "completedAt": "2026-09-22T07:29:59Z",
+        "conclusion": "success",
+        "name": "Check motion lab syntax",
+        "number": 11,
+        "startedAt": "2026-09-22T07:29:59Z",
+        "status": "completed"
+      }
+    },
+    {
+      "gate": "test",
+      "command": "node scripts/run-test-shard.mjs --shard N/4",
+      "jobId": 106655217040,
+      "step": {
+        "completedAt": "2026-09-22T08:09:22Z",
+        "conclusion": "success",
+        "name": "Run test shard 4/4",
+        "number": 7,
+        "startedAt": "2026-09-22T07:30:51Z",
+        "status": "completed"
+      },
+      "actualJobSteps": [
+        {
+          "shard": 1,
+          "jobId": 106655216916,
+          "step": {
+            "completedAt": "2026-09-22T07:54:37Z",
+            "conclusion": "success",
+            "name": "Run test shard 1/4",
+            "number": 7,
+            "startedAt": "2026-09-22T07:30:53Z",
+            "status": "completed"
+          },
+          "counts": {
+            "tests": 3019,
+            "pass": 3019,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          }
+        },
+        {
+          "shard": 2,
+          "jobId": 106655217005,
+          "step": {
+            "completedAt": "2026-09-22T08:21:28Z",
+            "conclusion": "success",
+            "name": "Run test shard 2/4",
+            "number": 7,
+            "startedAt": "2026-09-22T07:30:49Z",
+            "status": "completed"
+          },
+          "counts": {
+            "tests": 3073,
+            "pass": 3073,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          }
+        },
+        {
+          "shard": 3,
+          "jobId": 106655217048,
+          "step": {
+            "completedAt": "2026-09-22T09:15:35Z",
+            "conclusion": "success",
+            "name": "Run test shard 3/4",
+            "number": 7,
+            "startedAt": "2026-09-22T07:30:51Z",
+            "status": "completed"
+          },
+          "counts": {
+            "tests": 2956,
+            "pass": 2956,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          }
+        },
+        {
+          "shard": 4,
+          "jobId": 106655217040,
+          "step": {
+            "completedAt": "2026-09-22T08:09:22Z",
+            "conclusion": "success",
+            "name": "Run test shard 4/4",
+            "number": 7,
+            "startedAt": "2026-09-22T07:30:51Z",
+            "status": "completed"
+          },
+          "counts": {
+            "tests": 2640,
+            "pass": 2640,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          }
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "tests": 11688,
+    "pass": 11688,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testFiles": 887,
+  "additionalManualQualification": {
+    "runId": 35691421851,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/35691421851",
+    "shards": [
+      {
+        "shard": 1,
+        "jobId": 106629844837,
+        "step": {
+          "completedAt": "2026-09-22T06:28:31Z",
+          "conclusion": "success",
+          "name": "Run test shard 1/4",
+          "number": 7,
+          "startedAt": "2026-09-22T05:42:35Z",
+          "status": "completed"
+        },
+        "counts": {
+          "tests": 3019,
+          "pass": 3019,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      {
+        "shard": 2,
+        "jobId": 106629844767,
+        "step": {
+          "completedAt": "2026-09-22T06:35:26Z",
+          "conclusion": "success",
+          "name": "Run test shard 2/4",
+          "number": 7,
+          "startedAt": "2026-09-22T05:42:37Z",
+          "status": "completed"
+        },
+        "counts": {
+          "tests": 3073,
+          "pass": 3073,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      {
+        "shard": 3,
+        "jobId": 106629844786,
+        "step": {
+          "completedAt": "2026-09-22T07:25:07Z",
+          "conclusion": "success",
+          "name": "Run test shard 3/4",
+          "number": 7,
+          "startedAt": "2026-09-22T05:42:33Z",
+          "status": "completed"
+        },
+        "counts": {
+          "tests": 2956,
+          "pass": 2956,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      {
+        "shard": 4,
+        "jobId": 106629844858,
+        "step": {
+          "completedAt": "2026-09-22T06:42:34Z",
+          "conclusion": "success",
+          "name": "Run test shard 4/4",
+          "number": 7,
+          "startedAt": "2026-09-22T05:42:39Z",
+          "status": "completed"
+        },
+        "counts": {
+          "tests": 2640,
+          "pass": 2640,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      }
+    ],
+    "preflight": {
+      "completedAt": "2026-09-22T05:41:23Z",
+      "conclusion": "success",
+      "databaseId": 106629035939,
+      "name": "preflight",
+      "startedAt": "2026-09-22T05:37:18Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-22T05:37:20Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-22T05:37:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:38:05Z",
+          "conclusion": "success",
+          "name": "Check out source",
+          "number": 2,
+          "startedAt": "2026-09-22T05:37:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:38:07Z",
+          "conclusion": "success",
+          "name": "Check out the workflow's source verifier",
+          "number": 3,
+          "startedAt": "2026-09-22T05:38:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:38:16Z",
+          "conclusion": "success",
+          "name": "Set up Node.js",
+          "number": 4,
+          "startedAt": "2026-09-22T05:38:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:38:30Z",
+          "conclusion": "success",
+          "name": "Verify exact tracked source before commands",
+          "number": 5,
+          "startedAt": "2026-09-22T05:38:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:38:32Z",
+          "conclusion": "success",
+          "name": "Install dependencies",
+          "number": 6,
+          "startedAt": "2026-09-22T05:38:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:40:53Z",
+          "conclusion": "success",
+          "name": "Validate, lint, and format source",
+          "number": 7,
+          "startedAt": "2026-09-22T05:38:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:41:00Z",
+          "conclusion": "success",
+          "name": "Verify Field Kit production ledger and compiled output",
+          "number": 8,
+          "startedAt": "2026-09-22T05:40:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:41:06Z",
+          "conclusion": "success",
+          "name": "Verify immutable production sources first",
+          "number": 9,
+          "startedAt": "2026-09-22T05:41:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:41:20Z",
+          "conclusion": "success",
+          "name": "Verify tracked source after preflight",
+          "number": 10,
+          "startedAt": "2026-09-22T05:41:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:41:20Z",
+          "conclusion": "success",
+          "name": "Post Set up Node.js",
+          "number": 18,
+          "startedAt": "2026-09-22T05:41:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:41:20Z",
+          "conclusion": "success",
+          "name": "Post Check out the workflow's source verifier",
+          "number": 19,
+          "startedAt": "2026-09-22T05:41:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:41:20Z",
+          "conclusion": "success",
+          "name": "Post Check out source",
+          "number": 20,
+          "startedAt": "2026-09-22T05:41:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-22T05:41:20Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 21,
+          "startedAt": "2026-09-22T05:41:20Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/mekhovov/revealline/actions/runs/35691421851/job/106629035939"
+    },
+    "scope": "The PR source differs from the merged source only by publishing/pages-controller selector and retained-evidence files. Game, build, and test inputs are identical."
+  },
+  "ordinaryBuildCorroboration": {
+    "runId": 35691421851,
+    "jobId": 106629844709,
+    "command": "npm run build",
+    "step": {
+      "completedAt": "2026-09-22T05:46:34Z",
+      "conclusion": "success",
+      "name": "Build pull-request artifact",
+      "number": 7,
+      "startedAt": "2026-09-22T05:42:24Z",
+      "status": "completed"
+    },
+    "scope": "The successful PR build used the same game, build, and test inputs as the exact merged frozen source."
+  },
+  "frozenArtifactCorroboration": {
+    "artifactId": 10685958903,
+    "runId": 35699607640,
+    "inspectionRunId": 35718120244,
+    "wholeOriginalArtifactVerifiedBeforeQualification": true,
+    "sourceTarGitBlobTypeModeAndPaxCommitVerified": true,
+    "allInnerZipManifestBytesVerified": true,
+    "frozenOfflineInventoryAndBindingsVerified": true,
+    "inputs": {
+      "inspection": {
+        "path": "verification.json",
+        "bytes": 1915,
+        "sha256": "89dbf5d21e70602e92ac345f64a535f8b5cab5d3dfe16e3d9a359bb665f15128"
+      },
+      "manifest": {
+        "path": "manifest.json",
+        "bytes": 191593,
+        "sha256": "a9269833abe8882267bce49629803b6e28f2715c6704855265e5533e0a972c8e"
+      },
+      "releaseRecord": {
+        "path": "release.json",
+        "bytes": 465,
+        "sha256": "64ec33344baafc27806a59e66aebd46dae5305186c5fc84e9793198003e0075b"
+      },
+      "checksum": {
+        "path": "distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "1293a2ee01c8d1e3fb4d6a315b056ed2eb80bd2413aa06277715be0d681bea9c"
+      }
+    }
+  },
+  "evidencePins": [
+    {
+      "path": "inspection/api/001.json",
+      "bytes": 696,
+      "sha256": "e359ae571e313eb631c9661bb19dc112ca2976ecca44b248baa0dad1d472695e"
+    },
+    {
+      "path": "inspection/api/001.request.json",
+      "bytes": 304,
+      "sha256": "d637471ccca507484e5adab79161eaada266de58d1ff502b7093c4bd022b3d89"
+    },
+    {
+      "path": "inspection/api/002.json",
+      "bytes": 12193,
+      "sha256": "886042321f799f143ae7ab16001a181c9334f323195cd71e5fd5b5f5cb5444f7"
+    },
+    {
+      "path": "inspection/api/002.request.json",
+      "bytes": 301,
+      "sha256": "7f9c52fedd53322a49f2a3a2e8de35b56df77956f115936ee41b052901450373"
+    },
+    {
+      "path": "inspection/api/003.json",
+      "bytes": 18431,
+      "sha256": "530134620074936080c9cd1820ddeec578b97c76b918775c843702f606ed9b9f"
+    },
+    {
+      "path": "inspection/api/003.request.json",
+      "bytes": 326,
+      "sha256": "ae83ab2493e861fc36e397644cdecc070abcc8efec4b901d383257a979ff4e32"
+    },
+    {
+      "path": "inspection/api/004.json",
+      "bytes": 696,
+      "sha256": "e359ae571e313eb631c9661bb19dc112ca2976ecca44b248baa0dad1d472695e"
+    },
+    {
+      "path": "inspection/api/004.request.json",
+      "bytes": 304,
+      "sha256": "dfc9cd42a9e4369d2622062c764f64c4bfdbe36d3c585786ca7d4ce21151c677"
+    },
+    {
+      "path": "inspection/api/005.json",
+      "bytes": 12193,
+      "sha256": "886042321f799f143ae7ab16001a181c9334f323195cd71e5fd5b5f5cb5444f7"
+    },
+    {
+      "path": "inspection/api/005.request.json",
+      "bytes": 301,
+      "sha256": "861f8fe7cfd241846aec0d28290bf2310ec512bb985d05f45b566a1fafe6fb2d"
+    },
+    {
+      "path": "inspection/api/006.json",
+      "bytes": 18431,
+      "sha256": "530134620074936080c9cd1820ddeec578b97c76b918775c843702f606ed9b9f"
+    },
+    {
+      "path": "inspection/api/006.request.json",
+      "bytes": 326,
+      "sha256": "7c5b38a39991aa0c7d3997313ec9473225b65adca65deb924cc8368356ce3ae8"
+    },
+    {
+      "path": "inspection/artifact-authority.json",
+      "bytes": 779,
+      "sha256": "079ac1c086f8de0c537d5875de047cccfb550bcdef3a80aeecca0a0af2af88fc"
+    },
+    {
+      "path": "inspection/binding.json",
+      "bytes": 395,
+      "sha256": "f66a607448dfd74acacac87378f7331c38e0973c7068fd156e3883860366b42d"
+    },
+    {
+      "path": "inspection/execution.json",
+      "bytes": 2663,
+      "sha256": "565d30c0d4b0490256df5ac4feb539324d6188a2ccca08db6d1178c25c084855"
+    },
+    {
+      "path": "inspection/frozen-offline-review/originals/game/build-info.json",
+      "bytes": 143,
+      "sha256": "fc6ede6e25b1d772f714c558ac26018d1e2a03d84c99252daf86a061473d7e9e"
+    },
+    {
+      "path": "inspection/frozen-offline-review/originals/game/index.html",
+      "bytes": 104116,
+      "sha256": "c4cccd7b7cd527069a29781ac53d41065770c165e5bf464e6d3496d769cd0602"
+    },
+    {
+      "path": "inspection/frozen-offline-review/originals/offline-cache.json",
+      "bytes": 185796,
+      "sha256": "402eea39885c3da8e1495b0126137b35c4937992de4ba7337133942a934a0fb5"
+    },
+    {
+      "path": "inspection/frozen-offline-review/originals/service-worker.js",
+      "bytes": 163352,
+      "sha256": "909310e4a9e94ce36f5b2bf2b018906620ccebee51442c1e405f1198abcb1f84"
+    },
+    {
+      "path": "inspection/frozen-offline-review/review.json",
+      "bytes": 3412,
+      "sha256": "2d808ea64ca1a11dd0b48a14ae326e67aac45e611b5856300fbb7c6ea2ba9ddd"
+    },
+    {
+      "path": "inspection/inspection.log",
+      "bytes": 4818,
+      "sha256": "63752e6430c5954b3e6390a43806a8ebe7cb25cabcfd721cd513fec4fa9fcae2"
+    },
+    {
+      "path": "inspection/offline-review.log",
+      "bytes": 194,
+      "sha256": "1467a366b2292507ffdef9f53057cd1492eca8054481e4ff0000c48dd810d1d7"
+    },
+    {
+      "path": "inspection/qualified-artifact-original.download.json",
+      "bytes": 594,
+      "sha256": "9bcc0f49cd71123ba9a10bb1e063cabeada7fe755cd44cd6aaee47819e330817"
+    },
+    {
+      "path": "inspection/qualified-artifact-verified/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "1293a2ee01c8d1e3fb4d6a315b056ed2eb80bd2413aa06277715be0d681bea9c"
+    },
+    {
+      "path": "inspection/qualified-artifact-verified/inspection.json",
+      "bytes": 1915,
+      "sha256": "89dbf5d21e70602e92ac345f64a535f8b5cab5d3dfe16e3d9a359bb665f15128"
+    },
+    {
+      "path": "inspection/qualified-artifact-verified/manifest.json",
+      "bytes": 191593,
+      "sha256": "a9269833abe8882267bce49629803b6e28f2715c6704855265e5533e0a972c8e"
+    },
+    {
+      "path": "inspection/qualified-artifact-verified/release.json",
+      "bytes": 465,
+      "sha256": "64ec33344baafc27806a59e66aebd46dae5305186c5fc84e9793198003e0075b"
+    },
+    {
+      "path": "inspection/result.json",
+      "bytes": 548,
+      "sha256": "d6fef523307d94c32ddee531eb3c5cd72c768ad7323987ed7413e42ada765635"
+    },
+    {
+      "path": "inspection/retained-manifest.json",
+      "bytes": 6783,
+      "sha256": "46e31c7fc30efdd9dcca876cc5b770a3d6f352ead3234a7adc7f753cd5c3bc9f"
+    },
+    {
+      "path": "inspection/source-after.json",
+      "bytes": 159,
+      "sha256": "06cfc9de6ed323cdab38f879add3d789da9e01b638c4ee40c7b768cb16a911e4"
+    },
+    {
+      "path": "inspection/source-before.json",
+      "bytes": 159,
+      "sha256": "06cfc9de6ed323cdab38f879add3d789da9e01b638c4ee40c7b768cb16a911e4"
+    },
+    {
+      "path": "retained-failure/first-inspection-evidence.zip",
+      "bytes": 41944,
+      "sha256": "5c486c4ee70617424fd2c9569be800da7015a5d01e6528b0e6c3677d69827fb0"
+    },
+    {
+      "path": "retained-failure/first-inspection.log",
+      "bytes": 4256,
+      "sha256": "1fc0acad255d184f2f51845b60e4dad2d39ce4fbe5930de757146c6ac67e3302"
+    },
+    {
+      "path": "runs/manual-run.json",
+      "bytes": 13508,
+      "sha256": "cf8b97555a93ec057755727c1856816584ba0c5eda52cccaca35838ddd18c695"
+    },
+    {
+      "path": "runs/manual-run.log",
+      "bytes": 6426126,
+      "sha256": "5f72e9e4e6bd37449471bcc82f3915515a759cb7a420fbecea9e7dc54a275cc6"
+    },
+    {
+      "path": "runs/pr-run.json",
+      "bytes": 14288,
+      "sha256": "8ac79a9bf983fad1c5e09ead6fd5f424945fa792ad095a12dd239455c708b582"
+    },
+    {
+      "path": "runs/pr-run.log",
+      "bytes": 6081989,
+      "sha256": "79f399ce7e3a56983986dde24cf5f397003643055ad249be6912bf020b2086e2"
+    }
+  ],
+  "limits": {
+    "sourceTarBytes": 1583329280,
+    "distributionBytes": 590517861,
+    "hostedDistributionLimitBytes": 950000000,
+    "releaseEvidenceBytes": 13314580
+  }
+}
