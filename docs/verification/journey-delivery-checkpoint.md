@@ -122,3 +122,36 @@ combined source, not either parent, must pass the new PR gates.
 Local Node 20 startup/fullscreen checks pass 39/39. Independent Node 22 review
 passes 23/23 fullscreen/bootstrap checks and 16/16 actual authored-mode-entry
 checks, with no failures or skips. This does not certify physical iOS behavior.
+
+### Publication capacity and full-suite follow-up
+
+The old publisher copied the complete current distribution twice. At `40ff91b6`,
+the lower bound is 1,178,384,445 bytes before soundtrack/generated metadata,
+above the unchanged 950,000,000-byte guard. Infrastructure
+[PR #227](https://github.com/mekhovov/revealline/pull/227) preserves every original
+at its canonical versioned path, existing self-contained root aliases, and six
+bounded root metadata/icon files instead of duplicating runtime bodies. It does
+not change game source, selectors or release assets.
+
+Its independent 54/54 Node 20/22 and 4/4 Python checks pass. Hosted preview
+`35675336777` passed authenticated assembly and independent byte reread; its full
+3,489-file, 445,588,431-byte inventory matches the local preview exactly. That
+preview uses frozen **v0.80.2**, not this checkpoint. Native canonical game
+clear → Next, both Studios and the release catalog loaded successfully. A
+790-file offline preparation followed by server-stopped reload → Continue →
+active trail verified bounded desktop cached play. Physical installed-PWA
+behavior remains unclaimed. The final frozen v0.82.0 artifact must independently
+pass its own budget, admission and public checks after release-owner sequencing.
+
+The old run `35673216761` later completed shard 4 with 3,038 passing tests and two
+failures. Both reproduce at `40ff91b6`: the Rover presentation test assumed the
+earlier single-factory handler, and the mission-brief test expected superseded
+frontier wording. The repair changes tests only. Rover now executes the actual
+handler for both teaching and Sorting editions, with accepting and cancelling
+discard paths, asserting the exact pictured campaign source and inspection-only
+behavior. The briefing assertion now checks the complete existing changing-frontier
+and next-return explanation. No runtime, difficulty, geometry, copy or gate is
+altered. The local four-file regression cohort passes **53/53** on both Node
+20.19.5 and 22.22.2, with no failures or skips. Independent review found no blocker
+and separately passed the two repaired files **17/17** on Node 22. Earlier
+failures remain visible, and fresh full hosted qualification is still required.
