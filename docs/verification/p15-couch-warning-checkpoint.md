@@ -155,6 +155,38 @@ Retained new finding: Restore disables its focused Apply button and native AX
 focus falls to the WebArea. This pre-existing Journey backup dialog issue is
 outside PR255's unchanged source scope and is being corrected separately.
 
+## Initial Ready focus visibility correction
+
+Additional native cold-entry qualification exposed a pre-existing launch defect
+on source719f966a: at600×400 the focused Start race button was at y867.58 with
+height49.30 and scrollY0. The initial host handoff called native focus with
+preventScroll, bypassing the shell's visibility handling. No player interaction
+was needed to reproduce the inaccessible initial focus.
+
+The initial handoff now uses the existing `shell.focus(start)` under the same
+complete ownership guard. This preserves its one-time foreground Ready-only
+eligibility and reveals the actual focused action with nearest scrolling. It
+does not center Ready, await a timer, start a match, assign a controller or
+reclaim focus after a deliberate choice/background transition.
+
+- New assertion failed red: untouched initial handoff produced no reveal call.
+  Final72-case Versus/shell/focus/cue cohort passed on Node20.19.5, zero failures,
+  skips or cancellations,76861ms. Initial-focus tests additionally assert no
+  scroll after deliberate focus, background/lifecycle changes or hidden/disabled
+  Start; delayed eligible preparation reveals once. Scoped lint/format/diff pass.
+- Native source overlay8953 captures only the updated couch host over719f966a;
+  the actual browser storage remains unchanged. Host SHA256
+  `b7161b5f77c3a2d6b09ca85e49c1da94a5415648a2dc5ad2cea497a1ad9e3da6`.
+  Fresh600×400 Standard launch places Start at y336.08, height49.30, fully visible;
+  Enter starts the two untouched boards only after that deliberate action.
+- Saved preferences were selected through actual Settings, not storage injection.
+  Large/Plain600×400 Ready: y334.09, height50.70. Large/Plain320×568: y502.18,
+  height50.70. Standard/Theme320×568: y503.98, height49.30. Bare Legacy
+  Large/Plain320×568: y501.18, height50.70. Every Start was focused and in bounds.
+  Desktop1280×720: Standard Start y473.18, height49.30; Large/Theme Start y654.19,
+  height50.20. Browser warning/error log was empty. The temporary tabs closed,
+  viewport override reset and servers stopped.
+
 Remaining gates:
 
 1. Complete exact source CI, broader Legacy and cold-entry native checks,
