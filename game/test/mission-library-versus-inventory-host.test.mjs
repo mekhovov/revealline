@@ -381,6 +381,7 @@ test('paired originals download inline, never autostart, and exact late Play pre
   assert.equal((await p.pointer.snapshot()).journal, null);
   card().click();
   await replacement(p);
+  assert.equal(p.$('race-library-replace-title').textContent, `Play ${target.name}?`);
   p.$('race-library-stay').click();
   await settle(() => p.$('journey-chooser')?.open);
   assert.deepEqual(p.checkpoint(), before);

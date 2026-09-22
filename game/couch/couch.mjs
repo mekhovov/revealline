@@ -1642,7 +1642,9 @@ try {
       // The explicit decision temporarily owns focus; afterwards confirmation
       // receives a new lease so a later toolbar action cannot start this race.
       focus.dispose();
-      if (!(await confirmLibraryReplacement(context, `Play ${selection.levelId}?`))) return false;
+      const title =
+        missionLibrary.library.find(context.libraryMissionId)?.name || 'selected mission';
+      if (!(await confirmLibraryReplacement(context, `Play ${title}?`))) return false;
       focus = captureFocus();
       await staged.confirm();
       if (!current()) return false;
