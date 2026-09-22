@@ -1,6 +1,6 @@
 # Gameplay pressure and mission readiness
 
-Priority successor to v0.85.0. Keep the current release promotion independent.
+v0.86.0 priority successor to the publicly accepted v0.85.0.
 
 1. Fix the unified mission library's static-image preparation failure without
    relaxing validation of uploaded media or changing content ownership.
@@ -79,7 +79,8 @@ needed for a targeted repair. Do not delete retained media to bypass it.
 Human balance, physical-device coverage and new frozen/public acceptance remain
 pending. No claim that stronger numerical pressure proves enjoyment is made.
 
-The source PR does not allocate a release version or mutate publication files.
-The sole publisher will promote it after v0.85.0 public acceptance and mandatory
-exact-head hosted gates. This is the next user-facing priority, ahead of CI-only
-efficiency work or unrelated content production.
+The sole publisher allocated v0.86.0 after v0.85.0 public acceptance. The accepted
+main refresh contains publication/workflow/evidence changes only, with no
+runtime, package or test drift. Mandatory exact-head hosted gates and public
+verification still precede delivery. This is the next user-facing priority,
+ahead of CI-only efficiency work or unrelated content production.
