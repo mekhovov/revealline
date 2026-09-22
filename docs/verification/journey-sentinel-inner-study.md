@@ -62,9 +62,33 @@ isolation finish. Isolation remains a supported strategy, not a test failure.
 Short optimized clears still require human pacing review; longer sampled time
 alone does not establish a better level.
 
+## Native Studio check
+
+On 22 September 2026, the in-app browser used exact source `c9b64e5e`
+on localhost8955 with real IndexedDB and no simulation injection. Generated
+presentation/vendor dependencies came from the unchanged v0.82.0 graph; this
+was a source preview, not a frozen or public-release check.
+
+Searching for `inner receiver` found the existing Sentinel entry. Selecting the
+new edition and Inspect left Nearby shore and the one-mission draft unchanged.
+Explicit Apply adopted the five-mission study. Twin's workbench listed the inner
+receiver at `(50.5,19.5)`, the unchanged120 foundation/2028 earnable cells, and one
+retained component with Sentinel as the sole anchor and no unintended auto-fill.
+The board visibly retained its platforms and receiver galleries.
+
+Exact Solo preview opened in Studio's practice iframe, not a separate tab. The
+ready screen named Twin receivers,85% coverage, two shield relays and the core.
+Start and an ordinary Up gesture produced a0.6% first return,130points, three
+lives and no relay credit. Pause worked normally. Return to draft and reload
+retained checkpoint1 and the exact objective placement after reselecting Twin;
+mission selection itself reset to First relay. No captured browser warn/error
+logs were present. A label-based automation selector failed after reload; the
+visible native mission selector worked. This is not a full native clear, human
+balance, physical-controller, offline or browser-crash qualification.
+
 ## Remaining gates
 
-Native Studio inspection/Apply/preview and full play readability; wider input
+Full native play readability; wider input
 timing and both-policy mastery samples; real human/controller/accessibility
 review; original-picture successor integration; exact-head CI and independent
 review; allocated version, immutable release and public Pages verification.
