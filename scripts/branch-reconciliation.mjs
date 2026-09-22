@@ -6,7 +6,11 @@ import path from 'node:path';
 // Read-only Git/GitHub census. Writes only its explicitly selected output directory.
 const exec = promisify(execFile);
 const repository = process.env.RECONCILIATION_REPOSITORY || 'mekhovov/revealline';
-const output = path.resolve(process.argv[2] || 'docs/branch-reconciliation/2026-09-22');
+if (!process.argv[2])
+  throw new Error('Pass an explicit NEW snapshot directory; existing snapshots are immutable.');
+const output = path.resolve(process.argv[2]);
+await mkdir(path.dirname(output), { recursive: true });
+await mkdir(output); // Exclusive directory creation refuses any existing snapshot before API/Git work.
 const env = { ...process.env, GIT_OPTIONAL_LOCKS: '0', GIT_TERMINAL_PROMPT: '0' };
 async function run(command, args, cwd = process.cwd()) {
   return (await exec(command, args, { cwd, env, maxBuffer: 64 * 1024 * 1024 })).stdout;
@@ -171,8 +175,9 @@ const result = {
   refs,
   worktrees,
 };
-await mkdir(output, { recursive: true });
-await writeFile(path.join(output, 'inventory.json'), `${JSON.stringify(result, null, 2)}\n`);
+await writeFile(path.join(output, 'inventory.json'), `${JSON.stringify(result, null, 2)}\n`, {
+  flag: 'wx',
+});
 await writeFile(
   path.join(output, 'README.md'),
   `# Branch reconciliation snapshot\n\nCaptured ${result.completedAt} against main \`${main}\`.\n\nThis is an inventory, not a claim that reconciliation or production acceptance is complete.\n\n${Object.entries(
