@@ -133,10 +133,10 @@ not completion of P02/P13.
 
 On September 22, the public
 [release marker](https://mekhovov.github.io/revealline/release.json) names
-**v0.80.1**, source `b810521a53af7be145acb8dedce0a01a747339cf`, matching
-[the immutable release](https://github.com/mekhovov/revealline/releases/tag/v0.80.1).
-[Publisher run 35663262961](https://github.com/mekhovov/revealline/actions/runs/35663262961)
-deployed that revision successfully on September 21. That source does not contain
+**v0.80.2**, source `f4827cf4797fccce4530defd101547b796692e47`, matching
+[the immutable release](https://github.com/mekhovov/revealline/releases/tag/v0.80.2).
+[Publisher run 35672684516](https://github.com/mekhovov/revealline/actions/runs/35672684516)
+deployed that revision successfully on September 22. That source does not contain
 the new Sorting or Window spatial factories. This is a marker/workflow
 check, not a new whole-site byte/browser audit or a claim these local successors
 are included. The active release owner has the source handoffs; concurrent

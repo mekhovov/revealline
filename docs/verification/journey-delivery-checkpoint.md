@@ -63,9 +63,9 @@ The first focused run exposed old URL-order and old safe-ground caption
 assertions; these now verify the preserved route and revised banked-line language.
 
 Full hosted qualification remains mandatory. No release or Pages success is
-claimed for v0.82.0 here. The last checked public marker is v0.80.1; v0.80.2 has
-an immutable GitHub release but its Pages promotion remains in the release owner's
-pipeline and does not include this checkpoint.
+claimed for v0.82.0 here. The latest checked public marker is v0.80.2, source
+`f4827cf4797fccce4530defd101547b796692e47`; Pages run `35672684516` succeeded.
+That independently published release does not include this checkpoint.
 
 PR [#225](https://github.com/mekhovov/revealline/pull/225) now contains the source
 checkpoint. Its first run correctly rejected the stale composed presentation
@@ -74,3 +74,14 @@ input fingerprints, immutable fpv58 metadata, exact Team artwork binding,
 134 independent presentation checks and 69 binding/history checks per Node,
 plus a final native Team launch. The original failed run stays visible; full CI
 must pass again on the repaired head before merge or release.
+
+The second run, `35672648619`, passed presentation provenance and exposed a
+historical production-source pin still reading the changed live enemy catalogue.
+The repair retains main `12224540`'s exact 5,966-byte catalogue as inert metadata
+history (`46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447`).
+All four production registers, their assessments, and both readers remain
+unchanged. No new allowlist or fallback is introduced. A complete declaration
+scan found no other unretained changed source pins. New tests reject absent,
+modified and symlinked catalogue history even when live bytes match the old pin.
+All 71 production tests pass on Node 20.19.5 and 22.22.2, both locally and under
+independent review. Hosted full-suite/build gates must still pass on this fix.
