@@ -1,0 +1,4303 @@
+{
+  "format": "revealline-mission-library-index.v1",
+  "missions": [
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-01/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-01",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "First Signal",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "45% coverage · 3 lives · 10 cells/s · No mission countdown · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.45,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-02/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-02",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Relay Orchard",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "58% coverage · 3 lives · 10 cells/s · No mission countdown · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.58,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-03/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-03",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Crosswind",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "62% coverage · 3 lives · 10 cells/s · No mission countdown · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.62,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-04/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-04",
+      "levelRevision": "1",
+      "levelIndex": 3,
+      "name": "Stone Lanes",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "65% coverage · 3 lives · 10 cells/s · No mission countdown · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.65,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-05/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-05",
+      "levelRevision": "1",
+      "levelIndex": 4,
+      "name": "Night Patrol",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "65% coverage · 3 lives · 10 cells/s · No mission countdown · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.65,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 1 },
+          { "type": "border-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-06/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-06",
+      "levelRevision": "1",
+      "levelIndex": 5,
+      "name": "Hidden Frequency",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "68% coverage · 3 lives · 10 cells/s · No mission countdown · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-07/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-07",
+      "levelRevision": "1",
+      "levelIndex": 6,
+      "name": "The Crossing",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "70% coverage · 3 lives · 10 cells/s · No mission countdown · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.7,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 1 },
+          { "type": "lane-boss", "count": 1 }
+        ],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-08/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-08",
+      "levelRevision": "1",
+      "levelIndex": 7,
+      "name": "Last Light",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "72% coverage · 3 lives · 10 cells/s · No mission countdown · Manual actions · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.72,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "lane-boss", "count": 1 }
+        ],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-09/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-09",
+      "levelRevision": "1",
+      "levelIndex": 8,
+      "name": "Signal Garden",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "63% coverage · 3 lives · 10 cells/s · No mission countdown · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.63,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-10/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-10",
+      "levelRevision": "1",
+      "levelIndex": 9,
+      "name": "Supply Circuit",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "67% coverage · 3 lives · 10 cells/s · No mission countdown · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.67,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 1 },
+          { "type": "border-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-11/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-11",
+      "levelRevision": "1",
+      "levelIndex": 10,
+      "name": "Short Fuse",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "70% coverage · 3 lives · 10 cells/s · 70s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.7,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 70,
+        "enemies": [
+          { "type": "bouncer", "count": 1 },
+          { "type": "border-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/base/base/first-signal%2F2%2F88639f3aab7b6cc1/signal-12/1",
+      "source": "base",
+      "packId": null,
+      "campaignId": "first-signal",
+      "campaignRevision": "2",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-12",
+      "levelRevision": "1",
+      "levelIndex": 11,
+      "name": "Relay Storm",
+      "campaignTitle": "First Signal",
+      "edition": "Base game",
+      "themeId": null,
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "74% coverage · 3 lives · 10 cells/s · 95s limit · Manual actions · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 95,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "lane-boss", "count": 1 }
+        ],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/campaign.json",
+        "bytes": 18487,
+        "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+      }
+    },
+    {
+      "id": "classic/bundled/fpv-arcade-r5/fpv-pressure-lines%2F1%2Febb56ffdd9baa8e8/orchard-crossing/1",
+      "source": "bundled",
+      "packId": "fpv-arcade-r5",
+      "campaignId": "fpv-pressure-lines",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "orchard-crossing",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Orchard Crossing",
+      "campaignTitle": "FPV Front · Pressure Lines",
+      "edition": "FPV Front · Pressure Lines",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r5.json",
+        "bytes": 11708176,
+        "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+      },
+      "packVersion": "5.0.0"
+    },
+    {
+      "id": "classic/bundled/fpv-arcade-r5/fpv-pressure-lines%2F1%2Febb56ffdd9baa8e8/courtyard-exits/1",
+      "source": "bundled",
+      "packId": "fpv-arcade-r5",
+      "campaignId": "fpv-pressure-lines",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "courtyard-exits",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Courtyard Exits",
+      "campaignTitle": "FPV Front · Pressure Lines",
+      "edition": "FPV Front · Pressure Lines",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "74% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r5.json",
+        "bytes": 11708176,
+        "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+      },
+      "packVersion": "5.0.0"
+    },
+    {
+      "id": "classic/bundled/fpv-arcade-r5/fpv-pressure-lines%2F1%2Febb56ffdd9baa8e8/night-crossfire/1",
+      "source": "bundled",
+      "packId": "fpv-arcade-r5",
+      "campaignId": "fpv-pressure-lines",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "night-crossfire",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Night Crossfire",
+      "campaignTitle": "FPV Front · Pressure Lines",
+      "edition": "FPV Front · Pressure Lines",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "80% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.8,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "lane-boss", "count": 1 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r5.json",
+        "bytes": 11708176,
+        "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+      },
+      "packVersion": "5.0.0"
+    },
+    {
+      "id": "classic/bundled/fpv-pressure-frontier/fpv-pressure-frontier%2F1%2Fb9387b2be34f51ff/copper-switchyard/1",
+      "source": "bundled",
+      "packId": "fpv-pressure-frontier",
+      "campaignId": "fpv-pressure-frontier",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-pressure-frontier/1/b9387b2be34f51ff",
+      "levelId": "copper-switchyard",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Copper Switchyard",
+      "campaignTitle": "FPV Front · Frontier Lines",
+      "edition": "FPV Front · Frontier Lines",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "80% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.8,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-pressure-frontier.json",
+        "bytes": 11377254,
+        "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/fpv-pressure-frontier/fpv-pressure-frontier%2F1%2Fb9387b2be34f51ff/river-frontiers/1",
+      "source": "bundled",
+      "packId": "fpv-pressure-frontier",
+      "campaignId": "fpv-pressure-frontier",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-pressure-frontier/1/b9387b2be34f51ff",
+      "levelId": "river-frontiers",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "River Frontiers",
+      "campaignTitle": "FPV Front · Frontier Lines",
+      "edition": "FPV Front · Frontier Lines",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "83% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 6 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.83,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "eroder", "count": 1 },
+          { "type": "claimed-rover", "count": 1 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-pressure-frontier.json",
+        "bytes": 11377254,
+        "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/fpv-pressure-frontier/fpv-pressure-frontier%2F1%2Fb9387b2be34f51ff/last-beacon/1",
+      "source": "bundled",
+      "packId": "fpv-pressure-frontier",
+      "campaignId": "fpv-pressure-frontier",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-pressure-frontier/1/b9387b2be34f51ff",
+      "levelId": "last-beacon",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Last Beacon",
+      "campaignTitle": "FPV Front · Frontier Lines",
+      "edition": "FPV Front · Frontier Lines",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "85% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 7 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.85,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "lane-boss", "count": 2 },
+          { "type": "eroder", "count": 1 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-pressure-frontier.json",
+        "bytes": 11377254,
+        "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/night-shift/night-shift%2F1%2F7b8ffcade23e3175/night-shift-01/1",
+      "source": "bundled",
+      "packId": "night-shift",
+      "campaignId": "night-shift",
+      "campaignRevision": "1",
+      "campaignKey": "night-shift/1/7b8ffcade23e3175",
+      "levelId": "night-shift-01",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Midnight Channel",
+      "campaignTitle": "Night Shift",
+      "edition": "Night Shift",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "58% coverage · 3 lives · 10 cells/s · 150s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.58,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 150,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/night-shift.json",
+        "bytes": 8848,
+        "sha256": "b82d453a9c7a3feab9b88d960b3bf5cbeca8d5254dec3f259490c54b272acef4"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/night-shift/night-shift%2F1%2F7b8ffcade23e3175/night-shift-02/1",
+      "source": "bundled",
+      "packId": "night-shift",
+      "campaignId": "night-shift",
+      "campaignRevision": "1",
+      "campaignKey": "night-shift/1/7b8ffcade23e3175",
+      "levelId": "night-shift-02",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Voltage Garden",
+      "campaignTitle": "Night Shift",
+      "edition": "Night Shift",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "62% coverage · 3 lives · 10 cells/s · 135s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.62,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 135,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/night-shift.json",
+        "bytes": 8848,
+        "sha256": "b82d453a9c7a3feab9b88d960b3bf5cbeca8d5254dec3f259490c54b272acef4"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/night-shift/night-shift%2F1%2F7b8ffcade23e3175/night-shift-03/1",
+      "source": "bundled",
+      "packId": "night-shift",
+      "campaignId": "night-shift",
+      "campaignRevision": "1",
+      "campaignKey": "night-shift/1/7b8ffcade23e3175",
+      "levelId": "night-shift-03",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Afterglow Sentinel",
+      "campaignTitle": "Night Shift",
+      "edition": "Night Shift",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "65% coverage · 3 lives · 10 cells/s · 120s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.65,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 120,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/night-shift.json",
+        "bytes": 8848,
+        "sha256": "b82d453a9c7a3feab9b88d960b3bf5cbeca8d5254dec3f259490c54b272acef4"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/living-threads/living-threads%2F1%2Fe3287c370bec5e41/living-threads-01/1",
+      "source": "bundled",
+      "packId": "living-threads",
+      "campaignId": "living-threads",
+      "campaignRevision": "1",
+      "campaignKey": "living-threads/1/e3287c370bec5e41",
+      "levelId": "living-threads-01",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Petals at Dawn",
+      "campaignTitle": "Living Threads",
+      "edition": "Living Threads",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian"],
+      "rules": "65% coverage · 3 lives · 10 cells/s · 150s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.65,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 1 },
+          { "type": "border-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/living-threads.json",
+        "bytes": 9156,
+        "sha256": "c3fe1e692afcd2dfda0cc3c042f0969d1c2e655d663cf0b7034291c29d16ac52"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/living-threads/living-threads%2F1%2Fe3287c370bec5e41/living-threads-02/1",
+      "source": "bundled",
+      "packId": "living-threads",
+      "campaignId": "living-threads",
+      "campaignRevision": "1",
+      "campaignKey": "living-threads/1/e3287c370bec5e41",
+      "levelId": "living-threads-02",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "The Woven Path",
+      "campaignTitle": "Living Threads",
+      "edition": "Living Threads",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian"],
+      "rules": "68% coverage · 3 lives · 10 cells/s · 135s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 135,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/living-threads.json",
+        "bytes": 9156,
+        "sha256": "c3fe1e692afcd2dfda0cc3c042f0969d1c2e655d663cf0b7034291c29d16ac52"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/living-threads/living-threads%2F1%2Fe3287c370bec5e41/living-threads-03/1",
+      "source": "bundled",
+      "packId": "living-threads",
+      "campaignId": "living-threads",
+      "campaignRevision": "1",
+      "campaignKey": "living-threads/1/e3287c370bec5e41",
+      "levelId": "living-threads-03",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Garden of Memory",
+      "campaignTitle": "Living Threads",
+      "edition": "Living Threads",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian"],
+      "rules": "70% coverage · 3 lives · 10 cells/s · 120s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.7,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 120,
+        "enemies": [
+          { "type": "bouncer", "count": 1 },
+          { "type": "lane-boss", "count": 1 }
+        ],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/living-threads.json",
+        "bytes": 9156,
+        "sha256": "c3fe1e692afcd2dfda0cc3c042f0969d1c2e655d663cf0b7034291c29d16ac52"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/fieldcraft/fieldcraft%2F1%2F96ae746769a8b440/fieldcraft-01/1",
+      "source": "bundled",
+      "packId": "fieldcraft",
+      "campaignId": "fieldcraft",
+      "campaignRevision": "1",
+      "campaignKey": "fieldcraft/1/96ae746769a8b440",
+      "levelId": "fieldcraft-01",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Copper Crossing",
+      "campaignTitle": "Fieldcraft",
+      "edition": "Fieldcraft",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "72% coverage · 3 lives · 8 cells/s · 90s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.72,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 90,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fieldcraft.json",
+        "bytes": 15204,
+        "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/fieldcraft/fieldcraft%2F1%2F96ae746769a8b440/fieldcraft-02/1",
+      "source": "bundled",
+      "packId": "fieldcraft",
+      "campaignId": "fieldcraft",
+      "campaignRevision": "1",
+      "campaignKey": "fieldcraft/1/96ae746769a8b440",
+      "levelId": "fieldcraft-02",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Switchyard Circuit",
+      "campaignTitle": "Fieldcraft",
+      "edition": "Fieldcraft",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "68% coverage · 3 lives · 8 cells/s · 65s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 65,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fieldcraft.json",
+        "bytes": 15204,
+        "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/fieldcraft/fieldcraft%2F1%2F96ae746769a8b440/fieldcraft-03/1",
+      "source": "bundled",
+      "packId": "fieldcraft",
+      "campaignId": "fieldcraft",
+      "campaignRevision": "1",
+      "campaignKey": "fieldcraft/1/96ae746769a8b440",
+      "levelId": "fieldcraft-03",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Pulse Recall",
+      "campaignTitle": "Fieldcraft",
+      "edition": "Fieldcraft",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "70% coverage · 3 lives · 8 cells/s · 35s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.7,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 35,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fieldcraft.json",
+        "bytes": 15204,
+        "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/fieldcraft/fieldcraft%2F1%2F96ae746769a8b440/fieldcraft-04/1",
+      "source": "bundled",
+      "packId": "fieldcraft",
+      "campaignId": "fieldcraft",
+      "campaignRevision": "1",
+      "campaignKey": "fieldcraft/1/96ae746769a8b440",
+      "levelId": "fieldcraft-04",
+      "levelRevision": "1",
+      "levelIndex": 3,
+      "name": "Net Loom",
+      "campaignTitle": "Fieldcraft",
+      "edition": "Fieldcraft",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "68% coverage · 3 lives · 8 cells/s · 35s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 35,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fieldcraft.json",
+        "bytes": 15204,
+        "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/homeward-skies/homeward-skies%2F1%2F0d01f5687b3c38ff/homeward-01/1",
+      "source": "bundled",
+      "packId": "homeward-skies",
+      "campaignId": "homeward-skies",
+      "campaignRevision": "1",
+      "campaignKey": "homeward-skies/1/0d01f5687b3c38ff",
+      "levelId": "homeward-01",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Copper Orchard",
+      "campaignTitle": "Homeward Skies",
+      "edition": "Homeward Skies",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "72% coverage · 3 lives · 8 cells/s · 90s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.72,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 90,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/homeward-skies.json",
+        "bytes": 11371849,
+        "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/homeward-skies/homeward-skies%2F1%2F0d01f5687b3c38ff/homeward-02/1",
+      "source": "bundled",
+      "packId": "homeward-skies",
+      "campaignId": "homeward-skies",
+      "campaignRevision": "1",
+      "campaignKey": "homeward-skies/1/0d01f5687b3c38ff",
+      "levelId": "homeward-02",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "River Switchyard",
+      "campaignTitle": "Homeward Skies",
+      "edition": "Homeward Skies",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "68% coverage · 3 lives · 8 cells/s · 65s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 65,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/homeward-skies.json",
+        "bytes": 11371849,
+        "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/homeward-skies/homeward-skies%2F1%2F0d01f5687b3c38ff/homeward-03/1",
+      "source": "bundled",
+      "packId": "homeward-skies",
+      "campaignId": "homeward-skies",
+      "campaignRevision": "1",
+      "campaignKey": "homeward-skies/1/0d01f5687b3c38ff",
+      "levelId": "homeward-03",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Home Beacon",
+      "campaignTitle": "Homeward Skies",
+      "edition": "Homeward Skies",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "70% coverage · 3 lives · 8 cells/s · 35s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.7,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 35,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/homeward-skies.json",
+        "bytes": 11371849,
+        "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/equipment-workshop/equipment-workshop%2F1%2F3fc2cf073da368b4/workshop-01/1",
+      "source": "bundled",
+      "packId": "equipment-workshop",
+      "campaignId": "equipment-workshop",
+      "campaignRevision": "1",
+      "campaignKey": "equipment-workshop/1/3fc2cf073da368b4",
+      "levelId": "workshop-01",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Garden of Threads",
+      "campaignTitle": "Equipment Workshop",
+      "edition": "Equipment Workshop",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian"],
+      "rules": "72% coverage · 3 lives · 8 cells/s · 90s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.72,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 90,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/equipment-workshop.json",
+        "bytes": 11127024,
+        "sha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054"
+      },
+      "packVersion": "1.1.0"
+    },
+    {
+      "id": "classic/bundled/equipment-workshop/equipment-workshop%2F1%2F3fc2cf073da368b4/workshop-02/1",
+      "source": "bundled",
+      "packId": "equipment-workshop",
+      "campaignId": "equipment-workshop",
+      "campaignRevision": "1",
+      "campaignKey": "equipment-workshop/1/3fc2cf073da368b4",
+      "levelId": "workshop-02",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Neon Switchboard",
+      "campaignTitle": "Equipment Workshop",
+      "edition": "Equipment Workshop",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "68% coverage · 3 lives · 8 cells/s · 65s limit · Manual actions · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 65,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/equipment-workshop.json",
+        "bytes": 11127024,
+        "sha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054"
+      },
+      "packVersion": "1.1.0"
+    },
+    {
+      "id": "classic/bundled/equipment-workshop/equipment-workshop%2F1%2F3fc2cf073da368b4/workshop-03/1",
+      "source": "bundled",
+      "packId": "equipment-workshop",
+      "campaignId": "equipment-workshop",
+      "campaignRevision": "1",
+      "campaignKey": "equipment-workshop/1/3fc2cf073da368b4",
+      "levelId": "workshop-03",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Clear Ledger",
+      "campaignTitle": "Equipment Workshop",
+      "edition": "Equipment Workshop",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic"],
+      "rules": "70% coverage · 3 lives · 8 cells/s · 35s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v2",
+        "coverage": 0.7,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 35,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/equipment-workshop.json",
+        "bytes": 11127024,
+        "sha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054"
+      },
+      "packVersion": "1.1.0"
+    },
+    {
+      "id": "classic/bundled/sentinel-relay/sentinel-relay%2F1%2F838c4e06647f7fd0/sentinel-relay-01/1",
+      "source": "bundled",
+      "packId": "sentinel-relay",
+      "campaignId": "sentinel-relay",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-relay/1/838c4e06647f7fd0",
+      "levelId": "sentinel-relay-01",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Sentinel Relay",
+      "campaignTitle": "Sentinel Relay",
+      "edition": "Sentinel Relay",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "75% coverage · 3 lives · 8 cells/s · No mission countdown · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v3",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 8,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "relay-sentinel", "count": 1 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/sentinel-relay.json",
+        "bytes": 11416,
+        "sha256": "de523b416fa5a107d8d831061b54277d53b63faf17e58ab828a87e28f0fe48f1"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade-r4/fpv-first-light-r4%2F4%2F0295a1eae3e180ec/orchard-window/4",
+      "source": "archived",
+      "packId": "fpv-arcade-r4",
+      "campaignId": "fpv-first-light-r4",
+      "campaignRevision": "4",
+      "campaignKey": "fpv-first-light-r4/4/0295a1eae3e180ec",
+      "levelId": "orchard-window",
+      "levelRevision": "4",
+      "levelIndex": 0,
+      "name": "Orchard Window",
+      "campaignTitle": "FPV Front · First Light Arcade R4",
+      "edition": "FPV Front · First Light Arcade R4",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "65% coverage · 3 lives · 15 cells/s · 150s limit · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.65,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r4.json",
+        "bytes": 11707106,
+        "sha256": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703"
+      },
+      "packVersion": "4.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade-r4/fpv-first-light-r4%2F4%2F0295a1eae3e180ec/split-courtyard/4",
+      "source": "archived",
+      "packId": "fpv-arcade-r4",
+      "campaignId": "fpv-first-light-r4",
+      "campaignRevision": "4",
+      "campaignKey": "fpv-first-light-r4/4/0295a1eae3e180ec",
+      "levelId": "split-courtyard",
+      "levelRevision": "4",
+      "levelIndex": 1,
+      "name": "Split Courtyard",
+      "campaignTitle": "FPV Front · First Light Arcade R4",
+      "edition": "FPV Front · First Light Arcade R4",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "75% coverage · 3 lives · 15 cells/s · 150s limit · Direction-only Arcade · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "eroder", "count": 1 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r4.json",
+        "bytes": 11707106,
+        "sha256": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703"
+      },
+      "packVersion": "4.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade-r4/fpv-first-light-r4%2F4%2F0295a1eae3e180ec/night-signal/4",
+      "source": "archived",
+      "packId": "fpv-arcade-r4",
+      "campaignId": "fpv-first-light-r4",
+      "campaignRevision": "4",
+      "campaignKey": "fpv-first-light-r4/4/0295a1eae3e180ec",
+      "levelId": "night-signal",
+      "levelRevision": "4",
+      "levelIndex": 2,
+      "name": "Night Signal",
+      "campaignTitle": "FPV Front · First Light Arcade R4",
+      "edition": "FPV Front · First Light Arcade R4",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "85% coverage · 3 lives · 15 cells/s · 150s limit · Direction-only Arcade · 7 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.85,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "lane-boss", "count": 2 },
+          { "type": "contour-patrol", "count": 1 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r4.json",
+        "bytes": 11707106,
+        "sha256": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703"
+      },
+      "packVersion": "4.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade-r3/fpv-first-light-r3%2F3%2F73b6b5aed8595174/orchard-window/3",
+      "source": "archived",
+      "packId": "fpv-arcade-r3",
+      "campaignId": "fpv-first-light-r3",
+      "campaignRevision": "3",
+      "campaignKey": "fpv-first-light-r3/3/73b6b5aed8595174",
+      "levelId": "orchard-window",
+      "levelRevision": "3",
+      "levelIndex": 0,
+      "name": "Orchard Window",
+      "campaignTitle": "FPV Front · First Light R3",
+      "edition": "FPV Front · First Light R3",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "65% coverage · 3 lives · 12 cells/s · 150s limit · Manual actions · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.65,
+        "lives": 3,
+        "moveSpeed": 12,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r3.json",
+        "bytes": 11706413,
+        "sha256": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848"
+      },
+      "packVersion": "3.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade-r3/fpv-first-light-r3%2F3%2F73b6b5aed8595174/split-courtyard/3",
+      "source": "archived",
+      "packId": "fpv-arcade-r3",
+      "campaignId": "fpv-first-light-r3",
+      "campaignRevision": "3",
+      "campaignKey": "fpv-first-light-r3/3/73b6b5aed8595174",
+      "levelId": "split-courtyard",
+      "levelRevision": "3",
+      "levelIndex": 1,
+      "name": "Split Courtyard",
+      "campaignTitle": "FPV Front · First Light R3",
+      "edition": "FPV Front · First Light R3",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "75% coverage · 3 lives · 12 cells/s · 150s limit · Manual actions · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 12,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "eroder", "count": 1 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r3.json",
+        "bytes": 11706413,
+        "sha256": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848"
+      },
+      "packVersion": "3.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade-r3/fpv-first-light-r3%2F3%2F73b6b5aed8595174/night-signal/3",
+      "source": "archived",
+      "packId": "fpv-arcade-r3",
+      "campaignId": "fpv-first-light-r3",
+      "campaignRevision": "3",
+      "campaignKey": "fpv-first-light-r3/3/73b6b5aed8595174",
+      "levelId": "night-signal",
+      "levelRevision": "3",
+      "levelIndex": 2,
+      "name": "Night Signal",
+      "campaignTitle": "FPV Front · First Light R3",
+      "edition": "FPV Front · First Light R3",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "85% coverage · 3 lives · 12 cells/s · 150s limit · Manual actions · 7 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.85,
+        "lives": 3,
+        "moveSpeed": 12,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "lane-boss", "count": 2 },
+          { "type": "contour-patrol", "count": 1 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r3.json",
+        "bytes": 11706413,
+        "sha256": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848"
+      },
+      "packVersion": "3.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade-r2/fpv-first-light-r2%2F2%2F33e59e00d45542d4/orchard-window/2",
+      "source": "archived",
+      "packId": "fpv-arcade-r2",
+      "campaignId": "fpv-first-light-r2",
+      "campaignRevision": "2",
+      "campaignKey": "fpv-first-light-r2/2/33e59e00d45542d4",
+      "levelId": "orchard-window",
+      "levelRevision": "2",
+      "levelIndex": 0,
+      "name": "Orchard Window",
+      "campaignTitle": "FPV Front · First Light R2",
+      "edition": "FPV Front · First Light R2",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "65% coverage · 3 lives · 12 cells/s · 150s limit · Manual actions · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.65,
+        "lives": 3,
+        "moveSpeed": 12,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r2.json",
+        "bytes": 11706060,
+        "sha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f"
+      },
+      "packVersion": "2.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade-r2/fpv-first-light-r2%2F2%2F33e59e00d45542d4/split-courtyard/2",
+      "source": "archived",
+      "packId": "fpv-arcade-r2",
+      "campaignId": "fpv-first-light-r2",
+      "campaignRevision": "2",
+      "campaignKey": "fpv-first-light-r2/2/33e59e00d45542d4",
+      "levelId": "split-courtyard",
+      "levelRevision": "2",
+      "levelIndex": 1,
+      "name": "Split Courtyard",
+      "campaignTitle": "FPV Front · First Light R2",
+      "edition": "FPV Front · First Light R2",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "75% coverage · 3 lives · 12 cells/s · 150s limit · Manual actions · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 12,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "eroder", "count": 1 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r2.json",
+        "bytes": 11706060,
+        "sha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f"
+      },
+      "packVersion": "2.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade-r2/fpv-first-light-r2%2F2%2F33e59e00d45542d4/night-signal/2",
+      "source": "archived",
+      "packId": "fpv-arcade-r2",
+      "campaignId": "fpv-first-light-r2",
+      "campaignRevision": "2",
+      "campaignKey": "fpv-first-light-r2/2/33e59e00d45542d4",
+      "levelId": "night-signal",
+      "levelRevision": "2",
+      "levelIndex": 2,
+      "name": "Night Signal",
+      "campaignTitle": "FPV Front · First Light R2",
+      "edition": "FPV Front · First Light R2",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "85% coverage · 3 lives · 12 cells/s · 150s limit · Manual actions · 7 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.85,
+        "lives": 3,
+        "moveSpeed": 12,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "lane-boss", "count": 2 },
+          { "type": "contour-patrol", "count": 1 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade-r2.json",
+        "bytes": 11706060,
+        "sha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f"
+      },
+      "packVersion": "2.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade/fpv-first-light%2F1%2F7109e646c73e09be/orchard-window/1",
+      "source": "archived",
+      "packId": "fpv-arcade",
+      "campaignId": "fpv-first-light",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-first-light/1/7109e646c73e09be",
+      "levelId": "orchard-window",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Orchard Window",
+      "campaignTitle": "FPV Front · First Light",
+      "edition": "FPV Front · First Light",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "60% coverage · 3 lives · 10 cells/s · 150s limit · Manual actions · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v4",
+        "coverage": 0.6,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "border-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade.json",
+        "bytes": 11701968,
+        "sha256": "7b8413aa8dc5cc99f6413f0d2b2bf8dd7b9ba5613c6fa02550a3dbd12a7b9904"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade/fpv-first-light%2F1%2F7109e646c73e09be/split-courtyard/1",
+      "source": "archived",
+      "packId": "fpv-arcade",
+      "campaignId": "fpv-first-light",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-first-light/1/7109e646c73e09be",
+      "levelId": "split-courtyard",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Split Courtyard",
+      "campaignTitle": "FPV Front · First Light",
+      "edition": "FPV Front · First Light",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "70% coverage · 3 lives · 10 cells/s · 150s limit · Manual actions · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v4",
+        "coverage": 0.7,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade.json",
+        "bytes": 11701968,
+        "sha256": "7b8413aa8dc5cc99f6413f0d2b2bf8dd7b9ba5613c6fa02550a3dbd12a7b9904"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/archived/fpv-arcade/fpv-first-light%2F1%2F7109e646c73e09be/night-signal/1",
+      "source": "archived",
+      "packId": "fpv-arcade",
+      "campaignId": "fpv-first-light",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-first-light/1/7109e646c73e09be",
+      "levelId": "night-signal",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Night Signal",
+      "campaignTitle": "FPV Front · First Light",
+      "edition": "FPV Front · First Light",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV"],
+      "rules": "80% coverage · 3 lives · 10 cells/s · 150s limit · Manual actions · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v4",
+        "coverage": 0.8,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 150,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 1 },
+          { "type": "lane-boss", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/fpv-arcade.json",
+        "bytes": 11701968,
+        "sha256": "7b8413aa8dc5cc99f6413f0d2b2bf8dd7b9ba5613c6fa02550a3dbd12a7b9904"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/optional/original-fpv-pressure/original-fpv-pressure-lines%2F1%2Fb86804fb3ab94151/original-fpv-orchard-crossing/1",
+      "source": "optional",
+      "packId": "original-fpv-pressure",
+      "campaignId": "original-fpv-pressure-lines",
+      "campaignRevision": "1",
+      "campaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+      "levelId": "original-fpv-orchard-crossing",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Orchard Crossing",
+      "campaignTitle": "FPV Front · Illustrated Pressure",
+      "edition": "FPV Front · Illustrated Pressure",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+        "bytes": 10719959,
+        "sha256": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-fpv-pressure",
+        "bytes": 10719959,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-fpv-pressure/original-fpv-pressure-lines%2F1%2Fb86804fb3ab94151/original-fpv-courtyard-exits/1",
+      "source": "optional",
+      "packId": "original-fpv-pressure",
+      "campaignId": "original-fpv-pressure-lines",
+      "campaignRevision": "1",
+      "campaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+      "levelId": "original-fpv-courtyard-exits",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Courtyard Exits",
+      "campaignTitle": "FPV Front · Illustrated Pressure",
+      "edition": "FPV Front · Illustrated Pressure",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "74% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+        "bytes": 10719959,
+        "sha256": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-fpv-pressure",
+        "bytes": 10719959,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-fpv-pressure/original-fpv-pressure-lines%2F1%2Fb86804fb3ab94151/original-fpv-night-crossfire/1",
+      "source": "optional",
+      "packId": "original-fpv-pressure",
+      "campaignId": "original-fpv-pressure-lines",
+      "campaignRevision": "1",
+      "campaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+      "levelId": "original-fpv-night-crossfire",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Night Crossfire",
+      "campaignTitle": "FPV Front · Illustrated Pressure",
+      "edition": "FPV Front · Illustrated Pressure",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "80% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.8,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "lane-boss", "count": 1 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+        "bytes": 10719959,
+        "sha256": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-fpv-pressure",
+        "bytes": 10719959,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-ukraine-atlas/original-ukraine-woven-lines%2F1%2Ff9ac733132be4765/original-atlas-woven-dawn/1",
+      "source": "optional",
+      "packId": "original-ukraine-atlas",
+      "campaignId": "original-ukraine-woven-lines",
+      "campaignRevision": "1",
+      "campaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+      "levelId": "original-atlas-woven-dawn",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Carpathian Woven Dawn",
+      "campaignTitle": "Ukraine Atlas · Woven Lines",
+      "edition": "Ukraine Atlas · Woven Lines",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+        "bytes": 12358446,
+        "sha256": "690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-ukraine-atlas",
+        "bytes": 12358446,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-ukraine-atlas/original-ukraine-woven-lines%2F1%2Ff9ac733132be4765/original-atlas-sun-courtyard/1",
+      "source": "optional",
+      "packId": "original-ukraine-atlas",
+      "campaignId": "original-ukraine-woven-lines",
+      "campaignRevision": "1",
+      "campaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+      "levelId": "original-atlas-sun-courtyard",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Petrykivka Sun Courtyard",
+      "campaignTitle": "Ukraine Atlas · Woven Lines",
+      "edition": "Ukraine Atlas · Woven Lines",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Arcade"],
+      "rules": "74% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+        "bytes": 12358446,
+        "sha256": "690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-ukraine-atlas",
+        "bytes": 12358446,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-ukraine-atlas/original-ukraine-woven-lines%2F1%2Ff9ac733132be4765/original-atlas-autumn-watch/1",
+      "source": "optional",
+      "packId": "original-ukraine-atlas",
+      "campaignId": "original-ukraine-woven-lines",
+      "campaignRevision": "1",
+      "campaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+      "levelId": "original-atlas-autumn-watch",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Dnipro Autumn Watch",
+      "campaignTitle": "Ukraine Atlas · Woven Lines",
+      "edition": "Ukraine Atlas · Woven Lines",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Arcade"],
+      "rules": "80% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.8,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "lane-boss", "count": 1 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+        "bytes": 12358446,
+        "sha256": "690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-ukraine-atlas",
+        "bytes": 12358446,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-retro-1994/original-retro-after-hours%2F1%2Fccd70c475a070df5/original-retro-midnight-arcade/1",
+      "source": "optional",
+      "packId": "original-retro-1994",
+      "campaignId": "original-retro-after-hours",
+      "campaignRevision": "1",
+      "campaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+      "levelId": "original-retro-midnight-arcade",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Midnight Arcade",
+      "campaignTitle": "1994 Forever · After Hours",
+      "edition": "1994 Forever · After Hours",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+        "bytes": 10329657,
+        "sha256": "33e772d12a0ae98373e4240257b0f9726f00ad28095cb0ae06d6d1fc79964714"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-retro-1994",
+        "bytes": 10329657,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-retro-1994/original-retro-after-hours%2F1%2Fccd70c475a070df5/original-retro-video-rental/1",
+      "source": "optional",
+      "packId": "original-retro-1994",
+      "campaignId": "original-retro-after-hours",
+      "campaignRevision": "1",
+      "campaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+      "levelId": "original-retro-video-rental",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Rainy Video Rental",
+      "campaignTitle": "1994 Forever · After Hours",
+      "edition": "1994 Forever · After Hours",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "74% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+        "bytes": 10329657,
+        "sha256": "33e772d12a0ae98373e4240257b0f9726f00ad28095cb0ae06d6d1fc79964714"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-retro-1994",
+        "bytes": 10329657,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-retro-1994/original-retro-after-hours%2F1%2Fccd70c475a070df5/original-retro-last-train/1",
+      "source": "optional",
+      "packId": "original-retro-1994",
+      "campaignId": "original-retro-after-hours",
+      "campaignRevision": "1",
+      "campaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+      "levelId": "original-retro-last-train",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Last Train, Side B",
+      "campaignTitle": "1994 Forever · After Hours",
+      "edition": "1994 Forever · After Hours",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "80% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.8,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "lane-boss", "count": 1 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+        "bytes": 10329657,
+        "sha256": "33e772d12a0ae98373e4240257b0f9726f00ad28095cb0ae06d6d1fc79964714"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-retro-1994",
+        "bytes": 10329657,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-spend-network/original-spend-shared-routes%2F1%2F7a36efe129711f19/original-spend-shared-harbor/1",
+      "source": "optional",
+      "packId": "original-spend-network",
+      "campaignId": "original-spend-shared-routes",
+      "campaignRevision": "1",
+      "campaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+      "levelId": "original-spend-shared-harbor",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Shared Value Harbor",
+      "campaignTitle": "Spend Network · Shared Routes",
+      "edition": "Spend Network · Shared Routes",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+        "bytes": 11067202,
+        "sha256": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-spend-network",
+        "bytes": 11067202,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-spend-network.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-spend-network/original-spend-shared-routes%2F1%2F7a36efe129711f19/original-spend-city-wins/1",
+      "source": "optional",
+      "packId": "original-spend-network",
+      "campaignId": "original-spend-shared-routes",
+      "campaignRevision": "1",
+      "campaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+      "levelId": "original-spend-city-wins",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "City of Small Wins",
+      "campaignTitle": "Spend Network · Shared Routes",
+      "edition": "Spend Network · Shared Routes",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "74% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+        "bytes": 11067202,
+        "sha256": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-spend-network",
+        "bytes": 11067202,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-spend-network.json"
+      }
+    },
+    {
+      "id": "classic/optional/original-spend-network/original-spend-shared-routes%2F1%2F7a36efe129711f19/original-spend-market-workshop/1",
+      "source": "optional",
+      "packId": "original-spend-network",
+      "campaignId": "original-spend-shared-routes",
+      "campaignRevision": "1",
+      "campaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+      "levelId": "original-spend-market-workshop",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "The Thoughtful Market",
+      "campaignTitle": "Spend Network · Shared Routes",
+      "edition": "Spend Network · Shared Routes",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "80% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.8,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "lane-boss", "count": 1 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+        "bytes": 11067202,
+        "sha256": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-spend-network",
+        "bytes": 11067202,
+        "packPath": "authoring/library/four-worlds-chapters/packs/original-spend-network.json"
+      }
+    },
+    {
+      "id": "classic/optional/fpv-route-choices/fpv-route-choices%2F1%2F4a7f15a0b07d557d/route-choices-foundry/1",
+      "source": "optional",
+      "packId": "fpv-route-choices",
+      "campaignId": "fpv-route-choices",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+      "levelId": "route-choices-foundry",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Split Signal Foundry",
+      "campaignTitle": "FPV Front · Route Choices — Tactical",
+      "edition": "FPV Front · Route Choices — Tactical",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Tactical"],
+      "rules": "30% coverage · 1 lives · 10 cells/s · 30s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.3,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 30,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+        "bytes": 11949780,
+        "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fpv-route-choices",
+        "bytes": 11949780,
+        "packPath": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json"
+      }
+    },
+    {
+      "id": "classic/optional/fpv-route-choices/fpv-route-choices%2F1%2F4a7f15a0b07d557d/route-choices-depot/1",
+      "source": "optional",
+      "packId": "fpv-route-choices",
+      "campaignId": "fpv-route-choices",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+      "levelId": "route-choices-depot",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Crosswind Depot",
+      "campaignTitle": "FPV Front · Route Choices — Tactical",
+      "edition": "FPV Front · Route Choices — Tactical",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Tactical"],
+      "rules": "45% coverage · 1 lives · 10 cells/s · 45s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 45,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+        "bytes": 11949780,
+        "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fpv-route-choices",
+        "bytes": 11949780,
+        "packPath": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json"
+      }
+    },
+    {
+      "id": "classic/optional/fpv-route-choices/fpv-route-choices%2F1%2F4a7f15a0b07d557d/route-choices-switchback/1",
+      "source": "optional",
+      "packId": "fpv-route-choices",
+      "campaignId": "fpv-route-choices",
+      "campaignRevision": "1",
+      "campaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+      "levelId": "route-choices-switchback",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Signal Switchback",
+      "campaignTitle": "FPV Front · Route Choices — Tactical",
+      "edition": "FPV Front · Route Choices — Tactical",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Tactical"],
+      "rules": "48% coverage · 1 lives · 10 cells/s · 45s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.48,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 45,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+        "bytes": 11949780,
+        "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fpv-route-choices",
+        "bytes": 11949780,
+        "packPath": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json"
+      }
+    },
+    {
+      "id": "classic/external/original-fpv-pressure-external/original-fpv-pressure-lines-external%2F1%2F60d1f9c4f1304d7d/original-fpv-orchard-crossing-external/1",
+      "source": "external",
+      "packId": "original-fpv-pressure-external",
+      "campaignId": "original-fpv-pressure-lines-external",
+      "campaignRevision": "1",
+      "campaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+      "levelId": "original-fpv-orchard-crossing-external",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Orchard Crossing",
+      "campaignTitle": "Pressure Pictures · external-original pilot",
+      "edition": "FPV Front · Pressure Pictures",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/original-fpv-pressure-external/pack.json",
+        "bytes": 9398,
+        "sha256": "09fabce4207875dc73eefe49aaea8bc4aed491855e756b9dfda39cd4c35abe2c"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-fpv-pressure-external",
+        "bytes": 8046789,
+        "packPath": "optional/external-chapters/original-fpv-pressure-external/pack.json",
+        "mediaPath": "optional/external-chapters/original-fpv-pressure-external/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/original-fpv-pressure-external/original-fpv-pressure-lines-external%2F1%2F60d1f9c4f1304d7d/original-fpv-courtyard-exits-external/1",
+      "source": "external",
+      "packId": "original-fpv-pressure-external",
+      "campaignId": "original-fpv-pressure-lines-external",
+      "campaignRevision": "1",
+      "campaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+      "levelId": "original-fpv-courtyard-exits-external",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Courtyard Exits",
+      "campaignTitle": "Pressure Pictures · external-original pilot",
+      "edition": "FPV Front · Pressure Pictures",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "74% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "claimed-rover", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/original-fpv-pressure-external/pack.json",
+        "bytes": 9398,
+        "sha256": "09fabce4207875dc73eefe49aaea8bc4aed491855e756b9dfda39cd4c35abe2c"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-fpv-pressure-external",
+        "bytes": 8046789,
+        "packPath": "optional/external-chapters/original-fpv-pressure-external/pack.json",
+        "mediaPath": "optional/external-chapters/original-fpv-pressure-external/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/original-fpv-pressure-external/original-fpv-pressure-lines-external%2F1%2F60d1f9c4f1304d7d/original-fpv-night-crossfire-external/1",
+      "source": "external",
+      "packId": "original-fpv-pressure-external",
+      "campaignId": "original-fpv-pressure-lines-external",
+      "campaignRevision": "1",
+      "campaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+      "levelId": "original-fpv-night-crossfire-external",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Night Crossfire",
+      "campaignTitle": "Pressure Pictures · external-original pilot",
+      "edition": "FPV Front · Pressure Pictures",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "80% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 5 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.8,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "lane-boss", "count": 1 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/original-fpv-pressure-external/pack.json",
+        "bytes": 9398,
+        "sha256": "09fabce4207875dc73eefe49aaea8bc4aed491855e756b9dfda39cd4c35abe2c"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "original-fpv-pressure-external",
+        "bytes": 8046789,
+        "packPath": "optional/external-chapters/original-fpv-pressure-external/pack.json",
+        "mediaPath": "optional/external-chapters/original-fpv-pressure-external/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/route-worlds-ukraine/route-worlds-ukraine%2F1%2F6fc246baf830fe27/route-worlds-ukraine-foundry/1",
+      "source": "external",
+      "packId": "route-worlds-ukraine",
+      "campaignId": "route-worlds-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+      "levelId": "route-worlds-ukraine-foundry",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Two Lanes, One Forge",
+      "campaignTitle": "Ukraine Atlas · Route Choices — Tactical",
+      "edition": "Ukraine Atlas · Route Choices",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Tactical"],
+      "rules": "30% coverage · 1 lives · 10 cells/s · 30s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.3,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 30,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "bytes": 8405,
+        "sha256": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "route-worlds-ukraine",
+        "bytes": 8834292,
+        "packPath": "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/route-worlds-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/route-worlds-ukraine/route-worlds-ukraine%2F1%2F6fc246baf830fe27/route-worlds-ukraine-depot/1",
+      "source": "external",
+      "packId": "route-worlds-ukraine",
+      "campaignId": "route-worlds-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+      "levelId": "route-worlds-ukraine-depot",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Crosswind Market Depot",
+      "campaignTitle": "Ukraine Atlas · Route Choices — Tactical",
+      "edition": "Ukraine Atlas · Route Choices",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Tactical"],
+      "rules": "45% coverage · 1 lives · 10 cells/s · 45s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 45,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "bytes": 8405,
+        "sha256": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "route-worlds-ukraine",
+        "bytes": 8834292,
+        "packPath": "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/route-worlds-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/route-worlds-ukraine/route-worlds-ukraine%2F1%2F6fc246baf830fe27/route-worlds-ukraine-switchback/1",
+      "source": "external",
+      "packId": "route-worlds-ukraine",
+      "campaignId": "route-worlds-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+      "levelId": "route-worlds-ukraine-switchback",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Carpathian Thread Relay",
+      "campaignTitle": "Ukraine Atlas · Route Choices — Tactical",
+      "edition": "Ukraine Atlas · Route Choices",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Tactical"],
+      "rules": "48% coverage · 1 lives · 10 cells/s · 45s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.48,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 45,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "bytes": 8405,
+        "sha256": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "route-worlds-ukraine",
+        "bytes": 8834292,
+        "packPath": "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/route-worlds-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/route-worlds-retro/route-worlds-retro%2F1%2F31673372d46ee993/route-worlds-retro-foundry/1",
+      "source": "external",
+      "packId": "route-worlds-retro",
+      "campaignId": "route-worlds-retro",
+      "campaignRevision": "1",
+      "campaignKey": "route-worlds-retro/1/31673372d46ee993",
+      "levelId": "route-worlds-retro-foundry",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Midnight Workshop",
+      "campaignTitle": "1994 Forever · Route Choices — Tactical",
+      "edition": "1994 Forever · Route Choices",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "30% coverage · 1 lives · 10 cells/s · 30s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.3,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 30,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/route-worlds-retro/pack.json",
+        "bytes": 8307,
+        "sha256": "ef63420ef94edeecf56cd13f1a77c75afef9a5be6ec4c0d5d5814d002f7962b4"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "route-worlds-retro",
+        "bytes": 7597940,
+        "packPath": "optional/external-chapters/route-worlds-retro/pack.json",
+        "mediaPath": "optional/external-chapters/route-worlds-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/route-worlds-retro/route-worlds-retro%2F1%2F31673372d46ee993/route-worlds-retro-depot/1",
+      "source": "external",
+      "packId": "route-worlds-retro",
+      "campaignId": "route-worlds-retro",
+      "campaignRevision": "1",
+      "campaignKey": "route-worlds-retro/1/31673372d46ee993",
+      "levelId": "route-worlds-retro-depot",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Crosswind Courier",
+      "campaignTitle": "1994 Forever · Route Choices — Tactical",
+      "edition": "1994 Forever · Route Choices",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "45% coverage · 1 lives · 10 cells/s · 45s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 45,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/route-worlds-retro/pack.json",
+        "bytes": 8307,
+        "sha256": "ef63420ef94edeecf56cd13f1a77c75afef9a5be6ec4c0d5d5814d002f7962b4"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "route-worlds-retro",
+        "bytes": 7597940,
+        "packPath": "optional/external-chapters/route-worlds-retro/pack.json",
+        "mediaPath": "optional/external-chapters/route-worlds-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/route-worlds-retro/route-worlds-retro%2F1%2F31673372d46ee993/route-worlds-retro-switchback/1",
+      "source": "external",
+      "packId": "route-worlds-retro",
+      "campaignId": "route-worlds-retro",
+      "campaignRevision": "1",
+      "campaignKey": "route-worlds-retro/1/31673372d46ee993",
+      "levelId": "route-worlds-retro-switchback",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Signal Thread",
+      "campaignTitle": "1994 Forever · Route Choices — Tactical",
+      "edition": "1994 Forever · Route Choices",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "48% coverage · 1 lives · 10 cells/s · 45s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.48,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 45,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/route-worlds-retro/pack.json",
+        "bytes": 8307,
+        "sha256": "ef63420ef94edeecf56cd13f1a77c75afef9a5be6ec4c0d5d5814d002f7962b4"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "route-worlds-retro",
+        "bytes": 7597940,
+        "packPath": "optional/external-chapters/route-worlds-retro/pack.json",
+        "mediaPath": "optional/external-chapters/route-worlds-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/route-worlds-coupa/route-worlds-coupa%2F1%2F708c553521008c7d/route-worlds-coupa-foundry/1",
+      "source": "external",
+      "packId": "route-worlds-coupa",
+      "campaignId": "route-worlds-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "route-worlds-coupa/1/708c553521008c7d",
+      "levelId": "route-worlds-coupa-foundry",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Value Foundry",
+      "campaignTitle": "Spend Network · Route Choices — Tactical",
+      "edition": "Spend Network · Route Choices",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "30% coverage · 1 lives · 10 cells/s · 30s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.3,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 30,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/route-worlds-coupa/pack.json",
+        "bytes": 8317,
+        "sha256": "96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "route-worlds-coupa",
+        "bytes": 8289310,
+        "packPath": "optional/external-chapters/route-worlds-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/route-worlds-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/route-worlds-coupa/route-worlds-coupa%2F1%2F708c553521008c7d/route-worlds-coupa-depot/1",
+      "source": "external",
+      "packId": "route-worlds-coupa",
+      "campaignId": "route-worlds-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "route-worlds-coupa/1/708c553521008c7d",
+      "levelId": "route-worlds-coupa-depot",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Shared Harbor",
+      "campaignTitle": "Spend Network · Route Choices — Tactical",
+      "edition": "Spend Network · Route Choices",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "45% coverage · 1 lives · 10 cells/s · 45s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 45,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/route-worlds-coupa/pack.json",
+        "bytes": 8317,
+        "sha256": "96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "route-worlds-coupa",
+        "bytes": 8289310,
+        "packPath": "optional/external-chapters/route-worlds-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/route-worlds-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/route-worlds-coupa/route-worlds-coupa%2F1%2F708c553521008c7d/route-worlds-coupa-switchback/1",
+      "source": "external",
+      "packId": "route-worlds-coupa",
+      "campaignId": "route-worlds-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "route-worlds-coupa/1/708c553521008c7d",
+      "levelId": "route-worlds-coupa-switchback",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Network Garden",
+      "campaignTitle": "Spend Network · Route Choices — Tactical",
+      "edition": "Spend Network · Route Choices",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "48% coverage · 1 lives · 10 cells/s · 45s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.48,
+        "lives": 1,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 45,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/route-worlds-coupa/pack.json",
+        "bytes": 8317,
+        "sha256": "96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "route-worlds-coupa",
+        "bytes": 8289310,
+        "packPath": "optional/external-chapters/route-worlds-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/route-worlds-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-fpv/sentinel-circuit-fpv%2F1%2F398c82081d2d49df/sentinel-circuit-fpv-listening-court/1",
+      "source": "external",
+      "packId": "sentinel-circuit-fpv",
+      "campaignId": "sentinel-circuit-fpv",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+      "levelId": "sentinel-circuit-fpv-listening-court",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Listening Court",
+      "campaignTitle": "Sentinel Circuit",
+      "edition": "FPV Front · Sentinel Circuit",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Tactical"],
+      "rules": "45% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+        "bytes": 9238,
+        "sha256": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-fpv",
+        "bytes": 8605296,
+        "packPath": "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-fpv/sentinel-circuit-fpv%2F1%2F398c82081d2d49df/sentinel-circuit-fpv-switchyard-gates/1",
+      "source": "external",
+      "packId": "sentinel-circuit-fpv",
+      "campaignId": "sentinel-circuit-fpv",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+      "levelId": "sentinel-circuit-fpv-switchyard-gates",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Switchyard Gates",
+      "campaignTitle": "Sentinel Circuit",
+      "edition": "FPV Front · Sentinel Circuit",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Tactical"],
+      "rules": "45% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+        "bytes": 9238,
+        "sha256": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-fpv",
+        "bytes": 8605296,
+        "packPath": "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-fpv/sentinel-circuit-fpv%2F1%2F398c82081d2d49df/sentinel-circuit-fpv-open-circuit/1",
+      "source": "external",
+      "packId": "sentinel-circuit-fpv",
+      "campaignId": "sentinel-circuit-fpv",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+      "levelId": "sentinel-circuit-fpv-open-circuit",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Open the Circuit",
+      "campaignTitle": "Sentinel Circuit",
+      "edition": "FPV Front · Sentinel Circuit",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Tactical"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "relay-sentinel", "count": 1 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+        "bytes": 9238,
+        "sha256": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-fpv",
+        "bytes": 8605296,
+        "packPath": "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-ukraine/sentinel-circuit-ukraine%2F1%2F2c5a77757c64c4d1/sentinel-circuit-ukraine-listening-court/1",
+      "source": "external",
+      "packId": "sentinel-circuit-ukraine",
+      "campaignId": "sentinel-circuit-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-ukraine/1/2c5a77757c64c4d1",
+      "levelId": "sentinel-circuit-ukraine-listening-court",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Courtyard of quiet craft",
+      "campaignTitle": "Ukraine Atlas · Sentinel Circuit — Tactical",
+      "edition": "Ukraine Atlas · Sentinel Circuit",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Tactical"],
+      "rules": "45% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
+        "bytes": 9440,
+        "sha256": "b567d8901dcec9b4964ce5ada8f64276f7754f8dc537c9002703d746fcbcdd85"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-ukraine",
+        "bytes": 8185064,
+        "packPath": "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-ukraine/sentinel-circuit-ukraine%2F1%2F2c5a77757c64c4d1/sentinel-circuit-ukraine-switchyard-gates/1",
+      "source": "external",
+      "packId": "sentinel-circuit-ukraine",
+      "campaignId": "sentinel-circuit-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-ukraine/1/2c5a77757c64c4d1",
+      "levelId": "sentinel-circuit-ukraine-switchyard-gates",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Carpathian station exchange",
+      "campaignTitle": "Ukraine Atlas · Sentinel Circuit — Tactical",
+      "edition": "Ukraine Atlas · Sentinel Circuit",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Tactical"],
+      "rules": "45% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
+        "bytes": 9440,
+        "sha256": "b567d8901dcec9b4964ce5ada8f64276f7754f8dc537c9002703d746fcbcdd85"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-ukraine",
+        "bytes": 8185064,
+        "packPath": "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-ukraine/sentinel-circuit-ukraine%2F1%2F2c5a77757c64c4d1/sentinel-circuit-ukraine-open-circuit/1",
+      "source": "external",
+      "packId": "sentinel-circuit-ukraine",
+      "campaignId": "sentinel-circuit-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-ukraine/1/2c5a77757c64c4d1",
+      "levelId": "sentinel-circuit-ukraine-open-circuit",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "The mountain thread hall",
+      "campaignTitle": "Ukraine Atlas · Sentinel Circuit — Tactical",
+      "edition": "Ukraine Atlas · Sentinel Circuit",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Tactical"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "relay-sentinel", "count": 1 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
+        "bytes": 9440,
+        "sha256": "b567d8901dcec9b4964ce5ada8f64276f7754f8dc537c9002703d746fcbcdd85"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-ukraine",
+        "bytes": 8185064,
+        "packPath": "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-retro/sentinel-circuit-retro%2F1%2Fe8edd91a796a9b65/sentinel-circuit-retro-listening-court/1",
+      "source": "external",
+      "packId": "sentinel-circuit-retro",
+      "campaignId": "sentinel-circuit-retro",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-retro/1/e8edd91a796a9b65",
+      "levelId": "sentinel-circuit-retro-listening-court",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "The radio-repair courtyard",
+      "campaignTitle": "1994 Forever · Sentinel Circuit — Tactical",
+      "edition": "1994 Forever · Sentinel Circuit",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "45% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-retro/pack.json",
+        "bytes": 9404,
+        "sha256": "eab41d563f717170dc0c0077aa18b1656d2845e102b76e719a9daca6e5886545"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-retro",
+        "bytes": 7562490,
+        "packPath": "optional/external-chapters/sentinel-circuit-retro/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-retro/sentinel-circuit-retro%2F1%2Fe8edd91a796a9b65/sentinel-circuit-retro-switchyard-gates/1",
+      "source": "external",
+      "packId": "sentinel-circuit-retro",
+      "campaignId": "sentinel-circuit-retro",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-retro/1/e8edd91a796a9b65",
+      "levelId": "sentinel-circuit-retro-switchyard-gates",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "After-hours cassette dispatch",
+      "campaignTitle": "1994 Forever · Sentinel Circuit — Tactical",
+      "edition": "1994 Forever · Sentinel Circuit",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "45% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-retro/pack.json",
+        "bytes": 9404,
+        "sha256": "eab41d563f717170dc0c0077aa18b1656d2845e102b76e719a9daca6e5886545"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-retro",
+        "bytes": 7562490,
+        "packPath": "optional/external-chapters/sentinel-circuit-retro/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-retro/sentinel-circuit-retro%2F1%2Fe8edd91a796a9b65/sentinel-circuit-retro-open-circuit/1",
+      "source": "external",
+      "packId": "sentinel-circuit-retro",
+      "campaignId": "sentinel-circuit-retro",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-retro/1/e8edd91a796a9b65",
+      "levelId": "sentinel-circuit-retro-open-circuit",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "The hilltop night transmission",
+      "campaignTitle": "1994 Forever · Sentinel Circuit — Tactical",
+      "edition": "1994 Forever · Sentinel Circuit",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "relay-sentinel", "count": 1 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-retro/pack.json",
+        "bytes": 9404,
+        "sha256": "eab41d563f717170dc0c0077aa18b1656d2845e102b76e719a9daca6e5886545"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-retro",
+        "bytes": 7562490,
+        "packPath": "optional/external-chapters/sentinel-circuit-retro/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-coupa/sentinel-circuit-coupa%2F1%2F8459eb3ba67608e6/sentinel-circuit-coupa-listening-court/1",
+      "source": "external",
+      "packId": "sentinel-circuit-coupa",
+      "campaignId": "sentinel-circuit-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
+      "levelId": "sentinel-circuit-coupa-listening-court",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "The shared inventory court",
+      "campaignTitle": "Spend Network · Sentinel Circuit — Tactical",
+      "edition": "Spend Network · Sentinel Circuit",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "45% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+        "bytes": 9427,
+        "sha256": "0fc200adfd509d7a993f24c73432195e314b4450b2ef45fd601b523f62464c6c"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-coupa",
+        "bytes": 7425748,
+        "packPath": "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-coupa/sentinel-circuit-coupa%2F1%2F8459eb3ba67608e6/sentinel-circuit-coupa-switchyard-gates/1",
+      "source": "external",
+      "packId": "sentinel-circuit-coupa",
+      "campaignId": "sentinel-circuit-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
+      "levelId": "sentinel-circuit-coupa-switchyard-gates",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "The inland exchange yard",
+      "campaignTitle": "Spend Network · Sentinel Circuit — Tactical",
+      "edition": "Spend Network · Sentinel Circuit",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "45% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.45,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "bouncer", "count": 1 }],
+        "requiredObjectives": 1
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+        "bytes": 9427,
+        "sha256": "0fc200adfd509d7a993f24c73432195e314b4450b2ef45fd601b523f62464c6c"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-coupa",
+        "bytes": 7425748,
+        "packPath": "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/sentinel-circuit-coupa/sentinel-circuit-coupa%2F1%2F8459eb3ba67608e6/sentinel-circuit-coupa-open-circuit/1",
+      "source": "external",
+      "packId": "sentinel-circuit-coupa",
+      "campaignId": "sentinel-circuit-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
+      "levelId": "sentinel-circuit-coupa-open-circuit",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "The illuminated exchange hall",
+      "campaignTitle": "Spend Network · Sentinel Circuit — Tactical",
+      "edition": "Spend Network · Sentinel Circuit",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Tactical"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · 180s limit · Manual actions · 1 enemy",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 180,
+        "enemies": [{ "type": "relay-sentinel", "count": 1 }],
+        "requiredObjectives": 2
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+        "bytes": 9427,
+        "sha256": "0fc200adfd509d7a993f24c73432195e314b4450b2ef45fd601b523f62464c6c"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "sentinel-circuit-coupa",
+        "bytes": 7425748,
+        "packPath": "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-fpv/fracture-lines-fpv%2F1%2F8f79476cc9cf6221/fracture-lines-split-ring/1",
+      "source": "external",
+      "packId": "fracture-lines-fpv",
+      "campaignId": "fracture-lines-fpv",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-fpv/1/8f79476cc9cf6221",
+      "levelId": "fracture-lines-split-ring",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Split Ring",
+      "campaignTitle": "FPV Front · Fracture Lines — Arcade",
+      "edition": "FPV Front · Fracture Lines",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "62% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.62,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-fpv/pack.json",
+        "bytes": 9708,
+        "sha256": "7ccdba1465b1f5e2f2df25cdb574a8d93eb53974b14adf3599bb6f1bf23f5a8b"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-fpv",
+        "bytes": 8679018,
+        "packPath": "optional/external-chapters/fracture-lines-fpv/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-fpv/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-fpv/fracture-lines-fpv%2F1%2F8f79476cc9cf6221/fracture-lines-fault-fan/1",
+      "source": "external",
+      "packId": "fracture-lines-fpv",
+      "campaignId": "fracture-lines-fpv",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-fpv/1/8f79476cc9cf6221",
+      "levelId": "fracture-lines-fault-fan",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Fault Fan",
+      "campaignTitle": "FPV Front · Fracture Lines — Arcade",
+      "edition": "FPV Front · Fracture Lines",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-fpv/pack.json",
+        "bytes": 9708,
+        "sha256": "7ccdba1465b1f5e2f2df25cdb574a8d93eb53974b14adf3599bb6f1bf23f5a8b"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-fpv",
+        "bytes": 8679018,
+        "packPath": "optional/external-chapters/fracture-lines-fpv/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-fpv/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-fpv/fracture-lines-fpv%2F1%2F8f79476cc9cf6221/fracture-lines-frayed-causeway/1",
+      "source": "external",
+      "packId": "fracture-lines-fpv",
+      "campaignId": "fracture-lines-fpv",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-fpv/1/8f79476cc9cf6221",
+      "levelId": "fracture-lines-frayed-causeway",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Frayed Causeway",
+      "campaignTitle": "FPV Front · Fracture Lines — Arcade",
+      "edition": "FPV Front · Fracture Lines",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "74% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "eroder", "count": 1 },
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-fpv/pack.json",
+        "bytes": 9708,
+        "sha256": "7ccdba1465b1f5e2f2df25cdb574a8d93eb53974b14adf3599bb6f1bf23f5a8b"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-fpv",
+        "bytes": 8679018,
+        "packPath": "optional/external-chapters/fracture-lines-fpv/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-fpv/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-ukraine/fracture-lines-ukraine%2F1%2F8b020a538ec5549f/fracture-lines-split-ring/1",
+      "source": "external",
+      "packId": "fracture-lines-ukraine",
+      "campaignId": "fracture-lines-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-ukraine/1/8b020a538ec5549f",
+      "levelId": "fracture-lines-split-ring",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "The Four Gates at Blue Hour",
+      "campaignTitle": "Ukraine Atlas · Fracture Lines — Arcade",
+      "edition": "Ukraine Atlas · Fracture Lines",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Arcade"],
+      "rules": "62% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.62,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-ukraine/pack.json",
+        "bytes": 9311,
+        "sha256": "41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-ukraine",
+        "bytes": 8743419,
+        "packPath": "optional/external-chapters/fracture-lines-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-ukraine/fracture-lines-ukraine%2F1%2F8b020a538ec5549f/fracture-lines-fault-fan/1",
+      "source": "external",
+      "packId": "fracture-lines-ukraine",
+      "campaignId": "fracture-lines-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-ukraine/1/8b020a538ec5549f",
+      "levelId": "fracture-lines-fault-fan",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Potters’ Terraces after Rain",
+      "campaignTitle": "Ukraine Atlas · Fracture Lines — Arcade",
+      "edition": "Ukraine Atlas · Fracture Lines",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-ukraine/pack.json",
+        "bytes": 9311,
+        "sha256": "41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-ukraine",
+        "bytes": 8743419,
+        "packPath": "optional/external-chapters/fracture-lines-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-ukraine/fracture-lines-ukraine%2F1%2F8b020a538ec5549f/fracture-lines-frayed-causeway/1",
+      "source": "external",
+      "packId": "fracture-lines-ukraine",
+      "campaignId": "fracture-lines-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-ukraine/1/8b020a538ec5549f",
+      "levelId": "fracture-lines-frayed-causeway",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "The Mill-Island Causeway",
+      "campaignTitle": "Ukraine Atlas · Fracture Lines — Arcade",
+      "edition": "Ukraine Atlas · Fracture Lines",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Arcade"],
+      "rules": "74% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "eroder", "count": 1 },
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-ukraine/pack.json",
+        "bytes": 9311,
+        "sha256": "41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-ukraine",
+        "bytes": 8743419,
+        "packPath": "optional/external-chapters/fracture-lines-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-retro/fracture-lines-retro%2F1%2Fc03c1bf508a14755/fracture-lines-split-ring/1",
+      "source": "external",
+      "packId": "fracture-lines-retro",
+      "campaignId": "fracture-lines-retro",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-retro/1/c03c1bf508a14755",
+      "levelId": "fracture-lines-split-ring",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "The Record Market before Opening",
+      "campaignTitle": "1994 Forever · Fracture Lines — Arcade",
+      "edition": "1994 Forever · Fracture Lines",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "62% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.62,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-retro/pack.json",
+        "bytes": 9393,
+        "sha256": "61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-retro",
+        "bytes": 7976468,
+        "packPath": "optional/external-chapters/fracture-lines-retro/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-retro/fracture-lines-retro%2F1%2Fc03c1bf508a14755/fracture-lines-fault-fan/1",
+      "source": "external",
+      "packId": "fracture-lines-retro",
+      "campaignId": "fracture-lines-retro",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-retro/1/c03c1bf508a14755",
+      "levelId": "fracture-lines-fault-fan",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "The Last Train through the Console Hall",
+      "campaignTitle": "1994 Forever · Fracture Lines — Arcade",
+      "edition": "1994 Forever · Fracture Lines",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-retro/pack.json",
+        "bytes": 9393,
+        "sha256": "61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-retro",
+        "bytes": 7976468,
+        "packPath": "optional/external-chapters/fracture-lines-retro/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-retro/fracture-lines-retro%2F1%2Fc03c1bf508a14755/fracture-lines-frayed-causeway/1",
+      "source": "external",
+      "packId": "fracture-lines-retro",
+      "campaignId": "fracture-lines-retro",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-retro/1/c03c1bf508a14755",
+      "levelId": "fracture-lines-frayed-causeway",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Three Studios at First Light",
+      "campaignTitle": "1994 Forever · Fracture Lines — Arcade",
+      "edition": "1994 Forever · Fracture Lines",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "74% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "eroder", "count": 1 },
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-retro/pack.json",
+        "bytes": 9393,
+        "sha256": "61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-retro",
+        "bytes": 7976468,
+        "packPath": "optional/external-chapters/fracture-lines-retro/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-coupa/fracture-lines-coupa%2F1%2F7366cdb1e5e3ed7e/fracture-lines-split-ring/1",
+      "source": "external",
+      "packId": "fracture-lines-coupa",
+      "campaignId": "fracture-lines-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
+      "levelId": "fracture-lines-split-ring",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "The Shared Repair Court",
+      "campaignTitle": "Spend Network · Fracture Lines — Arcade",
+      "edition": "Spend Network · Fracture Lines",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "62% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.62,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-coupa/pack.json",
+        "bytes": 9345,
+        "sha256": "d9e4ba55eddc55c15e690b590d7c7dbb34934227faa7fcff471fc82929c8dcd9"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-coupa",
+        "bytes": 8728263,
+        "packPath": "optional/external-chapters/fracture-lines-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-coupa/fracture-lines-coupa%2F1%2F7366cdb1e5e3ed7e/fracture-lines-fault-fan/1",
+      "source": "external",
+      "packId": "fracture-lines-coupa",
+      "campaignId": "fracture-lines-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
+      "levelId": "fracture-lines-fault-fan",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Where Three Deliveries Meet",
+      "campaignTitle": "Spend Network · Fracture Lines — Arcade",
+      "edition": "Spend Network · Fracture Lines",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-coupa/pack.json",
+        "bytes": 9345,
+        "sha256": "d9e4ba55eddc55c15e690b590d7c7dbb34934227faa7fcff471fc82929c8dcd9"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-coupa",
+        "bytes": 8728263,
+        "packPath": "optional/external-chapters/fracture-lines-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/fracture-lines-coupa/fracture-lines-coupa%2F1%2F7366cdb1e5e3ed7e/fracture-lines-frayed-causeway/1",
+      "source": "external",
+      "packId": "fracture-lines-coupa",
+      "campaignId": "fracture-lines-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
+      "levelId": "fracture-lines-frayed-causeway",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "The Bridges We Rebuilt",
+      "campaignTitle": "Spend Network · Fracture Lines — Arcade",
+      "edition": "Spend Network · Fracture Lines",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "74% coverage · 3 lives · 15 cells/s · 180s limit · Direction-only Arcade · 4 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.74,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 180,
+        "enemies": [
+          { "type": "eroder", "count": 1 },
+          { "type": "bouncer", "count": 2 },
+          { "type": "contour-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/fracture-lines-coupa/pack.json",
+        "bytes": 9345,
+        "sha256": "d9e4ba55eddc55c15e690b590d7c7dbb34934227faa7fcff471fc82929c8dcd9"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "fracture-lines-coupa",
+        "bytes": 8728263,
+        "packPath": "optional/external-chapters/fracture-lines-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/fracture-lines-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-fpv/countercurrent-fpv%2F1%2F7359effa888ca945/countercurrent-offset-docks/1",
+      "source": "external",
+      "packId": "countercurrent-fpv",
+      "campaignId": "countercurrent-fpv",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-fpv/1/7359effa888ca945",
+      "levelId": "countercurrent-offset-docks",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Lanterns at the Offset Piers",
+      "campaignTitle": "FPV Front · Countercurrent — Arcade",
+      "edition": "FPV Front · Countercurrent",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "64% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.64,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "border-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-fpv/pack.json",
+        "bytes": 8104,
+        "sha256": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-fpv",
+        "bytes": 7078299,
+        "packPath": "optional/external-chapters/countercurrent-fpv/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-fpv/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-fpv/countercurrent-fpv%2F1%2F7359effa888ca945/countercurrent-sandbar-braid/1",
+      "source": "external",
+      "packId": "countercurrent-fpv",
+      "campaignId": "countercurrent-fpv",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-fpv/1/7359effa888ca945",
+      "levelId": "countercurrent-sandbar-braid",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "The Four Sandbar Relays",
+      "campaignTitle": "FPV Front · Countercurrent — Arcade",
+      "edition": "FPV Front · Countercurrent",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "66% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.66,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-fpv/pack.json",
+        "bytes": 8104,
+        "sha256": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-fpv",
+        "bytes": 7078299,
+        "packPath": "optional/external-chapters/countercurrent-fpv/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-fpv/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-fpv/countercurrent-fpv%2F1%2F7359effa888ca945/countercurrent-crossing-watch/1",
+      "source": "external",
+      "packId": "countercurrent-fpv",
+      "campaignId": "countercurrent-fpv",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-fpv/1/7359effa888ca945",
+      "levelId": "countercurrent-crossing-watch",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Two Quiet Signal Posts",
+      "campaignTitle": "FPV Front · Countercurrent — Arcade",
+      "edition": "FPV Front · Countercurrent",
+      "themeId": "fpv",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "FPV", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "lane-boss", "count": 2 },
+          { "type": "bouncer", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-fpv/pack.json",
+        "bytes": 8104,
+        "sha256": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-fpv",
+        "bytes": 7078299,
+        "packPath": "optional/external-chapters/countercurrent-fpv/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-fpv/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-ukraine/countercurrent-ukraine%2F1%2F7f014de96585a18e/countercurrent-offset-docks/1",
+      "source": "external",
+      "packId": "countercurrent-ukraine",
+      "campaignId": "countercurrent-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-ukraine/1/7f014de96585a18e",
+      "levelId": "countercurrent-offset-docks",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "The Boatbuilders’ Morning",
+      "campaignTitle": "Ukraine Atlas · Countercurrent — Arcade",
+      "edition": "Ukraine Atlas · Countercurrent",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Arcade"],
+      "rules": "64% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.64,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "border-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-ukraine/pack.json",
+        "bytes": 8184,
+        "sha256": "7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-ukraine",
+        "bytes": 8521052,
+        "packPath": "optional/external-chapters/countercurrent-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-ukraine/countercurrent-ukraine%2F1%2F7f014de96585a18e/countercurrent-sandbar-braid/1",
+      "source": "external",
+      "packId": "countercurrent-ukraine",
+      "campaignId": "countercurrent-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-ukraine/1/7f014de96585a18e",
+      "levelId": "countercurrent-sandbar-braid",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Four Gardens beside the River",
+      "campaignTitle": "Ukraine Atlas · Countercurrent — Arcade",
+      "edition": "Ukraine Atlas · Countercurrent",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Arcade"],
+      "rules": "66% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.66,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-ukraine/pack.json",
+        "bytes": 8184,
+        "sha256": "7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-ukraine",
+        "bytes": 8521052,
+        "packPath": "optional/external-chapters/countercurrent-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-ukraine/countercurrent-ukraine%2F1%2F7f014de96585a18e/countercurrent-crossing-watch/1",
+      "source": "external",
+      "packId": "countercurrent-ukraine",
+      "campaignId": "countercurrent-ukraine",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-ukraine/1/7f014de96585a18e",
+      "levelId": "countercurrent-crossing-watch",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "The Ferry Lights Return",
+      "campaignTitle": "Ukraine Atlas · Countercurrent — Arcade",
+      "edition": "Ukraine Atlas · Countercurrent",
+      "themeId": "ukraine",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Ukrainian", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "lane-boss", "count": 2 },
+          { "type": "bouncer", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-ukraine/pack.json",
+        "bytes": 8184,
+        "sha256": "7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-ukraine",
+        "bytes": 8521052,
+        "packPath": "optional/external-chapters/countercurrent-ukraine/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-ukraine/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-retro/countercurrent-retro%2F1%2F84d11a16c0585605/countercurrent-offset-docks/1",
+      "source": "external",
+      "packId": "countercurrent-retro",
+      "campaignId": "countercurrent-retro",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-retro/1/84d11a16c0585605",
+      "levelId": "countercurrent-offset-docks",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Records across the Canal",
+      "campaignTitle": "1994 Forever · Countercurrent — Arcade",
+      "edition": "1994 Forever · Countercurrent",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "64% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.64,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "border-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-retro/pack.json",
+        "bytes": 8115,
+        "sha256": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-retro",
+        "bytes": 7633672,
+        "packPath": "optional/external-chapters/countercurrent-retro/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-retro/countercurrent-retro%2F1%2F84d11a16c0585605/countercurrent-sandbar-braid/1",
+      "source": "external",
+      "packId": "countercurrent-retro",
+      "campaignId": "countercurrent-retro",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-retro/1/84d11a16c0585605",
+      "levelId": "countercurrent-sandbar-braid",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Last Platforms of Summer",
+      "campaignTitle": "1994 Forever · Countercurrent — Arcade",
+      "edition": "1994 Forever · Countercurrent",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "66% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.66,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-retro/pack.json",
+        "bytes": 8115,
+        "sha256": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-retro",
+        "bytes": 7633672,
+        "packPath": "optional/external-chapters/countercurrent-retro/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-retro/countercurrent-retro%2F1%2F84d11a16c0585605/countercurrent-crossing-watch/1",
+      "source": "external",
+      "packId": "countercurrent-retro",
+      "campaignId": "countercurrent-retro",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-retro/1/84d11a16c0585605",
+      "levelId": "countercurrent-crossing-watch",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "After-Hours Rooftop Exchange",
+      "campaignTitle": "1994 Forever · Countercurrent — Arcade",
+      "edition": "1994 Forever · Countercurrent",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "lane-boss", "count": 2 },
+          { "type": "bouncer", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-retro/pack.json",
+        "bytes": 8115,
+        "sha256": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-retro",
+        "bytes": 7633672,
+        "packPath": "optional/external-chapters/countercurrent-retro/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-retro/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-coupa/countercurrent-coupa%2F1%2F5f8155b60753cb07/countercurrent-offset-docks/1",
+      "source": "external",
+      "packId": "countercurrent-coupa",
+      "campaignId": "countercurrent-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
+      "levelId": "countercurrent-offset-docks",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "The Shared Receiving Courts",
+      "campaignTitle": "Spend Network · Countercurrent — Arcade",
+      "edition": "Spend Network · Countercurrent",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "64% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.64,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "border-patrol", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-coupa/pack.json",
+        "bytes": 8121,
+        "sha256": "625879853cfd4e7b26deb252ba0505565efda8fe27891e68c167893149310ff5"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-coupa",
+        "bytes": 8535635,
+        "packPath": "optional/external-chapters/countercurrent-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-coupa/countercurrent-coupa%2F1%2F5f8155b60753cb07/countercurrent-sandbar-braid/1",
+      "source": "external",
+      "packId": "countercurrent-coupa",
+      "campaignId": "countercurrent-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
+      "levelId": "countercurrent-sandbar-braid",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Four Workshops, One Garden",
+      "campaignTitle": "Spend Network · Countercurrent — Arcade",
+      "edition": "Spend Network · Countercurrent",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "66% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 2 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.66,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [{ "type": "bouncer", "count": 2 }],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-coupa/pack.json",
+        "bytes": 8121,
+        "sha256": "625879853cfd4e7b26deb252ba0505565efda8fe27891e68c167893149310ff5"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-coupa",
+        "bytes": 8535635,
+        "packPath": "optional/external-chapters/countercurrent-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-coupa/media.rlmedia"
+      }
+    },
+    {
+      "id": "classic/external/countercurrent-coupa/countercurrent-coupa%2F1%2F5f8155b60753cb07/countercurrent-crossing-watch/1",
+      "source": "external",
+      "packId": "countercurrent-coupa",
+      "campaignId": "countercurrent-coupa",
+      "campaignRevision": "1",
+      "campaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
+      "levelId": "countercurrent-crossing-watch",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "The Two Caretaker Houses",
+      "campaignTitle": "Spend Network · Countercurrent — Arcade",
+      "edition": "Spend Network · Countercurrent",
+      "themeId": "coupa",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "68% coverage · 3 lives · 15 cells/s · No mission countdown · Direction-only Arcade · 3 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v5",
+        "coverage": 0.68,
+        "lives": 3,
+        "moveSpeed": 15,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "lane-boss", "count": 2 },
+          { "type": "bouncer", "count": 1 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "optional/external-chapters/countercurrent-coupa/pack.json",
+        "bytes": 8121,
+        "sha256": "625879853cfd4e7b26deb252ba0505565efda8fe27891e68c167893149310ff5"
+      },
+      "packVersion": "1.0.0",
+      "download": {
+        "id": "countercurrent-coupa",
+        "bytes": 8535635,
+        "packPath": "optional/external-chapters/countercurrent-coupa/pack.json",
+        "mediaPath": "optional/external-chapters/countercurrent-coupa/media.rlmedia"
+      }
+    }
+  ]
+}

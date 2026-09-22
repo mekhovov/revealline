@@ -90,6 +90,34 @@
   color: #c7e78e;
   font-size: 0.85rem;
 }
+.journey-card-edition,
+.journey-card-tags,
+.journey-card-action {
+  grid-column: 1 / -1;
+  overflow-wrap: anywhere;
+}
+.journey-card-edition {
+  color: #bacdc0;
+  font-size: 0.85rem;
+}
+.journey-card-tags {
+  font-size: 0.85rem;
+  color: #f5ffba;
+}
+.journey-card-action {
+  font-weight: bold;
+  min-height: 1.5em;
+}
+#journey-chooser.mission-library-chooser .journey-filters label {
+  flex: 1 1 10rem;
+  min-width: 0;
+}
+@media (max-height: 480px) {
+  #journey-chooser.mission-library-chooser .journey-filters {
+    flex-wrap: wrap;
+    gap: 0.3rem 0.6rem;
+  }
+}
 #journey-chooser .journey-card-illustrated {
   grid-template-columns: 2.5rem 1fr;
   grid-template-rows: auto auto auto auto auto auto 1fr;
