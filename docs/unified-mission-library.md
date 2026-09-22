@@ -191,3 +191,28 @@ intermittent receipt assertion remains a tracked qualification gate.
 - Versus and Team integration are progressing in separate owned files. Their
   partial checks do not establish all-mode or release acceptance. Retained setup
   access, full sequence/failure qualification and promotion gates remain open.
+
+### Parallel host review checkpoint
+
+- Independent native browser verification of pinned `297e0318d` passed the held
+  index/newer-focus case: no late dialog or focus steal, with immediate loading
+  feedback and a successful fresh request. This remains local, not public proof.
+- Solo's existing native setup controls now live in a collapsed, bounded section
+  of the unified library. Pack/level/campaign selectors are hidden there; the
+  shared cards remain the only mission picker. Difficulty, steering and appearance
+  retain their existing handlers. Appearance opens this section after the owned
+  asynchronous opening, not before it.29 chooser/Solo host tests pass.
+- Team regression migration exposed stale detached-card activation. Shared
+  admission now requires a current visible card, exact registered owner, open
+  foreground dialog and supported mode. Filtered, closed and background cards
+  cannot start a download or mission; the new regression passes.
+- Versus implementation is in independent review. Review reproduced missing
+  incoming-handoff focus retirement and missing Journey replacement confirmation;
+  both are being repaired before that slice is committed. Team host and existing
+  fixture qualification continue in parallel.
+- Solo review also identified late Classic/Custom Next jumping to the first
+  uncleared mission instead of its authored successor, and a similar incoming
+  handoff focus race. These remain open until repaired and tested.
+- Release A qualification is running separately. Release B is not promoted,
+  versioned or publicly accepted; known download/cross-mode, full regression,
+  accessibility/layout and public verification gates still apply.

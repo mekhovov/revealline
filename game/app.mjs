@@ -5956,6 +5956,10 @@ try {
   }
   function focusAppearance() {
     if ($('collection-dialog').open) $('collection-dialog').close();
+    if (!practiceSession) {
+      void openUnifiedMissions(document.activeElement, { focusSetup: 'body-select' });
+      return;
+    }
     gameShell?.openMissions();
     missionPicker?.revealSetup();
     $('body-select').focus({ preventScroll: true });
@@ -7776,6 +7780,10 @@ try {
     }
   };
   $('choose-mission').onclick = () => {
+    if (!practiceSession) {
+      void openUnifiedMissions($('choose-mission'));
+      return;
+    }
     gameShell?.openMissions();
     const mission = $('missions').querySelector('button:not(:disabled)');
     mission?.focus();
@@ -8505,6 +8513,18 @@ try {
           });
         },
       });
+      // Keep the native settings and their guarded handlers, but not the old
+      // pack/level/campaign browser. Settings describe the current Solo host,
+      // independently of the library's cross-mode browsing filter.
+      const setup = $('mission-picker-setup');
+      if (setup) {
+        setup.classList.add('mission-library-setup');
+        setup.open = false;
+        setup.querySelector('summary').textContent = 'Current Solo flight setup';
+        for (const id of ['pack-select', 'level-select', 'campaign-select'])
+          $(id).closest('label').hidden = true;
+        $('journey-chooser').querySelector('.journey-footer').append(setup);
+      }
       unifiedLibrary = result;
       return result;
     })();
@@ -8605,6 +8625,15 @@ try {
       )
         return;
       unifiedChooser.open(opener, options);
+      if (options?.focusSetup) {
+        const setup = $('mission-picker-setup');
+        const control = $(options.focusSetup);
+        if (setup?.contains(control)) {
+          setup.open = true;
+          control.focus({ preventScroll: true });
+          control.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+        }
+      }
     } catch (error) {
       if (revision === unifiedOpenRevision) {
         failed = true;
