@@ -6,6 +6,7 @@ import { campaignKey, emptyLibrary } from '../library.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import {
   resolveInstalledMissionTarget,
+  resolveCampaignMissionTarget,
   installedMissionExecutionIndex,
 } from '../mission-library/installed-target.mjs';
 
@@ -32,6 +33,33 @@ const request = (changes = {}) => ({
   levelId: last.id,
   levelRevision: last.revision,
   ...changes,
+});
+
+test('trusted Base entry still requires exact campaign, source and mission revision', () => {
+  const base = { ...entry, sourcePackId: null };
+  const input = {
+    entry: base,
+    campaignIdentity: identity,
+    sourcePackId: null,
+    levelId: last.id,
+    levelRevision: last.revision,
+  };
+  const target = resolveCampaignMissionTarget(input);
+  assert.equal(target.entry, base);
+  assert.equal(target.levelIndex, base.campaign.levels.length - 1);
+  assert.equal(target.identity.sourcePackId, null);
+  assert.throws(
+    () => resolveCampaignMissionTarget({ ...input, sourcePackId: pack.id }),
+    /exact chapter/,
+  );
+  assert.throws(
+    () => resolveCampaignMissionTarget({ ...input, campaignIdentity: base.campaign.id }),
+    /exact chapter/,
+  );
+  assert.throws(
+    () => resolveCampaignMissionTarget({ ...input, levelRevision: 'wrong' }),
+    /revision changed/,
+  );
 });
 
 test('exact late mission resolves from the second campaign with an empty untouched profile', () => {

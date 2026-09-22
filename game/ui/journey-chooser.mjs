@@ -15,6 +15,7 @@ export function attachJourneyChooser({
   library,
   readState,
   writeState,
+  launchContext,
 }) {
   if (library) {
     const chooser = attachMissionLibraryChooser({
@@ -25,6 +26,7 @@ export function attachJourneyChooser({
       onReturn,
       readState,
       writeState,
+      launchContext,
     });
     if (profile) {
       const button = doc.createElement('button');
@@ -216,5 +218,11 @@ export function attachJourneyChooser({
       search.focus({ preventScroll: true });
     },
     close,
+    destroy() {
+      backup.close();
+      dialog.close();
+      doc.getElementById('journey-backup')?.remove();
+      dialog.remove();
+    },
   };
 }

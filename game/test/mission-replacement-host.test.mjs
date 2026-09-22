@@ -62,6 +62,14 @@ async function setup(t, options = {}) {
   await change(h, 'level-select', first);
   return h;
 }
+function openRetainedSetup(h) {
+  // These tests target retained Legacy selector callbacks, not the new public
+  // Missions route. Mount their historical parent at the finite DOM boundary;
+  // mission-library-solo-host covers the actual unified navigation and launches.
+  h.$('overlay-brief').click();
+  h.$('shell-briefing').click();
+  h.$('shell-missions').showModal();
+}
 async function flight(h, paused = true) {
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
   h.$('start-button').click();
@@ -83,8 +91,7 @@ async function flight(h, paused = true) {
   );
   assert.equal(h.rendered.run.player.queuedDirection, 'right');
   if (paused) {
-    h.$('overlay-menu').click();
-    h.$('shell-packs').click();
+    openRetainedSetup(h);
     h.$('mission-picker-setup').open = true;
   }
   h.frame(0);
@@ -343,8 +350,7 @@ for (const stage of ['download', 'save', 'cancel-download'])
     for (let n = 0; n < 20; n++) h.frame();
     h.key('ArrowDown', false);
     assert.ok(h.rendered.run.tick > 0);
-    h.$('overlay-menu').click();
-    h.$('shell-packs').click();
+    openRetainedSetup(h);
     h.frame(0);
     const run = h.rendered.run,
       before = checkpoint(h),
@@ -432,8 +438,7 @@ test('successful different-pack install adopts a fresh paused run and leaves the
   h.$('start-button').click();
   for (let n = 0; n < 5; n++) h.frame();
   assert.ok(h.rendered.run.tick > 0);
-  h.$('overlay-menu').click();
-  h.$('shell-packs').click();
+  openRetainedSetup(h);
   const run = h.rendered.run,
     before = checkpoint(h);
   await change(h, 'pack-select', 'living-threads');
@@ -495,8 +500,7 @@ test('restored paused unfinished flight is guarded and Stay preserves its exact 
     h.$('pause-button').click(); // Named title Continue now resumes; Pause remains explicit.
     h.frame(0);
     assert.equal(h.rendered.paused, true);
-    h.$('overlay-menu').click();
-    h.$('shell-packs').click();
+    openRetainedSetup(h);
     h.$('mission-picker-setup').open = true;
     const run = h.rendered.run;
     await requestLevel(h);

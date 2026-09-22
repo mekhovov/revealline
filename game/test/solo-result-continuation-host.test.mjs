@@ -162,6 +162,13 @@ async function running(p, id) {
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === id;
   });
 }
+function openRetainedSetup(p) {
+  // Retained Legacy setup callback coverage. Actual unified Missions navigation
+  // is covered separately, including the post-adoption case below.
+  p.$('overlay-brief').click();
+  p.$('shell-briefing').click();
+  p.$('shell-missions').showModal();
+}
 
 test('Journey chooser can supersede a held result picture without waiting for its stale decode', async (t) => {
   const { p, deferDecode } = await setup(t, { journey: true });
@@ -449,7 +456,7 @@ test('a newer Missions difficulty choice cancels held Next and a subsequent Next
   });
   p.$('next-button').click();
   await settle(() => entered);
-  p.$('shell-packs').click();
+  openRetainedSetup(p);
   p.$('shell-prepare').click();
   assert.equal(p.$('mission-picker-setup').open, true);
   p.change('difficulty-select', 'gentle');
@@ -476,8 +483,10 @@ for (const departure of ['missions', 'another-mission'])
     let released = false;
     onRelease(before.image, () => {
       released = true;
-      p.$('shell-packs').click();
-      if (departure === 'another-mission') p.$('missions').children[0].click();
+      if (departure === 'another-mission') {
+        openRetainedSetup(p);
+        p.$('missions').children[0].click();
+      } else p.$('shell-packs').click();
     });
     p.$('next-button').click();
     await settle(() => released);
@@ -488,7 +497,9 @@ for (const departure of ['missions', 'another-mission'])
         p.rendered.run.levelId === (departure === 'missions' ? 'next-cut' : 'first-cut')
       );
     });
-    assert.equal(p.$('shell-missions').open, true);
+    if (departure === 'missions')
+      await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+    else assert.equal(p.$('shell-missions').open, true);
     assert.notEqual(p.rendered.run, before.run);
     assert.equal(p.rendered.paused, true);
     assert.equal(p.rendered.run.tick, 0);

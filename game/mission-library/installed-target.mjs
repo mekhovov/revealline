@@ -20,6 +20,25 @@ export function resolveInstalledMissionTarget({
     .map((source) => resolvePackCampaign(pack, source.id))
     .find((candidate) => campaignKey(candidate.campaign) === campaignIdentity);
   if (!entry) throw new Error('That exact chapter is no longer available.');
+  return resolveCampaignMissionTarget({
+    entry,
+    campaignIdentity,
+    sourcePackId,
+    levelId,
+    levelRevision,
+  });
+}
+
+/** Caller must supply its exact owned Base entry or prepared-pack resolution. */
+export function resolveCampaignMissionTarget({
+  entry,
+  campaignIdentity,
+  sourcePackId,
+  levelId,
+  levelRevision,
+}) {
+  if (campaignKey(entry.campaign) !== campaignIdentity || entry.sourcePackId !== sourcePackId)
+    throw new Error('That exact chapter is no longer available.');
   let levelIndex = null;
   if (levelId !== undefined) {
     if (typeof levelId !== 'string' || !levelId)

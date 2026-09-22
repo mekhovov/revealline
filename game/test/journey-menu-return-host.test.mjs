@@ -34,10 +34,11 @@ async function setup(t, route = 'authored') {
   });
   return { p, backend: createJourneyBackend(memory) };
 }
-function open(p, id) {
+async function open(p, id) {
   const opener = p.$(id);
   opener.focus();
   opener.click();
+  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   assert.equal(p.$('journey-chooser').open, true);
   assert.equal(p.doc.activeElement, p.$('journey-search'));
   return opener;
@@ -76,7 +77,7 @@ for (const route of ['1', 'opening', 'authored'])
     test(`${route} title Missions ${method} restores Home and its exact opener`, async (t) => {
       const { p, backend } = await setup(t, route);
       const before = await backend.read();
-      const opener = open(p, 'shell-play');
+      const opener = await open(p, 'shell-play');
       assert.equal(p.$('journey-back').textContent, 'Back to menu');
       back(p, method, t);
       assert.equal(p.$('shell-home').open, true);
@@ -88,7 +89,7 @@ for (const route of ['1', 'opening', 'authored'])
 
 test('choosing a mission from Home leaves its parent and starts only the selected mission', async (t) => {
   const { p } = await setup(t);
-  open(p, 'shell-play');
+  await open(p, 'shell-play');
   p.$('journey-search').value = 'Choose your share';
   p.$('journey-search').emit('input');
   const cards = p.$('journey-cards').children;
@@ -115,7 +116,7 @@ for (const origin of ['field', 'home'])
     const checkpoint = authoritativeCheckpoint(run);
     const before = await backend.read();
     if (origin === 'home') p.$('overlay-menu').click();
-    const opener = open(p, origin === 'home' ? 'shell-play' : 'shell-packs');
+    const opener = await open(p, origin === 'home' ? 'shell-play' : 'shell-packs');
     assert.equal(
       p.$('journey-back').textContent,
       origin === 'home' ? 'Back to menu' : 'Back to game',
@@ -134,7 +135,7 @@ for (const origin of ['field', 'home'])
     assert.equal(p.rendered.run, run);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
     assert.deepEqual(await backend.read(), before);
-    open(p, opener.id);
+    await open(p, opener.id);
     assert.equal(p.$('journey-search').value, 'Two keepers');
     assert.equal(p.$('journey-cards').children.length, 1);
     back(p, 'button');

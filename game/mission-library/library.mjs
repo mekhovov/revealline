@@ -293,7 +293,7 @@ export function createMissionLibrary(sources = []) {
       requireRow(row, mode);
       // The host still owns its runtime validation, departure guard and atomic
       // picture adoption. Never pass a lookup-by-name replacement for entry.
-      return owner.launch(entry, { ...context, mode });
+      return owner.launch(entry, { ...context, mode, libraryMissionId: row.id });
     },
     subscribe(listener) {
       if (typeof listener !== 'function') throw new TypeError('A listener must be a function.');

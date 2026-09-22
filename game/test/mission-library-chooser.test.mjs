@@ -8,6 +8,30 @@ import { emptyJourneyProfile } from '../journey/profile.mjs';
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 
 const tick = () => new Promise((resolve) => setImmediate(resolve));
+
+test('late failed launch cannot reopen the picker over a newer host action', async () => {
+  let finish,
+    current = true;
+  const { $, chooser } = setup(
+    [
+      owner({
+        launch: () =>
+          new Promise((resolve) => {
+            finish = resolve;
+          }),
+      }),
+    ],
+    { launchContext: () => ({ isCurrent: () => current }) },
+  );
+  $('journey-cards').children[0].click();
+  await tick();
+  assert.equal($('journey-chooser').open, false);
+  current = false;
+  finish(false);
+  await tick();
+  assert.equal($('journey-chooser').open, false);
+  chooser.destroy();
+});
 const row = (id = 'late', modes = ['solo', 'versus']) => ({
   id,
   name: 'Last mission',
@@ -60,6 +84,19 @@ test('one flat selector defaults to All/current mode, textual collections, campa
   $('journey-mode').value = 'team';
   $('journey-mode').emit('change');
   assert.equal($('journey-cards').children.length, 1);
+  chooser.destroy();
+});
+
+test('restoring a cancelled host transition retains the real opener and return label', () => {
+  const { doc, $, chooser } = setup([owner()]);
+  const origin = doc.createElement('button');
+  doc.body.append(origin);
+  chooser.open(origin, { returnLabel: 'Back to Home' });
+  $('journey-chooser').close();
+  chooser.restore();
+  assert.equal($('journey-back').textContent, 'Back to Home');
+  $('journey-back').click();
+  assert.equal(doc.activeElement, origin);
   chooser.destroy();
 });
 
