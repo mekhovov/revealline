@@ -204,3 +204,37 @@ silencing them. These focused results do not replace fresh full CI on the
 eventual committed head, immutable freeze or public verification. The workflow
 has `cancel-in-progress: false`; the repair can queue without discarding the
 remaining old shard's result. No v0.82.0 publication is claimed.
+
+### Retained shard2 evidence and final test corrections
+
+After the reviewed `3acbf86f` repair was pushed, the release/UX owners coordinated
+cancellation of the known-failed superseded run `35676036012` so queued full run
+`35680904016` could begin. This was a response to reproduced, corrected failures,
+not elapsed time alone. Shard2 ended cancelled after 1h13m7s, with no complete TAP
+summary; its post-cancellation source check still matched `9262ed78` exactly.
+Its retained partial log revealed three additional failing assertions, which
+reproduced locally (14 passes / 3 failures in the two-file cohort):
+
+- Studio's acceptance-inspector test required adjacent mission selection and
+  inspector synchronization. The real host correctly synchronizes difficulty
+  labels between them. The replacement executes the actual `inspectBoard`
+  function through its preview boundary with the real difficulty and acceptance
+  helpers, checking Solo, Team and empty selections. It verifies label-before-
+  inspector ordering, stale-report clearing, preset retention and synchronization
+  before preview or empty return. Other editors are stubs; this is not a complete
+  native Studio test. No runtime ordering change was needed.
+- Two historical-import picture assertions retained FPV54 despite the already
+  reviewed runtime policy and compiled metadata explicitly binding FPV58. Both
+  expected revisions now explicitly name58, retaining compiled equality and all
+  original bytes/hash/dimension/content checks. A negative case rejects54 before
+  original reads, alongside the existing future-revision rejection. No version
+  range, fallback, picture identity or runtime binding was broadened.
+
+The focused three-file cohort passes24/24 on Node20.19.5 and22.22.2. The final
+combined ten-file integration cohort passes **86/86 on both versions**, without
+failures, skips or cancellations. Independent read-only review approves both
+test-only corrections and verifies the runtime Studio, difficulty helper,
+picture-binding and compiled-metadata bytes are unchanged from `3acbf86f`.
+ESLint, formatting and whitespace checks pass. These fixes require a new exact-
+head full CI run; the intermediate `3acbf86f` run cannot qualify the successor.
+All earlier failures and cancellation evidence remain part of the release record.
