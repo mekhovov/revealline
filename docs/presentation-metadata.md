@@ -25,3 +25,11 @@ Logical document hashes describe reconstructed canonical records. Encoded metada
 Verify exact V1/V2 exports, compact and raw V3 framing, the exact byte boundary, malformed dictionaries, expansion limits, immutable-history rejection, stale/failed atomic saves, and compiler-to-published-Studio round trips. Use the real retained production history as well as hostile fixtures. Prove that one or more complete collection replacements fit and that the next over-limit replacement fails without mutation. Compare all current production output bytes before adoption.
 
 Source tests, native Studio upload/edit/save/export/import, generation, offline behavior and public release verification are separate evidence. No representation change by itself approves artwork or closes the full theme-framework phase.
+
+## Reusing accepted immutable documents
+
+Repeated inspection may reuse the exact logical object returned by the model validator after ownership, complete schema/history validation, encoded-capacity validation and recursive freezing succeed. Trust is held in a private weak identity set; an external object, proxy, clone or caller-frozen document must still cross the full validation boundary. Freezing alone never grants trust.
+
+Calls with a previous document or expected revision retain their complete transition checks. Selection options, original-byte verification, storage generations and asynchronous operation ownership are not cached or bypassed. This prevents repeated Studio inspection of unchanged accepted history from re-encoding it on every refresh, without allowing mutable input to acquire lasting authority.
+
+Maintainer prompt: optimize only model-owned immutable identities. Test mutable and foreign-frozen inputs, proxy wrappers, throwing/accessor options, stale revisions and rewritten history before relying on reuse. Keep all serialized/logical budgets and explicit mutation checks. Compare the actual retained-history refresh path and native Undo/Redo/token editing separately; do not introduce timing thresholds into correctness tests or cache renderer state by document revision.
