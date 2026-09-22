@@ -147,7 +147,7 @@ now60 tests. The prior16 Solo host and8 full-index cases remain unchanged.
 
 ### Current implementation and remaining B work
 
-Updated after `45c56271d`. “Pushed” means implemented and locally verified in
+Updated after the trusted-download checkpoint. “Pushed” means implemented and locally verified in
 draft PR268, **not released or publicly accepted**. Earlier checkpoint prose below
 records the evidence at that time, not the current remaining list.
 
@@ -158,11 +158,11 @@ records the evidence at that time, not the current remaining list.
 | Versus host and supported Classic/Custom/optional launches                    | Pushed; independent fixes and17-case root repeat passed               | Downloads/readiness work below                     |
 | Team host,12 Journey +2 Classic +visit-local Custom                           | Pushed;153 tests passed together                                      | Cross-mode/native work below                       |
 | Solo↔Versus Journey modes without duplicate identities                       | Pushed;7 adapter +32 actual-host cases passed                         | Cross-mode public verification                     |
-| Team↔Solo/Versus catalogue and exact handoffs                                | Active parallel implementation                                        | 1–3h                                               |
-| Trusted bundled/archive Versus downloads                                      | Active parallel implementation; no Optional-schema bypass             | 1–3h                                               |
+| Team↔Solo/Versus catalogue and exact handoffs                                | Solo/Versus→Team pushed; reverse direction under lifecycle review      | 1–3h                                               |
+| Trusted bundled/archive Versus downloads                                      | Implemented;53 installer +actual-host tests pass together             | Native/public verification                         |
 | Paired-original downloads/readiness across hosts                              | Incomplete; retain existing media transactions                        | 3–5h                                               |
-| Installed Custom metadata/readiness without eager artwork decoding            | Design/integration pending; no fake prepared ownership                | 3–5h                                               |
-| Compact library                                                               | Portrait native pass; landscape correction pushed                     | 0.5–2h recheck/fixes                               |
+| Installed Custom metadata/readiness without eager artwork decoding            | Validation and read-only storage boundaries in parallel development  | 3–5h                                               |
+| Compact library                                                               | Pinned Solo portrait/landscape pass; new Team controls need review    | 0.5–2h targeted recheck                            |
 | Full navigation, failure, storage and accessibility/performance qualification | Bounded cohorts pass; whole affected/native gates remain              | 2–4h plus device availability                      |
 | Release B promotion                                                           | Waits only for accepted A and B technical gates; local work continues | 2–4h after qualification, CI/Pages queues variable |
 
@@ -361,3 +361,20 @@ verification. It must receive a new pinned native check before acceptance.
 - Team to Solo/Versus, retained downloads and installed metadata readiness are
   still separate gates. Release A source CI has passed11,788 tests; its public
   acceptance remains pending. Release B remains a draft preparation branch.
+
+### Trusted retained-chapter downloads in Versus
+
+- Bundled and archived cards now use the trusted release index directly; no
+  Optional-catalogue schema bypass or manual trip to Solo is required.
+- Downloads enforce fixed same-release paths, published byte counts/checksums,
+  full normalized pack identities and complete mission membership. Installation
+  rechecks storage under the writer lease, rejects modified same-ID editions and
+  preserves existing atomic publication and cancellation semantics.
+- Independent review repeated33 installer cases, including actual bundled
+  Night Shift and11.7MB archived FPV Arcade data. The final installer plus actual
+  Versus host cohort passes53/53 in74 seconds, zero failures/skips.
+- Actual host tests exercise HTTP failure, Retry, held download Cancel, successful
+  Download→Play without automatic launch, unchanged search/boards/picture, Stay
+  and explicit replacement into the exact late mission on both boards.
+- Paired-original media preparation and lazy installed inventory remain separate
+  gates. This checkpoint is not a release or public qualification claim.

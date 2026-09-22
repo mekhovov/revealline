@@ -1,9 +1,12 @@
-import { required } from '../data-json.mjs';
+import { canonicalJSON, required } from '../data-json.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
 import { createExternalChapterHost } from '../external-chapter-host.mjs';
 import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
-import { installPack } from '../packs.mjs';
+import { installPack, preparePack, PACK_LIMITS } from '../packs.mjs';
+import { prepareMissionLibraryIndex } from '../mission-library/classic-source.mjs';
+import { verifyIndexedInstalledPack } from '../mission-library/pack-identity.mjs';
+import { externalChapterHash } from '../external-chapter.mjs';
 import {
   OPTIONAL_CATALOG_FORMAT,
   prepareOptionalCatalog,
@@ -26,6 +29,7 @@ export function createCouchChapterInstaller({
   URLImpl = globalThis.URL,
   baseURL = new URL('../../', import.meta.url),
   fetch: request = globalThis.fetch,
+  missionIndex,
 } = {}) {
   required(
     typeof channel === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,150}$/.test(channel),
@@ -34,7 +38,9 @@ export function createCouchChapterInstaller({
   required(Array.isArray(registeredEntries), 'Provide the registered authored entries.');
   const entries = structuredClone(registeredEntries),
     profileKey = `revealline.library.${channel}.v1`,
-    packsKey = `revealline.packs.${channel}.v1`;
+    packsKey = `revealline.packs.${channel}.v1`,
+    distributionRoot = new URL(baseURL).href,
+    indexedMissions = missionIndex === undefined ? null : prepareMissionLibraryIndex(missionIndex);
   let active = null,
     disposed = false,
     manager = null;
@@ -171,6 +177,148 @@ export function createCouchChapterInstaller({
       });
   }
 
+  // Both embedded installers share the same writer/current-snapshot transaction.
+  // Only their independently authenticated metadata and transport paths differ.
+  function installVerified({ id, name, verify, download }, options) {
+    return operation(async ({ item, signal, report, check, host, inspect, decodeImage }) => {
+      const reader = host(Object.freeze({ writable: false }));
+      report('Checking the installed chapter…', 'verifying');
+      const before = await inspect(reader);
+      const reuse = async (snapshot) => {
+        const pack = snapshot.packs.packs.find((value) => value.id === id);
+        if (!pack) return null;
+        await verify(pack, { signal });
+        check();
+        return Object.freeze({
+          pack,
+          library: snapshot.packs,
+          usage: snapshot.usage,
+          committed: false,
+          reused: true,
+        });
+      };
+      const existing = await reuse(before);
+      if (existing) return existing;
+      report(`Downloading and verifying ${name}…`, 'downloading');
+      check();
+      const pack = await download({ library: before.packs, decodeImage, signal, check });
+      check();
+      reader.close();
+      report('Reserving safe chapter installation…', 'verifying');
+      check();
+      item.writer = await claimProfileWriter(lockManager, `${profileKey}.writer`);
+      check();
+      required(
+        item.writer.writable,
+        'Chapter installation cannot reserve this profile. Close the other saving tab or restore Web Locks, then retry. Your Couch match is kept.',
+      );
+      const writer = host(item.writer),
+        fresh = await inspect(writer),
+        installedMeanwhile = await reuse(fresh);
+      if (installedMeanwhile) return installedMeanwhile;
+      // installPack permits replacements. Only absent IDs reach this boundary;
+      // exact reuse or conflicting editions were resolved against fresh storage.
+      const next = installPack(fresh.packs, pack),
+        review = await writer.prepareMutation(fresh, next, { signal });
+      check();
+      report(`Saving ${name}…`, 'saving');
+      check();
+      const result = await writer.commitMutation(review, { signal });
+      // Cancellation after durable publication cannot truthfully undo storage.
+      const accepted = result.packs.packs.find((value) => value.id === id);
+      report('Chapter installed.', 'ready');
+      return Object.freeze({
+        pack: accepted,
+        library: result.packs,
+        usage: Object.freeze({
+          ...fresh.usage,
+          packBytes: new TextEncoder().encode(result.packLibrary).length,
+        }),
+        committed: true,
+        reused: false,
+      });
+    }, options);
+  }
+
+  async function indexedBytes(row, { signal, check }) {
+    const base = new URL(distributionRoot),
+      url = new URL(row.sourceFile.path, base);
+    required(
+      ['http:', 'https:'].includes(base.protocol) &&
+        !base.username &&
+        !base.password &&
+        !base.search &&
+        !base.hash &&
+        base.pathname.endsWith('/') &&
+        url.origin === base.origin &&
+        url.href.startsWith(base.href),
+      'Indexed downloads require this game’s same-origin HTTP release directory.',
+    );
+    const response = await request(url.href, {
+      signal,
+      redirect: 'error',
+      credentials: 'same-origin',
+    });
+    check();
+    required(
+      response.ok,
+      `Chapter download unavailable (HTTP ${response.status}). Retry when connected.`,
+    );
+    required(
+      !response.redirected && (!response.url || response.url === url.href),
+      'Indexed chapter download left its exact release URL.',
+    );
+    const maximum = row.sourceFile.bytes,
+      length = response.headers.get('content-length');
+    required(
+      length === null || (/^\d+$/.test(length) && Number(length) <= maximum),
+      'Chapter response exceeds its published byte budget.',
+    );
+    required(
+      response.body?.getReader,
+      'Bounded chapter downloads are unavailable in this browser.',
+    );
+    const reader = response.body.getReader(),
+      parts = [];
+    let total = 0,
+      finished = false;
+    const cancel = () => {
+      void reader.cancel().catch(() => {});
+    };
+    signal.addEventListener('abort', cancel, { once: true });
+    try {
+      for (;;) {
+        check();
+        const result = await reader.read();
+        check();
+        if (result.done) {
+          finished = true;
+          break;
+        }
+        total += result.value.byteLength;
+        required(total <= maximum, 'Chapter response exceeds its published byte budget.');
+        parts.push(result.value);
+      }
+    } finally {
+      signal.removeEventListener('abort', cancel);
+      if (!finished) await reader.cancel().catch(() => {});
+      reader.releaseLock();
+    }
+    required(total === maximum, 'Chapter download is incomplete. Nothing was installed.');
+    const bytes = new Uint8Array(total);
+    let offset = 0;
+    for (const part of parts) {
+      bytes.set(part, offset);
+      offset += part.byteLength;
+    }
+    required(
+      (await externalChapterHash(bytes)) === row.sourceFile.sha256,
+      'Chapter checksum differs. Nothing was installed; retry from the matching release.',
+    );
+    check();
+    return bytes;
+  }
+
   return Object.freeze({
     inspect(options) {
       return operation(async ({ host, inspect, report, check }) => {
@@ -184,70 +332,88 @@ export function createCouchChapterInstaller({
       // Capture exact metadata synchronously, before any caller can change it.
       const checked = prepareOptionalCatalog({ format: OPTIONAL_CATALOG_FORMAT, packs: [summary] })
         .packs[0];
-      return operation(async ({ item, signal, report, check, host, inspect, decodeImage }) => {
-        const reader = host(Object.freeze({ writable: false }));
-        report('Checking the installed chapter…', 'verifying');
-        const before = await inspect(reader);
-        const reuse = async (snapshot) => {
-          const pack = snapshot.packs.packs.find((value) => value.id === checked.id);
-          if (!pack) return null;
-          await verifyOptionalInstalled(pack, checked, { signal });
-          check();
-          return Object.freeze({
-            pack,
-            library: snapshot.packs,
-            usage: snapshot.usage,
-            committed: false,
-            reused: true,
-          });
-        };
-        const existing = await reuse(before);
-        if (existing) return existing;
-        report(`Downloading and verifying ${checked.name}…`, 'downloading');
-        check();
-        const pack = await prepareOptionalDownload(checked, {
-          library: before.packs,
-          decodeImage,
-          baseURL,
-          fetch: request,
-          signal,
-        });
-        check();
-        reader.close();
-        report('Reserving safe chapter installation…', 'verifying');
-        check();
-        item.writer = await claimProfileWriter(lockManager, `${profileKey}.writer`);
-        check();
-        required(
-          item.writer.writable,
-          'Chapter installation cannot reserve this profile. Close the other saving tab or restore Web Locks, then retry. Your Couch match is kept.',
+      return installVerified(
+        {
+          id: checked.id,
+          name: checked.name,
+          verify: (pack, context) => verifyOptionalInstalled(pack, checked, context),
+          download: ({ library, decodeImage, signal }) =>
+            prepareOptionalDownload(checked, {
+              library,
+              decodeImage,
+              baseURL: distributionRoot,
+              fetch: request,
+              signal,
+            }),
+        },
+        options,
+      );
+    },
+    async installIndexed(row, options) {
+      // An imported row cannot nominate another source or weaken published pins.
+      // Capture and compare before any asynchronous boundary.
+      const supplied = prepareMissionLibraryIndex({
+        format: 'revealline-mission-library-index.v1',
+        missions: [row],
+      }).missions[0];
+      const checked = indexedMissions?.missions.find((item) => item.id === supplied.id);
+      required(
+        checked && canonicalJSON(checked) === canonicalJSON(supplied),
+        'Choose an exact mission from this release’s trusted index.',
+      );
+      required(
+        ['bundled', 'archived'].includes(checked.source),
+        'This indexed installer supports only bundled and archived chapters.',
+      );
+      required(
+        /^[a-z0-9][a-z0-9-]{0,95}$/.test(checked.packId) &&
+          checked.sourceFile.path === `game/content/packs/${checked.packId}.json` &&
+          checked.sourceFile.bytes <= PACK_LIMITS.maxBytes &&
+          checked.packIdentity.bytes <= PACK_LIMITS.maxBytes,
+        'Indexed chapter must name its exact bounded distribution file.',
+      );
+      const peers = indexedMissions.missions.filter((item) => item.packId === checked.packId);
+      required(
+        peers.every(
+          (item) =>
+            item.source === checked.source &&
+            canonicalJSON(item.sourceFile) === canonicalJSON(checked.sourceFile) &&
+            canonicalJSON(item.packIdentity) === canonicalJSON(checked.packIdentity) &&
+            item.packVersion === checked.packVersion,
+        ),
+        'The indexed chapter contains conflicting published identities.',
+      );
+      const verify = async (pack, { signal }) => {
+        if (signal.aborted) throw cancelled();
+        const exact = await Promise.all(
+          peers.map((item) => verifyIndexedInstalledPack(pack, item)),
         );
-        const writer = host(item.writer),
-          fresh = await inspect(writer),
-          installedMeanwhile = await reuse(fresh);
-        if (installedMeanwhile) return installedMeanwhile;
-        // installPack permits replacements. This path only adds an absent ID;
-        // exact reuse and conflicting editions were handled above.
-        const next = installPack(fresh.packs, pack),
-          review = await writer.prepareMutation(fresh, next, { signal });
-        check();
-        report(`Saving ${checked.name}…`, 'saving');
-        check();
-        const result = await writer.commitMutation(review, { signal });
-        // No post-commit abort check: launch cancellation does not undo storage.
-        const accepted = result.packs.packs.find((value) => value.id === checked.id);
-        report('Chapter installed.', 'ready');
-        return Object.freeze({
-          pack: accepted,
-          library: result.packs,
-          usage: Object.freeze({
-            ...fresh.usage,
-            packBytes: new TextEncoder().encode(result.packLibrary).length,
-          }),
-          committed: true,
-          reused: false,
-        });
-      }, options);
+        if (signal.aborted) throw cancelled();
+        required(
+          exact.every(Boolean) &&
+            pack.campaigns.reduce((count, campaign) => count + campaign.levels.length, 0) ===
+              peers.length &&
+            new Set(peers.map((item) => JSON.stringify([item.campaignId, item.levelIndex])))
+              .size === peers.length,
+          'A different edition of this chapter is installed or downloaded. Existing content was not replaced.',
+        );
+        return pack;
+      };
+      return installVerified(
+        {
+          id: checked.packId,
+          name: checked.campaignTitle,
+          verify,
+          download: async ({ library, decodeImage, signal, check }) => {
+            const bytes = await indexedBytes(checked, { signal, check });
+            const source = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+            const prepared = await preparePack(source, { library, decodeImage });
+            check();
+            return verify(prepared.pack, { signal });
+          },
+        },
+        options,
+      );
     },
     cancel() {
       active?.controller.abort();

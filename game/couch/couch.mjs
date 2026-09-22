@@ -1667,6 +1667,7 @@ try {
       libraryInstaller ??= createCouchChapterInstaller({
         channel: contentChannel,
         registeredEntries: [baseEntry],
+        missionIndex: index,
         baseURL: new URL('../../', location.href),
       });
       await refreshLibraryInventory();
@@ -1765,11 +1766,7 @@ try {
             rules: `${Math.round(actual.goal.coverage * 100)}% coverage · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
           };
         },
-        unavailableClassic: (row) =>
-          libraryInventoryError ||
-          (['bundled', 'archived'].includes(row.source)
-            ? 'Install this retained chapter in Solo first. Its trusted Versus download adapter is not yet available.'
-            : null),
+        unavailableClassic: () => libraryInventoryError || null,
         availabilityExternal: (row, pack) =>
           pack && maps.some((entry) => entry.sourcePackId === row.packId && entry.external)
             ? { state: 'ready' }
@@ -1779,6 +1776,11 @@ try {
                   'Open this installed original-picture chapter from Legacy Versus. Paired-media downloads in this library are not yet available.',
               },
         prepareClassic: async (row, { signal }) => {
+          if (['bundled', 'archived'].includes(row.source)) {
+            const installed = await libraryInstaller.installIndexed(row, { signal });
+            libraryInventory = installed.library;
+            return;
+          }
           if (row.source !== 'optional')
             throw new Error(
               'Install this chapter in Solo first. This download is not yet supported in Versus.',
