@@ -138,15 +138,16 @@ async function fullHost(t, ids) {
   const begin = async (id, failure = false) => {
     const opener = control(h, id, 'remove');
     nativeDisable(opener);
+    nativeDisable(h.$('library-operation-cancel'));
     opener.focus();
     armed = true;
     fail = failure;
     const operation = action(opener);
     await settle(() => entered);
     assert.equal(
-      h.doc.activeElement === h.doc.body,
+      h.doc.activeElement === h.$('library-operation-cancel'),
       true,
-      'Disabling the actual opener moves focus to BODY',
+      'Stop waiting retains usable focus while the initiating row is disabled',
     );
     assert.equal(opener.disabled, true);
     assert.equal(h.$('library-operation-cancel').textContent, 'Stop waiting');
