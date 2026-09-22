@@ -1390,3 +1390,11 @@ boundaries, corrupt/truncated/trailing data, aborts, deterministic byte round tr
 and the real full collection plus review/replacement successors. Keep historical
 capacity measurements tied to their exact evidence bytes; concise and older review
 wording can change the deficit without changing the redundant-table cause.
+
+## Exact Team artwork after reviewed asset adoption
+
+When a production successor changes only reviewed equipment metadata, the current Team picture authority still needs an explicit matching theme revision. Retain supported older authorities and match full theme/collection/content/picture identities; never broaden admission to a revision range or "latest". Keep production history and all original payloads immutable.
+
+A paint-order test must inspect a fresh frame: the accepted decoded picture is the first background draw, once, followed by prepared actors. The last draw is no longer a reliable picture oracle. Keep failed/cancelled preparation, release ownership, Retry and stale-completion assertions intact.
+
+Use the [reviewed successor prompt](../../prompts/team-reviewed-successor.md). Equipment-image quality, recipe-functional review and public release acceptance have separate evidence. Exact adoption must reproduce the generated inventory and pass bounded transfer/history and direct host tests before final release qualification.

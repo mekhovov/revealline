@@ -40,6 +40,47 @@ const sources = {
     'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs',
 };
 
+// Image review is independent of the 37 Team recipes. Bind original bytes and
+// the complete renderer closure so a changed construction or consumer reopens it.
+const equipmentSources = [
+  'game/presentation/team-equipment-art.mjs',
+  'game/presentation/pixel-art.mjs',
+  'scripts/produce-field-kit-sprites.mjs',
+  ...sources.team.split('; '),
+];
+const reviewedEquipmentSource = 'b9cbf2db6fe094564a15743c72c45049bf9ee776a22b2599469e0ee1bdc03037';
+const reviewedEquipmentOriginals = Object.freeze({
+  'team.anchor.available': '88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3',
+  'team.anchor.captured': 'a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466',
+  'team.core.shielded': '009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a',
+  'team.core.exposed': '6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a',
+  'team.core.secured': '28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d',
+});
+
+export async function fieldKitEquipmentSource(read) {
+  return hash(Buffer.concat(await Promise.all(equipmentSources.map((name) => read(name)))));
+}
+
+export function fieldKitEquipmentQuality(slotId, source, originalHash) {
+  if (
+    Object.hasOwn(reviewedEquipmentOriginals, slotId) &&
+    source === reviewedEquipmentSource &&
+    reviewedEquipmentOriginals[slotId] === originalHash
+  )
+    return {
+      stage: 'reviewed',
+      evidence: [
+        'Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3',
+      ],
+    };
+  return {
+    stage: 'produced',
+    evidence: [
+      'Original authored pixel clusters; complete state and playing-scale review remains required.',
+    ],
+  };
+}
+
 // A recipe stays unreviewed whenever one of its source inputs changes. These
 // are deliberate, source-pinned approvals for scoped renderer and loading reviews:
 // changing a digest creates a new source-stage revision and re-opens the
@@ -186,6 +227,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   }
   const equipmentSource = 'game/presentation/team-equipment-art.mjs';
   const equipmentHash = hash(await read(equipmentSource));
+  const equipmentReviewSource = await fieldKitEquipmentSource(read);
   for (const slotId of TEAM_EQUIPMENT_IDS) {
     const slot = ASSET_SLOTS.find((entry) => entry.id === slotId);
     const image = teamEquipmentArt(slotId),
@@ -211,12 +253,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
           prompt: slot.prompt,
           parent: { id: `${slotId}.default`, revision: 1 },
         },
-        quality: {
-          stage: 'produced',
-          evidence: [
-            'Original authored pixel clusters; complete state and playing-scale review remains required.',
-          ],
-        },
+        quality: fieldKitEquipmentQuality(slotId, equipmentReviewSource, hash(body)),
       },
       body,
     );

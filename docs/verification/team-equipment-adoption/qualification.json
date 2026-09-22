@@ -1,0 +1,103 @@
+{
+  "scope": "Five equipment originals and exact Team artwork admission; not release acceptance",
+  "parent": "9e7ff24aa662c5f6cc33cb40f38084572207bc37",
+  "sourcePacket": {
+    "status": "SCOPED_SOURCE_GENERATED_ADOPTION_QUALIFIED_FOR_ROOT_REVIEW",
+    "sealedAt": "2026-09-22T06:02:44.852071+00:00",
+    "base": "516e9e60faeb688cd194eababd5d61052c82b603",
+    "sourcePaths": 24,
+    "generatedChangedPaths": 9,
+    "adoptionPaths": 33,
+    "sourcePatchSHA256": "791bd5b3cd84f4090173e6c1602b6312eddfb9c1c9fbe24a1d32066b854929f9",
+    "sourcePinsSHA256": "deef25e9a1e70be61d3bc3650ce1d9ed93966baf3ac7dc8af1aec92b19ad590f",
+    "adoptionInventorySHA256": "e2face7b6f4b427095e5441a322e7e3090ee5508d2e0574cb7a404b66d9ec5f9",
+    "bundleSHA256": "9c8bc1302fe9f31259c0de5e8652d314b5cc1e76eb480481551326974d52b263",
+    "generationSHA256": "e6409bf52842ec416e305b7d53ec6d49ad7edc347b307c522c457e774309df12",
+    "generationReadRecords": 1371,
+    "generationBindings": 470,
+    "generationMismatches": 0,
+    "generationAuditSHA256": "1b981d48b4aa058535c74be6dd200266ca7e5302c49bafcdff20728c998beed3",
+    "retentionChecksPerNode": 25,
+    "admissionChecksPerNode": 89,
+    "staticChecks": 34,
+    "staticReceipts": {
+      ".cache/p08-equipment-transfer-integration-516e-r1/static-checks.json": "95b780421c9cd6a701a0038c2d76ffea8c0321c14f7ba9bff3feef12c9bd8c54",
+      ".cache/p08-team60-admission-516e-r1/static-checks.json": "039d27f1ca90c78f697f5298b0c7199d2d574d31a146a67a7d5a36f1c000fd60"
+    },
+    "admissionReadySHA256": "193604b10cecd0dc1f67c7ca54f8ebef595d5e1eec917fb8582874f3d55f0a15",
+    "retentionReadySHA256": "f7b5401b14bc2b5e06676c8b0a9caf2f7e505134d60e4f9be0746f59078cd1cb",
+    "rootOwnsFurtherIntegration": true,
+    "noRemoteOrSharedSourceMutation": true,
+    "excludedDevelopingRescueFix": true,
+    "limits": "Five equipment images reviewed only;37 Team recipes remain source. No final native/phase/public/release acceptance."
+  },
+  "runtimeReview": {
+    "candidate": ".cache/p08-team60-admission-516e-r1",
+    "base": "516e9e60faeb688cd194eababd5d61052c82b603",
+    "runtimePins": [
+      {
+        "path": "game/couch/coop-picture-bindings.mjs",
+        "sha256": "4cd17f0f62f7c2edd2f41cff8b1f052b15c7355d0b478bde0b4afa3c84c8cf54",
+        "bytes": 3699
+      },
+      {
+        "path": "game/couch/coop-presentation.mjs",
+        "sha256": "d8fe3df1e39ca28001c0ddc94f8b0c574ea5f007249eb4b02c60cff393ecbb92",
+        "bytes": 22672
+      },
+      {
+        "path": "game/couch/relay-rescue.mjs",
+        "sha256": "d93966fb62644eb36680b8ce8da5c7d1e10aebe232e2c64cd90cb5f5fc26dd03",
+        "bytes": 145439
+      }
+    ],
+    "findings": [],
+    "runtimeTestsRunByReviewer": false,
+    "testReview": "Developing new test read; adversarial frozen snapshot corrected by owner; current-frame host oracle strengthening in progress. Full final test pins not yet sealed.",
+    "productionGeneration": "Immutable r60 bundle9c8bc1302fe9f31259c0de5e8652d314b5cc1e76eb480481551326974d52b263; no generation or adoption performed by reviewer"
+  },
+  "prior59NativeHost": {
+    "status": "scoped native real-host check passed; not release acceptance",
+    "base": "516e9e60faeb688cd194eababd5d61052c82b603",
+    "generatedPreview": {
+      "revision": 59,
+      "bundleSHA256": "be818f3afc020230f444976e3ccd4a255d58ba6c5ca2b603810d32a4aa6bf40a"
+    },
+    "viewport": [1280, 800],
+    "inputs": "ordinary keyboard actions through CUA; no state injection",
+    "observations": [
+      "Initial loading acknowledgement and disabled Start until artwork ready",
+      "First Connection Start, pause, Help, return to explicit Resume",
+      "First attempt exposed line caught by Hunter; downed player and rescue countdown visible; natural reserve recovery consumed one reserve",
+      "Retry confirmation then fresh First Connection: 0%, three reserves, timer zero; same accepted picture",
+      "Player 1 keyboard cut banked 0.6722689270973206% territory, three reserves",
+      "Pause > Browse Team arenas > keyboard Play Relay Yard > Replace & play starts directly",
+      "Player 2 arrow-key cut banked 0.8517887592315674% territory, three reserves",
+      "Relay Yard anchors A/B, shielded core, Hunter labels, distinct numbered player shapes, obstacles and revealed industrial picture visible",
+      "Support key Q produced 7.8s cooldown; explicit pause retained 0.9% and three reserves",
+      "Board intrinsic1152x576; paused DOM rectangle1116x558, exact2:1; full active board and criticalHUD visible"
+    ],
+    "http": {
+      "count": 285,
+      "non200": [],
+      "gitByteMismatches": [],
+      "log": ".cache/p08-studio-mobile-toolbar-516e-r1/native-team-host-requests-r6.jsonl",
+      "sha256": "36fc6b392a86909c0e89b5d318c56292e9df8edb96857b745d13b0131d3a1bf7"
+    },
+    "consoleWarningsErrors": [],
+    "screenshots": "inspected inline in CUA transcript; not persisted",
+    "limitations": [
+      "No victory or two-player rescue completed in this native pass",
+      "No physical controller/touch device/offline/public qualification",
+      "No complete native motion timing claim; Support pulse animation not sampled reliably",
+      "Source uses authenticated revision59 preview, not final adopted60"
+    ],
+    "cleanup": "Temporary tab275 closed; viewport reset; server stopped after receipt"
+  },
+  "retainedMetadata": "Complete canonical58 and prior59;127 previous originals plus5 exact equipment originals;raw54 dependencies",
+  "reviewedImages": 5,
+  "unapprovedTeamRecipes": 37,
+  "versionAssignment": "Deferred to final integration after preceding release; source still inherits0.82.0",
+  "publicAcceptance": false,
+  "note": "Local packet paths identify archived qualification evidence, not shipped help links. Native59 observations do not qualify final60 byte identity."
+}

@@ -77,14 +77,14 @@ test('objective states differ by silhouette and never alias ordinary pickup or e
   assert.throws(() => teamEquipmentArt('team.unknown'), /No Team equipment/);
 });
 
-test('production actually binds every equipment PNG with exact authored geometry and produced status', async () => {
+test('production actually binds every equipment PNG with exact authored geometry and scoped reviewed status', async () => {
   const production = await createFieldKitProduction(),
     resolved = resolvePresentation(production.document);
   for (const id of TEAM_EQUIPMENT_IDS) {
     const asset = resolved.assets[id],
       expected = encodeSpritePNG(teamEquipmentArt(id));
     assert.equal(asset.kind, 'image');
-    assert.equal(asset.quality.stage, 'produced');
+    assert.equal(asset.quality.stage, 'reviewed');
     assert.equal(asset.file.sha256, hash(expected));
     assert.equal(asset.file.bytes, expected.length);
     assert.ok(
