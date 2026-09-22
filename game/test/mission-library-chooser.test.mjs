@@ -100,6 +100,63 @@ function setup(sources, options = {}) {
   return { doc, library, chooser, opener, $: (id) => doc.getElementById(id) };
 }
 
+for (const intervention of ['new focus', 'focus away and back', 'new input', 'new filter'])
+  test(`ready touch launch yields to ${intervention} during native chooser closure`, async () => {
+    let launches = 0,
+      retired = 0;
+    const { doc, $, chooser, opener } = setup([owner({ launch: () => ++launches })], {
+      launchContext: () => ({ isCurrent: () => !retired, retire: () => retired++ }),
+    });
+    chooser.close();
+    opener.focus();
+    chooser.open(opener);
+    const help = doc.createElement('button'),
+      card = $('journey-cards').children[0];
+    help.id = 'newer-host-help';
+    doc.body.append(help);
+    $('journey-back').focus();
+    $('journey-chooser').addEventListener('close', () => {
+      if (intervention.startsWith('focus') || intervention === 'new focus') help.focus();
+      if (intervention === 'focus away and back') opener.focus();
+      if (intervention === 'new input') opener.emit('keydown', { key: 'Escape' });
+      if (intervention === 'new filter') {
+        $('journey-search').value = 'newer search';
+        $('journey-search').emit('input');
+      }
+    });
+    card.click(); // Touch deliberately does not move focus off Back.
+    const newerFocus = doc.activeElement;
+    await tick();
+    assert.equal(launches, 0, 'Closing the picker cannot grant a new launch after newer input.');
+    assert.equal(retired, 1);
+    assert.equal($('journey-chooser').open, false);
+    assert.equal(doc.activeElement, newerFocus, 'Cancellation cannot restore stale picker focus.');
+    for (const type of ['focusin', 'keydown', 'pointerdown', 'click'])
+      assert.equal(doc.captureListeners.get(type)?.size ?? 0, 0, 'The close guard is released.');
+    if (intervention === 'new focus') assert.equal(doc.activeElement, help);
+    if (intervention === 'new filter') assert.equal($('journey-search').value, 'newer search');
+    chooser.destroy();
+  });
+
+for (const input of ['focused card', 'touch from Back'])
+  test(`ready ${input} launch accepts normal native return focus exactly once`, async () => {
+    let launches = 0;
+    const { doc, $, chooser, opener } = setup([owner({ launch: () => ++launches })]);
+    chooser.close();
+    opener.focus();
+    chooser.open(opener);
+    const card = $('journey-cards').children[0];
+    (input === 'focused card' ? card : $('journey-back')).focus();
+    card.click();
+    await tick();
+    assert.equal(launches, 1);
+    assert.equal($('journey-chooser').open, false);
+    assert.equal(doc.activeElement, opener, 'Native dialog restoration remains valid admission.');
+    for (const type of ['focusin', 'keydown', 'pointerdown', 'click'])
+      assert.equal(doc.captureListeners.get(type)?.size ?? 0, 0, 'The close guard is released.');
+    chooser.destroy();
+  });
+
 test('controller clears persisted no-match search without resetting filters or launching, and reopen retains the repair', () => {
   const expected = createMissionLibrary([owner()]).missions[0];
   let saved = {
