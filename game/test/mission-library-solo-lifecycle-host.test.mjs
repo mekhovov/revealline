@@ -3,6 +3,55 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { classicLibrarySources } from '../mission-library/classic-source.mjs';
+import { createMissionLibrary } from '../mission-library/library.mjs';
+
+for (const transition of ['newer focus', 'newer key', 'newer pointer'])
+  test(`incoming exact Solo handoff retires after ${transition} during held index loading`, async (t) => {
+    const indexBytes = await readFile(
+      new URL('../content/mission-library-index.json', import.meta.url),
+    );
+    const library = createMissionLibrary(
+      classicLibrarySources(JSON.parse(indexBytes), {
+        availability: () => ({ state: 'ready' }),
+        launch: () => true,
+      }),
+    );
+    const exact = library.missions[11];
+    let release,
+      requested = false;
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    const p = await soloPage(t, {
+      titleScreen: true,
+      search: `?journey=legacy&library-mission=${encodeURIComponent(exact.id)}`,
+      fetchResponse: async (path) => {
+        if (path !== 'content/mission-library-index.json') return;
+        requested = true;
+        await gate;
+        return new Response(indexBytes);
+      },
+    });
+    await settle(() => requested);
+    const run = p.rendered.run;
+    if (transition === 'newer focus') p.$('shell-featured').focus();
+    else
+      p.$('shell-play').emit(
+        transition === 'newer key' ? 'keydown' : 'pointerdown',
+        transition === 'newer key' ? { key: 'Tab' } : {},
+      );
+    const focused = p.doc.activeElement;
+    release();
+    await settle(() => p.$('journey-collection'));
+    await new Promise((resolve) => setImmediate(resolve));
+    p.frame(0);
+    assert.equal(p.rendered.run, run);
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.equal(p.doc.activeElement, focused);
+    assert.notEqual(p.doc.body.dataset.flightState, 'running');
+    assert.deepEqual(p.errors, []);
+  });
 
 for (const transition of [
   'blur',

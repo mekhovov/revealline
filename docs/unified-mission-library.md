@@ -241,3 +241,20 @@ Native review additionally found a compact-layout blocker: filters/footer leave
 too little card viewport on narrow or short screens. A dedicated shared-selector
 responsive pass is in progress alongside Team regressions and Solo sequence
 verification. It must receive a new pinned native check before acceptance.
+
+### Solo authored sequence and incoming intent checkpoint
+
+- Classic/Custom Next now follows the exact current campaign's authored successor,
+  not its first uncleared mission. The last mission ends that sequence without
+  wrapping. The endpoint says “End of this campaign” when earlier missions remain
+  uncleared; it does not falsely award or announce a full campaign clear.
+- Added an actual-host Custom regression: select the penultimate mission on an
+  empty profile, clear it through legal movement, Next to the last, clear it and
+  return to the same filtered library. Only those two clears are stored.
+- Incoming Solo metadata preparation now retires on newer focus/key/pointer input,
+  and a failed stale launch cannot reopen the library.27 helper and actual Solo
+  host/lifecycle tests pass in one clean combined run.
+- The broader retained result-continuation cohort is16/17: a repeatable ordered
+  fixture case enters session-only storage recovery and omits the expected saved
+  picture receipt. It is under investigation with assertions preserved. This is
+  an open qualification gate, not a clean full-suite claim.

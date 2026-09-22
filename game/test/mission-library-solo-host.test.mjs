@@ -8,6 +8,8 @@ import { createMissionLibrary } from '../mission-library/library.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { preparePack, emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
+import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import { loadLibrary } from '../library.mjs';
 
 class Picture {
   width = 1774;
@@ -100,6 +102,63 @@ test('installed Custom late mission in a second campaign launches its exact auth
   await running(p, second.levels.at(-1).id);
   assert.equal(p.$('pack-select').value, source.id);
   assert.equal(p.$('journey-chooser').open, false);
+  assert.deepEqual(p.errors, []);
+});
+
+test('late Custom clear follows authored Next, ends truthfully, and never grants skipped clears', async (t) => {
+  const source = JSON.parse(
+    await readFile(new URL('../content/packs/night-shift.json', import.meta.url), 'utf8'),
+  );
+  source.id = 'library-authored-next';
+  source.campaigns = [source.campaigns[0]];
+  source.campaigns[0].id = 'library-authored-next-campaign';
+  source.campaigns[0].levels = [0, 1, 2].map((index) => ({
+    ...retryFixture('self-contact').level,
+    id: `authored-next-${index}`,
+    name: `Authored next ${index}`,
+    goal: { coverage: 0.1 },
+    rules: { lives: 3 },
+  }));
+  source.levelVisuals = [];
+  source.visualOverrides = {};
+  const { pack } = await preparePack(source);
+  const assets = await installedAssets(pack);
+  const p = await soloPage(t, { titleScreen: true, assetIndexedDB: assets.indexedDB });
+  await open(p);
+  p.$('journey-collection').value = 'Custom';
+  p.$('journey-collection').emit('change');
+  const selected = [...p.$('journey-cards').children].find(
+    (card) => JSON.parse(card.dataset.missionId)[3] === 'authored-next-1',
+  );
+  selected.click();
+  await running(p, 'authored-next-1');
+  async function clear() {
+    p.key('ArrowDown');
+    p.key('ArrowDown', false);
+    for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
+    assert.equal(p.rendered.run.status, 'won');
+    if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+  }
+  await clear();
+  p.$('next-button').click();
+  await running(p, 'authored-next-2');
+  await clear();
+  const last = p.rendered.run;
+  p.$('next-button').click();
+  p.frame(0);
+  assert.equal(p.rendered.run, last, 'Sequence end never wraps to the first uncleared mission.');
+  assert.equal(p.$('overlay-title').textContent, 'End of this campaign.');
+  assert.match(p.$('overlay-copy').textContent, /2 \/ 3 missions complete/);
+  const profile = loadLibrary(p.storage, 'revealline.library.dev.v1', {
+    campaigns: pack.campaigns,
+  }).library;
+  const progress = Object.values(profile.campaigns).find(
+    (entry) => entry.clears['authored-next-1'],
+  );
+  assert.deepEqual(Object.keys(progress.clears).sort(), ['authored-next-1', 'authored-next-2']);
+  p.$('choose-mission').click();
+  await settle(() => p.$('journey-chooser').open);
+  assert.equal(p.$('journey-collection').value, 'Custom');
   assert.deepEqual(p.errors, []);
 });
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 15000 });
