@@ -1,0 +1,15 @@
+{
+  "format": "revealline-public-http-audit.v1",
+  "baseUrl": "https://mekhovov.github.io/revealline-archive-49/",
+  "currentVersion": "v0.81.0",
+  "gameSourceRevision": "c1bf73baafca3ce4d4cad666263f9c3aee9b016b",
+  "qualifiedSourceTree": "eea421f1fc9618e076b84abb2a6e0cc82fdf5b6d",
+  "archiveCommit": "ed365ddac3aacc67b4d65659223439b79cf71c2f",
+  "expectedFiles": 886,
+  "expectedBytes": 423344698,
+  "verifiedFiles": 886,
+  "verifiedBytes": 423344698,
+  "failureCount": 0,
+  "durationSeconds": 42.742,
+  "failures": []
+}
