@@ -446,3 +446,11 @@ footer {
     height: 620px;
   }
 }
+
+/* Native validation selects the control; nearest reveal also includes its label. */
+#timed-bonus-form label,
+#timed-bonus-form input,
+#timed-bonus-form select,
+#timed-bonus-form textarea {
+  scroll-margin: 8px;
+}
