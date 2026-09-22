@@ -1,4 +1,3 @@
-import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -280,9 +279,4 @@ async function qualifyVersus(t, routeId) {
   assert.equal(Object.keys(profile.clears.team).length, 0);
 }
 
-for (const routeId of ['whole-originals-v3', 'whole-originals-v4']) {
-  test(`${routeId}:71 real Solo host clears retain exact themes and originals across70 Next actions and a failed preload`, (t) =>
-    qualifySolo(t, routeId));
-  test(`${routeId}:71 real Versus races keep equal boards, exact themes and pictures through70 deliberate Next actions`, (t) =>
-    qualifyVersus(t, routeId));
-}
+export { qualifySolo, qualifyVersus };
