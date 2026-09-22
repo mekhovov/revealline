@@ -2821,7 +2821,7 @@ export function bootCoop({
         [document, 'click', outside],
         [document, 'keydown', key],
         [document, 'visibilitychange', hidden],
-        [window, 'blur', retire],
+        [window, 'blur', windowBlur],
         [window, 'pagehide', retire],
         [dialog, 'cancel', retire],
         [dialog, 'close', retire],
@@ -2845,6 +2845,11 @@ export function bootCoop({
       }
       function hidden() {
         if (document.hidden) retire();
+      }
+      function windowBlur(event) {
+        // Capturing listeners also see a select/input losing focus inside the
+        // chooser. Only the window itself losing focus ends this read-only view.
+        if (event.target === window) retire();
       }
       // This is an already-open read-only view, not an automatic opening or
       // launch intent. Search and filters remain usable while rows arrive.
