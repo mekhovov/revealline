@@ -353,6 +353,31 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
   assert.deepEqual(p.errors, []);
 });
 
+for (const collection of ['Journey', 'Classic'])
+  test(`Solo Team filter hands an exact ${collection} mission to its Team host`, async (t) => {
+    const p = await soloPage(t, { titleScreen: true });
+    await open(p);
+    p.$('journey-mode').value = 'team';
+    p.$('journey-mode').emit('change');
+    const cards = [...p.$('journey-cards').children];
+    assert.equal(cards.length, 14);
+    assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, 14);
+    const target = cards.find((card) =>
+      card.querySelector('.journey-card-tags').textContent.includes(collection),
+    );
+    assert.match(target.textContent, /Play/);
+    target.click();
+    await settle(() => globalThis.location.href.includes('library-mission='));
+    const destination = new URL(globalThis.location.href);
+    assert.equal(destination.pathname, '/game/couch/relay-rescue.html');
+    assert.equal(
+      destination.searchParams.get('journey'),
+      collection === 'Journey' ? 'team-spatial-originals-1' : 'legacy',
+    );
+    assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
+    assert.deepEqual(p.errors, []);
+  });
+
 test('incoming Journey selection starts exactly its requested mission without another picker', async (t) => {
   const id = JSON.stringify([
     'journey:whole-spatial-v5',

@@ -145,22 +145,32 @@ now60 tests. The prior16 Solo host and8 full-index cases remain unchanged.
   DOM/storage/image boundaries, not browser layout, physical-controller, release
   or public verification.
 
-### Remaining B work, in execution order
+### Current implementation and remaining B work
 
-| Work                                   | State / gate                                                                                                                         |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Solo integration regression checkpoint | Implemented; final bounded rerun and commit in progress                                                                              |
-| Versus integration                     | In parallel local implementation; retain paired-board rules and staged replacement                                                   |
-| Team integration                       | Pending;12 Journey +2 legacy arenas, exact visit-local import ownership                                                              |
-| Cross-mode and external downloads      | Complete receiving adapters, cancellation/retry and paired-original installation; no silent fallback                                 |
-| Card presentation                      | Restore Journey band/mastery/route text and all applicable tags; show only actual Classic difficulty support                         |
-| Sequence/return acceptance             | Prove late Classic/Custom Next, cross-owner return state, same-name editions and no search-driven progression                        |
-| Compatibility qualification            | Native browser, compact layouts, keyboard/controller, lazy loading, failed storage/download and full affected suite                  |
-| Release B promotion                    | Reconcile accepted A, assign new version, reviewed PR, frozen build, Pages and public journeys; publisher remains sole release owner |
+Updated after `45c56271d`. “Pushed” means implemented and locally verified in
+draft PR268, **not released or publicly accepted**. Earlier checkpoint prose below
+records the evidence at that time, not the current remaining list.
 
-Versus and Team are not yet integrated at this checkpoint. No claim that all modes
-or the whole Release B acceptance list are complete. Release preparation remains
-serialized, while independent host work and bounded verification continue locally.
+| Work                                                                          | Current state                                                         | Remaining effort estimate                          |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------- |
+| Shared registry, trusted110-mission index, tags and exact owner identity      | Pushed; no name/geometry deduplication                                | Final release reconciliation                       |
+| Solo host, native setup, exact launches and authored Next                     | Pushed;27 combined host/helper cases passed                           | Full regression/native qualification               |
+| Versus host and supported Classic/Custom/optional launches                    | Pushed; independent fixes and17-case root repeat passed               | Downloads/readiness work below                     |
+| Team host,12 Journey +2 Classic +visit-local Custom                           | Pushed;153 tests passed together                                      | Cross-mode/native work below                       |
+| Solo↔Versus Journey modes without duplicate identities                       | Pushed;7 adapter +32 actual-host cases passed                         | Cross-mode public verification                     |
+| Team↔Solo/Versus catalogue and exact handoffs                                | Active parallel implementation                                        | 1–3h                                               |
+| Trusted bundled/archive Versus downloads                                      | Active parallel implementation; no Optional-schema bypass             | 1–3h                                               |
+| Paired-original downloads/readiness across hosts                              | Incomplete; retain existing media transactions                        | 3–5h                                               |
+| Installed Custom metadata/readiness without eager artwork decoding            | Design/integration pending; no fake prepared ownership                | 3–5h                                               |
+| Compact library                                                               | Portrait native pass; landscape correction pushed                     | 0.5–2h recheck/fixes                               |
+| Full navigation, failure, storage and accessibility/performance qualification | Bounded cohorts pass; whole affected/native gates remain              | 2–4h plus device availability                      |
+| Release B promotion                                                           | Waits only for accepted A and B technical gates; local work continues | 2–4h after qualification, CI/Pages queues variable |
+
+Estimates are remaining engineering ranges, not guaranteed release times or
+permission to skip gates. Parallel work overlaps; provisional B delivery range is
+8–16h from this checkpoint, with external media and CI the main risks. Publish
+actual delivery and remaining gates after each release. One publisher retains
+main/tag/Pages ownership; implementation stays isolated from A and the dirty tree.
 
 Additional compatibility gates: audit retained setup/appearance entry points now
 that Missions opens the unified library, without adding a second mission browser.
@@ -268,7 +278,7 @@ verification. It must receive a new pinned native check before acceptance.
 - Compact cards retain mission, campaign, edition, textual tags, actual rules and
   availability. Detailed route/mastery/diagrams are optional; hidden diagrams are
   not constructed.44px controls and a minimum card viewport are retained.
--20 shared chooser/compact tests and3 targeted existing Solo setup tests pass.
+  -20 shared chooser/compact tests and3 targeted existing Solo setup tests pass.
   Pinned native phone/landscape remeasurement remains mandatory; CSS assertions
   alone do not prove the reported82px viewport defect is resolved.
 
@@ -321,9 +331,9 @@ verification. It must receive a new pinned native check before acceptance.
 - Replaced an obsolete synchronous/retired-chooser fixture with a separate actual
   authored-opening test that awaits the unified UI, supersedes held Next artwork,
   settles and releases the stale decoder, and preserves the new run and picture.
-- All16 retained Legacy cases pass across bounded runs; the new actual authored
-  supersession case passes. A single final whole-cohort run remains part of full
-  qualification; earlier interrupted runs are not counted as clean full runs.
+- The final combined result-continuation cohort passes17/17, zero failures/skips
+  in185.5 seconds, including the actual authored supersession case. This closes
+  the earlier16/17 fixture gate without weakening receipt assertions.
 
 ### Short-landscape follow-up
 
@@ -334,4 +344,20 @@ verification. It must receive a new pinned native check before acceptance.
 - Added compact-specific spacing overrides while preserving44px targets. In short
   landscape, expanded Solo setup fields scroll above the stable footer rather
   than pushing Back below the viewport.22 chooser/compact and3 Solo setup tests
-  pass; a new pinned native recheck is still required.
+  pass. Pinned native `45c56271d` recheck passes the reported defects:844×390 has
+  a208px card viewport,44px footer and no dialog overflow;390×844 has612px cards
+  closed and335px with setup open. All setup/filter controls remain keyboard
+  reachable and visible. Escape/Home/Missions restores exact focus. This is a
+  bounded native-layout gate, not whole-release public/device qualification.
+
+### Solo/Versus to Team browsing checkpoint
+
+- Both hosts expose the same12 Journey and2 Classic Team identities as the
+  receiving Team host. Mode filtering remains in the shared selector; departure
+  opens the exact selected mission through the existing guarded handoff.
+- No remote Team run or background decoder is created. Independent review and
+  the identity test plus four actual-host handoffs pass5/5. Remote progress is
+  left blank rather than inventing clears.
+- Team to Solo/Versus, retained downloads and installed metadata readiness are
+  still separate gates. Release A source CI has passed11,788 tests; its public
+  acceptance remains pending. Release B remains a draft preparation branch.

@@ -335,6 +335,31 @@ test('Versus mode filter exposes the same qualified Journey identities in Solo w
   assert.equal(p.doc.documentElement.dataset.toolState, 'ready');
 });
 
+for (const collection of ['Journey', 'Classic'])
+  test(`Versus Team filter hands an exact ${collection} mission to its Team host`, async (t) => {
+    const p = await fixture(t);
+    await open(p);
+    p.$('journey-mode').value = 'team';
+    p.$('journey-mode').emit('change');
+    const cards = [...p.$('journey-cards').children];
+    assert.equal(cards.length, 14);
+    assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, 14);
+    const target = cards.find((card) =>
+      card.querySelector('.journey-card-tags').textContent.includes(collection),
+    );
+    assert.match(target.textContent, /Play/);
+    target.click();
+    await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
+    const destination = new URL(globalThis.location.href);
+    assert.equal(destination.pathname, '/game/couch/relay-rescue.html');
+    assert.equal(
+      destination.searchParams.get('journey'),
+      collection === 'Journey' ? 'team-spatial-originals-1' : 'legacy',
+    );
+    assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
+    assert.equal(p.doc.documentElement.dataset.toolState, 'ready');
+  });
+
 for (const custom of [false, true])
   test(`installed ${custom ? 'modified Custom' : 'official Classic'} selection stages the exact late level without falling back to its chapter opener`, async (t) => {
     const source = JSON.parse(

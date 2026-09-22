@@ -1659,6 +1659,11 @@ try {
       });
       const profile = journeyProfile || createJourneyProfileStore({ profileKey: route.profileKey });
       if (!journeyProfile) await profile.load();
+      const { createRemoteTeamLibrarySources } = await import('../mission-library/remote-team.mjs');
+      const teamSources = createRemoteTeamLibrarySources({
+        launch: departLibraryMission,
+        difficulty: () => journeyPreferences?.snapshot().difficulty ?? 'standard',
+      });
       libraryInstaller ??= createCouchChapterInstaller({
         channel: contentChannel,
         registeredEntries: [baseEntry],
@@ -1734,6 +1739,7 @@ try {
               }),
             },
           ]),
+          ...teamSources,
         ],
         compatibility: ({ entry, level }) => {
           const modes = [];
