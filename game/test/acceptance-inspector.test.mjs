@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import {
@@ -10,6 +11,7 @@ import {
   appendPlaytestEvidence,
 } from '../content-design/acceptance-evidence.mjs';
 import { createAcceptanceInspector } from '../studio/acceptance-inspector.mjs';
+import { syncStudioDifficulty } from '../studio/difficulty-view.mjs';
 
 const sourceCommit = 'a'.repeat(40);
 function element() {
@@ -209,10 +211,77 @@ test('Studio owns the inspector and synchronizes it when the applied board selec
   const host = readFileSync(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const html = readFileSync(new URL('../studio/index.html', import.meta.url), 'utf8');
   assert.match(host, /const acceptanceInspector = createAcceptanceInspector\(/);
-  assert.match(
-    host,
-    /function inspectBoard\(trailCells = \[\]\) \{\s*const mission = currentMission\(\);\s*acceptanceInspector.sync\(\)/,
+  const inspect = host.slice(
+    host.indexOf('function inspectBoard('),
+    host.indexOf('function render('),
   );
+  assert(inspect.startsWith('function inspectBoard('));
+  for (const source of [createStarterProject(), createTeamOpeningCandidates()])
+    for (const empty of [false, true]) {
+      const { state, nodes, inspector } = setup(source);
+      state.difficulty = 'expert';
+      if (empty) state.missionId = '';
+      const mission = source.missions.find((item) => item.id === state.missionId);
+      const selector = {
+        value: state.difficulty,
+        options: ['gentle', 'standard', 'expert'].map((value) => ({ value, textContent: 'stale' })),
+      };
+      const calls = [],
+        boardNodes = { difficulty: selector },
+        stopAtPreview = new Error('Preview boundary');
+      nodes.report.textContent = 'Stale report';
+      const context = {
+        currentMission: () => mission,
+        session: { current: () => source },
+        $: (id) => (boardNodes[id] ??= {}),
+        syncStudioDifficulty,
+        acceptanceInspector: {
+          sync() {
+            assert(selector.options.every((option) => option.textContent !== 'stale'));
+            calls.push('acceptance');
+            inspector.sync();
+          },
+        },
+        ...Object.fromEntries(
+          [
+            'actorEditor',
+            'combatEditor',
+            'geometryEditor',
+            'bonusEditor',
+            'timedBonusEditor',
+            'objectiveEditor',
+            'relayEditor',
+            'directionalEditor',
+            'encounterEditor',
+            'imageWorkbench',
+            'traceRecovery',
+          ].map((name) => [name, { sync() {} }]),
+        ),
+        document: {},
+        setBoardAvailability: (_document, available) => assert.equal(available, !!mission),
+        prepareContentPreview: (applied, id, options) => {
+          assert.equal(applied, source);
+          assert.equal(id, mission.id);
+          assert.equal(options.difficulty, 'expert');
+          calls.push('preview');
+          throw stopAtPreview;
+        },
+        inspectedTrail: [1],
+        tuningRevision: 'old',
+      };
+      const invoke = () => runInNewContext(`${inspect}\ninspectBoard();`, context);
+      if (empty) invoke();
+      else assert.throws(invoke, (error) => error === stopAtPreview);
+      assert.deepEqual(calls, empty ? ['acceptance'] : ['acceptance', 'preview']);
+      assert.equal(nodes.report.textContent, '');
+      assert.equal(nodes.inspect.disabled, empty);
+      assert.equal(selector.value, 'expert');
+      if (empty) {
+        assert.equal(nodes.selection.textContent, 'Choose an applied mission above.');
+        assert.equal(context.inspectedTrail.length, 0);
+        assert.equal(context.tuningRevision, null);
+      } else assert(nodes.selection.textContent.includes(`${mission.id} · expert`));
+    }
   for (const id of [
     'mode',
     'commit',
