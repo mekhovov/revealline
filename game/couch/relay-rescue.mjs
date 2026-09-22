@@ -2804,6 +2804,54 @@ export function bootCoop({
     remoteRetry.hidden = true;
     remoteFeedback.append(remoteStatus, remoteRetry);
     statusGroup.append(chooserStatus, remoteFeedback);
+    function trackRemoteLibraryView(onRetire) {
+      const visit = libraryOtherModesVisit,
+        mode = libraryChooser.state().mode;
+      let retired = false;
+      const current = () =>
+        !retired &&
+        !disposed &&
+        dialog.open &&
+        foreground() &&
+        libraryOtherModesVisit === visit &&
+        libraryChooser.state().mode === mode;
+      const listeners = [
+        [document, 'focusin', outside],
+        [document, 'pointerdown', outside],
+        [document, 'click', outside],
+        [document, 'keydown', key],
+        [document, 'visibilitychange', hidden],
+        [window, 'blur', retire],
+        [window, 'pagehide', retire],
+        [dialog, 'cancel', retire],
+        [dialog, 'close', retire],
+        [$('journey-mode'), 'change', retire],
+      ];
+      function dispose() {
+        for (const [target, type, listener] of listeners)
+          target.removeEventListener(type, listener, true);
+      }
+      function retire() {
+        if (retired) return;
+        retired = true;
+        dispose();
+        onRetire();
+      }
+      function outside(event) {
+        if (!dialog.contains(event.target)) retire();
+      }
+      function key(event) {
+        if (event.key === 'Escape' || !dialog.contains(event.target)) retire();
+      }
+      function hidden() {
+        if (document.hidden) retire();
+      }
+      // This is an already-open read-only view, not an automatic opening or
+      // launch intent. Search and filters remain usable while rows arrive.
+      for (const [target, type, listener] of listeners)
+        target.addEventListener(type, listener, true);
+      return { current, dispose };
+    }
     async function includeOtherModes() {
       libraryOtherModesOpening?.dispose();
       libraryOtherModesOpening = null;
@@ -2820,14 +2868,11 @@ export function bootCoop({
       remoteRetry.hidden = remoteStatus.hidden || document.activeElement !== remoteRetry;
       remoteRetry.setAttribute('aria-disabled', 'true');
       if (remoteStatus.hidden || libraryOtherModesCheckedVisit === libraryOtherModesVisit) return;
-      const opening = trackMissionLibraryOpening({
-        document,
-        onRetire() {
-          if (libraryOtherModesOpening !== opening) return;
-          remoteStatus.textContent = 'Loading interrupted. Retry when ready.';
-          remoteRetry.removeAttribute('aria-disabled');
-          remoteRetry.hidden = libraryChooser.state().mode === 'team';
-        },
+      const opening = trackRemoteLibraryView(() => {
+        if (libraryOtherModesOpening !== opening) return;
+        remoteStatus.textContent = 'Loading interrupted. Retry when ready.';
+        remoteRetry.removeAttribute('aria-disabled');
+        remoteRetry.hidden = libraryChooser.state().mode === 'team';
       });
       libraryOtherModesOpening = opening;
       remoteRetry.textContent = 'Retry';
