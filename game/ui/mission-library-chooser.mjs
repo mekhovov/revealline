@@ -35,21 +35,42 @@ export function attachMissionLibraryChooser({
     null,
     'All missions, one library. Journey, Classic and Custom keep their own rules and progression.',
   );
+  copy.className = 'journey-library-copy';
   const filters = node('div');
   filters.className = 'journey-filters';
-  function field(title, id, type = 'select') {
-    const label = node('label', null, title),
+  function field(title, id, type = 'select', parent = filters) {
+    const label = node('label'),
+      caption = node('span', null, title),
       control = node(type, id);
-    label.append(control);
-    filters.append(label);
+    caption.className = 'journey-filter-label';
+    label.append(caption, control);
+    parent.append(label);
     return control;
   }
   const search = field('Search all missions', 'journey-search', 'input');
+  search.parentElement.className = 'journey-search-field';
   search.type = 'search';
   search.placeholder = 'Mission, campaign, edition or tag';
-  const collection = field('Collection', 'journey-collection');
-  const campaign = field('Campaign', 'journey-campaign');
-  const modeFilter = field('Mode', 'journey-mode');
+  const filterDetails = node('details', 'journey-filter-details');
+  filterDetails.className = 'journey-filter-details';
+  const filterSummary = node('summary', 'journey-filter-summary', 'Filters');
+  const filterOptions = node('div');
+  filterOptions.className = 'journey-filter-options';
+  filterDetails.append(filterSummary, filterOptions);
+  filters.append(filterDetails);
+  const collection = field('Collection', 'journey-collection', 'select', filterOptions);
+  const campaign = field('Campaign', 'journey-campaign', 'select', filterOptions);
+  const modeFilter = field('Mode', 'journey-mode', 'select', filterOptions);
+  const detailLabel = node('label');
+  detailLabel.className = 'journey-card-detail-control';
+  const detailedCards = node('input', 'journey-detailed-cards');
+  detailedCards.type = 'checkbox';
+  detailLabel.append(detailedCards, node('span', null, 'Detailed mission cards'));
+  filterOptions.append(detailLabel);
+  const view = doc.defaultView ?? globalThis;
+  const media = view.matchMedia?.('(max-width: 600px), (max-height: 480px)');
+  let compact = media?.matches === true;
+  filterDetails.open = !compact;
   const option = (title, value) => {
     const result = node('option', null, title);
     result.value = value;
@@ -264,6 +285,8 @@ export function attachMissionLibraryChooser({
       campaign: campaign.value,
     });
     status.textContent = `${matches.length} mission${matches.length === 1 ? '' : 's'} · ${modeLabel(modeFilter.value)}${message ? ` · ${message}` : ''}`;
+    const filtersActive = !!collection.value || !!campaign.value || modeFilter.value !== mode;
+    filterSummary.textContent = filtersActive ? 'Filters · active' : 'Filters';
     const buttons = matches.map((row) => {
       let card = cards.get(row.id);
       if (card?.row !== row) {
@@ -351,6 +374,7 @@ export function attachMissionLibraryChooser({
         )
       : null;
   function observeDiagrams() {
+    if (compact && !detailedCards.checked) return;
     for (const button of list.children)
       if (!cards.get(button.dataset.missionId).diagram) observer?.observe(button);
   }
@@ -361,6 +385,26 @@ export function attachMissionLibraryChooser({
       card.button.querySelector('.journey-card-map')?.remove();
     }
   }
+  function resizeFilters(event) {
+    compact = event.matches === true;
+    // A viewport change must not hide the focused native select inside a
+    // collapsed details element. No filter value or browsing state is reset.
+    const focused = doc.activeElement;
+    filterDetails.open = !compact;
+    if (dialog.open && !doc.hidden && doc.hasFocus?.() !== false) {
+      if (compact && filterOptions.contains(focused)) filterSummary.focus({ preventScroll: true });
+      else if (!compact && (focused === filterSummary || detailLabel.contains(focused)))
+        collection.focus({ preventScroll: true });
+    }
+    if (compact && !detailedCards.checked) observer?.disconnect();
+    else if (dialog.open) observeDiagrams();
+  }
+  media?.addEventListener?.('change', resizeFilters);
+  detailedCards.addEventListener('change', () => {
+    dialog.classList.toggle('mission-library-detailed', detailedCards.checked);
+    if (compact && !detailedCards.checked) observer?.disconnect();
+    else if (dialog.open) observeDiagrams();
+  });
   function close() {
     ++visit;
     remember();
@@ -449,6 +493,7 @@ export function attachMissionLibraryChooser({
       destroyed = true;
       unsubscribe();
       observer?.disconnect();
+      media?.removeEventListener?.('change', resizeFilters);
       dialog.remove();
     },
   };
