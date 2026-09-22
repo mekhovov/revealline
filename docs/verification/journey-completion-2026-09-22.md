@@ -55,6 +55,11 @@ are provenance, not proof that later successors shipped.
 
 ## Latest bounded implementation
 
+[Team recovery explanation](journey-team-recovery-cause.md): automatic individual
+and shared reserve recovery now retain the observed hit/self-crossing cause,
+without changing physics, timing or adding a dialog. Real-keyboard shared failure
+and all-preset keeper hits cover the fix; native/human understanding is pending.
+
 [Changing-return Team player](journey-team-spatial-player.md): Shared Lookout and
 Twin Depots now join the pictured twelve-mission sequence through an explicit,
 isolated edition; the other ten levels and all original pictures remain exact.
