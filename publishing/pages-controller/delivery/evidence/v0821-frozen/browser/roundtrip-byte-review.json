@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "sessionOriginals": 1,
+  "restoredStoreOriginals": 2,
+  "allSessionOriginalBytesPreserved": true,
+  "restoredStoreBytes": 87465,
+  "assetHashes": [
+    "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65",
+    "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce"
+  ],
+  "scope": "Actual native export, additive Workshop restore and native re-export; no new assignment or earned-reward claim."
+}

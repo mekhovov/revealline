@@ -1,0 +1,86 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "archiveId": "archive-50",
+  "repository": "mekhovov/revealline-archive-50",
+  "infrastructureCommit": "b1f11e438e112ea09c3bec77cb10e0b2d68e658d",
+  "deploymentId": 6592773118,
+  "status": "PASS",
+  "workflowRunId": 35738900186,
+  "versions": [
+    "v0.82.0"
+  ],
+  "expectedFiles": 1056,
+  "expectedBytes": 590361506,
+  "httpAudit": {
+    "failedCount": 0,
+    "retryCount": 0,
+    "observedFiles": 1056,
+    "observedBytes": 590361506
+  },
+  "scopedBrowserJourneyPassed": true,
+  "admitted": true,
+  "evidence": [
+    {
+      "path": "evidence/archive-50-v0820/http-report-original.json",
+      "sha256": "1d90075186ae2028927263d3f261fe9f92595d79fb200501ffb329903c343ae1"
+    },
+    {
+      "path": "evidence/archive-50-v0820/deployment-actual-original.json",
+      "sha256": "1d96c19401fdd01453a3256b8bd41bf349ba766882ea26fab49a501bcbf9db13"
+    },
+    {
+      "path": "evidence/archive-50-v0820/deployment-statuses-original.json",
+      "sha256": "9beb91f3579c64091a494f7d8f84c2969ffff6110e116c5f2bf9e79c102caeb8"
+    },
+    {
+      "path": "evidence/archive-50-v0820/deploy-run-original.json",
+      "sha256": "08e62807250c5ea5f4703d1f817bfd57616489cff5cf79c93005a97447d20a4b"
+    },
+    {
+      "path": "evidence/archive-50-v0820/native-attempt.json",
+      "sha256": "007fbc9dafbede46d55459c932f89d0bee84389db1c7022e84eb511c52599c01"
+    },
+    {
+      "path": "evidence/archive-50-v0820/native/archive-index-return.txt",
+      "sha256": "449533d22321495e51beae131bc8cd9ecac3c2b19f570c78056f85d9e55051a1"
+    },
+    {
+      "path": "evidence/archive-50-v0820/native/errors.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/archive-50-v0820/native/first-signal-win.txt",
+      "sha256": "38ecb188e583eb1540f2e6d4ca6a2c6d9116991e11c890cae15b818df16b98ab"
+    },
+    {
+      "path": "evidence/archive-50-v0820/native/main-explorer.txt",
+      "sha256": "580f73315b6e24df5393a3e2fb4cc51ababde0c4a48495bcb81ede2f79467fba"
+    },
+    {
+      "path": "evidence/archive-50-v0820/native/observation.json",
+      "sha256": "d6973f6443af5317f847097fdfde6754e3bd8c3056e057b8b8e4648e4d8872fe"
+    },
+    {
+      "path": "evidence/archive-50-v0820/native/screenshot-1790086916234.png",
+      "sha256": "f49d53ad3e34e9fc11ec57d4c50def9a861973def9caad8a282dfd0c4d643b13"
+    },
+    {
+      "path": "evidence/archive-50-v0820/native/title.txt",
+      "sha256": "51edf19331357d0b242d738698bb1347429eb60696ae200fbb3f2462af5dd569"
+    }
+  ],
+  "limits": [
+    "Historical online preservation only; no new offline restart, physical iPhone, controller, multitouch, listening-quality or whole-phase acceptance.",
+    "Main-menu title has no Release explorer action in this exact frozen edition; archive index link was exercised.",
+    "Browser observations are separate from the complete public byte audit.",
+    "No explicit Pause/Resume claim is made by this archived-version observation.",
+    "The initial early ArrowDown wait and incorrect literal explorer-heading wait are preserved in the root observation; the earlier unavailable CUA attempt remains separate reference evidence."
+  ],
+  "reviewedAt": "2026-09-22T14:25:34.287900+00:00",
+  "reviewBasis": "Root-owned actual isolated Chromium observation and exact support files; parent authorized this scoped admission after its browser review.",
+  "scope": "Historical online preservation: canonical v0.82.0 title, ordinary keyboard First Signal victory, Main menu/Settings, archive index to current main explorer and browser Back.",
+  "retainedAttempts": [
+    "Initial ArrowDown issued before the ready canvas did not produce a win within the 20-second wait. A later ordinary ArrowDown produced the recorded win.",
+    "Explorer wait for literal Release explorer timed out because actual heading is Playable versions; actual URL and snapshot confirm successful navigation."
+  ]
+}

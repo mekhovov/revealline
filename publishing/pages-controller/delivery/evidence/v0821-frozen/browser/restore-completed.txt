@@ -1,0 +1,162 @@
+- dialog "Still picture workshop"
+  - heading "Still picture workshop" [level=2, ref=e1]
+  - generic
+    - paragraph
+      - status
+        - StaticText "Originals and the reviewed assignments were restored. Retained history was preserved. Reload saved media and installed maps to verify; game progress and flights were not imported."
+    - button "Cancel pending work" [disabled, ref=e2]
+    - button "Close workshop" [ref=e3]
+      - StaticText "Close workshop"
+  - paragraph
+    - StaticText "Save exact map/world assignments for fresh flights. Existing saved flights and earned Collection pictures keep their original revision. Original files remain unchanged."
+  - paragraph
+    - StaticText "1 retained image records · 1 immutable revisions · saved generation 1"
+  - generic
+    - LabelText
+      - StaticText "Installed chapter"
+      - combobox "Installed chapter" [expanded=false, disabled, ref=e13]: First Signal
+        - MenuListPopup
+          - option "First Signal" [disabled, ref=e46]
+    - LabelText
+      - StaticText "Map"
+      - combobox "Map" [expanded=false, disabled, ref=e14]: First Signal · 1
+        - MenuListPopup
+          - option "First Signal · 1" [disabled, ref=e47]
+          - option "Relay Orchard · 1" [disabled, ref=e48]
+          - option "Crosswind · 1" [disabled, ref=e49]
+          - option "Stone Lanes · 1" [disabled, ref=e50]
+          - option "Night Patrol · 1" [disabled, ref=e51]
+          - option "Hidden Frequency · 1" [disabled, ref=e52]
+          - option "The Crossing · 1" [disabled, ref=e53]
+          - option "Last Light · 1" [disabled, ref=e54]
+          - option "Signal Garden · 1" [disabled, ref=e55]
+          - option "Supply Circuit · 1" [disabled, ref=e56]
+          - option "Short Fuse · 1" [disabled, ref=e57]
+          - option "Relay Storm · 1" [disabled, ref=e58]
+    - LabelText
+      - StaticText "World"
+      - combobox "World" [expanded=false, disabled, ref=e15]: FPV Front
+        - MenuListPopup
+          - option "FPV Front" [disabled, ref=e59]
+          - option "Ukraine Atlas" [disabled, ref=e60]
+          - option "1994 Forever" [disabled, ref=e61]
+          - option "Spend Network" [disabled, ref=e62]
+    - LabelText
+      - StaticText "Saved picture revision"
+      - combobox "Saved picture revision" [expanded=false, disabled, ref=e16]: First Signal · First Signal · FPV Front. scene-signal-01 · revision 1
+        - MenuListPopup
+          - option "First Signal · First Signal · FPV Front. scene-signal-01 · revision 1" [disabled, ref=e63]
+    - LabelText
+      - StaticText "Original PNG or JPEG (4 MiB maximum)"
+      - button "Original PNG or JPEG (4 MiB maximum)" [disabled, ref=e17]: No file chosen
+    - LabelText
+      - StaticText "Declared source"
+      - combobox "Declared source" [expanded=false, disabled, ref=e18]: My uploaded file
+        - MenuListPopup
+          - option "My uploaded file" [disabled, ref=e64]
+          - option "Original artwork" [disabled, ref=e65]
+          - option "Licensed artwork" [disabled, ref=e66]
+    - LabelText
+      - StaticText "Credit"
+      - textbox "Credit" [disabled, ref=e19]
+    - LabelText
+      - StaticText "Source / provenance note"
+      - textbox "Source / provenance note" [disabled, ref=e20]
+    - LabelText
+      - StaticText "Picture description"
+      - textbox "Picture description" [disabled, ref=e21]
+  - Canvas "Isolated still picture preview; no gameplay or rewards"
+  - generic
+    - button "Preview chosen file" [disabled, ref=e4]
+    - button "Preview saved revision" [disabled, ref=e5]
+    - button "Preview authored picture" [disabled, ref=e6]
+    - button "Save assignment" [disabled, ref=e7]
+    - button "Use authored picture" [disabled, ref=e8]
+    - button "Discard draft" [disabled, ref=e9]
+    - button "Reload saved media and installed maps" [ref=e10]
+  - generic
+    - heading "Original picture files" [level=3, ref=e11]
+    - paragraph
+      - StaticText "A .rlmedia file includes every referenced still original, retained generic original and exact owner history. Game progress, flights, packs and audio-only files need their separate backups."
+    - generic
+      - LabelText
+        - StaticText "Originals backup (.rlmedia, at most 256 MiB)"
+        - button "Originals backup (.rlmedia, at most 256 MiB)" [disabled, ref=e32]: RevealLine-session-originals.rlmedia
+      - LabelText
+        - StaticText "Assignment restore policy"
+        - combobox "Assignment restore policy" [expanded=false, disabled, ref=e33]: Keep current assignments; add missing bindings
+          - MenuListPopup
+            - option "Keep current assignments; add missing bindings" [disabled, ref=e69]
+            - option "Use the bundle’s exact assignment set" [disabled, ref=e70]
+    - paragraph
+      - StaticText "Keep destination assignments when they conflict, and add only missing bindings. Every retained original and revision stays saved."
+    - paragraph
+      - StaticText "No originals backup has been reviewed."
+    - generic
+      - button "Prepare originals download" [disabled, ref=e22]
+      - button "Review chosen originals backup" [disabled, ref=e23]
+      - button "Restore reviewed originals" [disabled, ref=e24]
+  - generic
+    - heading "Optional story" [level=3, ref=e12]
+    - paragraph
+      - StaticText "Choose a saved picture revision before preparing its story. Saved flights and earned pictures are unchanged."
+    - paragraph
+      - StaticText "First Signal · First Signal · FPV Front. scene-signal-01 · revision 1 · historical revision"
+    - paragraph
+      - StaticText "Selected story: none."
+    - generic
+      - LabelText
+        - StaticText "Owned video (MP4 or WebM, 64 MiB maximum)"
+        - button "Owned video (MP4 or WebM, 64 MiB maximum)" [disabled, ref=e34]: No file chosen
+      - LabelText
+        - StaticText "Story starts at (seconds)"
+        - spinbutton "Story starts at (seconds) 50" [disabled, ref=e35]
+        - slider "Story starts at (seconds) slider" [disabled, ref=e36]: 50
+      - LabelText
+        - StaticText "Story ends at (seconds)"
+        - spinbutton "Story ends at (seconds) 50" [disabled, ref=e37]
+        - slider "Story ends at (seconds) slider" [disabled, ref=e38]: 50
+      - LabelText
+        - StaticText "Poster frame at (seconds)"
+        - spinbutton "Poster frame at (seconds) 50" [disabled, ref=e39]
+        - slider "Poster frame at (seconds) slider" [disabled, ref=e40]: 50
+      - LabelText
+        - StaticText "Story description"
+        - textbox "Story description" [disabled, ref=e41]
+      - LabelText
+        - StaticText "Saved story for this picture"
+        - combobox "Saved story for this picture" [expanded=false, disabled, ref=e42]: Choose a saved story…
+          - MenuListPopup
+            - option "Choose a saved story…" [disabled, ref=e71]
+    - paragraph
+    - generic
+      - button "Inspect chosen video" [disabled, ref=e25]
+      - button "Capture picture draft" [disabled, ref=e26]
+      - button "Prepare new story" [disabled, ref=e27]
+      - button "Prepare saved story" [disabled, ref=e28]
+      - button "Save prepared story" [disabled, ref=e29]
+      - button "Clear story binding" [disabled, ref=e30]
+    - paragraph
+    - generic
+      - heading "Story originals" [level=4, ref=e31]
+      - paragraph
+        - StaticText "Restore picture originals separately with .rlmedia. This file contains story history and video originals; no progress or audio."
+      - generic
+        - LabelText
+          - StaticText "Story originals (.rlstory, 256 MiB maximum)"
+          - button "Story originals (.rlstory, 256 MiB maximum)" [disabled, ref=e67]: No file chosen
+        - LabelText
+          - StaticText "Story binding restore policy"
+          - combobox "Story binding restore policy" [expanded=false, disabled, ref=e68]: Keep current bindings
+            - MenuListPopup
+              - option "Keep current bindings" [disabled, ref=e72]
+              - option "Restore incoming bindings" [disabled, ref=e73]
+      - paragraph
+        - StaticText "No story backup reviewed."
+      - generic
+        - button "Prepare story download" [disabled, ref=e43]
+        - button "Review chosen story backup" [disabled, ref=e44]
+        - button "Restore reviewed stories" [disabled, ref=e45]
+    - paragraph
+      - status
+        - StaticText "Story history loaded. Preparation does not save a binding."
