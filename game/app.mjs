@@ -127,7 +127,9 @@ import { createStoryMediaStore } from './story-media-store.mjs';
 import { storyPinForTheme, validateFlightPresentationPinsForRun } from './flight-media-pins.mjs';
 import { createStoryDialog } from './ui/story-dialog.mjs';
 import { createFlightPictures } from './ui/flight-pictures.mjs';
-import { acquireAuthoredPicture } from './ui/presentation-image.mjs';
+import { acquireAuthoredPicture, acquirePresentationImage } from './ui/presentation-image.mjs';
+import { createSessionReleasePictures } from './presentation/session-release-pictures.mjs';
+import { createSessionPictureView } from './presentation/session-picture-view.mjs';
 import {
   createPictureIdentityCatalog,
   createBackupPictureIdentityResolver,
@@ -946,6 +948,13 @@ try {
   getPictureManager();
   const pictureStore = practice ? null : createStillMediaStore({ managedStore: pictureManager });
   const storyStore = practice ? null : createStoryMediaStore({ managedStore: pictureManager });
+  const sessionPictures = createSessionReleasePictures();
+  const protectSessionOriginals = (event) => {
+    if (!sessionPictures.status().originals) return;
+    event.preventDefault();
+    event.returnValue = '';
+  };
+  window.addEventListener('beforeunload', protectSessionOriginals);
   let flightPictures = null,
     picturePrewarm = null,
     pictureResume = null,
@@ -1142,6 +1151,10 @@ try {
       themeIds: entry.themes.map((item) => item.id),
       identityCatalog: legacy ? null : pictureIdentity(),
       readMedia: pictureMedia,
+      acquire: (request, options) =>
+        sessionPictures.has(request.pin)
+          ? sessionPictures.acquire(request.pin, options)
+          : acquirePresentationImage(request, options),
       pins,
       legacy,
       explicitLegacy,
@@ -1615,6 +1628,8 @@ try {
     ready: () => presentationReady,
     executionCatalog: () => executionCatalog,
     readMedia: pictureMedia,
+    sessionPictures,
+    sessionOnly: () => !writer.writable,
     assertWritable() {
       if (!writer.writable) throw new ReleasePictureWriteRequiredError();
     },
@@ -2177,6 +2192,9 @@ try {
       candidateHost?.preparer.dispose();
       journeyPreferences?.dispose();
       missionThumbnails.close();
+      libraryPanel.dispose();
+      window.removeEventListener('beforeunload', protectSessionOriginals);
+      sessionPictures.dispose();
       pictureStore?.close();
       storyStore?.close();
       externalChapters?.close();
@@ -2212,7 +2230,7 @@ try {
     clearInput();
     pause(true);
     $('save-warning').textContent =
-      'This tab returned from browser history in session-only mode. Export a complete backup to keep its current progress, then reload to open the latest saved profile.';
+      'This tab returned from browser history in session-only mode. Export game data and any session originals from Game data before leaving this tab. Reload opens the latest saved profile; it does not keep session-only progress.';
     show('save-warning', true);
     void packCommits.reconcile();
     if ($('settings-dialog').open) void storageRetention.refresh();
@@ -5156,7 +5174,9 @@ try {
   const libraryPanel = attachLibraryPanel({
     prepareCollectionProgress,
     focusMission,
-    pictureMedia,
+    pictureMedia: async (options) =>
+      createSessionPictureView(await pictureMedia(options), sessionPictures),
+    sessionPictures,
     assertExternalBackupSupported,
     backupPreparation: externalBackup
       ? { prepareExternalChapters: externalBackup.prepareExternalChapters }
@@ -5251,6 +5271,9 @@ try {
     canSnapshotBackup: () => storedStateAdopted,
     sessionNote: () =>
       [
+        sessionPictures.status().originals
+          ? 'Session-only picture originals are not included in this JSON. Prepare and download session originals (.rlmedia) from Game data before leaving this tab; restore them before the JSON.'
+          : '',
         !storedStateAdopted
           ? 'This export contains the current session only. Unreadable stored data was not included; keep its original files.'
           : '',
@@ -6078,7 +6101,7 @@ try {
     if (kind === 'won') {
       $('overlay-title').textContent = 'A little more light.';
       $('overlay-copy').textContent =
-        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? 'Authored test clear recorded in Journey progress. No Legacy collection awards.' : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : 'Picture collected for this session. Export your library to keep it.')}`;
+        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? 'Authored test clear recorded in Journey progress. No Legacy collection awards.' : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : sessionPictures.status().originals ? 'Picture collected for this session. Export game data and session originals from Settings → Game data → Saves & recovery to keep it.' : 'Picture collected for this session. Export your library to keep it.')}`;
       $('result-medals').textContent = '★'.repeat(
         run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
       );
