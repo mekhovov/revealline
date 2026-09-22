@@ -43,7 +43,7 @@ CI, release and public verification separately. Heavy release jobs remain
 serialized; bounded local tests can run concurrently. Do not introduce new enemy
 systems, artwork, music, balance changes or unrelated recovery work into B.
 
-Current state: all three hosts are implemented; final qualification is in progress.
+Current state: all three hosts are implemented; v0.84.0 final qualification is in progress.
 There is no B release or public acceptance yet. The current table and final
 checkpoint sections supersede historical statements that hosts are not mounted.
 
@@ -856,3 +856,29 @@ verification. It must receive a new pinned native check before acceptance.
   raster. No new mission or art ships with this fixture. This is not a complete
   export/reimport byte-preservation or public-build claim. The retained native
   failure and both passing source receipts are now [reviewable in this PR](verification/unified-mission-library/native-source/README.md).
+
+### Accepted baseline and v0.84.0 promotion
+
+- v0.83.0 is public and accepted for promotion: source `01b189f6427`, selector
+  merge `e0f99c9642`, production run35775874062. The publisher verified3,809 files /
+  613,866,928 bytes and basic public journeys; extended manual checks remain
+  explicitly pending, not silently passed.
+- B integrates accepted main `ce09a38c538526adb919a5dfa18ee764599dc6e2` through a
+  non-rewriting merge `99ba04548`. No conflicts occurred. Relative to the reviewed
+  B source, gameplay runtime is unchanged: incoming game changes are only two
+  already accepted A test-fixture corrections. Other incoming changes are the
+  accepted documentation, publication evidence and temporary test policy.
+- v0.84.0 is confirmed unused and allocated to this frozen feature scope.
+  Package, lockfile and build version agree. PR268 is being retargeted to main
+  for mandatory exact-source preflight/build checks. No new gameplay or artwork
+  scope is included, and no B release/Pages acceptance is claimed yet.
+- Preserve the314/315 local failure and targeted fixture-repair results. The
+  accepted temporary policy records automated suites as waived/skipped; it does
+  not waive validation, lint/format, build, immutable source/artifact/hash/archive
+  integrity, basic public availability or honest evidence. PR235 stays deferred.
+- Independent integration review confirms all485 incoming paths exactly match
+  accepted main in contents, object type and mode; no merge-only or unowned
+  variants. Local v0.84.0 validation passes1029 files with the same four known
+  distribution-root navigation warnings. Repository lint, web/native formatting,
+  motion syntax, Field Kit production-ledger check and version consistency all
+  pass. These do not substitute for the exact hosted build or public acceptance.

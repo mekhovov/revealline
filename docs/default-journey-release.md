@@ -7,15 +7,20 @@ one successor is being prepared.
 
 ## Current release boundary
 
-- Accepted public baseline at implementation start: **v0.82.0**.
-- **v0.82.1** exact merged source `64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e`
-  (PR250 predecessor `565c4f3bd6a06a593d22786730435f59ee6b1aa1`) passed exact
-  qualification run35729850339; publication/public acceptance
-  remains owned by the publisher. Do not infer deployment from that pass.
-- **v0.83.0** is reserved for this feature. It is a candidate until both source
-  check families, immutable freeze, Pages and public acceptance pass.
-- The source already contains the new missions. The defect is ordinary entry:
-  Start and Missions still select Legacy unless a player knows a special URL.
+- **v0.83.0 is the accepted public baseline.** Source PR263 merged as
+  `01b189f6427601a15cbb3eb1563b5f82eabbafa3`; selector PR271 merged as
+  `e0f99c9642355aa3daf62ce3e551675b8c9d2e14`. Production run35775874062 deployed
+  the frozen release. The publisher verified all3,809 files /613,866,928 bytes
+  and basic public journeys. Extended manual/device checks remain open.
+- The earlier v0.82.1 and all retained releases remain preserved. Historical
+  implementation targets and evidence below are not current delivery claims.
+- **v0.84.0 is allocated to Release B / PR268**, the unified mission selector.
+  Its source includes accepted-main policy PR272 at `ce09a38c5`. This changes
+  release test policy, not gameplay. Automated suites may be explicitly waived;
+  source identity, validation, lint/format, build, immutable integrity, deployment
+  and basic public acceptance remain mandatory. A skipped suite is not a pass.
+- Default Solo/Versus/Team entry is now delivered. Unified browsing is the next
+  release; its implementation is complete and final promotion is in progress.
 
 ## Feature contract and release notes
 
@@ -69,8 +74,9 @@ remain separate follow-up gates.
 
 ## Delivery sequence and remaining work
 
-Finish v0.82.1 without scope growth, then qualify/deploy this default-entry feature.
-The targets are implementation by T+60–90m, PR qualification by T+2–3.5h, merged
+Default-entry v0.83.0 is delivered. Finish and publish PR268/v0.84.0 next;
+PR235 and unrelated follow-ups remain deferred. The historical targets were
+implementation by T+60–90m, PR qualification by T+2–3.5h, merged
 source/freeze by T+4–5.5h and public entry by T+5–6h. Fresh pipeline time is commonly
 2.5–4.5h; a blocking rerun requires an immediate revised estimate.
 
@@ -90,7 +96,7 @@ additive commitments or guarantees.
 
 | Priority | Remaining work | Estimate |
 |---|---|---|
-| Immediate after A | Release B unified tagged selector | 7–11 hours |
+| Current delivery | PR268 / v0.84.0 unified tagged selector | Implementation complete; remaining build/release/publication queues determine ETA |
 | After B | PR235 superseded PR-check cancellation | 2–4 hours |
 | Next | PR252/257 backup preflight and Restore focus | 4–8 hours |
 | Next | PR256 retained presentation/history recovery | 6–12 hours |
