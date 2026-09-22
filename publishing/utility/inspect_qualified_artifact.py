@@ -23,6 +23,8 @@ import sys
 import tarfile
 import zipfile
 
+from release_limits import DEFAULT_MAX_DISTRIBUTION_MIB, MAX_DISTRIBUTION_MIB, distribution_within_limit
+
 CHUNK = 1024 * 1024
 SMALL_LIMITS = {'release.json': 64 * 1024, 'site/manifest.json': 4 * CHUNK,
                 'distribution.zip.sha256': 1024}
@@ -339,11 +341,12 @@ def main():
     parser.add_argument('--out', required=True, type=Path)
     parser.add_argument('--artifact-sha256', help='Optional externally trusted downloaded artifact digest')
     parser.add_argument('--reserve-mib', type=int, default=512)
-    parser.add_argument('--max-distribution-mib', type=int, default=512)
+    parser.add_argument('--max-distribution-mib', type=int, default=DEFAULT_MAX_DISTRIBUTION_MIB)
     args = parser.parse_args()
     require(re.fullmatch(r'[0-9a-f]{40}|[0-9a-f]{64}', args.expected_commit), 'Use full lowercase commit hash')
     require(re.fullmatch(r'v\d+\.\d+\.\d+', args.expected_version), 'Use stable vX.Y.Z release version')
-    require(args.reserve_mib >= 256 and 1 <= args.max_distribution_mib <= 2048, 'Invalid reserve/distribution bounds')
+    require(args.reserve_mib >= 256 and 1 <= args.max_distribution_mib <= MAX_DISTRIBUTION_MIB,
+            'Invalid reserve/distribution bounds')
     if args.artifact_sha256:
         require(HEX256.fullmatch(args.artifact_sha256), 'Invalid expected artifact SHA256')
     require(args.artifact.is_file() and not args.artifact.is_symlink(), 'Artifact must be an existing regular file')
@@ -388,7 +391,8 @@ def main():
             match = re.fullmatch(r'([0-9a-f]{64})  distribution\.zip\n', checksum)
             require(match and match[1] == release['distributionSha256'], 'Distribution checksum/release hash differ')
             distribution = actual[prefix + 'site/distribution.zip']
-            require(distribution.file_size <= args.max_distribution_mib * CHUNK, 'Distribution exceeds extraction bound')
+            require(distribution_within_limit(distribution.file_size, args.max_distribution_mib),
+                    'Distribution exceeds extraction bound')
             needed = sum(map(len, small.values())) + CHUNK
             reserve = args.reserve_mib * CHUNK
             require(shutil.disk_usage(parent).free >= needed + reserve,

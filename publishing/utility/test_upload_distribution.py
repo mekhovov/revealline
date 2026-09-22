@@ -221,6 +221,13 @@ class UploaderTests(unittest.TestCase):
         with self.assertRaises(u.Refusal):
             u.PinnedDistribution(wrong)
 
+    def test_large_soundtrack_distribution_reaches_exact_member_verification(self):
+        self.args.member_bytes = 600 * 1024 * 1024
+        self.inspection['distribution']['bytes'] = self.args.member_bytes
+        self.receipt()
+        with self.assertRaisesRegex(u.Refusal, 'ZIP source member byte length differs'):
+            u.PinnedDistribution(self.args)
+
     def test_duplicate_on_second_page_no_post(self):
         with self.server('duplicate-page2') as server, contextlib.closing(u.PinnedDistribution(self.args)) as source:
             with self.assertRaisesRegex(u.Refusal, 'already exists'):

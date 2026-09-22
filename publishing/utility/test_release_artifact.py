@@ -11,6 +11,7 @@ from unittest.mock import patch
 import zipfile
 
 import release_artifact as utility
+import inspect_qualified_artifact as inspector
 
 
 def encoded(value):
@@ -65,6 +66,12 @@ class BindingTests(unittest.TestCase):
         for value in bad_values:
             with self.subTest(value=value), self.assertRaises(ValueError):
                 utility.validate_binding(encoded(value), 'upload-originals', 'example/project')
+        large = binding('upload-originals')
+        next(row for row in large['release']['assets'] if row['name'] == 'distribution.zip')['bytes'] = 600 * utility.MIB
+        self.assertEqual(utility.validate_binding(encoded(large), 'upload-originals', 'example/project'), large)
+        next(row for row in large['release']['assets'] if row['name'] == 'distribution.zip')['bytes'] = 1024 * utility.MIB + 1
+        with self.assertRaises(ValueError):
+            utility.validate_binding(encoded(large), 'upload-originals', 'example/project')
         with self.assertRaises(ValueError):
             utility.validate_binding(encoded(binding('upload-originals')), 'inspect-artifact', 'example/project')
         with self.assertRaises(ValueError):
@@ -153,6 +160,13 @@ class EvidenceTests(unittest.TestCase):
 
 
 class OriginalFixtureTests(unittest.TestCase):
+    def test_default_distribution_envelope_accepts_large_soundtrack_builds_but_remains_bounded(self):
+        self.assertEqual(inspector.DEFAULT_MAX_DISTRIBUTION_MIB, 1024)
+        self.assertLess(inspector.DEFAULT_MAX_DISTRIBUTION_MIB, inspector.MAX_DISTRIBUTION_MIB)
+        self.assertTrue(inspector.distribution_within_limit(600 * inspector.CHUNK))
+        self.assertFalse(inspector.distribution_within_limit(1024 * inspector.CHUNK + 1))
+        self.assertFalse(inspector.distribution_within_limit(-1))
+
     def test_real_git_tar_zip_offline_roundtrip_and_source_hash_rejection(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary); repo = root / 'repo'; repo.mkdir()
