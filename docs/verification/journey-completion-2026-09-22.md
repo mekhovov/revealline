@@ -12,6 +12,28 @@ lane with current main and tracks the reviewed PR → immutable release → Page
 gates. New implementation resumes only after that checkpoint is publicly verified;
 each following completed increment uses the same delivery sequence.
 
+### Delivery and authoring corrections after main PR221
+
+PR225 is reconciling main `f22a47e5`; v0.82.0 is not published. The live marker
+now reports v0.80.3 / `86044accb4b11f7b961893f5304296251413f89f`.
+The older public-state paragraph below is chronological evidence, not the latest
+marker. See the checkpoint's main-reconciliation record for edition provenance.
+
+Studio's supported image workflow is **manual geometry with an uploaded overlay**.
+Assisted colour tracing is a synthetic benchmark prototype, not a Studio UI
+capability; the shorthand in the original table below overstates its availability.
+Exact predecessor `e1eaf904` native checks now cover 320-pixel horizontal fit,
+empty-search/Clear recovery, inspection without changing the saved draft, two-tab
+stale-save refusal and separate-copy recovery, image upload/invalid-crop refusal,
+durable tracing restore and explicit one-time Apply. Actual backup-file export,
+import, Apply and reload reproduce the exact same-project JSON. These are bounded
+native observations, not fresh-profile/crash/storage-exhaustion or current-merge
+qualification. Native Cancel, actual zoom, full editor focus visibility,
+screen-reader/device and broader authoring usability remain open.
+
+Separate unpublished follow-ups PR230 (chapter download retry) and PR231 (replay
+display restoration after Back) are draft owner-lane work, not part of PR225.
+
 ## User-requested difficulty and variety extension
 
 | Item                                              | Implemented / evidenced                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Remaining                                                                                                                                                                                                                                                                |

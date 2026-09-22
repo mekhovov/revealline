@@ -1,0 +1,444 @@
+{
+  "format": "revealline-source-qualification.v1",
+  "version": "v0.80.3",
+  "sourceRevision": "86044accb4b11f7b961893f5304296251413f89f",
+  "sourceTree": "f759eb22353e5e5c8697e8243f256224b9f3a3f0",
+  "actualCheckoutCommit": "86044accb4b11f7b961893f5304296251413f89f",
+  "actualCheckoutTree": "f759eb22353e5e5c8697e8243f256224b9f3a3f0",
+  "sourceMerge": "e8bacfe0eef3c346d1ae5945c4f65b08b581244b",
+  "sourceMergeTree": "d5dbcd92e60763078b36a926a06a26578275e0f1",
+  "sourcePR": 224,
+  "qualifiedAt": "2026-09-22T01:41:29Z",
+  "passed": true,
+  "qualificationBasis": "two-hosted-exact-source-families-with-verified-frozen-originals",
+  "allTrackedSourceContentsAndModesMatch": true,
+  "sourceIdentity": {
+    "format": "revealline-source-identity.v1",
+    "sourceRevision": "86044accb4b11f7b961893f5304296251413f89f",
+    "sourceTree": "f759eb22353e5e5c8697e8243f256224b9f3a3f0",
+    "files": 15815,
+    "bytes": 1389734156,
+    "allTrackedSourceContentsAndModesMatch": true,
+    "authority": "retained frozen-artifact inspection"
+  },
+  "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/35670537187",
+  "runId": 35670537187,
+  "workflowPath": ".github/workflows/deploy-pages.yml",
+  "gates": [
+    {
+      "gate": "validate",
+      "command": "npm run validate",
+      "jobId": 106565764347,
+      "step": {
+        "completedAt": "2026-09-22T00:08:19Z",
+        "conclusion": "success",
+        "name": "Validate, lint, and format source",
+        "number": 7,
+        "startedAt": "2026-09-22T00:07:30Z",
+        "status": "completed"
+      },
+      "scope": "Commands share the exact successful PR preflight step; individual timestamps are not invented."
+    },
+    {
+      "gate": "lint",
+      "command": "npm run lint",
+      "jobId": 106565764347,
+      "step": {
+        "completedAt": "2026-09-22T00:08:19Z",
+        "conclusion": "success",
+        "name": "Validate, lint, and format source",
+        "number": 7,
+        "startedAt": "2026-09-22T00:07:30Z",
+        "status": "completed"
+      },
+      "scope": "Commands share the exact successful PR preflight step; individual timestamps are not invented."
+    },
+    {
+      "gate": "format",
+      "command": "npm run format:check",
+      "jobId": 106565764347,
+      "step": {
+        "completedAt": "2026-09-22T00:08:19Z",
+        "conclusion": "success",
+        "name": "Validate, lint, and format source",
+        "number": 7,
+        "startedAt": "2026-09-22T00:07:30Z",
+        "status": "completed"
+      },
+      "scope": "Commands share the exact successful PR preflight step; individual timestamps are not invented."
+    },
+    {
+      "gate": "native-format",
+      "command": "npm run format:native:check",
+      "jobId": 106565764347,
+      "step": {
+        "completedAt": "2026-09-22T00:08:19Z",
+        "conclusion": "success",
+        "name": "Validate, lint, and format source",
+        "number": 7,
+        "startedAt": "2026-09-22T00:07:30Z",
+        "status": "completed"
+      },
+      "scope": "Commands share the exact successful PR preflight step; individual timestamps are not invented."
+    },
+    {
+      "gate": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "jobId": 106565764347,
+      "step": {
+        "completedAt": "2026-09-22T00:08:19Z",
+        "conclusion": "success",
+        "name": "Validate, lint, and format source",
+        "number": 7,
+        "startedAt": "2026-09-22T00:07:30Z",
+        "status": "completed"
+      },
+      "scope": "Commands share the exact successful PR preflight step; individual timestamps are not invented."
+    },
+    {
+      "gate": "test",
+      "command": "node scripts/run-test-shard.mjs --shard N/4",
+      "jobId": 106566253027,
+      "step": {
+        "completedAt": "2026-09-22T00:48:08Z",
+        "conclusion": "success",
+        "name": "Run test shard 4/4",
+        "number": 7,
+        "startedAt": "2026-09-22T00:09:51Z",
+        "status": "completed"
+      },
+      "actualJobSteps": [
+        {
+          "shard": 1,
+          "jobId": 106566253040,
+          "step": {
+            "completedAt": "2026-09-22T00:32:54Z",
+            "conclusion": "success",
+            "name": "Run test shard 1/4",
+            "number": 7,
+            "startedAt": "2026-09-22T00:09:33Z",
+            "status": "completed"
+          },
+          "counts": {
+            "tests": 2157,
+            "pass": 2157,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          }
+        },
+        {
+          "shard": 2,
+          "jobId": 106566253006,
+          "step": {
+            "completedAt": "2026-09-22T01:01:22Z",
+            "conclusion": "success",
+            "name": "Run test shard 2/4",
+            "number": 7,
+            "startedAt": "2026-09-22T00:09:42Z",
+            "status": "completed"
+          },
+          "counts": {
+            "tests": 1839,
+            "pass": 1839,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          }
+        },
+        {
+          "shard": 3,
+          "jobId": 106566253144,
+          "step": {
+            "completedAt": "2026-09-22T00:30:23Z",
+            "conclusion": "success",
+            "name": "Run test shard 3/4",
+            "number": 7,
+            "startedAt": "2026-09-22T00:09:40Z",
+            "status": "completed"
+          },
+          "counts": {
+            "tests": 1944,
+            "pass": 1944,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          }
+        },
+        {
+          "shard": 4,
+          "jobId": 106566253027,
+          "step": {
+            "completedAt": "2026-09-22T00:48:08Z",
+            "conclusion": "success",
+            "name": "Run test shard 4/4",
+            "number": 7,
+            "startedAt": "2026-09-22T00:09:51Z",
+            "status": "completed"
+          },
+          "counts": {
+            "tests": 2163,
+            "pass": 2163,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          }
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "tests": 8103,
+    "pass": 8103,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testFiles": 683,
+  "additionalManualQualification": {
+    "runId": 35674328171,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/35674328171",
+    "shards": [
+      {
+        "shard": 1,
+        "jobId": 106577870842,
+        "step": {
+          "completedAt": "2026-09-22T01:37:44Z",
+          "conclusion": "success",
+          "name": "Run test shard 1/4",
+          "number": 7,
+          "startedAt": "2026-09-22T01:05:40Z",
+          "status": "completed"
+        },
+        "counts": {
+          "tests": 2157,
+          "pass": 2157,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      {
+        "shard": 2,
+        "jobId": 106577870782,
+        "step": {
+          "completedAt": "2026-09-22T01:35:07Z",
+          "conclusion": "success",
+          "name": "Run test shard 2/4",
+          "number": 7,
+          "startedAt": "2026-09-22T01:06:03Z",
+          "status": "completed"
+        },
+        "counts": {
+          "tests": 1839,
+          "pass": 1839,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      {
+        "shard": 3,
+        "jobId": 106577870829,
+        "step": {
+          "completedAt": "2026-09-22T01:25:10Z",
+          "conclusion": "success",
+          "name": "Run test shard 3/4",
+          "number": 7,
+          "startedAt": "2026-09-22T01:05:43Z",
+          "status": "completed"
+        },
+        "counts": {
+          "tests": 1944,
+          "pass": 1944,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      {
+        "shard": 4,
+        "jobId": 106577870822,
+        "step": {
+          "completedAt": "2026-09-22T01:35:06Z",
+          "conclusion": "success",
+          "name": "Run test shard 4/4",
+          "number": 7,
+          "startedAt": "2026-09-22T01:06:09Z",
+          "status": "completed"
+        },
+        "counts": {
+          "tests": 2163,
+          "pass": 2163,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      }
+    ],
+    "preflight": {
+      "databaseId": 106577492097,
+      "name": "qualify",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-09-22T01:03:09Z",
+      "completedAt": "2026-09-22T01:05:08Z"
+    }
+  },
+  "ordinaryBuildCorroboration": {
+    "runId": 35670537187,
+    "jobId": 106566252996,
+    "command": "npm run build",
+    "step": {
+      "completedAt": "2026-09-22T00:12:14Z",
+      "conclusion": "success",
+      "name": "Build pull-request artifact",
+      "number": 7,
+      "startedAt": "2026-09-22T00:09:33Z",
+      "status": "completed"
+    },
+    "scope": "The PR artifact build step invokes the ordinary build from the exact source; public deployment is separate."
+  },
+  "frozenArtifactCorroboration": {
+    "artifactId": 10673725692,
+    "runId": 35674328171,
+    "inspectionRunId": 35676784457,
+    "wholeOriginalArtifactVerifiedBeforeQualification": true,
+    "sourceTarGitBlobTypeModeAndPaxCommitVerified": true,
+    "allInnerZipManifestBytesVerified": true,
+    "frozenOfflineInventoryAndBindingsVerified": true,
+    "inputs": {
+      "inspection": {
+        "path": "verification.json",
+        "bytes": 1914,
+        "sha256": "524aebc3b1dc99585fe29759c1a19e5d0a0c3c17530f2e0c4c4c80fe5d856a65"
+      },
+      "manifest": {
+        "path": "manifest.json",
+        "bytes": 160120,
+        "sha256": "21fc984e90ac6104bb7ead476913a867479b1a0a817668a8f61a58cfb30554fe"
+      },
+      "releaseRecord": {
+        "path": "release.json",
+        "bytes": 465,
+        "sha256": "46d128bdefe747997eee276628b5071e8723051121860ed9ee5fb4faea7235ad"
+      },
+      "checksum": {
+        "path": "distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "5a86df04be37948ff2e5cfdad2a4fe52238f8c58bf90667dd87ee12191aebecd"
+      }
+    }
+  },
+  "evidencePins": [
+    {
+      "path": "artifact/freeze-artifacts.json",
+      "bytes": 751,
+      "sha256": "4f5bc78daa5a51db2456e335b5f05cb272661dd60622a3bba7ba606b56856425"
+    },
+    {
+      "path": "artifact/inspection-artifacts.json",
+      "bytes": 723,
+      "sha256": "84bbf12424054ca0c0de4e11c4b73ed226d5d29a46dafc669935427c29ba95c3"
+    },
+    {
+      "path": "inspection/artifact-authority.json",
+      "bytes": 802,
+      "sha256": "67e91cb08808feefa2d1b462900acf3d04773c33fda4cd0f96062e4ba394e954"
+    },
+    {
+      "path": "inspection/binding.json",
+      "bytes": 394,
+      "sha256": "dd57f6573f6972aeb6050a21b93d3cf6d0825cb5e1a531fbce02527e23afbbde"
+    },
+    {
+      "path": "inspection/download.json",
+      "bytes": 594,
+      "sha256": "3a74df286de16dddc6b7d55df22bd596da5f5e669e1eba01973f73a6ac6c35b4"
+    },
+    {
+      "path": "inspection/inspection.json",
+      "bytes": 1914,
+      "sha256": "524aebc3b1dc99585fe29759c1a19e5d0a0c3c17530f2e0c4c4c80fe5d856a65"
+    },
+    {
+      "path": "inspection/offline-review.json",
+      "bytes": 3411,
+      "sha256": "cd287f2a38aae80bb20a38c41c5b9a64b43262d0efa92107b8d647ea840fa418"
+    },
+    {
+      "path": "inspection/result.json",
+      "bytes": 548,
+      "sha256": "a41c5ca3f97c773b277670fe484c48befc19c6070f883407fee6918ff1333abc"
+    },
+    {
+      "path": "inspection/retained-manifest.json",
+      "bytes": 6782,
+      "sha256": "cc0b20d22f1765038b04f0779f3169b8ccb309b080525a44366a98f20c5bdce7"
+    },
+    {
+      "path": "inspection/source-before.json",
+      "bytes": 159,
+      "sha256": "7ddaacce8ee34225b363a83bdbe59e1d7c83cc7bd0449c1cf73d996041bd3e00"
+    },
+    {
+      "path": "inspection/source-after.json",
+      "bytes": 159,
+      "sha256": "7ddaacce8ee34225b363a83bdbe59e1d7c83cc7bd0449c1cf73d996041bd3e00"
+    },
+    {
+      "path": "inspection/execution.json",
+      "bytes": 2442,
+      "sha256": "ff22c066b213d3c675f52fa52d7aebb37fc0ff8798a8a80aecd564d107c6d493"
+    },
+    {
+      "path": "runs/pr-run.json",
+      "bytes": 14424,
+      "sha256": "e6275fc99d9d134fd42ef7d3a57e2e80c471f301219b5bfc175ceb7653c09a9b"
+    },
+    {
+      "path": "runs/pr-run.log",
+      "bytes": 4609941,
+      "sha256": "97f7d23c289383fdaa2285a1c46ffa3fb90f60b6db6dda89cee5836fa83da2bf"
+    },
+    {
+      "path": "runs/manual-run.json",
+      "bytes": 13649,
+      "sha256": "8ce3839c67907ff4a0c6a354ad0448504ee12d378ba33a9b9246e888c3792eae"
+    },
+    {
+      "path": "runs/manual-run.log",
+      "bytes": 4817409,
+      "sha256": "9024e8bb70b6146afe05b883719012073f76b8dc446e7eb44f91050f3e18b520"
+    },
+    {
+      "path": "runs/inspect-run.json",
+      "bytes": 3483,
+      "sha256": "06283468118e5ece6606bc5441ad2c096c9ecdbbdaa0050813c7e029c91bf67e"
+    },
+    {
+      "path": "runs/inspect-run.log",
+      "bytes": 132196,
+      "sha256": "082f96101664ae69402dbdf5c43852058fe876580dbad980163d1750873c294b"
+    },
+    {
+      "path": "source/pr-224.json",
+      "bytes": 363,
+      "sha256": "49df12f0c94f7560903f5ae6bafafcc7a13401117c443f3cbd66db5bb2a86526"
+    }
+  ],
+  "limits": [
+    "Qualification proves exact hosted source gates and frozen byte integrity; public deployment and player acceptance are separate.",
+    "Browser observations used simulated input; no physical controller, handset, or multi-touch certification is claimed.",
+    "This release adds iPhone and iPad Home Screen guidance; normal Safari tabs cannot programmatically remove browser chrome."
+  ]
+}

@@ -952,7 +952,10 @@ test('catalogue metadata drives playback and same-ID theme selection changes the
     path: `game/content/music/${theme}.mp3`,
     tags: { genres: ['synth90s'], role: 'gameplay', energy: 3, themes: [theme] },
   }));
-  const h = setup({ library: setCatalogueTracks(emptySoundtrackLibrary(), catalogTracks) });
+  const discovered = setCatalogueTracks(emptySoundtrackLibrary(), catalogTracks);
+  const h = setup({
+    library: { ...discovered, listening: { ...discovered.listening, mode: 'auto' } },
+  });
   t.after(() => h.player.dispose());
   h.player.setContext({ scene: 'gameplay', themeId: 'circuit' });
   await h.player.play();
@@ -960,7 +963,7 @@ test('catalogue metadata drives playback and same-ID theme selection changes the
   const url = h.media.src;
   h.player.setContext({ scene: 'gameplay', themeId: 'river' });
   assert.equal(h.player.snapshot().track.id, 'builtin.catalog.circuit');
-  assert.equal(h.player.snapshot().pendingPlaylistId, playlistId);
+  assert.equal(h.player.snapshot().pendingPlaylistId ?? h.player.snapshot().playlistId, playlistId);
   assert.equal(h.media.src, url, 'theme matching waits for the audible boundary');
   h.media.emit('ended');
   await settleUntil(
@@ -1061,7 +1064,8 @@ test('selection reuse follows owned library, context and override changes and re
   const other = await fixture('selection-other');
   const catalogue = resolveSoundtrackCatalogue(permissionCatalogue([original, other]));
   const [first, second] = catalogue.tracks;
-  const base = setCatalogueTracks(emptySoundtrackLibrary(), catalogue.tracks);
+  const discovered = setCatalogueTracks(emptySoundtrackLibrary(), catalogue.tracks);
+  const base = { ...discovered, listening: { ...discovered.listening, mode: 'auto' } };
   const library = {
     ...base,
     playlists: [

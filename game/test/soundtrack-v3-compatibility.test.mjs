@@ -29,6 +29,11 @@ test('v2 writers retain legacy genre choices and require v3 before writing expan
     ),
   );
   assert.deepEqual(emptySoundtrackLibrary({ catalogue: true }).listening.genres, SOUNDTRACK_GENRES);
+  assert.equal(
+    emptySoundtrackLibrary({ catalogue: true }).listening.mode,
+    'synth90s',
+    'fresh v3 libraries start with the hosted retro style',
+  );
   for (const patch of [{ mode: 'chiptune' }, { genres: ['chiptune'] }]) {
     const value = { ...oldLibrary, listening: { ...oldLibrary.listening, ...patch } };
     assert.throws(() => resolveSoundtrackLibrary(value), /require library v3/);

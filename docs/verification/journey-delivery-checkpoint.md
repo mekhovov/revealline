@@ -1,5 +1,26 @@
 # Journey continuous-delivery checkpoint
 
+## Latest main reconciliation
+
+Main PR221 subsequently landed at `f22a47e5`, requiring a new reviewed merge.
+[The reconciliation record](journey-main-reconciliation/README.md) supersedes
+the earlier current-edition FPV58 references below: canonical main FPV56 is
+preserved and the existing strict producer appends FPV57. The unpublished
+alternative Journey55–58 lineage remains authenticated as inert evidence and
+in Git ancestry, not as runtime history or a fallback. No new original image or
+music generation is included. The fourteen main audio inputs remain exact.
+
+The predecessor `e1eaf904` passed hosted preflight and build in run35681330898;
+its four test shards remain pending at this snapshot. It is not qualification of
+the reconciled source. New exact-head CI, immutable freeze, release, Pages and
+public verification remain mandatory. The latest checked public marker is
+**v0.80.3**, source `86044accb4b11f7b961893f5304296251413f89f`.
+
+The sections below retain chronological evidence, including earlier failures
+and then-current version identities. They are not claims of final acceptance.
+
+## Original checkpoint scope
+
 September 22, 2026. This checkpoint wraps the ready Journey lane through
 `0addde9c12dd364eb3e8384b8abb8dc23ca9be47` into accepted main
 `1222454049ea411b29c8822f77283f2109cafbd3`. Proposed release: **v0.82.0**,
