@@ -181,19 +181,17 @@ test('Shared windows Skip needs two activations, grants no clear and remains dir
   assert.equal(f.$('coop-level').value, 'coolant-crossing');
   enter(f, f.$('coop-pause'));
   enter(f, f.$('coop-discovery-paused'));
-  const cards = [...f.$('coop-discovery-list').querySelectorAll('article')].filter((c) =>
-    c.querySelector('.team-mission-diagram'),
+  await waitFor(() => f.$('journey-chooser')?.open);
+  const cards = [...f.$('journey-cards').querySelectorAll('.journey-card')].filter((c) =>
+    c.querySelector('.journey-card-tags').textContent.includes('Journey'),
   );
   assert.equal(cards.length, 3);
-  const first = cards.find((c) => c.querySelector('button').textContent === 'Play Window exchange');
-  assert.equal(
-    first.querySelector('.team-mission-completion').textContent,
-    'Skipped · revisit whenever you like',
-  );
-  enter(f, first.querySelector('button'));
+  const first = cards.find((c) => c.querySelector('strong').textContent === 'Window exchange');
+  assert.equal(first.querySelector('.journey-card-progress').textContent, 'Skipped · try again');
+  enter(f, first);
   await waitFor(() => f.$('coop-discard-dialog').open);
   enter(f, f.$('coop-discard-confirm'));
-  await waitFor(() => !f.$('coop-discovery-dialog').open);
+  await waitFor(() => !f.$('journey-chooser').open && f.$('coop-overlay').hidden);
   assert.equal(f.$('coop-level').value, 'window-exchange');
   const profile = await createJourneyBackend({
     ...memory,

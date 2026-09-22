@@ -4,6 +4,7 @@ import { page } from './helpers/coop-host.mjs';
 import { coverageClear, yardOpening } from './helpers/coop-route-search.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 import { createModeReturn } from '../mode-return.mjs';
+import { waitFor } from './helpers/coop-presentation-fixture.mjs';
 
 // Actual entry/core/input/navigation/artwork with the existing finite DOM and
 // inert Canvas boundary. Rehearsed keyboard commands earn the terminal state;
@@ -215,10 +216,10 @@ for (const level of ['first-connection', 'relay-yard'])
       assert.equal(f.$('coop-next').hidden, true, 'The last arena has no invented Next.');
       assert.equal(f.doc.activeElement.textContent, 'Browse Team arenas');
       f.tap('Enter');
-      assert.equal(f.$('coop-discovery-dialog').open, true);
-      tabTo(f, 'coop-discovery-back');
+      await waitFor(() => f.$('journey-chooser')?.open);
+      tabTo(f, 'journey-back');
       f.tap('Enter');
-      assert.equal(f.$('coop-discovery-dialog').open, false);
+      assert.equal(f.$('journey-chooser').open, false);
       assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
       assert.deepEqual({ hud: hud(f), paint: f.lastPaint }, terminal);
     }

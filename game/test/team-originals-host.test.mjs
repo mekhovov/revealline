@@ -148,18 +148,16 @@ test('initial candidate picture failure retries deliberately and chooser starts 
   assert.equal(first.sha256, source.assets.find((a) => a.id === firstAsset).sha256);
   f.$('coop-discovery-open').focus();
   f.tap('Enter');
-  const selected = [...f.$('coop-discovery-list').querySelectorAll('.team-discovery-play')].find(
-    (button) => button.textContent === 'Play Shared lookout',
+  await waitFor(() => f.$('journey-chooser')?.open);
+  const selected = [...f.$('journey-cards').querySelectorAll('.journey-card')].find(
+    (button) => button.querySelector('strong').textContent === 'Shared lookout',
   );
-  assert.match(
-    selected.closest('article').textContent,
-    /Original-art test; visual qualification pending/,
-  );
+  assert.match(selected.textContent, /Original-art test; visual qualification pending/);
   assert.equal(first.releases, 0, 'Opening chooser does not retire the prepared start');
   selected.focus();
   f.tap('Enter');
   await waitFor(
-    () => !f.$('coop-discovery-dialog').open,
+    () => !f.$('journey-chooser').open && f.$('coop-menu').hidden,
     () => f.$('coop-discovery-status').textContent,
   );
   f.tick(2);

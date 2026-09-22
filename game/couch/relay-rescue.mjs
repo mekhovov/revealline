@@ -70,7 +70,20 @@ import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.mjs';
 
 import { createTeamArenaPreference } from './team-arena-preference.mjs';
-import { attachTeamDiscovery } from './team-discovery.mjs';
+import { createMissionLibrary } from '../mission-library/library.mjs';
+import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
+import {
+  createMissionLibrarySessionState,
+  missionLibraryHref,
+  readMissionLibraryHandoff,
+} from '../mission-library/handoff.mjs';
+import {
+  teamJourneyLibrarySource,
+  teamArenaLibrarySource,
+  TEAM_LIBRARY_JOURNEY_EDITION,
+} from '../mission-library/team-source.mjs';
+import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
+import { attachTeamLibraryPreview } from './team-library-preview.mjs';
 
 import { teamReturnHref } from '../mode-return.mjs';
 
@@ -117,7 +130,6 @@ export function bootCoop({
   candidateJourney = null,
   candidateProgress = null,
   candidatePreferences = null,
-  candidateCardPresenter = undefined,
   candidateCaptureTeaching = null,
   candidateDifficulty = 'standard',
   candidateNotice = '',
@@ -126,6 +138,8 @@ export function bootCoop({
   // Entry links select a code-owned destination, never a supplied URL or referrer.
   // Older/direct links and ambiguous contexts retain the existing Versus return.
   const entryParams = new URL(location.href).searchParams;
+  const incomingLibraryMission = readMissionLibraryHandoff(entryParams);
+  const libraryEdition = resolveJourneyRequest(entryParams, { mode: 'team' });
   const returns = entryParams.getAll('return');
   const fromSolo = returns.length === 1 && returns[0] === 'solo';
   let returnStorage;
@@ -307,6 +321,18 @@ export function bootCoop({
     discoveryPreviewSequence = 0,
     localDiscoveryPack = null,
     localDiscoveryRevision = 0;
+  let missionLibrary = null,
+    libraryChooser = null,
+    libraryOpening = null,
+    libraryLaunch = null,
+    libraryLocalOwner = null,
+    libraryRemoteJourney = null,
+    libraryRemotePending = null,
+    libraryPreview = null,
+    libraryReturnFocus = true;
+  const libraryRuntimeRows = new WeakMap();
+  const librarySession = createMissionLibrarySessionState({ mode: 'team' });
+  const libraryVisit = crypto.randomUUID();
   const discoveryRows = (sourcePack, artworkSource, prefix) =>
     sourcePack.levels.map((level) =>
       Object.freeze({
@@ -630,7 +656,7 @@ export function bootCoop({
           : departure
             ? departureDialog
             : discovery?.isOpen()
-              ? $('coop-discovery-dialog')
+              ? $('journey-chooser')
               : run
                 ? $('coop-overlay')
                 : $('coop-app')),
@@ -1423,6 +1449,7 @@ export function bootCoop({
     retry = false,
     origin = document.activeElement,
     initial = false,
+    onPrepared = null,
   } = {}) {
     if (disposed || departure || importDisplay || running()) return Promise.resolve();
     if (importAdopting) {
@@ -1484,6 +1511,10 @@ export function bootCoop({
         selection.binding = binding;
         selection.state = 'ready';
         pictureOperation = null;
+        if (onPrepared?.(selection) === true) {
+          focus.finish(null, false);
+          return;
+        }
         pictureUI('Team picture ready. Start remains a separate action.');
         focus.finish(run ? $('coop-retry') : () => navigation.focusAvailable());
       } catch (error) {
@@ -1959,6 +1990,7 @@ export function bootCoop({
   function cancelDiscoveryPreparation(operation = discoveryOperation) {
     if (!operation || operation.cancelled) return;
     operation.cancelled = true;
+    operation.libraryOwner?.controller.abort();
     if (discoveryOperation === operation) discoveryOperation = null;
     operation.detach();
     if (departure?.kind === 'discovery' && departure.operation === operation)
@@ -2141,6 +2173,7 @@ export function bootCoop({
     };
     const operation = {
       selection,
+      libraryOwner: libraryLaunch,
       controller: new AbortController(),
       cancelled: false,
       detach: () => {},
@@ -2193,6 +2226,7 @@ export function bootCoop({
         ![
           opener,
           $('coop-discovery-dialog'),
+          $('journey-chooser'),
           $('coop-discovery-cancel'),
           document.body,
           document.documentElement,
@@ -2401,63 +2435,374 @@ export function bootCoop({
       discoveryControls();
     }
   }
-  discovery = attachTeamDiscovery({
-    document,
-    dialog: $('coop-discovery-dialog'),
-    list: $('coop-discovery-list'),
-    status: $('coop-discovery-status'),
-    back: $('coop-discovery-back'),
-    cancel: $('coop-discovery-cancel'),
-    search: $('coop-discovery-search'),
-    campaign: $('coop-discovery-campaign'),
-    getEntries: currentDiscoveryRows,
-    presentCard: candidateCardPresenter,
-    canOpen: canOpenDiscovery,
-    activate: activateDiscovery,
-    preparePreview: prepareDiscoveryPreview,
-    preview: {
+  const libraryDifficulty = () =>
+    acceptedPicture?.journeyRow?.difficulty ??
+    selectedCandidateRow()?.difficulty ??
+    candidateDifficulty;
+  function libraryStatus(text, state = 'ready') {
+    $('coop-discovery-status').textContent = text;
+    $('coop-discovery-status').dataset.state = state;
+  }
+  function registerTeamSource(source, resolve) {
+    const rows = missionLibrary.register(source);
+    rows.forEach((row, index) => libraryRuntimeRows.set(row, () => resolve(source.entries[index])));
+  }
+  function retireLibraryLaunch() {
+    const owner = libraryLaunch;
+    libraryLaunch = null;
+    owner?.detach();
+    owner?.controller.abort();
+    cancelDiscoveryPreparation();
+    if (departure?.kind === 'discovery' && !departure.operation)
+      closeDeparture(departure, { restore: false });
+    $('coop-discovery-cancel').hidden = true;
+    if (owner) libraryStatus('Preparation cancelled. Your Team attempt is kept.');
+  }
+  function finishLibraryStart(started) {
+    if (discoveryStarted !== started) return;
+    discoveryStarted = null;
+    clear();
+    const current = () =>
+      Boolean(started) &&
+      !disposed &&
+      foreground() &&
+      !inactive &&
+      run === started.run &&
+      generation === started.generation &&
+      acceptedPicture === started.picture &&
+      running() &&
+      !discovery.isOpen() &&
+      !settingsDialog.open &&
+      !earnedDialog.open &&
+      !departure;
+    const focus = document.activeElement;
+    if (
+      current() &&
+      started.sourcePack === COOP_STARTER_PACK &&
+      pack === COOP_STARTER_PACK &&
+      arenaPreference.current() !== started.levelId
+    )
+      arenaPreference.choose(started.levelId);
+    if (current() && document.activeElement === focus) input.focus();
+    discoveryControls();
+  }
+  function teamLibraryContext() {
+    retireLibraryLaunch();
+    libraryPreview?.close();
+    const owner = {
+      controller: new AbortController(),
+      opener: document.activeElement,
+      detach: () => {},
+    };
+    libraryLaunch = owner;
+    const current = () =>
+      libraryLaunch === owner &&
+      !owner.controller.signal.aborted &&
+      !disposed &&
+      !inactive &&
+      foreground();
+    // The initiating click/Enter may still be bubbling. Subsequent unrelated
+    // input retires admission without stealing its focus or reopening the picker.
+    const newerInput = (event) => {
+      if (departure?.kind === 'discovery' && departureDialog.contains(event.target)) return;
+      if (event.target === $('coop-discovery-cancel')) return;
+      retireLibraryLaunch();
+    };
+    const newerFocus = (event) => {
+      if (
+        [
+          owner.opener,
+          $('coop-discovery-cancel'),
+          document.body,
+          document.documentElement,
+        ].includes(event.target)
+      )
+        return;
+      newerInput(event);
+    };
+    queueMicrotask(() => {
+      if (!current()) return;
+      for (const type of ['keydown', 'pointerdown', 'click'])
+        document.addEventListener(type, newerInput, true);
+      document.addEventListener('focusin', newerFocus, true);
+    });
+    owner.detach = () => {
+      for (const type of ['keydown', 'pointerdown', 'click'])
+        document.removeEventListener(type, newerInput, true);
+      document.removeEventListener('focusin', newerFocus, true);
+    };
+    return {
+      signal: owner.controller.signal,
+      isCurrent: current,
+      opener: owner.opener,
+      onStatus: (text) => {
+        if (current()) libraryStatus(text, 'busy');
+      },
+    };
+  }
+  async function launchTeamLibraryRow(row, context) {
+    if (!context.isCurrent()) return false;
+    const owner = libraryLaunch;
+    const cancel = $('coop-discovery-cancel');
+    cancel.hidden = false;
+    cancel.focus({ preventScroll: true });
+    if (document.activeElement !== cancel || !context.isCurrent()) {
+      retireLibraryLaunch();
+      return false;
+    }
+    try {
+      const accepted = await activateDiscovery(row, context);
+      if (accepted && libraryLaunch === owner && context.isCurrent()) {
+        const started = discoveryStarted;
+        owner.detach();
+        libraryLaunch = null;
+        cancel.hidden = true;
+        libraryStatus(`${row.title} ready. Playing together.`);
+        finishLibraryStart(started);
+      } else if (libraryLaunch === owner && context.isCurrent())
+        libraryStatus('Your Team attempt is kept. Choose Play when ready.');
+      return accepted;
+    } catch (error) {
+      if (context.isCurrent())
+        libraryStatus(
+          `Could not prepare ${row.title}. Your current attempt is unchanged. Try Play again.`,
+          'error',
+        );
+      throw error;
+    } finally {
+      if (libraryLaunch === owner) {
+        cancel.hidden = true;
+        owner.detach();
+      }
+    }
+  }
+  async function launchRemoteTeamRow(row, context) {
+    const href = missionLibraryHref({
+      baseURL: location.href,
+      currentMode: 'team',
+      mode: 'team',
+      journey: TEAM_LIBRARY_JOURNEY_EDITION,
+      missionId: context.libraryMissionId,
+    });
+    const attempt = run,
+      epoch = generation;
+    const current = () => context.isCurrent() && run === attempt && generation === epoch;
+    if (!current()) return false;
+    if (unfinished()) {
+      const replace = await new Promise((resolve) => {
+        const ticket = {
+          kind: 'discovery',
+          opener: context.opener,
+          run,
+          generation,
+          operation: null,
+          current,
+          resolve,
+        };
+        departure = ticket;
+        $('coop-discard-title').textContent = 'Open Team Journey?';
+        $('coop-discard-copy').textContent =
+          `Stay keeps this attempt and its picture. Replace & play opens ${row.level.name} in its original Team Journey. This unfinished attempt is not saved.`;
+        $('coop-discard-confirm').textContent = 'Replace & play';
+        departureDialog.showModal();
+        $('coop-discard-stay').focus({ preventScroll: true });
+      });
+      if (!replace || !current()) return false;
+    }
+    if (!current()) return false;
+    location.assign(href);
+    return true;
+  }
+  function getTeamLibrary() {
+    if (!missionLibrary) {
+      missionLibrary = createMissionLibrary();
+      if (candidateJourney)
+        registerTeamSource(
+          teamJourneyLibrarySource({
+            journey: candidateJourney,
+            editionId: libraryEdition,
+            edition: defaultJourney
+              ? 'Team Journey'
+              : `Team Journey · ${libraryEdition} · ${
+                  candidateJourney.rows.some((row) => row.background)
+                    ? 'Original-art test; visual qualification pending'
+                    : 'Geometry test; human validation pending'
+                }`,
+            progress: candidateProgress,
+            difficulty: libraryDifficulty,
+            launch: (row, context) =>
+              launchTeamLibraryRow(
+                candidateDiscoveryRows.find((entry) => entry.journeyRow === row),
+                context,
+              ),
+          }),
+          (mission) =>
+            candidateDiscoveryRows.find(
+              (entry) => entry.journeyRow === candidateJourney.row(mission, libraryDifficulty()),
+            ),
+        );
+      registerTeamSource(
+        teamArenaLibrarySource({ rows: starterDiscoveryRows, launch: launchTeamLibraryRow }),
+        (row) => row,
+      );
+    }
+    if (libraryLocalOwner !== localDiscoveryPack) {
+      if (libraryLocalOwner) missionLibrary.remove(libraryLocalOwner.librarySourceId);
+      libraryLocalOwner = localDiscoveryPack;
+      if (localDiscoveryPack) {
+        const owner = localDiscoveryPack;
+        owner.librarySourceId = `team-custom:${libraryVisit}:${localDiscoveryRevision}`;
+        registerTeamSource(
+          teamArenaLibrarySource({
+            rows: owner.rows,
+            sourceId: owner.librarySourceId,
+            editionId: `${owner.pack.id}@${owner.pack.revision}`,
+            edition: `${owner.pack.name} · this visit`,
+            collection: 'Custom',
+            isCurrent: (row) => localDiscoveryPack === owner && owner.rows.includes(row),
+            launch: launchTeamLibraryRow,
+          }),
+          (row) => row,
+        );
+      }
+    }
+    return missionLibrary;
+  }
+  async function includeCurrentTeamJourney() {
+    if (candidateJourney || libraryRemoteJourney) return;
+    libraryRemotePending ??= Promise.all([
+      import('../content-design/team-host.mjs'),
+      import('../content-design/team-spatial-originals.mjs'),
+    ])
+      .then(([{ createCandidateTeamHost }, { createTeamSpatialOriginalCandidates }]) => {
+        if (disposed) return;
+        const source = createTeamSpatialOriginalCandidates();
+        libraryRemoteJourney = createCandidateTeamHost(source, {
+          corePackIds: source.packs.map((item) => item.id),
+        });
+        // This browsing-only owner has no profile writer and cannot create a run
+        // in the Legacy host. The receiving Journey resolves the exact opaque ID.
+        registerTeamSource(
+          teamJourneyLibrarySource({ journey: libraryRemoteJourney, launch: launchRemoteTeamRow }),
+          () => null,
+        );
+      })
+      .catch((error) => {
+        libraryRemotePending = null;
+        throw error;
+      });
+    await libraryRemotePending;
+  }
+  function mountTeamLibrary() {
+    if (libraryChooser) return;
+    libraryChooser = attachMissionLibraryChooser({
+      document,
+      library: getTeamLibrary(),
+      mode: 'team',
+      readState: librarySession.read,
+      writeState: librarySession.write,
+      launchContext: teamLibraryContext,
+      onPause() {
+        retireLibraryLaunch();
+        discoveryStarted = null;
+        clear();
+        libraryStatus(
+          'Choose a mission. Your current Team attempt is kept until Play is accepted.',
+        );
+        discoveryControls();
+      },
+      onReturn(opener) {
+        retireLibraryLaunch();
+        libraryPreview?.close();
+        clear();
+        if (libraryReturnFocus && !disposed && foreground() && visibleAction(opener))
+          opener.focus({ preventScroll: true });
+        discoveryControls();
+      },
+    });
+    const dialog = $('journey-chooser');
+    const previewButton = document.createElement('button');
+    previewButton.id = 'coop-library-preview';
+    previewButton.type = 'button';
+    previewButton.textContent = 'Select a mission to preview';
+    dialog.querySelector('.journey-footer').append(previewButton);
+    dialog.append($('coop-discovery-preview'));
+    libraryPreview = attachTeamLibraryPreview({
+      document,
+      dialog,
+      button: previewButton,
       panel: $('coop-discovery-preview'),
       canvas: $('coop-discovery-preview-canvas'),
       title: $('coop-discovery-preview-title'),
       status: $('coop-discovery-preview-status'),
       retry: $('coop-discovery-preview-retry'),
+      selection() {
+        const selected = missionLibrary.find(libraryChooser.state().selectedId);
+        if (!selected || libraryChooser.state().mode !== 'team') return null;
+        const row = libraryRuntimeRows.get(selected)?.();
+        return row && currentDiscoveryRows().includes(row) ? { row } : null;
+      },
+      prepare: prepareDiscoveryPreview,
+    });
+  }
+  discovery = {
+    isOpen: () => Boolean($('journey-chooser')?.open),
+    primary: () => $('journey-search') ?? $('coop-discovery-open'),
+    async open(opener) {
+      if (!canOpenDiscovery()) return;
+      libraryOpening?.dispose();
+      const opening = trackMissionLibraryOpening({ document });
+      libraryOpening = opening;
+      getTeamLibrary();
+      try {
+        await includeCurrentTeamJourney();
+        if (libraryOpening !== opening || !opening.current() || !canOpenDiscovery()) return;
+        opening.dispose();
+        libraryOpening = null;
+        mountTeamLibrary();
+        libraryChooser.open(opener);
+        libraryPreview.refresh();
+      } catch (error) {
+        if (opening.current() && !disposed)
+          $('coop-discovery-status').textContent =
+            `Mission library unavailable: ${error.message}. Your current attempt is kept.`;
+      } finally {
+        opening.dispose();
+      }
     },
-    onViewChange: () => clear(),
-    onOpen() {
-      discoveryStarted = null;
-      clear();
-      discoveryControls();
+    close({ restore = true } = {}) {
+      libraryOpening?.dispose();
+      libraryOpening = null;
+      libraryReturnFocus = restore;
+      if (discovery.isOpen()) libraryChooser.close();
+      libraryReturnFocus = true;
+      retireLibraryLaunch();
+      libraryPreview?.close();
     },
-    onClose() {
-      cancelDiscoveryPreparation();
-      const started = discoveryStarted;
-      discoveryStarted = null;
-      clear();
-      const stillCurrent = () =>
-        Boolean(started) &&
-        !disposed &&
-        foreground() &&
-        !inactive &&
-        run === started.run &&
-        generation === started.generation &&
-        acceptedPicture === started.picture &&
-        running() &&
-        !discovery.isOpen() &&
-        !settingsDialog.open &&
-        !earnedDialog.open &&
-        !departure;
-      const focus = document.activeElement;
-      if (
-        stillCurrent() &&
-        started.sourcePack === COOP_STARTER_PACK &&
-        pack === COOP_STARTER_PACK &&
-        arenaPreference.current() !== started.levelId
-      )
-        arenaPreference.choose(started.levelId);
-      if (stillCurrent() && document.activeElement === focus) input.focus();
-      discoveryControls();
+    back: () => discovery.close(),
+    cancel() {
+      libraryOpening?.dispose();
+      libraryOpening = null;
+      retireLibraryLaunch();
+      libraryPreview?.close();
     },
-  });
+    dispose() {
+      discovery.cancel();
+      libraryReturnFocus = false;
+      libraryPreview?.dispose();
+      libraryChooser?.destroy();
+      missionLibrary?.dispose();
+      $('coop-discovery-cancel').onclick = null;
+    },
+  };
+  // Preparation feedback remains visible after the shared chooser closes. The
+  // accepted attempt and imported source are not moved into the browsing owner.
+  tools.append($('coop-discovery-status'), $('coop-discovery-cancel'));
+  $('coop-discovery-cancel').onclick = () => {
+    retireLibraryLaunch();
+    libraryStatus('Preparation cancelled. Your Team attempt is kept.');
+    if (canOpenDiscovery()) libraryChooser?.restore();
+  };
   $('coop-discovery-open').onclick = () => discovery.open($('coop-discovery-open'));
   $('coop-discovery-paused').onclick = () => discovery.open($('coop-discovery-paused'));
 
@@ -3606,7 +3951,16 @@ export function bootCoop({
   }
   // Keep the existing option nodes and an already-correct native value while a
   // player may have the platform's selector open during module preparation.
-  if (candidateJourney && !earlySelection?.claimed) {
+  if (incomingLibraryMission) {
+    const mission = getTeamLibrary().find(incomingLibraryMission);
+    const row = mission && libraryRuntimeRows.get(mission)?.();
+    if (!row || !currentDiscoveryRows().includes(row))
+      throw new Error(
+        'The requested Team mission is unavailable in this edition or visit. Return to a game mode and choose a current mission.',
+      );
+    showPack(row.pack, row.levelId);
+    if (row.pack === COOP_STARTER_PACK) lastBuiltInArena = row.levelId;
+  } else if (candidateJourney && !earlySelection?.claimed) {
     const first = candidateJourney.catalog.missions.find((mission) =>
       candidateJourney.isCore(mission.id),
     );
@@ -3810,10 +4164,44 @@ export function bootCoop({
   });
   document.documentElement.dataset.toolState = 'ready';
   startPermitted = !$('coop-start').disabled;
-  void preparePicture({
+  let handoffOpening = null;
+  const incomingAutoStart =
+    incomingLibraryMission && initialFocusPending && !earlySelection?.claimed;
+  const handoffPack = pack,
+    handoffLevel = $('coop-level').value,
+    handoffGeneration = generation;
+  const preparation = preparePicture({
     initial: initialFocusPending,
     origin: initialFocusPending ? document.activeElement : null,
+    onPrepared(selection) {
+      if (
+        !incomingLibraryMission ||
+        !handoffOpening?.current() ||
+        disposed ||
+        inactive ||
+        !foreground() ||
+        run ||
+        departure ||
+        settingsDialog.open ||
+        discovery.isOpen() ||
+        generation !== handoffGeneration ||
+        pack !== handoffPack ||
+        $('coop-level').value !== handoffLevel ||
+        pictureSelection !== selection ||
+        selection.levelId !== handoffLevel
+      )
+        return false;
+      handoffOpening.dispose();
+      try {
+        start();
+      } catch (error) {
+        pictureUI(`The requested Team mission is ready but could not start: ${error.message}`);
+      }
+      return Boolean(run);
+    },
   });
+  if (incomingAutoStart) handoffOpening = trackMissionLibraryOpening({ document });
+  void preparation.finally(() => handoffOpening?.dispose());
   if (initialFocusPending && unclaimedFocus(document.activeElement) && foreground())
     navigation.focusAvailable();
   initialFocusPending = false;

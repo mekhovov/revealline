@@ -678,15 +678,15 @@ test('terminal departure during qualification releases the late decoder and the 
   assert.deepEqual(new Set(f.artwork.calls.releases), new Set(f.artwork.calls.urls));
 });
 
-function browseTeam(f) {
+async function browseTeam(f) {
   const opener = f.$(f.$('coop-menu').hidden ? 'coop-discovery-paused' : 'coop-discovery-open');
   opener.focus();
   f.tap('Enter');
-  assert.equal(f.$('coop-discovery-dialog').open, true);
+  await waitFor(() => f.$('journey-chooser')?.open);
 }
 async function playTeamCard(f, title, { replace = false } = {}) {
-  const button = [...f.$('coop-discovery-list').querySelectorAll('button')].find(
-    (node) => node.textContent === `Play ${title}`,
+  const button = [...f.$('journey-cards').querySelectorAll('.journey-card')].find(
+    (node) => node.querySelector('strong').textContent === title,
   );
   assert.ok(button, `The current Team catalogue contains ${title}.`);
   button.focus();
@@ -697,7 +697,12 @@ async function playTeamCard(f, title, { replace = false } = {}) {
     f.tap('Enter');
   }
   await waitFor(
-    () => !f.$('coop-discovery-dialog').open && f.$('coop-overlay').hidden,
+    () =>
+      !f.$('journey-chooser').open &&
+      f.$('coop-overlay').hidden &&
+      f.$('coop-menu').hidden &&
+      f.$('coop-stage').textContent === title.toUpperCase() &&
+      f.doc.activeElement.id === 'coop-canvas',
     () => f.$('coop-discovery-status').textContent,
   );
   assert.equal(f.$('coop-stage').textContent, title.toUpperCase());
@@ -708,10 +713,10 @@ test('Team discovery retains an opened artwork owner across starter play and exa
   const fixture = bundle();
   const f = await page(t, options);
   await selectNative(f, fixture.file);
-  browseTeam(f);
+  await browseTeam(f);
   await playTeamCard(f, 'First Connection');
   f.tap('Escape');
-  browseTeam(f);
+  await browseTeam(f);
   await playTeamCard(f, fixture.pack.levels[1].name, { replace: true });
   assert.equal(image(f).sha256, fixture.secondHash);
   assert.match(status(f), /Local artwork/);
@@ -725,14 +730,14 @@ test('discovery-started local artwork keeps its earned result, ordered Next and 
   await selectNative(f, fixture.file);
   f.$('coop-difficulty').value = 'gentle';
   f.$('coop-experiment').value = 'full';
-  browseTeam(f);
+  await browseTeam(f);
   await playTeamCard(f, fixture.pack.levels[0].name);
   assert.equal(image(f).sha256, fixture.firstHash);
   playImportedRoute(f);
   const earned = image(f);
   const result = hud(f);
-  browseTeam(f);
-  f.$('coop-discovery-back').focus();
+  await browseTeam(f);
+  f.$('journey-back').focus();
   f.tap('Enter');
   assert.equal(image(f), earned);
   assert.deepEqual(hud(f), result);
