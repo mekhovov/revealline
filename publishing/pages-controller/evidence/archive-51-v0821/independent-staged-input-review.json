@@ -1,0 +1,166 @@
+{
+  "format": "revealline-independent-archive-template-review.v1",
+  "status": "PASS_SCOPED_PREPARATION",
+  "reviewedAt": "2026-09-22T15:16:41.960210+00:00",
+  "reviewer": "Codex subagent /root/soundtrack_references",
+  "authorship": "Reviewer did not author archive51 template. Read-only source/metadata review; no inherited tests rerun.",
+  "archiveId": "archive-51",
+  "version": "v0.82.1",
+  "source": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+  "tree": "402f5f12d83cb86dbceb9d9dceec12731ea48980",
+  "tagObject": "22008a584b2b4c08d1cf37840d87b95e2888bca6",
+  "donorCommit": "b1f11e438e112ea09c3bec77cb10e0b2d68e658d",
+  "reviewedPins": [
+    {
+      "path": "repository/source-lock.json",
+      "bytes": 1429,
+      "sha256": "577463d0b1cfc7709581e3abd73945a53792fc2735e9efa1c8a5694c8ab01512"
+    },
+    {
+      "path": "repository/expected-inventory.json",
+      "bytes": 216442,
+      "sha256": "7687ea84796d955b63b6bc11b41465a7777be7e7f24ccd07b2becd2eeee246c0"
+    },
+    {
+      "path": "repository/input-authority.json",
+      "bytes": 2758,
+      "sha256": "8bfca0dfe31a53b22395334c37081df5646bb76c4520e2da6fccdd94c8effe98"
+    },
+    {
+      "path": "repository/.github/workflows/deploy.yml",
+      "bytes": 3234,
+      "sha256": "1f71c389543ab172d5f0f1f8faa265b08676d1d084e188fc9cc10fd4b7ec9ea6"
+    },
+    {
+      "path": "repository/tools/prepare.py",
+      "bytes": 4420,
+      "sha256": "d0c66a9f0ff13e5c9e343cec0251da40aebc98849059ffc70da948b3f0fa524f"
+    },
+    {
+      "path": "repository/tools/verify.py",
+      "bytes": 7916,
+      "sha256": "5e9c64fdc246d61b58355a5afebb39de55cfd4a1d1315f7f6d73b7e706281b06"
+    },
+    {
+      "path": "repository/tools/test_prepare.py",
+      "bytes": 16878,
+      "sha256": "7534d006f44eda8b33793517ecafcb89497543d9f5a48d6d7dce47b5c561f9cc"
+    },
+    {
+      "path": "repository/tools/test_verify.py",
+      "bytes": 2278,
+      "sha256": "84891f0ee35945d12e165279b5fcffc8393646dc940c703f3fdeab1ef16b3a85"
+    },
+    {
+      "path": "repository/tools/configure_v0821.py",
+      "bytes": 5010,
+      "sha256": "0143ecee571494355b0663600950625fecee4b1c7b3e41bb78fb0a468cd087c6"
+    },
+    {
+      "path": "repository/README.md",
+      "bytes": 768,
+      "sha256": "37d1560b56eb67043c77728337756c2286c6d380178218f15d571f384f54e27c"
+    },
+    {
+      "path": "repository/index.html",
+      "bytes": 823,
+      "sha256": "030bf7155d451cdd32925415009fc1ffe5cc624c95fee7839ed8711d82cc3fe7"
+    },
+    {
+      "path": "repository/releases/index.html",
+      "bytes": 571,
+      "sha256": "a67eebc2c45e1659fef5b993c65fee2146ae3e47f352f25b0c9d42ccc77471c0"
+    },
+    {
+      "path": "repository/metadata/v0.82.1/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "cd471011a9f229a656943a4b9e37363e86b2fc4660fe762dc3e3e158b9bc3588"
+    },
+    {
+      "path": "repository/metadata/v0.82.1/manifest.json",
+      "bytes": 192123,
+      "sha256": "f28ad08403db215de393ac562ca1d3fe7dfc6791f49194513af60bf5db1b7e3d"
+    },
+    {
+      "path": "repository/metadata/v0.82.1/release.json",
+      "bytes": 465,
+      "sha256": "bba2db9c5ed2c0d136224472dde33117cae6c8518c6d162f279f1cb5ed27bb5e"
+    },
+    {
+      "path": "repository/metadata/v0.82.1/source-qualification.json",
+      "bytes": 34101,
+      "sha256": "f723ddb7c5150353cb58d9f032da5acfa53f8f89018716c364038c51fc45aff8"
+    },
+    {
+      "path": "repository/authority/release-original.json",
+      "bytes": 17717,
+      "sha256": "82a6f62af9f63c2c0b3a094ea00332f4fc1e67fa6c80e95e79a20db3496e394c"
+    },
+    {
+      "path": "repository/authority/reviewed-release-descriptors.json",
+      "bytes": 1959,
+      "sha256": "664b256708321e5131afa7b0e73b3eff42b6b48da015c1ea9f8fd01642477c8f"
+    },
+    {
+      "path": "repository/authority/source-commit-local.txt",
+      "bytes": 1227,
+      "sha256": "5a652c2f2024692bac23dccfde6801fd0038e253d314c3570e11587bd6825b2f"
+    },
+    {
+      "path": "repository/authority/source-identity-local.json",
+      "bytes": 386,
+      "sha256": "681fbb10fa8923871d40c191d093e8c8129d6bc2fbbbc361199b94e0de8e2d90"
+    },
+    {
+      "path": "repository/authority/tag-original.json",
+      "bytes": 713,
+      "sha256": "593129224fa401bb3417182ad0efa2b82edcf017e1f470998024ba99ed142e5d"
+    },
+    {
+      "path": "repository/authority/tag-ref-original.json",
+      "bytes": 337,
+      "sha256": "c0baa2b753f3537ea5daeb9fa7bd8a6bec437ee986f643532aad9b08bc62e315"
+    },
+    {
+      "path": "local-archive-tests.log",
+      "bytes": 3675,
+      "sha256": "6dcb743b8edda4f49a4c67d8bdc51e9c77b46e5c8ef48baec36449e0de65c04d"
+    },
+    {
+      "path": "tag-fetch-preflight.json",
+      "bytes": 125,
+      "sha256": "98bd532ec70f1e1b6fbf3a294ff494b9281b305a70dc4bd83ffca88ababa0df3"
+    }
+  ],
+  "checks": {
+    "nineOriginalAssets": "All nine IDs, names, sizes and server SHA256 digests match retained independently reviewed draft-nine-assets.json. Current retained release-original.json identifies published stable393811220.",
+    "sourceIdentity": "Retained annotated tag/ref point to exact64ec; local raw commit equals Git cat-file bytes and pins tree402f.",
+    "sealedMetadata": "All four staged metadata files byte-equal existing seven-attachment reviewed package.",
+    "independentInventoryDerivation": {
+      "files": 1059,
+      "bytes": 590404002,
+      "largestFileBytes": 12358446,
+      "uniqueSafePaths": 1059,
+      "totalBudget": 800000000,
+      "fileCountLimit": 20000
+    },
+    "unmodifiedDonorHelpers": [
+      "tools/prepare.py",
+      "tools/verify.py",
+      "tools/test_verify.py",
+      "releases/index.html"
+    ],
+    "workflowDelta": "Archive ID/name/output paths and fetched release tag50/820\u219251/821 only; pinned tooling unchanged. PR never deploys; main deploy depends on successful preparation and independent inventory reread.",
+    "extractor": "SHA38081b1791b49cb7328d18b4d4325c2876bb3bc8d7db03f4610f8d8a7c4bf91b verified against exact30530b3436a1a9737be93f67f308587f89b2f8bc Git blob. Existing800MB transfer/expanded total,20k members,CRC/hash,regular-file/path/type/size guards retained.",
+    "preparationGuards": "Clean exact tooling commit; annotated release tag/source; extractor hash;3GiB reserve; fresh output; before/after source and inputs; final finite artifact reread including hidden files.",
+    "localFiles": "Staged repository contains ordinary files/directories without symlinks or hardlinks.",
+    "ownerTestEvidence": "Retained local-archive-tests.log reports20/20. Reviewer did not duplicate execution. Tag-fetch-preflight describes workflow requirements and explicitly says hostedExecutionVerified:false.",
+    "publicClaims": "README/input authority leave hosted execution, public-byte and native admission pending; zero prior archive51 accepted paths. No new game version, rebuild or media publication authority inferred."
+  },
+  "blockers": [],
+  "limitations": [
+    "No remote API, network downloads, builds, source checkouts, test runs, browser actions or publication performed.",
+    "Original large ZIP/source bodies were not copied, downloaded or rehashed; their already-reviewed metadata descriptors were compared.",
+    "Staged cache template is not yet a committed archive source; later exact commit/tree, hosted extraction, public-byte and scoped browser evidence remain required."
+  ]
+}
