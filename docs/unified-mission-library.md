@@ -587,3 +587,22 @@ verification. It must receive a new pinned native check before acceptance.
   Independent Versus modeled-host verification passes the analogous cold503 path
   without a runtime change. A separate missing-storage/Web-Locks core-browsing
   regression is under repair; installed-content failures must not block Journey.
+
+### Degraded-storage core fallback and download verification
+
+- Versus now constructs its strict inventory reader inside the controller's
+  checked refresh boundary. Missing recovery storage or Web Locks is a truthful
+  installed-content warning, not a failure of the core Journey/Base selector.
+  Unknown storage remains unavailable; no checked-empty fallback is manufactured.
+- Root's unchanged return-intent suite plus four new degraded-capability host
+  cases passes25/25. The separately completed affected Solo host, lifecycle and
+  result-continuation cohort passes42/42. Earlier failing return assertions were
+  preserved and now pass after the production fix, not relaxed fixture defaults.
+- Real optional/paired remote download and recovery verification passes5/5,
+  covering proof expiry, Play-time corruption, cancellation and committed-but-
+  unconfirmed installation. Browser and public qualification remain separate.
+- Native `50eb4f8c3` confirms genuinely fresh Team browse→503→Retry(second
+  request)→Cancel→retry(third request)→same focused Play→exact Solo Voltage Garden.
+  No late adoption or automatic launch occurred. Its exact brief,62% target,
+  three lives and135-second authored timer are confirmed. This supersedes the
+  recorded `9398dc15e` cold Retry failure for this bounded native journey.
