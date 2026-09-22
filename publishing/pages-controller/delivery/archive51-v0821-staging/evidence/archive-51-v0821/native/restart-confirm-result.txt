@@ -1,0 +1,36 @@
+- button "Game menu" [ref=e1]
+  - StaticText " ◩ REVEAL / LINE"
+- StaticText "TACTICAL EDITION"
+- button "Enter fullscreen" [ref=e2]
+  - StaticText "⛶"
+- button "Missions" [ref=e3]
+- button "Collection" [ref=e4]
+- button "Game settings" [ref=e5]
+  - StaticText "Settings"
+- main
+  - region "Game" [ref=e6]
+    - generic
+      - StaticText "REVEALED"
+      - progressbar "Picture revealed": 52.20000076293945
+        - StaticText "52.2%"
+      - generic
+      - emphasis
+        - StaticText "TARGET 45%"
+    - StaticText "LIVES"
+    - strong "3 lives"
+      - StaticText "◆ ◆ ◆"
+    - StaticText "TIME"
+    - strong
+      - StaticText "0:04"
+    - StaticText "SCORE"
+    - strong
+      - StaticText "08160"
+    - generic
+      - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving." [ref=e7] focusable [tabindex]
+      - button "Keep picture →" [ref=e8]
+    - strong
+      - StaticText "Mission complete"
+    - StaticText "Target reached"
+    - status
+      - StaticText "Picture unlocked. A whole world, from one brave line."
+    - status
