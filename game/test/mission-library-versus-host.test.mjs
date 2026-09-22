@@ -446,122 +446,126 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   assert.equal(new URL(globalThis.location.href).searchParams.get('library-mission'), late.id);
 });
 
-test(
-  'optional chapter failure and retry stay inline, then Play stages the exact selected mission without automatic launch',
-  { timeout: 120000 },
-  async (t) => {
-    const catalog = JSON.parse(
-      await readFile(new URL('../content/optional-worlds.json', import.meta.url)),
-    );
-    const chapter = catalog.packs.find((item) => item.id === 'original-fpv-pressure');
-    const bytes = await readFile(new URL(`../../${chapter.path}`, import.meta.url));
-    const source = JSON.parse(bytes);
-    const target = model.missions.find(
-      (row) => row.runtimeId === source.campaigns[0].levels.at(-1).id,
-    );
-    let fail = true,
-      heldDownload = null,
-      releaseDownload = null,
-      fetches = 0,
-      nextURL = 0;
-    const urls = new Map();
-    class PictureURL extends URL {
-      static createObjectURL(blob) {
-        const url = `blob:versus-library/${++nextURL}`;
-        urls.set(url, blob);
-        return url;
-      }
-      static revokeObjectURL(url) {
-        urls.delete(url);
-      }
-    }
-    class Picture {
-      set src(value) {
-        this.ready = Promise.resolve().then(async () => {
-          const bytes = value.startsWith('data:')
-            ? Buffer.from(value.split(',')[1], 'base64')
-            : Buffer.from(await urls.get(value).arrayBuffer());
-          assert.equal(bytes.subarray(1, 4).toString(), 'PNG');
-          this.width = this.naturalWidth = bytes.readUInt32BE(16);
-          this.height = this.naturalHeight = bytes.readUInt32BE(20);
-          this.onload?.();
-        });
-      }
-      async decode() {
-        await this.ready;
-      }
-      removeAttribute() {}
-    }
-    const p = await fixture(t, {
-      ImageClass: Picture,
-      URLImpl: PictureURL,
-      fetchResponse: async (path) => {
-        const url = new URL(path, 'http://localhost/game/couch/');
-        if (url.pathname.endsWith('/game/content/optional-worlds.json'))
-          return new Response(JSON.stringify(catalog));
-        if (url.pathname.endsWith(`/${chapter.path}`)) {
-          fetches++;
-          if (heldDownload) await heldDownload;
-          return fail
-            ? new Response('Controlled offline failure', { status: 503 })
-            : new Response(bytes, { headers: { 'content-length': String(bytes.length) } });
+for (const chapterSource of ['optional', 'bundled'])
+  test(
+    `${chapterSource} chapter failure and retry stay inline, then Play stages the exact selected mission without automatic launch`,
+    { timeout: 120000 },
+    async (t) => {
+      const catalog = JSON.parse(
+        await readFile(new URL('../content/optional-worlds.json', import.meta.url)),
+      );
+      const chapter =
+        chapterSource === 'optional'
+          ? catalog.packs.find((item) => item.id === 'original-fpv-pressure')
+          : { path: 'game/content/packs/night-shift.json' };
+      const bytes = await readFile(new URL(`../../${chapter.path}`, import.meta.url));
+      const source = JSON.parse(bytes);
+      const target = model.missions.find(
+        (row) => row.runtimeId === source.campaigns[0].levels.at(-1).id,
+      );
+      let fail = true,
+        heldDownload = null,
+        releaseDownload = null,
+        fetches = 0,
+        nextURL = 0;
+      const urls = new Map();
+      class PictureURL extends URL {
+        static createObjectURL(blob) {
+          const url = `blob:versus-library/${++nextURL}`;
+          urls.set(url, blob);
+          return url;
         }
-      },
-    });
-    p.$('race-start').click();
-    await running(p, 'signal-01');
-    await open(p);
-    p.$('journey-search').value = target.name;
-    p.$('journey-search').emit('input');
-    const card = () =>
-      [...p.$('journey-cards').children].find((card) => card.dataset.missionId === target.id);
-    assert.match(card().textContent, /Download/);
-    const before = p.checkpoint(),
-      picture = p.drawOptions[0].backdrop;
-    card().click();
-    await settle(() => card().textContent.includes('Retry'));
-    assert.equal(p.$('journey-chooser').open, true);
-    assert.equal(p.$('journey-search').value, target.name);
-    fail = false;
-    heldDownload = new Promise((resolve) => {
-      releaseDownload = resolve;
-    });
-    card().click();
-    await settle(() => fetches === 2 && card().textContent.includes('Preparing'));
-    card().click();
-    await settle(() =>
-      card().querySelector('.journey-card-action').textContent.startsWith('Download'),
-    );
-    releaseDownload();
-    heldDownload = null;
-    await new Promise((resolve) => setImmediate(resolve));
-    p.frame(0);
-    assert.deepEqual(p.checkpoint(), before);
-    assert.equal(p.$('journey-search').value, target.name);
-    card().click();
-    await waitFor(() => card().querySelector('.journey-card-action').textContent === 'Play', {
-      timeoutMs: 60000,
-    });
-    assert.equal(fetches, 3);
-    p.frame(0);
-    assert.deepEqual(p.checkpoint(), before);
-    assert.equal(p.drawOptions[0].backdrop, picture);
-    assert.equal(p.$('journey-chooser').open, true);
-    card().click();
-    await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
-    p.$('race-library-stay').click();
-    await settle(() => p.$('journey-chooser').open);
-    p.frame(0);
-    assert.deepEqual(p.checkpoint(), before);
-    assert.equal(p.drawOptions[0].backdrop, picture);
-    card().click();
-    await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
-    p.$('race-library-play').click();
-    await running(p, target.runtimeId);
-    assert.equal(p.renders[1].level.id, target.runtimeId);
-    assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
-  },
-);
+        static revokeObjectURL(url) {
+          urls.delete(url);
+        }
+      }
+      class Picture {
+        set src(value) {
+          this.ready = Promise.resolve().then(async () => {
+            const bytes = value.startsWith('data:')
+              ? Buffer.from(value.split(',')[1], 'base64')
+              : Buffer.from(await urls.get(value).arrayBuffer());
+            assert.equal(bytes.subarray(1, 4).toString(), 'PNG');
+            this.width = this.naturalWidth = bytes.readUInt32BE(16);
+            this.height = this.naturalHeight = bytes.readUInt32BE(20);
+            this.onload?.();
+          });
+        }
+        async decode() {
+          await this.ready;
+        }
+        removeAttribute() {}
+      }
+      const p = await fixture(t, {
+        ImageClass: Picture,
+        URLImpl: PictureURL,
+        fetchResponse: async (path) => {
+          const url = new URL(path, 'http://localhost/game/couch/');
+          if (url.pathname.endsWith('/game/content/optional-worlds.json'))
+            return new Response(JSON.stringify(catalog));
+          if (url.pathname.endsWith(`/${chapter.path}`)) {
+            fetches++;
+            if (heldDownload) await heldDownload;
+            return fail
+              ? new Response('Controlled offline failure', { status: 503 })
+              : new Response(bytes, { headers: { 'content-length': String(bytes.length) } });
+          }
+        },
+      });
+      p.$('race-start').click();
+      await running(p, 'signal-01');
+      await open(p);
+      p.$('journey-search').value = target.name;
+      p.$('journey-search').emit('input');
+      const card = () =>
+        [...p.$('journey-cards').children].find((card) => card.dataset.missionId === target.id);
+      assert.match(card().textContent, /Download/);
+      const before = p.checkpoint(),
+        picture = p.drawOptions[0].backdrop;
+      card().click();
+      await settle(() => card().textContent.includes('Retry'));
+      assert.equal(p.$('journey-chooser').open, true);
+      assert.equal(p.$('journey-search').value, target.name);
+      fail = false;
+      heldDownload = new Promise((resolve) => {
+        releaseDownload = resolve;
+      });
+      card().click();
+      await settle(() => fetches === 2 && card().textContent.includes('Preparing'));
+      card().click();
+      await settle(() =>
+        card().querySelector('.journey-card-action').textContent.startsWith('Download'),
+      );
+      releaseDownload();
+      heldDownload = null;
+      await new Promise((resolve) => setImmediate(resolve));
+      p.frame(0);
+      assert.deepEqual(p.checkpoint(), before);
+      assert.equal(p.$('journey-search').value, target.name);
+      card().click();
+      await waitFor(() => card().querySelector('.journey-card-action').textContent === 'Play', {
+        timeoutMs: 60000,
+      });
+      assert.equal(fetches, 3);
+      p.frame(0);
+      assert.deepEqual(p.checkpoint(), before);
+      assert.equal(p.drawOptions[0].backdrop, picture);
+      assert.equal(p.$('journey-chooser').open, true);
+      card().click();
+      await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
+      p.$('race-library-stay').click();
+      await settle(() => p.$('journey-chooser').open);
+      p.frame(0);
+      assert.deepEqual(p.checkpoint(), before);
+      assert.equal(p.drawOptions[0].backdrop, picture);
+      card().click();
+      await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
+      p.$('race-library-play').click();
+      await running(p, target.runtimeId);
+      assert.equal(p.renders[1].level.id, target.runtimeId);
+      assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
+    },
+  );
 
 for (const interruption of ['blur', 'focus', 'pointer'])
   test(`a cancelled lazy Versus library opening cannot regain focus after ${interruption}`, async (t) => {
