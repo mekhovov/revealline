@@ -309,7 +309,9 @@ separately from hosted upload success.”
 Use the [default Journey contract](../../docs/default-journey-release.md) for the
 v0.83 candidate. Test fresh and returning ordinary root entry (no special URL),
 91/91/12 catalogue counts, direct Start, explicit Legacy access, mode/Workshop
-return, Retry/Next/endings and loading recovery. Reuse current Journey scopes;
+return, Retry/Next/endings and loading recovery. Follow nested tool launches too:
+Playground's Couch preview must open the installed-map Legacy catalogue from both
+its frame and open link, with editor/session data unchanged. Reuse current Journey scopes;
 no save migration, database deletion or mission/art generation is in this feature.
 Report source, PR, public version/link, actual input/viewports and evidence limits;
 never infer publication or complete human/device qualification from a host pass.

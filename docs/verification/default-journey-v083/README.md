@@ -15,6 +15,17 @@ Final PR/merged source and publication receipts must qualify their exact SHA.
 - Workshop links from an explicitly launched pack lost catalogue intent. Outgoing
   links now pin the resolved route, including historical `journey=1`; bare old
   Workshop returns remain Legacy. All nine tools retain their return contracts.
+- After the first final-head checks started, compatibility review found that
+  Playground's installed-map Couch preview used only `?focus=1`, which enrolled
+  the new default instead. Both preview links now explicitly select Legacy;
+  editor/session preservation and the actual child host receive regressions.
+  Preserve the earlier candidate's evidence; the corrected SHA requires fresh
+  complete source gates.
+  Corrected editor cohort12/12 and child-host cohort10/10 passed on Node20.
+  The child's first new assertion incorrectly expected `first-signal`; the
+  retained race actually defaults to `orchard-crossing`. That initial test-only
+  failure is retained. Native Playground → Couch race → Start confirmed the
+  retained Orchard Crossing map on both boards, with explicit Legacy links.
 - New catalogue links use existing departure safeguards. Team's switch was moved
   into the existing tools area so keyboard/controller Pause navigation owns it.
 - Default UI copy avoids authoring labels, while historical review URLs retain
