@@ -213,10 +213,37 @@ test('Journey storage failure reports session-only progress without preventing S
   });
   assert.equal(p.$('journey-save-status').hidden, false);
   assert.match(p.$('journey-save-message').textContent, /session-only/);
+  assert.equal(p.$('journey-save-status').closest('dialog'), p.$('shell-home'));
+  assert.equal(p.$('journey-save-badge').hidden, false);
+  assert.match(p.$('shell-menu').getAttribute('aria-label'), /Journey progress not saved/);
   p.$('journey-skip').click();
   p.$('journey-skip').click();
   await running(p, 'cut-2');
   assert.equal(p.$('journey-save-status').hidden, false);
+  assert.deepEqual(p.errors, []);
+});
+
+test('Journey save options preserves the won attempt and deliberate Next', async (t) => {
+  const { p } = await setup(t, {
+    journeyIndexedDB: {
+      open() {
+        throw new Error('Storage denied by browser');
+      },
+    },
+  });
+  win(p);
+  const run = p.rendered.run;
+  assert.equal(p.$('journey-save-options').hidden, false);
+  p.$('journey-save-options').click();
+  assert.equal(p.$('shell-home').open, true);
+  assert.equal(p.doc.activeElement, p.$('journey-save-retry'));
+  p.frame(0);
+  assert.equal(p.rendered.run, run);
+  assert.equal(run.status, 'won');
+  p.$('shell-home').close();
+  p.$('next-button').click();
+  await running(p, 'cut-2');
+  assert.equal(p.$('journey-save-badge').hidden, false);
   assert.deepEqual(p.errors, []);
 });
 
