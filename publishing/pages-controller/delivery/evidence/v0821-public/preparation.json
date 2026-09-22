@@ -1,0 +1,1 @@
+{"status": "PREPARED_ACTUAL_DEPLOYMENT_BINDING_REQUIRED", "version": "v0.82.1", "inventory": null, "networkRequests": 0, "workers": 4, "helpers": {"http_audit.py": "db49591f108b1380408c8b5a624c85a83966e41f9582c00220cd703186ca658e", "binding.py": "0330239beebc0bdd300df141883117ec394bc3bd8f5b6a01a8627c567c9d3613"}}
