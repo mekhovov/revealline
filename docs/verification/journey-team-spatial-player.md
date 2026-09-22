@@ -4,6 +4,11 @@
 [twelve-mission pressure player](journey-team-pressure-player.md), not final
 balance or P14/P15 acceptance.
 
+Later [shared-return and inner-first continuation evidence](journey-team-partner-returns.md)
+qualifies the previously open Gentle/Expert inner-first finishes and one useful
+simultaneous Shared Lookout opening. The historical scope below remains intact;
+whole-library, human/device, pacing and release gates are still open.
+
 ## Playable integration
 
 `game/couch/relay-rescue.html?journey=team-spatial-originals-1` now includes the
