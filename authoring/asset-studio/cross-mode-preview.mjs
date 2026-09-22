@@ -363,8 +363,9 @@ export async function crossModeContextPreview(
         const objectiveNote = teamObjectivePreviewNote(slot.id, run);
         if (objectiveNote !== null) treatment.textContent = objectiveNote;
         const players = run.players.map((player, index) => {
-          const rescue = player.rescue
-            ? `rescuing ${Math.round((run.time - player.rescue.startedAt) * 100)}%`
+          const progress = teamRescueProgress(run, player);
+          const rescue = progress
+            ? `rescuing ${Math.floor(progress.progress * 100)}%`
             : player.status;
           return `P${index + 1} ${rescue}`;
         });
