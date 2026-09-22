@@ -1186,3 +1186,8 @@ In landscape, reserve the actual HUD, objective, footer and both complete player
 ## Music player without a catalogue
 
 Keep built-in and imported playlist selection visible when attachSoundtrackPanel receives no catalogue. Genre/style cards can be hidden, but the shared playlist field and Play action must move into the visible transport. Label the null selection as automatic map/campaign/theme matching rather than a nonexistent style selector. Assert visible ancestor chains as well as calling handlers: a detached or hidden control can pass a synthetic click test. Keep catalogue and legacy-library journeys separate.
+
+
+## Frozen distribution size authority
+
+Keep artifact inspection, reviewed release descriptors and streamed `distribution.zip` uploads bound to the same exact 950,000,000-byte Pages cap. Direct inspection may retain its bounded 1 GiB default, but the hosted release utility must pass the exact cap explicitly. Never raise a bound just because a snapshot failed: first preserve the failed evidence, confirm the current publication budget, and retain all ZIP, manifest, hash-chain, source and final assembled-Pages checks. Infrastructure-only utility corrections do not change frozen game bytes or reserve a game version; re-inspect the original immutable artifact after the reviewed utility PR merges.
