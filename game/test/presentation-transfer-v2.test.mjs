@@ -145,7 +145,9 @@ test('only oversized v1 envelopes fall back to deterministic v2 without changing
   );
   const oversized = structuredClone(document);
   oversized.assets[0].description += 'x';
-  await assert.rejects(exportThemeBundle(oversized, f.assets), /manifest exceeds/);
+  const next = await exportThemeBundle(oversized, f.assets);
+  assert.equal(new TextDecoder().decode((await bytesOf(next)).subarray(0, 8)), 'RLTHM3\r\n');
+  assert.deepEqual((await importThemeBundle(next, { decodeImage: null })).document, oversized);
 });
 
 test('both headers reject malformed manifests, bad lengths, missing payloads and trailing bytes', async () => {

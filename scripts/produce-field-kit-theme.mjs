@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { format, resolveConfig } from 'prettier';
 import { ASSET_SLOTS, createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
-import { FORMATS, presentationCoverage } from '../game/presentation/model.mjs';
+import { FORMATS, LIMITS, presentationCoverage } from '../game/presentation/model.mjs';
 import { reviseStudioTheme } from '../game/presentation/studio-session.mjs';
 import {
   iconForSlot,
@@ -408,17 +408,19 @@ export async function compileFieldKitProduction(
     previousOutput,
   });
   // Format current artifacts only; retained runtime names bind original raw bytes.
-  for (const [name, body] of result.files)
-    if (/\.(json|css)$/.test(name) && !retainedPresentationPath(name))
-      result.files.set(
-        name,
-        Buffer.from(
-          await format(new TextDecoder().decode(body), {
-            ...config,
-            parser: name.endsWith('.json') ? 'json' : 'css',
-          }),
-        ),
-      );
+  for (const [name, body] of result.files) {
+    if (!/\.(json|css)$/.test(name) || retainedPresentationPath(name)) continue;
+    const formatted = Buffer.from(
+      await format(new TextDecoder().decode(body), {
+        ...config,
+        parser: name.endsWith('.json') ? 'json' : 'css',
+      }),
+    );
+    // Pretty-printing must not make otherwise valid Studio metadata unloadable.
+    // The compiler already provided bounded canonical bytes as the fallback.
+    if (name !== 'studio.json' || formatted.length <= LIMITS.manifestBytes)
+      result.files.set(name, formatted);
+  }
   const inventory = [...result.files]
     .filter(([name]) => name !== 'manifest.json')
     .sort(([a], [b]) => a.localeCompare(b))

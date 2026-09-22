@@ -13,6 +13,7 @@ import {
   presentationFontDescriptors,
 } from '../game/presentation/runtime.mjs';
 import { createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
+import { encodePresentationDocument } from '../game/presentation/document-codec.mjs';
 import { inspectPresentationDependencies } from '../game/presentation/dependencies.mjs';
 import { campaignKey } from '../game/library.mjs';
 import { validatePack } from '../game/packs.mjs';
@@ -83,7 +84,10 @@ export async function compilePresentation(
     '',
   ].join('\n');
   files.set('theme.css', encode(css));
-  files.set('studio.json', encode(canonicalJSON(document) + '\n'));
+  const studioMetadata = encodePresentationDocument(document);
+  // Preserve the existing newline whenever it fits the serialized boundary.
+  const studioSuffix = encode(studioMetadata).length < LIMITS.manifestBytes ? '\n' : '';
+  files.set('studio.json', encode(studioMetadata + studioSuffix));
   files.set(
     'runtime.json',
     encode(

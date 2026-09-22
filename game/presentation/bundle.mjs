@@ -2,9 +2,11 @@ import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mj
 import { inspectImageDataUrl } from '../content.mjs';
 import { browserDecodeImage } from '../imports.mjs';
 import { LIMITS, validateThemeBundle } from './model.mjs';
+import { encodePresentationDocument, decodePresentationDocument } from './document-codec.mjs';
 
 const MAGIC_V1 = new TextEncoder().encode('RLTHM1\r\n');
 const MAGIC_V2 = new TextEncoder().encode('RLTHM2\r\n');
+const MAGIC_V3 = new TextEncoder().encode('RLTHM3\r\n');
 export const THEME_BUNDLE_MIME = 'application/vnd.revealline.theme';
 const nativeSize = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get;
 const abort = (signal) => {
@@ -83,7 +85,7 @@ function inspectAudio(bytes, mime) {
     );
 }
 // validateThemeBundle already rejects inconsistent file facts for a shared hash.
-// V2 derives its table only after that complete document validation.
+// V2 and V3 derive their tables only after complete document validation.
 function payloadTable(document) {
   return [
     ...new Map(
@@ -155,14 +157,31 @@ export async function exportThemeBundle(source, sourceAssets = new Map(), option
   const document = validateThemeBundle(source),
     assets = await verifyThemeAssets(document, sourceAssets, options);
   const table = [...assets].map(([sha256, blob]) => ({ sha256, bytes: nativeSize.call(blob) }));
-  let manifest = new TextEncoder().encode(canonicalJSON({ document, assets: table }));
-  const compact = manifest.length > LIMITS.manifestBytes;
-  if (compact) manifest = new TextEncoder().encode(canonicalJSON({ document }));
+  const metadata = encodePresentationDocument(document);
+  // Raw codec output also proves the legacy 2048-item array bound. A compact
+  // document must never be emitted under an older header its reader cannot use.
+  const legacyCompatible = metadata === canonicalJSON(document);
+  let magic = MAGIC_V3;
+  let manifest = new TextEncoder().encode(metadata);
+  if (legacyCompatible) {
+    const v1 = new TextEncoder().encode(canonicalJSON({ document, assets: table }));
+    const v2 =
+      v1.length <= LIMITS.manifestBytes
+        ? null
+        : new TextEncoder().encode(canonicalJSON({ document }));
+    if (v1.length <= LIMITS.manifestBytes) {
+      magic = MAGIC_V1;
+      manifest = v1;
+    } else if (v2.length <= LIMITS.manifestBytes) {
+      magic = MAGIC_V2;
+      manifest = v2;
+    }
+  }
   required(manifest.length <= LIMITS.manifestBytes, 'Bundle manifest exceeds its budget.');
   const total = 12 + manifest.length + table.reduce((sum, row) => sum + row.bytes, 0);
   required(total <= LIMITS.bundleBytes, 'Theme bundle exceeds 32 MiB.');
   const header = new Uint8Array(12);
-  header.set(compact ? MAGIC_V2 : MAGIC_V1);
+  header.set(magic);
   new DataView(header.buffer).setUint32(8, manifest.length);
   abort(options.signal);
   return new Blob([header, manifest, ...assets.values()], { type: THEME_BUNDLE_MIME });
@@ -178,27 +197,40 @@ export async function importThemeBundle(
   required(blob.size >= 12, 'Truncated theme bundle.');
   const header = new Uint8Array(await blob.slice(0, 12).arrayBuffer());
   const compact = MAGIC_V2.every((byte, i) => header[i] === byte);
-  required(compact || MAGIC_V1.every((byte, i) => header[i] === byte), 'Unsupported theme bundle.');
+  const encoded = MAGIC_V3.every((byte, i) => header[i] === byte);
+  required(
+    encoded || compact || MAGIC_V1.every((byte, i) => header[i] === byte),
+    'Unsupported theme bundle.',
+  );
   const length = new DataView(header.buffer).getUint32(8);
   required(
     length > 0 && length <= LIMITS.manifestBytes && 12 + length <= blob.size,
     'Invalid theme manifest length.',
   );
-  const manifest = boundedJSON(
-    new TextDecoder('utf-8', { fatal: true }).decode(
-      await blob.slice(12, 12 + length).arrayBuffer(),
-    ),
-    {
+  const metadata = new TextDecoder('utf-8', { fatal: true }).decode(
+    await blob.slice(12, 12 + length).arrayBuffer(),
+  );
+  let document, table;
+  if (encoded) {
+    document = validateThemeBundle(decodePresentationDocument(metadata), {
+      previous,
+      expectedRevision,
+    });
+    table = payloadTable(document);
+  } else {
+    // Legacy input budgets stay unchanged even though logical documents can now
+    // use a larger, explicitly versioned encoded representation.
+    const manifest = boundedJSON(metadata, {
       maxBytes: LIMITS.manifestBytes,
       maxNodes: 110000,
       maxArray: 2048,
       maxDepth: 20,
       maxString: 8192,
-    },
-  );
-  exactKeys(manifest, compact ? ['document'] : ['document', 'assets'], 'theme transfer');
-  const document = validateThemeBundle(manifest.document, { previous, expectedRevision });
-  const table = compact ? payloadTable(document) : manifest.assets;
+    });
+    exactKeys(manifest, compact ? ['document'] : ['document', 'assets'], 'theme transfer');
+    document = validateThemeBundle(manifest.document, { previous, expectedRevision });
+    table = compact ? payloadTable(document) : manifest.assets;
+  }
   required(Array.isArray(table) && table.length <= LIMITS.assets, 'Invalid theme asset table.');
   const assets = new Map();
   let offset = 12 + length,

@@ -1398,3 +1398,9 @@ When a production successor changes only reviewed equipment metadata, the curren
 A paint-order test must inspect a fresh frame: the accepted decoded picture is the first background draw, once, followed by prepared actors. The last draw is no longer a reliable picture oracle. Keep failed/cancelled preparation, release ownership, Retry and stale-completion assertions intact.
 
 Use the [reviewed successor prompt](../../prompts/team-reviewed-successor.md). Equipment-image quality, recipe-functional review and public release acceptance have separate evidence. Exact adoption must reproduce the generated inventory and pass bounded transfer/history and direct host tests before final release qualification.
+
+## Bounded presentation metadata and immutable history
+
+Keep serialized metadata, expanded logical history and original-payload budgets separate. See [the metadata contract](../../../docs/presentation-metadata.md) and [bounded-history prompt](../../prompts/bounded-theme-history.md). Preserve fitting historical bytes and every retained logical record. Decode compact metadata before semantic validation; do not treat reconstructed objects as trusted. Require encodability before an edit or atomic save is accepted.
+
+When qualifying a new representation, follow it through Studio storage, `.rltheme` framing, compiler newline handling, production formatting and published lazy loading. A bounded compiler result can become too large after pretty-printing. Any narrow generated-file formatting exception needs deterministic replacement validation and full output reproduction. Keep first failures, exact boundaries, stale/atomic guards and all original payloads. Representation readiness is separate from artwork review and public release acceptance.

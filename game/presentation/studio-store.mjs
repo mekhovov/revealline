@@ -1,6 +1,7 @@
 import { validateThemeBundle } from './model.mjs';
 import { verifyThemeAssets } from './bundle.mjs';
 import { canonicalJSON } from '../data-json.mjs';
+import { decodePresentationDocument, encodePresentationDocument } from './document-codec.mjs';
 
 // Deliberately independent of player, soundtrack and original-media databases.
 export const STUDIO_DATABASE = 'revealline-presentation-studio-v1';
@@ -10,7 +11,7 @@ function verifySavedHistory(document, current) {
   if (!current) return;
   if (!Number.isSafeInteger(current.generation) || current.generation < 1)
     throw new Error('The stored studio revision is invalid.');
-  const previous = validateThemeBundle(current.document);
+  const previous = validateThemeBundle(decodePresentationDocument(current.document));
   if (document.id !== previous.id || document.revision < previous.revision)
     throw new Error('Saving must retain the same studio document and its immutable history.');
   if (document.revision === previous.revision) {
@@ -130,7 +131,7 @@ export function createStudioStore({ indexedDB = globalThis.indexedDB } = {}) {
       if (!record) return null;
       if (!Number.isSafeInteger(record.generation) || record.generation < 1)
         throw new Error('The stored studio revision is invalid.');
-      const document = validateThemeBundle(record.document);
+      const document = validateThemeBundle(decodePresentationDocument(record.document));
       const assets = await verifyThemeAssets(document, record.assets);
       return { generation: record.generation, document, assets };
     },
@@ -143,13 +144,14 @@ export function createStudioStore({ indexedDB = globalThis.indexedDB } = {}) {
         throw new Error('Invalid expected studio generation.');
       // Verification owns all bytes before opening the short atomic transaction.
       const document = validateThemeBundle(source);
+      const storedDocument = JSON.parse(encodePresentationDocument(document));
       const assets = await verifyThemeAssets(document, sourceAssets);
       return transaction('readwrite', (store, current) => {
         if ((current?.generation ?? 0) !== expectedGeneration)
           throw new Error('This draft changed in another tab. Reload the studio before saving.');
         verifySavedHistory(document, current);
         const generation = expectedGeneration + 1;
-        store.put({ generation, document, assets }, KEY);
+        store.put({ generation, document: storedDocument, assets }, KEY);
         return { generation, document, assets };
       });
     },
