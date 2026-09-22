@@ -13,6 +13,8 @@ import {
   createCoopActorPresentation,
 } from '../couch/coop-actor-presentation.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
+import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
 const compiled = validateCompiledPresentation(
   JSON.parse(await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url))),
@@ -42,6 +44,12 @@ const SLOTS = [
     '2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0',
     515,
     64,
+  ],
+  [
+    'enemy.claimed-rover',
+    'fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc',
+    282,
+    32,
   ],
 ];
 const palette = Object.freeze({
@@ -138,7 +146,7 @@ const poses = (adapter, run) => [
 const labels = (calls) => calls.filter((call) => call.name === 'fillText');
 
 // The source slots are existing artwork, not newly produced Team character sets.
-test('five approved source frames retain exact IDs, revisions, PNG hashes and dimensions', async () => {
+test('six approved source frames retain exact IDs, revisions, PNG hashes and dimensions', async () => {
   assert.deepEqual(compiled.resolved.theme, {
     id: 'fpv',
     revision: 54,
@@ -186,7 +194,47 @@ test('explicit Team roles reuse prepared slots without changing actual types or 
     poses(adapter, run).length,
   );
   assert.deepEqual(run, before);
-  assert.deepEqual(new Set(p.reads), new Set(SLOTS.map(([slot]) => slot)));
+  assert.deepEqual(
+    new Set(p.reads),
+    new Set(SLOTS.map(([slot]) => slot).filter((slot) => slot !== 'enemy.claimed-rover')),
+  );
+});
+
+test('qualified Team roamers borrow the existing tracked body once and freeze locomotion until activation', () => {
+  const source = createTeamOpeningCandidates();
+  source.actorCatalogId = 'journey-actors-v2';
+  source.missions[0].team.format = 'TeamMissionV3';
+  source.missions[0].actors.push({
+    id: 'roamer',
+    role: 'reclaimed-roamer',
+    tier: 'measured',
+    x: 10.5,
+    y: 17.5,
+    heading: [1, 0],
+  });
+  const run = startCoop(
+    createCoop(
+      resolveMission(compileContentProject(source), 'twin-landings', { mode: 'team' }).level,
+    ),
+  );
+  const p = prepared(),
+    adapter = createCoopActorPresentation(),
+    actor = run.enemies.find((e) => e.id === 'roamer');
+  adapter.setPresentation(p.snapshot);
+  for (const mode of ['dormant', 'warning', 'active']) {
+    actor.rover.mode = mode;
+    run.tick++;
+    run.time = run.tick / 120;
+    const before = structuredClone(run);
+    adapter.update(run);
+    const frame = adapter.frame('enemy', actor.id);
+    assert.equal(frame.role, 'team-reclaimed-roamer');
+    assert.equal(frame.sourceSlot, 'enemy.claimed-rover');
+    assert.equal(frame.locked, mode !== 'active');
+    assert.deepEqual(run, before);
+  }
+  assert.equal(p.reads.filter((slot) => slot === 'enemy.claimed-rover').length, 1);
+  assert.equal(p.closed(), 0);
 });
 
 for (const [width, style, source] of [

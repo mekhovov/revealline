@@ -33,6 +33,11 @@ export function inspectContentPacing(source, options = {}) {
   ];
   const rows = [],
     diagnostics = [];
+  // Exact authored lesson labels only: actor names are not implicit aliases for
+  // lessons, and a practice/combination declaration cannot invent an introduction.
+  const declaredLessons = new Set(project.missions.flatMap((mission) => mission.design.introduces));
+  const introduced = new Set(),
+    practiced = new Set();
   let previous = null;
   for (const campaign of journey.campaigns) {
     if (excluded.includes(campaign.campaignId)) continue;
@@ -50,6 +55,42 @@ export function inspectContentPacing(source, options = {}) {
           )
         : null;
       const warnings = [];
+      const unintroducedPractice = mission.design.practices.filter(
+        (lesson) =>
+          declaredLessons.has(lesson) &&
+          !introduced.has(lesson) &&
+          !mission.design.introduces.includes(lesson),
+      );
+      const unintroducedCombination = mission.design.combines.filter(
+        (lesson) => declaredLessons.has(lesson) && !introduced.has(lesson),
+      );
+      const unpracticedCombination = mission.design.combines.filter(
+        (lesson) => declaredLessons.has(lesson) && introduced.has(lesson) && !practiced.has(lesson),
+      );
+      for (const [code, lessons, explanation] of [
+        [
+          'practice-before-selected-introduction',
+          unintroducedPractice,
+          'Practice has no earlier or same-mission declared introduction',
+        ],
+        [
+          'combination-before-selected-introduction',
+          unintroducedCombination,
+          'Combination has no earlier declared introduction',
+        ],
+        [
+          'combination-before-selected-practice',
+          unpracticedCombination,
+          'Combination has no earlier declared practice after introduction',
+        ],
+      ])
+        if (lessons.length)
+          warnings.push({
+            severity: 'warning',
+            code,
+            lessons,
+            message: `${explanation}: ${lessons.join(', ')}. Review the selected route and any assumed prior learning; declarations do not prove safe exposure or mastery.`,
+          });
       if (change?.band < 0)
         warnings.push({
           severity: 'warning',
@@ -86,6 +127,11 @@ export function inspectContentPacing(source, options = {}) {
       };
       rows.push(row);
       diagnostics.push(...warnings.map((item) => ({ ...identity, ...item })));
+      // Only earlier occurrences count for a combination. Practice before a
+      // missing introduction must not make a later combination appear prepared.
+      for (const lesson of mission.design.introduces) introduced.add(lesson);
+      for (const lesson of mission.design.practices)
+        if (introduced.has(lesson)) practiced.add(lesson);
       previous = { identity, rating };
     }
   }
@@ -111,6 +157,7 @@ export function inspectContentPacing(source, options = {}) {
       'Uses gameplay selection, order, archive state and mode filtering; repeated memberships remain separate occurrences.',
       'An intentionally quieter mission may be useful. Warnings never change or reject source content.',
       'No observed duration, route risk, cleanup quality, reaction tolerance or human enjoyment is inferred.',
+      'Learning-order diagnostics compare exact labels with explicit introductions anywhere in this project. Undeclared labels, actor/lesson aliases, actual encounters and learning outside the selected sequence are not inferred.',
     ],
   });
 }

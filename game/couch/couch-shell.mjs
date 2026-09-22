@@ -2,6 +2,7 @@ import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { authoredModeDestinations } from '../ui/authored-mode-routes.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { attachSettingsPanels } from '../ui/settings-panels.mjs';
+import { authoredJourneyModeHref, isAuthoredJourneyRouteId } from '../content-design/mode-href.mjs';
 
 const ABILITY = Object.freeze({
   scan: 'Scan',
@@ -44,6 +45,7 @@ export function createCouchShell({
   onLeaveRequest = () => {},
   getSoloReturnToken = () => null,
   authoredRoute = null,
+  getSoloJourneyRoute = () => null,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
     view = doc.defaultView,
@@ -244,8 +246,17 @@ export function createCouchShell({
       return null;
     }
   }
-  const destinationHref = (kind, token) =>
-    authoredDestinations?.[kind] ??
+  function soloJourneyRoute() {
+    try {
+      const id = getSoloJourneyRoute();
+      return isAuthoredJourneyRouteId(id) ? id : null;
+    } catch {
+      return null;
+    }
+  }
+  const destinationHref = (kind, token, routeId) =>
+    authoredDestinations?.[kind] ||
+    (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
     (kind === 'solo' && token ? `../?mode-return-v2=${token}` : DESTINATIONS[kind]);
   function departureCurrent(ticket) {
     const current = getDepartureState();
@@ -254,6 +265,7 @@ export function createCouchShell({
       departure === ticket &&
       current?.match === ticket.match &&
       current.generation === ticket.generation &&
+      soloJourneyRoute() === ticket.journeyRouteId &&
       current.match.status === 'paused'
     );
   }
@@ -277,7 +289,8 @@ export function createCouchShell({
       return;
     // Fixed routes are owned here; no target is accepted from a URL or control.
     const returnToken = kind === 'solo' && !authoredDestinations ? soloReturnToken() : null;
-    element.setAttribute('href', destinationHref(kind, returnToken));
+    const journeyRouteId = soloJourneyRoute();
+    element.setAttribute('href', destinationHref(kind, returnToken, journeyRouteId));
     const before = getDepartureState();
     if (destroyed || departure || screen !== 'main' || !foreground() || !before?.match) {
       event.preventDefault();
@@ -299,6 +312,7 @@ export function createCouchShell({
     const ticket = {
       kind,
       returnToken,
+      journeyRouteId,
       opener: element,
       match: current.match,
       generation: current.generation,
@@ -318,7 +332,7 @@ export function createCouchShell({
       'race-leave',
       kind === 'team' ? 'Discard and go to Team' : 'Discard and return to Solo',
     );
-    $('race-leave').setAttribute('href', destinationHref(kind, returnToken));
+    $('race-leave').setAttribute('href', destinationHref(kind, returnToken, journeyRouteId));
     show('leave', { remember: element });
     if (!departureCurrent(ticket)) cancelDeparture();
   }
@@ -354,7 +368,10 @@ export function createCouchShell({
       cancelDeparture();
       return;
     }
-    $('race-leave').setAttribute('href', destinationHref(ticket.kind, ticket.returnToken));
+    $('race-leave').setAttribute(
+      'href',
+      destinationHref(ticket.kind, ticket.returnToken, ticket.journeyRouteId),
+    );
     // Preserve native anchor activation. If the browser cannot leave, the
     // original paused attempt stays intact and another decision remains explicit.
   });
@@ -399,6 +416,11 @@ export function createCouchShell({
     focusTransition = true,
   }) {
     if (destroyed) return;
+    // Authored native/modified links need the edition before activation. Legacy
+    // return tokens remain read only by an explicit Solo departure request.
+    const soloHref = destinationHref('solo', null, soloJourneyRoute());
+    if ($('race-solo-return').getAttribute('href') !== soloHref)
+      $('race-solo-return').setAttribute('href', soloHref);
     const previous = status;
     status = match.status;
     if (departure && !departureCurrent(departure)) cancelDeparture();

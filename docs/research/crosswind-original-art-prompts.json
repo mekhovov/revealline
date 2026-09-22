@@ -1,0 +1,273 @@
+{
+  "campaign": "Crosswind Array",
+  "status": "seven-original-candidates-not-final-visual-or-human-qualification",
+  "tool": "built-in-imagegen",
+  "useCase": "stylized-concept",
+  "assets": [
+    {
+      "missionId": "read-the-arrows",
+      "path": "game/content-design/assets/crosswind-highlands-r1/read-the-arrows.png",
+      "bytes": 2628806,
+      "sha256": "87911215f03ee55b81ace5dbafc3cbb30d28e98df7eb42e6f4273c2b41ec00b5",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Crosswind Array campaign, Read the arrows. Create one opaque full-bleed wide 2:1 landscape. Scene: A broad sandstone landing at a highland weather station looks toward a low rounded instrument shelter beyond a meadow of wind-combed grass. Beside the landing a plain cup anemometer on a short mast and a curved windbreak wall create clear discoveries, with distant layered hills under soft moving cloud shadows. Do not draw directional arrows or markings. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable silhouettes and restrained detail. Muted slate blue, pale weathered sandstone, sage grass, brushed brass and dark timber; diffuse low-glare light and quiet areas for bright gameplay overlays. Natural oblique perspective, never top-down or a diagram. A distinct original composition with discoveries spread across its width for progressive revelation, not a crop or recolor. Decorative image only, not collision geometry. No people, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A brass cup anemometer overlooks a broad stone landing, wind-combed meadow and rounded weather shelter above layered highland waters.",
+          "Original independently generated composition, not a copied screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "survey-markers",
+      "path": "game/content-design/assets/crosswind-highlands-r1/survey-markers.png",
+      "bytes": 2702883,
+      "sha256": "ad007651f692eecf05e14524eba4833a88a39ed601066e343cd5f711fcfd505c",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Crosswind Array campaign, Survey markers. Create one opaque full-bleed wide 2:1 landscape. Scene: Three stout survey shelters stand on separate rocky terraces overlooking a broad upland valley. A weathered timber footbridge and two plain unmarked stone survey pillars connect the eye between terraces; a closed brass surveying instrument rests under the nearest canopy. Show open alternative hillside paths as natural scenery, not mapped routes. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable silhouettes and restrained detail. Muted slate blue, pale weathered sandstone, sage grass, brushed brass and dark timber; diffuse low-glare light and quiet areas for bright gameplay overlays. Natural oblique perspective, never top-down or a diagram. A distinct original composition with discoveries spread across its width for progressive revelation, not a crop or recolor. Decorative image only, not collision geometry. No people, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "edits": [
+        {
+          "useCase": "precise-object-edit",
+          "prompt": "Use case: precise-object-edit. Remove only the dark carved or painted symbols from both freestanding survey stones beside the footbridge. Replace the marks with continuous natural weathered stone texture. Preserve the stones, three shelters, surveying instrument, bridge, mountains, vegetation, lighting, palette and exact 2:1 composition. No new objects, markings, arrows, text, UI or watermark.",
+          "reason": "Remove unintended survey-stone glyphs so directional cues remain runtime-owned."
+        }
+      ],
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "Three survey shelters occupy separate rocky terraces linked by a timber footbridge and plain unmarked stone pillars.",
+          "Original independently generated composition, not a copied screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art.",
+          "Selected edit removes both survey-stone markings while retaining the three-shelter scene."
+        ],
+        "pending": [
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "windbreak-weave",
+      "path": "game/content-design/assets/crosswind-highlands-r1/windbreak-weave.png",
+      "bytes": 2912970,
+      "sha256": "91bb8ecd0dd0eeaa7eb85272237d63c1ecb95b933400b1746c91de95dbfdd7e1",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Crosswind Array campaign, Windbreak weave. Create one opaque full-bleed wide 2:1 landscape. Scene: A windswept plateau garden contains offset curved dry-stone windbreaks around a broad central maintenance deck. Long silver grasses bend between the stone walls, a plain vertical-axis wind rotor stands in the distance, and an empty tool alcove gives a quiet foreground discovery. Compose intersecting views between shelters without an arrow, maze or diagram. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable silhouettes and restrained detail. Muted slate blue, pale weathered sandstone, sage grass, brushed brass and dark timber; diffuse low-glare light and quiet areas for bright gameplay overlays. Natural oblique perspective, never top-down or a diagram. A distinct original composition with discoveries spread across its width for progressive revelation, not a crop or recolor. Decorative image only, not collision geometry. No people, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "Curved dry-stone windbreaks surround a broad maintenance deck above coastal cliffs, with silver grasses and a distant vertical-axis rotor.",
+          "Original independently generated composition, not a copied screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "compass-array",
+      "path": "game/content-design/assets/crosswind-highlands-r1/compass-array.png",
+      "bytes": 2672598,
+      "sha256": "68aec2169fb2cfd4bce6027494fa75de3cd7d79508694c1254dd7ec17be8c818",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Crosswind Array campaign, Compass array. Create one opaque full-bleed wide 2:1 landscape. Scene: An atmospheric observation station built around a circular sunken courtyard high above a cloud sea. Four wide stone access terraces surround a small closed timber instrument hut, with plain brass cup anemometers at different heights and a low circular water basin reflecting the sky. No compass rose, compass letters, radial diagram, markings or glyphs. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable silhouettes and restrained detail. Muted slate blue, pale weathered sandstone, sage grass, brushed brass and dark timber; diffuse low-glare light and quiet areas for bright gameplay overlays. Natural oblique perspective, never top-down or a diagram. A distinct original composition with discoveries spread across its width for progressive revelation, not a crop or recolor. Decorative image only, not collision geometry. No people, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A sunken circular weather courtyard and reflecting basin sit beneath brass cup anemometers above a sea of clouds.",
+          "Original independently generated composition, not a copied screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "outer-loop",
+      "path": "game/content-design/assets/crosswind-highlands-r1/outer-loop.png",
+      "bytes": 2638067,
+      "sha256": "0d15c80d7752f0cb78158794612fa469e86a5b92bf25874bb9926ad3f6f8484d",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Crosswind Array campaign, Outer loop. Create one opaque full-bleed wide 2:1 landscape. Scene: A sweeping U-shaped elevated stone promenade wraps around a highland weather garden. Two squat instrument cabins occupy interior rock outcrops while a third shelter stands beyond the outer curve. Weathered timber railings, coiled plain ropes and a distant rounded wind tower give distinct focal discoveries. Clear architectural depth and a long sheltered alternative walkway. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable silhouettes and restrained detail. Muted slate blue, pale weathered sandstone, sage grass, brushed brass and dark timber; diffuse low-glare light and quiet areas for bright gameplay overlays. Natural oblique perspective, never top-down or a diagram. A distinct original composition with discoveries spread across its width for progressive revelation, not a crop or recolor. Decorative image only, not collision geometry. No people, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A sweeping elevated stone promenade wraps around highland instrument cabins and rocky outcrops beneath a distant wind tower.",
+          "Original independently generated composition, not a copied screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "long-wave",
+      "path": "game/content-design/assets/crosswind-highlands-r1/long-wave.png",
+      "bytes": 2612948,
+      "sha256": "8f60752ffeb8bc7f19df30a96f795e3618e858ee3b870983dadb874932bbd4e5",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Crosswind Array campaign, Long wave. Create one opaque full-bleed wide 2:1 landscape. Scene: An expansive coastal upland with three tall slender weather masts beside staggered stone viewing terraces above long ocean swells. Plain cloth windsocks, without stripes or markings, hang from short side booms; a sheltered copper rain collector rests near a broad landing. Horizontal sea bands and varied-height terraces create a calm wide composition. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable silhouettes and restrained detail. Muted slate blue, pale weathered sandstone, sage grass, brushed brass and dark timber; diffuse low-glare light and quiet areas for bright gameplay overlays. Natural oblique perspective, never top-down or a diagram. A distinct original composition with discoveries spread across its width for progressive revelation, not a crop or recolor. Decorative image only, not collision geometry. No people, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "Plain cloth windsocks stand beside staggered stone terraces, a sheltered rain collector and long coastal ocean swells.",
+          "Original independently generated composition, not a copied screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    },
+    {
+      "missionId": "crosswind-remix",
+      "path": "game/content-design/assets/crosswind-highlands-r1/crosswind-remix.png",
+      "bytes": 2732689,
+      "sha256": "dc5d33fcdca96f4ae6861f594276ae5bf0208a50faeae2662e4ecbdf0711a69f",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept. Asset type: original raster reveal-background for Reveal Line, Crosswind Array campaign, Return currents. Create one opaque full-bleed wide 2:1 landscape. Scene: A highland station at blue dusk where a sturdy covered stone bridge crosses a stream between two instrument houses. Around the permanent bridge lie weathered side boardwalks, wind-combed grasses and a partly repaired outer landing. A large quiet cup anemometer and shaded amber windows frame the scene. Convey dependable central access and exposed outer paths as scenery only. Style: crafted stylized environmental illustration with grouped pixel-art-inspired textures, large readable silhouettes and restrained detail. Muted slate blue, pale weathered sandstone, sage grass, brushed brass and dark timber; diffuse low-glare light and quiet areas for bright gameplay overlays. Natural oblique perspective, never top-down or a diagram. A distinct original composition with discoveries spread across its width for progressive revelation, not a crop or recolor. Decorative image only, not collision geometry. No people, enemies, craft, vehicles, UI, text, labels, letters, numbers, logos, arrows, warning stripes, hazard symbols, collectibles, glowing trails, regular grid, banners, emblems, plaques, decorative glyphs, frame or watermark.",
+      "review": {
+        "kind": "assistant-image-inspection-not-human-playtest",
+        "observations": [
+          "A covered stone bridge links warmly lit instrument houses above a stream, with weathered side boardwalks under a blue dusk sky.",
+          "Original independently generated composition, not a copied screenshot, crop, recolor or collision map.",
+          "Detailed stylized environmental illustration rather than strict low-resolution pixel art."
+        ],
+        "pending": [
+          "Native broad-area and victory overlay checks beyond recorded first captures",
+          "Full directional-field and threat-state visual matrix, especially erosion-restored arrows",
+          "Campaign-specific actor presentation and audio",
+          "Reduced effects and small-screen/device review",
+          "Human visual and gameplay qualification",
+          "Accepted source integration, offline aggregate budget and public release"
+        ]
+      }
+    }
+  ],
+  "nativePreview": {
+    "kind": "assistant-native-keyboard-observation-not-human-playtest",
+    "sourceCommit": "422f1587f1a50764bfd52a6efeef5768ff424b4f",
+    "context": "Read-only exact-source local server; explicit Studio Inspect then Apply, Standard Solo Practice, normal Start and directional input. No state injection.",
+    "observations": [
+      {
+        "missionId": "read-the-arrows",
+        "input": "Down",
+        "coveragePercent": 0.6,
+        "score": 140,
+        "targetPercent": 82,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "survey-markers",
+        "input": "Up",
+        "coveragePercent": 0.4,
+        "score": 90,
+        "targetPercent": 82,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "windbreak-weave",
+        "input": "Up",
+        "coveragePercent": 0.4,
+        "score": 80,
+        "targetPercent": 82,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "compass-array",
+        "input": "Up",
+        "coveragePercent": 0.3,
+        "score": 70,
+        "targetPercent": 83,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "outer-loop",
+        "input": "Right",
+        "coveragePercent": 0.9,
+        "score": 170,
+        "targetPercent": 83,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "long-wave",
+        "input": "Down",
+        "coveragePercent": 0.6,
+        "score": 140,
+        "targetPercent": 83,
+        "lives": 3,
+        "stoppedOnCapture": true
+      },
+      {
+        "missionId": "crosswind-remix",
+        "input": "Down",
+        "coveragePercent": 0.6,
+        "score": 630,
+        "targetPercent": 84,
+        "lives": 3,
+        "stoppedOnCapture": true
+      }
+    ],
+    "findings": [
+      "All seven originals visibly loaded in the border, authored foundations and first captured strip.",
+      "Captured strips lost their directional arrows while adjacent unclaimed fields retained theirs.",
+      "Return currents opened its numbered connector and showed Relay 1/1; its eroder, keeper and emitter silhouettes remained distinct.",
+      "Long wave and Return currents showed the lane-warning caption; no active lane overlay or erosion-restoration claim is made.",
+      "All previews closed; focus returned to Play exact Solo preview."
+    ],
+    "limitations": [
+      "First captures only; no native full clear or broad-area/victory matrix",
+      "No erosion-restored artwork observation or complete threat-state matrix",
+      "No physical-device, accessibility matrix, human enjoyment or public-release qualification"
+    ]
+  }
+}

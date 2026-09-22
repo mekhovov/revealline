@@ -372,6 +372,7 @@
                 <p id="overlay-footnote" class="overlay-footnote">
                   A short first flight · arrows / WASD · touch controls below
                 </p>
+                <p id="journey-reactions" class="overlay-footnote" hidden></p>
               </div>
             </div>
             <button id="show-result" class="picture-return" type="button" hidden>Results ↗</button>
@@ -1186,6 +1187,19 @@
         <label><input id="settings-reduced-effects" type="checkbox" /> Reduced effects</label>
         <p id="display-system-reduction" class="micro-note"></p>
         <p id="display-preferences-status" class="micro-note" role="status"></p>
+        <label
+          ><input
+            id="journey-reactions-enabled"
+            type="checkbox"
+            aria-describedby="journey-reactions-help"
+          />
+          Character reactions</label
+        >
+        <p id="journey-reactions-help" class="micro-note">
+          Optional captions after completed Journey missions. No voice or animation.
+        </p>
+        <p id="journey-reactions-status" class="micro-note" role="status" hidden></p>
+        <button id="journey-reactions-retry" type="button" hidden>Retry saving reactions</button>
         <p class="micro-note">
           Reduced effects softens movement and celebration effects. Every direction tap keeps you
           moving. Use Pause to take a break. Manual equipment, when provided by a map, uses separate

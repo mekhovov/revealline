@@ -2,13 +2,7 @@ import { boundedJSON, exactKeys, required, dataIdentity } from '../data-json.mjs
 import { createJourneyCatalog } from '../journey/catalog.mjs';
 import { compileContentProject, resolveMission } from './project.mjs';
 import { freezeDesign, journeyPreset } from './catalogs.mjs';
-import {
-  COOP_FOUNDATION_PACK_VERSION,
-  COOP_FOUNDATION_RULESET,
-  COOP_TERRAIN_LEVEL_VERSION,
-  COOP_TERRAIN_PACK_VERSION,
-  COOP_TERRAIN_RULESET,
-} from '../coop/foundations.mjs';
+import { journeyTeamPackEdition } from '../coop/foundations.mjs';
 import { validateCoopPack } from '../coop/recipes.mjs';
 
 /** Candidate navigation and execution share the authored order and resolver.
@@ -19,8 +13,8 @@ export function resolveContentJourney(source, options = {}) {
   exactKeys(selected, ['packIds', 'mode', 'difficulty'], 'Journey selection');
   const { mode = 'solo', difficulty = 'standard' } = selected;
   required(['solo', 'versus', 'team'].includes(mode), 'Unsupported candidate mode.');
-  journeyPreset(difficulty);
   const project = compileContentProject(source);
+  journeyPreset(difficulty, project.difficulty.id);
   const packIds = selected.packIds ?? project.packs.map((pack) => pack.id);
   required(
     Array.isArray(packIds) &&
@@ -46,7 +40,6 @@ export function resolveContentJourney(source, options = {}) {
       const manifests = missionIds.map((missionId) =>
         resolveMission(project, missionId, { mode, difficulty }),
       );
-      const terrain = mode === 'team' && manifests[0].level.version === COOP_TERRAIN_LEVEL_VERSION;
       if (mode === 'team')
         required(
           manifests.every((manifest) => manifest.level.version === manifests[0].level.version),
@@ -59,15 +52,9 @@ export function resolveContentJourney(source, options = {}) {
         // A changed original must not impersonate a saved edition. Navigation
         // and Journey progress IDs remain independent of these revisions.
         runtime: {
-          version:
-            mode === 'team'
-              ? terrain
-                ? COOP_TERRAIN_PACK_VERSION
-                : COOP_FOUNDATION_PACK_VERSION
-              : 'xonix-campaign.v1',
           ...(mode === 'team'
-            ? { ruleset: terrain ? COOP_TERRAIN_RULESET : COOP_FOUNDATION_RULESET }
-            : {}),
+            ? journeyTeamPackEdition(manifests[0].level)
+            : { version: 'xonix-campaign.v1' }),
           id: design.id,
           revision: `candidate-${dataIdentity({
             campaign: design,

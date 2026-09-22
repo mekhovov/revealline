@@ -8,7 +8,19 @@
   if (
     !['versus', 'team'].includes(mode) ||
     values.length !== 1 ||
-    !['opening', 'authored'].includes(values[0])
+    ![
+      'opening',
+      'authored',
+      'whole-originals',
+      'whole-originals-v2',
+      'whole-originals-v3',
+      'whole-originals-v4',
+      'whole-spatial-v1',
+      'whole-spatial-v2',
+      'whole-spatial-v3',
+      'whole-spatial-v4',
+      'whole-spatial-v5',
+    ].includes(values[0])
   )
     return;
   const route = values[0];

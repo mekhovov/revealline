@@ -6,7 +6,9 @@ const freeze = (value) => {
   }
   return value;
 };
-export const ENEMY_THEMES = freeze(['fpv', 'ukraine', 'retro']);
+export const ENEMY_THEMES = freeze(['fpv',
+'ukraine',
+'retro']);
 export const ENEMY_STYLES = freeze(['microtile', 'hybrid', 'props']);
 export const ENEMY_CATALOG = freeze([
   {
@@ -17,7 +19,7 @@ export const ENEMY_CATALOG = freeze([
     domain: 'Hidden field',
     risk: 'Touches the player or unfinished line; its territory is retained during a capture.',
     motion: 'Reflects through the hidden field.',
-    forms: ['Tracked tank', 'Embroidered beetle', 'Arcade invader'],
+    forms: ['Tracked tank','Embroidered beetle','Arcade invader'],
   },
   {
     type: 'border-patrol',
@@ -27,7 +29,7 @@ export const ENEMY_CATALOG = freeze([
     domain: 'Outer border',
     risk: 'The outer safe border is not a shelter from this guard.',
     motion: 'Circles the original outer perimeter.',
-    forms: ['Four-rotor patrol', 'Swift moth', 'Comet shuttle'],
+    forms: ['Four-rotor patrol','Swift moth','Comet shuttle'],
   },
   {
     type: 'contour-patrol',
@@ -37,7 +39,7 @@ export const ENEMY_CATALOG = freeze([
     domain: 'Claimed frontier',
     risk: 'Follows newly captured contours and can reach the player on secured ground.',
     motion: 'Follows the field/safe frontier; visibly rejoins after its route changes.',
-    forms: ['Twin-rotor scout', 'Coiled serpent', 'Magnetic crawler'],
+    forms: ['Twin-rotor scout','Coiled serpent','Magnetic crawler'],
   },
   {
     type: 'claimed-rover',
@@ -47,7 +49,7 @@ export const ENEMY_CATALOG = freeze([
     domain: 'Claimed ground',
     risk: 'Starts dormant; warns before waking when fully supported by claimed ground.',
     motion: 'Moves only through secured ground after activation.',
-    forms: ['Wheeled patrol', 'Clockwork hare', 'Walking cabinet'],
+    forms: ['Wheeled patrol','Clockwork hare','Walking cabinet'],
   },
   {
     type: 'eroder',
@@ -57,7 +59,7 @@ export const ENEMY_CATALOG = freeze([
     domain: 'Hidden field / frontier',
     risk: 'Warns before reopening eligible captured cells; protected anchors stay intact.',
     motion: 'Reflects through the field and probes eligible secured edges.',
-    forms: ['Ground auger', 'Thorn wheel', 'Saw disc'],
+    forms: ['Ground auger','Thorn wheel','Saw disc'],
   },
   {
     type: 'lane-boss',
@@ -67,7 +69,7 @@ export const ENEMY_CATALOG = freeze([
     domain: 'Authored attack lane',
     risk: 'Telegraphs a timed lane attack. Cross during an opening.',
     motion: 'Stationary emitter; its lane timing is authored.',
-    forms: ['Radar emitter', 'Storm gate', 'Laser pylon'],
+    forms: ['Radar emitter','Storm gate','Laser pylon'],
   },
   {
     type: 'relay-sentinel',
@@ -75,9 +77,9 @@ export const ENEMY_CATALOG = freeze([
     badge: 'lock',
     label: 'Relay sentinel',
     domain: 'Staged encounter',
-    risk: 'Requires its linked relay objective and a legitimate opening before release.',
+    risk: 'Requires every linked shield relay and a legitimate opening before release.',
     motion: 'Stationary linked core; encounter stages control its openings.',
-    forms: ['Shielded relay', 'Sunflower keep', 'Core fortress'],
+    forms: ['Shielded relay','Sunflower keep','Core fortress'],
   },
 ]);
 const records = new Map(ENEMY_CATALOG.map((record) => [record.type, record]));

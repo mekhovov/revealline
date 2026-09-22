@@ -5,13 +5,13 @@ import { boundedJSON, required } from '../data-json.mjs';
 import { createContentExecutionCatalog } from './execution.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { createMissionCard } from './mission-card.mjs';
-import { createCandidateSequence } from './route.mjs';
+import { createCandidateSequence } from './sequence.mjs';
 
 /** Uses the shared compiler in Versus mode. The real host still owns createDuel,
  * controllers, paired ticks and race results; no Solo run substitutes for them. */
 export function createCandidateVersusHost(
   source,
-  { themes, corePackIds = ['journey-opening'] } = {},
+  { themes, corePackIds = ['journey-opening'], optionalCampaignIds = [] } = {},
 ) {
   const executions = createContentExecutionCatalog(source, { mode: 'versus' });
   const ownedThemes = boundedJSON(themes, { maxBytes: 262144, maxNodes: 8192, maxDepth: 12 });
@@ -35,7 +35,7 @@ export function createCandidateVersusHost(
       })),
     })),
   );
-  const sequence = createCandidateSequence(catalog, corePackIds);
+  const sequence = createCandidateSequence(catalog, corePackIds, optionalCampaignIds);
   const rawEntries = new WeakMap();
   const rows = executions.entries.flatMap((entry) =>
     entry.manifests.map((manifest, index) => {

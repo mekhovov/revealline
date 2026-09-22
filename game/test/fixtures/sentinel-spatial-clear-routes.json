@@ -1,0 +1,1935 @@
+{
+  "format": "SentinelSpatialFeasibilityV1",
+  "scope": "Seed 1 legal-input feasibility; bounded omniscient search, not minimum times or human balance. Separate copy-on-write pressure-v2 receiver greyboxes. Older editions untouched.",
+  "rows": [
+    {
+      "id": "relay-perimeter",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "d76272ad59997399",
+      "ticks": 3750,
+      "lives": 2,
+      "coverage": 1,
+      "cuts": 5,
+      "searchSteps": 5,
+      "checkpoint": "5b2b42f9d961a331",
+      "stages": [
+        [3210, "transition", 24],
+        [3391, "exposed", 24]
+      ],
+      "events": [
+        [1014, "cut.closed", null],
+        [1014, "objective.captured", "east-shield"],
+        [2214, "cut.closed", null],
+        [2466, "cut.closed", null],
+        [2466, "objective.captured", "west-shield"],
+        [2466, "relay.opened", "corner-side"],
+        [2466, "relay.opened", "corner-top"],
+        [3210, "cut.closed", null],
+        [3210, "objective.captured", "north-shield"],
+        [3210, "encounter.stageChanged", "sentinel"],
+        [3391, "encounter.stageChanged", "sentinel"],
+        [3750, "cut.closed", null],
+        [3750, "objective.captured", "core"],
+        [3750, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [1014, 0.2073477604428787],
+        [2214, 0.5868142929038752],
+        [2466, 0.5928535480624056],
+        [3210, 0.9879214896829391],
+        [3750, 1]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 426
+        },
+        {
+          "direction": "left",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 138
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 294
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        }
+      ],
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "shields": [
+          ["east-shield", 1014],
+          ["west-shield", 2466],
+          ["north-shield", 3210]
+        ],
+        "openings": [3715],
+        "used": [],
+        "defeat": {
+          "tick": 3750,
+          "cause": "cut-release",
+          "cutCells": 9,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "relay-perimeter",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "d76272ad59997399",
+      "ticks": 3462,
+      "lives": 2,
+      "coverage": 1,
+      "cuts": 5,
+      "searchSteps": 5,
+      "checkpoint": "bc4c22c10f6f91b8",
+      "stages": [
+        [2946, "transition", 527],
+        [3127, "exposed", 527]
+      ],
+      "events": [
+        [1014, "cut.closed", null],
+        [1014, "objective.captured", "east-shield"],
+        [2202, "cut.closed", null],
+        [2454, "cut.closed", null],
+        [2454, "objective.captured", "west-shield"],
+        [2454, "relay.opened", "corner-side"],
+        [2454, "relay.opened", "corner-top"],
+        [2946, "cut.closed", null],
+        [2946, "objective.captured", "north-shield"],
+        [2946, "encounter.stageChanged", "sentinel"],
+        [3127, "encounter.stageChanged", "sentinel"],
+        [3462, "cut.closed", null],
+        [3462, "objective.captured", "core"],
+        [3462, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [1014, 0.2073477604428787],
+        [2202, 0.5868142929038752],
+        [2454, 0.5928535480624056],
+        [2946, 0.7347760442878711],
+        [3462, 1]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "left",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 420
+        },
+        {
+          "direction": "up",
+          "ticks": 132
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 354
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 138
+        }
+      ],
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "shields": [
+          ["east-shield", 1014],
+          ["west-shield", 2454],
+          ["north-shield", 2946]
+        ],
+        "openings": [3451],
+        "used": [],
+        "defeat": {
+          "tick": 3462,
+          "cause": "cut-release",
+          "cutCells": 24,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "relay-perimeter",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "f13f12135b5af317",
+      "ticks": 3798,
+      "lives": 5,
+      "coverage": 1,
+      "cuts": 5,
+      "searchSteps": 7,
+      "checkpoint": "fd87405c410ae53b",
+      "stages": [
+        [3282, "transition", 511],
+        [3463, "exposed", 511]
+      ],
+      "events": [
+        [1014, "cut.closed", null],
+        [1014, "objective.captured", "east-shield"],
+        [1806, "cut.closed", null],
+        [2118, "cut.closed", null],
+        [2118, "objective.captured", "west-shield"],
+        [2118, "relay.opened", "corner-side"],
+        [2118, "relay.opened", "corner-top"],
+        [3282, "cut.closed", null],
+        [3282, "objective.captured", "north-shield"],
+        [3282, "encounter.stageChanged", "sentinel"],
+        [3463, "encounter.stageChanged", "sentinel"],
+        [3798, "cut.closed", null],
+        [3798, "objective.captured", "core"],
+        [3798, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [1014, 0.2073477604428787],
+        [1806, 0.6039255158530448],
+        [2118, 0.60694514343231],
+        [3282, 0.742828384499245],
+        [3798, 1]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 348
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 246
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 192
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 180
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 342
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        }
+      ],
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "shields": [
+          ["east-shield", 1014],
+          ["west-shield", 2118],
+          ["north-shield", 3282]
+        ],
+        "openings": [3787],
+        "used": [
+          ["corner-side", 2515],
+          ["corner-top", 2539]
+        ],
+        "defeat": {
+          "tick": 3798,
+          "cause": "cut-release",
+          "cutCells": 17,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "relay-perimeter",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "f13f12135b5af317",
+      "ticks": 3774,
+      "lives": 5,
+      "coverage": 1,
+      "cuts": 5,
+      "searchSteps": 7,
+      "checkpoint": "df1237ca902860f0",
+      "stages": [
+        [3246, "transition", 511],
+        [3427, "exposed", 511]
+      ],
+      "events": [
+        [1014, "cut.closed", null],
+        [1014, "objective.captured", "east-shield"],
+        [1794, "cut.closed", null],
+        [2094, "cut.closed", null],
+        [2094, "objective.captured", "west-shield"],
+        [2094, "relay.opened", "corner-side"],
+        [2094, "relay.opened", "corner-top"],
+        [3246, "cut.closed", null],
+        [3246, "objective.captured", "north-shield"],
+        [3246, "encounter.stageChanged", "sentinel"],
+        [3427, "encounter.stageChanged", "sentinel"],
+        [3774, "cut.closed", null],
+        [3774, "objective.captured", "core"],
+        [3774, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [1014, 0.2073477604428787],
+        [1794, 0.6039255158530448],
+        [2094, 0.60694514343231],
+        [3246, 0.742828384499245],
+        [3774, 1]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 348
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 234
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 60
+        },
+        {
+          "direction": "left",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 192
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 180
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 342
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "left",
+          "ticks": 126
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        }
+      ],
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "shields": [
+          ["east-shield", 1014],
+          ["west-shield", 2094],
+          ["north-shield", 3246]
+        ],
+        "openings": [3751],
+        "used": [
+          ["corner-side", 2479],
+          ["corner-top", 2503]
+        ],
+        "defeat": {
+          "tick": 3774,
+          "cause": "cut-release",
+          "cutCells": 23,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "relay-perimeter",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "2ff064d742241e1f",
+      "ticks": 3606,
+      "lives": 3,
+      "coverage": 1,
+      "cuts": 5,
+      "searchSteps": 5,
+      "checkpoint": "adb95dbacca2b02e",
+      "stages": [
+        [3090, "transition", 531],
+        [3271, "exposed", 531]
+      ],
+      "events": [
+        [1014, "cut.closed", null],
+        [1014, "objective.captured", "east-shield"],
+        [2334, "cut.closed", null],
+        [2586, "cut.closed", null],
+        [2586, "objective.captured", "west-shield"],
+        [2586, "relay.opened", "corner-side"],
+        [2586, "relay.opened", "corner-top"],
+        [3090, "cut.closed", null],
+        [3090, "objective.captured", "north-shield"],
+        [3090, "encounter.stageChanged", "sentinel"],
+        [3271, "encounter.stageChanged", "sentinel"],
+        [3606, "cut.closed", null],
+        [3606, "objective.captured", "core"],
+        [3606, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [1014, 0.2073477604428787],
+        [2334, 0.5868142929038752],
+        [2586, 0.5908404630095622],
+        [3090, 0.7327629592350277],
+        [3606, 1]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 426
+        },
+        {
+          "direction": "left",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "up",
+          "ticks": 150
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 354
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "left",
+          "ticks": 186
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 90
+        }
+      ],
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "shields": [
+          ["east-shield", 1014],
+          ["west-shield", 2586],
+          ["north-shield", 3090]
+        ],
+        "openings": [3595],
+        "used": [],
+        "defeat": {
+          "tick": 3606,
+          "cause": "cut-release",
+          "cutCells": 17,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "relay-perimeter",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "2ff064d742241e1f",
+      "ticks": 6822,
+      "lives": 3,
+      "coverage": 1,
+      "cuts": 6,
+      "searchSteps": 6,
+      "checkpoint": "1d2ff8fb1d15f10e",
+      "stages": [
+        [6294, "transition", 20],
+        [6475, "exposed", 20]
+      ],
+      "events": [
+        [1086, "cut.closed", null],
+        [1086, "objective.captured", "east-shield"],
+        [2454, "cut.closed", null],
+        [2994, "cut.closed", null],
+        [5022, "cut.closed", null],
+        [5022, "objective.captured", "west-shield"],
+        [5022, "relay.opened", "corner-side"],
+        [5022, "relay.opened", "corner-top"],
+        [6294, "cut.closed", null],
+        [6294, "objective.captured", "north-shield"],
+        [6294, "encounter.stageChanged", "sentinel"],
+        [6475, "encounter.stageChanged", "sentinel"],
+        [6822, "cut.closed", null],
+        [6822, "objective.captured", "core"],
+        [6822, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [1086, 0.2073477604428787],
+        [2454, 0.37544036235530953],
+        [2994, 0.5651736285858078],
+        [5022, 0.6155007549068948],
+        [6294, 0.9899345747357826],
+        [6822, 1]
+      ],
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 600
+        },
+        {
+          "direction": "down",
+          "ticks": 408
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 54
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 312
+        },
+        {
+          "direction": "left",
+          "ticks": 708
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 168
+        },
+        {
+          "direction": "down",
+          "ticks": 144
+        },
+        {
+          "direction": "left",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 186
+        },
+        {
+          "direction": null,
+          "ticks": 960
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 228
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 144
+        },
+        {
+          "direction": "right",
+          "ticks": 144
+        },
+        {
+          "direction": "down",
+          "ticks": 240
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 234
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "left",
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 216
+        },
+        {
+          "direction": "down",
+          "ticks": 180
+        },
+        {
+          "direction": "right",
+          "ticks": 252
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 246
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 132
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 6
+        }
+      ],
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "shields": [
+          ["east-shield", 1086],
+          ["west-shield", 5022],
+          ["north-shield", 6294]
+        ],
+        "openings": [6799],
+        "used": [
+          ["corner-side", 5227],
+          ["corner-top", 5251]
+        ],
+        "defeat": {
+          "tick": 6822,
+          "cause": "cut-release",
+          "cutCells": 9,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "twin-receivers",
+      "difficulty": "expert",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "86d4dc6ec97131e3",
+      "ticks": 3066,
+      "lives": 2,
+      "coverage": 1,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "111b701307b86070",
+      "stages": [
+        [2550, "transition", 160],
+        [2731, "exposed", 160]
+      ],
+      "events": [
+        [978, "cut.closed", null],
+        [2154, "cut.closed", null],
+        [2550, "cut.closed", null],
+        [2550, "objective.captured", "west-shield"],
+        [2550, "objective.captured", "east-shield"],
+        [2550, "encounter.stageChanged", "sentinel"],
+        [2731, "encounter.stageChanged", "sentinel"],
+        [3066, "cut.closed", null],
+        [3066, "objective.captured", "core"],
+        [3066, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [978, 0.20710059171597633],
+        [2154, 0.7830374753451677],
+        [2550, 0.9211045364891519],
+        [3066, 1]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 36
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 402
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 426
+        },
+        {
+          "direction": "right",
+          "ticks": 276
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 162
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 66
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 18
+        },
+        {
+          "direction": "up",
+          "ticks": 84
+        },
+        {
+          "direction": "right",
+          "ticks": 156
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 90
+        }
+      ],
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "shields": [
+          ["west-shield", 2550],
+          ["east-shield", 2550]
+        ],
+        "openings": [3055],
+        "used": [],
+        "defeat": {
+          "tick": 3066,
+          "cause": "cut-release",
+          "cutCells": 19,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "twin-receivers",
+      "difficulty": "expert",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "86d4dc6ec97131e3",
+      "ticks": 3102,
+      "lives": 2,
+      "coverage": 1,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "7e7e9f0bff906b70",
+      "stages": [
+        [2586, "transition", 160],
+        [2767, "exposed", 160]
+      ],
+      "events": [
+        [978, "cut.closed", null],
+        [2142, "cut.closed", null],
+        [2586, "cut.closed", null],
+        [2586, "objective.captured", "west-shield"],
+        [2586, "objective.captured", "east-shield"],
+        [2586, "encounter.stageChanged", "sentinel"],
+        [2767, "encounter.stageChanged", "sentinel"],
+        [3102, "cut.closed", null],
+        [3102, "objective.captured", "core"],
+        [3102, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [978, 0.20710059171597633],
+        [2142, 0.7830374753451677],
+        [2586, 0.9211045364891519],
+        [3102, 1]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 36
+        },
+        {
+          "direction": "down",
+          "ticks": 156
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 402
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        },
+        {
+          "direction": "right",
+          "ticks": 276
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 66
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 138
+        }
+      ],
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "shields": [
+          ["west-shield", 2586],
+          ["east-shield", 2586]
+        ],
+        "openings": [3091],
+        "used": [],
+        "defeat": {
+          "tick": 3102,
+          "cause": "cut-release",
+          "cutCells": 25,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "twin-receivers",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "3ff7a274ab87ad59",
+      "ticks": 3294,
+      "lives": 5,
+      "coverage": 1,
+      "cuts": 5,
+      "searchSteps": 5,
+      "checkpoint": "9fb72b849cf0f56b",
+      "stages": [
+        [2538, "transition", 160],
+        [2719, "exposed", 160]
+      ],
+      "events": [
+        [942, "cut.closed", null],
+        [1854, "cut.closed", null],
+        [2274, "cut.closed", null],
+        [2274, "objective.captured", "east-shield"],
+        [2538, "cut.closed", null],
+        [2538, "objective.captured", "west-shield"],
+        [2538, "encounter.stageChanged", "sentinel"],
+        [2719, "encounter.stageChanged", "sentinel"],
+        [3294, "cut.closed", null],
+        [3294, "objective.captured", "core"],
+        [3294, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [942, 0.27416173570019725],
+        [1854, 0.7830374753451677],
+        [2274, 0.8431952662721893],
+        [2538, 0.9211045364891519],
+        [3294, 1]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 156
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 402
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 228
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 270
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "up",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 66
+        },
+        {
+          "direction": "right",
+          "ticks": 30
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 90
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 42
+        }
+      ],
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "shields": [
+          ["east-shield", 2274],
+          ["west-shield", 2538]
+        ],
+        "openings": [3043],
+        "used": [],
+        "defeat": {
+          "tick": 3294,
+          "cause": "cut-release",
+          "cutCells": 11,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "twin-receivers",
+      "difficulty": "gentle",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "3ff7a274ab87ad59",
+      "ticks": 4614,
+      "lives": 5,
+      "coverage": 1,
+      "cuts": 6,
+      "searchSteps": 6,
+      "checkpoint": "f7370b0c3c2f63c0",
+      "stages": [
+        [4002, "transition", 222],
+        [4183, "exposed", 222]
+      ],
+      "events": [
+        [942, "cut.closed", null],
+        [1878, "cut.closed", null],
+        [2262, "cut.closed", null],
+        [3702, "cut.closed", null],
+        [3702, "objective.captured", "east-shield"],
+        [4002, "cut.closed", null],
+        [4002, "objective.captured", "west-shield"],
+        [4002, "encounter.stageChanged", "sentinel"],
+        [4183, "encounter.stageChanged", "sentinel"],
+        [4614, "cut.closed", null],
+        [4614, "objective.captured", "core"],
+        [4614, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [942, 0.27416173570019725],
+        [1878, 0.4940828402366864],
+        [2262, 0.5295857988165681],
+        [3702, 0.5739644970414202],
+        [4002, 0.8905325443786982],
+        [4614, 1]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 156
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 402
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 180
+        },
+        {
+          "direction": "up",
+          "ticks": 408
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 48
+        },
+        {
+          "direction": "down",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 90
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 84
+        },
+        {
+          "direction": "right",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 354
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 96
+        },
+        {
+          "direction": "right",
+          "ticks": 120
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 18
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 12
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "left",
+          "ticks": 72
+        },
+        {
+          "direction": "down",
+          "ticks": 72
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 78
+        }
+      ],
+      "goal": {
+        "achieved": true,
+        "condition": true,
+        "shields": [
+          ["east-shield", 3702],
+          ["west-shield", 4002]
+        ],
+        "openings": [4507],
+        "used": [],
+        "defeat": {
+          "tick": 4614,
+          "cause": "cut-release",
+          "cutCells": 20,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "twin-receivers",
+      "difficulty": "standard",
+      "turnPolicy": "grid-center",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "1556e5188f96ef7b",
+      "ticks": 3378,
+      "lives": 3,
+      "coverage": 1,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "2201167e0d4d069e",
+      "stages": [
+        [2862, "transition", 160],
+        [3043, "exposed", 160]
+      ],
+      "events": [
+        [942, "cut.closed", null],
+        [2334, "cut.closed", null],
+        [2334, "objective.captured", "west-shield"],
+        [2862, "cut.closed", null],
+        [2862, "objective.captured", "east-shield"],
+        [2862, "encounter.stageChanged", "sentinel"],
+        [3043, "encounter.stageChanged", "sentinel"],
+        [3378, "cut.closed", null],
+        [3378, "objective.captured", "core"],
+        [3378, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [942, 0.27416173570019725],
+        [2334, 0.3343195266272189],
+        [2862, 0.9211045364891519],
+        [3378, 1]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 156
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 402
+        },
+        {
+          "direction": null,
+          "ticks": 600
+        },
+        {
+          "direction": "up",
+          "ticks": 282
+        },
+        {
+          "direction": "right",
+          "ticks": 300
+        },
+        {
+          "direction": "up",
+          "ticks": 48
+        },
+        {
+          "direction": "left",
+          "ticks": 162
+        },
+        {
+          "direction": "right",
+          "ticks": 174
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        },
+        {
+          "direction": "left",
+          "ticks": 24
+        },
+        {
+          "direction": "up",
+          "ticks": 138
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "down",
+          "ticks": 18
+        },
+        {
+          "direction": "right",
+          "ticks": 24
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 90
+        }
+      ],
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "shields": [
+          ["west-shield", 2334],
+          ["east-shield", 2862]
+        ],
+        "openings": [3367],
+        "used": [],
+        "defeat": {
+          "tick": 3378,
+          "cause": "cut-release",
+          "cutCells": 17,
+          "opening": 1
+        }
+      }
+    },
+    {
+      "id": "twin-receivers",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "delaySeconds": 0,
+      "status": "won",
+      "simulationIdentity": "1556e5188f96ef7b",
+      "ticks": 2562,
+      "lives": 3,
+      "coverage": 1,
+      "cuts": 4,
+      "searchSteps": 4,
+      "checkpoint": "c8f5263ca88c505a",
+      "stages": [
+        [2046, "transition", 160],
+        [2227, "exposed", 160]
+      ],
+      "events": [
+        [942, "cut.closed", null],
+        [1662, "cut.closed", null],
+        [2046, "cut.closed", null],
+        [2046, "objective.captured", "west-shield"],
+        [2046, "objective.captured", "east-shield"],
+        [2046, "encounter.stageChanged", "sentinel"],
+        [2227, "encounter.stageChanged", "sentinel"],
+        [2562, "cut.closed", null],
+        [2562, "objective.captured", "core"],
+        [2562, "encounter.defeated", "sentinel"]
+      ],
+      "closures": [
+        [942, 0.27416173570019725],
+        [1662, 0.7830374753451677],
+        [2046, 0.9211045364891519],
+        [2562, 1]
+      ],
+      "segments": [
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 36
+        },
+        {
+          "direction": "right",
+          "ticks": 12
+        },
+        {
+          "direction": "up",
+          "ticks": 156
+        },
+        {
+          "direction": "right",
+          "ticks": 96
+        },
+        {
+          "direction": "down",
+          "ticks": 402
+        },
+        {
+          "direction": null,
+          "ticks": 60
+        },
+        {
+          "direction": "up",
+          "ticks": 6
+        },
+        {
+          "direction": "down",
+          "ticks": 12
+        },
+        {
+          "direction": "right",
+          "ticks": 228
+        },
+        {
+          "direction": "up",
+          "ticks": 414
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": "right",
+          "ticks": 72
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "left",
+          "ticks": 66
+        },
+        {
+          "direction": null,
+          "ticks": 120
+        },
+        {
+          "direction": "right",
+          "ticks": 6
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 24
+        },
+        {
+          "direction": "left",
+          "ticks": 138
+        }
+      ],
+      "goal": {
+        "achieved": false,
+        "condition": false,
+        "shields": [
+          ["west-shield", 2046],
+          ["east-shield", 2046]
+        ],
+        "openings": [2551],
+        "used": [],
+        "defeat": {
+          "tick": 2562,
+          "cause": "cut-release",
+          "cutCells": 25,
+          "opening": 1
+        }
+      }
+    }
+  ]
+}

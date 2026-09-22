@@ -1,0 +1,1841 @@
+{
+  "format": "TeamMaterialDelayFixturesV1",
+  "evidence": "Standard delayed public-input alternatives; ordinary clear is not automatically mastery",
+  "routes": [
+    {
+      "missionId": "crossed-gardens",
+      "difficulty": "standard",
+      "delayTicks": 60,
+      "simulationIdentity": "a4ddfbc1405e2592",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 336
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 300
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "1aaebc24081232cfbb1c2a4f8dfa0e78463ebb22b6e95b2aaf7f197354b0c4ae",
+          "swappedCheckpoint": "4322ae90394c27d0f3ca0fd85bb263573f019b5a5d7a077effc74045231f152e",
+          "tick": 2540,
+          "coverage": 0.7634782608695653,
+          "mastery": true
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "bee8ed98fb37c013204857cdd68fa734d59db1079345cec88adb073486696c7a",
+          "swappedCheckpoint": "a1e49428c7633b499af98cc799c9ce4fd3c8b425ec76980a9e6e0a1c8b9aca17",
+          "tick": 2540,
+          "coverage": 0.7634782608695653,
+          "mastery": true
+        }
+      ]
+    },
+    {
+      "missionId": "split-orchards",
+      "difficulty": "standard",
+      "delayTicks": 60,
+      "simulationIdentity": "df50569e8a4595fb",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 492
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 162
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "d918c071f08f5f68d692359ff01533b2afda11719c01d3a3bef7cc4d6c932999",
+          "swappedCheckpoint": "ec82f041d03933a2e8139b8901dabd94e7c7731d1251cc13570512d9a729158e",
+          "tick": 2528,
+          "coverage": 0.8486901535682023,
+          "mastery": true
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "92f5a35f239165c4ed1388254bdc53940c932a86a5399b38fceec2ee039a004a",
+          "swappedCheckpoint": "81f5c41880c18f26e9aa5dfc968a5d225213d36820aac328e7d050367f63e1b5",
+          "tick": 2528,
+          "coverage": 0.8486901535682023,
+          "mastery": true
+        }
+      ]
+    },
+    {
+      "missionId": "weaver-crossing",
+      "difficulty": "standard",
+      "delayTicks": 60,
+      "simulationIdentity": "7553eed9241fc327",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 312
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 156
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 522
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 61
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 156
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 312
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "998aa22a6bd207dcfe3b905a3af1c12d9a360b42dd35ffc448fdca65f1d33f42",
+          "swappedCheckpoint": "dd8cb004280dab4e4b707f2a6c87db7a63ce9187290ed160f60daab5bd1ddc8f",
+          "tick": 3394,
+          "coverage": 0.8088803088803089,
+          "mastery": false
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "ae15ecd9c68cedce6210e8cb610b1e2f091ebd28d63e1e995ab536762d098599",
+          "swappedCheckpoint": "55959cec2b9e419a99b33d618ecad61b0e22bc29d2f707d81b3936397c4a9fa2",
+          "tick": 3394,
+          "coverage": 0.8088803088803089,
+          "mastery": false
+        }
+      ]
+    },
+    {
+      "missionId": "crossed-gardens",
+      "difficulty": "standard",
+      "delayTicks": 120,
+      "simulationIdentity": "a4ddfbc1405e2592",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 312
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 288
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 558
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "b6a39d3a582a2f1ae3288d0fdf18cc8214d2430b9aab81c859737789989774db",
+          "swappedCheckpoint": "e8e71b663c68eae50a1e96de0c35ed6ba9678f24a309626fe7847570ee93bc9d",
+          "tick": 3441,
+          "coverage": 0.8269565217391305,
+          "mastery": true
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "ec74a629ff56e55d96e59dda494880d842db9e2fbd303eadedbc3bd53cc3d530",
+          "swappedCheckpoint": "9cd4bf69938c0086dba33556e180f4af44b2318ad72e547993fdd518df59c36f",
+          "tick": 3441,
+          "coverage": 0.8269565217391305,
+          "mastery": true
+        }
+      ]
+    },
+    {
+      "missionId": "split-orchards",
+      "difficulty": "standard",
+      "delayTicks": 120,
+      "simulationIdentity": "df50569e8a4595fb",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 61
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 384
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 468
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 198
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "c304ec051f75aa74f2f8f6fa410452679c252013504bad299b7e2908e2916534",
+          "swappedCheckpoint": "d01fa4b5dab756fb0faa39299d8f7c61f9ab4a2996edc834abc491488293cd7b",
+          "tick": 2612,
+          "coverage": 0.8970189701897019,
+          "mastery": true
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "0bb4c8b2080f0780351a45172feddd45d1bfad1c0d31bd01146789c87812cd68",
+          "swappedCheckpoint": "3407f7a45ddaf79d4a287d272c017bb2f3de2dbf0fdd145950c5bfa598287b74",
+          "tick": 2612,
+          "coverage": 0.8970189701897019,
+          "mastery": true
+        }
+      ]
+    },
+    {
+      "missionId": "weaver-crossing",
+      "difficulty": "standard",
+      "delayTicks": 120,
+      "simulationIdentity": "7553eed9241fc327",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 312
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 372
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 522
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 336
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "e83a8e6f4733b75a1c982f8a9d6a6edfe5cd135155388cab5a1d0521f7a4896e",
+          "swappedCheckpoint": "04c5de1e0fd008325ed93a282251916537ae31cde6bf6e3d22e13bd84855f580",
+          "tick": 4462,
+          "coverage": 0.8204633204633205,
+          "mastery": false
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "43829bdb5589801ee8ffb6bc580e4dcd876950d5f14b82f64c6484d3ab950be4",
+          "swappedCheckpoint": "32b2ea58d318b390dbc073ed760f76dbcc454f21faaa3f2a1d7fc58c92105ac4",
+          "tick": 4462,
+          "coverage": 0.8204633204633205,
+          "mastery": false
+        }
+      ]
+    },
+    {
+      "missionId": "crossed-gardens",
+      "difficulty": "standard",
+      "delayTicks": 240,
+      "simulationIdentity": "a4ddfbc1405e2592",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 240
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 264
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 558
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 276
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "aea2db1bd68973b4759b461b85f079209bac677b68f31a9635e821b8a17019cf",
+          "swappedCheckpoint": "7108af2c4d1d341174f860630b800e1cfa5c23e26681b4e6d978fa850049bb98",
+          "tick": 3741,
+          "coverage": 0.7530434782608696,
+          "mastery": false
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "2ac99eacd6852f64326b9b8fe0f1ae7271cb50626364b75e7cc84b1a3b3b126b",
+          "swappedCheckpoint": "e5e8bb905f5d587eaf23a15ea2dea1e307ace7cd32878e4491c99c9dd2b88e8a",
+          "tick": 3741,
+          "coverage": 0.7530434782608696,
+          "mastery": false
+        }
+      ]
+    },
+    {
+      "missionId": "split-orchards",
+      "difficulty": "standard",
+      "delayTicks": 240,
+      "simulationIdentity": "df50569e8a4595fb",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 240
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 492
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 198
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "14989c9e92d31edfa674d94543cb2474fa9a74195451d9a521b35ea0c6344cee",
+          "swappedCheckpoint": "f8344fd669d75eeb68c29e72d1853f74e295d6cfcb94ff26bfa08ced90f9d8dc",
+          "tick": 2660,
+          "coverage": 0.8735320686540199,
+          "mastery": true
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "a87e8b82086bbe2c06d22256efd00ae06d64f699d81c4911b23f3d4de3eed215",
+          "swappedCheckpoint": "a026593407b52b606ef52109c58ef94646b3ebb34fa121b1e2ae7d6bf1f34c6e",
+          "tick": 2660,
+          "coverage": 0.8735320686540199,
+          "mastery": true
+        }
+      ]
+    },
+    {
+      "missionId": "weaver-crossing",
+      "difficulty": "standard",
+      "delayTicks": 240,
+      "simulationIdentity": "7553eed9241fc327",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 240
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 300
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 180
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 96
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 582
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 61
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 144
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 402
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 132
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 210
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "5898386bc682d1c16e0a9ba8f6f831ccf87182ed2bc9739e867b9b86a9be2d9c",
+          "swappedCheckpoint": "0902a2062af29b1ce84ba51cd7eeeb162d38a7b72efa9c60e5db0d22a144bf40",
+          "tick": 4007,
+          "coverage": 0.7765444015444015,
+          "mastery": false
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "ecda8c9b595d714569bec4a491eae13774435e841b3196f435b1007fb33cf0ff",
+          "swappedCheckpoint": "aa36c8843ff7b2061886a3a33053f585e5cc58bafb99c962b6fa424c08883b2e",
+          "tick": 4007,
+          "coverage": 0.7765444015444015,
+          "mastery": false
+        }
+      ]
+    },
+    {
+      "missionId": "crossed-gardens",
+      "difficulty": "standard",
+      "delayTicks": 360,
+      "simulationIdentity": "a4ddfbc1405e2592",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 240
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 186
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 168
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 288
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 558
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "94f4b1c18e9731b3544c81bc3397af33cfbe72c4ea0e4cbd50a6c159f01c7365",
+          "swappedCheckpoint": "58c8e30ea4dc19bd9c31b9675ac7164da20959691fa0c549201d209e97c4bfc5",
+          "tick": 4366,
+          "coverage": 0.7469565217391304,
+          "mastery": false
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "4256817af96969e253dd367ef460745417dad047fa0669992beb79a11ad79c42",
+          "swappedCheckpoint": "8bfbbf4c80de56c72fbb3aed5fb2f143fd861168f3966b8894fb6e04d4640532",
+          "tick": 4366,
+          "coverage": 0.7469565217391304,
+          "mastery": false
+        }
+      ]
+    },
+    {
+      "missionId": "split-orchards",
+      "difficulty": "standard",
+      "delayTicks": 360,
+      "simulationIdentity": "df50569e8a4595fb",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 852
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 48
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 174
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 648
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 162
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "d5afa11e868d2b363be3b96a73d5d19e1e1020b3cbb9578e918bcc3fad5becab",
+          "swappedCheckpoint": "1dedc5819d0c0cb24c98c0874524e9d24f6233f9251985401bc6d79ee51cf616",
+          "tick": 3440,
+          "coverage": 0.7904245709123758,
+          "mastery": true
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "4ab5a2d2b02872cd755553a5d28ed1dd09933b275ee87342c8b4c432d23c8570",
+          "swappedCheckpoint": "cd124595e206e449cfcce074df5aef6e54214c9cc201b7aee3f62381e5c35e5e",
+          "tick": 3440,
+          "coverage": 0.7904245709123758,
+          "mastery": true
+        }
+      ]
+    },
+    {
+      "missionId": "weaver-crossing",
+      "difficulty": "standard",
+      "delayTicks": 360,
+      "simulationIdentity": "7553eed9241fc327",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 240
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 132
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 522
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 522
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 156
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 96
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 324
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 324
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 318
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "60a1bbf188bc51c5bcc4f554923c43da1ad61a1dd5a0ac7aeef96ece675d22df",
+          "swappedCheckpoint": "9727791d95243a3db80403d11442652f4ab14e06c2acd1d3aadb3a6e69e70d22",
+          "tick": 5436,
+          "coverage": 0.8359073359073359,
+          "mastery": false
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "309454585e31e3ebca24a01f8bfe3edd50b887d0f84540590074b82d566107e1",
+          "swappedCheckpoint": "b8ca658a709212a91ff4946b7b592fff6b27eb51357c3062b40ccc39ffb9ff13",
+          "tick": 5436,
+          "coverage": 0.8359073359073359,
+          "mastery": false
+        }
+      ]
+    },
+    {
+      "missionId": "crossed-gardens",
+      "difficulty": "standard",
+      "delayTicks": 600,
+      "simulationIdentity": "a4ddfbc1405e2592",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 600
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 240
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 300
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 180
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "8a737f51ae30958bf1e7719a7b0c6a568b023ba546f18494ef3ee3db5b7778f0",
+          "swappedCheckpoint": "a3358e5671b8c54e5166cd0ba8d4760c6ef6b93e9a669a78648a59789ed59a7a",
+          "tick": 3789,
+          "coverage": 0.7530434782608696,
+          "mastery": false
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "9238dc0b2e9e27dbc1da9c12e267dc5a9c227a0befaa619ee733091176b7eead",
+          "swappedCheckpoint": "8259deaff1158d731d1f770728439ed12322e4be9f8219a2995027ab7f1b599b",
+          "tick": 3789,
+          "coverage": 0.7530434782608696,
+          "mastery": false
+        }
+      ]
+    },
+    {
+      "missionId": "split-orchards",
+      "difficulty": "standard",
+      "delayTicks": 600,
+      "simulationIdentity": "df50569e8a4595fb",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 600
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 852
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 132
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 420
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 240
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 174
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "0d51bbdbc79365245d305f7ee7cd79345a92ae00a91a47b60b76fb759e36a457",
+          "swappedCheckpoint": "b8e1ee8e34143b802e164e223e2bebaf2cb99fb7e41328efda75680e7d7cf5e3",
+          "tick": 3716,
+          "coverage": 0.8012646793134598,
+          "mastery": true
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "70d386a483f06a56bf511ba386d2fdbfb4e6946d73f59645be54ccd0db82f609",
+          "swappedCheckpoint": "1f1874af69df94cfc54d1c3bd2a7a8eeeafd9a0f8b8bd67b46a7bb25113edd43",
+          "tick": 3716,
+          "coverage": 0.8012646793134598,
+          "mastery": true
+        }
+      ]
+    },
+    {
+      "missionId": "weaver-crossing",
+      "difficulty": "standard",
+      "delayTicks": 600,
+      "simulationIdentity": "7553eed9241fc327",
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 600
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 61
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 420
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 264
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 522
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 168
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        }
+      ],
+      "results": [
+        {
+          "jointCuts": true,
+          "checkpoint": "82612415ef99ee7dbf46566f6186504ef1de4736fa80a2fce80cca4350d9f0aa",
+          "swappedCheckpoint": "1507e169183707dafe0f167d0743730601496cf576198adbfd94507334f3f943",
+          "tick": 4042,
+          "coverage": 0.8696911196911197,
+          "mastery": false
+        },
+        {
+          "jointCuts": false,
+          "checkpoint": "96e6a30a114910786c9835668981b23352bcc49afb85e0d839e2f173c6f8d740",
+          "swappedCheckpoint": "2c643bb56d8f67d96494c7a6a7b3db25d42e9f2464d5964db082c0c0b54735d3",
+          "tick": 4042,
+          "coverage": 0.8696911196911197,
+          "mastery": false
+        }
+      ]
+    }
+  ]
+}

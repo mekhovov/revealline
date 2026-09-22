@@ -1,5 +1,6 @@
 import { createStarterProject } from './starter.mjs';
 import { freezeDesign, PHASE_ACTOR_CATALOG } from './catalogs.mjs';
+import { PHASE_ART_CANDIDATES } from './phase-art.mjs';
 
 // Original spatial hypotheses, not copied coordinates or inferred screenshot physics.
 const rect = (x, y, w, h) => ({ x, y, w, h });
@@ -256,11 +257,11 @@ export const PHASE_FIRST_RETURNS = freezeDesign(
   Object.fromEntries(rows.map((row) => [row.id, row.departure])),
 );
 
-export function createPhaseCandidates() {
+export function createPhaseCandidates({ artwork = false } = {}) {
   const project = createStarterProject('phase-greybox-candidates');
   project.name = 'Phaseworks · greybox candidates';
   project.actorCatalogId = PHASE_ACTOR_CATALOG.id;
-  project.assets = [];
+  project.assets = artwork ? structuredClone(PHASE_ART_CANDIDATES) : [];
   project.maps = rows.map((row) => ({
     format: 'MapDesignV1',
     id: `${row.id}-map`,
@@ -283,7 +284,13 @@ export function createPhaseCandidates() {
     objectives: [],
     bonuses: [],
     coverage: row.coverage,
-    presentation: { themeId: 'horizon', backgroundAssetId: null },
+    presentation: {
+      themeId: 'horizon',
+      backgroundAssetId: artwork
+        ? (PHASE_ART_CANDIDATES.find((asset) => asset.id === `phase-observatory-${row.id}`)?.id ??
+          null)
+        : null,
+    },
     design: {
       routeDecision: row.decision,
       lesson: row.lesson,

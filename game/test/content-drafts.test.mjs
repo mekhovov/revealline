@@ -34,6 +34,55 @@ const draft = () => ({
   packs: [],
 });
 
+function closableBackend() {
+  const memory = managedIndexedDB(),
+    requests = [];
+  const indexedDB = {
+    open(...args) {
+      const request = memory.indexedDB.open(...args);
+      requests.push(request);
+      return request;
+    },
+  };
+  return { memory, requests, backend: createContentDraftBackend({ indexedDB }) };
+}
+
+test('retry reopens a cached closing connection without replaying the failed transaction', async () => {
+  const { memory, requests, backend } = closableBackend();
+  await backend.save(draft(), null);
+  requests[0].result.close();
+  await assert.rejects(backend.read('draft-project'), { name: 'InvalidStateError' });
+  assert.equal(memory.openCount, 1, 'no hidden transaction replay');
+  assert.equal((await backend.read('draft-project')).revision, 1);
+  assert.equal(memory.openCount, 2);
+  assert.equal(memory.allPuts.length, 2);
+});
+
+test('close notifications reopen storage while stale notifications cannot discard the new connection', async () => {
+  const { memory, requests, backend } = closableBackend();
+  await backend.save(draft(), null);
+  const old = requests[0].result;
+  old.close();
+  old.onclose?.();
+  assert.equal((await backend.read('draft-project')).revision, 1);
+  old.onclose?.();
+  assert.equal((await backend.read('draft-project')).revision, 1);
+  assert.equal(memory.openCount, 2);
+});
+
+test('reopened write retries still honor a newer writer and immutable checkpoint history', async () => {
+  const { memory, requests, backend } = closableBackend();
+  await backend.save(draft(), null);
+  requests[0].result.close();
+  const changed = { ...draft(), name: 'Retry candidate' };
+  await assert.rejects(backend.save(changed, 1), { name: 'InvalidStateError' });
+  const other = createContentDraftBackend(memory);
+  await other.save({ ...draft(), name: 'Other writer' }, 1);
+  await assert.rejects(backend.save(changed, 1), { code: 'draft-conflict' });
+  assert.equal((await backend.read('draft-project')).project.name, 'Other writer');
+  assert.equal((await backend.read('draft-project', 1)).project.name, 'Draft');
+});
+
 test('draft saves are immutable checkpoints with atomic cross-tab revision conflicts', async () => {
   const memory = managedIndexedDB();
   const first = createContentDraftBackend(memory),

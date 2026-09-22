@@ -13,6 +13,8 @@ import {
   drawEnemyPressure,
 } from './classic-view.mjs';
 import { foundationCompatibleView as classicView } from './foundation-view.mjs';
+import { drawRelayGates, drawRelayTriggers, relayView } from './relay-view.mjs';
+import { drawDirectionalFields, directionalView } from './directional-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { playerBodyOffset } from './player-body-layout.mjs';
@@ -532,6 +534,9 @@ export class BoardPainter {
           ctx.globalAlpha = 1;
         }
       }
+    const relays = fullReveal ? null : relayView(state);
+    if (!fullReveal) drawDirectionalFields(ctx, directionalView(state), CELL);
+    drawRelayGates(ctx, relays, p, CELL);
     if (this.style === 'props' && !fullReveal && !images.wall)
       for (const w of state.level.walls || []) {
         const x = w.x * CELL,
@@ -678,6 +683,7 @@ export class BoardPainter {
           ctx.globalAlpha = 1;
         }
       }
+      drawRelayTriggers(ctx, relays, CELL);
       for (const f of state.ability.fields || []) {
         ctx.fillStyle = p.safe;
         ctx.globalAlpha = 0.12;
@@ -876,7 +882,9 @@ export class BoardPainter {
       ctx.lineWidth = 1;
       ctx.stroke();
       ctx.restore();
-      if (state.ruleset === 'xonix-core.v6')
+      if (
+        ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(state.ruleset)
+      )
         drawPlayerLocator(ctx, {
           x: (state.player.x + bodyOffset.x) * CELL,
           y: (state.player.y + bodyOffset.y) * CELL,

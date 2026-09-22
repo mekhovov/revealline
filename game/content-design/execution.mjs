@@ -2,7 +2,7 @@ import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../dat
 import { campaignKey } from '../library.mjs';
 import { resolveContentJourney } from './journey.mjs';
 import { compileContentProject } from './project.mjs';
-import { DIFFICULTY_CATALOG, freezeDesign, journeyPreset } from './catalogs.mjs';
+import { freezeDesign, journeyPreset } from './catalogs.mjs';
 
 /** Host-facing candidate executions. Each preset is resolved from authored source,
  * never projected from another execution (in particular, never Legacy Gentle).
@@ -12,7 +12,7 @@ export function createContentExecutionCatalog(source, options = {}) {
   exactKeys(selected, ['packIds', 'mode'], 'candidate execution selection');
   const project = compileContentProject(source);
   const journeys = new Map(
-    Object.keys(DIFFICULTY_CATALOG.presets).map((difficulty) => [
+    Object.keys(project.difficulty.presets).map((difficulty) => [
       difficulty,
       resolveContentJourney(project, { ...selected, difficulty }),
     ]),
@@ -63,11 +63,11 @@ export function createContentExecutionCatalog(source, options = {}) {
     entries: Object.freeze(entries),
     officialProgressEligible: false,
     journey(difficulty = 'standard') {
-      journeyPreset(difficulty);
+      journeyPreset(difficulty, project.difficulty.id);
       return journeys.get(difficulty);
     },
     select(packId, campaignId, difficulty = 'standard') {
-      journeyPreset(difficulty);
+      journeyPreset(difficulty, project.difficulty.id);
       if (!stableId(packId) || !stableId(campaignId)) return null;
       return byBase.get(`${packId}/${campaignId}`)?.get(difficulty) ?? null;
     },

@@ -136,3 +136,110 @@ rule, actor speed or damage immunity was changed to make the fixtures pass.
 
 Node20.19.5 and22.22.2 timing2/2 tests pass, with scoped lint. These samples demonstrate available alternatives,
 not a promise that one route is universally safe or that every timing is solved.
+
+## Original reveal artwork — first bounded candidate
+
+The isolated post-v0.76 continuation adds an original2:1 composition for First
+fracture: an intact coastal landing, broken embankment, station and repair crane.
+The built-in image tool generated it, then removed an unwanted emblem in a
+targeted edit. Both prompts and inspection limitations are recorded in
+`docs/research/fracture-original-art-prompts.json`. Original PNG bytes are kept
+unaltered at `game/content-design/assets/fracture-coastal-r1/first-fracture.png`:
+1774×887,2,369,540bytes,SHA256
+`5dbd2da2a014f43842a7e04c4652d158a3a7aa254129bf49ec3991cdca7478e6`.
+
+This is one of seven compositions, not complete campaign art. The opt-in pictured
+factory and shared immutable asset registry bind only that mission; six missing
+pictures stay null and the default greybox factory remains unchanged. The existing
+Studio Inspect → Apply → Play path uses the pictured draft without publishing it.
+Artwork remains `review: candidate`; preview still requires verified exact bytes.
+No collision, rules, objectives, earned percentage, historical receipts or public
+Journey enrollment are changed. No distribution/archive/build was produced.
+
+The19-test art/candidate/CLI/Studio-preview/whole-library/Border regression cohort
+passes on Node20.19.5 and22.22.2 (split into bounded runs). Exact asset bytes,
+dimensions, uniqueness and consumer checks pass; all42 Fracture clear-route
+checkpoints and all498 composed Solo/Versus manifests remain unchanged. Scoped
+lint, formatting and diff checks pass. Generated-image inspection is not a native
+overlay or human playtest. Partial reveal, small screens, other compositions,
+final theme identity, human qualification and accepted release integration remain.
+
+Native exact-source232bd92c preview on the owned port8813/tab38 verified the
+actual Inspect → Apply → Play path. Apply selected First fracture, retained seven
+missions and showed `candidate-art-not-visually-qualified`. The exact Solo preview
+loaded with76% target and3lives. A legal Down return reached0.5%; erosion reopened
+a gap while the permanent landing remained visible. A subsequent Left closure
+reached1.7%, retained3lives and displayed the original scene through the reclaimed
+landing, border and trails. The live screenshot showed distinct craft/field-keeper/
+eroder/patrol silhouettes over the scene fragments. Closing returned focus to Play.
+This is an early partial-reveal check, not broad-area contrast, full victory,
+Versus/device or human qualification. Two embedded-frame locator attempts timed
+out; fresh native accessibility inspection found the controls and actual0.5%
+state, without restarting or modifying the simulation. No timing claim is made.
+
+## Seven-composition local set
+
+The same continuation subsequently generated and inspected the remaining six
+originals one at a time. Island reserve has a pump-house island and separated
+landings; Two districts contrasts a settling basin and sea lock; Bank the crossing
+looks under a repaired bridge; Five landings foregrounds a bronze capstan;
+Staggered reserve follows terraced reservoirs; Keep the network reveals a connected
+waterworks at blue hour. These are distinct compositions, not recolors or crops.
+All prompts, exact pins and assistant-only review limits are in the same prompt
+record. All seven original1774×887 PNGs total18,019,065bytes; no resizing, recompression,
+collision tracing, copies of reference-game artwork or publishing occurred.
+
+The pictured factory now binds exactly one unique original to each mission,
+including the optional Remix. The default greybox factory and all runtime values
+remain unchanged. Shared registry, compiler, verified preview and packaging metadata
+use the same seven immutable revisions. The20-test art/candidate/CLI/Studio-preview/
+whole-library/Border cohort passes on both Node20.19.5 and22.22.2, including prompt
+record pin parity, all42 Fracture clear checkpoints and all498 composed manifests.
+Logs: `.cache/journey-fracture-art-full-node{20,22}-r1.tap`. Scoped lint, formatting
+and diff checks pass. The native232bd92c observation above covers only First
+fracture; the other six have image inspection and technical preview checks, not
+native gameplay qualification. Broad-area reveal contrast, campaign-specific actor
+presentation/audio, all-device and human review, aggregate offline budget, accepted
+integration and release/Pages are still open. This completes original-composition
+candidate production for P06, not P06 phase acceptance.
+
+## Native full-set partial-reveal continuation
+
+The owned read-only server8813 was restarted at exact
+`0ef504e0d99bb05771fec21726afb37ad6c7e7fd`. Native Studio tab38 explicitly
+inspected and applied the seven-picture source, preserving the normal checkpoint
+flow. Standard Solo practice then loaded each remaining picture through the same
+verified preview path. One fresh direction produced each legal first return:
+
+| Mission | Direction | Observed earned coverage | Target | Lives |
+|---|---|---|---|---|
+| Island reserve | Up | 0.6% | 76% | 3 |
+| Two districts | Left | 25.0% after erosion | 77% | 3 |
+| Bank the crossing | Down | 5.7% | 77% | 3 |
+| Five landings | Up | 0.6% | 78% | 3 |
+| Staggered reserve | Up | 0.6% | 78% | 3 |
+| Keep the network | Down | 0.7% | 79% | 3 |
+
+Each craft stopped on closure; required anchors remained visibly unmet rather
+than receiving credit from artwork or foundation cells. Screenshots showed each
+original through its permanent foundations and early captured regions. Two
+districts additionally exposed a substantial lower-left waterwheel/causeway area:
+slow and lethal terrain markings, erosion gaps and the cyan frontier patrol stayed
+distinguishable. The other five checks primarily cover fragments, not broad-area
+contrast. Close preview returned focus to Play and retained the Studio draft.
+
+A presentation concern remains: with the normal desktop viewport and Studio's
+720px-high iframe, Bank the crossing and Staggered reserve briefly displayed the
+Field conditions row together with a rover caption that extended below the frame.
+The complete caption remained in accessibility text. Once the conditions row
+disappeared, the caption fit. A repeated Bank the crossing Start/Down reproduced
+the screenshot; a native scroll attempt coincided with disappearance of the row,
+so it does not establish whether the overflow is unreachable. This reproduction
+was sent to the shared HUD owner; no speculative shell or fixed-height patch was
+made on this older integration branch.
+
+Together with the exact232bd92c First fracture observation above, all seven now
+have early native picture-binding evidence. This supersedes the earlier six-not-
+native limitation, not their candidate status. Full victory reveal, broad-area
+contrast across all pictures, other presets, Versus, reduced effects, physical
+devices, human enjoyment and accepted-source release/Pages remain unqualified.

@@ -1,9 +1,18 @@
 import { compileContentProject, resolveMission } from './project.mjs';
-import { FOUNDATION_SCENARIO_VERSION, validateScenario } from '../content.mjs';
+import {
+  FOUNDATION_SCENARIO_VERSION,
+  RELAY_SCENARIO_VERSION,
+  DIRECTIONAL_SCENARIO_VERSION,
+  SENTINEL_SCENARIO_VERSION,
+  validateScenario,
+} from '../content.mjs';
 import { createRun } from '../core/index.mjs';
 import { inspectCaptureSnapshot } from '../core/capture-regions.mjs';
 import { verifiedPreviewBackground } from './assets.mjs';
 import { createCoop } from '../coop/core.mjs';
+import { relayView } from '../ui/relay-view.mjs';
+import { directionalView } from '../ui/directional-view.mjs';
+import { contentCombatMarkers } from './actor-marker.mjs';
 
 /** Both preview surfaces use the same resolved candidate as the CLI. No awards. */
 export function prepareContentPreview(
@@ -27,6 +36,10 @@ export function prepareContentPreview(
   const capture = inspectCaptureSnapshot(run, { trailCells });
   let scenario = null;
   if (theme) {
+    if (manifest.level.classic?.combatPatrols?.enabled)
+      throw new Error(
+        'Enabled combat gameplay preview requires qualified actor/projectile presentation. Use static inspection or explicitly disable combat in a new draft edition.',
+      );
     if (mode !== 'solo')
       throw new Error(
         'Only Solo has a Studio gameplay preview; Team and paired-race launches are not substituted.',
@@ -34,7 +47,14 @@ export function prepareContentPreview(
     if (theme.id !== manifest.presentation.themeId)
       throw new Error('Preview theme must match the authored mission presentation.');
     scenario = {
-      format: FOUNDATION_SCENARIO_VERSION,
+      format:
+        manifest.level.version === 'xonix-level.v8'
+          ? SENTINEL_SCENARIO_VERSION
+          : manifest.level.version === 'xonix-level.v7'
+            ? DIRECTIONAL_SCENARIO_VERSION
+            : manifest.level.version === 'xonix-level.v6'
+              ? RELAY_SCENARIO_VERSION
+              : FOUNDATION_SCENARIO_VERSION,
       masteryDefinition: null,
       visualOverrides: manifest.background
         ? { background: verifiedPreviewBackground(manifest.background, artwork) }
@@ -55,10 +75,16 @@ export function prepareContentPreview(
   // Actor recipes such as contour patrols contain route edges, not positions.
   // Use the engine's resolved initial state for the authoring view, never invent
   // an alternate placement or expose the mutable run to Studio.
+  const relays = run.relay ? relayView(run) : null;
   const markers = {
-    actors: run.enemies.map(({ id, type, x, y }) => ({ id, type, x, y })),
+    actors: [
+      ...run.enemies.map(({ id, type, x, y }) => ({ id, type, x, y })),
+      ...contentCombatMarkers(manifest.level),
+    ],
     objectives: (run.objectives ?? []).map(({ id, x, y }) => ({ id, x, y })),
     ...(mode === 'team' ? { spawns: run.players.map(({ id, x, y }) => ({ id, x, y })) } : {}),
+    ...(relays ? { gates: relays.gates, relayTriggers: relays.triggers } : {}),
+    ...(manifest.level.directionalFields ? { directionalFields: directionalView(run) } : {}),
   };
   const authoredTerrain = structuredClone(
     manifest.level.classic?.terrain ?? manifest.level.terrain ?? [],

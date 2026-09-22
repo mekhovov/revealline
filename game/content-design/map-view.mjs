@@ -2,6 +2,8 @@ import { CELL } from '../core/registry.mjs';
 import { captureOverlay } from './capture-overlay.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
 import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
+import { drawRelayGates, drawRelayTriggers } from '../ui/relay-view.mjs';
+import { drawDirectionalFields } from '../ui/directional-view.mjs';
 
 /** Map-first Studio renderer. Only the engine inspection supplies capture facts.
  * Shapes/patterns duplicate colors so the view does not require color distinction. */
@@ -54,6 +56,14 @@ export function paintContentMap(
       ctx.strokeRect(x + 2, y + 2, size - 5, size - 5);
     }
   }
+  drawDirectionalFields(ctx, preview.markers.directionalFields, size);
+  if (preview.markers.gates)
+    drawRelayGates(
+      ctx,
+      { gates: preview.markers.gates },
+      { safe: '#ccebbc', accent: '#ffe8a5' },
+      size,
+    );
   // Framed glyphs distinguish pickup effects without relying on color. These
   // are placement markers, never a claim that enclosing them collects them.
   const bonusGlyphs = {
@@ -75,6 +85,23 @@ export function paintContentMap(
     ctx.textBaseline = 'middle';
     ctx.fillText(bonusGlyphs[bonus.kind], x, y);
   }
+  for (const [scheduleIndex, schedule] of (
+    (manifest.level.classic?.timedBonuses ?? manifest.level.timedBonuses)?.schedules ?? []
+  ).entries())
+    for (const [anchorIndex, anchor] of schedule.anchors.entries()) {
+      const x = anchor.x * size,
+        y = anchor.y * size;
+      ctx.save();
+      ctx.strokeStyle = '#d8ef92';
+      ctx.setLineDash([3, 2]);
+      ctx.strokeRect(x - size * 0.65, y - size * 0.65, size * 1.3, size * 1.3);
+      ctx.fillStyle = '#f5ffba';
+      ctx.font = `bold ${Math.max(10, size * 0.8)}px monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`${bonusGlyphs[schedule.kind]}${scheduleIndex + 1}.${anchorIndex + 1}`, x, y);
+      ctx.restore();
+    }
   for (const actor of overlay.actors) {
     const x = actor.x * size,
       y = actor.y * size,
@@ -83,6 +110,15 @@ export function paintContentMap(
     ctx.beginPath();
     traceContentActor(ctx, contentActorMarkerType(manifest.level, actor), x, y, radius);
     ctx.fill();
+    if (actor.inactive) {
+      ctx.strokeStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(x - radius, y + radius);
+      ctx.lineTo(x + radius, y - radius);
+      ctx.stroke();
+      ctx.font = `bold ${Math.max(9, size * 0.65)}px monospace`;
+      ctx.fillText('OFF', x + radius, y - radius);
+    }
     if (showCapture && actor.anchor) {
       ctx.strokeStyle = '#fff0ad';
       ctx.beginPath();
@@ -114,6 +150,7 @@ export function paintContentMap(
     ctx.textBaseline = 'middle';
     ctx.fillText(objective.hidden ? '?' : objective.required ? '!' : 'o', x, y);
   }
+  drawRelayTriggers(ctx, { triggers: preview.markers.relayTriggers }, size);
   ctx.fillStyle = '#f5ffba';
   for (const [seat, { x, y }] of (preview.markers.spawns ?? [manifest.level.spawn]).entries()) {
     ctx.fillRect(x * size - 8, y * size - 2, 16, 4);

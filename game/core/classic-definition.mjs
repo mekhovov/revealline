@@ -1,6 +1,8 @@
 import { exactKeys, required, stableId } from '../data-json.mjs';
 import { ARCADE_ACTIONS_VERSION } from './arcade-actions.mjs';
 import { validateEnemyPressure } from './enemy-pressure.mjs';
+import { validateTimedBonuses } from './timed-bonuses.mjs';
+import { validateCombatPatrols } from './combat-definition.mjs';
 
 export const CLASSIC_ENEMY_TYPES = Object.freeze([
   'bouncer',
@@ -28,7 +30,16 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
   const { width, height } = level;
   exactKeys(
     level.classic,
-    ['version', 'terrain', 'powerups', 'lineImpact', 'arcadeActions', 'enemyPressure'],
+    [
+      'version',
+      'terrain',
+      'powerups',
+      'lineImpact',
+      'arcadeActions',
+      'enemyPressure',
+      'timedBonuses',
+      'combatPatrols',
+    ],
     'classic',
   );
   required(
@@ -133,6 +144,14 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
     );
     powerupCells.add(i);
   }
+  validateTimedBonuses(level, {
+    identity,
+    walls,
+    terrain,
+    powerupCells,
+    geometry: foundationGeometry,
+  });
+  validateCombatPatrols(level, { identity, walls, terrain, geometry: foundationGeometry });
   for (const item of level.objectives ?? [])
     required(
       terrain[Math.floor(item.y) * width + Math.floor(item.x)] !== 2,

@@ -14,6 +14,7 @@ export const COOP_ACTOR_ROLES = Object.freeze({
   pilot: Object.freeze({ role: 'team-pilot', slot: 'player.scout' }),
   drifter: Object.freeze({ role: 'team-field-bouncer', slot: 'enemy.bouncer' }),
   hunter: Object.freeze({ role: 'team-line-hunter', slot: 'enemy.border-patrol' }),
+  'claimed-rover': Object.freeze({ role: 'team-reclaimed-roamer', slot: 'enemy.claimed-rover' }),
   core: Object.freeze({ role: 'team-stronghold', slot: 'enemy.relay-sentinel' }),
 });
 const key = (kind, id) => `${kind}:${id}`;
@@ -150,8 +151,14 @@ export function createCoopActorPresentation() {
       if (player.status === 'downed') frozen.push({ id, frozen: true, stunned: true });
     }
     for (const enemy of run.enemies) {
-      if (enemy.active === false || !['drifter', 'hunter'].includes(enemy.type)) continue;
+      if (enemy.active === false || !['drifter', 'hunter', 'claimed-rover'].includes(enemy.type))
+        continue;
       const id = key('enemy', enemy.id);
+      if (enemy.type === 'claimed-rover') {
+        const slot = COOP_ACTOR_ROLES[enemy.type].slot;
+        if (!sprites.has(slot)) sprites.set(slot, snapshot?.image?.(slot) ?? null);
+        frozen.push({ id, mode: enemy.rover?.mode, frozen: enemy.rover?.mode !== 'active' });
+      }
       actors.push({
         id,
         type: enemy.type,

@@ -36,6 +36,13 @@ test('Studio and CLI share exact selected pacing report without adopting edits o
   nodes['pacing-exclude'].children.find((option) => option.value === excluded).selected = true;
   const direct = inspectContentPacing(source, { mode: 'solo', excludedCampaignIds: [excluded] });
   assert.deepEqual(nodes['pacing-inspect'].onclick(), direct);
+  assert.deepEqual(
+    nodes['pacing-warnings'].children.map((item) => item.textContent),
+    direct.diagnostics.map(
+      (item) => `${item.packId} / ${item.campaignId} / ${item.missionId}: ${item.message}`,
+    ),
+  );
+  assert(direct.diagnostics.some((item) => item.code === 'combination-before-selected-practice'));
   assert.equal(nodes['pacing-sequence'].children.length, 6);
   assert.match(nodes['pacing-summary'].textContent, /not measured difficulty/);
   const cli = (args) =>
