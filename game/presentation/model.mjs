@@ -1,4 +1,10 @@
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
+import {
+  decodePresentationDocument,
+  encodePresentationDocument,
+  ownPresentationDocument,
+  PRESENTATION_METADATA_LIMITS,
+} from './document-codec.mjs';
 
 export const FORMATS = Object.freeze({
   bundle: 'revealline-theme-bundle.v1',
@@ -17,9 +23,9 @@ export const LIMITS = Object.freeze({
   bundleBytes: 32 * 1024 * 1024,
   assetBytes: 4 * 1024 * 1024,
   slots: 512,
-  // Retained production + reviews + one complete replacement must coexist.
-  // The 5 MiB metadata and unchanged 32 MiB transfer ceilings remain authoritative.
-  assets: 2048,
+  // Logical history remains bounded separately from its lossless serialized form.
+  // The 5 MiB metadata, 100k-node and 32 MiB transfer ceilings still apply.
+  assets: PRESENTATION_METADATA_LIMITS.records,
   themes: 1024,
   collections: 128,
   imageSide: 1920,
@@ -551,7 +557,13 @@ function resolve(value, index, { themeId, collectionId, draft } = {}) {
   };
 }
 export function validateThemeBundle(source, { previous = null, expectedRevision } = {}) {
-  const value = own(source);
+  // Serialized inputs retain the legacy parse boundary. Callers holding an
+  // envelope object must decode it before semantic validation; an ordinary
+  // logical document receives its own explicit expanded accounting boundary.
+  const value =
+    typeof source === 'string'
+      ? decodePresentationDocument(source)
+      : ownPresentationDocument(source);
   fields(value, 'format id revision slots assets themes collections selection', 'theme bundle');
   identity(value, FORMATS.bundle, 'bundle');
   indexed(value.slots, slotCheck, LIMITS.slots, 'slots');
@@ -664,6 +676,9 @@ export function validateThemeBundle(source, { previous = null, expectedRevision 
   } else if (expectedRevision !== undefined)
     required(value.revision === expectedRevision, 'Stale expected revision.');
   resolve(value, index);
+  // An accepted edit must remain persistable/exportable. Structural validity
+  // alone does not prove that the bounded dictionary representation fits.
+  encodePresentationDocument(value);
   return freezePresentation(value);
 }
 export function resolvePresentation(source, options = {}) {
