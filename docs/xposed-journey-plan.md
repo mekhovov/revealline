@@ -1,6 +1,12 @@
 # Xposed-led Journey — implementation contract
 
 Current checkpoint: [2026-09-22 item-by-item completion audit](verification/journey-completion-2026-09-22.md).
+The [shared-return follow-up](verification/journey-team-partner-returns.md) now
+qualifies a simultaneous Shared Lookout opening where each pilot banks on the
+other's earlier line, with missing-partner controls and complete continuations.
+Twin Depots' inner-first choice now has full Gentle/Expert finishes as well as
+Standard. These close specific route-use gaps, not whole-Team human/device or
+pacing acceptance; roamer mastery remains separately reported.
 The [Team automatic-recovery caption](verification/journey-team-recovery-cause.md)
 now retains the actual failure cause after a reserve is spent, including
 same-step shared recovery. No new dialog, pause or gameplay change is introduced;

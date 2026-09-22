@@ -30,30 +30,39 @@ or pickup timings, and none proves a feature guarantees popularity.
 
 ## Each original phase
 
-| Phase | Current implementation                                                                                                                                                             | Specific remaining acceptance                                                                                                                     |
-| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P00   | Audit of 110 old Solo missions, 64 reference files/48 numbered layouts; plan, capture/progress/direct-flow fixtures                                                                | Final reference dispositions, whole public flow and human capture understanding                                                                   |
-| P01   | Shared foundations/topology/interior spawns, opening candidates/art, minimal Studio                                                                                                | Island/return usefulness, short clears, full native/device/human review and successor release                                                     |
-| P02   | Border, bonuses/frontiers, Studio CRUD/image workflow; timed bonus Solo/Versus/Team successors                                                                                     | Remaining relocation/mastery, pacing, authoring usability and promotion                                                                           |
-| P03   | Signal, terrain rules, actor catalogue, tracing benchmark and presentation                                                                                                         | Neutralization/optional-objective pacing and whole-set human/device/audio review                                                                  |
-| P04   | Neon + Remix, originals and preset routes                                                                                                                                          | Frontier/mouth decisions, short routes and human pacing                                                                                           |
-| P05   | Rover + Remix, originals and preset routes; Sorting Yard baffle/retainer/active-return successor with all-preset ordinary/mastery routes and explicit whole-Journey v5 integration | Public promotion, remaining map-specific activation/escape issues, cleanup and human balance                                                      |
-| P06   | Fracture/erosion/anchors + Remix; Two Districts successor                                                                                                                          | Repair priorities, enclosure discovery, optimized pacing                                                                                          |
-| P07   | Phaseworks + Remix, safe returns; Reserve successor                                                                                                                                | Impact readability, explanations and short-route balance                                                                                          |
-| P08   | Livewire + Remix; pressure/routing successors                                                                                                                                      | Ten original optional-goal cases, delayed mastery, warning overlap and route pacing                                                               |
-| P09   | Relay + Remix, permanent connectors and Studio links                                                                                                                               | Shortcut bypasses, post-objective cleanup and human usefulness                                                                                    |
-| P10   | Crosswind + Remix, directional zones without drift                                                                                                                                 | Precision/readability, mastery and short-clear geometry                                                                                           |
-| P11   | Sentinel + Remix, receiver successors                                                                                                                                              | Fast Twin routes, shield mastery, complete successor adoption and balance                                                                         |
-| P12   | Apex + Remix, boss-return and ordinary-field alternatives                                                                                                                          | Finale length, quota tails, roamer bypasses and broader starts/mastery                                                                            |
-| P13   | 83 base candidates, 12 Remixes, 8 optional pictured studies, flat navigation; 498 ordinary pressure cases                                                                          | Global pacing/content cuts, multi-seed/mastery/human review, full host enrollment and Pages                                                       |
-| P14   | 12 original Team missions + 3 pictured timed studies; pressure and two-map changing-return player editions; all-preset useful inner landing and Standard finish                    | Whole-successor mastery/pacing review, Gentle/Expert inner-first finishes, simultaneous useful cooperation, two-person/controller tests and Pages |
-| P15   | Compatibility, persistent/immutable evidence and scoped performance/rollback groundwork                                                                                            | Human sessions, full accessibility/device/performance matrix, Legacy transition, rollback and final public audit                                  |
+| Phase | Current implementation                                                                                                                                                             | Specific remaining acceptance                                                                                              |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| P00   | Audit of 110 old Solo missions, 64 reference files/48 numbered layouts; plan, capture/progress/direct-flow fixtures                                                                | Final reference dispositions, whole public flow and human capture understanding                                            |
+| P01   | Shared foundations/topology/interior spawns, opening candidates/art, minimal Studio                                                                                                | Island/return usefulness, short clears, full native/device/human review and successor release                              |
+| P02   | Border, bonuses/frontiers, Studio CRUD/image workflow; timed bonus Solo/Versus/Team successors                                                                                     | Remaining relocation/mastery, pacing, authoring usability and promotion                                                    |
+| P03   | Signal, terrain rules, actor catalogue, tracing benchmark and presentation                                                                                                         | Neutralization/optional-objective pacing and whole-set human/device/audio review                                           |
+| P04   | Neon + Remix, originals and preset routes                                                                                                                                          | Frontier/mouth decisions, short routes and human pacing                                                                    |
+| P05   | Rover + Remix, originals and preset routes; Sorting Yard baffle/retainer/active-return successor with all-preset ordinary/mastery routes and explicit whole-Journey v5 integration | Public promotion, remaining map-specific activation/escape issues, cleanup and human balance                               |
+| P06   | Fracture/erosion/anchors + Remix; Two Districts successor                                                                                                                          | Repair priorities, enclosure discovery, optimized pacing                                                                   |
+| P07   | Phaseworks + Remix, safe returns; Reserve successor                                                                                                                                | Impact readability, explanations and short-route balance                                                                   |
+| P08   | Livewire + Remix; pressure/routing successors                                                                                                                                      | Ten original optional-goal cases, delayed mastery, warning overlap and route pacing                                        |
+| P09   | Relay + Remix, permanent connectors and Studio links                                                                                                                               | Shortcut bypasses, post-objective cleanup and human usefulness                                                             |
+| P10   | Crosswind + Remix, directional zones without drift                                                                                                                                 | Precision/readability, mastery and short-clear geometry                                                                    |
+| P11   | Sentinel + Remix, receiver successors                                                                                                                                              | Fast Twin routes, shield mastery, complete successor adoption and balance                                                  |
+| P12   | Apex + Remix, boss-return and ordinary-field alternatives                                                                                                                          | Finale length, quota tails, roamer bypasses and broader starts/mastery                                                     |
+| P13   | 83 base candidates, 12 Remixes, 8 optional pictured studies, flat navigation; 498 ordinary pressure cases                                                                          | Global pacing/content cuts, multi-seed/mastery/human review, full host enrollment and Pages                                |
+| P14   | 12 original Team missions + 3 pictured timed studies; pressure and changing-return player editions; all-preset inner-first finishes and useful simultaneous partner-return opening | Whole-successor mastery/pacing review, broader timing and complementary cooperation, two-person/controller tests and Pages |
+| P15   | Compatibility, persistent/immutable evidence and scoped performance/rollback groundwork                                                                                            | Human sessions, full accessibility/device/performance matrix, Legacy transition, rollback and final public audit           |
 
 All content phases also require their accepted-source integration, reviewed PR,
 versioned immutable release and public verification. Existing old phase snapshots
 are provenance, not proof that later successors shipped.
 
 ## Latest bounded implementation
+
+[Useful shared returns](journey-team-partner-returns.md): Shared Lookout now has
+an all-preset simultaneous opening where each pilot banks on the other's earlier
+earned line. Six missing-partner controls leave the survivor's second cut open;
+twelve full seat/control continuations and three keyboard clears qualify the
+opening beyond an isolated exercise. Twin's inner-first choice also has full
+Gentle/Expert finishes, completing all three preset alternatives.129/129 checks
+pass per Node, with independent review. Later tails mostly alternate pilots,
+short clears remain, and native/two-human/device balance and publication are open.
 
 [Team recovery explanation](journey-team-recovery-cause.md): automatic individual
 and shared reserve recovery now retain the observed hit/self-crossing cause,
@@ -68,8 +77,10 @@ cross-campaign Next, failed picture retry and receipt ownership. Twin's eastern
 inner landing has genuine bank, fresh departure and useful return on every preset,
 plus a no-loss Standard finish with four returns per pilot. This is not simultaneous
 cooperation or both-rover mastery. Native selection, Expert start/reload and Studio
-Inspect/Apply are checked. Full inner-first Gentle/Expert continuations, timing
-tolerance, complementary simultaneous play, human/device balance and Pages remain.
+Inspect/Apply are checked. At that checkpoint full inner-first Gentle/Expert
+continuations and simultaneous route usefulness were still open; the follow-up
+above qualifies specific alternatives. Broader timing/cooperation, human/device
+and Pages remain.
 The historical17 base mastery misses are not a remeasurement of this successor.
 
 [Twelve-mission Team pressure player](journey-team-pressure-player.md): the tested
