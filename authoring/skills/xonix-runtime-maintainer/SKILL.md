@@ -1416,3 +1416,13 @@ For [Studio progress counters](../../prompts/studio-same-tick-counters.md), comp
 ## 2026-09-22 — Exact scoped recipe reviews and immutable inheritance
 
 For [Team functional review](../../prompts/team-recipe-functional-review.md), bind the accepted evidence hash, exact role/default payloads, ordered renderer fingerprint and inherited image records/originals. Distinguish original produced assembly records from previously reviewed immutable successors; never erase provenance or quality differences to make a gate pass. Explicit coordinator acceptance follows evidence preparation and precedes production adoption. Changed/unknown inputs remain source; missing required evidence fails production. Test the complete producer consumer closure, including temporary-project fixtures with read-only evidence dependencies, and retain old source-stage records unchanged. Scoped functional review does not imply new artwork, complete native motion, physical-device, frozen/offline or public acceptance.
+
+## 2026-09-22 — Team import failure sentences
+
+Preserve an imported file error's existing terminal punctuation when adding the
+shared recovery instruction. Apply the same formatter to JSON and artwork imports;
+never change reader validation or ownership to repair copy. Exercise corrupted
+required artwork through the actual host reader, explicit Retry, the retained old
+picture/selection and successful recovery after a transient read failure. Keep
+modeled host evidence separate from native decoding and release acceptance. See
+[the import-error maintenance prompt](../../../docs/team-import-error-copy.md).

@@ -3450,9 +3450,10 @@ export function bootCoop({
       if (!current()) return;
       importOperation = null;
       importDisplay = null;
+      const detail = String(error.message).trim();
       packStatus.begin({ message: 'Team pack unavailable.' }).finish({
         state: 'error',
-        message: `Pack unchanged: ${error.message}. Retry pack or choose another file.`,
+        message: `Pack unchanged: ${detail}${/[.!?]$/.test(detail) ? '' : '.'} Retry pack or choose another file.`,
       });
       $('coop-pack-cancel').hidden = true;
       $('coop-pack-retry').hidden = false;
