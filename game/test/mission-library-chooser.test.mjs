@@ -100,6 +100,37 @@ test('restoring a cancelled host transition retains the real opener and return l
   chooser.destroy();
 });
 
+test('Journey text refreshes with preset without eager board construction or loss of card focus', () => {
+  let preset = 'Standard',
+    diagrams = 0;
+  const { doc, $, chooser } = setup([
+    owner({
+      collection: 'Journey',
+      details: () => ({
+        challenge: `Band 3/12 · ${preset}`,
+        route: 'Choose a return lane.',
+        mastery: 'Use two cuts.',
+      }),
+      card: () => {
+        diagrams++;
+        return null;
+      },
+    }),
+  ]);
+  const card = $('journey-cards').children[0];
+  card.focus();
+  assert.match(
+    card.textContent,
+    /Band 3\/12 · Standard.*Choose a return lane.*Optional challenge: Use two cuts/,
+  );
+  preset = 'Expert';
+  chooser.refresh();
+  assert.match(card.textContent, /Band 3\/12 · Expert/);
+  assert.equal(doc.activeElement, card);
+  assert.equal(diagrams, 0);
+  chooser.destroy();
+});
+
 test('download stays in picker, preserves search/focus/scroll, and requires a deliberate Play', async () => {
   let finish,
     ready = false,

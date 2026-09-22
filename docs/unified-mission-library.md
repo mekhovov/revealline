@@ -170,3 +170,24 @@ intent synchronously when a lazy Missions opening wins. Three targeted
 continuation/setup regressions pass after this correction. Do not describe the
 broader continuation cohort as clean until it is repeated successfully; the
 intermittent receipt assertion remains a tracked qualification gate.
+
+### Solo review follow-up: opening intent and truthful card text
+
+- Solo integration was pushed as `5db40f88e` to draft PR268. Independent native
+  browser review of that pinned commit confirmed201 cards, fresh-profile late
+  Classic launch, exact brief, saved-flight departure/Stay and chooser return.
+  This is local browser evidence, not Pages or physical-controller acceptance.
+- Fixed a further reviewed cold-opening race: newer focus, keyboard, pointer or
+  click retires the pending request even when focus later returns to the same
+  opener. Initiating events are allowed to finish first. Preparing missions is
+  visible beside the opener; cancellation removes it, and failure offers retry.
+- Restored text-only Journey band/preset, route decision and optional challenge
+  without constructing every board or decoding artwork. Curated original IDs
+  identify12 Remixes,4 Ukrainian-inspired and4 FPV workshop missions. Current
+  arcade-policy missions carry an Arcade tag. Classic cards explicitly label
+  authored Standard rules and list actual mode-supported difficulty settings.
+- Focused cohort:82 tests pass. Five actual held-index lifecycle/input tests and
+  ten Solo launch tests pass; shared text refresh preserves focused cards.
+- Versus and Team integration are progressing in separate owned files. Their
+  partial checks do not establish all-mode or release acceptance. Retained setup
+  access, full sequence/failure qualification and promotion gates remain open.

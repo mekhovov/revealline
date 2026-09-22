@@ -4,7 +4,13 @@ import { readFile } from 'node:fs/promises';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
-for (const transition of ['blur', 'persisted pagehide'])
+for (const transition of [
+  'blur',
+  'persisted pagehide',
+  'newer focus',
+  'newer key',
+  'newer pointer',
+])
   test(`a held mission-index request cannot reopen or focus the library after ${transition}; a fresh request works`, async (t) => {
     let release,
       requested = false;
@@ -27,18 +33,32 @@ for (const transition of ['blur', 'persisted pagehide'])
     p.$('shell-play').focus();
     p.$('shell-play').click();
     await settle(() => requested);
+    assert.equal(p.$('mission-library-opening-status').textContent, 'Preparing missions…');
     if (transition === 'blur') {
       p.doc.focused = false;
       p.win.emit('blur');
       p.doc.focused = true;
       p.win.emit('focus');
-    } else {
+    } else if (transition === 'persisted pagehide') {
       p.doc.hidden = true;
       p.win.emit('pagehide', { persisted: true });
       p.doc.hidden = false;
       p.win.emit('pageshow', { persisted: true });
+    } else if (transition === 'newer focus') {
+      p.$('shell-featured').focus();
+      p.$('shell-play').focus(); // Returning focus does not revive the old intent.
+    } else {
+      p.$('shell-play').emit(
+        transition === 'newer key' ? 'keydown' : 'pointerdown',
+        transition === 'newer key' ? { key: 'Tab' } : {},
+      );
     }
     const focused = p.doc.activeElement;
+    assert.equal(
+      p.$('mission-library-opening-status'),
+      null,
+      'Newer intent dismisses preparation feedback.',
+    );
     release();
     // Lazy metadata may finish constructing the surface; only a new explicit
     // foreground request may display it or restore its keyboard focus.

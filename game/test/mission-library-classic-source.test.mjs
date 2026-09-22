@@ -32,6 +32,16 @@ test('all110 indexed Classics are represented with separate original editions an
   );
 });
 
+test('Classic text names only verified mode-specific difficulty settings and never invents a Journey band', () => {
+  const library = createMissionLibrary(classicLibrarySources(index, adapters));
+  const row = library.missions[0];
+  assert.match(library.details(row, 'solo').challenge, /^Authored Standard rules · 45% coverage/);
+  assert.equal(library.details(row, 'solo').route, 'Difficulty settings: Standard, Gentle');
+  assert.equal(library.details(row, 'versus').route, 'Difficulty settings: Standard');
+  assert.equal(library.details(row, 'solo').mastery, '');
+  assert.ok(!library.details(row, 'solo').challenge.includes('Band'));
+});
+
 test('late Classic launch hands the exact pinned metadata to its validator, without recording a clear', () => {
   let chosen;
   const sources = classicLibrarySources(index, {
@@ -73,6 +83,12 @@ test('bounded reader rejects duplicates, malformed metadata and mixed source edi
     },
     (value) => {
       value.missions[0].modes = ['team'];
+    },
+    (value) => {
+      delete value.missions[0].difficultiesByMode;
+    },
+    (value) => {
+      value.missions[0].difficultiesByMode.solo = ['invented'];
     },
     (value) => {
       delete value.missions.find((row) => row.packId).packIdentity;

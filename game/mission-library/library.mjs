@@ -235,6 +235,17 @@ export function createMissionLibrary(sources = []) {
       const { owner, entry } = requireRow(row, mode);
       return owner.card?.(entry, mode) ?? null;
     },
+    details(row, mode) {
+      const { owner, entry } = requireRow(row, mode);
+      const value = owner.details?.(entry, mode);
+      const bounded = (value, fallback = '') =>
+        typeof value === 'string' ? value.slice(0, 2048) : fallback;
+      return Object.freeze({
+        challenge: bounded(value?.challenge, row.rules),
+        route: bounded(value?.route, row.hook),
+        mastery: bounded(value?.mastery),
+      });
+    },
     async prepare(row, { mode = 'solo', signal } = {}) {
       const { owner, entry } = requireRow(row, mode);
       const state = availability(row, mode);
