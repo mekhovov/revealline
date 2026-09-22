@@ -1,4 +1,6 @@
-const ROUTES = new Set(['opening', 'authored']);
+import { AUTHORED_JOURNEY_ROUTE_IDS } from '../content-design/mode-href.mjs';
+
+const ROUTES = new Set(AUTHORED_JOURNEY_ROUTE_IDS);
 
 /** Code-owned destinations only. Mode entry retains the library route, never a
  * simulation, mission selection, save slot, receipt or arbitrary return URL. */

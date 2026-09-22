@@ -1,0 +1,30 @@
+.studies {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+.study .surface {
+  min-height: 144px;
+  margin-top: 16px;
+}
+.study canvas {
+  width: 256px;
+  height: 128px;
+  max-width: 100%;
+}
+.study p {
+  min-height: 72px;
+}
+.controls {
+  align-items: baseline;
+}
+.controls label {
+  font-size: 14px;
+}
+.controls select {
+  margin-right: 8px;
+}
+.study .caption {
+  margin: 12px 0 0;
+  min-height: 0;
+  font-size: 12px;
+  color: #b5c2c6;
+}

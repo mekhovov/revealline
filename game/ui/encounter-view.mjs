@@ -1,6 +1,6 @@
 import { geometryForRun } from '../core/geometry.mjs';
 import { CELL, FIXED_DT } from '../core/registry.mjs';
-import { encounterCutCells } from '../core/encounter.mjs';
+import { encounterCutCells, encounterShieldIds } from '../core/encounter.mjs';
 import { classicEffectActive } from '../core/classic-state.mjs';
 import { isClassicRuleset } from '../core/versions.mjs';
 
@@ -12,6 +12,20 @@ export function encounterView(state) {
   const e = state?.encounter;
   if (!e) return null;
   const recipe = state.level.encounter;
+  const multiple = recipe.version === 'xonix-encounter.v2';
+  const shieldIds = multiple ? encounterShieldIds(recipe) : [];
+  const remainingShieldIds = shieldIds.filter(
+    (id) => !state.objectives.some((o) => o.id === id && o.captured),
+  );
+  const shields = multiple
+    ? Object.freeze({
+        total: shieldIds.length,
+        captured: shieldIds.length - remainingShieldIds.length,
+        remainingIds: Object.freeze(remainingShieldIds),
+      })
+    : null;
+  const ground = multiple ? 'reclaimed ground' : 'safe ground';
+  const shieldPlural = multiple && shieldIds.length > 1;
   const min = recipe.minReleaseCutCells;
   const remaining = state.cells.reduce((sum, cell) => sum + Number(cell === CELL.FIELD), 0);
   const cutCells = encounterCutCells(state);
@@ -26,10 +40,10 @@ export function encounterView(state) {
     ? `${e.axis === 'horizontal' ? 'row' : 'column'} ${Math.floor(e.lane)}`
     : '';
   const phaseName = {
-    delay: 'SHIELD RELAY',
+    delay: shieldPlural ? 'SHIELD RELAYS' : 'SHIELD RELAY',
     warning: 'LANE WARNING',
     active: suppressed ? 'LANE SUPPRESSED' : 'LANE ACTIVE',
-    rest: 'SHIELD RELAY',
+    rest: shieldPlural ? 'SHIELD RELAYS' : 'SHIELD RELAY',
     transition: 'SHIELD OPENING',
     open: 'CORE OPEN',
     defeated: 'CORE RELEASED',
@@ -49,16 +63,16 @@ export function encounterView(state) {
         ? 'Core isolated. The picture is yours.'
         : 'Release cut secured. The picture is yours.';
   else if (e.stage === 'shielded')
-    instruction = `Capture the shield relay. ${lane ? `Watch ${lane}.` : 'Return every line to safe ground.'}`;
+    instruction = `${multiple ? `Shield relay${shieldPlural ? 's' : ''} ${shields.captured} / ${shields.total}. Capture ${shieldPlural ? 'every' : 'the'} remaining relay.` : 'Capture the shield relay.'} ${lane ? `Watch ${lane}.` : `Return every line to ${ground}.`}`;
   else if (e.stage === 'transition')
-    instruction = 'Relay secured. A vertical attack comes before the first opening.';
+    instruction = `${shieldPlural ? 'All shield relays secured.' : 'Relay secured.'} A vertical attack comes before the first opening.`;
   else if (isolated)
     instruction =
       e.phase === 'open'
-        ? 'Core isolated. Return to safe ground with no live line to finish.'
-        : 'Core isolated. Reach safe ground and wait for CORE OPEN.';
+        ? `Core isolated. Return to ${ground} with no live line to finish.`
+        : `Core isolated. Reach ${ground} and wait for CORE OPEN.`;
   else
-    instruction = `Live line ${cutCells} / ${min} new cells · Close on safe ground during CORE OPEN.${lane && e.phase !== 'open' ? ` Watch ${lane}.` : ''}`;
+    instruction = `Live line ${cutCells} / ${min} new cells · Close on ${ground} during CORE OPEN.${lane && e.phase !== 'open' ? ` Watch ${lane}.` : ''}`;
   if (frozen && !ended && !e.defeated && state.status !== 'respawning')
     instruction += ' Enemy freeze holds the encounter clock.';
   return Object.freeze({
@@ -73,6 +87,7 @@ export function encounterView(state) {
     remaining,
     isolated,
     suppressed,
+    ...(multiple ? { shields } : {}),
   });
 }
 

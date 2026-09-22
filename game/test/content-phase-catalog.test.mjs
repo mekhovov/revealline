@@ -131,7 +131,7 @@ test('carrier CRUD cannot override front speeds and removing the final carrier r
         id: 'carrier',
         actor: carrier,
       }),
-    /currently support field keepers/,
+    /qualified actor roles/,
   );
 });
 
@@ -177,7 +177,7 @@ test('Studio, chooser and gameplay share a distinct static bolt; ordinary keeper
     view.enemies.map((enemy) => enemy.impactCarrier),
     [undefined, true],
   );
-  assert.match(view.summary, /1 field enemy/);
+  assert.match(view.summary, /1 field hunter/);
   assert.match(view.summary, /1 trail-impact carrier/);
   const s = surface(),
     palette = { danger: '#d33', muted: '#888' };

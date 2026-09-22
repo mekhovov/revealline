@@ -2,19 +2,21 @@ import { exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { validateCoopLevel, createCoop } from '../coop/core.mjs';
 import {
   COOP_FOUNDATION_LEVEL_VERSION,
-  COOP_FOUNDATION_RULESET,
   COOP_TERRAIN_LEVEL_VERSION,
-  COOP_TERRAIN_RULESET,
+  COOP_ROVER_LEVEL_VERSION,
+  COOP_BONUS_LEVEL_VERSION,
+  journeyTeamPackEdition,
 } from '../coop/foundations.mjs';
 import { compileActor, freezeDesign } from './catalogs.mjs';
 import { inspectRuntimeTopology } from './diagnostics.mjs';
+import { TEAM_MISSION_FORMATS, teamRoleQualified } from './team-qualification.mjs';
 
 /** Explicit Team qualification, not an automatic Solo-to-Team conversion.
  * Unsupported mechanics fail closed until their Team semantics are implemented. */
 export function resolveTeamMission(project, mission, map, difficulty) {
   exactKeys(mission.team, ['format', 'spawnIds'], 'Team mission');
   required(
-    ['TeamMissionV1', 'TeamMissionV2'].includes(mission.team.format) &&
+    TEAM_MISSION_FORMATS.includes(mission.team.format) &&
       Array.isArray(mission.team.spawnIds) &&
       mission.team.spawnIds.length === 2 &&
       new Set(mission.team.spawnIds).size === 2 &&
@@ -27,12 +29,20 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     'Team missions require a coordination rating.',
   );
   required(
-    mission.actors.every((actor) => actor.role === 'field-keeper') &&
+    mission.actors.every((actor) => teamRoleQualified(mission.team.format, actor.role)) &&
       mission.objectives.length === 0 &&
       mission.bonuses.length === 0 &&
+      (!Object.hasOwn(mission, 'timedBonuses') || mission.team.format === 'TeamMissionV4') &&
       mission.timeLimitSeconds === 0 &&
-      (mission.team.format === 'TeamMissionV2' || (map.source.terrain ?? []).length === 0),
-    'Team foundation candidates currently support field keepers and coverage, not unqualified terrain, bonuses, objectives or timers.',
+      (mission.team.format !== 'TeamMissionV1' || (map.source.terrain ?? []).length === 0),
+    'Team candidates support only qualified actor roles and coverage, not unqualified terrain, bonuses, objectives or timers.',
+  );
+  required(
+    mission.team.format !== 'TeamMissionV4' ||
+      (map.source.format === 'MapDesignV1' &&
+        !Object.hasOwn(mission, 'encounter') &&
+        !Object.hasOwn(mission, 'relayLinks')),
+    'Team timed bonuses currently qualify foundation/terrain maps, not relay, directional or encounter mechanics.',
   );
   const spawns = mission.team.spawnIds.map((id) => {
     const spawn = map.geometry.spawns.find((item) => item.id === id);
@@ -45,10 +55,15 @@ export function resolveTeamMission(project, mission, map, difficulty) {
   );
   const level = {
     version:
-      mission.team.format === 'TeamMissionV2'
-        ? COOP_TERRAIN_LEVEL_VERSION
-        : COOP_FOUNDATION_LEVEL_VERSION,
-    ...(mission.team.format === 'TeamMissionV2' ? { terrain: map.source.terrain ?? [] } : {}),
+      mission.team.format === 'TeamMissionV4'
+        ? COOP_BONUS_LEVEL_VERSION
+        : mission.team.format === 'TeamMissionV3'
+          ? COOP_ROVER_LEVEL_VERSION
+          : mission.team.format === 'TeamMissionV2'
+            ? COOP_TERRAIN_LEVEL_VERSION
+            : COOP_FOUNDATION_LEVEL_VERSION,
+    ...(mission.team.format !== 'TeamMissionV1' ? { terrain: map.source.terrain ?? [] } : {}),
+    ...(Object.hasOwn(mission, 'timedBonuses') ? { timedBonuses: mission.timedBonuses } : {}),
     id: mission.id,
     revision: mission.revision,
     name: mission.name,
@@ -59,8 +74,12 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     walls: map.source.walls ?? [],
     safeRects: map.source.foundations ?? [],
     enemies: mission.actors.map((source) => {
-      const actor = compileActor(source, difficulty, project.actors.id);
-      return { ...actor, type: 'drifter', radius: 0.25 };
+      const actor = compileActor(source, difficulty, project.actors.id, project.difficulty.id);
+      return {
+        ...actor,
+        type: source.role === 'reclaimed-roamer' ? 'claimed-rover' : 'drifter',
+        radius: 0.25,
+      };
     }),
     goal: { coverage: mission.coverage },
     rules: { moveSpeed: project.policy.rules.moveSpeed, boostMultiplier: 1 },
@@ -81,8 +100,7 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     difficulty,
     policyId: project.policy.id,
     simulationIdentity: dataIdentity({
-      ruleset:
-        mission.team.format === 'TeamMissionV2' ? COOP_TERRAIN_RULESET : COOP_FOUNDATION_RULESET,
+      ruleset: journeyTeamPackEdition(level).ruleset,
       policy: project.policy.id,
       difficulty,
       level: simulation,

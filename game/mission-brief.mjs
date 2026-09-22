@@ -16,9 +16,16 @@ export function missionBriefing(
   const title = compact(fullTitle, 44);
   const coverage = Number((level.goal.coverage * 100).toFixed(6));
   const required = (level.objectives || []).filter((item) => item.required).length;
+  const encounter = level.encounter;
+  const multiShield = encounter?.version === 'xonix-encounter.v2';
+  const shieldCount = multiShield ? encounter.shieldObjectiveIds.length : 1;
+  const shieldLabel = `${shieldCount} shield relay${shieldCount === 1 ? '' : 's'}`;
+  const otherRequired = multiShield ? Math.max(0, required - shieldCount - 1) : 0;
   const label = compact(objectiveLabel, 24).toLowerCase() || 'objective';
   const plural = /[^aeiou]y$/.test(label) ? `${label.slice(0, -1)}ies` : `${label}s`;
-  const goal = `Reveal ${coverage}%${required ? ` · ${required} required ${required === 1 ? label : plural}` : ''}.`;
+  const goal = multiShield
+    ? `Reveal ${coverage}% · ${shieldLabel} + core${otherRequired ? ` · ${otherRequired} other required ${otherRequired === 1 ? label : plural}` : ''}.`
+    : `Reveal ${coverage}%${required ? ` · ${required} required ${required === 1 ? label : plural}` : ''}.`;
   const rules = level.rules || {};
   const limits = [
     rules.timeLimitSeconds > 0 ? `Deadline ${rules.timeLimitSeconds}s` : '',
@@ -40,27 +47,46 @@ export function missionBriefing(
   const recommendation = recommendations.length
     ? `Recommended: ${compact(recommendations.join(' / '), 68)}.`
     : '';
-  const encounter = level.encounter;
   const encounterGoal = encounter
-    ? `Capture the shield relay. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
+    ? `Capture ${multiShield && shieldCount > 1 ? `all ${shieldLabel}` : 'the shield relay'}. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
     : '';
-  const classicHint = ['xonix-level.v4', 'xonix-level.v5'].includes(level.version)
+  const foundations = [
+    'xonix-level.v5',
+    'xonix-level.v6',
+    'xonix-level.v7',
+    'xonix-level.v8',
+  ].includes(level.version);
+  const classicHint = [
+    'xonix-level.v4',
+    'xonix-level.v5',
+    'xonix-level.v6',
+    'xonix-level.v7',
+    'xonix-level.v8',
+  ].includes(level.version)
     ? [
-        level.version === 'xonix-level.v5' &&
-        level.enemies?.some((enemy) => enemy.type === 'lane-boss')
+        level.directionalFields?.zones?.length
+          ? 'Arrow fields: faster with the arrow, slower against it; never forced drift. Capture removes their effect.'
+          : '',
+        level.relayGates?.gates?.length
+          ? 'Capture matching-number relays to open permanent return routes. Closed gates block cuts.'
+          : '',
+        foundations && level.enemies?.some((enemy) => enemy.type === 'lane-boss')
           ? 'Lanes lock, warn, then fire. Leave the lane and secure exposed trail.'
           : '',
         level.classic?.enemyPressure?.actors?.length
-          ? 'AIM locks a target. Turn before CHASE; REST returns it to patrol.'
+          ? 'AIM locks. Evade HEAD; close before TRAIL catches up.'
           : '',
         level.classic?.powerups?.length ? 'Touch pickups to collect their effects.' : '',
+        level.classic?.timedBonuses
+          ? 'Timed pickups: wait for the solid symbol, then touch before its ring expires. Missed pickups may return elsewhere; enclosure alone does not collect them.'
+          : '',
         level.classic?.terrain?.some((tile) => tile.kind === 'lethal')
           ? 'Red crosshatched fields damage on contact; enclose them before crossing.'
           : level.classic?.terrain?.some((tile) => tile.kind === 'slow')
             ? 'Striped fields slow your craft while they remain hidden.'
             : '',
         level.enemies?.some((enemy) => enemy.type === 'contour-patrol')
-          ? 'Contour patrols follow newly captured edges.'
+          ? 'Contour crawlers follow new frontiers after captures. Check your return.'
           : '',
         level.enemies?.some((enemy) => enemy.type === 'claimed-rover')
           ? 'Rovers wake on claimed ground after a warning.'
@@ -73,8 +99,7 @@ export function missionBriefing(
         .slice(
           0,
           level.classic?.lineImpact ||
-            (level.version === 'xonix-level.v5' &&
-              level.enemies?.some((enemy) => enemy.type === 'lane-boss'))
+            (foundations && level.enemies?.some((enemy) => enemy.type === 'lane-boss'))
             ? 1
             : 2,
         )
@@ -102,11 +127,11 @@ export function missionBriefing(
       authored ||
       'Return to safe ground to secure each line. Regions without a field enemy are revealed.',
     status: encounter
-      ? 'Capture the shield relay first. Watch the patterned lane before each attack.'
+      ? `Capture ${multiShield && shieldCount > 1 ? `all ${shieldLabel}` : 'the shield relay'} first. Watch the patterned lane before each attack.`
       : intro
         ? 'Your first route: fly down from the marked start to the opposite border.'
         : level.classic?.enemyPressure?.actors?.length
-          ? 'AIM → CHASE → REST. Bait a locked target, then choose another exit.'
+          ? 'AIM → CHASE → REST. Close to cancel pursuit; turn away from a heading lock.'
           : 'Choose your route. Open Missions → Mission brief for guidance.',
   });
 }

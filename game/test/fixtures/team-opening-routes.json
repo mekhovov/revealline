@@ -1,0 +1,187 @@
+{
+  "evidence": "Public-input feasibility recordings; no human pacing or mastery qualification implied.",
+  "routes": [
+    {
+      "missionId": "twin-landings",
+      "difficulty": "standard",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 234
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 144
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 846
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 276
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 846
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 132
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 468
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 270
+        }
+      ]
+    },
+    {
+      "missionId": "shared-detour",
+      "difficulty": "standard",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 852
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 144
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 186
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 492
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 594
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 48
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        }
+      ]
+    }
+  ]
+}

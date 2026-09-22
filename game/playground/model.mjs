@@ -11,6 +11,9 @@ import {
   WIDE_SCENARIO_VERSION,
   CLASSIC_SCENARIO_VERSION,
   FOUNDATION_SCENARIO_VERSION,
+  RELAY_SCENARIO_VERSION,
+  DIRECTIONAL_SCENARIO_VERSION,
+  SENTINEL_SCENARIO_VERSION,
   CLASSIC_VISUAL_ROLES,
 } from '../content.mjs';
 import { createMasteryCatalog } from '../mastery-catalog.mjs';
@@ -26,6 +29,9 @@ import {
   WIDE_PACK_VERSION,
   CLASSIC_PACK_VERSION,
   FOUNDATION_PACK_VERSION,
+  RELAY_PACK_VERSION,
+  DIRECTIONAL_PACK_VERSION,
+  SENTINEL_PACK_VERSION,
 } from '../packs.mjs';
 
 export function expansionEntries(library) {
@@ -49,8 +55,20 @@ export function editorScenario(scenario) {
 export function visualsForLevelReplacement(current, format) {
   return Object.fromEntries(
     Object.entries(current.visualOverrides).filter(([role]) =>
-      ![CLASSIC_SCENARIO_VERSION, FOUNDATION_SCENARIO_VERSION].includes(current.format) ||
-      [CLASSIC_SCENARIO_VERSION, FOUNDATION_SCENARIO_VERSION].includes(format)
+      ![
+        CLASSIC_SCENARIO_VERSION,
+        FOUNDATION_SCENARIO_VERSION,
+        RELAY_SCENARIO_VERSION,
+        DIRECTIONAL_SCENARIO_VERSION,
+        SENTINEL_SCENARIO_VERSION,
+      ].includes(current.format) ||
+      [
+        CLASSIC_SCENARIO_VERSION,
+        FOUNDATION_SCENARIO_VERSION,
+        RELAY_SCENARIO_VERSION,
+        DIRECTIONAL_SCENARIO_VERSION,
+        SENTINEL_SCENARIO_VERSION,
+      ].includes(format)
         ? true
         : !CLASSIC_VISUAL_ROLES.includes(role),
     ),
@@ -61,15 +79,21 @@ export function withScenarioMastery(current, definition) {
   const candidate = {
     ...current,
     format:
-      current.format === FOUNDATION_SCENARIO_VERSION
-        ? FOUNDATION_SCENARIO_VERSION
-        : current.format === CLASSIC_SCENARIO_VERSION
-          ? CLASSIC_SCENARIO_VERSION
-          : current.format === WIDE_SCENARIO_VERSION
-            ? WIDE_SCENARIO_VERSION
-            : current.format === ENCOUNTER_SCENARIO_VERSION
-              ? ENCOUNTER_SCENARIO_VERSION
-              : MASTERY_SCENARIO_VERSION,
+      current.format === SENTINEL_SCENARIO_VERSION
+        ? SENTINEL_SCENARIO_VERSION
+        : current.format === DIRECTIONAL_SCENARIO_VERSION
+          ? DIRECTIONAL_SCENARIO_VERSION
+          : current.format === RELAY_SCENARIO_VERSION
+            ? RELAY_SCENARIO_VERSION
+            : current.format === FOUNDATION_SCENARIO_VERSION
+              ? FOUNDATION_SCENARIO_VERSION
+              : current.format === CLASSIC_SCENARIO_VERSION
+                ? CLASSIC_SCENARIO_VERSION
+                : current.format === WIDE_SCENARIO_VERSION
+                  ? WIDE_SCENARIO_VERSION
+                  : current.format === ENCOUNTER_SCENARIO_VERSION
+                    ? ENCOUNTER_SCENARIO_VERSION
+                    : MASTERY_SCENARIO_VERSION,
     masteryDefinition: structuredClone(definition),
   };
   const checked = validateScenario(candidate);
@@ -81,24 +105,36 @@ export function withScenarioEncounter(current, descriptor) {
   const candidate = {
     ...current,
     format:
-      current.format === FOUNDATION_SCENARIO_VERSION
-        ? FOUNDATION_SCENARIO_VERSION
-        : current.format === CLASSIC_SCENARIO_VERSION
-          ? CLASSIC_SCENARIO_VERSION
-          : current.format === WIDE_SCENARIO_VERSION
-            ? WIDE_SCENARIO_VERSION
-            : ENCOUNTER_SCENARIO_VERSION,
+      current.format === SENTINEL_SCENARIO_VERSION
+        ? SENTINEL_SCENARIO_VERSION
+        : current.format === DIRECTIONAL_SCENARIO_VERSION
+          ? DIRECTIONAL_SCENARIO_VERSION
+          : current.format === RELAY_SCENARIO_VERSION
+            ? RELAY_SCENARIO_VERSION
+            : current.format === FOUNDATION_SCENARIO_VERSION
+              ? FOUNDATION_SCENARIO_VERSION
+              : current.format === CLASSIC_SCENARIO_VERSION
+                ? CLASSIC_SCENARIO_VERSION
+                : current.format === WIDE_SCENARIO_VERSION
+                  ? WIDE_SCENARIO_VERSION
+                  : ENCOUNTER_SCENARIO_VERSION,
     masteryDefinition: null,
     level: {
       ...current.level,
       version:
-        current.format === FOUNDATION_SCENARIO_VERSION
-          ? 'xonix-level.v5'
-          : current.format === CLASSIC_SCENARIO_VERSION
-            ? 'xonix-level.v4'
-            : current.format === WIDE_SCENARIO_VERSION
-              ? 'xonix-level.v3'
-              : 'xonix-level.v2',
+        current.format === SENTINEL_SCENARIO_VERSION
+          ? 'xonix-level.v8'
+          : current.format === DIRECTIONAL_SCENARIO_VERSION
+            ? 'xonix-level.v7'
+            : current.format === RELAY_SCENARIO_VERSION
+              ? 'xonix-level.v6'
+              : current.format === FOUNDATION_SCENARIO_VERSION
+                ? 'xonix-level.v5'
+                : current.format === CLASSIC_SCENARIO_VERSION
+                  ? 'xonix-level.v4'
+                  : current.format === WIDE_SCENARIO_VERSION
+                    ? 'xonix-level.v3'
+                    : 'xonix-level.v2',
       encounter: structuredClone(descriptor),
     },
   };
@@ -115,6 +151,9 @@ export function withoutScenarioEncounter(current) {
     WIDE_SCENARIO_VERSION,
     CLASSIC_SCENARIO_VERSION,
     FOUNDATION_SCENARIO_VERSION,
+    RELAY_SCENARIO_VERSION,
+    DIRECTIONAL_SCENARIO_VERSION,
+    SENTINEL_SCENARIO_VERSION,
   ].includes(current.format);
   if (wide) level.encounter = null;
   else {
@@ -163,24 +202,40 @@ export function entryScenario(
     entry.themes[0];
   const current = {
     format:
-      level.version === 'xonix-level.v5'
-        ? FOUNDATION_SCENARIO_VERSION
-        : level.version === 'xonix-level.v4'
-          ? CLASSIC_SCENARIO_VERSION
-          : level.version === 'xonix-level.v3'
-            ? WIDE_SCENARIO_VERSION
-            : entry.sourcePackFormat === ENCOUNTER_PACK_VERSION
-              ? ENCOUNTER_SCENARIO_VERSION
-              : entry.sourcePackFormat === MASTERY_PACK_VERSION
-                ? MASTERY_SCENARIO_VERSION
-                : 'xonix-playground.v1',
-    ...(['xonix-level.v3', 'xonix-level.v4', 'xonix-level.v5'].includes(level.version) ||
+      level.version === 'xonix-level.v8'
+        ? SENTINEL_SCENARIO_VERSION
+        : level.version === 'xonix-level.v7'
+          ? DIRECTIONAL_SCENARIO_VERSION
+          : level.version === 'xonix-level.v6'
+            ? RELAY_SCENARIO_VERSION
+            : level.version === 'xonix-level.v5'
+              ? FOUNDATION_SCENARIO_VERSION
+              : level.version === 'xonix-level.v4'
+                ? CLASSIC_SCENARIO_VERSION
+                : level.version === 'xonix-level.v3'
+                  ? WIDE_SCENARIO_VERSION
+                  : entry.sourcePackFormat === ENCOUNTER_PACK_VERSION
+                    ? ENCOUNTER_SCENARIO_VERSION
+                    : entry.sourcePackFormat === MASTERY_PACK_VERSION
+                      ? MASTERY_SCENARIO_VERSION
+                      : 'xonix-playground.v1',
+    ...([
+      'xonix-level.v3',
+      'xonix-level.v4',
+      'xonix-level.v5',
+      'xonix-level.v6',
+      'xonix-level.v7',
+      'xonix-level.v8',
+    ].includes(level.version) ||
     [
       MASTERY_PACK_VERSION,
       ENCOUNTER_PACK_VERSION,
       WIDE_PACK_VERSION,
       CLASSIC_PACK_VERSION,
       FOUNDATION_PACK_VERSION,
+      RELAY_PACK_VERSION,
+      DIRECTIONAL_PACK_VERSION,
+      SENTINEL_PACK_VERSION,
     ].includes(entry.sourcePackFormat)
       ? {
           masteryDefinition:
@@ -232,6 +287,9 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
       WIDE_PACK_VERSION,
       CLASSIC_PACK_VERSION,
       FOUNDATION_PACK_VERSION,
+      RELAY_PACK_VERSION,
+      DIRECTIONAL_PACK_VERSION,
+      SENTINEL_PACK_VERSION,
       'xonix-pack-library.v1',
     ].includes(value.format)
   ) {
@@ -263,33 +321,62 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
     };
   }
   const candidateScenario =
-    value.version === 'xonix-level.v5'
-      ? { ...current, format: FOUNDATION_SCENARIO_VERSION, masteryDefinition: null, level: value }
-      : value.version === 'xonix-level.v4'
-        ? { ...current, format: CLASSIC_SCENARIO_VERSION, masteryDefinition: null, level: value }
-        : value.version === 'xonix-level.v3'
-          ? { ...current, format: WIDE_SCENARIO_VERSION, masteryDefinition: null, level: value }
-          : value.version === 'xonix-level.v2'
+    value.version === 'xonix-level.v8'
+      ? { ...current, format: SENTINEL_SCENARIO_VERSION, masteryDefinition: null, level: value }
+      : value.version === 'xonix-level.v7'
+        ? {
+            ...current,
+            format: DIRECTIONAL_SCENARIO_VERSION,
+            masteryDefinition: null,
+            level: value,
+          }
+        : value.version === 'xonix-level.v6'
+          ? { ...current, format: RELAY_SCENARIO_VERSION, masteryDefinition: null, level: value }
+          : value.version === 'xonix-level.v5'
             ? {
                 ...current,
-                format: ENCOUNTER_SCENARIO_VERSION,
+                format: FOUNDATION_SCENARIO_VERSION,
                 masteryDefinition: null,
                 level: value,
               }
-            : value.version === 'xonix-level.v1'
+            : value.version === 'xonix-level.v4'
               ? {
                   ...current,
-                  ...([
-                    ENCOUNTER_SCENARIO_VERSION,
-                    WIDE_SCENARIO_VERSION,
-                    CLASSIC_SCENARIO_VERSION,
-                    FOUNDATION_SCENARIO_VERSION,
-                  ].includes(current?.format)
-                    ? { format: MASTERY_SCENARIO_VERSION, masteryDefinition: null }
-                    : {}),
+                  format: CLASSIC_SCENARIO_VERSION,
+                  masteryDefinition: null,
                   level: value,
                 }
-              : value;
+              : value.version === 'xonix-level.v3'
+                ? {
+                    ...current,
+                    format: WIDE_SCENARIO_VERSION,
+                    masteryDefinition: null,
+                    level: value,
+                  }
+                : value.version === 'xonix-level.v2'
+                  ? {
+                      ...current,
+                      format: ENCOUNTER_SCENARIO_VERSION,
+                      masteryDefinition: null,
+                      level: value,
+                    }
+                  : value.version === 'xonix-level.v1'
+                    ? {
+                        ...current,
+                        ...([
+                          ENCOUNTER_SCENARIO_VERSION,
+                          WIDE_SCENARIO_VERSION,
+                          CLASSIC_SCENARIO_VERSION,
+                          FOUNDATION_SCENARIO_VERSION,
+                          RELAY_SCENARIO_VERSION,
+                          DIRECTIONAL_SCENARIO_VERSION,
+                          SENTINEL_SCENARIO_VERSION,
+                        ].includes(current?.format)
+                          ? { format: MASTERY_SCENARIO_VERSION, masteryDefinition: null }
+                          : {}),
+                        level: value,
+                      }
+                    : value;
   if (['xonix-level.v1', 'xonix-level.v2', 'xonix-level.v3'].includes(value.version))
     candidateScenario.visualOverrides = visualsForLevelReplacement(
       current,
@@ -355,7 +442,13 @@ export function paintLevel(
       y: y + 0.5,
       radius: 1.5,
     });
-  else if (brush === 'spawn' && (!inside || level.version === 'xonix-level.v5'))
+  else if (
+    brush === 'spawn' &&
+    (!inside ||
+      ['xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8'].includes(
+        level.version,
+      ))
+  )
     level.spawn = { x: x + 0.5, y: y + 0.5 };
   else if (brush === 'signal' && inside)
     level.signalZones.push({
@@ -414,6 +507,9 @@ export function interactionPreset(kind, current, classRecipes = CLASSES) {
       WIDE_SCENARIO_VERSION,
       CLASSIC_SCENARIO_VERSION,
       FOUNDATION_SCENARIO_VERSION,
+      RELAY_SCENARIO_VERSION,
+      DIRECTIONAL_SCENARIO_VERSION,
+      SENTINEL_SCENARIO_VERSION,
     ].includes(scenario.format)
   ) {
     scenario.format = MASTERY_SCENARIO_VERSION;
@@ -485,23 +581,32 @@ export function expansionFromScenario(
   delete level.musicId;
   const pack = {
     format:
-      current.format === FOUNDATION_SCENARIO_VERSION
-        ? FOUNDATION_PACK_VERSION
-        : current.format === CLASSIC_SCENARIO_VERSION
-          ? CLASSIC_PACK_VERSION
-          : current.format === WIDE_SCENARIO_VERSION
-            ? WIDE_PACK_VERSION
-            : current.format === ENCOUNTER_SCENARIO_VERSION
-              ? ENCOUNTER_PACK_VERSION
-              : current.format === MASTERY_SCENARIO_VERSION
-                ? MASTERY_PACK_VERSION
-                : 'xonix-pack.v1',
+      current.format === SENTINEL_SCENARIO_VERSION
+        ? SENTINEL_PACK_VERSION
+        : current.format === DIRECTIONAL_SCENARIO_VERSION
+          ? DIRECTIONAL_PACK_VERSION
+          : current.format === RELAY_SCENARIO_VERSION
+            ? RELAY_PACK_VERSION
+            : current.format === FOUNDATION_SCENARIO_VERSION
+              ? FOUNDATION_PACK_VERSION
+              : current.format === CLASSIC_SCENARIO_VERSION
+                ? CLASSIC_PACK_VERSION
+                : current.format === WIDE_SCENARIO_VERSION
+                  ? WIDE_PACK_VERSION
+                  : current.format === ENCOUNTER_SCENARIO_VERSION
+                    ? ENCOUNTER_PACK_VERSION
+                    : current.format === MASTERY_SCENARIO_VERSION
+                      ? MASTERY_PACK_VERSION
+                      : 'xonix-pack.v1',
     ...([
       MASTERY_SCENARIO_VERSION,
       ENCOUNTER_SCENARIO_VERSION,
       WIDE_SCENARIO_VERSION,
       CLASSIC_SCENARIO_VERSION,
       FOUNDATION_SCENARIO_VERSION,
+      RELAY_SCENARIO_VERSION,
+      DIRECTIONAL_SCENARIO_VERSION,
+      SENTINEL_SCENARIO_VERSION,
     ].includes(current.format)
       ? {
           masteries: current.masteryDefinition

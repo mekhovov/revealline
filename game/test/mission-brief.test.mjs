@@ -12,7 +12,10 @@ const classicLab = json('../content/packs/classic-lab.json');
 test('classic ready cards name contact pickups, material hazards and claimed-ground threats', () => {
   const levels = classicLab.campaigns[0].levels;
   assert.match(missionBriefing(levels[0]).copy, /Touch pickups/);
-  assert.match(missionBriefing(levels[2]).copy, /newly captured edges/);
+  assert.match(
+    missionBriefing(levels[2]).copy,
+    /Contour crawlers follow new frontiers after captures\. Check your return\./,
+  );
   assert.match(missionBriefing(levels[3]).copy, /Rovers wake/);
   assert.match(missionBriefing(levels[4]).copy, /reopening captured ground/);
   assert.match(missionBriefing(levels[5]).copy, /Red crosshatched fields damage/);
@@ -126,8 +129,8 @@ test('pressure brief explains locked commitment while preserving the full author
   const level = structuredClone(classicLab.campaigns[0].levels[0]);
   level.classic.enemyPressure = { version: 'enemy-pressure.v1', actors: [{ id: 'demo' }] };
   const result = missionBriefing(level);
-  assert.match(result.copy, /AIM locks a target/);
-  assert.match(result.copy, /Turn before CHASE/);
-  assert.match(result.status, /choose another exit/);
+  assert.match(result.copy, /AIM locks. Evade HEAD/);
+  assert.match(result.copy, /close before TRAIL catches up/);
+  assert.match(result.status, /turn away from a heading lock/);
   assert.equal(result.fullBrief, level.metadata.description);
 });

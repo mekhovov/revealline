@@ -1,0 +1,5220 @@
+{
+  "format": "TeamRoamerSpatialSupplementV1",
+  "source": "createTeamRoamerSpatialCandidates()",
+  "projectRevision": "return-network-1",
+  "difficultyCatalogue": "journey-difficulty-v2",
+  "budgetMilliseconds": 120000,
+  "elapsedMilliseconds": 1074,
+  "methodology": "Historical source logs are replayed unchanged under public commands until first down, guard mismatch or completion. Inner probes use authored waypoint alternatives with bounded startup timing, no run edits; successful added-landings have a real self-return, SAFE connectivity to the starting island and every roamer dormant. All accepted probes verified joint on/off and relabelled seats.",
+  "limitations": "Inner routes are opening choices, not full clears or a proof of both-player cooperation. Historical failures are preserved rather than required. Bounded search does not prove impossible routes; seeds do not add enemy RNG diversity.",
+  "history": [
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "gentle",
+      "simulationIdentity": "196ca876707a7641",
+      "source": {
+        "fixture": "team-roamer-routes",
+        "templateId": "roamer/routes/shared-lookout/standard",
+        "delayTicks": 0
+      },
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 300
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 168
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 42
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 168
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 456
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 300
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 180
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 336
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 210
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 3970,
+          "coverage": 0.2767940354147251,
+          "closures": [4, 1],
+          "closureReasons": [
+            {
+              "return": 4
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [2514, 1263],
+          "stationaryTicks": [2100, 3150],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "9d3046ec76851b2449993519718b0fdc5af7a1bc748bc153194dbaf31275046d",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1303,
+              "time": 10.866666666666667,
+              "player": 0,
+              "reason": "return",
+              "cells": 238
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1513,
+              "time": 12.616666666666667,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 3601,
+              "time": 30.015333333333352,
+              "player": 0,
+              "reason": "return",
+              "cells": 328
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 8.5,
+              "y": 1
+            },
+            {
+              "x": 56.5,
+              "y": 17.82
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 3970,
+          "coverage": 0.2767940354147251,
+          "closures": [1, 4],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 4
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [1263, 2514],
+          "stationaryTicks": [3150, 2100],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "cd4a994ae83ef963a538c60b5aa183a71897480f585f6e2b6a482f3a0e48a11c",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1303,
+              "time": 10.866666666666667,
+              "player": 1,
+              "reason": "return",
+              "cells": 238
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1513,
+              "time": 12.616666666666667,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 3601,
+              "time": 30.015333333333352,
+              "player": 1,
+              "reason": "return",
+              "cells": 328
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 56.5,
+              "y": 17.82
+            },
+            {
+              "x": 8.5,
+              "y": 1
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 3970,
+          "coverage": 0.2767940354147251,
+          "closures": [4, 1],
+          "closureReasons": [
+            {
+              "return": 4
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [2514, 1263],
+          "stationaryTicks": [2100, 3150],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "945d13dfbaaecccbc6f5673bac0c71887b960e47a78b6a501b234989c9e75e73",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1303,
+              "time": 10.866666666666667,
+              "player": 0,
+              "reason": "return",
+              "cells": 238
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1513,
+              "time": 12.616666666666667,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 3601,
+              "time": 30.015333333333352,
+              "player": 0,
+              "reason": "return",
+              "cells": 328
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 8.5,
+              "y": 1
+            },
+            {
+              "x": 56.5,
+              "y": 17.82
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 3970,
+          "coverage": 0.2767940354147251,
+          "closures": [1, 4],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 4
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [1263, 2514],
+          "stationaryTicks": [3150, 2100],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "1c88dbb70bf0859a96ff0f640daf1a2124733145442d0d2630385b5c973854d3",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1303,
+              "time": 10.866666666666667,
+              "player": 1,
+              "reason": "return",
+              "cells": 238
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1513,
+              "time": 12.616666666666667,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 3601,
+              "time": 30.015333333333352,
+              "player": 1,
+              "reason": "return",
+              "cells": 328
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 56.5,
+              "y": 17.82
+            },
+            {
+              "x": 8.5,
+              "y": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "standard",
+      "simulationIdentity": "0758990846e4fe50",
+      "source": {
+        "fixture": "team-pressure-roamer-routes",
+        "missionId": "shared-lookout",
+        "difficulty": "standard"
+      },
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 300
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 48
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 516
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 180
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 1717,
+          "coverage": 0.09226467847157502,
+          "closures": [3, 1],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [650, 85],
+          "stationaryTicks": [591, 1591],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 1716,
+            "time": 14.30576074893419,
+            "player": 0,
+            "cause": "enemy-player",
+            "enemy": "roamer-1"
+          },
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "75435a449be37d2d4cc3a919b9cff92d8273eb9ebaa221aacd66c89c02c1b812",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1051,
+              "time": 8.766666666666666,
+              "player": 0,
+              "reason": "return",
+              "cells": 170
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1261,
+              "time": 10.516666666666666,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 8.5,
+              "y": 10.5
+            },
+            {
+              "x": 70.9999999999996,
+              "y": 25.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 1717,
+          "coverage": 0.09226467847157502,
+          "closures": [1, 3],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [85, 650],
+          "stationaryTicks": [1591, 591],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 1716,
+            "time": 14.30576074893419,
+            "player": 1,
+            "cause": "enemy-player",
+            "enemy": "roamer-1"
+          },
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "34a67b4178c98be66fe314c1599696d3a5f92c321a92eb49b4795166151eedd9",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1051,
+              "time": 8.766666666666666,
+              "player": 1,
+              "reason": "return",
+              "cells": 170
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1261,
+              "time": 10.516666666666666,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 70.9999999999996,
+              "y": 25.5
+            },
+            {
+              "x": 8.5,
+              "y": 10.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 1717,
+          "coverage": 0.09226467847157502,
+          "closures": [3, 1],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [650, 85],
+          "stationaryTicks": [591, 1591],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 1716,
+            "time": 14.30576074893419,
+            "player": 0,
+            "cause": "enemy-player",
+            "enemy": "roamer-1"
+          },
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "fc9cd9c4f937ea52f157e95481775a193890c9f64411dd6fc5b9019d68fc7ab7",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1051,
+              "time": 8.766666666666666,
+              "player": 0,
+              "reason": "return",
+              "cells": 170
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1261,
+              "time": 10.516666666666666,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 8.5,
+              "y": 10.5
+            },
+            {
+              "x": 70.9999999999996,
+              "y": 25.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 1717,
+          "coverage": 0.09226467847157502,
+          "closures": [1, 3],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [85, 650],
+          "stationaryTicks": [1591, 591],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 1716,
+            "time": 14.30576074893419,
+            "player": 1,
+            "cause": "enemy-player",
+            "enemy": "roamer-1"
+          },
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "f0fbd0608632f85705636bfce0f3df2c52d9773b7cd5464a4bc72f8ed0129fb1",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1051,
+              "time": 8.766666666666666,
+              "player": 1,
+              "reason": "return",
+              "cells": 170
+            },
+            {
+              "type": "cut.closed",
+              "tick": 1261,
+              "time": 10.516666666666666,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 70.9999999999996,
+              "y": 25.5
+            },
+            {
+              "x": 8.5,
+              "y": 10.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "expert",
+      "simulationIdentity": "e6a365a07e3c9dbf",
+      "source": {
+        "fixture": "team-pressure-roamer-routes",
+        "missionId": "shared-lookout",
+        "difficulty": "expert"
+      },
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 90
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 78
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 114
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 168
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 300
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 552
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 444
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 384
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 156
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 648,
+          "coverage": 0.055452003727865795,
+          "closures": [2, 1],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [158, 85],
+          "stationaryTicks": [3, 522],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 647,
+            "time": 5.393489583177083,
+            "player": 0,
+            "cause": "enemy-player",
+            "enemy": "roamer-1"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "f0ff292ff81b5727149985eec22c0942be172fac590a6c0ebe4f640ca261edc3",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 403,
+              "time": 3.3666666666666667,
+              "player": 0,
+              "reason": "return",
+              "cells": 105
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 3.5,
+              "y": 10.5
+            },
+            {
+              "x": 70.9999999999996,
+              "y": 25.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 648,
+          "coverage": 0.055452003727865795,
+          "closures": [1, 2],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [85, 158],
+          "stationaryTicks": [522, 3],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 647,
+            "time": 5.393489583177083,
+            "player": 1,
+            "cause": "enemy-player",
+            "enemy": "roamer-1"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "1034b4feb491f4b246e49df9a30b77656ef78a52cd0ae9f520a5090ccf2a6e85",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 403,
+              "time": 3.3666666666666667,
+              "player": 1,
+              "reason": "return",
+              "cells": 105
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 70.9999999999996,
+              "y": 25.5
+            },
+            {
+              "x": 3.5,
+              "y": 10.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 648,
+          "coverage": 0.055452003727865795,
+          "closures": [2, 1],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [158, 85],
+          "stationaryTicks": [3, 522],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 647,
+            "time": 5.393489583177083,
+            "player": 0,
+            "cause": "enemy-player",
+            "enemy": "roamer-1"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "b19c943a6f2032f9df7a921920b1ab8ab380d76a11d46b7656a895089f48adb4",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 403,
+              "time": 3.3666666666666667,
+              "player": 0,
+              "reason": "return",
+              "cells": 105
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 3.5,
+              "y": 10.5
+            },
+            {
+              "x": 70.9999999999996,
+              "y": 25.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 648,
+          "coverage": 0.055452003727865795,
+          "closures": [1, 2],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [85, 158],
+          "stationaryTicks": [522, 3],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 647,
+            "time": 5.393489583177083,
+            "player": 1,
+            "cause": "enemy-player",
+            "enemy": "roamer-1"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "0cef3337211cd7e8ac4211e162110ff7fc59dcc8206b75395f1533f836c63eed",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 125,
+              "time": 1.05,
+              "id": "roamer-1",
+              "activationTick": 246
+            },
+            {
+              "type": "rover.activated",
+              "tick": 245,
+              "time": 2.0416666666666665,
+              "id": "roamer-1"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 0,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 125,
+              "time": 1.05,
+              "player": 1,
+              "reason": "return",
+              "cells": 14
+            },
+            {
+              "type": "cut.closed",
+              "tick": 403,
+              "time": 3.3666666666666667,
+              "player": 1,
+              "reason": "return",
+              "cells": 105
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 70.9999999999996,
+              "y": 25.5
+            },
+            {
+              "x": 3.5,
+              "y": 10.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "gentle",
+      "simulationIdentity": "c131a63bc7119ba9",
+      "source": {
+        "fixture": "team-roamer-routes",
+        "templateId": "roamer/routes/twin-depots/standard",
+        "delayTicks": 0
+      },
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 324
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 228
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 61
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 228
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 210
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 662,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [1, 499],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 661,
+            "time": 5.51041666666594,
+            "player": 1,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "82167dfc0656cd3068ce4b3e5d849cbb0fe93cdd64344ffe803dd88064f72c3d",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 23.58333333333324,
+              "y": 35.49999999999996
+            },
+            {
+              "x": 71.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 662,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [499, 1],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 661,
+            "time": 5.51041666666594,
+            "player": 0,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "09d8c7afdc869f2c6ba094fa62adcf9ed98c6be4bc862d3766590cf1c01d5b1d",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 71.5,
+              "y": 17.5
+            },
+            {
+              "x": 23.58333333333324,
+              "y": 35.49999999999996
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 662,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [1, 499],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 661,
+            "time": 5.51041666666594,
+            "player": 1,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "83ba8df37ac46210c5159ce92cc60d5ef6ea15b97d07da5ce5dd05f69ced7e8f",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 23.58333333333324,
+              "y": 35.49999999999996
+            },
+            {
+              "x": 71.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 662,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [499, 1],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 661,
+            "time": 5.51041666666594,
+            "player": 0,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "50e9691a262e36c84a4a72cfb9ec8a1731c0b29d203cbe42e03862e49767aca3",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 71.5,
+              "y": 17.5
+            },
+            {
+              "x": 23.58333333333324,
+              "y": 35.49999999999996
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "standard",
+      "simulationIdentity": "b0283f7094f97a33",
+      "source": {
+        "fixture": "team-pressure-roamer-routes",
+        "missionId": "twin-depots",
+        "difficulty": "standard"
+      },
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 276
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 576
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 210
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 553,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [2, 390],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 552,
+            "time": 4.6050595238100325,
+            "player": 1,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "734c1480beb6fb8fb3537049942a645df73eed3c4943c4c479650c29735abdcf",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 13.41666666666666,
+              "y": 35.49999999999995
+            },
+            {
+              "x": 71.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 553,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [390, 2],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 552,
+            "time": 4.6050595238100325,
+            "player": 0,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "1b5ebb5dc6d7bf016b6a109038ef833862b6e852df7d7262e576f63af5ecf9c6",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 71.5,
+              "y": 17.5
+            },
+            {
+              "x": 13.41666666666666,
+              "y": 35.49999999999995
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 553,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [2, 390],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 552,
+            "time": 4.6050595238100325,
+            "player": 1,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "1c4ab3c71f2993e038c56e60144f47f377bcd88627eb20270a02c19814d3586f",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 13.41666666666666,
+              "y": 35.49999999999995
+            },
+            {
+              "x": 71.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 553,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [390, 2],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 552,
+            "time": 4.6050595238100325,
+            "player": 0,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "114dd81284026986d2a655c6cc6f806c48430088030dd2755bc596c40fc13c19",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 71.5,
+              "y": 17.5
+            },
+            {
+              "x": 13.41666666666666,
+              "y": 35.49999999999995
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "expert",
+      "simulationIdentity": "fc9a2baa6c83b001",
+      "source": {
+        "fixture": "team-pressure-roamer-routes",
+        "missionId": "twin-depots",
+        "difficulty": "expert"
+      },
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 499,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [2, 336],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 498,
+            "time": 4.152380952381243,
+            "player": 1,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "991d213c79c23036265e454097d7df3003155f058bd597f9dc50aa3bc868a0c5",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 9.916666666666657,
+              "y": 0.5000000000000782
+            },
+            {
+              "x": 71.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 499,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [336, 2],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 498,
+            "time": 4.152380952381243,
+            "player": 0,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "31844083dacdc62b14871472659ab9226b502e0e82103a28b2600db91aebef4c",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 71.5,
+              "y": 17.5
+            },
+            {
+              "x": 9.916666666666657,
+              "y": 0.5000000000000782
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 499,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [2, 336],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 498,
+            "time": 4.152380952381243,
+            "player": 1,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "4da710d5fae2ca86cf3087593a14979366366c2b42523e24e67498bed9935544",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 9.916666666666657,
+              "y": 0.5000000000000782
+            },
+            {
+              "x": 71.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 499,
+          "coverage": 0.010456273764258554,
+          "closures": [1, 1],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 133],
+          "stationaryTicks": [336, 2],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 498,
+            "time": 4.152380952381243,
+            "player": 0,
+            "cause": "enemy-player",
+            "enemy": "roamer-2"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": true,
+            "activated": ["roamer-1", "roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "b9c054ce0ad6521c6d6f3d20effcd7320559d0819201d9674e2cd98ed1379049",
+          "roamerEvents": [
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-1",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.warning",
+              "tick": 161,
+              "time": 1.35,
+              "id": "roamer-2",
+              "activationTick": 282
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-1"
+            },
+            {
+              "type": "rover.activated",
+              "tick": 281,
+              "time": 2.341666666666667,
+              "id": "roamer-2"
+            }
+          ],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 22
+            },
+            {
+              "type": "cut.closed",
+              "tick": 161,
+              "time": 1.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 22
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "active"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "active"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 71.5,
+              "y": 17.5
+            },
+            {
+              "x": 9.916666666666657,
+              "y": 0.5000000000000782
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "inner": [
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "gentle",
+      "simulationIdentity": "196ca876707a7641",
+      "targetFoundationIndex": 2,
+      "targetFoundation": {
+        "x": 32,
+        "y": 15,
+        "w": 8,
+        "h": 6
+      },
+      "connectedFromSpawnIndex": 0,
+      "landingInitiallyConnected": false,
+      "landingConnected": true,
+      "connectionKind": "starting-island-to-added-landing-not-perimeter",
+      "waypoints": [
+        {
+          "x": 11.5,
+          "y": 13.5
+        },
+        {
+          "x": 32.5,
+          "y": 13.5
+        },
+        {
+          "x": 32.5,
+          "y": 17.5
+        }
+      ],
+      "delayTicks": 0,
+      "log": [
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 18
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 306,
+          "coverage": 0.008853681267474371,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [306, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [229, 0],
+          "stationaryTicks": [0, 306],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "20dc7a0ecbc8dda7b94ac9b46baf098922edae6c028b052a3ec2a1a1a087cb9e",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 305,
+              "time": 2.55,
+              "player": 0,
+              "reason": "return",
+              "cells": 19
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 32.49999999999987,
+              "y": 14.999999999999986
+            },
+            {
+              "x": 60.5,
+              "y": 25.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 306,
+          "coverage": 0.008853681267474371,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 306],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 229],
+          "stationaryTicks": [306, 0],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "3d4ad4718a46165f2ba170baca1a88fcdff87ab43d7b30a9fe538498811c09d3",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 305,
+              "time": 2.55,
+              "player": 1,
+              "reason": "return",
+              "cells": 19
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 60.5,
+              "y": 25.5
+            },
+            {
+              "x": 32.49999999999987,
+              "y": 14.999999999999986
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 306,
+          "coverage": 0.008853681267474371,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [306, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [229, 0],
+          "stationaryTicks": [0, 306],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "ff422cfa9581c185966ac5ff50c8319f0bf3119ff99f7ee945776109be1f04f0",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 305,
+              "time": 2.55,
+              "player": 0,
+              "reason": "return",
+              "cells": 19
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 32.49999999999987,
+              "y": 14.999999999999986
+            },
+            {
+              "x": 60.5,
+              "y": 25.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 306,
+          "coverage": 0.008853681267474371,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 306],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 229],
+          "stationaryTicks": [306, 0],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "44bb40fff61697cdbd4f59820613abf427e60abfd26f96c741f5bae6939cb960",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 305,
+              "time": 2.55,
+              "player": 1,
+              "reason": "return",
+              "cells": 19
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 60.5,
+              "y": 25.5
+            },
+            {
+              "x": 32.49999999999987,
+              "y": 14.999999999999986
+            }
+          ]
+        }
+      ],
+      "rejectedAttempts": [
+        {
+          "seat": 0,
+          "targetFoundationIndex": 2,
+          "waypoints": [
+            {
+              "x": 35.5,
+              "y": 10.5
+            },
+            {
+              "x": 35.5,
+              "y": 17.5
+            }
+          ],
+          "delayTicks": 0,
+          "log": [
+            {
+              "a": "right",
+              "b": null,
+              "ticks": 288
+            },
+            {
+              "a": "down",
+              "b": null,
+              "ticks": 13
+            }
+          ],
+          "tick": 301,
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 300,
+            "time": 2.504336516702408,
+            "player": 0,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "closed": false,
+          "connected": false,
+          "dormant": true
+        },
+        {
+          "seat": 0,
+          "targetFoundationIndex": 2,
+          "waypoints": [
+            {
+              "x": 35.5,
+              "y": 10.5
+            },
+            {
+              "x": 35.5,
+              "y": 17.5
+            }
+          ],
+          "delayTicks": 30,
+          "log": [
+            {
+              "a": null,
+              "b": null,
+              "ticks": 30
+            },
+            {
+              "a": "right",
+              "b": null,
+              "ticks": 271
+            }
+          ],
+          "tick": 301,
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 300,
+            "time": 2.504336516702408,
+            "player": 0,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "closed": false,
+          "connected": false,
+          "dormant": true
+        },
+        {
+          "seat": 0,
+          "targetFoundationIndex": 2,
+          "waypoints": [
+            {
+              "x": 35.5,
+              "y": 10.5
+            },
+            {
+              "x": 35.5,
+              "y": 17.5
+            }
+          ],
+          "delayTicks": 60,
+          "log": [
+            {
+              "a": null,
+              "b": null,
+              "ticks": 60
+            },
+            {
+              "a": "right",
+              "b": null,
+              "ticks": 241
+            }
+          ],
+          "tick": 301,
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 300,
+            "time": 2.504336516702407,
+            "player": 0,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "closed": false,
+          "connected": false,
+          "dormant": true
+        },
+        {
+          "seat": 0,
+          "targetFoundationIndex": 2,
+          "waypoints": [
+            {
+              "x": 35.5,
+              "y": 10.5
+            },
+            {
+              "x": 35.5,
+              "y": 17.5
+            }
+          ],
+          "delayTicks": 120,
+          "log": [
+            {
+              "a": null,
+              "b": null,
+              "ticks": 120
+            },
+            {
+              "a": "right",
+              "b": null,
+              "ticks": 210
+            }
+          ],
+          "tick": 330,
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 329,
+            "time": 2.75,
+            "player": 0,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "closed": false,
+          "connected": false,
+          "dormant": true
+        }
+      ]
+    },
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "standard",
+      "simulationIdentity": "0758990846e4fe50",
+      "targetFoundationIndex": 2,
+      "targetFoundation": {
+        "x": 32,
+        "y": 15,
+        "w": 8,
+        "h": 6
+      },
+      "connectedFromSpawnIndex": 0,
+      "landingInitiallyConnected": false,
+      "landingConnected": true,
+      "connectionKind": "starting-island-to-added-landing-not-perimeter",
+      "waypoints": [
+        {
+          "x": 35.5,
+          "y": 10.5
+        },
+        {
+          "x": 35.5,
+          "y": 17.5
+        }
+      ],
+      "delayTicks": 120,
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 288
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 54
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 462,
+          "coverage": 0.011649580615097856,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [462, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [301, 0],
+          "stationaryTicks": [120, 462],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "9fd2356812db65d73748ed5ac54d65e7e7096d10f1866d9e5b47e47fbcdb9ece",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 461,
+              "time": 3.85,
+              "player": 0,
+              "reason": "return",
+              "cells": 25
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 35.49999999999989,
+              "y": 14.999999999999964
+            },
+            {
+              "x": 60.5,
+              "y": 25.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 462,
+          "coverage": 0.011649580615097856,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 462],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 301],
+          "stationaryTicks": [462, 120],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "e626725d90c647eefc985059ce9679e389e389e17ea9cf748146fca1a3949cf1",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 461,
+              "time": 3.85,
+              "player": 1,
+              "reason": "return",
+              "cells": 25
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 60.5,
+              "y": 25.5
+            },
+            {
+              "x": 35.49999999999989,
+              "y": 14.999999999999964
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 462,
+          "coverage": 0.011649580615097856,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [462, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [301, 0],
+          "stationaryTicks": [120, 462],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "0c65e4d54ff938a9b2fc76327138884ef8b5a47b67b863d02336c5ed5bf67653",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 461,
+              "time": 3.85,
+              "player": 0,
+              "reason": "return",
+              "cells": 25
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 35.49999999999989,
+              "y": 14.999999999999964
+            },
+            {
+              "x": 60.5,
+              "y": 25.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 462,
+          "coverage": 0.011649580615097856,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 462],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 301],
+          "stationaryTicks": [462, 120],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "446c2c1f0e2d4b6381d3d381fbf2fb19fe8fddbe996f9151a40ccc28604a2246",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 461,
+              "time": 3.85,
+              "player": 1,
+              "reason": "return",
+              "cells": 25
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 60.5,
+              "y": 25.5
+            },
+            {
+              "x": 35.49999999999989,
+              "y": 14.999999999999964
+            }
+          ]
+        }
+      ],
+      "rejectedAttempts": [
+        {
+          "seat": 0,
+          "targetFoundationIndex": 2,
+          "waypoints": [
+            {
+              "x": 35.5,
+              "y": 10.5
+            },
+            {
+              "x": 35.5,
+              "y": 17.5
+            }
+          ],
+          "delayTicks": 0,
+          "log": [
+            {
+              "a": "right",
+              "b": null,
+              "ticks": 215
+            }
+          ],
+          "tick": 215,
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 214,
+            "time": 1.7888117976445586,
+            "player": 0,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "closed": false,
+          "connected": false,
+          "dormant": true
+        },
+        {
+          "seat": 0,
+          "targetFoundationIndex": 2,
+          "waypoints": [
+            {
+              "x": 35.5,
+              "y": 10.5
+            },
+            {
+              "x": 35.5,
+              "y": 17.5
+            }
+          ],
+          "delayTicks": 30,
+          "log": [
+            {
+              "a": null,
+              "b": null,
+              "ticks": 30
+            },
+            {
+              "a": "right",
+              "b": null,
+              "ticks": 222
+            }
+          ],
+          "tick": 252,
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 251,
+            "time": 2.1,
+            "player": 0,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "closed": false,
+          "connected": false,
+          "dormant": true
+        },
+        {
+          "seat": 0,
+          "targetFoundationIndex": 2,
+          "waypoints": [
+            {
+              "x": 35.5,
+              "y": 10.5
+            },
+            {
+              "x": 35.5,
+              "y": 17.5
+            }
+          ],
+          "delayTicks": 60,
+          "log": [
+            {
+              "a": null,
+              "b": null,
+              "ticks": 60
+            },
+            {
+              "a": "right",
+              "b": null,
+              "ticks": 222
+            }
+          ],
+          "tick": 282,
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 281,
+            "time": 2.35,
+            "player": 0,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "closed": false,
+          "connected": false,
+          "dormant": true
+        }
+      ]
+    },
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "expert",
+      "simulationIdentity": "e6a365a07e3c9dbf",
+      "targetFoundationIndex": 2,
+      "targetFoundation": {
+        "x": 32,
+        "y": 15,
+        "w": 8,
+        "h": 6
+      },
+      "connectedFromSpawnIndex": 0,
+      "landingInitiallyConnected": false,
+      "landingConnected": true,
+      "connectionKind": "starting-island-to-added-landing-not-perimeter",
+      "waypoints": [
+        {
+          "x": 35.5,
+          "y": 10.5
+        },
+        {
+          "x": 35.5,
+          "y": 17.5
+        }
+      ],
+      "delayTicks": 30,
+      "log": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 30
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 288
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 54
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 372,
+          "coverage": 0.011649580615097856,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [372, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [301, 0],
+          "stationaryTicks": [30, 372],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "9d25e5fb878cd9a1e8cacee7dd9e7796d6ae58b396149cd2ef64dfec382c0305",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 371,
+              "time": 3.1,
+              "player": 0,
+              "reason": "return",
+              "cells": 25
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 35.499999999999964,
+              "y": 14.999999999999964
+            },
+            {
+              "x": 60.5,
+              "y": 25.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 372,
+          "coverage": 0.011649580615097856,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 372],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 301],
+          "stationaryTicks": [372, 30],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "8259777d839a8d374b7a8b9eeb5b32dd256649370fb05decbfc7f4824b0271c3",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 371,
+              "time": 3.1,
+              "player": 1,
+              "reason": "return",
+              "cells": 25
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 60.5,
+              "y": 25.5
+            },
+            {
+              "x": 35.499999999999964,
+              "y": 14.999999999999964
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 372,
+          "coverage": 0.011649580615097856,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [372, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [301, 0],
+          "stationaryTicks": [30, 372],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "49951a952e1ac17f2fdd9e6ddad508036f604160e36c3d7067dcb087b476a97d",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 371,
+              "time": 3.1,
+              "player": 0,
+              "reason": "return",
+              "cells": 25
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 35.499999999999964,
+              "y": 14.999999999999964
+            },
+            {
+              "x": 60.5,
+              "y": 25.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 372,
+          "coverage": 0.011649580615097856,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 372],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 301],
+          "stationaryTicks": [372, 30],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "135202bd042b5595da0fee7e8b8b0530b8f56b9900ad0f5d9dd523366e3a8de2",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 371,
+              "time": 3.1,
+              "player": 1,
+              "reason": "return",
+              "cells": 25
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 60.5,
+              "y": 25.5
+            },
+            {
+              "x": 35.499999999999964,
+              "y": 14.999999999999964
+            }
+          ]
+        }
+      ],
+      "rejectedAttempts": [
+        {
+          "seat": 0,
+          "targetFoundationIndex": 2,
+          "waypoints": [
+            {
+              "x": 35.5,
+              "y": 10.5
+            },
+            {
+              "x": 35.5,
+              "y": 17.5
+            }
+          ],
+          "delayTicks": 0,
+          "log": [
+            {
+              "a": "right",
+              "b": null,
+              "ticks": 222
+            }
+          ],
+          "tick": 222,
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 221,
+            "time": 1.8499999999999999,
+            "player": 0,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "closed": false,
+          "connected": false,
+          "dormant": true
+        }
+      ]
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "gentle",
+      "simulationIdentity": "c131a63bc7119ba9",
+      "targetFoundationIndex": 2,
+      "targetFoundation": {
+        "x": 30,
+        "y": 14,
+        "w": 3,
+        "h": 8
+      },
+      "connectedFromSpawnIndex": 0,
+      "landingInitiallyConnected": false,
+      "landingConnected": true,
+      "connectionKind": "starting-island-to-added-landing-not-perimeter",
+      "waypoints": [
+        {
+          "x": 24.5,
+          "y": 17.5
+        },
+        {
+          "x": 24.5,
+          "y": 7.5
+        },
+        {
+          "x": 31.5,
+          "y": 7.5
+        },
+        {
+          "x": 31.5,
+          "y": 17.5
+        }
+      ],
+      "delayTicks": 0,
+      "log": [
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 78
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [402, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [361, 0],
+          "stationaryTicks": [0, 402],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "c7748f664b99bbdd9cf05eaf4035dd31288eed67688b35eb8eb2d81f10b0ef30",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 31.499999999999858,
+              "y": 13.99999999999995
+            },
+            {
+              "x": 57.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 402],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 361],
+          "stationaryTicks": [402, 0],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "aa14ffab003463bda61d12f791d16af594b96d9959a4ea8379f220bd2bd0b46c",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 57.5,
+              "y": 17.5
+            },
+            {
+              "x": 31.499999999999858,
+              "y": 13.99999999999995
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [402, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [361, 0],
+          "stationaryTicks": [0, 402],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "1eff68c420b2baad7aa10e6e5ae6ac996e935466177e8b54fec98113316368b5",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 31.499999999999858,
+              "y": 13.99999999999995
+            },
+            {
+              "x": 57.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 402],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 361],
+          "stationaryTicks": [402, 0],
+          "firstDown": null,
+          "reserves": 4,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "40415fb0837799ea2efc0f9d1f5bb539a90368f820ec135ab84b7f58873675fd",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 57.5,
+              "y": 17.5
+            },
+            {
+              "x": 31.499999999999858,
+              "y": 13.99999999999995
+            }
+          ]
+        }
+      ],
+      "rejectedAttempts": []
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "standard",
+      "simulationIdentity": "b0283f7094f97a33",
+      "targetFoundationIndex": 2,
+      "targetFoundation": {
+        "x": 30,
+        "y": 14,
+        "w": 3,
+        "h": 8
+      },
+      "connectedFromSpawnIndex": 0,
+      "landingInitiallyConnected": false,
+      "landingConnected": true,
+      "connectionKind": "starting-island-to-added-landing-not-perimeter",
+      "waypoints": [
+        {
+          "x": 24.5,
+          "y": 17.5
+        },
+        {
+          "x": 24.5,
+          "y": 7.5
+        },
+        {
+          "x": 31.5,
+          "y": 7.5
+        },
+        {
+          "x": 31.5,
+          "y": 17.5
+        }
+      ],
+      "delayTicks": 0,
+      "log": [
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 78
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [402, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [361, 0],
+          "stationaryTicks": [0, 402],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "f636e62137f43882f8e159558da3dd11700b6e4458e66c544d4c690c8236b82b",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 31.499999999999858,
+              "y": 13.99999999999995
+            },
+            {
+              "x": 57.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 402],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 361],
+          "stationaryTicks": [402, 0],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "c1162bcc08b8c108dc226cdd6d9b7ba178e6d5b0e43b7999d6ac3c58ccd0cebd",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 57.5,
+              "y": 17.5
+            },
+            {
+              "x": 31.499999999999858,
+              "y": 13.99999999999995
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [402, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [361, 0],
+          "stationaryTicks": [0, 402],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "6d08a895d6dc1a34942a758c1a00a9c0b870ce74da67145dcbd6950bc6b6e01a",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 31.499999999999858,
+              "y": 13.99999999999995
+            },
+            {
+              "x": 57.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 402],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 361],
+          "stationaryTicks": [402, 0],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "0cb88ce035b4c6e6c0f1880e638ce591a6a04990a6abb149849c68d499a8b08b",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 57.5,
+              "y": 17.5
+            },
+            {
+              "x": 31.499999999999858,
+              "y": 13.99999999999995
+            }
+          ]
+        }
+      ],
+      "rejectedAttempts": []
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "expert",
+      "simulationIdentity": "fc9a2baa6c83b001",
+      "targetFoundationIndex": 2,
+      "targetFoundation": {
+        "x": 30,
+        "y": 14,
+        "w": 3,
+        "h": 8
+      },
+      "connectedFromSpawnIndex": 0,
+      "landingInitiallyConnected": false,
+      "landingConnected": true,
+      "connectionKind": "starting-island-to-added-landing-not-perimeter",
+      "waypoints": [
+        {
+          "x": 24.5,
+          "y": 17.5
+        },
+        {
+          "x": 24.5,
+          "y": 7.5
+        },
+        {
+          "x": 31.5,
+          "y": 7.5
+        },
+        {
+          "x": 31.5,
+          "y": 17.5
+        }
+      ],
+      "delayTicks": 0,
+      "log": [
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 84
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 78
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [402, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [361, 0],
+          "stationaryTicks": [0, 402],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "28a063dee520b5f15bc77f3ac59d102677d97f7e1e82260cdbefd001bb6df240",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 31.499999999999858,
+              "y": 13.999999999999954
+            },
+            {
+              "x": 57.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 402],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 361],
+          "stationaryTicks": [402, 0],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "6cd1044845d159c81099afd28d0bef1b25b1c5e49f9105ffea2636d9247d6439",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 57.5,
+              "y": 17.5
+            },
+            {
+              "x": 31.499999999999858,
+              "y": 13.999999999999954
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [1, 0],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {}
+          ],
+          "firstClosures": [402, null],
+          "simultaneousTicks": 0,
+          "exposureTicks": [361, 0],
+          "stationaryTicks": [0, 402],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "872e662476e0296351e984263997c38c8f146c312f114b6a8caeb4e8bfe953e2",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 0,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 31.499999999999858,
+              "y": 13.999999999999954
+            },
+            {
+              "x": 57.5,
+              "y": 17.5
+            }
+          ]
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 402,
+          "coverage": 0.014258555133079848,
+          "closures": [0, 1],
+          "closureReasons": [
+            {},
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [null, 402],
+          "simultaneousTicks": 0,
+          "exposureTicks": [0, 361],
+          "stationaryTicks": [402, 0],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": []
+          },
+          "checkpoint": "46b4b951c49c2d00bb2c1673e8a0b2c6d80d41ec038dbdefd1027c27510b817b",
+          "roamerEvents": [],
+          "returnEvents": [
+            {
+              "type": "cut.closed",
+              "tick": 401,
+              "time": 3.35,
+              "player": 1,
+              "reason": "return",
+              "cells": 30
+            }
+          ],
+          "roamerModes": [
+            {
+              "id": "roamer-1",
+              "mode": "dormant"
+            },
+            {
+              "id": "roamer-2",
+              "mode": "dormant"
+            }
+          ],
+          "endpoints": [
+            {
+              "x": 57.5,
+              "y": 17.5
+            },
+            {
+              "x": 31.499999999999858,
+              "y": 13.999999999999954
+            }
+          ]
+        }
+      ],
+      "rejectedAttempts": []
+    }
+  ],
+  "failed": []
+}

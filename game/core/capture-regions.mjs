@@ -1,12 +1,18 @@
 import { CELL } from './registry.mjs';
 import { cellIndex } from './movement.mjs';
-import { classicSeedsField } from './classic-topology.mjs';
+import { classicSeedsField, fitsClassicDomain } from './classic-topology.mjs';
 
 /** Shared engine/Studio seed ownership. Historical rules retain their own branch. */
 export function captureSeedEnemies(state, releaseBoss = false) {
   return state.enemies.filter(
     (enemy) =>
       (state.classic ? classicSeedsField(enemy) : enemy.type !== 'border-patrol') &&
+      // Team v6 explicitly qualifies reclaimed roamers. Earlier snapshots keep
+      // their own seed contract, including unsupported historical actor data.
+      !(
+        ['revealline-coop.v6', 'revealline-coop.v7'].includes(state.ruleset) &&
+        enemy.type === 'claimed-rover'
+      ) &&
       !(enemy.type === 'relay-sentinel' && (releaseBoss || state.encounter?.defeated)),
   );
 }
@@ -92,6 +98,25 @@ export function inspectCaptureSnapshot(state, { trailCells = [], releaseBoss = f
     .filter((component) => !component.retained)
     .flatMap((component) => component.cells);
   const captured = new Set([...securedTrail, ...filledCells]);
+  const affectedObjectiveIds = (state.objectives || [])
+    .filter(
+      (objective) =>
+        !objective.captured && captured.has(cellIndex(objective.x, objective.y, snapshot)),
+    )
+    .map((objective) => objective.id);
+  let combat = {};
+  if (state.level?.classic?.combatPatrols) {
+    const reclaimed = Uint8Array.from(cells);
+    for (const index of filledCells) reclaimed[index] = CELL.SAFE;
+    const after = { ...snapshot, cells: reclaimed };
+    combat = {
+      affectedCombatIds: (state.classic?.combatPatrols?.actors ?? [])
+        .filter(
+          (actor) => actor.alive && !fitsClassicDomain(after, actor, actor.radius, CELL.FIELD),
+        )
+        .map((actor) => actor.id),
+    };
+  }
   return {
     tick: state.tick ?? null,
     assumption:
@@ -99,12 +124,18 @@ export function inspectCaptureSnapshot(state, { trailCells = [], releaseBoss = f
     securedTrail,
     filledCells,
     components,
-    affectedObjectiveIds: (state.objectives || [])
-      .filter(
-        (objective) =>
-          !objective.captured && captured.has(cellIndex(objective.x, objective.y, snapshot)),
-      )
-      .map((objective) => objective.id),
+    affectedObjectiveIds,
+    ...combat,
+    ...(state.relay
+      ? {
+          affectedGateIds: state.relay.gates
+            .filter(
+              (gate) => gate.openedTick === null && affectedObjectiveIds.includes(gate.objectiveId),
+            )
+            .map((gate) => gate.id),
+          reservedGateCells: state.relay.gates.flatMap((gate) => gate.cells),
+        }
+      : {}),
     lineOnly: securedTrail.length > 0 && filledCells.length === 0,
   };
 }

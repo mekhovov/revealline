@@ -1,0 +1,819 @@
+[
+  {
+    "id": "two-bay-service",
+    "difficulty": "standard",
+    "turnPolicy": "grid-center",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 5970,
+      "losses": 0,
+      "cuts": 12,
+      "coverage": 0.7860553963705826,
+      "liveShotExposureTicks": 0,
+      "locks": 1,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "south-scout",
+          "cause": "capture",
+          "tick": 3270
+        },
+        {
+          "id": "north-sentry",
+          "cause": "capture",
+          "tick": 5262
+        }
+      ],
+      "checkpoint": "c56392243280be84"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 5970,
+      "losses": 0,
+      "cuts": 12,
+      "coverage": 0.7860553963705826,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "e617d5291c9164b8"
+    }
+  },
+  {
+    "id": "workshop-sweep",
+    "difficulty": "standard",
+    "turnPolicy": "immediate",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 2970,
+      "losses": 0,
+      "cuts": 4,
+      "coverage": 0.7179938407391113,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "6a3a5501ba8d673e"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 2970,
+      "losses": 0,
+      "cuts": 4,
+      "coverage": 0.7179938407391113,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "e6f782bcc0a565cd"
+    }
+  },
+  {
+    "id": "workshop-sweep",
+    "difficulty": "gentle",
+    "turnPolicy": "immediate",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 3306,
+      "losses": 0,
+      "cuts": 5,
+      "coverage": 0.7056753189617246,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "bench-scout",
+          "cause": "ram",
+          "tick": 2516
+        },
+        {
+          "id": "pad-scout",
+          "cause": "capture",
+          "tick": 2730
+        }
+      ],
+      "checkpoint": "ab3aa4956b10b799"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 3306,
+      "losses": 0,
+      "cuts": 5,
+      "coverage": 0.7056753189617246,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "08580237174eb19d"
+    }
+  },
+  {
+    "id": "workshop-sweep",
+    "difficulty": "gentle",
+    "turnPolicy": "grid-center",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 3222,
+      "losses": 0,
+      "cuts": 5,
+      "coverage": 0.7056753189617246,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "bench-scout",
+          "cause": "ram",
+          "tick": 2434
+        },
+        {
+          "id": "pad-scout",
+          "cause": "capture",
+          "tick": 2634
+        }
+      ],
+      "checkpoint": "0c12a9ee1eeb301d"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 3222,
+      "losses": 0,
+      "cuts": 5,
+      "coverage": 0.7056753189617246,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "a5e094df5cc65d35"
+    }
+  },
+  {
+    "id": "workshop-sweep",
+    "difficulty": "standard",
+    "turnPolicy": "grid-center",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 3522,
+      "losses": 0,
+      "cuts": 4,
+      "coverage": 0.7329520457545095,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "pad-scout",
+          "cause": "capture",
+          "tick": 2490
+        }
+      ],
+      "checkpoint": "58cd595222bb1123"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 3522,
+      "losses": 0,
+      "cuts": 4,
+      "coverage": 0.7329520457545095,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "faea6b0b36fe96a4"
+    }
+  },
+  {
+    "id": "workshop-sweep",
+    "difficulty": "expert",
+    "turnPolicy": "immediate",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 2490,
+      "losses": 0,
+      "cuts": 4,
+      "coverage": 0.7179938407391113,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "pad-scout",
+          "cause": "capture",
+          "tick": 2490
+        }
+      ],
+      "checkpoint": "ff8d6ab0ba3ec2f8"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 2490,
+      "losses": 0,
+      "cuts": 4,
+      "coverage": 0.7179938407391113,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "8d4fed5b415f7e67"
+    }
+  },
+  {
+    "id": "workshop-sweep",
+    "difficulty": "expert",
+    "turnPolicy": "grid-center",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 3342,
+      "losses": 0,
+      "cuts": 5,
+      "coverage": 0.730312362516498,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "pad-scout",
+          "cause": "capture",
+          "tick": 2382
+        }
+      ],
+      "checkpoint": "2026b7cbf9886e48"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 3342,
+      "losses": 0,
+      "cuts": 5,
+      "coverage": 0.730312362516498,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "f409d23a8945fbb0"
+    }
+  },
+  {
+    "id": "sentry-detour",
+    "difficulty": "gentle",
+    "turnPolicy": "immediate",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 4818,
+      "losses": 0,
+      "cuts": 8,
+      "coverage": 0.9199823165340407,
+      "liveShotExposureTicks": 0,
+      "locks": 2,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "watch-sentry",
+          "cause": "capture",
+          "tick": 4818
+        }
+      ],
+      "checkpoint": "41291eae23e1c3ca"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 4818,
+      "losses": 0,
+      "cuts": 8,
+      "coverage": 0.9199823165340407,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "5167a96242dadf25"
+    }
+  },
+  {
+    "id": "sentry-detour",
+    "difficulty": "gentle",
+    "turnPolicy": "grid-center",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 4878,
+      "losses": 0,
+      "cuts": 8,
+      "coverage": 0.9022988505747126,
+      "liveShotExposureTicks": 0,
+      "locks": 2,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "watch-sentry",
+          "cause": "capture",
+          "tick": 4878
+        }
+      ],
+      "checkpoint": "1fd41c963a1f8050"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 4878,
+      "losses": 0,
+      "cuts": 8,
+      "coverage": 0.9022988505747126,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "30ee0fc0d448f33c"
+    }
+  },
+  {
+    "id": "sentry-detour",
+    "difficulty": "standard",
+    "turnPolicy": "immediate",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 5202,
+      "losses": 0,
+      "cuts": 8,
+      "coverage": 0.9332449160035367,
+      "liveShotExposureTicks": 0,
+      "locks": 2,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "watch-sentry",
+          "cause": "ram",
+          "tick": 3651
+        }
+      ],
+      "checkpoint": "d84ab2551529735a"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 5202,
+      "losses": 0,
+      "cuts": 8,
+      "coverage": 0.9332449160035367,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "70595a92a2cf57d3"
+    }
+  },
+  {
+    "id": "sentry-detour",
+    "difficulty": "standard",
+    "turnPolicy": "grid-center",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 2754,
+      "losses": 0,
+      "cuts": 3,
+      "coverage": 0.7435897435897436,
+      "liveShotExposureTicks": 204,
+      "locks": 1,
+      "shots": 1,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "watch-sentry",
+          "cause": "capture",
+          "tick": 2754
+        }
+      ],
+      "checkpoint": "c6b70bee5e553a14"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 2754,
+      "losses": 0,
+      "cuts": 3,
+      "coverage": 0.7435897435897436,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "8da49cf3d2cf4e59"
+    }
+  },
+  {
+    "id": "sentry-detour",
+    "difficulty": "expert",
+    "turnPolicy": "immediate",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 4650,
+      "losses": 0,
+      "cuts": 7,
+      "coverage": 0.9566755083996463,
+      "liveShotExposureTicks": 0,
+      "locks": 1,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "watch-sentry",
+          "cause": "capture",
+          "tick": 1914
+        }
+      ],
+      "checkpoint": "d75f4a3dcc9e3fe6"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 4650,
+      "losses": 0,
+      "cuts": 7,
+      "coverage": 0.9566755083996463,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "b8a2835976582f0b"
+    }
+  },
+  {
+    "id": "sentry-detour",
+    "difficulty": "expert",
+    "turnPolicy": "grid-center",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 6474,
+      "losses": 0,
+      "cuts": 9,
+      "coverage": 0.9739168877099912,
+      "liveShotExposureTicks": 0,
+      "locks": 1,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "watch-sentry",
+          "cause": "capture",
+          "tick": 1866
+        }
+      ],
+      "checkpoint": "f0a2b2e50f0474e9"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 6474,
+      "losses": 0,
+      "cuts": 9,
+      "coverage": 0.9739168877099912,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "162ccebb32d6edad"
+    }
+  },
+  {
+    "id": "two-bay-service",
+    "difficulty": "gentle",
+    "turnPolicy": "immediate",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 5226,
+      "losses": 0,
+      "cuts": 10,
+      "coverage": 0.7650429799426934,
+      "liveShotExposureTicks": 0,
+      "locks": 2,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "south-scout",
+          "cause": "ram",
+          "tick": 2839
+        }
+      ],
+      "checkpoint": "dc2af4cee8026c3d"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 5226,
+      "losses": 0,
+      "cuts": 10,
+      "coverage": 0.7650429799426934,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "643711df097c346e"
+    }
+  },
+  {
+    "id": "two-bay-service",
+    "difficulty": "gentle",
+    "turnPolicy": "grid-center",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 5250,
+      "losses": 0,
+      "cuts": 10,
+      "coverage": 0.7650429799426934,
+      "liveShotExposureTicks": 0,
+      "locks": 2,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "south-scout",
+          "cause": "ram",
+          "tick": 2811
+        }
+      ],
+      "checkpoint": "b41488f373628643"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 5250,
+      "losses": 0,
+      "cuts": 10,
+      "coverage": 0.7650429799426934,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "a1ee19865f612166"
+    }
+  },
+  {
+    "id": "two-bay-service",
+    "difficulty": "standard",
+    "turnPolicy": "immediate",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 4842,
+      "losses": 0,
+      "cuts": 10,
+      "coverage": 0.7626552053486151,
+      "liveShotExposureTicks": 0,
+      "locks": 1,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "south-scout",
+          "cause": "capture",
+          "tick": 3258
+        },
+        {
+          "id": "north-sentry",
+          "cause": "capture",
+          "tick": 4842
+        }
+      ],
+      "checkpoint": "149779f17374137f"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 4842,
+      "losses": 0,
+      "cuts": 10,
+      "coverage": 0.7626552053486151,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "cfe5ac21757146b4"
+    }
+  },
+  {
+    "id": "two-bay-service",
+    "difficulty": "expert",
+    "turnPolicy": "immediate",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 6498,
+      "losses": 0,
+      "cuts": 12,
+      "coverage": 0.788443170964661,
+      "liveShotExposureTicks": 0,
+      "locks": 1,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "south-scout",
+          "cause": "capture",
+          "tick": 6498
+        }
+      ],
+      "checkpoint": "c2291d4976596480"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 6498,
+      "losses": 0,
+      "cuts": 12,
+      "coverage": 0.788443170964661,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "9a68efa65ef0c875"
+    }
+  },
+  {
+    "id": "two-bay-service",
+    "difficulty": "expert",
+    "turnPolicy": "grid-center",
+    "seed": 1,
+    "on": {
+      "status": "won",
+      "ticks": 7290,
+      "losses": 0,
+      "cuts": 12,
+      "coverage": 0.8457497612225406,
+      "liveShotExposureTicks": 0,
+      "locks": 2,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "north-sentry",
+          "cause": "capture",
+          "tick": 7290
+        }
+      ],
+      "checkpoint": "da3a79099bcd4016"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 7290,
+      "losses": 0,
+      "cuts": 12,
+      "coverage": 0.8457497612225406,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "bd350c6f017220a7"
+    }
+  },
+  {
+    "id": "workshop-sweep",
+    "difficulty": "standard",
+    "turnPolicy": "immediate",
+    "seed": 2,
+    "on": {
+      "status": "won",
+      "ticks": 2970,
+      "losses": 0,
+      "cuts": 4,
+      "coverage": 0.7179938407391113,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "bench-scout",
+          "cause": "capture",
+          "tick": 2970
+        }
+      ],
+      "checkpoint": "c7a94844daacc8ea"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 2970,
+      "losses": 0,
+      "cuts": 4,
+      "coverage": 0.7179938407391113,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "c7f917e9d20f62a0"
+    }
+  },
+  {
+    "id": "sentry-detour",
+    "difficulty": "standard",
+    "turnPolicy": "immediate",
+    "seed": 2,
+    "on": {
+      "status": "won",
+      "ticks": 5202,
+      "losses": 0,
+      "cuts": 8,
+      "coverage": 0.9332449160035367,
+      "liveShotExposureTicks": 234,
+      "locks": 1,
+      "shots": 1,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "watch-sentry",
+          "cause": "capture",
+          "tick": 5202
+        }
+      ],
+      "checkpoint": "bd5feab7286cebb5"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 5202,
+      "losses": 0,
+      "cuts": 8,
+      "coverage": 0.9332449160035367,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "f0a7c2c11e83d299"
+    }
+  },
+  {
+    "id": "two-bay-service",
+    "difficulty": "standard",
+    "turnPolicy": "immediate",
+    "seed": 2,
+    "on": {
+      "status": "won",
+      "ticks": 4842,
+      "losses": 0,
+      "cuts": 10,
+      "coverage": 0.7626552053486151,
+      "liveShotExposureTicks": 0,
+      "locks": 1,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [
+        {
+          "id": "south-scout",
+          "cause": "capture",
+          "tick": 1782
+        },
+        {
+          "id": "north-sentry",
+          "cause": "capture",
+          "tick": 3738
+        }
+      ],
+      "checkpoint": "9df3027eb2c95587"
+    },
+    "off": {
+      "status": "won",
+      "ticks": 4842,
+      "losses": 0,
+      "cuts": 10,
+      "coverage": 0.7626552053486151,
+      "liveShotExposureTicks": 0,
+      "locks": 0,
+      "shots": 0,
+      "impacts": 0,
+      "removals": [],
+      "checkpoint": "3f6ac54154879f05"
+    }
+  }
+]

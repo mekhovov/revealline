@@ -1,0 +1,1611 @@
+{
+  "format": "TeamPressureOpeningRoutesV1",
+  "source": "withPressureDifficulty(createTeamJourneyCandidates())",
+  "sourceHead": "ed469391b19229bd496f1445eadd894b3d8d4fa7",
+  "projectRevision": "pressure-v2-7e637c6d2912c04e",
+  "difficultyCatalogue": "journey-difficulty-v2",
+  "methodology": "Offline bounded greedy search from a legal two-seat opening, safe-grid path approaches and straight field-return cuts; copied legal branch states only, no runtime state assignments. Shared Detour Expert uses an explicit above/below-material crossing order before a final searched cut. Chosen inputs replayed from fresh createCoop/startCoop/stepCoop through the continuous-steering guard in all four jointCuts/seat-relabelling combinations.",
+  "limitations": "Local deterministic simulation evidence, not official Team replay, optimal routes, human cooperation, balance, physical controller/native or deployment qualification. Seeds do not vary Team enemy RNG. No support or meaningful joint closures occurred. Most continuation cuts alternate one active player while the other stays stopped on safe ground; both contribute multiple returns. Delayed timing failures remain explicit.",
+  "searchBudgetMilliseconds": 600000,
+  "rows": [
+    {
+      "missionId": "twin-landings",
+      "difficulty": "standard",
+      "simulationIdentity": "43ffd4c571ccfea2",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 234
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 210
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 210
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 174
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 528
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 348
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 174
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 3199,
+          "coverage": 0.6678111587982832,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [234, 234],
+          "simultaneousTicks": 204,
+          "exposureTicks": [543, 795],
+          "stationaryTicks": [1993, 973],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true
+          },
+          "checkpoint": "617da33aafc01b7311bed70c9fdb90c05a200b306c945bab3db58896ea278dde"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 3199,
+          "coverage": 0.6678111587982832,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [234, 234],
+          "simultaneousTicks": 204,
+          "exposureTicks": [795, 543],
+          "stationaryTicks": [973, 1993],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true
+          },
+          "checkpoint": "a1fa2459e21752216d8ee2665a4d444340423a87545b6f37441b45dfffcdae87"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 3199,
+          "coverage": 0.6678111587982832,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [234, 234],
+          "simultaneousTicks": 204,
+          "exposureTicks": [543, 795],
+          "stationaryTicks": [1993, 973],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true
+          },
+          "checkpoint": "524061ba6781cd76029b7cde4be7aee14c896ca69158ed20015548c55078a168"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 3199,
+          "coverage": 0.6678111587982832,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [234, 234],
+          "simultaneousTicks": 204,
+          "exposureTicks": [795, 543],
+          "stationaryTicks": [973, 1993],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true
+          },
+          "checkpoint": "07389093b43e6b35d2de11dea5a692a6d6b176e961723e68348d1ceac4e25b5b"
+        }
+      ],
+      "bothIdleTicks": 1,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "success": true,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 3229,
+            "coverage": 0.6678111587982832,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [264, 264],
+            "simultaneousTicks": 204,
+            "exposureTicks": [543, 795],
+            "stationaryTicks": [2023, 1003],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true
+            },
+            "checkpoint": "cb611d63ab1847fde32c991ef6f8b26e353faf9c52f87d1763450666c8da7ebf"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 3229,
+            "coverage": 0.6678111587982832,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [264, 264],
+            "simultaneousTicks": 204,
+            "exposureTicks": [795, 543],
+            "stationaryTicks": [1003, 2023],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true
+            },
+            "checkpoint": "9966e86e2bcd1a640ad34a21d638e15b6c56794b51fec680794cdd5bca0c9e0c"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 3229,
+            "coverage": 0.6678111587982832,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [264, 264],
+            "simultaneousTicks": 204,
+            "exposureTicks": [543, 795],
+            "stationaryTicks": [2023, 1003],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true
+            },
+            "checkpoint": "893aba32605d1607c1d6a43c372efd9b9ebdf8f12c4480b600c508d0d34b4579"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 3229,
+            "coverage": 0.6678111587982832,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [264, 264],
+            "simultaneousTicks": 204,
+            "exposureTicks": [795, 543],
+            "stationaryTicks": [1003, 2023],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true
+            },
+            "checkpoint": "7366f386bbf79805310fc473af993d8dc1790411da4f7d4fffe15db75c0fa6fc"
+          }
+        ]
+      }
+    },
+    {
+      "missionId": "twin-landings",
+      "difficulty": "expert",
+      "simulationIdentity": "13d496a1c53c4c50",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 234
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 210
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 174
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 30
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 198
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 2104,
+          "coverage": 0.6493562231759656,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [234, 234],
+          "simultaneousTicks": 204,
+          "exposureTicks": [579, 795],
+          "stationaryTicks": [994, 910],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true
+          },
+          "checkpoint": "7c32199821a4f846c6357a53360b3259b6ee592c9af1bf6175deaebe91e41b1b"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 2104,
+          "coverage": 0.6493562231759656,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [234, 234],
+          "simultaneousTicks": 204,
+          "exposureTicks": [795, 579],
+          "stationaryTicks": [910, 994],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true
+          },
+          "checkpoint": "61a50f203d655c0081eae6071c73e99d6b707a67667b0cce8689941e0133d911"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 2104,
+          "coverage": 0.6493562231759656,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [234, 234],
+          "simultaneousTicks": 204,
+          "exposureTicks": [579, 795],
+          "stationaryTicks": [994, 910],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true
+          },
+          "checkpoint": "a178377a928bc52fb3738382e3927b40c164f5aa85e595d2a250c5543bf59c17"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 2104,
+          "coverage": 0.6493562231759656,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [234, 234],
+          "simultaneousTicks": 204,
+          "exposureTicks": [795, 579],
+          "stationaryTicks": [910, 994],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true
+          },
+          "checkpoint": "e78cf706915fdedf6c1c2fb56b0a61776bfd1bf29e955195474ae1469e1a9655"
+        }
+      ],
+      "bothIdleTicks": 34,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "success": true,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 2134,
+            "coverage": 0.6493562231759656,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [264, 264],
+            "simultaneousTicks": 204,
+            "exposureTicks": [579, 795],
+            "stationaryTicks": [1024, 940],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true
+            },
+            "checkpoint": "1482c159a49556298f738bda7f6449a54b343c02e77d960c5472b6ae90041b66"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 2134,
+            "coverage": 0.6493562231759656,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [264, 264],
+            "simultaneousTicks": 204,
+            "exposureTicks": [795, 579],
+            "stationaryTicks": [940, 1024],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true
+            },
+            "checkpoint": "4b94eb58ca209cf65b189dcb9602690eaf23ae25b1f473749860cc20d058bcfa"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 2134,
+            "coverage": 0.6493562231759656,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [264, 264],
+            "simultaneousTicks": 204,
+            "exposureTicks": [579, 795],
+            "stationaryTicks": [1024, 940],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true
+            },
+            "checkpoint": "45e40f16a3463ecfba159bc4a6f85f3e1905a56038295f69717f74ce1bf21b6a"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 2134,
+            "coverage": 0.6493562231759656,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [264, 264],
+            "simultaneousTicks": 204,
+            "exposureTicks": [795, 579],
+            "stationaryTicks": [940, 1024],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true
+            },
+            "checkpoint": "2cbee48142b163f5b146e0b5e7db1b7c9ffafe8d1ca17c2e1ba7d7baca9ba7ef"
+          }
+        ]
+      }
+    },
+    {
+      "missionId": "shared-detour",
+      "difficulty": "standard",
+      "simulationIdentity": "c02e0df485e21603",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 84
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 186
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 228
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 528
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 594
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 318
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 30
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 144
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 4036,
+          "coverage": 0.8285077951002228,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [162, 186],
+          "simultaneousTicks": 108,
+          "exposureTicks": [951, 903],
+          "stationaryTicks": [2254, 1654],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "neutralized": true
+          },
+          "checkpoint": "31ca7f392467dc5217b987dcd7b5ab5f813f697dcbb9b00ab6257af29287bc16"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 4036,
+          "coverage": 0.8285077951002228,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [186, 162],
+          "simultaneousTicks": 108,
+          "exposureTicks": [903, 951],
+          "stationaryTicks": [1654, 2254],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "neutralized": true
+          },
+          "checkpoint": "5c3c61d6ea1d750a8f403afc14850f17302097f7cf472251c934f9156ff95a64"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 4036,
+          "coverage": 0.8285077951002228,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [162, 186],
+          "simultaneousTicks": 108,
+          "exposureTicks": [951, 903],
+          "stationaryTicks": [2254, 1654],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "neutralized": true
+          },
+          "checkpoint": "e57f8fa335a926b662eb58c16ef07dffa64995cc2ec8023bd538d062fb9827bc"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 4036,
+          "coverage": 0.8285077951002228,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [186, 162],
+          "simultaneousTicks": 108,
+          "exposureTicks": [903, 951],
+          "stationaryTicks": [1654, 2254],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "neutralized": true
+          },
+          "checkpoint": "61dbcbb073e47c59d25d36e3e6cdbc1932cdc015681270e7ca67bc5eec52466e"
+        }
+      ],
+      "bothIdleTicks": 34,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "success": true,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 4066,
+            "coverage": 0.8285077951002228,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [192, 216],
+            "simultaneousTicks": 108,
+            "exposureTicks": [951, 903],
+            "stationaryTicks": [2284, 1684],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "neutralized": true
+            },
+            "checkpoint": "2e6984790a5f82f77a81418d1bf462ef237a4bc4622e1cb10545923a8226a917"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 4066,
+            "coverage": 0.8285077951002228,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [216, 192],
+            "simultaneousTicks": 108,
+            "exposureTicks": [903, 951],
+            "stationaryTicks": [1684, 2284],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "neutralized": true
+            },
+            "checkpoint": "df5e743d402475aa0640187a6eb610268c9a0802526a240ad2bafc965548902c"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 4066,
+            "coverage": 0.8285077951002228,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [192, 216],
+            "simultaneousTicks": 108,
+            "exposureTicks": [951, 903],
+            "stationaryTicks": [2284, 1684],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "neutralized": true
+            },
+            "checkpoint": "e61902eb66d18fb79d18c8d1634b200c870fd55b242433f33fc3b1039b2c48a2"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 4066,
+            "coverage": 0.8285077951002228,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [216, 192],
+            "simultaneousTicks": 108,
+            "exposureTicks": [903, 951],
+            "stationaryTicks": [1684, 2284],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "neutralized": true
+            },
+            "checkpoint": "b3ebb12d6423ec410e9ac4d266a294425a4ac4fc6e2229e22eac295b9c389773"
+          }
+        ]
+      }
+    },
+    {
+      "missionId": "shared-detour",
+      "difficulty": "expert",
+      "simulationIdentity": "dc41ed71a26e30ad",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 846
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 654
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 30
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 654
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 84
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 2893,
+          "coverage": 0.7291759465478842,
+          "closures": [2, 3],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [162, 186],
+          "simultaneousTicks": 108,
+          "exposureTicks": [974, 879],
+          "stationaryTicks": [1771, 991],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "neutralized": true
+          },
+          "checkpoint": "05e1cc8be1102e2a5b81ed23386fc51c74ed3e2f7b6f7247f1994cf68210ff3e"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 2893,
+          "coverage": 0.7291759465478842,
+          "closures": [3, 2],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [186, 162],
+          "simultaneousTicks": 108,
+          "exposureTicks": [879, 974],
+          "stationaryTicks": [991, 1771],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "neutralized": true
+          },
+          "checkpoint": "fd65838e23486f06acf0d35c16dbd437cdb98db95414b9389dbdad1298510db1"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 2893,
+          "coverage": 0.7291759465478842,
+          "closures": [2, 3],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [162, 186],
+          "simultaneousTicks": 108,
+          "exposureTicks": [974, 879],
+          "stationaryTicks": [1771, 991],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "neutralized": true
+          },
+          "checkpoint": "fc56d1ced523c141fd3b5d0007e00db6d8760c6a41b5281841671c40038fc1b7"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 2893,
+          "coverage": 0.7291759465478842,
+          "closures": [3, 2],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [186, 162],
+          "simultaneousTicks": 108,
+          "exposureTicks": [879, 974],
+          "stationaryTicks": [991, 1771],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "neutralized": true
+          },
+          "checkpoint": "0b9221f74994abd3c6fad3b807a0db154672ef0adb5d6751db320acc62eecc1c"
+        }
+      ],
+      "bothIdleTicks": 31,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "success": true,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 2923,
+            "coverage": 0.7291759465478842,
+            "closures": [2, 3],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [192, 216],
+            "simultaneousTicks": 108,
+            "exposureTicks": [974, 879],
+            "stationaryTicks": [1801, 1021],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "neutralized": true
+            },
+            "checkpoint": "2405ff5ece6796b53defda7afb20b5dfd1c7394c072dcca667a4af9fc3966462"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 2923,
+            "coverage": 0.7291759465478842,
+            "closures": [3, 2],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [216, 192],
+            "simultaneousTicks": 108,
+            "exposureTicks": [879, 974],
+            "stationaryTicks": [1021, 1801],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "neutralized": true
+            },
+            "checkpoint": "30cd9d0ee25a1fd6840ae0f56357036ef7506afbbdbd46a1ee19d389f2e4b134"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 2923,
+            "coverage": 0.7291759465478842,
+            "closures": [2, 3],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [192, 216],
+            "simultaneousTicks": 108,
+            "exposureTicks": [974, 879],
+            "stationaryTicks": [1801, 1021],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "neutralized": true
+            },
+            "checkpoint": "5caf769c8fb61c4500b7021d0f31d2223e2d37770c47c04eef8caa6ec8256b5b"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 2923,
+            "coverage": 0.7291759465478842,
+            "closures": [3, 2],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [216, 192],
+            "simultaneousTicks": 108,
+            "exposureTicks": [879, 974],
+            "stationaryTicks": [1021, 1801],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "neutralized": true
+            },
+            "checkpoint": "fb294ffb24de09a322513ab6196482aa57252970ef096ba4dfcbdd9dbcd05ec1"
+          }
+        ]
+      }
+    }
+  ],
+  "partialAttempts": [
+    {
+      "missionId": "shared-detour",
+      "difficulty": "expert",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 84
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 186
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 594
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 408
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 2782,
+          "coverage": 0.6993318485523385,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [162, 186],
+          "simultaneousTicks": 108,
+          "exposureTicks": [1131, 483],
+          "stationaryTicks": [988, 1756],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "neutralized": false
+          },
+          "checkpoint": "f8e29b19c1dd689675386a5657785b945c05739b11d8541c4eadd7179afb52c1"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 2782,
+          "coverage": 0.6993318485523385,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [186, 162],
+          "simultaneousTicks": 108,
+          "exposureTicks": [483, 1131],
+          "stationaryTicks": [1756, 988],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "neutralized": false
+          },
+          "checkpoint": "60fdfbb07596e35bf66a78071c03924756f6e6b191e139fdf7482f22e5f8d8e7"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "route-exhausted",
+          "tick": 2782,
+          "coverage": 0.6993318485523385,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [162, 186],
+          "simultaneousTicks": 108,
+          "exposureTicks": [1131, 483],
+          "stationaryTicks": [988, 1756],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "neutralized": false
+          },
+          "checkpoint": "a5c2d00e10100365e37bdf79149523cd67834ca2cf4f5c1ad6e00a3df79c7c0b"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "route-exhausted",
+          "tick": 2782,
+          "coverage": 0.6993318485523385,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [186, 162],
+          "simultaneousTicks": 108,
+          "exposureTicks": [483, 1131],
+          "stationaryTicks": [1756, 988],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "neutralized": false
+          },
+          "checkpoint": "a258b0ba7685b5cbf76786ef359540740c3a0223ff43d8f2517dfd990d2aea90"
+        }
+      ],
+      "reason": "First greedy branch stopped below quota without neutralizing every material cell; preserved rather than presented as a clear."
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { createStarterProject } from './starter.mjs';
 import { freezeDesign, LIVEWIRE_ACTOR_CATALOG } from './catalogs.mjs';
+import { LIVEWIRE_ART_CANDIDATES } from './livewire-art.mjs';
 
 // Original greyboxes. Screenshot motifs are not collision, timing or AI evidence.
 const rect = (x, y, w, h) => ({ x, y, w, h });
@@ -265,11 +266,11 @@ export const LIVEWIRE_FIRST_RETURNS = freezeDesign(
   Object.fromEntries(rows.map((r) => [r.id, r.departure])),
 );
 
-export function createLivewireCandidates() {
+export function createLivewireCandidates({ artwork = false } = {}) {
   const project = createStarterProject('livewire-greybox-candidates');
   project.name = 'Livewire Foundry · greybox candidates';
   project.actorCatalogId = LIVEWIRE_ACTOR_CATALOG.id;
-  project.assets = [];
+  project.assets = artwork ? structuredClone(LIVEWIRE_ART_CANDIDATES) : [];
   project.maps = rows.map((row) => ({
     format: 'MapDesignV1',
     id: `${row.id}-map`,
@@ -292,7 +293,13 @@ export function createLivewireCandidates() {
     objectives: [],
     bonuses: [],
     coverage: row.coverage,
-    presentation: { themeId: 'horizon', backgroundAssetId: null },
+    presentation: {
+      themeId: 'horizon',
+      backgroundAssetId: artwork
+        ? (LIVEWIRE_ART_CANDIDATES.find((asset) => asset.id === `livewire-foundry-${row.id}`)?.id ??
+          null)
+        : null,
+    },
     design: {
       routeDecision: row.decision,
       lesson: row.lesson,

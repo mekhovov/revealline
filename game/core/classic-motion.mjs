@@ -8,9 +8,10 @@ import {
   isCenter,
   cellIndex,
 } from './movement.mjs';
-import { classicEffectActive } from './classic-state.mjs';
+import { classicEffectActive, CLASSIC_EFFECT_FACTORS } from './classic-state.mjs';
 import { fitsClassicDomain } from './classic-topology.mjs';
 import { pressureWaypoint } from './enemy-pressure.mjs';
+import { directionalSpeedFactor } from './directional-fields.mjs';
 import {
   classicContourGraph,
   orientedContourEdge,
@@ -47,8 +48,9 @@ export function planClassicPlayer(state, input, duration) {
         (state.classRecipe.moveSpeedMultiplier ?? 1) *
         (state.signal?.speedFactor ?? 1) *
         (input.boost && !state.signal?.boostBlocked ? state.rules.boostMultiplier : 1) *
-        (classicEffectActive(state, 'player-speed') ? 1.25 : 1) *
-        terrain,
+        (classicEffectActive(state, 'player-speed') ? CLASSIC_EFFECT_FACTORS['player-speed'] : 1) *
+        terrain *
+        directionalSpeedFactor(state, index, direction),
     );
     const view = {
       ...state,
@@ -141,10 +143,14 @@ function domainHit(state, a, b, radius, domain) {
   return best;
 }
 
+// The Team reclaimed-roamer edition uses this same swept domain boundary,
+// including world edges. Exporting the pure query does not change Solo motion.
+export { domainHit as classicDomainHit };
+
 export function classicEnemyFactor(state, enemy) {
   if (classicEffectActive(state, 'enemy-freeze') || enemy.stunnedUntil > state.time + EPS) return 0;
   return Math.min(
-    classicEffectActive(state, 'enemy-slow') ? 0.5 : 1,
+    classicEffectActive(state, 'enemy-slow') ? CLASSIC_EFFECT_FACTORS['enemy-slow'] : 1,
     enemy.slowUntil > state.time + EPS ? enemy.slowFactor : 1,
   );
 }

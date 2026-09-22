@@ -1,0 +1,3358 @@
+{
+  "format": "TeamPressureRoamerRoutesV1",
+  "sourceHead": "6d4032ee58e9cca2659474eddd8c75de47982fd6",
+  "source": "withPressureDifficulty(createTeamJourneyCandidates())",
+  "projectRevision": "pressure-v2-7e637c6d2912c04e",
+  "difficultyCatalogue": "journey-difficulty-v2",
+  "methodology": "Bounded greedy continuation from recorded legal two-seat openings; branches clone only reached states and advance public commands. All candidate logs assessed freshly in four joint/seat variants. No gameplay or run-state injection.",
+  "limitations": "Offline deterministic feasibility only, not official replay, human balance, useful simultaneous cooperation, device or release approval. Optional roamer mastery reported independently. Additional timing failures preserved.",
+  "searchBudgetMilliseconds": 360000,
+  "perVariantBudgetMilliseconds": 45000,
+  "searchMilliseconds": 35519,
+  "failed": [
+    {
+      "missionId": "twin-depots",
+      "difficulty": "expert",
+      "kind": "additional-start-timing",
+      "delayTicks": 30,
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 1950,
+          "coverage": 0.6985559566787004,
+          "closures": [2, 2],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [192, 192],
+          "simultaneousTicks": 132,
+          "exposureTicks": [929, 290],
+          "stationaryTicks": [418, 1404],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 1949,
+            "time": 16.25,
+            "player": 0,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "c41b7911ded00be7c9f182dadfb3a6bd28b9d3a34e39cb95bf6b07ca40de74ef"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 1950,
+          "coverage": 0.6985559566787004,
+          "closures": [2, 2],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [192, 192],
+          "simultaneousTicks": 132,
+          "exposureTicks": [290, 929],
+          "stationaryTicks": [1404, 418],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 1949,
+            "time": 16.25,
+            "player": 1,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "d33f12271ee72de51852eb4d49bf7d5eb2940598afbc76ce4f8e0bf11cc039fa"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "first-knockdown",
+          "tick": 1950,
+          "coverage": 0.6985559566787004,
+          "closures": [2, 2],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [192, 192],
+          "simultaneousTicks": 132,
+          "exposureTicks": [929, 290],
+          "stationaryTicks": [418, 1404],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 1949,
+            "time": 16.25,
+            "player": 0,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "4d3ab745333cb67f31ef19b2a4018f50262e2f60f7e8fac2d4e05742afc47ba0"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "first-knockdown",
+          "tick": 1950,
+          "coverage": 0.6985559566787004,
+          "closures": [2, 2],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [192, 192],
+          "simultaneousTicks": 132,
+          "exposureTicks": [290, 929],
+          "stationaryTicks": [1404, 418],
+          "firstDown": {
+            "type": "player.downed",
+            "tick": 1949,
+            "time": 16.25,
+            "player": 1,
+            "cause": "enemy-trail",
+            "enemy": "keeper-1"
+          },
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "1d9852bfb206dcf09054372c23884ce2a2558019ef27c8d2357c620e0cf32ffd"
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "standard",
+      "simulationIdentity": "b02fc4148e4b0b26",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 300
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 48
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 516
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 180
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 2900,
+          "coverage": 0.8159509202453987,
+          "closures": [3, 2],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [747, 494],
+          "stationaryTicks": [854, 2042],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "21391a81ab45e3642ebfd97380a97e094b60e186e743737f4b63b48168148972"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 2900,
+          "coverage": 0.8159509202453987,
+          "closures": [2, 3],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [494, 747],
+          "stationaryTicks": [2042, 854],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "e4fda5e8d3612fa7d7eb333a48ab91a57b2e727944af23c598ebf99e809f849a"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 2900,
+          "coverage": 0.8159509202453987,
+          "closures": [3, 2],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [747, 494],
+          "stationaryTicks": [854, 2042],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "fe8e3bb80c396de94bff1d894cf876c87297d3703dfe1609c4cfa82c5628ed6e"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 2900,
+          "coverage": 0.8159509202453987,
+          "closures": [2, 3],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [494, 747],
+          "stationaryTicks": [2042, 854],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": true,
+            "condition": true,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "5bceccf1501128b0e50ed11ce7b02f872cba1278281a4b4d04cb471b5079de1a"
+        }
+      ],
+      "bothIdleTicks": 122,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 2930,
+            "coverage": 0.8159509202453987,
+            "closures": [3, 2],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [156, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [747, 494],
+            "stationaryTicks": [884, 2072],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "condition": true,
+              "activated": ["roamer-1"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "57874f5ba617c102481f252ff1846277d6302c99c0c4193ea7190fa8c0c26104"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 2930,
+            "coverage": 0.8159509202453987,
+            "closures": [2, 3],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [156, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [494, 747],
+            "stationaryTicks": [2072, 884],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "condition": true,
+              "activated": ["roamer-1"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "f55798f637b0c3789bb3f713159f669847d1de6cb97a6deac9e1dadddd643649"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 2930,
+            "coverage": 0.8159509202453987,
+            "closures": [3, 2],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [156, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [747, 494],
+            "stationaryTicks": [884, 2072],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "condition": true,
+              "activated": ["roamer-1"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "82338ed6c6ea031bf9c07e9635e022a187f15375397b637084332fd51cb33e45"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 2930,
+            "coverage": 0.8159509202453987,
+            "closures": [2, 3],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [156, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [494, 747],
+            "stationaryTicks": [2072, 884],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": true,
+              "condition": true,
+              "activated": ["roamer-1"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "53dacf697097f1cbaf2b999629b7533e8a860e76fbe1fb52a3b2be4bae794d32"
+          }
+        ],
+        "success": true
+      },
+      "searchMilliseconds": 3576,
+      "evaluated": 1000,
+      "prefixFailed": false
+    },
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "expert",
+      "simulationIdentity": "6440c3bdfae4de7f",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 90
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 78
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 114
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 168
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 300
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 552
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 444
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 384
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 156
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 24
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 36
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 4426,
+          "coverage": 0.7467134092900964,
+          "closures": [5, 2],
+          "closureReasons": [
+            {
+              "return": 5
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [1229, 494],
+          "stationaryTicks": [1168, 3316],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": [0, 1]
+          },
+          "checkpoint": "003340c5b3b830114ced3230781bb0d32dbeb0de69b8cfb798c2d136dbfb244d"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 4426,
+          "coverage": 0.7467134092900964,
+          "closures": [2, 5],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 5
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [494, 1229],
+          "stationaryTicks": [3316, 1168],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": [0, 1]
+          },
+          "checkpoint": "522b3b20387a24ef80b8b319feef626061589a0bfe72d58fd26e5cc10c4c0b48"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 4426,
+          "coverage": 0.7467134092900964,
+          "closures": [5, 2],
+          "closureReasons": [
+            {
+              "return": 5
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [1229, 494],
+          "stationaryTicks": [1168, 3316],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": [0, 1]
+          },
+          "checkpoint": "783699999e7bcf82836496466f4e64c5779fd3d00b23881a4f0cc363f294e030"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 4426,
+          "coverage": 0.7467134092900964,
+          "closures": [2, 5],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 5
+            }
+          ],
+          "firstClosures": [126, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [494, 1229],
+          "stationaryTicks": [3316, 1168],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": [0, 1]
+          },
+          "checkpoint": "38c78d3a98fb859672bd513b48bcbe32be2733ea09e792bc21baaa56a0778a4a"
+        }
+      ],
+      "bothIdleTicks": 184,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 4456,
+            "coverage": 0.7467134092900964,
+            "closures": [5, 2],
+            "closureReasons": [
+              {
+                "return": 5
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [156, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [1229, 494],
+            "stationaryTicks": [1198, 3346],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": [],
+              "connected": [0, 1]
+            },
+            "checkpoint": "0ca874689c475be997bd0ebfacdec614d6f8690bf81d23c9e34bda8845771103"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 4456,
+            "coverage": 0.7467134092900964,
+            "closures": [2, 5],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 5
+              }
+            ],
+            "firstClosures": [156, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [494, 1229],
+            "stationaryTicks": [3346, 1198],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": [],
+              "connected": [0, 1]
+            },
+            "checkpoint": "bf2906aa52fd117221b757a01a44817baaaefaf895e3cdfb52566f28822e557b"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 4456,
+            "coverage": 0.7467134092900964,
+            "closures": [5, 2],
+            "closureReasons": [
+              {
+                "return": 5
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [156, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [1229, 494],
+            "stationaryTicks": [1198, 3346],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": [],
+              "connected": [0, 1]
+            },
+            "checkpoint": "ebfabcd0531a44dc835122332c3e4f6b6a49e1d2568c568ecd83edaf5dc818fd"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 4456,
+            "coverage": 0.7467134092900964,
+            "closures": [2, 5],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 5
+              }
+            ],
+            "firstClosures": [156, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [494, 1229],
+            "stationaryTicks": [3346, 1198],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": [],
+              "connected": [0, 1]
+            },
+            "checkpoint": "c110d940273047b2b7d8312e56bf771592a639556c23ba8e5519ba4806311c2c"
+          }
+        ],
+        "success": true
+      },
+      "searchMilliseconds": 5456,
+      "evaluated": 1648,
+      "prefixFailed": false
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "standard",
+      "simulationIdentity": "d00864bb901f1935",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 276
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 576
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 210
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 2193,
+          "coverage": 0.7775270758122743,
+          "closures": [3, 1],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [747, 133],
+          "stationaryTicks": [3, 2031],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "55a0a235fb6b2cc6ca53a532552994ca5e0d87f6c38229733ade8b207baa0834"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 2193,
+          "coverage": 0.7775270758122743,
+          "closures": [1, 3],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 747],
+          "stationaryTicks": [2031, 3],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "bdcd004c685d949a6be6d4810131bbec18a905b02af115c262788ab76e87f381"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 2193,
+          "coverage": 0.7775270758122743,
+          "closures": [3, 1],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 1
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [747, 133],
+          "stationaryTicks": [3, 2031],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "99a72db7b4bc81584c21197967114c6e243b8dec573fbdedc73cdf8773cfa3bb"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 2193,
+          "coverage": 0.7775270758122743,
+          "closures": [1, 3],
+          "closureReasons": [
+            {
+              "return": 1
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [133, 747],
+          "stationaryTicks": [2031, 3],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "61af7beb07542a324cd9b4f6330d2e9ad6d09f8a70efd4dd33ca5ee470836ae7"
+        }
+      ],
+      "bothIdleTicks": 3,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 2223,
+            "coverage": 0.7775270758122743,
+            "closures": [3, 1],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 1
+              }
+            ],
+            "firstClosures": [192, 192],
+            "simultaneousTicks": 132,
+            "exposureTicks": [747, 133],
+            "stationaryTicks": [33, 2061],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "9cf21bb06cb73c4dc2dcbe851d6552e8fbca9257626f4dd8a8a6b58ca081290e"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 2223,
+            "coverage": 0.7775270758122743,
+            "closures": [1, 3],
+            "closureReasons": [
+              {
+                "return": 1
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [192, 192],
+            "simultaneousTicks": 132,
+            "exposureTicks": [133, 747],
+            "stationaryTicks": [2061, 33],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "2c9d98d1eacd7938e40721683b28e89ac5ddeb0a5a794018a97ac041821a8ea3"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 2223,
+            "coverage": 0.7775270758122743,
+            "closures": [3, 1],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 1
+              }
+            ],
+            "firstClosures": [192, 192],
+            "simultaneousTicks": 132,
+            "exposureTicks": [747, 133],
+            "stationaryTicks": [33, 2061],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "66bae291da74b360eedf8b0033b8a56e657a3e5e92828367f67c7f4bdb127d0c"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 2223,
+            "coverage": 0.7775270758122743,
+            "closures": [1, 3],
+            "closureReasons": [
+              {
+                "return": 1
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [192, 192],
+            "simultaneousTicks": 132,
+            "exposureTicks": [133, 747],
+            "stationaryTicks": [2061, 33],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "643659b8e6d17d3104f58f0576d4390c1eb7fe3507e47f87f73b7880f6db4827"
+          }
+        ],
+        "success": true
+      },
+      "searchMilliseconds": 2071,
+      "evaluated": 664,
+      "prefixFailed": false
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "expert",
+      "simulationIdentity": "9e95e6c622a805fb",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 162
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 72
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 1942,
+          "coverage": 0.8212996389891697,
+          "closures": [3, 2],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [951, 290],
+          "stationaryTicks": [388, 1396],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "5847db309d22e3db1e221d70b21a987766f94cbaa6d939fe2ef374cc38a3c2f7"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 1942,
+          "coverage": 0.8212996389891697,
+          "closures": [2, 3],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [290, 951],
+          "stationaryTicks": [1396, 388],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "31c4ae43b31ec2b44a3eb979a9cd7fe9771916fdeea1b94960eac488e265c8cd"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 1942,
+          "coverage": 0.8212996389891697,
+          "closures": [3, 2],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [951, 290],
+          "stationaryTicks": [388, 1396],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "a4d8104435770c9c7197d58ce36ff0d33e61c7a55a1a771bfa5f97f571b1fbe0"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 1942,
+          "coverage": 0.8212996389891697,
+          "closures": [2, 3],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [162, 162],
+          "simultaneousTicks": 132,
+          "exposureTicks": [290, 951],
+          "stationaryTicks": [1396, 388],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-2"],
+            "connected": [0, 1]
+          },
+          "checkpoint": "3c00959791496ce02ce9f035c37b3acdb9d165427af55cd8239bb02bf336a4d1"
+        }
+      ],
+      "bothIdleTicks": 4,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "first-knockdown",
+            "tick": 1950,
+            "coverage": 0.6985559566787004,
+            "closures": [2, 2],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [192, 192],
+            "simultaneousTicks": 132,
+            "exposureTicks": [929, 290],
+            "stationaryTicks": [418, 1404],
+            "firstDown": {
+              "type": "player.downed",
+              "tick": 1949,
+              "time": 16.25,
+              "player": 0,
+              "cause": "enemy-trail",
+              "enemy": "keeper-1"
+            },
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-2"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "c41b7911ded00be7c9f182dadfb3a6bd28b9d3a34e39cb95bf6b07ca40de74ef"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "first-knockdown",
+            "tick": 1950,
+            "coverage": 0.6985559566787004,
+            "closures": [2, 2],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [192, 192],
+            "simultaneousTicks": 132,
+            "exposureTicks": [290, 929],
+            "stationaryTicks": [1404, 418],
+            "firstDown": {
+              "type": "player.downed",
+              "tick": 1949,
+              "time": 16.25,
+              "player": 1,
+              "cause": "enemy-trail",
+              "enemy": "keeper-1"
+            },
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-2"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "d33f12271ee72de51852eb4d49bf7d5eb2940598afbc76ce4f8e0bf11cc039fa"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "first-knockdown",
+            "tick": 1950,
+            "coverage": 0.6985559566787004,
+            "closures": [2, 2],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [192, 192],
+            "simultaneousTicks": 132,
+            "exposureTicks": [929, 290],
+            "stationaryTicks": [418, 1404],
+            "firstDown": {
+              "type": "player.downed",
+              "tick": 1949,
+              "time": 16.25,
+              "player": 0,
+              "cause": "enemy-trail",
+              "enemy": "keeper-1"
+            },
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-2"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "4d3ab745333cb67f31ef19b2a4018f50262e2f60f7e8fac2d4e05742afc47ba0"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "first-knockdown",
+            "tick": 1950,
+            "coverage": 0.6985559566787004,
+            "closures": [2, 2],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [192, 192],
+            "simultaneousTicks": 132,
+            "exposureTicks": [290, 929],
+            "stationaryTicks": [1404, 418],
+            "firstDown": {
+              "type": "player.downed",
+              "tick": 1949,
+              "time": 16.25,
+              "player": 1,
+              "cause": "enemy-trail",
+              "enemy": "keeper-1"
+            },
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-2"],
+              "connected": [0, 1]
+            },
+            "checkpoint": "1d9852bfb206dcf09054372c23884ce2a2558019ef27c8d2357c620e0cf32ffd"
+          }
+        ],
+        "success": false
+      },
+      "searchMilliseconds": 2937,
+      "evaluated": 976,
+      "prefixFailed": false
+    },
+    {
+      "missionId": "changing-courtyard",
+      "difficulty": "standard",
+      "simulationIdentity": "430db8e9a24ecb26",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 114
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 78
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 168
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 474
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 144
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 408
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 3215,
+          "coverage": 0.8081730769230769,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [138, 138],
+          "simultaneousTicks": 108,
+          "exposureTicks": [987, 591],
+          "stationaryTicks": [1565, 1517],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2]
+          },
+          "checkpoint": "2ade501c881639d998cb2366ad4757577dc5ee9bbaac4a59de4b585f3bbce1a1"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 3215,
+          "coverage": 0.8081730769230769,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [138, 138],
+          "simultaneousTicks": 108,
+          "exposureTicks": [591, 987],
+          "stationaryTicks": [1517, 1565],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2]
+          },
+          "checkpoint": "6398327a11f4ee1d76f50b48d768c32a0f1debb63ba51f17bdfd00817f4ab190"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 3215,
+          "coverage": 0.8081730769230769,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [138, 138],
+          "simultaneousTicks": 108,
+          "exposureTicks": [987, 591],
+          "stationaryTicks": [1565, 1517],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2]
+          },
+          "checkpoint": "b73c0eef8b0b87ac3c87309fe014dcbea54d8c1e79b9087a106f78d84eed04c1"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 3215,
+          "coverage": 0.8081730769230769,
+          "closures": [3, 3],
+          "closureReasons": [
+            {
+              "return": 3
+            },
+            {
+              "return": 3
+            }
+          ],
+          "firstClosures": [138, 138],
+          "simultaneousTicks": 108,
+          "exposureTicks": [591, 987],
+          "stationaryTicks": [1517, 1565],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2]
+          },
+          "checkpoint": "c28b9e72ca1fc2cada2a5bc274fc55a5b72c3fbfe6a63b8739bcd0b4a61dbd21"
+        }
+      ],
+      "bothIdleTicks": 5,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 3245,
+            "coverage": 0.8081730769230769,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [168, 168],
+            "simultaneousTicks": 108,
+            "exposureTicks": [987, 591],
+            "stationaryTicks": [1595, 1547],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2]
+            },
+            "checkpoint": "d46315de08cd66b9cd9e86ad00b8a07819fca2c05f9c1807a3bc344cde622b24"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 3245,
+            "coverage": 0.8081730769230769,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [168, 168],
+            "simultaneousTicks": 108,
+            "exposureTicks": [591, 987],
+            "stationaryTicks": [1547, 1595],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2]
+            },
+            "checkpoint": "c7b47fde4075ce900c89819260eb09a4fa4aadd155d50a3cf92e9539a613e22e"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 3245,
+            "coverage": 0.8081730769230769,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [168, 168],
+            "simultaneousTicks": 108,
+            "exposureTicks": [987, 591],
+            "stationaryTicks": [1595, 1547],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2]
+            },
+            "checkpoint": "29d9323062b4b2cbe9d59c1d30fcdb3ddfff06b4d22681ab4feafc2f77815ebc"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 3245,
+            "coverage": 0.8081730769230769,
+            "closures": [3, 3],
+            "closureReasons": [
+              {
+                "return": 3
+              },
+              {
+                "return": 3
+              }
+            ],
+            "firstClosures": [168, 168],
+            "simultaneousTicks": 108,
+            "exposureTicks": [591, 987],
+            "stationaryTicks": [1547, 1595],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2]
+            },
+            "checkpoint": "a2fe36f8efcbf375f13321309bbf19e4958f6a92edc8e8412d85c0963277a321"
+          }
+        ],
+        "success": true
+      },
+      "searchMilliseconds": 4017,
+      "evaluated": 1328,
+      "prefixFailed": false
+    },
+    {
+      "missionId": "changing-courtyard",
+      "difficulty": "expert",
+      "simulationIdentity": "364fba065a5f6cca",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 242
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 138
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 210
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 144
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 336
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 474
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 114
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 330
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 78
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 408
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 72
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 30
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 198
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 4586,
+          "coverage": 0.7846153846153846,
+          "closures": [4, 5],
+          "closureReasons": [
+            {
+              "return": 4
+            },
+            {
+              "return": 5
+            }
+          ],
+          "firstClosures": [138, 138],
+          "simultaneousTicks": 108,
+          "exposureTicks": [844, 1073],
+          "stationaryTicks": [2504, 2192],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": [0, 1]
+          },
+          "checkpoint": "b3c45d0891e24c5e7c3f2f6afd2494f8f9fd53024822064ea0e45552f3572a0a"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 4586,
+          "coverage": 0.7846153846153846,
+          "closures": [5, 4],
+          "closureReasons": [
+            {
+              "return": 5
+            },
+            {
+              "return": 4
+            }
+          ],
+          "firstClosures": [138, 138],
+          "simultaneousTicks": 108,
+          "exposureTicks": [1073, 844],
+          "stationaryTicks": [2192, 2504],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": [0, 1]
+          },
+          "checkpoint": "90a2cee32fdf4bf17ecf9232a41928c46d2aca545a98e4a061f5ecb323a53314"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 4586,
+          "coverage": 0.7846153846153846,
+          "closures": [4, 5],
+          "closureReasons": [
+            {
+              "return": 4
+            },
+            {
+              "return": 5
+            }
+          ],
+          "firstClosures": [138, 138],
+          "simultaneousTicks": 108,
+          "exposureTicks": [844, 1073],
+          "stationaryTicks": [2504, 2192],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": [0, 1]
+          },
+          "checkpoint": "b2c439d9a4fca36e891365b9f4f81c3bde43140ee7eab77069e1c9e2411f7c94"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 4586,
+          "coverage": 0.7846153846153846,
+          "closures": [5, 4],
+          "closureReasons": [
+            {
+              "return": 5
+            },
+            {
+              "return": 4
+            }
+          ],
+          "firstClosures": [138, 138],
+          "simultaneousTicks": 108,
+          "exposureTicks": [1073, 844],
+          "stationaryTicks": [2192, 2504],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": [],
+            "connected": [0, 1]
+          },
+          "checkpoint": "90381f2609f3c10a3c20fb83f3cb20880b7ac14b98cb572db78f9c3d36d111cd"
+        }
+      ],
+      "bothIdleTicks": 248,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 4616,
+            "coverage": 0.7846153846153846,
+            "closures": [4, 5],
+            "closureReasons": [
+              {
+                "return": 4
+              },
+              {
+                "return": 5
+              }
+            ],
+            "firstClosures": [168, 168],
+            "simultaneousTicks": 108,
+            "exposureTicks": [844, 1073],
+            "stationaryTicks": [2534, 2222],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": [],
+              "connected": [0, 1]
+            },
+            "checkpoint": "9dd9a983779e1879c525fa08f7f52441d21f0b6b1d615942165899fddca919c0"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 4616,
+            "coverage": 0.7846153846153846,
+            "closures": [5, 4],
+            "closureReasons": [
+              {
+                "return": 5
+              },
+              {
+                "return": 4
+              }
+            ],
+            "firstClosures": [168, 168],
+            "simultaneousTicks": 108,
+            "exposureTicks": [1073, 844],
+            "stationaryTicks": [2222, 2534],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": [],
+              "connected": [0, 1]
+            },
+            "checkpoint": "064abcd6ec4afd1c37bd2e21b9849142a15133f6a1cc87fd4bebd87b355e1ae0"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 4616,
+            "coverage": 0.7846153846153846,
+            "closures": [4, 5],
+            "closureReasons": [
+              {
+                "return": 4
+              },
+              {
+                "return": 5
+              }
+            ],
+            "firstClosures": [168, 168],
+            "simultaneousTicks": 108,
+            "exposureTicks": [844, 1073],
+            "stationaryTicks": [2534, 2222],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": [],
+              "connected": [0, 1]
+            },
+            "checkpoint": "90dd089556ae8c3361833d64dc295b8c253f224411985da630ccf579b030183a"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 4616,
+            "coverage": 0.7846153846153846,
+            "closures": [5, 4],
+            "closureReasons": [
+              {
+                "return": 5
+              },
+              {
+                "return": 4
+              }
+            ],
+            "firstClosures": [168, 168],
+            "simultaneousTicks": 108,
+            "exposureTicks": [1073, 844],
+            "stationaryTicks": [2222, 2534],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": [],
+              "connected": [0, 1]
+            },
+            "checkpoint": "8cd6cd347fe8017f6c2b623ba663a796ad056c8b172dfa3961620beb4cd77011"
+          }
+        ],
+        "success": true
+      },
+      "searchMilliseconds": 5894,
+      "evaluated": 2256,
+      "prefixFailed": false
+    },
+    {
+      "missionId": "last-rendezvous",
+      "difficulty": "standard",
+      "simulationIdentity": "6a8e50f03712a700",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 228
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 300
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 396
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 474
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 216
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 90
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 138
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 3094,
+          "coverage": 0.8975631768953068,
+          "closures": [2, 4],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 4
+            }
+          ],
+          "firstClosures": [126, 138],
+          "simultaneousTicks": 84,
+          "exposureTicks": [506, 1108],
+          "stationaryTicks": [2200, 892],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2, 3]
+          },
+          "checkpoint": "f01862d1b8daf88a52a76a34fa14bc3ec164dd8096758df0663d83b5da6043fd"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 3094,
+          "coverage": 0.8975631768953068,
+          "closures": [4, 2],
+          "closureReasons": [
+            {
+              "return": 4
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [138, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [1108, 506],
+          "stationaryTicks": [892, 2200],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2, 3]
+          },
+          "checkpoint": "a3a85c823a9adccb31464b64a6c93464ef6c9d0e325805e3456da8a74369d154"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 3094,
+          "coverage": 0.8975631768953068,
+          "closures": [2, 4],
+          "closureReasons": [
+            {
+              "return": 2
+            },
+            {
+              "return": 4
+            }
+          ],
+          "firstClosures": [126, 138],
+          "simultaneousTicks": 84,
+          "exposureTicks": [506, 1108],
+          "stationaryTicks": [2200, 892],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2, 3]
+          },
+          "checkpoint": "ee4180bd30474368fef67ef0d81d227e2e0582cb7200619fa2d9fb5b83ef4549"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 3094,
+          "coverage": 0.8975631768953068,
+          "closures": [4, 2],
+          "closureReasons": [
+            {
+              "return": 4
+            },
+            {
+              "return": 2
+            }
+          ],
+          "firstClosures": [138, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [1108, 506],
+          "stationaryTicks": [892, 2200],
+          "firstDown": null,
+          "reserves": 2,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2, 3]
+          },
+          "checkpoint": "ed73d4924431c209e0ddb8cc95bba4716c1158f153e7f0b15b7b82dda6e8df60"
+        }
+      ],
+      "bothIdleTicks": 124,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 3124,
+            "coverage": 0.8975631768953068,
+            "closures": [2, 4],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 4
+              }
+            ],
+            "firstClosures": [156, 168],
+            "simultaneousTicks": 84,
+            "exposureTicks": [506, 1108],
+            "stationaryTicks": [2230, 922],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2, 3]
+            },
+            "checkpoint": "6a434f555d50c1ff1f63e8b81179e929997a0761509f7aca3aba2cab89e091a4"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 3124,
+            "coverage": 0.8975631768953068,
+            "closures": [4, 2],
+            "closureReasons": [
+              {
+                "return": 4
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [168, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [1108, 506],
+            "stationaryTicks": [922, 2230],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2, 3]
+            },
+            "checkpoint": "7fd7b07c4c59f528094f2b4571b64579e4870a0b9cb9dc8d9c842cd84de74739"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 3124,
+            "coverage": 0.8975631768953068,
+            "closures": [2, 4],
+            "closureReasons": [
+              {
+                "return": 2
+              },
+              {
+                "return": 4
+              }
+            ],
+            "firstClosures": [156, 168],
+            "simultaneousTicks": 84,
+            "exposureTicks": [506, 1108],
+            "stationaryTicks": [2230, 922],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2, 3]
+            },
+            "checkpoint": "e74d409fa11a28ba1d69e055b5297df201794b027ffe5a1027cd2164ff210644"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 3124,
+            "coverage": 0.8975631768953068,
+            "closures": [4, 2],
+            "closureReasons": [
+              {
+                "return": 4
+              },
+              {
+                "return": 2
+              }
+            ],
+            "firstClosures": [168, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [1108, 506],
+            "stationaryTicks": [922, 2230],
+            "firstDown": null,
+            "reserves": 2,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2, 3]
+            },
+            "checkpoint": "e8204dcb06024e810fc04cb8f60549108c1209a581b7cdcb0aa2016cb5635b44"
+          }
+        ],
+        "success": true
+      },
+      "searchMilliseconds": 4456,
+      "evaluated": 1320,
+      "prefixFailed": false
+    },
+    {
+      "missionId": "last-rendezvous",
+      "difficulty": "expert",
+      "simulationIdentity": "0277fda375f689ce",
+      "log": [
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 126
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 192
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 414
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 24
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 270
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 36
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 270
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 156
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 474
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 144
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 12
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 144
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 414
+        }
+      ],
+      "outcomes": [
+        {
+          "jointCuts": true,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 4045,
+          "coverage": 0.8122743682310469,
+          "closures": [4, 5],
+          "closureReasons": [
+            {
+              "return": 4
+            },
+            {
+              "return": 5
+            }
+          ],
+          "firstClosures": [126, 138],
+          "simultaneousTicks": 84,
+          "exposureTicks": [1384, 1109],
+          "stationaryTicks": [1603, 2443],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2, 3]
+          },
+          "checkpoint": "109691430401fabebb1a4e07fdfd9dafa33d3d75dc9e2638eed3e3e9cc34a0bf"
+        },
+        {
+          "jointCuts": true,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 4045,
+          "coverage": 0.8122743682310469,
+          "closures": [5, 4],
+          "closureReasons": [
+            {
+              "return": 5
+            },
+            {
+              "return": 4
+            }
+          ],
+          "firstClosures": [138, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [1109, 1384],
+          "stationaryTicks": [2443, 1603],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2, 3]
+          },
+          "checkpoint": "050353f4c0a4936b24f2a7f3eb12ed878a724ea30c58d3665e579bbe16c3937c"
+        },
+        {
+          "jointCuts": false,
+          "swapped": false,
+          "status": "shared-no-loss-clear",
+          "tick": 4045,
+          "coverage": 0.8122743682310469,
+          "closures": [4, 5],
+          "closureReasons": [
+            {
+              "return": 4
+            },
+            {
+              "return": 5
+            }
+          ],
+          "firstClosures": [126, 138],
+          "simultaneousTicks": 84,
+          "exposureTicks": [1384, 1109],
+          "stationaryTicks": [1603, 2443],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2, 3]
+          },
+          "checkpoint": "15d864d5a059314e59451a63a67f0def84665ae2db0e5a7d493a60c579f40cee"
+        },
+        {
+          "jointCuts": false,
+          "swapped": true,
+          "status": "shared-no-loss-clear",
+          "tick": 4045,
+          "coverage": 0.8122743682310469,
+          "closures": [5, 4],
+          "closureReasons": [
+            {
+              "return": 5
+            },
+            {
+              "return": 4
+            }
+          ],
+          "firstClosures": [138, 126],
+          "simultaneousTicks": 84,
+          "exposureTicks": [1109, 1384],
+          "stationaryTicks": [2443, 1603],
+          "firstDown": null,
+          "reserves": 1,
+          "supportUses": [0, 0],
+          "jointEvents": 0,
+          "meaningfulJointCuts": 0,
+          "mastery": {
+            "achieved": false,
+            "condition": false,
+            "activated": ["roamer-1"],
+            "connected": [0, 1, 2, 3]
+          },
+          "checkpoint": "b7494598f55c572e984fd4bc6e3356bcc5d0df6b58ba0744a1cde0b88aafe9ae"
+        }
+      ],
+      "bothIdleTicks": 127,
+      "additionalTiming": {
+        "delayTicks": 30,
+        "outcomes": [
+          {
+            "jointCuts": true,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 4075,
+            "coverage": 0.8122743682310469,
+            "closures": [4, 5],
+            "closureReasons": [
+              {
+                "return": 4
+              },
+              {
+                "return": 5
+              }
+            ],
+            "firstClosures": [156, 168],
+            "simultaneousTicks": 84,
+            "exposureTicks": [1384, 1109],
+            "stationaryTicks": [1633, 2473],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2, 3]
+            },
+            "checkpoint": "efd641fcfc30d685b34b74aebd17b808bec8539ba91508fbb8dde800d874ea17"
+          },
+          {
+            "jointCuts": true,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 4075,
+            "coverage": 0.8122743682310469,
+            "closures": [5, 4],
+            "closureReasons": [
+              {
+                "return": 5
+              },
+              {
+                "return": 4
+              }
+            ],
+            "firstClosures": [168, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [1109, 1384],
+            "stationaryTicks": [2473, 1633],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2, 3]
+            },
+            "checkpoint": "64c12009bbd651d833a845b40bc4d9ad2f27fbeac81266c63b6ab68913d9971a"
+          },
+          {
+            "jointCuts": false,
+            "swapped": false,
+            "status": "shared-no-loss-clear",
+            "tick": 4075,
+            "coverage": 0.8122743682310469,
+            "closures": [4, 5],
+            "closureReasons": [
+              {
+                "return": 4
+              },
+              {
+                "return": 5
+              }
+            ],
+            "firstClosures": [156, 168],
+            "simultaneousTicks": 84,
+            "exposureTicks": [1384, 1109],
+            "stationaryTicks": [1633, 2473],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2, 3]
+            },
+            "checkpoint": "8c30f917dc93d3dbf3e995554abf46ecae6fc042204cc845ad2bbf6512d02bab"
+          },
+          {
+            "jointCuts": false,
+            "swapped": true,
+            "status": "shared-no-loss-clear",
+            "tick": 4075,
+            "coverage": 0.8122743682310469,
+            "closures": [5, 4],
+            "closureReasons": [
+              {
+                "return": 5
+              },
+              {
+                "return": 4
+              }
+            ],
+            "firstClosures": [168, 156],
+            "simultaneousTicks": 84,
+            "exposureTicks": [1109, 1384],
+            "stationaryTicks": [2473, 1633],
+            "firstDown": null,
+            "reserves": 1,
+            "supportUses": [0, 0],
+            "jointEvents": 0,
+            "meaningfulJointCuts": 0,
+            "mastery": {
+              "achieved": false,
+              "condition": false,
+              "activated": ["roamer-1"],
+              "connected": [0, 1, 2, 3]
+            },
+            "checkpoint": "441e21dd0a9aa6b337494309c25a65e1181d643eafd22a602693e80cd9751252"
+          }
+        ],
+        "success": true
+      },
+      "searchMilliseconds": 7112,
+      "evaluated": 2296,
+      "prefixFailed": false
+    }
+  ]
+}

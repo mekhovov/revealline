@@ -1,5 +1,13 @@
-import { journeyActors, journeyPreset } from '../content-design/catalogs.mjs';
+import {
+  journeyActors,
+  journeyPreset,
+  journeyLaneTiming,
+  journeySentinelTiming,
+  journeyPressureTiming,
+  journeyCombatTiming,
+} from '../content-design/catalogs.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
+import { teamRoleQualified } from '../content-design/team-qualification.mjs';
 import { missionEditContext } from './edit-context.mjs';
 
 const names = {
@@ -10,6 +18,11 @@ const names = {
   'territory-eroder': 'Territory eroder',
   'impact-carrier': 'Trail-impact carrier',
   'lane-emitter': 'Lane emitter',
+  'relay-sentinel': 'Shield-relay Sentinel',
+  'trail-pursuer': 'Trail pursuer',
+  'heading-interceptor': 'Heading interceptor',
+  'optional-scout': 'Optional removable scout',
+  'optional-sentry': 'Optional firing sentry',
 };
 
 /** Catalog-only controls. Unsaved fields are local; only an explicit validated
@@ -21,7 +34,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
   const context = () => missionEditContext(getSource(), getMission(), getDifficulty());
   const catalog = () => journeyActors(getSource().actorCatalogId);
   const hasHeading = (role) =>
-    ['field-keeper', 'reclaimed-roamer', 'territory-eroder', 'impact-carrier'].includes(role);
+    ['bouncer', 'claimed-rover', 'eroder', 'combat-patrol'].includes(catalog().roles[role]?.type);
   const options = (element, rows) =>
     element.replaceChildren(
       ...rows.map(([value, label]) => {
@@ -43,39 +56,71 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     const role = catalog().roles[$('role').value];
     const tier = $('tier').value;
     const emitter = role.type === 'lane-boss';
-    const tiers = emitter ? role.timings : role.speeds;
-    $('tier-label').textContent = emitter
-      ? 'Cadence tier · fixed warning in every difficulty'
-      : 'Speed tier · selected difficulty';
+    const sentinel = role.type === 'relay-sentinel';
+    const difficultyCatalogId = getSource().difficultyCatalogId;
+    const preset = journeyPreset(getDifficulty(), difficultyCatalogId);
+    const sentinelTiming = journeySentinelTiming(getDifficulty(), difficultyCatalogId);
+    const tiers = sentinel ? { measured: 0 } : emitter ? role.timings : role.speeds;
+    $('tier-label').textContent = sentinel
+      ? preset.attackRestFactor === undefined
+        ? 'Shared Sentinel recipe · fixed cadence'
+        : 'Shared Sentinel recipe · selected difficulty, fixed warning'
+      : emitter
+        ? 'Cadence tier · fixed warning in every difficulty'
+        : 'Speed tier · selected difficulty';
     options(
       $('tier'),
       Object.entries(tiers).map(([id, value]) => [
         id,
-        emitter
-          ? `${id} · ${value.warningSeconds}s warning / ${value.activeSeconds}s active / ${value.period}s cycle`
-          : `${id} · ${Number((value * journeyPreset(getDifficulty()).enemySpeedFactor).toFixed(3))} cells/s`,
+        sentinel
+          ? `measured · shared two-stage recipe · ${sentinelTiming.shielded.warningTicks / 120}s warning / ${sentinelTiming.shielded.restTicks / 120}s rest / ${sentinelTiming.exposed.openTicks / 120}s core open`
+          : emitter
+            ? `${id} · ${value.warningSeconds}s warning / ${value.activeSeconds}s active / ${Number(journeyLaneTiming(value, getDifficulty(), difficultyCatalogId).period.toFixed(4))}s cycle`
+            : `${id} · ${Number((value * preset.enemySpeedFactor).toFixed(3))} cells/s`,
       ]),
     );
     if (Object.hasOwn(tiers, tier)) $('tier').value = tier;
     const frontier = $('role').value === 'frontier-patrol';
-    $('position-help').textContent = frontier
-      ? 'Integer field cell beside reclaimed ground; choose its side facing that ground.'
-      : $('role').value === 'reclaimed-roamer'
-        ? 'Use cell centres ending in .5. Dormant in field; after its body is reclaimed it warns for 120 actor ticks, then roams reclaimed ground.'
-        : $('role').value === 'territory-eroder'
-          ? 'Start in unclaimed field. Eligible frontier contact marks one cell for 60 actor ticks before reopening it, followed by a 120 actor-tick cooldown. Foundations are permanent.'
-          : $('role').value === 'impact-carrier'
-            ? `Start in unclaimed field. Trail impacts travel at the shared ${role.impactSpeed} cells/s in every preset. Only this marked role creates fronts; body contact is still dangerous.`
-            : emitter
-              ? `Stationary in unclaimed field. First warning starts after 2 actor seconds, then locks a row or column. The ${role.laneWidth}-cell lane does not damage reclaimed ground; this emitter still retains field.`
-              : 'Board coordinates in cells. Cell centres use .5; outer patrols must start on the perimeter.';
+    $('position-help').textContent = sentinel
+      ? 'The Sentinel must share the core objective cell. Use Stage a Sentinel encounter to move the boss/core binding or replace shield links atomically.'
+      : frontier
+        ? 'Integer field cell beside reclaimed ground; choose its side facing that ground.'
+        : $('role').value === 'reclaimed-roamer'
+          ? 'Use cell centres ending in .5. Dormant in field; after its body is reclaimed it warns for 120 actor ticks, then roams reclaimed ground.'
+          : $('role').value === 'territory-eroder'
+            ? 'Start in unclaimed field. Eligible frontier contact marks one cell for 60 actor ticks before reopening it, followed by a 120 actor-tick cooldown. Foundations are permanent.'
+            : $('role').value === 'impact-carrier'
+              ? `Start in unclaimed field. Trail impacts travel at the shared ${role.impactSpeed} cells/s in every preset. Only this marked role creates fronts; body contact is still dangerous.`
+              : emitter
+                ? `Stationary in unclaimed field. First warning starts after 2 actor seconds, then locks a row or column. The ${role.laneWidth}-cell lane does not damage reclaimed ground; this emitter still retains field.`
+                : 'Board coordinates in cells. Cell centres use .5; outer patrols must start on the perimeter.';
     $('heading-row').hidden = !hasHeading($('role').value);
     $('edge-row').hidden = !frontier;
-    $('clockwise-row').hidden = hasHeading($('role').value) || emitter;
+    $('clockwise-row').hidden = hasHeading($('role').value) || emitter || sentinel;
     $('axis-row').hidden = !emitter;
     for (const axis of ['x', 'y']) $(axis).step = frontier ? '1' : '0.5';
     $('description').textContent =
       `${role.domain} · hits ${role.damageTarget} · ${role.retainsField ? 'Retains its field region.' : 'Does not retain field regions.'} ${role.counterplay}`;
+    if (role.pressureRecipe) {
+      const timing = journeyPressureTiming(
+        $('role').value,
+        getDifficulty(),
+        catalog().id,
+        difficultyCatalogId,
+      );
+      $('position-help').textContent =
+        `Start in unclaimed field. Locked target: ${timing.warningTicks / 120}s warning / ${timing.commitTicks / 120}s commitment / ${timing.cooldownTicks / 120}s recovery. Sense radius ${timing.senseRadius} cells; no tracking after target lock. Closure cancels the attack. Body and trail contact remain dangerous.`;
+    }
+    if (role.combatRole) {
+      const timing = journeyCombatTiming(
+        $('role').value,
+        getDifficulty(),
+        catalog().id,
+        difficultyCatalogId,
+      );
+      $('position-help').textContent =
+        `Use field cell centres ending in .5 with two cells of spawn clearance. ${getMission()?.combat?.enabled ? 'Combat enabled.' : 'Inactive authored actor; combat is disabled.'} Removed by craft contact or capture; never retains field.${role.combatRole === 'sentry' ? ` ${timing.openingTicks / 120}s opening / ${timing.warningTicks / 120}s locked warning / ${timing.recoveryTicks / 120}s recovery / ${timing.restTicks / 120}s rest. Only its projectile harms the craft.` : ' No contact damage.'}`;
+    }
   }
   function select() {
     cancelRemoval();
@@ -107,7 +152,9 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
       Object.entries(names).filter(
         ([role]) =>
           Object.hasOwn(catalog().roles, role) &&
-          (!mission?.modes.includes('team') || role === 'field-keeper'),
+          (!catalog().roles[role].combatRole || !!mission?.combat) &&
+          (role !== 'relay-sentinel' || !!mission?.encounter) &&
+          (!mission?.modes.includes('team') || teamRoleQualified(mission.team?.format, role)),
       ),
     );
     const selected = $('select').value;
@@ -155,7 +202,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     else Object.assign(actor, { x, y });
     if (hasHeading(role)) actor.heading = $('heading').value.split(',').map(Number);
     else if (role === 'lane-emitter') actor.axis = $('axis').value;
-    else actor.clockwise = $('clockwise').checked;
+    else if (role !== 'relay-sentinel') actor.clockwise = $('clockwise').checked;
     commit({ action: $('select').value ? 'replace' : 'add', id, actor });
   };
   $('remove').onclick = () => {

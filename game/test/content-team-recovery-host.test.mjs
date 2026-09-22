@@ -55,8 +55,8 @@ test('new Team edition automatically retries the same exact mission without rere
   assert.equal(f.artwork.calls.reads.length, reads);
   assert.equal(f.$('coop-level').value, 'twin-landings');
   f.tick(90);
-  assert.equal(f.$('coop-state-0').textContent, 'On safe ground');
-  assert.equal(f.$('coop-state-1').textContent, 'On safe ground');
+  assert.equal(f.$('coop-state-0').textContent, 'On reclaimed ground');
+  assert.equal(f.$('coop-state-1').textContent, 'On reclaimed ground');
   assert.equal(f.$('coop-coverage').textContent, '0.0%');
 });
 
