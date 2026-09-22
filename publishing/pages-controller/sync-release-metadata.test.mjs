@@ -88,6 +88,77 @@ function release(version) {
   };
 }
 
+function waivedReleaseQualification(item) {
+  const policy = jsonBytes({
+      format: 'revealline-release-test-policy.v1',
+      mode: 'waived',
+      authorization: 'explicit-user-request-20260922',
+      scope: 'automated-test-suites',
+      reason: 'Temporary automated test waiver requested by the user.',
+      restoration: 'Restore required automated tests in a reviewed change.',
+    }),
+    sourceTree = 'e'.repeat(40),
+    step = (name, number) => ({ name, number, status: 'completed', conclusion: 'success' }),
+    policyEvidence = {
+      path: 'publishing/test-policy.json',
+      bytes: policy.length,
+      sha256: digest(policy),
+    },
+    runEvidence = { path: 'run.json', bytes: 10, sha256: '1'.repeat(64) },
+    jobsEvidence = { path: 'jobs.json', bytes: 10, sha256: '2'.repeat(64) };
+  item.tag.sourceTree = sourceTree;
+  item.assets.set(
+    'source-qualification.json',
+    jsonBytes({
+      format: 'revealline-source-qualification.v2',
+      status: 'qualified-with-test-waiver',
+      releaseEligible: true,
+      version: item.pin.version,
+      sourceRevision: item.tag.sourceRevision,
+      sourceTree,
+      actualCheckoutCommit: item.tag.sourceRevision,
+      actualCheckoutTree: sourceTree,
+      allTrackedSourceContentsAndModesMatch: true,
+      gates: ['validate', 'lint', 'format', 'native-format', 'motion-syntax'].map(
+        (gate, index) => ({
+          gate,
+          command: [
+            'npm run validate',
+            'npm run lint',
+            'npm run format:check',
+            'npm run format:native:check',
+            'node --check authoring/motion-lab/app.js',
+          ][index],
+          jobId: 100 + index,
+          step: step(`Gate ${gate}`, index + 1),
+        }),
+      ),
+      tests: { status: 'waived', counts: null },
+      testPolicy: {
+        mode: 'waived',
+        authorization: 'explicit-user-request-20260922',
+        reason: 'Temporary automated test waiver requested by the user.',
+        policyEvidence,
+      },
+      waiverEvidence: { runId: 42, runEvidence, jobsEvidence },
+      evidencePins: [policyEvidence, runEvidence, jobsEvidence],
+      ordinaryBuildCorroboration: {
+        command: 'npm run build',
+        step: step('Build', 20),
+      },
+      frozenArtifactCorroboration: {
+        artifactId: 99,
+        runId: 42,
+        wholeOriginalArtifactVerifiedBeforeQualification: true,
+        sourceTarGitBlobTypeModeAndPaxCommitVerified: true,
+        allInnerZipManifestBytesVerified: true,
+        frozenOfflineInventoryAndBindingsVerified: true,
+      },
+    }),
+  );
+  return policy;
+}
+
 async function setup(t, pinned = ['v0.1.0']) {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'rl-metadata-sync-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));
@@ -154,6 +225,41 @@ test('sync adds verified metadata and qualification; repeat preserves every byte
     ),
     times.map((s) => s.mtimeMs),
   );
+});
+
+test('sync accepts v2 only with the exact policy from the tagged source', async (t) => {
+  const f = await setup(t),
+    item = f.releases.get('v0.2.0'),
+    policy = waivedReleaseQualification(item),
+    result = await syncReleaseMetadata({
+      ...f.options,
+      versions: ['v0.2.0'],
+      qualificationVersion: 'v0.2.0',
+      readSourceFile: async (revision, name) => {
+        assert.equal(revision, item.tag.sourceRevision);
+        assert.equal(name, 'publishing/test-policy.json');
+        return policy;
+      },
+    });
+  assert.equal(result.qualificationVersion, 'v0.2.0');
+  assert.equal(result.qualificationSha256, digest(item.assets.get('source-qualification.json')));
+});
+
+test('sync rejects a v2 policy substitution before writing any metadata', async (t) => {
+  const f = await setup(t),
+    item = f.releases.get('v0.2.0'),
+    policy = waivedReleaseQualification(item),
+    before = await files(f.directory);
+  await assert.rejects(
+    syncReleaseMetadata({
+      ...f.options,
+      versions: ['v0.2.0'],
+      qualificationVersion: 'v0.2.0',
+      readSourceFile: async () => Buffer.concat([policy, Buffer.from('\n')]),
+    }),
+    /policy byte pin mismatch/,
+  );
+  assert.deepEqual(await files(f.directory), before);
 });
 
 test('existing-only sync preserves original catalog whitespace', async (t) => {
