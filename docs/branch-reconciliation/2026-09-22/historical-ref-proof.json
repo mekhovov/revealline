@@ -1,0 +1,2327 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-22T15:30:35.894Z",
+  "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+  "scope": "Committed-ref reconciliation only. No worktree dirty/untracked changes covered.",
+  "commands": [
+    "git diff --name-only --find-renames MERGE_BASE TIP",
+    "git show TIP:.github/workflows/qualify-release-source.yml",
+    "git show TIP:BOUND_JSON_PATH",
+    "git show --format=medium --find-renames COMMIT | git patch-id --stable",
+    "gh pr view 33 --repo mekhovov/revealline --json body,comments",
+    "gh pr view 45 --repo mekhovov/revealline --json comments",
+    "gh api repos/mekhovov/revealline/pulls/228"
+  ],
+  "counts": {
+    "refRows": 47,
+    "uniqueTips": 25,
+    "classifications": {
+      "historical-release-evidence": 19,
+      "historical-rejected-proposal": 1,
+      "patch-equivalent-to-main": 3,
+      "unique-changes-require-intake": 1,
+      "superseded-historical-selector": 1
+    }
+  },
+  "refs": [
+    {
+      "tip": "12cd3dadf978d2e3148e4981ece5e82270d6379b",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive30-public-byte-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive30-public-byte-audit"
+        }
+      ],
+      "mergeBase": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "ahead": 1,
+      "behind": 751,
+      "uniqueCommitIds": [
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 24,
+      "pullRequests": [],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "79af8bf123f3be77adf5368299d571df28426102",
+        "workflowName": "name: Audit exact public Archive30 bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/archive30-public-audit",
+        "bindingPath": "publishing/utility/archive30-public-audit/binding.proposed.json",
+        "binding": {
+          "format": "revealline-archive30-hosted-audit.v1",
+          "reviewed": false,
+          "repository": "mekhovov/revealline-archive-30",
+          "archiveCommit": "cf9113746d96cf50d7cb8491d58dece53bd9cc60",
+          "archiveTree": "c3baca75f63c6e886b6cfa3a0f7a81f3da0d4188",
+          "runId": 35421309244,
+          "runAttempt": 1,
+          "deploymentId": 6537067684,
+          "deploymentStatusId": 18553235524,
+          "receiptArtifactId": 10577528164,
+          "receiptBytes": 37618,
+          "receiptSha256": "d64ee36720da01e58aabb3b7ed76b57889111eb2ea1a3ef60a9a9735e3be9dcc",
+          "inventorySha256": "4bff619ddb71739ab0cc851518fc7115bdb877d4608f6bae025864ab2d90f774",
+          "sourceLockSha256": "96975e385a48e0da84696a23d2593b8ede599573d190a5f323e66c9a76380802",
+          "expectedFiles": 705,
+          "expectedBytes": 313563420,
+          "priorRows": 0,
+          "executionRequestSha256": "ac0b16f2172689be950595641ea9156963ba003c017b96711ff67dd833130b36"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "4dd68d07c5c984e78336b21a694a4e245d0934e9",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive30-v0621-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive30-v0621-http-audit"
+        }
+      ],
+      "mergeBase": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "ahead": 2,
+      "behind": 751,
+      "uniqueCommitIds": [
+        "4dd68d07c5c984e78336b21a694a4e245d0934e9",
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 24,
+      "pullRequests": [],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "25921f49c7eda64cec623033b4de242615f6e6b8",
+        "workflowName": "name: Audit exact public Archive30 bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/archive30-public-audit",
+        "bindingPath": "publishing/utility/archive30-public-audit/binding.proposed.json",
+        "binding": {
+          "format": "revealline-archive30-hosted-audit.v1",
+          "reviewed": false,
+          "repository": "mekhovov/revealline-archive-30",
+          "archiveCommit": "950e30e6c891345ac5b68e2e796b54c0e64828f5",
+          "archiveTree": "fe6cba995c640068d2f9f21805bd815c46831163",
+          "runId": 35431113584,
+          "runAttempt": 1,
+          "deploymentId": 6538726400,
+          "deploymentStatusId": 18557058965,
+          "receiptArtifactId": 10580223813,
+          "receiptBytes": 74091,
+          "receiptSha256": "063da5fcabfd2c232937a17ccf951cfa616ec35b601c71f57e622c402b8e86fa",
+          "inventorySha256": "39343732354cf89ef968048a501d81cef4555bd22dc7d7a3f15eac6801b1fb9b",
+          "sourceLockSha256": "cf7c1384c8c5eff796eadc3a59d8c5645f04ea50d279fae6f7bb05761b8b43ff",
+          "expectedFiles": 1408,
+          "expectedBytes": 627086405,
+          "priorRows": 705,
+          "executionRequestSha256": "e3cce9d3079639ad5282cdf973c375f9580cd77f5e9ebee00bb3c3138614227f"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "a1c735741db7c4f01e5837e662d24f68c2357ca1",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive31-public-byte-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive31-public-byte-audit"
+        }
+      ],
+      "mergeBase": "145f58c2941e40c5bc56da044e5647465ea41a96",
+      "ahead": 1,
+      "behind": 597,
+      "uniqueCommitIds": [
+        "a1c735741db7c4f01e5837e662d24f68c2357ca1"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 24,
+      "pullRequests": [],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "302010e4e7c1dc9957a6a38e45d321aa16b4e3b5",
+        "workflowName": "name: Audit exact public Archive31 bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/archive31-public-audit",
+        "bindingPath": "publishing/utility/archive31-public-audit/binding.proposed.json",
+        "binding": {
+          "format": "revealline-archive31-hosted-audit.v1",
+          "reviewed": false,
+          "repository": "mekhovov/revealline-archive-31",
+          "archiveCommit": "f476c311e0050b47d7408db51d57239fba7bece6",
+          "archiveTree": "d144cc112088882211bb1b5e04df298f4f4a78be",
+          "runId": 35434694566,
+          "runAttempt": 1,
+          "deploymentId": 6539360227,
+          "deploymentStatusId": 18558487091,
+          "receiptArtifactId": 10581207803,
+          "receiptBytes": 37874,
+          "receiptSha256": "35cf5f0decf18e95fab49bce13426025d2d902127206579719b6f754e690825e",
+          "inventorySha256": "285232581d22b530a309eae608a75cb6826bf688bd8604b179b6258f64748da6",
+          "sourceLockSha256": "1204afdf0ca75a10333a2e4a8ddc776a622ef5108604076969a0198802c46bea",
+          "expectedFiles": 711,
+          "expectedBytes": 313557913,
+          "priorRows": 0,
+          "executionRequestSha256": "67dcd2439c33e2e348ab915c0311e4a1ad2edc4c1add74b6fe7bdedbee3d15b8"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "8692aa902f2535d87767fcc410811948ddd02adb",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive31-v0640-public-byte-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive31-v0640-public-byte-audit"
+        }
+      ],
+      "mergeBase": "145f58c2941e40c5bc56da044e5647465ea41a96",
+      "ahead": 2,
+      "behind": 597,
+      "uniqueCommitIds": [
+        "8692aa902f2535d87767fcc410811948ddd02adb",
+        "a1c735741db7c4f01e5837e662d24f68c2357ca1"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 24,
+      "pullRequests": [],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "f775c535f5b3941e24ea91922ab40cc46dee42ac",
+        "workflowName": "name: Audit exact public Archive31 bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/archive31-public-audit",
+        "bindingPath": "publishing/utility/archive31-public-audit/binding.proposed.json",
+        "binding": {
+          "format": "revealline-archive31-hosted-audit.v1",
+          "reviewed": false,
+          "repository": "mekhovov/revealline-archive-31",
+          "archiveCommit": "2ff1b312872857cf04b485f9c987a26c0432f356",
+          "archiveTree": "8c3ca7ed1accb04afcb8a92063bb412e05ecc833",
+          "runId": 35441173594,
+          "runAttempt": 1,
+          "deploymentId": 6540533321,
+          "deploymentStatusId": 18561156073,
+          "receiptArtifactId": 10583822110,
+          "receiptBytes": 74646,
+          "receiptSha256": "3ba0e84e0864810b421c92920a376d13bee09627352299b5060aa89b239a71b0",
+          "inventorySha256": "0ffe35d0cfbeb53b200c3cd1d62749f23fb625bfb82cf3a1d84b649e9c3284db",
+          "sourceLockSha256": "c36f25e5a7289a0c2930f0d18841df83585d3103f7195caba263768ea17ea7d3",
+          "expectedFiles": 1420,
+          "expectedBytes": 627122610,
+          "priorRows": 711,
+          "executionRequestSha256": "2fb2a5fcb33475ffc3e3a64ea78388a83d074cc11b2946cf9745189b347c9732"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "aceab9f58ffb405c81539f0ef5ebf49175b70e9b",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive32-public-byte-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive32-public-byte-audit"
+        }
+      ],
+      "mergeBase": "145f58c2941e40c5bc56da044e5647465ea41a96",
+      "ahead": 2,
+      "behind": 597,
+      "uniqueCommitIds": [
+        "aceab9f58ffb405c81539f0ef5ebf49175b70e9b",
+        "a1c735741db7c4f01e5837e662d24f68c2357ca1"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 47,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive32-public-byte-audit"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "d742c12779e4a27a862676c55b2c719098a2cebb",
+        "workflowName": "name: Audit exact public Archive32 bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/archive32-public-audit",
+        "bindingPath": "publishing/utility/archive32-public-audit/binding.proposed.json",
+        "binding": {
+          "format": "revealline-archive32-hosted-audit.v1",
+          "reviewed": false,
+          "repository": "mekhovov/revealline-archive-32",
+          "archiveCommit": "50909e7cf38916fe7d3e2e7eb79339bb49ae80b9",
+          "archiveTree": "b11d49db3eb2e7416bc5d8b0b6f01f8084911345",
+          "runId": 35446915477,
+          "runAttempt": 1,
+          "deploymentId": 6541593688,
+          "deploymentStatusId": 18563533057,
+          "receiptArtifactId": 10585129992,
+          "receiptBytes": 37929,
+          "receiptSha256": "abf503a3cdf07c093794fa22c04b12c8fc304510ba2e6b6c96696150a6da1461",
+          "inventorySha256": "fcf083e83494a0d22c3078ddd032f75b630dcda4d25d3d4976b612ca1216c6d0",
+          "sourceLockSha256": "4edef85f0b79cc82e7597497db9153e92c5cd3e07aca55e05089562d20372c46",
+          "expectedFiles": 712,
+          "expectedBytes": 313567687,
+          "priorRows": 0,
+          "executionRequestSha256": "618598f3a280c9bf5c2195d59590f0d06e6248c6d7d7be4643f72da07c282033"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "bcdef9e2b043e7466505aa6ea8e2e248e7567dc4",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive32-v0642-public-byte-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive32-v0642-public-byte-audit"
+        }
+      ],
+      "mergeBase": "145f58c2941e40c5bc56da044e5647465ea41a96",
+      "ahead": 3,
+      "behind": 597,
+      "uniqueCommitIds": [
+        "bcdef9e2b043e7466505aa6ea8e2e248e7567dc4",
+        "aceab9f58ffb405c81539f0ef5ebf49175b70e9b",
+        "a1c735741db7c4f01e5837e662d24f68c2357ca1"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 47,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive32-v0642-public-byte-audit"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "65bffe5c330355b555720f1dad47f9550cae7f31",
+        "workflowName": "name: Audit exact public Archive32 bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/archive32-public-audit",
+        "bindingPath": "publishing/utility/archive32-public-audit/binding.proposed.json",
+        "binding": {
+          "format": "revealline-archive32-hosted-audit.v1",
+          "reviewed": false,
+          "repository": "mekhovov/revealline-archive-32",
+          "archiveCommit": "2ff124892905eda499e7b1fb29729f092a253ecb",
+          "archiveTree": "12407d538821769350a37679ec0d214b99b77a98",
+          "runId": 35464701544,
+          "runAttempt": 1,
+          "deploymentId": 6544867176,
+          "deploymentStatusId": 18570809928,
+          "receiptArtifactId": 10590574153,
+          "receiptBytes": 74682,
+          "receiptSha256": "e6b153a057a629f3d04746fab21429d9e52577a2af3c2f0eaf846b4d58855151",
+          "inventorySha256": "2557dc9feaa90454f291846f135f3ec556a92b18cf4e883fbb173d4a76376543",
+          "sourceLockSha256": "96b82582a221f57781eb6342d35efde98ac03437d63378cc376f18af7d40fa10",
+          "expectedFiles": 1421,
+          "expectedBytes": 627136217,
+          "priorRows": 712,
+          "executionRequestSha256": "ecb73415aa2f7505500a0482564178641f9b65195a9c0b3a1ed5a48337d87906"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "8ec16b28a136765c339e45f7aa229b42b59547e1",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive33-v0643-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive33-v0643-http-audit"
+        }
+      ],
+      "mergeBase": "145f58c2941e40c5bc56da044e5647465ea41a96",
+      "ahead": 3,
+      "behind": 597,
+      "uniqueCommitIds": [
+        "8ec16b28a136765c339e45f7aa229b42b59547e1",
+        "aceab9f58ffb405c81539f0ef5ebf49175b70e9b",
+        "a1c735741db7c4f01e5837e662d24f68c2357ca1"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 70,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive33-v0643-http-audit"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "661196cdcbcd99b4f856a7d8be2de0635bcfb221",
+        "workflowName": "name: Audit exact public Archive33 bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/archive33-public-audit",
+        "bindingPath": "publishing/utility/archive33-public-audit/binding.proposed.json",
+        "binding": {
+          "format": "revealline-archive33-hosted-audit.v1",
+          "reviewed": false,
+          "repository": "mekhovov/revealline-archive-33",
+          "archiveCommit": "b184d8d8872ec305d8606ac99bd3d6235e291db8",
+          "archiveTree": "b46cb2fa286731828733a65f0b83f6b205f8e3f8",
+          "runId": 35468569854,
+          "runAttempt": 1,
+          "deploymentId": 6545564229,
+          "deploymentStatusId": 18572361543,
+          "receiptArtifactId": 10591926694,
+          "receiptBytes": 37933,
+          "receiptSha256": "387be101428de5b13fdcc9274a8bbbb7037b77080772e330074b2803d2c48561",
+          "inventorySha256": "90255bf387bf20ee20d27f6a0419e8822a231148f0409c1b901aaef588293637",
+          "sourceLockSha256": "81a09c0859634ec528aaebb1f4e2eb82f270894b27a8e4383409c9471793e5ae",
+          "expectedFiles": 712,
+          "expectedBytes": 313572608,
+          "priorRows": 0,
+          "executionRequestSha256": "81855f7452d8d058b73c5fb5d6fa202f54b43430014ea780e3cf3a6022367831"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "84ab171fa8551d2b6f26ce77e84f04c2cea381f6",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/archive33-v0650-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/archive33-v0650-http-audit"
+        }
+      ],
+      "mergeBase": "145f58c2941e40c5bc56da044e5647465ea41a96",
+      "ahead": 4,
+      "behind": 597,
+      "uniqueCommitIds": [
+        "84ab171fa8551d2b6f26ce77e84f04c2cea381f6",
+        "8ec16b28a136765c339e45f7aa229b42b59547e1",
+        "aceab9f58ffb405c81539f0ef5ebf49175b70e9b",
+        "a1c735741db7c4f01e5837e662d24f68c2357ca1"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 70,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive33-v0650-http-audit"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "d22ce6242811adecbc7090959eb9c5ffb990c51b",
+        "workflowName": "name: Audit exact public Archive33 bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/archive33-public-audit",
+        "bindingPath": "publishing/utility/archive33-public-audit/binding.proposed.json",
+        "binding": {
+          "format": "revealline-archive33-hosted-audit.v1",
+          "reviewed": false,
+          "repository": "mekhovov/revealline-archive-33",
+          "archiveCommit": "8e9e15eb55ba98b821e70861a20dc76bb7a761ce",
+          "archiveTree": "be3cf8f64dc6a435044a7b909091c666a024e668",
+          "runId": 35476969070,
+          "runAttempt": 1,
+          "deploymentId": 6547026356,
+          "deploymentStatusId": 18575642876,
+          "receiptArtifactId": 10594441954,
+          "receiptBytes": 74707,
+          "receiptSha256": "2522c120f85362ba7b6c99f912f37b92c6d8678b2277eeb965da72dde1f4f460",
+          "inventorySha256": "d3d094c2d02841fb6e561fe6ec3e3cc054907d66f55811cccc1336bbc041e088",
+          "sourceLockSha256": "67cc55331378b393f0f19cefbf6d7d8e8325f388111794399caff91335b820d6",
+          "expectedFiles": 1421,
+          "expectedBytes": 627143902,
+          "priorRows": 712,
+          "executionRequestSha256": "9db1ef2e06e573f827228b137955d854e37895e439c4e925f7949d84036be80f"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "7c227dc92954a9d8ce654a2e235ce805934b8847",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/hosted-qualified-freezes"
+        },
+        {
+          "location": "github",
+          "name": "codex/hosted-qualified-freezes"
+        }
+      ],
+      "mergeBase": "5d4bd98718955fa471fe71d798715864af166d18",
+      "ahead": 2,
+      "behind": 1128,
+      "uniqueCommitIds": [
+        "7c227dc92954a9d8ce654a2e235ce805934b8847",
+        "411dbd12453b0beb693fe37cb43f1245b55ff6bd"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 13,
+      "pullRequests": [],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "explicit-temporary-historical-controller",
+        "readmePath": "publishing/qualified-freeze/README.md",
+        "readmeBlob": "da785d2056289df8fa344f7f916b227e94d63e37",
+        "bindingPath": "publishing/qualified-freeze/sources.json",
+        "binding": {
+          "format": "revealline-hosted-freeze-sources.v1",
+          "repository": "mekhovov/revealline",
+          "sources": [
+            {
+              "version": "v0.49.0",
+              "sourceRevision": "8af0d47d73e8633c771823fe024a3456441d62c1",
+              "sourceTree": "ae3ae1d2911d93ca154ec04968eb34c3002648ae",
+              "node": "v20.19.6",
+              "qualificationSha256": "590a2198a599c43937d00ae4f0fc49abf436e6fd0c175ebf445f4d7263ce7d1d",
+              "receiptSha256": "5174ca44c35af63ca75b21a0440051a5d638be63275f07deaed878361ce36e5c",
+              "runId": 34899424481,
+              "workflowBlob": "2b7ce6a33f0731bc56c173012a271a5ddc318f6d",
+              "tests": 3583
+            },
+            {
+              "version": "v0.50.0",
+              "sourceRevision": "d52b634a231ce0907b83ea681e1e1aaf02387485",
+              "sourceTree": "42a4a2326633cb824b7b99e746e03c979a7af082",
+              "node": "v20.19.6",
+              "qualificationSha256": "65f3f238438cd33ccb4b7e33084054064550acafba4efc8ecd6408e7ebe37ad1",
+              "receiptSha256": "6ba0e7e3f40034a0cfac27a27e4a0ed1e957cb6cc2f2727685cccd60dae4aec3",
+              "runId": 34899353190,
+              "workflowBlob": "a819b0c6e0f2c18fe852984f15475e53884c5650",
+              "tests": 3593
+            },
+            {
+              "version": "v0.51.0",
+              "sourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+              "sourceTree": "37331db1a89526aedffd25ae979b7378a1a707fc",
+              "node": "v20.19.6",
+              "qualificationSha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0",
+              "receiptSha256": "5dc89f02dde6b83c657715081312cb85f435856d1d8e29aef6733e308cc20a03",
+              "runId": 34898406470,
+              "workflowBlob": "7923078412bc24f83accf02c0b0e057abaec9bf7",
+              "tests": 3691
+            }
+          ]
+        },
+        "onlyFreezeWorkflowAndPayloadPaths": true
+      },
+      "disposition": "Retain pinned temporary v0.49.0/v0.50.0/v0.51.0 freeze, verify and guarded draft-promotion controllers; no replay into current source.",
+      "uncertainty": [
+        "Not a new permanent-asset or execution audit. Historical promotion controller can write drafts; it is not read-only."
+      ]
+    },
+    {
+      "tip": "a48f0459f03bd25b96f3d27c3650ab6edebcd854",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/pages-artifact-budget"
+        },
+        {
+          "location": "github",
+          "name": "codex/pages-artifact-budget"
+        }
+      ],
+      "mergeBase": "d9c6f91710248b3d32c5372e9d806ba7e0beb2cc",
+      "ahead": 3,
+      "behind": 1161,
+      "uniqueCommitIds": [
+        "a48f0459f03bd25b96f3d27c3650ab6edebcd854",
+        "3d3314dc0b0ec09f1b29b65d793db528bda9eb7c",
+        "4f5740cfcea2011b173d4b432dc6bc7fed400cd7"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 4,
+      "pullRequests": [
+        {
+          "number": 33,
+          "state": "closed",
+          "draft": false,
+          "title": "Retain ten recent releases on GitHub Pages",
+          "head": "a48f0459f03bd25b96f3d27c3650ab6edebcd854",
+          "base": "main",
+          "mergedAt": null,
+          "mergeCommit": null,
+          "url": "https://github.com/mekhovov/revealline/pull/33"
+        }
+      ],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-rejected-proposal",
+      "proof": {
+        "kind": "owner-supersession-comment",
+        "pr": 33,
+        "url": "https://github.com/mekhovov/revealline/pull/33#issuecomment-5672335170",
+        "successorPr": 34,
+        "summary": "Owner closed as superseded by active frozen Pages controller; legacy build-pages policy caps at five and removes older external archive routing."
+      },
+      "disposition": "Retain closed proposal. Do not port its loss of historical playable routes: owner supersession and current preserve-all-history policy account for intentional non-delivery.",
+      "uncertainty": [
+        "Not whole-patch-equivalent to main."
+      ]
+    },
+    {
+      "tip": "d08602dee0a086c345d7f8273b5363ee693fe00a",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/promote-qualified-freezes"
+        },
+        {
+          "location": "github",
+          "name": "codex/promote-qualified-freezes"
+        }
+      ],
+      "mergeBase": "5d4bd98718955fa471fe71d798715864af166d18",
+      "ahead": 5,
+      "behind": 1128,
+      "uniqueCommitIds": [
+        "d08602dee0a086c345d7f8273b5363ee693fe00a",
+        "018643c0ed2a5f5929ae44407201f7f34bf9aeff",
+        "20781633a8a373f9229694101c4bd5946638e6a2",
+        "7c227dc92954a9d8ce654a2e235ce805934b8847",
+        "411dbd12453b0beb693fe37cb43f1245b55ff6bd"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 40,
+      "pullRequests": [],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "explicit-temporary-historical-controller",
+        "readmePath": "publishing/qualified-freeze/README.md",
+        "readmeBlob": "a2b6104fdc37f7747ecf0c0acc3b562f373f4634",
+        "bindingPath": "publishing/qualified-freeze/sources.json",
+        "binding": {
+          "format": "revealline-hosted-freeze-sources.v1",
+          "repository": "mekhovov/revealline",
+          "sources": [
+            {
+              "version": "v0.49.0",
+              "sourceRevision": "8af0d47d73e8633c771823fe024a3456441d62c1",
+              "sourceTree": "ae3ae1d2911d93ca154ec04968eb34c3002648ae",
+              "node": "v20.19.6",
+              "qualificationSha256": "590a2198a599c43937d00ae4f0fc49abf436e6fd0c175ebf445f4d7263ce7d1d",
+              "receiptSha256": "5174ca44c35af63ca75b21a0440051a5d638be63275f07deaed878361ce36e5c",
+              "runId": 34899424481,
+              "workflowBlob": "2b7ce6a33f0731bc56c173012a271a5ddc318f6d",
+              "tests": 3583
+            },
+            {
+              "version": "v0.50.0",
+              "sourceRevision": "d52b634a231ce0907b83ea681e1e1aaf02387485",
+              "sourceTree": "42a4a2326633cb824b7b99e746e03c979a7af082",
+              "node": "v20.19.6",
+              "qualificationSha256": "65f3f238438cd33ccb4b7e33084054064550acafba4efc8ecd6408e7ebe37ad1",
+              "receiptSha256": "6ba0e7e3f40034a0cfac27a27e4a0ed1e957cb6cc2f2727685cccd60dae4aec3",
+              "runId": 34899353190,
+              "workflowBlob": "a819b0c6e0f2c18fe852984f15475e53884c5650",
+              "tests": 3593
+            },
+            {
+              "version": "v0.51.0",
+              "sourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+              "sourceTree": "37331db1a89526aedffd25ae979b7378a1a707fc",
+              "node": "v20.19.6",
+              "qualificationSha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0",
+              "receiptSha256": "5dc89f02dde6b83c657715081312cb85f435856d1d8e29aef6733e308cc20a03",
+              "runId": 34898406470,
+              "workflowBlob": "7923078412bc24f83accf02c0b0e057abaec9bf7",
+              "tests": 3691
+            }
+          ]
+        },
+        "onlyFreezeWorkflowAndPayloadPaths": true
+      },
+      "disposition": "Retain pinned temporary v0.49.0/v0.50.0/v0.51.0 freeze, verify and guarded draft-promotion controllers; no replay into current source.",
+      "uncertainty": [
+        "Not a new permanent-asset or execution audit. Historical promotion controller can write drafts; it is not read-only."
+      ]
+    },
+    {
+      "tip": "6704ad7ba2da63a0865c8acd79113361c9c5a310",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/release-router-pending-selector"
+        },
+        {
+          "location": "github",
+          "name": "codex/release-router-pending-selector"
+        }
+      ],
+      "mergeBase": "6b6bf7ddf71f2fe1b2554b5df4efd4548859ee04",
+      "ahead": 1,
+      "behind": 1076,
+      "uniqueCommitIds": [
+        "6704ad7ba2da63a0865c8acd79113361c9c5a310"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 2,
+      "pullRequests": [
+        {
+          "number": 45,
+          "state": "closed",
+          "draft": false,
+          "title": "ci: keep release events green while selector review is pending",
+          "head": "6704ad7ba2da63a0865c8acd79113361c9c5a310",
+          "base": "main",
+          "mergedAt": null,
+          "mergeCommit": "e425fd5186ddfd32a258815d0848658806f2417c",
+          "url": "https://github.com/mekhovov/revealline/pull/45"
+        }
+      ],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "patch-equivalent-to-main",
+      "proof": [
+        {
+          "commit": "6704ad7ba2da63a0865c8acd79113361c9c5a310",
+          "patchId": "3e75fd7d3515da622148e4bb1d4954942da316ca",
+          "equivalentMainCommits": [
+            "6996899010201b4727eda05c4e318f303fba17b1"
+          ]
+        }
+      ],
+      "disposition": "Retain original ref; no replay needed.",
+      "uncertainty": [
+        "Patch-ID equivalence ignores whitespace; runtime acceptance separate."
+      ]
+    },
+    {
+      "tip": "6e8ce9e65a2f80abfdb5f143588c59e096c6f2fb",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/release-v0.51.1-audio"
+        },
+        {
+          "location": "github",
+          "name": "codex/release-v0.51.1-audio"
+        }
+      ],
+      "mergeBase": "5f905b1b4ac60206c1fa15ddfedd9b2add5ac04d",
+      "ahead": 8,
+      "behind": 1094,
+      "uniqueCommitIds": [
+        "6e8ce9e65a2f80abfdb5f143588c59e096c6f2fb",
+        "e1a09827ac88f32d57253200789742bde5f6f2d1",
+        "58922af7fccf21c7e409520827785bdfd5548caf",
+        "964e62dba81b9ab9770a8c0e99284dec6f43c42f",
+        "d7612c87066156ad9b546d41a1a429ea62608d03",
+        "1ce194373ba5cbd1da7000abcb4ec0c3b70bbc6b",
+        "5aa6acd206c4222fa00484db91318a89b4524de4",
+        "f5abe84e60a4eb6176115f5d89fb5a3bd1afb25b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 19,
+      "pullRequests": [
+        {
+          "number": 40,
+          "state": "closed",
+          "draft": false,
+          "title": "release: v0.51.1 audio and release explorer",
+          "head": "d7612c87066156ad9b546d41a1a429ea62608d03",
+          "base": "main",
+          "mergedAt": "2026-09-15T01:25:00Z",
+          "mergeCommit": "ac6d842052bba4addef21e404cdfc91f5a909321",
+          "url": "https://github.com/mekhovov/revealline/pull/40"
+        }
+      ],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "unique-changes-require-intake",
+      "proof": {
+        "kind": "post-merge-branch-drift",
+        "pr": 40,
+        "mergedPrHead": "d7612c87066156ad9b546d41a1a429ea62608d03",
+        "mainMerge": "ac6d842052bba4addef21e404cdfc91f5a909321",
+        "unaccountedPostPrCommits": [
+          "964e62dba81b9ab9770a8c0e99284dec6f43c42f",
+          "58922af7fccf21c7e409520827785bdfd5548caf",
+          "e1a09827ac88f32d57253200789742bde5f6f2d1",
+          "6e8ce9e65a2f80abfdb5f143588c59e096c6f2fb"
+        ],
+        "missingFromOriginalMergePaths": [
+          "authoring/library/fpv-field-kit/production.rltheme",
+          "game/presentation/compiled/manifest.json",
+          "game/presentation/compiled/runtime.json",
+          "game/presentation/compiled/studio.json",
+          "game/test/external-chapter-app.test.mjs",
+          "game/ui/soundtrack-panel.mjs",
+          "scripts/produce-field-kit-theme.mjs"
+        ],
+        "currentObservation": "Main retains gesture wake/play and iPhone audio-session implementation, but notifyPlayback now uses state.playing && !audioMaster rather than branch state.desired || state.playing.",
+        "releaseTagApi": "GET releases/tags/v0.51.1 returned404 and local tag absent."
+      },
+      "disposition": "Owner-coordinate fresh current-main draft intake for four post-PR commits. Re-evaluate intent persistence and cold-run timeout; never copy obsolete production-review ledger or reuse v0.51.1 blindly.",
+      "uncertainty": [
+        "No exact successor established for four post-PR commits. Generated ledger advanced audio quality on focused-test evidence; current approval must be independently reviewed."
+      ]
+    },
+    {
+      "tip": "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0621-main-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0621-main-http-audit"
+        }
+      ],
+      "mergeBase": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "ahead": 2,
+      "behind": 751,
+      "uniqueCommitIds": [
+        "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 45,
+      "pullRequests": [],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "145724e04efde283bdc0a22f627fa65c0b7c2b69",
+        "workflowName": "name: Audit exact v0.62.1 public main bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/main-public-v0621",
+        "bindingPath": "publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/binding.json",
+        "binding": {
+          "format": "revealline-final-main-public-binding.v1",
+          "reviewed": true,
+          "base": "https://mekhovov.github.io/revealline/",
+          "currentVersion": "v0.62.1",
+          "gameSourceRevision": "9f04273a09dd23d44236c1715d62cfa460171e24",
+          "qualifiedSourceTree": "2c35f299f981aba98929ba9ac01addbfe8b48d63",
+          "controllerCommit": "3abc9b8d8a61280fd3070ffb3fa926328d14aefb",
+          "controllerTree": "38a121d6309cb3e7ab860fbd4659837835521e20",
+          "deploymentId": 6538129092,
+          "runId": 35427535988,
+          "inventorySha256": "dffb1c6362f3acf2efde830babd0ed1828f14c1096b1df34be77a7bb21c2ba0c"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "d3513449935f4d00747e746ed3aa82dc308cf692",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0630-main-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0630-main-http-audit"
+        }
+      ],
+      "mergeBase": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "ahead": 3,
+      "behind": 751,
+      "uniqueCommitIds": [
+        "d3513449935f4d00747e746ed3aa82dc308cf692",
+        "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 67,
+      "pullRequests": [],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "10c3c18986b809ad873bb63ff6964fb431eff110",
+        "workflowName": "name: Audit exact v0.63.0 public main bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/main-public-v0630",
+        "bindingPath": "publishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/binding.json",
+        "binding": {
+          "format": "revealline-final-main-public-binding.v1",
+          "reviewed": true,
+          "base": "https://mekhovov.github.io/revealline/",
+          "currentVersion": "v0.63.0",
+          "gameSourceRevision": "3e47f60b9f9b4c5088410536d649ff595b2667eb",
+          "qualifiedSourceTree": "fd0138c0e5f71b8b25368878c1948f5bef14255d",
+          "controllerCommit": "d97bea7cd435a55884eaa43586771e481de85fd7",
+          "controllerTree": "60a4230a9f4a1dd119049f8e9a003757e8d2e00a",
+          "deploymentId": 6539128893,
+          "runId": 35433279357,
+          "inventorySha256": "ddf7c16728d8ff917672134d0b9c8a8e3cf6e39b86710db25c5ad5a9d54ed195"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "976c45d49662ac40ee697e7084ce9d66e0a98ad4",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0640-main-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0640-main-http-audit"
+        }
+      ],
+      "mergeBase": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "ahead": 4,
+      "behind": 751,
+      "uniqueCommitIds": [
+        "976c45d49662ac40ee697e7084ce9d66e0a98ad4",
+        "d3513449935f4d00747e746ed3aa82dc308cf692",
+        "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 89,
+      "pullRequests": [],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "c4725575e6407a2cdf13db08afd23f68cf5f7044",
+        "workflowName": "name: Audit exact v0.64.0 public main bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/main-public-v0640",
+        "bindingPath": "publishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/binding.json",
+        "binding": {
+          "format": "revealline-final-main-public-binding.v1",
+          "reviewed": true,
+          "base": "https://mekhovov.github.io/revealline/",
+          "currentVersion": "v0.64.0",
+          "gameSourceRevision": "7c9d34f7011a904b9c100f66884a19808666315a",
+          "qualifiedSourceTree": "db0b7014be960b5e04e41234a802fac9d5930d6d",
+          "controllerCommit": "5807df71aa612636e574f66f0df99bf09506cbeb",
+          "controllerTree": "43975b699e50f7e92106da2be25ae6a08c330579",
+          "deploymentId": 6540160635,
+          "runId": 35439057940,
+          "inventorySha256": "604fd49a026f2eb6d9308633f891746c3478e2b1429897c68311011bcd3eed81"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "436aae27d96eda3b3bf404fd23e9f621d134b0ed",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0641-main-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0641-main-http-audit"
+        }
+      ],
+      "mergeBase": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "ahead": 5,
+      "behind": 751,
+      "uniqueCommitIds": [
+        "436aae27d96eda3b3bf404fd23e9f621d134b0ed",
+        "976c45d49662ac40ee697e7084ce9d66e0a98ad4",
+        "d3513449935f4d00747e746ed3aa82dc308cf692",
+        "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 112,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/v0641-main-http-audit"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "de6761b751f28504a5cb804ee1c746cbc6a95496",
+        "workflowName": "name: Audit exact v0.64.1 public main bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/main-public-v0641",
+        "bindingPath": "publishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/binding.json",
+        "binding": {
+          "format": "revealline-final-main-public-binding.v1",
+          "reviewed": true,
+          "base": "https://mekhovov.github.io/revealline/",
+          "currentVersion": "v0.64.1",
+          "gameSourceRevision": "8ae70850db00777eb9afb233ff8a881fc26714f0",
+          "qualifiedSourceTree": "3b52b721c2000b316bcc52a3132d011703089888",
+          "controllerCommit": "95575953e9601c2ee018e9803ea6f90db9d93e20",
+          "controllerTree": "6a21170770cd7341abe423c88228a9424f80a5e9",
+          "deploymentId": 6541328289,
+          "runId": 35445356978,
+          "inventorySha256": "877c96b9a66df74e80a7ad497fa11c9540edd8713ae0f35fe1a74e3cec06aaba"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "2ae7c91c0ba9bfbe16bb4c3775bd1fa308abe09e",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0642-main-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0642-main-http-audit"
+        }
+      ],
+      "mergeBase": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "ahead": 6,
+      "behind": 751,
+      "uniqueCommitIds": [
+        "2ae7c91c0ba9bfbe16bb4c3775bd1fa308abe09e",
+        "436aae27d96eda3b3bf404fd23e9f621d134b0ed",
+        "976c45d49662ac40ee697e7084ce9d66e0a98ad4",
+        "d3513449935f4d00747e746ed3aa82dc308cf692",
+        "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 136,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/v0642-main-http-audit"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "551d221a432a8f9d5eede19277cced64487eb51b",
+        "workflowName": "name: Audit exact v0.64.2 public main bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/main-public-v0642",
+        "bindingPath": "publishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/binding.json",
+        "binding": {
+          "format": "revealline-final-main-public-binding.v1",
+          "reviewed": true,
+          "base": "https://mekhovov.github.io/revealline/",
+          "currentVersion": "v0.64.2",
+          "gameSourceRevision": "adbfcb94037b8a38d49b9650e7f8a83c7face1db",
+          "qualifiedSourceTree": "32369df7260360cc273857b195b2c2c7ca855994",
+          "controllerCommit": "2abd779766cd6d4b217b93a10575ed55d2d5547a",
+          "controllerTree": "00478b7f870107adfe389efeeebeac0d7013b61c",
+          "deploymentId": 6542316588,
+          "runId": 35450648405,
+          "inventorySha256": "08c52b19fdbea137fbec1b9fb33fa1d59520b5e8e38fa0c72c915d5049024bb3"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "0376f1f2d3b077208418836d32d6610d0a154fdc",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0643-main-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0643-main-http-audit"
+        }
+      ],
+      "mergeBase": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "ahead": 7,
+      "behind": 751,
+      "uniqueCommitIds": [
+        "0376f1f2d3b077208418836d32d6610d0a154fdc",
+        "2ae7c91c0ba9bfbe16bb4c3775bd1fa308abe09e",
+        "436aae27d96eda3b3bf404fd23e9f621d134b0ed",
+        "976c45d49662ac40ee697e7084ce9d66e0a98ad4",
+        "d3513449935f4d00747e746ed3aa82dc308cf692",
+        "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 160,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/v0643-main-http-audit"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "f07571433065ddad4001160cc4cdcc096b8b22a4",
+        "workflowName": "name: Audit exact v0.64.3 public main bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/main-public-v0643",
+        "bindingPath": "publishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/binding.json",
+        "binding": {
+          "format": "revealline-final-main-public-binding.v1",
+          "reviewed": true,
+          "base": "https://mekhovov.github.io/revealline/",
+          "currentVersion": "v0.64.3",
+          "gameSourceRevision": "7a9985ec00168b99a86c1d5db0457343ca18ffae",
+          "qualifiedSourceTree": "4a5960488f4c19fc8fbd6e784c612b8bdb81596e",
+          "controllerCommit": "666c68a6f842da7cdac22c542e56f5e2910380e7",
+          "controllerTree": "aad495dabe764e42cea285ddcc70951858d3a055",
+          "deploymentId": 6545673666,
+          "runId": 35469057384,
+          "inventorySha256": "ace3ee1237654c0686b948d955848dece49dd92f130b4a5260a6d31627f83655"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "8af3d87b10d660e78735da669f676ed4b9a2c2ff",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0650-main-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0650-main-http-audit"
+        }
+      ],
+      "mergeBase": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "ahead": 8,
+      "behind": 751,
+      "uniqueCommitIds": [
+        "8af3d87b10d660e78735da669f676ed4b9a2c2ff",
+        "0376f1f2d3b077208418836d32d6610d0a154fdc",
+        "2ae7c91c0ba9bfbe16bb4c3775bd1fa308abe09e",
+        "436aae27d96eda3b3bf404fd23e9f621d134b0ed",
+        "976c45d49662ac40ee697e7084ce9d66e0a98ad4",
+        "d3513449935f4d00747e746ed3aa82dc308cf692",
+        "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 184,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/v0650-main-http-audit"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "d085ae288737792a6e8435cd2ea0022a5621b67e",
+        "workflowName": "name: Audit exact v0.65.0 public main bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/main-public-v0650",
+        "bindingPath": "publishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/binding.json",
+        "binding": {
+          "format": "revealline-final-main-public-binding.v1",
+          "reviewed": true,
+          "base": "https://mekhovov.github.io/revealline/",
+          "currentVersion": "v0.65.0",
+          "gameSourceRevision": "57fdc39aa78683f6de479eb77f810f60e7c6756a",
+          "qualifiedSourceTree": "b71a23d6c2474da72ef379793c811e7097b0a156",
+          "controllerCommit": "e6e269ea58aef2336c54f9497289a31c22ce9bb7",
+          "controllerTree": "7e96a3c4dca79d9385ed742ee5ad8885a590cff9",
+          "deploymentId": 6546633515,
+          "runId": 35474519516,
+          "inventorySha256": "83ab63aea4409760ebc66b9236e57c6dc1ba1be9ca9b1ebe1774244daa49a99c"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "94f7ac356778cf8854b6de046f21642873534d8c",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/v0660-main-http-audit"
+        },
+        {
+          "location": "github",
+          "name": "codex/v0660-main-http-audit"
+        }
+      ],
+      "mergeBase": "ef491211488b1c06f00ad2efbeb4fb23bbae39b8",
+      "ahead": 9,
+      "behind": 751,
+      "uniqueCommitIds": [
+        "94f7ac356778cf8854b6de046f21642873534d8c",
+        "8af3d87b10d660e78735da669f676ed4b9a2c2ff",
+        "0376f1f2d3b077208418836d32d6610d0a154fdc",
+        "2ae7c91c0ba9bfbe16bb4c3775bd1fa308abe09e",
+        "436aae27d96eda3b3bf404fd23e9f621d134b0ed",
+        "976c45d49662ac40ee697e7084ce9d66e0a98ad4",
+        "d3513449935f4d00747e746ed3aa82dc308cf692",
+        "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+        "12cd3dadf978d2e3148e4981ece5e82270d6379b"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 208,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/v0660-main-http-audit"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "bound-historical-audit-controller",
+        "workflowPath": ".github/workflows/qualify-release-source.yml",
+        "workflowBlob": "e466d567df89c5644c27bde684e4acb4e27676f0",
+        "workflowName": "name: Audit exact v0.66.0 public main bytes",
+        "permissions": "contents: read",
+        "utility": "publishing/utility/main-public-v0660",
+        "bindingPath": "publishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/binding.json",
+        "binding": {
+          "format": "revealline-final-main-public-binding.v1",
+          "reviewed": true,
+          "base": "https://mekhovov.github.io/revealline/",
+          "currentVersion": "v0.66.0",
+          "gameSourceRevision": "dae39ba7d4f1a64e309566f9cacca826958e7de2",
+          "qualifiedSourceTree": "e003212f771c9c8b71e87c9b913c62f107486e7d",
+          "controllerCommit": "7b898a7ba4a5007397d02d8911e0577668d3bc99",
+          "controllerTree": "2688ea503c55efcbe40d4d16a650db6196d6ec96",
+          "deploymentId": 6547558688,
+          "runId": 35480159218,
+          "inventorySha256": "c305c4f604ae4cf5ebc5b7ca736d0eff941c39a23e1f6bf7f9d43196821774d4"
+        },
+        "pathScopeVerified": true
+      },
+      "disposition": "Preserve ref and payloads as historical audit tooling; never merge the workflow replacement into modern main because it removes source qualification in favor of a pinned version-only audit.",
+      "uncertainty": [
+        "Historical purpose proven, not successful HTTP execution; proposed reviewed=false bindings remain unapproved inputs."
+      ]
+    },
+    {
+      "tip": "20781633a8a373f9229694101c4bd5946638e6a2",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "codex/verify-qualified-freeze-artifacts"
+        },
+        {
+          "location": "github",
+          "name": "codex/verify-qualified-freeze-artifacts"
+        }
+      ],
+      "mergeBase": "5d4bd98718955fa471fe71d798715864af166d18",
+      "ahead": 3,
+      "behind": 1128,
+      "uniqueCommitIds": [
+        "20781633a8a373f9229694101c4bd5946638e6a2",
+        "7c227dc92954a9d8ce654a2e235ce805934b8847",
+        "411dbd12453b0beb693fe37cb43f1245b55ff6bd"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 20,
+      "pullRequests": [],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "historical-release-evidence",
+      "proof": {
+        "kind": "explicit-temporary-historical-controller",
+        "readmePath": "publishing/qualified-freeze/README.md",
+        "readmeBlob": "2f9e17c83c85ebe9c6a794d0383df397e646b9da",
+        "bindingPath": "publishing/qualified-freeze/sources.json",
+        "binding": {
+          "format": "revealline-hosted-freeze-sources.v1",
+          "repository": "mekhovov/revealline",
+          "sources": [
+            {
+              "version": "v0.49.0",
+              "sourceRevision": "8af0d47d73e8633c771823fe024a3456441d62c1",
+              "sourceTree": "ae3ae1d2911d93ca154ec04968eb34c3002648ae",
+              "node": "v20.19.6",
+              "qualificationSha256": "590a2198a599c43937d00ae4f0fc49abf436e6fd0c175ebf445f4d7263ce7d1d",
+              "receiptSha256": "5174ca44c35af63ca75b21a0440051a5d638be63275f07deaed878361ce36e5c",
+              "runId": 34899424481,
+              "workflowBlob": "2b7ce6a33f0731bc56c173012a271a5ddc318f6d",
+              "tests": 3583
+            },
+            {
+              "version": "v0.50.0",
+              "sourceRevision": "d52b634a231ce0907b83ea681e1e1aaf02387485",
+              "sourceTree": "42a4a2326633cb824b7b99e746e03c979a7af082",
+              "node": "v20.19.6",
+              "qualificationSha256": "65f3f238438cd33ccb4b7e33084054064550acafba4efc8ecd6408e7ebe37ad1",
+              "receiptSha256": "6ba0e7e3f40034a0cfac27a27e4a0ed1e957cb6cc2f2727685cccd60dae4aec3",
+              "runId": 34899353190,
+              "workflowBlob": "a819b0c6e0f2c18fe852984f15475e53884c5650",
+              "tests": 3593
+            },
+            {
+              "version": "v0.51.0",
+              "sourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+              "sourceTree": "37331db1a89526aedffd25ae979b7378a1a707fc",
+              "node": "v20.19.6",
+              "qualificationSha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0",
+              "receiptSha256": "5dc89f02dde6b83c657715081312cb85f435856d1d8e29aef6733e308cc20a03",
+              "runId": 34898406470,
+              "workflowBlob": "7923078412bc24f83accf02c0b0e057abaec9bf7",
+              "tests": 3691
+            }
+          ]
+        },
+        "onlyFreezeWorkflowAndPayloadPaths": true
+      },
+      "disposition": "Retain pinned temporary v0.49.0/v0.50.0/v0.51.0 freeze, verify and guarded draft-promotion controllers; no replay into current source.",
+      "uncertainty": [
+        "Not a new permanent-asset or execution audit. Historical promotion controller can write drafts; it is not read-only."
+      ]
+    },
+    {
+      "tip": "809f5a91c18c9eeb777ecc1b452637f861d92795",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "fix/snapshot-archive-transfer"
+        }
+      ],
+      "mergeBase": "06ac8e08a4f3aa28cb0874bc1e9d15e0c6b3e863",
+      "ahead": 1,
+      "behind": 1057,
+      "uniqueCommitIds": [
+        "809f5a91c18c9eeb777ecc1b452637f861d92795"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 4,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/snapshot-archive-transfer"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "patch-equivalent-to-main",
+      "proof": [
+        {
+          "commit": "809f5a91c18c9eeb777ecc1b452637f861d92795",
+          "patchId": "041eead7f2bbef5cabcd307d088d1ce465769daf",
+          "equivalentMainCommits": [
+            "d980c8d8d7b9ce5ba0a1cc4afb97668e143f9e76",
+            "2b9dcbaf4cd80c4144759a38d0fb95a48e5f40ec"
+          ]
+        }
+      ],
+      "disposition": "Retain original ref; no replay needed.",
+      "uncertainty": [
+        "Patch-ID equivalence ignores whitespace; runtime acceptance separate."
+      ]
+    },
+    {
+      "tip": "a97f808486105264866e53b5dda63f8d4a4dc3c9",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "local",
+          "name": "prepare/archive10-controller-admission"
+        }
+      ],
+      "mergeBase": "20d6874531e6bb574fb3758c97c9115605174a58",
+      "ahead": 1,
+      "behind": 1009,
+      "uniqueCommitIds": [
+        "a97f808486105264866e53b5dda63f8d4a4dc3c9"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 56,
+      "pullRequests": [],
+      "worktrees": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive10-controller-admission"
+      ],
+      "dirtyChangesCovered": false,
+      "classification": "patch-equivalent-to-main",
+      "proof": [
+        {
+          "commit": "a97f808486105264866e53b5dda63f8d4a4dc3c9",
+          "patchId": "7f507285f54c6d74403f3721dc5441513d5fb018",
+          "equivalentMainCommits": [
+            "28be688a2ee77c25b89318497e0a6bad2217f866"
+          ]
+        }
+      ],
+      "disposition": "Retain original ref; no replay needed.",
+      "uncertainty": [
+        "Patch-ID equivalence ignores whitespace; runtime acceptance separate."
+      ]
+    },
+    {
+      "tip": "79b6c0192c63722487986c03d83927866f9804c8",
+      "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+      "refs": [
+        {
+          "location": "github",
+          "name": "codex/publish-v0803-selector"
+        }
+      ],
+      "mergeBase": "0b1d0fc98cc064aee4c352f6288deb620c36925d",
+      "ahead": 1,
+      "behind": 227,
+      "uniqueCommitIds": [
+        "79b6c0192c63722487986c03d83927866f9804c8"
+      ],
+      "changedPathsSource": "All changed paths are listed in commitPatchEvidence.files for uniqueCommitIds; rename destinations retained.",
+      "changedPathCount": 14,
+      "pullRequests": [
+        {
+          "number": 229,
+          "state": "closed",
+          "draft": false,
+          "title": "publish: select v0.80.3 and admit archive 47",
+          "head": "79b6c0192c63722487986c03d83927866f9804c8",
+          "base": "main",
+          "mergedAt": null,
+          "mergeCommit": "39adf53760dcfe0c2984f0d378155331123ff77c",
+          "url": "https://github.com/mekhovov/revealline/pull/229"
+        }
+      ],
+      "worktrees": [],
+      "dirtyChangesCovered": false,
+      "classification": "superseded-historical-selector",
+      "proof": {
+        "kind": "accepted-successor-with-evidence-corrections",
+        "successorPr": 228,
+        "successorHead": "0a6afa674ce248c6045e820344ffb1a3518d2c23",
+        "mergedAt": "2026-09-22T02:02:37Z",
+        "changedPathsVersusSuccessor": [
+          "publishing/pages-controller/evidence/archive-47-v0802/browser-admission.json",
+          "publishing/pages-controller/evidence/archive-47-v0802/workflow-run.json",
+          "publishing/pages-controller/publication.json"
+        ],
+        "corrections": "Only archive47 browser limitations, original workflow-run API evidence, and their publication SHA pins differ; all remaining files including immutable v0.80.3 metadata identical.",
+        "metadataStillIdenticalToMain": true
+      },
+      "disposition": "Preserve historical predecessor to merged228; do not roll back selector or corrected evidence.",
+      "uncertainty": [
+        "Not identical whole patch; successor intentionally narrows browser claims."
+      ]
+    }
+  ],
+  "commitPatchEvidence": [
+    {
+      "commit": "12cd3dadf978d2e3148e4981ece5e82270d6379b",
+      "patchId": "e99d1fc7e901d00a0e9ab1279af4845fbb78801a",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/archive30-public-audit/binding.proposed.json",
+        "A\tpublishing/utility/archive30-public-audit/hosted_run.py",
+        "A\tpublishing/utility/archive30-public-audit/payload-pins.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/collect-live.py",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/execution-request.reviewed.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/http-tools/audit_binding.py",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/http-tools/http_audit.py",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/http-tools/test_http_audit.py",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/inputs/expected-inventory.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/inputs/prior-expected-inventory.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/inputs/source-lock.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/internal-review.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/public_api_get.py",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/reconcile-completed-rows.py",
+        "A\tpublishing/utility/archive30-public-audit/payload/http/run-reviewed-operations.py",
+        "A\tpublishing/utility/archive30-public-audit/payload/intake/hosted-originals/verification-receipts-original.zip",
+        "A\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/artifacts.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/commit.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/deployment.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/main.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/run.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/statuses.json",
+        "A\tpublishing/utility/archive30-public-audit/test_hosted_run.py"
+      ]
+    },
+    {
+      "commit": "4dd68d07c5c984e78336b21a694a4e245d0934e9",
+      "patchId": "dcd199252f8fe6fcca257cf106ef4ec4f0994fdc",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "M\tpublishing/utility/archive30-public-audit/binding.proposed.json",
+        "M\tpublishing/utility/archive30-public-audit/hosted_run.py",
+        "M\tpublishing/utility/archive30-public-audit/payload-pins.json",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/execution-request.reviewed.json",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/http-tools/audit_binding.py",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/http-tools/http_audit.py",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/http-tools/test_http_audit.py",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/inputs/expected-inventory.json",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/inputs/prior-expected-inventory.json",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/inputs/source-lock.json",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/internal-review.json",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/public_api_get.py",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/reconcile-completed-rows.py",
+        "M\tpublishing/utility/archive30-public-audit/payload/http/run-reviewed-operations.py",
+        "D\tpublishing/utility/archive30-public-audit/payload/intake/hosted-originals/verification-receipts-original.zip",
+        "M\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/artifacts.json",
+        "M\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/commit.json",
+        "R072\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/statuses.json\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/deployment-statuses.json",
+        "M\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/deployment.json",
+        "M\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/main.json",
+        "A\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/receipts-original.zip",
+        "M\tpublishing/utility/archive30-public-audit/payload/intake/terminal-r1/run.json",
+        "M\tpublishing/utility/archive30-public-audit/test_hosted_run.py"
+      ]
+    },
+    {
+      "commit": "a1c735741db7c4f01e5837e662d24f68c2357ca1",
+      "patchId": "689d09ecd5c24d27fa586c6df0227097ef03f2df",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/archive31-public-audit/binding.proposed.json",
+        "A\tpublishing/utility/archive31-public-audit/hosted_run.py",
+        "A\tpublishing/utility/archive31-public-audit/payload-pins.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/collect-live.py",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/execution-request.reviewed.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/http-tools/audit_binding.py",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/http-tools/http_audit.py",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/http-tools/test_http_audit.py",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/inputs/expected-inventory.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/inputs/prior-expected-inventory.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/inputs/source-lock.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/internal-review.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/public_api_get.py",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/reconcile-completed-rows.py",
+        "A\tpublishing/utility/archive31-public-audit/payload/http/run-reviewed-operations.py",
+        "A\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/artifacts.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/commit.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/deployment.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/main.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/receipts-original.zip",
+        "A\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/run.json",
+        "A\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/statuses.json",
+        "A\tpublishing/utility/archive31-public-audit/test_hosted_run.py"
+      ]
+    },
+    {
+      "commit": "8692aa902f2535d87767fcc410811948ddd02adb",
+      "patchId": "a2c3a33b014f5ebbd1d364d348bd54c00f1fe2dd",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "M\tpublishing/utility/archive31-public-audit/binding.proposed.json",
+        "M\tpublishing/utility/archive31-public-audit/payload-pins.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/execution-request.reviewed.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/http-tools/audit_binding.py",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/http-tools/http_audit.py",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/http-tools/test_http_audit.py",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/inputs/expected-inventory.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/inputs/prior-expected-inventory.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/inputs/source-lock.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/internal-review.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/public_api_get.py",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/reconcile-completed-rows.py",
+        "M\tpublishing/utility/archive31-public-audit/payload/http/run-reviewed-operations.py",
+        "M\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/artifacts.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/commit.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/deployment.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/main.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/receipts-original.zip",
+        "M\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/run.json",
+        "M\tpublishing/utility/archive31-public-audit/payload/intake/terminal-r1/statuses.json",
+        "M\tpublishing/utility/archive31-public-audit/test_hosted_run.py"
+      ]
+    },
+    {
+      "commit": "aceab9f58ffb405c81539f0ef5ebf49175b70e9b",
+      "patchId": "2379ef3a4ad4a7d1c683a56a962305e65f106dc9",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/archive32-public-audit/binding.proposed.json",
+        "A\tpublishing/utility/archive32-public-audit/hosted_run.py",
+        "A\tpublishing/utility/archive32-public-audit/payload-pins.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/collect-live.py",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/execution-request.reviewed.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/http-tools/audit_binding.py",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/http-tools/http_audit.py",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/http-tools/test_http_audit.py",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/inputs/expected-inventory.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/inputs/prior-expected-inventory.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/inputs/source-lock.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/internal-review.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/public_api_get.py",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/reconcile-completed-rows.py",
+        "A\tpublishing/utility/archive32-public-audit/payload/http/run-reviewed-operations.py",
+        "A\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/artifacts.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/commit.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/deployment.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/main.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/receipts-original.zip",
+        "A\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/run.json",
+        "A\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/statuses.json",
+        "A\tpublishing/utility/archive32-public-audit/test_hosted_run.py"
+      ]
+    },
+    {
+      "commit": "bcdef9e2b043e7466505aa6ea8e2e248e7567dc4",
+      "patchId": "25d747acd12be0d97479be293f673cf46a04bb03",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "M\tpublishing/utility/archive32-public-audit/binding.proposed.json",
+        "M\tpublishing/utility/archive32-public-audit/payload-pins.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/execution-request.reviewed.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/http-tools/audit_binding.py",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/http-tools/http_audit.py",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/http-tools/test_http_audit.py",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/inputs/expected-inventory.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/inputs/prior-expected-inventory.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/inputs/source-lock.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/internal-review.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/public_api_get.py",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/reconcile-completed-rows.py",
+        "M\tpublishing/utility/archive32-public-audit/payload/http/run-reviewed-operations.py",
+        "M\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/artifacts.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/commit.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/deployment.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/main.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/receipts-original.zip",
+        "M\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/run.json",
+        "M\tpublishing/utility/archive32-public-audit/payload/intake/terminal-r1/statuses.json",
+        "M\tpublishing/utility/archive32-public-audit/test_hosted_run.py"
+      ]
+    },
+    {
+      "commit": "8ec16b28a136765c339e45f7aa229b42b59547e1",
+      "patchId": "dcb74948907a10ea6604a72c9e1df2e52555123a",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/archive33-public-audit/binding.proposed.json",
+        "A\tpublishing/utility/archive33-public-audit/hosted_run.py",
+        "A\tpublishing/utility/archive33-public-audit/payload-pins.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/collect-live.py",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/execution-request.reviewed.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/http-tools/audit_binding.py",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/http-tools/http_audit.py",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/http-tools/test_http_audit.py",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/inputs/expected-inventory.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/inputs/prior-expected-inventory.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/inputs/source-lock.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/internal-review.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/public_api_get.py",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/reconcile-completed-rows.py",
+        "A\tpublishing/utility/archive33-public-audit/payload/http/run-reviewed-operations.py",
+        "A\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/artifacts.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/commit.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/deployment.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/main.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/receipts-original.zip",
+        "A\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/run.json",
+        "A\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/statuses.json",
+        "A\tpublishing/utility/archive33-public-audit/test_hosted_run.py"
+      ]
+    },
+    {
+      "commit": "84ab171fa8551d2b6f26ce77e84f04c2cea381f6",
+      "patchId": "fc69d59f4d5d3b289ce56d24ba17c6e3d7056906",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "M\tpublishing/utility/archive33-public-audit/binding.proposed.json",
+        "M\tpublishing/utility/archive33-public-audit/payload-pins.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/execution-request.reviewed.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/http-tools/audit_binding.py",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/http-tools/http_audit.py",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/http-tools/test_http_audit.py",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/inputs/expected-inventory.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/inputs/prior-expected-inventory.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/inputs/source-lock.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/internal-review.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/public_api_get.py",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/reconcile-completed-rows.py",
+        "M\tpublishing/utility/archive33-public-audit/payload/http/run-reviewed-operations.py",
+        "M\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/artifacts.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/commit.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/deployment.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/main.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/receipts-original.zip",
+        "M\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/run.json",
+        "M\tpublishing/utility/archive33-public-audit/payload/intake/terminal-r1/statuses.json",
+        "M\tpublishing/utility/archive33-public-audit/test_hosted_run.py"
+      ]
+    },
+    {
+      "commit": "7c227dc92954a9d8ce654a2e235ce805934b8847",
+      "patchId": "5a803f4b952f3bd05c02c04b3a9418cc928f29d5",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tpublishing/qualified-freeze/freeze.py"
+      ]
+    },
+    {
+      "commit": "411dbd12453b0beb693fe37cb43f1245b55ff6bd",
+      "patchId": "12bc4a542c74592fc578b21132293356f6f29fc2",
+      "equivalentMainCommits": [],
+      "files": [
+        "A\t.github/workflows/freeze-qualified-sources.yml",
+        "A\tpublishing/qualified-freeze/README.md",
+        "A\tpublishing/qualified-freeze/freeze.py",
+        "A\tpublishing/qualified-freeze/qualifications/v0.49.0/receipt-qualified.json",
+        "A\tpublishing/qualified-freeze/qualifications/v0.49.0/source-qualification.json",
+        "A\tpublishing/qualified-freeze/qualifications/v0.50.0/receipt-qualified.json",
+        "A\tpublishing/qualified-freeze/qualifications/v0.50.0/source-qualification.json",
+        "A\tpublishing/qualified-freeze/qualifications/v0.51.0/receipt-qualified.json",
+        "A\tpublishing/qualified-freeze/qualifications/v0.51.0/source-qualification.json",
+        "A\tpublishing/qualified-freeze/sources.json",
+        "A\tpublishing/qualified-freeze/test-freeze.py",
+        "A\tpublishing/qualified-freeze/test-integrity.py",
+        "A\tpublishing/qualified-freeze/verify-frozen.py"
+      ]
+    },
+    {
+      "commit": "a48f0459f03bd25b96f3d27c3650ab6edebcd854",
+      "patchId": "280b8ed41d6b50b6a21023623fbeb96a0bd06b93",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/deploy-pages.yml",
+        "M\tdocs/deployment.md",
+        "M\tscripts/build-pages.mjs"
+      ]
+    },
+    {
+      "commit": "3d3314dc0b0ec09f1b29b65d793db528bda9eb7c",
+      "patchId": "26f35b12b79573742e4c63ff036327cd1a67a8c9",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tscripts/test-pages-archive.mjs"
+      ]
+    },
+    {
+      "commit": "4f5740cfcea2011b173d4b432dc6bc7fed400cd7",
+      "patchId": "60fc7b12323c379a517fcd114f3ae22824665daf",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/deploy-pages.yml",
+        "M\tdocs/deployment.md",
+        "M\tscripts/build-pages.mjs",
+        "M\tscripts/test-pages-archive.mjs"
+      ]
+    },
+    {
+      "commit": "d08602dee0a086c345d7f8273b5363ee693fe00a",
+      "patchId": "84e4f648238a9322fd0d4dec61ee53fdb052a717",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tpublishing/qualified-freeze/README.md",
+        "M\tpublishing/qualified-freeze/promote.py",
+        "A\tpublishing/qualified-freeze/recoveries.json",
+        "A\tpublishing/qualified-freeze/recoveries/v0.49.0/failure.json",
+        "A\tpublishing/qualified-freeze/recoveries/v0.49.0/live-empty-draft.json",
+        "A\tpublishing/qualified-freeze/recoveries/v0.50.0/failure.json",
+        "A\tpublishing/qualified-freeze/recoveries/v0.50.0/live-empty-draft.json",
+        "A\tpublishing/qualified-freeze/recoveries/v0.51.0/failure.json",
+        "A\tpublishing/qualified-freeze/recoveries/v0.51.0/live-empty-draft.json",
+        "M\tpublishing/qualified-freeze/test-promote.py"
+      ]
+    },
+    {
+      "commit": "018643c0ed2a5f5929ae44407201f7f34bf9aeff",
+      "patchId": "05ddd0a932d616961d21ce0721f8aa08c22afa68",
+      "equivalentMainCommits": [],
+      "files": [
+        "A\t.github/workflows/promote-qualified-artifacts.yml",
+        "M\tpublishing/qualified-freeze/README.md",
+        "A\tpublishing/qualified-freeze/promote.py",
+        "A\tpublishing/qualified-freeze/promotions.json",
+        "A\tpublishing/qualified-freeze/promotions/v0.49.0/local-artifact-integrity.json",
+        "A\tpublishing/qualified-freeze/promotions/v0.49.0/small-proof-capture.json",
+        "A\tpublishing/qualified-freeze/promotions/v0.49.0/verification.json",
+        "A\tpublishing/qualified-freeze/promotions/v0.50.0/local-artifact-integrity.json",
+        "A\tpublishing/qualified-freeze/promotions/v0.50.0/small-proof-capture.json",
+        "A\tpublishing/qualified-freeze/promotions/v0.50.0/verification.json",
+        "A\tpublishing/qualified-freeze/promotions/v0.51.0/local-artifact-integrity.json",
+        "A\tpublishing/qualified-freeze/promotions/v0.51.0/small-proof-capture.json",
+        "A\tpublishing/qualified-freeze/promotions/v0.51.0/verification.json",
+        "A\tpublishing/qualified-freeze/test-promote.py"
+      ]
+    },
+    {
+      "commit": "20781633a8a373f9229694101c4bd5946638e6a2",
+      "patchId": "28ad22edf71ec37ba8394a9d3d17fea391cfebaf",
+      "equivalentMainCommits": [],
+      "files": [
+        "A\t.github/workflows/reverify-qualified-artifacts.yml",
+        "M\tpublishing/qualified-freeze/README.md",
+        "A\tpublishing/qualified-freeze/reverify-pins/v0.49.0.json",
+        "A\tpublishing/qualified-freeze/reverify-pins/v0.50.0.json",
+        "A\tpublishing/qualified-freeze/reverify-pins/v0.51.0.json",
+        "A\tpublishing/qualified-freeze/reverify.py",
+        "A\tpublishing/qualified-freeze/test-reverify.py",
+        "A\tpublishing/qualified-freeze/verify-artifact-bodies.py"
+      ]
+    },
+    {
+      "commit": "6704ad7ba2da63a0865c8acd79113361c9c5a310",
+      "patchId": "3e75fd7d3515da622148e4bb1d4954942da316ca",
+      "equivalentMainCommits": [
+        "6996899010201b4727eda05c4e318f303fba17b1"
+      ],
+      "files": [
+        "M\tpublishing/pages-controller/release-policy.mjs",
+        "M\tpublishing/pages-controller/release-policy.test.mjs"
+      ]
+    },
+    {
+      "commit": "6e8ce9e65a2f80abfdb5f143588c59e096c6f2fb",
+      "patchId": "e221757bd663b4d1786dc1f04d742ab680849952",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tgame/test/external-chapter-app.test.mjs"
+      ]
+    },
+    {
+      "commit": "e1a09827ac88f32d57253200789742bde5f6f2d1",
+      "patchId": "b9e5bdd57f568a444d8c7ff0e0fb58fe9f5d6ee7",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tgame/ui/soundtrack-panel.mjs"
+      ]
+    },
+    {
+      "commit": "58922af7fccf21c7e409520827785bdfd5548caf",
+      "patchId": "28ea576ab4d58f7cb1b95ee6bd4ae2429f3c6f7c",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tauthoring/library/fpv-field-kit/production.rltheme",
+        "M\tgame/presentation/compiled/manifest.json",
+        "M\tgame/presentation/compiled/runtime.json",
+        "M\tgame/presentation/compiled/studio.json",
+        "M\tscripts/produce-field-kit-theme.mjs"
+      ]
+    },
+    {
+      "commit": "964e62dba81b9ab9770a8c0e99284dec6f43c42f",
+      "patchId": "2f8d50761f71e07cfa8eff70cbd5bbf62fa1a712",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tauthoring/library/fpv-field-kit/production.rltheme",
+        "M\tgame/presentation/compiled/manifest.json",
+        "M\tgame/presentation/compiled/runtime.json",
+        "M\tgame/presentation/compiled/studio.json"
+      ]
+    },
+    {
+      "commit": "d7612c87066156ad9b546d41a1a429ea62608d03",
+      "patchId": "769140897799cb7b30a8ffeae1a07975676c7baf",
+      "equivalentMainCommits": [
+        "c1c3f7433b929eef76b3fa6074df7070249c448a"
+      ],
+      "files": [
+        "M\tgame/app.mjs",
+        "M\tgame/index.html",
+        "A\tgame/release-explorer.mjs",
+        "M\tgame/test/site-release-links.test.mjs",
+        "M\tscripts/test-pages-current-entry.mjs"
+      ]
+    },
+    {
+      "commit": "1ce194373ba5cbd1da7000abcb4ec0c3b70bbc6b",
+      "patchId": "58577b91930797c7180ca49d771490daf01079ef",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tgame/build-config.json",
+        "M\tpackage-lock.json",
+        "M\tpackage.json"
+      ]
+    },
+    {
+      "commit": "5aa6acd206c4222fa00484db91318a89b4524de4",
+      "patchId": "56a808c5359a45b232cc4dc012d0266f7a434592",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tgame/test/audio.test.mjs",
+        "M\tgame/ui/audio.mjs"
+      ]
+    },
+    {
+      "commit": "f5abe84e60a4eb6176115f5d89fb5a3bd1afb25b",
+      "patchId": "25d01c87c949909f2ea42b5b36292a602efc55a0",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tgame/app.mjs",
+        "M\tgame/test/soundtrack-player.test.mjs",
+        "M\tgame/ui/soundtrack-panel.mjs",
+        "M\tgame/ui/soundtrack-player.mjs"
+      ]
+    },
+    {
+      "commit": "1fc74f79c61c8e29b234ace57a0ab37d14d27520",
+      "patchId": "786ae6cf7146c3f1f2abcb7bd7d62cde8a4b3af5",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/main-public-v0621/hosted_run.py",
+        "A\tpublishing/utility/main-public-v0621/payload-pins.json",
+        "A\tpublishing/utility/main-public-v0621/payload/review-public.py",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/audit-main.mjs",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/catalog-cohorts.mjs",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/http-engine.mjs",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/binding.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/catalog.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/configuration.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/deployment.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/manifest.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/qualification.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/receipt.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/record.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/run.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/statuses.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/preparation-provenance.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/retained-catalog.json",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/self-check.mjs",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/test-all-history-policy.mjs",
+        "A\tpublishing/utility/main-public-v0621/payload/tools/test-cohort-output.mjs"
+      ]
+    },
+    {
+      "commit": "d3513449935f4d00747e746ed3aa82dc308cf692",
+      "patchId": "a5f706311027886fa313e899d79272739a85dfad",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/main-public-v0630/hosted_run.py",
+        "A\tpublishing/utility/main-public-v0630/payload-pins.json",
+        "A\tpublishing/utility/main-public-v0630/payload-pins.pending.json",
+        "A\tpublishing/utility/main-public-v0630/payload/review-public.py",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/audit-main.mjs",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/catalog-cohorts.mjs",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/http-engine.mjs",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/binding.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/catalog.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/configuration.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/deployment.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/manifest.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/qualification.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/receipt.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/record.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/run.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/inputs/d97bea7cd435a55884eaa43586771e481de85fd7/statuses.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/preparation-provenance.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/retained-catalog.json",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/self-check.mjs",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/test-all-history-policy.mjs",
+        "A\tpublishing/utility/main-public-v0630/payload/tools/test-cohort-output.mjs"
+      ]
+    },
+    {
+      "commit": "976c45d49662ac40ee697e7084ce9d66e0a98ad4",
+      "patchId": "dc6e3347b10bf4fbd23a62a2a1c9c60e14b66ee6",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/main-public-v0640/hosted_run.py",
+        "A\tpublishing/utility/main-public-v0640/payload-pins.json",
+        "A\tpublishing/utility/main-public-v0640/payload-pins.pending.json",
+        "A\tpublishing/utility/main-public-v0640/payload/review-public.py",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/audit-main.mjs",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/catalog-cohorts.mjs",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/http-engine.mjs",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/binding.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/catalog.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/configuration.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/deployment.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/manifest.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/qualification.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/receipt.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/record.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/run.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/statuses.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/preparation-provenance.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/retained-catalog.json",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/self-check.mjs",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/test-all-history-policy.mjs",
+        "A\tpublishing/utility/main-public-v0640/payload/tools/test-cohort-output.mjs"
+      ]
+    },
+    {
+      "commit": "436aae27d96eda3b3bf404fd23e9f621d134b0ed",
+      "patchId": "d90c22166af75af5d78b3c17de8c5609ad78832a",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/main-public-v0641/hosted_run.py",
+        "A\tpublishing/utility/main-public-v0641/payload-pins.json",
+        "A\tpublishing/utility/main-public-v0641/payload/review-public.py",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/audit-main.mjs",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/catalog-cohorts.mjs",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/http-engine.mjs",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/binding.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/catalog.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/configuration.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/deployment.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/manifest.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/qualification.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/receipt.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/record.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/run.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/statuses.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/preparation-provenance.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/retained-catalog.json",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/self-check.mjs",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/test-admissions.mjs",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/test-all-history-policy.mjs",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/test-cohort-output.mjs",
+        "A\tpublishing/utility/main-public-v0641/payload/tools/test-fixtures/prior-configuration.json"
+      ]
+    },
+    {
+      "commit": "2ae7c91c0ba9bfbe16bb4c3775bd1fa308abe09e",
+      "patchId": "2b404b7d96689f30092c07db1471be95e925a120",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/main-public-v0642/hosted_run.py",
+        "A\tpublishing/utility/main-public-v0642/payload-pins.json",
+        "A\tpublishing/utility/main-public-v0642/payload/review-public.py",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/audit-main.mjs",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/catalog-cohorts.mjs",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/http-engine.mjs",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/binding.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/catalog.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/configuration.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/deployment.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/manifest.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/qualification.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/receipt.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/record.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/run.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/statuses.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/preparation-provenance.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/retained-catalog.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/self-check.mjs",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/test-admissions.mjs",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/test-all-history-policy.mjs",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/test-cohort-output.mjs",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/test-fixtures/new-admission.json",
+        "A\tpublishing/utility/main-public-v0642/payload/tools/test-fixtures/prior-configuration.json"
+      ]
+    },
+    {
+      "commit": "0376f1f2d3b077208418836d32d6610d0a154fdc",
+      "patchId": "b96388122f5f3b5bf3898c6a4c9c74192169b4df",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/main-public-v0643/hosted_run.py",
+        "A\tpublishing/utility/main-public-v0643/payload-pins.json",
+        "A\tpublishing/utility/main-public-v0643/payload/review-public.py",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/audit-main.mjs",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/catalog-cohorts.mjs",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/http-engine.mjs",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/binding.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/catalog.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/configuration.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/deployment.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/manifest.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/qualification.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/receipt.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/record.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/run.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/inputs/666c68a6f842da7cdac22c542e56f5e2910380e7/statuses.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/preparation-provenance.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/retained-catalog.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/self-check.mjs",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/test-admissions.mjs",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/test-all-history-policy.mjs",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/test-cohort-output.mjs",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/test-fixtures/new-admission.json",
+        "A\tpublishing/utility/main-public-v0643/payload/tools/test-fixtures/prior-configuration.json"
+      ]
+    },
+    {
+      "commit": "8af3d87b10d660e78735da669f676ed4b9a2c2ff",
+      "patchId": "72eb356c2d0a3086ebf9520c3b6706d889374165",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/main-public-v0650/hosted_run.py",
+        "A\tpublishing/utility/main-public-v0650/payload-pins.json",
+        "A\tpublishing/utility/main-public-v0650/payload/review-public.py",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/audit-main.mjs",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/catalog-cohorts.mjs",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/http-engine.mjs",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/binding.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/catalog.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/configuration.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/deployment.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/manifest.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/qualification.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/receipt.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/record.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/run.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/inputs/e6e269ea58aef2336c54f9497289a31c22ce9bb7/statuses.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/preparation-provenance.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/retained-catalog.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/self-check.mjs",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/test-admissions.mjs",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/test-all-history-policy.mjs",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/test-cohort-output.mjs",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/test-fixtures/new-admission.json",
+        "A\tpublishing/utility/main-public-v0650/payload/tools/test-fixtures/prior-configuration.json"
+      ]
+    },
+    {
+      "commit": "94f7ac356778cf8854b6de046f21642873534d8c",
+      "patchId": "52bb41ccbe3c1e909af98ccae775161b90dfb8fc",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\t.github/workflows/qualify-release-source.yml",
+        "A\tpublishing/utility/main-public-v0660/hosted_run.py",
+        "A\tpublishing/utility/main-public-v0660/payload-pins.json",
+        "A\tpublishing/utility/main-public-v0660/payload/review-public.py",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/audit-main.mjs",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/catalog-cohorts.mjs",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/http-engine.mjs",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/binding.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/catalog.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/configuration.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/deployment.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/manifest.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/qualification.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/receipt.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/record.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/run.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/inputs/7b898a7ba4a5007397d02d8911e0577668d3bc99/statuses.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/preparation-provenance.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/retained-catalog.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/self-check.mjs",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/test-admissions.mjs",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/test-all-history-policy.mjs",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/test-cohort-output.mjs",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/test-fixtures/new-admission.json",
+        "A\tpublishing/utility/main-public-v0660/payload/tools/test-fixtures/prior-configuration.json"
+      ]
+    },
+    {
+      "commit": "809f5a91c18c9eeb777ecc1b452637f861d92795",
+      "patchId": "041eead7f2bbef5cabcd307d088d1ce465769daf",
+      "equivalentMainCommits": [
+        "d980c8d8d7b9ce5ba0a1cc4afb97668e143f9e76",
+        "2b9dcbaf4cd80c4144759a38d0fb95a48e5f40ec"
+      ],
+      "files": [
+        "A\tdocs/snapshot-staging.md",
+        "M\tscripts/game-cli.mjs",
+        "M\tscripts/test-game-cli.mjs",
+        "A\tscripts/test-snapshot-archive-transfer.mjs"
+      ]
+    },
+    {
+      "commit": "a97f808486105264866e53b5dda63f8d4a4dc3c9",
+      "patchId": "7f507285f54c6d74403f3721dc5441513d5fb018",
+      "equivalentMainCommits": [
+        "28be688a2ee77c25b89318497e0a6bad2217f866"
+      ],
+      "files": [
+        "M\t.cursor/skills/deploy-release-pages/SKILL.md",
+        "M\tpublishing/pages-controller/README.md",
+        "M\tpublishing/pages-controller/allocations.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/browser-admission.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/deployed-handoff.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/expected-inventory.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/final-ref-check.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/historical-admission-v042.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-completion.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipt-intake.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/build.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/build.stderr",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/build.stdout",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/inventory.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/receipt.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/tags-after.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/tags-before.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/v0.42.0/build-command.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/v0.42.0/build.stderr",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/v0.42.0/build.stdout",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/v0.42.0/site-inventory.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/v0.51.0/build-command.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/v0.51.0/build.stderr",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/v0.51.0/build.stdout",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/hosted-receipts/v0.51.0/site-inventory.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/http-execution.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/main-handoff-boundary.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/native-pending.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/native/native-journeys.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/native/v042-missing-pack-guard.txt",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/native/v042-picture.png",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/native/v042-picture.txt",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/native/v042-win.png",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/native/v042-win.txt",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/native/v051-cut.png",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/native/v051-cut.txt",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/native/v051-resume-pause.txt",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/peer-source-parfit.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/pr-before-merge.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/pr-merged.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-final-deployments.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-final-main.stdout",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-final-statuses.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-http-attempt-1/attempts.jsonl",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-http-attempt-1/inventory.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-http-attempt-1/report.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-http-attempt-1/results.jsonl",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-tool/audit-public.mjs",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-tool/check.stdout",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-tool/preparation.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/public-tool/source.diff",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/run-final.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/source-completion.json",
+        "A\tpublishing/pages-controller/evidence/archive-10/combined-051/staged.json",
+        "M\tpublishing/pages-controller/publication.json",
+        "M\tscripts/pages-archives.json"
+      ]
+    },
+    {
+      "commit": "79b6c0192c63722487986c03d83927866f9804c8",
+      "patchId": "d2f1e056700416ca98917aab655576c2e01c57a5",
+      "equivalentMainCommits": [],
+      "files": [
+        "M\tpublishing/pages-controller/allocations.json",
+        "M\tpublishing/pages-controller/catalog.json",
+        "A\tpublishing/pages-controller/evidence/archive-47-v0802/browser-admission.json",
+        "A\tpublishing/pages-controller/evidence/archive-47-v0802/deployment-statuses.json",
+        "A\tpublishing/pages-controller/evidence/archive-47-v0802/deployments.json",
+        "A\tpublishing/pages-controller/evidence/archive-47-v0802/expected-inventory.json",
+        "A\tpublishing/pages-controller/evidence/archive-47-v0802/http-report-original.json",
+        "A\tpublishing/pages-controller/evidence/archive-47-v0802/http-report.json",
+        "A\tpublishing/pages-controller/evidence/archive-47-v0802/workflow-run.json",
+        "A\tpublishing/pages-controller/evidence/current-v0803/source-qualification.json",
+        "A\tpublishing/pages-controller/metadata/v0.80.3/distribution.zip.sha256",
+        "A\tpublishing/pages-controller/metadata/v0.80.3/manifest.json",
+        "A\tpublishing/pages-controller/metadata/v0.80.3/release.json",
+        "M\tpublishing/pages-controller/publication.json"
+      ]
+    }
+  ]
+}

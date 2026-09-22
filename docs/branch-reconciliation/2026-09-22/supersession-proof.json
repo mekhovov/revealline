@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "observedDate": "2026-09-22",
+  "repository": "mekhovov/revealline",
+  "liveMainSha": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+  "liveMainCommand": "gh api repos/mekhovov/revealline/commits/main --jq .sha",
+  "scope": "Read-only source-containment proof. Not merge, CI, browser, or production acceptance evidence. No branches, worktrees, releases, or PR states changed by this audit.",
+  "sourceBase253": "0816c8051cf6a2294f07718284036365ceaeefa1",
+  "sourceHead253": "81729fc1ec979a88a7e4950570eae577d32f032e",
+  "sourceBase255": "81729fc1ec979a88a7e4950570eae577d32f032e",
+  "sourceHead255": "7e54637bef2b100429ea8b86f6d261da443e5b6b",
+  "successorPr": 263,
+  "successorHead": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+  "cherryPickTip": "e77889637d93d7786bc35835701d4729923f23b4",
+  "patchIdCommandTemplate": "git show --format=medium --find-renames COMMIT | git patch-id --stable",
+  "mapping": [
+    {
+      "pr": 253,
+      "source": "fa092389e898684db6b0163d817d65daf2b430b7",
+      "successor": "575a28f58ac52004fb80e4adf0bcf106f2ef625f",
+      "stablePatchId": "e7a44313528453c80db5d89c5b7223805a8508c3"
+    },
+    {
+      "pr": 253,
+      "source": "81729fc1ec979a88a7e4950570eae577d32f032e",
+      "successor": "5ba156397203b710ef42e7ec85cb07589e590efa",
+      "stablePatchId": "da56a52715521dcab2db0792f864fce5f859bb59"
+    },
+    {
+      "pr": 255,
+      "source": "5ba8e3af84294789608734c2e92956abdb41622f",
+      "successor": "43ce9d120a92e96d4d24076692b29b05b053eb95",
+      "stablePatchId": "eb99c6111671900a78ad7808a2be60776ab6c747"
+    },
+    {
+      "pr": 255,
+      "source": "c137d283be190b68380cbfaa42848c36a0d0323f",
+      "successor": "e7bc8b255b6974a3bbc5319d0caaa94f039f8fd5",
+      "stablePatchId": "52dd1126921273f702bd850354878a912ea292c0"
+    },
+    {
+      "pr": 255,
+      "source": "a37a651bce4ed8263943ae44a84257b4adff60f0",
+      "successor": "a331445c8ebb60e110199a14490e303309bc57f8",
+      "stablePatchId": "c780497d6b4631769fb4c3b9fe096cab194d2270"
+    },
+    {
+      "pr": 255,
+      "source": "13af2c37ce3d64734bf370d82c82ce181c9cd08b",
+      "successor": "22f7d9db0df30b57a597bd8c434c1e553b465fe0",
+      "stablePatchId": "0b94c1e2505d892dccff51dabd5b18518b01a21d"
+    },
+    {
+      "pr": 255,
+      "source": "719f966ad59efe40ea22badd4d970272282a3c2b",
+      "successor": "8aa52ca9ded23ba5d828760cad24cec2101e60de",
+      "stablePatchId": "2fcaeb8324ba87236ed49498ead78bfd01b8e0ec"
+    },
+    {
+      "pr": 255,
+      "source": "7e54637bef2b100429ea8b86f6d261da443e5b6b",
+      "successor": "e77889637d93d7786bc35835701d4729923f23b4",
+      "stablePatchId": "aeea76d0e24e4e395ceed46150ab4a97f9893fe8"
+    }
+  ],
+  "result": {
+    "sourceCommitCount": 8,
+    "identicalStablePatchIdPairs": 8,
+    "unmatchedSourceCommits": [],
+    "uniqueRemainderIdentified": [],
+    "closureGate": "Keep PR253 and PR255 open until PR263 actual merged-source qualification and v0.83.0 public acceptance. Revalidate this proof if any pinned head changes."
+  },
+  "finalTreeReview": {
+    "changedPathCount": 21,
+    "identicalFinalBlobCount": 13,
+    "identicalFinalBlobs": {
+      "docs/verification/p15-couch-warning-checkpoint.md": "ce011120bb15b12fb6fe0ef43070d779d40f8f1f",
+      "docs/verification/p15-journey-warning-visibility.md": "681daedebf2339ed2bd433f9a9faf3bd715fb7eb",
+      "game/couch/couch.css": "624fdc23a8a9c8c655e723cf6b2c0cbe386cbcf9",
+      "game/test/candidate-versus-host.test.mjs": "c05b4b1807afde18f373e7ba55d479a5a7d58495",
+      "game/test/couch-initial-focus.test.mjs": "13720de769d9d9b33c24014bdcc0a4c96b033313",
+      "game/test/journey-host.test.mjs": "b8229b9e34d24245b10ecdd93bbd3ac03c4e8f26",
+      "game/test/journey-save-cue.test.mjs": "6db253f9079e444eea5c56213f9c4f0d4d24fba6",
+      "game/test/journey-save-notice.test.mjs": "8790f06b430ecc363244e72e724976e5f1cf4277",
+      "game/test/team-journey-next-host.test.mjs": "08c1ca55b78500d674d1c1b79558449f2f44c235",
+      "game/ui/journey-save-cue.css": "7f21a0900179a4c997437b4e9ff91b03953f9d84",
+      "game/ui/journey-save-cue.mjs": "26a6335d43a3b8ac880f9c68502d29ebf520deea",
+      "game/ui/journey-save-notice.mjs": "943261b6b2717622313dfd086e35fde9c9e9bf57",
+      "game/ui/journey.css": "099ebba7319b1602d3a40f3dd8db5926e917b34b"
+    },
+    "laterModifiedPathsReviewed": [
+      "game/app.mjs",
+      "game/index.html",
+      "game/couch/couch-shell.mjs",
+      "game/couch/couch.mjs",
+      "game/couch/index.html",
+      "game/couch/relay-rescue.html",
+      "game/couch/relay-rescue.mjs",
+      "game/test/couch-shell.test.mjs"
+    ],
+    "renameAwareReviewCommand": "git diff --find-renames e77889637d93d7786bc35835701d4729923f23b4 70836db6ac7559791ef61ecfbf31c0785604ffc0 -- game/app.mjs game/index.html game/couch/couch-shell.mjs game/couch/couch.mjs game/couch/index.html game/couch/relay-rescue.html game/couch/relay-rescue.mjs game/test/couch-shell.test.mjs",
+    "reviewFinding": "Later differences implement default Journey selection, explicit Legacy navigation, departure guarding and route copy. They do not remove the transplanted save-warning, Pause, adjacent recovery-control, or initial-focus fixes. Couch-shell test changes are only expected Legacy URLs. Source-to-cherry-pick-tree differences additionally include accepted v0.82.1 session-original recovery changes; whole-file inequality is not missing-patch evidence."
+  },
+  "pr239In245": {
+    "sourcePr": 239,
+    "sourceHead": "8c0da7c58a358f878ca24b937d3f70f37f85cb86",
+    "successorPr": 245,
+    "successorHead": "e777522f0ce94fd253b8a54e69efc0a7ad9331bb",
+    "fullSourceStablePatchId": "1b637a15e1d80feaafb9cfa40442453fda0810f8",
+    "scopeNote": "Successor bundles other work, so full-commit patch IDs differ. The three implementation/test/prompt paths have identical patches and identical final blobs; the remaining appended skill section is retained byte-for-byte.",
+    "threePathStablePatchId": "aad71a731911af9b308a5f83a6964c7cc8eeebee",
+    "threePathPatchIdCommandTemplate": "git diff --find-renames COMMIT^ COMMIT -- authoring/asset-studio/cross-mode-preview.mjs authoring/prompts/studio-same-tick-counters.md game/test/asset-studio-cross-mode.test.mjs | git patch-id --stable",
+    "identicalFinalBlobs": {
+      "authoring/asset-studio/cross-mode-preview.mjs": "2033d6201fbc06711af3d914040f9ba3b465a9eb",
+      "authoring/prompts/studio-same-tick-counters.md": "d01fdf5405d0562fbc3e9074c15903011a5a4503",
+      "game/test/asset-studio-cross-mode.test.mjs": "1e1a2e9238e43e25620adf3ca61746769fc07b13"
+    },
+    "remainingPath": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "retainedSectionStart": "## 2026-09-22 — Same-tick authoring counters",
+    "retainedSourceSectionCharacterCount": 722,
+    "exactSectionRetained": true,
+    "uniqueRemainderIdentified": [],
+    "closureGate": "Source containment established in draft245; not yet evidence of delivery to main or an accepted release. Keep the successor dependency and acceptance gates."
+  }
+}
