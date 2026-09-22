@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-22T19:13:20.457Z",
+  "reviewer": "independent subagent v0821_music_acceptance",
+  "scope": [
+    "scripts/file-timing-reporter.mjs",
+    "scripts/test-file-timing-reporter.mjs"
+  ],
+  "baseCommit": "01b189f6427601a15cbb3eb1563b5f82eabbafa3",
+  "reviewedWorkingFiles": [
+    {
+      "path": "scripts/file-timing-reporter.mjs",
+      "bytes": 5482,
+      "sha256": "d367e36e58f3766bd9322507517faab3207c288b13c969300ed872edb6eca7ee",
+      "gitBlob": "3a61095b38c6939df9f6e9cbe04b95b64348472c"
+    },
+    {
+      "path": "scripts/test-file-timing-reporter.mjs",
+      "bytes": 10586,
+      "sha256": "d4114f80c29830551a4858259935524a4b48e143272d2b399cd902675fa5a836",
+      "gitBlob": "8369748361f0190948a78a40039659fc6059df17"
+    }
+  ],
+  "retainedInitialEvidence": {
+    "files": [
+      {
+        "path": "scripts/file-timing-reporter.mjs",
+        "bytes": 5124,
+        "sha256": "35610733d4a5071da01fef655b37b436d29d4ea4849198e85bd078f821f0ff12",
+        "gitBlob": "b374f685e052ef985c9fbf2c2312222a40d6abff"
+      },
+      {
+        "path": "scripts/test-file-timing-reporter.mjs",
+        "bytes": 9464,
+        "sha256": "5f2a00e46169c7c2c1c175ce63c9ea0c6947ffcf6d4e7c9755394c40185b2fb9",
+        "gitBlob": "8218e8abe8001baa08b3a5264e4312b311974354"
+      }
+    ],
+    "node20": {
+      "independentlyRun": true,
+      "version": "20.19.5",
+      "tests": 9,
+      "pass": 9,
+      "fail": 0
+    },
+    "node22": {
+      "independentlyRun": false,
+      "reportedBy": "root coordinator",
+      "version": "22.22.2",
+      "failedTests": 4,
+      "problem": "Absolute-only container name predicate missed Node22 cwd-relative names; passing Node20 alone was not supported-runtime acceptance."
+    }
+  },
+  "findings": [
+    {
+      "id": "node22-container-name-compatibility",
+      "initialSeverity": "blocker-for-dual-runtime-readiness",
+      "status": "resolved",
+      "resolution": "Capture runner cwd and require path.resolve(runnerCwd, data.name) to equal the absolute data.file. Preserve exact nesting/line/column shape and enqueue/dequeue/complete sequence; do not substitute case sums or silently label Node22 unsupported.",
+      "verification": "All original acceptance assertions retained. Added relative-container and mismatched-name regression; independently rerun 10/10 on both supported versions."
+    }
+  ],
+  "verification": [
+    {
+      "nodeVersion": "20.19.5",
+      "command": "node --test scripts/test-file-timing-reporter.mjs",
+      "exitCode": 0,
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "nodeVersion": "22.22.2",
+      "command": "node --test scripts/test-file-timing-reporter.mjs",
+      "exitCode": 0,
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    }
+  ],
+  "reviewedInvariants": [
+    "Reporter consumes the event stream without selecting/filtering executable tests or overriding process.exitCode.",
+    "Normal TAP can run alongside telemetry; an actual failing assertion and nonzero file subprocess exit retain ordinary failed runner status.",
+    "Durations exactly equal native file-container complete-event duration_ms, including startup/import cost; nested/concurrent case times and log-arrival gaps are not summed.",
+    "Recognized containers require one ordered enqueue/dequeue/complete sequence and positive finite duration with boolean pass state. Duplicate, incomplete, unordered and malformed containers are rejected.",
+    "Explicit source revision and selected inventory are required for usable output; duplicate/unsafe inventory, missing/extra file durations, failed files and skipped/todo cases invalidate the final summary.",
+    "Absent container support fails closed and supplies no replacement case-sum measurement.",
+    "Node20 absolute and Node22 cwd-relative names must bind to the same absolute data.file; source-root override is not incorrectly used as the dispatch cwd."
+  ],
+  "outcome": "No remaining concrete blocker found in the two exact reviewed reporter files. Raw telemetry support verified locally on Node 20.19.5 and Node 22.22.2.",
+  "shipping": {
+    "workflowActivation": false,
+    "manifestConversion": false,
+    "gameVersionRequiredForThisScopedPatch": false,
+    "shippedRuntimeFilesChanged": false,
+    "reason": "New scripts are outside the explicit shipped build includes. A future source archive would contain committed tooling; current immutable release assets are unchanged."
+  },
+  "limits": [
+    "This is raw event telemetry, not a qualified timing-weight manifest or hosted performance result.",
+    "Future consumer must require a complete usable final summary, rebind source/inventory/runtime/runner and reporter identities, and preserve test invocation/concurrency context; caller-provided metadata is not independently authenticated by this reporter.",
+    "No production workflow opt-in, converter, full-suite qualification, hosted speed measurement or publication acceptance is certified.",
+    "Review covers only the listed file hashes; unrelated reporter measurement documentation, runner changes and later edits require their own evidence.",
+    "Initial Node22 failure count is retained as coordinator-reported evidence; final dual-runtime reruns were independently executed.",
+    "Only this review receipt was authored; no source edits, commits, pushes, workflow triggers or release actions were performed."
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-22T19:09:37.811Z",
+  "reviewer": "independent subagent v0821_music_acceptance",
+  "scope": [
+    "scripts/run-test-shard.mjs",
+    "scripts/test-run-test-shard.mjs"
+  ],
+  "baseCommit": "01b189f6427601a15cbb3eb1563b5f82eabbafa3",
+  "reviewedWorkingFiles": [
+    {
+      "path": "scripts/run-test-shard.mjs",
+      "bytes": 7007,
+      "sha256": "e596d2ffdb41c0e70dad64eee20f9c9705ad7a3e89c3da4da6fef30e28d840d3",
+      "gitBlob": "b22a94ed672b5788c0fcaf5745e5e23738ffe6a5",
+      "baseBlob": "2fed1c91b4c2d1b44eb4f7fbb8d3192e607bc84a"
+    },
+    {
+      "path": "scripts/test-run-test-shard.mjs",
+      "bytes": 12459,
+      "sha256": "0cfc6bf879b70a4e187067933afeda87155ff70bad45259d512b2f6e12e186d8",
+      "gitBlob": "3849ee9a87af27a147c5cf83cb900eda65d1756c",
+      "baseBlob": "7c804fd4d06fc148a8af45bc2c5df00c309742f5"
+    }
+  ],
+  "hashesUnchangedAfterTests": true,
+  "initialFindings": [
+    {
+      "id": "timings-file-read-bounds",
+      "status": "resolved",
+      "initial": "Opening before type validation could block on a FIFO; unbounded readFile allocated before the final size check.",
+      "resolution": "Pre-open lstat refuses non-regular files; O_NONBLOCK and O_NOFOLLOW defend the open race; fstat rechecks the opened object and 5 MiB cap; allocation and reads are bounded to stat.size + 1, and length changes reject before test execution.",
+      "verification": "Source inspected; added symlink and FIFO refusal fixtures pass on both reviewed runtimes. No claim of detecting every same-length concurrent rewrite."
+    },
+    {
+      "id": "source-revision-type",
+      "status": "resolved",
+      "initial": "RegExp coercion allowed a one-element SHA array to pass revision identity validation.",
+      "resolution": "Explicit typeof sourceRevision === string guard precedes the SHA expression.",
+      "verification": "One-element array regression fixture rejects before sentinel execution on both runtimes."
+    },
+    {
+      "id": "timed-import-cwd-coverage",
+      "status": "resolved",
+      "initial": "Actual import/cwd execution was explicitly tested only in untimed mode.",
+      "resolution": "The selected-source import, cwd and marker fixture now also runs with --timings.",
+      "verification": "Timed and untimed import/cwd checks pass on both runtimes."
+    }
+  ],
+  "verification": [
+    {
+      "nodeVersion": "20.19.5",
+      "command": "node --test scripts/test-run-test-shard.mjs",
+      "exitCode": 0,
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "nodeVersion": "22.22.2",
+      "command": "node --test scripts/test-run-test-shard.mjs",
+      "exitCode": 0,
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    }
+  ],
+  "retainedInvariants": [
+    "Test inventory comes only from the five selected-root discovery directories, never from telemetry.",
+    "LPT partition assigns every discovered test exactly once; deterministic lexical and bin tie resolution is retained.",
+    "Removed timing entries cannot add tests; new tests receive a median observed weight; no overlapping measured files rejects.",
+    "Malformed timing metadata, invalid paths/durations, invalid roots/arguments and empty shards reject before child execution.",
+    "Untimed round-robin assignment and child execution using selected-root cwd/import resolution remain unchanged.",
+    "Child failure/non-success exit propagates; timing hints do not supply cached test verdicts."
+  ],
+  "outcome": "No remaining concrete correctness blocker found in the two reviewed files after fixes.",
+  "shipping": {
+    "workflowChanges": false,
+    "buildConfigOrGameCliChanges": false,
+    "shippedRuntimeFilesChanged": false,
+    "reason": "Both scripts lie outside explicit game/build-config.json include paths; collectBuildFiles uses that include list. Future git-archived source.tar includes committed script changes, but existing immutable release assets are not rewritten.",
+    "gameVersionRequiredForThisScopedPatch": false
+  },
+  "limits": [
+    "Review covers the two exact file hashes only; reporter and measurement files from another agent are excluded.",
+    "No production workflow opt-in, remote CI trigger, full-suite qualification, browser journey or hosted speed measurement was performed.",
+    "The bounded file reader detects observed length change, not a cryptographic immutable snapshot; future workflow adoption must distribute one pinned timing manifest consistently across shards.",
+    "Timing source/node metadata is syntactically validated provenance of an advisory profile, not permission to reuse passing tests or a requirement that the selected current source equal the historical timing source.",
+    "Only this review receipt was authored; no source edits, commits, pushes or release actions were performed."
+  ]
+}
