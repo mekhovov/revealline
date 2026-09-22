@@ -1,0 +1,26 @@
+{
+  "status": "BLOCKED",
+  "observedAt": "2026-09-22T14:17:54.077655+00:00",
+  "canonicalURL": "https://mekhovov.github.io/revealline-archive-50/releases/v0.82.0/site/game/",
+  "attempts": [
+    {
+      "tool": "cua.createBrowserTab",
+      "browser": "iab",
+      "result": "Browser is not available: iab"
+    },
+    {
+      "tool": "cua.getState",
+      "result": {
+        "browsers": []
+      }
+    },
+    {
+      "tool": "cua.getApp",
+      "app": "com.apple.Safari",
+      "result": "Computer Use permissions are not granted"
+    }
+  ],
+  "nativeAcceptance": false,
+  "databaseMutations": false,
+  "limitation": "No native archive UI interaction was available; parent notified to perform separate acceptance."
+}
