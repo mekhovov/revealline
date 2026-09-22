@@ -126,7 +126,12 @@ async function buildFixture(t) {
   await fs.mkdir(path.join(fixtureRoot, 'game/content-design'), { recursive: true });
   await fs.mkdir(path.join(fixtureRoot, 'scripts'));
   await fs.mkdir(path.join(fixtureRoot, 'game/offline'));
-  for (const file of ['offline.mjs', 'platform.mjs', 'offline/service-worker.template.js']) {
+  for (const file of [
+    'offline.mjs',
+    'platform.mjs',
+    'offline/service-worker.template.js',
+    'content-design/limits.mjs',
+  ]) {
     await fs.copyFile(path.join(root, 'game', file), path.join(fixtureRoot, 'game', file));
   }
   await fs.writeFile(
