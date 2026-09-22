@@ -9,7 +9,7 @@ import {
 import { resolvePresentation } from '../presentation/model.mjs';
 import { TEAM_EQUIPMENT_IDS } from '../presentation/team-equipment-art.mjs';
 
-test('Team recipes stay source-stage and original equipment stays produced until its own review', async () => {
+test('Team recipes stay source-stage while original equipment retains its separate five-image review', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const roles = production.document.slots.filter((slot) => slot.id.startsWith('team.'));
@@ -26,7 +26,7 @@ test('Team recipes stay source-stage and original equipment stays produced until
     const asset = resolved.assets[slot.id];
     if (TEAM_EQUIPMENT_IDS.includes(slot.id)) {
       assert.equal(asset.kind, 'image', slot.id);
-      assert.equal(asset.quality.stage, 'produced', slot.id);
+      assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.match(
         asset.provenance.source,
         /^game\/presentation\/team-equipment-art\.mjs sha256:[a-f0-9]{64}$/,
