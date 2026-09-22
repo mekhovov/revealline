@@ -70,12 +70,23 @@ The workflow requires 8 GiB free on the hosted runner. No npm installation or hi
 
 1. Validate the selector, metadata, immutable tag pins and archive admissions.
 2. Download only the selected original `distribution.zip` from the code-owned GitHub Release URL. Verify its exact SHA, every bounded safe member, CRC, length and SHA before promoting the extracted current graph. Links, duplicate members, traversal, unexpected files and altered original manifests are refused.
-3. Copy the current graph under `releases/V/site/`, retaining its original worker. Copy its root assets and generate the existing current-entry aliases and retirement worker. Neither worker forces activation or deletes storage.
+3. Copy the complete current graph only under `releases/V/site/`, retaining its original worker. At root, retain only the frozen `manifest.json` evidence and the bounded webmanifest/icon compatibility files, then generate the existing self-contained current-entry aliases and retirement worker. Runtime code, pictures, optional downloads and `offline-cache.json` are not duplicated at root. Neither worker forces activation or deletes storage. The separate `catalog-ui/` graph remains explicit.
 4. Derive retained historical HTML bridge paths and worker existence from authenticated original manifests. The pure bridge generators are the existing `scripts/pages-archive.mjs` protocol. No historical payload reads or placeholder bodies are used. ZIPs remain on their original GitHub Releases.
 5. Style only the mutable release catalog using the selected current graph's own presentation assets. `catalog.mjs` preserves the P6 catalog helper behavior from `scripts/release-catalog.mjs` and `publishedReleaseIndex`; it is infrastructure code so that the final catalog can be published before the source integration merges. Earlier releases without the presentation bundle use the readable fallback.
 6. Hash the full resulting artifact, enforce the 950,000,000-byte main cap, and independently reread all files against the receipt before upload. The artifact and receipt bind the controller commit/tree separately from the frozen game source.
 
 An existing output is never overwritten. Failed preparation cannot receive a verified receipt or be deployed. ZIP extraction stages its own output and removes only that newly created staging directory on failure. A failed later assembly may retain an incomplete new artifact directory for inspection; retry in a fresh workflow workspace.
+
+The receipt identifies `single-canonical-with-root-metadata-v1` and lists every
+duplicated compatibility file with its original size and hash. Root
+`manifest.json` describes the immutable canonical graph, as declared by
+`current-entry-routing.json`; it is not an inventory of root aliases. Existing
+root-installed web apps keep their webmanifest and fixed icon URLs. An old root
+runtime's uncached non-HTML request is not redirected or substituted with another
+edition's body. Its old cached bodies and saved data are not deleted; current
+HTML navigation selects the canonical release. This layout does not promise
+continued uncached operation of obsolete root-scoped sessions. See the
+[bounded correction and remaining checks](delivery/single-current-graph.md).
 
 The publisher deploys only `refs/heads/main` through the existing `github-pages` environment.
 Its concurrency waits for an earlier frozen publication. Source pull requests retain main's
