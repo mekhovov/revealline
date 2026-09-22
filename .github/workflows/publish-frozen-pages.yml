@@ -121,6 +121,12 @@ jobs:
         with:
           ref: ${{ github.sha }}
           fetch-depth: 1
+          sparse-checkout: |
+            /publishing/pages-controller/release-policy.mjs
+            /publishing/pages-controller/metadata.mjs
+            /publishing/pages-controller/publication.json
+            /scripts/pages-archive.mjs
+          sparse-checkout-cone-mode: false
 
       - name: Set up publishing policy runtime
         uses: actions/setup-node@v4
