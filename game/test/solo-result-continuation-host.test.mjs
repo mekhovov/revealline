@@ -42,7 +42,9 @@ const catalog = createExecutionCatalog([{ campaign, themes }]);
 const ticks = (p, n) => {
   for (let i = 0; i < n; i++) p.frame();
 };
-async function setup(t, { journey = false } = {}) {
+// Current asynchronous Journey-library supersession is exercised separately in
+// mission-library-solo-result-supersession-host.test.mjs using real authored maps.
+async function setup(t) {
   const diagnostics = [];
   let diagnosticAction = null;
   t.mock.method(console, 'warn', (...args) => {
@@ -119,12 +121,18 @@ async function setup(t, { journey = false } = {}) {
   }
   const p = await soloPage(t, {
     campaign,
-    ...(journey
-      ? { search: '?journey=1', titleScreen: true, journeyIndexedDB: managedIndexedDB().indexedDB }
-      : {}),
+    // The unified library can read Journey progress from a Legacy host too.
+    // The finite IndexedDB model represents one database, so keep that named
+    // database separate from asset storage in every case, not only journey=1.
+    journeyIndexedDB: managedIndexedDB().indexedDB,
     soundtrackIndexedDB: memory.indexedDB,
     pictures: { Image: Picture },
   });
+  assert.equal(
+    p.$('save-warning').textContent,
+    '',
+    'Result-transition fixtures must begin with writable, isolated storage.',
+  );
   return {
     p,
     images,
@@ -170,48 +178,6 @@ function openRetainedSetup(p) {
   p.$('shell-missions').showModal();
 }
 
-test('Journey chooser can supersede a held result picture without waiting for its stale decode', async (t) => {
-  const { p, deferDecode } = await setup(t, { journey: true });
-  p.$('shell-featured').click();
-  await running(p, 'first-cut');
-  p.key('ArrowDown');
-  for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
-  assert.equal(
-    p.rendered.run.status,
-    'won',
-    JSON.stringify({
-      tick: p.rendered.run.tick,
-      player: p.rendered.run.player,
-      coverage: p.rendered.run.coverage,
-      lives: p.rendered.run.lives,
-      message: p.$('run-message').textContent,
-    }),
-  );
-  p.key('ArrowDown', false);
-  await settle(() =>
-    [...p.$('missions').children].every((button) => button.dataset.pictureState !== 'loading'),
-  );
-  const held = deferred();
-  let began = false;
-  deferDecode(() => {
-    began = true;
-    return held.promise;
-  });
-  p.$('next-button').click();
-  await settle(() => began);
-  p.$('shell-packs').click();
-  p.$('journey-search').value = 'first-cut';
-  p.$('journey-search').emit('input');
-  p.$('journey-cards').children[0].click();
-  await running(p, 'first-cut');
-  const accepted = p.rendered.run;
-  held.resolve();
-  await new Promise((resolve) => setImmediate(resolve));
-  p.frame(0);
-  assert.equal(p.rendered.run, accepted);
-  assert.equal(p.doc.body.dataset.flightState, 'running');
-  assert.deepEqual(p.errors, []);
-});
 function snapshot(p) {
   p.frame(0);
   return {
@@ -273,10 +239,9 @@ for (const policy of ['immediate', 'grid-center'])
     assert.equal(p.rendered.paused, false);
     assert.equal(p.$('game-overlay').hidden, true);
     assert.equal(p.doc.activeElement.id, 'game-canvas');
-    assert.equal(
-      loadLibrary(p.storage, profileKey, { campaigns: [campaign] }).library.pictureReceipts.length,
-      1,
-    );
+    const stored = loadLibrary(p.storage, profileKey, { campaigns: [campaign] });
+    assert.ok(Array.isArray(stored.library.pictureReceipts));
+    assert.equal(stored.library.pictureReceipts.length, 1);
     assert.deepEqual(p.errors, []);
   });
 

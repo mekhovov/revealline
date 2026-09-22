@@ -309,3 +309,18 @@ verification. It must receive a new pinned native check before acceptance.
   decoded-image disposal and exact accepted run/picture/focus assertions.
 - Team↔Solo/Versus catalogue registration, trusted retained downloads and native
   final qualification are still separate remaining gates.
+
+### Result-transition fixture correction
+
+- Traced the missing receipt to a finite test database boundary: the fixture used
+  one database implementation for named asset and Journey databases. Lazy Journey
+  browsing from a Classic host exposed that collision as “Unknown store” recovery.
+  The fixture now isolates the named Journey database in every case and asserts
+  writable startup. Runtime save behavior and receipt-count assertions are not
+  relaxed.
+- Replaced an obsolete synchronous/retired-chooser fixture with a separate actual
+  authored-opening test that awaits the unified UI, supersedes held Next artwork,
+  settles and releases the stale decoder, and preserves the new run and picture.
+- All16 retained Legacy cases pass across bounded runs; the new actual authored
+  supersession case passes. A single final whole-cohort run remains part of full
+  qualification; earlier interrupted runs are not counted as clean full runs.
