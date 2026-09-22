@@ -108,6 +108,9 @@ const MIMES = {
 const text = (v, max = 512) => typeof v === 'string' && v.trim().length > 0 && v.length <= max;
 const integer = (v, max = 1000000) => Number.isSafeInteger(v) && v > 0 && v <= max;
 const key = (v) => `${v.id}@${v.revision}`;
+// Only this validator may confer trust, after ownership, schema, capacity and
+// deep-freeze checks. Caller-owned frozen objects are not accepted identities.
+const acceptedDocuments = new WeakSet();
 export function freezePresentation(value) {
   if (value && typeof value === 'object') {
     for (const child of Object.values(value)) freezePresentation(child);
@@ -557,6 +560,8 @@ function resolve(value, index, { themeId, collectionId, draft } = {}) {
   };
 }
 export function validateThemeBundle(source, { previous = null, expectedRevision } = {}) {
+  if (previous === null && expectedRevision === undefined && acceptedDocuments.has(source))
+    return source;
   // Serialized inputs retain the legacy parse boundary. Callers holding an
   // envelope object must decode it before semantic validation; an ordinary
   // logical document receives its own explicit expanded accounting boundary.
@@ -679,7 +684,9 @@ export function validateThemeBundle(source, { previous = null, expectedRevision 
   // An accepted edit must remain persistable/exportable. Structural validity
   // alone does not prove that the bounded dictionary representation fits.
   encodePresentationDocument(value);
-  return freezePresentation(value);
+  freezePresentation(value);
+  acceptedDocuments.add(value);
+  return value;
 }
 export function resolvePresentation(source, options = {}) {
   const value = validateThemeBundle(source);
