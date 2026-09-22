@@ -353,6 +353,14 @@ export function rootCompatibilityRows(rows) {
   });
 }
 
+export function rootReleaseProjection(record, repository) {
+  return {
+    ...record,
+    play: `releases/${encodeURIComponent(record.version)}/site/game/`,
+    download: `https://github.com/${repository}/releases/download/${encodeURIComponent(record.version)}/distribution.zip`,
+  };
+}
+
 export async function assemble({
   directory = path.join(root, 'publishing/pages-controller'),
   currentSite,
@@ -449,7 +457,11 @@ export async function assemble({
     );
   await writeFile(outputDirectory, 'releases/index.json', jsonBytes(index.json));
   await writeFile(outputDirectory, 'releases/index.html', index.html);
-  await writeFile(outputDirectory, 'release.json', jsonBytes(current.record));
+  await writeFile(
+    outputDirectory,
+    'release.json',
+    jsonBytes(rootReleaseProjection(current.record, lock.sourceRepository)),
+  );
   await writeFile(outputDirectory, '.nojekyll', '');
   await writeCurrentEntries(entries, outputDirectory);
   await writeFile(
