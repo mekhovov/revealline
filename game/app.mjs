@@ -25,6 +25,11 @@ import {
 } from './mission-library/installed-target.mjs';
 import { createInstalledMissionLibrary } from './mission-library/installed-library.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
+import { trackMissionLibraryOpening } from './mission-library/opening-intent.mjs';
+import {
+  journeyMissionDetails,
+  authoredJourneyMissionTags,
+} from './mission-library/journey-presentation.mjs';
 import {
   createMissionLibrarySessionState,
   missionLibraryHref,
@@ -401,6 +406,7 @@ try {
     unifiedLibraryLoading = null,
     unifiedChooser = null,
     disposeUnifiedPreview = null,
+    cancelUnifiedOpening = null,
     retiredJourneyChooser = null,
     unifiedOpenRevision = 0,
     unifiedLaunchRevision = 0,
@@ -2174,6 +2180,7 @@ try {
     enemyGuide.open();
   };
   handlePageHide = (event) => {
+    cancelUnifiedOpening?.();
     ++unifiedOpenRevision;
     ++unifiedLaunchRevision;
     // Suspend while this tab still owns the writer. A history-cache return
@@ -8130,6 +8137,7 @@ try {
   };
   $('download-replay').onclick = () => lastReplay && downloadCurrentReplay(lastReplay);
   function suspendInteraction() {
+    cancelUnifiedOpening?.();
     // Returning to focus must not revive a picker or launch requested before
     // the interruption, even when its asynchronous work finishes afterward.
     ++unifiedOpenRevision;
@@ -8378,11 +8386,20 @@ try {
         ? journeyProfile
         : createJourneyProfileStore({ profileKey: route.profileKey });
       if (!candidateHost) await profile.load();
+      const manifestFor = (
+        mission,
+        difficulty = journeyPreferences?.snapshot().difficulty ?? 'standard',
+      ) =>
+        host
+          .select(mission, difficulty)
+          ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
       const source = journeyLibrarySource({
         editionId: route.id,
         edition: route.id === 'whole-spatial-v5' ? 'New Journey' : route.label,
         catalog: host.catalog,
         profile,
+        details: (mission) => journeyMissionDetails(manifestFor(mission)),
+        tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
         card: (mission) =>
           host.card(mission, journeyPreferences?.snapshot().difficulty ?? 'standard'),
         launch: (mission, context) => {
@@ -8541,6 +8558,7 @@ try {
     };
   }
   async function openUnifiedMissions(opener, options) {
+    cancelUnifiedOpening?.();
     const revision = ++unifiedOpenRevision;
     // The picker may need its first metadata load. Retire post-adoption Next
     // intent immediately; a not-yet-mounted dialog cannot block its resume.
@@ -8552,11 +8570,30 @@ try {
     ++unifiedLaunchRevision;
     pause(true);
     clearInput();
+    const feedback = document.createElement('span');
+    feedback.id = 'mission-library-opening-status';
+    feedback.className = 'micro-note';
+    feedback.setAttribute('role', 'status');
+    feedback.textContent = 'Preparing missions…';
+    (opener?.isConnected ? opener : $('shell-play')).after(feedback);
+    let failed = false;
+    const cancel = () => {
+      if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
+      opening.dispose();
+      feedback.remove();
+      if (cancelUnifiedOpening === cancel) cancelUnifiedOpening = null;
+    };
+    const opening = trackMissionLibraryOpening({
+      onRetire: cancel,
+    });
+    cancelUnifiedOpening = cancel;
     try {
       const host = await getUnifiedMissionLibrary();
       await host.refreshInstalled();
+      opening.dispose();
       if (
         revision !== unifiedOpenRevision ||
+        !opening.current() ||
         unifiedDisposed ||
         document.hidden ||
         document.hasFocus?.() === false ||
@@ -8569,8 +8606,17 @@ try {
         return;
       unifiedChooser.open(opener, options);
     } catch (error) {
-      if (revision === unifiedOpenRevision)
+      if (revision === unifiedOpenRevision) {
+        failed = true;
+        feedback.textContent = 'Missions could not load. Choose Missions to retry.';
         warning(`Mission library could not open: ${error.message}`);
+      }
+    } finally {
+      opening.dispose();
+      if (!failed) {
+        feedback.remove();
+        if (cancelUnifiedOpening === cancel) cancelUnifiedOpening = null;
+      }
     }
   }
   if (journeyEnabled) {
@@ -8893,7 +8939,9 @@ try {
         !event.shiftKey
       ) {
         event.preventDefault();
-        void openUnifiedMissions(link, { returnLabel: 'Back to menu' });
+        void openUnifiedMissions(link, {
+          returnLabel: $('shell-home').open ? 'Back to menu' : 'Back to brief',
+        });
         return;
       }
       const parent = link.closest('dialog');

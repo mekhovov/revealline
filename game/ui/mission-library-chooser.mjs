@@ -216,14 +216,29 @@ export function attachMissionLibraryChooser({
     const rules = node('span', null, row.rules);
     rules.className = 'journey-card-challenge';
     rules.hidden = !row.rules;
+    const route = node('span');
+    route.className = 'journey-card-route';
+    const mastery = node('span');
+    mastery.className = 'journey-card-mastery';
     const action = node('span');
     action.className = 'journey-card-action';
-    button.append(number, name, campaignName, edition, tags, progress, rules, action);
+    button.append(
+      number,
+      name,
+      campaignName,
+      edition,
+      tags,
+      progress,
+      rules,
+      route,
+      mastery,
+      action,
+    );
     button.onclick = () => void activate(row);
     button.addEventListener('focus', () => {
       selectedId = row.id;
     });
-    return { row, button, progress, action, diagram: null };
+    return { row, button, progress, rules, route, mastery, action, diagram: null };
   }
   function render() {
     if (destroyed) return;
@@ -243,6 +258,13 @@ export function attachMissionLibraryChooser({
         cards.set(row.id, card);
       }
       const availability = library.availability(row, modeFilter.value);
+      const details = library.details(row, modeFilter.value);
+      card.rules.textContent = details.challenge;
+      card.rules.hidden = !details.challenge;
+      card.route.textContent = details.route;
+      card.route.hidden = !details.route;
+      card.mastery.textContent = details.mastery ? `Optional challenge: ${details.mastery}` : '';
+      card.mastery.hidden = !details.mastery;
       card.progress.textContent = library.progress(row, modeFilter.value);
       card.progress.hidden = !card.progress.textContent;
       card.action.textContent =

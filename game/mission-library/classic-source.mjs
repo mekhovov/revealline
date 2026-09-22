@@ -36,6 +36,14 @@ export function prepareMissionLibraryIndex(value) {
       !Array.isArray(row.modes) ||
       !row.modes.length ||
       row.modes.some((mode) => !['solo', 'versus'].includes(mode)) ||
+      row.modes.some(
+        (mode) =>
+          !Array.isArray(row.difficultiesByMode?.[mode]) ||
+          !row.difficultiesByMode[mode].length ||
+          row.difficultiesByMode[mode].some(
+            (preset) => !['standard', 'gentle', 'expert'].includes(preset),
+          ),
+      ) ||
       !Array.isArray(row.tags) ||
       !row.tags.includes('Classic') ||
       !Number.isInteger(row.levelIndex) ||
@@ -96,6 +104,12 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
         launch,
         progress,
         card,
+        details: (row, mode) => ({
+          challenge: `Authored Standard rules · ${row.rules}`,
+          route: `Difficulty settings: ${row.difficultiesByMode[mode]
+            .map((preset) => `${preset[0].toUpperCase()}${preset.slice(1)}`)
+            .join(', ')}`,
+        }),
       };
       owners.set(id, owner);
     }

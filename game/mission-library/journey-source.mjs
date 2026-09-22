@@ -7,6 +7,7 @@ export function journeyLibrarySource({
   profile,
   launch,
   card,
+  details,
   tags = () => [],
 }) {
   return {
@@ -35,6 +36,7 @@ export function journeyLibrarySource({
           : '';
     },
     card,
+    details,
     launch,
   };
 }

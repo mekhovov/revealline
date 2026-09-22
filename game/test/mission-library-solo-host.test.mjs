@@ -126,6 +126,7 @@ test('Classic Solo mounts the same flat library with all91 Journey and110 retain
   assert.equal(p.$('journey-collection').value, '');
   const cards = [...p.$('journey-cards').children];
   assert.match(cards[0].textContent, /Journey/);
+  assert.match(cards[0].textContent, /Arcade.*Band 1\/12 · Standard.*Optional challenge:/);
   assert.equal(
     cards.filter((card) => card.querySelector('.journey-card-tags').textContent.includes('Classic'))
       .length,
