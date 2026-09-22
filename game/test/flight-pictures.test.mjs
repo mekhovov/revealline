@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createFlightPictures } from '../ui/flight-pictures.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import {
   createPictureIdentityCatalog,
   createBackupPictureIdentityResolver,
@@ -213,4 +214,171 @@ test('picture status precedes real reads and decode, preserves cached readiness,
   gate.resolve();
   await assert.rejects(loading, { name: 'AbortError' });
   assert.equal(stale.length, before);
+});
+
+function stagedSelection({ decodeGate, acquireError, acceptError } = {}) {
+  const counts = { acquired: 0, accepted: 0, discarded: 0, released: 0 };
+  let discarded = false;
+  return {
+    counts,
+    has: (pin) => pin.identity.themeId === 'fpv',
+    async acquire(pin) {
+      counts.acquired++;
+      await decodeGate?.promise;
+      if (acquireError) throw acquireError;
+      return { pin, image: {}, release: () => counts.released++ };
+    },
+    accept() {
+      assert.equal(discarded, false);
+      if (acceptError) throw acceptError;
+      counts.accepted++;
+    },
+    discard() {
+      if (!discarded) counts.discarded++;
+      discarded = true;
+    },
+  };
+}
+const prepareStage =
+  (stage) =>
+  async ({ media, selection }) => ({
+    media,
+    library: selection.library,
+    stage,
+  });
+
+test('session selection accepts only after display readiness and preserves normal pins on later worlds', async () => {
+  const { options } = setup(),
+    gate = deferred(),
+    stage = stagedSelection({ decodeGate: gate });
+  const owner = createFlightPictures({
+    ...options,
+    prepareSelection: prepareStage(stage),
+    acquire: () => assert.fail('Unaccepted session bytes never reach durable acquisition'),
+  });
+  const pending = owner.ensure();
+  await waitFor(() => stage.counts.acquired > 0);
+  assert.equal(stage.counts.accepted, 0);
+  assert.equal(owner.current(), null);
+  gate.resolve();
+  await pending;
+  const pins = owner.pins();
+  assert.equal(stage.counts.accepted, 1);
+  assert.equal(owner.current().pin.assetId, 'picture-a');
+  await owner.ensure('ukraine');
+  assert.equal(owner.pins(), pins);
+  assert.equal(stage.counts.accepted, 1);
+  owner.dispose();
+  assert.deepEqual(stage.counts, { acquired: 1, accepted: 1, discarded: 0, released: 1 });
+});
+
+test('a verified session selection can retain another world while starting its legacy world', async () => {
+  const { options } = setup(),
+    stage = stagedSelection();
+  const owner = createFlightPictures({ ...options, prepareSelection: prepareStage(stage) });
+  await owner.ensure('ukraine');
+  assert.equal(owner.ready('ukraine'), true);
+  assert.equal(owner.current(), null);
+  assert.equal(owner.pins().choices[0].assetId, 'picture-a');
+  assert.equal(stage.counts.accepted, 1);
+  assert.equal(stage.counts.acquired, 0);
+  owner.dispose();
+  assert.equal(stage.counts.discarded, 0);
+});
+
+test('late canceled session preparation is discarded without accepting pins or displaying anything', async () => {
+  const { options } = setup(),
+    gate = deferred(),
+    stage = stagedSelection();
+  let preparing = false;
+  const owner = createFlightPictures({
+    ...options,
+    prepareSelection: async (request) => {
+      preparing = true;
+      await gate.promise;
+      return prepareStage(stage)(request);
+    },
+  });
+  const pending = owner.ensure();
+  await waitFor(() => preparing);
+  owner.cancel();
+  gate.resolve();
+  await assert.rejects(pending, { name: 'AbortError' });
+  assert.equal(owner.pins(), undefined);
+  assert.equal(owner.current(), null);
+  assert.deepEqual(stage.counts, { acquired: 0, accepted: 0, discarded: 1, released: 0 });
+  owner.dispose();
+});
+
+test('late canceled session decode cannot discard a newer accepted selection', async () => {
+  const { options } = setup(),
+    gate = deferred(),
+    old = stagedSelection({ decodeGate: gate }),
+    current = stagedSelection();
+  let preparations = 0;
+  const owner = createFlightPictures({
+    ...options,
+    prepareSelection: (request) => prepareStage(++preparations === 1 ? old : current)(request),
+  });
+  const pending = owner.ensure();
+  const rejected = assert.rejects(pending, { name: 'AbortError' });
+  await waitFor(() => old.counts.acquired > 0);
+  owner.cancel();
+  await owner.ensure();
+  const picture = owner.current(),
+    pins = owner.pins();
+  gate.resolve();
+  await rejected;
+  assert.equal(owner.current(), picture);
+  assert.equal(owner.pins(), pins);
+  assert.deepEqual(old.counts, { acquired: 1, accepted: 0, discarded: 1, released: 1 });
+  assert.equal(current.counts.accepted, 1);
+  assert.equal(current.counts.discarded, 0);
+  owner.dispose();
+  assert.equal(current.counts.released, 1);
+});
+
+for (const failure of ['decode', 'accept']) {
+  test(`failed session ${failure} discards unaccepted history and permits a fresh deliberate preparation`, async () => {
+    const { options } = setup(),
+      broken = stagedSelection({
+        ...(failure === 'decode'
+          ? { acquireError: new Error('Decode failed') }
+          : { acceptError: new Error('Stale session revision') }),
+      }),
+      good = stagedSelection();
+    let preparations = 0;
+    const owner = createFlightPictures({
+      ...options,
+      prepareSelection: (request) => prepareStage(++preparations === 1 ? broken : good)(request),
+    });
+    await assert.rejects(owner.ensure(), failure === 'decode' ? /Decode failed/ : /Stale/);
+    assert.equal(owner.pins(), undefined);
+    assert.equal(owner.current(), null);
+    assert.equal(broken.counts.accepted, 0);
+    assert.equal(broken.counts.discarded, 1);
+    assert.equal(broken.counts.released, failure === 'decode' ? 0 : 1);
+    await owner.ensure();
+    assert.equal(good.counts.accepted, 1);
+    assert.equal(owner.ready('fpv'), true);
+    owner.dispose();
+  });
+}
+
+test('status callback cancellation retires a staged session before acquisition or acceptance', async () => {
+  const { options } = setup(),
+    stage = stagedSelection();
+  const owner = createFlightPictures({ ...options, prepareSelection: prepareStage(stage) });
+  await assert.rejects(
+    owner.ensure(undefined, {
+      onStatus: (status) => {
+        if (status.stage === 'decoding') owner.cancel();
+      },
+    }),
+    { name: 'AbortError' },
+  );
+  assert.equal(owner.current(), null);
+  assert.equal(owner.pins(), undefined);
+  assert.deepEqual(stage.counts, { acquired: 0, accepted: 0, discarded: 1, released: 0 });
+  owner.dispose();
 });

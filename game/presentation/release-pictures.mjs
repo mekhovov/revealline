@@ -177,12 +177,15 @@ export function createReleasePictureDefaults({
   executionCatalog,
   readMedia,
   assertWritable = () => {},
+  sessionPictures = null,
+  sessionOnly = () => false,
   commit = (store, prepared, options) => store.commit(prepared, options),
 }) {
   required(
     typeof getHost === 'function' &&
       typeof executionCatalog === 'function' &&
-      typeof readMedia === 'function',
+      typeof readMedia === 'function' &&
+      typeof sessionOnly === 'function',
     'Release pictures need the current host and still catalog.',
   );
   async function source(signal, onStatus) {
@@ -227,6 +230,62 @@ export function createReleasePictureDefaults({
         ];
     }
     if (!same(library, previous)) {
+      // Only an explicit, already-known writer-unavailable policy may choose
+      // session history. A failed durable write never falls back here.
+      if (!persistBindings && sessionPictures && sessionOnly() === true) {
+        let stage;
+        try {
+          const selected = validateMediaLibrary(
+            {
+              ...library,
+              assignments: [
+                ...library.assignments.filter(
+                  (entry) =>
+                    !additions.some((row) => same(row.assignment.identity, entry.identity)),
+                ),
+                ...additions.map((row) => row.assignment),
+              ],
+            },
+            { identityCatalog: choices[0].identityCatalog, previous },
+          );
+          const accepted = new Set(
+            sessionPictures.metadata().document.library.assets.map((asset) => asset.sha256),
+          );
+          const originals = new Map();
+          for (const row of additions) {
+            abort(signal);
+            required(host.current() === snapshot, 'Release picture changed during preparation.');
+            if (accepted.has(row.asset.sha256) || originals.has(row.asset.sha256)) continue;
+            notice(onStatus, signal, 'downloading', 'Downloading the published picture original…');
+            const original = await host.readPicture(row.choice.slotId, {
+              snapshot,
+              signal,
+              onStatus,
+            });
+            abort(signal);
+            required(
+              host.current() === snapshot && same(original.asset, row.choice.asset),
+              'Release picture changed during preparation.',
+            );
+            originals.set(row.asset.sha256, { sha256: row.asset.sha256, blob: original.blob });
+          }
+          notice(onStatus, signal, 'verifying', 'Verifying picture originals for this session…');
+          stage = await sessionPictures.stage(
+            additions.map(({ choice: { slotId, label, identity, asset }, ...row }) => ({
+              ...row,
+              choice: { slotId, label, identity, asset },
+            })),
+            [...originals.values()],
+            { executionCatalog: executionCatalog(), signal },
+          );
+          abort(signal);
+          required(host.current() === snapshot, 'Release picture changed during preparation.');
+          return { media, library: selected, stage };
+        } catch (error) {
+          stage?.discard();
+          throw error;
+        }
+      }
       // Existing exact originals can be selected read-only after a history
       // return. Missing history needs the current writer before any download.
       assertWritable();
