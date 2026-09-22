@@ -844,6 +844,7 @@ export function bootCoop({
       foreground();
     navigation.clear();
     router.clear();
+    discoveryControls();
     if (!restore || !currentReturn() || !visibleAction(owner.opener) || !currentReturn()) return;
     const active = document.activeElement;
     if (active !== owner.opener && (unclaimedFocus(active) || settingsDialog.contains(active)))
