@@ -12,7 +12,7 @@ available through its preserved archive route.
 | --- | --- | --- |
 | v0.83.0 default Journey | **Complete** | Source PR #263 merged at `01b189f64`; all 11,788 exact-source tests passed; immutable tag/release, selector PR #271 and Pages run `35775874062` passed. |
 | v0.84.0 unified mission library | **Complete for scoped public acceptance** | Source PR #268 merged at `1107f570`; exact merged-source qualification and frozen inspection passed; immutable release has nine descriptor-matched assets; selector PR #274 and Pages run `35783546172` passed. |
-| Unified public discovery | **Complete in scoped browser release** | Keyboard-only public entry opened one mission library with 201 Solo-visible Journey, Classic and Custom entries plus Solo, Versus and Team filters. Search, campaign and collection controls were exposed without a mouse. |
+| Unified public discovery | **Complete in scoped browser release** | The first browser load surfaced a dynamic-import failure with a usable Reload action; Reload recovered. The exact public app body matched the deployed source, and keyboard-only entry then opened one mission library with 201 Solo-visible Journey, Classic and Custom entries plus Solo, Versus and Team filters. Search, campaign and collection controls were exposed without a mouse. |
 | Public version identity | **Complete** | Root `release.json`, versioned `release.json` and `game/build-info.json` all reported v0.84.0 and source `1107f570508e0d107440236b6aeedbce8506cd7d`. |
 | Historical preservation | **Complete** | v0.83.0 is retained in Archive 52; its versioned release record still reports the original source `01b189f64`. |
 | Public mission counts from v0.83 | **Preserved** | 91 Solo, 91 Versus and 12 Team Journey missions remain available; the v0.84 library additionally exposes retained Classic and Custom entries. |
@@ -29,9 +29,10 @@ separate evidence gate; the scoped player journeys above are already accepted.
 
 PR #272 temporarily waives repository-wide automated suites after v0.83.0.
 Releases made while that policy is active must label those suites as **waived**,
-never passed. Validation, exact source identity, production reproduction,
-build/integrity, immutable artifacts, deployment and affected public journeys
-remain mandatory.
+never passed. Validation, exact source identity, production reproduction, build/integrity,
+immutable artifacts, deployment and basic public availability remain mandatory.
+Extended manual gameplay, full browser matrices and physical-device journeys remain
+useful evidence, but are nonblocking while the temporary waiver is active.
 
 ## Active next release
 
@@ -69,8 +70,9 @@ Remaining gates:
 3. Re-run qualification and freeze on the exact merge commit.
 4. Publish the immutable v0.85.0 tag and release assets.
 5. Preserve v0.84.0 in the next archive, merge a separate selector PR, deploy
-   Pages and verify Keep, Replace, Undo, failed import and focus restoration on
-   the actual public build.
+   Pages and prove source identity, integrity and basic availability. Record
+   Keep, Replace, Undo, failed-import and focus-restoration journeys when run;
+   the temporary waiver keeps those extended manual checks nonblocking.
 6. Close PRs #252 and #257 as superseded only after v0.85.0 public acceptance.
 
 ## Prioritized remaining releases
