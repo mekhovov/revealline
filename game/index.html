@@ -173,6 +173,7 @@
     <div class="shell-bar" data-boot-inert inert>
       <button id="shell-menu" type="button" aria-label="Game menu">
         ◩ <span>REVEAL / LINE</span>
+        <span id="journey-save-badge" class="journey-save-badge" aria-hidden="true" hidden>!</span>
       </button>
       <span id="shell-edition" class="shell-edition"></span>
       <button
@@ -363,8 +364,17 @@
                   <button id="start-button" class="button primary" type="button">
                     Start mission <span>↗</span></button
                   ><button id="next-button" class="button primary" type="button" hidden>
-                    Next mission →</button
-                  ><button id="view-picture" class="button secondary" type="button" hidden>
+                    Next mission →
+                  </button>
+                  <button
+                    id="journey-save-options"
+                    class="button secondary journey-save-options"
+                    type="button"
+                    hidden
+                  >
+                    Progress not saved · Save options
+                  </button>
+                  <button id="view-picture" class="button secondary" type="button" hidden>
                     View picture ⤢
                   </button>
                   <button id="retry-button" class="button secondary" type="button" hidden>
@@ -489,11 +499,7 @@
           <p id="run-message" class="run-message" role="status">
             Your first route: fly down from the marked start to the opposite border.
           </p>
-          <aside id="journey-save-status" class="journey-status" hidden>
-            <p id="journey-save-message" role="status"></p>
-            <button id="journey-save-retry" type="button">Retry save</button>
-            <button id="journey-save-export" type="button">Export Journey progress</button>
-          </aside>
+          <p id="journey-save-announcement" class="sr-only" role="status" aria-live="polite"></p>
           <div class="minor-controls">
             <label><input id="tap-steering" type="checkbox" /> Tap steering</label
             ><label><input id="reduced-effects" type="checkbox" /> Reduced effects</label
@@ -1679,6 +1685,16 @@
           </button>
         </nav>
         <p id="shell-destination" class="home-destination" aria-live="polite"></p>
+        <aside
+          id="journey-save-status"
+          class="journey-status"
+          aria-label="Journey progress saving"
+          hidden
+        >
+          <p id="journey-save-message" role="status"></p>
+          <button id="journey-save-retry" type="button">Retry save</button>
+          <button id="journey-save-export" type="button">Export Journey progress</button>
+        </aside>
         <p id="journey-artwork-availability" class="home-status" hidden>
           Authored Journey web previews need an online connection for their original pictures. Core
           offline preparation does not save these pictures. Full downloaded distributions include

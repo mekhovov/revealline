@@ -4,6 +4,7 @@ import { createCharacterPresentations } from './character-presentations.mjs';
 import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs';
 import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
+import { attachJourneySaveNotice } from './ui/journey-save-notice.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
 import { loadAuthoredJourneyRoute } from './content-design/route-loader.mjs';
 import {
@@ -357,6 +358,7 @@ try {
       : legacyDifficultyLabel(entry);
   }
   const journeyEnabled = (params.get('journey') === '1' || authoredJourney) && !practiceSession;
+  const journeySaveNotice = journeyEnabled ? attachJourneySaveNotice({ document }) : null;
   const journeyAuthority =
     journeyEnabled && !authoredJourney
       ? createJourneyAuthority({
@@ -370,12 +372,7 @@ try {
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
-        onStatus({ ready, durable, error }) {
-          show('journey-save-status', ready && !durable && !!error);
-          $('journey-save-message').textContent = error
-            ? `Journey progress is session-only. Keep playing, retry saving, or export before closing. ${error}`
-            : '';
-        },
+        onStatus: (status) => journeySaveNotice.update(status),
       })
     : null;
   if (journeyProfile) await journeyProfile.load();
