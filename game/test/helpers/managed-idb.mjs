@@ -96,6 +96,7 @@ export function managedIndexedDB() {
       if (!names.includes(name)) throw new DOMException('Store outside scope', 'NotFoundError');
       return {
         get: (key) => request(() => structuredClone(data.get(name).get(key))),
+        count: (key) => request(() => (data.get(name).has(key) ? 1 : 0)),
         getAllKeys: () => request(() => [...data.get(name).keys()].sort()),
         getAll: () =>
           request(() =>
