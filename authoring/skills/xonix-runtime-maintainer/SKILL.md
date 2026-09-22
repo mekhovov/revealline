@@ -1186,3 +1186,13 @@ In landscape, reserve the actual HUD, objective, footer and both complete player
 ## Music player without a catalogue
 
 Keep built-in and imported playlist selection visible when attachSoundtrackPanel receives no catalogue. Genre/style cards can be hidden, but the shared playlist field and Play action must move into the visible transport. Label the null selection as automatic map/campaign/theme matching rather than a nonexistent style selector. Assert visible ancestor chains as well as calling handlers: a detached or hidden control can pass a synthetic click test. Keep catalogue and legacy-library journeys separate.
+
+
+For bundled-chapter recovery, describe the existing explicit retry path accurately.
+HTTP and unreadable-body failures permit selecting the same uninstalled chapter
+again while online; do not require reload when each selection creates a new
+request. Preserve the current flight, library, status code, diagnostic cause,
+abort semantics and ordinary pack validation. Verify controlled failure then
+success in the same page without reload. See `docs/chapter-download-retry.md` and
+`authoring/prompts/chapter-download-retry.md`; local faults do not qualify public
+network recovery or physical-device input.
