@@ -9,6 +9,39 @@ import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
+test('filtered, closed and background cards cannot launch or prepare an old selection', async () => {
+  let launches = 0,
+    preparations = 0;
+  const { doc, $, chooser } = setup([
+    owner({ launch: () => ++launches }),
+    owner({
+      id: 'missing',
+      entries: [row('missing')],
+      availability: () => ({ state: 'download', bytes: 1024 }),
+      prepare: () => ++preparations,
+    }),
+  ]);
+  const oldCards = [...$('journey-cards').children];
+  $('journey-search').value = 'no match';
+  $('journey-search').emit('input');
+  for (const card of oldCards) card.click();
+  await tick();
+  assert.equal(launches, 0);
+  assert.equal(preparations, 0);
+  $('journey-search').value = '';
+  $('journey-search').emit('input');
+  doc.hidden = true;
+  for (const card of oldCards) card.click();
+  await tick();
+  doc.hidden = false;
+  chooser.close();
+  for (const card of oldCards) card.click();
+  await tick();
+  assert.equal(launches, 0);
+  assert.equal(preparations, 0);
+  chooser.destroy();
+});
+
 test('late failed launch cannot reopen the picker over a newer host action', async () => {
   let finish,
     current = true;

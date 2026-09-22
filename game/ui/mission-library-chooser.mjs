@@ -133,7 +133,20 @@ export function attachMissionLibraryChooser({
     else search.focus({ preventScroll: true });
     list.scrollTop = savedScroll;
   }
-  async function activate(row) {
+  async function activate(row, button) {
+    // Detached cards retain their event handlers. A past view (or a closed
+    // chooser) must not launch or prepare content after its intent has ended.
+    if (
+      destroyed ||
+      !dialog.open ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      cards.get(row.id)?.button !== button ||
+      !list.contains(button) ||
+      library.find(row.id) !== row ||
+      !row.modes.includes(modeFilter.value)
+    )
+      return;
     selectedId = row.id;
     remember();
     const activeMode = modeFilter.value;
@@ -234,7 +247,7 @@ export function attachMissionLibraryChooser({
       mastery,
       action,
     );
-    button.onclick = () => void activate(row);
+    button.onclick = () => void activate(row, button);
     button.addEventListener('focus', () => {
       selectedId = row.id;
     });

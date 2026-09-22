@@ -136,6 +136,48 @@ test('Classic Solo mounts the same flat library with all91 Journey and110 retain
   assert.deepEqual(p.errors, []);
 });
 
+test('unified Solo retains native setup without a second mission picker', async (t) => {
+  const p = await soloPage(t, { titleScreen: true });
+  const steering = p.$('turn-select');
+  await open(p);
+  const setup = p.$('mission-picker-setup');
+  assert.equal(p.$('journey-chooser').contains(setup), true);
+  assert.equal(setup.open, false);
+  assert.match(setup.querySelector('summary').textContent, /Current Solo flight setup/);
+  assert.equal(p.$('turn-select'), steering, 'Existing guarded control, not a duplicate.');
+  for (const id of ['pack-select', 'level-select', 'campaign-select'])
+    assert.equal(p.$(id).closest('label').hidden, true);
+  for (const id of ['difficulty-select', 'turn-select', 'body-select'])
+    assert.equal(setup.contains(p.$(id)), true);
+  assert.deepEqual(p.errors, []);
+});
+
+test('appearance opens the unified Solo setup and focuses its existing control', async (t) => {
+  const p = await soloPage(t, { titleScreen: true });
+  p.$('choose-appearance').focus();
+  p.$('choose-appearance').click();
+  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  assert.equal(p.$('mission-picker-setup').open, true);
+  assert.equal(p.doc.activeElement, p.$('body-select'));
+  assert.equal(p.$('shell-missions').open, false);
+  assert.deepEqual(p.errors, []);
+});
+
+test('Journey setup changes next preset and library details without replacing the controls', async (t) => {
+  const p = await journeyPage(t, '?journey=whole-spatial-v5');
+  await open(p);
+  const difficulty = p.$('difficulty-select');
+  p.$('mission-picker-setup').open = true;
+  difficulty.focus();
+  difficulty.value = 'expert';
+  difficulty.emit('change');
+  await settle(() => p.$('journey-cards').children[0].textContent.includes('Expert'));
+  assert.equal(p.$('difficulty-select'), difficulty);
+  assert.equal(p.doc.activeElement, difficulty);
+  assert.equal(p.$('journey-chooser').open, true);
+  assert.deepEqual(p.errors, []);
+});
+
 test('unified Solo Download becomes Play inline and launches the selected late installed Classic', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
