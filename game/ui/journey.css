@@ -251,7 +251,9 @@
   display: none;
 }
 /* Compact flight hides branding spans; this status is not branding. */
-.game-shell[data-flight-state='running'] #shell-menu .journey-save-badge:not([hidden]) {
+body.field-kit.game-shell[data-flight-state='running']
+  #shell-menu
+  .journey-save-badge:not([hidden]) {
   display: grid;
 }
 .game-shell .game-overlay .journey-save-options {
