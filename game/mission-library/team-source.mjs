@@ -12,6 +12,9 @@ export function teamJourneyLibrarySource({
   editionId = TEAM_LIBRARY_JOURNEY_EDITION,
   edition = 'Team Journey',
   progress,
+  // Hosts adopting new runtime pressure explicitly supply their edition hash.
+  // Historical readers keep authored receipt semantics unless they opt in.
+  gameplayIdentity = (row) => row.simulationIdentity,
   difficulty = () => 'standard',
   launch,
 }) {
@@ -38,7 +41,7 @@ export function teamJourneyLibrarySource({
       if (!receipt)
         return profile.skipped.team?.includes(mission.id) ? 'Skipped · try again' : 'Not cleared';
       const cleared = journey.row(mission, receipt.difficulty);
-      const exact = receipt.gameplayId === cleared?.simulationIdentity;
+      const exact = Boolean(cleared && receipt.gameplayId === gameplayIdentity(cleared));
       return (
         `${exact ? 'Cleared' : 'Earlier edition cleared'} on ${receipt.difficulty}` +
         (exact && receipt.difficulty === difficulty()

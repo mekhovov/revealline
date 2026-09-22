@@ -63,15 +63,31 @@ export function createCoopPainter(canvas) {
   }
   function paint(
     run,
-    { reduced = false, textFace = 'pixel', picture = null, actorStyle = 'hybrid' } = {},
+    {
+      reduced = false,
+      textFace = 'pixel',
+      picture = null,
+      pictureLevel = run.level,
+      actorStyle = 'hybrid',
+    } = {},
   ) {
     // This is a defensive arena guard, not full content-hash authority. The
     // picture lease verifies the pack/level hashes; the host owns attempt intent.
     let pictureWidth = 1152,
       pictureHeight = 576;
     if (picture !== null) {
+      // The host keeps the authenticated authored picture edition separately
+      // from a derived pressure recipe. Geometry and the actual simulation stay
+      // owned by the run; no alternate picture edition is inferred by ID.
+      if (
+        pictureLevel.id !== run.level.id ||
+        pictureLevel.version !== run.level.version ||
+        pictureLevel.width !== run.width ||
+        pictureLevel.height !== run.height
+      )
+        throw new TypeError('Team picture source does not match this arena.');
       if (picture.choice?.sourceKind === 'candidate-original') {
-        const frame = candidateTeamPictureFrame(picture, run.level, presentation);
+        const frame = candidateTeamPictureFrame(picture, pictureLevel, presentation);
         if (!frame) throw new TypeError('Team candidate picture has no live verified owner.');
         pictureWidth = frame.width;
         pictureHeight = frame.height;
@@ -80,7 +96,7 @@ export function createCoopPainter(canvas) {
         picture.snapshot !== presentation ||
         !presentation ||
         picture.choice?.levelId !== run.level.id ||
-        picture.choice?.levelRevision !== run.level.revision ||
+        picture.choice?.levelRevision !== pictureLevel.revision ||
         picture.fit !== 'contain' ||
         picture.sampling !== 'nearest' ||
         run.width !== 72 ||

@@ -8,6 +8,8 @@ import {
   teamArenaLibrarySource,
 } from '../mission-library/team-source.mjs';
 import { COOP_STARTER_PACK, coopGoalText } from '../coop/library.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { dataIdentity } from '../data-json.mjs';
 
 const source = createTeamSpatialOriginalCandidates();
 const journey = createCandidateTeamHost(source, {
@@ -128,4 +130,35 @@ test('Team card receipts distinguish the selected preset from an earlier or diff
   assert.equal(library.progress(selected, 'team'), 'Cleared on standard · selected edition');
   receipt.gameplayId = 'older-simulation';
   assert.match(library.progress(selected, 'team'), /^Earlier edition cleared.*no clear recorded/);
+});
+
+test('a pressure host explicitly qualifies new Team receipt identity without upgrading historical clears', () => {
+  const mission = journey.catalog.missions[0],
+    row = journey.row(mission, 'standard');
+  const receipt = { difficulty: 'standard', gameplayId: row.simulationIdentity };
+  const profile = { clears: { team: { [mission.id]: receipt } }, skipped: { team: [] } };
+  const expected = dataIdentity({
+    ruleset: row.pack.ruleset,
+    level: applyGameplayTuning(row.level, resolveGameplayTuning(row.difficulty)),
+  });
+  const source = teamJourneyLibrarySource({
+    journey,
+    progress: { snapshot: () => profile },
+    gameplayIdentity: (owned) => {
+      assert.strictEqual(owned, row);
+      return expected;
+    },
+    launch: () => true,
+  });
+  assert.match(source.progress(mission), /^Earlier edition cleared/);
+  receipt.gameplayId = expected;
+  assert.equal(source.progress(mission), 'Cleared on standard · selected edition');
+  receipt.gameplayId = dataIdentity({
+    ruleset: row.pack.ruleset,
+    level: applyGameplayTuning(
+      row.level,
+      resolveGameplayTuning(row.difficulty, { enemySpeed: 1.1 }),
+    ),
+  });
+  assert.match(source.progress(mission), /^Earlier edition cleared/);
 });

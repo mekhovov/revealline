@@ -173,3 +173,22 @@ test('admitted skip publishes its successor cursor and reversible skip together 
   assert.deepEqual(observed[0].clears.team, {});
   assert.equal(progress.started(first, createCoop(first.level), { skipped: second }), false);
 });
+
+test('a fresh pressure attempt records its actual gameplay identity while admin practice earns no clear', async () => {
+  const progress = createTeamJourneyProgress(journey, { backend: memory() });
+  await progress.load();
+  const run = createCoop(first.level),
+    gameplayId = '1234567890abcdef';
+  assert.equal(progress.started(first, run, { gameplayId: 'not-a-gameplay-identity' }), false);
+  assert(progress.started(first, run, { gameplayId }));
+  win(run);
+  assert(progress.complete(run));
+  assert.equal(progress.snapshot().clears.team[first.mission.id].gameplayId, gameplayId);
+  const practice = createTeamJourneyProgress(journey, { backend: memory() });
+  await practice.load();
+  const admin = createCoop(first.level);
+  assert.equal(practice.started(first, admin, { gameplayId, adminOverride: true }), false);
+  win(admin);
+  assert.equal(practice.complete(admin), false);
+  assert.deepEqual(practice.snapshot().clears.team, {});
+});

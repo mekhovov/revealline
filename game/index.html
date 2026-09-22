@@ -1020,6 +1020,7 @@
         hidden
       >
         <h3 data-field-kit-copy="settings.controls">Controls</h3>
+        <section id="gameplay-tuning" aria-label="Global gameplay playtest tuning"></section>
         <p class="micro-note" data-field-kit-copy="settings.controlsDescription">
           Keyboard, controller and touch.
         </p>
@@ -1642,6 +1643,15 @@
         <p id="shell-title-edition" class="eyebrow">FPV FIELD KIT / FLIGHT READY</p>
         <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
         <p class="home-copy">Find your line.<br />Bring the picture home.</p>
+        <label class="field" data-course-hide>
+          Difficulty
+          <select id="menu-difficulty" aria-describedby="menu-difficulty-note">
+            <option value="gentle">Gentle</option>
+            <option value="standard">Standard</option>
+            <option value="expert">Expert</option>
+          </select>
+        </label>
+        <p id="menu-difficulty-note" class="micro-note" role="status" data-course-hide></p>
         <nav id="shell-title-modes" aria-label="Game mode">
           <a id="shell-title-versus" href="couch/?return=solo">Couch Versus</a>
           <a id="shell-title-team" href="couch/relay-rescue.html?return=solo">Couch Team</a>

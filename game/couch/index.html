@@ -173,6 +173,20 @@
           </p>
           <p id="race-message" role="status">Both boards use the same map, class and seed.</p>
           <p id="race-summary" class="race-summary"></p>
+          <div class="race-fields">
+            <label id="race-journey-difficulty-field" hidden
+              >Next fresh race difficulty
+              <select id="race-journey-difficulty"></select>
+              <span id="race-journey-difficulty-note" role="status"></span>
+            </label>
+            <div id="race-journey-preferences-recovery" hidden>
+              <p id="race-journey-preferences-message" role="status"></p>
+              <button id="race-journey-preferences-retry" type="button">
+                Retry saving difficulty
+              </button>
+              <button id="race-journey-preferences-export" type="button">Export difficulty</button>
+            </div>
+          </div>
           <div class="race-seats">
             <article class="seat sun">
               <span>PLAYER 1</span>
@@ -241,18 +255,6 @@
           <h1 id="race-setup-title">Race setup</h1>
           <p>Choose together. Each player starts with the same map, craft and time.</p>
           <div class="race-fields">
-            <label id="race-journey-difficulty-field" hidden
-              >Next fresh race difficulty
-              <select id="race-journey-difficulty"></select>
-              <span id="race-journey-difficulty-note" role="status"></span>
-            </label>
-            <div id="race-journey-preferences-recovery" hidden>
-              <p id="race-journey-preferences-message" role="status"></p>
-              <button id="race-journey-preferences-retry" type="button">
-                Retry saving difficulty
-              </button>
-              <button id="race-journey-preferences-export" type="button">Export difficulty</button>
-            </div>
             <label>Map<select id="race-level"></select></label>
             <label
               >Format<select id="race-format">
@@ -343,6 +345,7 @@
             inert
           >
             <h2>Controls</h2>
+            <section id="race-gameplay-tuning" aria-label="Shared gameplay tuning"></section>
             <div class="race-fields">
               <label
                 >Player 1 touch controls<select id="race-touch-0">

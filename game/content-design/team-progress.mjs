@@ -57,9 +57,12 @@ export function createTeamJourneyProgress(
           : journey.catalog.missions.find((item) => journey.isCore(item.id));
       return journey.row(mission, difficulty);
     },
-    started(row, run, { skipped = null } = {}) {
+    started(row, run, { skipped = null, gameplayId = null, adminOverride = false } = {}) {
       if (
         disposed ||
+        adminOverride ||
+        (gameplayId !== null &&
+          (typeof gameplayId !== 'string' || !/^[0-9a-f]{16}$/.test(gameplayId))) ||
         !journey.owns(row) ||
         !run ||
         attempts.has(run) ||
@@ -72,7 +75,12 @@ export function createTeamJourneyProgress(
         (skipped && (!journey.owns(skipped) || journey.destination(skipped).next !== row))
       )
         return false;
-      attempts.set(run, { row, runId: `${sessionId}/${++sequence}`, completed: false });
+      attempts.set(run, {
+        row,
+        runId: `${sessionId}/${++sequence}`,
+        gameplayId: gameplayId ?? row.simulationIdentity,
+        completed: false,
+      });
       store.recordMany([
         ...(skipped ? [{ type: 'skip', mode: 'team', missionId: skipped.mission.id }] : []),
         { type: 'select', mode: 'team', missionId: row.mission.id },
@@ -88,7 +96,7 @@ export function createTeamJourneyProgress(
         mode: 'team',
         missionId: attempt.row.mission.id,
         runId: attempt.runId,
-        gameplayId: attempt.row.simulationIdentity,
+        gameplayId: attempt.gameplayId,
         difficulty: attempt.row.difficulty,
       });
       return true;
