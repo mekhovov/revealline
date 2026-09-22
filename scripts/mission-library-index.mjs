@@ -125,6 +125,7 @@ function rowsForCampaign(campaign, collection) {
       },
       difficultiesByMode: { solo: difficulties, versus: ['standard'] },
       sourceFile: collection.sourceFile,
+      ...(collection.packIdentity ? { packIdentity: collection.packIdentity } : {}),
       ...(collection.packVersion ? { packVersion: collection.packVersion } : {}),
       ...(collection.download ? { download: collection.download } : {}),
     };
@@ -132,6 +133,8 @@ function rowsForCampaign(campaign, collection) {
 }
 
 function rowsForPack(pack, collection) {
+  const canonical = Buffer.from(canonicalJSON(pack));
+  const packIdentity = { bytes: canonical.length, sha256: digest(canonical) };
   return pack.campaigns.flatMap((source) =>
     rowsForCampaign(
       {
@@ -140,7 +143,7 @@ function rowsForPack(pack, collection) {
           (recipe) => !source.classIds || source.classIds.includes(recipe.id),
         ),
       },
-      { ...collection, packId: pack.id, packVersion: pack.version },
+      { ...collection, packId: pack.id, packVersion: pack.version, packIdentity },
     ),
   );
 }

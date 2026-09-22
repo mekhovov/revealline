@@ -693,6 +693,10 @@
         "bytes": 11708176,
         "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
       },
+      "packIdentity": {
+        "bytes": 11699525,
+        "sha256": "61227a2edc5e68bf9566ec1e8e010352fdce29b184f19a34f567b709f076bbec"
+      },
       "packVersion": "5.0.0"
     },
     {
@@ -750,6 +754,10 @@
         "path": "game/content/packs/fpv-arcade-r5.json",
         "bytes": 11708176,
         "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+      },
+      "packIdentity": {
+        "bytes": 11699525,
+        "sha256": "61227a2edc5e68bf9566ec1e8e010352fdce29b184f19a34f567b709f076bbec"
       },
       "packVersion": "5.0.0"
     },
@@ -813,6 +821,10 @@
         "bytes": 11708176,
         "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
       },
+      "packIdentity": {
+        "bytes": 11699525,
+        "sha256": "61227a2edc5e68bf9566ec1e8e010352fdce29b184f19a34f567b709f076bbec"
+      },
       "packVersion": "5.0.0"
     },
     {
@@ -870,6 +882,10 @@
         "path": "game/content/packs/fpv-pressure-frontier.json",
         "bytes": 11377254,
         "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
+      },
+      "packIdentity": {
+        "bytes": 11367294,
+        "sha256": "939c1428135424c0d97919817eba244d5d1db65a9f1dff0f9159e451ca006104"
       },
       "packVersion": "1.0.0"
     },
@@ -937,6 +953,10 @@
         "bytes": 11377254,
         "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
       },
+      "packIdentity": {
+        "bytes": 11367294,
+        "sha256": "939c1428135424c0d97919817eba244d5d1db65a9f1dff0f9159e451ca006104"
+      },
       "packVersion": "1.0.0"
     },
     {
@@ -1003,6 +1023,10 @@
         "bytes": 11377254,
         "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
       },
+      "packIdentity": {
+        "bytes": 11367294,
+        "sha256": "939c1428135424c0d97919817eba244d5d1db65a9f1dff0f9159e451ca006104"
+      },
       "packVersion": "1.0.0"
     },
     {
@@ -1054,6 +1078,10 @@
         "path": "game/content/packs/night-shift.json",
         "bytes": 8848,
         "sha256": "b82d453a9c7a3feab9b88d960b3bf5cbeca8d5254dec3f259490c54b272acef4"
+      },
+      "packIdentity": {
+        "bytes": 5077,
+        "sha256": "d0fcdbfd0e5dd4205d26f9a4fc567fe4dbe208576b1e446efae8113ff7717f64"
       },
       "packVersion": "1.0.0"
     },
@@ -1107,6 +1135,10 @@
         "bytes": 8848,
         "sha256": "b82d453a9c7a3feab9b88d960b3bf5cbeca8d5254dec3f259490c54b272acef4"
       },
+      "packIdentity": {
+        "bytes": 5077,
+        "sha256": "d0fcdbfd0e5dd4205d26f9a4fc567fe4dbe208576b1e446efae8113ff7717f64"
+      },
       "packVersion": "1.0.0"
     },
     {
@@ -1158,6 +1190,10 @@
         "path": "game/content/packs/night-shift.json",
         "bytes": 8848,
         "sha256": "b82d453a9c7a3feab9b88d960b3bf5cbeca8d5254dec3f259490c54b272acef4"
+      },
+      "packIdentity": {
+        "bytes": 5077,
+        "sha256": "d0fcdbfd0e5dd4205d26f9a4fc567fe4dbe208576b1e446efae8113ff7717f64"
       },
       "packVersion": "1.0.0"
     },
@@ -1216,6 +1252,10 @@
         "bytes": 9156,
         "sha256": "c3fe1e692afcd2dfda0cc3c042f0969d1c2e655d663cf0b7034291c29d16ac52"
       },
+      "packIdentity": {
+        "bytes": 5316,
+        "sha256": "ac8cfc2f87d3ad1bbd10de1a9ff1f575ba619f8e3b039f678848765c9f617417"
+      },
       "packVersion": "1.0.0"
     },
     {
@@ -1268,6 +1308,10 @@
         "path": "game/content/packs/living-threads.json",
         "bytes": 9156,
         "sha256": "c3fe1e692afcd2dfda0cc3c042f0969d1c2e655d663cf0b7034291c29d16ac52"
+      },
+      "packIdentity": {
+        "bytes": 5316,
+        "sha256": "ac8cfc2f87d3ad1bbd10de1a9ff1f575ba619f8e3b039f678848765c9f617417"
       },
       "packVersion": "1.0.0"
     },
@@ -1326,6 +1370,10 @@
         "bytes": 9156,
         "sha256": "c3fe1e692afcd2dfda0cc3c042f0969d1c2e655d663cf0b7034291c29d16ac52"
       },
+      "packIdentity": {
+        "bytes": 5316,
+        "sha256": "ac8cfc2f87d3ad1bbd10de1a9ff1f575ba619f8e3b039f678848765c9f617417"
+      },
       "packVersion": "1.0.0"
     },
     {
@@ -1378,6 +1426,10 @@
         "path": "game/content/packs/fieldcraft.json",
         "bytes": 15204,
         "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb"
+      },
+      "packIdentity": {
+        "bytes": 8688,
+        "sha256": "3f09daa29641c2cbeae1963f8e9b37bfe9be89942e495100b2336f7fbe0f9be8"
       },
       "packVersion": "1.0.0"
     },
@@ -1432,6 +1484,10 @@
         "bytes": 15204,
         "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb"
       },
+      "packIdentity": {
+        "bytes": 8688,
+        "sha256": "3f09daa29641c2cbeae1963f8e9b37bfe9be89942e495100b2336f7fbe0f9be8"
+      },
       "packVersion": "1.0.0"
     },
     {
@@ -1484,6 +1540,10 @@
         "path": "game/content/packs/fieldcraft.json",
         "bytes": 15204,
         "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb"
+      },
+      "packIdentity": {
+        "bytes": 8688,
+        "sha256": "3f09daa29641c2cbeae1963f8e9b37bfe9be89942e495100b2336f7fbe0f9be8"
       },
       "packVersion": "1.0.0"
     },
@@ -1538,6 +1598,10 @@
         "bytes": 15204,
         "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb"
       },
+      "packIdentity": {
+        "bytes": 8688,
+        "sha256": "3f09daa29641c2cbeae1963f8e9b37bfe9be89942e495100b2336f7fbe0f9be8"
+      },
       "packVersion": "1.0.0"
     },
     {
@@ -1590,6 +1654,10 @@
         "path": "game/content/packs/homeward-skies.json",
         "bytes": 11371849,
         "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
+      },
+      "packIdentity": {
+        "bytes": 11365658,
+        "sha256": "36764f052118a9e47bb0c4980094f1ff22746282b19a57b56b3ea1771cb2dd4b"
       },
       "packVersion": "1.0.0"
     },
@@ -1644,6 +1712,10 @@
         "bytes": 11371849,
         "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
       },
+      "packIdentity": {
+        "bytes": 11365658,
+        "sha256": "36764f052118a9e47bb0c4980094f1ff22746282b19a57b56b3ea1771cb2dd4b"
+      },
       "packVersion": "1.0.0"
     },
     {
@@ -1696,6 +1768,10 @@
         "path": "game/content/packs/homeward-skies.json",
         "bytes": 11371849,
         "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
+      },
+      "packIdentity": {
+        "bytes": 11365658,
+        "sha256": "36764f052118a9e47bb0c4980094f1ff22746282b19a57b56b3ea1771cb2dd4b"
       },
       "packVersion": "1.0.0"
     },
@@ -1750,6 +1826,10 @@
         "bytes": 11127024,
         "sha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054"
       },
+      "packIdentity": {
+        "bytes": 11119435,
+        "sha256": "4f9794f1e14cc730681a2e94808f6881dae057e9709b108c17d0fe91c3e3a9e6"
+      },
       "packVersion": "1.1.0"
     },
     {
@@ -1801,6 +1881,10 @@
         "path": "game/content/packs/equipment-workshop.json",
         "bytes": 11127024,
         "sha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054"
+      },
+      "packIdentity": {
+        "bytes": 11119435,
+        "sha256": "4f9794f1e14cc730681a2e94808f6881dae057e9709b108c17d0fe91c3e3a9e6"
       },
       "packVersion": "1.1.0"
     },
@@ -1854,6 +1938,10 @@
         "path": "game/content/packs/sentinel-relay.json",
         "bytes": 11416,
         "sha256": "de523b416fa5a107d8d831061b54277d53b63faf17e58ab828a87e28f0fe48f1"
+      },
+      "packIdentity": {
+        "bytes": 7614,
+        "sha256": "572f33fb5f154ab5629897f92def9a1d5a57492cbdcba5396e82ef2ade012c38"
       },
       "packVersion": "1.0.0"
     },
@@ -1912,6 +2000,10 @@
         "path": "game/content/packs/fpv-arcade-r4.json",
         "bytes": 11707106,
         "sha256": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703"
+      },
+      "packIdentity": {
+        "bytes": 11699514,
+        "sha256": "922ceb7776fdf87e0df6eaba6137a34e1a2649115598ad96cc1209cbde5e2926"
       },
       "packVersion": "4.0.0"
     },
@@ -1974,6 +2066,10 @@
         "path": "game/content/packs/fpv-arcade-r4.json",
         "bytes": 11707106,
         "sha256": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703"
+      },
+      "packIdentity": {
+        "bytes": 11699514,
+        "sha256": "922ceb7776fdf87e0df6eaba6137a34e1a2649115598ad96cc1209cbde5e2926"
       },
       "packVersion": "4.0.0"
     },
@@ -2041,6 +2137,10 @@
         "bytes": 11707106,
         "sha256": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703"
       },
+      "packIdentity": {
+        "bytes": 11699514,
+        "sha256": "922ceb7776fdf87e0df6eaba6137a34e1a2649115598ad96cc1209cbde5e2926"
+      },
       "packVersion": "4.0.0"
     },
     {
@@ -2097,6 +2197,10 @@
         "path": "game/content/packs/fpv-arcade-r3.json",
         "bytes": 11706413,
         "sha256": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848"
+      },
+      "packIdentity": {
+        "bytes": 11698950,
+        "sha256": "4e570853944bd5de0dda20108a3b4f0afed3153b25032aa626d4dc0b257d1739"
       },
       "packVersion": "3.0.0"
     },
@@ -2158,6 +2262,10 @@
         "path": "game/content/packs/fpv-arcade-r3.json",
         "bytes": 11706413,
         "sha256": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848"
+      },
+      "packIdentity": {
+        "bytes": 11698950,
+        "sha256": "4e570853944bd5de0dda20108a3b4f0afed3153b25032aa626d4dc0b257d1739"
       },
       "packVersion": "3.0.0"
     },
@@ -2224,6 +2332,10 @@
         "bytes": 11706413,
         "sha256": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848"
       },
+      "packIdentity": {
+        "bytes": 11698950,
+        "sha256": "4e570853944bd5de0dda20108a3b4f0afed3153b25032aa626d4dc0b257d1739"
+      },
       "packVersion": "3.0.0"
     },
     {
@@ -2280,6 +2392,10 @@
         "path": "game/content/packs/fpv-arcade-r2.json",
         "bytes": 11706060,
         "sha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f"
+      },
+      "packIdentity": {
+        "bytes": 11698774,
+        "sha256": "fa041431d9d8ee15c55912877fccacf82dded7c31a566d38cd29d66225274725"
       },
       "packVersion": "2.0.0"
     },
@@ -2341,6 +2457,10 @@
         "path": "game/content/packs/fpv-arcade-r2.json",
         "bytes": 11706060,
         "sha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f"
+      },
+      "packIdentity": {
+        "bytes": 11698774,
+        "sha256": "fa041431d9d8ee15c55912877fccacf82dded7c31a566d38cd29d66225274725"
       },
       "packVersion": "2.0.0"
     },
@@ -2407,6 +2527,10 @@
         "bytes": 11706060,
         "sha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f"
       },
+      "packIdentity": {
+        "bytes": 11698774,
+        "sha256": "fa041431d9d8ee15c55912877fccacf82dded7c31a566d38cd29d66225274725"
+      },
       "packVersion": "2.0.0"
     },
     {
@@ -2464,6 +2588,10 @@
         "bytes": 11701968,
         "sha256": "7b8413aa8dc5cc99f6413f0d2b2bf8dd7b9ba5613c6fa02550a3dbd12a7b9904"
       },
+      "packIdentity": {
+        "bytes": 11696765,
+        "sha256": "e1ffe5843cef4cfd7a1cbb2c39ea24aea0de2d9d799e15fea3c37d6f200c45c9"
+      },
       "packVersion": "1.0.0"
     },
     {
@@ -2520,6 +2648,10 @@
         "path": "game/content/packs/fpv-arcade.json",
         "bytes": 11701968,
         "sha256": "7b8413aa8dc5cc99f6413f0d2b2bf8dd7b9ba5613c6fa02550a3dbd12a7b9904"
+      },
+      "packIdentity": {
+        "bytes": 11696765,
+        "sha256": "e1ffe5843cef4cfd7a1cbb2c39ea24aea0de2d9d799e15fea3c37d6f200c45c9"
       },
       "packVersion": "1.0.0"
     },
@@ -2582,6 +2714,10 @@
         "bytes": 11701968,
         "sha256": "7b8413aa8dc5cc99f6413f0d2b2bf8dd7b9ba5613c6fa02550a3dbd12a7b9904"
       },
+      "packIdentity": {
+        "bytes": 11696765,
+        "sha256": "e1ffe5843cef4cfd7a1cbb2c39ea24aea0de2d9d799e15fea3c37d6f200c45c9"
+      },
       "packVersion": "1.0.0"
     },
     {
@@ -2639,6 +2775,10 @@
         "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
         "bytes": 10719959,
         "sha256": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9"
+      },
+      "packIdentity": {
+        "bytes": 10711106,
+        "sha256": "d93f20311a164304addb0b512c8452a7fef284a533e616415c7a13c265fe13e5"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -2702,6 +2842,10 @@
         "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
         "bytes": 10719959,
         "sha256": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9"
+      },
+      "packIdentity": {
+        "bytes": 10711106,
+        "sha256": "d93f20311a164304addb0b512c8452a7fef284a533e616415c7a13c265fe13e5"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -2770,6 +2914,10 @@
         "bytes": 10719959,
         "sha256": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9"
       },
+      "packIdentity": {
+        "bytes": 10711106,
+        "sha256": "d93f20311a164304addb0b512c8452a7fef284a533e616415c7a13c265fe13e5"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "original-fpv-pressure",
@@ -2833,6 +2981,10 @@
         "bytes": 12358446,
         "sha256": "690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b"
       },
+      "packIdentity": {
+        "bytes": 12349593,
+        "sha256": "c52d7f8002f58a7ff2339a46c7301cf278897b5344437c0378d8baea834a9a9d"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "original-ukraine-atlas",
@@ -2895,6 +3047,10 @@
         "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
         "bytes": 12358446,
         "sha256": "690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b"
+      },
+      "packIdentity": {
+        "bytes": 12349593,
+        "sha256": "c52d7f8002f58a7ff2339a46c7301cf278897b5344437c0378d8baea834a9a9d"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -2963,6 +3119,10 @@
         "bytes": 12358446,
         "sha256": "690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b"
       },
+      "packIdentity": {
+        "bytes": 12349593,
+        "sha256": "c52d7f8002f58a7ff2339a46c7301cf278897b5344437c0378d8baea834a9a9d"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "original-ukraine-atlas",
@@ -3025,6 +3185,10 @@
         "bytes": 10329657,
         "sha256": "33e772d12a0ae98373e4240257b0f9726f00ad28095cb0ae06d6d1fc79964714"
       },
+      "packIdentity": {
+        "bytes": 10320804,
+        "sha256": "b19b80274af97b6c19dbf79e2bc39bac2e19ee79ae34ab93aa7d5925dceb3a5e"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "original-retro-1994",
@@ -3086,6 +3250,10 @@
         "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
         "bytes": 10329657,
         "sha256": "33e772d12a0ae98373e4240257b0f9726f00ad28095cb0ae06d6d1fc79964714"
+      },
+      "packIdentity": {
+        "bytes": 10320804,
+        "sha256": "b19b80274af97b6c19dbf79e2bc39bac2e19ee79ae34ab93aa7d5925dceb3a5e"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -3153,6 +3321,10 @@
         "bytes": 10329657,
         "sha256": "33e772d12a0ae98373e4240257b0f9726f00ad28095cb0ae06d6d1fc79964714"
       },
+      "packIdentity": {
+        "bytes": 10320804,
+        "sha256": "b19b80274af97b6c19dbf79e2bc39bac2e19ee79ae34ab93aa7d5925dceb3a5e"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "original-retro-1994",
@@ -3211,6 +3383,10 @@
         "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
         "bytes": 11949780,
         "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+      },
+      "packIdentity": {
+        "bytes": 11944013,
+        "sha256": "87c6a8e032e4848a1aaa175f59e50bec8fd577fd5c91ce825a3e1fcf9727a049"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -3271,6 +3447,10 @@
         "bytes": 11949780,
         "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
       },
+      "packIdentity": {
+        "bytes": 11944013,
+        "sha256": "87c6a8e032e4848a1aaa175f59e50bec8fd577fd5c91ce825a3e1fcf9727a049"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "fpv-route-choices",
@@ -3329,6 +3509,10 @@
         "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
         "bytes": 11949780,
         "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+      },
+      "packIdentity": {
+        "bytes": 11944013,
+        "sha256": "87c6a8e032e4848a1aaa175f59e50bec8fd577fd5c91ce825a3e1fcf9727a049"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -3393,6 +3577,10 @@
         "bytes": 9398,
         "sha256": "09fabce4207875dc73eefe49aaea8bc4aed491855e756b9dfda39cd4c35abe2c"
       },
+      "packIdentity": {
+        "bytes": 9398,
+        "sha256": "0e5b6b3bf12868f8d739d9a45cccb185e24ded0c14ef14fda31b8a92abc1c18d"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "original-fpv-pressure-external",
@@ -3456,6 +3644,10 @@
         "path": "optional/external-chapters/original-fpv-pressure-external/pack.json",
         "bytes": 9398,
         "sha256": "09fabce4207875dc73eefe49aaea8bc4aed491855e756b9dfda39cd4c35abe2c"
+      },
+      "packIdentity": {
+        "bytes": 9398,
+        "sha256": "0e5b6b3bf12868f8d739d9a45cccb185e24ded0c14ef14fda31b8a92abc1c18d"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -3525,6 +3717,10 @@
         "bytes": 9398,
         "sha256": "09fabce4207875dc73eefe49aaea8bc4aed491855e756b9dfda39cd4c35abe2c"
       },
+      "packIdentity": {
+        "bytes": 9398,
+        "sha256": "0e5b6b3bf12868f8d739d9a45cccb185e24ded0c14ef14fda31b8a92abc1c18d"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "original-fpv-pressure-external",
@@ -3584,6 +3780,10 @@
         "path": "optional/external-chapters/route-worlds-ukraine/pack.json",
         "bytes": 8405,
         "sha256": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0"
+      },
+      "packIdentity": {
+        "bytes": 8405,
+        "sha256": "6e23c8d4715c3cb540994ef06dbe21f150795c34a3d3ea9719983a922a9f4d14"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -3645,6 +3845,10 @@
         "bytes": 8405,
         "sha256": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0"
       },
+      "packIdentity": {
+        "bytes": 8405,
+        "sha256": "6e23c8d4715c3cb540994ef06dbe21f150795c34a3d3ea9719983a922a9f4d14"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "route-worlds-ukraine",
@@ -3705,6 +3909,10 @@
         "bytes": 8405,
         "sha256": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0"
       },
+      "packIdentity": {
+        "bytes": 8405,
+        "sha256": "6e23c8d4715c3cb540994ef06dbe21f150795c34a3d3ea9719983a922a9f4d14"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "route-worlds-ukraine",
@@ -3763,6 +3971,10 @@
         "path": "optional/external-chapters/route-worlds-retro/pack.json",
         "bytes": 8307,
         "sha256": "ef63420ef94edeecf56cd13f1a77c75afef9a5be6ec4c0d5d5814d002f7962b4"
+      },
+      "packIdentity": {
+        "bytes": 8307,
+        "sha256": "46c84ea3008ca7904adfac110e030bfc98c7ba64d19ffaa40c25b13870439d75"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -3823,6 +4035,10 @@
         "bytes": 8307,
         "sha256": "ef63420ef94edeecf56cd13f1a77c75afef9a5be6ec4c0d5d5814d002f7962b4"
       },
+      "packIdentity": {
+        "bytes": 8307,
+        "sha256": "46c84ea3008ca7904adfac110e030bfc98c7ba64d19ffaa40c25b13870439d75"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "route-worlds-retro",
@@ -3881,6 +4097,10 @@
         "path": "optional/external-chapters/route-worlds-retro/pack.json",
         "bytes": 8307,
         "sha256": "ef63420ef94edeecf56cd13f1a77c75afef9a5be6ec4c0d5d5814d002f7962b4"
+      },
+      "packIdentity": {
+        "bytes": 8307,
+        "sha256": "46c84ea3008ca7904adfac110e030bfc98c7ba64d19ffaa40c25b13870439d75"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -3942,6 +4162,10 @@
         "bytes": 9238,
         "sha256": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb"
       },
+      "packIdentity": {
+        "bytes": 9238,
+        "sha256": "615cebf1d615a4df6e4601412953bb86cd4c32b851376778bd725702428e9244"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "sentinel-circuit-fpv",
@@ -4001,6 +4225,10 @@
         "path": "optional/external-chapters/sentinel-circuit-fpv/pack.json",
         "bytes": 9238,
         "sha256": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb"
+      },
+      "packIdentity": {
+        "bytes": 9238,
+        "sha256": "615cebf1d615a4df6e4601412953bb86cd4c32b851376778bd725702428e9244"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -4062,6 +4290,10 @@
         "bytes": 9238,
         "sha256": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb"
       },
+      "packIdentity": {
+        "bytes": 9238,
+        "sha256": "615cebf1d615a4df6e4601412953bb86cd4c32b851376778bd725702428e9244"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "sentinel-circuit-fpv",
@@ -4121,6 +4353,10 @@
         "path": "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
         "bytes": 9440,
         "sha256": "b567d8901dcec9b4964ce5ada8f64276f7754f8dc537c9002703d746fcbcdd85"
+      },
+      "packIdentity": {
+        "bytes": 9440,
+        "sha256": "2110f72347ef54dce13734f862bfe8ad1e1a40c8e85b449f27d0f124646a7078"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -4182,6 +4418,10 @@
         "bytes": 9440,
         "sha256": "b567d8901dcec9b4964ce5ada8f64276f7754f8dc537c9002703d746fcbcdd85"
       },
+      "packIdentity": {
+        "bytes": 9440,
+        "sha256": "2110f72347ef54dce13734f862bfe8ad1e1a40c8e85b449f27d0f124646a7078"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "sentinel-circuit-ukraine",
@@ -4242,6 +4482,10 @@
         "bytes": 9440,
         "sha256": "b567d8901dcec9b4964ce5ada8f64276f7754f8dc537c9002703d746fcbcdd85"
       },
+      "packIdentity": {
+        "bytes": 9440,
+        "sha256": "2110f72347ef54dce13734f862bfe8ad1e1a40c8e85b449f27d0f124646a7078"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "sentinel-circuit-ukraine",
@@ -4300,6 +4544,10 @@
         "path": "optional/external-chapters/sentinel-circuit-retro/pack.json",
         "bytes": 9404,
         "sha256": "eab41d563f717170dc0c0077aa18b1656d2845e102b76e719a9daca6e5886545"
+      },
+      "packIdentity": {
+        "bytes": 9404,
+        "sha256": "238ffa30e0d829a1ac2630aa513fe7296275973ea49f90ebf8a638779674b60e"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -4360,6 +4608,10 @@
         "bytes": 9404,
         "sha256": "eab41d563f717170dc0c0077aa18b1656d2845e102b76e719a9daca6e5886545"
       },
+      "packIdentity": {
+        "bytes": 9404,
+        "sha256": "238ffa30e0d829a1ac2630aa513fe7296275973ea49f90ebf8a638779674b60e"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "sentinel-circuit-retro",
@@ -4418,6 +4670,10 @@
         "path": "optional/external-chapters/sentinel-circuit-retro/pack.json",
         "bytes": 9404,
         "sha256": "eab41d563f717170dc0c0077aa18b1656d2845e102b76e719a9daca6e5886545"
+      },
+      "packIdentity": {
+        "bytes": 9404,
+        "sha256": "238ffa30e0d829a1ac2630aa513fe7296275973ea49f90ebf8a638779674b60e"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -4483,6 +4739,10 @@
         "bytes": 9708,
         "sha256": "7ccdba1465b1f5e2f2df25cdb574a8d93eb53974b14adf3599bb6f1bf23f5a8b"
       },
+      "packIdentity": {
+        "bytes": 9708,
+        "sha256": "0a35b7f71349e93d12150e93b4cfe5c8a118e094e3cafc7c07ec5e25fe06b7ca"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "fracture-lines-fpv",
@@ -4546,6 +4806,10 @@
         "path": "optional/external-chapters/fracture-lines-fpv/pack.json",
         "bytes": 9708,
         "sha256": "7ccdba1465b1f5e2f2df25cdb574a8d93eb53974b14adf3599bb6f1bf23f5a8b"
+      },
+      "packIdentity": {
+        "bytes": 9708,
+        "sha256": "0a35b7f71349e93d12150e93b4cfe5c8a118e094e3cafc7c07ec5e25fe06b7ca"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -4615,6 +4879,10 @@
         "bytes": 9708,
         "sha256": "7ccdba1465b1f5e2f2df25cdb574a8d93eb53974b14adf3599bb6f1bf23f5a8b"
       },
+      "packIdentity": {
+        "bytes": 9708,
+        "sha256": "0a35b7f71349e93d12150e93b4cfe5c8a118e094e3cafc7c07ec5e25fe06b7ca"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "fracture-lines-fpv",
@@ -4679,6 +4947,10 @@
         "bytes": 9311,
         "sha256": "41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505"
       },
+      "packIdentity": {
+        "bytes": 9311,
+        "sha256": "6e094a8fabfd9f2f21cdd250ecb2a15b0120c44c59d0bace29ac009622a0b3f8"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "fracture-lines-ukraine",
@@ -4742,6 +5014,10 @@
         "path": "optional/external-chapters/fracture-lines-ukraine/pack.json",
         "bytes": 9311,
         "sha256": "41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505"
+      },
+      "packIdentity": {
+        "bytes": 9311,
+        "sha256": "6e094a8fabfd9f2f21cdd250ecb2a15b0120c44c59d0bace29ac009622a0b3f8"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -4811,6 +5087,10 @@
         "bytes": 9311,
         "sha256": "41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505"
       },
+      "packIdentity": {
+        "bytes": 9311,
+        "sha256": "6e094a8fabfd9f2f21cdd250ecb2a15b0120c44c59d0bace29ac009622a0b3f8"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "fracture-lines-ukraine",
@@ -4874,6 +5154,10 @@
         "bytes": 9393,
         "sha256": "61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0"
       },
+      "packIdentity": {
+        "bytes": 9393,
+        "sha256": "29bd319f29d630997876a1b1a938654fcb9d0ba4fec5c050f80df88d5ea3aa2e"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "fracture-lines-retro",
@@ -4936,6 +5220,10 @@
         "path": "optional/external-chapters/fracture-lines-retro/pack.json",
         "bytes": 9393,
         "sha256": "61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0"
+      },
+      "packIdentity": {
+        "bytes": 9393,
+        "sha256": "29bd319f29d630997876a1b1a938654fcb9d0ba4fec5c050f80df88d5ea3aa2e"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -5004,6 +5292,10 @@
         "bytes": 9393,
         "sha256": "61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0"
       },
+      "packIdentity": {
+        "bytes": 9393,
+        "sha256": "29bd319f29d630997876a1b1a938654fcb9d0ba4fec5c050f80df88d5ea3aa2e"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "fracture-lines-retro",
@@ -5068,6 +5360,10 @@
         "bytes": 8104,
         "sha256": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38"
       },
+      "packIdentity": {
+        "bytes": 8104,
+        "sha256": "2fd9eb3626babf77df0047ce3e2c2582d717116b82315618fdbd0ffb7ec21896"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "countercurrent-fpv",
@@ -5127,6 +5423,10 @@
         "path": "optional/external-chapters/countercurrent-fpv/pack.json",
         "bytes": 8104,
         "sha256": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38"
+      },
+      "packIdentity": {
+        "bytes": 8104,
+        "sha256": "2fd9eb3626babf77df0047ce3e2c2582d717116b82315618fdbd0ffb7ec21896"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -5192,6 +5492,10 @@
         "bytes": 8104,
         "sha256": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38"
       },
+      "packIdentity": {
+        "bytes": 8104,
+        "sha256": "2fd9eb3626babf77df0047ce3e2c2582d717116b82315618fdbd0ffb7ec21896"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "countercurrent-fpv",
@@ -5256,6 +5560,10 @@
         "bytes": 8184,
         "sha256": "7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d"
       },
+      "packIdentity": {
+        "bytes": 8184,
+        "sha256": "db4539ab84de0e6c04f5201c00d88805b4da88262d4259d3ed05bd56b761f6f2"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "countercurrent-ukraine",
@@ -5315,6 +5623,10 @@
         "path": "optional/external-chapters/countercurrent-ukraine/pack.json",
         "bytes": 8184,
         "sha256": "7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d"
+      },
+      "packIdentity": {
+        "bytes": 8184,
+        "sha256": "db4539ab84de0e6c04f5201c00d88805b4da88262d4259d3ed05bd56b761f6f2"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -5380,6 +5692,10 @@
         "bytes": 8184,
         "sha256": "7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d"
       },
+      "packIdentity": {
+        "bytes": 8184,
+        "sha256": "db4539ab84de0e6c04f5201c00d88805b4da88262d4259d3ed05bd56b761f6f2"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "countercurrent-ukraine",
@@ -5443,6 +5759,10 @@
         "bytes": 8115,
         "sha256": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe"
       },
+      "packIdentity": {
+        "bytes": 8115,
+        "sha256": "b993ae14d71fd041b5f96360babb9502c520524d27d704cd89463e8e1de3bc5f"
+      },
       "packVersion": "1.0.0",
       "download": {
         "id": "countercurrent-retro",
@@ -5501,6 +5821,10 @@
         "path": "optional/external-chapters/countercurrent-retro/pack.json",
         "bytes": 8115,
         "sha256": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe"
+      },
+      "packIdentity": {
+        "bytes": 8115,
+        "sha256": "b993ae14d71fd041b5f96360babb9502c520524d27d704cd89463e8e1de3bc5f"
       },
       "packVersion": "1.0.0",
       "download": {
@@ -5564,6 +5888,10 @@
         "path": "optional/external-chapters/countercurrent-retro/pack.json",
         "bytes": 8115,
         "sha256": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe"
+      },
+      "packIdentity": {
+        "bytes": 8115,
+        "sha256": "b993ae14d71fd041b5f96360babb9502c520524d27d704cd89463e8e1de3bc5f"
       },
       "packVersion": "1.0.0",
       "download": {

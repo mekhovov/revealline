@@ -12,7 +12,9 @@ import {
 } from '../../scripts/mission-library-index.mjs';
 import { readExternalDistributionEntries } from '../../scripts/external-distribution.mjs';
 import { readPackIndexes, readPackJSON } from '../../scripts/pack-indexes.mjs';
-import { PACK_LIMITS } from '../packs.mjs';
+import { PACK_LIMITS, preparePack } from '../packs.mjs';
+import { inspectImageDataUrl } from '../content.mjs';
+import { preparedPackIdentity } from '../mission-library/pack-identity.mjs';
 import { campaignKey } from '../library.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
@@ -116,6 +118,25 @@ test('same-name and same-runtime-ID editions remain distinct without invented ra
       (row) => !Object.hasOwn(row, 'challengeBand') && !Object.hasOwn(row, 'difficultyBand'),
     ),
   );
+});
+
+test('every indexed pack fingerprint matches its prepared runtime owner including presentation', async () => {
+  const packs = new Map();
+  for (const row of expected.missions) if (row.packId) packs.set(row.packId, row);
+  for (const row of packs.values()) {
+    const bytes =
+      row.source === 'external'
+        ? externalEntries.find((item) => item.name === row.sourceFile.path).bytes
+        : await readFile(new URL(`../../${row.sourceFile.path}`, import.meta.url));
+    // A finite header-only decoder verifies normalization identity, not pixels.
+    const { pack } = await preparePack(bytes.toString('utf8'), {
+      decodeImage: async (dataUrl) => {
+        const header = inspectImageDataUrl(dataUrl);
+        return { naturalWidth: header.width, naturalHeight: header.height };
+      },
+    });
+    assert.deepEqual(await preparedPackIdentity(pack), row.packIdentity, row.packId);
+  }
 });
 
 test('browse metadata never embeds artwork, engine geometry or artificial progress', () => {

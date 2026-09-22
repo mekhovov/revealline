@@ -41,6 +41,10 @@ export function prepareMissionLibraryIndex(value) {
       !Number.isInteger(row.levelIndex) ||
       row.levelIndex < 0 ||
       (row.source === 'base' ? row.packId !== null : !nonempty(row.packId)) ||
+      (row.source !== 'base' &&
+        (!digest(row.packIdentity?.sha256) ||
+          !Number.isSafeInteger(row.packIdentity?.bytes) ||
+          row.packIdentity.bytes <= 0)) ||
       (row.download &&
         (row.download.id !== row.packId ||
           !Number.isSafeInteger(row.download.bytes) ||
@@ -95,7 +99,13 @@ export function classicLibrarySources(index, { availability, prepare, launch, pr
       };
       owners.set(id, owner);
     }
-    if (owner.editionId !== entry.sourceFile.sha256 || owner.edition !== entry.edition)
+    if (
+      owner.editionId !== entry.sourceFile.sha256 ||
+      owner.edition !== entry.edition ||
+      (owner.entries.length > 0 &&
+        (owner.entries[0].packIdentity?.sha256 !== entry.packIdentity?.sha256 ||
+          owner.entries[0].packIdentity?.bytes !== entry.packIdentity?.bytes))
+    )
       throw new TypeError('One Classic owner cannot silently combine different source editions.');
     owner.entries.push(entry);
   }
