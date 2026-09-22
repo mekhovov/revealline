@@ -11,7 +11,7 @@ available through its preserved archive route.
 | Item | Status | Acceptance evidence |
 | --- | --- | --- |
 | v0.83.0 default Journey | **Complete** | Source PR #263 merged at `01b189f64`; all 11,788 exact-source tests passed; immutable tag/release, selector PR #271 and Pages run `35775874062` passed. |
-| v0.84.0 unified mission library | **Complete for scoped public acceptance** | Source PR #268 merged at `1107f570`; exact merged-source qualification and frozen inspection passed; immutable release has nine descriptor-matched assets; selector PR #274 and Pages run `35783546172` passed. |
+| v0.84.0 unified mission library | **Complete within the current release policy** | Source PR #268 merged at `1107f570`; exact merged-source qualification and frozen inspection passed; immutable release has nine descriptor-matched assets; selector PR #274 and Pages run `35783546172` passed. |
 | Unified public discovery | **Complete in scoped browser release** | The first browser load surfaced a dynamic-import failure with a usable Reload action; Reload recovered. The exact public app body matched the deployed source, and keyboard-only entry then opened one mission library with 201 Solo-visible Journey, Classic and Custom entries plus Solo, Versus and Team filters. Search, campaign and collection controls were exposed without a mouse. |
 | Public version identity | **Complete** | Root `release.json`, versioned `release.json` and `game/build-info.json` all reported v0.84.0 and source `1107f570508e0d107440236b6aeedbce8506cd7d`. |
 | Historical preservation | **Complete** | v0.83.0 is retained in Archive 52; its versioned release record still reports the original source `01b189f64`. |
@@ -24,8 +24,10 @@ The bounded v0.83 record is in
 [`evidence/v0830-public/`](evidence/v0830-public/README.md). v0.84 source,
 release and publication evidence is retained by the merged pull requests,
 workflow artifacts, immutable release assets and Archive 52 publication record.
-A complete public-graph HTTP inventory audit is still running and remains a
-separate evidence gate; the scoped player journeys above are already accepted.
+The complete public-graph audit reconciled all 3,859 files and 614,523,893
+bytes with zero transfer, status, MIME, size or digest failures. The scoped
+browser receipt separately retains the recovered initial fetch failure; extended
+manual and physical-device matrices remain deferred under the current waiver.
 
 PR #272 temporarily waives repository-wide automated suites after v0.83.0.
 Releases made while that policy is active must label those suites as **waived**,
