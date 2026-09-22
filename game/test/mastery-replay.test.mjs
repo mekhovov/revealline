@@ -233,10 +233,14 @@ test('new structural snapshot is owned and cannot authorize an award', () => {
 function host() {
   let library = emptyLibrary(),
     generation = 'profile-one',
-    writes = 0;
+    writes = 0,
+    generationReads = 0;
   const statuses = [];
   const awards = createMasteryAwards({
-    getGeneration: () => generation,
+    getGeneration: () => {
+      generationReads++;
+      return generation;
+    },
     commit: (record) => {
       library = withMasteryRecords(library, [record]);
       writes++;
@@ -252,6 +256,9 @@ function host() {
     },
     get writes() {
       return writes;
+    },
+    get generationReads() {
+      return generationReads;
     },
     replace() {
       library = emptyLibrary();
@@ -390,4 +397,44 @@ test('optional goal text distinguishes open progress, safe credit, practice and 
     )[0].name,
     /^Archived seal/,
   );
+});
+
+async function verifiedWhileHeld(app) {
+  const deadline = Date.now() + 10000;
+  while (app.generationReads < 3 && Date.now() < deadline)
+    await new Promise((resolve) => setTimeout(resolve, 5));
+  assert.ok(app.generationReads >= 3, 'The genuine verifier reached the held commit boundary.');
+  assert.equal(app.writes, 0);
+}
+for (const outcome of ['resume', 'cancel', 'generation changed'])
+  test(`backup commit hold: ${outcome} preserves award ownership`, async () => {
+    const app = host(),
+      release = app.awards.holdCommits();
+    const pending = app.awards.submit(request(entries[0]), { eligible: true });
+    await verifiedWhileHeld(app);
+    if (outcome === 'cancel') app.awards.cancelAll();
+    if (outcome === 'generation changed') app.replace();
+    release();
+    release();
+    assert.equal((await pending).status, outcome === 'resume' ? 'earned' : 'cancelled');
+    assert.equal(app.writes, outcome === 'resume' ? 1 : 0);
+  });
+test('nested backup commit holds do not release another transaction or strand cancelled jobs', async () => {
+  const app = host(),
+    first = app.awards.holdCommits(),
+    second = app.awards.holdCommits();
+  const pending = app.awards.submit(request(entries[0]), { eligible: true });
+  await verifiedWhileHeld(app);
+  first();
+  first();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(app.writes, 0);
+  app.awards.cancelAll();
+  assert.equal(
+    (await pending).status,
+    'cancelled',
+    'Cancellation wakes a verifier even while another hold remains.',
+  );
+  second();
+  assert.equal(app.writes, 0);
 });

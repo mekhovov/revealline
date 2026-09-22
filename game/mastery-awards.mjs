@@ -1,11 +1,18 @@
 import { verifyMasteryRun, verifiedMasteryRecord } from './mastery-verification.mjs';
 
 /** Host-owned eligibility and profile lifetime. Verification never blocks the
- * next mission, and an import, Undo or page exit invalidates every pending job.
+ * next mission. A committed import/Undo or page exit invalidates pending jobs;
+ * an accepted replacement can hold commits until storage settles.
  * commit is a synchronous local metadata/storage operation.
  */
 export function createMasteryAwards({ getGeneration, commit, onStatus = () => {} }) {
-  const jobs = new Map();
+  const jobs = new Map(),
+    holds = new Set(),
+    waiters = new Set();
+  const wake = () => {
+    for (const resolve of waiters) resolve();
+    waiters.clear();
+  };
   let epoch = 0;
   const publish = (runId, status, message = '') => {
     const value = { runId, status, message };
@@ -39,6 +46,12 @@ export function createMasteryAwards({ getGeneration, commit, onStatus = () => {}
           'unqualified',
           'Picture collected. The optional seal is waiting for another route.',
         );
+      // Backup replacement holds only the commit boundary; verification can
+      // finish while storage decides whether the original profile survives.
+      if (holds.size)
+        publish(runId, 'checking', 'Goal checked. Waiting for game-data replacement…');
+      while (holds.size && current()) await new Promise((resolve) => waiters.add(resolve));
+      if (!current()) return { runId, status: 'cancelled', message: '' };
       const saved = commit(record);
       if (typeof saved !== 'boolean')
         throw new TypeError('Seal persistence must return a synchronous boolean result.');
@@ -63,6 +76,14 @@ export function createMasteryAwards({ getGeneration, commit, onStatus = () => {}
   }
   return Object.freeze({
     submit,
+    holdCommits() {
+      const token = {};
+      holds.add(token);
+      return () => {
+        holds.delete(token);
+        if (!holds.size) wake();
+      };
+    },
     cancelAll() {
       epoch++;
       for (const [runId, controller] of jobs) {
@@ -70,6 +91,7 @@ export function createMasteryAwards({ getGeneration, commit, onStatus = () => {}
         publish(runId, 'cancelled', 'Goal check cancelled. Retry this mission to earn the seal.');
       }
       jobs.clear();
+      wake();
     },
   });
 }
