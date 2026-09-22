@@ -7,6 +7,7 @@ import { createJourneyCatalog } from '../journey/catalog.mjs';
 import { emptyJourneyProfile } from '../journey/profile.mjs';
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
@@ -98,6 +99,115 @@ function setup(sources, options = {}) {
   chooser.open(opener);
   return { doc, library, chooser, opener, $: (id) => doc.getElementById(id) };
 }
+
+test('controller clears persisted no-match search without resetting filters or launching, and reopen retains the repair', () => {
+  const expected = createMissionLibrary([owner()]).missions[0];
+  let saved = {
+      mode: 'versus',
+      collection: 'Classic',
+      campaign: expected.campaignKey,
+      search: 'no such mission',
+      selectedId: expected.id,
+      scroll: 99,
+    },
+    launches = 0,
+    inputs = 0;
+  const options = {
+    readState: () => saved,
+    writeState: (value) => (saved = structuredClone(value)),
+  };
+  const source = owner({ launch: () => ++launches });
+  const p = setup([source], options);
+  p.doc.addEventListener('input', (event) => {
+    if (event.target === p.$('journey-search')) inputs++;
+  });
+  const navigation = attachControllerNavigation({
+    document: p.doc,
+    getRoot: () => p.$('journey-chooser'),
+    getScope: () => 'missions',
+  });
+  assert.equal(p.$('journey-cards').children.length, 0);
+  assert.equal(p.$('journey-search-clear').hidden, false);
+  assert.equal(p.doc.activeElement, p.$('journey-search'));
+  navigation.handle({ direction: 'right' });
+  assert.equal(p.doc.activeElement, p.$('journey-search-clear'));
+  navigation.handle({ confirm: true });
+  assert.equal(inputs, 1, 'Clear uses the host-observable typing invalidation path.');
+  assert.equal(p.$('journey-search').value, '');
+  assert.equal(p.$('journey-search-clear').hidden, true);
+  assert.equal(p.$('journey-mode').value, 'versus');
+  assert.equal(p.$('journey-collection').value, 'Classic');
+  assert.equal(p.$('journey-campaign').value, expected.campaignKey);
+  assert.equal(p.$('journey-cards').children.length, 1);
+  assert.equal(p.doc.activeElement, p.$('journey-cards').children[0]);
+  assert.equal(p.$('journey-cards').scrollTop, 0);
+  assert.equal(launches, 0);
+  navigation.destroy();
+  p.chooser.destroy();
+  const reopened = setup([source], options);
+  assert.equal(reopened.$('journey-search').value, '');
+  assert.equal(reopened.$('journey-search-clear').hidden, true);
+  assert.equal(reopened.$('journey-mode').value, 'versus');
+  assert.equal(reopened.$('journey-campaign').value, expected.campaignKey);
+  assert.equal(reopened.doc.activeElement.dataset.missionId, expected.id);
+  assert.equal(launches, 0);
+  reopened.chooser.destroy();
+});
+
+test('clearing search retires late preparation feedback while keeping current filters and focus', async () => {
+  let ready = false,
+    finish;
+  const { doc, $, chooser } = setup([
+    owner({
+      availability: () => (ready ? { state: 'ready' } : { state: 'download', bytes: 12 }),
+      prepare: () =>
+        new Promise((resolve) => {
+          finish = () => {
+            ready = true;
+            resolve();
+          };
+        }),
+    }),
+  ]);
+  const card = $('journey-cards').children[0];
+  card.click();
+  await tick();
+  $('journey-search').value = 'no such mission';
+  $('journey-search').emit('input');
+  $('journey-search-clear').focus();
+  $('journey-search-clear').click();
+  assert.equal(doc.activeElement, card);
+  finish();
+  await tick();
+  assert.equal(doc.activeElement, card);
+  assert.equal($('journey-search').value, '');
+  assert.equal($('journey-chooser-status').textContent, '1 mission · Solo');
+  assert.equal($('journey-chooser').open, true);
+  chooser.destroy();
+});
+
+test('clear search cannot act from a closed or background chooser or steal newer input focus', () => {
+  const { doc, $, chooser, opener } = setup([owner()]);
+  const search = $('journey-search'),
+    clear = $('journey-search-clear');
+  assert.equal(clear.hidden, true);
+  search.value = 'no such mission';
+  search.emit('input');
+  chooser.close();
+  clear.onclick();
+  assert.equal(search.value, 'no such mission');
+  chooser.open(opener);
+  doc.hidden = true;
+  clear.onclick();
+  assert.equal(search.value, 'no such mission');
+  doc.hidden = false;
+  doc.addEventListener('input', () => $('journey-back').focus());
+  clear.focus();
+  clear.click();
+  assert.equal(search.value, '');
+  assert.equal(doc.activeElement, $('journey-back'));
+  chooser.destroy();
+});
 
 test('one flat selector defaults to All/current mode, textual collections, campaign and edition', () => {
   const { $, chooser } = setup([

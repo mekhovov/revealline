@@ -606,3 +606,16 @@ verification. It must receive a new pinned native check before acceptance.
   No late adoption or automatic launch occurred. Its exact brief,62% target,
   three lives and135-second authored timer are confirmed. This supersedes the
   recorded `9398dc15e` cold Retry failure for this bounded native journey.
+
+### Controller-accessible search recovery
+
+- Added an ordinary44px Clear search action beside the search field. A controller
+  can now recover a persisted no-match query without typing or opening another
+  menu. Other filters remain selected; the cleared state persists on reopen.
+- Clear uses the same input invalidation path as typing and restores a visible
+  card or reachable Filters control. Closed/background clicks, late preparation
+  feedback and newer focus cannot reactivate a stale search or start a mission.
+- Shared chooser/compact/controller cohort passes188/188, including real shared
+  controller-navigation activation. This does not establish all three gameplay
+  hosts' gamepad wiring or physical-device behavior. Native layout recheck and
+  actual-host modeled controller journeys remain explicit qualification gates.
