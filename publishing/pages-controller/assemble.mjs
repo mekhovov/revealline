@@ -330,6 +330,29 @@ export async function directoryInventory(directory, prefix = '') {
   return rows.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
 }
 
+// HTML entry aliases are self-contained. Runtime bodies live only in the
+// immutable release graph; copying them at root would double the Pages budget.
+// Keep frozen manifest evidence and the tiny metadata/icon graph that existing
+// root-installed web apps may revalidate. This is not a second offline graph.
+const ROOT_COMPATIBILITY_LIMITS = new Map([
+  ['manifest.json', 8_000_000],
+  ['manifest.webmanifest', 65_536],
+  ['icons/icon-180.png', 1_048_576],
+  ['icons/icon-192.png', 1_048_576],
+  ['icons/icon-512.png', 1_048_576],
+  ['icons/icon.svg', 65_536],
+]);
+
+export function rootCompatibilityRows(rows) {
+  return rows.filter((row) => {
+    const limit = ROOT_COMPATIBILITY_LIMITS.get(row.path);
+    if (limit === undefined) return false;
+    if (!Number.isSafeInteger(row.bytes) || row.bytes < 1 || row.bytes > limit)
+      throw new Error(`Root compatibility file exceeds its byte budget: ${row.path}`);
+    return true;
+  });
+}
+
 export async function assemble({
   directory = path.join(root, 'publishing/pages-controller'),
   currentSite,
@@ -394,6 +417,8 @@ export async function assemble({
     repository: lock.sourceRepository,
     record: current.record,
   });
+  const rootRows = rootCompatibilityRows(currentRows),
+    rootPaths = new Set(rootRows.map((row) => row.path));
   // Refuse to replace an existing artifact. A successful build is immutable evidence.
   await fs.mkdir(outputDirectory, { recursive: false });
   for (const row of currentRows) {
@@ -401,7 +426,7 @@ export async function assemble({
     if (bytes.length !== row.bytes || digest(bytes) !== row.sha256)
       throw new Error('Current asset changed during publication.');
     await writeFile(outputDirectory, `releases/${current.record.version}/site/${row.path}`, bytes);
-    if (row.path !== 'distribution.zip.sha256') await writeFile(outputDirectory, row.path, bytes);
+    if (rootPaths.has(row.path)) await writeFile(outputDirectory, row.path, bytes);
   }
   let redirectedHTMLFiles = 0;
   for (const [version, item] of publicationMetadata) {
@@ -459,5 +484,7 @@ export async function assemble({
     redirectedHTMLFiles,
     browserAdmissionsRequired: requireBrowser,
     catalogPresentation,
+    currentGraphLayout: 'single-canonical-with-root-metadata-v1',
+    rootCompatibilityFiles: rootRows,
   };
 }

@@ -3,8 +3,15 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { assemble, loadCatalog, validateAdmissions } from './assemble.mjs';
+import {
+  assemble,
+  loadCatalog,
+  validateAdmissions,
+  rootCompatibilityRows,
+  directoryInventory,
+} from './assemble.mjs';
 import { digest, jsonBytes, retainRecentMetadata } from './metadata.mjs';
+import { assertPagesBudget } from '../../scripts/pages-archive.mjs';
 
 async function fixture(t, versions = ['v0.1.0', 'v0.44.0'], { archiveCurrent = false } = {}) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-assemble-'));
@@ -27,6 +34,14 @@ async function fixture(t, versions = ['v0.1.0', 'v0.44.0'], { archiveCurrent = f
       ['index.html', Buffer.from(`root ${version}`)],
       ['game/index.html', Buffer.from(`game ${version}`)],
       ['game/icon.png', Buffer.from([1, 2, 3])],
+      ['game/app.mjs', Buffer.from('export const edition = "frozen";')],
+      ['optional/chapter.json', Buffer.from('{"edition":"frozen"}')],
+      ['offline-cache.json', Buffer.from('{"offline":"canonical-only"}')],
+      ['manifest.webmanifest', Buffer.from('{"start_url":"./game/","scope":"./"}')],
+      ['icons/icon-180.png', Buffer.from([1, 8, 0])],
+      ['icons/icon-192.png', Buffer.from([1, 9, 2])],
+      ['icons/icon-512.png', Buffer.from([5, 1, 2])],
+      ['icons/icon.svg', Buffer.from('<svg/>')],
       ['service-worker.js', Buffer.from(`original worker ${version}`)],
     ]);
     const rows = [...payload].map(([name, bytes]) => ({
@@ -217,7 +232,52 @@ test('complete artifact retains original graph and creates only authenticated hi
   assert.match(worker, /registration.unregister/);
   assert.doesNotMatch(worker, /skipWaiting|clients.claim|caches.delete/);
   assert.equal(receipt.browserAdmissionsRequired, true);
+  assert.equal(receipt.currentGraphLayout, 'single-canonical-with-root-metadata-v1');
+  const { metadata } = await loadCatalog(f.directory);
+  const current = metadata.get('v0.44.0');
+  // Every immutable runtime body is present once at its canonical path, even
+  // when its old root duplicate is no longer emitted. Never edit frozen bytes.
+  for (const row of current.manifest.files) {
+    const original = await fs.readFile(path.join(f.currentSite, row.path));
+    assert.deepEqual(
+      await fs.readFile(path.join(f.outputDirectory, 'releases/v0.44.0/site', row.path)),
+      original,
+      row.path,
+    );
+    assert.equal(digest(original), row.sha256);
+  }
+  for (const name of [
+    'game/app.mjs',
+    'game/icon.png',
+    'optional/chapter.json',
+    'offline-cache.json',
+    '.xonix-build.json',
+  ])
+    await assert.rejects(fs.access(path.join(f.outputDirectory, name)), { code: 'ENOENT' });
+  assert.deepEqual(receipt.rootCompatibilityFiles.map((row) => row.path).sort(), [
+    'icons/icon-180.png',
+    'icons/icon-192.png',
+    'icons/icon-512.png',
+    'icons/icon.svg',
+    'manifest.json',
+    'manifest.webmanifest',
+  ]);
+  for (const row of receipt.rootCompatibilityFiles)
+    assert.deepEqual(
+      await fs.readFile(path.join(f.outputDirectory, row.path)),
+      await fs.readFile(path.join(f.currentSite, row.path)),
+    );
+  const routing = JSON.parse(
+    await fs.readFile(path.join(f.outputDirectory, 'current-entry-routing.json')),
+  );
+  assert.equal(routing.frozenManifest.appliesTo, 'releases/v0.44.0/site/');
   assert.ok(receipt.totalBytes < 950_000_000);
+  const reread = await directoryInventory(f.outputDirectory);
+  assert.deepEqual(reread, receipt.files);
+  assert.equal(
+    reread.reduce((sum, row) => sum + row.bytes, 0),
+    receipt.totalBytes,
+  );
   await assert.rejects(assemble(f), /EEXIST/);
   assert.equal(
     await fs.readFile(
@@ -226,6 +286,50 @@ test('complete artifact retains original graph and creates only authenticated hi
     ),
     'game v0.44.0',
   );
+});
+
+test('root compatibility projection never admits runtime bodies and retains finite byte bounds', () => {
+  const names = [
+    'manifest.json',
+    'manifest.webmanifest',
+    'icons/icon-180.png',
+    'icons/icon-192.png',
+    'icons/icon-512.png',
+    'icons/icon.svg',
+  ];
+  assert.deepEqual(
+    rootCompatibilityRows(names.map((path) => ({ path, bytes: 1 }))).map((row) => row.path),
+    names,
+  );
+  assert.deepEqual(
+    rootCompatibilityRows(
+      [
+        'game/app.mjs',
+        'offline-cache.json',
+        'optional/chapter.json',
+        'icons/extra.png',
+        'manifest.json/extra',
+        '../manifest.json',
+      ].map((path) => ({ path, bytes: 1 })),
+    ),
+    [],
+  );
+  for (const bytes of [0, -1, 1.5, Infinity, '1', 8_000_001])
+    assert.throws(() => rootCompatibilityRows([{ path: 'manifest.json', bytes }]), /byte budget/);
+  for (const [path, bytes] of [
+    ['manifest.json', 8_000_000],
+    ['manifest.webmanifest', 65_536],
+    ['icons/icon-192.png', 1_048_576],
+    ['icons/icon.svg', 65_536],
+  ]) {
+    assert.equal(rootCompatibilityRows([{ path, bytes }]).length, 1);
+    assert.throws(() => rootCompatibilityRows([{ path, bytes: bytes + 1 }]), /byte budget/);
+  }
+});
+
+test('single-copy projection does not relax the actual Pages artifact budget', () => {
+  assert.equal(assertPagesBudget(950_000_000), 950_000_000);
+  assert.throws(() => assertPagesBudget(950_000_001), /budget|exceeds/i);
 });
 
 test('retention keeps only the latest releases in each semantic major line', async (t) => {
