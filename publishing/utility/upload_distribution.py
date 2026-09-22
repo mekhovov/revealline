@@ -15,6 +15,7 @@ import zipfile
 
 CHUNK = 1024 * 1024
 JSON_LIMIT = 2 * 1024 * 1024
+MAX_DISTRIBUTION_BYTES = 950_000_000
 SHA = re.compile(r'[a-f0-9]{64}\Z')
 COMMIT = re.compile(r'(?:[a-f0-9]{40}|[a-f0-9]{64})\Z')
 REPO = re.compile(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+\Z')
@@ -92,7 +93,7 @@ class PinnedDistribution:
                 and SHA.fullmatch(args.inspection_sha256), 'Invalid explicit SHA256 pin')
         require(COMMIT.fullmatch(args.source_commit), 'Invalid explicit source commit')
         require(TAG.fullmatch(args.tag), 'Expected an exact version tag')
-        require(0 < args.member_bytes <= 512 * 1024 * 1024, 'Invalid source byte length')
+        require(0 < args.member_bytes <= MAX_DISTRIBUTION_BYTES, 'Invalid source byte length')
         require(0 < args.outer_bytes <= 4_000_000_000, 'Invalid outer ZIP byte length')
         with open_regular(args.inspection) as receipt:
             data = receipt.read(JSON_LIMIT + 1)
