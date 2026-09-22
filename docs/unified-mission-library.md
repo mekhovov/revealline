@@ -108,3 +108,12 @@ Next: mount the library in Solo Journey and Classic hosts, resolve incoming opaq
 selection through the exact registered owner, wire preparation/readiness and
 device Custom content, then repeat for Versus and Team. Retain atomic artwork
 adoption, replacement/departure guards and each owner's separate Next sequence.
+
+Independent integration review additionally identified mutable resolved Custom
+entry clones as a host-wiring risk. Bindings now carry immutable scalar selection
+snapshots from the prepared original. Launch checks the exact current binding;
+preparation checks before and after awaiting, and registration rechecks after
+official verification. Original references are retained without freezing caller
+objects. Hosts must use the immutable selection after asynchronous work and
+re-resolve the prepared owner. Four added regressions pass; the fast cohort is
+now60 tests. The prior16 Solo host and8 full-index cases remain unchanged.

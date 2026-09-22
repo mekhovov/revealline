@@ -156,6 +156,92 @@ test('campaign entry lookup preserves pack-authored order, not caller lookup ord
   );
 });
 
+test('immutable selection prevents mutable entry clones from retargeting an existing card', async () => {
+  const owner = await makeOwner();
+  let calls = 0;
+  const sources = await customLibrarySources([owner], {
+    ...adapters,
+    launch: () => {
+      calls++;
+    },
+  });
+  const binding = sources[0].entries[0];
+  const originalTarget = structuredClone(binding.selection);
+  assert.ok(Object.isFrozen(binding.selection));
+  assert.throws(() => {
+    binding.selection.levelId = 'another-map';
+  }, TypeError);
+  const library = createMissionLibrary(sources),
+    row = library.missions[0];
+  binding.level.id = owner.entries[0].campaign.levels[1].id;
+  assert.deepEqual(binding.selection, originalTarget);
+  assert.equal(row.runtimeId, originalTarget.levelId);
+  assert.throws(() => library.launch(row), /Custom mission changed/);
+  assert.equal(calls, 0);
+});
+
+test('post-registration rule, presentation and reference changes cannot reach host launch', async () => {
+  for (const mutate of [
+    (binding) => {
+      binding.level.rules.lives++;
+    },
+    (binding) => {
+      binding.entry.themes[0].palette.accent = '#112233';
+    },
+    (binding) => {
+      binding.entry.campaign.levels[0] = structuredClone(binding.level);
+    },
+    (binding) => {
+      binding.entry.campaign.id = 'another-campaign';
+    },
+    (binding) => {
+      binding.entry.campaign = null;
+    },
+  ]) {
+    const owner = await makeOwner();
+    const sources = await customLibrarySources([owner], {
+      ...adapters,
+      launch: () => assert.fail('Changed binding must not reach the host'),
+    });
+    const library = createMissionLibrary(sources);
+    mutate(sources[0].entries[0]);
+    assert.throws(() => library.launch(library.missions[0]), /Custom mission changed/);
+  }
+});
+
+test('asynchronous official verification cannot register a retargeted mutable clone', async () => {
+  const owner = await makeOwner();
+  await assert.rejects(
+    customLibrarySources([owner], {
+      ...adapters,
+      isOfficial: async () => {
+        await Promise.resolve();
+        owner.entries[0].campaign.levels[0].id = 'changed-during-check';
+        return false;
+      },
+    }),
+    /Custom mission changed/,
+  );
+});
+
+test('preparation rechecks mutable bindings before reporting a ready result', async () => {
+  const owner = await makeOwner();
+  let ready = false;
+  const sources = await customLibrarySources([owner], {
+    ...adapters,
+    availability: () => (ready ? { state: 'ready' } : { state: 'download', bytes: 123 }),
+    prepare: async (binding) => {
+      await Promise.resolve();
+      binding.level.id = 'changed-during-prepare';
+      ready = true;
+    },
+  });
+  const library = createMissionLibrary(sources),
+    row = library.missions[0];
+  await assert.rejects(library.prepare(row), /Custom mission changed/);
+  assert.equal(library.availability(row).state, 'unavailable');
+});
+
 test('raw packs, wrong owners, altered campaigns and Gentle projections are rejected', async () => {
   const owner = await makeOwner();
   await assert.rejects(
