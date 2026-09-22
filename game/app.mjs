@@ -25,6 +25,7 @@ import {
 } from './mission-library/installed-target.mjs';
 import { createInstalledMissionLibrary } from './mission-library/installed-library.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
+import { combineJourneyLibrarySources } from './mission-library/cross-mode-journey.mjs';
 import { trackMissionLibraryOpening } from './mission-library/opening-intent.mjs';
 import { authoredMissionSuccessor } from './mission-library/authored-continuation.mjs';
 import {
@@ -8381,19 +8382,28 @@ try {
     unifiedLibraryLoading = (async () => {
       const index = await getJSON('content/mission-library-index.json');
       const route = authoredRoute || (await loadAuthoredJourneyRoute('whole-spatial-v5'));
+      const originalThemes = (await getJSON('content-design/themes.json')).themes;
+      const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
+        ? journeyActorThemeCandidates(originalThemes, {
+            includeOriginals: route.preserveOriginalThemes === true,
+          })
+        : originalThemes;
       const host =
         candidateHost ||
         createCandidateSoloHost(route.source, {
-          themes: journeyActorThemeCandidates(
-            (await getJSON('content-design/themes.json')).themes,
-            {
-              includeOriginals: route.preserveOriginalThemes === true,
-            },
-          ),
+          themes: libraryThemes,
           buildVersion,
           corePackIds: route.corePackIds,
           optionalCampaignIds: route.optionalCampaignIds,
         });
+      // Compile the other mode through its own validated runtime adapter. The
+      // combined browsing identity never grants this Solo host Versus ownership.
+      const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
+      const versusPreview = createCandidateVersusHost(route.source, {
+        themes: libraryThemes,
+        corePackIds: route.corePackIds,
+        optionalCampaignIds: route.optionalCampaignIds,
+      });
       const profile = candidateHost
         ? journeyProfile
         : createJourneyProfileStore({ profileKey: route.profileKey });
@@ -8421,9 +8431,31 @@ try {
           return launchJourneyMission(mission);
         },
       });
+      const versusSource = journeyLibrarySource({
+        editionId: route.id,
+        edition: route.id === 'whole-spatial-v5' ? 'New Journey' : route.label,
+        catalog: versusPreview.catalog,
+        profile,
+        details: (mission) =>
+          journeyMissionDetails(
+            versusPreview.manifest(
+              mission,
+              journeyPreferences?.snapshot().difficulty ?? 'standard',
+            ),
+          ),
+        tags: (mission) => authoredJourneyMissionTags(mission, versusPreview.manifest(mission)),
+        card: (mission) =>
+          versusPreview.card(mission, journeyPreferences?.snapshot().difficulty ?? 'standard'),
+        launch: (_mission, context) => departLibraryMission(context),
+      });
       const result = await createInstalledMissionLibrary({
         index,
-        journeySources: [source],
+        journeySources: [
+          combineJourneyLibrarySources([
+            { mode: 'solo', source },
+            { mode: 'versus', source: versusSource },
+          ]),
+        ],
         getPacks: () => packs,
         baseEntry,
         compatibility: ({ entry, level }) => {

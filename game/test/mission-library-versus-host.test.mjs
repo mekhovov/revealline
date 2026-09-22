@@ -312,6 +312,29 @@ test('Classic Versus selects an exact Journey handoff and preserves the release 
   assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
 });
 
+test('Versus mode filter exposes the same qualified Journey identities in Solo without duplicates', async (t) => {
+  const p = await fixture(t);
+  await open(p);
+  const original = [...p.$('journey-cards').children].map((card) => card.dataset.missionId);
+  p.$('journey-mode').value = 'solo';
+  p.$('journey-mode').emit('change');
+  const cards = [...p.$('journey-cards').children];
+  assert.deepEqual(
+    cards.map((card) => card.dataset.missionId),
+    original,
+  );
+  assert.equal(new Set(original).size, 201);
+  const target = cards[1];
+  assert.match(target.textContent, /Journey.*Band 1\/12.*Play/);
+  target.click();
+  await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
+  const destination = new URL(globalThis.location.href);
+  assert.equal(destination.pathname, '/game/');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
+  assert.equal(p.doc.documentElement.dataset.toolState, 'ready');
+});
+
 for (const custom of [false, true])
   test(`installed ${custom ? 'modified Custom' : 'official Classic'} selection stages the exact late level without falling back to its chapter opener`, async (t) => {
     const source = JSON.parse(
