@@ -4,36 +4,49 @@
   const doc = document,
     mode = doc.currentScript?.dataset.mode;
   const params = new URL(doc.baseURI).searchParams;
-  const values = params.getAll(mode === 'team' ? 'journey-return' : 'journey');
-  if (
-    !['versus', 'team'].includes(mode) ||
-    values.length !== 1 ||
-    ![
-      'opening',
-      'authored',
-      'whole-originals',
-      'whole-originals-v2',
-      'whole-originals-v3',
-      'whole-originals-v4',
-      'whole-spatial-v1',
-      'whole-spatial-v2',
-      'whole-spatial-v3',
-      'whole-spatial-v4',
-      'whole-spatial-v5',
-    ].includes(values[0])
-  )
-    return;
-  const route = values[0];
   const set = (id, href) => doc.getElementById(id)?.setAttribute('href', href);
-  if (mode === 'versus') {
-    set('boot-return', `../?journey=${route}`);
-    return;
-  }
+  if (!['versus', 'team'].includes(mode)) return;
+  const authoredRoutes = [
+    'opening',
+    'authored',
+    'whole-originals',
+    'whole-originals-v2',
+    'whole-originals-v3',
+    'whole-originals-v4',
+    'whole-spatial-v1',
+    'whole-spatial-v2',
+    'whole-spatial-v3',
+    'whole-spatial-v4',
+    'whole-spatial-v5',
+  ];
+  const teamRoutes = [
+    'team-greybox',
+    'team-originals',
+    'team-pressure-originals-1',
+    'team-spatial-originals-1',
+    'team-timed-originals',
+    'team-window-spatial-1',
+    'team-depot-spatial-1',
+  ];
   const origins = params.getAll('return');
+  const teamLinks = (solo, versus) => {
+    const fromSolo = origins.length === 1 && origins[0] === 'solo';
+    set('coop-home', solo);
+    set('coop-solo', solo);
+    set('coop-versus', versus);
+    set('coop-race', fromSolo ? solo : versus);
+    const back = doc.getElementById('coop-race');
+    if (back) back.textContent = fromSolo ? 'Back to Solo' : 'Race mode ↗';
+  };
+  // The ready host gives a validated authored origin priority over pack hints.
+  const returns = params.getAll('journey-return');
   if (
-    origins.length !== 1 ||
-    !['solo', 'versus'].includes(origins[0]) ||
-    [
+    mode === 'team' &&
+    returns.length === 1 &&
+    authoredRoutes.includes(returns[0]) &&
+    origins.length === 1 &&
+    ['solo', 'versus'].includes(origins[0]) &&
+    ![
       'journey',
       'practice',
       'return-token',
@@ -41,14 +54,34 @@
       'mode-return',
       'mode-return-v2',
     ].some((key) => params.has(key))
-  )
+  ) {
+    teamLinks(`../?journey=${returns[0]}`, `./?journey=${returns[0]}`);
     return;
-  const solo = `../?journey=${route}`,
-    versus = `./?journey=${route}`;
-  set('coop-home', solo);
-  set('coop-solo', solo);
-  set('coop-versus', versus);
-  set('coop-race', origins[0] === 'solo' ? solo : versus);
-  const back = doc.getElementById('coop-race');
-  if (back) back.textContent = origins[0] === 'solo' ? 'Back to Solo' : 'Race mode ↗';
+  }
+  const journey = params.getAll('journey');
+  const legacyLaunch = journey.length
+    ? mode === 'team'
+      ? journey.length !== 1 || !teamRoutes.includes(journey[0])
+      : !authoredRoutes.includes(journey[0])
+    : [
+        'pack',
+        'campaign',
+        'level',
+        'play',
+        'practice',
+        'course',
+        'lesson',
+        'workshop',
+        'return-token',
+        'return-token-v2',
+        'mode-return',
+        'mode-return-v2',
+      ].some((key) => params.has(key));
+  if (legacyLaunch) {
+    if (mode === 'versus') set('boot-return', '../?journey=legacy');
+    if (mode === 'team') teamLinks('../?journey=legacy', './?journey=legacy');
+    return;
+  }
+  if (mode === 'versus' && journey.length && authoredRoutes.includes(journey[0]))
+    set('boot-return', `../?journey=${journey[0]}`);
 })();

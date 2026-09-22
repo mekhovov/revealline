@@ -5,6 +5,18 @@ const ROUTES = new Set(AUTHORED_JOURNEY_ROUTE_IDS);
 /** Code-owned destinations only. Mode entry retains the library route, never a
  * simulation, mission selection, save slot, receipt or arbitrary return URL. */
 export function authoredModeDestinations(mode, route) {
+  if (route === 'legacy' && ['solo', 'versus'].includes(mode))
+    return Object.freeze(
+      mode === 'solo'
+        ? {
+            versus: 'couch/?journey=legacy&return=solo',
+            team: 'couch/relay-rescue.html?journey=legacy&return=solo',
+          }
+        : {
+            solo: '../?journey=legacy',
+            team: 'relay-rescue.html?journey=legacy&return=versus',
+          },
+    );
   if (!ROUTES.has(route) || !['solo', 'versus'].includes(mode)) return null;
   return Object.freeze(
     mode === 'solo'

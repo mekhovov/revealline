@@ -40,8 +40,8 @@ test('the same Team mode choices belong to the lobby and active pause panel, nev
   assert.equal(current.tagName, 'SPAN');
   assert.equal(current.getAttribute('tabindex'), null);
   assert.equal(current.getAttribute('href'), null);
-  assert.equal(solo.getAttribute('href'), '../');
-  assert.equal(versus.getAttribute('href'), './');
+  assert.equal(solo.getAttribute('href'), '../?journey=legacy');
+  assert.equal(versus.getAttribute('href'), './?journey=legacy');
   current.click();
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.visits.length, 0);
@@ -599,9 +599,9 @@ for (const [query, path, label] of [
   ['?return=solo&return=versus', './', 'Race mode ↗'],
 ])
   test(`Team lobby uses only its code-owned return destination ${query || '(default)'}`, async (t) => {
-    const href = `http://localhost/releases/v0.58.0/couch/relay-rescue.html${query}`,
+    const href = `http://localhost/releases/v0.58.0/couch/relay-rescue.html${query || '?'}${query ? '&' : ''}journey=legacy`,
       f = await page(t, { href }),
-      destination = new URL(path, href).href,
+      destination = new URL(`${path}?journey=legacy`, href).href,
       link = f.$('coop-race'),
       visited = [];
     assert.equal(new URL(link.getAttribute('href'), href).href, destination);
@@ -1085,7 +1085,7 @@ test('confirmed retry uses the actual level/configuration, not edited hidden lob
 for (const [kind, id] of departures.filter(([kind]) => ['home', 'return'].includes(kind)))
   for (const context of ['solo', 'versus'])
     test(`confirmed ${kind} keeps only its fixed ${context} destination`, async (t) => {
-      const href = `http://localhost/releases/v0.58.0/couch/relay-rescue.html?return=${context}`;
+      const href = `http://localhost/releases/v0.58.0/couch/relay-rescue.html?return=${context}&journey=legacy`;
       const f = await page(t, { href, nativeFocus: true, capturePaint: true });
       playingTeam(f);
       f.$(id).setAttribute('href', 'https://other.invalid/steal');
@@ -1095,7 +1095,7 @@ for (const [kind, id] of departures.filter(([kind]) => ['home', 'return'].includ
       const before = heldTeam(f);
       f.$('coop-discard-confirm').click();
       const path = kind === 'home' || context === 'solo' ? '../' : './';
-      assert.deepEqual(f.visits, [new URL(path, href).href]);
+      assert.deepEqual(f.visits, [new URL(`${path}?journey=legacy`, href).href]);
       f.tick(60);
       assert.deepEqual(heldTeam(f), before);
       assert.equal(f.$('coop-overlay').hidden, false);
@@ -1244,8 +1244,8 @@ function tabToTeamAction(f, id) {
   assert.equal(f.doc.activeElement.closest('[hidden],[inert]'), null);
 }
 const modePanelLinks = [
-  ['coop-solo', '../'],
-  ['coop-versus', './'],
+  ['coop-solo', '../?journey=legacy'],
+  ['coop-versus', './?journey=legacy'],
 ];
 for (const [id, path] of modePanelLinks)
   for (const fault of [false, true])

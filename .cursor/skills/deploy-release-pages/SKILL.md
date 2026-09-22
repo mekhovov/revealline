@@ -258,3 +258,16 @@ During an active title preparation, Escape/Back cancels the operation and retain
 When an authored conditional recovery group changes a chapter card, preserve the exact visible action order and closed native-file disclosure checks. Extend the contract to require the group hidden initially, an accessible name and the correct explicit actions; keep complete keyboard/controller, cancel/retry and stale-focus tests. Never simply remove a structural assertion to obtain a pass.
 
 For short-screen pause overlays, test Large/Plain at 844×390 and 568×320. Traverse both directions to Resume and Main menu; inspect the whole focused outline within the scrollport. Structural CSS assertions do not substitute for actual intrinsic-height, scroll and keyboard checks. Keep font size and target size intact.
+
+
+## Default Journey delivery (v0.83 candidate)
+
+Use [the current bounded release contract](../../../docs/default-journey-release.md).
+A special `?journey=whole-spatial-v5` URL does not prove ordinary discovery. Verify
+queryless public root, direct Solo/Versus and Team (91/91/12), then explicit Legacy
+and return paths. Preserve parameter-owned practice, course, pack and mode-return
+entry and Workshop catalogue context. Keep one publisher/one prepared successor;
+reserve the version before committing. No migration or new artwork is required.
+Legacy fixture helpers must explicitly request Legacy; dedicated default-entry
+tests must pass an actually empty query. Never change behavioral assertions merely
+to hide a navigation regression. Keep balance/device/offline limits in evidence.

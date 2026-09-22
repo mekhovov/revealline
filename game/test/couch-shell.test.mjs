@@ -118,10 +118,13 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(f.doc.activeElement.id, 'race-coop');
   press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
   assert.equal(f.doc.activeElement.id, 'race-solo-return');
-  assert.equal(f.doc.activeElement.getAttribute('href'), '../');
+  assert.equal(f.doc.activeElement.getAttribute('href'), '../?journey=legacy');
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-coop');
-  assert.equal(f.doc.activeElement.getAttribute('href'), 'relay-rescue.html?return=versus');
+  assert.equal(
+    f.doc.activeElement.getAttribute('href'),
+    'relay-rescue.html?journey=legacy&return=versus',
+  );
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-start');
   press(f, 'Tab');
