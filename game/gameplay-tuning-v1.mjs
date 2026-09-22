@@ -3,11 +3,8 @@ import { normalizedLevel } from './core/level.mjs';
 import { foundationGeometry } from './core/foundations.mjs';
 import { validateCoopLevel } from './coop/core.mjs';
 import { compileCoopFoundationGeometry, isJourneyTeamLevel } from './coop/foundations.mjs';
-import * as historical from './gameplay-tuning-v1.mjs';
 
-export const GAMEPLAY_TUNING_VERSION = 'gameplay-pressure.v2';
-// The preference format is unchanged; historical recipes have separate dispatch.
-const PREFERENCE_VERSION = 'gameplay-pressure.v1';
+export const GAMEPLAY_TUNING_VERSION = 'gameplay-pressure.v1';
 export const GAMEPLAY_TUNING_STORAGE_KEY = 'revealline.gameplay-tuning.v1';
 export const GAMEPLAY_TUNING_DEFAULTS = Object.freeze({
   enemySpeed: 1,
@@ -20,17 +17,9 @@ export const GAMEPLAY_TUNING_BOUNDS = Object.freeze({
   enemyDensity: Object.freeze([0, 2]),
 });
 export const GAMEPLAY_PRESSURE_PRESETS = Object.freeze({
-  gentle: Object.freeze({ enemySpeed: 0.75, playerSpeed: 1, enemyDensity: 0 }),
-  standard: Object.freeze({ enemySpeed: 1, playerSpeed: 1, enemyDensity: 0 }),
-  expert: Object.freeze({ enemySpeed: 1.2, playerSpeed: 1, enemyDensity: 0.5 }),
-});
-// Approximate observations, not claimed Xposed source constants. See research.
-// Units are original playable short-field lengths per second; never shrink as
-// territory is captured. Unmeasured actor roles keep their v1 pressure policy.
-export const REFERENCE_MOTION_RATES = Object.freeze({
-  craft: 0.26,
-  fieldKeeper: 0.325,
-  boundaryPatrol: 0.24,
+  gentle: Object.freeze({ enemySpeed: 1.2, playerSpeed: 1.15, enemyDensity: 0 }),
+  standard: Object.freeze({ enemySpeed: 1.6, playerSpeed: 1.15, enemyDensity: 0.5 }),
+  expert: Object.freeze({ enemySpeed: 2, playerSpeed: 1.15, enemyDensity: 1 }),
 });
 const freeze = (value) => {
   if (value && typeof value === 'object') {
@@ -53,7 +42,7 @@ function checkedOverrides(value) {
   return Object.freeze({ ...GAMEPLAY_TUNING_DEFAULTS, ...copy });
 }
 
-/** Relative to reference movement targets, on an explicitly selected edition.
+/** Relative to the explicitly selected, already compiled difficulty edition.
  * This is an attempt recipe, never a mutation of a running simulation. */
 export function resolveGameplayTuning(
   difficulty = 'standard',
@@ -70,7 +59,7 @@ export function resolveGameplayTuning(
     difficulty,
     enemySpeed: preset.enemySpeed * owned.enemySpeed,
     playerSpeed: preset.playerSpeed * owned.playerSpeed,
-    enemyDensity: Math.max(0, (1 + preset.enemyDensity) * owned.enemyDensity - 1),
+    enemyDensity: preset.enemyDensity * owned.enemyDensity,
     adminOverride: fields.some((key) => owned[key] !== GAMEPLAY_TUNING_DEFAULTS[key]),
     overrides: owned,
   });
@@ -80,7 +69,6 @@ export function resolveGameplayTuning(
  * with the visible difficulty or the practice/award classification. */
 export function validateGameplayTuning(snapshot) {
   const owned = copySmall(snapshot);
-  if (owned?.version === 'gameplay-pressure.v1') return historical.validateGameplayTuning(owned);
   exactKeys(
     owned,
     ['version', 'difficulty', ...fields, 'adminOverride', 'overrides'],
@@ -92,17 +80,6 @@ export function validateGameplayTuning(snapshot) {
     'Inconsistent gameplay tuning snapshot.',
   );
   return resolved;
-}
-
-/** Shared menu copy: measured roles use normalized units, not authored factors. */
-export function gameplayTuningDescription(snapshot) {
-  const tuning = validateGameplayTuning(snapshot);
-  if (tuning.version === 'gameplay-pressure.v1')
-    return `Historical pressure: enemy speed ×${tuning.enemySpeed.toFixed(2)}, craft speed ×${tuning.playerSpeed.toFixed(2)}.`;
-  return (
-    `Reference-paced targets: craft ${(REFERENCE_MOTION_RATES.craft * tuning.playerSpeed).toFixed(3)}, field enemies ${(REFERENCE_MOTION_RATES.fieldKeeper * tuning.enemySpeed).toFixed(3)}, boundary patrols ${(REFERENCE_MOTION_RATES.boundaryPatrol * tuning.enemySpeed).toFixed(3)} short-fields/s (runtime caps apply). ` +
-    `${tuning.enemyDensity ? `Target +${Math.round(tuning.enemyDensity * 100)}% field keepers, rounded up where safe` : 'Authored enemy counts'}. Other threat roles keep their authored difficulty pressure.`
-  );
 }
 
 const difficultyCodes = Object.freeze({ gentle: 'g', standard: 's', expert: 'e' });
@@ -118,11 +95,9 @@ function overrideBits(overrides) {
  * from its installed original and compare the entire tuned level before adopt.
  * The 70-character revision preserves exact floating-point overrides. */
 export function recoverGameplayTuning(level) {
-  const previous = historical.recoverGameplayTuning(level);
-  if (previous) return previous;
   const match =
     typeof level?.revision === 'string' &&
-    /^gp2([gse])-([a-f0-9]{48})-([a-f0-9]{16})$/.exec(level.revision);
+    /^gp1([gse])-([a-f0-9]{48})-([a-f0-9]{16})$/.exec(level.revision);
   if (!match) return null;
   try {
     const bytes = Uint8Array.from(match[2].match(/../g), (byte) => Number.parseInt(byte, 16));
@@ -153,7 +128,7 @@ export function createGameplayTuningController({ storage, eventTarget } = {}) {
     if (raw === null) return GAMEPLAY_TUNING_DEFAULTS;
     const saved = copySmall(raw);
     exactKeys(saved, ['version', 'overrides'], 'saved gameplay tuning');
-    required(saved.version === PREFERENCE_VERSION, 'Unsupported saved gameplay tuning.');
+    required(saved.version === GAMEPLAY_TUNING_VERSION, 'Unsupported saved gameplay tuning.');
     return checkedOverrides(saved.overrides);
   };
   try {
@@ -187,7 +162,7 @@ export function createGameplayTuningController({ storage, eventTarget } = {}) {
       required(backend && typeof backend.setItem === 'function', 'browser storage is unavailable');
       backend.setItem(
         GAMEPLAY_TUNING_STORAGE_KEY,
-        JSON.stringify({ version: PREFERENCE_VERSION, overrides }),
+        JSON.stringify({ version: GAMEPLAY_TUNING_VERSION, overrides }),
       );
       durable = true;
       error = null;
@@ -372,12 +347,6 @@ function addKeepers(level, tuning, team) {
 export function applyGameplayTuning(source, snapshot) {
   const tuning = validateGameplayTuning(snapshot);
   const owned = boundedJSON(source);
-  required(
-    !/^gp[12][gse]-/.test(String(owned?.revision)),
-    'Gameplay tuning must apply exactly once per attempt.',
-  );
-  if (tuning.version === 'gameplay-pressure.v1')
-    return historical.applyGameplayTuning(owned, tuning);
   const team =
     typeof owned?.version === 'string' && owned.version.startsWith('revealline-coop-level.');
   const level = team ? owned : normalizedLevel(owned);
@@ -389,34 +358,26 @@ export function applyGameplayTuning(source, snapshot) {
       'Tuning difficulty must match the compiled Team edition.',
     );
   }
+  required(
+    !/^gp1[gse]-/.test(String(level.revision)),
+    'Gameplay tuning must apply exactly once per attempt.',
+  );
   const sourceIdentity = dataIdentity(level);
-  const shortField = Math.min(level.width - 2, level.height - 2);
-  const unmeasuredSpeed = historical.resolveGameplayTuning(
-    tuning.difficulty,
-    tuning.overrides,
-  ).enemySpeed;
   level.rules = {
     ...level.rules,
-    moveSpeed: clamp(shortField * REFERENCE_MOTION_RATES.craft * tuning.playerSpeed, 1, 20),
+    moveSpeed: clamp((level.rules?.moveSpeed ?? 8) * tuning.playerSpeed, 1, 20),
   };
   for (const enemy of level.enemies) {
     if (Number.isFinite(enemy.vx) && Number.isFinite(enemy.vy)) {
       const magnitude = Math.hypot(enemy.vx, enemy.vy);
       // Arbitrary valid vector angles can otherwise round to more than 20 and
       // fail the strict Team cap. Keep a sub-nanocell numerical margin.
-      const keeper = enemy.type === (team ? 'drifter' : 'bouncer');
-      const target = keeper
-        ? shortField * REFERENCE_MOTION_RATES.fieldKeeper * tuning.enemySpeed
-        : magnitude * unmeasuredSpeed;
-      const factor = magnitude ? Math.min(target, 20 - 1e-9) / magnitude : 1;
+      const factor = magnitude ? Math.min(tuning.enemySpeed, (20 - 1e-9) / magnitude) : 1;
       enemy.vx *= factor;
       enemy.vy *= factor;
     }
     if (['border-patrol', 'contour-patrol'].includes(enemy.type))
-      enemy.speed =
-        (enemy.speed ?? 4) === 0
-          ? 0
-          : clamp(shortField * REFERENCE_MOTION_RATES.boundaryPatrol * tuning.enemySpeed, 0, 15);
+      enemy.speed = clamp((enemy.speed ?? 4) * tuning.enemySpeed, 0, 15);
     if (enemy.type === 'lane-boss') {
       const warning = enemy.warningSeconds ?? 1.5,
         active = enemy.activeSeconds ?? 0.7;
@@ -424,7 +385,7 @@ export function applyGameplayTuning(source, snapshot) {
         warning +
         active +
         clamp(
-          ((enemy.period ?? 6) - warning - active) / unmeasuredSpeed,
+          ((enemy.period ?? 6) - warning - active) / tuning.enemySpeed,
           0.25,
           60 - warning - active,
         );
@@ -432,23 +393,32 @@ export function applyGameplayTuning(source, snapshot) {
   }
   if (!team && level.encounter)
     level.encounter.shielded.restTicks = clamp(
-      Math.round(level.encounter.shielded.restTicks / unmeasuredSpeed),
+      Math.round(level.encounter.shielded.restTicks / tuning.enemySpeed),
       1,
       7200,
     );
   if (team && level.enemies.some((enemy) => enemy.type === 'hunter'))
     level.encounter = {
       ...level.encounter,
-      hunterAttackSpeed: clamp((level.encounter?.hunterAttackSpeed ?? 8) * unmeasuredSpeed, 6, 14),
+      hunterAttackSpeed: clamp(
+        (level.encounter?.hunterAttackSpeed ?? 8) * tuning.enemySpeed,
+        6,
+        14,
+      ),
     };
   for (const actor of level.classic?.combatPatrols?.actors ?? []) {
-    actor.speed = clamp(actor.speed * unmeasuredSpeed, 0.25, 8);
-    if (actor.role === 'sentry') actor.shotSpeed = clamp(actor.shotSpeed * unmeasuredSpeed, 4, 12);
+    actor.speed = clamp(actor.speed * tuning.enemySpeed, 0.25, 8);
+    if (actor.role === 'sentry')
+      actor.shotSpeed = clamp(actor.shotSpeed * tuning.enemySpeed, 4, 12);
   }
   if (level.classic?.lineImpact)
-    level.classic.lineImpact.speed = clamp(level.classic.lineImpact.speed * unmeasuredSpeed, 4, 60);
+    level.classic.lineImpact.speed = clamp(
+      level.classic.lineImpact.speed * tuning.enemySpeed,
+      4,
+      60,
+    );
   addKeepers(level, tuning, team);
-  level.revision = `gp2${difficultyCodes[tuning.difficulty]}-${overrideBits(tuning.overrides)}-${dataIdentity({ sourceIdentity, tuning })}`;
+  level.revision = `gp1${difficultyCodes[tuning.difficulty]}-${overrideBits(tuning.overrides)}-${dataIdentity({ sourceIdentity, tuning })}`;
   if (team) {
     const validation = validateCoopLevel(level);
     required(validation.valid, `Invalid tuned Team level: ${validation.errors.join(' ')}`);

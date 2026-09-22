@@ -1,3 +1,5 @@
+import { gameplayTuningDescription } from '../gameplay-tuning.mjs';
+
 /** Browser-wide playtest controls. Hosts own attempt replacement and awards. */
 export function mountGameplayTuning({ root, controller, getDifficulty, onChange = () => {} }) {
   if (!root) return null;
@@ -13,9 +15,9 @@ export function mountGameplayTuning({ root, controller, getDifficulty, onChange 
   const values = new Map();
   details.append(summary, help);
   for (const [key, label, min, max] of [
-    ['enemySpeed', 'Enemy speed multiplier', 0.5, 2],
-    ['playerSpeed', 'Player speed multiplier', 0.75, 1.5],
-    ['enemyDensity', 'Additional enemy density multiplier', 0, 2],
+    ['enemySpeed', 'Enemy pace factor', 0.5, 2],
+    ['playerSpeed', 'Craft pace factor', 0.75, 1.5],
+    ['enemyDensity', 'Enemy count factor (authored minimum)', 0, 2],
   ]) {
     const field = doc.createElement('label');
     field.className = 'field';
@@ -58,8 +60,8 @@ export function mountGameplayTuning({ root, controller, getDifficulty, onChange 
     const snapshot = controller.snapshot(getDifficulty());
     note.textContent =
       `${snapshot.adminOverride ? 'Playtest overrides enabled' : 'Normal difficulty presets'}. ` +
-      `Next attempt: enemy speed ×${snapshot.enemySpeed.toFixed(2)}, player speed ×${snapshot.playerSpeed.toFixed(2)}, target +${Math.round(snapshot.enemyDensity * 100)}% field keepers. ` +
-      'Counts round up, capped by safe placement in existing occupied regions. ' +
+      `Next attempt: ${gameplayTuningDescription(snapshot)} ` +
+      'Added counts round up, capped by safe placement in existing occupied regions; authored enemies are never removed. ' +
       (status.error || 'Saved on this browser.');
   };
   apply.onclick = () => {
