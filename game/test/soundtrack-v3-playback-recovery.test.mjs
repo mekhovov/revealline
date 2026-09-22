@@ -22,12 +22,20 @@ function createPlayer(t, readAsset) {
   return { ...h, player };
 }
 
+function automaticLibrary() {
+  const library = upgradeSoundtrackLibrary(emptySoundtrackLibrary());
+  return {
+    ...library,
+    listening: { ...library.listening, mode: 'auto' },
+  };
+}
+
 test('v3 automatic published music failure falls back once to available synthesized music', async (t) => {
   let reads = 0;
   const h = createPlayer(t, async () => {
     throw new Error('No library download should be attempted.');
   });
-  h.player.setLibrary(upgradeSoundtrackLibrary(emptySoundtrackLibrary()));
+  h.player.setLibrary(automaticLibrary());
   h.player.setAuthoredTrack(BUILTIN_SOUNDTRACK_TRACKS[0].recipe);
   h.player.setPublishedTrack({
     id: `published.${'a'.repeat(64)}`,
@@ -76,7 +84,7 @@ test('Recording mode excludes published music without video and Content ID autho
   const h = createPlayer(t, async () => {
     throw new Error('No library download should be attempted.');
   });
-  const library = upgradeSoundtrackLibrary(emptySoundtrackLibrary());
+  const library = automaticLibrary();
   h.player.setLibrary({
     ...library,
     listening: { ...library.listening, recordingMode: true },
@@ -103,7 +111,7 @@ test('enabling Recording mode retires current published audio and preserves paus
   const h = createPlayer(t, async () => {
     throw new Error('No library download should be attempted.');
   });
-  const library = upgradeSoundtrackLibrary(emptySoundtrackLibrary());
+  const library = automaticLibrary();
   h.player.setLibrary(library);
   h.player.setContext({ scene: 'gameplay' });
   h.player.setPublishedTrack({
