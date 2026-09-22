@@ -340,6 +340,11 @@ async function installedSources({
       },
       async prepareClassic(row, context) {
         check(context.signal);
+        // A failed explicit installation can create an empty content database.
+        // Each deliberate Retry owns a fresh checked snapshot; do not reuse an
+        // earlier absence proof or silently reinterpret changed installed data.
+        await refresh({ signal: context.signal });
+        check(context.signal);
         if (!state().ready) throw new Error(state().reason);
         const before = currentInventory(),
           epoch = refreshEpoch;

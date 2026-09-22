@@ -573,3 +573,17 @@ verification. It must receive a new pinned native check before acceptance.
   exact-key storage cases pass16/16. Scoped lint/format/diff checks pass. Inventory
   warnings share the existing bounded status row; native layout, persistent-IDB
   journeys, whole-branch qualification and public acceptance remain outstanding.
+
+### Fresh-storage Retry repair
+
+- Native Team `9398dc15e` exposed a missing case: the first failed download could
+  initialize a previously absent database, invalidating the old absence snapshot.
+  Retry then stopped before another network request. Seeded fixtures had masked it.
+- Each deliberate Team preparation now obtains a fresh checked inventory before
+  the exact installer runs. No absent/initialized snapshot equivalence is invented.
+  The genuinely absent-database503→Retry→same-card Play regression passes, and
+  intervening modified same-ID content still rejects without overwrite/download.
+- Final remote-installed cohort passes9/9. Native repair recheck remains required.
+  Independent Versus modeled-host verification passes the analogous cold503 path
+  without a runtime change. A separate missing-storage/Web-Locks core-browsing
+  regression is under repair; installed-content failures must not block Journey.
