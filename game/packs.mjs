@@ -27,7 +27,14 @@ import {
   SENTINEL_SCENARIO_VERSION,
 } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
-import { boundedJSON, plainObject, stableId, exactKeys, required } from './data-json.mjs';
+import {
+  boundedJSON,
+  canonicalJSON,
+  plainObject,
+  stableId,
+  exactKeys,
+  required,
+} from './data-json.mjs';
 import { createMasteryCatalog } from './mastery-catalog.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
 
@@ -41,6 +48,7 @@ export const RELAY_PACK_VERSION = 'xonix-pack.v7';
 export const DIRECTIONAL_PACK_VERSION = 'xonix-pack.v8';
 export const SENTINEL_PACK_VERSION = 'xonix-pack.v9';
 export const PACK_LIBRARY_VERSION = 'xonix-pack-library.v1';
+export const PACK_LIBRARY_METADATA_VERSION = 'revealline-pack-library-metadata.v1';
 export const PACK_LIMITS = Object.freeze({
   maxBytes: 24 * 1024 * 1024,
   libraryBytes: 48 * 1024 * 1024,
@@ -57,7 +65,8 @@ const semver = (v) =>
 const text = (v, max) => typeof v === 'string' && v.trim().length > 0 && v.length <= max;
 const finite = (v, lo, hi) => Number.isFinite(v) && v >= lo && v <= hi;
 const preparedPacks = new WeakSet(),
-  preparedLibraries = new WeakSet();
+  preparedLibraries = new WeakSet(),
+  metadataLibraries = new WeakSet();
 function freeze(value) {
   if (value && typeof value === 'object') {
     for (const child of Object.values(value)) freeze(child);
@@ -576,7 +585,7 @@ export function exportPackLibrary(library) {
   required(preparedLibraries.has(library), 'Export a prepared pack library.');
   return JSON.stringify(library);
 }
-export async function importPackLibrary(candidate, { decodeImage = browserDecodeImage } = {}) {
+function checkedLibrary(candidate) {
   const value = boundedPack(candidate, true);
   exactKeys(value, ['format', 'packs'], 'pack library');
   required(
@@ -588,22 +597,60 @@ export async function importPackLibrary(candidate, { decodeImage = browserDecode
   // Validate every pack/dependency before allocating any browser decode surface.
   const checked = value.packs.map((pack) => packChecks(pack));
   libraryChecks(checked.map((entry) => entry.pack));
+  return checked;
+}
+export async function importPackLibrary(candidate, { decodeImage = browserDecodeImage } = {}) {
+  const checked = checkedLibrary(candidate);
   const packs = [];
   for (const candidate of checked)
     packs.push((await decodeCheckedPack(candidate, decodeImage)).pack);
   return registeredLibrary(packs);
 }
-export function resolvePackCampaign(pack, campaignId) {
-  required(preparedPacks.has(pack), 'Resolve a prepared pack.');
-  const source = pack.campaigns.find((c) => c.id === campaignId);
-  required(source, 'Unknown pack campaign.');
+/** Validated browsing data, NOT prepared runtime content. All pack, dependency,
+ * mastery and image-header checks run, but no images are decoded or retained in
+ * the returned projection. identity fingerprints the complete normalized pack,
+ * including artwork, exactly as preparedPackIdentity does after preparation.
+ * A matching fingerprint is not evidence of decoded or available media; Play
+ * must still re-resolve and prepare the exact installed edition independently.
+ */
+export async function inspectPackLibraryMetadata(candidate) {
+  const checked = checkedLibrary(candidate);
+  const packs = [];
+  for (const { pack } of checked) {
+    const bytes = new TextEncoder().encode(canonicalJSON(pack));
+    // Keep this primitive local: external-chapter imports packs, and importing
+    // its hash helper here would introduce a dependency cycle at the boundary.
+    const sha256 = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+      .map((byte) => byte.toString(16).padStart(2, '0'))
+      .join('');
+    packs.push({
+      id: pack.id,
+      version: pack.version,
+      name: pack.name,
+      description: pack.description,
+      format: pack.format,
+      engine: pack.engine,
+      dependencies: pack.dependencies,
+      ...(pack.metadata !== undefined ? { metadata: pack.metadata } : {}),
+      identity: { bytes: bytes.byteLength, sha256 },
+      entries: pack.campaigns.map((source) => campaignMetadata(pack, source)),
+    });
+  }
+  // Deliberately do not add this DTO or any member to the prepared WeakSets.
+  const projection = freeze({ format: PACK_LIBRARY_METADATA_VERSION, packs });
+  metadataLibraries.add(projection);
+  return projection;
+}
+/** Browsing provenance only; never a prepared-pack or runtime authority check. */
+export function isPackLibraryMetadata(value) {
+  return metadataLibraries.has(value);
+}
+function campaignMetadata(pack, source) {
   const campaign = campaignData(pack, source);
   return {
     campaign,
     classRecipes: structuredClone(campaign.classRecipes),
     themes: structuredClone(pack.themes),
-    visualOverrides: structuredClone(pack.visualOverrides),
-    levelVisuals: structuredClone(pack.levelVisuals),
     music: structuredClone(pack.music),
     sourcePackId: pack.id,
     ...(pack.format !== PACK_VERSION
@@ -614,6 +661,16 @@ export function resolvePackCampaign(pack, campaignId) {
           ),
         }
       : {}),
+  };
+}
+export function resolvePackCampaign(pack, campaignId) {
+  required(preparedPacks.has(pack), 'Resolve a prepared pack.');
+  const source = pack.campaigns.find((c) => c.id === campaignId);
+  required(source, 'Unknown pack campaign.');
+  return {
+    ...campaignMetadata(pack, source),
+    visualOverrides: structuredClone(pack.visualOverrides),
+    levelVisuals: structuredClone(pack.levelVisuals),
   };
 }
 export function scenarioFromPack(

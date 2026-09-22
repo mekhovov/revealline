@@ -378,3 +378,19 @@ verification. It must receive a new pinned native check before acceptance.
   and explicit replacement into the exact late mission on both boards.
 - Paired-original media preparation and lazy installed inventory remain separate
   gates. This checkpoint is not a release or public qualification claim.
+
+### Metadata-only installed-content foundation
+
+- Added validated pack-library inspection that runs the existing schema,
+  dependencies, budgets, image-header and mastery normalization checks without
+  decoding artwork. Its private, immutable browsing projection retains exact
+  campaign/class restrictions and full artwork-inclusive edition fingerprints.
+- Metadata never enters prepared-runtime ownership. A separate Custom adapter
+  preserves the existing display IDs and authored ordering, delegates readiness
+  explicitly and rejects stale/forged selections. Host launch must still confirm
+  storage and genuinely prepare the exact pack before runtime adoption.
+- Review caught stale progress throwing during an Unavailable-card render;
+  stale progress now stays blank and does not call the retired host callback.
+- The pack-inspection cohort passes42/42; the final metadata-source, inspection,
+  existing pack and Custom-source cohort passes37/37. These overlap, not79 unique
+  tests. Host adoption and read-only inventory integration are still pending.
