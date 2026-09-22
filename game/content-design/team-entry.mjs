@@ -11,15 +11,25 @@ import {
   createTeamPressureOriginalCandidates,
   TEAM_PRESSURE_PROFILE_KEY,
 } from './team-pressure-originals.mjs';
+import {
+  createTeamSpatialOriginalCandidates,
+  TEAM_SPATIAL_PROFILE_KEY,
+} from './team-spatial-originals.mjs';
 
 /** Explicit candidate-review entry only. Originals require a separate opt-in;
  * no variant grants default enrollment, official awards, artwork qualification
  * or changes to legacy Team arena preferences.
  * Pressure has a separate progress scope; only admitted play records events. */
-export async function createTeamGreyboxEntry({ artwork = false, pressure = false } = {}) {
-  const source = pressure
-    ? createTeamPressureOriginalCandidates()
-    : createTeamJourneyCandidates({ artwork });
+export async function createTeamGreyboxEntry({
+  artwork = false,
+  pressure = false,
+  spatial = false,
+} = {}) {
+  const source = spatial
+    ? createTeamSpatialOriginalCandidates()
+    : pressure
+      ? createTeamPressureOriginalCandidates()
+      : createTeamJourneyCandidates({ artwork });
   const preferences = createJourneyPreferences({ window: globalThis.window ?? globalThis });
   const snapshot = preferences.snapshot();
   const candidateJourney = createCandidateTeamHost(source, {
@@ -27,7 +37,11 @@ export async function createTeamGreyboxEntry({ artwork = false, pressure = false
   });
   const candidateProgress = createTeamJourneyProgress(
     candidateJourney,
-    pressure ? { profileKey: TEAM_PRESSURE_PROFILE_KEY } : {},
+    spatial
+      ? { profileKey: TEAM_SPATIAL_PROFILE_KEY }
+      : pressure
+        ? { profileKey: TEAM_PRESSURE_PROFILE_KEY }
+        : {},
   );
   await candidateProgress.load();
   return Object.freeze({
@@ -40,9 +54,10 @@ export async function createTeamGreyboxEntry({ artwork = false, pressure = false
       TEAM_JOURNEY_LEARNING_ARCS[0].missionIds,
     ),
     candidateDifficulty: snapshot.difficulty,
-    candidateEditionLabel: pressure
-      ? 'pressure edition · enemy speed Gentle ×1 / Standard ×1.4 / Expert ×1.75 · shared reserves 4 / 2 / 1'
-      : '',
+    candidateEditionLabel:
+      pressure || spatial
+        ? `${spatial ? 'changing-return pressure edition' : 'pressure edition'} · enemy speed Gentle ×1 / Standard ×1.4 / Expert ×1.75 · shared reserves 4 / 2 / 1`
+        : '',
     candidateNotice: snapshot.durable ? '' : snapshot.error,
   });
 }

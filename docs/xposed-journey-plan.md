@@ -1,6 +1,12 @@
 # Xposed-led Journey — implementation contract
 
 Current checkpoint: [2026-09-22 item-by-item completion audit](verification/journey-completion-2026-09-22.md).
+The [Team changing-return integration](verification/journey-team-spatial-player.md)
+now brings two revised roamer layouts into the pictured twelve-mission route,
+preserving the other ten missions and all old editions. Twin Depots' eastern
+inner landing has a verified bank→fresh departure→useful capture on every preset,
+plus a complete Standard continuation. This closes a specific landing-use gap;
+broader cooperation, pacing, human/device and public-release gates remain open.
 Depot's relocated reserve now has complementary collection routes on all three
 presets: one pilot takes the second window while the other cuts, both bank with
 substantial work remaining, and real keyboard-host routes finish without loss.

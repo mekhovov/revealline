@@ -146,5 +146,8 @@ test('Studio artwork opt-in still requires Apply and does not silently change Te
     'utf8',
   );
   assert.match(entry, /createTeamJourneyCandidates\(\{ artwork \}\)/);
-  assert.match(entry, /createTeamGreyboxEntry\(\{ artwork = false, pressure = false \}/);
+  assert.match(
+    entry,
+    /createTeamGreyboxEntry\(\{\s*artwork = false,\s*pressure = false,\s*spatial = false/,
+  );
 });

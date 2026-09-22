@@ -6,6 +6,11 @@ not a published replacement, new Team rule or human balance signoff. Design:
 The historical [twelve-mission pressure audit](journey-team-pressure.md) and all
 of its failures/mastery misses remain intact.
 
+Follow-up: [pictured twelve-mission integration and eastern landing reuse](journey-team-spatial-player.md)
+now expose these exact two-map donors through a separate player/Studio edition.
+All-preset eastern bank/departure/return and a full Standard continuation add
+bounded evidence without replacing the historical observations below.
+
 ## What changed
 
 `createTeamRoamerSpatialCandidates()` produces one two-mission campaign and pack,
