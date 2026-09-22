@@ -1186,3 +1186,8 @@ In landscape, reserve the actual HUD, objective, footer and both complete player
 ## Music player without a catalogue
 
 Keep built-in and imported playlist selection visible when attachSoundtrackPanel receives no catalogue. Genre/style cards can be hidden, but the shared playlist field and Play action must move into the visible transport. Label the null selection as automatic map/campaign/theme matching rather than a nonexistent style selector. Assert visible ancestor chains as well as calling handlers: a detached or hidden control can pass a synthetic click test. Keep catalogue and legacy-library journeys separate.
+
+
+## 2026-09-22 — Responsive authoring toolbar minimums
+
+For [Studio preview controls](../../../docs/verification/studio-responsive-toolbar.md), inspect later shared host selectors when a narrow toolbar ignores its minimum widths. A logical `min-inline-size: 0` can override an earlier `min-width`, and `flex: 1` can then collapse every label into one row. Keep a bounded track minimum rather than relying on the children's minimum alone; constrain native select text, preserve DOM/tab order and measure actual 44px action rows. Verify portrait, short landscape, wide layout and Plain/Large text. Attribute native checks to the exact source and CSS overlay, preserve the full existing maintainer history, and keep responsive emulation separate from physical-device or complete authoring acceptance. Use the [focused prompt](../../prompts/studio-responsive-toolbar.md).
