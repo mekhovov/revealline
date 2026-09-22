@@ -155,7 +155,7 @@ records the evidence at that time, not the current remaining list.
 | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------- |
 | Shared registry, trusted110-mission index, tags and exact owner identity      | Pushed; final33-case reconciliation passes all110 retained identities           | Repeat against frozen release                      |
 | Solo host, native setup, exact launches and authored Next                     | Pushed;42 affected Solo cases pass; native exact launch and return pass         | Combined affected/full release gates               |
-| Versus host and supported Classic/Custom/optional launches                    | Pushed;20 existing +16 new local cases pass; native installed handoff/Stay pass | Frozen download/readiness qualification            |
+| Versus host and supported Classic/Custom/optional launches                    | All visible entries consolidated; retained18 and default/degraded16 pass       | Final native/frozen repeat                         |
 | Team host,12 Journey +2 Classic +visit-local Custom                           | Pushed;153 tests passed together                                                | Cross-mode/native work below                       |
 | Solo↔Versus Journey modes without duplicate identities                       | Pushed;7 adapter +32 actual-host cases passed                                   | Cross-mode public verification                     |
 | Team↔Solo/Versus catalogue and exact handoffs                                | Pushed; pinned native source-return and saved-flight round trips pass           | Final downloaded/Custom cross-mode qualification   |
@@ -700,3 +700,89 @@ verification. It must receive a new pinned native check before acceptance.
   not native image decoding, physical-device or public qualification.
 - Paired-original native decoding, retained-original/Custom journeys in a
   release-aware setup, full release CI and frozen/public repetitions remain open.
+
+### Visible-entry consolidation and follow-up verification
+
+- Final retained-settings review reproduced a second Versus mission browser:
+  the visible Chapters button still opened the historical catalogue. The header
+  All missions entry already used the shared selector. Release B cannot pass its
+  one-selector gate until both lead to the shared library with their exact opener.
+- The repair is pushed as `f7f5752dc`, with truthful migration of the historical current-host
+  tests: preserve picture/run/checkpoint/series ownership, separate Download from
+  Play, no Solo writes, cancellation, newer input and Stay/Replace. Standalone
+  legacy-catalogue module tests remain retained; they do not prove the current UI.
+- Eight outdated default-Versus assertions also reproduced as failures. Their
+  migration preserves queryless/explicit edition routing, paired-board state,
+  controller Back and guarded exact mission replacement instead of expecting the
+  removed Legacy-library page transition. Full qualification must use the repaired
+  production source; the earlier301-case result does not qualify this later change.
+- The combined default-entry, denied-capability and modeled-controller cohort
+  initially passed22/22. Final current-host migration passes18/18 in151.602s,
+  default/degraded cases16/16 in21.605s (including actual throwing getters), and
+  the untouched standalone catalogue module3/3. Independent production review
+  found the getter defect described below; its fix is included, not waived.
+- Solo has no equivalent visible duplicate: actual queryless-edition/Legacy host
+  probes confirm Play uses the shared chooser and Brief hides More chapters.
+  Historical optional-world tests that programmatically invoke the old hidden
+  control are compatibility checks, not proof of a reachable current player flow.
+  Installed-content management remains separate; its retained data is not removed.
+- Independent review also reproduced a throwing `localStorage` accessor blocking
+  Versus library construction; the installer is now deferred behind explicit
+  preparation so core browsing can show an honest installed-inventory warning.
+  Team already handles this case. Solo handles denial after boot using its owned
+  snapshot, but denial before boot fails at the pre-existing `app.mjs:501` host
+  initialization (predating B). Track that separate bootstrap defect in the next
+  save-warning/recovery priority; the three bounded probes are not a claim that
+  startup denial is fixed across all modes.
+
+### Synchronous closure and independent browse restoration
+
+- `6a3168648` fixes a reproduced touch reentry: a synchronous dialog-close callback
+  focused another host action, but the pending Play still opened Replace and
+  stole focus. Admission now tracks the input turn before closing; normal browser
+  return focus remains valid. Four red-to-green regressions plus two normal-path
+  cases are included in206/206 shared checks; actual-host modeled pads pass8/8.
+  The retained18-case Versus run also passes the original reproduction and both
+  touch Stay/Replace paths, preserving run, pictures, results and controller owner.
+- Native review found a distinct Solo return issue: checked runtime restoration
+  reset the source chooser to that runtime's mission. Validated session browsing
+  now restores search, collection, campaign, mode, scroll and focused card
+  independently. Checked runtime/token resolution remains unchanged. Missing
+  browse state still falls back to the retained mission. The combined Solo/Team
+  return and source-intent cohort passes40/40 in65.587s; independent review passes.
+  An initial fixture used an unqualified campaign value and was corrected to an
+  actual visible option, without weakening exact runtime or focus assertions.
+
+### Authenticated source-native artwork and Custom evidence
+
+- Pinned `9e540de0a` browser testing used exact Git source plus authenticated
+  immutable v0.82.1 paired originals (pack9,398 bytes; media8,037,391 bytes).
+  No synthetic release marker or decoder was injected. Team→Solo paired Download
+  →media503→Retry→native decode→separate Play works. Stay retains the accepted
+  original flight. Modified same-ID Night Shift imports as a distinct Custom
+  edition; its trusted Classic card reports the conflict and Custom→Versus starts
+  the exact mission on both boards. Versus paired readiness rechecks originals
+  without a new download, then supports Stay and deliberate Replace & play.
+- Returning Solo restores the original flight and its retained one life, not a
+  fresh attempt. This native journey exposed the browsing-state defect fixed
+  above; a final pinned repeat is required. The Custom fixture is procedural and
+  does not prove arbitrary Custom raster retention. Solo absent-pair admission in
+  an actual release channel, complete frozen/public repetitions and physical
+  devices remain open.
+- Additional native Plain + Large Solo library checks pass at844×390 and390×844
+  with readable cards and44px Clear/47px Back;1280×800 geometry also fits. This
+  does not establish200% zoom or full cross-mode/physical accessibility.
+
+### Complementary retained-host sweep
+
+- A28-file changed-test sweep completed374 tests:373 passed and one stale Team
+  card-label expectation failed. Shared cards correctly say Team Journey for the
+  same edition; explicit review entry still shows its qualification warnings.
+  The corrected12-case Team default-entry file passes in11.997s, retaining those
+  warnings and exact first-artwork hash assertions. No runtime change was needed.
+- That sweep overlapped the late source repairs and is not immutable-source
+  qualification. Final production `70f99283e` is now frozen locally while the
+  combined mission-library cohort and native repaired-flow repetition run.
+  Repository-wide lint and formatting pass on this production. Release A source
+  qualification and freezing have succeeded; public acceptance, the coordinated
+  CI baseline and B version/full release qualification are still separate gates.

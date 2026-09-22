@@ -148,7 +148,10 @@ test('explicit spatial review entry retains its original review labels and exact
   enter(f, 'coop-discovery-open');
   await waitFor(() => f.$('journey-chooser')?.open);
   const caption = f.$('journey-cards').querySelector('.journey-card-edition');
-  assert.match(caption.textContent, /Original-art test; visual qualification pending/);
+  // Shared cards name the same immutable edition in both entry routes; the
+  // explicit review host retains its qualification warnings above.
+  assert.equal(caption.textContent, 'Team Journey');
+  assert.match(f.$('journey-cards').querySelector('.journey-card-tags').textContent, /Journey/);
   enter(f, 'journey-back');
   enter(f, 'coop-start');
   f.tick(2);
