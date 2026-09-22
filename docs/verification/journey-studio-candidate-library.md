@@ -83,18 +83,18 @@ PR/release/Pages remain separate gates.
 ## Integrated-source follow-up
 
 On September 22, exact PR #225 source `7faa84cbd293518a82b7341760fb0f39345b725b`
-was served on the isolated local port8858. These native observations narrow the
+was served on the isolated local port 8858. These native observations narrow the
 open list above without claiming full Studio acceptance:
 
 - In the filtered Neon library, Tab reached Inspect and Space compiled seven
-  missions. The applied Nearby shore and saved checkpoint1 stayed unchanged.
+  missions. The applied Nearby shore and saved checkpoint 1 stayed unchanged.
 - Review inspected source closed discovery and focused the source textarea.
 - Explicit Apply changed the workbench to Folded corner in a separate Neon
   candidate project. A same-project temporary name edit required Inspect/Apply;
   Undo restored the exact original JSON, Redo restored the edited name, and a
   second Undo restored the original again. No gameplay geometry was edited.
-- Jump to map focused `map-workbench`, with its top at0 in the viewport.
-- At390×844, document width remained390, the search input was44pixels high,
+- Jump to map focused `map-workbench`, with its top at 0 in the viewport.
+- At 390×844, document width remained 390, the search input was 44 pixels high,
   and discovery controls stayed inside the viewport. A native screenshot showed
   readable inspection feedback and its source-review link. Activating that link
   still closed discovery and focused source at this width. The viewport override
