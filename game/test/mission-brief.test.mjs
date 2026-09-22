@@ -12,7 +12,10 @@ const classicLab = json('../content/packs/classic-lab.json');
 test('classic ready cards name contact pickups, material hazards and claimed-ground threats', () => {
   const levels = classicLab.campaigns[0].levels;
   assert.match(missionBriefing(levels[0]).copy, /Touch pickups/);
-  assert.match(missionBriefing(levels[2]).copy, /newly captured edges/);
+  assert.match(
+    missionBriefing(levels[2]).copy,
+    /Contour crawlers follow the changing frontier after captures; check your next return\./,
+  );
   assert.match(missionBriefing(levels[3]).copy, /Rovers wake/);
   assert.match(missionBriefing(levels[4]).copy, /reopening captured ground/);
   assert.match(missionBriefing(levels[5]).copy, /Red crosshatched fields damage/);

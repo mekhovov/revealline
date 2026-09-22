@@ -1,12 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { runInNewContext } from 'node:vm';
 import { validateTheme } from '../content.mjs';
 import {
   JOURNEY_CAMPAIGN_THEMES,
   withCampaignPresentation,
 } from '../content-design/campaign-presentation.mjs';
 import { createWholeJourneyChapterSources } from '../content-design/whole-journey-candidates.mjs';
+import { createRoverTeachingCandidates } from '../content-design/rover-teaching-candidates.mjs';
+import { createRoverSpatialCandidates } from '../content-design/rover-spatial-candidates.mjs';
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
@@ -216,12 +219,57 @@ test('individual Studio chapter inspections use the same presentation projection
     const start = studio.indexOf(`$('${id}').onclick = guarded(() => {`);
     assert(start >= 0, id);
     const handler = studio.slice(start, studio.indexOf('\n});', start));
-    assert(
-      handler.includes(
-        `withCampaignPresentation(create${factory}Candidates({ artwork: true }), '${id}')`,
-      ),
-      id,
-    );
+    if (id === 'rover') {
+      // Rover now has two explicit editions. Exercise the actual selection handler
+      // instead of requiring its earlier single-factory source spelling.
+      for (const [edition, create] of [
+        ['teaching-1', createRoverTeachingCandidates],
+        ['sorting-spatial-1', createRoverSpatialCandidates],
+      ])
+        for (const discard of [true, false]) {
+          const elements = {
+            rover: {},
+            'rover-edition': { value: edition },
+            source: { value: 'existing inspected draft' },
+          };
+          let inspections = 0,
+            discardChecks = 0;
+          const context = {
+            $: (key) => {
+              assert(Object.hasOwn(elements, key), key);
+              return elements[key];
+            },
+            guarded: (action) => action,
+            discardSource: () => {
+              discardChecks++;
+              return discard;
+            },
+            inspectSource: () => inspections++,
+            sourceChanged: false,
+            createRoverTeachingCandidates,
+            createRoverSpatialCandidates,
+            withCampaignPresentation,
+          };
+          runInNewContext(`${handler}\n});`, context);
+          elements.rover.onclick();
+          assert.equal(discardChecks, 1);
+          assert.equal(inspections, discard ? 1 : 0);
+          assert.equal(context.sourceChanged, discard);
+          if (discard)
+            assert.deepEqual(
+              JSON.parse(elements.source.value),
+              withCampaignPresentation(create({ artwork: true }), 'rover'),
+              edition,
+            );
+          else assert.equal(elements.source.value, 'existing inspected draft');
+        }
+    } else
+      assert(
+        handler.includes(
+          `withCampaignPresentation(create${factory}Candidates({ artwork: true }), '${id}')`,
+        ),
+        id,
+      );
     assert(handler.includes('discardSource()'), id);
     assert(handler.includes('inspectSource()'), id);
     assert.doesNotMatch(handler, /session\.(?:apply|replace|transact)|location\.|publish/i);
