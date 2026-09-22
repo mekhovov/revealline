@@ -496,6 +496,110 @@ test('restores validated same-mode state across host handoff, tolerates unavaila
   next.chooser.destroy();
 });
 
+for (const exit of ['Play', 'Back'])
+  test(`${exit} then closed cleanup preserves native hidden-scroll position and newer host focus`, async () => {
+    let saved,
+      writes = 0,
+      returns = 0,
+      launches = 0;
+    const source = owner({
+      id: 'installed-player-pack',
+      collection: 'Custom',
+      entries: [{ ...row('voltage'), name: 'Night Shift Voltage' }],
+      launch: () => ++launches,
+    });
+    const first = setup([source], {
+      writeState: (value) => {
+        saved = structuredClone(value);
+        writes++;
+      },
+      onReturn: () => returns++,
+    });
+    const dialog = first.$('journey-chooser'),
+      list = first.$('journey-cards');
+    let visibleScroll = 0;
+    Object.defineProperty(list, 'scrollTop', {
+      get: () => (dialog.open ? visibleScroll : 0),
+      set: (value) => (visibleScroll = value),
+    });
+    first.$('journey-mode').value = 'versus';
+    first.$('journey-mode').emit('change');
+    first.$('journey-collection').value = 'Custom';
+    first.$('journey-collection').emit('change');
+    first.$('journey-search').value = 'Night Shift';
+    first.$('journey-search').emit('input');
+    const card = list.children[0],
+      selectedId = card.dataset.missionId;
+    card.focus();
+    list.scrollTop = 490;
+    if (exit === 'Play') card.click();
+    else first.chooser.close();
+    await tick();
+    assert.equal(saved.scroll, 490, 'The visible selection is saved before closing.');
+    assert.equal(list.scrollTop, 0, 'Native hidden layout no longer exposes the old scroll.');
+    assert.equal(launches, exit === 'Play' ? 1 : 0);
+    const savedWrites = writes,
+      savedReturns = returns,
+      newer = first.doc.createElement('button');
+    first.doc.body.append(newer);
+    newer.focus();
+    first.chooser.close(); // A host cleanup may close an already closed chooser.
+    first.chooser.destroy(); // Page departure then disposes that same owner.
+    assert.equal(saved.scroll, 490, 'Cleanup must not replace visible scroll with hidden zero.');
+    assert.equal(first.chooser.state().scroll, 490);
+    assert.equal(writes, savedWrites, 'Closed cleanup does not rewrite selector storage.');
+    assert.equal(returns, savedReturns, 'Closed cleanup does not request stale return focus.');
+    assert.equal(first.doc.activeElement, newer);
+    const restored = setup([source], { readState: () => saved });
+    assert.equal(restored.$('journey-mode').value, 'versus');
+    assert.equal(restored.$('journey-collection').value, 'Custom');
+    assert.equal(restored.$('journey-search').value, 'Night Shift');
+    assert.equal(restored.doc.activeElement.dataset.missionId, selectedId);
+    assert.equal(restored.$('journey-cards').scrollTop, 490);
+    restored.chooser.destroy();
+  });
+
+test('already-closed cleanup still cancels downloads and invalidates a late launch', async () => {
+  let downloadSignal, finishDownload, finishLaunch;
+  const { doc, $, chooser } = setup([
+    owner({
+      entries: [{ ...row('ready'), name: 'Ready mission' }],
+      launch: () => new Promise((resolve) => (finishLaunch = resolve)),
+    }),
+    owner({
+      id: 'download',
+      entries: [{ ...row('download'), name: 'Pending mission' }],
+      availability: () => ({ state: 'download', bytes: 123 }),
+      prepare: (_entry, { signal }) => {
+        downloadSignal = signal;
+        return new Promise((resolve) => (finishDownload = resolve));
+      },
+    }),
+  ]);
+  const cards = [...$('journey-cards').children];
+  cards.find((card) => card.querySelector('strong').textContent === 'Pending mission').click();
+  await tick();
+  cards.find((card) => card.querySelector('strong').textContent === 'Ready mission').click();
+  await tick();
+  assert.equal($('journey-chooser').open, false);
+  assert.equal(downloadSignal.aborted, false);
+  const newer = doc.createElement('button');
+  doc.body.append(newer);
+  newer.focus();
+  chooser.close();
+  assert.equal(
+    downloadSignal.aborted,
+    true,
+    'Closed cleanup still aborts outstanding preparation.',
+  );
+  finishDownload();
+  finishLaunch(false);
+  await tick();
+  assert.equal($('journey-chooser').open, false, 'Late refusal cannot reopen a retired visit.');
+  assert.equal(doc.activeElement, newer);
+  chooser.destroy();
+});
+
 test('restores another-mode filters only from the same host session key', () => {
   const values = new Map();
   const storage = {
