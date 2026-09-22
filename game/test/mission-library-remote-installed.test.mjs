@@ -30,7 +30,7 @@ class Locks {
 async function fixture(
   t,
   packs = [],
-  { launch = async (context) => context.confirmInventory?.() ?? true } = {},
+  { launch = async (context) => context.confirmInventory?.() ?? true, absent = false } = {},
 ) {
   const models = new Map(),
     values = new Map(),
@@ -62,7 +62,7 @@ async function fixture(
   }
   // Seed the storage boundary before browsing. A later pointer.snapshot() may
   // create an absent DB; that would rightly invalidate the readonly snapshot.
-  await put(packs);
+  if (!absent) await put(packs);
   let fetchHook = null;
   const locks = new Locks();
   const owner = await createRemoteSoloVersusLibrarySources({
@@ -271,6 +271,49 @@ test('failed inventory refresh retains stale Custom cards and blocks invented do
   assert.equal(f.owner.state().ready, true);
   assert.equal(f.library.availability(customRow).state, 'ready');
   assert.deepEqual(f.decodes, []);
+});
+
+test('an actually absent database can recover inline from first-download 503 without losing the exact card', async (t) => {
+  const f = await fixture(t, [], { absent: true });
+  const row = chapter(f.library).at(-1);
+  assert.equal(f.library.availability(row).state, 'download');
+  let downloads = 0;
+  f.fetchHook = async (path) => {
+    if (!path.endsWith('/packs/night-shift.json')) return;
+    downloads++;
+    if (downloads === 1) return new Response('Controlled first-download failure', { status: 503 });
+  };
+  await assert.rejects(f.library.prepare(row), /503/);
+  assert.equal(downloads, 1);
+  assert.equal(f.library.availability(row).retry, true);
+  assert.equal(f.launches.length, 0);
+  assert.deepEqual(await f.library.prepare(row), { state: 'ready' });
+  assert.equal(downloads, 2, 'The explicit Retry must reach its exact download again.');
+  assert.equal(f.library.find(row.id), row);
+  assert.equal(f.launches.length, 0);
+  assert.equal(await f.library.launch(row, { isCurrent: () => true }), true);
+  assert.equal(f.launches.length, 1);
+});
+
+test('a deliberate Retry refuses an intervening same-ID custom edition before another download', async (t) => {
+  const f = await fixture(t, [], { absent: true });
+  const row = chapter(f.library).at(-1);
+  let downloads = 0;
+  f.fetchHook = async (path) => {
+    if (!path.endsWith('/packs/night-shift.json')) return;
+    downloads++;
+    return new Response('Controlled first-download failure', { status: 503 });
+  };
+  await assert.rejects(f.library.prepare(row), /503/);
+  const modified = structuredClone(recipe);
+  modified.name = 'Retain this player edition';
+  await f.put([modified]);
+  const before = await f.pointer.snapshot();
+  await assert.rejects(f.library.prepare(row), /different edition/i);
+  assert.equal(downloads, 1);
+  assert.deepEqual(await f.pointer.snapshot(), before);
+  assert.equal(f.launches.length, 0);
+  assert.equal(f.owner.sources.filter((source) => source.collection === 'Custom').length, 1);
 });
 
 test('installed external gameplay alone never grants original-picture readiness or a remote handoff', async (t) => {
