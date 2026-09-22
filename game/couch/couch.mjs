@@ -22,6 +22,7 @@ import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 import { createInstalledMissionLibrary } from '../mission-library/installed-library.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
+import { combineJourneyLibrarySources } from '../mission-library/cross-mode-journey.mjs';
 import {
   journeyMissionDetails,
   authoredJourneyMissionTags,
@@ -268,6 +269,7 @@ try {
     libraryInventory = emptyPackLibrary(),
     libraryInventoryError = '',
     libraryInstaller = null,
+    librarySoloPreview = null,
     libraryOpenEpoch = 0,
     libraryDecision = null,
     libraryLaunchController = null;
@@ -1636,16 +1638,25 @@ try {
       const index = await json('../content/mission-library-index.json');
       const route =
         authoredRoute || (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.versus));
+      const originalThemes = (await json('../content-design/themes.json')).themes;
+      const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
+        ? journeyActorThemeCandidates(originalThemes, {
+            includeOriginals: route.preserveOriginalThemes === true,
+          })
+        : originalThemes;
       const preview =
         candidateJourney ||
         createCandidateVersusHost(route.source, {
-          themes: journeyActorThemeCandidates(
-            (await json('../content-design/themes.json')).themes,
-            { includeOriginals: route.preserveOriginalThemes === true },
-          ),
+          themes: libraryThemes,
           corePackIds: route.corePackIds,
           optionalCampaignIds: route.optionalCampaignIds,
         });
+      const { createCandidateSoloHost } = await import('../content-design/solo-host.mjs');
+      librarySoloPreview = createCandidateSoloHost(route.source, {
+        themes: libraryThemes,
+        corePackIds: route.corePackIds,
+        optionalCampaignIds: route.optionalCampaignIds,
+      });
       const profile = journeyProfile || createJourneyProfileStore({ profileKey: route.profileKey });
       if (!journeyProfile) await profile.load();
       libraryInstaller ??= createCouchChapterInstaller({
@@ -1660,30 +1671,69 @@ try {
         baseEntry,
         getPacks: () => libraryInventory,
         journeySources: [
-          journeyLibrarySource({
-            editionId: route.id,
-            edition: route.id === DEFAULT_JOURNEY_ROUTES.versus ? 'New Journey' : route.label,
-            catalog: preview.catalog,
-            profile,
-            details: (mission) =>
-              journeyMissionDetails(
-                preview.manifest(mission, journeyPreferences?.snapshot().difficulty ?? 'standard'),
-              ),
-            tags: (mission) => authoredJourneyMissionTags(mission, preview.manifest(mission)),
-            card: (mission) =>
-              preview.card(mission, journeyPreferences?.snapshot().difficulty ?? 'standard'),
-            launch: async (mission, context) => {
-              if (!context.isCurrent()) return false;
-              if (!candidateJourney || context.mode !== 'versus')
-                return departLibraryMission(context);
-              const entry = candidateJourney.row(mission, journeyPreferences.snapshot().difficulty);
-              if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`)))
-                return false;
-              if (!context.isCurrent()) return false;
-              await startRace(entry);
-              return roundRecipe.entry === entry && match.status === 'running';
+          combineJourneyLibrarySources([
+            {
+              mode: 'versus',
+              source: journeyLibrarySource({
+                editionId: route.id,
+                edition: route.id === DEFAULT_JOURNEY_ROUTES.versus ? 'New Journey' : route.label,
+                catalog: preview.catalog,
+                profile,
+                details: (mission) =>
+                  journeyMissionDetails(
+                    preview.manifest(
+                      mission,
+                      journeyPreferences?.snapshot().difficulty ?? 'standard',
+                    ),
+                  ),
+                tags: (mission) => authoredJourneyMissionTags(mission, preview.manifest(mission)),
+                card: (mission) =>
+                  preview.card(mission, journeyPreferences?.snapshot().difficulty ?? 'standard'),
+                launch: async (mission, context) => {
+                  if (!context.isCurrent()) return false;
+                  if (!candidateJourney || context.mode !== 'versus')
+                    return departLibraryMission(context);
+                  const entry = candidateJourney.row(
+                    mission,
+                    journeyPreferences.snapshot().difficulty,
+                  );
+                  if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`)))
+                    return false;
+                  if (!context.isCurrent()) return false;
+                  await startRace(entry);
+                  return roundRecipe.entry === entry && match.status === 'running';
+                },
+              }),
             },
-          }),
+            {
+              mode: 'solo',
+              source: journeyLibrarySource({
+                editionId: route.id,
+                edition: route.id === DEFAULT_JOURNEY_ROUTES.versus ? 'New Journey' : route.label,
+                catalog: librarySoloPreview.catalog,
+                profile,
+                details: (mission) =>
+                  journeyMissionDetails(
+                    librarySoloPreview
+                      .select(mission, journeyPreferences?.snapshot().difficulty ?? 'standard')
+                      ?.manifests.find((item) => item.missionId === mission.levelId),
+                  ),
+                tags: (mission) =>
+                  authoredJourneyMissionTags(
+                    mission,
+                    librarySoloPreview
+                      .select(mission, 'standard')
+                      ?.manifests.find((item) => item.missionId === mission.levelId),
+                  ),
+                card: (mission) =>
+                  librarySoloPreview.card(
+                    mission,
+                    journeyPreferences?.snapshot().difficulty ?? 'standard',
+                  ),
+                launch: (_mission, context) => departLibraryMission(context),
+              }),
+            },
+          ]),
         ],
         compatibility: ({ entry, level }) => {
           const modes = [];
@@ -2414,6 +2464,7 @@ try {
     journeyChooser?.destroy();
     missionLibrary?.library.dispose();
     libraryInstaller?.dispose();
+    librarySoloPreview?.preparer.dispose();
     preparationStatus.dispose();
     couchTouch.destroy();
     journeyReactions.dispose();

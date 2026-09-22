@@ -292,3 +292,20 @@ verification. It must receive a new pinned native check before acceptance.
   Scoped lint/format/whitespace checks pass. Native/public evidence is separate.
 - Cross-mode library registration and final layout/release acceptance remain
   incomplete; this checkpoint does not claim all Release B gates are closed.
+
+### Solo/Versus cross-mode catalogue checkpoint
+
+- Both hosts now expose the91 Journey identities in both supported mode filters,
+  alongside110 Classic entries, without duplicating missions or changing opaque
+  display IDs. Each mode compiles through its existing validator and delegates
+  launch/card/details/progress to that mode's original owner objects.
+- The combining adapter rejects conflicting metadata, forged bindings and
+  unsupported modes. It creates no runs, downloads no images and owns no Next
+  sequence.7 adapter tests and32 actual Solo/Versus host cases pass together in
+  their respective clean runs; independent review found no further issue.
+- The actual authored-opening supersession test caught a theme mismatch in the
+  initial cross-mode integration. Both hosts now use the same raw-versus-actor
+  theme selection as their normal runtime. The corrected test passes with late
+  decoded-image disposal and exact accepted run/picture/focus assertions.
+- Team↔Solo/Versus catalogue registration, trusted retained downloads and native
+  final qualification are still separate remaining gates.
