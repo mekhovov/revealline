@@ -52,6 +52,14 @@ export function attachMissionLibraryChooser({
   search.parentElement.className = 'journey-search-field';
   search.type = 'search';
   search.placeholder = 'Mission, campaign, edition or tag';
+  const searchControls = node('div');
+  searchControls.className = 'journey-search-controls';
+  const clearSearch = node('button', 'journey-search-clear', 'Clear search');
+  clearSearch.type = 'button';
+  clearSearch.className = 'button secondary';
+  clearSearch.setAttribute('aria-controls', 'journey-cards');
+  search.parentElement.after(searchControls);
+  searchControls.append(search.parentElement, clearSearch);
   const filterDetails = node('details', 'journey-filter-details');
   filterDetails.className = 'journey-filter-details';
   const filterSummary = node('summary', 'journey-filter-summary', 'Filters');
@@ -332,6 +340,7 @@ export function attachMissionLibraryChooser({
   }
   function render() {
     if (destroyed) return;
+    clearSearch.hidden = !search.value;
     const focused = doc.activeElement;
     const focusedId = list.contains(focused) ? focused?.dataset.missionId : null;
     const scroll = list.scrollTop || 0;
@@ -495,6 +504,30 @@ export function attachMissionLibraryChooser({
     render();
     remember();
   });
+  clearSearch.onclick = () => {
+    if (destroyed || !dialog.open || doc.hidden || doc.hasFocus?.() === false || !search.value)
+      return;
+    const ticket = visit,
+      focused = doc.activeElement;
+    search.value = '';
+    // Use the same bubbling input path as typing, including host-owned lazy
+    // loading invalidation. Clearing never changes the other visible filters.
+    const EventType = doc.defaultView?.Event || Event;
+    search.dispatchEvent(new EventType('input', { bubbles: true }));
+    if (
+      destroyed ||
+      !dialog.open ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      visit !== ticket + 1 ||
+      (doc.activeElement !== focused &&
+        !(focused === clearSearch && doc.activeElement === doc.body))
+    )
+      return;
+    const first = [...list.children].find((button) => !button.disabled);
+    (first ?? (compact ? filterSummary : collection)).focus({ preventScroll: true });
+    remember();
+  };
   for (const control of [collection, campaign, modeFilter])
     control.addEventListener('change', () => {
       retirePendingSelection();

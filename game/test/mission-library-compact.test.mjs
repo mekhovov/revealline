@@ -87,6 +87,12 @@ test('compact chooser keeps search outside collapsed filters and preserves filte
   const filters = p.$('journey-filter-details');
   assert.equal(filters.open, false);
   assert.equal(filters.contains(p.$('journey-search')), false);
+  assert.equal(filters.contains(p.$('journey-search-clear')), false);
+  assert.equal(
+    p.$('journey-search-clear').parentElement,
+    p.$('journey-search').parentElement.parentElement,
+  );
+  assert.equal(p.$('journey-back').parentElement.contains(p.$('journey-search-clear')), false);
   for (const id of ['journey-collection', 'journey-campaign', 'journey-mode'])
     assert.equal(filters.contains(p.$(id)), true);
   filters.open = true;
@@ -106,6 +112,22 @@ test('compact chooser keeps search outside collapsed filters and preserves filte
   assert.equal(p.launches, 0);
   p.chooser.destroy();
   assert.equal(p.listenerCount, 0);
+});
+
+test('clearing search with an empty mode keeps compact filters and sends focus to their reachable summary', () => {
+  const p = setup();
+  p.$('journey-mode').value = 'team';
+  p.$('journey-mode').emit('change');
+  p.$('journey-search').value = 'no matches';
+  p.$('journey-search').emit('input');
+  p.$('journey-search-clear').focus();
+  p.$('journey-search-clear').click();
+  assert.equal(p.$('journey-search-clear').hidden, true);
+  assert.equal(p.$('journey-mode').value, 'team');
+  assert.equal(p.$('journey-filter-details').open, false);
+  assert.equal(p.doc.activeElement, p.$('journey-filter-summary'));
+  assert.equal(p.launches, 0);
+  p.chooser.destroy();
 });
 
 test('compact transition keeps focused filters reachable without resetting mode or selection', () => {
@@ -157,6 +179,16 @@ test('compact CSS reserves mission space and retains accessible target sizing', 
   assert.match(css, /mission-library-setup > summary \{[^}]*min-height: 44px/s);
   assert.match(css, /mission-library-chooser \.journey-filter-options \{[^}]*overflow: auto/s);
   assert.match(css, /mission-library-chooser:not\(\.mission-library-detailed\) \.journey-card-map/);
+  assert.match(
+    css,
+    /\.journey-search-controls \{[^}]*display: flex;[^}]*align-items: end;[^}]*min-width: 0;/s,
+    'Search and Clear share one row above cards in portrait and short landscape.',
+  );
+  assert.match(
+    css,
+    /#journey-chooser #journey-search-clear \{[^}]*flex: 0 0 auto;[^}]*min-height: 44px;[^}]*min-block-size: 44px;[^}]*margin: 0;/s,
+  );
+  assert.match(css, /#journey-chooser #journey-search-clear\[hidden\] \{\s*display: none;/);
 });
 
 test('compact controls override inherited dialog panel spacing without shrinking targets', async () => {
