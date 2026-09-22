@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
@@ -57,17 +58,21 @@ for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 
       }),
     );
     let decoded = 0;
-    class PackImage {
+    class PackImage extends PNGImage {
       async decode() {
-        assert.ok(this.width > 0 && this.height > 0);
-        decoded++;
+        await super.decode();
+        if (imageSizes.has(this.src)) decoded++;
       }
       set src(data) {
-        const size = imageSizes.get(data);
-        assert.ok(size, 'The browser boundary accepts only the exact R5 original headers');
-        [this.width, this.height] = size;
-        [this.naturalWidth, this.naturalHeight] = size;
-        queueMicrotask(() => this.onload());
+        if (!data.startsWith('blob:'))
+          assert.ok(
+            imageSizes.has(data),
+            'The browser boundary accepts only the exact R5 original headers',
+          );
+        super.src = data;
+      }
+      get src() {
+        return super.src;
       }
     }
     t.mock.method(SoloElement.prototype, 'getContext', () => null);

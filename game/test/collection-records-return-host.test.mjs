@@ -11,6 +11,7 @@ import { createStillMediaStore } from '../media-store.mjs';
 import { emptyLibrary, importLibrary, recordLibraryCompletion, saveLibrary } from '../library.mjs';
 import { createRun, stepRun, getSummary, FIXED_DT, CLASSES } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 
 const campaign = {
@@ -171,29 +172,19 @@ async function setup(t, { media = false } = {}) {
     manager.close();
     assert.equal(saveLibrary(storage, 'revealline.library.dev.v1', f.profile).ok, true);
   }
-  class Image {
-    naturalWidth = 1;
-    naturalHeight = 1;
-    width = 1;
-    height = 1;
-    set src(value) {
-      if (value) queueMicrotask(() => this.onload?.());
-    }
-    async decode() {}
-    removeAttribute() {}
-  }
   t.mock.method(SoloElement.prototype, 'getContext', () => ({ drawImage() {} }));
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
   const h = await soloPage(t, {
     storage,
     ...(media ? {} : { campaign, titleScreen: true }),
     soundtrackIndexedDB: reads.indexedDB,
-    pictures: { Image },
+    pictures: { Image: PNGImage },
   });
   Object.assign(h.win, h.doc.defaultView);
   h.doc.defaultView = h.win;
   if (media) {
     h.$('start-button').click();
+    await settle(() => h.doc.body.dataset.flightState === 'running');
     h.key('ArrowDown');
     h.key('ArrowDown', false);
     for (let i = 0; i < 20; i++) h.frame();

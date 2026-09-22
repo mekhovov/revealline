@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import { writePresentation } from '../../scripts/write-presentation.mjs';
 import { createPresentationHost } from '../presentation/host.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { FORMATS } from '../presentation/model.mjs';
@@ -10,7 +13,10 @@ import {
   createVisualThemeCatalogue,
   VISUAL_THEME_CATALOGUE_FORMAT,
 } from '../presentation/visual-theme-catalogue.mjs';
-import { prepareVisualThemeLease } from '../presentation/visual-theme-lease.mjs';
+import {
+  prepareVisualThemeLease,
+  prepareRetainedVisualThemeLease,
+} from '../presentation/visual-theme-lease.mjs';
 
 const baseURL = 'https://game.test/releases/v1/game/presentation/compiled/';
 let fixturePromise;
@@ -47,6 +53,7 @@ function fixture() {
     const compiled = await compilePresentation(document, new Map([[hash, new Blob([bytes])]]));
     return {
       ...compiled,
+      document,
       hash,
       bytes,
       manifest: JSON.parse(new TextDecoder().decode(compiled.files.get('runtime.json'))),
@@ -371,4 +378,156 @@ test('an observer exception cannot own the attempt; abort from final readiness s
     { name: 'AbortError' },
   );
   assert.equal(other.decoded[0].closes, 1);
+});
+
+test('retained lease restores original manifest after current bytes change and owns its resources independently', async () => {
+  const { f, request } = await setup();
+  const old = environment(f);
+  const first = await prepareVisualThemeLease(request, { createHost: () => old.host });
+  const pin = first.pin();
+  first.release();
+  const files = new Map(f.files);
+  files.set(`runtime.${pin.presentation.sha256}.json`, files.get('runtime.json'));
+  files.set('runtime.json', new TextEncoder().encode('a later, unrelated current manifest'));
+  const env = environment({ ...f, files }, { retainedManifestSha256: pin.presentation.sha256 });
+  const signalOwner = new AbortController();
+  const restored = await prepareRetainedVisualThemeLease(
+    { ...request, pin },
+    {
+      createHost: () => env.host,
+      signal: signalOwner.signal,
+    },
+  );
+  try {
+    assert.deepEqual(restored.pin(), pin);
+    assert.equal(restored.snapshot.manifestSha256, pin.presentation.sha256);
+    assert.equal(env.requests[0].url, baseURL + `runtime.${pin.presentation.sha256}.json`);
+    assert.equal(
+      env.requests.some((request) => request.url === baseURL + 'runtime.json'),
+      false,
+    );
+    signalOwner.abort();
+    assert.equal(env.host.current(), restored.snapshot);
+    assert.equal(env.decoded[0].closes, 0);
+    assert.equal(old.decoded[0].closes, 1);
+  } finally {
+    restored.release();
+  }
+  assert.equal(env.decoded[0].closes, 1);
+});
+
+test('missing retained release leaves another accepted owner usable and disposes only its staging host', async () => {
+  const { f, request } = await setup();
+  const live = environment(f);
+  const accepted = await prepareVisualThemeLease(request, { createHost: () => live.host });
+  const pin = accepted.pin();
+  const stage = environment(f, { retainedManifestSha256: pin.presentation.sha256 });
+  try {
+    await assert.rejects(
+      prepareRetainedVisualThemeLease({ ...request, pin }, { createHost: () => stage.host }),
+      /unavailable/,
+    );
+    assert.equal(stage.requests.length, 1);
+    assert.equal(stage.decoded.length, 0);
+    await assert.rejects(
+      stage.host.load({ expectedManifestSha256: pin.presentation.sha256 }),
+      /closed/,
+    );
+    assert.equal(live.host.current(), accepted.snapshot);
+    assert.deepEqual(accepted.pin(), pin);
+    assert.equal(live.decoded[0].closes, 0);
+  } finally {
+    accepted.release();
+  }
+  assert.equal(live.decoded[0].closes, 1);
+});
+
+test('compiler and writer preserve an original lease across a real output-directory update', async (t) => {
+  const { f, request } = await setup(),
+    firstEnv = environment(f);
+  const first = await prepareVisualThemeLease(request, { createHost: () => firstEnv.host });
+  const pin = first.pin();
+  t.after(() => first.release());
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'rl-retained-lease-'));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const out = path.join(root, 'compiled');
+  await writePresentation(f.files, out);
+  const source = structuredClone(f.document);
+  source.revision++;
+  const theme = source.themes.find((row) => row.id === f.manifest.resolved.theme.id);
+  theme.revision++;
+  theme.tokens.amber = '#ffd170';
+  source.selection.theme.revision = theme.revision;
+  const image = new Uint8Array(
+    await fs.readFile(
+      new URL('../assets/field-kit/sprites/player-bomber-compact.png', import.meta.url),
+    ),
+  );
+  const imageHash = await hashPresentationBytes(image);
+  const replacement = source.assets.find((row) => row.id === 'host.test.sprite');
+  replacement.revision++;
+  replacement.file = { ...replacement.file, sha256: imageHash, bytes: image.length };
+  theme.bindings['player.scout.compact'].revision = replacement.revision;
+  const newer = await compilePresentation(source, new Map([[imageHash, new Blob([image])]]), {
+    previousOutput: f.files,
+  });
+  await writePresentation(newer.files, out);
+  await writePresentation(newer.files, out, { check: true });
+  const requests = [];
+  const diskFetch = async (url) => {
+    requests.push(url);
+    assert(url.startsWith(baseURL));
+    try {
+      return new Response(await fs.readFile(path.join(out, url.slice(baseURL.length))));
+    } catch (error) {
+      if (error.code === 'ENOENT') return new Response(null, { status: 404 });
+      throw error;
+    }
+  };
+  const currentEnv = environment(f, { fetch: diskFetch });
+  const current = await currentEnv.host.load();
+  assert.equal(
+    current.manifestSha256,
+    await hashPresentationBytes(newer.files.get('runtime.json')),
+  );
+  assert.notEqual(current.manifestSha256, pin.presentation.sha256);
+  currentEnv.host.close();
+  requests.length = 0;
+  const retainedEnv = environment(f, {
+    fetch: diskFetch,
+    retainedManifestSha256: pin.presentation.sha256,
+  });
+  const restored = await prepareRetainedVisualThemeLease(
+    { ...request, pin },
+    { createHost: () => retainedEnv.host },
+  );
+  try {
+    assert.deepEqual(restored.pin(), pin);
+    assert.equal(restored.snapshot.resolved.assets['player.scout.compact'].file.sha256, f.hash);
+    assert.equal(requests[0], baseURL + `runtime.${pin.presentation.sha256}.json`);
+    assert(!requests.includes(baseURL + 'runtime.json'));
+    assert.deepEqual(
+      await fs.readFile(path.join(out, `assets/${f.hash}.png`)),
+      Buffer.from(f.bytes),
+    );
+    const name = path.join(out, `runtime.${pin.presentation.sha256}.json`);
+    const original = await fs.readFile(name);
+    await fs.writeFile(name, Buffer.from('corrupt retained bytes'));
+    const failedEnv = environment(f, {
+      fetch: diskFetch,
+      retainedManifestSha256: pin.presentation.sha256,
+    });
+    await assert.rejects(
+      prepareRetainedVisualThemeLease({ ...request, pin }, { createHost: () => failedEnv.host }),
+      /pinned|manifest|JSON|compiled/,
+    );
+    assert.equal(failedEnv.decoded.length, 0);
+    assert.equal(firstEnv.host.current(), first.snapshot);
+    assert.equal(retainedEnv.host.current(), restored.snapshot);
+    assert.equal(retainedEnv.decoded[0].closes, 0);
+    await fs.writeFile(name, original);
+  } finally {
+    restored.release();
+  }
+  assert.equal(retainedEnv.decoded[0].closes, 1);
 });

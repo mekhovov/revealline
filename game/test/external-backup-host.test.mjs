@@ -4,6 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { buildExternalPilot } from '../../authoring/library/external-chapter-pilot/build.mjs';
@@ -116,23 +117,12 @@ class Locks {
     }
   }
 }
-class Picture {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.url = value;
-    if (value) queueMicrotask(() => this.onload?.());
-  }
-  get src() {
-    return this.url;
-  }
-  async decode() {}
-  removeAttribute() {
-    this.url = '';
+class Picture extends PNGImage {
+  get url() {
+    return this.src;
   }
 }
+
 async function page(t, f = {}) {
   f.assets ??= managedIndexedDB();
   f.media ??= managedIndexedDB();
@@ -151,8 +141,10 @@ async function page(t, f = {}) {
     String(url).includes('optional-worlds.json')
       ? new Response(await readFile(new URL('../content/optional-worlds.json', import.meta.url)))
       : fetchBefore(url, options);
+  const installedFetch = globalThis.fetch;
   t.after(() => {
-    globalThis.fetch = fetchBefore;
+    // The outer page fixture may already have restored browser globals.
+    if (globalThis.fetch === installedFetch) globalThis.fetch = fetchBefore;
   });
   return Object.assign(p, { fixture: f });
 }
@@ -444,6 +436,7 @@ test('closing during descriptor hashing cancels export and a changed flight cann
   assert.equal(p.$('save-status').dataset.state, 'cancelled');
   const cancelledMessage = p.$('save-status').textContent;
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   ticks(p, 6);
   p.$('pause-button').click();
   p.frame(0);
@@ -529,6 +522,7 @@ for (const mode of ['own-v2', 'mixed', 'legacy-v1-indexed'])
     const rawAssets = f.assets.contents(),
       rawLocal = new Map(f.storage.map),
       puts = f.assets.allPuts.length;
+    if (mode !== 'own-v2') f.options = { waitForPictures: false };
     const p = await page(t, f);
     if (mode === 'own-v2') {
       const state = f.assets.contents().get('assets');
@@ -540,6 +534,8 @@ for (const mode of ['own-v2', 'mixed', 'legacy-v1-indexed'])
       assert.equal(f.storage.getItem(keys.lockKey), null);
       assert.match(p.$('save-warning').textContent, /rolled back|Interrupted/);
     } else {
+      await settle(() => /Picture unavailable: Pending/.test(p.$('run-message').textContent));
+      assert.notEqual(p.doc.body.dataset.pictureState, 'ready');
       assert.deepEqual(f.assets.contents(), rawAssets);
       assert.deepEqual(f.storage.map, rawLocal);
       assert.equal(f.assets.allPuts.length, puts);

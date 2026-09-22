@@ -1,1 +1,5 @@
 game/vendor/
+
+# Exact retained runtime bytes are hash/schema verified, never reformatted.
+game/presentation/compiled/runtime.*.json
+authoring/library/fpv-field-kit/retained/runtime.*.json

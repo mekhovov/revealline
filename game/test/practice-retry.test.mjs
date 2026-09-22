@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 
@@ -18,6 +18,7 @@ test('a new attempt keeps replay export locked until the previous download reque
     return timer;
   });
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   page.frame(100);
   page.key('ArrowDown', false);

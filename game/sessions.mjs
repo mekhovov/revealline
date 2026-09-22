@@ -11,6 +11,7 @@ import {
 } from './replay.mjs';
 import { boundedJSON, exactKeys, stableId, required } from './data-json.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
+import { snapshotSessionVisualPin } from './session-visual-pin.mjs';
 import { PRESENTATION_PINS_FORMAT } from './presentation-pins.mjs';
 import {
   FLIGHT_MEDIA_PINS_FORMAT,
@@ -23,6 +24,9 @@ export const SESSION_FORMAT = 'xonix-session.v1';
 export const CONTINUOUS_SESSION_FORMAT = 'xonix-session.v2';
 export const PRESENTATION_SESSION_FORMAT = 'xonix-session.v3';
 export const STORY_SESSION_FORMAT = 'xonix-session.v4';
+export const VISUAL_SESSION_FORMAT = 'xonix-session.v5';
+const pictureFormats = [PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT, VISUAL_SESSION_FORMAT];
+const continuationFormats = [CONTINUOUS_SESSION_FORMAT, ...pictureFormats];
 export const SESSION_STORAGE_BYTES = 2 * 1024 * 1024;
 export const SESSION_IMPORT_BYTES = MAX_REPLAY_BYTES + 16384;
 const canonical = (v) =>
@@ -81,14 +85,9 @@ function envelope(candidate) {
       'runId',
       'savedAt',
       'replay',
-      ...([CONTINUOUS_SESSION_FORMAT, PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(
-        session.format,
-      )
-        ? ['continuation']
-        : []),
-      ...([PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(session.format)
-        ? ['presentationPins']
-        : []),
+      ...(continuationFormats.includes(session.format) ? ['continuation'] : []),
+      ...(pictureFormats.includes(session.format) ? ['presentationPins'] : []),
+      ...(session.format === VISUAL_SESSION_FORMAT ? ['visualThemePin'] : []),
     ],
     'saved attempt',
   );
@@ -98,22 +97,20 @@ function envelope(candidate) {
       CONTINUOUS_SESSION_FORMAT,
       PRESENTATION_SESSION_FORMAT,
       STORY_SESSION_FORMAT,
+      VISUAL_SESSION_FORMAT,
     ].includes(session.format),
     'Unsupported saved attempt format.',
   );
-  if (
-    [CONTINUOUS_SESSION_FORMAT, PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(
-      session.format,
-    )
-  )
+  if (continuationFormats.includes(session.format))
     session.continuation = continuationValue(session.continuation);
-  if ([PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(session.format)) {
+  if (pictureFormats.includes(session.format)) {
     session.presentationPins = snapshotFlightPresentationPins(session.presentationPins);
     required(
-      session.presentationPins.format ===
-        (session.format === STORY_SESSION_FORMAT
-          ? FLIGHT_MEDIA_PINS_FORMAT
-          : PRESENTATION_PINS_FORMAT),
+      session.format === VISUAL_SESSION_FORMAT ||
+        session.presentationPins.format ===
+          (session.format === STORY_SESSION_FORMAT
+            ? FLIGHT_MEDIA_PINS_FORMAT
+            : PRESENTATION_PINS_FORMAT),
       'Saved attempt and presentation versions differ.',
     );
   }
@@ -128,6 +125,13 @@ function envelope(candidate) {
     replayVersion: session.replay.version,
     checkpointAlgorithm: session.replay.checkpoint?.algorithm,
   });
+  if (session.format === VISUAL_SESSION_FORMAT)
+    session.visualThemePin = snapshotSessionVisualPin(session.visualThemePin, {
+      pictures: session.presentationPins,
+      campaignKey: session.campaignKey,
+      themeId: session.themeId,
+      level: session.replay.level,
+    });
   return session;
 }
 
@@ -144,6 +148,7 @@ export function suspendSession({
   savedAt = new Date().toISOString(),
   continuation,
   presentationPins,
+  visualThemePin,
 }) {
   if (!run || !['running', 'respawning'].includes(run.status))
     throw new Error('Only an unfinished attempt can be suspended.');
@@ -166,19 +171,30 @@ export function suspendSession({
         ),
       'Saved pictures require matching flight identity and explicit continuation.',
     );
+  const visuals =
+    visualThemePin === undefined
+      ? undefined
+      : snapshotSessionVisualPin(visualThemePin, {
+          pictures,
+          campaignKey,
+          themeId,
+          level: run.level,
+        });
   if (intent === undefined) {
     releaseInputs(run);
     recordRelease(recorder);
   }
   return {
     format:
-      pictures !== undefined
-        ? pictures.format === FLIGHT_MEDIA_PINS_FORMAT
-          ? STORY_SESSION_FORMAT
-          : PRESENTATION_SESSION_FORMAT
-        : intent === undefined
-          ? SESSION_FORMAT
-          : CONTINUOUS_SESSION_FORMAT,
+      visuals !== undefined
+        ? VISUAL_SESSION_FORMAT
+        : pictures !== undefined
+          ? pictures.format === FLIGHT_MEDIA_PINS_FORMAT
+            ? STORY_SESSION_FORMAT
+            : PRESENTATION_SESSION_FORMAT
+          : intent === undefined
+            ? SESSION_FORMAT
+            : CONTINUOUS_SESSION_FORMAT,
     campaignKey,
     themeId,
     bodyId,
@@ -186,6 +202,7 @@ export function suspendSession({
     savedAt,
     ...(intent === undefined ? {} : { continuation: intent }),
     ...(pictures === undefined ? {} : { presentationPins: pictures }),
+    ...(visuals === undefined ? {} : { visualThemePin: visuals }),
     replay: exportReplay(recorder, run),
   };
 }
@@ -237,7 +254,7 @@ export async function restoreSession(
       canonical(session.replay.options.classRecipes)
   )
     throw new Error('Saved rules differ from the installed campaign.');
-  if ([PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(session.format))
+  if (pictureFormats.includes(session.format))
     validateFlightPresentationPinsForRun(session.presentationPins, {
       identityCatalog: mediaIdentityCatalog,
       campaignKey,

@@ -9,22 +9,7 @@ const settle = (predicate, message) =>
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
-// Browser decoding is modeled only at this boundary; PNG dimensions come from
-// the actual embedded bytes. This does not certify pixels or native rendering.
-class Picture {
-  set src(url) {
-    if (url.startsWith('data:image/png;base64,')) {
-      const bytes = Buffer.from(url.split(',')[1], 'base64');
-      this.width = this.naturalWidth = bytes.readUInt32BE(16);
-      this.height = this.naturalHeight = bytes.readUInt32BE(20);
-    } else {
-      this.width = this.naturalWidth = 384;
-      this.height = this.naturalHeight = 288;
-    }
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-}
+import { PNGImage as Picture } from './helpers/png-image.mjs';
 const profileKey = 'revealline.library.dev.v1';
 const sessionKey = 'revealline.suspended.dev.v1';
 const selectionKey = `${profileKey}.last-selection.v1`;

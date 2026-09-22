@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { waitForChapterSelection } from './helpers/chapter-install-wait.mjs';
 import { prepareScenario } from '../imports.mjs';
-import { inspectImageDataUrl } from '../content.mjs';
+import { PNGImage as ChapterImage } from './helpers/png-image.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { Events } from './helpers/couch-dom.mjs';
 import { attachEnemyWorkshopReturnHost } from '../ui/enemy-workshop-return.mjs';
@@ -343,18 +343,6 @@ test('ordinary manual missions show the Tactical edition label', async (t) => {
 test('only an ordinary validated Arcade action policy receives the Arcade label', async (t) => {
   // Real chapter installation still validates exact image headers; native
   // decode is the only modeled boundary needed for this context-label case.
-  class ChapterImage {
-    set src(value) {
-      const header = inspectImageDataUrl(value);
-      assert.equal(header.valid, true);
-      this.width = this.naturalWidth = header.width;
-      this.height = this.naturalHeight = header.height;
-      queueMicrotask(() => this.onload?.());
-    }
-    decode() {
-      return Promise.resolve();
-    }
-  }
   const page = await soloPage(t, { titleScreen: true, pictures: { Image: ChapterImage } });
   // Start continues the selected flight. Choose the authored Arcade chapter
   // explicitly instead of assuming the title action replaces that selection.
