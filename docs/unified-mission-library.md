@@ -160,8 +160,8 @@ records the evidence at that time, not the current remaining list.
 | Solo↔Versus Journey modes without duplicate identities                       | Pushed;7 adapter +32 actual-host cases passed                                 | Cross-mode public verification                     |
 | Team↔Solo/Versus catalogue and exact handoffs                                | Pushed; pinned native source-return and saved-flight round trips pass         | Final downloaded/Custom cross-mode qualification   |
 | Trusted bundled/archive Versus downloads                                      | Implemented;53 installer +actual-host tests pass together                     | Native/public verification                         |
-| Paired-original downloads/readiness across hosts                              | Service pushed,41 tests pass; Versus and Team integrations in parallel review | 2–4h plus native verification                      |
-| Installed Custom metadata/readiness without eager artwork decoding            | Team integration reviewed and tested; Versus final regression in progress     | Native qualification and failure-matrix completion |
+| Paired-original downloads/readiness across hosts                              | Service and Versus integration tested; Team success-path qualification active | 2–4h plus native verification                      |
+| Installed Custom metadata/readiness without eager artwork decoding            | Team and Versus integrations reviewed; local host regressions pass            | Native qualification and failure-matrix completion |
 | Compact library and selector return                                           | Pinned Solo/Team layouts and filter/card-focus return pass                    | New inventory feedback native recheck              |
 | Full navigation, failure, storage and accessibility/performance qualification | Bounded cohorts pass; whole affected/native gates remain                      | 2–4h plus device availability                      |
 | Release B promotion                                                           | Waits only for accepted A and B technical gates; local work continues         | 2–4h after qualification, CI/Pages queues variable |
@@ -557,3 +557,19 @@ verification. It must receive a new pinned native check before acceptance.
   CSS grouping assertion then updated and independently passing. Scoped lint,
   formatting and whitespace checks pass. Native installed/download journeys,
   successful optional/paired preparation and public verification remain gates.
+
+### Versus installed inventory and paired-original checkpoint
+
+- Versus library browsing now reads exact installed metadata without decoding
+  artwork. Explicit Play materializes a genuine prepared pack under inventory
+  and input guards before the existing staged two-board replacement flow.
+- Paired-original downloads stay inline and require separate Play. Installed
+  pairs use explicit readiness checking; no metadata projection grants picture
+  authority. Incoming exact paired selections prepare only under their owned input.
+- Independent review reproduced a stale Custom departure while Replace was open.
+  The fix confirms storage again after that decision under a fresh input lease;
+  the same reproduction now passes. Blur also cancels incoming paired preparation.
+- Existing Versus host cohort passes20/20; new inventory/paired host, compact and
+  exact-key storage cases pass16/16. Scoped lint/format/diff checks pass. Inventory
+  warnings share the existing bounded status row; native layout, persistent-IDB
+  journeys, whole-branch qualification and public acceptance remain outstanding.
