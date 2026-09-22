@@ -38,8 +38,24 @@ test('Classic text names only verified mode-specific difficulty settings and nev
   assert.match(library.details(row, 'solo').challenge, /^Authored Standard rules · 45% coverage/);
   assert.equal(library.details(row, 'solo').route, 'Difficulty settings: Standard, Gentle');
   assert.equal(library.details(row, 'versus').route, 'Difficulty settings: Standard');
+  assert.match(
+    library.details(row, 'versus').challenge,
+    /Separate Versus race timer also applies$/,
+  );
+  assert.doesNotMatch(library.details(row, 'solo').challenge, /race timer/);
   assert.equal(library.details(row, 'solo').mastery, '');
   assert.ok(!library.details(row, 'solo').challenge.includes('Band'));
+});
+
+test('timed Classic maps distinguish their authored clock from the separate Versus race timer', () => {
+  const library = createMissionLibrary(classicLibrarySources(index, adapters));
+  const row = library.missions.find((mission) => mission.name === 'Voltage Garden');
+  assert(row);
+  assert.match(library.details(row, 'solo').challenge, /135s/);
+  assert.match(
+    library.details(row, 'versus').challenge,
+    /135s.*Separate Versus race timer also applies/,
+  );
 });
 
 test('late Classic launch hands the exact pinned metadata to its validator, without recording a clear', () => {

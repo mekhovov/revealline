@@ -440,3 +440,14 @@ verification. It must receive a new pinned native check before acceptance.
 -26 source/factory and existing prepared-registry tests pass together, including
   edition changes, exact late selection, stable download cards and no autolaunch.
   This is the final browsing-layer foundation; gameplay-host adoption is next.
+
+### Native download follow-up
+
+- Pinned native `8633d0256` verifies an exact Night Shift late mission through
+  controlled HTTP503, focused Retry, held-download Cancel, unchanged race,
+  preserved search/focus, successful Download→Play and exact launch on both
+  boards. Evidence is local source-pinned, not public release acceptance.
+- Native review noticed135s authored map timing alongside the90s race clock.
+  These are independent clocks, not an altered map rule. Classic Versus cards
+  now explicitly say a separate race timer also applies; Solo wording stays
+  unchanged.35 relevant source/chooser/metadata-registry tests pass together.
