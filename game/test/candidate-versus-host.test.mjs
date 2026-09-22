@@ -33,10 +33,16 @@ async function setup(t, difficulty = 'standard', options = {}) {
 
 test('Versus save warning uses existing pause and recovery without changing either board', async (t) => {
   const p = await setup(t, 'standard', { assetDatabase: undefined });
+  const reveals = [];
+  t.mock.method(p.$('race-start'), 'scrollIntoView', (options) => reveals.push(options));
   assert.equal(p.$('race-journey-save').parentNode, p.$('race-main'));
   assert.equal(p.$('race-journey-save').hidden, false);
   assert.equal(p.$('race-journey-save-options').hidden, false);
   assert.equal(p.$('race-pause').dataset.journeyUnsaved, 'true');
+  p.$('race-start').focus();
+  p.key('Escape');
+  p.key('Escape', false);
+  assert.deepEqual(reveals.at(-1), { block: 'nearest', inline: 'nearest', behavior: 'auto' });
   p.$('race-start').click();
   await waitFor(() => {
     p.frame();
@@ -45,6 +51,7 @@ test('Versus save warning uses existing pause and recovery without changing eith
   assert.equal(p.$('race-main').hidden, true);
   p.$('race-pause').click();
   p.frame(0);
+  assert.deepEqual(reveals.at(-1), { block: 'center', inline: 'nearest', behavior: 'auto' });
   const previous = [...p.renders],
     checkpoint = p.checkpoint();
   p.$('race-journey-save-options').click();

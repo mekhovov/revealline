@@ -114,8 +114,21 @@ export function createCouchShell({
     element.focus({ preventScroll: true });
     // The screen is installed first. Reveal its actual focused action without
     // letting a synchronous focus callback scroll a replacement/background view.
-    if (eligible() && doc.activeElement === element)
-      element.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
+    if (eligible() && doc.activeElement === element) {
+      // Keep the adjacent save-recovery shortcut in view with primary play.
+      // This only changes a deliberate menu transition's scroll, never flight
+      // geometry or focus in response to a background storage status change.
+      const warning = $('race-journey-save-options');
+      const block =
+        screen === 'main' &&
+        (status === 'paused' || status === 'finished') &&
+        element === $('race-start') &&
+        warning &&
+        !warning.hidden
+          ? 'center'
+          : 'nearest';
+      element.scrollIntoView({ block, inline: 'nearest', behavior: 'auto' });
+    }
   }
   function revealResizedAction(event) {
     if (revealingResize || event.target !== view) return;
@@ -171,7 +184,7 @@ export function createCouchShell({
     $('race-shell').inert = running;
     $('race-hud').hidden = !running;
     $('race-pause').disabled = !running;
-    $('race-pause').textContent = screen === 'review' ? 'Results' : 'Pause';
+    setText('race-pause', screen === 'review' ? 'Results' : 'Pause');
     $('race-boards').hidden = !running;
     $('race-boards').inert = !running;
     doc.body.classList.toggle('race-focus', running);
@@ -456,7 +469,8 @@ export function createCouchShell({
     );
     $('race-review').hidden = status !== 'finished';
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
-    $('race-pause').textContent = screen === 'review' ? 'Results' : 'Pause';
+    // Do not replace the native click target's content on every flight frame.
+    setText('race-pause', screen === 'review' ? 'Results' : 'Pause');
     $('race-focus').textContent = status === 'ready' ? 'Race setup' : 'New match · setup';
     $('race-class-field').hidden = !equipment[0].action;
     $('race-class').disabled = !equipment[0].action || status !== 'ready';
