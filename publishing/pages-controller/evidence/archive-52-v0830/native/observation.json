@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_SCOPED_NATIVE_AVAILABILITY",
+  "checkedAt": "2026-09-22T20:47:33.202740+00:00",
+  "observerTask": "01a0a0be-e184-7c03-ba2b-59dc179a9800",
+  "archive": "revealline-archive-52",
+  "version": "v0.83.0",
+  "gameSource": "01b189f6427601a15cbb3eb1563b5f82eabbafa3",
+  "infrastructureRevision": "2dd7e8a598d8e37af063933733b8dc458ea9d44f",
+  "infrastructureTree": "b21a8bdf97a7b4af190f065286d470e2c73e1f4f",
+  "workflowRun": 35782103893,
+  "deployment": 6600345978,
+  "canonicalURL": "https://mekhovov.github.io/revealline-archive-52/releases/v0.83.0/site/game/",
+  "environment": {
+    "browser": "Codex in-app browser",
+    "browserId": "1",
+    "temporaryTab": "350",
+    "viewport": "1280x720",
+    "profile": "Existing returning test profile preserved; no storage reset",
+    "input": "browser pointer navigation; no physical-device qualification"
+  },
+  "steps": [
+    {
+      "action": "Open canonical archive URL",
+      "observed": [
+        "Loading game styles\u2026",
+        "Reading your saved flight and installed chapters\u2026",
+        "NEW JOURNEY / 91 MISSIONS",
+        "VERSION V0.83.0",
+        "Continue \u00b7 Prologue \u00b7 Choose your share"
+      ],
+      "pass": true
+    },
+    {
+      "action": "Settings \u2192 Close settings",
+      "observed": "Home restored with Settings opener focused; no preferences changed",
+      "pass": true
+    },
+    {
+      "action": "Workshop \u2192 Sound & game extras \u2192 About & build information",
+      "url": "https://mekhovov.github.io/revealline-archive-52/releases/v0.83.0/site/site/about.html#versions",
+      "observed": "About Reveal Line \u00b7 Field Kit; Return to game link visible",
+      "pass": true
+    },
+    {
+      "action": "Expand BUILD INFORMATION",
+      "observed": "Release history and preserved builds; RELEASE HISTORY central link; preserved-build selector available",
+      "pass": true
+    },
+    {
+      "action": "Click RELEASE HISTORY",
+      "url": "https://mekhovov.github.io/revealline/releases/",
+      "observed": [
+        "Playable versions",
+        "Current: v0.83.0. Every edition keeps its original gameplay, saves and artwork.",
+        "v0.83.0 \u00b7 Current",
+        "01b189f6427601a15cbb3eb1563b5f82eabbafa3",
+        "Play",
+        "Download ZIP",
+        "Manifest"
+      ],
+      "pass": true
+    },
+    {
+      "action": "Browser Back",
+      "url": "https://mekhovov.github.io/revealline-archive-52/releases/v0.83.0/site/site/about.html#versions",
+      "observed": "Archived About page and Return to game link restored",
+      "pass": true
+    },
+    {
+      "action": "Click Return to game",
+      "url": "https://mekhovov.github.io/revealline-archive-52/releases/v0.83.0/site/game/",
+      "observed": [
+        "REVEAL / LINE title",
+        "NEW JOURNEY / 91 MISSIONS",
+        "Continue \u00b7 Prologue \u00b7 Choose your share",
+        "Version v0.83.0"
+      ],
+      "pass": true
+    }
+  ],
+  "console": {
+    "warningAndErrorEntries": [],
+    "checkedAtReleaseCatalogueAndReturnedTitle": true
+  },
+  "screenshots": {
+    "storage": "Raw images preserved inline in this task\u2019s cua_repl tool results; no disk PNG export claimed",
+    "toolObservations": [
+      "Capture archive title and visible build identity",
+      "Verify catalogue availability and Back to archive information",
+      "Record final archived title restoration and console"
+    ],
+    "format": "unaltered browser screenshot tool output"
+  },
+  "limits": [
+    "Navigation-only availability, not gameplay qualification.",
+    "No offline, physical input, responsive matrix, screenshot-file export or exhaustive accessibility claim.",
+    "No release/archive writes, uploads, gameplay actions or explicit save changes.",
+    "Complete public HTTP byte audit is separate and not established by this receipt.",
+    "The in-app browser content export command was unsupported; no artifact is claimed from that failed export."
+  ],
+  "cleanup": {
+    "ownedTabClosed": true,
+    "noUserTabClosed": true,
+    "viewportOverrideUsed": false
+  },
+  "independentWorkflowReadback": {
+    "status": "completed",
+    "conclusion": "success",
+    "headSha": "2dd7e8a598d8e37af063933733b8dc458ea9d44f",
+    "url": "https://github.com/mekhovov/revealline-archive-52/actions/runs/35782103893"
+  }
+}
