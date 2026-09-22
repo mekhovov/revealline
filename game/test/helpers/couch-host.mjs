@@ -28,7 +28,7 @@ export async function couchPage(
     assetDatabase,
     storage,
     previewStorage,
-    href = 'http://localhost/game/couch/',
+    href = 'http://localhost/game/couch/?journey=legacy',
     lockManager,
     fetchResponse,
     URLImpl = globalThis.URL,

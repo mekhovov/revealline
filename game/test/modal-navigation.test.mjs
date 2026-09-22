@@ -1117,7 +1117,7 @@ for (const exit of ['button', 'escape', 'controller'])
     assert.equal(h.$('mode-leave-dialog').open, false);
     assert.equal(h.$('shell-missions').open, true);
     assert.equal(h.doc.activeElement.id, 'shell-team');
-    assert.equal(globalThis.location.href, 'http://localhost/game/');
+    assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
     for (let i = 0; i < 30; i++) h.frame();
     assert.equal(h.rendered.paused, true);
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
