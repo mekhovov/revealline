@@ -22,7 +22,7 @@ remains visible there rather than being treated as rejected or completed.
   Pages run `35874064355`, deployment `6616518311` and status `18733866229`
   passed. The live title reports VERSION V0.94.0 and 91 Journey missions. Its
   complete deployed-byte audit verified **4,186 files / 624,544,602 bytes** in
-  4,186 attempts with zero failures, retries or skips. The independent raw-row
+  4,187 attempts with zero final failures or skips and one recovered HTTP 503 retry. The independent raw-row
   readback passed. Its
   accepted scope is the integrated Team/presentation stack and retained
   visual-session proof; broader responsive/input/device/offline, gameplay and
@@ -309,10 +309,12 @@ versioned public release markers identify v0.94.0 and exact source `28f75fbd`;
 the live title reports VERSION V0.94.0 and 91 missions.
 
 The final public-byte audit streamed and hashed every path from the exact Pages
-production receipt. It verified **4,186 files / 624,544,602 bytes / 4,186
-attempts** with zero failures, retries or skips and no persisted payload files.
-The report SHA-256 is
-`026a6623b675adcd40408e881a07d7992b8230c017c2c4c5f3f1eac39915df5d`;
+production receipt. It verified **4,186 files / 624,544,602 bytes / 4,187
+attempts** with zero final failures or skips and one recovered retry. The first
+request for the historical v0.78 reveal review returned HTTP 503; its ordinary
+retry matched the pinned body exactly. The original failed attempt remains in
+the evidence. The report SHA-256 is
+`a9d564fecdcfc66f9fadc52ff570fe3a25425e8e5c77faa1cf33c96c3ba34309`;
 the independent raw-row readback passed. The bounded live browser check reached
 the title, visibly reported VERSION V0.94.0, started Solo and observed active
 gameplay. These receipts are retained in
