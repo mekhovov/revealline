@@ -1,6 +1,6 @@
 # Reveal Line — completed work and remaining delivery plan
 
-Status checked **23 September 2026, 04:05 UTC**. This is the current status and
+Status checked **23 September 2026, 06:55 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source
 observations or release evidence. The original P00–P15 version allocations are
@@ -13,25 +13,24 @@ remains visible there rather than being treated as rejected or completed.
 
 ## 1. Summary
 
-- **Live and publicly accepted: [v0.89.0](https://mekhovov.github.io/revealline/releases/v0.89.0/site/game/).**
+- **Live and publicly accepted: [v0.91.0](https://mekhovov.github.io/revealline/releases/v0.91.0/site/game/).**
   The ordinary Pages marker identifies source
-  `9374f7fab315a2b9145d699cb4548fb7807b1380`; the complete deployed-file audit
-  and scoped public browser acceptance passed. v0.88.0 remains preserved in
-  Archive57.
-- **In promotion: v0.90.0.** Continuous Next source [PR287](https://github.com/mekhovov/revealline/pull/287)
-  is merged as `c585bcd3220438da971e2927763b966f55ee8235`; the immutable
-  [v0.90.0 release](https://github.com/mekhovov/revealline/releases/tag/v0.90.0)
-  is published. Archive58 preservation deployed successfully and its audit is
-  active. Pages still selects v0.89.0, so v0.90.0 is not publicly delivered or
-  accepted yet.
-- **Active gameplay correction:** [PR290](https://github.com/mekhovov/revealline/pull/290)
-  proposes v0.91.0 to replace unfair mid-flight gp3 field-enemy direction changes
-  with collision-only course changes. The intended compatible
-  gp4 rules preserve speed and movement domains, permit only a small anti-loop
-  variation at a true single-face bounce, and retain a byte-frozen gp3 adapter.
-  Candidate `b17f9310f412eb0751fdfb4c45399a7a55879168` passed 52 focused
-  checks plus required preflight and build. The long test job was waived/skipped;
-  merge, publication and public acceptance remain open.
+  `e771ca71b0e710ea878d54f8ff370707f7428ef8`; the complete deployed-file audit
+  and bounded public browser acceptance passed. v0.90.0 is preserved as the
+  Continuous Next predecessor.
+- **Continuous Next is delivered in v0.90.0 and retained by v0.91.0.** Source
+  [PR287](https://github.com/mekhovov/revealline/pull/287) merged as
+  `c585bcd3220438da971e2927763b966f55ee8235`; selector
+  [PR293](https://github.com/mekhovov/revealline/pull/293) promoted the immutable
+  release before v0.91.0 superseded it.
+- **Collision-only gp4 enemy courses are publicly delivered in v0.91.0.** Source
+  [PR290](https://github.com/mekhovov/revealline/pull/290) merged as
+  `e771ca71b0e710ea878d54f8ff370707f7428ef8`; selector
+  [PR294](https://github.com/mekhovov/revealline/pull/294) promoted it. The bounded
+  acceptance proves identity, complete public inventory and selected fresh-gp4
+  observation/history/pause/Stay/return paths. It does not prove continuous
+  heading at every frame/collision, exact save reconstruction, whole-game balance,
+  extended win/Next, devices, offline behavior or audio.
 - Default redesigned Journey, the unified tagged mission selector, safer backup
   replacement, main-menu difficulty and global local-browser playtest controls
   are delivered features.
@@ -59,19 +58,17 @@ remains visible there rather than being treated as rejected or completed.
 
 | State         | Scope                                                                                                                   | Current boundary / next gate                                                                                                                                                                                       |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Completed** | Public releases v0.83.0–v0.89.0                                                                                         | Default Journey, unified library, safer replacement, visible difficulty/testing controls, gp2 defaults, same-page chapter recovery and deterministic gp3 courses are publicly delivered within their recorded scopes.                                     |
+| **Completed** | Public releases v0.83.0–v0.91.0                                                                                         | Default Journey, unified library, safer replacement, visible difficulty/testing controls, gp2 defaults, chapter recovery, Continuous Next and collision-only gp4 courses are publicly delivered within their recorded scopes.                                     |
 | **Partial**   | Core game framework and authored content                                                                                | 91 Journey Solo/Versus missions, 12 Team missions, retained Classic content, authoring, media, bonuses and threat roles exist; balance, presentation, recovery, devices and whole-campaign acceptance remain open. |
-| **Active**    | Promote published v0.90.0 Continuous Next                                                                              | Finish Archive58 audit, select it through the Pages PR and pass public identity, inventory and affected Next-journey checks.                                                                                         |
-| **Next — P1** | Collision-only enemy-course fairness; PNG/JPEG failure; current-speed pacing; capture-stop and action feedback         | Release each confirmed correction separately with representative gameplay or public Retry/Play evidence. Preserve gp3 recordings through the frozen adapter.                                                        |
+| **Next — P1** | PNG/JPEG failure; current-speed pacing; capture-stop/action feedback; broader gp4 qualification                        | Release each correction separately with public Retry/Play or representative gameplay evidence. Keep v0.91 delivery distinct from human balance, all-collision and exact-save proof.                                  |
 | **Next — P2** | Navigation, touch/controller parity, compact mobile HUD, iPhone behavior, Steam Deck Confirm/Start, save/media recovery | Complete keyboard-only, controller-only and touch-only journeys; retain physical-device evidence separately from simulated checks.                                                                                 |
 | **Then — P3** | Studio and Team stacks, reference dispositions, soundtrack review, whole-Journey and final browser qualification        | Reconcile existing drafts against current main and close each feature's own content, listening, accessibility, offline and human-review gates.                                                                     |
 | **Deferred**  | Native stores and network multiplayer                                                                                   | Separate platform lifecycle, packaging, hardware and authoritative-network phases after browser qualification.                                                                                                     |
 
-At this cutoff, the retained open queue is **20 draft PRs plus active gameplay
-PR290** (v0.91.0 collision-only courses). Documentation PR289 carrying this plan
-is merged. The retained set includes player features, infrastructure, audits and
-provenance work. None is counted as a completed feature or a reserved release
-merely because it has an implementation branch.
+At this cutoff, the retained open queue is **20 draft PRs**. Gameplay PR290 and
+publication PRs293/294 are merged. The retained set includes player features,
+infrastructure, audits and provenance work. None is counted as a completed feature
+or a reserved release merely because it has an implementation branch.
 The detailed queue and conditional effort ranges are in section 5.
 Feedback-specific acceptance remains in F01–F30.
 
@@ -89,6 +86,8 @@ Feedback-specific acceptance remains in F01–F30.
 | Xposed-paced defaults                | Approximate reference-calibrated gp2 craft/threat motion with authored counts; frozen gp1 history remains readable                                                      | v0.87.0, source PR279 / selector PR282; full public audit 3,946 files / 615,244,291 bytes; scoped title/history/return accepted, not whole-game balance |
 | Same-page chapter recovery           | Failed optional-chapter preparation keeps the player in context with actionable recovery guidance and retained selection                                                | v0.88.0, source PR284 / selector PR286; full public audit 3,974 files / 615,463,127 bytes; natural failure-copy fault injection remains untested       |
 | Deterministic field-enemy courses    | Seeded gp3 field-enemy course variation without changing speed or movement domains; historical rules remain readable                                                     | v0.89.0, source PR285 / selector PR288; full public audit 4,005 files / 615,708,592 bytes; mid-flight turn fairness correction remains active          |
+| Continuous Next                      | Next continues across campaign, pack and Collection boundaries in Solo, Versus and Team                                                                                   | v0.90.0, source PR287 / selector PR293; publicly delivered and retained by v0.91.0; broader boundary variants remain part of whole-Journey qualification |
+| Collision-only enemy courses         | Fresh gp4 field enemies fly straight between collisions and only vary course at a true bounce; frozen gp3 history remains readable                                       | v0.91.0, source PR290 / selector PR294; full public audit 4,063 files / 616,196,229 bytes; bounded acceptance, not whole-game or human-balance approval |
 
 The v0.83.0 full suite passed11788 tests. Subsequent expedited releases used the
 user-authorized automated-suite waiver. Skipped suites are not passes. Public
@@ -117,7 +116,7 @@ them twice. Alternate artwork, presets and reference links are not new maps.
 The older11-themed-campaign /132-mission programme is not completed by these
 counts and is not silently added to the immediate release queue.
 
-## 4. Recent releases — completed and active
+## 4. Recent releases — completed
 
 ### Completed — v0.87.0 Xposed-paced defaults
 
@@ -194,15 +193,33 @@ deployment `6605286903` and status `18708092422` succeeded. Full HTTP audit
 failures, retries or skips. Fresh Solo/Versus motion, exact Resume and extended
 suites were deferred rather than passed.
 
-### Active — v0.90.0 Continuous Next promotion
+### Completed — v0.90.0 Continuous Next
 
-Source [PR287](https://github.com/mekhovov/revealline/pull/287) is merged as
-`c585bcd3220438da971e2927763b966f55ee8235`. It continues Next across campaign,
-pack and Collection boundaries in Solo, Versus and Team. The immutable GitHub
-release was published at `2026-09-23T03:28:18Z`; Archive58 preservation deployed
-successfully and its audit remains active. Pages still identifies v0.89.0.
-Completion requires the final selector PR, production deployment, full public
-inventory and the affected Next journeys. Until those gates pass, this is **active**, not completed.
+Source [PR287](https://github.com/mekhovov/revealline/pull/287) merged as
+`c585bcd3220438da971e2927763b966f55ee8235`; selector
+[PR293](https://github.com/mekhovov/revealline/pull/293) merged as
+`c2d4789f08fde3a50a7218bbc5c0d6a3b8997a4f`. Continuous Next across campaign,
+pack and Collection boundaries in Solo, Versus and Team is publicly delivered
+and retained by v0.91.0. Whole-Journey qualification still owns broader starts,
+endings, failure recovery and every boundary variant.
+
+### Completed — v0.91.0 collision-only enemy courses
+
+Source [PR290](https://github.com/mekhovov/revealline/pull/290) merged as
+`e771ca71b0e710ea878d54f8ff370707f7428ef8`; the immutable release was published
+at `2026-09-23T05:27:44Z`. Selector
+[PR294](https://github.com/mekhovov/revealline/pull/294) merged as
+`3a7244dbd6220c8e802ac4a7c2ebf3a02173da1d`. Production run `35826568244`,
+deployment `6607801868` and status `18713811980` succeeded. Independent public
+audit checked **4,063 files / 616,196,229 bytes / 4,063 attempts** with zero
+failures, retries or skips; admission-review SHA256 is
+`9bd9ff5e7751e22fad4fbd51ceec2cb0884784bd64147515c8f0a1ce9c6c3325`.
+
+The bounded native receipt passed 13 selected steps for fresh gp4 observation,
+history, Pause, Stay and return. Its eight frames are a visual sample, not proof
+of continuous heading or every collision. The 52 focused source checks remain
+separate; the full suite was waived/skipped. No extended gameplay, win/Next,
+physical-device, offline, audio, human-balance or exact-save claim is made.
 
 ## 5. Remaining — prioritized execution queue
 
@@ -212,8 +229,7 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 
 | Priority     | Item / current state                                                | Completion condition                                                                                                                                                                                | Indicative effort                                                |
 | ------------ | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| P0           | v0.90.0 Continuous Next promotion — release published, Pages pending | Finish Archive58 audit, merge Pages selector, verify public version/source/inventory and Solo/Versus/Team Next across campaign, pack and Collection boundaries                                      | 1–3h conditional elapsed if publication gates pass first time    |
-| P1           | v0.91.0 collision-only field-enemy courses — PR290 in review        | Frozen candidate and 52 focused checks complete; merge/release/public gates remain. Straight flight between collisions; direction changes only on true bounces; at most 8° seeded anti-loop variation on a single-face bounce; preserve speed/domains and byte-frozen gp3 replay/save   | 4–8h implementation/review, then independent release gates       |
+| P1           | Broader gp4 gameplay qualification — public delivery bounded       | Prove representative continuous-heading/all-collision behavior, exact gp3/gp4 save and replay reconstruction, extended win/Next paths and human balance without rewriting v0.91 evidence            | 1–3 days initial bounded review; devices remain under P2         |
 | P1           | PNG/JPEG mission-selection failure — unresolved                     | Identify affected mission/mode/asset and reproduce; repair actual cause; public Download/Retry/Play succeeds without deleting media or bypassing validation                                         | 2–4h diagnosis;3–8h scoped repair once reproducible              |
 | P1           | Current-speed difficulty/pacing review                              | Representative early/middle/late Solo/Versus/Team routes; fair departures, enemy/craft ratios, useful geometry and no trivial one-cut bypasses outside teaching. Human feedback recorded separately | 1–3 days first pass;6–12h per map-fix release                    |
 | P2           | Remaining save warnings, recovery focus and session-only continuity | Recheck latest accepted source; close only still-reproducible gaps, including two-tab ownership/Next and failed-save recovery                                                                       | 6–10h per bounded slice                                          |
@@ -241,7 +257,7 @@ accessibility slices above. Delivered foundations remain separate from unfinishe
 acceptance. Estimates overlap the existing programme ranges, not extra promises.
 
 PR numbers denote retained work, **not merge-ready certification**.
-The retained inventory contains **20 draft PRs, excluding active review,
+The retained inventory contains **20 draft PRs, excluding merged gameplay,
 documentation and publication PRs**. These include product, study, evidence,
 infrastructure and support work, not 20 independent finished features. The latest completed conflict
 audit records six conflicting drafts: PR230, PR231, PR237, PR256, PR258 and PR262;
