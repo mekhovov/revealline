@@ -1,5 +1,17 @@
 # PR278 priority and supersession checkpoint
 
+## v0.88 publicly accepted; PR285/v0.89 hold released
+
+At2026-09-23T02:15:40.716Z parent completed v88 acceptance and explicitly released main/new-stable hold to Playlist for user-priority285/v89, no intervening source release. PR286 merge82f1632c4be441ba212fccc7a3cd336911cba246/tree130269b980d0bd2bd507bc01862f21430ae36d3b; production35809170261/deployment6604852605/status18707100817 SUCCESS. Actual receipt10728909296/182805bytes/SHA2870462cfa9996bda2238d1ffbf1759161cc0bf173187edcc7663bb487ddf6b0 separately inspected from preview.
+
+New retained Archive56 audit-only ref codex/audit-main-v0880 atc8677071914e621d6be442e5e97e4828591c83ef/tree0f32a6977dbce0ec3ab32c68291870df9af91b34, parent592d0af, worktree `.cache/main-v0880-public-audit/audit-repository`:14 reviewed files, one read-only audit job, no deployment jobs. This is proven historical public-evidence provenance, not runtime source to replay. Single audit35809535421 passed3974files615463127bytes3974attempts,zero failures/retries/skips. Artifact10729017754/970152bytes/SHA12eba608eaa37f2bf103574c07c37f67c05ae97e29371e9e25f4d9bdd1e3d2d0; reportc4c7ee0d752e39c8cd17220342f44ff1e43eab7ecfecede4aa92eae245d7ccdd. Parent reconciled all rows,attempts,URL/MIME/hash/pins and six fresh post-audit authorities unchanged. Request573fdaa7747b6e9af8045084474c9f5a9d753976b05ad3f5b7e6aedebb3942b4 preserves original false candidate. No duplicate audit/deployment.
+
+Scoped UX native2d57b8db8198b0a990a6ebebb7d536f7c5d9dea1758347f3d8ab3161968d1e13 passes root/title88/history87Archive56/Back/console, no failures/retries/reloads. Optional failure-only chapter retry copy not exposed or exercised; no injected-failure/recovery claim. Automated suites and extended matrices waived, never passed. Full report `.cache/main-v0880-public-audit/REPORT.md`;286 acceptance5787796509 and284 delivery5787796682;285 priority5787796877. Earlier accepted releases/archives not rerun.
+
+PR230 originalhead283f4e1 six-path coverage freshly revalidated against actual950f190 source: five byte-exact postimages and exact604-byte original maintainer appendix after accepted-main prefix. Source tree equals reviewed284 candidate. PR230 now intentionally closed as superseded after accepted public delivery, preserving its earlier premature auto-closure/reopening history, original refs and worktree. Existing proof file remains historical pending evidence plus this explicit accepted checkpoint, not rewritten.
+
+Capacity restoration provenance: Playlist reported removing reinstallable Playwright cache; RevealLine reported removing its own clean merged `.cache/worktrees/plan-clarity-20260923` registration, retaining branch/commits. Releases performed no deletion. This owner-reported worktree change must be reflected in next census; all other dirty registrations/evidence remain untouched. Full reconciliation remains incomplete. Prepared two-more-historical-ref proof4b2dd7f8 remains unlanded/pending parent review and fresh remote tip validation.
+
 ## PR285 priority reaffirmed; v0.88 selector merged, production pending
 
 User explicitly prioritizes PR285 merge and Pages release, then remaining PRs. Frozen head33614bc806db2397096851bb0af5a3d6ab90892f has exact run35808406051 preflight/build SUCCESS (build completed02:06:31Z); suites/release gate skipped, not passed. Playlist retains sole game publication and v0.89 allocation; no intervening source release or continuous-Next scope bundled into this head.
