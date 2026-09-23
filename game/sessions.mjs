@@ -165,10 +165,10 @@ export function suspendSession({
   const tuning = recoverGameplayTuning(run.level);
   let pictureRevision = run.level.revision;
   if (presentationLevel && tuning) {
-    const expected = createRun(
-      applyGameplayTuning(presentationLevel, tuning),
-      { classId: run.classId, classRecipes: run.classRecipes },
-    );
+    const expected = createRun(applyGameplayTuning(presentationLevel, tuning), {
+      classId: run.classId,
+      classRecipes: run.classRecipes,
+    });
     required(
       canonical(expected.level) === canonical(run.level),
       'Tuned picture source differs from this flight.',
