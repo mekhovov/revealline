@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "base": "https://mekhovov.github.io/revealline-archive-61/",
+  "archiveCommit": "fa3f1224ef57a80fa33f977fa1991e998cc0c93b",
+  "files": 1093,
+  "expectedBytes": 590981815,
+  "verifiedBytes": 590981815,
+  "failedFiles": 0,
+  "failures": [],
+  "skipped": [],
+  "expectedInventorySha256": "7619754dc519705cced2ac1ef697e8d76e90483cb6e671a1e5412b6f7d3b5610",
+  "verifiedAt": "2026-09-23T11:42:31.499Z",
+  "attempts": 1093,
+  "failedAttempts": 0,
+  "retriedFiles": 0,
+  "runId": 35855710669,
+  "deploymentId": 6612987708,
+  "deploymentStatusId": 18725747149,
+  "archiveTree": "6966cc1dca3d94238c9eee90307bc14a5e3442f3",
+  "scope": "Every pinned canonical HTTP body. Automated suites and extended journeys remain waived; this is byte availability evidence only."
+}
