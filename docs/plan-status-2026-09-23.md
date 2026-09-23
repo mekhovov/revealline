@@ -27,7 +27,8 @@ remains visible there rather than being treated as rejected or completed.
   with collision-only course changes. The intended compatible
   gp4 rules preserve speed and movement domains, permit only a small anti-loop
   variation at a true single-face bounce, and retain a byte-frozen gp3 adapter.
-  This work is not yet merged or released.
+  Candidate `b17f9310f412eb0751fdfb4c45399a7a55879168` passed 52 focused
+  checks; PR, build, merge, publication and public acceptance remain open.
 - Default redesigned Journey, the unified tagged mission selector, safer backup
   replacement, main-menu difficulty and global local-browser playtest controls
   are delivered features.
@@ -207,7 +208,7 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 | Priority     | Item / current state                                                | Completion condition                                                                                                                                                                                | Indicative effort                                                |
 | ------------ | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | P0           | v0.90.0 Continuous Next promotion — source merged                   | Finalize immutable release, merge Pages selector, verify public version/source/inventory and Solo/Versus/Team Next across campaign, pack and Collection boundaries                                  | 1–3h conditional elapsed if publication gates pass first time    |
-| P1           | v0.91.0 collision-only field-enemy courses — PR290 in review        | Straight flight between collisions; direction changes only on true bounces; at most 8° seeded anti-loop variation on a single-face bounce; preserve speed/domains and byte-frozen gp3 replay/save   | 4–8h implementation/review, then independent release gates       |
+| P1           | v0.91.0 collision-only field-enemy courses — PR290 in review        | Frozen candidate and 52 focused checks complete; merge/release/public gates remain. Straight flight between collisions; direction changes only on true bounces; at most 8° seeded anti-loop variation on a single-face bounce; preserve speed/domains and byte-frozen gp3 replay/save   | 4–8h implementation/review, then independent release gates       |
 | P1           | PNG/JPEG mission-selection failure — unresolved                     | Identify affected mission/mode/asset and reproduce; repair actual cause; public Download/Retry/Play succeeds without deleting media or bypassing validation                                         | 2–4h diagnosis;3–8h scoped repair once reproducible              |
 | P1           | Current-speed difficulty/pacing review                              | Representative early/middle/late Solo/Versus/Team routes; fair departures, enemy/craft ratios, useful geometry and no trivial one-cut bypasses outside teaching. Human feedback recorded separately | 1–3 days first pass;6–12h per map-fix release                    |
 | P2           | Remaining save warnings, recovery focus and session-only continuity | Recheck latest accepted source; close only still-reproducible gaps, including two-tab ownership/Next and failed-save recovery                                                                       | 6–10h per bounded slice                                          |
