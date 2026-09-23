@@ -7,7 +7,7 @@
     "oldPr256Head": "4ecf8b520225c4369cdc482460e0d042f82e3af0",
     "pr233Base": "c3398112e9a739225fdc2e8bf603b45f52a5cbb6",
     "pr233Head": "80a47a3b25167d9dcd0bdf98b1bde6a95d112269",
-    "successorRuntime": "d4bcff519175a316c6f9dd96385bfde5495b72dc"
+    "successorRuntime": "ba6b7edd14b16d8af513839aadf104a5ceb6c543"
   },
   "expected": {
     "pr256Paths": 154,
@@ -827,7 +827,7 @@
       "oldStatus": "A",
       "oldBaseBlob": null,
       "oldHeadBlob": "c8d37acc3ad5a90ca585ff298d3b3b2c938c75b7",
-      "successorBlob": "42ecb4fadca8e0e92d671a376e9856a82850c79c",
+      "successorBlob": "224ea521e824ae642af6309f5a04e272180721f7",
       "inPr233": true,
       "pr233FinalBlob": "c8d37acc3ad5a90ca585ff298d3b3b2c938c75b7",
       "classification": "ported",
@@ -843,7 +843,7 @@
       "oldStatus": "M",
       "oldBaseBlob": "235c7b9529d802f84ed4ebe3074951a7d1558265",
       "oldHeadBlob": "ff71912caea224a39f09d275fb5b09d8d5b28991",
-      "successorBlob": "48ebb0d22eed7e9c6358a788c1d8b0dabeda7518",
+      "successorBlob": "8cc3b08f33f52a7a81707c871685d671e7beadcb",
       "inPr233": true,
       "pr233FinalBlob": "ff71912caea224a39f09d275fb5b09d8d5b28991",
       "classification": "ported",
