@@ -34,3 +34,10 @@ local build reached artifact writing but the shared volume had only about 1.3 Gi
 ended with `ENOSPC`; its exact temporary output was removed afterward. This capacity failure
 is retained as a failure, not a passed build. The draft PR's hosted exact-head build remains
 mandatory before readiness or merge.
+
+The focused visual-session compatibility case constructs the shipped fpv58 catalogue owner,
+binds it to an authenticated First Signal picture owner and gameplay-pressure v4 simulation,
+restores the v5 session, resumes identical fixed commands, and re-saves it. Every resumed
+checkpoint stays equal and the saved visual owner remains exact revision58 with manifest
+SHA-256 `ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54`; it is never
+silently upgraded to the integrated current revision62.

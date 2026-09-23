@@ -70,14 +70,14 @@ const perPr = commits.map((entry) => {
 });
 
 const retained58 =
-  "authoring/library/fpv-field-kit/retained/runtime.b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c.json";
+  'authoring/library/fpv-field-kit/retained/runtime.ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54.json';
 const compiled58 =
-  "game/presentation/compiled/runtime.b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c.json";
+  'game/presentation/compiled/runtime.ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54.json';
 for (const relative of [retained58, compiled58]) {
   const bytes = await fs.readFile(path.join(root, relative));
   if (
     bytes.length !== 979746 ||
-    sha256(bytes) !== "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c"
+    sha256(bytes) !== 'ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54'
   )
     throw new Error(`Exact accepted runtime58 differs: ${relative}.`);
 }
@@ -109,7 +109,7 @@ const admitted58 = catalogue.entries.find(
 );
 if (
   admitted58?.presentation?.sha256 !==
-    "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c" ||
+    'ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54' ||
   admitted58.presentation.source.revision !== 58 ||
   admitted58.presentation.theme.revision !== 58
 )
@@ -172,8 +172,8 @@ const result = {
   retainedRuntime58: {
     sourceCommit: '6842203fbf24db198da21759e23d5c5c64d499dd',
     gitBlob: 'd5e6e66b5195a142e9a7205bfbef95429a80bd3c',
-    bytes: 820068,
-    sha256: "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c",
+    bytes: 979746,
+    sha256: 'ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54',
     paths: [retained58, compiled58],
     lazyDependencyFiles: 124,
     closureFiles: 125,
@@ -195,6 +195,7 @@ const result = {
     'game/test/coop-reviewed-successor-picture.test.mjs',
     'game/test/field-kit-retained-runtime.test.mjs',
     'game/test/saved-visual-catalogue.test.mjs',
+    'game/test/visual-sessions.test.mjs',
     'game/build-config.json',
     'package.json',
     'package-lock.json',
