@@ -182,7 +182,7 @@ function pixelAt(trace, x, y) {
   }
   return value;
 }
-function assertLockedPreview(f, hash) {
+function assertFullPreview(f, hash) {
   const canvas = fullCanvas(f),
     trace = fullTrace(f),
     draw = lastDraw(trace);
@@ -200,19 +200,23 @@ function assertLockedPreview(f, hash) {
     assert.equal(
       pixelAt(trace, x, y),
       draw.args[0],
-      'Expanded teaser keeps the same source border',
+      'Full preview retains the same authenticated source border',
     );
   for (const [x, y] of [
     [96, 96],
     [576, 288],
     [1055, 479],
-  ]) {
-    const pixel = pixelAt(trace, x, y);
-    assert.equal(pixel?.opaque, true, 'Expanded preview must conceal the unrevealed centre');
-    assert.equal(pixel.colour, '#0b1a24');
-  }
-  assert.match(previewStatus(f).textContent, /Locked preview.*Win to reveal the full picture/i);
-  assert.match(f.$('coop-discovery-preview-title').textContent, /Locked preview/);
+  ])
+    assert.equal(
+      pixelAt(trace, x, y),
+      draw.args[0],
+      'Explicit preview shows the exact picture centre without awarding it',
+    );
+  assert.match(
+    previewStatus(f).textContent,
+    /Full picture preview.*does not complete an arena or earn a picture/i,
+  );
+  assert.match(f.$('coop-discovery-preview-title').textContent, /Picture preview/);
 }
 
 function retained(f) {
@@ -232,7 +236,7 @@ function retained(f) {
   };
 }
 
-test('Team cards browse without artwork; explicit locked preview returns directly without awards', async (t) => {
+test('Team cards browse without artwork; explicit full preview returns directly without awards', async (t) => {
   const f = await fixture(t),
     writes = [...f.writes];
   await open(f);
@@ -244,7 +248,7 @@ test('Team cards browse without artwork; explicit locked preview returns directl
   assert.equal(fullCanvas(f).hidden, true);
   assert.equal(f.$('journey-back').textContent, 'Back to game');
   await ready(f);
-  assertLockedPreview(f, yard.picture.sha256);
+  assertFullPreview(f, yard.picture.sha256);
   enter(f, f.$('journey-back'));
   assert.equal(viewer(f).hidden, true);
   assert.equal(dialog(f).open, false);
@@ -270,7 +274,7 @@ test('previewing a different arena keeps the paused attempt, original picture an
   await browsingReady(f);
   enter(f, await previewButton(f, 'Relay Yard'));
   await ready(f);
-  assertLockedPreview(f, yard.picture.sha256);
+  assertFullPreview(f, yard.picture.sha256);
   f.tick(20);
   assert.deepEqual(retained(f), before);
   assert.equal(f.$('coop-overlay').hidden, false);
@@ -344,7 +348,7 @@ test('required preview read failure offers an exact Retry without starting play 
   fail = false;
   enter(f, retry);
   await ready(f);
-  assertLockedPreview(f, yard.picture.sha256);
+  assertFullPreview(f, yard.picture.sha256);
   assert.equal(f.doc.activeElement === retry, true);
   assert.equal(f.drawImages.length, 0);
   assert.equal(f.artwork.calls.reads.at(-1).slot, yard.picture.slot);
@@ -372,7 +376,7 @@ test('a newer Back focus survives expanded preview readiness without automatic n
   f.$('journey-back').focus();
   gate.resolve();
   await ready(f);
-  assertLockedPreview(f, yard.picture.sha256);
+  assertFullPreview(f, yard.picture.sha256);
   assert.equal(f.doc.activeElement.id, 'journey-back');
   assert.equal(dialog(f).open, true);
   assert.equal(viewer(f).hidden, false);
@@ -404,7 +408,7 @@ test('a cancelled old visit cannot overwrite a newer expanded preview or its foc
   enter(f, await previewButton(f, 'First Connection'));
   f.$('journey-back').focus();
   await ready(f);
-  assertLockedPreview(f, first.picture.sha256);
+  assertFullPreview(f, first.picture.sha256);
   assert.equal(f.doc.activeElement.id, 'journey-back');
   assert.equal(f.drawImages.length, 0);
   assert.equal(f.$('coop-level').value, 'first-connection');
@@ -477,7 +481,7 @@ async function swappedOriginalBundle() {
   );
 }
 
-test('local .rlteam artwork with exact starter IDs keeps its own teaser and concealed expanded original without a compiled substitute', async (t) => {
+test('local .rlteam artwork with exact starter IDs keeps its own teaser and full original without a compiled substitute', async (t) => {
   const f = await fixture(t),
     file = await swappedOriginalBundle();
   const input = f.$('coop-pack-file');
@@ -494,7 +498,7 @@ test('local .rlteam artwork with exact starter IDs keeps its own teaser and conc
     writes = [...f.writes];
   enter(f, origin);
   await ready(f);
-  assertLockedPreview(f, yard.picture.sha256);
+  assertFullPreview(f, yard.picture.sha256);
   assert.equal(
     f.artwork.calls.reads.length,
     reads,
@@ -526,7 +530,7 @@ test('an earned Team result survives another arena preview and its original Next
   const origin = await previewButton(f, 'Relay Yard');
   enter(f, origin);
   await ready(f);
-  assertLockedPreview(f, yard.picture.sha256);
+  assertFullPreview(f, yard.picture.sha256);
   f.tick(20);
   assert.deepEqual(retained(f), earned);
   enter(f, f.$('journey-back'));
@@ -563,6 +567,12 @@ test('an earned Team result survives another arena preview and its original Next
   assert.equal(f.$('coop-stage').textContent, 'RELAY YARD');
   assert.equal(f.$('coop-clock').textContent, '0:00');
   assert.equal(f.$('coop-coverage').textContent, '0.0%');
-  assert.equal(f.drawImages.at(-1).sha256, yard.picture.sha256);
+  f.drawImages.length = 0;
+  f.tick(1);
+  const nextPicture = f.drawImages[0];
+  assert.ok(f.artwork.calls.decodes.includes(nextPicture));
+  assert.equal(nextPicture.sha256, yard.picture.sha256);
+  assert.equal(f.drawImages.filter((image) => image === nextPicture).length, 1);
+  assert.ok(f.drawImages.length > 1, 'Prepared actors follow the accepted successor picture');
   assert.equal(f.doc.activeElement.id, 'coop-canvas');
 });

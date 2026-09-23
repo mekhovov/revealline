@@ -1,4 +1,30 @@
-/** Explicit, concealed artwork preview. Browsing never decodes pictures, and
+/** Read-only copies of authenticated Team artwork. Passive surfaces retain a
+ * broad concealed teaser; the explicit library action may show the full
+ * original without granting gameplay ownership. */
+export function paintTeamPicturePreview(
+  context,
+  image,
+  width,
+  height,
+  { full = false, isCurrent = () => true } = {},
+) {
+  if (!isCurrent()) return false;
+  context.imageSmoothingEnabled = false;
+  context.globalAlpha = 1;
+  context.globalCompositeOperation = 'source-over';
+  if (!isCurrent()) return false;
+  context.drawImage(image, 0, 0, width, height);
+  if (!isCurrent()) return false;
+  if (!full) {
+    const border = width / 12;
+    context.fillStyle = '#0b1a24';
+    if (!isCurrent()) return false;
+    context.fillRect(border, border, width - border * 2, height - border * 2);
+  }
+  return isCurrent();
+}
+
+/** Explicit full artwork preview. Browsing remains artwork-lazy, and
  * cancellation keeps the underlying one-at-a-time permit until it settles. */
 export function attachTeamLibraryPreview({
   document,
@@ -57,7 +83,7 @@ export function attachTeamLibraryPreview({
       !ticket.controller.signal.aborted &&
       selection()?.row === ticket.row;
     panel.hidden = false;
-    title.textContent = `${ticket.row.title} · Locked preview`;
+    title.textContent = `${ticket.row.title} · Picture preview`;
     status.textContent = 'Preparing the selected picture… Your current attempt is unchanged.';
     status.dataset.state = 'busy';
     retry.hidden = document.activeElement !== retry;
@@ -80,15 +106,17 @@ export function attachTeamLibraryPreview({
         canvas.height = 576;
         const context = canvas.getContext('2d');
         if (!context) throw new Error('Preview canvas unavailable.');
-        context.imageSmoothingEnabled = false;
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-        context.fillStyle = '#0b1a24';
-        context.fillRect(96, 96, 960, 384);
-        if (!current()) return;
+        if (
+          !paintTeamPicturePreview(context, image, canvas.width, canvas.height, {
+            full: true,
+            isCurrent: current,
+          })
+        )
+          return;
         canvas.hidden = false;
       }
       status.textContent = image
-        ? 'Locked preview. Win to reveal the full picture.'
+        ? 'Full picture preview. Viewing does not complete an arena or earn a picture.'
         : 'Approved procedural scene. Play to explore this arena.';
       status.dataset.state = 'ready';
     } catch {
