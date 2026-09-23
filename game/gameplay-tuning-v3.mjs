@@ -5,10 +5,9 @@ import { validateCoopLevel } from './coop/core.mjs';
 import { compileCoopFoundationGeometry, isJourneyTeamLevel } from './coop/foundations.mjs';
 import * as historical from './gameplay-tuning-v1.mjs';
 import * as v2 from './gameplay-tuning-v2.mjs';
-import * as v3 from './gameplay-tuning-v3.mjs';
-import { COLLISION_COURSE_VERSION } from './core/field-course.mjs';
+import { FIELD_COURSE_VERSION } from './core/field-course.mjs';
 
-export const GAMEPLAY_TUNING_VERSION = 'gameplay-pressure.v4';
+export const GAMEPLAY_TUNING_VERSION = 'gameplay-pressure.v3';
 // The preference format is unchanged; historical recipes have separate dispatch.
 const PREFERENCE_VERSION = 'gameplay-pressure.v1';
 export const GAMEPLAY_TUNING_STORAGE_KEY = 'revealline.gameplay-tuning.v1';
@@ -85,7 +84,6 @@ export function validateGameplayTuning(snapshot) {
   const owned = copySmall(snapshot);
   if (owned?.version === 'gameplay-pressure.v1') return historical.validateGameplayTuning(owned);
   if (owned?.version === 'gameplay-pressure.v2') return v2.validateGameplayTuning(owned);
-  if (owned?.version === 'gameplay-pressure.v3') return v3.validateGameplayTuning(owned);
   exactKeys(
     owned,
     ['version', 'difficulty', ...fields, 'adminOverride', 'overrides'],
@@ -105,10 +103,9 @@ export function gameplayTuningDescription(snapshot) {
   if (tuning.version === 'gameplay-pressure.v1')
     return `Historical pressure: enemy speed ×${tuning.enemySpeed.toFixed(2)}, craft speed ×${tuning.playerSpeed.toFixed(2)}.`;
   if (tuning.version === 'gameplay-pressure.v2') return v2.gameplayTuningDescription(tuning);
-  if (tuning.version === 'gameplay-pressure.v3') return v3.gameplayTuningDescription(tuning);
   return (
     `Reference-paced targets: craft ${(REFERENCE_MOTION_RATES.craft * tuning.playerSpeed).toFixed(3)}, field enemies ${(REFERENCE_MOTION_RATES.fieldKeeper * tuning.enemySpeed).toFixed(3)}, boundary patrols ${(REFERENCE_MOTION_RATES.boundaryPatrol * tuning.enemySpeed).toFixed(3)} short-fields/s (runtime caps apply). ` +
-    `${tuning.enemyDensity ? `Target +${Math.round(tuning.enemyDensity * 100)}% field keepers, rounded up where safe` : 'Authored enemy counts'}. Field enemies travel straight between impacts, with small angle variation only at wall or reclaimed-ground bounces. Boundary patrols keep their routes; special attacks keep their warnings.`
+    `${tuning.enemyDensity ? `Target +${Math.round(tuning.enemyDensity * 100)}% field keepers, rounded up where safe` : 'Authored enemy counts'}. Field enemies make gradual, varied course changes; boundary patrols keep their routes. Other threat roles keep their authored difficulty pressure.`
   );
 }
 
@@ -125,11 +122,11 @@ function overrideBits(overrides) {
  * from its installed original and compare the entire tuned level before adopt.
  * The 70-character revision preserves exact floating-point overrides. */
 export function recoverGameplayTuning(level) {
-  const previous = v3.recoverGameplayTuning(level);
+  const previous = v2.recoverGameplayTuning(level);
   if (previous) return previous;
   const match =
     typeof level?.revision === 'string' &&
-    /^gp4([gse])-([a-f0-9]{48})-([a-f0-9]{16})$/.exec(level.revision);
+    /^gp3([gse])-([a-f0-9]{48})-([a-f0-9]{16})$/.exec(level.revision);
   if (!match) return null;
   try {
     const bytes = Uint8Array.from(match[2].match(/../g), (byte) => Number.parseInt(byte, 16));
@@ -380,13 +377,12 @@ export function applyGameplayTuning(source, snapshot) {
   const tuning = validateGameplayTuning(snapshot);
   const owned = boundedJSON(source);
   required(
-    !/^gp[1234][gse]-/.test(String(owned?.revision)),
+    !/^gp[123][gse]-/.test(String(owned?.revision)),
     'Gameplay tuning must apply exactly once per attempt.',
   );
   if (tuning.version === 'gameplay-pressure.v1')
     return historical.applyGameplayTuning(owned, tuning);
   if (tuning.version === 'gameplay-pressure.v2') return v2.applyGameplayTuning(owned, tuning);
-  if (tuning.version === 'gameplay-pressure.v3') return v3.applyGameplayTuning(owned, tuning);
   const team =
     typeof owned?.version === 'string' && owned.version.startsWith('revealline-coop-level.');
   const level = team ? owned : normalizedLevel(owned);
@@ -459,8 +455,8 @@ export function applyGameplayTuning(source, snapshot) {
   addKeepers(level, tuning, team);
   for (const enemy of level.enemies)
     if (enemy.type === (team ? 'drifter' : 'bouncer') && Math.hypot(enemy.vx, enemy.vy) > 0)
-      enemy.course = COLLISION_COURSE_VERSION;
-  level.revision = `gp4${difficultyCodes[tuning.difficulty]}-${overrideBits(tuning.overrides)}-${dataIdentity({ sourceIdentity, tuning })}`;
+      enemy.course = FIELD_COURSE_VERSION;
+  level.revision = `gp3${difficultyCodes[tuning.difficulty]}-${overrideBits(tuning.overrides)}-${dataIdentity({ sourceIdentity, tuning })}`;
   if (team) {
     const validation = validateCoopLevel(level);
     required(validation.valid, `Invalid tuned Team level: ${validation.errors.join(' ')}`);

@@ -1132,7 +1132,7 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
     for (let i = 0; i < walls.length; i++)
       if (walls[i] && due(walls[i].time)) {
         if (walls[i].rover) reflectCoopRoamer(run.enemies[i], walls[i]);
-        else reflectEnemy(run.enemies[i], walls[i].normals);
+        else reflectEnemy(run.enemies[i], walls[i].normals, run.seed);
       }
     const newMeeting = meetingTime !== null && due(meetingTime);
     if (newMeeting) run.headsTouching = true;
