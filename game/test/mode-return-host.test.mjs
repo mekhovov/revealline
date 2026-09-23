@@ -54,6 +54,7 @@ for (const [kind, version, label] of [
   async function missions(h, flight = false) {
     if (flight) {
       h.$('start-button').click();
+      await settle(() => h.doc.body.dataset.flightState === 'running');
       h.key('ArrowDown');
       for (let i = 0; i < 24; i++) h.frame();
       h.key('ArrowDown', false);
@@ -98,8 +99,14 @@ for (const [kind, version, label] of [
           theme: h.$('theme-select').value,
         };
         const checkpoint = authoritativeCheckpoint(h.rendered.run);
+        const originalSave = flight ? JSON.parse(storage.getItem(slot)) : null;
         await request(h);
         if (flight) {
+          assert.equal(originalSave.format, 'xonix-session.v5');
+          const retainedSave = JSON.parse(storage.getItem(slot));
+          assert.equal(retainedSave.format, 'xonix-session.v5');
+          assert.deepEqual(retainedSave.visualThemePin, originalSave.visualThemePin);
+          assert.deepEqual(retainedSave.presentationPins, originalSave.presentationPins);
           assert.match(h.$('mode-leave-status').textContent, /saved and verified/);
           assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
           h.$('mode-leave-confirm').click();
@@ -252,8 +259,14 @@ for (const [kind, version, label] of [
         const h = await host(t, { storage, previewStorage, titleScreen: !flight });
         await missions(h, flight);
         const checkpoint = authoritativeCheckpoint(h.rendered.run);
+        const originalSave = flight ? JSON.parse(storage.getItem(slot)) : null;
         await request(h);
         if (flight) {
+          assert.equal(originalSave.format, 'xonix-session.v5');
+          const retainedSave = JSON.parse(storage.getItem(slot));
+          assert.equal(retainedSave.format, 'xonix-session.v5');
+          assert.deepEqual(retainedSave.visualThemePin, originalSave.visualThemePin);
+          assert.deepEqual(retainedSave.presentationPins, originalSave.presentationPins);
           assert.match(h.$('mode-leave-status').textContent, /saved and verified/);
           h.$('mode-leave-confirm').click();
         }

@@ -1,0 +1,1096 @@
+TAP version 13
+# Subtest: Collection file Import and Undo return Home without inventing a cancelled pack launch
+ok 1 - Collection file Import and Undo return Home without inventing a cancelled pack launch
+  ---
+  duration_ms: 1937.647208
+  type: 'test'
+  ...
+# Subtest: blur during the actual held backup lock does not announce a pack cancellation or autoplay
+ok 2 - blur during the actual held backup lock does not announce a pack cancellation or autoplay
+  ---
+  duration_ms: 1295.07325
+  type: 'test'
+  ...
+# Subtest: backup replacement review: keep preserves current data and never commits implicitly
+ok 3 - backup replacement review: keep preserves current data and never commits implicitly
+  ---
+  duration_ms: 917.541042
+  type: 'test'
+  ...
+# Subtest: backup replacement review: escape preserves current data and never commits implicitly
+ok 4 - backup replacement review: escape preserves current data and never commits implicitly
+  ---
+  duration_ms: 905.874583
+  type: 'test'
+  ...
+# Subtest: backup replacement review: close preserves current data and never commits implicitly
+ok 5 - backup replacement review: close preserves current data and never commits implicitly
+  ---
+  duration_ms: 905.263625
+  type: 'test'
+  ...
+# Subtest: backup replacement review: pagehide preserves current data and never commits implicitly
+ok 6 - backup replacement review: pagehide preserves current data and never commits implicitly
+  ---
+  duration_ms: 879.223084
+  type: 'test'
+  ...
+# Subtest: backup replacement review: changed storage preserves current data and never commits implicitly
+ok 7 - backup replacement review: changed storage preserves current data and never commits implicitly
+  ---
+  duration_ms: 882.514083
+  type: 'test'
+  ...
+# Subtest: repeated Escape cancels only the active replacement review before native close
+ok 8 - repeated Escape cancels only the active replacement review before native close
+  ---
+  duration_ms: 1097.162958
+  type: 'test'
+  ...
+# Subtest: modeled controller Back routes the replacement decision through the current Library owner
+ok 9 - modeled controller Back routes the replacement decision through the current Library owner
+  ---
+  duration_ms: 944.861459
+  type: 'test'
+  ...
+# Subtest: modeled controller Confirm routes the replacement decision through the current Library owner
+ok 10 - modeled controller Confirm routes the replacement decision through the current Library owner
+  ---
+  duration_ms: 1305.305709
+  type: 'test'
+  ...
+# Subtest: backup pending optional seal: keep respects completed flight ownership
+ok 11 - backup pending optional seal: keep respects completed flight ownership
+  ---
+  duration_ms: 22270.197375
+  type: 'test'
+  ...
+# Legal host win tick=1305; held verifier yields=1
+# Opened Library from won result.
+# Subtest: backup pending optional seal: close respects completed flight ownership
+ok 12 - backup pending optional seal: close respects completed flight ownership
+  ---
+  duration_ms: 21928.19575
+  type: 'test'
+  ...
+# Legal host win tick=1305; held verifier yields=1
+# Opened Library from won result.
+# Subtest: backup pending optional seal: failed replacement respects completed flight ownership
+ok 13 - backup pending optional seal: failed replacement respects completed flight ownership
+  ---
+  duration_ms: 22241.818333
+  type: 'test'
+  ...
+# Legal host win tick=1305; held verifier yields=1
+# Opened Library from won result.
+# Subtest: backup pending optional seal: uncertain replacement respects completed flight ownership
+ok 14 - backup pending optional seal: uncertain replacement respects completed flight ownership
+  ---
+  duration_ms: 22234.973667
+  type: 'test'
+  ...
+# Legal host win tick=1305; held verifier yields=1
+# Opened Library from won result.
+# Subtest: backup pending optional seal: successful replacement respects completed flight ownership
+ok 15 - backup pending optional seal: successful replacement respects completed flight ownership
+  ---
+  duration_ms: 22219.561083
+  type: 'test'
+  ...
+# Legal host win tick=1305; held verifier yields=1
+# Opened Library from won result.
+# Subtest: a seal earned during backup review invalidates the Undo snapshot without replacing data
+ok 16 - a seal earned during backup review invalidates the Undo snapshot without replacing data
+  ---
+  duration_ms: 21933.672208
+  type: 'test'
+  ...
+# Legal host win tick=1305; held verifier yields=1
+# Opened Library from won result.
+# Subtest: a verified seal waits through successful accepted backup storage
+ok 17 - a verified seal waits through successful accepted backup storage
+  ---
+  duration_ms: 22278.619666
+  type: 'test'
+  ...
+# Legal host win tick=1305; held verifier yields=1
+# Opened Library from won result.
+# Subtest: a verified seal waits through refused accepted backup storage
+ok 18 - a verified seal waits through refused accepted backup storage
+  ---
+  duration_ms: 22164.115291
+  type: 'test'
+  ...
+# Legal host win tick=1305; held verifier yields=1
+# Opened Library from won result.
+# Subtest: a verified seal waits through rolled back accepted backup storage
+ok 19 - a verified seal waits through rolled back accepted backup storage
+  ---
+  duration_ms: 21832.321333
+  type: 'test'
+  ...
+# Legal host win tick=1305; held verifier yields=1
+# Opened Library from won result.
+# Subtest: a fresh released mission pins verified visuals and restores its exact checkpoint without rewriting artwork
+    # Subtest: fresh first capture setup saves a real v5 attempt
+    ok 1 - fresh first capture setup saves a real v5 attempt
+      ---
+      duration_ms: 1144.846875
+      type: 'test'
+      ...
+    # Subtest: Continue independently verifies and restores both owners
+    ok 2 - Continue independently verifies and restores both owners
+      ---
+      duration_ms: 1088.15175
+      type: 'test'
+      ...
+    1..2
+ok 20 - a fresh released mission pins verified visuals and restores its exact checkpoint without rewriting artwork
+  ---
+  duration_ms: 2233.528833
+  type: 'test'
+  ...
+# Subtest: real victory Retry retains visuals and failed Next keeps results before one retry starts the successor
+ok 21 - real victory Retry retains visuals and failed Next keeps results before one retry starts the successor
+  ---
+  duration_ms: 17139.263833
+  type: 'test'
+  ...
+# Subtest: Gentle fresh play pins the original mission while keeping its transformed checkpoint
+ok 22 - Gentle fresh play pins the original mission while keeping its transformed checkpoint
+  ---
+  duration_ms: 1202.632833
+  type: 'test'
+  ...
+# Subtest: cancelled fresh-theme preparation keeps the current paused run and can retry deliberately
+ok 23 - cancelled fresh-theme preparation keeps the current paused run and can retry deliberately
+  ---
+  duration_ms: 804.6735
+  type: 'test'
+  ...
+# Subtest: an unavailable declared fresh collection fails visibly instead of falling back to page appearance
+ok 24 - an unavailable declared fresh collection fails visibly instead of falling back to page appearance
+  ---
+  duration_ms: 779.976209
+  type: 'test'
+  ...
+# Subtest: First Flight checked departure keeps the complete accepted visual reference and original picture
+ok 25 - First Flight checked departure keeps the complete accepted visual reference and original picture
+  ---
+  duration_ms: 1027.154417
+  type: 'test'
+  ...
+# Subtest: fresh policy declares exact full original coverage for both accepted difficulties
+ok 26 - fresh policy declares exact full original coverage for both accepted difficulties
+  ---
+  duration_ms: 118.418583
+  type: 'test'
+  ...
+# Subtest: same-named or mutated authored content cannot reuse approved fresh coverage
+ok 27 - same-named or mutated authored content cannot reuse approved fresh coverage
+  ---
+  duration_ms: 9.894417
+  type: 'test'
+  ...
+# Subtest: history return retires same-owner speculative work before a late ordinary rejection
+ok 28 - history return retires same-owner speculative work before a late ordinary rejection
+  ---
+  duration_ms: 497.451042
+  type: 'test'
+  ...
+# Subtest: an unfinished original can be prepared explicitly after history return without durable writes or writer reacquisition
+ok 29 - an unfinished original can be prepared explicitly after history return without durable writes or writer reacquisition
+  ---
+  duration_ms: 638.856166
+  type: 'test'
+  ...
+# Subtest: a world change cancels pending session preparation and late completion cannot start or replace the newer choice
+ok 30 - a world change cancels pending session preparation and late completion cannot start or replace the newer choice
+  ---
+  duration_ms: 545.616584
+  type: 'test'
+  ...
+# Subtest: history Load saved flight and explicit Resume keep the saved pin and checkpoint without reacquiring or writing
+ok 31 - history Load saved flight and explicit Resume keep the saved pin and checkpoint without reacquiring or writing
+  ---
+  duration_ms: 2154.846958
+  type: 'test'
+  ...
+# Subtest: history cancellation preserves selected pins while a new explicit Start retries only their decode
+ok 32 - history cancellation preserves selected pins while a new explicit Start retries only their decode
+  ---
+  duration_ms: 831.631709
+  type: 'test'
+  ...
+# Subtest: unjoined session prewarm becomes ready without starting and exposes export of its exact originals
+ok 33 - unjoined session prewarm becomes ready without starting and exposes export of its exact originals
+  ---
+  duration_ms: 546.856208
+  type: 'test'
+  ...
+# Subtest: backup preparation synchronously gives Cancel usable focus and explicit Cancel returns to Load
+ok 34 - backup preparation synchronously gives Cancel usable focus and explicit Cancel returns to Load
+  ---
+  duration_ms: 817.119875
+  type: 'test'
+  ...
+# Subtest: backup preparation keeps focus through the Keep decision and restores its actual Load opener
+ok 35 - backup preparation keeps focus through the Keep decision and restores its actual Load opener
+  ---
+  duration_ms: 847.885917
+  type: 'test'
+  ...
+# Subtest: backup review does not reclaim preparation focus from a newer Close choice
+ok 36 - backup review does not reclaim preparation focus from a newer Close choice
+  ---
+  duration_ms: 841.317834
+  type: 'test'
+  ...
+# Subtest: a reentrant Close during the initial Cancel handoff retires work before it reads or locks controls
+ok 37 - a reentrant Close during the initial Cancel handoff retires work before it reads or locks controls
+  ---
+  duration_ms: 645.7635
+  type: 'test'
+  ...
+# Subtest: a native Close with a queued close event retires preparation before reading or re-locking controls
+ok 38 - a native Close with a queued close event retires preparation before reading or re-locking controls
+  ---
+  duration_ms: 640.278458
+  type: 'test'
+  ...
+# Subtest: chapter completion restores its still-owned actual button after native disable
+ok 39 - chapter completion restores its still-owned actual button after native disable
+  ---
+  duration_ms: 1088.797875
+  type: 'test'
+  ...
+# Subtest: chapter error restores its still-owned actual button after native disable
+ok 40 - chapter error restores its still-owned actual button after native disable
+  ---
+  duration_ms: 645.122125
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after focus, even after returning to BODY
+ok 41 - chapter completion does not reclaim focus after focus, even after returning to BODY
+  ---
+  duration_ms: 932.641042
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after blur, even after returning to BODY
+ok 42 - chapter completion does not reclaim focus after blur, even after returning to BODY
+  ---
+  duration_ms: 638.2605
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after hidden, even after returning to BODY
+ok 43 - chapter completion does not reclaim focus after hidden, even after returning to BODY
+  ---
+  duration_ms: 633.932084
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after pagehide, even after returning to BODY
+ok 44 - chapter completion does not reclaim focus after pagehide, even after returning to BODY
+  ---
+  duration_ms: 626.736
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after close, even after returning to BODY
+ok 45 - chapter completion does not reclaim focus after close, even after returning to BODY
+  ---
+  duration_ms: 916.86825
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after new-dialog, even after returning to BODY
+ok 46 - chapter completion does not reclaim focus after new-dialog, even after returning to BODY
+  ---
+  duration_ms: 937.400834
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after body-key, even after returning to BODY
+ok 47 - chapter completion does not reclaim focus after body-key, even after returning to BODY
+  ---
+  duration_ms: 959.273375
+  type: 'test'
+  ...
+# Subtest: chapter enable callback choosing another control is not overwritten
+ok 48 - chapter enable callback choosing another control is not overwritten
+  ---
+  duration_ms: 960.7665
+  type: 'test'
+  ...
+# Subtest: install completion restores its still-owned actual button after native disable
+not ok 49 - install completion restores its still-owned actual button after native disable
+  ---
+  duration_ms: 5647.656833
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:100:5'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:101:45)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: install error restores its still-owned actual button after native disable
+not ok 50 - install error restores its still-owned actual button after native disable
+  ---
+  duration_ms: 5646.304334
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:100:5'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:101:45)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: install completion does not reclaim focus after focus, even after returning to BODY
+not ok 51 - install completion does not reclaim focus after focus, even after returning to BODY
+  ---
+  duration_ms: 5648.294666
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:137:5'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:138:45)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: install completion does not reclaim focus after blur, even after returning to BODY
+not ok 52 - install completion does not reclaim focus after blur, even after returning to BODY
+  ---
+  duration_ms: 5637.984917
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:137:5'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:138:45)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: install completion does not reclaim focus after hidden, even after returning to BODY
+not ok 53 - install completion does not reclaim focus after hidden, even after returning to BODY
+  ---
+  duration_ms: 5645.237417
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:137:5'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:138:45)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: install completion does not reclaim focus after pagehide, even after returning to BODY
+not ok 54 - install completion does not reclaim focus after pagehide, even after returning to BODY
+  ---
+  duration_ms: 5639.057833
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:137:5'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:138:45)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: install completion does not reclaim focus after close, even after returning to BODY
+not ok 55 - install completion does not reclaim focus after close, even after returning to BODY
+  ---
+  duration_ms: 5645.474416
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:137:5'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:138:45)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: install completion does not reclaim focus after new-dialog, even after returning to BODY
+not ok 56 - install completion does not reclaim focus after new-dialog, even after returning to BODY
+  ---
+  duration_ms: 5641.937666
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:137:5'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:138:45)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: install completion does not reclaim focus after body-key, even after returning to BODY
+not ok 57 - install completion does not reclaim focus after body-key, even after returning to BODY
+  ---
+  duration_ms: 5657.013667
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:137:5'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:138:45)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: install enable callback choosing another control is not overwritten
+not ok 58 - install enable callback choosing another control is not overwritten
+  ---
+  duration_ms: 5657.268542
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:167:3'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:168:43)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: explicit Library Cancel after a native Tab cycle renews return to the actual Install action
+not ok 59 - explicit Library Cancel after a native Tab cycle renews return to the actual Install action
+  ---
+  duration_ms: 5638.766042
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:241:1'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:242:41)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after background
+not ok 60 - fresh explicit Cancel cannot restore after background
+  ---
+  duration_ms: 5651.166083
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:251:3'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:252:43)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after closed-root
+not ok 61 - fresh explicit Cancel cannot restore after closed-root
+  ---
+  duration_ms: 5643.479583
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:251:3'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:252:43)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after cleanup-focus
+not ok 62 - fresh explicit Cancel cannot restore after cleanup-focus
+  ---
+  duration_ms: 5642.16325
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:251:3'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:252:43)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after cleanup-blur
+not ok 63 - fresh explicit Cancel cannot restore after cleanup-blur
+  ---
+  duration_ms: 5649.889
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:251:3'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:252:43)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Cancel while actual pack commit is finishing remains detached and cannot restore focus
+not ok 64 - Cancel while actual pack commit is finishing remains detached and cannot restore focus
+  ---
+  duration_ms: 5655.872417
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:274:1'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:275:35)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: fresh return intent refuses a target outside its captured dialog
+not ok 65 - fresh return intent refuses a target outside its captured dialog
+  ---
+  duration_ms: 5650.75675
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:308:1'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/wait-for.mjs:15:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:147:3)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:48:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/operation-focus-host.test.mjs:309:35)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: discovery includes suspended-only releases, deduplicates profiles and excludes recovery markers
+ok 66 - discovery includes suspended-only releases, deduplicates profiles and excludes recovery markers
+  ---
+  duration_ms: 6.521333
+  type: 'test'
+  ...
+# Subtest: candidate bound counts distinct editions across both namespaces
+ok 67 - candidate bound counts distinct editions across both namespaces
+  ---
+  duration_ms: 0.305417
+  type: 'test'
+  ...
+# Subtest: picker keeps a recent saved flight visible after many releases and explains its bound
+ok 68 - picker keeps a recent saved flight visible after many releases and explains its bound
+  ---
+  duration_ms: 1.902458
+  type: 'test'
+  ...
+# Subtest: immediate: an unfinished first attempt transfers without ever writing a source profile
+ok 69 - immediate: an unfinished first attempt transfers without ever writing a source profile
+  ---
+  duration_ms: 25.995208
+  type: 'test'
+  ...
+# Subtest: grid-center: an unfinished first attempt transfers without ever writing a source profile
+ok 70 - grid-center: an unfinished first attempt transfers without ever writing a source profile
+  ---
+  duration_ms: 13.977834
+  type: 'test'
+  ...
+# Subtest: null profile never masks corrupt/unreadable profiles, missing sessions or malformed replay data
+ok 71 - null profile never masks corrupt/unreadable profiles, missing sessions or malformed replay data
+  ---
+  duration_ms: 5.526958
+  type: 'test'
+  ...
+# Subtest: suspended-only sources retain writer and recovery exclusion without stealing or repairing
+ok 72 - suspended-only sources retain writer and recovery exclusion without stealing or repairing
+  ---
+  duration_ms: 8.5365
+  type: 'test'
+  ...
+# Subtest: shipped R4 suspended-only first capture retains its exact edition, original art and both turn policies
+ok 73 - shipped R4 suspended-only first capture retains its exact edition, original art and both turn policies
+  ---
+  duration_ms: 4151.760792
+  type: 'test'
+  ...
+# Subtest: included Gentle campaign expansion is forwarded for both absent and present profiles
+ok 74 - included Gentle campaign expansion is forwarded for both absent and present profiles
+  ---
+  duration_ms: 24.434458
+  type: 'test'
+  ...
+# Subtest: real transfer panel reviews empty-profile meaning, rechecks source and applies only the fresh journaled snapshot
+ok 75 - real transfer panel reviews empty-profile meaning, rechecks source and applies only the fresh journaled snapshot
+  ---
+  duration_ms: 39.560875
+  type: 'test'
+  ...
+# Subtest: a cancelled transfer read cannot hide the next review controls or publish its preview
+ok 76 - a cancelled transfer read cannot hide the next review controls or publish its preview
+  ---
+  duration_ms: 5.995042
+  type: 'test'
+  ...
+# Subtest: confirmed Restart retains xonix-session.v4 picture ownership after assignment changes
+ok 77 - confirmed Restart retains xonix-session.v4 picture ownership after assignment changes
+  ---
+  duration_ms: 1060.098084
+  type: 'test'
+  ...
+# Subtest: confirmed Restart retains xonix-session.v2 picture ownership after assignment changes
+ok 78 - confirmed Restart retains xonix-session.v2 picture ownership after assignment changes
+  ---
+  duration_ms: 867.724084
+  type: 'test'
+  ...
+# Subtest: shipped catalogue retains the released FPV revision and exact First Signal coverage
+ok 79 - shipped catalogue retains the released FPV revision and exact First Signal coverage
+  ---
+  duration_ms: 85.6125
+  type: 'test'
+  ...
+# Subtest: catalogue reader uses the code-owned URL and rejects redirect, oversized and malformed replies
+ok 80 - catalogue reader uses the code-owned URL and rejects redirect, oversized and malformed replies
+  ---
+  duration_ms: 11.453666
+  type: 'test'
+  ...
+# Subtest: catalogue cancellation closes the actual pending response stream
+ok 81 - catalogue cancellation closes the actual pending response stream
+  ---
+  duration_ms: 0.92625
+  type: 'test'
+  ...
+# Subtest: real Solo Continue restores an older decoded collection, saves it and retains it through Retry
+    # Subtest: record an actual unfinished flight
+    ok 1 - record an actual unfinished flight
+      ---
+      duration_ms: 554.818667
+      type: 'test'
+      ...
+    1..1
+ok 82 - real Solo Continue restores an older decoded collection, saves it and retains it through Retry
+  ---
+  duration_ms: 8684.494167
+  type: 'test'
+  ...
+# Subtest: retained collection cancel keeps the current Solo attempt and original save
+    # Subtest: record an actual unfinished flight
+    ok 1 - record an actual unfinished flight
+      ---
+      duration_ms: 456.024333
+      type: 'test'
+      ...
+    1..1
+ok 83 - retained collection cancel keeps the current Solo attempt and original save
+  ---
+  duration_ms: 793.499125
+  type: 'test'
+  ...
+# Subtest: retained collection corrupt keeps the current Solo attempt and original save
+    # Subtest: record an actual unfinished flight
+    ok 1 - record an actual unfinished flight
+      ---
+      duration_ms: 456.877834
+      type: 'test'
+      ...
+    1..1
+ok 84 - retained collection corrupt keeps the current Solo attempt and original save
+  ---
+  duration_ms: 785.836458
+  type: 'test'
+  ...
+# Subtest: retained collection bad-image keeps the current Solo attempt and original save
+    # Subtest: record an actual unfinished flight
+    ok 1 - record an actual unfinished flight
+      ---
+      duration_ms: 444.733459
+      type: 'test'
+      ...
+    1..1
+ok 85 - retained collection bad-image keeps the current Solo attempt and original save
+  ---
+  duration_ms: 791.434667
+  type: 'test'
+  ...
+# Subtest: retained collection bad-audio keeps the current Solo attempt and original save
+    # Subtest: record an actual unfinished flight
+    ok 1 - record an actual unfinished flight
+      ---
+      duration_ms: 457.223291
+      type: 'test'
+      ...
+    1..1
+ok 86 - retained collection bad-audio keeps the current Solo attempt and original save
+  ---
+  duration_ms: 804.762042
+  type: 'test'
+  ...
+# Subtest: leaving the page writes the retained visual pin before closing its decoded resources
+    # Subtest: record an actual unfinished flight
+    ok 1 - record an actual unfinished flight
+      ---
+      duration_ms: 453.126958
+      type: 'test'
+      ...
+    # Subtest: restore and leave through actual pagehide
+    ok 2 - restore and leave through actual pagehide
+      ---
+      duration_ms: 378.985708
+      type: 'test'
+      ...
+    1..2
+ok 87 - leaving the page writes the retained visual pin before closing its decoded resources
+  ---
+  duration_ms: 942.30725
+  type: 'test'
+  ...
+# Subtest: a missing pinned picture releases the staged theme without replacing the accepted page assets
+    # Subtest: record an actual unfinished flight
+    ok 1 - record an actual unfinished flight
+      ---
+      duration_ms: 456.711916
+      type: 'test'
+      ...
+    1..1
+ok 88 - a missing pinned picture releases the staged theme without replacing the accepted page assets
+  ---
+  duration_ms: 813.253
+  type: 'test'
+  ...
+# Subtest: a late page presentation neither blocks nor replaces an independently restored theme
+    # Subtest: record an actual unfinished flight
+    ok 1 - record an actual unfinished flight
+      ---
+      duration_ms: 456.492
+      type: 'test'
+      ...
+    1..1
+ok 89 - a late page presentation neither blocks nor replaces an independently restored theme
+  ---
+  duration_ms: 932.478167
+  type: 'test'
+  ...
+# Subtest: a save matching the current release loads an independent owner without a redundant history file
+    # Subtest: record an actual unfinished flight
+    ok 1 - record an actual unfinished flight
+      ---
+      duration_ms: 457.894833
+      type: 'test'
+      ...
+    1..1
+ok 90 - a save matching the current release loads an independent owner without a redundant history file
+  ---
+  duration_ms: 931.741292
+  type: 'test'
+  ...
+# Subtest: Gentle restoration verifies original art identity and preserves the transformed simulation
+    # Subtest: record an actual unfinished flight
+    ok 1 - record an actual unfinished flight
+      ---
+      duration_ms: 519.922583
+      type: 'test'
+      ...
+    1..1
+ok 91 - Gentle restoration verifies original art identity and preserves the transformed simulation
+  ---
+  duration_ms: 1002.889083
+  type: 'test'
+  ...
+# Subtest: session-only Next prepares a new exact original without persistent writes
+not ok 92 - session-only Next prepares a new exact original without persistent writes
+  ---
+  duration_ms: 76.670042
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/session-only-release-next-host.test.mjs:45:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/content/journey-campaign-pins.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/content/journey-campaign-pins.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1249:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:299:26)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/app.mjs?difficultyHost=1:371:17
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1249:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:299:26)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/app.mjs?difficultyHost=1:371:17
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/helpers/solo-dom.mjs:472:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/ux-delivery-review-20260922/pr233-merged-test/game/test/session-only-release-next-host.test.mjs:109:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: offers a reusable real download without claiming durable save
+ok 93 - offers a reusable real download without claiming durable save
+  ---
+  duration_ms: 1.12
+  type: 'test'
+  ...
+# Subtest: new originals invalidate a prepared download before refresh
+ok 94 - new originals invalidate a prepared download before refresh
+  ---
+  duration_ms: 0.162041
+  type: 'test'
+  ...
+# Subtest: cancel or navigation prevents a late prepared download
+ok 95 - cancel or navigation prevents a late prepared download
+  ---
+  duration_ms: 0.212292
+  type: 'test'
+  ...
+# Subtest: export failure preserves originals and allows retry
+ok 96 - export failure preserves originals and allows retry
+  ---
+  duration_ms: 0.165708
+  type: 'test'
+  ...
+# Subtest: empty history hides the export controls
+ok 97 - empty history hides the export controls
+  ---
+  duration_ms: 0.106042
+  type: 'test'
+  ...
+# Subtest: empty session history preserves the exact branded durable media object
+ok 98 - empty session history preserves the exact branded durable media object
+  ---
+  duration_ms: 58.731542
+  type: 'test'
+  ...
+# Subtest: Collection view separates storage generations and preserves manual assignments without writes
+ok 99 - Collection view separates storage generations and preserves manual assignments without writes
+  ---
+  duration_ms: 52.132833
+  type: 'test'
+  ...
+# Subtest: durable acquisition receives its original branded snapshot, never the combined view
+ok 100 - durable acquisition receives its original branded snapshot, never the combined view
+  ---
+  duration_ms: 51.470583
+  type: 'test'
+  ...
+# Subtest: view merge rejects conflicting immutable history without mutating either source
+ok 101 - view merge rejects conflicting immutable history without mutating either source
+  ---
+  duration_ms: 44.272
+  type: 'test'
+  ...
+# Subtest: v5 standard/immediate: preserves original artwork owner, full visual reference and continuing simulation
+ok 102 - v5 standard/immediate: preserves original artwork owner, full visual reference and continuing simulation
+  ---
+  duration_ms: 44.144833
+  type: 'test'
+  ...
+# Subtest: v5 standard/grid-center: preserves original artwork owner, full visual reference and continuing simulation
+ok 103 - v5 standard/grid-center: preserves original artwork owner, full visual reference and continuing simulation
+  ---
+  duration_ms: 27.399541
+  type: 'test'
+  ...
+# Subtest: v5 gentle/immediate: preserves original artwork owner, full visual reference and continuing simulation
+ok 104 - v5 gentle/immediate: preserves original artwork owner, full visual reference and continuing simulation
+  ---
+  duration_ms: 25.002375
+  type: 'test'
+  ...
+# Subtest: v5 gentle/grid-center: preserves original artwork owner, full visual reference and continuing simulation
+ok 105 - v5 gentle/grid-center: preserves original artwork owner, full visual reference and continuing simulation
+  ---
+  duration_ms: 22.922625
+  type: 'test'
+  ...
+# Subtest: v5 retains still and story envelopes without changing v3/v4 output
+ok 106 - v5 retains still and story envelopes without changing v3/v4 output
+  ---
+  duration_ms: 19.346833
+  type: 'test'
+  ...
+# Subtest: v5 rejects conflicting mode before touching simulation
+ok 107 - v5 rejects conflicting mode before touching simulation
+  ---
+  duration_ms: 6.047375
+  type: 'test'
+  ...
+# Subtest: v5 rejects conflicting theme before touching simulation
+ok 108 - v5 rejects conflicting theme before touching simulation
+  ---
+  duration_ms: 5.930375
+  type: 'test'
+  ...
+# Subtest: v5 rejects conflicting owner before touching simulation
+ok 109 - v5 rejects conflicting owner before touching simulation
+  ---
+  duration_ms: 5.51925
+  type: 'test'
+  ...
+# Subtest: v5 rejects conflicting level before touching simulation
+ok 110 - v5 rejects conflicting level before touching simulation
+  ---
+  duration_ms: 5.932916
+  type: 'test'
+  ...
+# Subtest: v5 rejects conflicting revision before touching simulation
+ok 111 - v5 rejects conflicting revision before touching simulation
+  ---
+  duration_ms: 5.94675
+  type: 'test'
+  ...
+# Subtest: v5 rejects conflicting unknown field before touching simulation
+ok 112 - v5 rejects conflicting unknown field before touching simulation
+  ---
+  duration_ms: 6.128708
+  type: 'test'
+  ...
+# Subtest: v5 rejects conflicting missing hash before touching simulation
+ok 113 - v5 rejects conflicting missing hash before touching simulation
+  ---
+  duration_ms: 5.567709
+  type: 'test'
+  ...
+# Subtest: v5 requires pictures, continuation and a non-null pin; malformed writes preserve older save bytes
+ok 114 - v5 requires pictures, continuation and a non-null pin; malformed writes preserve older save bytes
+  ---
+  duration_ms: 7.651917
+  type: 'test'
+  ...
+# Subtest: matching forged visual and picture owners still fail against installed content
+ok 115 - matching forged visual and picture owners still fail against installed content
+  ---
+  duration_ms: 9.984709
+  type: 'test'
+  ...
+# Subtest: installed and replay-only rescue export preserve visual pins without granting asset readiness
+ok 116 - installed and replay-only rescue export preserve visual pins without granting asset readiness
+  ---
+  duration_ms: 14.154708
+  type: 'test'
+  ...
+# Subtest: backup round trip retains visual metadata and requires authenticated picture identity
+ok 117 - backup round trip retains visual metadata and requires authenticated picture identity
+  ---
+  duration_ms: 18.787125
+  type: 'test'
+  ...
+1..117
+# tests 130
+# suites 0
+# pass 112
+# fail 18
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 222575.578042

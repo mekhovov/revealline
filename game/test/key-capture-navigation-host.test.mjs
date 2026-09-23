@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { soloPage } from './helpers/solo-dom.mjs';
+import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { loadLibrary } from '../library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
@@ -40,6 +40,7 @@ async function controls(t, active = false) {
   const page = await soloPage(t);
   if (active) {
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(16);
     page.key('ArrowDown');
     for (let n = 0; n < 8; n++) page.frame(16);

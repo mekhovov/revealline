@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
@@ -48,17 +49,18 @@ function imageBoundary(t) {
     }),
   );
   let decoded = 0;
-  globalThis.Image = class {
+  globalThis.Image = class extends PNGImage {
     async decode() {
-      assert.ok(this.width > 0 && this.height > 0);
-      decoded++;
+      await super.decode();
+      if (images.has(this.src)) decoded++;
     }
     set src(data) {
-      const size = images.get(data);
-      assert.ok(size, 'Only exact original First Light image headers are accepted.');
-      [this.width, this.height] = size;
-      [this.naturalWidth, this.naturalHeight] = size;
-      queueMicrotask(() => this.onload());
+      if (!data.startsWith('blob:'))
+        assert.ok(images.has(data), 'Only exact original First Light image headers are accepted.');
+      super.src = data;
+    }
+    get src() {
+      return super.src;
     }
   };
   t.after(() => {
@@ -109,6 +111,7 @@ async function choosePressureChapter(page) {
 test('pause updates flight presentation before another animation frame can run', async (t) => {
   const page = await soloPage(t, { campaign });
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(0);
   touch(page.$('game-canvas'));
   touch(page.doc.querySelector('[data-move="down"]'));
@@ -202,6 +205,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(page.doc.body.dataset.inputMode, 'keyboard');
     controls(page, 'hidden');
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
     controls(page, 'hidden');
     touch(page.$('game-canvas'));
@@ -253,6 +257,7 @@ test('Always enables actual mouse steering and survives a complete backup; omitt
   );
   closeSettings(page);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(0);
   controls(page, 'shown');
   touch(page.doc.querySelector('[data-move="down"]'), 'mouse');
@@ -302,6 +307,7 @@ test('Always enables actual mouse steering and survives a complete backup; omitt
   page.change('screen-controls', 'off');
   closeSettings(page);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   touch(page.$('game-canvas'));
   page.frame(0);
   controls(page, 'hidden');
@@ -334,6 +340,7 @@ test('an already joined controller takes its first fresh turn after touch withou
   assert.match(page.$('input-status').textContent, /controller|joined/i);
   sample([]);
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   sample([], 1000 / 120); // The ordinary Resume neutral tick remains intact.
   const down = page.$('touch-surface');
   down.emit('pointerdown', {
@@ -400,8 +407,9 @@ function steeringHand(page, expected) {
   );
 }
 const currentProfile = (storage) => loadLibrary(storage, profileKey, { campaigns: [campaign] });
-function startHandCut(page) {
+async function startHandCut(page) {
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(0);
   const down = page.doc.querySelector('[data-move="down"]');
   touch(down);
@@ -440,7 +448,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       storage: storageWith({ ...handPreferences('left'), turnPolicy, screenControls: 'always' }),
     });
     steeringHand(page, 'left');
-    const down = startHandCut(page),
+    const down = await startHandCut(page),
       before = pauseForHand(page),
       original = JSON.parse(before.slot),
       library = currentProfile(page.storage).library;
@@ -480,6 +488,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     closeSettings(page);
     assertHandPaused(page, before);
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
     controls(page, 'shown');
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before.checkpoint);
@@ -524,6 +533,7 @@ test('Right hand survives actual app reload while Auto still hides keyboard cont
   assert.deepEqual(storage.map, before);
   assert.equal(storage.writes.length, writes, 'Startup does not resave an unchanged preference.');
   reloaded.$('start-button').click();
+  await settle(() => reloaded.doc.body.dataset.flightState === 'running');
   reloaded.frame(0);
   controls(reloaded, 'hidden');
   touch(reloaded.$('game-canvas'));
@@ -538,7 +548,7 @@ test('Right hand survives actual app reload while Auto still hides keyboard cont
 test('unrelated saves apply the actual merged hand, and a deliberate Left remains explicit', async (t) => {
   const storage = storageWith(handPreferences('left')),
     page = await soloPage(t, { campaign, storage });
-  startHandCut(page);
+  await startHandCut(page);
   const before = pauseForHand(page),
     current = currentProfile(storage);
   assert.equal(
@@ -568,7 +578,7 @@ test('unrelated saves apply the actual merged hand, and a deliberate Left remain
 test('quota refusal keeps the session hand and exact stored bytes with visible feedback', async (t) => {
   const storage = storageWith(handPreferences('left')),
     page = await soloPage(t, { campaign, storage });
-  startHandCut(page);
+  await startHandCut(page);
   const before = pauseForHand(page),
     raw = storage.getItem(profileKey),
     setItem = storage.setItem.bind(storage);
@@ -611,7 +621,7 @@ test('practice hand placement stays session-only without changing profile or sav
 
 test('complete-backup import and Undo adopt hand placement without rewriting the saved attempt', async (t) => {
   const page = await soloPage(t, { campaign, storage: storageWith(handPreferences('left')) });
-  startHandCut(page);
+  await startHandCut(page);
   page.$('library-button').click();
   page.frame(0);
   const original = JSON.parse(page.storage.getItem(sessionKey)),

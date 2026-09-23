@@ -10,7 +10,7 @@ import { MENU_STYLE_PREFERENCES_KEY } from '../menu-style-preferences.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary } from '../library.mjs';
-import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { couchPage, mountCouch } from './helpers/couch-host.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
@@ -163,6 +163,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       'Opening a host does not create a menu preference.',
     );
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     for (let n = 0; n < 13; n++) page.frame();
@@ -195,6 +196,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     page.frame(0);
     assert.equal(page.rendered.paused, true);
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     for (let n = 0; n < 12; n++) page.frame();
     page.$('pause-button').click();
     page.frame(0);
