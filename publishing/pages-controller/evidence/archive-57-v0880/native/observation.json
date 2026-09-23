@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-23T02:27:41.876582+00:00",
+  "kind": "scoped native public availability",
+  "version": "v0.88.0",
+  "sourceRevision": "950f19045facacf5151c90661de1ca28d30658df",
+  "archivePublisher": "de23f0600a8410d0060f2bbcc1887bfb37d049a0",
+  "publisherTree": "5d00558b78f917cd7bb40d718fbcf0ef55b2ed86",
+  "productionRun": 35810246159,
+  "deployment": 6605004645,
+  "deploymentStatus": 18707444061,
+  "productionReceipt": {
+    "artifact": 10729766530,
+    "bytes": 57637,
+    "sha256": "5d85f7cc9d11e50194184a0ec487007389d839a2f03198136c0439ab3c4a5710"
+  },
+  "entry": "https://mekhovov.github.io/revealline-archive-57/",
+  "gameURL": "https://mekhovov.github.io/revealline-archive-57/releases/v0.88.0/site/game/",
+  "canonicalMarker": "https://mekhovov.github.io/revealline-archive-57/releases/v0.88.0/release.json",
+  "browser": "Codex in-app browser; desktop screenshot 1280x720; no viewport override",
+  "steps": [
+    {
+      "action": "Archive index \u2192 Play v0.88.0",
+      "result": "PASS: visible preparing screen, then title without reload."
+    },
+    {
+      "action": "Read title/version",
+      "result": "PASS: New Journey 91 missions, VERSION V0.88.0, Standard reference-paced targets and Team 12. Existing Continue Prologue / Choose your share; not a fresh profile."
+    },
+    {
+      "action": "Keyboard Workshop, expand extras, keyboard About",
+      "result": "PASS: archived v0.88 About route."
+    },
+    {
+      "action": "Expand Build information",
+      "result": "PASS: 132 preserved builds, current v0.88 selected, OPEN BUILD targets archive57 v0.88. Main release explorer link present."
+    },
+    {
+      "action": "Browser Back",
+      "result": "PASS: archived v0.88 title restored. Focus Difficulty; no Workshop opener-restoration claim."
+    },
+    {
+      "action": "Read captured console warnings/errors",
+      "result": "PASS: empty list."
+    }
+  ],
+  "failures": [],
+  "retries": 0,
+  "reloads": 0,
+  "knownObservations": [
+    "Existing current/preserved version duplication remains.",
+    "Generic About offline-ready copy does not certify Journey picture caching."
+  ],
+  "screenshots": [
+    {
+      "name": "title",
+      "bytes": 137202,
+      "sha256": "1a1f73c3861ddd25c1609c941a20a0f434433bd55a222f47ce726ecc2795de42"
+    },
+    {
+      "name": "history",
+      "bytes": 71915,
+      "sha256": "4f85a88f40e6c793f21ae890d676f7b79e9000b8c5d0267ce23a17082437d91f"
+    },
+    {
+      "name": "return",
+      "bytes": 137116,
+      "sha256": "203f992460ed514ce660063cabbbad4d5c3d3bad609e406808d826f6fb2c0356"
+    }
+  ],
+  "screenshotRetention": "Original bytes hashed and emitted inline; no local PNG files. Version confirmed through AX text below screenshot fold.",
+  "limits": [
+    "Source/deployment/marker authority supplied by coordinator handoff.",
+    "Full HTTP audit is separate and was not duplicated.",
+    "No gameplay, failure-copy, offline, physical device/controller, listening or full-suite claim.",
+    "No public v0.89 check."
+  ],
+  "canonicalReleaseMarker": "https://mekhovov.github.io/revealline-archive-57/releases/v0.88.0/release.json",
+  "productFailures": [],
+  "automationFailures": [],
+  "normalizationProvenance": {
+    "type": "metadata-only schema aliases",
+    "normalizedAt": "2026-09-23T02:30:58.258404+00:00",
+    "originalReceiptPath": ".cache/ux-delivery-review-20260922/archive57-v0880-native-availability.json",
+    "originalReceiptSha256": "08b1e16ce9f6224eaafe6a309972a2d1e487b5eae9f11e696c55a376b3a342ad",
+    "changes": [
+      "Add canonicalReleaseMarker alias equal to canonicalMarker.",
+      "Add productFailures and automationFailures empty arrays, matching the observed failure-free original journey."
+    ],
+    "noNewBrowserRun": true,
+    "packagingObservation": "Parent packaging rejected the original receipt schema; this is a metadata adaptation, not a product failure. Original receipt remains unchanged."
+  }
+}
