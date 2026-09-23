@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { entryScenario } from '../playground/model.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
@@ -22,8 +22,9 @@ function key(page, value, extra = {}) {
   target.emit('keyup', { key: value, code: value, ...extra });
   return event;
 }
-function startCut(page) {
+async function startCut(page) {
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(16);
   page.key('ArrowDown');
   for (let n = 0; n < 8; n++) page.frame(16);
@@ -122,7 +123,7 @@ async function embeddedPractice(t) {
 
 test('repeated forced Pause keeps the chosen menu action after Settings closes', async (t) => {
   const page = await soloPage(t);
-  startCut(page);
+  await startCut(page);
   page.$('pause-button').click();
   const run = page.rendered.run,
     checkpoint = authoritativeCheckpoint(run);
@@ -149,7 +150,7 @@ test('repeated forced Pause keeps the chosen menu action after Settings closes',
 test('paused Controller practice exits both boundaries through the real app blur handler', async (t) => {
   const f = await embeddedPractice(t),
     { page } = f;
-  startCut(page);
+  await startCut(page);
   page.$('pause-button').click();
   const run = page.rendered.run,
     checkpoint = authoritativeCheckpoint(run),
@@ -186,7 +187,7 @@ test('paused Controller practice exits both boundaries through the real app blur
 test('first iframe blur pauses a moving cut without focusing its new Resume action', async (t) => {
   const f = await embeddedPractice(t),
     { page } = f;
-  startCut(page);
+  await startCut(page);
   const run = page.rendered.run,
     checkpoint = authoritativeCheckpoint(run),
     focusCalls = f.calls.length,

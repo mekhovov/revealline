@@ -24,8 +24,9 @@ function size(page, expected) {
 function ticks(page, count) {
   for (let i = 0; i < count; i++) page.frame();
 }
-function startCut(page) {
+async function startCut(page) {
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 13);
@@ -101,7 +102,7 @@ test('startup adopts persisted Large and a deliberate Standard change survives a
 for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: changing text size in Settings preserves the paused live cut and its recorded continuation`, async (t) => {
     const page = await soloPage(t, { campaign, storage: initialStorage({ turnPolicy }) });
-    const run = startCut(page),
+    const run = await startCut(page),
       liveCheckpoint = authoritativeCheckpoint(run);
     openSettings(page);
     // Opening Settings is the existing pause/save boundary. Size-only changes
@@ -126,6 +127,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const pausedY = run.player.y;
     closeSettings(page);
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
     assert.strictEqual(page.rendered.run, run);
     assert.equal(page.rendered.paused, false);
@@ -163,7 +165,7 @@ test('a failed preference write keeps the selected session size and old stored b
     setItem(key, value);
   };
   const page = await soloPage(t, { campaign, storage });
-  startCut(page);
+  await startCut(page);
   openSettings(page);
   const before = snapshot(page),
     raw = storage.getItem(profileKey);
@@ -188,7 +190,7 @@ test('a failed preference write keeps the selected session size and old stored b
 test('an unrelated host preference change applies the actual merged stored size before an explicit override', async (t) => {
   const storage = initialStorage(),
     page = await soloPage(t, { campaign, storage });
-  startCut(page);
+  await startCut(page);
   openSettings(page);
   const before = snapshot(page),
     current = profile(storage);
@@ -216,7 +218,7 @@ test('an unrelated host preference change applies the actual merged stored size 
 
 test('actual complete-backup import and Undo adopt text size while preserving the verified suspended flight', async (t) => {
   const page = await soloPage(t, { campaign, storage: initialStorage() });
-  startCut(page);
+  await startCut(page);
   page.$('library-button').click();
   page.frame(0);
   assert.equal(page.$('library-dialog').open, true);

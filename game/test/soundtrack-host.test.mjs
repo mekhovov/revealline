@@ -291,7 +291,10 @@ test('actual MP3 keeps its stream and position through menus, a real victory, re
   assert.equal(page.$('collection-dialog').open, true);
   assert.equal(media.src, url);
   assert.equal(media.plays, plays);
-  assert.equal(audio.created.length, 1);
+  const streams = audio.created.filter(({ blob }) => blob.type.startsWith('audio/'));
+  assert.equal(streams.length, 1, 'picture URLs must not count as replacement music streams');
+  assert.equal(streams[0].url, url);
+  assert.equal(audio.revoked.includes(url), false, 'the playing music stream remains retained');
   assert.deepEqual(page.errors, []);
 });
 

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 // Model only native focus eligibility and the actual boot visibility handshake.
@@ -86,6 +86,7 @@ test('saved-flight title selects visible Continue or the next enabled action wit
   await t.test('prepare a legitimate saved cut', async (t) => {
     const page = await soloPage(t, { storage });
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.key('ArrowDown');
     for (let i = 0; i < 24; i++) page.frame();
     page.key('ArrowDown', false);

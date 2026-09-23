@@ -109,27 +109,40 @@ export function attachPublishedAudio({
 }) {
   let closed = false,
     snapshot = null,
+    explicitPresentation = false,
     player = null;
   const readAudio = (slot, options) => {
     if (closed || !snapshot || snapshot.resolved.assets[slot]?.kind !== 'audio') return null;
     return getHost()?.readAudio(slot, { ...options, snapshot }) ?? null;
   };
   const syncPlayer = () => {
-    const asset = snapshot?.resolved.assets['audio.music'];
+    const accepted = snapshot,
+      host = !closed && accepted ? getHost() : null;
+    const asset = accepted?.resolved.assets['audio.music'];
     player?.setPublishedTrack?.(
       !closed && asset?.kind === 'audio'
         ? {
             id: `published.${asset.file.sha256}`,
             title: asset.description,
             allowed: allowMusic,
-            readBlob: async (options) => (await readAudio('audio.music', options))?.blob,
+            readBlob: async (options) => {
+              if (closed || snapshot !== accepted)
+                throw new DOMException('Published theme changed.', 'AbortError');
+              const result = await host?.readAudio('audio.music', {
+                ...options,
+                snapshot: accepted,
+              });
+              if (closed || snapshot !== accepted)
+                throw new DOMException('Published theme changed.', 'AbortError');
+              return result?.blob;
+            },
           }
         : null,
     );
   };
   const loaded = Promise.resolve(ready)
     .then((value) => {
-      if (closed) return;
+      if (closed || explicitPresentation) return;
       snapshot = value;
       if (snapshot && cues) sound.setPublishedAudio(readAudio);
       syncPlayer();
@@ -153,6 +166,13 @@ export function attachPublishedAudio({
   }
   return Object.freeze({
     ready: loaded,
+    setPresentation(value) {
+      if (closed || (explicitPresentation && snapshot === value)) return;
+      explicitPresentation = true;
+      snapshot = value;
+      if (cues) sound.setPublishedAudio(snapshot ? readAudio : null);
+      syncPlayer();
+    },
     setPlayer(value) {
       player = value;
       syncPlayer();

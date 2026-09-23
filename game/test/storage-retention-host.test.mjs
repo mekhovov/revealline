@@ -24,6 +24,7 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
     },
   };
   h.$('start-button').click();
+  await settle(() => h.doc.body.dataset.flightState === 'running');
   const down = h.$('touch-surface');
   down.emit('pointerdown', {
     pointerId: 1,
