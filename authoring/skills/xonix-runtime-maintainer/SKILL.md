@@ -1234,3 +1234,8 @@ abort semantics and ordinary pack validation. Verify controlled failure then
 success in the same page without reload. See `docs/chapter-download-retry.md` and
 `authoring/prompts/chapter-download-retry.md`; local faults do not qualify public
 network recovery or physical-device input.
+
+
+## Replay Theater history-restored display controls
+
+When a browser restores form values, an unchanged shared preference owner may legitimately emit no subscription update. Replay Theater must use the shared view-only preference-restoration adapter after its owner listeners. Repaint current snapshots immediately and in the next task; never treat restored controls as explicit intent. Preserve denied-save session choices, raw effects choice, system reduction, focus, warnings, input and paused recording checkpoints. Cancel pending repaint on departure and dispose on terminal exit. Test unchanged saved/session-only values and stale controls both before and after pageshow, separately from physical browser/device qualification. See `docs/replay-display-restoration.md` and `authoring/prompts/replay-display-restoration.md`.
