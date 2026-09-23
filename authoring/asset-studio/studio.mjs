@@ -1,3 +1,9 @@
+import { createStudioDownload } from './download.mjs';
+import { isTeamPreviewScenarioAvailable } from './team-preview-fixture.mjs';
+import {
+  addTeamPresentationSlots,
+  needsTeamPresentationSlots,
+} from '../../game/presentation/team-anchor-upgrade.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createDefaultThemeBundle } from '../../game/presentation/catalog.mjs';
 import {
@@ -36,6 +42,7 @@ import { attachPreferenceRestoration } from '../../game/ui/preference-restoratio
 import { mountInterfacePreferences } from './interface-preferences.mjs';
 import { mountStudioGuide } from './guide.mjs';
 import { attachStudioAuditionLifecycle } from './audition-lifecycle.mjs';
+import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
@@ -56,6 +63,31 @@ let selected = working.document.slots[0].id,
   redo = [],
   promptAction = 'variation';
 const collectionSlots = new Set();
+const viewMemory = createStudioViewMemory(() => window.history);
+const pendingViewRestore = viewMemory.read();
+let initialWorkspaceLoad = true,
+  restoredView = false;
+function rememberView() {
+  if (!initialWorkspaceLoad) viewMemory.write(selected, filters());
+}
+function restoreView() {
+  if (!initialWorkspaceLoad || !pendingViewRestore) return;
+  const view = resolveStudioView(
+    pendingViewRestore,
+    working.document.slots.map((slot) => slot.id),
+    Object.fromEntries(
+      ['screen', 'state', 'kind', 'quality'].map((key) => [
+        key,
+        [...$(`filter-${key}`).querySelectorAll('option')].map((option) => option.value),
+      ]),
+    ),
+  );
+  if (!view) return;
+  if (view.selected) selected = view.selected;
+  for (const [key, value] of Object.entries(view.filters))
+    $(key === 'query' ? 'filter-search' : `filter-${key}`).value = value;
+  restoredView = !!view.selected;
+}
 let previewGeneration = 0;
 const currentSlot = () => working.document.slots.find((slot) => slot.id === selected);
 const resolved = () => resolvePresentation(working.document);
@@ -79,14 +111,21 @@ const operations = createStudioOperations({
         el.inert = value;
         el.setAttribute('aria-busy', String(value));
       });
+    // A successful Stage consumes its prepared draft and disables its opener.
+    // Preserve the ordinary return owner on errors; only a consumed Stage
+    // advances to the next available authoring action.
+    const returnTarget =
+      operationFocus === $('stage-asset') && operationFocus.disabled
+        ? $('save-workspace')
+        : operationFocus;
     if (
       !value &&
       document.hasFocus() &&
       [document.body, $('cancel-studio-operation')].includes(document.activeElement) &&
-      operationFocus?.isConnected &&
-      !operationFocus.disabled
+      returnTarget?.isConnected &&
+      !returnTarget.disabled
     )
-      operationFocus.focus();
+      returnTarget.focus();
   },
 });
 const status = (message, kind = '') => operations.message(message, kind);
@@ -169,6 +208,7 @@ function selectSlot(id) {
   selected = id;
   sprite.reset();
   refresh();
+  rememberView();
 }
 function filters() {
   return {
@@ -232,6 +272,9 @@ function updateCollectionCount() {
   $('collection-count').textContent = `${collectionSlots.size} slots selected`;
 }
 function refresh() {
+  if (!working.document.slots.some((slot) => slot.id === selected))
+    selected = working.document.slots[0].id;
+  $('add-team-anchors').disabled = !needsTeamPresentationSlots(working.document);
   const view = resolved();
   const themes = [...new Map(working.document.themes.map((theme) => [theme.id, theme])).values()];
   $('filter-theme').replaceChildren(
@@ -340,13 +383,11 @@ async function refreshPreviews() {
   $('preview-field-mode').disabled = !fieldContext;
   $('preview-team-arena').disabled = !teamContext;
   $('preview-team-scenario').disabled = !teamContext;
-  const firstConnection = $('preview-team-arena').value === 'first-connection',
-    scenario = $('preview-team-scenario'),
-    firstConnectionScenes = ['initial', 'cutting', 'warning', 'charge', 'capture', 'victory'];
+  const arena = $('preview-team-arena').value,
+    scenario = $('preview-team-scenario');
   for (const option of scenario.options)
-    option.disabled = firstConnection && !firstConnectionScenes.includes(option.value);
-  if (firstConnection && !firstConnectionScenes.includes(scenario.value))
-    scenario.value = 'initial';
+    option.disabled = !isTeamPreviewScenarioAvailable(arena, option.value);
+  if (!isTeamPreviewScenarioAvailable(arena, scenario.value)) scenario.value = 'initial';
   const requestedPreview = ++previewGeneration;
   const slot = currentSlot(),
     current = resolvePresentation(saved.document),
@@ -520,20 +561,18 @@ function fileMime(file) {
     }[ext] || file.type
   );
 }
+const preparedDownload = createStudioDownload({ document, target: $('prepared-download') });
 function download(blob, filename) {
   if (!blob) {
     report(new Error('File bytes are unavailable.'));
     return;
   }
-  const url = URL.createObjectURL(blob),
-    link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  preparedDownload.offer(blob, filename);
 }
+window.addEventListener('pagehide', (event) => {
+  if (!event.persisted) preparedDownload.dispose();
+});
+
 async function fileMetadata(blob, dimensions, task) {
   task.update('Reading asset bytes for verification…', 'reading');
   const bytes = new Uint8Array(await blob.arrayBuffer());
@@ -1000,7 +1039,10 @@ $('token-form').onsubmit = (event) => {
   });
 };
 ['filter-search', 'filter-screen', 'filter-state', 'filter-kind', 'filter-quality'].forEach((id) =>
-  $(id).addEventListener(id === 'filter-search' ? 'input' : 'change', refreshInventory),
+  $(id).addEventListener(id === 'filter-search' ? 'input' : 'change', () => {
+    refreshInventory();
+    rememberView();
+  }),
 );
 $('filter-theme').onchange = () =>
   operation('Preparing workspace change…', () => {
@@ -1093,6 +1135,15 @@ $('copy-generated-prompt').onclick = async () => {
     });
   }
 };
+$('add-team-anchors').onclick = () =>
+  operation('Adding editable Team presentation…', () => {
+    requireSettled();
+    stage(
+      addTeamPresentationSlots(working.document),
+      working.assets,
+      'Team presentation slots added to this draft. Choose Couch Team and the matching arena/scene to preview; save or export to keep the new revision. Public game assets are unchanged.',
+    );
+  });
 $('undo-draft').onclick = () =>
   operation('Preparing workspace change…', () => {
     requireSettled();
@@ -1218,6 +1269,7 @@ async function loadWorkspace(task) {
   saved = working;
   undo = [];
   redo = [];
+  restoreView();
   if (!working.document.slots.some((slot) => slot.id === selected))
     selected = working.document.slots[0].id;
   sprite.reset();
@@ -1251,6 +1303,7 @@ $('load-release').onclick = () =>
     );
   });
 window.addEventListener('pagehide', (event) => {
+  rememberView();
   copyRequest++;
   if (event.persisted) {
     operations.cancel();
@@ -1292,4 +1345,17 @@ for (const [id, values] of [
     }),
   );
 refresh();
-operation('Loading saved Studio workspace…', loadWorkspace);
+operation('Loading saved Studio workspace…', loadWorkspace).then(() => {
+  initialWorkspaceLoad = false;
+  if (
+    restoredView &&
+    !operations.busy &&
+    document.hasFocus() &&
+    document.activeElement === document.body
+  ) {
+    const target = matchMedia('(max-width: 700px)').matches
+      ? $('inspector')
+      : $('asset-list').querySelector('button[aria-pressed="true"]') || $('inspector');
+    target.focus();
+  }
+});

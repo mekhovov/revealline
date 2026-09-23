@@ -11,6 +11,8 @@ import {
 import { CURRENT_ART_SOURCES } from '../presentation/current-art-sources.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 import { stepDuel } from '../multiplayer.mjs';
+import { FIXED_DT } from '../coop/core.mjs';
+import { teamRescueProgress } from '../couch/coop-rescue-presentation.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { createStudioTeamFixture } from '../../authoring/asset-studio/team-preview-fixture.mjs';
 
@@ -51,8 +53,15 @@ test('Team compatibility requires real bound roles and complete arena artwork', 
   );
   assert.equal(teamPreviewBinding('terrain.wall', view, 'relay-yard').roles.length, 6);
   assert.throws(() => teamPreviewBinding('terrain.wall', view, 'first-connection'), /not bound/);
+  assert.throws(
+    () => teamPreviewBinding('team.emitter.spark', view, 'first-connection'),
+    (error) => /Native size/.test(error.message) && !/Solo\/Versus/.test(error.message),
+  );
   assert.throws(() => teamPreviewBinding('pickup.life', view, 'relay-yard'), /not bound/);
-  assert.throws(() => teamPreviewBinding('trail.active', view, 'relay-yard'), /procedural/);
+  assert.throws(
+    () => teamPreviewBinding('trail.active', view, 'relay-yard'),
+    /not bound.*Native size/,
+  );
   assert.throws(() => teamPreviewBinding('player.scout.compact', view, 'invented'), /registered/);
   view.theme.id = 'retro';
   assert.throws(
@@ -137,6 +146,7 @@ test('each Versus painter receives its selected capture and failure effect', () 
 
 function fakeDocument() {
   const draws = [],
+    texts = [],
     nodes = [];
   class Node {
     constructor(tag) {
@@ -162,7 +172,14 @@ function fakeDocument() {
           get: (target, name) => {
             if (name in target) return target[name];
             if (name === 'drawImage') return (image) => draws.push({ canvas: this, image });
-            if (name === 'measureText') return (text) => ({ width: String(text).length * 7 });
+            if (name === 'fillText') return (text) => texts.push(String(text));
+            if (name === 'measureText')
+              return (text) => ({
+                width:
+                  String(text).length *
+                  Number(String(target.font).match(/([\d.]+)px/)?.[1] ?? 12) *
+                  0.6,
+              });
             if (name === 'createLinearGradient' || name === 'createRadialGradient')
               return () => ({ addColorStop() {} });
             return () => {};
@@ -172,7 +189,7 @@ function fakeDocument() {
       return this.context;
     }
   }
-  return { document: { createElement: (tag) => new Node(tag) }, Node, draws, nodes };
+  return { document: { createElement: (tag) => new Node(tag) }, Node, draws, texts, nodes };
 }
 const palette = Object.fromEntries(
   ['ink', 'paper', 'muted', 'accent', 'safe', 'danger', 'field', 'grid', 'sky', 'land'].map(
@@ -205,6 +222,90 @@ const decodedImage = (asset) => ({
   src: 'owned-image',
   width: asset.file.width,
   height: asset.file.height,
+});
+test('secured scene shows role bodies on a neutral backdrop and refuses canonical picture inspection', async (t) => {
+  const dom = fakeDocument(),
+    previous = globalThis.document;
+  globalThis.document = dom.document;
+  t.after(() => {
+    globalThis.document = previous;
+  });
+  const view = resolved();
+  for (const id of ['team.core.secured', 'team.core.shielded'])
+    view.assets[id] = {
+      id,
+      kind: 'image',
+      revision: 1,
+      file: { width: 64, height: 64, sha256: id },
+      geometry: { frame: { x: 0, y: 0, width: 64, height: 64 } },
+    };
+  const options = {
+    fieldMode: 'team',
+    teamArena: 'relay-yard',
+    teamScenario: 'secured',
+    motion: 'paused',
+    isCurrent: () => true,
+  };
+  const decoded = [],
+    cleanups = [],
+    surface = new dom.Node('section');
+  const services = {
+    decode: async (asset) => {
+      const image = decodedImage(asset);
+      decoded.push(image);
+      return image;
+    },
+    presentation: snapshot,
+    loop: (own, draw) => draw(0, true),
+  };
+  const slot = { id: 'team.core.secured', group: 'actors' };
+  await crossModeContextPreview(
+    surface,
+    slot,
+    view.assets[slot.id],
+    view,
+    new Map(),
+    options,
+    (cleanup) => cleanups.push(cleanup),
+    services,
+  );
+  for (const id of ['team.core.secured', 'team.core.shielded'])
+    assert.ok(dom.draws.some(({ image }) => image.id === id));
+  assert.ok(
+    decoded.every((image) => !COOP_PICTURE_BINDINGS.some((row) => row.picture.slot === image.id)),
+  );
+  assert.ok(
+    dom.nodes.some((node) =>
+      /Authored two-relay specimen · neutral backdrop/.test(node.textContent || ''),
+    ),
+  );
+  assert.ok(dom.nodes.some((node) => /^Showing 1 secured core/.test(node.textContent || '')));
+  assert.ok(
+    dom.nodes.some((node) => /Studio Two Relays/.test(node.attributes?.['aria-label'] || '')),
+  );
+  const { level } = createStudioTeamFixture({ arena: 'relay-yard', scenario: 'secured' });
+  await assert.rejects(
+    validateTeamPreviewIdentity(COOP_PICTURE_BINDINGS[1], level),
+    /identity or revision/,
+  );
+  const count = decoded.length,
+    pictureSlot = { id: COOP_PICTURE_BINDINGS[1].picture.slot, group: 'pictures' };
+  await assert.rejects(
+    crossModeContextPreview(
+      new dom.Node('section'),
+      pictureSlot,
+      view.assets[pictureSlot.id],
+      view,
+      new Map(),
+      options,
+      (cleanup) => cleanups.push(cleanup),
+      services,
+    ),
+    /neutral backdrop/,
+  );
+  assert.equal(decoded.length, count, 'picture inspection fails before any resource decode');
+  cleanups.forEach((cleanup) => cleanup());
+  assert.ok(decoded.every((image) => image.src === ''));
 });
 test('real Team painter consumes distinct compact/detailed sprites, picture and held rescue', async (t) => {
   const dom = fakeDocument(),
@@ -286,6 +387,94 @@ test('real Team painter consumes distinct compact/detailed sprites, picture and 
   assert.equal(disconnected, true);
   assert.ok(images.every((image) => image.src === ''));
 });
+for (const target of [1, 2]) {
+  test(`Team rescue ${target} HUD, board and note agree through fractional ticks and completion`, async (t) => {
+    const dom = fakeDocument(),
+      previous = globalThis.document;
+    globalThis.document = dom.document;
+    t.after(() => {
+      globalThis.document = previous;
+    });
+    const view = resolved(),
+      slot = { id: 'team.rescue.progress', group: 'effects' },
+      scenario = `rescue-p${target}`,
+      expected = createStudioTeamFixture({ arena: 'relay-yard', scenario }),
+      cleanups = [];
+    view.assets[slot.id] = {
+      id: `${slot.id}.default`,
+      revision: 1,
+      kind: 'recipe',
+      recipe: { id: 'team.rescue.v1' },
+    };
+    let render;
+    await crossModeContextPreview(
+      new dom.Node('section'),
+      slot,
+      view.assets[slot.id],
+      view,
+      new Map(),
+      {
+        fieldMode: 'team',
+        teamArena: 'relay-yard',
+        teamScenario: scenario,
+        motion: 'playing',
+        isCurrent: () => true,
+      },
+      (cleanup) => cleanups.push(cleanup),
+      {
+        decode: async (asset) => decodedImage(asset),
+        presentation: snapshot,
+        loop: (_own, draw) => {
+          render = draw;
+        },
+      },
+    );
+    t.after(() => cleanups.forEach((cleanup) => cleanup()));
+    const hud = dom.nodes.find((node) => node.className === 'context-hud'),
+      rescuer = 3 - target,
+      shown = [];
+    let completed = false;
+    for (let tick = 0; tick <= 61; tick++) {
+      const dt = tick === 0 ? 0 : FIXED_DT;
+      expected.advance(dt);
+      dom.texts.length = 0;
+      render(dt, false);
+      const progress = teamRescueProgress(expected.run, expected.run.players[rescuer - 1]);
+      if (progress) {
+        const percent = Math.floor(progress.progress * 100);
+        shown.push(percent);
+        assert.match(hud.textContent, new RegExp(`P${rescuer} rescuing ${percent}%`));
+        assert.deepEqual(
+          dom.texts.filter((text) => text.startsWith('RESCUE ')),
+          [`RESCUE ${target} · ${percent}%`],
+          `same simulation tick ${expected.run.tick} must have one matching board cue`,
+        );
+        assert.ok(
+          dom.nodes.some((node) =>
+            (node.textContent || '').includes(
+              `Player ${rescuer} rescuing player ${target}: ${percent}%`,
+            ),
+          ),
+        );
+        assert.ok(percent < 100, 'Active rescue must not announce completion early.');
+      } else {
+        completed = true;
+        assert.equal(expected.run.players[target - 1].status, 'active');
+        assert.doesNotMatch(hud.textContent, /rescuing/);
+        assert.equal(
+          dom.texts.some((text) => text.startsWith('RESCUE ')),
+          false,
+        );
+        assert.ok(
+          dom.nodes.some((node) => /^No active contact rescue/.test(node.textContent || '')),
+        );
+      }
+    }
+    assert.ok(shown.includes(50) && shown.includes(71) && shown.includes(99));
+    assert.equal(completed, true, 'Public-command rescue completes on the ordinary core timer.');
+  });
+}
+
 test('replacement during decode cannot attach a stale Team scene or leak its image', async (t) => {
   const dom = fakeDocument(),
     previous = globalThis.document;

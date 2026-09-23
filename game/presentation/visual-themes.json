@@ -1,7 +1,7 @@
 {
   "format": "revealline-visual-theme-catalogue.v1",
   "id": "revealline-released-themes",
-  "revision": 1,
+  "revision": 2,
   "entries": [
     {
       "id": "field-kit-fpv",
@@ -182,6 +182,151 @@
             "kind": "campaign",
             "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
           },
+          "level": {
+            "id": "signal-12",
+            "revision": "1",
+            "sha256": "17db9a990f35012a7adb787eaba7eb5a89dc77d93e37969f3457fc6135d2d1e4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "field-kit-fpv",
+      "revision": 58,
+      "name": "FPV Field Kit · v0.93 retained",
+      "presentation": {
+        "source": { "id": "field-kit", "revision": 58 },
+        "theme": { "id": "fpv", "revision": 58 },
+        "collection": null,
+        "sha256": "ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54"
+      },
+      "coverage": [
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-01",
+            "revision": "1",
+            "sha256": "371f26582b83df3fa139c1ef16865a1284174a5febcb7de29e29ddc7e88a1edb"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-02",
+            "revision": "1",
+            "sha256": "a493cdc0213f8efda2e7b337ab6186d9ca5b1b189dc995648ec2447880a66b5c"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-03",
+            "revision": "1",
+            "sha256": "8897671b57577da4702742fac5228f13b4d07ba389a3d757af82402469bf3171"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-04",
+            "revision": "1",
+            "sha256": "f6004b758f50fda298de89e591ad538fa7e4ec44a1012f2badf77d27ba6a3aaa"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-05",
+            "revision": "1",
+            "sha256": "d2cfbf613009f2d2c58912e35620b2ea0a389fa5edb1dbf9388acbba3a6c914a"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-06",
+            "revision": "1",
+            "sha256": "ca06a4914831e4094b1b43daf17d15daf3cc681340174997b5a1cc65cb8a5ef5"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-07",
+            "revision": "1",
+            "sha256": "f70c970a547f3a9880d9d5605043fdda9a89aca73eb8b15bc374e2f01567d15d"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-08",
+            "revision": "1",
+            "sha256": "7f7398acf21be70913828b287329dd1bbfb2949a36855476ebc475d100eff581"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-09",
+            "revision": "1",
+            "sha256": "0d416bc30142f916c029d055b975ca6d9013d353674db8d22d9cbf3890036075"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-10",
+            "revision": "1",
+            "sha256": "7dd435d2f2c076c381b3b47de30d6edc38eccd9578ba62488e9d18f4b2e94ee1"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
+          "level": {
+            "id": "signal-11",
+            "revision": "1",
+            "sha256": "33d6854c0baa3fb4ab9fca69aa27ebd63d5e068d6c823d4d42d133f6a789bc88"
+          }
+        },
+        {
+          "editionId": "field-kit",
+          "contentThemeId": "fpv",
+          "mode": "solo",
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-12",
             "revision": "1",

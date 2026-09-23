@@ -4,11 +4,12 @@ import { freezePresentation } from '../presentation/model.mjs';
  * The injected lease verifies these identities before reading or decoding; other
  * imports/themes have no implicit procedural or wider FPV-picture fallback.
  * Lease output retains the complete frame with contain fit and nearest sampling.
- * Canonical fpv58 retains accepted main57 artwork while integrating the scoped
- * retained-presentation reader and audio ownership review.
- * The separately archived alternate pre-main lineage spanning fpv55 through fpv58 is not a
- * runtime fallback. All 127 original payloads, including these two derivatives, remain
- * byte-identical. No other revision is admitted.
+ * Canonical fpv62 integrates the accepted58 reader/session lineage with the
+ * separately recorded37 scoped functional recipe reviews. Picture and actor
+ * originals are unchanged. Exact accepted58 and retained59/60/61
+ * attempts remain admitted; the separately archived alternate fpv55–57 lineage
+ * is not a runtime fallback. This finite picture association grants no additional
+ * artwork or physical-play approval.
  */
 export const COOP_PICTURE_BINDINGS = freezePresentation([
   {
@@ -19,7 +20,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     levelRevision: 2,
     levelSha256: '31041ad693f59418fb34e91f6f7bdae4d46fb6294b5e4ba49f8035aab4e79246',
     themeId: 'fpv',
-    themeRevision: 58,
+    themeRevision: 62,
     collection: null,
     picture: {
       slot: 'scene.reveal.wide',
@@ -40,7 +41,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     levelRevision: 2,
     levelSha256: 'fcb1014f8b2c60047a2d10e4c0558b9ca03dcfe50c23ad48a5d2dabf9852c2a7',
     themeId: 'fpv',
-    themeRevision: 58,
+    themeRevision: 62,
     collection: null,
     picture: {
       slot: 'picture.fpv.adf5c9eea274ba7f',
@@ -62,7 +63,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
 export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
   version: 'revealline-team-historical-import-picture.v1',
   themeId: 'fpv',
-  themeRevision: 58,
+  themeRevision: 62,
   collection: null,
   picture: {
     slot: 'scene.reveal.wide',
@@ -75,3 +76,27 @@ export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
     width: 1152,
   },
 });
+
+/** Retained attempts use the same immutable content/picture identities under the
+ * explicitly preserved58,59,60 and61 themes. Current-only callers keep the two-row exports.
+ */
+export const COOP_RETAINED_PICTURE_BINDINGS = freezePresentation(
+  [58, 59, 60, 61].flatMap((themeRevision) =>
+    COOP_PICTURE_BINDINGS.map((row) => ({ ...row, themeRevision })),
+  ),
+);
+export const COOP_SUPPORTED_PICTURE_BINDINGS = freezePresentation([
+  ...COOP_PICTURE_BINDINGS,
+  ...COOP_RETAINED_PICTURE_BINDINGS,
+]);
+export const COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
+  ...COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+  themeRevision: 59,
+});
+export const COOP_HISTORICAL_IMPORT_PICTURE_POLICIES = freezePresentation([
+  COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+  { ...COOP_HISTORICAL_IMPORT_PICTURE_POLICY, themeRevision: 58 },
+  COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY,
+  { ...COOP_HISTORICAL_IMPORT_PICTURE_POLICY, themeRevision: 60 },
+  { ...COOP_HISTORICAL_IMPORT_PICTURE_POLICY, themeRevision: 61 },
+]);

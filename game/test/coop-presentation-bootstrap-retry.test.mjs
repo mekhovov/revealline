@@ -96,11 +96,29 @@ for (const arena of ['first-connection', 'relay-yard']) {
 
     f.$('coop-start').focus();
     f.tap('Enter');
-    f.tick(3);
+    const decodedPicture = f.artwork.calls.decodes[0];
+    for (let frame = 0; frame < 3; frame++) {
+      f.drawImages.length = 0;
+      f.tick(1);
+      assert.equal(
+        f.drawImages[0],
+        decodedPicture,
+        `Frame ${frame + 1} paints the exact recovered decoded picture before actor artwork.`,
+      );
+      assert.equal(f.drawImages[0].sha256, row.picture.sha256);
+      assert.equal(
+        f.drawImages.filter((image) => image === decodedPicture).length,
+        1,
+        'Each sampled frame paints its accepted original exactly once.',
+      );
+      assert.ok(
+        f.drawImages.length > 1,
+        'The real prepared actor/equipment artwork also paints after the arena picture.',
+      );
+    }
     assert.equal(f.$('coop-menu').hidden, true);
     assert.equal(f.$('coop-play').hidden, false);
     assert.equal(f.$('coop-overlay').hidden, true);
-    assert.equal(f.drawImages.at(-1).sha256, row.picture.sha256);
     assert.equal(f.artwork.calls.loads, 2, 'Start borrows the recovered presentation.');
     assert.equal(f.artwork.calls.reads.length, 1);
   });
