@@ -13,7 +13,7 @@ export function snapshotSessionVisualPin(
     media = presentationPicturePins(pictures);
   const picture = media.choices.find((choice) => choice.identity.themeId === themeId);
   required(
-      media.executionKey === campaignKey &&
+    media.executionKey === campaignKey &&
       media.levelId === simulationLevel?.id &&
       (presentationLevel === undefined ||
         (presentationLevel !== null &&
