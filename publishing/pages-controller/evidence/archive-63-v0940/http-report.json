@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "base": "https://mekhovov.github.io/revealline-archive-63/",
+  "files": 1120,
+  "expectedBytes": 594889291,
+  "verifiedBytes": 594889291,
+  "failedFiles": 0,
+  "failures": [],
+  "skipped": [],
+  "expectedInventorySha256": "863bdebdef3ea1f28c16d8fb9d668608f859837cb40c9ace9c55fc97e2cdc91c",
+  "attempts": 1120,
+  "elapsedSeconds": 160.951,
+  "scope": "Every exact Archive63 inventory body, size, SHA-256, HTTP status and final URL."
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-23T15:54:00Z",
+  "kind": "bounded archive title availability",
+  "status": "PASS within bounded launch scope",
+  "version": "v0.94.0",
+  "sourceRevision": "28f75fbda8d4a9011df8520754b68ab7d75fef22",
+  "archiveRepository": "mekhovov/revealline-archive-63",
+  "archiveRevision": "2c12b49492cc5029e8eb0d1009c0e7875d314451",
+  "productionRun": 35884201254,
+  "deployment": 6618242102,
+  "entry": "https://mekhovov.github.io/revealline-archive-63/releases/v0.94.0/site/game/",
+  "steps": [
+    "Opened the canonical archived game URL in a fresh hidden in-app browser tab.",
+    "Observed the boot surface and then the loaded native title shell.",
+    "Observed NEW JOURNEY / 91 MISSIONS, Standard difficulty, Solo, Versus and Team mode entries.",
+    "Observed Continue, Missions, Collection, Settings and Workshop controls.",
+    "Observed VERSION V0.94.0 on the loaded title."
+  ],
+  "limits": [
+    "No mission was launched and no progress, settings or saved data were changed.",
+    "This receipt establishes bounded title availability; the exact 1,120-file HTTP audit separately establishes archived byte integrity.",
+    "No physical controller, touch, offline, gameplay, audio or human-balance qualification is claimed."
+  ]
+}
