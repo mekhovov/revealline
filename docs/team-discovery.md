@@ -19,14 +19,9 @@ reviewed Team content, exact artwork dependencies and a qualified installer.
 
 ## Optional artwork preview
 
-Cards add a 288×144 artwork teaser and a separate **Preview** action beside the
-existing Play action. Preview enlarges the same concealed teaser in the same dialog;
-it does not expose the full picture, start a simulation, complete an arena or add
-an earned picture. The opaque centre scales with the view, retaining the same
-proportional border as the card. Its caption says **Locked preview · Win to reveal
-the full picture**. Scenery does not define collision geometry. Earned Results
-**View picture** and creator Studio previews retain the full original. **Back to arenas** returns to the cards and their selected arena without
-opening a nested modal. A failed preview offers **Retry preview**.
+Unified mission-library cards stay metadata-only and browsing remains artwork-lazy. The ready lobby shows a broad-border 576×288 artwork teaser with its centre concealed. The separate **Preview picture** action for the selected mission opens the complete authenticated 1152×576 original inline in the shared chooser. Its caption states that viewing does not complete an arena or earn a picture. Preview changes no score, captured territory, awards, saves or accepted attempt. Scenery does not define collision geometry. Earned Results **View picture** still displays the earned original independently. Shared chooser **Back** closes directly to the exact lobby/result game opener; selecting another card clears the old preview, and failure offers **Retry preview**.
+
+This current optional full-preview contract supersedes the earlier card-teaser and locked enlarged-teaser policies. Earlier source/native receipts below keep their original scope and do not qualify this behavior.
 
 Preview uses the exact Team content and artwork resolver. Keep at most one actual
 preview preparation in flight, including after cancellation while an underlying
@@ -124,11 +119,11 @@ earned-picture or Solo-save mutations. Reviewed Team downloads remain later P06 
 
 ## Expanded-preview responsive layout
 
-The complete concealed preview frame and Back action must fit together. In landscape, allocate the dialog’s available height after navigation, title, caption and status, then fit the entire 2:1 picture with `object-fit: contain`. Do not independently assign most of the viewport height to the picture. On portrait screens, use natural image height, a `height: fit-content` dialog and non-expanding rows instead of a fixed-height letterbox. `height: auto` alone does not prevent the modal grid from stretching. Keep overflow available for enlarged text and recovery messages.
+The complete full-preview frame and Back action must fit together. In landscape, allocate the dialog’s available height after navigation, title, caption and status, then fit the entire 2:1 picture with `object-fit: contain`. Do not independently assign most of the viewport height to the picture. On portrait screens, use natural image height, a `height: fit-content` dialog and non-expanding rows instead of a fixed-height letterbox. `height: auto` alone does not prevent the modal grid from stretching. Keep overflow available for enlarged text and recovery messages.
 
-Hide gallery-only copy in the expanded view. The visible caption states “Locked preview · Win to reveal the full picture”; successful loading announcements remain available to assistive technology. Loading, errors, cancellation and procedural-scene explanations stay visible. Keep the existing Back/Retry ownership and minimum 44-pixel targets.
+Hide gallery-only copy in the expanded view. The visible caption states “Full picture preview · Viewing does not complete an arena or earn a picture”; successful loading announcements remain available to assistive technology. Loading, errors, cancellation and procedural-scene explanations stay visible. Keep the existing Back/Retry ownership and minimum 44-pixel targets.
 
-Qualify settled screenshots and geometry at 844×390, 600×400, 390×844 and desktop, including Large/Plain text and 200% zoom. Rotate without closing the picture; verify the same artwork and focus remain. Exercise failed loading and Retry, then Back to the exact Preview opener and Back again to the gallery opener. Finite DOM tests and CSS checks do not establish browser geometry, physical input or public release readiness.
+Qualify settled screenshots and geometry at 844×390, 600×400, 390×844 and desktop, including Large/Plain text and 200% zoom. Rotate without closing the picture; verify the same artwork and focus remain. Exercise failed loading and Retry, selection-change cleanup, then shared chooser Back directly to the exact game opener. Finite DOM tests and CSS checks do not establish browser geometry, physical input or public release readiness.
 
 ## Reference guidance — checked 20 September 2026
 
@@ -136,11 +131,12 @@ The [W3C modal-dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-m
 
 ## Picture reward boundary
 
-Player discovery keeps both the 288×144 card and 1152×576 expanded view concealed.
-Their border widths are 24 and 96 pixels respectively. Preview never unlocks or
-awards a picture. Preserve the exact artwork, current attempt/result, resource
-lease, cancellation, Retry and Back focus contracts. Creator Studio views and
-earned Results viewing remain complete; this does not introduce a global spoiler
-preference or a new progress store. The prior full-preview native and test
-records remain historical. Qualify this correction on its own final source and
-public journey before acceptance.
+Player discovery keeps metadata-only cards artwork-lazy and shows the complete
+authenticated original only after the selected mission's explicit Preview action.
+Preview never unlocks or awards a picture. Preserve the exact artwork, current
+attempt/result, transient resource lease, cancellation, Retry and shared chooser
+Back-to-game focus contracts. Creator Studio views and earned Results viewing
+remain complete; this does not introduce a global spoiler preference or a new
+progress store. The prior card-teaser, concealed expanded-preview and full-preview
+records remain historical until independently bound to their exact source. Qualify
+this correction on its own final source and public journey before acceptance.
