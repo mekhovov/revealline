@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import { createWholeJourneyChapterSources } from '../game/content-design/whole-journey-candidates.mjs';
+import { createAuthoredJourneyRoute } from '../game/content-design/route.mjs';
 
 const root = new URL('../', import.meta.url);
 const json = async (relative) => JSON.parse(await readFile(new URL(relative, root), 'utf8'));
@@ -17,18 +18,22 @@ export async function loadJourneyAdaptationInputs({ edition = 'greybox' } = {}) 
       'teaching-originals',
       'campaign-originals',
       'actor-originals',
+      'whole-spatial-v5',
     ].includes(edition)
   )
     throw new Error('Unknown adaptation content edition.');
   const ledger = await json('docs/research/xposed-journey-ledger.json');
   const chapters = [];
+  // Keep declaration-era pins on their original source. Selecting a newer
+  // execution edition does not renew the old design rationale or route evidence.
+  const declarationEdition = edition === 'whole-spatial-v5' ? 'actor-originals' : edition;
   const selected = createWholeJourneyChapterSources({
-    artwork: edition !== 'greybox',
+    artwork: declarationEdition !== 'greybox',
     roverTeaching: ['teaching-originals', 'campaign-originals', 'actor-originals'].includes(
-      edition,
+      declarationEdition,
     ),
-    campaignPresentation: ['campaign-originals', 'actor-originals'].includes(edition),
-    campaignActors: edition === 'actor-originals',
+    campaignPresentation: ['campaign-originals', 'actor-originals'].includes(declarationEdition),
+    campaignActors: declarationEdition === 'actor-originals',
   });
   for (const [index, chapter] of selected.entries()) {
     const module = await import(`../game/content-design/${chapter.id}-candidates.mjs`);
@@ -59,7 +64,14 @@ export async function loadJourneyAdaptationInputs({ edition = 'greybox' } = {}) 
     }
     chapters.push({ id: chapter.id, phase, source, evidenceSource, declarations });
   }
-  return { ledger, chapters, contentEdition: edition };
+  return {
+    ledger,
+    chapters,
+    contentEdition: edition,
+    ...(edition === 'whole-spatial-v5'
+      ? { selectedSource: createAuthoredJourneyRoute(edition).source }
+      : {}),
+  };
 }
 
 /** Qualification stays open. Resolved identities prove a declaration has current
@@ -68,6 +80,7 @@ export function inspectJourneyAdaptations({
   ledger,
   chapters,
   contentEdition = 'caller-supplied',
+  selectedSource,
 }) {
   const references = ledger.references.filter((row) => row.kind === 'mission-layout-reference');
   const byKey = new Map(references.map((row) => [row.designKey, row]));
@@ -75,17 +88,34 @@ export function inspectJourneyAdaptations({
   const links = [],
     seen = new Set(),
     authoredMissions = [];
-  for (const chapter of chapters) {
-    const project = compileContentProject(chapter.source);
-    authoredMissions.push(
-      ...project.missions.map((mission) => ({
-        chapter: chapter.id,
+  const selectedProject = selectedSource ? compileContentProject(selectedSource) : null;
+  if (selectedProject) {
+    for (const mission of selectedProject.missions) {
+      const chapter = chapters.find((row) =>
+        row.source.missions.some((candidate) => candidate.id === mission.id),
+      );
+      authoredMissions.push({
+        chapter: chapter?.id ?? null,
         missionId: mission.id,
         missionRevision: mission.revision,
-        projectId: project.source.id,
+        projectId: selectedProject.source.id,
         map: mission.map,
-      })),
-    );
+      });
+    }
+  }
+  for (const chapter of chapters) {
+    const declarationProject = compileContentProject(chapter.source);
+    const project = selectedProject ?? declarationProject;
+    if (!selectedProject)
+      authoredMissions.push(
+        ...project.missions.map((mission) => ({
+          chapter: chapter.id,
+          missionId: mission.id,
+          missionRevision: mission.revision,
+          projectId: project.source.id,
+          map: mission.map,
+        })),
+      );
     for (const declaration of chapter.declarations) {
       const reference = byKey.get(declaration.reference);
       if (!reference) throw new Error(`Unknown numbered reference: ${declaration.reference}.`);
@@ -103,6 +133,10 @@ export function inspectJourneyAdaptations({
       const key = `${chapter.id}/${declaration.missionId}/${declaration.reference}`;
       if (seen.has(key)) throw new Error(`Duplicate adaptation: ${key}.`);
       seen.add(key);
+      const declaredMission = declarationProject.source.missions.find(
+        (row) => row.id === declaration.missionId,
+      );
+      if (!declaredMission) throw new Error(`Unknown declared mission: ${key}.`);
       const editions = [];
       for (const mode of ['solo', 'versus'])
         for (const difficulty of ['gentle', 'standard', 'expert']) {
@@ -112,7 +146,11 @@ export function inspectJourneyAdaptations({
             mode === 'solo' &&
             difficulty === 'standard' &&
             Object.hasOwn(declaration, 'standardSimulationIdentity') &&
-            declaration.standardSimulationIdentity !== manifest.simulationIdentity
+            declaration.standardSimulationIdentity !==
+              (selectedProject
+                ? resolveMission(declarationProject, declaration.missionId, { mode, difficulty })
+                    .simulationIdentity
+                : manifest.simulationIdentity)
           )
             throw new Error(
               `Stale declared simulation: ${key}. Renew its design and route review.`,
@@ -131,6 +169,16 @@ export function inspectJourneyAdaptations({
         designRationale: declaration.reason,
         routeDecision: mission.design.routeDecision,
         evidenceSource: chapter.evidenceSource,
+        ...(selectedProject
+          ? {
+              declarationProvenance: {
+                projectId: declarationProject.source.id,
+                missionRevision: declaredMission.revision,
+                map: declaredMission.map,
+                designReview: 'requires-selected-edition-review',
+              },
+            }
+          : {}),
         editions,
         status: 'implemented-candidate-not-final-disposition',
         finalDisposition: false,
@@ -152,6 +200,14 @@ export function inspectJourneyAdaptations({
   return {
     format: 'JourneyAdaptationCoverageV1',
     contentEdition,
+    ...(selectedProject
+      ? {
+          selectedProject: {
+            id: selectedProject.source.id,
+            revision: selectedProject.source.revision,
+          },
+        }
+      : {}),
     counts: {
       sourceFiles: ledger.references.length,
       numberedReferences: references.length,
@@ -186,7 +242,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const args = process.argv.slice(2);
     if (args.length && (args.length !== 2 || args[0] !== '--edition'))
       throw new Error(
-        'Usage: node scripts/audit-journey-adaptations.mjs [--edition greybox|originals|teaching-originals|campaign-originals|actor-originals]',
+        'Usage: node scripts/audit-journey-adaptations.mjs [--edition greybox|originals|teaching-originals|campaign-originals|actor-originals|whole-spatial-v5]',
       );
     const report = await auditJourneyAdaptations(args.length ? { edition: args[1] } : undefined);
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
