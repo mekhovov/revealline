@@ -6,6 +6,11 @@ It supersedes older status/queue paragraphs, not their design contracts, source
 observations or release evidence. The original P00–P15 version allocations are
 historical estimates, not a record of what each later release contains.
 
+The [player-feedback register](player-feedback-register-2026-09-23.md) maps
+the user's gameplay, content, authoring and delivery feedback to explicit
+requirements F01–F14, current scope and completion conditions. Deferred feedback
+remains visible there rather than being treated as rejected or completed.
+
 ## 1. Summary
 
 - **Live and publicly accepted: v0.86.0.** The ordinary Pages release marker
@@ -90,6 +95,12 @@ Remaining before calling v0.87.0 delivered:
    explicitly waived gameplay checks as deferred, never passed.
 5. Publish the acceptance receipt and update this register to Delivered.
 
+Later preservation checkpoint: Archive55 production run `35800419227` deployed
+v0.86.0 from publisher `288aaa3f`. The scoped native index → title/version →
+About/history → Back journey passed without retry, warning or error; receipt
+SHA256 `c717070db09d6e3c396718bb418b5b46e27223d42ab7de7a725607081723dffa`.
+This is not the full archive HTTP/admission gate or v0.87 Pages promotion.
+
 Owner: sole publisher, with the existing Pages coordinator and native acceptance
 owner. No competing tags, asset uploads or deployments. Estimated remaining
 elapsed time: **1–3 hours if release/archive gates pass first time**, not a promise.
@@ -121,11 +132,12 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 | Support only | PR266/269 branch/sprite provenance reconciliation; PR235 CI efficiency | Account for unique work and dependencies without losing source or delaying player-visible repairs                                                                                                   | 2–4h bounded reconciliation/CI slice                             |
 
 PR numbers denote retained work, **not merge-ready certification**. At this check,
-22 PRs remain open including this documentation-only status PR; the other 21 are
-retained product, study, evidence or support work, not 21 independent finished
-features. Six currently report merge conflicts. Stacked changes must be reconciled
-against current main. PR252/257 were consolidated into delivered v0.85.0 and
-closed as superseded; do not list them as unfinished releases.
+The cutoff inventory contains **21 feature draft PRs, excluding documentation
+and publication PRs**. These include product, study, evidence and support work,
+not 21 independent finished features. Six reported merge conflicts at that check;
+recheck before admission. Stacked changes must be reconciled against current main.
+PR252/257 were consolidated into delivered v0.85.0 and closed as superseded;
+do not list them as unfinished releases.
 
 The image error has diagnostics, not a proven fix. Published bundle/hash checks
 and one successful Orchard Crossing download did not reproduce the user's case.
