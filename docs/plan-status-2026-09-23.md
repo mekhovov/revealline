@@ -175,13 +175,13 @@ rights, public redistribution or recording-safe use.
 
 ### Remaining soundtrack work, in priority order
 
-| Priority | Item / current state | Completion condition | Indicative effort |
-| -------- | -------------------- | -------------------- | ----------------- |
-| P1 | Production soundtrack UX and 70-track audit | Current Pages style/playlist/shuffle, menu↔game continuity, install/offline/recovery and unavailable-network paths pass; every public track receives full listening, genre-fit, transition, volume and credit review | 4–8 h technical UX pass; 1–2 days listening |
-| P2 | More clearly redistributable licensed music | Exact recording/license/hash/credit review, full audition, rights-aware catalogue admission and a small independently releasable album batch | 1–3 days per 10–20-track batch |
-| P2 blocked | Public UA-FPV album | Recording-specific public redistribution, game use, artwork/metadata and recording-video evidence for every admitted hash | No reliable estimate until rights evidence exists |
-| P3 | Better original-production method and four pilots | One synchronized, memorable and game-ready 90s Synth, Metal, Ukrainian and fusion pilot; no weak local-procedural candidate is promoted | 2–5 days for method and pilots |
-| P3 | 36 reviewed originals | 12 per family including six fusions; masters and MP3s, loudness/peak checks, complete listening, in-game transitions and Ukrainian cultural review all pass | Approximately 3–6 weeks after pilot approval |
+| Priority   | Item / current state                              | Completion condition                                                                                                                                                                                                  | Indicative effort                                 |
+| ---------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| P1         | Production soundtrack UX and 70-track audit       | Current Pages style/playlist/shuffle, menu↔game continuity, install/offline/recovery and unavailable-network paths pass; every public track receives full listening, genre-fit, transition, volume and credit review | 4–8 h technical UX pass; 1–2 days listening       |
+| P2         | More clearly redistributable licensed music       | Exact recording/license/hash/credit review, full audition, rights-aware catalogue admission and a small independently releasable album batch                                                                          | 1–3 days per 10–20-track batch                    |
+| P2 blocked | Public UA-FPV album                               | Recording-specific public redistribution, game use, artwork/metadata and recording-video evidence for every admitted hash                                                                                             | No reliable estimate until rights evidence exists |
+| P3         | Better original-production method and four pilots | One synchronized, memorable and game-ready 90s Synth, Metal, Ukrainian and fusion pilot; no weak local-procedural candidate is promoted                                                                               | 2–5 days for method and pilots                    |
+| P3         | 36 reviewed originals                             | 12 per family including six fusions; masters and MP3s, loudness/peak checks, complete listening, in-game transitions and Ukrainian cultural review all pass                                                           | Approximately 3–6 weeks after pilot approval      |
 
 Keep the four UA-FPV upload packs private and documented while rights remain
 unverified. A YouTube page or playlist without an explicit grant does not authorize
