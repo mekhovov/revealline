@@ -126,7 +126,12 @@ and one successful Orchard Crossing download did not reproduce the user's case.
 Use the failing mission/mode/asset diagnostic if available; do not clear player
 uploads or weaken static-image validation to make the error disappear.
 
-## 6. Original P00–P15 phase closure checklist
+## 6. Xposed Journey P00–P15 phase closure checklist
+
+These identifiers belong to the Xposed Journey contract, not the older whole-game
+programme. Its separate [P00–P18 remaining-work crosswalk](cross-mode-execution.md#original-whole-game-phases-remaining-work-crosswalk)
+retains UI, presentation, community-production and device obligations. Completing
+a Journey phase does not automatically complete a similarly numbered older phase.
 
 Every row has implementation and scoped technical evidence. **No row has full
 final acceptance.** Current releases close deployment gaps for integrated content,
