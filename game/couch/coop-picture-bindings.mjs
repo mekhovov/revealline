@@ -6,8 +6,9 @@ import { freezePresentation } from '../presentation/model.mjs';
  * Lease output retains the complete frame with contain fit and nearest sampling.
  * Canonical fpv58 retains accepted main57 artwork while integrating the scoped
  * retained-presentation reader and audio ownership review.
- * The archived unpublished fpv55–58 lineage is not a runtime fallback. All 127 original
- * payloads, including these two derivatives, remain byte-identical. No other revision is admitted.
+ * The separately archived alternate pre-main lineage spanning fpv55 through fpv58 is not a
+ * runtime fallback. All 127 original payloads, including these two derivatives, remain
+ * byte-identical. No other revision is admitted.
  */
 export const COOP_PICTURE_BINDINGS = freezePresentation([
   {
