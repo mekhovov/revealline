@@ -1234,3 +1234,20 @@ abort semantics and ordinary pack validation. Verify controlled failure then
 success in the same page without reload. See `docs/chapter-download-retry.md` and
 `authoring/prompts/chapter-download-retry.md`; local faults do not qualify public
 network recovery or physical-device input.
+
+
+## Replay Theater history-restored display controls
+
+When a browser restores form values, an unchanged shared preference owner may legitimately emit no subscription update. Replay Theater must use the shared view-only preference-restoration adapter after its owner listeners. Repaint current snapshots immediately and in the next task; never treat restored controls as explicit intent. Preserve denied-save session choices, raw effects choice, system reduction, focus, warnings, input and paused recording checkpoints. Cancel pending repaint on departure and dispose on terminal exit. Test unchanged saved/session-only values and stale controls both before and after pageshow, separately from physical browser/device qualification. See `docs/replay-display-restoration.md` and `authoring/prompts/replay-display-restoration.md`.
+
+## 2026-09-22 — Responsive authoring toolbar minimums
+
+For [Studio preview controls](../../../docs/verification/studio-responsive-toolbar.md), inspect later shared host selectors when a narrow toolbar ignores its minimum widths. A logical `min-inline-size: 0` can override an earlier `min-width`, and `flex: 1` can then collapse every label into one row. Keep a bounded track minimum rather than relying on the children's minimum alone; constrain native select text, preserve DOM/tab order and measure actual 44px action rows. Verify portrait, short landscape, wide layout and Plain/Large text. Attribute native checks to the exact source and CSS overlay, preserve the full existing maintainer history, and keep responsive emulation separate from physical-device or complete authoring acceptance. Use the [focused prompt](../../prompts/studio-responsive-toolbar.md).
+
+## 2026-09-22 — Native validation keeps its field label visible
+
+For [Studio validation labels](../../prompts/studio-validation-labels.md), keep the browser’s chosen invalid field and native error behavior. Reveal the complete associated label plus outline clearance after one bounded animation frame; a tall wrapper falls back to the control. Bind queued scrolling to the live connected form, current focus and foreground, and recheck ownership after layout reads. Background, disposal or stale focus must not move another field. Keep the adapter scoped to the affected form rather than broadening modal helpers. Qualify both real form editing semantics and native invalid-submission geometry, preserve draft JSON, and distinguish narrow local keyboard evidence from physical-device, actual zoom, all-form and public acceptance. See [verification and limits](../../../docs/studio-validation-labels.md).
+
+## Sprite history keyboard focus
+
+Before disabling an owned Undo or Redo endpoint, enable and focus its available opposite action; use the canvas if neither history action remains. Let normal focus reveal the successor after responsive reflow or rotation. Canvas shortcuts, intermediate history, background redraws and newer unrelated focus retain their owners. Verify real pixel/history outcomes as well as focus; a modeled pass does not prove visible native focus. Preserve failed native iterations. Follow [the verification prompt](../../prompts/studio-pixel-history-focus.md).

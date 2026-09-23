@@ -1,0 +1,20 @@
+[
+  {
+    "receipt": "pr247-studio-source-http.json",
+    "responses": 318,
+    "paths": 318,
+    "mismatches": []
+  },
+  {
+    "receipt": "pr247-studio-destination-http.json",
+    "responses": 503,
+    "paths": 318,
+    "mismatches": []
+  },
+  {
+    "receipt": "pr247-studio-focus-first-http.json",
+    "responses": 185,
+    "paths": 185,
+    "mismatches": []
+  }
+]
