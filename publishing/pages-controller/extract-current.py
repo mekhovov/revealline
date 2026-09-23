@@ -8,11 +8,67 @@ import re
 import shutil
 import stat
 import tempfile
+import urllib.error
+import urllib.parse
 import urllib.request
 import zipfile
 
 LIMIT = 800_000_000
 MARKER = b'{\n  "tool": "xonix-game-cli",\n  "formatVersion": 1\n}\n'
+API_ROOT = 'https://api.github.com/repos/mekhovov/revealline'
+API_VERSION = '2022-11-28'
+USER_AGENT = 'RevealLine-Pages-Publisher/1'
+
+def api_headers(accept):
+    token = os.environ.get('GH_TOKEN')
+    if not token:
+        raise ValueError('GH_TOKEN is required to read private release assets')
+    return {'Accept': accept, 'Authorization': f'Bearer {token}', 'X-GitHub-Api-Version': API_VERSION, 'User-Agent': USER_AGENT}
+
+def select_release_asset(release, version, name, expected_sha256):
+    matches = [asset for asset in release.get('assets', []) if asset.get('name') == name]
+    if release.get('draft') or release.get('prerelease') or release.get('tag_name') != version or len(matches) != 1:
+        raise ValueError('Selected release or asset identity mismatch')
+    asset = matches[0]
+    if asset.get('state') != 'uploaded' or type(asset.get('size')) is not int or not 0 <= asset['size'] <= LIMIT or asset.get('digest') != f'sha256:{expected_sha256}' or not re.fullmatch(r'https://api\.github\.com/repos/mekhovov/revealline/releases/assets/\d+', asset.get('url', '')):
+        raise ValueError('Selected release asset descriptor mismatch')
+    return asset
+
+def release_asset(version, name, expected_sha256):
+    url = f'{API_ROOT}/releases/tags/{urllib.parse.quote(version, safe="")}'
+    request = urllib.request.Request(url, headers=api_headers('application/vnd.github+json'))
+    with urllib.request.urlopen(request, timeout=60) as response:
+        raw = response.read(2_000_001)
+    if len(raw) > 2_000_000:
+        raise ValueError('Release metadata exceeds its byte budget')
+    return select_release_asset(json.loads(raw), version, name, expected_sha256)
+
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, request, file_pointer, code, message, headers, new_url):
+        return None
+
+def download_release_asset(asset, destination):
+    request = urllib.request.Request(asset['url'], headers=api_headers('application/octet-stream'))
+    opener = urllib.request.build_opener(NoRedirect())
+    try:
+        response = opener.open(request, timeout=120)
+    except urllib.error.HTTPError as error:
+        if error.code not in [301, 302, 303, 307, 308]:
+            raise
+        location = error.headers.get('Location', '')
+        parsed = urllib.parse.urlparse(location)
+        if parsed.scheme != 'https' or parsed.hostname != 'release-assets.githubusercontent.com':
+            raise ValueError('Release asset redirect left the approved host') from error
+        response = urllib.request.urlopen(urllib.request.Request(location, headers={'User-Agent': USER_AGENT}), timeout=120)
+    with response, os.fdopen(destination, 'wb') as out:
+        count = 0
+        while block := response.read(1024 * 1024):
+            count += len(block)
+            if count > LIMIT or count > asset['size']:
+                raise ValueError('Original ZIP transfer exceeded budget')
+            out.write(block)
+    if count != asset['size']:
+        raise ValueError('Original ZIP transfer size mismatch')
 
 def sha_file(path):
     with open(path, 'rb') as stream:
@@ -95,17 +151,11 @@ def main():
         if args.zip:
             zip_path = args.zip
         else:
-            # Manifest data never chooses an arbitrary host/path.
-            url = f'https://github.com/mekhovov/revealline/releases/download/{record["version"]}/distribution.zip'
+            # Authenticated API metadata chooses the exact immutable-by-policy asset.
+            asset = release_asset(record['version'], 'distribution.zip', record['distributionSha256'])
             handle, downloaded = tempfile.mkstemp(prefix='.current-original-', suffix='.zip', dir=args.output.parent)
             zip_path = pathlib.Path(downloaded)
-            with os.fdopen(handle, 'wb') as out, urllib.request.urlopen(url, timeout=120) as response:
-                count = 0
-                while block := response.read(1024 * 1024):
-                    count += len(block)
-                    if count > LIMIT:
-                        raise ValueError('Original ZIP transfer exceeded budget')
-                    out.write(block)
+            download_release_asset(asset, handle)
         result = extract_current(zip_path, args.output, record, (args.metadata / 'manifest.json').read_bytes(), (args.metadata / 'distribution.zip.sha256').read_bytes())
         with open(args.receipt, 'x') as out:
             json.dump(result, out, indent=2); out.write('\n')

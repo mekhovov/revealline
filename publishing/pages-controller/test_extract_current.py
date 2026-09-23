@@ -64,4 +64,19 @@ class ExtractCurrentTests(unittest.TestCase):
             extractor.extract_current(args[0], self.root / 'current', args[1], args[2], checksum)
         self.assertFalse((self.root / 'current').exists())
 
+    def test_private_release_asset_descriptor_is_exact(self):
+        digest = 'b' * 64
+        asset = {'name': 'distribution.zip', 'size': 42, 'state': 'uploaded', 'digest': 'sha256:' + digest, 'url': 'https://api.github.com/repos/mekhovov/revealline/releases/assets/123'}
+        release = {'tag_name': 'v0.95.0', 'draft': False, 'prerelease': False, 'assets': [asset]}
+        self.assertEqual(extractor.select_release_asset(release, 'v0.95.0', 'distribution.zip', digest), asset)
+        for mutation in [
+            lambda value: value.update({'draft': True}),
+            lambda value: value.update({'tag_name': 'v0.94.0'}),
+            lambda value: value['assets'][0].update({'digest': 'sha256:' + 'c' * 64}),
+            lambda value: value['assets'][0].update({'url': 'https://example.com/asset'}),
+        ]:
+            changed = json.loads(json.dumps(release)); mutation(changed)
+            with self.assertRaises(ValueError):
+                extractor.select_release_asset(changed, 'v0.95.0', 'distribution.zip', digest)
+
 if __name__ == '__main__': unittest.main()
