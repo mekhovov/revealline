@@ -6,10 +6,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const output = path.join(
-  root,
-  'docs/verification/team-presentation-v0940-20260923/coverage.json',
-);
+const output = path.join(root, 'docs/verification/team-presentation-v0940-20260923/coverage.json');
 const base = '80a47a3b25167d9dcd0bdf98b1bde6a95d112269';
 const head = '20370a67892e5d48d65b0be9277c715d297b9f47';
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
@@ -43,11 +40,14 @@ const commits = [
   { pr: 245, head: 'e777522f0ce94fd253b8a54e69efc0a7ad9331bb', expectedPaths: 31 },
   { pr: 247, head: '20370a67892e5d48d65b0be9277c715d297b9f47', expectedPaths: 4 },
 ];
-const parents = new Map(commits.map((entry, index) => [entry.head, commits[index - 1]?.head ?? base]));
+const parents = new Map(
+  commits.map((entry, index) => [entry.head, commits[index - 1]?.head ?? base]),
+);
 // PR240 is the only two-commit PR in the exact chain.
 parents.set('444021555554e522388a8776983846f262f4fa25', '9e7ff24aa662c5f6cc33cb40f38084572207bc37');
 const rangePaths = lines(git('diff', '--name-only', `${base}..${head}`)).sort();
-if (rangePaths.length !== 154) throw new Error(`Expected 154 historical paths, got ${rangePaths.length}.`);
+if (rangePaths.length !== 154)
+  throw new Error(`Expected 154 historical paths, got ${rangePaths.length}.`);
 const rangePathSha256 = sha256(`${rangePaths.join('\n')}\n`);
 if (rangePathSha256 !== 'fee5887dadc77ecd389d5a10b45755ddfbd6109543d1c1552207f231fa6f405f')
   throw new Error('Historical range path identity changed.');
@@ -81,10 +81,18 @@ for (const relative of [retained58, compiled58]) {
   )
     throw new Error(`Exact accepted runtime58 differs: ${relative}.`);
 }
-const manifest = JSON.parse(await fs.readFile(path.join(root, 'game/presentation/compiled/manifest.json')));
-if (!manifest.files.some((file) => file.path === compiled58.slice('game/presentation/compiled/'.length)))
+const manifest = JSON.parse(
+  await fs.readFile(path.join(root, 'game/presentation/compiled/manifest.json')),
+);
+if (
+  !manifest.files.some(
+    (file) => file.path === compiled58.slice('game/presentation/compiled/'.length),
+  )
+)
   throw new Error('Compiled ownership manifest omits accepted runtime58.');
-const runtime = JSON.parse(await fs.readFile(path.join(root, 'game/presentation/compiled/runtime.json')));
+const runtime = JSON.parse(
+  await fs.readFile(path.join(root, 'game/presentation/compiled/runtime.json')),
+);
 if (runtime.source.revision !== 62 || runtime.resolved.theme.revision !== 62)
   throw new Error('Integrated current presentation must be exact revision62.');
 for (const relative of ['package.json', 'package-lock.json', 'game/build-config.json']) {
@@ -114,10 +122,8 @@ const pr239 = {
   coveredBy: 245,
   pathListSha256: '3b1b92600b82329225a40387acd13d2ee1b0795d6299122cfe540599f19346c2',
   exactBlobs: {
-    'authoring/asset-studio/cross-mode-preview.mjs':
-      '2033d6201fbc06711af3d914040f9ba3b465a9eb',
-    'authoring/prompts/studio-same-tick-counters.md':
-      'd01fdf5405d0562fbc3e9074c15903011a5a4503',
+    'authoring/asset-studio/cross-mode-preview.mjs': '2033d6201fbc06711af3d914040f9ba3b465a9eb',
+    'authoring/prompts/studio-same-tick-counters.md': 'd01fdf5405d0562fbc3e9074c15903011a5a4503',
     'game/test/asset-studio-cross-mode.test.mjs': '1e1a2e9238e43e25620adf3ca61746769fc07b13',
   },
 };
@@ -199,7 +205,10 @@ const result = {
   ],
   testPolicy: {
     mandatory: ['exact-source validate', 'build', 'retention and deterministic focused checks'],
-    waivedDeferred: ['broad automated suites', 'extended native/gameplay/responsive/offline journeys'],
+    waivedDeferred: [
+      'broad automated suites',
+      'extended native/gameplay/responsive/offline journeys',
+    ],
     localBuild: 'deferred to hosted exact-head CI after local ENOSPC capacity failure',
   },
 };
