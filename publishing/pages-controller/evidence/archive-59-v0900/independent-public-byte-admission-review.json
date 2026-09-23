@@ -1,0 +1,331 @@
+{
+  "format": "revealline-archive59-public-byte-admission-review.v1",
+  "status": "PASS_FULL_PUBLIC_BYTE_RECONCILIATION",
+  "reviewedAt": "2026-09-23T05:58:04.877491+00:00",
+  "artifact": {
+    "id": 10735090573,
+    "node_id": "MDg6QXJ0aWZhY3QxMDczNTA5MDU3Mw==",
+    "name": "archive59-public-http-evidence",
+    "size_in_bytes": 320712,
+    "url": "https://api.github.com/repos/mekhovov/revealline-archive-59/actions/artifacts/10735090573",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline-archive-59/actions/artifacts/10735090573/zip",
+    "expired": false,
+    "digest": "sha256:c2f68c3c30d4d2bccc474e7ca3f0d60a36eca9a5ed010462f00eaafd4e749346",
+    "created_at": "2026-09-23T05:55:20Z",
+    "updated_at": "2026-09-23T05:55:20Z",
+    "expires_at": "2026-12-22T05:54:51Z",
+    "workflow_run": {
+      "id": 35824389581,
+      "repository_id": 1382824824,
+      "head_repository_id": 1382824824,
+      "head_branch": "codex/audit-archive59-http",
+      "head_sha": "b1119f5782189962efb0d2216e27758273a17210"
+    }
+  },
+  "zip": {
+    "bytes": 320712,
+    "sha256": "c2f68c3c30d4d2bccc474e7ca3f0d60a36eca9a5ed010462f00eaafd4e749346",
+    "files": 14,
+    "crcAndRetainedBytesVerified": true
+  },
+  "counts": {
+    "files": 1091,
+    "bytes": 590954684,
+    "attempts": 1091,
+    "failedFiles": 0,
+    "failedAttempts": 0,
+    "retries": 0,
+    "skips": 0
+  },
+  "report": {
+    "status": "PASS",
+    "base": "https://mekhovov.github.io/revealline-archive-59/",
+    "archiveCommit": "59104dfb5467339ae8ccdce7ee7b9c83939bb4a5",
+    "files": 1091,
+    "expectedBytes": 590954684,
+    "verifiedBytes": 590954684,
+    "failedFiles": 0,
+    "failures": [],
+    "skipped": [],
+    "expectedInventorySha256": "787197923251ee6049d5103bbd48e41f094f5cc34ff57dad3cff0c7849a7edf1",
+    "startedAt": "2026-09-23T05:54:55.964533+00:00",
+    "verifiedAt": "2026-09-23T05:55:19.995108+00:00",
+    "attempts": 1091,
+    "failedAttempts": 0,
+    "retriedFiles": 0,
+    "workers": 4,
+    "socketTimeoutSeconds": 25,
+    "attemptDeadlineSeconds": 90,
+    "auditDeadlineSeconds": 1800,
+    "maxAttemptsPerFile": 3,
+    "auditDeadlineExceeded": false,
+    "deadlineSemantics": "Acceptance checked before/after body reads and after response close and final authority validation; expired completions fail. A blocking transport operation may overrun; socket timeout is inactivity, not a strict process wall limit.",
+    "allFinalURLsExact": true,
+    "payloadFilesPersisted": false,
+    "sourcePinsUnchanged": true,
+    "authorityError": null,
+    "archiveTree": "60e7ab0b6240de281df3bc668dd71ac5cb070fb2",
+    "sourceCheckoutCommit": "59104dfb5467339ae8ccdce7ee7b9c83939bb4a5",
+    "runId": 35823714942,
+    "deploymentId": 6607260581,
+    "deploymentStatusId": 18712596858,
+    "receiptArtifactId": 10733648969,
+    "executionRequestSha256": "5a259a735883bda615516bc5d9183c9aee7f27affc17c033bcf1ecd1fc00dd65",
+    "preservedOldCanonicalRows": 0,
+    "scope": "Every pinned canonical HTTP body and explicit MIME, including hidden metadata. Independent of browser/offline or physical-device acceptance."
+  },
+  "rawPins": [
+    {
+      "path": "http-report.json",
+      "bytes": 1638,
+      "sha256": "e3813f65a5e8a48c7d350fcfe1c9020759ecb75d7454dfa833b89d675f1d85a9"
+    },
+    {
+      "path": "http-results.jsonl",
+      "bytes": 888421,
+      "sha256": "058c7e447c38a44eda371e27828c30a548d3e4884f3c262ae96031acf26c440c"
+    },
+    {
+      "path": "http-attempts.jsonl",
+      "bytes": 888421,
+      "sha256": "058c7e447c38a44eda371e27828c30a548d3e4884f3c262ae96031acf26c440c"
+    },
+    {
+      "path": "expected-inventory.json",
+      "bytes": 222653,
+      "sha256": "787197923251ee6049d5103bbd48e41f094f5cc34ff57dad3cff0c7849a7edf1"
+    },
+    {
+      "path": "auditor.py",
+      "bytes": 14812,
+      "sha256": "8cf5803ca17249314b963832b45c66407101ef68d4a9d5878d0721bbe5695e89"
+    },
+    {
+      "path": "audit_binding.py",
+      "bytes": 9018,
+      "sha256": "9a048c5e5759a6b543bf0c80c882cf67be5f63763cd7bc9314fe57d34f8dea38"
+    }
+  ],
+  "freshPostAudit": {
+    "main": {
+      "ref": "refs/heads/main",
+      "node_id": "REF_kwDOUmw7eK9yZWZzL2hlYWRzL21haW4",
+      "url": "https://api.github.com/repos/mekhovov/revealline-archive-59/git/refs/heads/main",
+      "object": {
+        "sha": "59104dfb5467339ae8ccdce7ee7b9c83939bb4a5",
+        "type": "commit",
+        "url": "https://api.github.com/repos/mekhovov/revealline-archive-59/git/commits/59104dfb5467339ae8ccdce7ee7b9c83939bb4a5"
+      }
+    },
+    "commit": {
+      "sha": "59104dfb5467339ae8ccdce7ee7b9c83939bb4a5",
+      "node_id": "C_kwDOUmw7eNoAKDU5MTA0ZGZiNTQ2NzMzOWFlOGNjZGNlN2VlN2I5YzgzOTM5YmI0YTU",
+      "url": "https://api.github.com/repos/mekhovov/revealline-archive-59/git/commits/59104dfb5467339ae8ccdce7ee7b9c83939bb4a5",
+      "html_url": "https://github.com/mekhovov/revealline-archive-59/commit/59104dfb5467339ae8ccdce7ee7b9c83939bb4a5",
+      "author": {
+        "name": "Oleksandr Mekhovov",
+        "email": "oleksandr.mekhovov@coupa.com",
+        "date": "2026-09-23T05:45:08Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-09-23T05:45:08Z"
+      },
+      "tree": {
+        "sha": "60e7ab0b6240de281df3bc668dd71ac5cb070fb2",
+        "url": "https://api.github.com/repos/mekhovov/revealline-archive-59/git/trees/60e7ab0b6240de281df3bc668dd71ac5cb070fb2"
+      },
+      "message": "Merge pull request #1 from mekhovov/codex/preserve-v0900-archive59\n\narchive: preserve original v0.90.0 in Archive59",
+      "parents": [
+        {
+          "sha": "dce5856dbd5458587f2a6bbcf198fa27ab845467",
+          "url": "https://api.github.com/repos/mekhovov/revealline-archive-59/git/commits/dce5856dbd5458587f2a6bbcf198fa27ab845467",
+          "html_url": "https://github.com/mekhovov/revealline-archive-59/commit/dce5856dbd5458587f2a6bbcf198fa27ab845467"
+        },
+        {
+          "sha": "9844070577bdaccc22c7e181227d5651fc1eb20b",
+          "url": "https://api.github.com/repos/mekhovov/revealline-archive-59/git/commits/9844070577bdaccc22c7e181227d5651fc1eb20b",
+          "html_url": "https://github.com/mekhovov/revealline-archive-59/commit/9844070577bdaccc22c7e181227d5651fc1eb20b"
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqs2dkCRC1aQ7uu5UhlAAA/AMQAIyKeb7Amw3B/OEkNyWZz94c\np+BHwIt2KSya5BfoJRXyfAID022y5EzYtwzVvX7fp06wAcZwHaYmGdlJPExA/j/P\njPoJA44GIvhyWa5nREmzQJtt0w1mSHZCkSpoEKrobwsUpZp7myDp05MCo3fiB5+T\nf9IEYjjq1AAw5rQINK8UTc//riOkQ1Q+X29HoRwGPJTItoVfoT41xNojFbZVGjiL\nVqo+rW6v/TWDXHLBNXfcd6b6a5unVnANkYEHJcaq23CVAVAXWEZRSQQ9rAbNEhgp\nB//+aogHzAbmWbdCFUiiU6v8etsWuNRIgnbvkTF0ZBC71/mqIS9YWsD0eCn/goKv\nkmQ3rgd/cgXFZo52OhAIwTrwO971o8eG/v5kE4bKc5GflvJQ158fhNGLaCcGs/4P\nJ1HUiXqsgaAqReFBCvGa/n3iQvmHkse48wpl5LjXz8DPPuesbUEQuOg5y70VGDtY\nGnyUW132vVqTjM3R1qJcgK3bI38qF46MU7Vd+U1jsr0kA3BSmDjB2jVXCbeq9f7A\nEQA7BU1BI2RyijrTqArisSL63G5zGeVGH9QLK10MvMMI/nQx3DuxFPspiq+WWmDk\ny23AnRIojP42lMFJndI4Ru/LGtD4fgtaJBCHKm6HX5yL6y3+ecxfqwbj5YENfYJY\n9YAjEn7VhzFnwMBzUDKp\n=r4uT\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 60e7ab0b6240de281df3bc668dd71ac5cb070fb2\nparent dce5856dbd5458587f2a6bbcf198fa27ab845467\nparent 9844070577bdaccc22c7e181227d5651fc1eb20b\nauthor Oleksandr Mekhovov <oleksandr.mekhovov@coupa.com> 1790142308 +0200\ncommitter GitHub <noreply@github.com> 1790142308 +0200\n\nMerge pull request #1 from mekhovov/codex/preserve-v0900-archive59\n\narchive: preserve original v0.90.0 in Archive59",
+        "verified_at": "2026-09-23T05:45:09Z"
+      }
+    },
+    "productionRun": {
+      "id": 35823714942,
+      "head_sha": "59104dfb5467339ae8ccdce7ee7b9c83939bb4a5",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "deployment": {
+      "id": 6607260581,
+      "sha": "59104dfb5467339ae8ccdce7ee7b9c83939bb4a5",
+      "environment": "github-pages"
+    },
+    "status": {
+      "url": "https://api.github.com/repos/mekhovov/revealline-archive-59/deployments/6607260581/statuses/18712596858",
+      "id": 18712596858,
+      "node_id": "DES_kwDOUmw7eM8AAAAEW1uReg",
+      "state": "success",
+      "creator": {
+        "login": "mekhovov",
+        "id": 194539,
+        "node_id": "MDQ6VXNlcjE5NDUzOQ==",
+        "avatar_url": "https://avatars.githubusercontent.com/u/194539?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/mekhovov",
+        "html_url": "https://github.com/mekhovov",
+        "followers_url": "https://api.github.com/users/mekhovov/followers",
+        "following_url": "https://api.github.com/users/mekhovov/following{/other_user}",
+        "gists_url": "https://api.github.com/users/mekhovov/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/mekhovov/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/mekhovov/subscriptions",
+        "organizations_url": "https://api.github.com/users/mekhovov/orgs",
+        "repos_url": "https://api.github.com/users/mekhovov/repos",
+        "events_url": "https://api.github.com/users/mekhovov/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/mekhovov/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "description": "",
+      "environment": "github-pages",
+      "target_url": "https://github.com/mekhovov/revealline-archive-59/actions/runs/35823714942/job/107060942920",
+      "created_at": "2026-09-23T05:46:06Z",
+      "updated_at": "2026-09-23T05:46:06Z",
+      "deployment_url": "https://api.github.com/repos/mekhovov/revealline-archive-59/deployments/6607260581",
+      "repository_url": "https://api.github.com/repos/mekhovov/revealline-archive-59",
+      "environment_url": "https://mekhovov.github.io/revealline-archive-59/",
+      "log_url": "https://github.com/mekhovov/revealline-archive-59/actions/runs/35823714942/job/107060942920",
+      "performed_via_github_app": null
+    },
+    "release": {
+      "id": 394273849,
+      "tag": "v0.90.0",
+      "draft": false,
+      "publishedAt": "2026-09-23T03:28:18Z",
+      "assets": [
+        {
+          "id": 582854820,
+          "name": "distribution.zip",
+          "bytes": 591122142,
+          "sha256": "9014614f8fe0cb234460d859615b432c098487b21d9e9ae9446b943e35abbb87"
+        },
+        {
+          "id": 582846084,
+          "name": "distribution.zip.sha256",
+          "bytes": 83,
+          "sha256": "bb76dd9ec7f70195e68499a794600e13ecf22e94eefaad9890ba7b4db6bc7ddc"
+        },
+        {
+          "id": 582846081,
+          "name": "manifest.json",
+          "bytes": 197630,
+          "sha256": "703e1b57ade676c9f136427647823f8487762277992757fa97fc4874de441618"
+        },
+        {
+          "id": 582846080,
+          "name": "qualification-evidence-record.json",
+          "bytes": 1987,
+          "sha256": "4043bef1e1bf8913250dc6c5dedffb7b86c6b71d4fed75b182de7cef859f1115"
+        },
+        {
+          "id": 582846086,
+          "name": "release.json",
+          "bytes": 465,
+          "sha256": "51d0adb91be86fef06f306d3072b72b651d9893ed7e32e5e6cbaa74bf615e78e"
+        },
+        {
+          "id": 582846079,
+          "name": "source-qualification-evidence.zip",
+          "bytes": 1079091,
+          "sha256": "c79a65e6dc010d077c54f8c7125a6296678d6338efc944a8049884a01bac1169"
+        },
+        {
+          "id": 582846111,
+          "name": "source-qualification.json",
+          "bytes": 14169,
+          "sha256": "4d8b74f99f9efec7e5199cdbf70d4959365dc1193dc680cbe3e9faca444cc975"
+        },
+        {
+          "id": 582852747,
+          "name": "source.tar",
+          "bytes": 1625630720,
+          "sha256": "0be6bf264577cb385200ff0816189fc8124382cf9352e3310c4525526a6f9872"
+        },
+        {
+          "id": 582846115,
+          "name": "verification.json",
+          "bytes": 1915,
+          "sha256": "0b1a690855d28d19be458a49ca7990962aecdfa59b002214a17c314c335953b2"
+        }
+      ]
+    },
+    "tagRef": {
+      "ref": "refs/tags/v0.90.0",
+      "node_id": "REF_kwDOUYDvKLFyZWZzL3RhZ3MvdjAuOTAuMA",
+      "url": "https://api.github.com/repos/mekhovov/revealline/git/refs/tags/v0.90.0",
+      "object": {
+        "sha": "302c7647286827281df9211c799e26f24547e7bf",
+        "type": "tag",
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/tags/302c7647286827281df9211c799e26f24547e7bf"
+      }
+    },
+    "tagObject": {
+      "node_id": "TA_kwDOUYDvKNoAKDMwMmM3NjQ3Mjg2ODI3MjgxZGY5MjExYzc5OWUyNmYyNDU0N2U3YmY",
+      "sha": "302c7647286827281df9211c799e26f24547e7bf",
+      "url": "https://api.github.com/repos/mekhovov/revealline/git/tags/302c7647286827281df9211c799e26f24547e7bf",
+      "tagger": {
+        "name": "Codex",
+        "email": "codex@openai.com",
+        "date": "2026-09-23T03:16:36Z"
+      },
+      "object": {
+        "sha": "c585bcd3220438da971e2927763b966f55ee8235",
+        "type": "commit",
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/commits/c585bcd3220438da971e2927763b966f55ee8235"
+      },
+      "tag": "v0.90.0",
+      "message": "RevealLine v0.90.0 — Continuous Next across the mission library",
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    }
+  },
+  "nativeReceiptReviewed": false,
+  "reviewer": "Independent agent in task01a0b9ef-0646-7b22-8fb4-006e734dce4a",
+  "findings": [],
+  "approval": {
+    "byteEvidence": "APPROVED_COMPLETE_PUBLIC_BYTE_EVIDENCE",
+    "archiveAdmission": "CONDITIONAL_ON_SEPARATE_SCOPED_NATIVE_RECEIPT",
+    "selectorInclusion": "This exact independently verified byte evidence may be included in the separate v0.91 controller PR; final archive admission still requires its scoped native record and coordinator approval.",
+    "noRemoteMutationAuthority": true
+  },
+  "checks": [
+    "Fresh hosted audit run/jobs/artifact metadata match retained originals; run35824389581 succeeded at exact reviewed b1119f5 audit-only source.",
+    "Original320712-byte hosted evidence ZIP matches fresh SHA256/c2f68c3c authority, CRC and exactly14 retained files with no extras or missing members.",
+    "Independently reconciled all1091 final results and all1091 attempts against complete pinned inventory:590954684bytes; every path occurs once, every attempt is1, every row is HTTP200/PASS.",
+    "Every actual/expected byte length and SHA matches; final URLs are exact canonical targets; reviewed MIME, identity encoding and Content-Length checks pass.",
+    "Zero failed final files, failed attempts, retries or skips; counts and full raw JSONL reconcile with report. All recorded attempts were within90s acceptance; total audit completed within1800s.",
+    "Retained auditor/binding bytes match exact approved commit; request/inventory/seven authority bodies retain original reviewed pins.",
+    "Fresh post-audit main/commit/tree/production run/deployment/latest status match pinned production, closing the live-authority gap not covered by retained local binding alone.",
+    "Fresh original v0.90 published release, annotated tag/source and all nine original asset IDs/names/lengths/digests remain unchanged."
+  ],
+  "limits": [
+    "This is full Archive59 public HTTP byte evidence, not main-site v0.91 deployment or native gameplay evidence.",
+    "No new HTTP payload audit was run by reviewer; independently authenticated and reconciled original hosted audit, plus fresh authority GETs.",
+    "No bounded native Archive59 receipt was supplied at this review; it must be retained and reviewed separately before complete archive admission.",
+    "No physical-device, human enjoyment, cold-offline or musical acceptance; automated suites remain waived, not passed.",
+    "Reviewer did not mutate archive/main/selector/release/Pages."
+  ]
+}
