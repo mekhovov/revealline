@@ -4075,19 +4075,21 @@ try {
       $('difficulty-select').value = next.difficulty;
       $('difficulty-select').disabled = contentSwitchBusy || backupBusy || sessionBusy;
       const nextPreset = journeyPreset(next.difficulty, catalogId);
-      const nextRules =
-        nextPressure.version === 'gameplay-pressure.v2'
-          ? `${nextPreset.lives} mission lives; ${nextPreset.failingDeadline ? 'deadlines only on authored timed missions' : 'no failing countdown'}.`
-          : nextPreset.description;
+      const nextRules = ['gameplay-pressure.v2', 'gameplay-pressure.v3'].includes(
+        nextPressure.version,
+      )
+        ? `${nextPreset.lives} mission lives; ${nextPreset.failingDeadline ? 'deadlines only on authored timed missions' : 'no failing countdown'}.`
+        : nextPreset.description;
       $('difficulty-note').textContent =
         `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${nextRules} ${gameplayTuningDescription(nextPressure)} Resume and Load preserve this flight. ${next.error}`;
       show('difficulty-details', false);
       const currentTuning = recoverGameplayTuning(run?.level);
       const currentPreset = journeyPreset(activeEntry.difficulty, catalogId);
-      const currentRules =
-        currentTuning?.version === 'gameplay-pressure.v2'
-          ? `${run.level.rules.lives ?? currentPreset.lives} starting lives; ${run.level.rules.timeLimitSeconds > 0 ? `${run.level.rules.timeLimitSeconds}s deadline` : 'no failing countdown'}.`
-          : currentPreset.description;
+      const currentRules = ['gameplay-pressure.v2', 'gameplay-pressure.v3'].includes(
+        currentTuning?.version,
+      )
+        ? `${run.level.rules.lives ?? currentPreset.lives} starting lives; ${run.level.rules.timeLimitSeconds > 0 ? `${run.level.rules.timeLimitSeconds}s deadline` : 'no failing countdown'}.`
+        : currentPreset.description;
       $('overlay-difficulty').textContent =
         `Journey ${activeEntry.difficulty}. ${currentRules} ${currentTuning ? `${run.enemies.length} enemies · ${run.level.rules.moveSpeed.toFixed(1)} craft cells/s${currentTuning.adminOverride ? ' · ADMIN PLAYTEST' : ''}.` : ''}`;
       show('overlay-difficulty', true);
