@@ -1,5 +1,12 @@
 # Default Journey release — six-hour delivery
 
+> **Current status:** use the
+> [completed and remaining delivery plan](plan-status-2026-09-23.md) for released
+> features, active promotion, prioritized remaining work and evidence limits.
+> Dated “current” versions and “next” queues below are historical. Default
+> Journey and unified-library delivery are complete; whole-game qualification
+> is not. Update the linked status register after each public acceptance.
+
 Approved scope resumed on 2026-09-22 at **14:13:56 UTC**. Feature scope freezes at
 **15:43:56 UTC**; the public-delivery target is **20:13:56 UTC**. These are targets,
 not permission to skip a failing gate. One publisher owns tags and Pages; at most

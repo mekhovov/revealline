@@ -1,5 +1,42 @@
 # Reveal Line cross-mode execution register
 
+> **Current status:** use the
+> [completed and remaining delivery plan](plan-status-2026-09-23.md) for released
+> features, active promotion, prioritized remaining work and evidence limits.
+> Dated “current” versions and “next” queues below are historical. Default
+> Journey and unified-library delivery are complete; whole-game qualification
+> is not. Update the linked status register after each public acceptance.
+
+## Original whole-game phases: remaining-work crosswalk
+
+The later Xposed Journey contract reuses P00–P15 for different gameplay phases.
+Its phase numbers are **not** the original whole-game P00–P18 identifiers below.
+Keep both scopes traceable; a Journey phase acceptance does not automatically
+close UI, presentation, community-production or physical-device requirements.
+The linked current plan controls near-term priority; this table preserves the
+original programme's unfinished obligations. Estimates are conditional ranges
+from an item's start, not simultaneous commitments or an overall completion date.
+
+| Original phase / area | Status | Remaining acceptance | Planning range after start |
+| --- | --- | --- | --- |
+| P00/P01 baseline and loading | Initial scope accepted; regression closure open | New async paths acknowledge activation; delayed, cancelled, failed and stale work preserves state. | Within owning features |
+| P02 / P03 / P05 sound, Settings, navigation, accessibility | Partly released | All screens/modes, actual opener restoration, consistent mute/labels, EN/UA fonts, 44px targets, Large/Plain text, zoom, responsive focus and input prompts. | 1–3 days |
+| P06/P07 catalogue and progression | Default entry and library released; closure open | Every compatible campaign, safe Download & play, retained Retry/Next, optional/final endings, campaign-specific offline readiness and repair. | 2–4 days |
+| P08-A existing map presentation | Partial; see current queue | Genuine shared decoded assets and approved art in Solo/Versus/Team; no missing required roles; full boards and both players' controls; imported coverage/stronghold paths. | 1–3 days |
+| P04/P05 Studio and complete themes | Partial | Genuine cross-mode previews, immutable history, complete collection binding, exact Retry/restoration, bounded byte-preserving bundles and FPV/Ukrainian benchmark. | 2–5 days |
+| P08-B/P02-B feedback and audio | Partial | Countdown/loss/capture/rescue/results readability, reduced effects, actual soundtrack listening and cross-mode parity. | 1–3 days plus listening/device access |
+| P09 encounter/difficulty benchmark | Partial; pressure and motion increments delivered/in progress | Deterministic optional encounters, readable counterplay, difficulty fairness, historical saves/replays and human playtest findings. | 3–6 days together with P10 |
+| P10 Team encounters | Unfinished qualification | Separate 36-case matrix; Support, rescue, strongholds and two-player readability preserved. | Included in benchmark estimate |
+| P11–P15 themed production | Partial source content; production allocation unresolved | Map accepted missions to FPV, DroneAid, culture/history, Retro and Coupa; complete design cards, branding/art/audio, meaningful variety and independent campaign releases. | 3–7 days for a first finished campaign slice; whole programme not estimable until inventory reconciliation |
+| P16 remaining workflows | Partial | Collection/records/mastery, learning, replay, legacy categories, supporting pages and published help/link closure. | 2–4 days |
+| P17 community creation guide | Unfinished | Independent fresh-workspace creation → install → play → recovery trial; current prompts/templates and release instructions. | 1–2 days |
+| P18 whole-game qualification | Unfinished | Performance, storage/download budgets, accessibility, real devices/controllers, offline/lifecycle and complete public journeys; no unresolved required acceptance. | 3–5 days after blockers close |
+
+## Historical execution register
+
+The original text below is retained without rewriting. Its release status and
+queue order are superseded by the linked current delivery plan.
+
 ## Current priority — 2026-09-22 default Journey delivery
 
 The [six-hour default Journey release plan](default-journey-release.md) is the
