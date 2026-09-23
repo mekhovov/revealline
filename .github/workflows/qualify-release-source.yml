@@ -210,6 +210,12 @@ jobs:
           ref: ${{ github.workflow_sha }}
           path: automation
           persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            .github/workflows/qualify-release-source.yml
+            publishing/test-policy.mjs
+            publishing/utility/
+          sparse-checkout-cone-mode: false
 
       - name: Set up explicit test policy runtime
         uses: actions/setup-node@v4
@@ -280,6 +286,12 @@ jobs:
           ref: ${{ github.workflow_sha }}
           path: automation
           persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            .github/workflows/qualify-release-source.yml
+            publishing/test-policy.mjs
+            publishing/utility/
+          sparse-checkout-cone-mode: false
 
       - name: Set up explicit test policy runtime
         uses: actions/setup-node@v4
