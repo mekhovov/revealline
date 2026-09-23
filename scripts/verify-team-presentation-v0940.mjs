@@ -195,6 +195,7 @@ const result = {
     'game/test/coop-reviewed-successor-picture.test.mjs',
     'game/test/field-kit-retained-runtime.test.mjs',
     'game/test/saved-visual-catalogue.test.mjs',
+    'game/test/visual-sessions.test.mjs',
     'game/build-config.json',
     'package.json',
     'package-lock.json',
