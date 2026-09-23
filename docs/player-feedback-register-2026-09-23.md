@@ -56,7 +56,7 @@ with the existing programme estimates; do not add them again to produce an ETA.
 - Latest reference-matching feedback supersedes blanket increases to every actor's
   speed/count. A map can become harder through route decisions and threat domains
   rather than constant acceleration or clutter.
-- Finish v0.87 delivery, mission-launch defects and current-speed balance before
+- With v0.87 delivered, finish mission-launch defects and current-speed balance before
   bulk new content. Keep deferred ideas visible instead of implying their removal.
 - Historical gp1/pressure-v2 route passes do not prove gp2 balance or identical
   route feasibility. Human enjoyment and physical-device checks remain distinct
