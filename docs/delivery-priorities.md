@@ -1,5 +1,12 @@
 # RevealLine delivery plan
 
+> **Current status:** use the
+> [completed and remaining delivery plan](plan-status-2026-09-23.md) for released
+> features, active promotion, prioritized remaining work and evidence limits.
+> Dated “current” versions and “next” queues below are historical. Default
+> Journey and unified-library delivery are complete; whole-game qualification
+> is not. Update the linked status register after each public acceptance.
+
 ## Current priority — 2026-09-22 default Journey delivery
 
 The [six-hour default Journey release plan](default-journey-release.md) is the
