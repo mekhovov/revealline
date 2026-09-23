@@ -595,14 +595,26 @@ body.field-kit {
     flex-wrap: wrap;
   }
   .preview-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
     gap: 12px;
   }
-  .preview-controls > label {
-    flex: 1;
-    min-width: 120px;
+  body.field-kit .preview-controls > label {
+    min-inline-size: 0;
+    overflow-wrap: normal;
   }
-  .preview-controls select {
-    min-width: 0;
+  body.field-kit .preview-controls select {
+    min-inline-size: 0;
+    min-block-size: 44px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  body.field-kit .preview-controls .inline-check {
+    min-block-size: 44px;
+    padding-block: 0;
+  }
+  body.field-kit .preview-controls input[type='checkbox'] {
+    flex: 0 0 20px;
   }
   .preview-surface {
     min-height: 210px;
