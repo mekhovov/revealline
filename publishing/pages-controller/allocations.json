@@ -460,6 +460,13 @@
       "versions": [
         "v0.86.0"
       ]
+    },
+    {
+      "id": "archive-56",
+      "repository": "mekhovov/revealline-archive-56",
+      "versions": [
+        "v0.87.0"
+      ]
     }
   ]
 }
