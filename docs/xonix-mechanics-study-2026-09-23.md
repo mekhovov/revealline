@@ -87,6 +87,39 @@ admin controls stay; no silent adaptive difficulty or player-targeted RNG.
 
 ## Apply to existing architecture before adding systems
 
+### Current-library inspection, not a balance claim
+
+A read-only compilation at PR285 source `33614bc806db2397096851bb0af5a3d6ab90892f`
+used `createWholeSortingCandidates()` → `createContentExecutionCatalog(...,
+{mode: 'solo'})` → Standard entries → `applyGameplayTuning(...,
+resolveGameplayTuning())`. It counted **91** current Solo missions, including
+Remixes and optional ornament/workshop sequences:
+
+| Existing feature | Missions containing it |
+| --- | ---: |
+| Ordinary bouncers / new varied courses | 83 |
+| Outer-perimeter patrols | 28 |
+| Moving-frontier patrols | 44 |
+| Reclaimed-ground roamers | 22 |
+| Eroders | 11 |
+| Lane emitters | 11 |
+| Relay Sentinel | 5 |
+| Explicit travelling line-impact descriptor | 11 |
+| Relay gates | 13 |
+| Timed-bonus schedules | 3 |
+| Explicit pursuit/interception descriptor | **0** |
+
+Counts overlap; this is a compiled-content inventory, not 91 gameplay clears,
+not the entire Classic library, and not Team evidence. It demonstrates a useful
+gap: the engine already supports pursuit, but the redesigned Solo Journey does
+not author it; timed opportunities currently appear on only three missions.
+This makes careful adoption/teaching of those capabilities more defensible than
+inventing another similar enemy engine. The zero-pursuit gap still requires
+versioned authoring/catalogue support and a teaching arc—not raw edits to frozen
+runtime JSON or silently enabling homing on every keeper. Eight missions with no
+ordinary bouncer intentionally retain their other roles; gp3 does not make a boss
+or erosion actor behave like a basic orb.
+
 | Desired decision | Existing implementation surface | Next application, not a completion claim |
 | --- | --- | --- |
 | Read a moving threat without memorizing a lane | `core/field-course.mjs` in PR285; gameplay tuning gp3 | Finish v0.89 release and verify fresh attempts in all modes. Keep uninterrupted control and preserved historical attempts. |
