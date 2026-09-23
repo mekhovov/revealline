@@ -303,6 +303,10 @@ separately from hosted upload success.”
 
 “Prepare the archive from exact original ZIP/metadata. A new archive has zero previously accepted paths. Update only template-specific fixture identities; keep all corruption guards, inventory-base binding and budget limits. Preserve first failures, run complete fixtures, and verify hosted extraction plus every public body. Carry known historical UX issues into scoped native admission. Publish the separately qualified correction only after retention is admitted, then verify the affected public menu journey before marking its scope accepted.”
 
+## Team teaser and optional full picture preview
+
+Use one read-only draw helper for the ready lobby's recognisable broad border and concealed centre. The unified mission-library cards remain metadata-only and artwork-lazy. The existing explicit Preview picture action for the selected mission shows the complete authenticated original, with clear copy that viewing neither completes the arena nor earns a picture. This supersedes the older card-teaser and locked enlarged-teaser prompt above. Preserve current attempt/profile/checkpoint bytes, no automatic Start, transient preview lease release, cancellation and stale-visit guards; shared chooser Back closes directly to its exact game opener. Test true lobby centre/border pixels and full-preview pixels with both built-ins and imported artwork; qualify native recognisability, responsive controls and focus separately. Do not alter artwork, production recipes, simulation, awards or saves.
+
 
 ## Ordinary default entry qualification
 
