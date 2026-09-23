@@ -1,5 +1,9 @@
 # PR278 priority and supersession checkpoint
 
+## Plan clarification merged: 2026-09-23 00:45 UTC
+
+PR283 merged at 00:43:59 UTC as `41099ae0094bb6797383018cd0ac27cccba37693`, preserving reviewed head `08c78c91d57ccdce0284cd3a08289275d9f33671`. Exact-head run35802518416 completed successfully: preflight and build passed; tests and release gate were skipped, not passed. Its only changed file is `docs/plan-status-2026-09-23.md`. Classify the retained local/remote `codex/plan-clarity-20260923` ref and its owner worktree as represented by this merge, superseding the pending classification below. No new game release, selector dispatch or v0.87 acceptance rerun is needed for this documentation change. Remaining 21 PRs are drafts with no newly handed-off runtime candidate; full reconciliation remains incomplete.
+
 ## Incremental plan-ref checkpoint: 2026-09-23 00:38 UTC
 
 Docs PR281 is merged as `a44676a65446b1d71e30270dfb5e5a289ac63f4f` from head `3148d53f2e10cb17003e0a097051e95dcaad77d7`. Local/remote `codex/current-plan-status-20260923` and clean owner worktree `.cache/worktrees/current-plan-status` are represented by that merge; ancestry to freshly fetched main was checked. Preserve both ref and worktree. This docs-only merge does not change the accepted v0.87 source or require another game release.
