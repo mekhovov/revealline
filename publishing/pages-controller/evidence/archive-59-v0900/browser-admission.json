@@ -1,0 +1,28 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-59",
+  "repository": "mekhovov/revealline-archive-59",
+  "infrastructureCommit": "59104dfb5467339ae8ccdce7ee7b9c83939bb4a5",
+  "deploymentId": 6607260581,
+  "workflowRunId": 35823714942,
+  "versions": [
+    "v0.90.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-59-v0900/native/observation.json",
+      "sha256": "740e5ee8abf33b7d95a95af1518fcc93916c832bbc501f4ffdca3befedb13fad"
+    }
+  ],
+  "scope": "Scoped archive index, preserved v0.90 Play/title, browser Back, and clean warning/error console only.",
+  "limits": [
+    "Bounded archive index/play/title/back only; About/history was not part of this attempt.",
+    "No gameplay, offline, physical-device, balance, listening, continuous-Next or exact save-restoration claim.",
+    "No settings changed, runs resumed or replaced; visible Continue label is not proof of exact save bytes.",
+    "Source revision taken from prior v0.90 coordinator handoff; archive publisher/tree/deployment pins supplied by current coordinator, not independently re-audited. UI archive/version observed directly.",
+    "Canonical marker URL recorded but not fetched during native verification.",
+    "v0.91 main selector not inspected. No source/release/selector mutation."
+  ],
+  "approval": "Independent final review approved this exact scoped Archive59 preservation evidence for selector admission. Evidence admission only. This reviewer does not authorize or perform selector mutation, merge or deployment. v0.91 main Pages publication and public acceptance remain pending."
+}
