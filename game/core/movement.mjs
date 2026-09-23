@@ -1,5 +1,6 @@
 import { CELL, DIRECTIONS } from './registry.mjs';
 import { EPS, clamp, boxTime, pointAt, LEGACY_GEOMETRY } from './geometry.mjs';
+import { COLLISION_COURSE_VERSION, varyCollisionCourse } from './field-course.mjs';
 
 export const cellIndex = (x, y, { width, height } = LEGACY_GEOMETRY) =>
   clamp(Math.floor(y), 0, height - 1) * width + clamp(Math.floor(x), 0, width - 1);
@@ -206,7 +207,12 @@ export function planEnemy(state, enemy, duration) {
         fraction = hit ? hit.t : 1,
         used = left * fraction,
         end = pointAt(a, b, fraction);
-      paths.push(segment(a, end, time, time + used));
+      paths.push({
+        ...segment(a, end, time, time + used),
+        ...(e.course === COLLISION_COURSE_VERSION
+          ? { courseVelocity: { vx: e.vx, vy: e.vy } }
+          : {}),
+      });
       e.x = end.x;
       e.y = end.y;
       time += used;
@@ -218,12 +224,17 @@ export function planEnemy(state, enemy, duration) {
         e.vx = -e.vx;
         e.vy = -e.vy;
       }
+      varyCollisionCourse(e, hit.nx, hit.ny, state.seed);
       // Move away by a geometry epsilon, not a visible or distance-based step.
       e.x += (hit.nx || 0) * EPS * 2;
       e.y += (hit.ny || 0) * EPS * 2;
     }
   }
-  if (!paths.length || time < duration - EPS) paths.push(segment(e, e, time, duration));
+  if (!paths.length || time < duration - EPS)
+    paths.push({
+      ...segment(e, e, time, duration),
+      ...(e.course === COLLISION_COURSE_VERSION ? { courseVelocity: { vx: e.vx, vy: e.vy } } : {}),
+    });
   return { enemy: e, paths };
 }
 
@@ -269,7 +280,8 @@ export function applyPlannedEnemy(enemy, plan, time, duration, geometry = LEGACY
   if (time >= duration - EPS) Object.assign(enemy, plan.enemy);
   else {
     const path = plan.paths.find((p) => p.t1 > time + EPS) ?? plan.paths.at(-1);
-    if (enemy.type === 'bouncer' && path && path.t1 - path.t0 > EPS) {
+    if (path?.courseVelocity) Object.assign(enemy, path.courseVelocity);
+    else if (enemy.type === 'bouncer' && path && path.t1 - path.t0 > EPS) {
       const factor =
         enemy.stunnedUntil > 0 && Math.abs(path.x2 - path.x1) + Math.abs(path.y2 - path.y1) < EPS
           ? 0

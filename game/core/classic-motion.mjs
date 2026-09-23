@@ -12,6 +12,7 @@ import { classicEffectActive, CLASSIC_EFFECT_FACTORS } from './classic-state.mjs
 import { fitsClassicDomain } from './classic-topology.mjs';
 import { pressureWaypoint } from './enemy-pressure.mjs';
 import { directionalSpeedFactor } from './directional-fields.mjs';
+import { varyCollisionCourse } from './field-course.mjs';
 import {
   classicContourGraph,
   orientedContourEdge,
@@ -299,6 +300,8 @@ export function planClassicEnemy(state, enemy, duration, { penetrationRecovery =
       e.vx = -e.vx;
       e.vy = -e.vy;
     }
+    if (!penetration && !['warning', 'committed'].includes(e.classic?.pressure?.phase))
+      varyCollisionCourse(e, hit.nx, hit.ny, state.seed);
     e.x += hit.nx * EPS * 2;
     e.y += hit.ny * EPS * 2;
   }
