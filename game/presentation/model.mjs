@@ -1,4 +1,10 @@
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
+import {
+  decodePresentationDocument,
+  encodePresentationDocument,
+  ownPresentationDocument,
+  PRESENTATION_METADATA_LIMITS,
+} from './document-codec.mjs';
 
 export const FORMATS = Object.freeze({
   bundle: 'revealline-theme-bundle.v1',
@@ -17,9 +23,9 @@ export const LIMITS = Object.freeze({
   bundleBytes: 32 * 1024 * 1024,
   assetBytes: 4 * 1024 * 1024,
   slots: 512,
-  // Retained production + reviews + one complete replacement must coexist.
-  // The 5 MiB metadata and unchanged 32 MiB transfer ceilings remain authoritative.
-  assets: 2048,
+  // Logical history remains bounded separately from its lossless serialized form.
+  // The 5 MiB metadata, 100k-node and 32 MiB transfer ceilings still apply.
+  assets: PRESENTATION_METADATA_LIMITS.records,
   themes: 1024,
   collections: 128,
   imageSide: 1920,
@@ -40,6 +46,14 @@ export const RECIPE_IDS = Object.freeze([
   'actor.rotors.v1',
   'terrain.tile.v1',
   'pickup.icon.v1',
+  'team.anchor.v1',
+  'team.core.v1',
+  'team.support.v1',
+  'team.emitter.v1',
+  'team.rescue.v1',
+  'team.pilot.v1',
+  'team.enemy.v1',
+  'team.outcome.v1',
   'trail.signal.v1',
   'effect.capture.v1',
   'effect.feedback.v1',
@@ -94,6 +108,9 @@ const MIMES = {
 const text = (v, max = 512) => typeof v === 'string' && v.trim().length > 0 && v.length <= max;
 const integer = (v, max = 1000000) => Number.isSafeInteger(v) && v > 0 && v <= max;
 const key = (v) => `${v.id}@${v.revision}`;
+// Only this validator may confer trust, after ownership, schema, capacity and
+// deep-freeze checks. Caller-owned frozen objects are not accepted identities.
+const acceptedDocuments = new WeakSet();
 export function freezePresentation(value) {
   if (value && typeof value === 'object') {
     for (const child of Object.values(value)) freezePresentation(child);
@@ -543,7 +560,15 @@ function resolve(value, index, { themeId, collectionId, draft } = {}) {
   };
 }
 export function validateThemeBundle(source, { previous = null, expectedRevision } = {}) {
-  const value = own(source);
+  if (previous === null && expectedRevision === undefined && acceptedDocuments.has(source))
+    return source;
+  // Serialized inputs retain the legacy parse boundary. Callers holding an
+  // envelope object must decode it before semantic validation; an ordinary
+  // logical document receives its own explicit expanded accounting boundary.
+  const value =
+    typeof source === 'string'
+      ? decodePresentationDocument(source)
+      : ownPresentationDocument(source);
   fields(value, 'format id revision slots assets themes collections selection', 'theme bundle');
   identity(value, FORMATS.bundle, 'bundle');
   indexed(value.slots, slotCheck, LIMITS.slots, 'slots');
@@ -656,7 +681,12 @@ export function validateThemeBundle(source, { previous = null, expectedRevision 
   } else if (expectedRevision !== undefined)
     required(value.revision === expectedRevision, 'Stale expected revision.');
   resolve(value, index);
-  return freezePresentation(value);
+  // An accepted edit must remain persistable/exportable. Structural validity
+  // alone does not prove that the bounded dictionary representation fits.
+  encodePresentationDocument(value);
+  freezePresentation(value);
+  acceptedDocuments.add(value);
+  return value;
 }
 export function resolvePresentation(source, options = {}) {
   const value = validateThemeBundle(source);

@@ -5,34 +5,82 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { format, resolveConfig } from 'prettier';
 import { ASSET_SLOTS, createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
-import { FORMATS, presentationCoverage } from '../game/presentation/model.mjs';
+import { FORMATS, LIMITS, presentationCoverage } from '../game/presentation/model.mjs';
 import { reviseStudioTheme } from '../game/presentation/studio-session.mjs';
 import {
   iconForSlot,
   FIELD_KIT_ICON_IDS,
   FIELD_KIT_ICON_DESCRIPTIONS,
 } from '../game/presentation/icons.mjs';
+import {
+  TEAM_EQUIPMENT_IDS,
+  TEAM_EQUIPMENT_DESCRIPTIONS,
+  teamEquipmentArt,
+} from '../game/presentation/team-equipment-art.mjs';
+import { fieldKitTeamRecipeQuality } from './team-recipe-review.mjs';
 import { encodeSpritePNG, inspectSprite } from './produce-field-kit-sprites.mjs';
 import { compilePresentation } from './compile-presentation.mjs';
 import { writePresentation, retainedPresentationPath } from './write-presentation.mjs';
 import { readFieldKitRetainedOutput } from './field-kit-retained-runtime.mjs';
-import { retainProductionHistory } from './presentation-production-history.mjs';
+import { retainFieldKitProductionHistory } from './team-production-history.mjs';
 import { importThemeBundle, exportThemeBundle } from '../game/presentation/bundle.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reference = (asset) => ({ id: asset.id, revision: asset.revision });
 const sources = {
-  ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs',
+  ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs',
   screens:
     'game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css',
   motion:
     'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs',
   effects:
     'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs',
+  team: 'game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs',
   audio:
     'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs',
 };
+
+// Image review is independent of the 37 Team recipes. Bind original bytes and
+// the complete renderer closure so a changed construction or consumer reopens it.
+const equipmentSources = [
+  'game/presentation/team-equipment-art.mjs',
+  'game/presentation/pixel-art.mjs',
+  'scripts/produce-field-kit-sprites.mjs',
+  ...sources.team.split('; '),
+];
+const reviewedEquipmentSource = 'b9cbf2db6fe094564a15743c72c45049bf9ee776a22b2599469e0ee1bdc03037';
+const reviewedEquipmentOriginals = Object.freeze({
+  'team.anchor.available': '88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3',
+  'team.anchor.captured': 'a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466',
+  'team.core.shielded': '009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a',
+  'team.core.exposed': '6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a',
+  'team.core.secured': '28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d',
+});
+
+export async function fieldKitEquipmentSource(read) {
+  return hash(Buffer.concat(await Promise.all(equipmentSources.map((name) => read(name)))));
+}
+
+export function fieldKitEquipmentQuality(slotId, source, originalHash) {
+  if (
+    Object.hasOwn(reviewedEquipmentOriginals, slotId) &&
+    source === reviewedEquipmentSource &&
+    reviewedEquipmentOriginals[slotId] === originalHash
+  )
+    return {
+      stage: 'reviewed',
+      evidence: [
+        'Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3',
+      ],
+    };
+  return {
+    stage: 'produced',
+    evidence: [
+      'Original authored pixel clusters; complete state and playing-scale review remains required.',
+    ],
+  };
+}
 
 // A recipe stays unreviewed whenever one of its source inputs changes. These
 // are deliberate, source-pinned approvals for scoped renderer and loading reviews:
@@ -48,11 +96,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: '2d2803a0727c61e1241267bcbcb50525cde16bab72d7cfb77d83fc793b4b890e',
+    sha256: '6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865',
     evidence: [
-      'Scoped retained-presentation functional source review: docs/verification/fresh-presentation-retention/review.json sha256:120fbc1081856a6961f99bd479212695a09a4ce4b8debf3e3069a05620e75675. Six UI inputs sha256:2d2803a0727c61e1241267bcbcb50525cde16bab72d7cfb77d83fc793b4b890e; only the authenticated retained-manifest reader changes. All24 procedural UI recipes, tokens, compiled CSS and original payloads are unchanged.',
-      'Independent per-slot and source review found no correctness blocker. Pre-approval candidate passes109 integrated checks on each Node20/22; its native keyboard Start, confirmed Restart, win, staged Next and reload Continue matches402 served bindings with an empty console. Exact final-source gates remain required.',
-      'Continuation of prior functional source approval only. No new visual/art, whole-screen, screen-reader, physical-device, audio listening, offline or public acceptance. Immutable prior approvals remain in canonical history; any UI input change reopens this group.',
+      'Scoped Team-host UI functional continuation: docs/verification/team-host-ui-continuation/review.json sha256:9bedba528191f2948259714d0f39fbcc369b6cccfa53ea1a5ee7ae397b1fc6db. Seven ordered UI inputs sha256:6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865 include the dependency-free shared Team slot leaf. All24 existing UI recipe payloads and resolved tokens are unchanged; only explicit image admission and its dependency closure change.',
+      'Thirteen complete host, manifest-pin, Team admission/atomic ownership, affected-owner and fingerprint suites pass125 checks on each Node20/22, with264 identical exact source bindings and zero mismatches. Exact pre-approval r3 native panels/focus/Settings/Plain/Large/effects/slider/dialog/help/search/preview observations have285 HTTP200 requests and an empty console.',
+      'UI functional continuation only. Native Large catalogue initial Play focus is clipped and remains a required navigation correction; no whole-navigation acceptance. Team37 source recipes and five produced equipment images retain separate unapproved status. No physical-device, listening, offline, public or release approval. Prior UI approvals and all immutable originals remain preserved; any UI input change reopens this group.',
     ],
   },
   audio: {
@@ -141,19 +189,22 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
     bindings[slotId] = reference(asset);
   };
   for (const slot of ASSET_SLOTS) {
-    if (!sources[slot.group]) continue;
+    // Team roles cannot inherit a Solo effects approval: their painter and
+    // state recipes have a separate fingerprint and require their own review.
+    const group = slot.id.startsWith('team.') ? 'team' : slot.group;
+    if (!sources[group] || TEAM_EQUIPMENT_IDS.includes(slot.id)) continue;
     add(slot.id, {
       kind: 'recipe',
       recipe: { id: slot.recipes[0] },
       description: `${slot.label}: existing bounded component with Field Kit tokens and state styling.`,
       provenance: {
         creator: 'Reveal Line',
-        source: recipeSources[slot.group],
+        source: recipeSources[group],
         license: 'Project-authored runtime recipe',
         prompt: slot.prompt,
         parent: { id: `${slot.id}.default`, revision: 1 },
       },
-      quality: recipeQuality(slot.group, recipeSources[slot.group]),
+      quality: recipeQuality(group, recipeSources[group]),
     });
   }
   const sprites = await json('game/assets/field-kit/sprites/sprites.json');
@@ -173,6 +224,58 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
         quality: sprite.quality,
       },
       await read(`game/assets/field-kit/sprites/${filePath}`),
+    );
+  }
+  const teamReviewBytes = await read('docs/verification/team37/review.json');
+  const inheritedAssets = Object.fromEntries(
+    assets.filter((asset) => asset.kind === 'image').map((asset) => [asset.id, asset]),
+  );
+  for (const asset of assets) {
+    if (!asset.id.startsWith('team.') || asset.kind !== 'recipe') continue;
+    const slotId = asset.id.slice(0, -'.field-kit'.length);
+    const defaultAsset = baseline.assets.find(
+      (entry) => entry.id === asset.provenance.parent.id && entry.revision === 1,
+    );
+    asset.quality = fieldKitTeamRecipeQuality({
+      slotId,
+      source: recipeSources.team,
+      recipe: asset.recipe,
+      defaultAsset,
+      inheritedAssets,
+      reviewBytes: teamReviewBytes,
+    });
+  }
+  const equipmentSource = 'game/presentation/team-equipment-art.mjs';
+  const equipmentHash = hash(await read(equipmentSource));
+  const equipmentReviewSource = await fieldKitEquipmentSource(read);
+  for (const slotId of TEAM_EQUIPMENT_IDS) {
+    const slot = ASSET_SLOTS.find((entry) => entry.id === slotId);
+    const image = teamEquipmentArt(slotId),
+      body = encodeSpritePNG(image),
+      measured = inspectSprite(image);
+    add(
+      slotId,
+      {
+        kind: 'image',
+        file: {
+          sha256: hash(body),
+          bytes: body.length,
+          mime: 'image/png',
+          width: image.width,
+          height: image.height,
+        },
+        geometry: { ...structuredClone(slot.geometry), occupiedBounds: measured.occupiedBounds },
+        description: TEAM_EQUIPMENT_DESCRIPTIONS[slotId],
+        provenance: {
+          creator: 'Reveal Line',
+          source: `${equipmentSource} sha256:${equipmentHash}`,
+          license: 'Original project integer-pixel equipment artwork',
+          prompt: slot.prompt,
+          parent: { id: `${slotId}.default`, revision: 1 },
+        },
+        quality: fieldKitEquipmentQuality(slotId, equipmentReviewSource, hash(body)),
+      },
+      body,
     );
   }
   const iconHash = hash(await read('game/presentation/icons.mjs'));
@@ -325,17 +428,19 @@ export async function compileFieldKitProduction(
     previousOutput,
   });
   // Format current artifacts only; retained runtime names bind original raw bytes.
-  for (const [name, body] of result.files)
-    if (/\.(json|css)$/.test(name) && !retainedPresentationPath(name))
-      result.files.set(
-        name,
-        Buffer.from(
-          await format(new TextDecoder().decode(body), {
-            ...config,
-            parser: name.endsWith('.json') ? 'json' : 'css',
-          }),
-        ),
-      );
+  for (const [name, body] of result.files) {
+    if (!/\.(json|css)$/.test(name) || retainedPresentationPath(name)) continue;
+    const formatted = Buffer.from(
+      await format(new TextDecoder().decode(body), {
+        ...config,
+        parser: name.endsWith('.json') ? 'json' : 'css',
+      }),
+    );
+    // Pretty-printing must not make otherwise valid Studio metadata unloadable.
+    // The compiler already provided bounded canonical bytes as the fallback.
+    if (name !== 'studio.json' || formatted.length <= LIMITS.manifestBytes)
+      result.files.set(name, formatted);
+  }
   const inventory = [...result.files]
     .filter(([name]) => name !== 'manifest.json')
     .sort(([a], [b]) => a.localeCompare(b))
@@ -368,7 +473,7 @@ async function generate(args) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  production.document = retainProductionHistory(production.document, history?.document);
+  production.document = retainFieldKitProductionHistory(production.document, history?.document);
   production.assets = new Map([...(history?.assets ?? []), ...production.assets]);
   production.coverage = presentationCoverage(production.document);
   const historyBytes = Buffer.from(

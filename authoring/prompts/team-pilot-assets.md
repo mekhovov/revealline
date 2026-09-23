@@ -1,0 +1,7 @@
+# Team pilot body variation
+
+Start with the Studio-generated prompt for the selected slot and exact theme revision. Attach the approved body, palette and geometry. Example:
+
+> Create an original north-facing FPV player 2 crawling body for Reveal Line’s field-kit collection. Target `team.pilot.p2.crawling.detailed`: 64×64 transparent PNG, center pivot (32,32), four hubs at (16,16), (48,16), (16,48), (48,48), radius 7.68 px. Use the attached palette and approved silhouette; show the camera, battery, antenna and a restrained damaged-body pose. Keep frame and motor bounds intact. Crisp pixel clusters, binary alpha, no background, text, number, logo, blur or baked glow. Do not paint propeller blades: runtime freezes the rotor layer while crawling. Player identity and rescue cues are added by the game. Return editable source and prepared PNG. Validate dimensions, alpha, palette, anchors, occupied bounds and readability at 20/24/32 CSS pixels. Do not change the collision footprint or imply another ability.
+
+For compact output use the selected 32×32 contract and halve hub coordinates/radii. Generate a whole collection only against all 24 exported slot specifications, preserving slot names and exact dependencies. Visually inspect every state and seat in the real Team painter. A candidate becomes approved only after preparation, native-size review, host decoding, save/export/import and release qualification.

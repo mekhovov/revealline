@@ -6,7 +6,7 @@ import { deflateSync } from 'node:zlib';
 import { canonicalJSON } from '../data-json.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
-import { page } from './helpers/coop-host.mjs';
+import { page as hostPage } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import {
   importedRoute,
@@ -116,7 +116,64 @@ function selectNative(f, file) {
   return input.onchange();
 }
 const preview = (f) => f.previewDrawImages.at(-1);
-const image = (f) => f.drawImages.at(-1);
+// Observe complete real paints without taking another simulation step. Actors
+// now draw after the background; the last draw is not the accepted picture.
+async function page(t, options) {
+  const f = await hostPage(t, options),
+    ctx = f.$('coop-canvas').getContext('2d'),
+    save = ctx.save,
+    restore = ctx.restore,
+    drawImage = ctx.drawImage;
+  let depth = 0,
+    frame = [];
+  f.pictureFrame = [];
+  ctx.save = (...args) => {
+    if (depth++ === 0) frame = [];
+    return save(...args);
+  };
+  ctx.drawImage = (...args) => {
+    frame.push(args[0]);
+    return drawImage(...args);
+  };
+  ctx.restore = (...args) => {
+    const result = restore(...args);
+    if (--depth === 0) f.pictureFrame = [...frame];
+    return result;
+  };
+  return f;
+}
+function assertPictureFrame(frame, expected) {
+  assert.ok(expected, 'a completed frame needs an accepted picture');
+  assert.equal(expected.naturalWidth, 1152);
+  assert.equal(expected.naturalHeight, 576);
+  assert.match(expected.sha256, /^[0-9a-f]{64}$/);
+  assert.equal(frame[0], expected, 'the exact accepted picture draws before all actors');
+  assert.equal(
+    frame.filter((draw) => draw.naturalWidth === 1152 && draw.naturalHeight === 576).length,
+    1,
+    'a fresh frame has exactly one background picture',
+  );
+  return expected;
+}
+const image = (f) => {
+  const picture = f.pictureFrame[0];
+  assert.ok(
+    f.artwork.calls.decodes.includes(picture),
+    'the picture is a qualified decoded original',
+  );
+  return assertPictureFrame(f.pictureFrame, picture);
+};
+
+test('fresh-frame picture oracle rejects missing, actor-only, wrong and duplicate backgrounds', () => {
+  const picture = { naturalWidth: 1152, naturalHeight: 576, sha256: 'a'.repeat(64) },
+    wrong = { ...picture, sha256: 'b'.repeat(64) },
+    actor = { width: 24, height: 24, slot: 'team.anchor.available' };
+  assert.equal(assertPictureFrame([picture, actor], picture), picture);
+  assert.throws(() => assertPictureFrame([], picture));
+  assert.throws(() => assertPictureFrame([actor], picture));
+  assert.throws(() => assertPictureFrame([wrong, actor], picture));
+  assert.throws(() => assertPictureFrame([picture, picture, actor], picture));
+});
 const status = (f) => f.$('coop-pack-status').textContent;
 const localStatus = (f) => `${status(f)} ${f.$('coop-picture-status').textContent}`;
 const flush = () => new Promise((resolve) => setImmediate(resolve));
@@ -414,6 +471,16 @@ test('a corrupt required body leaves the existing pack and picture usable withou
   assert.equal(f.artwork.calls.reads.length, reads);
   assert.equal(f.$('coop-pack-retry').hidden, false);
   assert.equal(f.$('coop-menu').hidden, false);
+  const errorCopy =
+    'Pack unchanged: Team artwork bytes do not match their hash. Retry pack or choose another file.';
+  assert.equal(status(f), errorCopy);
+  await f.$('coop-pack-retry').onclick();
+  assert.equal(status(f), errorCopy, 'Retry retains the same complete error and recovery action');
+  assert.equal(preview(f), old);
+  assert.equal(old.src, oldURL);
+  assert.equal(f.$('coop-level').value, 'first-connection');
+  assert.equal(f.artwork.calls.reads.length, reads);
+  assert.equal(f.$('coop-pack-retry').hidden, false);
   start(f);
   assert.equal(image(f), old);
 });
@@ -755,3 +822,29 @@ test('discovery-started local artwork keeps its earned result, ordered Next and 
   assert.equal(image(f), original);
   assert.equal(f.$('coop-clock').textContent, '0:00');
 });
+
+for (const ending of ['', '.', '!', '?']) {
+  test(`pack read errors preserve sentence punctuation and explicit Retry (${ending || 'none'})`, async (t) => {
+    const f = await page(t, options),
+      old = preview(f),
+      text = JSON.stringify(importedRoute.authoredPack);
+    let reads = 0;
+    await f.selectFile(text, async () => {
+      if (++reads === 1) throw new Error(`File temporarily unavailable${ending}`);
+      return text;
+    });
+    assert.equal(
+      status(f),
+      `Pack unchanged: File temporarily unavailable${ending || '.'} Retry pack or choose another file.`,
+    );
+    assert.equal(preview(f), old);
+    assert.equal(f.$('coop-level').value, 'first-connection');
+    assert.equal(f.$('coop-pack-retry').hidden, false);
+    await f.$('coop-pack-retry').onclick();
+    assert.equal(reads, 2);
+    assert.equal(f.$('coop-level').value, importedRoute.authoredPack.levels[0].id);
+    assert.equal(f.$('coop-pack-retry').hidden, true);
+    assert.equal(f.$('coop-menu').hidden, false, 'successful Retry still requires explicit Start');
+    assert.equal(f.$('coop-start').disabled, false);
+  });
+}

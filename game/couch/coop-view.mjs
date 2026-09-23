@@ -1,3 +1,25 @@
+import {
+  createTeamOutcomeFeedback,
+  prepareTeamOutcomes,
+  drawTeamOutcomeBadge,
+} from './coop-outcome-presentation.mjs';
+import {
+  prepareTeamRescue,
+  teamRescueProgress,
+  drawTeamRescueDecoration,
+} from './coop-rescue-presentation.mjs';
+import {
+  prepareTeamEmitter,
+  drawTeamEmitterWarning,
+  drawTeamEmitterSpark,
+} from './coop-emitter-presentation.mjs';
+import {
+  prepareTeamSupport,
+  drawTeamSupportPulse,
+  drawTeamSlowed,
+} from './coop-support-presentation.mjs';
+import { prepareTeamCores, drawTeamCoreCue } from './coop-core-presentation.mjs';
+import { prepareTeamAnchors, drawTeamAnchor } from './coop-anchor-presentation.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
@@ -17,9 +39,16 @@ export function createCoopPainter(canvas) {
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Relay Rescue needs a browser with Canvas 2D support.');
   const actors = createCoopActorPresentation();
+  const outcomes = createTeamOutcomeFeedback();
   let presentation = null,
     look = null,
-    wall = null;
+    wall = null,
+    anchors = Object.freeze({}),
+    coreFrames = Object.freeze({}),
+    supportFrames = Object.freeze({}),
+    emitterFrames = Object.freeze({}),
+    rescueFrames = Object.freeze({}),
+    outcomeFrames = Object.freeze({});
   function setPresentation(snapshot) {
     let next = null;
     if (snapshot != null) {
@@ -56,10 +85,22 @@ export function createCoopPainter(canvas) {
     // Keep the page lease's exact snapshot identity while capturing its display
     // values. The painter never changes or disposes shared presentation assets.
     const nextWall = prepareCoopWall(snapshot);
+    const nextAnchors = prepareTeamAnchors(snapshot);
+    const nextCoreFrames = prepareTeamCores(snapshot);
+    const nextSupportFrames = prepareTeamSupport(snapshot);
+    const nextEmitterFrames = prepareTeamEmitter(snapshot);
+    const nextRescueFrames = prepareTeamRescue(snapshot);
+    const nextOutcomes = prepareTeamOutcomes(snapshot);
     actors.setPresentation(snapshot ?? null);
     presentation = snapshot ?? null;
     look = next;
     wall = nextWall;
+    anchors = nextAnchors;
+    coreFrames = nextCoreFrames;
+    supportFrames = nextSupportFrames;
+    emitterFrames = nextEmitterFrames;
+    rescueFrames = nextRescueFrames;
+    outcomeFrames = nextOutcomes;
   }
   function paint(
     run,
@@ -69,6 +110,8 @@ export function createCoopPainter(canvas) {
       picture = null,
       pictureLevel = run.level,
       actorStyle = 'hybrid',
+      feedback = null,
+      previousRun = null,
     } = {},
   ) {
     // This is a defensive arena guard, not full content-hash authority. The
@@ -114,6 +157,7 @@ export function createCoopPainter(canvas) {
           `Team picture must retain its complete ${pictureWidth}×${pictureHeight} decoded frame.`,
         );
     }
+    const recentOutcomes = feedback ?? outcomes.observe(run);
     const fonts = canvasTextFonts(textFace, look?.fonts ?? THEME_FONTS);
     const bonuses = coopBonusView(run);
     const palette = look?.palette;
@@ -125,6 +169,7 @@ export function createCoopPainter(canvas) {
       motionScale,
       canvasCSSWidth: canvas.clientWidth,
       style: actorStyle,
+      previousRun,
     });
     const unit = canvas.width / run.width;
     const cueScale = coopCueScale(canvas.clientWidth, run.width),
@@ -222,20 +267,12 @@ export function createCoopPainter(canvas) {
       }
       drawCoopBonuses(ctx, bonuses, { screenScale: canvas.clientWidth / 1152 });
       // Launch markers are anchored landmarks, not compulsory meeting pads.
-      for (const effect of run.supportEffects || []) {
-        ctx.fillStyle = colors[effect.player];
-        ctx.globalAlpha = reduced ? 0.06 : 0.1;
-        ctx.beginPath();
-        ctx.arc(effect.x, effect.y, 6, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 0.65;
-        ctx.strokeStyle = colors[effect.player];
-        ctx.lineWidth = 0.08;
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-      }
+      for (const effect of run.supportEffects || [])
+        drawTeamSupportPulse(ctx, supportFrames, effect, colors, reduced);
       // Paint every cosmetic body before functional markers and labels. Larger
       // sprites must never cover another actor's warning or a stronghold anchor.
+      for (const player of run.players)
+        drawTeamRescueDecoration(ctx, rescueFrames, run, player, reduced);
       const bodies = new Set();
       const body = (kind, id) => bodies.has(`${kind}:${id}`);
       for (const [kind, list] of [
@@ -341,9 +378,14 @@ export function createCoopPainter(canvas) {
           ctx.setLineDash([]);
         }
         ctx.restore();
-        if (frame?.pilotState === 'rescuing' && Number.isInteger(frame.rescueTarget))
+        const rescue = rescueFrames['team.rescue.progress']
+          ? teamRescueProgress(run, player)
+          : null;
+        if (rescue || (frame?.pilotState === 'rescuing' && Number.isInteger(frame.rescueTarget)))
           cue(
-            `RESCUE ${frame.rescueTarget + 1}`,
+            rescue
+              ? `RESCUE ${rescue.target + 1} · ${Math.floor(rescue.progress * 100)}%`
+              : `RESCUE ${frame.rescueTarget + 1}`,
             x,
             (rect.bottom + 12) / cssCell,
             0.66,
@@ -358,11 +400,15 @@ export function createCoopPainter(canvas) {
         const relayLabel =
           run.strongholds.length > 1 ? `${run.strongholds.indexOf(stronghold) + 1}` : '';
         for (const [i, anchor] of stronghold.anchors.entries()) {
-          ctx.strokeStyle = anchor.captured ? '#c9e4a0' : '#ffd279';
-          ctx.fillStyle = anchor.captured ? '#315744' : '#604b30';
-          ctx.lineWidth = 0.1;
-          ctx.fillRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
-          ctx.strokeRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
+          const decorated = drawTeamAnchor(ctx, anchors, anchor, palette);
+          // Keep a 12px readable label outside replacement artwork, including
+          // small Studio/handheld canvases. Legacy cue placement stays exact.
+          const labelOffset = 0.7 + 12 / cssCell;
+          const labelY = decorated
+            ? anchor.y + labelOffset < run.height - 0.6
+              ? anchor.y + labelOffset
+              : anchor.y - labelOffset
+            : anchor.y;
           ctx.fillStyle = '#fff1c8';
           ctx.font = `600 0.85px ${fonts.ui}`;
           ctx.textAlign = 'center';
@@ -370,7 +416,7 @@ export function createCoopPainter(canvas) {
           cue(
             anchor.captured ? '✓' : `${relayLabel}${String.fromCharCode(65 + i)}`,
             anchor.x,
-            anchor.y,
+            labelY,
             0.85,
             fonts.ui,
             true,
@@ -378,22 +424,7 @@ export function createCoopPainter(canvas) {
           );
         }
         const core = stronghold.core;
-        ctx.fillStyle = stronghold.defeated ? '#a0c887' : '#ffc1a4';
-        ctx.strokeStyle = stronghold.shielded ? '#f1b860' : '#f48885';
-        ctx.lineWidth = stronghold.shielded ? 0.2 : 0.08;
-        ctx.beginPath();
-        for (let i = 0; i < 6; i++) {
-          const angle = (i * Math.PI) / 3;
-          const x = core.x + Math.cos(angle) * 1.2,
-            y = core.y + Math.sin(angle) * 1.2;
-          if (i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.closePath();
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(core.x, core.y, 0.48, 0, Math.PI * 2);
-        ctx.fill();
+        const coreColor = drawTeamCoreCue(ctx, coreFrames, stronghold, palette);
         cue(
           `${relayLabel ? `${relayLabel} ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELD' : 'CAPTURE'}`,
           core.x,
@@ -401,21 +432,13 @@ export function createCoopPainter(canvas) {
           0.64,
           fonts.ui,
           coreBody,
-          stronghold.defeated ? '#a0c887' : '#ffc1a4',
+          coreColor,
         );
         const emitter = stronghold.emitter;
         if (emitter?.phase === 'warning' && Number.isInteger(emitter.cellIndex)) {
           const x = (emitter.cellIndex % run.width) + 0.5,
             y = Math.floor(emitter.cellIndex / run.width) + 0.5;
-          ctx.strokeStyle = '#ffd279';
-          ctx.lineWidth = 0.12;
-          ctx.setLineDash([0.35, 0.3]);
-          ctx.beginPath();
-          ctx.moveTo(core.x, core.y);
-          ctx.lineTo(x, y);
-          ctx.stroke();
-          ctx.setLineDash([]);
-          ctx.strokeRect(x - 0.7, y - 0.7, 1.4, 1.4);
+          drawTeamEmitterWarning(ctx, emitterFrames, core, { x, y }, palette);
         }
       }
       for (const enemy of run.enemies) {
@@ -484,7 +507,7 @@ export function createCoopPainter(canvas) {
         ctx.save();
         ctx.translate(player.x, player.y);
         if (!downed && player.graceUntil > run.time) {
-          ctx.strokeStyle = '#e6ffcf';
+          ctx.strokeStyle = rescueFrames['team.player.recovery'] ? palette.safe : '#e6ffcf';
           ctx.lineWidth = 0.12;
           ctx.setLineDash([0.2, 0.18]);
           ctx.beginPath();
@@ -609,17 +632,7 @@ export function createCoopPainter(canvas) {
         }
         // Authoritative active time keeps this cue visible through pause and reduced effects.
         if (enemy.speedScale < 1 && enemy.slowUntil > run.time) {
-          ctx.strokeStyle = '#e6f8ff';
-          ctx.lineWidth = 0.11;
-          ctx.setLineDash([0.16, 0.12]);
-          ctx.beginPath();
-          ctx.arc(0, 0, 0.88, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.setLineDash([]);
-          ctx.fillStyle = '#e6f8ff';
-          ctx.font = `600 0.6px ${fonts.ui}`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
+          const slowedColor = drawTeamSlowed(ctx, supportFrames, palette);
           ctx.restore();
           cue(
             'SLOWED',
@@ -628,7 +641,7 @@ export function createCoopPainter(canvas) {
             0.6,
             fonts.ui,
             enemyBody,
-            '#e6f8ff',
+            slowedColor,
           );
           ctx.save();
           ctx.translate(enemy.x, enemy.y);
@@ -644,19 +657,45 @@ export function createCoopPainter(canvas) {
         ctx.fill();
         ctx.stroke();
       }
+      for (const [index, outcome] of recentOutcomes.entries()) {
+        if (!['running', 'paused'].includes(run.status)) break;
+        const label =
+          outcome.slot === 'team.capture.joint' ? '1 + 2 · JOINT CUT' : '1 + 2 · TEAM RECOVERY';
+        const size = cueScale.font(0.75, 12, 18);
+        ctx.font = `600 ${size}px ${fonts.ui}`;
+        const width = (ctx.measureText(label)?.width ?? size * label.length * 0.7) * cssCell + 38;
+        const rect = place(run.width / 2, (18 + index * 34) / cssCell, width, 28);
+        if (!rect) continue;
+        drawTeamOutcomeBadge(
+          ctx,
+          outcomeFrames[outcome.slot],
+          rect,
+          cssCell,
+          colors,
+          reduced,
+          run.time - outcome.time,
+        );
+        ctx.save();
+        ctx.fillStyle = '#07111c';
+        ctx.fillRect(
+          (rect.left + 28) / cssCell,
+          rect.top / cssCell,
+          (rect.width - 28) / cssCell,
+          rect.height / cssCell,
+        );
+        ctx.fillStyle = palette?.ink ?? '#f3f0db';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(label, (rect.left + 32) / cssCell, rect.y / cssCell);
+        ctx.restore();
+      }
       for (const impact of run.impacts || []) {
         const x = Number.isFinite(impact.x) ? impact.x : (impact.cellIndex % run.width) + 0.5;
         const y = Number.isFinite(impact.y)
           ? impact.y
           : Math.floor(impact.cellIndex / run.width) + 0.5;
         if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
-        ctx.fillStyle = '#fff0bc';
-        ctx.strokeStyle = '#fc786f';
-        ctx.lineWidth = 0.14;
-        ctx.beginPath();
-        ctx.arc(x, y, 0.35, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
+        drawTeamEmitterSpark(ctx, emitterFrames, { x, y }, palette);
       }
     } finally {
       ctx.restore();
@@ -664,7 +703,9 @@ export function createCoopPainter(canvas) {
   }
   return {
     paint,
+    observe: outcomes.observe,
     setPresentation,
+    actorFrame: (kind, id) => actors.frame(kind, id),
     get presentation() {
       return presentation;
     },
