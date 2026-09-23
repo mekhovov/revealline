@@ -1,6 +1,6 @@
 # Reveal Line — completed work and remaining delivery plan
 
-Status checked **23 September 2026, 00:26 UTC**. This is the current status and
+Status checked **23 September 2026, 00:29 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source
 observations or release evidence. The original P00–P15 version allocations are
@@ -32,7 +32,35 @@ remains visible there rather than being treated as rejected or completed.
 - Do not give a misleading overall percentage: released functionality, candidate
   content and final human/device acceptance are different kinds of completion.
 
-## 2. Completed and publicly delivered
+### Status definitions
+
+- **Completed** means the stated slice is merged, released to its intended public
+  route and verified within the evidence named here. It does not close broader
+  gameplay, device or content requirements.
+- **Partial** means usable implementation exists in the accepted game, but at
+  least one required behavior, content or qualification gate remains open.
+- **Remaining** means the work is required and prioritized but is not yet accepted.
+- **Deferred** means the work stays in scope after the browser-release priorities;
+  it is not rejected or silently counted as complete.
+
+### Current execution board
+
+| State         | Scope                                                                                                                   | Current boundary / next gate                                                                                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Completed** | Public releases v0.83.0–v0.87.0                                                                                         | Default Journey, unified library, safer replacement, visible difficulty/testing controls and gp2 reference-paced defaults are publicly delivered within their recorded scopes.                                     |
+| **Partial**   | Core game framework and authored content                                                                                | 91 Journey Solo/Versus missions, 12 Team missions, retained Classic content, authoring, media, bonuses and threat roles exist; balance, presentation, recovery, devices and whole-campaign acceptance remain open. |
+| **Next — P1** | Reproduce the PNG/JPEG launch failure; review gp2 pacing; qualify capture-stop, actor and action feedback               | Release each confirmed correction separately with public Retry/Play or representative gameplay evidence. No successor version is allocated before a bounded fix is ready.                                          |
+| **Next — P2** | Navigation, touch/controller parity, compact mobile HUD, iPhone behavior, Steam Deck Confirm/Start, save/media recovery | Complete keyboard-only, controller-only and touch-only journeys; retain physical-device evidence separately from simulated checks.                                                                                 |
+| **Then — P3** | Studio and Team stacks, reference dispositions, soundtrack review, whole-Journey and final browser qualification        | Reconcile existing drafts against current main and close each feature's own content, listening, accessibility, offline and human-review gates.                                                                     |
+| **Deferred**  | Native stores and network multiplayer                                                                                   | Separate platform lifecycle, packaging, hardware and authoritative-network phases after browser qualification.                                                                                                     |
+
+All **21 currently open PRs are drafts**. The set includes player features,
+infrastructure, audits and provenance work. None is counted as a completed
+feature or a reserved release merely because it has an implementation branch.
+The detailed queue and conditional effort ranges are in section 5.
+Feedback-specific acceptance remains in F01–F28.
+
+## 2. Completed — publicly delivered
 
 | Item                                 | Delivered result                                                                                                                                                        | Release / evidence                                                                                                                                      |
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -50,7 +78,7 @@ user-authorized automated-suite waiver. Skipped suites are not passes. Public
 verification is bounded: a release being delivered does not certify every mission,
 physical controller, mobile device, offline journey or human balance outcome.
 
-## 3. Implemented content and framework, with acceptance still open
+## 3. Remaining — implemented foundations requiring acceptance
 
 These capabilities are present in the integrated Journey or documented candidate
 editions; this table does not promote every study or open PR into the default game.
@@ -72,7 +100,7 @@ them twice. Alternate artwork, presets and reference links are not new maps.
 The older11-themed-campaign /132-mission programme is not completed by these
 counts and is not silently added to the immediate release queue.
 
-## 4. Completed release: v0.87.0 Xposed-paced defaults
+## 4. Completed — v0.87.0 Xposed-paced defaults
 
 **Public delivery is accepted.** [Play v0.87.0](https://mekhovov.github.io/revealline/releases/v0.87.0/site/game/).
 Source [PR279](https://github.com/mekhovov/revealline/pull/279) merged as
@@ -122,26 +150,27 @@ historical 498-route evidence as gp2 proof. Full gameplay, physical-device,
 controller, offline and listening qualification remain separate work. This
 release closes its delivery scope, not the whole redesign.
 
-## 5. Remaining work, in priority order
+## 5. Remaining — prioritized execution queue
 
 Estimates are focused effort after starting, not deadlines or additive promises.
 Release/CI queues and human/device availability can extend elapsed time. Finish
 one user-visible slice per reviewed PR/release rather than accumulating a large diff.
 
-| Priority     | Item / current state                                                   | Completion condition                                                                                                                                                                                | Indicative effort                                                |
-| ------------ | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| P1           | PNG/JPEG mission-selection failure — unresolved                        | Identify affected mission/mode/asset and reproduce; repair actual cause; public Download/Retry/Play succeeds without deleting media or bypassing validation                                         | 2–4h diagnosis;3–8h scoped repair once reproducible              |
-| P1           | Current-speed difficulty/pacing review                                 | Representative early/middle/late Solo/Versus/Team routes; fair departures, enemy/craft ratios, useful geometry and no trivial one-cut bypasses outside teaching. Human feedback recorded separately | 1–3 days first pass;6–12h per map-fix release                    |
-| P2           | Remaining save warnings, recovery focus and session-only continuity    | Recheck latest accepted source; close only still-reproducible gaps, including two-tab ownership/Next and failed-save recovery                                                                       | 6–10h per bounded slice                                          |
-| P2           | Ready/download/replay usability — PR230/231/234                        | Same-page retry, preserved readiness/selection and visible opener focus; replay preferences restore after Back                                                                                      | 3–6h each after dependency reconciliation                        |
-| P2           | Retained-media/presentation recovery — PR256                           | Preserve all exact revisions/session-only originals; qualify backup/import/recovery and failure paths                                                                                               | 8–12h                                                            |
-| P2           | Twin Receivers — PR261                                                 | Rebase reviewed study, adopt correct pictured Journey edition, reassess fast double-objective closures under gp2 and publish                                                                        | 6–10h                                                            |
-| P3           | Studio small fixes — PR237/239/258/262                                 | Mobile toolbar, rescue percentages, visible validation errors and Undo/Redo focus verified in current host                                                                                          | 4–7h each                                                        |
-| P3           | Team presentation/history stack — PR236/238/240/241/243/244/245/247    | Dependency-aware integration; exact artwork/roles/history, export limits, import errors and both-seat readability retained                                                                          | 10–18h initial integrated slice                                  |
-| P3           | Final48 reference dispositions / audit — PR260                         | Explicit current-edition keep/merge/redesign/reject decisions with evidence, not just link coverage                                                                                                 | 8–16h review, plus targeted fixes                                |
-| P3           | Whole-Journey and Team qualification                                   | All chapter transitions, endings, optional arcs, broader mastery/starts, real cooperation and refreshed gp2 pacing                                                                                  | 3–6 days initial bounded workstream; human availability required |
-| P3           | Final accessibility/performance/offline/recovery                       | Physical keyboard/touch/controller matrix, reduced effects/contrast/captions, storage/download interruptions, measured performance and rollback                                                     | 3–5 days after functional blockers; devices required             |
-| Support only | PR266/269 branch/sprite provenance reconciliation; PR235 CI efficiency | Account for unique work and dependencies without losing source or delaying player-visible repairs                                                                                                   | 2–4h bounded reconciliation/CI slice                             |
+| Priority     | Item / current state                                                | Completion condition                                                                                                                                                                                | Indicative effort                                                |
+| ------------ | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| P1           | PNG/JPEG mission-selection failure — unresolved                     | Identify affected mission/mode/asset and reproduce; repair actual cause; public Download/Retry/Play succeeds without deleting media or bypassing validation                                         | 2–4h diagnosis;3–8h scoped repair once reproducible              |
+| P1           | Current-speed difficulty/pacing review                              | Representative early/middle/late Solo/Versus/Team routes; fair departures, enemy/craft ratios, useful geometry and no trivial one-cut bypasses outside teaching. Human feedback recorded separately | 1–3 days first pass;6–12h per map-fix release                    |
+| P2           | Remaining save warnings, recovery focus and session-only continuity | Recheck latest accepted source; close only still-reproducible gaps, including two-tab ownership/Next and failed-save recovery                                                                       | 6–10h per bounded slice                                          |
+| P2           | Ready/download/replay usability — PR230/231/234                     | Same-page retry, preserved readiness/selection and visible opener focus; replay preferences restore after Back                                                                                      | 3–6h each after dependency reconciliation                        |
+| P2           | Retained-media/presentation recovery — PR256                        | Preserve all exact revisions/session-only originals; qualify backup/import/recovery and failure paths                                                                                               | 8–12h                                                            |
+| P2           | Twin Receivers — PR261                                              | Rebase reviewed study, adopt correct pictured Journey edition, reassess fast double-objective closures under gp2 and publish                                                                        | 6–10h                                                            |
+| P3           | Studio small fixes — PR237/239/258/262                              | Mobile toolbar, rescue percentages, visible validation errors and Undo/Redo focus verified in current host                                                                                          | 4–7h each                                                        |
+| P3           | Team presentation/history stack — PR236/238/240/241/243/244/245/247 | Dependency-aware integration; exact artwork/roles/history, export limits, import errors and both-seat readability retained                                                                          | 10–18h initial integrated slice                                  |
+| P3           | Final48 reference dispositions / audit — PR260                      | Explicit current-edition keep/merge/redesign/reject decisions with evidence, not just link coverage                                                                                                 | 8–16h review, plus targeted fixes                                |
+| P3           | Whole-Journey and Team qualification                                | All chapter transitions, endings, optional arcs, broader mastery/starts, real cooperation and refreshed gp2 pacing                                                                                  | 3–6 days initial bounded workstream; human availability required |
+| P3           | Final accessibility/performance/offline/recovery                    | Physical keyboard/touch/controller matrix, reduced effects/contrast/captions, storage/download interruptions, measured performance and rollback                                                     | 3–5 days after functional blockers; devices required             |
+| Support only | PR266/269 branch/sprite provenance reconciliation                   | Account for unique work and dependencies without losing source or delaying player-visible repairs                                                                                                   | 2–4h bounded reconciliation slice                                |
+| Support only | PR235 and publishing efficiency                                     | Preserve the delivered four-file deployment checkout; add phase timing before any bounded-concurrency change, retaining fail-closed timeouts, fresh authority checks and deterministic evidence     | 2–4h bounded CI/publishing slice                                 |
 
 The [UX/device delivery mapping](player-feedback-register-2026-09-23.md#uxdevice-delivery-mapping-and-estimates)
 tracks feedback F15–F28 explicitly: capture-stop; directional role readability;
@@ -154,10 +183,31 @@ accessibility slices above. Delivered foundations remain separate from unfinishe
 acceptance. Estimates overlap the existing programme ranges, not extra promises.
 
 PR numbers denote retained work, **not merge-ready certification**.
-The cutoff inventory contains **21 feature draft PRs, excluding documentation
-and publication PRs**. These include product, study, evidence and support work,
-not 21 independent finished features. Six reported merge conflicts at that check;
-recheck before admission. Stacked changes must be reconciled against current main.
+The cutoff inventory contains **21 draft PRs, excluding documentation and
+publication PRs**. These include product, study, evidence, infrastructure and
+support work, not 21 independent finished features. The latest completed conflict
+audit records six conflicting drafts: PR230, PR231, PR237, PR256, PR258 and PR262;
+recheck every head before admission.
+
+The compatible Team/presentation dependency lane is
+**PR256 → PR234 → PR236 → PR238 → PR240 → PR243 → PR244 → PR245 → PR247**,
+admitted as reviewed units rather than by PR number. PR239 is separate coverage
+proof; PR241 is a separate preview feature. PR230, PR231, PR237, PR258 and PR262
+are standalone corrections. PR260/261 are audit/study work; PR235/266/269 are
+support, reconciliation or provenance work. Stacked changes must be reconciled
+against current main.
+
+The full branch/worktree reconciliation is also unfinished. Its last dated raw
+census recorded 520 local refs, 297 GitHub refs, 247 worktrees, 96 dirty worktrees
+and 165 unclassified entries. Those counts are a checkpoint, not current truth or
+completion. Closure requires a fresh census with zero unclassified refs and zero
+unique unaccounted patches while preserving owner worktrees and dirty changes.
+
+Publishing performance work remains a bounded support candidate. The four-file
+deployment checkout is delivered; API phase timing and safe limited concurrency
+are not. Any optimization must retain all required fresh passes, the final latest-
+selection guard, deterministic output, rate-limit handling and fail-closed errors.
+
 PR252/257 were consolidated into delivered v0.85.0 and closed as superseded;
 do not list them as unfinished releases.
 
@@ -166,7 +216,7 @@ and one successful Orchard Crossing download did not reproduce the user's case.
 Use the failing mission/mode/asset diagnostic if available; do not clear player
 uploads or weaken static-image validation to make the error disappear.
 
-## 6. Soundtrack delivery: completed and remaining
+## 6. Soundtrack — completed and remaining
 
 ### Completed and technically verified
 
@@ -216,7 +266,7 @@ UA-FPV permissions independently, then resume originals only after four strong
 pilots prove the production method. The 36-original milestone must not block safe
 incremental library releases and must not be marked complete from briefs or tests.
 
-## 7. Xposed Journey P00–P15 phase closure checklist
+## 7. Remaining — Xposed Journey P00–P15 closure checklist
 
 These identifiers belong to the Xposed Journey contract, not the older whole-game
 programme. Its separate [P00–P18 remaining-work crosswalk](cross-mode-execution.md#original-whole-game-phases-remaining-work-crosswalk)
@@ -276,7 +326,8 @@ not every later study or human/device requirement in its historical phase record
 - Release facts: GitHub PR/release/run readbacks plus the actual public
   `https://mekhovov.github.io/revealline/release.json`, not GitHub Latest alone.
 - Local evidence: `.cache/ux-delivery-review-20260922/current-delivery-plan.md`,
-  `journey-campaign-crosswalk.md`, and `.cache/main-v0860-public-audit/REPORT.md`.
+  `journey-campaign-crosswalk.md`, `.cache/main-v0860-public-audit/REPORT.md`, and
+  `.cache/main-v0870-public-audit/REPORT.md`.
   Historical checkpoint files are retained; this register resolves their stale
   queue summaries without overwriting the observations.
 - After each release, record source/version, deployment, public evidence, exact
