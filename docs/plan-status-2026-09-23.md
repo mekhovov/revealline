@@ -30,7 +30,8 @@ remains visible there rather than being treated as rejected or completed.
   gp4 rules preserve speed and movement domains, permit only a small anti-loop
   variation at a true single-face bounce, and retain a byte-frozen gp3 adapter.
   Candidate `b17f9310f412eb0751fdfb4c45399a7a55879168` passed 52 focused
-  checks; PR, build, merge, publication and public acceptance remain open.
+  checks plus required preflight and build. The long test job was waived/skipped;
+  merge, publication and public acceptance remain open.
 - Default redesigned Journey, the unified tagged mission selector, safer backup
   replacement, main-menu difficulty and global local-browser playtest controls
   are delivered features.
