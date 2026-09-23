@@ -1,6 +1,6 @@
 # Reveal Line — completed work and remaining delivery plan
 
-Status checked **23 September 2026, 00:26 UTC**. This is the current status and
+Status checked **23 September 2026, 00:29 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source
 observations or release evidence. The original P00–P15 version allocations are
@@ -32,7 +32,34 @@ remains visible there rather than being treated as rejected or completed.
 - Do not give a misleading overall percentage: released functionality, candidate
   content and final human/device acceptance are different kinds of completion.
 
-## 2. Completed and publicly delivered
+### Status definitions
+
+- **Completed** means the stated slice is merged, released to its intended public
+  route and verified within the evidence named here. It does not close broader
+  gameplay, device or content requirements.
+- **Partial** means usable implementation exists in the accepted game, but at
+  least one required behavior, content or qualification gate remains open.
+- **Remaining** means the work is required and prioritized but is not yet accepted.
+- **Deferred** means the work stays in scope after the browser-release priorities;
+  it is not rejected or silently counted as complete.
+
+### Current execution board
+
+| State         | Scope                                                                                                                   | Current boundary / next gate                                                                                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Completed** | Public releases v0.83.0–v0.87.0                                                                                         | Default Journey, unified library, safer replacement, visible difficulty/testing controls and gp2 reference-paced defaults are publicly delivered within their recorded scopes.                                     |
+| **Partial**   | Core game framework and authored content                                                                                | 91 Journey Solo/Versus missions, 12 Team missions, retained Classic content, authoring, media, bonuses and threat roles exist; balance, presentation, recovery, devices and whole-campaign acceptance remain open. |
+| **Next — P1** | Reproduce the PNG/JPEG launch failure; review gp2 pacing; qualify capture-stop, actor and action feedback               | Release each confirmed correction separately with public Retry/Play or representative gameplay evidence. No successor version is allocated before a bounded fix is ready.                                          |
+| **Next — P2** | Navigation, touch/controller parity, compact mobile HUD, iPhone behavior, Steam Deck Confirm/Start, save/media recovery | Complete keyboard-only, controller-only and touch-only journeys; retain physical-device evidence separately from simulated checks.                                                                                 |
+| **Then — P3** | Studio and Team stacks, reference dispositions, soundtrack review, whole-Journey and final browser qualification        | Reconcile existing drafts against current main and close each feature's own content, listening, accessibility, offline and human-review gates.                                                                     |
+| **Deferred**  | Native stores and network multiplayer                                                                                   | Separate platform lifecycle, packaging, hardware and authoritative-network phases after browser qualification.                                                                                                     |
+
+All **21 currently open feature PRs are drafts**. They preserve candidate work;
+none is counted as a completed feature or a reserved release merely because it
+has an implementation branch. The detailed queue and conditional effort ranges
+are in section 5. Feedback-specific acceptance remains in F01–F28.
+
+## 2. Completed — publicly delivered
 
 | Item                                 | Delivered result                                                                                                                                                        | Release / evidence                                                                                                                                      |
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -50,7 +77,7 @@ user-authorized automated-suite waiver. Skipped suites are not passes. Public
 verification is bounded: a release being delivered does not certify every mission,
 physical controller, mobile device, offline journey or human balance outcome.
 
-## 3. Implemented content and framework, with acceptance still open
+## 3. Remaining — implemented foundations requiring acceptance
 
 These capabilities are present in the integrated Journey or documented candidate
 editions; this table does not promote every study or open PR into the default game.
@@ -72,7 +99,7 @@ them twice. Alternate artwork, presets and reference links are not new maps.
 The older11-themed-campaign /132-mission programme is not completed by these
 counts and is not silently added to the immediate release queue.
 
-## 4. Completed release: v0.87.0 Xposed-paced defaults
+## 4. Completed — v0.87.0 Xposed-paced defaults
 
 **Public delivery is accepted.** [Play v0.87.0](https://mekhovov.github.io/revealline/releases/v0.87.0/site/game/).
 Source [PR279](https://github.com/mekhovov/revealline/pull/279) merged as
@@ -122,7 +149,7 @@ historical 498-route evidence as gp2 proof. Full gameplay, physical-device,
 controller, offline and listening qualification remain separate work. This
 release closes its delivery scope, not the whole redesign.
 
-## 5. Remaining work, in priority order
+## 5. Remaining — prioritized execution queue
 
 Estimates are focused effort after starting, not deadlines or additive promises.
 Release/CI queues and human/device availability can extend elapsed time. Finish
@@ -166,7 +193,7 @@ and one successful Orchard Crossing download did not reproduce the user's case.
 Use the failing mission/mode/asset diagnostic if available; do not clear player
 uploads or weaken static-image validation to make the error disappear.
 
-## 6. Soundtrack delivery: completed and remaining
+## 6. Soundtrack — completed and remaining
 
 ### Completed and technically verified
 
@@ -216,7 +243,7 @@ UA-FPV permissions independently, then resume originals only after four strong
 pilots prove the production method. The 36-original milestone must not block safe
 incremental library releases and must not be marked complete from briefs or tests.
 
-## 7. Xposed Journey P00–P15 phase closure checklist
+## 7. Remaining — Xposed Journey P00–P15 closure checklist
 
 These identifiers belong to the Xposed Journey contract, not the older whole-game
 programme. Its separate [P00–P18 remaining-work crosswalk](cross-mode-execution.md#original-whole-game-phases-remaining-work-crosswalk)
