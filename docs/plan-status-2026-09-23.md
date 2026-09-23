@@ -16,6 +16,10 @@ historical estimates, not a record of what each later release contains.
 - Default redesigned Journey, the unified tagged mission selector, safer backup
   replacement, main-menu difficulty and global local-browser playtest controls
   are delivered features.
+- The soundtrack framework and simplified player controls are delivered with 70
+  cleared creator recordings across 15 hosted albums. The 77 distinct UA-FPV
+  recordings are verified as private local imports, not public assets. The
+  original-music milestone remains 0 of 36 approved recordings.
 - The whole redesign is **not complete**. P00–P15 have implementation and scoped
   evidence, but each retains balance, content-review or qualification work.
 - Do not give a misleading overall percentage: released functionality, candidate
@@ -117,16 +121,68 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 | Support only | PR266/269 branch/sprite provenance reconciliation; PR235 CI efficiency | Account for unique work and dependencies without losing source or delaying player-visible repairs                                                                                                   | 2–4h bounded reconciliation/CI slice                             |
 
 PR numbers denote retained work, **not merge-ready certification**. At this check,
-21 PRs remain open; they are not21 independent finished features. Stacked changes
-must be reconciled against current main. PR252/257 were consolidated into delivered
-v0.85.0 and closed as superseded; do not list them as unfinished releases.
+22 PRs remain open including this documentation-only status PR; the other 21 are
+retained product, study, evidence or support work, not 21 independent finished
+features. Six currently report merge conflicts. Stacked changes must be reconciled
+against current main. PR252/257 were consolidated into delivered v0.85.0 and
+closed as superseded; do not list them as unfinished releases.
 
 The image error has diagnostics, not a proven fix. Published bundle/hash checks
 and one successful Orchard Crossing download did not reproduce the user's case.
 Use the failing mission/mode/asset diagnostic if available; do not clear player
 uploads or weaken static-image validation to make the error disappear.
 
-## 6. Xposed Journey P00–P15 phase closure checklist
+## 6. Soundtrack delivery: completed and remaining
+
+### Completed and technically verified
+
+- Soundtrack catalogue/library v3, stable recording identities, hash-bound rights,
+  continuous repeat-all playback, shuffle, scene-aware menu/gameplay selection,
+  90s Synth / Metal / Ukrainian / Fusion / My Mix, uploaded MP3s, custom
+  playlists, credits/source links, offline installation and recovery are integrated.
+- The simplified player view makes style, playlist and shuffle-all selection the
+  primary actions, with advanced creation/recovery controls collapsed. Fresh
+  libraries default to 90s Synth.
+- The separate `revealline-soundtracks-01` host contains 70 cleared creator
+  recordings across 15 albums. The game catalogue can stream those exact hosted
+  files and install permitted recordings for offline use without adding the whole
+  collection to every core game release.
+- The supplied UA-FPV folder contains 80 filenames for 77 distinct MP3 recordings.
+  Four private additive `.rlsound` volumes preserve all names and exact bytes.
+  All 77 distinct recordings passed native decoding; all four volumes were imported,
+  saved and played through the actual game UI, including title/filename, menu,
+  gameplay, Play and Next behavior.
+- The 36 original briefs, genre/fusion allocation, production compiler and review
+  ledger exist. Rejected procedural candidates are excluded from the trusted
+  catalogue and do not count as completed music.
+
+Technical decode, transport and catalogue checks are not complete listening or
+musical approval. The public creator library still needs full-track subjective
+review. UA-FPV local availability does not establish ownership, lyric/artwork
+rights, public redistribution or recording-safe use.
+
+### Remaining soundtrack work, in priority order
+
+| Priority | Item / current state | Completion condition | Indicative effort |
+| -------- | -------------------- | -------------------- | ----------------- |
+| P1 | Production soundtrack UX and 70-track audit | Current Pages style/playlist/shuffle, menu↔game continuity, install/offline/recovery and unavailable-network paths pass; every public track receives full listening, genre-fit, transition, volume and credit review | 4–8 h technical UX pass; 1–2 days listening |
+| P2 | More clearly redistributable licensed music | Exact recording/license/hash/credit review, full audition, rights-aware catalogue admission and a small independently releasable album batch | 1–3 days per 10–20-track batch |
+| P2 blocked | Public UA-FPV album | Recording-specific public redistribution, game use, artwork/metadata and recording-video evidence for every admitted hash | No reliable estimate until rights evidence exists |
+| P3 | Better original-production method and four pilots | One synchronized, memorable and game-ready 90s Synth, Metal, Ukrainian and fusion pilot; no weak local-procedural candidate is promoted | 2–5 days for method and pilots |
+| P3 | 36 reviewed originals | 12 per family including six fusions; masters and MP3s, loudness/peak checks, complete listening, in-game transitions and Ukrainian cultural review all pass | Approximately 3–6 weeks after pilot approval |
+
+Keep the four UA-FPV upload packs private and documented while rights remain
+unverified. A YouTube page or playlist without an explicit grant does not authorize
+publishing its MP3. Restricted licensed music may remain reference-only in shared
+playlists; removing a download button does not create redistribution permission.
+
+The immediate music sequence is: verify the released player experience, finish
+the 70-track listening audit, publish additional small cleared albums, pursue
+UA-FPV permissions independently, then resume originals only after four strong
+pilots prove the production method. The 36-original milestone must not block safe
+incremental library releases and must not be marked complete from briefs or tests.
+
+## 7. Xposed Journey P00–P15 phase closure checklist
 
 These identifiers belong to the Xposed Journey contract, not the older whole-game
 programme. Its separate [P00–P18 remaining-work crosswalk](cross-mode-execution.md#original-whole-game-phases-remaining-work-crosswalk)
@@ -156,7 +212,7 @@ not every later study or human/device requirement in its historical phase record
 | P14   | 12 pictured Team missions and timed/changing-return studies                     | Complementary simultaneous play, both-rover mastery, two-person/controllers, presentation stack and current-speed balance                                           |
 | P15   | Compatibility, immutable editions, preservation and scoped rollback/performance | Final human sessions, accessibility/devices/performance/offline, rollback proof and full closure report; Legacy remains available until separately approved removal |
 
-## 7. Deferred — not required for the immediate fixes
+## 8. Deferred — not required for the immediate fixes
 
 - New enemy families, additional level production and new artwork/music. Finish
   the current release and existing defects first; do not expand scope by default.
@@ -168,14 +224,15 @@ not every later study or human/device requirement in its historical phase record
 - Complete FPV/DroneAid/Ukrainian/Retro/other themed campaign programmes, final
   character sets and collections. Shared geometry or a theme swap is not a new
   finished campaign. Reconcile older programme targets before expansion.
-- Original soundtrack production remains paused; broader music/listening,
-  stories, Collection/learning/support and community-creation guide qualification
-  stay separately tracked, not secretly accepted by Journey releases.
+- Original soundtrack production remains paused until the four-pilot method in
+  section 6 succeeds. Stories, Collection/learning/support and community-creation
+  guide qualification stay separately tracked, not secretly accepted by Journey
+  releases.
 - Hosted administration, full Ukrainian translation, persistent co-op saves,
   online multiplayer/Deathmatch and native-store distribution.
 - Removal of Classic missions or historical releases: not authorized now.
 
-## 8. Evidence and update rules
+## 9. Evidence and update rules
 
 - Working source contracts: `docs/xposed-journey-plan.md`,
   `docs/unified-mission-library.md`, `docs/default-journey-release.md`,
