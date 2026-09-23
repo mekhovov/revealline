@@ -1,0 +1,59 @@
+{
+  "checkedAt": "2026-09-22T12:52:13.414127+00:00",
+  "source": "3563ef77344de3b7fa27263cefd90a38a4326be1",
+  "tree": "64cc13262608487e898088cdffd7e16ee5a1bb94",
+  "origin": "http://127.0.0.1:64951",
+  "browser": "Codex in-app browser",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "server": "pr256-native-server.mjs",
+  "serverSha256": "dff046e66e05231f9c5a409c4257c58e699e72623f3ed7260e6802446bb28127",
+  "http": {
+    "file": "pr256-native-http.json",
+    "bytes": 228806,
+    "sha256": "804ce0fc8f2536d85afe65e1cf1e99e7e1a62222e5bb5259ce156d7d5ee173d0",
+    "responses": 1134,
+    "uniquePaths": 405,
+    "mismatches": [],
+    "exceptions": "Installed Phaser4.2.1 bundle separately hash-checked; development build-info intentionally unavailable"
+  },
+  "observed": [
+    "Fresh title Start acknowledged immediately with loading status and Cancel",
+    "Native Down route: First Signal50.0%,7820points,3lives,17.625seconds,Gold",
+    "Next kept results visible with Relay Orchard preparation then entered play directly",
+    "Escape paused Relay Orchard at0:06,0%coverage,0score,3lives",
+    "Settings/Game data/Saves returned with correct opener; export contained xonix-session.v5",
+    "Replacement review focused Keep; Keep retained flight and restored Load this JSON focus",
+    "Repeat review and deliberate Replace restored v5 backup; Load suspended verified artwork and paused at0:06 with Resume focused",
+    "After actual load, UI-exported backup retained identical run ID, full checkpoint, picture pins, visual-theme pin and entire library",
+    "Undo restored previous data and focused enabled Export game data",
+    "Reload exposed Continue naming First Signal/Relay Orchard; explicit Continue resumed flight, later Escape paused. This is an explicit start action, not automatic background resume"
+  ],
+  "exportComparison": {
+    "sameRun": true,
+    "sameCheckpoint": true,
+    "samePicturePins": true,
+    "sameVisualThemePin": true,
+    "sameLibrary": true,
+    "ticks": 748,
+    "checkpoint": "311f7773954871d9",
+    "runId": "0e5e931e-8b88-4014-8c41-b36c61dd9c58",
+    "pictureSha256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65",
+    "selection": {
+      "id": "field-kit-fpv",
+      "revision": 54
+    },
+    "manifestSha256": "91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace"
+  },
+  "consoleWarningsErrors": [],
+  "limits": [
+    "Native keyboard and pointer browser actions, no injected simulation/storage state",
+    "Same-origin original picture store retained; not fresh-origin media transfer",
+    "JSON read from actual visible export text; operating-system download completion not claimed",
+    "Screenshot observed inline only; pause intentionally conceals board; no exported screenshot hash",
+    "Not full cross-mode/artwork/device/controller/audio/offline qualification",
+    "No release version allocated; final exact-source gates, freeze and public verification remain"
+  ]
+}
