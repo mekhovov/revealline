@@ -1,6 +1,6 @@
 # Reveal Line — completed work and remaining delivery plan
 
-Status checked **23 September 2026, 06:55 UTC**. This is the current status and
+Status checked **23 September 2026, 09:35 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source
 observations or release evidence. The original P00–P15 version allocations are
@@ -13,17 +13,24 @@ remains visible there rather than being treated as rejected or completed.
 
 ## 1. Summary
 
-- **Live and publicly accepted: [v0.91.0](https://mekhovov.github.io/revealline/releases/v0.91.0/site/game/).**
-  The ordinary Pages marker identifies source
-  `e771ca71b0e710ea878d54f8ff370707f7428ef8`; the complete deployed-file audit
-  and bounded public browser acceptance passed. v0.90.0 is preserved as the
-  Continuous Next predecessor.
-- **Continuous Next is delivered in v0.90.0 and retained by v0.91.0.** Source
+- **Live and publicly accepted within the recorded scope: [v0.92.0](https://mekhovov.github.io/revealline/releases/v0.92.0/site/game/).**
+  Source [PR297](https://github.com/mekhovov/revealline/pull/297) merged as
+  `b572e82765cb53e2e7420ea13ec7cfd5e55301df`; selector
+  [PR298](https://github.com/mekhovov/revealline/pull/298) merged as
+  `8232a8f90e1381e986a8d67d74f17592ccd9ff7b`. Production run
+  `35842300057`, deployment `6610614566` and status `18720317680`
+  succeeded. The bounded public receipt passed title/history/archive/Back,
+  unchanged Replay preferences and opener, responsive Studio toolbar, rotated
+  Undo/Redo endpoint focus and visible invalid-field labels. It does not close
+  Replay bfcache or denied-storage recovery, full responsive/input/device/offline
+  or gameplay/human-balance qualification. v0.91.0 remains available in Archive
+  60.
+- **Continuous Next is delivered in v0.90.0 and retained by v0.92.0.** Source
   [PR287](https://github.com/mekhovov/revealline/pull/287) merged as
   `c585bcd3220438da971e2927763b966f55ee8235`; selector
   [PR293](https://github.com/mekhovov/revealline/pull/293) promoted the immutable
   release before v0.91.0 superseded it.
-- **Collision-only gp4 enemy courses are publicly delivered in v0.91.0.** Source
+- **Collision-only gp4 enemy courses are publicly delivered in v0.91.0 and retained by v0.92.0.** Source
   [PR290](https://github.com/mekhovov/revealline/pull/290) merged as
   `e771ca71b0e710ea878d54f8ff370707f7428ef8`; selector
   [PR294](https://github.com/mekhovov/revealline/pull/294) promoted it. The bounded
@@ -58,17 +65,20 @@ remains visible there rather than being treated as rejected or completed.
 
 | State         | Scope                                                                                                                      | Current boundary / next gate                                                                                                                                                                                                  |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Completed** | Public releases v0.83.0–v0.91.0                                                                                            | Default Journey, unified library, safer replacement, visible difficulty/testing controls, gp2 defaults, chapter recovery, Continuous Next and collision-only gp4 courses are publicly delivered within their recorded scopes. |
+| **Completed** | Public releases v0.83.0–v0.92.0                                                                                            | Default Journey, unified library, safer replacement, visible difficulty/testing controls, gp2 defaults, chapter recovery, Continuous Next, collision-only gp4 courses, and bounded Replay/Studio UX recovery are publicly delivered within their recorded scopes. |
 | **Partial**   | Core game framework and authored content                                                                                   | 91 Journey Solo/Versus missions, 12 Team missions, retained Classic content, authoring, media, bonuses and threat roles exist; balance, presentation, recovery, devices and whole-campaign acceptance remain open.            |
 | **Next — P1** | PNG/JPEG failure; current-speed pacing; capture-stop/action feedback; broader gp4 qualification                            | Release each correction separately with public Retry/Play or representative gameplay evidence. Keep v0.91 delivery distinct from human balance, all-collision and exact-save proof.                                           |
 | **Next — P2** | Navigation, touch/controller parity, compact mobile HUD, iPhone behavior, Steam Deck Confirm/Start, save/media recovery    | Complete keyboard-only, controller-only and touch-only journeys; retain physical-device evidence separately from simulated checks.                                                                                            |
 | **Then — P3** | Studio and Team stacks, reference dispositions, soundtrack review (F31–F38), whole-Journey and final browser qualification | Reconcile existing drafts against current main and close each feature's own content, listening, accessibility, offline and human-review gates.                                                                                |
 | **Deferred**  | Native stores and network multiplayer                                                                                      | Separate platform lifecycle, packaging, hardware and authoritative-network phases after browser qualification.                                                                                                                |
 
-At this cutoff, the retained open queue is **20 draft PRs**. Gameplay PR290 and
-publication PRs293/294 are merged. The retained set includes player features,
-infrastructure, audits and provenance work. None is counted as a completed feature
-or a reserved release merely because it has an implementation branch.
+At this cutoff, the retained open queue is **20 draft PRs**. Gameplay PR290,
+source PR297 and publication PRs293/294/298 are merged. Original owner drafts
+PR231/237/258/262 remain open even though their admitted functionality is now in
+v0.92.0; they require explicit coverage reconciliation or closure rather than a
+second merge. The retained set also includes player features, infrastructure,
+audits and provenance work. None is counted as a completed feature or a reserved
+release merely because it has an implementation branch.
 The detailed queue and conditional effort ranges are in section 5.
 Feedback-specific acceptance remains in F01–F38.
 
@@ -88,6 +98,7 @@ Feedback-specific acceptance remains in F01–F38.
 | Deterministic field-enemy courses    | Seeded gp3 field-enemy course variation without changing speed or movement domains; historical rules remain readable                                                    | v0.89.0, source PR285 / selector PR288; full public audit 4,005 files / 615,708,592 bytes; open-flight fairness was corrected by v0.91.0                 |
 | Continuous Next                      | Next continues across campaign, pack and Collection boundaries in Solo, Versus and Team                                                                                 | v0.90.0, source PR287 / selector PR293; publicly delivered and retained by v0.91.0; broader boundary variants remain part of whole-Journey qualification |
 | Collision-only enemy courses         | Fresh gp4 field enemies fly straight between collisions and only vary course at a true bounce; frozen gp3 history remains readable                                      | v0.91.0, source PR290 / selector PR294; full public audit 4,063 files / 616,196,229 bytes; bounded acceptance, not whole-game or human-balance approval  |
+| Replay and Studio UX recovery        | Replay display controls remain stable through Back; Studio uses a responsive 44px toolbar, visible validation labels and focus-safe Undo/Redo endpoints               | v0.92.0, source PR297 / selector PR298; bounded receipt SHA256 `f9525a0880f99eb1898b95d1fe65c1587d2e92ed5e2758253246cb862b49c061`; broader recovery/device gates remain open |
 
 The v0.83.0 full suite passed11788 tests. Subsequent expedited releases used the
 user-authorized automated-suite waiver. Skipped suites are not passes. Public
@@ -221,6 +232,29 @@ of continuous heading or every collision. The 52 focused source checks remain
 separate; the full suite was waived/skipped. No extended gameplay, win/Next,
 physical-device, offline, audio, human-balance or exact-save claim is made.
 
+### Completed — v0.92.0 Replay and Studio UX recovery
+
+Source [PR297](https://github.com/mekhovov/revealline/pull/297) merged as
+`b572e82765cb53e2e7420ea13ec7cfd5e55301df`; selector
+[PR298](https://github.com/mekhovov/revealline/pull/298) merged as
+`8232a8f90e1381e986a8d67d74f17592ccd9ff7b`. Production run
+`35842300057`, deployment `6610614566` and status `18720317680`
+succeeded.
+
+The bounded public receipt observed 13 steps at `2026-09-23T09:33:17Z`:
+root/title, History 136, v0.91 in Archive 60, Back from Replay, unchanged Replay
+settings/history/opener, eight responsive Studio preview rows with 44px controls,
+rotated Undo/Redo endpoint focus and visible invalid Content Studio field labels.
+It recorded zero product failures, one automation-cleanup retry and zero reloads;
+temporary tabs were closed and the viewport was reset. Receipt SHA256:
+`f9525a0880f99eb1898b95d1fe65c1587d2e92ed5e2758253246cb862b49c061`.
+
+Exact-head preflight and build passed. The long tests and release gate were
+explicitly waived/skipped, not passed. This acceptance does not prove Replay
+bfcache, denied-storage or nonzero persisted checkpoint recovery; full device,
+offline, gameplay, responsive or human-balance qualification; or a new
+byte-for-byte public artifact audit.
+
 ## 5. Remaining — prioritized execution queue
 
 Estimates are focused effort after starting, not deadlines or additive promises.
@@ -233,10 +267,10 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 | P1           | PNG/JPEG mission-selection failure — unresolved                     | Identify affected mission/mode/asset and reproduce; repair actual cause; public Download/Retry/Play succeeds without deleting media or bypassing validation                                         | 2–4h diagnosis;3–8h scoped repair once reproducible              |
 | P1           | Current-speed difficulty/pacing review                              | Representative early/middle/late Solo/Versus/Team routes; fair departures, enemy/craft ratios, useful geometry and no trivial one-cut bypasses outside teaching. Human feedback recorded separately | 1–3 days first pass;6–12h per map-fix release                    |
 | P2           | Remaining save warnings, recovery focus and session-only continuity | Recheck latest accepted source; close only still-reproducible gaps, including two-tab ownership/Next and failed-save recovery                                                                       | 6–10h per bounded slice                                          |
-| P2           | Ready/download/replay usability — PR230/231/234                     | Same-page retry, preserved readiness/selection and visible opener focus; replay preferences restore after Back                                                                                      | 3–6h each after dependency reconciliation                        |
+| P2           | Ready/download usability — PR230/234                                | Same-page retry, preserved readiness/selection and visible opener focus; retain v0.92 Replay Back behavior while broader storage/bfcache recovery stays open                                           | 3–6h each after dependency reconciliation                        |
 | P2           | Retained-media/presentation recovery — PR256                        | Preserve all exact revisions/session-only originals; qualify backup/import/recovery and failure paths                                                                                               | 8–12h                                                            |
 | P2           | Twin Receivers — PR261                                              | Rebase reviewed study, adopt correct pictured Journey edition, reassess fast double-objective closures under gp2 and publish                                                                        | 6–10h                                                            |
-| P3           | Studio small fixes — PR237/239/258/262                              | Mobile toolbar, rescue percentages, visible validation errors and Undo/Redo focus verified in current host                                                                                          | 4–7h each                                                        |
+| P3           | Studio rescue percentages — PR239                                   | Admit the remaining rescue-percentage coverage once against current main; v0.92 already delivers mobile toolbar, visible validation errors and Undo/Redo focus                                        | 4–7h                                                            |
 | P3           | Team presentation/history stack — PR236/238/240/241/243/244/245/247 | Dependency-aware integration; exact artwork/roles/history, export limits, import errors and both-seat readability retained                                                                          | 10–18h initial integrated slice                                  |
 | P3           | Final48 reference dispositions / audit — PR260                      | Explicit current-edition keep/merge/redesign/reject decisions with evidence, not just link coverage                                                                                                 | 8–16h review, plus targeted fixes                                |
 | P3           | Whole-Journey and Team qualification                                | All chapter transitions, endings, optional arcs, broader mastery/starts, real cooperation and refreshed gp2 pacing                                                                                  | 3–6 days initial bounded workstream; human availability required |
@@ -416,10 +450,14 @@ not every later study or human/device requirement in its historical phase record
 - Release facts: GitHub PR/release/run readbacks plus the actual public
   `https://mekhovov.github.io/revealline/release.json`, not GitHub Latest alone.
 - Local evidence: `.cache/ux-delivery-review-20260922/current-delivery-plan.md`,
-  `journey-campaign-crosswalk.md`, `.cache/main-v0860-public-audit/REPORT.md`, and
-  `.cache/main-v0870-public-audit/REPORT.md`.
-  Historical checkpoint files are retained; this register resolves their stale
-  queue summaries without overwriting the observations.
+  `journey-campaign-crosswalk.md`, `.cache/main-v0860-public-audit/REPORT.md`,
+  `.cache/main-v0870-public-audit/REPORT.md`, and the bounded v0.92 receipt
+  `.cache/ux-delivery-review-20260922/v0920-public-native-ux.json` with SHA256
+  `f9525a0880f99eb1898b95d1fe65c1587d2e92ed5e2758253246cb862b49c061`.
+  The receipt is scoped browser evidence, not physical-device, offline, full
+  gameplay or byte-complete artifact certification. Historical checkpoint files
+  are retained; this register resolves their stale queue summaries without
+  overwriting the observations.
 - After each release, record source/version, deployment, public evidence, exact
   scope and remaining gates. Move only the delivered slice into Completed.
 - Keep one publisher and one prepared successor. Preserve user dirty work,
