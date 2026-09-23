@@ -23,7 +23,9 @@ permissions:
 
 concurrency:
   group: source-gates-${{ github.ref }}
-  cancel-in-progress: false
+  # Superseded PR heads cannot qualify the current source; do not queue behind them.
+  # Release routing and manual runs keep their existing serialization.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   release_gate:

@@ -48,7 +48,18 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.match(workflow, /cancel-in-progress: false/);
   assert.match(workflow, /group: frozen-pages-/);
   assert.match(legacy, /group: source-gates-\$\{\{ github.ref \}\}/);
-  assert.match(legacy, /cancel-in-progress: false/);
+  const sourceConcurrency = legacy.slice(legacy.indexOf('concurrency:'), legacy.indexOf('jobs:'));
+  assert.match(
+    sourceConcurrency,
+    /cancel-in-progress: \$\{\{ github\.event_name == 'pull_request' \}\}/,
+  );
+  assert.doesNotMatch(sourceConcurrency, /cancel-in-progress: true/);
+  const qualification = await fs.readFile(
+    new URL('../../.github/workflows/qualify-release-source.yml', import.meta.url),
+    'utf8',
+  );
+  assert.equal((qualification.match(/cancel-in-progress: false/g) || []).length, 2);
+  assert.doesNotMatch(qualification, /cancel-in-progress: (?:true|\$)/);
   assert.match(workflow, /include-hidden-files: true/);
   assert.match(workflow, /publish\.mjs verify-artifact/);
   assert.ok(
