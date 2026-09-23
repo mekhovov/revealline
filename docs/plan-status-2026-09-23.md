@@ -8,7 +8,7 @@ historical estimates, not a record of what each later release contains.
 
 The [player-feedback register](player-feedback-register-2026-09-23.md) maps
 the user's gameplay, content, authoring and delivery feedback to explicit
-requirements F01–F14, current scope and completion conditions. Deferred feedback
+requirements F01–F28, current scope and completion conditions. Deferred feedback
 remains visible there rather than being treated as rejected or completed.
 
 ## 1. Summary
@@ -130,6 +130,16 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 | P3           | Whole-Journey and Team qualification                                   | All chapter transitions, endings, optional arcs, broader mastery/starts, real cooperation and refreshed gp2 pacing                                                                                  | 3–6 days initial bounded workstream; human availability required |
 | P3           | Final accessibility/performance/offline/recovery                       | Physical keyboard/touch/controller matrix, reduced effects/contrast/captions, storage/download interruptions, measured performance and rollback                                                     | 3–5 days after functional blockers; devices required             |
 | Support only | PR266/269 branch/sprite provenance reconciliation; PR235 CI efficiency | Account for unique work and dependencies without losing source or delaying player-visible repairs                                                                                                   | 2–4h bounded reconciliation/CI slice                             |
+
+The [UX/device delivery mapping](player-feedback-register-2026-09-23.md#uxdevice-delivery-mapping-and-estimates)
+tracks feedback F15–F28 explicitly: capture-stop; directional role readability;
+trail/impact/failure/capture/pickup feedback; readable pixel UI; complete input
+navigation; removal of the unnecessary “Take a breath” interstitial; contextual
+abilities; shared touch overlays; compact HUD; iPhone viewport constraints;
+Steam Deck Confirm/Start; the in-game title shell; and physical-device evidence.
+Its P1/P2 corrections join the applicable current-speed, navigation, Team and
+accessibility slices above. Delivered foundations remain separate from unfinished
+acceptance. Estimates overlap the existing programme ranges, not extra promises.
 
 PR numbers denote retained work, **not merge-ready certification**. At this check,
 The cutoff inventory contains **21 feature draft PRs, excluding documentation
