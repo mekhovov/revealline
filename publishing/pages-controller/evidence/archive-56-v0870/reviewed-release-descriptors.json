@@ -1,0 +1,73 @@
+{
+  "artifacts": [
+    {
+      "bytes": 1616773120,
+      "copiedToDisk": false,
+      "name": "source.tar",
+      "originalMember": "v0.87.0/source.tar",
+      "sha256": "1a319a7da822caac270b1735c04d036ca4e8a6122053304a990f4d3a04b76320"
+    },
+    {
+      "bytes": 591074581,
+      "copiedToDisk": false,
+      "name": "distribution.zip",
+      "originalMember": "v0.87.0/site/distribution.zip",
+      "sha256": "4131bd0a0ec6a5cea5c12e4a81c4969c141c9a30ef28342ea53b032f18afa5ff"
+    },
+    {
+      "bytes": 83,
+      "name": "distribution.zip.sha256",
+      "sha256": "3f120662367a11877be329b9e29b6d4c4f064357fa2cb073b01633efd45d0ba5"
+    },
+    {
+      "bytes": 197131,
+      "name": "manifest.json",
+      "sha256": "dc03b1caae7ad0c7fdb49f79cbb21f86b6e84b294a7103c344037e100e342632"
+    },
+    {
+      "bytes": 1987,
+      "name": "qualification-evidence-record.json",
+      "sha256": "99a448e030f596bf22f4f06c522e54af465747764baa511e3c2906e7786a0077"
+    },
+    {
+      "bytes": 465,
+      "name": "release.json",
+      "sha256": "ad366aab66d571a7fe0e21e72d038241e1ffd19bec9ace9db679c3dc27033794"
+    },
+    {
+      "bytes": 1070337,
+      "name": "source-qualification-evidence.zip",
+      "sha256": "4d5087dd89b12665ffa691a13585d4e592874d83c0591d116ede780395664935"
+    },
+    {
+      "bytes": 14169,
+      "name": "source-qualification.json",
+      "sha256": "038ddcc0741aa40cc0100f7384e47a03e549b3a96ef116dc3a5835c97b784147"
+    },
+    {
+      "bytes": 1915,
+      "name": "verification.json",
+      "sha256": "02f995032e36a6c43bade90a7735ae13b1eb7e4c2c5c1a2a90d93755e8470e96"
+    }
+  ],
+  "consumer": {
+    "allQualificationPinsResolved": true,
+    "everyMemberCRCAndHashVerified": true,
+    "files": 54,
+    "manifestSha256": "6d5e492dd7a45e4aa1e3e6d408e110b4195836ae033b2de82ceda67360f3d001",
+    "originalBytes": 4016994
+  },
+  "releaseAuthority": null,
+  "remoteWrites": false,
+  "scope": "Offline metadata only; independent review and owner publication authority still required.",
+  "source": {
+    "commit": "08548aeabe72f396fb75aede938d5bcadcfdc00e",
+    "tree": "6d85b9096d089b740a9eacf5e38eb5ebdfce5874",
+    "version": "v0.87.0"
+  },
+  "status": "OFFLINE_CONSUMER_VERIFIED_SMALL_PACKAGE",
+  "tests": {
+    "counts": null,
+    "status": "waived"
+  }
+}

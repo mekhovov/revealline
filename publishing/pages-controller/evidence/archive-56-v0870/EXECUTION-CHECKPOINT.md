@@ -1,0 +1,9 @@
+# Archive56 actual production and audit authority
+
+PR1 merged592d0afe42f66dfb9fe95962c80adfaf236cd8ef/tree4443f3a017da924836de658ebd5dbbe9cf96dc21 with bootstrap33c040bc213775dae0b168c4a80eb2d4942df2d5 and featuree5f96e8ddf11d9084fe439a5af492e474884e6ac parents. Automatic production35808261588 succeeded2026-09-23T01:56:10Z, deployment6604670353/status18706677271. Exact actual receipt10728921369/57641bytes/SHAbb0ff49f132f88b7a4b35cf81003210c8bca76094629e9a607d0239f6493b28c independently verified by parent-reviewed collector, not preview substitution. All mandatory build/upload/deploy steps passed; optional suites skipped under waiver.
+
+Parent read seven raw authority pins, source/parent/tree and receipt extraction checks, and approved request by changing only reviewed:false to true. Reviewed request SHAeca3ca5edc19bb904c33bc7f25d7ba9b34b3b09a8363208619f7453576415f71. Retained false candidate unchanged. Local materializer validated the complete request/receipt offline against new detached deployed-checkout at exact592d0af. No public audit yet.
+
+Initial manual marker probe used an unlisted /releases/v0.87.0/site/release.json path and returned404; inventory inspection corrected it to /releases/v0.87.0/release.json, which returned200 and original source08548ae. Preserve this observer URL correction; it is not evidence of a failed canonical inventory route or zero-attempt claim. UX received bounded native availability handoff after actual successful deployment and canonical marker. FullHTTP/native acceptance remains pending.
+
+Parent reviewed the proposed audit-only workflow: contents:read only, no build/deploy jobs or production artifact, exact audit branch and reviewed-request SHA guard. Transport helper preserves fixed canonical GET paths, streaming hashes, MIME checks and all attempt history; no payload files persisted. Future audit ref is historical read-only evidence, never source to replay into main.
