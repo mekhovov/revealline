@@ -95,7 +95,7 @@ import {
   TEAM_LIBRARY_JOURNEY_EDITION,
 } from '../mission-library/team-source.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
-import { attachTeamLibraryPreview } from './team-library-preview.mjs';
+import { attachTeamLibraryPreview, paintTeamPicturePreview } from './team-library-preview.mjs';
 
 import { teamReturnHref } from '../mode-return.mjs';
 
@@ -949,6 +949,7 @@ export function bootCoop({
       foreground();
     navigation.clear();
     router.clear();
+    discoveryControls();
     if (!restore || !currentReturn() || !visibleAction(owner.opener) || !currentReturn()) return;
     const active = document.activeElement;
     if (active !== owner.opener && (unclaimedFocus(active) || settingsDialog.contains(active)))
@@ -1367,10 +1368,10 @@ export function bootCoop({
       name = level?.name;
     $('coop-preview-caption').textContent =
       level?.journeyDifficulty && !selection.artworkSource && !selection.journeyRow?.background
-        ? `${name} geometry test. Preview scenery is not authored mission artwork. Win to reveal the full picture; scenery does not mark obstacles.`
+        ? `${name} geometry test. Preview scenery is not authored mission artwork. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.`
         : name
-          ? `${name} preview. Win to reveal the full picture. Scenery does not mark obstacles.`
-          : 'Selected arena preview. Win to reveal the full picture. Scenery does not mark obstacles.';
+          ? `${name} teaser. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.`
+          : 'Selected arena teaser. Browse arenas for an optional full preview; viewing earns no progress. Scenery does not mark obstacles.';
     if (binding && previewBinding === binding && !retry) return;
     const cleared = clearPicturePreview();
     message.hidden = false;
@@ -1380,13 +1381,13 @@ export function bootCoop({
         if (!cleared) throw new Error('Preview canvas unavailable.');
         const context = canvas.getContext('2d');
         if (!context) throw new Error('Preview canvas unavailable.');
-        context.imageSmoothingEnabled = false;
-        context.globalAlpha = 1;
-        context.globalCompositeOperation = 'source-over';
-        context.drawImage(binding.image, 0, 0, canvas.width, canvas.height);
-        // One-cell border teaser only. The full original remains an earned reward.
-        context.fillStyle = '#000';
-        context.fillRect(8, 8, canvas.width - 16, canvas.height - 16);
+        if (
+          !paintTeamPicturePreview(context, binding.image, canvas.width, canvas.height, {
+            isCurrent: () =>
+              !disposed && !run && pictureSelection === selection && selection.binding === binding,
+          })
+        )
+          return;
         canvas.hidden = false;
         message.hidden = true;
         previewState = 'ready';
