@@ -1,0 +1,2490 @@
+{
+  "format": "revealline-pr-coverage.v1",
+  "generatedAt": "2026-09-23T10:16:37.000Z",
+  "refs": {
+    "currentBase": "a5e6df101130eb920d4cb82f598c4de4a3aaee5a",
+    "oldPr256Base": "069890158c9f2c766e334564f752716491057727",
+    "oldPr256Head": "4ecf8b520225c4369cdc482460e0d042f82e3af0",
+    "pr233Base": "c3398112e9a739225fdc2e8bf603b45f52a5cbb6",
+    "pr233Head": "80a47a3b25167d9dcd0bdf98b1bde6a95d112269",
+    "successorRuntime": "d4bcff519175a316c6f9dd96385bfde5495b72dc"
+  },
+  "expected": {
+    "pr256Paths": 154,
+    "pr233Paths": 139,
+    "pr256PathListSha256": "57ee6fe602c24260ed5b9adc7f90776b53e9a73b90dc86980ab701adc12ea6c5",
+    "pr233PathListSha256": "2579b4fc04ffabcb5e9fb6752ad457fc772af0e503db623fa4b8cf2ed2ee21a1"
+  },
+  "provenance": {
+    "pr256CombinedPatchId": "c3865c509444b02846b656382970bc433949c429",
+    "pr233CombinedPatchId": "c40e8f8693e23282b2a36eff8332714b4695b390",
+    "pr233Occurrences": 1,
+    "note": "Patch IDs are provenance only; per-path blob and classification rows are the coverage proof."
+  },
+  "rows": [
+    {
+      "path": ".prettierignore",
+      "oldStatus": "M",
+      "oldBaseBlob": "bab27e1ef8372f6cb94ca47dfd9e9338b2408253",
+      "oldHeadBlob": "b3fbf3b0bd84a69780a2daadf972523619fdbbf8",
+      "successorBlob": "b3fbf3b0bd84a69780a2daadf972523619fdbbf8",
+      "inPr233": true,
+      "pr233FinalBlob": "b3fbf3b0bd84a69780a2daadf972523619fdbbf8",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "oldStatus": "M",
+      "oldBaseBlob": "d862a3b31732def3300825c353a89ba86bb58c76",
+      "oldHeadBlob": "c791365d0fe7975f73035539beeb062c6ab728ce",
+      "successorBlob": "c791365d0fe7975f73035539beeb062c6ab728ce",
+      "inPr233": true,
+      "pr233FinalBlob": "c791365d0fe7975f73035539beeb062c6ab728ce",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/retained/runtime.91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace.json",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "1d646a8a1b47fc79a5ffbfefdec1219d4993713e",
+      "successorBlob": "1d646a8a1b47fc79a5ffbfefdec1219d4993713e",
+      "inPr233": true,
+      "pr233FinalBlob": "1d646a8a1b47fc79a5ffbfefdec1219d4993713e",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "authoring/prompts/field-kit-retained-production.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "6af05d67c3c72b6965271481aa180dd65c5b1fa7",
+      "successorBlob": "6af05d67c3c72b6965271481aa180dd65c5b1fa7",
+      "inPr233": true,
+      "pr233FinalBlob": "6af05d67c3c72b6965271481aa180dd65c5b1fa7",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "authoring/prompts/fresh-visual-preparation.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "25daef5b433bbb56b349984fb6ad6b0e42aedbcd",
+      "successorBlob": "25daef5b433bbb56b349984fb6ad6b0e42aedbcd",
+      "inPr233": true,
+      "pr233FinalBlob": "25daef5b433bbb56b349984fb6ad6b0e42aedbcd",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "authoring/prompts/pack-snapshot-memory.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "bbf5e8759dee8a39defe83eee1094d1563657788",
+      "successorBlob": "bbf5e8759dee8a39defe83eee1094d1563657788",
+      "inPr233": true,
+      "pr233FinalBlob": "bbf5e8759dee8a39defe83eee1094d1563657788",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "authoring/prompts/retained-presentation-output.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "86457501af9f65da3935509b52720b13b2797df5",
+      "successorBlob": "86457501af9f65da3935509b52720b13b2797df5",
+      "inPr233": true,
+      "pr233FinalBlob": "86457501af9f65da3935509b52720b13b2797df5",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "authoring/prompts/saved-visual-restoration.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "3f147004022702bedfdc0743c1c6d994d660c1ee",
+      "successorBlob": "3f147004022702bedfdc0743c1c6d994d660c1ee",
+      "inPr233": true,
+      "pr233FinalBlob": "3f147004022702bedfdc0743c1c6d994d660c1ee",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "authoring/prompts/visual-session-references.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "edaa93b1d24d0ae0c8b8ef26f03f5e019f37598f",
+      "successorBlob": "edaa93b1d24d0ae0c8b8ef26f03f5e019f37598f",
+      "inPr233": true,
+      "pr233FinalBlob": "edaa93b1d24d0ae0c8b8ef26f03f5e019f37598f",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "oldStatus": "M",
+      "oldBaseBlob": "3357ca8b0ec93b6ad129ad555e563608b3831b6c",
+      "oldHeadBlob": "113470ec682d5a297ca861f4ec629c7c0ceb7b71",
+      "successorBlob": "437347be0300cf61757adeb32e94f489378ecfe7",
+      "inPr233": true,
+      "pr233FinalBlob": "3147dd3137ed9075e19a1bd26d62ab1b58de3e8d",
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "oldStatus": "M",
+      "oldBaseBlob": "e9edb17c9bdc9fe989591821ef4aeb0661e083ca",
+      "oldHeadBlob": "d18831a06aaef7f48678978b08246cb4fc6e5a62",
+      "successorBlob": "56fc378c889fdf6fb0a157c529e65012899576fb",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/delivery-priorities.md",
+      "oldStatus": "M",
+      "oldBaseBlob": "6a3ecb7c064d26b4ef9baa6fa58a67fa367fdd91",
+      "oldHeadBlob": "c65c54331ceed51a534c58219c1bb9a5d6b2dd15",
+      "successorBlob": "892be5d9cd406369e83692298d38b751a2238f44",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/field-kit-retained-production.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "e6df66228d2af00be0390eff0c400e4ff4735d88",
+      "successorBlob": "e6df66228d2af00be0390eff0c400e4ff4735d88",
+      "inPr233": true,
+      "pr233FinalBlob": "e6df66228d2af00be0390eff0c400e4ff4735d88",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/fresh-visual-preparation.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "015bca57a6773519e02c78ab53ce2ea71bf3be93",
+      "successorBlob": "015bca57a6773519e02c78ab53ce2ea71bf3be93",
+      "inPr233": true,
+      "pr233FinalBlob": "015bca57a6773519e02c78ab53ce2ea71bf3be93",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/pack-snapshot-memory.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "db552cbf0c31755fce86f0e0f3972c7053bd66ee",
+      "successorBlob": "db552cbf0c31755fce86f0e0f3972c7053bd66ee",
+      "inPr233": true,
+      "pr233FinalBlob": "db552cbf0c31755fce86f0e0f3972c7053bd66ee",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/retained-presentation-manifests.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "e76b05dcff4d89b1eeca11a3af033937c1d31110",
+      "successorBlob": "e76b05dcff4d89b1eeca11a3af033937c1d31110",
+      "inPr233": true,
+      "pr233FinalBlob": "e76b05dcff4d89b1eeca11a3af033937c1d31110",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/retained-presentation-output.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "4d44c7bccef647ce2730501ab3cec7c765565f2f",
+      "successorBlob": "4d44c7bccef647ce2730501ab3cec7c765565f2f",
+      "inPr233": true,
+      "pr233FinalBlob": "4d44c7bccef647ce2730501ab3cec7c765565f2f",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/saved-visual-restoration.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "feb086de46be6766767a5b79971f3247bbdb264a",
+      "successorBlob": "feb086de46be6766767a5b79971f3247bbdb264a",
+      "inPr233": true,
+      "pr233FinalBlob": "feb086de46be6766767a5b79971f3247bbdb264a",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/ux-delivery-status-20260922.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "ef9f50b2ff3e21f2e4036d20189c2fb19c2854dd",
+      "successorBlob": null,
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "superseded-status-omitted",
+      "rationale": "Obsolete v0.82/v0.85 queue register is replaced by docs/plan-status-2026-09-23.md.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/fresh-presentation-retention/audio-lifecycle-proof.json",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "27f653f7a105488c2b2d8cdf0732684f74a545b0",
+      "successorBlob": "27f653f7a105488c2b2d8cdf0732684f74a545b0",
+      "inPr233": true,
+      "pr233FinalBlob": "27f653f7a105488c2b2d8cdf0732684f74a545b0",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/fresh-presentation-retention/comparison.json",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "d757b49eb041e69304115174d75383080ebcdd97",
+      "successorBlob": "d757b49eb041e69304115174d75383080ebcdd97",
+      "inPr233": true,
+      "pr233FinalBlob": "d757b49eb041e69304115174d75383080ebcdd97",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/fresh-presentation-retention/independent-source-review.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "ab7c6970b9bea5171e08d613f82ba9bab1134b7c",
+      "successorBlob": "ab7c6970b9bea5171e08d613f82ba9bab1134b7c",
+      "inPr233": true,
+      "pr233FinalBlob": "ab7c6970b9bea5171e08d613f82ba9bab1134b7c",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/fresh-presentation-retention/review.json",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "f11bcbded6704c64ece393fc1f4f6b2f47fe0307",
+      "successorBlob": "f11bcbded6704c64ece393fc1f4f6b2f47fe0307",
+      "inPr233": true,
+      "pr233FinalBlob": "f11bcbded6704c64ece393fc1f4f6b2f47fe0307",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/README.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "f567b44ba7a8cccb224c7ac63e37f9e75b8ace1a",
+      "successorBlob": "18fdcf779e511f8c87beb035d58e218dba7c484f",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/pr233-merged-node20.19.5-r3.log",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "8380dfbe16b99354ca4093c96c6e68b139d54c49",
+      "successorBlob": "8380dfbe16b99354ca4093c96c6e68b139d54c49",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/pr233-merged-node20.19.5-r4.log",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "a7c54f6a0a306fc97040ac2b01f414c3bcd615eb",
+      "successorBlob": "a7c54f6a0a306fc97040ac2b01f414c3bcd615eb",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/pr233-merged-node22.22.2-r3.log",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "cf246f2eb21f4ee126126931178201403ee65454",
+      "successorBlob": "cf246f2eb21f4ee126126931178201403ee65454",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/pr233-merged-node22.22.2-r4.log",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "665754399f09ae5e0ed04a2246c5b790710121c8",
+      "successorBlob": "665754399f09ae5e0ed04a2246c5b790710121c8",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/pr233-session-next-final-node20.19.5.log",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "4ddd53a22a398ba2577617238a4f507c314eea92",
+      "successorBlob": "4ddd53a22a398ba2577617238a4f507c314eea92",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/pr233-session-next-final-node22.22.2.log",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "a8243ae3896901fad882a7184c1d2da3ad3499af",
+      "successorBlob": "a8243ae3896901fad882a7184c1d2da3ad3499af",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/pr256-native-http.json",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "fcf37547c1ebb3e78b8545b72933edc31f499124",
+      "successorBlob": "fcf37547c1ebb3e78b8545b72933edc31f499124",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "historical-evidence-retained",
+      "rationale": "Historical source 3563ef evidence is retained byte-exact and is not successor qualification.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/pr256-native-qualification.json",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "44b02cd990a2c762a55bb0b1cd82d6db388ee995",
+      "successorBlob": "44b02cd990a2c762a55bb0b1cd82d6db388ee995",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "historical-evidence-retained",
+      "rationale": "Historical source 3563ef evidence is retained byte-exact and is not successor qualification.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/pr256-native-server.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "55bd54fd018afe68b8469cb3303be6902fdffc10",
+      "successorBlob": "55bd54fd018afe68b8469cb3303be6902fdffc10",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "historical-evidence-retained",
+      "rationale": "Historical source 3563ef evidence is retained byte-exact and is not successor qualification.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/presentation-recovery-20260922/qualification.json",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "38e6fa97046fb91040cc411a6590f8c04a9224d7",
+      "successorBlob": "38e6fa97046fb91040cc411a6590f8c04a9224d7",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/verification/versus-built-in-picture-parity.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "91e84eaa286376c6b28f61cc46384cf85fe8f501",
+      "successorBlob": "91e84eaa286376c6b28f61cc46384cf85fe8f501",
+      "inPr233": true,
+      "pr233FinalBlob": "91e84eaa286376c6b28f61cc46384cf85fe8f501",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "docs/visual-session-references.md",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "4c4b1baf30eeae905beedfcd3b357530f3b05a8b",
+      "successorBlob": "4c4b1baf30eeae905beedfcd3b357530f3b05a8b",
+      "inPr233": true,
+      "pr233FinalBlob": "4c4b1baf30eeae905beedfcd3b357530f3b05a8b",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/app.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "f5598b83313af179a4899b85a0ef0e737d044369",
+      "oldHeadBlob": "a04570e2ea0f7197e1d33b041e615f2b59182d32",
+      "successorBlob": "ac2d7e1ba3672f813b4cb7f47c05b150cce07859",
+      "inPr233": true,
+      "pr233FinalBlob": "45bf94eb14e89ce9b57133ea142e9d7834dfb895",
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/backup.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "4ff69b96bd6400979d7b7153174521a02976fade",
+      "oldHeadBlob": "7dc4d56c6143e89e83dffa06b88793c6db60daed",
+      "successorBlob": "7dc4d56c6143e89e83dffa06b88793c6db60daed",
+      "inPr233": true,
+      "pr233FinalBlob": "7dc4d56c6143e89e83dffa06b88793c6db60daed",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "70bfe4c9b7a4ffac2a9921276cca3da869511307",
+      "oldHeadBlob": "6c243ef0c9978c30229c193f2a860e03f8373214",
+      "successorBlob": "4cf9a8548ff83e1395317fa8153eb39e11a2e7aa",
+      "inPr233": true,
+      "pr233FinalBlob": "6c243ef0c9978c30229c193f2a860e03f8373214",
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/external-chapter-host.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "f1a7d99cf6c0a6bfc45711d3fa85ef4048ff86cb",
+      "oldHeadBlob": "067ea208e1936f2077166aa11b7dec27a39cac1e",
+      "successorBlob": "067ea208e1936f2077166aa11b7dec27a39cac1e",
+      "inPr233": true,
+      "pr233FinalBlob": "067ea208e1936f2077166aa11b7dec27a39cac1e",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "oldStatus": "M",
+      "oldBaseBlob": "c3b77e3d01eee5909352493d8519017d78938d93",
+      "oldHeadBlob": "e90819deaa9d540fc2f9587ba088d33ea47dde29",
+      "successorBlob": "e90819deaa9d540fc2f9587ba088d33ea47dde29",
+      "inPr233": true,
+      "pr233FinalBlob": "e90819deaa9d540fc2f9587ba088d33ea47dde29",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/presentation/compiled/runtime.91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace.json",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "1d646a8a1b47fc79a5ffbfefdec1219d4993713e",
+      "successorBlob": "1d646a8a1b47fc79a5ffbfefdec1219d4993713e",
+      "inPr233": true,
+      "pr233FinalBlob": "1d646a8a1b47fc79a5ffbfefdec1219d4993713e",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "oldStatus": "M",
+      "oldBaseBlob": "93d5e19e4a8ddcd8070a5c69157cffc42ede8939",
+      "oldHeadBlob": "d5e6e66b5195a142e9a7205bfbef95429a80bd3c",
+      "successorBlob": "d5e6e66b5195a142e9a7205bfbef95429a80bd3c",
+      "inPr233": true,
+      "pr233FinalBlob": "d5e6e66b5195a142e9a7205bfbef95429a80bd3c",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "oldStatus": "M",
+      "oldBaseBlob": "0268b97da99dc63591d228b5485d04eb0e0a20d7",
+      "oldHeadBlob": "a26a82af88f53b034bc62a1389cefff40db1b7d1",
+      "successorBlob": "a26a82af88f53b034bc62a1389cefff40db1b7d1",
+      "inPr233": true,
+      "pr233FinalBlob": "a26a82af88f53b034bc62a1389cefff40db1b7d1",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/presentation/dependencies.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "961ce02521c30754164512235c97d762abea115d",
+      "oldHeadBlob": "3a61c54fb645eab9b9d336a49232a2be23cb6d6d",
+      "successorBlob": "3a61c54fb645eab9b9d336a49232a2be23cb6d6d",
+      "inPr233": true,
+      "pr233FinalBlob": "3a61c54fb645eab9b9d336a49232a2be23cb6d6d",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/presentation/fresh-visual-theme.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "1984c7c325327d199f526f67ae7646dd067cf3ea",
+      "successorBlob": "1984c7c325327d199f526f67ae7646dd067cf3ea",
+      "inPr233": true,
+      "pr233FinalBlob": "1984c7c325327d199f526f67ae7646dd067cf3ea",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/presentation/host.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "4b0b6e43673af679e22b7edbacd8753e8f7548f3",
+      "oldHeadBlob": "a660d96cfb6b293a457d25691f1509042ba0f5ac",
+      "successorBlob": "a660d96cfb6b293a457d25691f1509042ba0f5ac",
+      "inPr233": true,
+      "pr233FinalBlob": "a660d96cfb6b293a457d25691f1509042ba0f5ac",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/presentation/manifest-path.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "51b63efab1bfefadaa2f202b3126ae9ac903754c",
+      "successorBlob": "51b63efab1bfefadaa2f202b3126ae9ac903754c",
+      "inPr233": true,
+      "pr233FinalBlob": "51b63efab1bfefadaa2f202b3126ae9ac903754c",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/presentation/saved-visual-theme.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "ea71790f9142739a7d64fb0258a51bb998c18885",
+      "successorBlob": "ea71790f9142739a7d64fb0258a51bb998c18885",
+      "inPr233": true,
+      "pr233FinalBlob": "ea71790f9142739a7d64fb0258a51bb998c18885",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/presentation/visual-themes.json",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "e0f61908cb340d032479431f9643ff24dea83dba",
+      "successorBlob": "e0f61908cb340d032479431f9643ff24dea83dba",
+      "inPr233": true,
+      "pr233FinalBlob": "e0f61908cb340d032479431f9643ff24dea83dba",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/session-visual-pin.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "c8d37acc3ad5a90ca585ff298d3b3b2c938c75b7",
+      "successorBlob": "42ecb4fadca8e0e92d671a376e9856a82850c79c",
+      "inPr233": true,
+      "pr233FinalBlob": "c8d37acc3ad5a90ca585ff298d3b3b2c938c75b7",
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/sessions.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "235c7b9529d802f84ed4ebe3074951a7d1558265",
+      "oldHeadBlob": "ff71912caea224a39f09d275fb5b09d8d5b28991",
+      "successorBlob": "48ebb0d22eed7e9c6358a788c1d8b0dabeda7518",
+      "inPr233": true,
+      "pr233FinalBlob": "ff71912caea224a39f09d275fb5b09d8d5b28991",
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/backup-set-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "1283f4e54b16eb907a6bc9c641e7e2bef525a9b8",
+      "oldHeadBlob": "4a298cad764ddcefdf14af8a78227b393a918456",
+      "successorBlob": "4a298cad764ddcefdf14af8a78227b393a918456",
+      "inPr233": true,
+      "pr233FinalBlob": "4a298cad764ddcefdf14af8a78227b393a918456",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/chapter-download-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "90d98f55ec08a48713c8b24ae848db3729aef33f",
+      "oldHeadBlob": "071a436c908f5d8524b7497ccc7c71ddbc6b6c19",
+      "successorBlob": "071a436c908f5d8524b7497ccc7c71ddbc6b6c19",
+      "inPr233": true,
+      "pr233FinalBlob": "071a436c908f5d8524b7497ccc7c71ddbc6b6c19",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/collection-context-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "0d12006399c2594f7a0bf8809ae9b6a2b6b31212",
+      "oldHeadBlob": "39eb758e327b50564fa9743cdce0e3173c64509b",
+      "successorBlob": "39eb758e327b50564fa9743cdce0e3173c64509b",
+      "inPr233": true,
+      "pr233FinalBlob": "39eb758e327b50564fa9743cdce0e3173c64509b",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/collection-records-return-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "7ebf9f73b6319a40772bdcf7c4a07f054f2c79e0",
+      "oldHeadBlob": "712f355d3af41ea22f06dbe3a5d991a78fac4c83",
+      "successorBlob": "712f355d3af41ea22f06dbe3a5d991a78fac4c83",
+      "inPr233": true,
+      "pr233FinalBlob": "712f355d3af41ea22f06dbe3a5d991a78fac4c83",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/controller-practice-pause-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "dd21e58bcee48536cbf62458ec0ad3cbb13091f1",
+      "oldHeadBlob": "18e159704ba6e4c22a7a9bd838a453bfb6840bfc",
+      "successorBlob": "18e159704ba6e4c22a7a9bd838a453bfb6840bfc",
+      "inPr233": true,
+      "pr233FinalBlob": "18e159704ba6e4c22a7a9bd838a453bfb6840bfc",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/coop-actor-presentation.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "44a8f5bdb665cfb682bb226269a667157dae6a8e",
+      "oldHeadBlob": "ee6916dc63887e732693b5ea8843452b0cf77d42",
+      "successorBlob": "4b1aafe23a7c335fd98815532d8d7633f313aaee",
+      "inPr233": true,
+      "pr233FinalBlob": "ee6916dc63887e732693b5ea8843452b0cf77d42",
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/coop-historical-import-picture.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "cbe9758791eb17908b8bfeb9d4bbe5a4da3cfbb6",
+      "oldHeadBlob": "a7bd52de7d58095979777284f05e15838395b5a8",
+      "successorBlob": "a7bd52de7d58095979777284f05e15838395b5a8",
+      "inPr233": true,
+      "pr233FinalBlob": "a7bd52de7d58095979777284f05e15838395b5a8",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/coop-picture-bindings.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "8e9c94d215916c6dab568c358dc0620fe9e2b1be",
+      "oldHeadBlob": "ca7e6227014ef4fb654d7eeddb82d08f92b6fcaa",
+      "successorBlob": "ca7e6227014ef4fb654d7eeddb82d08f92b6fcaa",
+      "inPr233": true,
+      "pr233FinalBlob": "ca7e6227014ef4fb654d7eeddb82d08f92b6fcaa",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/couch-built-in-picture-parity.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "9c5f4af9ae208f83a98d86ad4dfe1ae5711b1bba",
+      "successorBlob": "9c5f4af9ae208f83a98d86ad4dfe1ae5711b1bba",
+      "inPr233": true,
+      "pr233FinalBlob": "9c5f4af9ae208f83a98d86ad4dfe1ae5711b1bba",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/countercurrent-chapter-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "434385ff102751b0e9cd7a62dbf8b15ba154b38b",
+      "oldHeadBlob": "652cf76cf9abfde54df9f8017278f8fbf4bc5911",
+      "successorBlob": "652cf76cf9abfde54df9f8017278f8fbf4bc5911",
+      "inPr233": true,
+      "pr233FinalBlob": "b62e6f228a06d449fa63276dbb85417a803751ed",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/device-controls-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "e185787395757e6c9d63995203e1de32216580c3",
+      "oldHeadBlob": "2c841f636b7adaacf46bced54faa353fd0d35758",
+      "successorBlob": "2c841f636b7adaacf46bced54faa353fd0d35758",
+      "inPr233": true,
+      "pr233FinalBlob": "2c841f636b7adaacf46bced54faa353fd0d35758",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/display-preferences-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "1f340d58424bd2ba57a7e38665805aeccd297fb6",
+      "oldHeadBlob": "3868323b41110c7b14df1f41a51d5fcacedd1e1f",
+      "successorBlob": "3868323b41110c7b14df1f41a51d5fcacedd1e1f",
+      "inPr233": true,
+      "pr233FinalBlob": "1d6f975b9226da8f2df42b01abe710748904e14a",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/equipment-help-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "d58c2c924c0df70bd07cdeebba2589cb1d054ea9",
+      "oldHeadBlob": "909b2a417b66ae6be09d60e900e20993481ae2b2",
+      "successorBlob": "909b2a417b66ae6be09d60e900e20993481ae2b2",
+      "inPr233": true,
+      "pr233FinalBlob": "909b2a417b66ae6be09d60e900e20993481ae2b2",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/external-backup-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "d91940d723edfa2245ff355a67b6f881a90b874c",
+      "oldHeadBlob": "62925a6eae558d0e31e6b20e586f777aed1fa843",
+      "successorBlob": "62925a6eae558d0e31e6b20e586f777aed1fa843",
+      "inPr233": true,
+      "pr233FinalBlob": "7cf3317f918ac7d5c594bee0ff4c388432129890",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/external-chapter-app.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "f16b012aac6090dd3f143650634f04c2e2215e81",
+      "oldHeadBlob": "8135f2d04a15e37b363625e9c7e3bf3b3e4dce41",
+      "successorBlob": "8135f2d04a15e37b363625e9c7e3bf3b3e4dce41",
+      "inPr233": true,
+      "pr233FinalBlob": "8135f2d04a15e37b363625e9c7e3bf3b3e4dce41",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/external-chapter-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "17ed6a80b1325479c55167faed00296982f7ca4a",
+      "oldHeadBlob": "57f303c87bdf93ba310fc450fffa5abe9ca56aab",
+      "successorBlob": "57f303c87bdf93ba310fc450fffa5abe9ca56aab",
+      "inPr233": true,
+      "pr233FinalBlob": "57f303c87bdf93ba310fc450fffa5abe9ca56aab",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/field-kit-retained-runtime.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "9276bc7ea2d5b43c976162b8a7a060c762a1490f",
+      "successorBlob": "9276bc7ea2d5b43c976162b8a7a060c762a1490f",
+      "inPr233": true,
+      "pr233FinalBlob": "9276bc7ea2d5b43c976162b8a7a060c762a1490f",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/first-flight-entry.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "9b0ab9867c9b15124ead7552cedbf40a7d5f27b2",
+      "oldHeadBlob": "3d411792e0369c54c2c396750438c9d287c1910b",
+      "successorBlob": "3d411792e0369c54c2c396750438c9d287c1910b",
+      "inPr233": true,
+      "pr233FinalBlob": "3d411792e0369c54c2c396750438c9d287c1910b",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/flight-pictures-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "2bc30b4e289cc9249e6f86ca6fb7de5737f861d5",
+      "oldHeadBlob": "4610354652e350d194bcae4423020924da7a6bd1",
+      "successorBlob": "4610354652e350d194bcae4423020924da7a6bd1",
+      "inPr233": true,
+      "pr233FinalBlob": "4610354652e350d194bcae4423020924da7a6bd1",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/flight-preparation-status-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "811704dd6e4076ab91474400eda7557382e77c29",
+      "successorBlob": "811704dd6e4076ab91474400eda7557382e77c29",
+      "inPr233": true,
+      "pr233FinalBlob": "811704dd6e4076ab91474400eda7557382e77c29",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/fracture-chapter-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "815069dafdf1f54cb312269f8b9d7e535bbb9049",
+      "oldHeadBlob": "6c96ae0ee99e502882164ab123e7728c4e8887d3",
+      "successorBlob": "6c96ae0ee99e502882164ab123e7728c4e8887d3",
+      "inPr233": true,
+      "pr233FinalBlob": "5c36ced0da4acae58a4ff7fec0173aaa58bfa767",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/fresh-visual-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "ded64396ce8bb5cef7658e09c7c2d63aa5ca28df",
+      "successorBlob": "ded64396ce8bb5cef7658e09c7c2d63aa5ca28df",
+      "inPr233": true,
+      "pr233FinalBlob": "ded64396ce8bb5cef7658e09c7c2d63aa5ca28df",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/fresh-visual-policy.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "3da7b4ba31a7cf5bb6a4754b821557833fb93909",
+      "successorBlob": "3da7b4ba31a7cf5bb6a4754b821557833fb93909",
+      "inPr233": true,
+      "pr233FinalBlob": "3da7b4ba31a7cf5bb6a4754b821557833fb93909",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/gallery-return-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "e0b3ab625257044219d077f80715c370e65b8279",
+      "oldHeadBlob": "82e954bb827be6cd2f7b69bba95981c95325caf7",
+      "successorBlob": "82e954bb827be6cd2f7b69bba95981c95325caf7",
+      "inPr233": true,
+      "pr233FinalBlob": "82e954bb827be6cd2f7b69bba95981c95325caf7",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/helpers/png-image.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "d969c500136c42eae7f28154700d4f182e4ed014",
+      "successorBlob": "d969c500136c42eae7f28154700d4f182e4ed014",
+      "inPr233": true,
+      "pr233FinalBlob": "d969c500136c42eae7f28154700d4f182e4ed014",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/helpers/released-original.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "5b4a7274385ef00e121933903dd9e464eb3bc72f",
+      "successorBlob": "5b4a7274385ef00e121933903dd9e464eb3bc72f",
+      "inPr233": true,
+      "pr233FinalBlob": "5b4a7274385ef00e121933903dd9e464eb3bc72f",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "5c2d91371e33af4ac65761a20635dcbc56a07939",
+      "oldHeadBlob": "40491197b61064a63cef481af14e26558044c043",
+      "successorBlob": "40491197b61064a63cef481af14e26558044c043",
+      "inPr233": true,
+      "pr233FinalBlob": "95bd3100ec82932996941b426c7e68ac5e4ca319",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/history-picture-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "15602f2c67271a688dd744e15d2ee4ae67f9bbae",
+      "oldHeadBlob": "9f1b56cd4928a4b586b7658e8a934465a22cc1eb",
+      "successorBlob": "9f1b56cd4928a4b586b7658e8a934465a22cc1eb",
+      "inPr233": true,
+      "pr233FinalBlob": "7ccaab0f3a5f4dba8fcdadfe9118f48a28c452e0",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/initial-focus-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "27dffc311eeeaa1bb85bd57fd0b5ab0244600f03",
+      "oldHeadBlob": "0ba734cc949307e57af19a16ebdb22cee6e1d31a",
+      "successorBlob": "0ba734cc949307e57af19a16ebdb22cee6e1d31a",
+      "inPr233": true,
+      "pr233FinalBlob": "0ba734cc949307e57af19a16ebdb22cee6e1d31a",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/key-capture-navigation-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "eb1662e479a0cc3dc54b43cb26fc6a3e1c79722c",
+      "oldHeadBlob": "9f80da9f2bab8b8e17a3f1b6fe3c7c68bce16c22",
+      "successorBlob": "9f80da9f2bab8b8e17a3f1b6fe3c7c68bce16c22",
+      "inPr233": true,
+      "pr233FinalBlob": "9f80da9f2bab8b8e17a3f1b6fe3c7c68bce16c22",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/menu-style-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "d038458382664a875bd6ddb028a496d750422d5a",
+      "oldHeadBlob": "b535a7d9730003652a9648e98c5f36beedadf877",
+      "successorBlob": "b535a7d9730003652a9648e98c5f36beedadf877",
+      "inPr233": true,
+      "pr233FinalBlob": "417fadc20ecd117a66767fbd8723b063f31045c5",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/mission-picker-older.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "47e6c3febca8f3fdab0700b9fd4e25d49ae0b4d8",
+      "oldHeadBlob": "86e4af683eedba1b9fd5b51b99f652355b184fd6",
+      "successorBlob": "86e4af683eedba1b9fd5b51b99f652355b184fd6",
+      "inPr233": true,
+      "pr233FinalBlob": "86e4af683eedba1b9fd5b51b99f652355b184fd6",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/mission-replacement-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "b9f7a0297cb8672258fc5b8d2c41bf7cc870e49e",
+      "oldHeadBlob": "828f05cde97d8a2d14ff4061a45a433926cffb27",
+      "successorBlob": "828f05cde97d8a2d14ff4061a45a433926cffb27",
+      "inPr233": true,
+      "pr233FinalBlob": "917981d0b185b51ba259e4a85e58ef521d5cb2da",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/modal-navigation.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "3b2a70770b70f820494b91ed0b2b3e9bc1b1a3ec",
+      "oldHeadBlob": "3800de728112bbe09b06c230f203dff8b4cb1cdf",
+      "successorBlob": "3800de728112bbe09b06c230f203dff8b4cb1cdf",
+      "inPr233": true,
+      "pr233FinalBlob": "95af372cd6c39ed5a6cc346af2adeba7b063e248",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/mode-return-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "711fc7549896c86236e6b35efca4f604f27d211c",
+      "oldHeadBlob": "caed15476df96bb1e2b10dc0fba0c46fdd0a226f",
+      "successorBlob": "caed15476df96bb1e2b10dc0fba0c46fdd0a226f",
+      "inPr233": true,
+      "pr233FinalBlob": "3468f672c2c5647798a26b3d94229245795da758",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/nonmodal-header-navigation.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "8b1ac600dbead8fcbb02b54c525f9f7af48506f7",
+      "oldHeadBlob": "e989442f54b7176d42f09436742dc4fe6fce7ae5",
+      "successorBlob": "e989442f54b7176d42f09436742dc4fe6fce7ae5",
+      "inPr233": true,
+      "pr233FinalBlob": "e989442f54b7176d42f09436742dc4fe6fce7ae5",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapter-descriptions.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "e796ef8dcc5d9c4b2784d85e0bdb4b56e0be8f49",
+      "oldHeadBlob": "705967dabaf7002ec3bce6fdc0d6846fba3e8ae3",
+      "successorBlob": "705967dabaf7002ec3bce6fdc0d6846fba3e8ae3",
+      "inPr233": true,
+      "pr233FinalBlob": "705967dabaf7002ec3bce6fdc0d6846fba3e8ae3",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-cancel-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "c65492e996f7446f4cce0ceb19183465bd0b72a4",
+      "successorBlob": "c65492e996f7446f4cce0ceb19183465bd0b72a4",
+      "inPr233": true,
+      "pr233FinalBlob": "c65492e996f7446f4cce0ceb19183465bd0b72a4",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-checksum-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "a9ddd83b6135b26763dfb1a9fbd81d7570b1d72e",
+      "successorBlob": "a9ddd83b6135b26763dfb1a9fbd81d7570b1d72e",
+      "inPr233": true,
+      "pr233FinalBlob": "a9ddd83b6135b26763dfb1a9fbd81d7570b1d72e",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-conflict-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "959c00df9614dac7039b0a2ed5c6e01c2a356fc9",
+      "successorBlob": "959c00df9614dac7039b0a2ed5c6e01c2a356fc9",
+      "inPr233": true,
+      "pr233FinalBlob": "959c00df9614dac7039b0a2ed5c6e01c2a356fc9",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "4f70fdc9b1a64b290e2f6f1572e17ef1a248e483",
+      "oldHeadBlob": "af95873bc99586931b3f58295635df85e1724c1c",
+      "successorBlob": "af95873bc99586931b3f58295635df85e1724c1c",
+      "inPr233": true,
+      "pr233FinalBlob": "af95873bc99586931b3f58295635df85e1724c1c",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-navigation-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "f4af494e31824f733f620431d4b057ab2841f634",
+      "successorBlob": "f4af494e31824f733f620431d4b057ab2841f634",
+      "inPr233": true,
+      "pr233FinalBlob": "f4af494e31824f733f620431d4b057ab2841f634",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-offline-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "4445507cd477694c299b5793446550ffd38e83df",
+      "successorBlob": "4445507cd477694c299b5793446550ffd38e83df",
+      "inPr233": true,
+      "pr233FinalBlob": "4445507cd477694c299b5793446550ffd38e83df",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-quota-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "30b59560179444937d9927dc6007ecc8f9569758",
+      "successorBlob": "30b59560179444937d9927dc6007ecc8f9569758",
+      "inPr233": true,
+      "pr233FinalBlob": "30b59560179444937d9927dc6007ecc8f9569758",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-readback-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "01b9765dcb5fb86ccc1481d877dfd576671996de",
+      "successorBlob": "01b9765dcb5fb86ccc1481d877dfd576671996de",
+      "inPr233": true,
+      "pr233FinalBlob": "01b9765dcb5fb86ccc1481d877dfd576671996de",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-refresh-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "34b5ccc0a1ccb768ba0a78d3c6cc23f14b5bb817",
+      "successorBlob": "34b5ccc0a1ccb768ba0a78d3c6cc23f14b5bb817",
+      "inPr233": true,
+      "pr233FinalBlob": "34b5ccc0a1ccb768ba0a78d3c6cc23f14b5bb817",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-save-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "29409cd5c14553534d7faae590ae0a58720f1ed1",
+      "successorBlob": "29409cd5c14553534d7faae590ae0a58720f1ed1",
+      "inPr233": true,
+      "pr233FinalBlob": "29409cd5c14553534d7faae590ae0a58720f1ed1",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-scenarios.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "04b468968a3503a705bc8f4c4ace207b6c58e94c",
+      "successorBlob": "04b468968a3503a705bc8f4c4ace207b6c58e94c",
+      "inPr233": true,
+      "pr233FinalBlob": "04b468968a3503a705bc8f4c4ace207b6c58e94c",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-stay-background-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "e3d76c2dfb9b61038bd6d3b202ee12bc361665aa",
+      "successorBlob": "e3d76c2dfb9b61038bd6d3b202ee12bc361665aa",
+      "inPr233": true,
+      "pr233FinalBlob": "e3d76c2dfb9b61038bd6d3b202ee12bc361665aa",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-stay-focus-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "0ead3bdcbbec5dbb9281ea95cc5e9df0ca764eab",
+      "successorBlob": "0ead3bdcbbec5dbb9281ea95cc5e9df0ca764eab",
+      "inPr233": true,
+      "pr233FinalBlob": "0ead3bdcbbec5dbb9281ea95cc5e9df0ca764eab",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-stay-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "bb84db65cf779de99fe068b9ee6702d2c886b388",
+      "successorBlob": "bb84db65cf779de99fe068b9ee6702d2c886b388",
+      "inPr233": true,
+      "pr233FinalBlob": "bb84db65cf779de99fe068b9ee6702d2c886b388",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-stay-newer-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "b7841f383aa46b220ea3ab8bc5070db662a52539",
+      "successorBlob": "b7841f383aa46b220ea3ab8bc5070db662a52539",
+      "inPr233": true,
+      "pr233FinalBlob": "b7841f383aa46b220ea3ab8bc5070db662a52539",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-chapters-transaction-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "0cc9f66fd55ed566703488c7bb145d325c10d752",
+      "successorBlob": "0cc9f66fd55ed566703488c7bb145d325c10d752",
+      "inPr233": true,
+      "pr233FinalBlob": "0cc9f66fd55ed566703488c7bb145d325c10d752",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-art-conflict-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "a5067bca1a28f42ea7910334ea094d80c48bd9d0",
+      "successorBlob": "a5067bca1a28f42ea7910334ea094d80c48bd9d0",
+      "inPr233": true,
+      "pr233FinalBlob": "a5067bca1a28f42ea7910334ea094d80c48bd9d0",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-body-cancel-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "3ab843077b125f439b1d19c5ee8ec3f8ec03ddec",
+      "successorBlob": "3ab843077b125f439b1d19c5ee8ec3f8ec03ddec",
+      "inPr233": true,
+      "pr233FinalBlob": "3ab843077b125f439b1d19c5ee8ec3f8ec03ddec",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-current-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "53f717863bf41f6d297b65050e494f77ff2b289d",
+      "successorBlob": "53f717863bf41f6d297b65050e494f77ff2b289d",
+      "inPr233": true,
+      "pr233FinalBlob": "53f717863bf41f6d297b65050e494f77ff2b289d",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-embedded-failure-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "5fc3268b55eecbd0d637658c072016f566c71655",
+      "successorBlob": "5fc3268b55eecbd0d637658c072016f566c71655",
+      "inPr233": true,
+      "pr233FinalBlob": "5fc3268b55eecbd0d637658c072016f566c71655",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-embedded-success-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "7b1804e80e409e27caffc6e540ffac3749caecd8",
+      "successorBlob": "7b1804e80e409e27caffc6e540ffac3749caecd8",
+      "inPr233": true,
+      "pr233FinalBlob": "7b1804e80e409e27caffc6e540ffac3749caecd8",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "a777825016b2e9e14d0362b50ab2ed827ae4b716",
+      "oldHeadBlob": "a675db0a300b5807efe9bb070ea9b44fe314e9ea",
+      "successorBlob": "a675db0a300b5807efe9bb070ea9b44fe314e9ea",
+      "inPr233": true,
+      "pr233FinalBlob": "a675db0a300b5807efe9bb070ea9b44fe314e9ea",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-installed-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "05b75cfd6860b645c9d3ea3b107a3598425fbb0d",
+      "successorBlob": "05b75cfd6860b645c9d3ea3b107a3598425fbb0d",
+      "inPr233": true,
+      "pr233FinalBlob": "05b75cfd6860b645c9d3ea3b107a3598425fbb0d",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-late-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "91a53f51c79d4bbdd71ef1e887581580ffde9ffb",
+      "successorBlob": "91a53f51c79d4bbdd71ef1e887581580ffde9ffb",
+      "inPr233": true,
+      "pr233FinalBlob": "91a53f51c79d4bbdd71ef1e887581580ffde9ffb",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-lock-conflict-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "aa9f692126b6da95436dfc45dc9f78fd583a7e3b",
+      "successorBlob": "aa9f692126b6da95436dfc45dc9f78fd583a7e3b",
+      "inPr233": true,
+      "pr233FinalBlob": "aa9f692126b6da95436dfc45dc9f78fd583a7e3b",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-picture-cancel-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "f6d5ea04533ca7fd61ddeeeab872083bfb394677",
+      "successorBlob": "f6d5ea04533ca7fd61ddeeeab872083bfb394677",
+      "inPr233": true,
+      "pr233FinalBlob": "f6d5ea04533ca7fd61ddeeeab872083bfb394677",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-picture-failure-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "aed6ddb86d79e0a73f6406a82e25968f2aac24ac",
+      "successorBlob": "aed6ddb86d79e0a73f6406a82e25968f2aac24ac",
+      "inPr233": true,
+      "pr233FinalBlob": "aed6ddb86d79e0a73f6406a82e25968f2aac24ac",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-picture-hidden-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "fc8c5c8496d81ecfd58af53d3edcbae35a227f3c",
+      "successorBlob": "fc8c5c8496d81ecfd58af53d3edcbae35a227f3c",
+      "inPr233": true,
+      "pr233FinalBlob": "fc8c5c8496d81ecfd58af53d3edcbae35a227f3c",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-reentry-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "504713e5cfa80c023d4676d536efb56a4a55c15a",
+      "successorBlob": "504713e5cfa80c023d4676d536efb56a4a55c15a",
+      "inPr233": true,
+      "pr233FinalBlob": "504713e5cfa80c023d4676d536efb56a4a55c15a",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-release-original-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "6175c30f9892f74a2fadc708fc137c369e22d378",
+      "successorBlob": "6175c30f9892f74a2fadc708fc137c369e22d378",
+      "inPr233": true,
+      "pr233FinalBlob": "6175c30f9892f74a2fadc708fc137c369e22d378",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-replace-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "931a0b19cebb40e6ff2c91cb88c027910024d170",
+      "successorBlob": "931a0b19cebb40e6ff2c91cb88c027910024d170",
+      "inPr233": true,
+      "pr233FinalBlob": "931a0b19cebb40e6ff2c91cb88c027910024d170",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-save-conflict-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "e5623af028d291505397c6952662513d64f05c4b",
+      "successorBlob": "e5623af028d291505397c6952662513d64f05c4b",
+      "inPr233": true,
+      "pr233FinalBlob": "e5623af028d291505397c6952662513d64f05c4b",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-scenarios.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "f525e5b4dec78ca122aa4130d52f98846fe67127",
+      "successorBlob": "f525e5b4dec78ca122aa4130d52f98846fe67127",
+      "inPr233": true,
+      "pr233FinalBlob": "3270dd10bed6a3bbde054fce440a4f8a343ff519",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/optional-world-play-settings-return-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "c40357480c941b675318fbfd592bf2536dd76104",
+      "successorBlob": "c40357480c941b675318fbfd592bf2536dd76104",
+      "inPr233": true,
+      "pr233FinalBlob": "c40357480c941b675318fbfd592bf2536dd76104",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/pause-menu-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "4e5ca2b68fd351ca979bd5acaa754e979c1be81f",
+      "oldHeadBlob": "76c65a0074d15e345195340adc301bc48a2b172d",
+      "successorBlob": "76c65a0074d15e345195340adc301bc48a2b172d",
+      "inPr233": true,
+      "pr233FinalBlob": "76c65a0074d15e345195340adc301bc48a2b172d",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/practice-brief-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "cd1a065bfbea41209c299ceace838600c101a3a1",
+      "oldHeadBlob": "a655cb30d98cc2a55779ffb57cac0e53ad0a58c4",
+      "successorBlob": "a655cb30d98cc2a55779ffb57cac0e53ad0a58c4",
+      "inPr233": true,
+      "pr233FinalBlob": "a655cb30d98cc2a55779ffb57cac0e53ad0a58c4",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/practice-retry.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "c6556ff409cc95b0733133a78bdc3778c0b71e4f",
+      "oldHeadBlob": "e7dac9d0a80c6eae92d9099ed62735371fc27511",
+      "successorBlob": "e7dac9d0a80c6eae92d9099ed62735371fc27511",
+      "inPr233": true,
+      "pr233FinalBlob": "e7dac9d0a80c6eae92d9099ed62735371fc27511",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/presentation-dependencies.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "11c05927f450ffd1648e4f474fdbe66ccdcced8b",
+      "oldHeadBlob": "f64ae2b846b9e6a40d6627c24f5127d102136ea4",
+      "successorBlob": "f64ae2b846b9e6a40d6627c24f5127d102136ea4",
+      "inPr233": true,
+      "pr233FinalBlob": "f64ae2b846b9e6a40d6627c24f5127d102136ea4",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/presentation-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "7f601eaf95c31c37076ce20ef05c9b872c19e29c",
+      "oldHeadBlob": "6ef689b27f2b33c8c094771dba793a2f9a4a0ebc",
+      "successorBlob": "6ef689b27f2b33c8c094771dba793a2f9a4a0ebc",
+      "inPr233": true,
+      "pr233FinalBlob": "6ef689b27f2b33c8c094771dba793a2f9a4a0ebc",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/presentation-retained-output.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "8591031eed100819eac19955f5d998e9ecc02129",
+      "successorBlob": "8591031eed100819eac19955f5d998e9ecc02129",
+      "inPr233": true,
+      "pr233FinalBlob": "8591031eed100819eac19955f5d998e9ecc02129",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/published-audio.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "780e072dfe26b7fa86fdd8d0b04aa90f74d97925",
+      "oldHeadBlob": "1cf87c479dda823760d92cbdbff8838750e2174e",
+      "successorBlob": "1cf87c479dda823760d92cbdbff8838750e2174e",
+      "inPr233": true,
+      "pr233FinalBlob": "1cf87c479dda823760d92cbdbff8838750e2174e",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/restart-picture-retention.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "b49d45d54b59bb3083e9bb28751d10e46252c3fd",
+      "successorBlob": "b49d45d54b59bb3083e9bb28751d10e46252c3fd",
+      "inPr233": true,
+      "pr233FinalBlob": "b49d45d54b59bb3083e9bb28751d10e46252c3fd",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/route-worlds-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "3f2df097fa7895486dd409be8b4b3b77c5127c88",
+      "oldHeadBlob": "0a7d7d32212506bd46b42219ed40dccb7a217acc",
+      "successorBlob": "0a7d7d32212506bd46b42219ed40dccb7a217acc",
+      "inPr233": true,
+      "pr233FinalBlob": "0a7d7d32212506bd46b42219ed40dccb7a217acc",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/saved-visual-catalogue.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "f9752425f7ee20207ad6f9ea21969fa31f5f6731",
+      "successorBlob": "f9752425f7ee20207ad6f9ea21969fa31f5f6731",
+      "inPr233": true,
+      "pr233FinalBlob": "f9752425f7ee20207ad6f9ea21969fa31f5f6731",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/saved-visual-host.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "6dc95ce7cdb153fe99a15c5ff40696ba0378d412",
+      "successorBlob": "6dc95ce7cdb153fe99a15c5ff40696ba0378d412",
+      "inPr233": true,
+      "pr233FinalBlob": "6dc95ce7cdb153fe99a15c5ff40696ba0378d412",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/selection-bookmark-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "6272fdee53cfdaeaa33caee62f14ee1543b49e60",
+      "oldHeadBlob": "98fb9a0160659eeccc41838dff421c856c4577ed",
+      "successorBlob": "98fb9a0160659eeccc41838dff421c856c4577ed",
+      "inPr233": true,
+      "pr233FinalBlob": "98fb9a0160659eeccc41838dff421c856c4577ed",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/sentinel-theme-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "b3f303a790a26112cb008a13853524820426322d",
+      "oldHeadBlob": "3b937ca1d2717ec2b459d5dbb7b51bd4cdb6d840",
+      "successorBlob": "3b937ca1d2717ec2b459d5dbb7b51bd4cdb6d840",
+      "inPr233": true,
+      "pr233FinalBlob": "3b937ca1d2717ec2b459d5dbb7b51bd4cdb6d840",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/session-only-release-next-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "6082f975ba5da879f604794010b9a27f8baaccad",
+      "oldHeadBlob": "318ebd5ce552a8fe12367f8dc0bb967556b6b291",
+      "successorBlob": "318ebd5ce552a8fe12367f8dc0bb967556b6b291",
+      "inPr233": false,
+      "pr233FinalBlob": null,
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/settings-assists-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "314e84e2bb88f6a438c7e81846a686c8a0ea79c9",
+      "oldHeadBlob": "92cc4b9f6f5ed428e96e416e1e14f162c8ce8d43",
+      "successorBlob": "92cc4b9f6f5ed428e96e416e1e14f162c8ce8d43",
+      "inPr233": true,
+      "pr233FinalBlob": "92cc4b9f6f5ed428e96e416e1e14f162c8ce8d43",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "588501c8aef14497324728302562c70f1f938a5e",
+      "oldHeadBlob": "3768fd256d6e490fa8005b57b9f5135f2d7ecd21",
+      "successorBlob": "3768fd256d6e490fa8005b57b9f5135f2d7ecd21",
+      "inPr233": true,
+      "pr233FinalBlob": "3768fd256d6e490fa8005b57b9f5135f2d7ecd21",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/storage-retention-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "8f990ed304f1a843080d5b5ebcebc7ae32de9671",
+      "oldHeadBlob": "fadb4a55d2e11a58c470e9f6b7ed45d490457353",
+      "successorBlob": "fadb4a55d2e11a58c470e9f6b7ed45d490457353",
+      "inPr233": true,
+      "pr233FinalBlob": "fadb4a55d2e11a58c470e9f6b7ed45d490457353",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/terminal-navigation.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "faff4fad1b8a40c14a3b7c5776b6b855519f93f3",
+      "oldHeadBlob": "5dea3d3232f24e62a430879755ec854e1314a72f",
+      "successorBlob": "5dea3d3232f24e62a430879755ec854e1314a72f",
+      "inPr233": true,
+      "pr233FinalBlob": "5dea3d3232f24e62a430879755ec854e1314a72f",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/text-face-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "e098f82a0bef4fb535c0b9c6c1fd02e9158584b6",
+      "oldHeadBlob": "f94fe1c79bbe9e40a6d0729d354a06545d5f8e95",
+      "successorBlob": "f94fe1c79bbe9e40a6d0729d354a06545d5f8e95",
+      "inPr233": true,
+      "pr233FinalBlob": "f94fe1c79bbe9e40a6d0729d354a06545d5f8e95",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/text-size-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "89b1652e515f0aa914794813327fde0cd1f6b2da",
+      "oldHeadBlob": "d1e1097a29646458dde0a81236aa6d5f932eb01c",
+      "successorBlob": "d1e1097a29646458dde0a81236aa6d5f932eb01c",
+      "inPr233": true,
+      "pr233FinalBlob": "d1e1097a29646458dde0a81236aa6d5f932eb01c",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/title-entry-host.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "83b77d87c3e6d580f93661afdd2169824180ecef",
+      "oldHeadBlob": "98ce7a66f18439778f1950d531c44aa0c220c6f3",
+      "successorBlob": "98ce7a66f18439778f1950d531c44aa0c220c6f3",
+      "inPr233": true,
+      "pr233FinalBlob": "98ce7a66f18439778f1950d531c44aa0c220c6f3",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/visual-sessions.test.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "f8bafab1e17ad4bb82a3e4059f97591fb7110705",
+      "successorBlob": "9bfd1779d6426da3100250c8f644335f4ca744cf",
+      "inPr233": true,
+      "pr233FinalBlob": "f8bafab1e17ad4bb82a3e4059f97591fb7110705",
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/test/visual-theme-lease.test.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "0dc239e29ed7a6968b51e715771d86c2010e80b0",
+      "oldHeadBlob": "24f4ae55e3972e4a5d99c26281fe07c215333d7a",
+      "successorBlob": "24f4ae55e3972e4a5d99c26281fe07c215333d7a",
+      "inPr233": true,
+      "pr233FinalBlob": "24f4ae55e3972e4a5d99c26281fe07c215333d7a",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/ui/first-flight-entry.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "5b96eec5935293c4f0bf9ec88d8927cab72c38bd",
+      "oldHeadBlob": "8d05e6c91d5177242065e26c9b210c091aa5d943",
+      "successorBlob": "63ee165ff9e6000e8d18b5a6773017a678d51c98",
+      "inPr233": true,
+      "pr233FinalBlob": "8d05e6c91d5177242065e26c9b210c091aa5d943",
+      "classification": "ported",
+      "rationale": "PR256 behavior is composed with current-main changes and reviewed conflict corrections.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "bf566e67c267ec03ba69dc25c5a853bd01b77bd7",
+      "oldHeadBlob": "d216ac42f6192b8b661ce019c41aa2ce7f13fb96",
+      "successorBlob": "d216ac42f6192b8b661ce019c41aa2ce7f13fb96",
+      "inPr233": true,
+      "pr233FinalBlob": "17d65903d8655b55fced794713482eed7ecd2277",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "game/ui/published-audio.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "64e15e67bfa3bca4dce33da59848566fb2e05b22",
+      "oldHeadBlob": "fe2af64417d0bba9f0c897343f045c5d111dbcb7",
+      "successorBlob": "fe2af64417d0bba9f0c897343f045c5d111dbcb7",
+      "inPr233": true,
+      "pr233FinalBlob": "fe2af64417d0bba9f0c897343f045c5d111dbcb7",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "scripts/compile-presentation.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "96606c0cc1141374fe09d98d52ea5913c397a75d",
+      "oldHeadBlob": "44cad6658a31ffbdd89d2c2c7b6e6f8b9d35704f",
+      "successorBlob": "44cad6658a31ffbdd89d2c2c7b6e6f8b9d35704f",
+      "inPr233": true,
+      "pr233FinalBlob": "44cad6658a31ffbdd89d2c2c7b6e6f8b9d35704f",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "scripts/field-kit-retained-runtime.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "1c7f948758e858e1e45096d3cdb1b7690fd130c2",
+      "successorBlob": "1c7f948758e858e1e45096d3cdb1b7690fd130c2",
+      "inPr233": true,
+      "pr233FinalBlob": "1c7f948758e858e1e45096d3cdb1b7690fd130c2",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "9edb3e418d38f508d7b5bda1cca05b7ae1f1f49f",
+      "oldHeadBlob": "6e5b04e2b2d6b357a14b35eb232ce4dba98be7fc",
+      "successorBlob": "6e5b04e2b2d6b357a14b35eb232ce4dba98be7fc",
+      "inPr233": true,
+      "pr233FinalBlob": "6e5b04e2b2d6b357a14b35eb232ce4dba98be7fc",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "scripts/retain-presentation-output.mjs",
+      "oldStatus": "A",
+      "oldBaseBlob": null,
+      "oldHeadBlob": "504468879f23736aa472992dc56d5697ea54f8a7",
+      "successorBlob": "504468879f23736aa472992dc56d5697ea54f8a7",
+      "inPr233": true,
+      "pr233FinalBlob": "504468879f23736aa472992dc56d5697ea54f8a7",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    },
+    {
+      "path": "scripts/write-presentation.mjs",
+      "oldStatus": "M",
+      "oldBaseBlob": "dc02b0842fc0979ea8f845a7fd4305bbecf95c19",
+      "oldHeadBlob": "83d558cc4c954aa945cb4102e826568a90610f07",
+      "successorBlob": "83d558cc4c954aa945cb4102e826568a90610f07",
+      "inPr233": true,
+      "pr233FinalBlob": "83d558cc4c954aa945cb4102e826568a90610f07",
+      "classification": "byte-identical",
+      "rationale": "Old PR256 final blob is retained exactly.",
+      "verification": [
+        "node --test game/test/visual-sessions.test.mjs",
+        "node --test game/test/first-flight-entry.test.mjs",
+        "node --test game/test/gameplay-pressure-host.test.mjs"
+      ]
+    }
+  ]
+}
