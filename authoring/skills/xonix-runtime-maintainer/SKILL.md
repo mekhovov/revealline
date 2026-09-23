@@ -1466,3 +1466,15 @@ required artwork through the actual host reader, explicit Retry, the retained ol
 picture/selection and successful recovery after a transient read failure. Keep
 modeled host evidence separate from native decoding and release acceptance. See
 [the import-error maintenance prompt](../../../docs/team-import-error-copy.md).
+
+## Optional objective-placement studies
+
+Keep a placement study in its own versioned content source and Studio choice.
+Do not silently replace the default edition, alter capture rules, or infer final
+balance from solver routes. Preserve the old shortcut as a control, prove that
+the proposed placement changes the intended closure, and cover all supported
+difficulty and steering combinations with public-input replay checks. Inspect
+and Apply remain separate actions; the option must say when balance is pending.
+Record automated, native, human and public-release evidence independently. The
+Twin inner-receiver example and its limits are documented in
+`docs/verification/journey-sentinel-inner-study.md`.
