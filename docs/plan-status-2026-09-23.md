@@ -1,6 +1,6 @@
 # Reveal Line — completed work and remaining delivery plan
 
-Status checked **23 September 2026, 03:27 UTC**. This is the current status and
+Status checked **23 September 2026, 03:37 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source
 observations or release evidence. The original P00–P15 version allocations are
@@ -19,9 +19,11 @@ remains visible there rather than being treated as rejected or completed.
   and scoped public browser acceptance passed. v0.88.0 remains preserved in
   Archive57.
 - **In promotion: v0.90.0.** Continuous Next source [PR287](https://github.com/mekhovov/revealline/pull/287)
-  is merged as `c585bcd3220438da971e2927763b966f55ee8235`, and a draft immutable
-  release exists. Pages still selects v0.89.0, so v0.90.0 is not publicly
-  delivered or accepted yet.
+  is merged as `c585bcd3220438da971e2927763b966f55ee8235`; the immutable
+  [v0.90.0 release](https://github.com/mekhovov/revealline/releases/tag/v0.90.0)
+  is published. Archive58 preservation deployed successfully and its audit is
+  active. Pages still selects v0.89.0, so v0.90.0 is not publicly delivered or
+  accepted yet.
 - **Active gameplay correction:** [PR290](https://github.com/mekhovov/revealline/pull/290)
   proposes v0.91.0 to replace unfair mid-flight gp3 field-enemy direction changes
   with collision-only course changes. The intended compatible
@@ -194,10 +196,11 @@ suites were deferred rather than passed.
 
 Source [PR287](https://github.com/mekhovov/revealline/pull/287) is merged as
 `c585bcd3220438da971e2927763b966f55ee8235`. It continues Next across campaign,
-pack and Collection boundaries in Solo, Versus and Team. The GitHub release is
-still a draft and Pages still identifies v0.89.0. Completion requires final
-release publication, selector PR, deployment, full public inventory and the
-affected Next journeys. Until those gates pass, this is **active**, not completed.
+pack and Collection boundaries in Solo, Versus and Team. The immutable GitHub
+release was published at `2026-09-23T03:28:18Z`; Archive58 preservation deployed
+successfully and its audit remains active. Pages still identifies v0.89.0.
+Completion requires the final selector PR, production deployment, full public
+inventory and the affected Next journeys. Until those gates pass, this is **active**, not completed.
 
 ## 5. Remaining — prioritized execution queue
 
@@ -207,7 +210,7 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 
 | Priority     | Item / current state                                                | Completion condition                                                                                                                                                                                | Indicative effort                                                |
 | ------------ | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| P0           | v0.90.0 Continuous Next promotion — source merged                   | Finalize immutable release, merge Pages selector, verify public version/source/inventory and Solo/Versus/Team Next across campaign, pack and Collection boundaries                                  | 1–3h conditional elapsed if publication gates pass first time    |
+| P0           | v0.90.0 Continuous Next promotion — release published, Pages pending | Finish Archive58 audit, merge Pages selector, verify public version/source/inventory and Solo/Versus/Team Next across campaign, pack and Collection boundaries                                      | 1–3h conditional elapsed if publication gates pass first time    |
 | P1           | v0.91.0 collision-only field-enemy courses — PR290 in review        | Frozen candidate and 52 focused checks complete; merge/release/public gates remain. Straight flight between collisions; direction changes only on true bounces; at most 8° seeded anti-loop variation on a single-face bounce; preserve speed/domains and byte-frozen gp3 replay/save   | 4–8h implementation/review, then independent release gates       |
 | P1           | PNG/JPEG mission-selection failure — unresolved                     | Identify affected mission/mode/asset and reproduce; repair actual cause; public Download/Retry/Play succeeds without deleting media or bypassing validation                                         | 2–4h diagnosis;3–8h scoped repair once reproducible              |
 | P1           | Current-speed difficulty/pacing review                              | Representative early/middle/late Solo/Versus/Team routes; fair departures, enemy/craft ratios, useful geometry and no trivial one-cut bypasses outside teaching. Human feedback recorded separately | 1–3 days first pass;6–12h per map-fix release                    |
