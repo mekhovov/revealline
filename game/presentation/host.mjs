@@ -1,3 +1,4 @@
+import { isTeamRuntimeImageSlot } from './team-runtime-slots.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import {
@@ -154,7 +155,8 @@ async function cropBlob(image, frame, document) {
 const visibleSlot = (id, asset) =>
   asset.kind === 'font' ||
   (asset.kind === 'image' &&
-    /^(ui|icon|hud|reward|control|screen|player|enemy|terrain|pickup)\./.test(id));
+    (/^(ui|icon|hud|reward|control|screen|player|enemy|terrain|pickup)\./.test(id) ||
+      isTeamRuntimeImageSlot(id)));
 const controlIcons = {
   settings: '#shell-settings, #settings-button, #shell-options',
   play: '#shell-featured, #shell-continue, #shell-deploy, #start-button, #soundtrack-play, #race-start',

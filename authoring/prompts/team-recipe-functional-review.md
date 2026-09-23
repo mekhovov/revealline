@@ -1,0 +1,7 @@
+# Qualify an exact Team recipe successor
+
+Review the actual selected recipe payloads and renderer dependency closure. Separate inherited image bodies from procedural cues and newly authored equipment. Record measured compact/detailed contexts, source and complete-file test bindings, attributed native observations, discovered defects and unexercised limits. A bounded functional approval must say exactly what it approves; neither prepared evidence nor green tests alone approve new artwork or a release.
+
+Authenticate the approved record itself, exact slot/default payloads, ordered source fingerprint and full inherited image records with original byte identities. Fresh producer assembly can reconstruct an original produced record even when immutable history selects its reviewed successor: bind both exact records, never normalize away differing quality or provenance. Changed and unknown inputs must reopen source review, and missing required evidence must fail production.
+
+Prove raw-byte rejection, modified defaults/records/fingerprints and immutable ancestor preservation. Run all consumers of the producer, including temporary-project source-invalidation fixtures; declare newly required evidence directories as read-only fixture inputs. Preserve ordinary filesystem and CLI semantics. Append the reviewed successor only after coordinator acceptance and exact generated inventory/budget review. Keep source qualification, production adoption, native/device and public/offline acceptance distinct.

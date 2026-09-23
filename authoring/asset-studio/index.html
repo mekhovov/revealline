@@ -248,8 +248,19 @@
         >
           Load release collection
         </button>
+        <button
+          data-studio-host="control"
+          type="button"
+          id="add-team-anchors"
+          data-tool-control
+          data-studio-startup-disabled
+          disabled
+        >
+          Add Team presentation slots
+        </button>
       </div>
     </div>
+    <p id="prepared-download" class="workspace-state" role="status" hidden></p>
     <main class="studio-layout">
       <aside class="inventory" aria-labelledby="inventory-title">
         <div class="inventory-heading">
@@ -371,14 +382,22 @@
               <option value="cutting">Active cuts</option>
               <option value="warning">Hunter warning</option>
               <option value="charge">Hunter charge</option>
-              <option value="capture">Capture feedback</option>
+              <option value="hunter-recovery">Hunter recovery</option>
+              <option value="capture">Joint capture</option>
+              <option value="team-recovery">Team reserve recovery</option>
+              <option value="support">Support pulse</option>
+              <option value="emitter-warning">Emitter warning</option>
+              <option value="emitter-spark">Travelling spark</option>
               <option value="anchors" disabled>Anchors captured</option>
               <option value="core" disabled>Relay core exposed</option>
+              <option value="secured" disabled>Secured core · two-relay specimen</option>
               <option value="victory">Completed field</option>
               <option value="downed-p1" disabled>Player 1 downed</option>
+              <option value="crawling-p1" disabled>Player 1 crawling</option>
               <option value="rescue-p1" disabled>Rescuing Player 1</option>
               <option value="recovered-p1" disabled>Player 1 recovered</option>
               <option value="downed-p2" disabled>Player 2 downed</option>
+              <option value="crawling-p2" disabled>Player 2 crawling</option>
               <option value="rescue-p2" disabled>Rescuing Player 2</option>
               <option value="recovered-p2" disabled>Player 2 recovered</option>
             </select></label

@@ -4,6 +4,7 @@ import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { resolvePresentation, validateThemeBundle } from '../presentation/model.mjs';
 import { reviseStudioTheme, adoptStudioBundle } from '../presentation/studio-session.mjs';
 import { retainProductionHistory } from '../../scripts/presentation-production-history.mjs';
+import { retainFieldKitProductionHistory } from '../../scripts/team-production-history.mjs';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -270,7 +271,7 @@ test('current P03 reproduction retains its measured source stage before any revi
   const production = await createFieldKitProduction();
   // Match the CLI: reproduce against the complete existing ledger. Rebuilding
   // from P02 would flatten fpv25 and any later measured review successors.
-  const next = retainProductionHistory(production.document, prior);
+  const next = retainFieldKitProductionHistory(production.document, prior);
   validateThemeBundle(next, { expectedRevision: prior.revision });
   assert.ok(next.revision >= stage.document.revision, 'the measured source stage is retained');
   assert.equal(canonicalJSON(next), canonicalJSON(candidate.document));
@@ -287,7 +288,7 @@ test('current P03 reproduction retains its measured source stage before any revi
       Buffer.from(await before.arrayBuffer()),
       `retained source-stage payload ${hash}`,
     );
-  const second = retainProductionHistory(production.document, next);
+  const second = retainFieldKitProductionHistory(production.document, next);
   assert.equal(canonicalJSON(second), canonicalJSON(next));
   const exported = Buffer.from(await (await exportThemeBundle(next, mergedAssets)).arrayBuffer());
   const repeated = Buffer.from(await (await exportThemeBundle(second, mergedAssets)).arrayBuffer());
@@ -335,7 +336,7 @@ test('Journey music review retains fpv33 source evidence and every earlier immut
   assert.equal(reviewed.document.assets.length, stage.document.assets.length + 8);
   assert.equal(reviewed.document.themes.length, stage.document.themes.length + 1);
   assert.equal(reviewed.assets.size, stage.assets.size);
-  const reproduced = retainProductionHistory(
+  const reproduced = retainFieldKitProductionHistory(
     (await createFieldKitProduction()).document,
     current.document,
   );
@@ -443,12 +444,16 @@ test('Journey feedback dependencies bind only the reviewed integrated effects in
   }
 });
 
-test('soundtrack UI and audio bind only their reviewed current inputs', async () => {
+test('shared-host UI and audio bind only their reviewed current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
-  const audioReviewPath = 'docs/verification/soundtrack-player-ux-2026-09-21/review.json';
+  const audioReviewPath = 'docs/verification/fresh-presentation-retention/review.json';
   const audioReviewHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${audioReviewPath}`, import.meta.url)))
+    .digest('hex');
+  const uiReviewPath = 'docs/verification/team-host-ui-continuation/review.json';
+  const uiReviewHash = createHash('sha256')
+    .update(await fs.readFile(new URL(`../../${uiReviewPath}`, import.meta.url)))
     .digest('hex');
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
   assert.equal(reviewed.length, 32);
@@ -458,16 +463,19 @@ test('soundtrack UI and audio bind only their reviewed current inputs', async ()
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:28f337f2e488afcae8a93d0d062f06f05ab70ab899d7ea986e88be72dd46cd6e',
+          'sha256:6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865',
         ),
         slot.id,
       );
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.css/);
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
       assert.match(asset.provenance.source, /game\/presentation\/dom-ownership\.mjs/);
+      assert.match(asset.provenance.source, /game\/presentation\/team-runtime-slots\.mjs/);
       assert.equal(
-        asset.quality.evidence.some((entry) =>
-          entry.includes('Scoped soundtrack UI source review'),
+        asset.quality.evidence.some(
+          (entry) =>
+            entry.includes('Scoped Team-host UI functional continuation') &&
+            entry.includes(`${uiReviewPath} sha256:${uiReviewHash}`),
         ),
         true,
       );
@@ -481,7 +489,7 @@ test('soundtrack UI and audio bind only their reviewed current inputs', async ()
       );
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:1128ede72e1d687690a3832d84b240bd8013be643bb9a21b430fe6875adcac94',
+          'sha256:f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601',
         ),
         slot.id,
       );
@@ -568,7 +576,7 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
   // fixture files may be changed; links to the real project are read-only inputs.
   await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
   await fs.mkdir(path.join(fixture, 'game', 'content'), { recursive: true });
-  for (const entry of ['authoring', 'site'])
+  for (const entry of ['authoring', 'site', 'scripts', 'docs'])
     await fs.symlink(path.join(root, entry), path.join(fixture, entry));
   for (const directory of ['', 'ui', 'content'])
     for (const entry of await fs.readdir(path.join(root, 'game', directory))) {
@@ -587,7 +595,7 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
     try {
       await fs.appendFile(target, '\n/* Unreviewed fixture change. */\n');
       const changed = await createFieldKitProduction({ projectRoot: fixture });
-      const next = retainProductionHistory(changed.document, prior);
+      const next = retainFieldKitProductionHistory(changed.document, prior);
       validateThemeBundle(next, { previous: prior });
       const assets = resolvePresentation(next).assets;
       for (const slot of reviewed) {
@@ -645,7 +653,7 @@ test('the whole production collection has capacity for immutable review successo
       evidence: ['Capacity fixture only; not production qualification. '.repeat(4)],
     };
   }
-  const next = retainProductionHistory(proposed, prior.document);
+  const next = retainFieldKitProductionHistory(proposed, prior.document);
   validateThemeBundle(next, { previous: prior.document });
   assert.ok(next.assets.length > prior.document.assets.length);
   for (const old of prior.document.assets)

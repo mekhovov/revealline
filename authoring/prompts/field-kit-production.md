@@ -39,3 +39,13 @@ Refine the current artwork-led result panel using the completed attempt's loaded
 ## Revise a procedural recipe
 
 Recipe-only rotor, trail and effect slots request a reviewable change to registered source code or supported theme tokens and related body anchors. They do not accept PNG uploads or executable content in `.rltheme` bundles. Recipe metadata stores only a registered ID; new behavior or a new recipe requires implementation and review. Keep prior source/revisions and validate the actual runtime, pause and reduced-motion behavior. All three copy actions retain the current custom production brief.
+
+For complete collection capacity, preserve every immutable revision, source credit,
+review record and original payload. Export and import the complete reviewed set
+and its coordinated replacement. A fitting transfer must retain exact RLTHM1
+bytes; only a redundant asset table overflowing the existing 5 MiB manifest may
+select RLTHM2's document-only envelope. Derive sorted unique payload facts from
+validated file metadata and reject conflicting facts for one hash. Do not raise
+budgets, compress opaque metadata, truncate history or edit evidence to pass.
+Check the real current collection and byte-identical import/export round trips;
+record older-reader compatibility separately from production/art approval.

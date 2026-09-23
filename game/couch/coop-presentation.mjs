@@ -59,6 +59,27 @@ function historicalPolicy(source) {
   );
   return freezePresentation(policy);
 }
+function historicalPolicies(source) {
+  if (source === null || source === undefined) return [];
+  const entries = Array.isArray(source)
+    ? boundedJSON(source, { maxBytes: 8192, maxArray: 5 })
+    : [source];
+  const seen = new Set();
+  return freezePresentation(
+    entries.map((entry) => {
+      const policy = historicalPolicy(entry);
+      required(policy, 'A Team historical policy entry is required.');
+      const key = canonicalJSON({
+        themeId: policy.themeId,
+        themeRevision: policy.themeRevision,
+        collection: policy.collection,
+      });
+      required(!seen.has(key), 'Duplicate Team historical picture identity.');
+      seen.add(key);
+      return policy;
+    }),
+  );
+}
 function bindingTable(source) {
   const rows = boundedJSON(source, { maxBytes: 256 * 1024, maxArray: 128 });
   required(Array.isArray(rows), 'Team picture bindings must be a finite list.');
@@ -205,7 +226,7 @@ export function createCoopPresentation({
   decodeImage,
 }) {
   const rows = bindingTable(bindings),
-    policy = historicalPolicy(historicalImportPolicy),
+    policies = historicalPolicies(historicalImportPolicy),
     closedNamespaces = new Set(['relay-rescue-starter', ...rows.map((row) => row.packId)]);
   required(
     [getSnapshot, readPicture, decodeImage].every((fn) => typeof fn === 'function'),
@@ -301,11 +322,13 @@ export function createCoopPresentation({
         candidate.themeRevision === state.theme.themeRevision &&
         canonicalJSON(candidate.collection) === canonicalJSON(state.theme.collection),
     );
-    const policyMatches =
-      policy &&
-      state.theme.themeId === policy.themeId &&
-      state.theme.themeRevision === policy.themeRevision &&
-      canonicalJSON(state.theme.collection) === canonicalJSON(policy.collection);
+    const policy = policies.find(
+      (candidate) =>
+        state.theme.themeId === candidate.themeId &&
+        state.theme.themeRevision === candidate.themeRevision &&
+        canonicalJSON(state.theme.collection) === canonicalJSON(candidate.collection),
+    );
+    const policyMatches = Boolean(policy);
     if (state.request.artworkSource !== null) {
       const receipt = state.request.sourceReceipt;
       required(
