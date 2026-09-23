@@ -289,7 +289,7 @@ for (const action of ['focus', 'key', 'blur'])
     if (action === 'focus') assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   });
 
-test('explicit Team library preview has a separate concealed lease and clears on selection/Back', async (t) => {
+test('explicit Team library full preview has a separate lease and clears on selection/Back', async (t) => {
   const f = await fixture(t);
   const image = f.previewDrawImages.at(-1);
   await open(f);
@@ -303,7 +303,10 @@ test('explicit Team library preview has a separate concealed lease and clears on
     () => f.$('coop-discovery-preview-status').textContent,
   );
   assert.equal(f.previewDrawImages.at(-1), image);
-  assert.match(f.$('coop-discovery-preview-status').textContent, /Locked preview/);
+  assert.match(
+    f.$('coop-discovery-preview-status').textContent,
+    /Full picture preview.*does not complete an arena or earn a picture/i,
+  );
   card(f, 'Twin landings').focus();
   card(f, 'Twin landings').emit('focus', { bubbles: false });
   await new Promise((resolve) => queueMicrotask(resolve));
