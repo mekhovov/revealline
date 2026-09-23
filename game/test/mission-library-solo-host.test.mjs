@@ -145,10 +145,12 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
   await clear();
   const last = p.rendered.run;
   p.$('next-button').click();
+  await settle(() =>
+    /End of the Solo mission library/.test(p.$('flight-preparation-status').textContent),
+  );
   p.frame(0);
   assert.equal(p.rendered.run, last, 'Sequence end never wraps to the first uncleared mission.');
-  assert.equal(p.$('overlay-title').textContent, 'End of this campaign.');
-  assert.match(p.$('overlay-copy').textContent, /2 \/ 3 missions complete/);
+  assert.equal(p.$('game-overlay').dataset.kind, 'won');
   const profile = loadLibrary(p.storage, 'revealline.library.dev.v1', {
     campaigns: pack.campaigns,
   }).library;
