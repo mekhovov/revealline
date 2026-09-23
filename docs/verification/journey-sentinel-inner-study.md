@@ -69,10 +69,27 @@ isolation finish. Isolation remains a supported strategy, not a test failure.
 Short optimized clears still require human pacing review; longer sampled time
 alone does not establish a better level.
 
+## Historical native Studio check
+
+On 22 September 2026, the in-app browser used exact source `c9b64e5e` with real
+IndexedDB and no simulation injection. Searching for `inner receiver` found the
+Sentinel entry. Selecting the new edition and Inspect left the accepted draft
+unchanged; explicit Apply adopted the five-mission study. Twin Receivers listed
+the inner objective at `(50.5,19.5)` and retained the same foundation, earnable
+cells, platforms and receiver galleries.
+
+The exact Solo practice preview named Twin Receivers, its 85% target, two shield
+relays and the core. Start plus one ordinary Up command made a 0.6% first return
+for 130 points with three lives and no relay credit. Pause, return to draft and
+reload retained checkpoint 1 and the exact objective placement. No captured
+browser warning or error was present. This was a source preview on the historical
+study, not a complete clear, current-source browser check, human balance review,
+physical-controller test, offline test or public acceptance.
+
 ## Remaining gates
 
-Native Studio inspection/Apply/preview and full play readability; wider input
+Current-source native Studio inspection and full-play readability; wider input
 timing and both-policy mastery samples; real human/controller/accessibility
 review; original-picture successor integration; exact-head CI and independent
-review; allocated version, immutable release and public Pages verification.
-No Team, newly generated art/music or fully validated-content claim.
+review; immutable release and public Pages verification. No Team, newly generated
+art/music or fully validated-content claim.
