@@ -14,6 +14,7 @@ import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { reviseStudioTheme } from '../presentation/studio-session.mjs';
 import { resolvePresentation } from '../presentation/model.mjs';
+import { STUDIO_VIEW_KEY } from '../../authoring/asset-studio/view-memory.mjs';
 
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 const deferred = () => {
@@ -36,7 +37,15 @@ function mount(doc, html) {
       stack.pop();
       continue;
     }
-    if (!token.startsWith('<')) continue;
+    if (!token.startsWith('<')) {
+      // Native option.value defaults to its text when no value attribute exists.
+      const current = stack.at(-1);
+      if (current.tagName === 'OPTION') {
+        current.textContent += token.trim();
+        if (!current.hasAttribute('value')) current.value = current.textContent;
+      }
+      continue;
+    }
     const tag = token.match(/^<([\w-]+)/)[1];
     const element = doc.createElement(tag);
     for (const [, name, quoted, bare] of token
@@ -96,6 +105,27 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   );
   const doc = new Document(),
     window = new Events();
+  const historyWrites = [];
+  window.history = {
+    state: {
+      unrelatedOwner: { retained: true },
+      [STUDIO_VIEW_KEY]: {
+        version: 1,
+        selected: 'icon.play',
+        filters: {
+          query: 'icon.play',
+          screen: 'flight',
+          state: 'default',
+          kind: 'recipe',
+          quality: 'source',
+        },
+      },
+    },
+    replaceState(value, title, ...url) {
+      this.state = structuredClone(value);
+      historyWrites.push({ title, url });
+    },
+  };
   const readGate = deferred(),
     decodeGate = deferred(),
     startupGate = deferred();
@@ -385,9 +415,48 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     'studio-interface-reduced',
   ])
     assert.equal($(id).hasAttribute('data-studio-startup-disabled'), false);
+  const startupReaderFocus = doc.activeElement;
   startupGate.resolve();
   await until(() => $('cancel-studio-operation').hidden);
+  await flush();
   assert.match(message(), /Current release assets loaded/);
+  assert.equal(
+    $('slot-id').textContent,
+    'icon.play',
+    'Loaded document restores the history selection.',
+  );
+  assert.equal($('filter-search').value, 'icon.play');
+  assert.equal($('filter-kind').value, 'recipe');
+  assert.equal($('filter-quality').value, 'source');
+  assert.equal(
+    doc.activeElement === startupReaderFocus,
+    true,
+    'Startup does not steal newer guide focus.',
+  );
+  assert.equal(historyWrites.length, 0, 'Restoration does not rewrite the history entry.');
+  for (const id of [
+    'filter-search',
+    'filter-screen',
+    'filter-state',
+    'filter-kind',
+    'filter-quality',
+  ]) {
+    $(id).value = '';
+    $(id).emit(id === 'filter-search' ? 'input' : 'change');
+  }
+  $('asset-list')
+    .querySelectorAll('button')
+    .find((button) =>
+      button.querySelector('small')?.textContent.startsWith(`${publishedSlot.id} ·`),
+    )
+    .click();
+  assert.equal(window.history.state[STUDIO_VIEW_KEY].selected, publishedSlot.id);
+  assert.deepEqual(window.history.state.unrelatedOwner, { retained: true });
+  assert.equal(
+    historyWrites.every(({ title, url }) => title === '' && url.length === 0),
+    true,
+  );
+
   // Model native form restoration separately from the authoritative audio record.
   // Pageshow can restore controls after listeners have run; neither phase is an edit.
   const masterField = $('studio-master-volume'),
@@ -865,7 +934,20 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   assert.match(message(), /Derivative prepared/);
   // The following real stage/save/restore byte assertion also proves that the
   // prepared asset survived the return, rather than only its visible labels.
-  await $('stage-asset').onclick();
+  const stageButton = $('stage-asset');
+  let stageDisabled = stageButton.disabled;
+  Object.defineProperty(stageButton, 'disabled', {
+    configurable: true,
+    get: () => stageDisabled,
+    set(value) {
+      stageDisabled = value;
+      // Model the browser removing focus when its action becomes disabled.
+      if (value && doc.activeElement === stageButton) stageButton.blur();
+    },
+  });
+  stageButton.focus();
+  await stageButton.onclick();
+  assert.equal(doc.activeElement?.id, 'save-workspace', 'Staging hands keyboard focus to Save.');
   assert.match(message(), /validated and staged/);
   assert.match($('workspace-summary').textContent, /unsaved changes/);
   const historyRow = (id, revision) =>
@@ -972,7 +1054,11 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   await $('edit-geometry').onclick();
   assert.equal($('nine-slice').disabled, false);
   $('nine-slice').value = JSON.stringify({ ...approved.geometry.nineSlice, left: 7 });
-  await $('stage-asset').onclick();
+  stageButton.focus();
+  const stagedWithNewFocus = stageButton.onclick();
+  $('studio-guide-open').focus();
+  await stagedWithNewFocus;
+  assert.equal(doc.activeElement?.id, 'studio-guide-open', 'Staging preserves newer reader focus.');
   assert.match(message(), /validated and staged/);
   await $('save-workspace').onclick();
   assert.match(message(), /saved atomically/);

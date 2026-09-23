@@ -11,6 +11,7 @@ export function attachTeamDiscoveryPictures({
   prepare,
   select = () => {},
   onViewChange = () => {},
+  onReturnFocus = () => {},
 }) {
   let session = null,
     detail = null,
@@ -239,8 +240,11 @@ export function attachTeamDiscoveryPictures({
       ownedFocus &&
       visible(shown.card.button) &&
       (document.activeElement === prior || unclaimed(document.activeElement))
-    )
+    ) {
       shown.card.button.focus({ preventScroll: true });
+      if (live(owner) && !detail && document.activeElement === shown.card.button)
+        onReturnFocus(shown.card.button);
+    }
     if (live(owner) && !detail) thumbnails(owner);
     return true;
   }
@@ -274,10 +278,14 @@ export function attachTeamDiscoveryPictures({
       for (const source of cards) {
         if (!owns(owner)) return;
         const figure = document.createElement('figure'),
+          frame = document.createElement('div'),
           canvas = document.createElement('canvas'),
           message = document.createElement('figcaption'),
           button = document.createElement('button');
         figure.className = 'team-discovery-teaser';
+        // Reserve the teaser's layout before asynchronous picture preparation.
+        // The canvas stays hidden until actual pixels have been painted.
+        frame.className = 'team-discovery-thumbnail-frame';
         canvas.className = 'team-discovery-teaser-canvas';
         canvas.width = 288;
         canvas.height = 144;
@@ -292,7 +300,8 @@ export function attachTeamDiscoveryPictures({
           'aria-label',
           `Preview ${source.row.title} · ${source.row.packName} · ${source.row.sourceLabel}`,
         );
-        figure.append(canvas, message);
+        frame.append(canvas);
+        figure.append(frame, message);
         source.card.append(figure, source.button, button);
         const card = { row: source.row, canvas, message, button, state: 'queued' };
         owner.cards.push(card);

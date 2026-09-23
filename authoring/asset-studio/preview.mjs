@@ -1,3 +1,20 @@
+import {
+  TEAM_OUTCOME_SLOTS,
+  drawTeamOutcomeBadge,
+} from '../../game/couch/coop-outcome-presentation.mjs';
+import { TEAM_ENEMY_SLOTS, teamEnemyInheritance } from '../../game/couch/coop-enemy-slots.mjs';
+import {
+  TEAM_EMITTER_SLOTS,
+  drawTeamEmitterWarning,
+  drawTeamEmitterSpark,
+} from '../../game/couch/coop-emitter-presentation.mjs';
+import {
+  TEAM_SUPPORT_SLOTS,
+  drawTeamSupportPulse,
+  drawTeamSlowed,
+} from '../../game/couch/coop-support-presentation.mjs';
+import { TEAM_CORE_SLOTS, drawTeamCoreCue } from '../../game/couch/coop-core-presentation.mjs';
+import { TEAM_ANCHOR_SLOTS, drawTeamAnchor } from '../../game/couch/coop-anchor-presentation.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { bindAudioMasterMedia } from '../../game/ui/audio-master.mjs';
 import { createCurrentArtPreview } from '../../game/presentation/current-art.mjs';
@@ -77,6 +94,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     'pickups',
     'effects',
     'pictures',
+    'objectives',
   ].includes(slot.group);
   let cleaned = false;
   surface.previewCleanup = (preserveStatus = false) => {
@@ -130,6 +148,83 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       phase(`reading and decoding ${id}…`, 'decoding');
       await prepareFont(fontAsset, fontBlob, resolved);
       if (!isCurrent()) return;
+    }
+    if (TEAM_OUTCOME_SLOTS.includes(slot.id)) {
+      if (mode === 'context' && fieldMode !== 'team')
+        throw new Error(
+          'Team outcomes use Couch Team context. Choose its actual event scene or Native size.',
+        );
+      if (asset.kind === 'recipe' && mode !== 'context') {
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = 32;
+        canvas.setAttribute('role', 'img');
+        canvas.setAttribute('aria-label', `${slot.label} recipe preview`);
+        drawTeamOutcomeBadge(
+          canvas.getContext('2d'),
+          { kind: 'recipe' },
+          { left: 4, y: 16 },
+          1,
+          [resolved.tokens.amber, resolved.tokens.cyan],
+          true,
+          0,
+        );
+        canvas.style.width = mode === 'native' ? '32px' : '192px';
+        canvas.style.maxWidth = '100%';
+        surface.append(
+          canvas,
+          text(
+            'small',
+            'Isolated two-player badge recipe. Choose the actual Joint capture or Team reserve recovery scene to inspect timing and game-owned labels.',
+            'bounded-label',
+            'secondary',
+          ),
+        );
+        return;
+      }
+    }
+    if (TEAM_ENEMY_SLOTS.includes(slot.id)) {
+      if (mode === 'context' && fieldMode !== 'team')
+        throw new Error(
+          'Team enemy-state bodies use Couch Team context. Choose Couch Team or Native size.',
+        );
+      if (asset.kind === 'recipe' && mode !== 'context') {
+        const inherited = teamEnemyInheritance(slot.id);
+        asset = resolved.assets[inherited];
+        if (asset?.kind !== 'image')
+          throw new Error(
+            `Shared body ${inherited} is not prepared. Choose a complete collection.`,
+          );
+        surface.append(
+          text(
+            'small',
+            `Explicit shared-body inheritance: ${inherited}. Uploads replace only the selected Team enemy role/state.`,
+            'bounded-label',
+            'secondary',
+          ),
+        );
+      }
+    }
+    if (slot.id.startsWith('team.pilot.')) {
+      if (mode === 'context' && fieldMode !== 'team')
+        throw new Error(
+          'Team player-state bodies use Couch Team context. Choose Couch Team or Native size.',
+        );
+      if (asset.kind === 'recipe' && mode !== 'context') {
+        const inherited = `player.scout.${slot.id.split('.').at(-1)}`;
+        asset = resolved.assets[inherited];
+        if (asset?.kind !== 'image')
+          throw new Error(
+            `This Team recipe inherits ${inherited}, which has no prepared artwork. Load a reviewed collection or upload a body.`,
+          );
+        surface.append(
+          text(
+            'small',
+            `Explicit shared-body inheritance: ${inherited}. Uploads replace only the selected Team seat/state/treatment.`,
+            'bounded-label',
+            'secondary',
+          ),
+        );
+      }
     }
     const blob = asset.file && blobs.get(asset.file.sha256);
     if (asset.file && !blob) {
@@ -223,6 +318,192 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       return;
     }
     const palette = canvasPresentation(resolved).palette;
+    if (
+      [...TEAM_ANCHOR_SLOTS, ...TEAM_CORE_SLOTS].includes(slot.id) &&
+      mode === 'context' &&
+      fieldMode !== 'team'
+    )
+      throw new Error(
+        'Relay objectives belong to Team. Choose Team / Relay Yard or inspect Native size.',
+      );
+    if (TEAM_EMITTER_SLOTS.includes(slot.id) && mode === 'context' && fieldMode !== 'team')
+      throw new Error(
+        'Emitter hazards belong to Team. Choose Couch Team / Relay Yard or inspect Native size.',
+      );
+    if (TEAM_EMITTER_SLOTS.includes(slot.id) && asset.kind === 'recipe' && mode !== 'context') {
+      const warning = slot.id.endsWith('warning'),
+        size = warning ? 24 : 16,
+        canvas = document.createElement('canvas');
+      canvas.width = canvas.height = size;
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', `${slot.label} fixed recipe preview`);
+      const ctx = canvas.getContext('2d'),
+        frames = { [slot.id]: { kind: 'recipe' } };
+      ctx.save();
+      if (warning) {
+        ctx.scale(size / 4, size / 4);
+        drawTeamEmitterWarning(ctx, frames, { x: 0.4, y: 0.4 }, { x: 2.4, y: 2.4 }, palette);
+      } else {
+        ctx.scale(size / 2, size / 2);
+        drawTeamEmitterSpark(ctx, frames, { x: 1, y: 1 }, palette);
+      }
+      ctx.restore();
+      if (mode === 'alpha') {
+        const pixels = ctx.getImageData(0, 0, size, size);
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          const a = pixels.data[i + 3];
+          pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = a;
+          pixels.data[i + 3] = 255;
+        }
+        ctx.putImageData(pixels, 0, 0);
+      }
+      canvas.style.width = mode === 'native' ? `${size}px` : '192px';
+      canvas.style.maxWidth = '100%';
+      surface.append(
+        canvas,
+        text(
+          'small',
+          'Native glyph demonstration. Relay Yard Emitter warning and Travelling spark scenes show actual targets, positions and timing.',
+          'bounded-label',
+          'secondary',
+        ),
+      );
+      return;
+    }
+    if (TEAM_SUPPORT_SLOTS.includes(slot.id) && mode === 'context' && fieldMode !== 'team')
+      throw new Error(
+        'Support belongs to Team. Choose Couch Team / Support pulse or inspect Native size.',
+      );
+    if (TEAM_SUPPORT_SLOTS.includes(slot.id) && asset.kind === 'recipe' && mode !== 'context') {
+      const pulse = slot.id === 'team.support.pulse',
+        size = pulse ? 64 : 24;
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = size;
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', `${slot.label} fixed recipe preview`);
+      const ctx = canvas.getContext('2d'),
+        frames = { [slot.id]: { kind: 'recipe' } };
+      ctx.save();
+      if (pulse) {
+        ctx.scale(size / 13, size / 13);
+        drawTeamSupportPulse(
+          ctx,
+          frames,
+          { x: 6.5, y: 6.5, player: 0 },
+          [palette.accent, palette.safe],
+          true,
+        );
+      } else {
+        ctx.scale(size / 2, size / 2);
+        ctx.translate(1, 1);
+        drawTeamSlowed(ctx, frames, palette);
+      }
+      ctx.restore();
+      if (mode === 'alpha') {
+        const pixels = ctx.getImageData(0, 0, size, size);
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          const alpha = pixels.data[i + 3];
+          pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = alpha;
+          pixels.data[i + 3] = 255;
+        }
+        ctx.putImageData(pixels, 0, 0);
+      }
+      canvas.style.width = mode === 'native' ? `${size}px` : '192px';
+      canvas.style.maxWidth = '100%';
+      surface.append(
+        canvas,
+        text(
+          'small',
+          'Fixed functional recipe. Uploads add bounded decoration; Team / Support pulse shows both players and actual effect timers.',
+          'bounded-label',
+          'secondary',
+        ),
+      );
+      return;
+    }
+    if (TEAM_ANCHOR_SLOTS.includes(slot.id) && asset.kind === 'recipe' && mode !== 'context') {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 24;
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute(
+        'aria-label',
+        `${slot.label} decoration; live anchor labels are drawn separately`,
+      );
+      const ctx = canvas.getContext('2d');
+      drawTeamAnchor(
+        ctx,
+        { [slot.id]: { kind: 'recipe' } },
+        { x: 12, y: 12, captured: slot.id.endsWith('.captured') },
+        palette,
+        20,
+      );
+      if (mode === 'alpha') {
+        const pixels = ctx.getImageData(0, 0, 24, 24);
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          const alpha = pixels.data[i + 3];
+          pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = alpha;
+          pixels.data[i + 3] = 255;
+        }
+        ctx.putImageData(pixels, 0, 0);
+      }
+      canvas.style.width = mode === 'native' ? '24px' : '192px';
+      canvas.style.maxWidth = '100%';
+      surface.append(
+        canvas,
+        text(
+          'small',
+          'Decoration only. Anchor identity and captured checkmark stay visible in the Team context preview.',
+          'bounded-label',
+          'secondary',
+        ),
+      );
+      return;
+    }
+
+    if (TEAM_CORE_SLOTS.includes(slot.id) && asset.kind === 'recipe' && mode !== 'context') {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 64;
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute(
+        'aria-label',
+        `${slot.label} state-overlay recipe; shared core body is shown in Team context`,
+      );
+      const ctx = canvas.getContext('2d');
+      ctx.save();
+      ctx.scale(64 / 3, 64 / 3);
+      drawTeamCoreCue(
+        ctx,
+        { [slot.id]: { kind: 'recipe' } },
+        {
+          core: { x: 1.5, y: 1.5 },
+          shielded: slot.id.endsWith('.shielded'),
+          defeated: slot.id.endsWith('.secured'),
+        },
+        palette,
+      );
+      ctx.restore();
+      if (mode === 'alpha') {
+        const pixels = ctx.getImageData(0, 0, 64, 64);
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          const alpha = pixels.data[i + 3];
+          pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = alpha;
+          pixels.data[i + 3] = 255;
+        }
+        ctx.putImageData(pixels, 0, 0);
+      }
+      canvas.style.width = mode === 'native' ? '64px' : '192px';
+      canvas.style.maxWidth = '100%';
+      surface.append(
+        canvas,
+        text(
+          'small',
+          'State-overlay recipe. Team context keeps the shared relay body; an uploaded image replaces the body while functional cues remain visible.',
+          'bounded-label',
+          'secondary',
+        ),
+      );
+      return;
+    }
     if (mode === 'context' && fieldMode === 'team' && fieldSlot) {
       if (asset.kind === 'recipe' && slot.group === 'pictures')
         throw new Error(

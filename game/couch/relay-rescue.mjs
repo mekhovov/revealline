@@ -39,8 +39,8 @@ import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCoopPresentation } from './coop-presentation.mjs';
 import { createCandidateTeamPictures } from './candidate-team-pictures.mjs';
 import {
-  COOP_PICTURE_BINDINGS,
-  COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+  COOP_SUPPORTED_PICTURE_BINDINGS,
+  COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
 } from './coop-picture-bindings.mjs';
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 import { createCoopPresentationImport } from './coop-import-source.mjs';
@@ -1477,8 +1477,8 @@ export function bootCoop({
               getSnapshot: presentationPage.current,
             })
           : createCoopPresentation({
-              bindings: COOP_PICTURE_BINDINGS,
-              historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+              bindings: COOP_SUPPORTED_PICTURE_BINDINGS,
+              historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
               getSnapshot: presentationPage.current,
               readPicture: presentationPage.readPicture,
               decodeImage: decodeCoopPicture,
@@ -2178,8 +2178,8 @@ export function bootCoop({
         throw aborted();
     };
     const leaseOptions = {
-      bindings: COOP_PICTURE_BINDINGS,
-      historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+      bindings: COOP_SUPPORTED_PICTURE_BINDINGS,
+      historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
       getSnapshot() {
         check();
         const current = presentationPage.current();
@@ -3668,6 +3668,7 @@ export function bootCoop({
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
+    painter.observe(run);
     const terminalMessage =
       run.status === 'won'
         ? 'Team objective complete. Your shared result is ready.'
@@ -4195,9 +4196,10 @@ export function bootCoop({
       if (!current()) return;
       importOperation = null;
       importDisplay = null;
+      const detail = String(error.message).trim();
       packStatus.begin({ message: 'Team pack unavailable.' }).finish({
         state: 'error',
-        message: `Pack unchanged: ${error.message}. Retry pack or choose another file.`,
+        message: `Pack unchanged: ${detail}${/[.!?]$/.test(detail) ? '' : '.'} Retry pack or choose another file.`,
       });
       $('coop-pack-cancel').hidden = true;
       $('coop-pack-retry').hidden = false;

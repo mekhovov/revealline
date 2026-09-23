@@ -1,0 +1,11 @@
+# Review Team presentation production
+
+Review the exact compiled Team collection for First Connection and Relay Yard. Record the source commit, Team recipe fingerprint, collection revisions, artwork hashes and decoded bindings. Inspect player identity and each pilot state, hunter phases, drifter, anchors, core states, Support, emitter warning/spark, rescue, recovery and joint capture with normal and reduced effects. Use actual game-earned states where available and label synthetic inspection scenes. Compare light/dark artwork, native sprite scale, desktop and short-landscape controls.
+
+Preserve gameplay and original assets. Do not inherit a Solo effects or motion approval merely because an inventory group matches. Keep unreviewed Team roles at source stage and list their remaining checks. An empty missing-bindings report is not an art review. Update the production declaration only for exactly reviewed inputs; preserve earlier immutable records and qualify the final committed release independently.
+
+Before review, run the explicit Team production migration and verify unchanged historical records and payloads, atomic failure cases, and repeat export byte equality. Use the resulting ledger in the final release gates; do not rewrite old frozen bundles or tag bytes.
+
+When reconciling onto canonical main, authenticate the pre-Team fpv57 fixture using the existing reconciliation oracle and complete bundle hash; keep its generic-writer rejection separate from current-ledger no-op reproduction. Preserve canonical history and the inert alternate archive. Do not reuse an unpublished Team preview by revision number. Review the actual generated successor before changing exact Team picture bindings or host fixture revisions, and independently review any reopened UI fingerprint.
+
+When changing shared Team image admission, keep the slot constants in the dependency-free `team-runtime-slots.mjs` leaf and preserve owner-module exports. Pin the leaf in both UI and Team fingerprints. Verify exact 42-slot membership/order and shared export identities, plus independent invalidation of both fingerprints when the leaf changes. Do not duplicate allowlists or promote review quality from source tests alone.

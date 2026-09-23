@@ -53,6 +53,7 @@ export function attachTeamDiscovery({
             selected = key;
           },
           onViewChange,
+          onReturnFocus: (target) => revealFocused(visit, target, () => !pictures?.primary()),
         })
       : null;
   const primary = () => pictures?.primary() ?? (operation ? cancel : (available()?.button ?? back));
@@ -251,6 +252,39 @@ export function attachTeamDiscovery({
   }
   if (search) search.oninput = filterCards;
   if (campaign) campaign.onchange = filterCards;
+  function revealFocused(owner, target, isTargetCurrent) {
+    const current = () =>
+      live(owner) &&
+      !operation &&
+      foreground() &&
+      document.activeElement === target &&
+      dialog.contains(target) &&
+      isTargetCurrent() &&
+      visible(target);
+    if (!current()) return;
+    const rect = target.getBoundingClientRect(),
+      bounds = dialog.getBoundingClientRect(),
+      width = document.documentElement.clientWidth || document.defaultView?.innerWidth,
+      height = document.documentElement.clientHeight || document.defaultView?.innerHeight,
+      left = Math.max(0, bounds.left + dialog.clientLeft),
+      top = Math.max(0, bounds.top + dialog.clientTop),
+      right = Math.min(width, bounds.left + dialog.clientLeft + dialog.clientWidth),
+      bottom = Math.min(height, bounds.top + dialog.clientTop + dialog.clientHeight);
+    if (
+      ![rect.left, rect.top, rect.right, rect.bottom, left, top, right, bottom].every(
+        Number.isFinite,
+      ) ||
+      rect.width <= 0 ||
+      rect.height <= 0 ||
+      right <= left ||
+      bottom <= top ||
+      (rect.left >= left && rect.right <= right && rect.top >= top && rect.bottom <= bottom)
+    )
+      return;
+    // Focus and layout callbacks may publish a newer visit or destination.
+    if (current())
+      target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+  }
   function open(opener = document.activeElement) {
     if (disposed || dialog.open || visit || !foreground() || !canOpen()) return false;
     const owner = { opener, cards: [], restore: true, sequence: ++visitSequence };
@@ -269,9 +303,13 @@ export function attachTeamDiscovery({
       if (!owns(owner)) return false;
       dialog.showModal();
       if (!live(owner)) return false;
-      const active = document.activeElement;
+      const active = document.activeElement,
+        target = primary();
       if (unclaimed(active) || active === opener || active === dialog || active === back)
-        primary().focus({ preventScroll: true });
+        target.focus({ preventScroll: true });
+      // Native showModal may already have focused this action. Reveal it without
+      // refocusing, but only while the same visit still owns that focus.
+      revealFocused(owner, target, () => primary() === target);
       if (live(owner)) pictures?.start();
       return live(owner);
     } catch {
