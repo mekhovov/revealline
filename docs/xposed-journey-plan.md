@@ -1,10 +1,23 @@
 # Xposed-led Journey — implementation contract
 
+Current status: [accepted completed/remaining plan](plan-status-2026-09-23.md).
+The PR261 successor below remains an optional, balance-pending Studio study;
+recorded feasibility routes use their historical authored rules and do not
+qualify current gameplay tuning. Default Journey/Team enrollment and official
+awards are unchanged. Inspect and Apply remain separate authoring actions.
+
 The [current-edition adaptation audit](verification/p00-current-adaptation-audit.md)
 now resolves the 48 numbered reference crosswalks against explicit
 `whole-spatial-v5` execution identities. Historical declarations and their pins
 remain intact; selected-edition design review and all final dispositions are
 still pending. This closes an audit-selector gap, not P00 acceptance.
+
+The [Twin inner-receiver study](verification/journey-sentinel-inner-study.md)
+keeps the existing capture rules and map geometry while moving one receiver into
+the retained core court. The known shared-mouth closure no longer captures both
+objectives; ordinary and inner-first historical routes remain recorded. This is
+an explicit Studio study, not automatic Journey adoption or final human-balance
+acceptance.
 
 Current checkpoint: [2026-09-22 item-by-item completion audit](verification/journey-completion-2026-09-22.md).
 The [shared-return follow-up](verification/journey-team-partner-returns.md) now

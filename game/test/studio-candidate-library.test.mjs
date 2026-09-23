@@ -93,6 +93,24 @@ test('Sorting successor search preserves the paired Rover edition selector and I
   assert(visible()[0].querySelector('#rover-edition'));
 });
 
+test('inner receiver search keeps the original edition and explicit Inspect in the same entry', () => {
+  const { search, visible, $ } = setup();
+  search('inner receiver');
+  assert.equal(visible().length, 1);
+  assert.equal(visible()[0], $('sentinel-spatial').closest('[data-library-entry]'));
+  assert.equal($('sentinel-spatial-edition').closest('[data-library-entry]'), visible()[0]);
+  const editions = [...$('sentinel-spatial-edition').querySelectorAll('option')];
+  assert.deepEqual(
+    editions.map((option) => [option.value, option.textContent.trim()]),
+    [
+      ['original', 'Original receiver galleries'],
+      ['inner', 'Inner receiver approach · balance pending'],
+    ],
+  );
+  assert.equal($('sentinel-spatial-edition').value, 'original');
+  assert.equal(editions[0].hasAttribute('selected'), false);
+});
+
 test('outer-pocket search preserves the Shared windows edition selector beside its Inspect action', () => {
   const { search, visible, $ } = setup();
   search('contested outer pockets');

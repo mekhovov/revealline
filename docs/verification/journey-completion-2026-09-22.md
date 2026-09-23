@@ -6,6 +6,63 @@
 automated feasibility, native observation, human balance and public deployment
 are separate gates. All P00–P15 phases still have open acceptance items.
 
+## Current status pointer — 23 September 2026
+
+Use the [accepted delivery plan](../plan-status-2026-09-23.md) for the live release
+and remaining queue. The publication sequence and draft states recorded below
+are historical checkpoints, not current blockers or delivery claims. PR261 now
+has an owner handoff for the optional labelled Studio-only study; default
+Journey adoption and current-default human balance remain separate future scopes. See the
+[current study boundary](journey-sentinel-inner-study.md#current-main-studio-only-preparation--23-september-2026).
+The unversioned preparation waits behind PR241/v0.95 and must be reconciled on
+that accepted main before review, version allocation or delivery.
+
+## Historical delivery update — 22 September 2026
+
+This section supersedes the earlier publication/queue statements below, which
+remain historical evidence. The per-phase and extension acceptance tables still
+describe unfinished work; no entire phase has final human/device acceptance.
+
+- **Published:** [v0.82.0](https://github.com/mekhovov/revealline/releases/tag/v0.82.0),
+  exact source `9b26f2a02fb621a6f023422768e34605ae103739`, published September22
+  at11:01:44UTC. PR225's source and exact-merge checks passed11,688 tests.
+  Pages publication passed; PR254 subsequently repaired mutable release links
+  without changing the frozen edition (Pages run35724104771 succeeded).
+- **Merged, not yet released:** PR250, the Legacy session-only continuation and
+  original-media recovery increment, merged as
+  `64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e`. Exact-merge qualification
+  [35729850339](https://github.com/mekhovov/revealline/actions/runs/35729850339)
+  has passed source qualification; its four test shards are still running at
+  this checkpoint. v0.82.1 freeze, publication, Pages and public acceptance remain.
+- **Reviewed, awaiting integrated delivery:** Solo save-warning PR253, Couch
+  warning/focus PR255, backup-focus PR257 and current-edition adaptation audit
+  PR260 have scoped independent review and technical evidence, not publication.
+  PR260 resolves91missions/66adaptation links/48references/396runtime identities
+  while retaining all historical audit output and source-image observations.
+  Final adaptation dispositions still require review of the selected edition.
+- **New bounded P11 study:** [Twin inner receiver](journey-sentinel-inner-study.md)
+  invalidates the demonstrated shared-mouth double-receiver shortcut without
+  changing capture rules or physics. Nine legal routes,48 passing tests on both
+  Node versions, and native Studio Inspect/Apply/first-return/reload checks are
+  recorded. Wider balance, independent review, exact CI and delivery remain.
+- **Other delivery queue:** open drafts230,231,234,235,236,237,238,239,240,241,
+  243,244,245,247,252,256,258 cover retry/replay, Team presentation/focus,
+  Studio responsiveness/recovery, backup preflight and CI supersession. Integrate
+  their dependency stacks coherently; do not publish236 without its matching
+  generated presentation data. Closed-unmerged233 and242 require recovery of
+  their preserved heads; they are not delivered fixes.
+
+The sole release owner serializes250/v0.82.1, then P07 public acceptance and253.
+No competing tag or version is allocated here. Every accepted successor still
+needs exact-source checks, reviewed PR, immutable version, Pages and public
+verification. Do not turn a passing scoped test or merged PR into a delivery claim.
+
+**Critical remaining rollout:** normal entry still selects older content. The
+new Solo/Versus edition requires `whole-spatial-v5`; new Team requires
+`team-spatial-originals-1`. Adopt them through normal entry with explicit Legacy
+access and unchanged historical saves/links, then qualify mode/Workshop returns,
+reload, Next and Skip. Publishing the explicit test editions alone does not do this.
+
 The user has prioritized publishing the ready work before further development.
 [The v0.82.0 delivery checkpoint](journey-delivery-checkpoint.md) integrates this
 lane with current main and tracks the reviewed PR → immutable release → Pages
