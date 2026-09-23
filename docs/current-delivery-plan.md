@@ -4,8 +4,8 @@
 
 Use the [completed and remaining delivery plan](plan-status-2026-09-23.md) for the
 current release state, priorities, estimates and P00–P15 closure checklist.
-v0.83–v0.86 are delivered; v0.87 is published on GitHub but still awaiting Pages
-promotion at the 00:00 UTC check. The full redesign is not finally accepted.
+v0.83–v0.87 are delivered; v0.87 Pages and scoped public acceptance are complete
+at the 00:26 UTC check. The full redesign is not finally accepted.
 The earlier text below is preserved historical scope and evidence, not today's
 release queue.
 
