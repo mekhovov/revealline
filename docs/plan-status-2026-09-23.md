@@ -1,6 +1,6 @@
 # Reveal Line — completed work and remaining delivery plan
 
-Status checked **23 September 2026, 13:35 UTC**. This is the current status and
+Status checked **23 September 2026, 13:42 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source
 observations or release evidence. The original P00–P15 version allocations are
@@ -70,7 +70,7 @@ remains visible there rather than being treated as rejected or completed.
 | ------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Completed** | Public releases v0.83.0–v0.93.0                                                                                            | Default Journey, unified library, safer replacement, visible difficulty/testing controls, gp2 defaults, chapter recovery, Continuous Next, collision-only gp4 courses, Replay/Studio UX recovery and retained visual-session recovery are publicly delivered within their recorded scopes. |
 | **Partial**   | Core game framework and authored content                                                                                   | 91 Journey Solo/Versus missions, 12 Team missions, retained Classic content, authoring, media, bonuses and threat roles exist; balance, presentation, recovery, devices and whole-campaign acceptance remain open.                                                                         |
-| **Next — P0** | Close the v0.94 Team/presentation integration blocker                                                                      | Add one mixed exact-fpv58 visual-session-v5 + gameplay-tuning save/restore/resume proof, rerun exact-head review, merge only after approval, then version, publish and verify Pages.                                                                                                       |
+| **Next — P0** | Deliver the review-approved v0.94 Team/presentation integration                                                            | Merge exact approved head, qualify/freeze merged source, publish immutable v0.94.0, promote its selector and verify actual public Pages before calling it complete.                                                                                                                        |
 | **Next — P1** | PNG/JPEG failure; current-speed pacing; capture-stop/action feedback; broader gp4 qualification                            | Release each correction separately with public Retry/Play or representative gameplay evidence. Keep v0.91 delivery distinct from human balance, all-collision and exact-save proof.                                                                                                        |
 | **Next — P2** | Navigation, touch/controller parity, compact mobile HUD, iPhone behavior, Steam Deck Confirm/Start, save/media recovery    | Complete keyboard-only, controller-only and touch-only journeys; retain physical-device evidence separately from simulated checks.                                                                                                                                                         |
 | **Then — P3** | Studio and Team stacks, reference dispositions, soundtrack review (F31–F38), whole-Journey and final browser qualification | Reconcile existing drafts against current main and close each feature's own content, listening, accessibility, offline and human-review gates.                                                                                                                                             |
@@ -280,23 +280,24 @@ recorded and is not counted. Long automated suites and extended gameplay,
 responsive, offline and device matrices were explicitly waived/deferred rather
 than passed.
 
-### In review — v0.94.0 Team/presentation integration
+### Review approved — v0.94.0 Team/presentation integration
 
 [PR305](https://github.com/mekhovov/revealline/pull/305) is a draft at exact head
-`8d16f1ef9511ec4c7708b7c61031a8488d1e59c7` on current main `3539027a`.
+`ed9695f87dbd32788cb2ae054bd3a507ae8dbdc0` on current main `3539027a`.
 Its 154-path historical Team stack, three conflict resolutions, 0.94.0 version
 alignment, exact retained fpv58 bytes/closure, current revision-62 policy, PR239
-coverage and PR241 exclusion have independent review support. Replacement run
-`35865264053` passed required preflight and build; its broad test and release-gate
-jobs were explicitly skipped.
+coverage and PR241 exclusion passed independent review. The final four-path delta
+adds the combined exact-fpv58 + gp4-tuned visual-session-v5 proof: authenticated
+picture ownership, suspend, restore, recorded-direction/fixed-command resume,
+checkpoint equality, replay verification and re-save all retain revision 58 without
+drift to current revision 62. The named case passed 1/1 and the complete visual
+session file passed 25/25. Fresh hosted run `35867341512` passed required preflight
+and build; its broad test and release-gate jobs were explicitly skipped.
 
-The candidate is **blocked, not complete**. It separately proves exact fpv58
-retention and visual-session v5 restore/resume across gameplay-tuning generations,
-but lacks the requested combined case: an exact published fpv58 visual owner in a
-tuned v5 save must restore and resume with checkpoint equality and without owner
-drift or upgrade to revision 62. Add that focused proof, repeat exact-head review,
-then merge, freeze, release, select for Pages and verify the public game. Until all
-those gates pass, v0.93.0 remains the latest public release.
+The candidate is **review approved, not delivered**. Merge, merged-source
+qualification/freeze, immutable release publication, Pages selection and actual
+public verification remain mandatory. Until those gates pass, v0.93.0 remains the
+latest public release.
 
 ## 5. Remaining — prioritized execution queue
 
@@ -306,7 +307,7 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 
 | Priority     | Item / current state                                                | Completion condition                                                                                                                                                                                | Indicative effort                                                |
 | ------------ | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| P0           | v0.94 Team/presentation integration — PR305 blocked in review       | Add exact fpv58 + tuned visual-v5 save/restore/resume proof; obtain clean exact-head approval; merge, qualify/freeze, publish immutable v0.94.0, promote selector and verify actual public Pages    | 2–4h for proof/review if no defect; 2–5h release/Pages afterward |
+| P0           | v0.94 Team/presentation integration — PR305 review approved         | Merge exact `ed9695f8`, qualify/freeze merged source, publish immutable v0.94.0, promote selector and verify actual public Pages before closing covered owner drafts                                | 2–5h conditional release/Pages elapsed                           |
 | P1           | Broader gp4 gameplay qualification — public delivery bounded        | Prove representative continuous-heading/all-collision behavior, exact gp3/gp4 save and replay reconstruction, extended win/Next paths and human balance without rewriting v0.91 evidence            | 1–3 days initial bounded review; devices remain under P2         |
 | P1           | PNG/JPEG mission-selection failure — unresolved                     | Identify affected mission/mode/asset and reproduce; repair actual cause; public Download/Retry/Play succeeds without deleting media or bypassing validation                                         | 2–4h diagnosis;3–8h scoped repair once reproducible              |
 | P1           | Current-speed difficulty/pacing review                              | Representative early/middle/late Solo/Versus/Team routes; fair departures, enemy/craft ratios, useful geometry and no trivial one-cut bypasses outside teaching. Human feedback recorded separately | 1–3 days first pass;6–12h per map-fix release                    |
@@ -315,7 +316,7 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 | P2           | Retained-media/presentation recovery after v0.93                    | Extend accepted exact-revision/session-only recovery through backup/import/failure and mixed historical tuning paths without rewriting v0.93 evidence                                               | 6–10h after the v0.94 blocker                                    |
 | P2           | Twin Receivers — PR261                                              | Rebase reviewed study, adopt correct pictured Journey edition, reassess fast double-objective closures under gp2 and publish                                                                        | 6–10h                                                            |
 | P3           | Studio rescue percentages — PR239                                   | Close the owner draft after PR305 proves exact inclusion once; retain same-tick board/HUD/note behavior and avoid a duplicate merge                                                                 | 1–2h after PR305 acceptance                                      |
-| P3           | Team presentation/history stack — PR305                             | Close the mixed fpv58/tuned-v5 blocker, publish the integrated 154-path stack, then close covered owner drafts; keep PR241 separately reviewable                                                    | Included in P0; 4–8h follow-up closure/public checks             |
+| P3           | Team presentation/history stack — PR305                             | Publish the review-approved integrated 154-path stack, then close covered owner drafts; keep PR241 separately reviewable                                                                            | Included in P0; 2–4h follow-up closure/public checks             |
 | P3           | Final 48 reference dispositions                                     | PR303 delivers the 48/48 coverage audit; add explicit current-edition keep/merge/redesign/reject decisions with evidence rather than treating link coverage as final disposition                    | 8–16h review, plus targeted fixes                                |
 | P3           | Whole-Journey and Team qualification                                | All chapter transitions, endings, optional arcs, broader mastery/starts, real cooperation and refreshed gp2 pacing                                                                                  | 3–6 days initial bounded workstream; human availability required |
 | P3           | Final accessibility/performance/offline/recovery                    | Physical keyboard/touch/controller matrix, reduced effects/contrast/captions, storage/download interruptions, measured performance and rollback                                                     | 3–5 days after functional blockers; devices required             |
@@ -498,9 +499,8 @@ not every later study or human/device requirement in its historical phase record
   `6842203fbf24db198da21759e23d5c5c64d499dd`. Current accepted main is
   `3539027af095a5a8de6e304ccf327d8e5f71e547`; its later PR302–304 merges are
   CI/audit/source-tool work and do not change the selected frozen game bytes.
-- PR305 cannot move from In review to Completed until its mixed historical
-  visual/tuning compatibility proof, exact-head approval, merge/freeze, immutable
-  release, Pages selector and public verification all pass.
+- PR305 has exact-head approval at `ed9695f8`; it cannot move to Completed until
+  merge/freeze, immutable release, Pages selector and public verification all pass.
 - Local evidence: `.cache/ux-delivery-review-20260922/current-delivery-plan.md`,
   `journey-campaign-crosswalk.md`, `.cache/main-v0860-public-audit/REPORT.md`,
   `.cache/main-v0870-public-audit/REPORT.md`, and the bounded v0.92 receipt
