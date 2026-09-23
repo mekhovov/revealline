@@ -28,6 +28,7 @@ import { journeyLibrarySource } from './mission-library/journey-source.mjs';
 import { combineJourneyLibrarySources } from './mission-library/cross-mode-journey.mjs';
 import { trackMissionLibraryOpening } from './mission-library/opening-intent.mjs';
 import { authoredMissionSuccessor } from './mission-library/authored-continuation.mjs';
+import { librarySuccessor, retainedLibraryMission } from './mission-library/continuous-next.mjs';
 import {
   journeyMissionDetails,
   authoredJourneyMissionTags,
@@ -423,6 +424,8 @@ try {
     : null;
   if (journeyProfile) await journeyProfile.load();
   let journeyChooser = null,
+    libraryNextOperation = null,
+    retainedLibraryOwner = null,
     unifiedLibrary = null,
     unifiedLibraryLoading = null,
     unifiedChooser = null,
@@ -1964,6 +1967,10 @@ try {
     }
     const scope = controllerScope();
     if (courseBlocked()) return;
+    if (libraryNextOperation) {
+      libraryNextOperation.cancel({ restoreFocus: true });
+      return;
+    }
     if (resultAttempt) {
       cancelResultAttempt({ restoreFocus: true });
       return;
@@ -6376,17 +6383,7 @@ try {
         run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
       );
       if (recoverGameplayTuning(run.level)?.adminOverride) $('result-medals').textContent = '';
-      $('next-button').textContent = practice
-        ? 'Try it yourself →'
-        : journeyEnabled && journeyMission()
-          ? nextJourneyMission(journeyMission().id)
-            ? 'Next mission →'
-            : candidateHost?.isOptionalSequence(journeyMission().id)
-              ? 'End of sequence · find missions'
-              : 'Journey complete · replay or exit'
-          : currentSelection().complete
-            ? 'Campaign complete →'
-            : 'Next uncleared mission →';
+      $('next-button').textContent = practice ? 'Try it yourself →' : 'Next mission →';
       $('overlay-footnote').textContent = practice
         ? 'Demonstrations and imported maps do not grant unlocks.'
         : run.medal === 'gold'
@@ -6506,6 +6503,7 @@ try {
       ticket.button.focus({ preventScroll: true });
   }
   function cancelResultAttempt({ restoreFocus = false } = {}) {
+    libraryNextOperation?.cancel({ restoreFocus });
     if (resultAttempt)
       finishResultAttempt(
         resultAttempt,
@@ -6513,6 +6511,165 @@ try {
         'cancelled',
         restoreFocus,
       );
+  }
+  async function nextLibraryMission() {
+    if (
+      libraryNextOperation ||
+      run?.status !== 'won' ||
+      practice ||
+      scenario ||
+      courseSession ||
+      dialogOpen() ||
+      document.hidden
+    )
+      return;
+    const previous = run,
+      entry = activeEntry,
+      index = levelIndex,
+      epoch = resultAttemptEpoch,
+      controller = new AbortController(),
+      button = $('next-button'),
+      cancelButton = $('flight-preparation-cancel');
+    const operation = { cancel: null };
+    libraryNextOperation = operation;
+    let feedback;
+    const current = () =>
+      libraryNextOperation === operation &&
+      !controller.signal.aborted &&
+      run === previous &&
+      activeEntry === entry &&
+      levelIndex === index &&
+      resultAttemptEpoch === epoch &&
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      !dialogOpen();
+    const detach = () => {
+      document.removeEventListener('focusin', changedFocus);
+      document.removeEventListener('visibilitychange', lostForeground);
+      window.removeEventListener('blur', lostForeground);
+    };
+    operation.cancel = ({ restoreFocus = false } = {}) => {
+      if (libraryNextOperation !== operation) return;
+      libraryNextOperation = null;
+      detach();
+      controller.abort();
+      button.disabled = false;
+      feedback?.finish(
+        'Preparation cancelled. Your result is kept. Choose Next to retry.',
+        'cancelled',
+      );
+      if (
+        restoreFocus &&
+        run === previous &&
+        !document.hidden &&
+        document.hasFocus?.() !== false &&
+        !dialogOpen()
+      )
+        button.focus({ preventScroll: true });
+    };
+    function changedFocus(event) {
+      if (![button, cancelButton, document.body, document.documentElement].includes(event.target))
+        operation.cancel();
+    }
+    function lostForeground(event) {
+      if (document.hidden || event.type === 'blur') operation.cancel();
+    }
+    try {
+      feedback = beginPreparation(
+        'Finding the next mission… Your result is kept.',
+        operation.cancel,
+        'preparing',
+        true,
+      );
+      button.disabled = true;
+      cancelButton.focus({ preventScroll: true });
+      document.addEventListener('focusin', changedFocus);
+      document.addEventListener('visibilitychange', lostForeground);
+      window.addEventListener('blur', lostForeground);
+      const host = await getUnifiedMissionLibrary();
+      if (!current()) return;
+      await host.refreshInstalled();
+      if (!current()) return;
+      const mission = journeyEnabled ? journeyMission() : null;
+      const row = mission
+        ? host.library
+            .forMode('solo')
+            .find(
+              (item) =>
+                item.collection === 'Journey' &&
+                item.editionId === authoredRoute?.id &&
+                item.runtimeId === mission.id,
+            )
+        : retainedLibraryMission(host.library, {
+            mode: 'solo',
+            levelId: campaign.levels[levelIndex].id,
+            campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
+            sourcePackId: activeEntry.sourcePackId ?? null,
+            ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
+          });
+      const next = librarySuccessor(host.library, row, 'solo');
+      if (!next) {
+        feedback.finish(
+          'End of the Solo mission library. Replay or choose another mission whenever you like.',
+        );
+        return;
+      }
+      feedback.update({
+        status: 'preparing',
+        stage: 'preparing',
+        message: `Preparing ${next.name}… Your result is kept.`,
+      });
+      if (host.library.availability(next, 'solo').state !== 'ready') {
+        const ready = await host.library.prepare(next, { mode: 'solo', signal: controller.signal });
+        if (!current()) return;
+        if (ready.state !== 'ready')
+          throw new Error(ready.reason || 'The next mission is not ready.');
+      }
+      if (!current()) return;
+      // Keep admission cancellable while adapters verify installed originals.
+      // Transfer only immediately before their own guarded adoption/departure.
+      const activation = libraryActivationContext();
+      let transferred = false;
+      const context = {
+        ...activation,
+        signal: controller.signal,
+        isCurrent: () => activation.isCurrent() && (transferred || current()),
+        continuation: true,
+        onStatus: feedback.update,
+        transferContinuation: () => {
+          if (!current() || !activation.isCurrent()) return false;
+          transferred = true;
+          detach();
+          libraryNextOperation = null;
+          button.disabled = false;
+          feedback.finish();
+          button.focus({ preventScroll: true });
+          return activation.isCurrent();
+        },
+      };
+      const launched = await host.library.launch(next, { mode: 'solo', ...context });
+      if (launched === false && !transferred && current())
+        throw new Error('The next mission could not start.');
+      if (!controller.signal.aborted) feedback.finish();
+    } catch (error) {
+      if (run === previous && !controller.signal.aborted && !document.hidden) {
+        feedback?.finish(
+          `Could not prepare the next mission: ${error.message} Your result is kept. Choose Next to retry.`,
+          'error',
+        );
+      }
+    } finally {
+      detach();
+      if (libraryNextOperation === operation) libraryNextOperation = null;
+      if (!libraryNextOperation && !resultAttempt) button.disabled = false;
+      if (
+        run === previous &&
+        document.activeElement === cancelButton &&
+        !document.hidden &&
+        !dialogOpen()
+      )
+        button.focus({ preventScroll: true });
+    }
   }
   async function prepareResultAttempt(
     kind,
@@ -8129,7 +8286,7 @@ try {
     if (journeyEnabled && !practice && !scenario && run?.status === 'won' && journeyMission()) {
       const next = nextJourneyMission(journeyMission().id);
       if (next) void launchJourneyMission(next, { kind: 'next' });
-      else journeyChooser.open($('next-button'));
+      else void nextLibraryMission();
       return;
     }
     if (campaignOverview && !practice) {
@@ -8146,6 +8303,10 @@ try {
       const selection = authoredMissionSuccessor(activeEntry, levelIndex);
       if (!selection.atEnd && !scenario && run?.status === 'won') {
         void prepareResultAttempt('next', selection.levelIndex);
+        return;
+      }
+      if (selection.atEnd && !scenario) {
+        void nextLibraryMission();
         return;
       }
       cancelResultAttempt();
@@ -8535,6 +8696,7 @@ try {
   }
   function departLibraryMission(context) {
     if (context.isCurrent?.() === false) return false;
+    if (context.transferContinuation && !context.transferContinuation()) return false;
     const target = unifiedLibrary.library.find(context.libraryMissionId);
     return requestModeDeparture('library', { preventDefault() {} }, $('shell-play'), {
       libraryTarget: target,
@@ -8543,13 +8705,67 @@ try {
   }
   async function launchLibraryClassic(pack, selection, context) {
     if (context.isCurrent?.() === false) return false;
+    if (context.continuation && journeyEnabled && context.mode === 'solo') {
+      // Validate the destination's exact picture before leaving this document.
+      // No target run/progress is adopted by the Journey host.
+      const authored = pack === null ? baseEntry : resolvePackCampaign(pack, selection.campaignId);
+      const entry = executionForEntry(authored, library.preferences.campaignDifficulty);
+      const level = entry.campaign.levels.find((item) => item.id === selection.levelId);
+      if (!level) throw new Error('The exact next mission is unavailable.');
+      const nextTheme =
+        entry.themes.find((item) => item.id === (level.themeId || entry.campaign.themeId)) ||
+        entry.themes[0];
+      const options = {
+        seed,
+        turnPolicy,
+        classId: entry.classRecipes[0].id,
+        classRecipes: entry.classRecipes,
+      };
+      const pictures = newFlightPictures({
+        nextRun: createRun(applyGameplayTuning(level, nextGameplayTuning(entry)), options),
+        nextRunId: crypto.randomUUID(),
+        entry,
+        nextThemeId: nextTheme.id,
+      });
+      try {
+        await pictures.ensure(nextTheme.id, { signal: context.signal, onStatus: context.onStatus });
+        if (context.isCurrent?.() === false) return false;
+        return departLibraryMission(context);
+      } finally {
+        pictures.dispose();
+      }
+    }
     if (journeyEnabled || context.mode !== 'solo') return departLibraryMission(context);
+    if (context.continuation && run?.status === 'won') {
+      const authored = pack === null ? baseEntry : resolvePackCampaign(pack, selection.campaignId);
+      const entry = executionForEntry(authored, library.preferences.campaignDifficulty);
+      const nextIndex = entry.campaign.levels.findIndex((level) => level.id === selection.levelId);
+      if (nextIndex < 0) throw new Error('The exact next mission is unavailable.');
+      if (context.transferContinuation && !context.transferContinuation()) return false;
+      const selected = await prepareResultAttempt('next', nextIndex, entry);
+      if (selected) {
+        const row = unifiedLibrary.library.find(context.libraryMissionId);
+        retainedLibraryOwner = {
+          entry: activeEntry,
+          ownerId: row.ownerId,
+          editionId: row.editionId,
+        };
+      }
+      return selected;
+    }
     if ($('shell-home').open) $('shell-home').close();
     const revision = unifiedLaunchRevision;
     const launch = {
       opener: $('shell-play'),
       isCurrent: () => revision === unifiedLaunchRevision && !document.hidden,
       onStarted: () => {
+        const row = unifiedLibrary?.library.find(context.libraryMissionId);
+        if (row)
+          retainedLibraryOwner = {
+            entry: activeEntry,
+            ownerId: row.ownerId,
+            editionId: row.editionId,
+          };
         unifiedChooser?.close();
       },
       onSelected: () => {},
@@ -8624,7 +8840,8 @@ try {
           if (context.isCurrent?.() === false) return false;
           if (!candidateHost || context.mode !== 'solo') return departLibraryMission(context);
           if ($('shell-home').open) $('shell-home').close();
-          return launchJourneyMission(mission);
+          if (context.transferContinuation && !context.transferContinuation()) return false;
+          return launchJourneyMission(mission, { kind: context.continuation ? 'next' : 'choose' });
         },
       });
       const versusSource = journeyLibrarySource({

@@ -80,7 +80,7 @@ const makePad = (index) => ({
   axes: [0, 0],
   buttons: Array.from({ length: 16 }, () => ({ pressed: false })),
 });
-function fixture(t, { tap = false, onStop = () => {}, onPause = () => {} } = {}) {
+function fixture(t, { tap = false, onStop = () => {}, onPause = () => {}, initialSlots } = {}) {
   const win = new Target(),
     doc = new Target(win),
     arena = new Target(win),
@@ -109,6 +109,7 @@ function fixture(t, { tap = false, onStop = () => {}, onPause = () => {} } = {})
     pauseCount = 0,
     slots = [];
   const input = attachCouchInput({
+    initialSlots,
     window: win,
     document: doc,
     arena,
@@ -159,6 +160,35 @@ function fixture(t, { tap = false, onStop = () => {}, onPause = () => {} } = {})
   };
 }
 const neutralPair = () => [neutralCommand(), neutralCommand()];
+
+test('continuation restores connected controller seats without accepting held input', (t) => {
+  const f = fixture(t, { initialSlots: [2, 0] });
+  const first = makePad(0),
+    second = makePad(2);
+  second.axes[0] = 1;
+  f.setPads([first, null, second]);
+  f.input.poll();
+  assert.deepEqual(f.slots, [2, 0]);
+  assert.deepEqual(f.input.consume(), neutralPair());
+  second.axes[0] = 0;
+  f.input.poll();
+  second.axes[0] = 1;
+  f.input.poll();
+  assert.equal(f.input.consume()[0].direction, 'right');
+});
+
+test('missing continuation controller falls back only to actually connected pads', (t) => {
+  const f = fixture(t, { initialSlots: [2, 0] });
+  f.setPads([makePad(0)]);
+  f.input.poll();
+  assert.deepEqual(f.slots, [null, 0]);
+  assert.equal(f.pauses, 0);
+});
+
+for (const slots of [[0, 0], [-1, null], [256, null], [0], [null, '0']])
+  test(`invalid continuation controller seats ${JSON.stringify(slots)} are rejected`, (t) => {
+    assert.throws(() => fixture(t, { initialSlots: slots }), /unique bounded indexes/);
+  });
 
 test('simultaneous keyboard, held touch and controllers remain scoped to their player', (t) => {
   const f = fixture(t),

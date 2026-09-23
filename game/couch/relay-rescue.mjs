@@ -80,6 +80,7 @@ import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.
 
 import { createTeamArenaPreference } from './team-arena-preference.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
+import { librarySuccessor } from '../mission-library/continuous-next.mjs';
 import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
 import {
   createMissionLibrarySessionState,
@@ -1103,7 +1104,7 @@ export function bootCoop({
     const won = run.status === 'won',
       lost = run.status === 'lost';
     const destination = won && !loopStopped ? teamDestination() : null;
-    $('coop-next').hidden = !destination?.next;
+    $('coop-next').hidden = !destination?.next && !destination?.error;
     $('coop-next').textContent = destination?.next
       ? `Next: ${destination.next.name}`
       : 'Next arena';
@@ -1120,11 +1121,13 @@ export function bootCoop({
       : lost
         ? 'Your next route starts here.'
         : 'Both players paused';
-    const completionCopy = destination?.journey
-      ? 'Team Journey test complete. Browse a mission, replay, or leave whenever you are ready.'
-      : 'Pack complete. Browse Team arenas to choose your next challenge, or retry this one.';
+    const completionCopy = destination?.libraryEnd
+      ? 'End of the Team mission library. Browse Team arenas or replay whenever you are ready.'
+      : destination?.journey
+        ? 'End of the Team Journey test route. Browse a mission, replay, or leave whenever you are ready.'
+        : 'End of this pack. Browse Team arenas to choose your next challenge, or retry this one.';
     $('coop-overlay-copy').textContent = won
-      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. ${destination?.next ? `Next arena: ${destination.next.name}.` : destination?.final ? completionCopy : 'Browse Team arenas or retry this challenge.'}`
+      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. ${destination?.next ? `Next arena: ${destination.next.name}.` : destination?.error ? 'The next mission is unavailable. Your result and picture are kept. Try Next again or browse Team arenas.' : destination?.final ? completionCopy : 'Browse Team arenas or retry this challenge.'}`
       : lost
         ? coopRetryFeedback(run, knockdowns.filter(Boolean))
         : 'Release your controls, then choose Resume together.';
@@ -1636,8 +1639,39 @@ export function bootCoop({
       acceptedPicture.levelId !== attemptLevel?.id
     )
       return null;
-    if (candidateJourney?.owns(acceptedPicture.journeyRow)) return journeyNavigation();
-    return coopPackDestination(attemptPack, attemptLevel);
+    const authored = candidateJourney?.owns(acceptedPicture.journeyRow)
+      ? journeyNavigation()
+      : coopPackDestination(attemptPack, attemptLevel);
+    if (
+      authored?.next ||
+      !authored?.final ||
+      (candidateJourney && libraryEdition !== TEAM_LIBRARY_JOURNEY_EDITION) ||
+      entryParams.has('practice')
+    )
+      return authored;
+    try {
+      const library = getTeamLibrary();
+      const matches = library.forMode('team').filter((mission) => {
+        const row = libraryRuntimeRows.get(mission)?.();
+        return (
+          row?.pack === acceptedPicture.sourcePack &&
+          row.levelId === acceptedPicture.levelId &&
+          JSON.stringify(row.level) === JSON.stringify(attemptLevel)
+        );
+      });
+      if (matches.length !== 1)
+        throw new Error('The completed Team mission no longer has one exact library identity.');
+      const next = librarySuccessor(library, matches[0], 'team');
+      if (!next) return { ...authored, libraryEnd: true };
+      const row = libraryRuntimeRows.get(next)?.();
+      if (!row || !currentDiscoveryRows().includes(row))
+        throw new Error('The next exact Team mission is unavailable in this edition or visit.');
+      if (library.availability(next, 'team').state !== 'ready')
+        throw new Error('The next exact Team mission is not ready.');
+      return { next: row.level, nextDiscoveryRow: row, final: false };
+    } catch (error) {
+      return { next: null, final: false, error };
+    }
   }
   function nextStatus(text) {
     const owner = nextOperation,
@@ -1689,6 +1723,12 @@ export function bootCoop({
   async function nextArena({ skipRow = null } = {}) {
     const navigation = skipRow ? journeyNavigation() : teamDestination(),
       destination = navigation?.next;
+    if (navigation?.error) {
+      nextStatus(
+        'The next mission is unavailable. Your result and picture are kept. Try Next again or browse Team arenas.',
+      );
+      return;
+    }
     if (
       !destination ||
       disposed ||
@@ -1704,11 +1744,17 @@ export function bootCoop({
     )
       return;
     const recipe = freshRecipe(structuredClone(destination), currentRecipe().options);
+    const nextDiscoveryRow = navigation.nextDiscoveryRow;
+    const nextPack = nextDiscoveryRow?.pack ?? navigation.nextRow?.pack;
     const selection = newPictureSelection(
       recipe,
-      navigation.nextRow?.pack ?? acceptedPicture.sourcePack,
-      navigation.nextRow?.pack ?? attemptPack,
-      navigation.nextRow ? null : acceptedPicture.artworkSource,
+      nextPack ?? acceptedPicture.sourcePack,
+      nextPack ?? attemptPack,
+      nextDiscoveryRow
+        ? nextDiscoveryRow.artworkSource
+        : navigation.nextRow
+          ? null
+          : acceptedPicture.artworkSource,
     );
     const rememberBuiltIn = selection.sourcePack === COOP_STARTER_PACK;
     const operation = {
@@ -1824,9 +1870,9 @@ export function bootCoop({
       accumulator = 0;
       try {
         if (rememberBuiltIn) lastBuiltInArena = destination.id;
-        if (navigation.nextRow) {
-          packArtworkSource = null;
-          showPack(navigation.nextRow.pack, destination.id, () => adopted(candidate));
+        if (nextPack) {
+          packArtworkSource = selection.artworkSource;
+          showPack(nextPack, destination.id, () => adopted(candidate));
           if (!adopted(candidate)) return;
         }
         $('coop-level').value = destination.id;
@@ -1859,7 +1905,7 @@ export function bootCoop({
           accumulator = previous.accumulator;
           generation++;
           lastBuiltInArena = previous.lastBuiltInArena;
-          if (navigation.nextRow) {
+          if (nextPack) {
             packArtworkSource = previous.artworkSource;
             const epoch = generation;
             showPack(
