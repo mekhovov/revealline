@@ -29,6 +29,13 @@ approach is labelled balance pending. Inspect and Apply remain separate.
 
 ## Technical evidence
 
+The current-main successor was composed onto the merged v0.95.0 source on
+23 September 2026. Its 25 directly affected tests pass on the local current
+runtime, and scoped ESLint, Prettier and diff checks pass. The earlier 48-test
+two-runtime record below remains historical evidence for the original study;
+hosted PR qualification of the composed successor remains authoritative for the
+release candidate.
+
 - 48 tests passed on each of Node20.19.5 and Node22.22.2, zero
   failures/skips/cancellations, including
   historical receiver routes, the exact old short-clear checkpoint, placement
