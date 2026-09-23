@@ -6,7 +6,16 @@
 automated feasibility, native observation, human balance and public deployment
 are separate gates. All P00–P15 phases still have open acceptance items.
 
-## Current delivery update
+## Current status pointer — 23 September 2026
+
+Use the [accepted delivery plan](../plan-status-2026-09-23.md) for the live release
+and remaining queue. The publication sequence and draft states recorded below
+are historical checkpoints, not current blockers or delivery claims. PR261 now
+has an owner handoff for the optional labelled Studio-only study; default
+Journey adoption and gp2 balance remain separate future scopes. See the
+[current study boundary](journey-sentinel-inner-study.md#current-main-studio-only-handoff--23-september-2026).
+
+## Historical delivery update — 22 September 2026
 
 This section supersedes the earlier publication/queue statements below, which
 remain historical evidence. The per-phase and extension acceptance tables still

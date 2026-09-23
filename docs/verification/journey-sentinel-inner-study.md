@@ -4,6 +4,58 @@ This is an explicit P11 study, not replacement of a published edition or a claim
 of final balance. It addresses the known shared-mouth shortcut with placement,
 not new physics, mandatory waiting, extra enemies or a different capture rule.
 
+## Current-main Studio-only handoff — 23 September 2026
+
+The unversioned successor composes the exact PR261 study head
+`3c671d0d8dbd757641efcd1575460f99bea163fa` onto main
+`950f19045facacf5151c90661de1ca28d30658df`. Original commits `c9b64e5e`,
+`113092fcb` and `3c671d0d`, all eleven paths and their historical evidence are
+retained. The owner has handed off this complete authoring-study scope separately
+from the future pictured/default-Journey adoption.
+
+Original receiver galleries remains the default. The optional choice is
+**Inner receiver approach · balance pending**; Inspect does not Apply, and
+compiled study missions remain ineligible for official progress. This slice does
+not enroll Journey or Team, repair the mission-selection PNG/JPEG issue, or claim
+improved ordinary-player balance. The compiled preview uses its actual authored
+rules, not a newly calibrated gp2 mission.
+
+The route timings and native observations below belong to their recorded
+historical source. Historical exact-head run35735726497 passed preflight, build
+and four test shards; its release gate was skipped. Those results are not checks
+of this current-main composition. Fresh gp2 routes, pictured adoption and broader
+human/device qualification remain future work, not a hidden prerequisite for
+shipping this unchanged, labelled Studio study. Current-source review, mandatory
+validation/build and publisher-controlled version/release/public gates remain
+pending; longer automated suites are waived/deferred, never reported as passed.
+
+### Bounded local composition evidence
+
+All eleven original postimages were verified byte-identical to `3c671d0d`
+before these three documentation clarifications; the eight runtime, UI, fixture,
+test and probe paths remain byte-identical afterward. None of the eleven paths
+had changed on main since the original base `64ec9fd2`. No package/build version,
+default Journey source, Team source, saved-progress owner or published asset was
+changed.
+
+On Node20.19.5, the candidate-isolation and Studio candidate-library files pass
+15 focused checks; six changed JavaScript modules pass syntax checks. This
+covers authored placement isolation, old-shortcut distinction, initial return
+and the library's explicit selection/inspection boundaries, not a gp2 full-route
+or native-browser acceptance. Full route suites, current native play and hosted
+validation/lint/format/build have not run for this composition.
+
+Retained preparation observations: the initial sparse dependency scan encountered
+generated-only `native/bridge.mjs` and stopped before hydration. A refused
+cherry-pick sequence then continued at the two documentation commits before the
+feature commit; resolving that local sequencing conflict retained the exact
+final historical study document and all three original commit trailers. No
+original branch was rewritten or reset. Two focused test attempts reported the
+same absent sparse `game/studio/studio.css`; an unsupported sparse-add flag was
+corrected, the unchanged tracked CSS was hydrated, and all15 checks then passed.
+These setup failures are not hidden or counted as product passes. No dependency
+installation, artifact generation, publication or hosted workflow was performed.
+
 ## Decision and scope
 
 The retained Standard Immediate route clears the previous receiver galleries in
