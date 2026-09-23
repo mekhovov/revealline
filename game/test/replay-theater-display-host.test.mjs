@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { setImmediate } from 'node:timers/promises';
+import { setImmediate, setTimeout as delay } from 'node:timers/promises';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
@@ -408,3 +408,68 @@ test('terminal exit during delayed boot retires authority and fences late replay
   assert.equal(p.writes.length, 0);
   noPlayerAccess(p);
 });
+
+for (const denied of [false, true])
+  test(`history-restored replay controls follow unchanged ${denied ? 'session-only' : 'saved'} intent without touching playback`, async (t) => {
+    const p = fixture(t, {
+      stored: encode(denied ? {} : { textFace: 'plain', textSize: 'large' }),
+    });
+    await ready(p);
+    p.frame(1000);
+    p.$('step').emit('click');
+    const before = p.frame(1010).checkpoint;
+    if (denied) {
+      p.failWrites(true);
+      p.change('replay-text-face', 'plain');
+      p.change('replay-text-size', 'large');
+    }
+    const writes = p.writes.length,
+      stored = p.data.get(DISPLAY_PREFERENCES_KEY),
+      warning = p.$('replay-display-status').textContent;
+    p.$('replay-text').value = 'Keep this unsubmitted recording';
+    p.$('replay-text-size').focus();
+    p.win.emit('pagehide', { persisted: true });
+    const restoreStaleControls = () => {
+      p.$('replay-text-face').value = 'pixel';
+      p.$('replay-text-size').value = 'standard';
+      p.$('reduced').checked = true;
+    };
+    restoreStaleControls();
+    p.win.emit('pageshow', { persisted: true });
+    assert.equal(p.$('replay-text-face').value, 'plain');
+    assert.equal(p.$('replay-text-size').value, 'large');
+    assert.equal(p.$('reduced').checked, false);
+    // Browsers may restore controls after pageshow listeners have run.
+    restoreStaleControls();
+    await delay(0);
+    assert.equal(p.$('replay-text-face').value, 'plain');
+    assert.equal(p.$('replay-text-size').value, 'large');
+    assert.equal(p.$('reduced').checked, false);
+    assert.equal(p.doc.body.dataset.textFace, 'plain');
+    assert.equal(p.doc.body.dataset.textSize, 'large');
+    assert.equal(p.$('replay-display-status').textContent, warning);
+    assert.equal(p.$('replay-text').value, 'Keep this unsubmitted recording');
+    assert.equal(p.doc.activeElement, p.$('replay-text-size'));
+    assert.equal(p.writes.length, writes);
+    assert.equal(p.data.get(DISPLAY_PREFERENCES_KEY), stored);
+    assert.deepEqual(p.frame(3000).checkpoint, before);
+    assert.equal(p.$('playback-phase').textContent, 'paused');
+    noPlayerAccess(p);
+    // A newer explicit choice wins over an already queued repair.
+    p.win.emit('pageshow', { persisted: true });
+    p.change('replay-text-size', 'standard');
+    await delay(0);
+    assert.equal(p.$('replay-text-size').value, 'standard');
+    assert.equal(p.doc.body.dataset.textSize, 'standard');
+    assert.equal(p.writes.length, writes + 1);
+    assert.deepEqual(p.frame(4000).checkpoint, before);
+    assert.equal(p.$('playback-phase').textContent, 'paused');
+    // A queued repair must not paint after terminal departure.
+    p.win.emit('pageshow', { persisted: true });
+    p.win.emit('pagehide', { persisted: false });
+    restoreStaleControls();
+    await delay(0);
+    assert.equal(p.$('replay-text-face').value, 'pixel');
+    assert.equal(p.$('replay-text-size').value, 'standard');
+    assert.equal(p.writes.length, writes + 1);
+  });
