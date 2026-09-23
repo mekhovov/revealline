@@ -1,0 +1,9 @@
+{
+  "bootstrap": "0bed8223cc8839b218e6cd60e99e9f22b137d40b",
+  "bootstrapTree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+  "feature": "fdc47dd65e1c5579a3f64b536bae3d2fef00f2a3",
+  "tree": "be7851a079bf66b1014731973c7a566113570776",
+  "preparation": "6a0f1e7ef402b65348c39acddd3cc39a07ecf997",
+  "preparationRef": "refs/heads/codex/archive58-local-scaffold-20260923",
+  "featureRef": "refs/heads/codex/preserve-v0890-archive58"
+}
