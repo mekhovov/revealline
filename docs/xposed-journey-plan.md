@@ -1,5 +1,11 @@
 # Xposed-led Journey — implementation contract
 
+The [current-edition adaptation audit](verification/p00-current-adaptation-audit.md)
+now resolves the 48 numbered reference crosswalks against explicit
+`whole-spatial-v5` execution identities. Historical declarations and their pins
+remain intact; selected-edition design review and all final dispositions are
+still pending. This closes an audit-selector gap, not P00 acceptance.
+
 Current checkpoint: [2026-09-22 item-by-item completion audit](verification/journey-completion-2026-09-22.md).
 The [shared-return follow-up](verification/journey-team-partner-returns.md) now
 qualifies a simultaneous Shared Lookout opening where each pilot banks on the

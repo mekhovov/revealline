@@ -11,6 +11,71 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 
 const inputs = await loadJourneyAdaptationInputs();
+test('explicit spatial-v5 audit resolves current revisions without promoting historical design rationale', async () => {
+  const currentInputs = await loadJourneyAdaptationInputs({ edition: 'whole-spatial-v5' });
+  const before = JSON.stringify(currentInputs);
+  const report = inspectJourneyAdaptations(currentInputs);
+  const route = createAuthoredJourneyRoute('whole-spatial-v5');
+  const project = compileContentProject(route.source);
+  assert.equal(report.contentEdition, 'whole-spatial-v5');
+  assert.deepEqual(report.selectedProject, {
+    id: route.source.id,
+    revision: route.source.revision,
+  });
+  assert.deepEqual(report.counts, {
+    sourceFiles: 64,
+    numberedReferences: 48,
+    coveredReferences: 48,
+    adaptationLinks: 66,
+    authoredSoloCandidates: 91,
+    finalDispositions: 0,
+  });
+  assert.deepEqual(report.unlinkedReferences, []);
+  const links = report.references.flatMap((row) => row.adaptations);
+  for (const link of links) {
+    const mission = route.source.missions.find((row) => row.id === link.missionId);
+    assert.equal(link.projectId, route.source.id);
+    assert.equal(link.missionRevision, mission.revision);
+    assert.deepEqual(link.map, mission.map);
+    assert.equal(link.declarationProvenance.designReview, 'requires-selected-edition-review');
+    assert.equal(link.finalDisposition, false);
+    assert.equal(link.humanValidation, 'pending');
+    for (const edition of link.editions)
+      assert.equal(
+        edition.simulationIdentity,
+        resolveMission(project, link.missionId, edition).simulationIdentity,
+      );
+  }
+  const home = links.find((link) => link.missionId === 'home-signal');
+  assert.notDeepEqual(home.map, home.declarationProvenance.map);
+  assert.equal(report.originalMissionsWithoutReference.length, 29);
+  assert.equal(
+    new Set(report.originalMissionsWithoutReference.map((row) => row.missionId)).size,
+    29,
+  );
+  assert.equal(JSON.stringify(currentInputs), before);
+  const stale = structuredClone(currentInputs);
+  stale.chapters[0].declarations[0].standardSimulationIdentity = 'f'.repeat(16);
+  assert.throws(() => inspectJourneyAdaptations(stale), /Stale declared simulation/);
+  const missing = structuredClone(currentInputs);
+  missing.chapters[0].declarations[0].missionId = 'missing-selected-mission';
+  assert.throws(() => inspectJourneyAdaptations(missing), /mission/i);
+  const missingCurrent = structuredClone(currentInputs);
+  missingCurrent.selectedSource = missingCurrent.chapters[0].source;
+  assert.throws(() => inspectJourneyAdaptations(missingCurrent), /mission/i);
+  const cli = spawnSync(
+    process.execPath,
+    [
+      new URL('../../scripts/audit-journey-adaptations.mjs', import.meta.url).pathname,
+      '--edition',
+      'whole-spatial-v5',
+    ],
+    { encoding: 'utf8', maxBuffer: 1024 * 1024 },
+  );
+  assert.equal(cli.status, 0, cli.stderr);
+  assert.deepEqual(JSON.parse(cli.stdout), report);
+});
+
 test('explicit teaching audit resolves the same editions as the playable shared route', async () => {
   const route = createAuthoredJourneyRoute('whole-originals-v2');
   const project = compileContentProject(route.source);
