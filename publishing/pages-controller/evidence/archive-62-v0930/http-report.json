@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "base": "https://mekhovov.github.io/revealline-archive-62/",
+  "archiveCommit": "1dc9dde97f34532d61ebdb341ed93df2d371a996",
+  "deploymentRun": 35872560802,
+  "files": 1099,
+  "expectedBytes": 592077839,
+  "verifiedBytes": 592077839,
+  "failedFiles": 0,
+  "failures": [],
+  "skipped": [],
+  "attempts": 1099,
+  "failedAttempts": 0,
+  "retriedFiles": 0,
+  "expectedInventorySha256": "1c10ac5e8253f44160730a33f9fae5f94cd5a4c6e15453953ef681be466da763",
+  "startedAt": "2026-09-23T14:15:40.394099+00:00",
+  "verifiedAt": "2026-09-23T14:17:42.145165+00:00",
+  "workers": 4,
+  "allFinalURLsExact": true,
+  "payloadFilesPersisted": false,
+  "scope": "Every immutable Archive62 HTTP body, size, SHA-256 and MIME; no browser, offline, or physical-device claim."
+}

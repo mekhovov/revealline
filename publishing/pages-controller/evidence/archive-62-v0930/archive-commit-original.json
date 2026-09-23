@@ -1,0 +1,40 @@
+{
+  "sha": "1dc9dde97f34532d61ebdb341ed93df2d371a996",
+  "node_id": "C_kwDOUne7l9oAKDFkYzlkZGU5N2YzNDUzMmQ2MWViZGIzNDFlZDkzZGYyZDM3MWE5OTY",
+  "url": "https://api.github.com/repos/mekhovov/revealline-archive-62/git/commits/1dc9dde97f34532d61ebdb341ed93df2d371a996",
+  "html_url": "https://github.com/mekhovov/revealline-archive-62/commit/1dc9dde97f34532d61ebdb341ed93df2d371a996",
+  "author": {
+    "name": "Oleksandr Mekhovov",
+    "email": "oleksandr.mekhovov@coupa.com",
+    "date": "2026-09-23T14:13:04Z"
+  },
+  "committer": {
+    "name": "GitHub",
+    "email": "noreply@github.com",
+    "date": "2026-09-23T14:13:04Z"
+  },
+  "tree": {
+    "sha": "acc33ef16f5c63719558555f87248c83899171cb",
+    "url": "https://api.github.com/repos/mekhovov/revealline-archive-62/git/trees/acc33ef16f5c63719558555f87248c83899171cb"
+  },
+  "message": "Merge pull request #1 from mekhovov/codex/preserve-v0930-archive62\n\narchive: preserve original v0.93.0 in Archive62",
+  "parents": [
+    {
+      "sha": "bd43870d78add7b4a3417b49f1c9951cdf4a2d91",
+      "url": "https://api.github.com/repos/mekhovov/revealline-archive-62/git/commits/bd43870d78add7b4a3417b49f1c9951cdf4a2d91",
+      "html_url": "https://github.com/mekhovov/revealline-archive-62/commit/bd43870d78add7b4a3417b49f1c9951cdf4a2d91"
+    },
+    {
+      "sha": "576d323be85fb9b15fbe84740788c5b2a74df953",
+      "url": "https://api.github.com/repos/mekhovov/revealline-archive-62/git/commits/576d323be85fb9b15fbe84740788c5b2a74df953",
+      "html_url": "https://github.com/mekhovov/revealline-archive-62/commit/576d323be85fb9b15fbe84740788c5b2a74df953"
+    }
+  ],
+  "verification": {
+    "verified": true,
+    "reason": "valid",
+    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqs95wCRC1aQ7uu5UhlAAA5JgQADxrCPSTbf1fNWAnI3Ftxihp\ncjFC0D1kuT9u8Q/CtkQCGiH9BNWLMZOAupe83O2S1PufXKyuf+bKI9opWlqa5n0A\nI1Tq4ms2AOrOX38RYPRuu96dzLGJnlPG6Q71bxxiryIzh+U7BiIezsoDNOb+ej9j\niRdhPEjcSiEDoaHQ2p0EBpHknf9DpwETJMknn9isSGtpnzfVDNnYUrbO6RVWv0P9\nBsOiLjkumMj5bQF5kLg09JrcTF20cdwwkoNOXBLNxQp1E0c3wOC7vpQ15ygbV13P\nABH88cAc76/V1O6u+tDFlX9C7gMloqIJZpuwUSMGv+PPpu8fkn0yHt/oyBZr/zL5\n8w23B+1zELM/oDlso9JCBhwXwaaGAC8ffMcihIzY5LyylzDC4d7YoCnop9ZyOE1x\nrlVZvat8QFX8aZHlQJ7Y/y6usymqYSagrobm+3nSwdQbZgYmkEtBkNewE+qBsA4T\n47IoeMNzej9u2NR+boht/cI3zF+cTo9hPSyd1WHob5EiQ/Lu5AHA6Oc59174hbz4\nH9OVVHdreWn0UIaFiH3zHFEGEHz03YXFoGLd9dbJyONe0nnsRQuK0tKBrTEyk0a+\n47tJOw0zNF4+8IVDUvWYTl48009QTkx8wmztsVTR9tEAsOe6upcq2y/MQt/Z7tZ+\ndoS2IdJq7XV2hAagk2It\n=23Hp\n-----END PGP SIGNATURE-----\n",
+    "payload": "tree acc33ef16f5c63719558555f87248c83899171cb\nparent bd43870d78add7b4a3417b49f1c9951cdf4a2d91\nparent 576d323be85fb9b15fbe84740788c5b2a74df953\nauthor Oleksandr Mekhovov <oleksandr.mekhovov@coupa.com> 1790172784 +0200\ncommitter GitHub <noreply@github.com> 1790172784 +0200\n\nMerge pull request #1 from mekhovov/codex/preserve-v0930-archive62\n\narchive: preserve original v0.93.0 in Archive62",
+    "verified_at": "2026-09-23T14:13:05Z"
+  }
+}
