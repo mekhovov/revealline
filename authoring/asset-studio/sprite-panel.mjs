@@ -28,9 +28,21 @@ export function mountSpritePanel({ onPrepare, onError, runOperation }) {
     if (selection) ctx.strokeRect(selection.x, selection.y, selection.width, selection.height);
     if (document.activeElement === canvas)
       ctx.strokeRect(cursor[0] + 0.15, cursor[1] + 0.15, 0.7, 0.7);
-    const history = editor.history();
-    $('sprite-undo').disabled = !history.undo;
-    $('sprite-redo').disabled = !history.redo;
+    const history = editor.history(),
+      undo = $('sprite-undo'),
+      redo = $('sprite-redo'),
+      focused = document.activeElement;
+    // Hand off owned endpoint focus before native disabling loses it. Canvas
+    // shortcuts and newer focus elsewhere remain with their existing owner.
+    if (focused === undo && !history.undo) {
+      redo.disabled = !history.redo;
+      (history.redo ? redo : canvas).focus();
+    } else if (focused === redo && !history.redo) {
+      undo.disabled = !history.undo;
+      (history.undo ? undo : canvas).focus();
+    }
+    undo.disabled = !history.undo;
+    redo.disabled = !history.redo;
     $('sprite-cursor').textContent =
       `${doc.width} × ${doc.height} · cursor ${cursor.join(', ')}${selection ? ` · selection ${selection.width} × ${selection.height}` : ''}${anchor ? ' · choose the end point, then Space' : ''}`;
   }

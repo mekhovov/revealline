@@ -1,0 +1,85 @@
+TAP version 13
+# Subtest: bounded sprite documents own their bytes and reject mismatched imports
+ok 1 - bounded sprite documents own their bytes and reject mismatched imports
+  ---
+  duration_ms: 0.85225
+  ...
+# Subtest: a closed shape contains flood fill, with undo and branchable redo
+ok 2 - a closed shape contains flood fill, with undo and branchable redo
+  ---
+  duration_ms: 0.34775
+  ...
+# Subtest: invalid strokes and clipped moves never partially change the document
+ok 3 - invalid strokes and clipped moves never partially change the document
+  ---
+  duration_ms: 0.172458
+  ...
+# Subtest: overlapping selection moves preserve the selected source, and rotations round trip
+ok 4 - overlapping selection moves preserve the selected source, and rotations round trip
+  ---
+  duration_ms: 0.794792
+  ...
+# Subtest: sparse colors and invalid operations retain exact pixels and the redo branch
+ok 5 - sparse colors and invalid operations retain exact pixels and the redo branch
+  ---
+  duration_ms: 0.227167
+  ...
+# Subtest: undo and redo are lossless across rectangular transforms and overlapping transparent moves
+ok 6 - undo and redo are lossless across rectangular transforms and overlapping transparent moves
+  ---
+  duration_ms: 0.304375
+  ...
+# Subtest: focused undo endpoint transfers to enabled opposite history action without changing pixels
+ok 7 - focused undo endpoint transfers to enabled opposite history action without changing pixels
+  ---
+  duration_ms: 3.200416
+  ...
+# Subtest: focused redo endpoint transfers to enabled opposite history action without changing pixels
+ok 8 - focused redo endpoint transfers to enabled opposite history action without changing pixels
+  ---
+  duration_ms: 1.28875
+  ...
+# Subtest: an Undo with remaining history retains its own focus
+ok 9 - an Undo with remaining history retains its own focus
+  ---
+  duration_ms: 1.393459
+  ...
+# Subtest: canvas ctrlKey Undo/Redo keeps keyboard ownership and exact pixels
+ok 10 - canvas ctrlKey Undo/Redo keeps keyboard ownership and exact pixels
+  ---
+  duration_ms: 0.691084
+  ...
+# Subtest: canvas metaKey Undo/Redo keeps keyboard ownership and exact pixels
+ok 11 - canvas metaKey Undo/Redo keeps keyboard ownership and exact pixels
+  ---
+  duration_ms: 0.684166
+  ...
+# Subtest: history operations do not claim another control focus
+ok 12 - history operations do not claim another control focus
+  ---
+  duration_ms: 0.790166
+  ...
+# Subtest: opening fresh history falls back to canvas only from an owned endpoint
+ok 13 - opening fresh history falls back to canvas only from an owned endpoint
+  ---
+  duration_ms: 0.680208
+  ...
+# Subtest: a newer focus established during repaint is not reclaimed
+ok 14 - a newer focus established during repaint is not reclaimed
+  ---
+  duration_ms: 0.458833
+  ...
+# Subtest: a successor focus callback can choose another control without a later handoff
+ok 15 - a successor focus callback can choose another control without a later handoff
+  ---
+  duration_ms: 0.724958
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 46.521834
