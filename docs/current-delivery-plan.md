@@ -1,5 +1,16 @@
 # RevealLine: detailed delivery history
 
+## Current status — 23 September 2026
+
+Use the [completed and remaining delivery plan](plan-status-2026-09-23.md) for the
+current release state, priorities, estimates and P00–P15 closure checklist.
+v0.83–v0.87 are delivered; v0.87 Pages and scoped public acceptance are complete
+at the 00:26 UTC check. The full redesign is not finally accepted.
+The earlier text below is preserved historical scope and evidence, not today's
+release queue.
+
+## Preserved historical delivery register
+
 For the current release, phase status, accepted evidence and remaining work, start with the [cross-mode execution register](cross-mode-execution.md). The [whole-game execution plan](whole-game-ux-plan.md) and [Delivery priorities](delivery-priorities.md) describe the approved sequence and outcomes. The detailed historical register below remains unchanged; its “active” and “upcoming” headings describe their recorded dates, not the current release.
 
 Historical register last updated 2026-09-14. Its dated status paragraphs describe earlier checkpoints, not today’s release or remaining priorities. Use [Delivery priorities](delivery-priorities.md) for the current order and acceptance gates. Implementation remains authorized.
