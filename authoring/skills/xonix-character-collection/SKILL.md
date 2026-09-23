@@ -54,6 +54,14 @@ For the current source candidate, read [the enemy presentation contract](../../.
 
 ## Review and hand off
 
+For small built-in sprite candidates, use the [reproducible export tool](../../sprites/README.md) after inspecting and preserving the source originals. Supply a finite manifest with exact source byte/hash/dimension identities, export into a new source-only directory, then run the independent regeneration check. This preserves the square frame and all sampled RGBA channels; it does not crop, quantize or manufacture an animation rig. Keep originals, generated candidates, reviewed presentation bindings and released assets as separate states. The tool does not register runtime defaults. Compare the original and derivative at actual game and Guide sizes before proposing a separately tested adapter, and preserve manual override precedence, motion anchors, historic earned identities and all existing storage budgets.
+
+Useful task variations:
+
+- “Prepare 128px candidates for the seven inspected player bodies from theme X. Use actual SHA-256 records, preserve every original, verify exact regeneration and inspect 16/24/32/56px views. Report visual failures before any runtime adoption.”
+- “Replace only the bomber source body. Keep its class/appearance identity and ability rules, create a new provenance record and derivative cohort, and inspect its existing payload/rotor attachments through all motion states.”
+- “Compare 32/64/128px candidates of a thin-wing interceptor over black and revealed pictures. Retain each recipe/output separately; choose based on actual readability, then measure total runtime transfer and decode size without changing collision geometry.”
+
 Apply and switch the actual supplied assets in the available preview, then inspect normal size, small viewport, bright/dark artwork, pause/resume and relevant earned/context fixtures. Compare identical geometry and motion across compact/microtile, detailed-object and hybrid terrain. Test the declared fallback and distinguish reviewed scenarios from missing ones. Browser viewport inspection is not native iPhone or controller verification.
 
 Report collection-data validity, media provenance, applied visual review, motion playback, simulated unlock behavior and runtime evidence separately. A template, generated contact sheet, planned reward or working selection preview does not establish a finished character set or implemented game progression. Keep deeper game-plan questions and unsupported stat changes in the design handoff rather than implementing game logic as a side effect.
