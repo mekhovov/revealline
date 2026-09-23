@@ -13,6 +13,7 @@ import {
 } from './assemble.mjs';
 import { digest, jsonBytes, parseJSON, retainRecentMetadata } from './metadata.mjs';
 import { publishedReleasePages, releaseDecision } from './release-policy.mjs';
+import { downloadReleaseAsset } from './release-asset.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const directory = path.join(root, 'publishing/pages-controller');
@@ -87,23 +88,12 @@ async function verify({ preview = false, remote = false } = {}) {
         requested: process.env.REQUESTED_RELEASE || '',
       });
     }
-    const response = await fetch(
-      `https://github.com/mekhovov/revealline/releases/download/${configuration.currentVersion}/source-qualification.json`,
-      { signal: AbortSignal.timeout(60_000) },
-    );
-    if (!response.ok)
-      throw new Error('The selected release does not publish its source qualification.');
-    const chunks = [];
-    let size = 0;
-    for await (const chunk of response.body) {
-      size += chunk.length;
-      if (size > 8_000_000) {
-        await response.body.cancel().catch(() => {});
-        throw new Error('Published qualification exceeds its byte budget.');
-      }
-      chunks.push(chunk);
-    }
-    if (digest(Buffer.concat(chunks)) !== configuration.currentSourceQualification.sha256)
+    const qualificationAsset = await downloadReleaseAsset({
+      repository: 'mekhovov/revealline',
+      version: configuration.currentVersion,
+      name: 'source-qualification.json',
+    });
+    if (digest(qualificationAsset) !== configuration.currentSourceQualification.sha256)
       throw new Error('Published source qualification does not match the reviewed pin.');
     for (const admission of admissions) {
       const repo = `mekhovov/revealline-${admission.id}`;
