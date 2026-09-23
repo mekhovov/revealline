@@ -12,7 +12,7 @@ import {
   applyGameplayTuning,
   resolveGameplayTuning,
   recoverGameplayTuning,
-} from '../gameplay-tuning.mjs';
+} from '../gameplay-tuning-v3.mjs';
 import * as v2 from '../gameplay-tuning-v2.mjs';
 import * as v1 from '../gameplay-tuning-v1.mjs';
 import {
@@ -98,7 +98,7 @@ test('v2 adapter remains byte-identical; current dispatch reproduces historical 
   }
 });
 
-test('new attempts are gp3, preserve speeds/preferences, and reconstruct exact recipes', () => {
+test('historical gp3 attempts preserve speeds/preferences and reconstruct exact recipes', () => {
   const level = tuned();
   assert.match(level.revision, /^gp3s-/);
   assert.equal(recoverGameplayTuning(level).version, 'gameplay-pressure.v3');

@@ -1,4 +1,5 @@
 import { EPS, boxTime, circleTime, pointAt } from '../core/geometry.mjs';
+import { varyCollisionCourse } from '../core/field-course.mjs';
 
 export const cellAt = (run, x, y) => Math.floor(y) * run.width + Math.floor(x);
 export const positionAt = (body, velocity, seconds) => ({
@@ -142,7 +143,7 @@ export function playerWallContact(run, player, velocity, horizon) {
   return time === null ? null : { time };
 }
 
-export function reflectEnemy(enemy, normals) {
+export function reflectEnemy(enemy, normals, seed = 0) {
   // Combine coincident faces before reflecting; visiting a corner cannot flip an axis twice.
   const unique = [];
   for (const normal of normals)
@@ -162,6 +163,13 @@ export function reflectEnemy(enemy, normals) {
   if (dot >= -EPS) return;
   enemy.vx -= 2 * dot * nx;
   enemy.vy -= 2 * dot * ny;
+  // Curved corner normals and opposed simultaneous faces keep their exact
+  // physical reflection. Only unambiguous axis-face contacts get anti-loop bias.
+  if (
+    unique.every((n) => !n.nx || !n.ny) &&
+    unique.every((n) => (!n.nx || n.nx * nx > 0) && (!n.ny || n.ny * ny > 0))
+  )
+    varyCollisionCourse(enemy, Math.sign(nx), Math.sign(ny), seed);
 }
 
 export function trailContact(run, enemy, trail, horizon) {
