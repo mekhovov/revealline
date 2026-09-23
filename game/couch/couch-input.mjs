@@ -38,6 +38,7 @@ export function attachCouchInput({
   continuousSteering = () => false,
   heldActions = [],
   steeringEdges = false,
+  initialSlots = [null, null],
   onPause = () => {},
   onStop = () => {},
   onPads = () => {},
@@ -54,6 +55,17 @@ export function attachCouchInput({
   if (typeof steeringEdges !== 'boolean') throw new TypeError('Steering edges must be boolean.');
   if (typeof onAcceptedInput !== 'function')
     throw new TypeError('onAcceptedInput must be a function.');
+  if (
+    !Array.isArray(initialSlots) ||
+    initialSlots.length !== 2 ||
+    initialSlots.some(
+      (slot) => slot !== null && (!Number.isInteger(slot) || slot < 0 || slot > 255),
+    ) ||
+    new Set(initialSlots.filter((slot) => slot !== null)).size !==
+      initialSlots.filter((slot) => slot !== null).length
+  )
+    throw new TypeError('Initial controller seats need two unique bounded indexes or null.');
+  let pendingInitialSlots = [...initialSlots];
   const accepted = (player, source) => {
     // Optional display notification: a broken observer cannot reject an input.
     try {
@@ -415,6 +427,11 @@ export function attachCouchInput({
         .sort((a, b) => a.index - b.index);
     } catch {}
     const indexes = new Set(pads.map((p) => p.index));
+    if (pendingInitialSlots) {
+      for (const [seat, slot] of pendingInitialSlots.entries())
+        if (slot !== null && indexes.has(slot)) players[seat].slot = slot;
+      pendingInitialSlots = null;
+    }
     let disconnected = false;
     for (const player of players)
       if (player.slot !== null && !indexes.has(player.slot)) {
