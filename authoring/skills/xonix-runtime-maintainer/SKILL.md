@@ -1234,3 +1234,7 @@ abort semantics and ordinary pack validation. Verify controlled failure then
 success in the same page without reload. See `docs/chapter-download-retry.md` and
 `authoring/prompts/chapter-download-retry.md`; local faults do not qualify public
 network recovery or physical-device input.
+
+## Sprite history keyboard focus
+
+Before disabling an owned Undo or Redo endpoint, enable and focus its available opposite action; use the canvas if neither history action remains. Let normal focus reveal the successor after responsive reflow or rotation. Canvas shortcuts, intermediate history, background redraws and newer unrelated focus retain their owners. Verify real pixel/history outcomes as well as focus; a modeled pass does not prove visible native focus. Preserve failed native iterations. Follow [the verification prompt](../../prompts/studio-pixel-history-focus.md).
