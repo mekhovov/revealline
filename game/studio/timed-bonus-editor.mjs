@@ -1,3 +1,4 @@
+import { attachFormFocus } from './form-focus.mjs';
 import { BONUS_CHOICES } from '../content-design/bonuses.mjs';
 import { editTimedBonus } from '../content-design/timed-bonuses.mjs';
 import { missionEditContext } from './edit-context.mjs';
@@ -5,6 +6,7 @@ import { FIXED_DT } from '../core/registry.mjs';
 
 export function createTimedBonusEditor({ document, getSource, getMission, apply }) {
   const $ = (id) => document.getElementById(`timed-bonus-${id}`);
+  const focusClearance = attachFormFocus({ form: $('form'), document });
   const timeFields = {
     delay: 'initialDelayTicks',
     announce: 'announcementTicks',
@@ -127,5 +129,5 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
     disarm();
     commit('remove');
   };
-  return { sync };
+  return { sync, destroy: () => focusClearance.destroy() };
 }
