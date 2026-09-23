@@ -1,0 +1,16 @@
+[
+  {
+    "path": "authoring/asset-studio/sprite-panel.mjs",
+    "errors": 0,
+    "warnings": 0,
+    "messages": [],
+    "formatted": true
+  },
+  {
+    "path": "game/test/sprite-panel-focus.test.mjs",
+    "errors": 0,
+    "warnings": 0,
+    "messages": [],
+    "formatted": true
+  }
+]

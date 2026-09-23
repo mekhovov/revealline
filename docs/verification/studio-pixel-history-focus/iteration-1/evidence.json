@@ -1,0 +1,70 @@
+{
+  "source": "20370a67892e5d48d65b0be9277c715d297b9f47",
+  "runs": [
+    {
+      "lane": "baseline",
+      "node": "20.19.5",
+      "exit": 1,
+      "totals": [
+        "# tests 15",
+        "# pass 11",
+        "# fail 4",
+        "# cancelled 0",
+        "# skipped 0"
+      ],
+      "log": "baseline-node-20.19.5.tap",
+      "sha256": "a3da6f2098029c0b8a506d6d738078909c83e50b70e46aa361dc7abc936f0ce4"
+    },
+    {
+      "lane": "candidate",
+      "node": "20.19.5",
+      "exit": 0,
+      "totals": [
+        "# tests 15",
+        "# pass 15",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0"
+      ],
+      "log": "candidate-node-20.19.5.tap",
+      "sha256": "45d29c42247883a870f4711da7bab46f682361d8af9ceb44c7cde2c8ffaa255d"
+    },
+    {
+      "lane": "baseline",
+      "node": "22.22.2",
+      "exit": 1,
+      "totals": [
+        "# tests 15",
+        "# pass 11",
+        "# fail 4",
+        "# cancelled 0",
+        "# skipped 0"
+      ],
+      "log": "baseline-node-22.22.2.tap",
+      "sha256": "9872988b9d9019a621020c60ca6ee3081af24628479157e177639fde52a4bcd3"
+    },
+    {
+      "lane": "candidate",
+      "node": "22.22.2",
+      "exit": 0,
+      "totals": [
+        "# tests 15",
+        "# pass 15",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0"
+      ],
+      "log": "candidate-node-22.22.2.tap",
+      "sha256": "dc1c85af9fe4e80d3bef58d86c6fea215c0b35acf062a8832b73d6ae40115c83"
+    }
+  ],
+  "files": {
+    "authoring/asset-studio/helpers.mjs": "8032c1b16e9b532cb5106118e955f2e98988a89b59ad24bd372d8bc95a1114da",
+    "authoring/asset-studio/sprite-panel.mjs": "5999fdb99e51d29cbdce827b729cb129282b28c251514be0e7de44d2c7a9bf4a",
+    "game/test/sprite-panel-focus.test.mjs": "8df42ed0365b9ae02e54386e82b288cda295a5a9292f2a1ddaea7606436ef2b0",
+    "game/test/sprite-editor.test.mjs": "7ae8f38866f5f752359872bc5b2c5a3bce6266dba48e4c3808c62237fd684d6c",
+    "game/presentation/sprite-editor.mjs": "db6345f534b9c30f5ad65c1046ccf6352a1b51907de679dcef123a7de2ae1705",
+    "game/test/helpers/couch-dom.mjs": "878852600b15a1551ba136fd506f88c890349472c6fc340225ab423a299159f8"
+  },
+  "patchSHA256": "cd69b5399875c2d75bb6ac67128d6d0559963a3791447266807ae4213505283f"
+}
