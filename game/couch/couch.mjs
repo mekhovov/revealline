@@ -1370,7 +1370,7 @@ try {
     const preset =
       candidateJourney && journeyPreset(difficulty, authoredRoute.source.difficultyCatalogId);
     const rules = preset
-      ? tuning.version === 'gameplay-pressure.v2'
+      ? ['gameplay-pressure.v2', 'gameplay-pressure.v3'].includes(tuning.version)
         ? `${preset.lives} mission lives; ${preset.failingDeadline ? 'deadlines only on authored timed missions' : 'no failing countdown'}.`
         : preset.description
       : 'Authored lives and objectives stay unchanged.';

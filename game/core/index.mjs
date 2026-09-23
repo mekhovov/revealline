@@ -35,6 +35,7 @@ import { createAbility, switchClass, updateSignal, challengeContact } from './sy
 import { createClassicState } from './classic-state.mjs';
 import { clearCombatPatrols } from './combat-patrols.mjs';
 import { initializeClassicActors, stepClassic } from './classic-step.mjs';
+import { steerFieldCourse } from './field-course.mjs';
 import { foundationGeometry } from './foundations.mjs';
 import { createRelayState } from './relay-gates.mjs';
 export {
@@ -401,6 +402,9 @@ function fixedStep(state, input) {
     switchClass(state, input.switchClass);
   updateSignal(state);
   useAbilities(state, input);
+  for (const enemy of state.enemies)
+    if (!(enemy.stunnedUntil > state.time + EPS))
+      steerFieldCourse(enemy, state.seed, state.tick - 1);
   if (state.status === 'respawning') {
     if (state.rules.timeLimitSeconds > 0 && endTime + EPS >= state.rules.timeLimitSeconds) {
       state.time = state.rules.timeLimitSeconds;

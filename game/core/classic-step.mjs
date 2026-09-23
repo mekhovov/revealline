@@ -36,6 +36,7 @@ import {
 } from './classic-contour.mjs';
 import { planClassicPlayer, planClassicEnemy, applyClassicEnemy } from './classic-motion.mjs';
 import { initializeEnemyPressure, updateEnemyPressure } from './enemy-pressure.mjs';
+import { steerFieldCourse } from './field-course.mjs';
 import {
   updateTimedBonuses,
   collectTimedBonus,
@@ -491,6 +492,13 @@ export function stepClassic(state, input, hooks) {
   }
   updateActors(state);
   updateEnemyPressure(state);
+  if (!classicEffectActive(state, 'enemy-freeze'))
+    for (const enemy of state.enemies)
+      if (
+        !(enemy.stunnedUntil > state.time + EPS) &&
+        !['warning', 'committed'].includes(enemy.classic?.pressure?.phase)
+      )
+        steerFieldCourse(enemy, state.seed, state.classic.actorTick - 1);
   updateTimedBonuses(state);
   expireCombatProjectiles(state);
   const interrupted = world(state, input, hooks);

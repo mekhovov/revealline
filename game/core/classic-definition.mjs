@@ -187,7 +187,11 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
         'invalid contour radius',
       );
     } else if (['bouncer', 'claimed-rover', 'eroder'].includes(enemy.type)) {
-      exactKeys(enemy, [...common, 'x', 'y', 'vx', 'vy'], enemy.type);
+      exactKeys(
+        enemy,
+        [...common, 'x', 'y', 'vx', 'vy', ...(enemy.type === 'bouncer' ? ['course'] : [])],
+        enemy.type,
+      );
       required(number(enemy.vx, -20, 20) && number(enemy.vy, -20, 20), 'invalid classic velocity');
       if (enemy.type === 'claimed-rover')
         required(

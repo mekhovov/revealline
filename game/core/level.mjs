@@ -3,6 +3,7 @@ import { boundedJSON, exactKeys } from '../data-json.mjs';
 import { resolveEncounterDescriptor } from './encounter.mjs';
 import { resolveClassicDefinition } from './classic-definition.mjs';
 import { foundationGeometry, validateFoundationOccupants } from './foundations.mjs';
+import { validFieldCourse } from './field-course.mjs';
 
 const number = (v, lo, hi) => Number.isFinite(v) && v >= lo && v <= hi;
 const integer = (v, lo, hi) => Number.isInteger(v) && v >= lo && v <= hi;
@@ -105,6 +106,7 @@ function validateShape(
   for (const [i, e] of enemies.entries()) {
     check(object(e) && id(e.id) && !seen.has(e.id), `enemies[${i}] needs a unique id`);
     if (!object(e)) continue;
+    check(validFieldCourse(e), `enemies[${i}] has an invalid field course`);
     seen.add(e.id);
     check(
       (encounterBranch
