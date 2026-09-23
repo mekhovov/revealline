@@ -1,5 +1,13 @@
 # PR278 priority and supersession checkpoint
 
+## Incremental plan-ref checkpoint: 2026-09-23 00:38 UTC
+
+Docs PR281 is merged as `a44676a65446b1d71e30270dfb5e5a289ac63f4f` from head `3148d53f2e10cb17003e0a097051e95dcaad77d7`. Local/remote `codex/current-plan-status-20260923` and clean owner worktree `.cache/worktrees/current-plan-status` are represented by that merge; ancestry to freshly fetched main was checked. Preserve both ref and worktree. This docs-only merge does not change the accepted v0.87 source or require another game release.
+
+The plan clarification ref `codex/plan-clarity-20260923` at `08c78c91d57ccdce0284cd3a08289275d9f33671`, with clean owner worktree `.cache/worktrees/plan-clarity-20260923`, is represented by open non-draft PR283. RevealLine retains writer/merge ownership. Releases independently reviewed the exact one-file documentation diff, including completed/remaining sections, dependency lane, incomplete census, pending speed work and v0.87 evidence pointer. Exact-head run35802518416 has passed preflight and its build is still pending at this checkpoint; no merge or completed CI is claimed. No duplicate dispatch or overlapping edit was made.
+
+The other 21 open PR heads remain unchanged drafts: 269,266,262,261,260,258,256,247,245,244,243,241,240,239,238,237,236,235,234,231,230. No new runtime owner handoff was received. This incremental accounting does not constitute a new full census or clear any unresolved dirty-work/patch proofs. All prior public acceptance evidence remains valid; none was rerun.
+
 ## Current: v0.87 PUBLIC ACCEPTANCE COMPLETE
 
 Production35801168401 succeeded at2026-09-23T00:19:47Z on selector0831a3f84572459bba3211ccc25d09f285a80e77/treee9987d2022eb3878b97f2df0b9d7d2efb35675a5; deployment6603513566/status18704054707. Actual receipt artifact10725952208/181558bytes/SHA32bbf322aeacca3d60df73e6f5543578da0d3b29c7850946c65083b48f1e1e61 inspected independently from preview. Merge-to-production success326seconds, not a future runtime guarantee.
