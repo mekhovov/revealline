@@ -1,0 +1,25 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-63",
+  "repository": "mekhovov/revealline-archive-63",
+  "infrastructureCommit": "2c12b49492cc5029e8eb0d1009c0e7875d314451",
+  "deploymentId": 6618242102,
+  "workflowRunId": 35884201254,
+  "versions": [
+    "v0.94.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-63-v0940/native/observation.json",
+      "sha256": "f4e498ddda9bb55671f540addc80656db82d8a77991100654d987a1c0183df9a"
+    }
+  ],
+  "scope": "Bounded archived title launch with visible v0.94.0 identity, 91 missions and native mode/menu entries.",
+  "limits": [
+    "No mission was launched and no progress, settings or saved data were changed.",
+    "This receipt establishes bounded title availability; the exact 1,120-file HTTP audit separately establishes archived byte integrity.",
+    "No physical controller, touch, offline, gameplay, audio or human-balance qualification is claimed."
+  ],
+  "approval": "Selector admission preserves the already published v0.94.0 build at its exact Archive63 route without expanding the bounded acceptance scope."
+}
