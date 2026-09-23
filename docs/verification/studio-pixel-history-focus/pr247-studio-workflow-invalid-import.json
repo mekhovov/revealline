@@ -1,0 +1,8 @@
+{
+  "rejection": "Asset bytes/hash do not match the manifest.",
+  "currentRevision": 62,
+  "savedGeneration": 1,
+  "failedImportExportByteIdentical": true,
+  "bytes": 8220084,
+  "sha256": "1f552157fb505deaf58a0b7526500b49ce4c663dbc7e17086bd07bf1867cbef6"
+}

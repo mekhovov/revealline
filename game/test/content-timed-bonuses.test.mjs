@@ -206,6 +206,8 @@ function uiFixture() {
     value: '',
     textContent: '',
     disabled: false,
+    addEventListener() {},
+    removeEventListener() {},
     replaceChildren(...children) {
       this.children = children;
       this.value = children[0]?.value ?? '';
