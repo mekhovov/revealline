@@ -3,15 +3,14 @@ import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
-const evidencePath =
-  'docs/verification/presentation-recovery-20260923/pr256-v0930-coverage.json';
+const evidencePath = 'docs/verification/presentation-recovery-20260923/pr256-v0930-coverage.json';
 const refs = Object.freeze({
   currentBase: 'a5e6df101130eb920d4cb82f598c4de4a3aaee5a',
   oldPr256Base: '069890158c9f2c766e334564f752716491057727',
   oldPr256Head: '4ecf8b520225c4369cdc482460e0d042f82e3af0',
   pr233Base: 'c3398112e9a739225fdc2e8bf603b45f52a5cbb6',
   pr233Head: '80a47a3b25167d9dcd0bdf98b1bde6a95d112269',
-  successorRuntime: 'd4bcff519175a316c6f9dd96385bfde5495b72dc',
+  successorRuntime: 'ba6b7edd14b16d8af513839aadf104a5ceb6c543',
 });
 const expected = Object.freeze({
   pr256Paths: 154,
@@ -72,7 +71,8 @@ function buildEvidence() {
       assert.equal(successorBlob, null);
     } else if (historicalEvidence.has(path)) {
       classification = 'historical-evidence-retained';
-      rationale = 'Historical source 3563ef evidence is retained byte-exact and is not successor qualification.';
+      rationale =
+        'Historical source 3563ef evidence is retained byte-exact and is not successor qualification.';
       assert.equal(successorBlob, oldHeadBlob);
     } else if (successorBlob === oldHeadBlob) {
       classification = 'byte-identical';
@@ -82,7 +82,8 @@ function buildEvidence() {
       rationale = 'Current accepted main supersedes the stale PR256 version of this path.';
     } else {
       classification = 'ported';
-      rationale = 'PR256 behavior is composed with current-main changes and reviewed conflict corrections.';
+      rationale =
+        'PR256 behavior is composed with current-main changes and reviewed conflict corrections.';
       assert(successorBlob, `Missing successor blob for ${path}`);
     }
     return {
