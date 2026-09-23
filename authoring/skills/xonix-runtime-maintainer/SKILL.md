@@ -1247,3 +1247,7 @@ For [Studio preview controls](../../../docs/verification/studio-responsive-toolb
 ## 2026-09-22 — Native validation keeps its field label visible
 
 For [Studio validation labels](../../prompts/studio-validation-labels.md), keep the browser’s chosen invalid field and native error behavior. Reveal the complete associated label plus outline clearance after one bounded animation frame; a tall wrapper falls back to the control. Bind queued scrolling to the live connected form, current focus and foreground, and recheck ownership after layout reads. Background, disposal or stale focus must not move another field. Keep the adapter scoped to the affected form rather than broadening modal helpers. Qualify both real form editing semantics and native invalid-submission geometry, preserve draft JSON, and distinguish narrow local keyboard evidence from physical-device, actual zoom, all-form and public acceptance. See [verification and limits](../../../docs/studio-validation-labels.md).
+
+## Sprite history keyboard focus
+
+Before disabling an owned Undo or Redo endpoint, enable and focus its available opposite action; use the canvas if neither history action remains. Let normal focus reveal the successor after responsive reflow or rotation. Canvas shortcuts, intermediate history, background redraws and newer unrelated focus retain their owners. Verify real pixel/history outcomes as well as focus; a modeled pass does not prove visible native focus. Preserve failed native iterations. Follow [the verification prompt](../../prompts/studio-pixel-history-focus.md).
