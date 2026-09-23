@@ -1224,3 +1224,13 @@ Before a Library task disables its focused opener, reveal and enable Cancel and 
 When integrating historical preflight changes, include the Undo handler’s logical successor, not only the shared rail. A successful Undo disables its own opener and must resolve Export game data through the existing focus lease. Model native beforetoggle at the test DOM boundary and compare element identity as a boolean to keep failed assertions bounded; never relax ownership or interruption expectations to obtain a pass. Retain failure evidence and requalify affected files after runtime corrections.
 
 During an active Library replacement review, handle an unmodified, unhandled keyboard Escape in the review owner before the browser dialog close request. Native close-watcher cancel events may be non-cancelable after a previous request; do not rely only on cancel.preventDefault or reopen a closed dialog. Preserve nested dialog, composition, reader/edit and repeat ownership. After the review ends, the next Escape uses ordinary modal closing. Retain native failure traces and verify repeated review cycles; keyboard evidence does not certify mobile Back or assistive-technology gestures.
+
+
+For bundled-chapter recovery, describe the existing explicit retry path accurately.
+HTTP and unreadable-body failures permit selecting the same uninstalled chapter
+again while online; do not require reload when each selection creates a new
+request. Preserve the current flight, library, status code, diagnostic cause,
+abort semantics and ordinary pack validation. Verify controlled failure then
+success in the same page without reload. See `docs/chapter-download-retry.md` and
+`authoring/prompts/chapter-download-retry.md`; local faults do not qualify public
+network recovery or physical-device input.

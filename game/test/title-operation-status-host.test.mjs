@@ -118,7 +118,7 @@ test('failed explicit Missions chapter selection remains visible after leaving a
   assert.equal(status.dataset.kind, 'error');
   assert.equal(
     status.textContent,
-    'The download for FPV Front · Pressure Lines could not be read. Reload the game while online, then choose this chapter again. Your current flight and installed chapters are kept.',
+    'The download for FPV Front · Pressure Lines could not be read. While online, choose this chapter again to retry the download. Your current flight and installed chapters are kept.',
   );
   assert.equal(status.hidden, false);
   const message = status.textContent;
