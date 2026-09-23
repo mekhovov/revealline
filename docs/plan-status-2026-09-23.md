@@ -21,6 +21,9 @@ remains visible there rather than being treated as rejected or completed.
   [v0.94.0](https://github.com/mekhovov/revealline/releases/tag/v0.94.0) is immutable.
   Pages run `35874064355`, deployment `6616518311` and status `18733866229`
   passed. The live title reports VERSION V0.94.0 and 91 Journey missions. Its
+  complete deployed-byte audit verified **4,186 files / 624,544,602 bytes** in
+  4,186 attempts with zero failures, retries or skips. The independent raw-row
+  readback passed. Its
   accepted scope is the integrated Team/presentation stack and retained
   visual-session proof; broader responsive/input/device/offline, gameplay and
   human-balance matrices remain open.
@@ -67,14 +70,14 @@ remains visible there rather than being treated as rejected or completed.
 
 ### Current execution board
 
-| State         | Scope                                                                                                                      | Current boundary / next gate                                                                                                                                                                                                                                                               |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| State         | Scope                                                                                                                      | Current boundary / next gate                                                                                                                                                                                                                                                                                                       |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Completed** | Public releases v0.83.0–v0.94.0                                                                                            | Default Journey, unified library, safer replacement, visible difficulty/testing controls, gp2 defaults, chapter recovery, Continuous Next, collision-only gp4 courses, Replay/Studio UX recovery, retained visual-session recovery and the integrated Team/presentation stack are publicly delivered within their recorded scopes. |
-| **Partial**   | Core game framework and authored content                                                                                   | 91 Journey Solo/Versus missions, 12 Team missions, retained Classic content, authoring, media, bonuses and threat roles exist; balance, presentation, recovery, devices and whole-campaign acceptance remain open.                                                                         |
-| **Next — P1** | PNG/JPEG failure; current-speed pacing; capture-stop/action feedback; broader gp4 qualification                            | Release each correction separately with public Retry/Play or representative gameplay evidence. Keep v0.91 delivery distinct from human balance, all-collision and exact-save proof.                                                                                                        |
-| **Next — P2** | Navigation, touch/controller parity, compact mobile HUD, iPhone behavior, Steam Deck Confirm/Start, save/media recovery    | Complete keyboard-only, controller-only and touch-only journeys; retain physical-device evidence separately from simulated checks.                                                                                                                                                         |
-| **Then — P3** | Studio and Team stacks, reference dispositions, soundtrack review (F31–F38), whole-Journey and final browser qualification | Reconcile existing drafts against current main and close each feature's own content, listening, accessibility, offline and human-review gates.                                                                                                                                             |
-| **Deferred**  | Native stores and network multiplayer                                                                                      | Separate platform lifecycle, packaging, hardware and authoritative-network phases after browser qualification.                                                                                                                                                                             |
+| **Partial**   | Core game framework and authored content                                                                                   | 91 Journey Solo/Versus missions, 12 Team missions, retained Classic content, authoring, media, bonuses and threat roles exist; balance, presentation, recovery, devices and whole-campaign acceptance remain open.                                                                                                                 |
+| **Next — P1** | PNG/JPEG failure; current-speed pacing; capture-stop/action feedback; broader gp4 qualification                            | Release each correction separately with public Retry/Play or representative gameplay evidence. Keep v0.91 delivery distinct from human balance, all-collision and exact-save proof.                                                                                                                                                |
+| **Next — P2** | Navigation, touch/controller parity, compact mobile HUD, iPhone behavior, Steam Deck Confirm/Start, save/media recovery    | Complete keyboard-only, controller-only and touch-only journeys; retain physical-device evidence separately from simulated checks.                                                                                                                                                                                                 |
+| **Then — P3** | Studio and Team stacks, reference dispositions, soundtrack review (F31–F38), whole-Journey and final browser qualification | Reconcile existing drafts against current main and close each feature's own content, listening, accessibility, offline and human-review gates.                                                                                                                                                                                     |
+| **Deferred**  | Native stores and network multiplayer                                                                                      | Separate platform lifecycle, packaging, hardware and authoritative-network phases after browser qualification.                                                                                                                                                                                                                     |
 
 At this cutoff, the retained product/support queue is **12 draft PRs**. Source PR305 and
 publication PR307 are merged and v0.94.0 is live. CI-only PR302, audit-only PR303
@@ -105,7 +108,7 @@ Feedback-specific acceptance remains in F01–F38.
 | Collision-only enemy courses         | Fresh gp4 field enemies fly straight between collisions and only vary course at a true bounce; frozen gp3 history remains readable                                        | v0.91.0, source PR290 / selector PR294; full public audit 4,063 files / 616,196,229 bytes; bounded acceptance, not whole-game or human-balance approval                              |
 | Replay and Studio UX recovery        | Replay display controls remain stable through Back; Studio uses a responsive 44px toolbar, visible validation labels and focus-safe Undo/Redo endpoints                   | v0.92.0, source PR297 / selector PR298; bounded receipt SHA256 `f9525a0880f99eb1898b95d1fe65c1587d2e92ed5e2758253246cb862b49c061`; broader recovery/device gates remain open         |
 | Retained visual-session recovery     | Exact retained presentation output, visual-session v5 ownership, fresh Solo visual preparation, audio lifecycle ownership and exception-safe session-only visual recovery | v0.93.0, source PR300 / selector PR301; exact package identity and live Pages marker accepted; broader gameplay/device/offline and mixed historical tuning qualification remain open |
-| Team/presentation integration        | Integrated 154-path Team/presentation stack, conflict resolutions, exact fpv58 retention, gp4 visual-session-v5 proof and PR239 coverage without PR241 | v0.94.0, source PR305 / selector PR307; release394719503; Pages run35874064355 and deployment6616518311; live title/version verified; broader device/gameplay matrices remain open |
+| Team/presentation integration        | Integrated 154-path Team/presentation stack, conflict resolutions, exact fpv58 retention, gp4 visual-session-v5 proof and PR239 coverage without PR241                    | v0.94.0, source PR305 / selector PR307; release394719503; Pages run35874064355 and deployment6616518311; live title/version verified; broader device/gameplay matrices remain open   |
 
 The v0.83.0 full suite passed11788 tests. Subsequent expedited releases used the
 user-authorized automated-suite waiver. Skipped suites are not passes. Public
@@ -304,6 +307,16 @@ validation, assembly, independent byte reread, upload and deployment. Production
 deployment `6616518311`, status `18733866229`, succeeded. Both the root and
 versioned public release markers identify v0.94.0 and exact source `28f75fbd`;
 the live title reports VERSION V0.94.0 and 91 missions.
+
+The final public-byte audit streamed and hashed every path from the exact Pages
+production receipt. It verified **4,186 files / 624,544,602 bytes / 4,186
+attempts** with zero failures, retries or skips and no persisted payload files.
+The report SHA-256 is
+`026a6623b675adcd40408e881a07d7992b8230c017c2c4c5f3f1eac39915df5d`;
+the independent raw-row readback passed. The bounded live browser check reached
+the title, visibly reported VERSION V0.94.0, started Solo and observed active
+gameplay. These receipts are retained in
+`docs/verification/v0940-public-audit/`.
 
 This closes the v0.94 publication slice. Broad automated product suites were
 explicitly waived/skipped, not passed. Whole-game balance, physical devices,
