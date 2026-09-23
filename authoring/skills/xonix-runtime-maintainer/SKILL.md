@@ -1234,3 +1234,7 @@ abort semantics and ordinary pack validation. Verify controlled failure then
 success in the same page without reload. See `docs/chapter-download-retry.md` and
 `authoring/prompts/chapter-download-retry.md`; local faults do not qualify public
 network recovery or physical-device input.
+
+## 2026-09-22 — Responsive authoring toolbar minimums
+
+For [Studio preview controls](../../../docs/verification/studio-responsive-toolbar.md), inspect later shared host selectors when a narrow toolbar ignores its minimum widths. A logical `min-inline-size: 0` can override an earlier `min-width`, and `flex: 1` can then collapse every label into one row. Keep a bounded track minimum rather than relying on the children's minimum alone; constrain native select text, preserve DOM/tab order and measure actual 44px action rows. Verify portrait, short landscape, wide layout and Plain/Large text. Attribute native checks to the exact source and CSS overlay, preserve the full existing maintainer history, and keep responsive emulation separate from physical-device or complete authoring acceptance. Use the [focused prompt](../../prompts/studio-responsive-toolbar.md).
