@@ -1,5 +1,11 @@
 # Xposed-led Journey — implementation contract
 
+Current status: [accepted completed/remaining plan](plan-status-2026-09-23.md).
+The PR261 successor below is an optional, balance-pending Studio study only;
+recorded feasibility routes use their historical authored rules and do not
+qualify fresh gp2 gameplay. Default Journey/Team enrollment and official awards
+are unchanged. Inspect and Apply remain separate authoring actions.
+
 The [Twin inner-receiver study](verification/journey-sentinel-inner-study.md)
 keeps the existing rules and geometry while moving one receiver into the retained
 core court. The known shared-mouth closure no longer captures both objectives;
