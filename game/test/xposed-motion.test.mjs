@@ -10,8 +10,9 @@ import {
   createGameplayTuningController,
   gameplayTuningDescription,
   GAMEPLAY_TUNING_STORAGE_KEY,
-} from '../gameplay-tuning.mjs';
+} from '../gameplay-tuning-v2.mjs';
 import * as v1 from '../gameplay-tuning-v1.mjs';
+import * as current from '../gameplay-tuning.mjs';
 import { createRun, stepRun, FIXED_DT, validateLevel } from '../core/index.mjs';
 import { createCoop, validateCoopLevel } from '../coop/core.mjs';
 import { createDuel, resumeDuel, stepDuel } from '../multiplayer.mjs';
@@ -241,9 +242,9 @@ test('all current Solo and Team editions validate at every bounded override with
           { enemySpeed: 2, playerSpeed: 1.5, enemyDensity: 2 },
           { enemySpeed: 0.5, playerSpeed: 0.75, enemyDensity: 0 },
         ]) {
-          const tuned = applyGameplayTuning(
+          const tuned = current.applyGameplayTuning(
             level,
-            resolveGameplayTuning(entry.difficulty, overrides),
+            current.resolveGameplayTuning(entry.difficulty, overrides),
           );
           const validation = mode === 'solo' ? validateLevel(tuned) : validateCoopLevel(tuned);
           assert(validation.valid, `${mode}/${level.id}: ${validation.errors.join(';')}`);
@@ -281,7 +282,10 @@ test('retained Classic maps validate under both new ordinary defaults and maximu
         for (const difficulty of ['gentle', 'standard', 'expert'])
           for (const overrides of [{}, { enemySpeed: 2, playerSpeed: 1.5, enemyDensity: 2 }]) {
             const checked = validateLevel(
-              applyGameplayTuning(level, resolveGameplayTuning(difficulty, overrides)),
+              current.applyGameplayTuning(
+                level,
+                current.resolveGameplayTuning(difficulty, overrides),
+              ),
             );
             assert(checked.valid, `${level.id}: ${checked.errors.join(';')}`);
             variants++;

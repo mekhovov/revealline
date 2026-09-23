@@ -280,6 +280,7 @@ function authoritativeSections(state, versions) {
       pick(enemy, [
         'id',
         'type',
+        'course',
         'x',
         'y',
         'radius',
