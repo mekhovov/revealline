@@ -1,5 +1,15 @@
 # PR278 priority and supersession checkpoint
 
+## PR285 priority reaffirmed; v0.88 selector merged, production pending
+
+User explicitly prioritizes PR285 merge and Pages release, then remaining PRs. Frozen head33614bc806db2397096851bb0af5a3d6ab90892f has exact run35808406051 preflight/build SUCCESS (build completed02:06:31Z); suites/release gate skipped, not passed. Playlist retains sole game publication and v0.89 allocation; no intervening source release or continuous-Next scope bundled into this head.
+
+PR286 exact-head preview35808777803 succeeded02:07:14Z. Parent collected original receipt10728732633/182760bytes/SHA24cbee34ecf63e32c5b203b1f2cbff23db8cb2d43b96aa04fadea3249ab08ed9 and verified3974files615463127bytes,56archives131bridges, exact source/configuration/catalog/qualification and test-merge parents. Independent source review and parent original-evidence review found no blockers; fresh comments/review threads empty. Checkpoint5787733143 precedes merge.
+
+PR286 merged02:08:33Z as82f1632c4be441ba212fccc7a3cd336911cba246, tree130269b980d0bd2bd507bc01862f21430ae36d3b, exact parents950f190 and ed7e4b5. Branch/worktree retained. Sole automatic production35809170261 is running; no dispatch duplicated and no actual Pages acceptance claimed. Next actual production receipt, one hosted full main inventory audit and bounded UX native check, then immediate hold release for285/v89. Archive56 acceptance remains complete, not repeated.
+
+Local disk fell to113MiB and a checkpoint write failed; file was verified unchanged against HEAD, no commit/push followed. Read-only reviewer also retained a temporary-file ENOSPC. Fresh read recovered2.5GiB without cleanup by Releases. Only bounded small receipts/evidence, no full payload/build/deletion. All dirty owner work and historical refs preserved. Main88 audit helpers reviewed independently with no code blockers; execution remains bound to actual successful production.
+
 ## Archive56 accepted; v0.88 selector PR286 in preview
 
 Archive56 PR1 merged592d0afe42f66dfb9fe95962c80adfaf236cd8ef/tree4443f3a017da924836de658ebd5dbbe9cf96dc21 at01:55:01Z after parent+independent exact-tree review and preview35808164507. Empty bootstrap33c040bc213775dae0b168c4a80eb2d4942df2d5, featuree5f96e8ddf11d9084fe439a5af492e474884e6ac and original preparation780d5a8 remain retained. Actual automatic production35808261588 succeeded01:56:10Z, deployment6604670353/status18706677271, receipt10728921369/57641bytes/SHAbb0ff49f132f88b7a4b35cf81003210c8bca76094629e9a607d0239f6493b28c. No duplicate production.
