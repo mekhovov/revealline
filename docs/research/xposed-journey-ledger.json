@@ -4,9 +4,10 @@
   "reviewDate": "2026-09-20",
   "status": "implementation-review-in-progress; original proposals retained, final dispositions pending",
   "implementationTracking": {
-    "command": "node scripts/audit-journey-adaptations.mjs",
+    "command": "node scripts/audit-journey-adaptations.mjs --edition whole-spatial-v5",
+    "historicalDefaultCommand": "node scripts/audit-journey-adaptations.mjs",
     "contract": "JourneyAdaptationCoverageV1",
-    "scope": "Read-only current projection of existing campaign declarations through the shared compiler. Original observations, proposals and per-reference historical placeholders below are preserved, not overwritten with inferred acceptance.",
+    "scope": "Read-only projection of existing campaign declarations onto the explicitly selected whole-spatial-v5 route through the shared compiler. Historical declaration provenance and pins remain separate from selected execution identities; design rationale requires selected-edition review. Original observations, proposals and per-reference historical placeholders below are preserved, not overwritten with inferred acceptance.",
     "qualification": "Current candidate coverage is distinct from final disposition, original-art qualification, human playtesting and release or Pages approval."
   },
   "scope": {
