@@ -13,6 +13,7 @@ import {
 } from './assemble.mjs';
 import { digest, jsonBytes, parseJSON, retainRecentMetadata } from './metadata.mjs';
 import { publishedReleasePages, releaseDecision } from './release-policy.mjs';
+import { ARCHIVE_CONCURRENCY, observeArchiveAuthorities } from './archive-authority.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const directory = path.join(root, 'publishing/pages-controller');
@@ -105,25 +106,18 @@ async function verify({ preview = false, remote = false } = {}) {
     }
     if (digest(Buffer.concat(chunks)) !== configuration.currentSourceQualification.sha256)
       throw new Error('Published source qualification does not match the reviewed pin.');
-    for (const admission of admissions) {
-      const repo = `mekhovov/revealline-${admission.id}`;
-      const api = (suffix) => JSON.parse(run('gh', ['api', `repos/${repo}/${suffix}`]));
-      const commit = api('commits/main'),
-        deployment = api(`deployments/${admission.deploymentId}`),
-        statuses = api(`deployments/${admission.deploymentId}/statuses`);
-      if (
-        commit.sha !== admission.infrastructureCommit ||
-        deployment.sha !== admission.infrastructureCommit ||
-        deployment.environment !== 'github-pages' ||
-        statuses[0]?.state !== 'success'
-      )
-        throw new Error(`Admitted archive changed or is not deployed: ${admission.id}`);
-      observations.push({
-        archiveId: admission.id,
-        infrastructureCommit: commit.sha,
-        deploymentId: deployment.id,
-        deploymentState: statuses[0].state,
-      });
+    const started = performance.now();
+    try {
+      observations.push(...(await observeArchiveAuthorities(admissions, { cwd: root })));
+    } finally {
+      console.error(
+        JSON.stringify({
+          phase: 'archive-authority',
+          archives: admissions.length,
+          concurrency: ARCHIVE_CONCURRENCY,
+          elapsedMs: Math.round(performance.now() - started),
+        }),
+      );
     }
   }
   return {
