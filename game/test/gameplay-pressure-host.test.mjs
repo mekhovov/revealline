@@ -131,7 +131,7 @@ test('current Journey menus and overlay report lives and normalized pacing witho
         : undefined,
   });
   page.frame(0);
-  assert.equal(recoverGameplayTuning(page.rendered.run.level).version, 'gameplay-pressure.v2');
+  assert.equal(recoverGameplayTuning(page.rendered.run.level).version, 'gameplay-pressure.v3');
   assert.match(page.$('difficulty-note').textContent, /2 mission lives/);
   assert.match(page.$('overlay-difficulty').textContent, /2 starting lives; no failing countdown/);
   for (const id of [

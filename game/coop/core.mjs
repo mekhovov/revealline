@@ -1,4 +1,5 @@
 import { EPS, movingCirclesTime } from '../core/geometry.mjs';
+import { validFieldCourse, steerFieldCourse } from '../core/field-course.mjs';
 import { JOURNEY_POLICY, journeyPreset } from '../content-design/catalogs.mjs';
 import {
   compileCoopFoundationGeometry,
@@ -232,7 +233,8 @@ export function validateCoopLevel(level) {
       level.enemies.length <= 16 &&
       level.enemies.every((enemy) => {
         if (
-          !keys(enemy, ['id', 'type', 'x', 'y', 'vx', 'vy', 'radius']) ||
+          !keys(enemy, ['id', 'type', 'x', 'y', 'vx', 'vy', 'radius', 'course']) ||
+          !validFieldCourse(enemy, 'drifter') ||
           !identifier(enemy.id) ||
           ids.has(enemy.id)
         )
@@ -968,6 +970,9 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
   clearInvalidImpacts(run, emit);
   run.supportEffects = run.supportEffects.filter((effect) => effect.until > run.time);
   prepareSupport(run, commands);
+  if (!coopBonusActive(run, 'enemy-freeze'))
+    for (const enemy of run.enemies)
+      if (enemy.active !== false) steerFieldCourse(enemy, run.seed, run.tick);
   let iterations = 0;
   while (run.time < tickEnd - EPS && run.status === 'running') {
     if (++iterations > 128) throw new Error('Co-op movement failed to advance.');
