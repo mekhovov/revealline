@@ -1,6 +1,6 @@
 # Reveal Line — completed work and remaining delivery plan
 
-Status checked **23 September 2026, 00:00 UTC**. This is the current status and
+Status checked **23 September 2026, 00:26 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source
 observations or release evidence. The original P00–P15 version allocations are
@@ -13,11 +13,13 @@ remains visible there rather than being treated as rejected or completed.
 
 ## 1. Summary
 
-- **Live and publicly accepted: v0.86.0.** The ordinary Pages release marker
-  identifies source `c311e91b886c55039cda6e335a7408de8650110f`.
-- **In release promotion: v0.87.0.** PR279 is merged and the immutable GitHub
-  release is published. At this check, Pages still serves v0.86.0; v0.87.0 is
-  therefore not marked delivered to normal players.
+- **Live and publicly accepted: [v0.87.0](https://mekhovov.github.io/revealline/releases/v0.87.0/site/game/).**
+  The ordinary Pages marker identifies source
+  `08548aeabe72f396fb75aede938d5bcadcfdc00e`; full deployed-file audit and the
+  scoped public navigation check passed. v0.86.0 remains preserved in Archive55.
+- **Next:** diagnose the unresolved mission-selection image error and review
+  current-speed pacing, then finish the existing recovery/navigation/Studio/Team
+  queue. No new release candidate is declared accepted by this status update.
 - Default redesigned Journey, the unified tagged mission selector, safer backup
   replacement, main-menu difficulty and global local-browser playtest controls
   are delivered features.
@@ -32,15 +34,16 @@ remains visible there rather than being treated as rejected or completed.
 
 ## 2. Completed and publicly delivered
 
-| Item                                 | Delivered result                                                                                                                                                        | Release / evidence                                                                                                          |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Redesign integration checkpoint      | Combined redesigned Journey source, original mission pictures and retained historical editions                                                                          | v0.82.0 / v0.82.1 accepted checkpoints; not whole-plan balance approval                                                     |
-| Release A: new Journey by default    | Ordinary Solo and Versus use the 91-mission Journey; Team uses its separately authored 12 missions. Old selections no longer determine the default                      | v0.83.0, PR263; Pages run35775874062; public first-capture/clear/Next in all three modes                                    |
-| Release B: one mission library       | All / Journey / Classic / Custom, provenance-aware identity, same-screen search/filter/readiness and owner-specific launch/progression; old content retained            | v0.84.0, PR268 / selector274; public library201 Solo /201 Versus /14 Team before device-specific Custom additions           |
-| Safer game-data replacement          | Explicit Keep/Replace review, source/destination checks, verified Undo where available, pending mastery-write protection and Restore focus                              | v0.85.0, PR275 / selector277; public availability accepted. Full recovery failure/device matrix is not closed               |
-| Real difficulty and visible controls | Presets affect enemy pressure as well as lives; difficulty is on the main menu; bounded enemy/craft/density testing overrides and Reset are available across Solo/Couch | v0.86.0, PR278 / selector280; scoped public title/difficulty visibility and navigation accepted                             |
-| Safe tuning identity                 | Fresh attempts receive versioned rules; active/restored attempts keep their recorded rules. Non-default admin playtests do not award normal progression                 | v0.86.0 source verification; historical gp1 preservation is extended by v0.87.0                                             |
-| Continuous delivery and preservation | Reviewed source PRs, immutable releases, separate Pages selection, previous-version archives and public checks                                                          | Working pipeline; v0.86.0 main audit3917 files /615005113 bytes, zero final failures/skips, two recovered503 first attempts |
+| Item                                 | Delivered result                                                                                                                                                        | Release / evidence                                                                                                                                      |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Redesign integration checkpoint      | Combined redesigned Journey source, original mission pictures and retained historical editions                                                                          | v0.82.0 / v0.82.1 accepted checkpoints; not whole-plan balance approval                                                                                 |
+| Release A: new Journey by default    | Ordinary Solo and Versus use the 91-mission Journey; Team uses its separately authored 12 missions. Old selections no longer determine the default                      | v0.83.0, PR263; Pages run35775874062; public first-capture/clear/Next in all three modes                                                                |
+| Release B: one mission library       | All / Journey / Classic / Custom, provenance-aware identity, same-screen search/filter/readiness and owner-specific launch/progression; old content retained            | v0.84.0, PR268 / selector274; public library201 Solo /201 Versus /14 Team before device-specific Custom additions                                       |
+| Safer game-data replacement          | Explicit Keep/Replace review, source/destination checks, verified Undo where available, pending mastery-write protection and Restore focus                              | v0.85.0, PR275 / selector277; public availability accepted. Full recovery failure/device matrix is not closed                                           |
+| Real difficulty and visible controls | Presets affect enemy pressure as well as lives; difficulty is on the main menu; bounded enemy/craft/density testing overrides and Reset are available across Solo/Couch | v0.86.0, PR278 / selector280; scoped public title/difficulty visibility and navigation accepted                                                         |
+| Safe tuning identity                 | Fresh attempts receive versioned rules; active/restored attempts keep their recorded rules. Non-default admin playtests do not award normal progression                 | v0.86.0 source verification; historical gp1 preservation is extended by v0.87.0                                                                         |
+| Continuous delivery and preservation | Reviewed source PRs, immutable releases, separate Pages selection, previous-version archives and public checks                                                          | Working pipeline; v0.86.0 main audit3917 files /615005113 bytes, zero final failures/skips, two recovered503 first attempts                             |
+| Xposed-paced defaults                | Approximate reference-calibrated gp2 craft/threat motion with authored counts; frozen gp1 history remains readable                                                      | v0.87.0, source PR279 / selector PR282; full public audit 3,946 files / 615,244,291 bytes; scoped title/history/return accepted, not whole-game balance |
 
 The v0.83.0 full suite passed11788 tests. Subsequent expedited releases used the
 user-authorized automated-suite waiver. Skipped suites are not passes. Public
@@ -69,45 +72,55 @@ them twice. Alternate artwork, presets and reference links are not new maps.
 The older11-themed-campaign /132-mission programme is not completed by these
 counts and is not silently added to the immediate release queue.
 
-## 4. In progress: v0.87.0 Xposed-paced defaults
+## 4. Completed release: v0.87.0 Xposed-paced defaults
 
-Completed for this release:
+**Public delivery is accepted.** [Play v0.87.0](https://mekhovov.github.io/revealline/releases/v0.87.0/site/game/).
+Source [PR279](https://github.com/mekhovov/revealline/pull/279) merged as
+`08548aeabe72f396fb75aede938d5bcadcfdc00e`. The immutable
+[GitHub release](https://github.com/mekhovov/revealline/releases/tag/v0.87.0)
+was published at `2026-09-22T23:56:29Z`.
 
-- PR279 merged as `08548aeabe72f396fb75aede938d5bcadcfdc00e`, preserving
-  publication-controller history. Runtime/tests match reviewed head`ca0f4469`.
-- Shared gp2 starting targets: craft0.26, ordinary field keeper0.325 and boundary
-  patrol0.24 original short-field lengths/second. Standard preserves authored
+Delivered scope:
+
+- Shared gp2 starting targets: craft 0.26, ordinary field keeper 0.325 and boundary
+  patrol 0.24 original short-field lengths/second. Standard preserves authored
   enemy counts; main-menu difficulty and global playtest overrides remain.
 - Two gameplay recordings measured; rates are approximations, not recovered
-  Xposed source constants or measurements of every enemy type.
-- Frozen gp1 adapter preserves historical save/replay reconstruction. Existing
-  attempts are not silently retuned; unmeasured attack roles retain prior pressure.
-- Independent exact-head review and34 focused tests passed. PR35794493627 and
-  merged qualification/freeze35797883977 succeeded; long suites were waived.
-- Immutable GitHub releasev0.87.0 published at2026-09-22T23:56:29Z.
+  Xposed constants or measurements of every enemy type.
+- The frozen gp1 adapter preserves historical save/replay reconstruction.
+  Existing attempts are not silently retuned; unmeasured attack roles retain
+  prior pressure.
+- Independent exact-head review and 34 focused tests passed. PR qualification
+  `35794493627` and merged qualification/freeze `35797883977` succeeded within
+  their recorded scope. Long automated suites were explicitly waived/skipped,
+  not passed.
 
-Remaining before calling v0.87.0 delivered:
+### Publication and public acceptance evidence
 
-1. Finish previous-release archive preservation/admission for the new selector.
-2. Promote the reviewed Pages selector and obtain successful production deployment.
-3. Verify the public release marker/source and required public asset integrity.
-4. Complete the assigned bounded native/public availability checks; record any
-   explicitly waived gameplay checks as deferred, never passed.
-5. Publish the acceptance receipt and update this register to Delivered.
+| Gate                         | Accepted evidence                                                                                                                                                                                                                      |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Selector                     | [PR282](https://github.com/mekhovov/revealline/pull/282), head `ae6c4f4571e29d275500c0b485e84a39dbbdc39f`, merged `0831a3f84572459bba3211ccc25d09f285a80e77`                                                                           |
+| Preview / production         | Runs `35800863442` / `35801168401` succeeded; deployment `6603513566`, status `18704054707` success                                                                                                                                    |
+| Production receipts          | Artifact `10725952208`, SHA256 `32bbf322aeacca3d60df73e6f5543578da0d3b29c7850946c65083b48f1e1e61`                                                                                                                                      |
+| Complete deployed-file audit | Run `35801746074`: **3,946 files / 615,244,291 bytes**, zero failures, skips or retries                                                                                                                                                |
+| Audit artifact / report      | Artifact `10726660654`, digest `99d47f9b181a56d32803e07afb3b2dc38e67f611cb80d2bcce919e5dceb98a0e`; report SHA256 `c33190e0185adfb3da8843a75d085889202f16c83144a99e53d034c19834eb68`                                                    |
+| Scoped public browser        | Queryless root → title v0.87 → About/history with v0.86 Archive55 link → Back to v0.87; no product failure/reload or captured console warning/error. Receipt SHA256 `f69cfc5bd1e764ecbd0022eda9eb6d0e26b5daf929d0e7b68484c18f3c0e3da7` |
+| Fresh identity               | Root, v0.87 release and build markers identify source `08548aeabe72f396fb75aede938d5bcadcfdc00e`; preserved v0.86 identifies `c311e91b886c55039cda6e335a7408de8650110f`                                                                |
 
-Later preservation checkpoint: Archive55 production run `35800419227` deployed
-v0.86.0 from publisher `288aaa3f`. The scoped native index → title/version →
-About/history → Back journey passed without retry, warning or error; receipt
-SHA256 `c717070db09d6e3c396718bb418b5b46e27223d42ab7de7a725607081723dffa`.
-This is not the full archive HTTP/admission gate or v0.87 Pages promotion.
+The native receipt retains one automation locator correction (AX uppercase label
+versus DOM title-case label). This was not a failed product download or reload;
+it must not be silently omitted from the observation record.
 
-Owner: sole publisher, with the existing Pages coordinator and native acceptance
-owner. No competing tags, asset uploads or deployments. Estimated remaining
-elapsed time: **1–3 hours if release/archive gates pass first time**, not a promise.
+Archive55 preservation deployed v0.86.0 through run `35800419227`, publisher
+`288aaa3f`. Its separate scoped native receipt is
+`c717070db09d6e3c396718bb418b5b46e27223d42ab7de7a725607081723dffa`.
+Preservation and public promotion are complete; they are no longer queued steps.
 
-**New qualification obligation:** old gp1/pressure-v2 scripted clear routes do not
-prove gp2 balance or even unchanged route feasibility. Reassess current-speed
-missions after delivery; do not relabel historical498-route evidence as gp2 proof.
+**Still open:** old gp1/pressure-v2 scripted routes do not prove gp2 balance or
+unchanged route feasibility. Reassess current-speed missions; do not relabel
+historical 498-route evidence as gp2 proof. Full gameplay, physical-device,
+controller, offline and listening qualification remain separate work. This
+release closes its delivery scope, not the whole redesign.
 
 ## 5. Remaining work, in priority order
 
@@ -117,7 +130,6 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 
 | Priority     | Item / current state                                                   | Completion condition                                                                                                                                                                                | Indicative effort                                                |
 | ------------ | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| P0           | Finish v0.87.0 promotion                                               | Gates in section4, actual default Pages build verified                                                                                                                                              | 1–3h conditional elapsed                                         |
 | P1           | PNG/JPEG mission-selection failure — unresolved                        | Identify affected mission/mode/asset and reproduce; repair actual cause; public Download/Retry/Play succeeds without deleting media or bypassing validation                                         | 2–4h diagnosis;3–8h scoped repair once reproducible              |
 | P1           | Current-speed difficulty/pacing review                                 | Representative early/middle/late Solo/Versus/Team routes; fair departures, enemy/craft ratios, useful geometry and no trivial one-cut bypasses outside teaching. Human feedback recorded separately | 1–3 days first pass;6–12h per map-fix release                    |
 | P2           | Remaining save warnings, recovery focus and session-only continuity    | Recheck latest accepted source; close only still-reproducible gaps, including two-tab ownership/Next and failed-save recovery                                                                       | 6–10h per bounded slice                                          |
@@ -141,7 +153,7 @@ Its P1/P2 corrections join the applicable current-speed, navigation, Team and
 accessibility slices above. Delivered foundations remain separate from unfinished
 acceptance. Estimates overlap the existing programme ranges, not extra promises.
 
-PR numbers denote retained work, **not merge-ready certification**. At this check,
+PR numbers denote retained work, **not merge-ready certification**.
 The cutoff inventory contains **21 feature draft PRs, excluding documentation
 and publication PRs**. These include product, study, evidence and support work,
 not 21 independent finished features. Six reported merge conflicts at that check;
