@@ -1,6 +1,6 @@
 # Reveal Line — completed work and remaining delivery plan
 
-Status checked **23 September 2026, 03:37 UTC**. This is the current status and
+Status checked **23 September 2026, 04:05 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source
 observations or release evidence. The original P00–P15 version allocations are
@@ -60,16 +60,17 @@ remains visible there rather than being treated as rejected or completed.
 | ------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Completed** | Public releases v0.83.0–v0.89.0                                                                                         | Default Journey, unified library, safer replacement, visible difficulty/testing controls, gp2 defaults, same-page chapter recovery and deterministic gp3 courses are publicly delivered within their recorded scopes.                                     |
 | **Partial**   | Core game framework and authored content                                                                                | 91 Journey Solo/Versus missions, 12 Team missions, retained Classic content, authoring, media, bonuses and threat roles exist; balance, presentation, recovery, devices and whole-campaign acceptance remain open. |
-| **Active**    | Promote merged v0.90.0 Continuous Next                                                                                 | Publish the final immutable release, select it through the Pages PR and pass public identity, inventory and affected Next-journey checks.                                                                            |
+| **Active**    | Promote published v0.90.0 Continuous Next                                                                              | Finish Archive58 audit, select it through the Pages PR and pass public identity, inventory and affected Next-journey checks.                                                                                         |
 | **Next — P1** | Collision-only enemy-course fairness; PNG/JPEG failure; current-speed pacing; capture-stop and action feedback         | Release each confirmed correction separately with representative gameplay or public Retry/Play evidence. Preserve gp3 recordings through the frozen adapter.                                                        |
 | **Next — P2** | Navigation, touch/controller parity, compact mobile HUD, iPhone behavior, Steam Deck Confirm/Start, save/media recovery | Complete keyboard-only, controller-only and touch-only journeys; retain physical-device evidence separately from simulated checks.                                                                                 |
 | **Then — P3** | Studio and Team stacks, reference dispositions, soundtrack review, whole-Journey and final browser qualification        | Reconcile existing drafts against current main and close each feature's own content, listening, accessibility, offline and human-review gates.                                                                     |
 | **Deferred**  | Native stores and network multiplayer                                                                                   | Separate platform lifecycle, packaging, hardware and authoritative-network phases after browser qualification.                                                                                                     |
 
-There are **22 open PRs**: 20 retained drafts plus active review PR289 (this
-plan) and gameplay PR290 (v0.91.0 collision-only courses). The set includes
-player features, infrastructure, audits and provenance work. None is counted as a completed
-feature or a reserved release merely because it has an implementation branch.
+At this cutoff, the retained open queue is **20 draft PRs plus active gameplay
+PR290** (v0.91.0 collision-only courses). Documentation PR289 carrying this plan
+is merged. The retained set includes player features, infrastructure, audits and
+provenance work. None is counted as a completed feature or a reserved release
+merely because it has an implementation branch.
 The detailed queue and conditional effort ranges are in section 5.
 Feedback-specific acceptance remains in F01–F30.
 
