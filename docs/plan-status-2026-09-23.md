@@ -1,6 +1,6 @@
 # Reveal Line — completed work and remaining delivery plan
 
-Status checked **23 September 2026, 03:21 UTC**. This is the current status and
+Status checked **23 September 2026, 03:27 UTC**. This is the current status and
 priority register for the approved Xposed-led Journey and unified-library plan.
 It supersedes older status/queue paragraphs, not their design contracts, source
 observations or release evidence. The original P00–P15 version allocations are
@@ -22,8 +22,9 @@ remains visible there rather than being treated as rejected or completed.
   is merged as `c585bcd3220438da971e2927763b966f55ee8235`, and a draft immutable
   release exists. Pages still selects v0.89.0, so v0.90.0 is not publicly
   delivered or accepted yet.
-- **Active gameplay correction:** replace unfair mid-flight gp3 field-enemy
-  direction changes with collision-only course changes. The intended compatible
+- **Active gameplay correction:** [PR290](https://github.com/mekhovov/revealline/pull/290)
+  proposes v0.91.0 to replace unfair mid-flight gp3 field-enemy direction changes
+  with collision-only course changes. The intended compatible
   gp4 rules preserve speed and movement domains, permit only a small anti-loop
   variation at a true single-face bounce, and retain a byte-frozen gp3 adapter.
   This work is not yet merged or released.
@@ -62,8 +63,9 @@ remains visible there rather than being treated as rejected or completed.
 | **Then — P3** | Studio and Team stacks, reference dispositions, soundtrack review, whole-Journey and final browser qualification        | Reconcile existing drafts against current main and close each feature's own content, listening, accessibility, offline and human-review gates.                                                                     |
 | **Deferred**  | Native stores and network multiplayer                                                                                   | Separate platform lifecycle, packaging, hardware and authoritative-network phases after browser qualification.                                                                                                     |
 
-All **20 currently open PRs are drafts**. The set includes player features,
-infrastructure, audits and provenance work. None is counted as a completed
+There are **22 open PRs**: 20 retained drafts plus active review PR289 (this
+plan) and gameplay PR290 (v0.91.0 collision-only courses). The set includes
+player features, infrastructure, audits and provenance work. None is counted as a completed
 feature or a reserved release merely because it has an implementation branch.
 The detailed queue and conditional effort ranges are in section 5.
 Feedback-specific acceptance remains in F01–F30.
@@ -205,7 +207,7 @@ one user-visible slice per reviewed PR/release rather than accumulating a large 
 | Priority     | Item / current state                                                | Completion condition                                                                                                                                                                                | Indicative effort                                                |
 | ------------ | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | P0           | v0.90.0 Continuous Next promotion — source merged                   | Finalize immutable release, merge Pages selector, verify public version/source/inventory and Solo/Versus/Team Next across campaign, pack and Collection boundaries                                  | 1–3h conditional elapsed if publication gates pass first time    |
-| P1           | Collision-only field-enemy courses — active fairness correction     | Straight flight between collisions; direction changes only on true bounces; at most 8° seeded anti-loop variation on a single-face bounce; preserve speed/domains and byte-frozen gp3 replay/save   | 4–8h implementation/review, then independent release gates       |
+| P1           | v0.91.0 collision-only field-enemy courses — PR290 in review        | Straight flight between collisions; direction changes only on true bounces; at most 8° seeded anti-loop variation on a single-face bounce; preserve speed/domains and byte-frozen gp3 replay/save   | 4–8h implementation/review, then independent release gates       |
 | P1           | PNG/JPEG mission-selection failure — unresolved                     | Identify affected mission/mode/asset and reproduce; repair actual cause; public Download/Retry/Play succeeds without deleting media or bypassing validation                                         | 2–4h diagnosis;3–8h scoped repair once reproducible              |
 | P1           | Current-speed difficulty/pacing review                              | Representative early/middle/late Solo/Versus/Team routes; fair departures, enemy/craft ratios, useful geometry and no trivial one-cut bypasses outside teaching. Human feedback recorded separately | 1–3 days first pass;6–12h per map-fix release                    |
 | P2           | Remaining save warnings, recovery focus and session-only continuity | Recheck latest accepted source; close only still-reproducible gaps, including two-tab ownership/Next and failed-save recovery                                                                       | 6–10h per bounded slice                                          |
@@ -233,9 +235,9 @@ accessibility slices above. Delivered foundations remain separate from unfinishe
 acceptance. Estimates overlap the existing programme ranges, not extra promises.
 
 PR numbers denote retained work, **not merge-ready certification**.
-The current inventory contains **20 draft PRs, excluding documentation and
-publication PRs**. These include product, study, evidence, infrastructure and
-support work, not 20 independent finished features. The latest completed conflict
+The retained inventory contains **20 draft PRs, excluding active review,
+documentation and publication PRs**. These include product, study, evidence,
+infrastructure and support work, not 20 independent finished features. The latest completed conflict
 audit records six conflicting drafts: PR230, PR231, PR237, PR256, PR258 and PR262;
 recheck every head before admission.
 
