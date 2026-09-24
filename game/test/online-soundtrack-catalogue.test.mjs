@@ -23,6 +23,8 @@ const track = {
   status: 'licensed-preview',
   listeningApproval: 'not-reviewed',
   gameCatalogueAdmission: false,
+  contentId: true,
+  recordingModeEligible: false,
   audio: { path: `batches/creator-album/objects/${sha256}.mp3`, bytes: 1234, sha256 },
   aliases: [],
 };
@@ -46,6 +48,8 @@ test('online catalogue creates a bounded immutable remote playback entry', () =>
   );
   assert(Object.isFrozen(resolved));
   assert(Object.isFrozen(resolved.tracks));
+  assert.equal(resolved.tracks[0].contentId, true);
+  assert.equal(resolved.tracks[0].recordingModeEligible, false);
 });
 
 test('online catalogue cannot grant game admission or escape its hash path', () => {
@@ -53,6 +57,7 @@ test('online catalogue cannot grant game admission or escape its hash path', () 
     { ...track, gameCatalogueAdmission: true },
     { ...track, audio: { ...track.audio, path: `objects/${'b'.repeat(64)}.mp3` } },
     { ...track, licenseURL: 'https://example.com/custom' },
+    { ...track, recordingModeEligible: true },
   ])
     assert.throws(() => resolveOnlineSoundtrackCatalogue({ ...catalogue, tracks: [changed] }));
   assert.throws(() =>
