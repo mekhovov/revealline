@@ -57,7 +57,7 @@ for (const [activeRouteId, alternateRouteId, label] of [
       assert.equal(row.automaticContinuation, false);
       assert.deepEqual(
         row.tags,
-        sourceId(row) === 'neon-remix' ? ['Journey', 'Remix'] : ['Journey'],
+        sourceId(row) === 'neon-remix' ? ['Journey', 'Arcade', 'Remix'] : ['Journey', 'Arcade'],
       );
       for (const mode of ['solo', 'versus']) {
         assert.equal(library.availability(row, mode).state, 'ready');

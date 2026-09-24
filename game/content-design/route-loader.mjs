@@ -7,7 +7,9 @@ import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export async function loadAuthoredJourneyRoute(id) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   let factories;
-  if (id === 'whole-spatial-v6') {
+  if (id === 'whole-ornament-v1') {
+    factories = await import('./ukrainian-ornament-candidates.mjs');
+  } else if (id === 'whole-spatial-v6') {
     factories = await import('./spatial-challenge-journey.mjs');
   } else if (id.startsWith('whole-spatial-')) {
     factories = await import('./whole-spatial-candidates.mjs');

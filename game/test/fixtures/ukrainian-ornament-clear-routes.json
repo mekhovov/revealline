@@ -1,0 +1,2052 @@
+{
+  "format": "UkrainianOrnamentClearRoutesV1",
+  "scope": "Three primary complete legal-input routes on the frozen Ukrainian ornament candidate: Standard, immediate controls, seed 1, fresh gp4, no admin overrides. Extensions resume original 80k-budget samples, preserved below without editing the original opening study. This is not all-preset, all-control, alternate-route, Team, public-device, human-difficulty or enjoyment qualification. Failed search proposals are counted by cause, not retained as independently replayable routes.",
+  "sourceIdentity": {
+    "gitRevision": "e8888844e398d9850bc833ca1a070f00e6cad5ea",
+    "dirty": true,
+    "sourceFiles": 537,
+    "sourceSha256": "dd008c9697cac5727c74469ba35cb90a45700e58dbbc2e3439573b20e11930bf",
+    "digestScope": "All non-test game .mjs files plus the route CLI, assessment and bent-route helper, sorted paths and bytes separated by NUL.",
+    "stableDuringProbe": true,
+    "elapsedSeconds": 5.945559834
+  },
+  "searchBudgets": {
+    "firstExtension": 160000,
+    "optionalSecondExtension": 90000,
+    "maximumPerMission": 250000,
+    "includes": "Each extension includes replaying its own full initial input prefix; the separately recorded original 80k study and independent replay verification are not part of this extension allowance."
+  },
+  "outcomes": {
+    "full-clear-qualified": 3,
+    "continued-route-incomplete": 0
+  },
+  "rows": [
+    {
+      "missionId": "cross-stitch-crossings",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "approach": "mouth",
+      "origin": {
+        "path": "game/test/fixtures/ukrainian-ornament-routes.json",
+        "sha256": "4324b604675c28a3cc9e576757d45b2a73808b8cd9567f1c516e53f23cdaefb7",
+        "sourceProjectIdentity": "98161e7c0fba69c1"
+      },
+      "originalContinuation": {
+        "status": "route-exhausted",
+        "ticks": 3011,
+        "seconds": 25.091666666665883,
+        "cuts": 6,
+        "losses": 0,
+        "failureCause": null,
+        "coverage": 0.4026327734906945,
+        "coverageGoal": 0.7,
+        "checkpoint": "08736bd10926d9e5",
+        "simulationIdentity": "b77f5352e1f74e3a",
+        "authoredSimulationIdentity": "0babda120affb7c1",
+        "levelIdentity": "cf35f0cf3f0492dd",
+        "ruleset": "xonix-core.v6",
+        "replayVerified": true,
+        "segments": [
+          ["down", 14],
+          ["right", 299],
+          ["up", 62],
+          ["down", 7],
+          ["up", 14],
+          ["right", 40],
+          ["down", 82],
+          ["left", 108],
+          ["up", 8],
+          ["down", 7],
+          ["up", 14],
+          ["right", 27],
+          ["up", 163],
+          ["right", 27],
+          ["down", 55],
+          ["up", 54],
+          ["right", 326],
+          ["down", 108],
+          ["left", 265],
+          ["right", 142],
+          ["down", 217],
+          ["right", 14],
+          ["up", 211],
+          ["down", 7],
+          ["up", 122],
+          ["right", 95],
+          ["up", 41],
+          ["right", 27],
+          ["down", 455]
+        ],
+        "closureCoverage": [
+          [375, 0.02723558783477077],
+          [634, 0.06082614616432138],
+          [920, 0.07535179300953246],
+          [1680, 0.1643213799364503],
+          [2264, 0.2115297321833863],
+          [3011, 0.4026327734906945]
+        ],
+        "search": {
+          "simulationTickBudget": 80000,
+          "simulatedTicks": 80000,
+          "candidateLimit": 16,
+          "maxCuts": 24,
+          "policy": "efficient",
+          "attempts": 206,
+          "failures": 47
+        }
+      },
+      "opening": {
+        "seed": 1,
+        "delay": 0,
+        "waypoints": [
+          ["down", 16.5],
+          ["right", 35.5],
+          ["up", 10.5]
+        ],
+        "status": "route-exhausted",
+        "closed": true,
+        "stalled": false,
+        "ticks": 375,
+        "cuts": 1,
+        "losses": 0,
+        "failureCause": null,
+        "coverage": 0.02723558783477077,
+        "checkpoint": "81e1a89e90840ff0",
+        "segments": [
+          ["down", 14],
+          ["right", 299],
+          ["up", 62]
+        ],
+        "returnPosition": [35.526333333333625, 12],
+        "fieldBounds": [16, 12, 35, 16],
+        "replayVerified": true
+      },
+      "qualification": "full-clear-qualified",
+      "result": {
+        "format": "SpatialRouteEvidenceV1",
+        "missionId": "cross-stitch-crossings",
+        "difficulty": "standard",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "sourceProjectIdentity": "98161e7c0fba69c1",
+        "authoredSimulationIdentity": "0babda120affb7c1",
+        "simulationIdentity": "b77f5352e1f74e3a",
+        "levelIdentity": "cf35f0cf3f0492dd",
+        "gameplayTuning": {
+          "version": "gameplay-pressure.v4",
+          "difficulty": "standard",
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 0,
+          "adminOverride": false,
+          "overrides": {
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 1
+          }
+        },
+        "ruleset": "xonix-core.v6",
+        "status": "no-loss-clear",
+        "qualification": "legal-route-and-replay-only",
+        "ticks": 5820,
+        "seconds": 48.49441930618183,
+        "losses": 0,
+        "failureCause": null,
+        "coverage": 0.7058556513844757,
+        "coverageGoal": 0.7,
+        "claimedCells": 1555,
+        "totalClaimable": 2203,
+        "cuts": 11,
+        "exposureTicks": 3648,
+        "maxExposureTicks": 693,
+        "firstCoverageMetTick": 5820,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "initialComponents": [
+          {
+            "id": 73,
+            "cells": 2203,
+            "retained": true,
+            "enemyIds": ["west", "east", "rotated-motif"]
+          }
+        ],
+        "finalComponents": [
+          {
+            "id": 577,
+            "cells": 648,
+            "retained": true,
+            "enemyIds": ["west", "east", "rotated-motif"]
+          }
+        ],
+        "actors": [
+          {
+            "id": "west",
+            "type": "bouncer",
+            "role": "field-keeper",
+            "retainsField": true
+          },
+          {
+            "id": "east",
+            "type": "bouncer",
+            "role": "field-keeper",
+            "retainsField": true
+          },
+          {
+            "id": "rotated-motif",
+            "type": "bouncer",
+            "role": "field-keeper",
+            "retainsField": true
+          }
+        ],
+        "objectives": [],
+        "closures": [
+          {
+            "tick": 375,
+            "claimedCells": 60,
+            "coverage": 0.02723558783477077,
+            "coverageGain": 0.02723558783477077,
+            "exposureTicks": 328,
+            "trailCellsBeforeClosingStep": 24,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 2203,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 2143,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 634,
+            "claimedCells": 74,
+            "coverage": 0.06082614616432138,
+            "coverageGain": 0.033590558329550615,
+            "exposureTicks": 191,
+            "trailCellsBeforeClosingStep": 14,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 2143,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 2069,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 920,
+            "claimedCells": 32,
+            "coverage": 0.07535179300953246,
+            "coverageGain": 0.014525646845211078,
+            "exposureTicks": 232,
+            "trailCellsBeforeClosingStep": 17,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 2069,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 2037,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 1680,
+            "claimedCells": 196,
+            "coverage": 0.1643213799364503,
+            "coverageGain": 0.08896958692691784,
+            "exposureTicks": 693,
+            "trailCellsBeforeClosingStep": 51,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 2037,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1841,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 2264,
+            "claimedCells": 104,
+            "coverage": 0.2115297321833863,
+            "coverageGain": 0.04720835224693601,
+            "exposureTicks": 436,
+            "trailCellsBeforeClosingStep": 32,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1841,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1737,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 3011,
+            "claimedCells": 421,
+            "coverage": 0.4026327734906945,
+            "coverageGain": 0.19110304130730818,
+            "exposureTicks": 516,
+            "trailCellsBeforeClosingStep": 38,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1737,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1316,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 3268,
+            "claimedCells": 57,
+            "coverage": 0.42850658193372676,
+            "coverageGain": 0.025873808443032276,
+            "exposureTicks": 231,
+            "trailCellsBeforeClosingStep": 17,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1316,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1259,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 3770,
+            "claimedCells": 71,
+            "coverage": 0.4607353608715388,
+            "coverageGain": 0.032228778937812064,
+            "exposureTicks": 258,
+            "trailCellsBeforeClosingStep": 19,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1259,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1188,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 4110,
+            "claimedCells": 171,
+            "coverage": 0.5383567862006355,
+            "coverageGain": 0.07762142532909672,
+            "exposureTicks": 232,
+            "trailCellsBeforeClosingStep": 17,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1188,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1017,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 5562,
+            "claimedCells": 285,
+            "coverage": 0.6677258284157966,
+            "coverageGain": 0.1293690422151611,
+            "exposureTicks": 367,
+            "trailCellsBeforeClosingStep": 27,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1017,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 732,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 5820,
+            "claimedCells": 84,
+            "coverage": 0.7058556513844757,
+            "coverageGain": 0.03812982296867906,
+            "exposureTicks": 164,
+            "trailCellsBeforeClosingStep": 12,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 732,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 577,
+                "cells": 648,
+                "retained": true,
+                "enemyIds": ["west", "east", "rotated-motif"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          }
+        ],
+        "segments": [
+          {
+            "direction": "down",
+            "ticks": 14
+          },
+          {
+            "direction": "right",
+            "ticks": 299
+          },
+          {
+            "direction": "up",
+            "ticks": 62
+          },
+          {
+            "direction": "down",
+            "ticks": 7
+          },
+          {
+            "direction": "up",
+            "ticks": 14
+          },
+          {
+            "direction": "right",
+            "ticks": 40
+          },
+          {
+            "direction": "down",
+            "ticks": 82
+          },
+          {
+            "direction": "left",
+            "ticks": 108
+          },
+          {
+            "direction": "up",
+            "ticks": 8
+          },
+          {
+            "direction": "down",
+            "ticks": 7
+          },
+          {
+            "direction": "up",
+            "ticks": 14
+          },
+          {
+            "direction": "right",
+            "ticks": 27
+          },
+          {
+            "direction": "up",
+            "ticks": 163
+          },
+          {
+            "direction": "right",
+            "ticks": 27
+          },
+          {
+            "direction": "down",
+            "ticks": 55
+          },
+          {
+            "direction": "up",
+            "ticks": 54
+          },
+          {
+            "direction": "right",
+            "ticks": 326
+          },
+          {
+            "direction": "down",
+            "ticks": 108
+          },
+          {
+            "direction": "left",
+            "ticks": 265
+          },
+          {
+            "direction": "right",
+            "ticks": 142
+          },
+          {
+            "direction": "down",
+            "ticks": 217
+          },
+          {
+            "direction": "right",
+            "ticks": 14
+          },
+          {
+            "direction": "up",
+            "ticks": 211
+          },
+          {
+            "direction": "down",
+            "ticks": 7
+          },
+          {
+            "direction": "up",
+            "ticks": 122
+          },
+          {
+            "direction": "right",
+            "ticks": 95
+          },
+          {
+            "direction": "up",
+            "ticks": 41
+          },
+          {
+            "direction": "right",
+            "ticks": 27
+          },
+          {
+            "direction": "down",
+            "ticks": 462
+          },
+          {
+            "direction": "up",
+            "ticks": 13
+          },
+          {
+            "direction": "left",
+            "ticks": 67
+          },
+          {
+            "direction": "up",
+            "ticks": 109
+          },
+          {
+            "direction": "right",
+            "ticks": 68
+          },
+          {
+            "direction": "down",
+            "ticks": 122
+          },
+          {
+            "direction": "left",
+            "ticks": 109
+          },
+          {
+            "direction": "up",
+            "ticks": 81
+          },
+          {
+            "direction": "left",
+            "ticks": 108
+          },
+          {
+            "direction": "down",
+            "ticks": 82
+          },
+          {
+            "direction": "left",
+            "ticks": 95
+          },
+          {
+            "direction": "up",
+            "ticks": 238
+          },
+          {
+            "direction": "down",
+            "ticks": 7
+          },
+          {
+            "direction": "up",
+            "ticks": 190
+          },
+          {
+            "direction": "right",
+            "ticks": 285
+          },
+          {
+            "direction": "up",
+            "ticks": 54
+          },
+          {
+            "direction": "left",
+            "ticks": 543
+          },
+          {
+            "direction": "down",
+            "ticks": 162
+          },
+          {
+            "direction": "left",
+            "ticks": 55
+          },
+          {
+            "direction": "up",
+            "ticks": 156
+          },
+          {
+            "direction": "down",
+            "ticks": 88
+          },
+          {
+            "direction": "left",
+            "ticks": 170
+          }
+        ],
+        "replayVerified": true,
+        "checkpoint": "04605fc89718bed5"
+      },
+      "searchHistory": [
+        {
+          "policy": "efficient",
+          "simulationTickBudget": 160000,
+          "simulatedTicks": 102650,
+          "candidateLimit": 16,
+          "maxCuts": 24,
+          "attemptCount": 236,
+          "failedAttempts": 91,
+          "failuresByCause": {
+            "enemy-trail": 91
+          },
+          "exhausted": false
+        }
+      ]
+    },
+    {
+      "missionId": "rushnyk-bands",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "approach": "inner",
+      "origin": {
+        "path": "game/test/fixtures/ukrainian-ornament-routes.json",
+        "sha256": "4324b604675c28a3cc9e576757d45b2a73808b8cd9567f1c516e53f23cdaefb7",
+        "sourceProjectIdentity": "98161e7c0fba69c1"
+      },
+      "originalContinuation": {
+        "status": "route-exhausted",
+        "ticks": 2617,
+        "seconds": 21.808333333332737,
+        "cuts": 5,
+        "losses": 0,
+        "failureCause": null,
+        "coverage": 0.1888560157790927,
+        "coverageGoal": 0.72,
+        "checkpoint": "61971729d9d90343",
+        "simulationIdentity": "0ddb79a3037f75b2",
+        "authoredSimulationIdentity": "aaa9dd68711f719c",
+        "levelIdentity": "aaa5dc6d95ad98f1",
+        "ruleset": "xonix-core.v6",
+        "replayVerified": true,
+        "segments": [
+          ["up", 14],
+          ["right", 164],
+          ["left", 14],
+          ["up", 81],
+          ["left", 108],
+          ["down", 69],
+          ["up", 14],
+          ["left", 163],
+          ["up", 54],
+          ["right", 271],
+          ["down", 41],
+          ["right", 380],
+          ["up", 55],
+          ["left", 713],
+          ["right", 34],
+          ["down", 442]
+        ],
+        "closureCoverage": [
+          [171, 0.0039447731755424065],
+          [443, 0.03007889546351085],
+          [837, 0.059664694280078895],
+          [2141, 0.1390532544378698],
+          [2617, 0.1888560157790927]
+        ],
+        "search": {
+          "simulationTickBudget": 80000,
+          "simulatedTicks": 80000,
+          "candidateLimit": 16,
+          "maxCuts": 24,
+          "policy": "efficient",
+          "attempts": 182,
+          "failures": 16
+        }
+      },
+      "opening": {
+        "seed": 1,
+        "delay": 0,
+        "waypoints": [
+          ["up", 9.5],
+          ["right", 27.5]
+        ],
+        "status": "route-exhausted",
+        "closed": true,
+        "stalled": false,
+        "ticks": 171,
+        "cuts": 1,
+        "losses": 0,
+        "failureCause": null,
+        "coverage": 0.0039447731755424065,
+        "checkpoint": "0410a79264e1e01b",
+        "segments": [
+          ["up", 14],
+          ["right", 157]
+        ],
+        "returnPosition": [26, 9.468666666666675],
+        "fieldBounds": [18, 9, 25, 9],
+        "replayVerified": true
+      },
+      "qualification": "full-clear-qualified",
+      "result": {
+        "format": "SpatialRouteEvidenceV1",
+        "missionId": "rushnyk-bands",
+        "difficulty": "standard",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "sourceProjectIdentity": "98161e7c0fba69c1",
+        "authoredSimulationIdentity": "aaa9dd68711f719c",
+        "simulationIdentity": "0ddb79a3037f75b2",
+        "levelIdentity": "aaa5dc6d95ad98f1",
+        "gameplayTuning": {
+          "version": "gameplay-pressure.v4",
+          "difficulty": "standard",
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 0,
+          "adminOverride": false,
+          "overrides": {
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 1
+          }
+        },
+        "ruleset": "xonix-core.v6",
+        "status": "no-loss-clear",
+        "qualification": "legal-route-and-replay-only",
+        "ticks": 7471,
+        "seconds": 62.255165912515935,
+        "losses": 0,
+        "failureCause": null,
+        "coverage": 0.7233727810650887,
+        "coverageGoal": 0.72,
+        "claimedCells": 1467,
+        "totalClaimable": 2028,
+        "cuts": 10,
+        "exposureTicks": 5030,
+        "maxExposureTicks": 1087,
+        "firstCoverageMetTick": 7471,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "initialComponents": [
+          {
+            "id": 73,
+            "cells": 2028,
+            "retained": true,
+            "enemyIds": ["west", "east", "inner-weave"]
+          }
+        ],
+        "finalComponents": [
+          {
+            "id": 1216,
+            "cells": 561,
+            "retained": true,
+            "enemyIds": ["west", "east", "inner-weave"]
+          }
+        ],
+        "actors": [
+          {
+            "id": "west",
+            "type": "bouncer",
+            "role": "field-keeper",
+            "retainsField": true
+          },
+          {
+            "id": "east",
+            "type": "bouncer",
+            "role": "field-keeper",
+            "retainsField": true
+          },
+          {
+            "id": "outer",
+            "type": "border-patrol",
+            "role": "perimeter-patrol",
+            "retainsField": false
+          },
+          {
+            "id": "inner-weave",
+            "type": "bouncer",
+            "role": "field-keeper",
+            "retainsField": true
+          }
+        ],
+        "objectives": [],
+        "closures": [
+          {
+            "tick": 171,
+            "claimedCells": 8,
+            "coverage": 0.0039447731755424065,
+            "coverageGain": 0.0039447731755424065,
+            "exposureTicks": 110,
+            "trailCellsBeforeClosingStep": 8,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 2028,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 2020,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 443,
+            "claimedCells": 53,
+            "coverage": 0.03007889546351085,
+            "coverageGain": 0.026134122287968443,
+            "exposureTicks": 245,
+            "trailCellsBeforeClosingStep": 18,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 2020,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1967,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 837,
+            "claimedCells": 60,
+            "coverage": 0.059664694280078895,
+            "coverageGain": 0.029585798816568046,
+            "exposureTicks": 366,
+            "trailCellsBeforeClosingStep": 27,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1967,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1907,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 2141,
+            "claimedCells": 161,
+            "coverage": 0.1390532544378698,
+            "coverageGain": 0.07938856015779092,
+            "exposureTicks": 1087,
+            "trailCellsBeforeClosingStep": 80,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1907,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1746,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 2617,
+            "claimedCells": 101,
+            "coverage": 0.1888560157790927,
+            "coverageGain": 0.049802761341222884,
+            "exposureTicks": 435,
+            "trailCellsBeforeClosingStep": 32,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1746,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1645,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 3921,
+            "claimedCells": 236,
+            "coverage": 0.3052268244575937,
+            "coverageGain": 0.116370808678501,
+            "exposureTicks": 558,
+            "trailCellsBeforeClosingStep": 41,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1645,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 606,
+                "cells": 1409,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 5013,
+            "claimedCells": 314,
+            "coverage": 0.46005917159763315,
+            "coverageGain": 0.15483234714003946,
+            "exposureTicks": 911,
+            "trailCellsBeforeClosingStep": 67,
+            "departureComponents": [
+              {
+                "id": 606,
+                "cells": 1409,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 1156,
+                "cells": 1095,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 5816,
+            "claimedCells": 252,
+            "coverage": 0.584319526627219,
+            "coverageGain": 0.12426035502958582,
+            "exposureTicks": 720,
+            "trailCellsBeforeClosingStep": 53,
+            "departureComponents": [
+              {
+                "id": 1156,
+                "cells": 1095,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 1216,
+                "cells": 843,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 6210,
+            "claimedCells": 138,
+            "coverage": 0.6523668639053254,
+            "coverageGain": 0.06804733727810641,
+            "exposureTicks": 259,
+            "trailCellsBeforeClosingStep": 19,
+            "departureComponents": [
+              {
+                "id": 1216,
+                "cells": 843,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 1216,
+                "cells": 705,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 7471,
+            "claimedCells": 144,
+            "coverage": 0.7233727810650887,
+            "coverageGain": 0.07100591715976334,
+            "exposureTicks": 339,
+            "trailCellsBeforeClosingStep": 25,
+            "departureComponents": [
+              {
+                "id": 1216,
+                "cells": 705,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 1216,
+                "cells": 561,
+                "retained": true,
+                "enemyIds": ["west", "east", "inner-weave"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          }
+        ],
+        "segments": [
+          {
+            "direction": "up",
+            "ticks": 14
+          },
+          {
+            "direction": "right",
+            "ticks": 164
+          },
+          {
+            "direction": "left",
+            "ticks": 14
+          },
+          {
+            "direction": "up",
+            "ticks": 81
+          },
+          {
+            "direction": "left",
+            "ticks": 108
+          },
+          {
+            "direction": "down",
+            "ticks": 69
+          },
+          {
+            "direction": "up",
+            "ticks": 14
+          },
+          {
+            "direction": "left",
+            "ticks": 163
+          },
+          {
+            "direction": "up",
+            "ticks": 54
+          },
+          {
+            "direction": "right",
+            "ticks": 271
+          },
+          {
+            "direction": "down",
+            "ticks": 41
+          },
+          {
+            "direction": "right",
+            "ticks": 380
+          },
+          {
+            "direction": "up",
+            "ticks": 55
+          },
+          {
+            "direction": "left",
+            "ticks": 713
+          },
+          {
+            "direction": "right",
+            "ticks": 34
+          },
+          {
+            "direction": "down",
+            "ticks": 449
+          },
+          {
+            "direction": "up",
+            "ticks": 380
+          },
+          {
+            "direction": "right",
+            "ticks": 917
+          },
+          {
+            "direction": null,
+            "ticks": 60
+          },
+          {
+            "direction": "right",
+            "ticks": 7
+          },
+          {
+            "direction": "down",
+            "ticks": 108
+          },
+          {
+            "direction": "left",
+            "ticks": 917
+          },
+          {
+            "direction": "right",
+            "ticks": 7
+          },
+          {
+            "direction": "left",
+            "ticks": 14
+          },
+          {
+            "direction": "down",
+            "ticks": 55
+          },
+          {
+            "direction": "right",
+            "ticks": 734
+          },
+          {
+            "direction": "left",
+            "ticks": 122
+          },
+          {
+            "direction": "down",
+            "ticks": 81
+          },
+          {
+            "direction": "left",
+            "ticks": 109
+          },
+          {
+            "direction": "up",
+            "ticks": 75
+          },
+          {
+            "direction": "down",
+            "ticks": 7
+          },
+          {
+            "direction": "up",
+            "ticks": 14
+          },
+          {
+            "direction": "left",
+            "ticks": 366
+          },
+          {
+            "direction": "down",
+            "ticks": 54
+          },
+          {
+            "direction": "left",
+            "ticks": 136
+          },
+          {
+            "direction": "down",
+            "ticks": 163
+          },
+          {
+            "direction": "right",
+            "ticks": 176
+          },
+          {
+            "direction": "up",
+            "ticks": 162
+          },
+          {
+            "direction": "right",
+            "ticks": 27
+          },
+          {
+            "direction": "down",
+            "ticks": 156
+          }
+        ],
+        "replayVerified": true,
+        "checkpoint": "3d029b20ae3d2adb"
+      },
+      "searchHistory": [
+        {
+          "policy": "efficient",
+          "simulationTickBudget": 160000,
+          "simulatedTicks": 145948,
+          "candidateLimit": 16,
+          "maxCuts": 24,
+          "attemptCount": 238,
+          "failedAttempts": 47,
+          "failuresByCause": {
+            "enemy-trail": 36,
+            "enemy-player": 11
+          },
+          "exhausted": false
+        }
+      ]
+    },
+    {
+      "missionId": "pysanka-sections",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "approach": "side",
+      "origin": {
+        "path": "game/test/fixtures/ukrainian-ornament-routes.json",
+        "sha256": "4324b604675c28a3cc9e576757d45b2a73808b8cd9567f1c516e53f23cdaefb7",
+        "sourceProjectIdentity": "98161e7c0fba69c1"
+      },
+      "originalContinuation": {
+        "status": "route-exhausted",
+        "ticks": 3808,
+        "seconds": 31.733333333332173,
+        "cuts": 6,
+        "losses": 0,
+        "failureCause": null,
+        "coverage": 0.5421401515151515,
+        "coverageGoal": 0.74,
+        "checkpoint": "caba2d6ecd111280",
+        "simulationIdentity": "0c3116764594b5dc",
+        "authoredSimulationIdentity": "6a8ba348d1710d9c",
+        "levelIdentity": "38fb2edcdc437f1b",
+        "ruleset": "xonix-core.v6",
+        "replayVerified": true,
+        "segments": [
+          [null, 120],
+          ["down", 95],
+          ["right", 367],
+          ["down", 244],
+          ["left", 108],
+          ["up", 238],
+          ["down", 7],
+          ["right", 108],
+          ["down", 68],
+          ["right", 116],
+          [null, 120],
+          ["right", 7],
+          ["up", 245],
+          ["left", 958],
+          ["right", 7],
+          ["left", 14],
+          ["down", 55],
+          ["right", 449],
+          ["down", 40],
+          ["left", 442]
+        ],
+        "closureCoverage": [
+          [535, 0.013257575757575758],
+          [1172, 0.08617424242424243],
+          [1471, 0.13541666666666666],
+          [2801, 0.4446022727272727],
+          [3319, 0.5023674242424242],
+          [3808, 0.5421401515151515]
+        ],
+        "search": {
+          "simulationTickBudget": 80000,
+          "simulatedTicks": 80000,
+          "candidateLimit": 16,
+          "maxCuts": 24,
+          "policy": "efficient",
+          "attempts": 198,
+          "failures": 25
+        }
+      },
+      "opening": {
+        "seed": 1,
+        "delay": 120,
+        "waypoints": [
+          ["down", 16.5],
+          ["right", 60.5]
+        ],
+        "status": "route-exhausted",
+        "closed": true,
+        "stalled": false,
+        "ticks": 535,
+        "cuts": 1,
+        "losses": 0,
+        "failureCause": null,
+        "coverage": 0.013257575757575758,
+        "checkpoint": "4127a6dd3019066b",
+        "segments": [
+          [null, 120],
+          ["down", 95],
+          ["right", 320]
+        ],
+        "returnPosition": [59, 16.498333333333296],
+        "fieldBounds": [35, 12, 58, 16],
+        "replayVerified": true
+      },
+      "qualification": "full-clear-qualified",
+      "result": {
+        "format": "SpatialRouteEvidenceV1",
+        "missionId": "pysanka-sections",
+        "difficulty": "standard",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "sourceProjectIdentity": "98161e7c0fba69c1",
+        "authoredSimulationIdentity": "6a8ba348d1710d9c",
+        "simulationIdentity": "0c3116764594b5dc",
+        "levelIdentity": "38fb2edcdc437f1b",
+        "gameplayTuning": {
+          "version": "gameplay-pressure.v4",
+          "difficulty": "standard",
+          "enemySpeed": 1,
+          "playerSpeed": 1,
+          "enemyDensity": 0,
+          "adminOverride": false,
+          "overrides": {
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 1
+          }
+        },
+        "ruleset": "xonix-core.v6",
+        "status": "no-loss-clear",
+        "qualification": "legal-route-and-replay-only",
+        "ticks": 6489,
+        "seconds": 54.06776018099302,
+        "losses": 0,
+        "failureCause": null,
+        "coverage": 0.7679924242424242,
+        "coverageGoal": 0.74,
+        "claimedCells": 1622,
+        "totalClaimable": 2112,
+        "cuts": 13,
+        "exposureTicks": 4481,
+        "maxExposureTicks": 952,
+        "firstCoverageMetTick": 6489,
+        "allRequiredCapturedTick": null,
+        "ticksAfterRequiredObjectives": null,
+        "ticksAfterFirstCoverage": 0,
+        "initialComponents": [
+          {
+            "id": 73,
+            "cells": 2112,
+            "retained": true,
+            "enemyIds": ["inside", "outside"]
+          }
+        ],
+        "finalComponents": [
+          {
+            "id": 1261,
+            "cells": 490,
+            "retained": true,
+            "enemyIds": ["inside", "outside"]
+          }
+        ],
+        "actors": [
+          {
+            "id": "inside",
+            "type": "bouncer",
+            "role": "field-keeper",
+            "retainsField": true
+          },
+          {
+            "id": "outside",
+            "type": "bouncer",
+            "role": "field-keeper",
+            "retainsField": true
+          },
+          {
+            "id": "frontier",
+            "type": "contour-patrol",
+            "role": "frontier-patrol",
+            "retainsField": false
+          }
+        ],
+        "objectives": [],
+        "closures": [
+          {
+            "tick": 535,
+            "claimedCells": 28,
+            "coverage": 0.013257575757575758,
+            "coverageGain": 0.013257575757575758,
+            "exposureTicks": 382,
+            "trailCellsBeforeClosingStep": 28,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 2112,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 2084,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 1172,
+            "claimedCells": 154,
+            "coverage": 0.08617424242424243,
+            "coverageGain": 0.07291666666666667,
+            "exposureTicks": 557,
+            "trailCellsBeforeClosingStep": 41,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 2084,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1930,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 1471,
+            "claimedCells": 104,
+            "coverage": 0.13541666666666666,
+            "coverageGain": 0.049242424242424226,
+            "exposureTicks": 109,
+            "trailCellsBeforeClosingStep": 8,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1930,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 73,
+                "cells": 1826,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 2801,
+            "claimedCells": 653,
+            "coverage": 0.4446022727272727,
+            "coverageGain": 0.3091856060606061,
+            "exposureTicks": 952,
+            "trailCellsBeforeClosingStep": 70,
+            "departureComponents": [
+              {
+                "id": 73,
+                "cells": 1826,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 361,
+                "cells": 1173,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 3319,
+            "claimedCells": 122,
+            "coverage": 0.5023674242424242,
+            "coverageGain": 0.05776515151515149,
+            "exposureTicks": 436,
+            "trailCellsBeforeClosingStep": 32,
+            "departureComponents": [
+              {
+                "id": 361,
+                "cells": 1173,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 649,
+                "cells": 1051,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 3808,
+            "claimedCells": 84,
+            "coverage": 0.5421401515151515,
+            "coverageGain": 0.03977272727272729,
+            "exposureTicks": 435,
+            "trailCellsBeforeClosingStep": 32,
+            "departureComponents": [
+              {
+                "id": 649,
+                "cells": 1051,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 865,
+                "cells": 967,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 4162,
+            "claimedCells": 69,
+            "coverage": 0.5748106060606061,
+            "coverageGain": 0.032670454545454586,
+            "exposureTicks": 313,
+            "trailCellsBeforeClosingStep": 23,
+            "departureComponents": [
+              {
+                "id": 865,
+                "cells": 967,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 868,
+                "cells": 898,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 4663,
+            "claimedCells": 92,
+            "coverage": 0.6183712121212122,
+            "coverageGain": 0.04356060606060608,
+            "exposureTicks": 314,
+            "trailCellsBeforeClosingStep": 23,
+            "departureComponents": [
+              {
+                "id": 868,
+                "cells": 898,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 872,
+                "cells": 806,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 4813,
+            "claimedCells": 20,
+            "coverage": 0.6278409090909091,
+            "coverageGain": 0.009469696969696906,
+            "exposureTicks": 109,
+            "trailCellsBeforeClosingStep": 8,
+            "departureComponents": [
+              {
+                "id": 872,
+                "cells": 806,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 872,
+                "cells": 786,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 5381,
+            "claimedCells": 117,
+            "coverage": 0.6832386363636364,
+            "coverageGain": 0.05539772727272729,
+            "exposureTicks": 381,
+            "trailCellsBeforeClosingStep": 28,
+            "departureComponents": [
+              {
+                "id": 872,
+                "cells": 786,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 888,
+                "cells": 669,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 5613,
+            "claimedCells": 55,
+            "coverage": 0.709280303030303,
+            "coverageGain": 0.02604166666666663,
+            "exposureTicks": 151,
+            "trailCellsBeforeClosingStep": 11,
+            "departureComponents": [
+              {
+                "id": 888,
+                "cells": 669,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 888,
+                "cells": 614,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 5944,
+            "claimedCells": 32,
+            "coverage": 0.7244318181818182,
+            "coverageGain": 0.015151515151515249,
+            "exposureTicks": 150,
+            "trailCellsBeforeClosingStep": 11,
+            "departureComponents": [
+              {
+                "id": 888,
+                "cells": 614,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 888,
+                "cells": 582,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          },
+          {
+            "tick": 6489,
+            "claimedCells": 92,
+            "coverage": 0.7679924242424242,
+            "coverageGain": 0.043560606060605966,
+            "exposureTicks": 192,
+            "trailCellsBeforeClosingStep": 14,
+            "departureComponents": [
+              {
+                "id": 888,
+                "cells": 582,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "retainedComponents": [
+              {
+                "id": 1261,
+                "cells": 490,
+                "retained": true,
+                "enemyIds": ["inside", "outside"]
+              }
+            ],
+            "capturedObjectiveIds": [],
+            "openedGateIds": []
+          }
+        ],
+        "segments": [
+          {
+            "direction": null,
+            "ticks": 120
+          },
+          {
+            "direction": "down",
+            "ticks": 95
+          },
+          {
+            "direction": "right",
+            "ticks": 367
+          },
+          {
+            "direction": "down",
+            "ticks": 244
+          },
+          {
+            "direction": "left",
+            "ticks": 108
+          },
+          {
+            "direction": "up",
+            "ticks": 238
+          },
+          {
+            "direction": "down",
+            "ticks": 7
+          },
+          {
+            "direction": "right",
+            "ticks": 108
+          },
+          {
+            "direction": "down",
+            "ticks": 68
+          },
+          {
+            "direction": "right",
+            "ticks": 116
+          },
+          {
+            "direction": null,
+            "ticks": 120
+          },
+          {
+            "direction": "right",
+            "ticks": 7
+          },
+          {
+            "direction": "up",
+            "ticks": 245
+          },
+          {
+            "direction": "left",
+            "ticks": 958
+          },
+          {
+            "direction": "right",
+            "ticks": 7
+          },
+          {
+            "direction": "left",
+            "ticks": 14
+          },
+          {
+            "direction": "down",
+            "ticks": 55
+          },
+          {
+            "direction": "right",
+            "ticks": 449
+          },
+          {
+            "direction": "down",
+            "ticks": 40
+          },
+          {
+            "direction": "left",
+            "ticks": 442
+          },
+          {
+            "direction": "right",
+            "ticks": 34
+          },
+          {
+            "direction": "down",
+            "ticks": 320
+          },
+          {
+            "direction": null,
+            "ticks": 120
+          },
+          {
+            "direction": "down",
+            "ticks": 7
+          },
+          {
+            "direction": "right",
+            "ticks": 54
+          },
+          {
+            "direction": "up",
+            "ticks": 320
+          },
+          {
+            "direction": "down",
+            "ticks": 34
+          },
+          {
+            "direction": "right",
+            "ticks": 54
+          },
+          {
+            "direction": "down",
+            "ticks": 62
+          },
+          {
+            "direction": null,
+            "ticks": 120
+          },
+          {
+            "direction": "down",
+            "ticks": 7
+          },
+          {
+            "direction": "right",
+            "ticks": 14
+          },
+          {
+            "direction": "down",
+            "ticks": 40
+          },
+          {
+            "direction": "right",
+            "ticks": 163
+          },
+          {
+            "direction": "up",
+            "ticks": 54
+          },
+          {
+            "direction": "left",
+            "ticks": 170
+          },
+          {
+            "direction": "right",
+            "ticks": 7
+          },
+          {
+            "direction": "down",
+            "ticks": 225
+          },
+          {
+            "direction": null,
+            "ticks": 60
+          },
+          {
+            "direction": "down",
+            "ticks": 7
+          },
+          {
+            "direction": "right",
+            "ticks": 108
+          },
+          {
+            "direction": "up",
+            "ticks": 54
+          },
+          {
+            "direction": "left",
+            "ticks": 102
+          },
+          {
+            "direction": "right",
+            "ticks": 7
+          },
+          {
+            "direction": "left",
+            "ticks": 14
+          },
+          {
+            "direction": "up",
+            "ticks": 163
+          },
+          {
+            "direction": "right",
+            "ticks": 326
+          },
+          {
+            "direction": "up",
+            "ticks": 35
+          }
+        ],
+        "replayVerified": true,
+        "checkpoint": "49ab1ec8730d979a"
+      },
+      "searchHistory": [
+        {
+          "policy": "efficient",
+          "simulationTickBudget": 160000,
+          "simulatedTicks": 93292,
+          "candidateLimit": 16,
+          "maxCuts": 24,
+          "attemptCount": 332,
+          "failedAttempts": 170,
+          "failuresByCause": {
+            "enemy-trail": 162,
+            "enemy-player": 8
+          },
+          "exhausted": false
+        }
+      ]
+    }
+  ]
+}

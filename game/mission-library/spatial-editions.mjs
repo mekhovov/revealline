@@ -6,10 +6,9 @@ import { compileContentProject } from '../content-design/project.mjs';
 import { createJourneyCatalog } from '../journey/catalog.mjs';
 import { createMissionCard } from '../content-design/mission-card.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
-import { WHOLE_JOURNEY_REMIX_PACK_IDS } from '../content-design/whole-journey-order.mjs';
 import { journeyLibrarySource } from './journey-source.mjs';
 import { combineJourneyLibrarySources } from './cross-mode-journey.mjs';
-import { journeyMissionDetails } from './journey-presentation.mjs';
+import { journeyMissionDetails, authoredJourneyMissionTags } from './journey-presentation.mjs';
 
 const REVISED_MISSIONS = new Set([
   'two-bays',
@@ -25,9 +24,14 @@ const ALTERNATE = Object.freeze({
     routeId: 'whole-spatial-v6',
     label: 'Spatial challenge · balance pending',
   },
+  'whole-ornament-v1': {
+    routeId: 'whole-spatial-v6',
+    label: 'Previous ornament studies · v6',
+    missionIds: ['cross-stitch-crossings', 'rushnyk-bands', 'pysanka-sections'],
+  },
 });
 
-/** Only the six changed editions, with their original runtime and display IDs.
+/** Only changed editions, with their original runtime and display IDs.
  * Compilation qualifies each mode independently; browsing does not construct a
  * preparer, fetch artwork or decode pictures. These browse-only alternatives
  * cannot become an automatic boundary successor; manual Play still enters the
@@ -43,6 +47,7 @@ export async function createSpatialEditionSources({
 } = {}) {
   const alternate = Object.hasOwn(ALTERNATE, activeRouteId) ? ALTERNATE[activeRouteId] : null;
   if (!alternate) return Object.freeze({ sources: Object.freeze([]), dispose() {} });
+  const revised = alternate.missionIds ? new Set(alternate.missionIds) : REVISED_MISSIONS;
   required(typeof launch === 'function', 'Spatial editions need an exact mission handoff.');
   required(typeof difficulty === 'function', 'Spatial editions need the selected preset.');
   required(
@@ -66,7 +71,7 @@ export async function createSpatialEditionSources({
   const qualified = ['solo', 'versus'].map((mode) => {
     const executions = createContentExecutionCatalog(project, { mode });
     // Construct the full metadata catalogue before filtering. The original
-    // campaign position is not the row's position in this six-card library.
+    // campaign position is not the row's position in this alternate-card library.
     const fullCatalog = createJourneyCatalog(
       executions.journey().campaigns.map(({ packId, runtime, manifests }) => ({
         source: 'candidate',
@@ -81,13 +86,11 @@ export async function createSpatialEditionSources({
         })),
       })),
     );
-    const missions = fullCatalog.missions.filter((mission) =>
-      REVISED_MISSIONS.has(mission.levelId),
-    );
+    const missions = fullCatalog.missions.filter((mission) => revised.has(mission.levelId));
     required(
-      missions.length === REVISED_MISSIONS.size &&
-        new Set(missions.map((mission) => mission.levelId)).size === REVISED_MISSIONS.size,
-      'Spatial edition must contain each of the six original mission owners exactly once.',
+      missions.length === revised.size &&
+        new Set(missions.map((mission) => mission.levelId)).size === revised.size,
+      'Spatial edition must contain each requested original mission owner exactly once.',
     );
     const manifestFor = (mission, preset = difficulty()) =>
       executions
@@ -108,7 +111,7 @@ export async function createSpatialEditionSources({
       profile,
       details: (mission) => journeyMissionDetails(manifestFor(mission)),
       card: (mission) => createMissionCard(manifestFor(mission)),
-      tags: (mission) => (WHOLE_JOURNEY_REMIX_PACK_IDS.includes(mission.packId) ? ['Remix'] : []),
+      tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission)),
       launch: (_mission, context) => {
         if (disposed || context?.isCurrent?.() === false) return false;
         // The combined adapter validates this exact display identity and mode.
@@ -129,15 +132,28 @@ export async function createSpatialEditionSources({
       },
     };
   });
+  // The opt-in ornament successor also retains the six prior v5 alternatives.
+  // Their profile is independent: never lend the v6 profile to v5 records.
+  const earlier =
+    activeRouteId === 'whole-ornament-v1'
+      ? await createSpatialEditionSources({
+          activeRouteId: 'whole-spatial-v6',
+          originalThemes,
+          difficulty,
+          launch,
+        })
+      : null;
   return Object.freeze({
     sources: Object.freeze([
       Object.freeze({
         ...combineJourneyLibrarySources(qualified),
         automaticContinuation: false,
       }),
+      ...(earlier?.sources ?? []),
     ]),
     dispose() {
       disposed = true;
+      earlier?.dispose();
     },
   });
 }

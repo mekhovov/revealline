@@ -9,6 +9,7 @@ import {
 } from './whole-spatial-candidates.mjs';
 import { createWholeJourneyCandidates } from './whole-journey-candidates.mjs';
 import { createSpatialChallengeJourney } from './spatial-challenge-journey.mjs';
+import { createUkrainianOrnamentJourney } from './ukrainian-ornament-candidates.mjs';
 
 import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 export { createCandidateSequence } from './sequence.mjs';
@@ -26,5 +27,6 @@ export function createAuthoredJourneyRoute(id) {
     createWholeVarietyCandidates,
     createWholeSortingCandidates,
     createSpatialChallengeJourney,
+    createUkrainianOrnamentJourney,
   });
 }

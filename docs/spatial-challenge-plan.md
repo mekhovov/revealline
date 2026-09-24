@@ -13,6 +13,18 @@ validation/lint/format and the exact-source build in run `35948582417`. Subseque
 evidence-only commits still require their own checks. Release qualification is a
 separate gate. The long suite is waived, not passed.
 
+## Next prepared batch — Ukrainian ornament studies
+
+The user's follow-up prioritizes Ukrainian ornament as playable obstacle geometry.
+[The bounded successor plan](ukrainian-ornament-study.md) revises Cross-stitch
+crossings, Rushnyk bands and Pysanka sections, using original diamond, zigzag and
+open-shell layouts. It stays separate from PR323 and leaves its default, core
+order and other 88 missions untouched. `whole-ornament-v1` is an explicit
+Solo/Versus review route with a Studio entry; source preparation is not public
+delivery. Previous editions remain in the same tagged selector. This advances
+three of Phase E's optional studies, not the whole Team/cultural phase or the
+wall-free early-campaign work in Phase B. Human/cultural/device review remains open.
+
 ## Outcome and non-negotiable rules
 
 Create distinct, fair spatial problems, not arbitrary per-map physics or a larger

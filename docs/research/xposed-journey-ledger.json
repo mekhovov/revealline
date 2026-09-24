@@ -3,6 +3,21 @@
   "schemaVersion": 2,
   "reviewDate": "2026-09-20",
   "status": "implementation-review-in-progress; original proposals retained, final dispositions pending",
+  "ukrainianOrnamentStudy": {
+    "reviewDate": "2026-09-24",
+    "plan": "docs/ukrainian-ornament-study.md",
+    "edition": "whole-ornament-v1",
+    "status": "Optional three-map implementation candidate; technical, public, human and cultural qualification recorded separately",
+    "missions": ["cross-stitch-crossings", "rushnyk-bands", "pysanka-sections"],
+    "disposition": "Original successor geometry; previous v6 editions remain selectable. No new final disposition is claimed for any of the 48 numbered Reloaded references.",
+    "comparison": "Break repeated horizontal diamond crossings, remove reclaimed strips through wall-band gaps, and distinguish side-entry from shoulder-enclosure decisions. Preserve actual wall blocking, enemy-seeded capture and gp4 straight-between-impact movement.",
+    "culturalSources": [
+      "https://honchar.org.ua/collections/detail/1769",
+      "https://museum.kh.ua/academic/publications.html?n=929",
+      "https://ich.unesco.org/en/decisions/19.COM/7.B.14"
+    ],
+    "limits": "Original abstractions, not traced charts or reused museum imagery. Pysanka is egg decoration, not embroidery. No invented universal symbol meanings, copied reference coordinates, or enjoyment claims. Earlier observations and hashes remain unchanged."
+  },
   "spatialChallengeReview": {
     "reviewDate": "2026-09-24",
     "plan": "docs/spatial-challenge-plan.md",
