@@ -72,6 +72,31 @@ function key(page, value, extra = {}) {
   target.emit('keyup', { key: value, code: value });
   return event;
 }
+// Capture the original handler's operation without moving focus or replacing
+// the native keyboard/controller gesture being qualified. Cold catalogue work
+// may exceed a readiness poll while still acknowledging the action immediately.
+async function activateHeader(page, header, activate) {
+  if (header !== 'shell-packs') {
+    activate();
+    return;
+  }
+  const control = page.$(header),
+    handler = control.onclick;
+  let pending;
+  control.onclick = (...args) => (pending = handler.apply(control, args));
+  try {
+    activate();
+  } finally {
+    control.onclick = handler;
+  }
+  assert(pending instanceof Promise, 'The actual Missions gesture owns preparation.');
+  const feedback = page.$('mission-library-opening-status');
+  assert.equal(feedback?.textContent, 'Preparing missions…');
+  assert.equal(feedback.getAttribute('role'), 'status');
+  assert.equal(page.doc.activeElement, control, 'Loading does not take header focus.');
+  await pending;
+  assert.equal(page.$('journey-chooser').open, true);
+}
 function frames(page, count) {
   for (let i = 0; i < count; i++) page.frame();
 }
@@ -192,7 +217,7 @@ for (const policy of ['immediate', 'grid-center']) {
       const before = snapshot(page);
       for (const [header, dialog] of headers) {
         page.$(header).focus();
-        key(page, 'Enter');
+        await activateHeader(page, header, () => key(page, 'Enter'));
         await settle(() => page.$(dialog)?.open);
         assert.equal(page.$(dialog).open, true, `${header} activates from ${state}`);
         page.$(dialog).close();
@@ -202,7 +227,7 @@ for (const policy of ['immediate', 'grid-center']) {
       const controls = pad(page, t);
       for (const [header, dialog] of headers) {
         controls.reach(header);
-        controls.pulse(0);
+        await activateHeader(page, header, () => controls.pulse(0));
         await settle(() => page.$(dialog)?.open);
         assert.equal(page.$(dialog).open, true);
         controls.frame(); // The asynchronously opened modal receives a neutral sample.
@@ -247,7 +272,7 @@ for (const policy of ['immediate', 'grid-center']) {
     const controls = pad(page, t);
     for (const [header, dialog] of headers) {
       controls.reach(header);
-      controls.pulse(0);
+      await activateHeader(page, header, () => controls.pulse(0));
       await settle(() => page.$(dialog)?.open);
       assert.equal(page.$(dialog).open, true);
       controls.frame();

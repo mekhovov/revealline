@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { soloPage, settle, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { TOUCH_PREFERENCES_KEY } from '../touch-preferences.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const classic = JSON.parse(
   readFileSync(new URL('../content/packs/classic-lab.json', import.meta.url)),
@@ -20,7 +21,9 @@ function controller() {
 }
 async function classicPage(t, options = {}) {
   t.mock.method(SoloElement.prototype, 'getContext', () => null);
-  const page = await soloPage(t, options);
+  // Cold released-picture verification can outlast five seconds on a busy CI
+  // worker. Readiness stays mandatory before any synchronous input assertion.
+  const page = await soloPage(t, { initialReadyTimeoutMs: 30000, ...options });
   page.$('library-button').click();
   page.doc.querySelector('[data-library-panel="packs"]').click();
   assert.equal(page.$('library-dialog').open, true);
@@ -119,10 +122,15 @@ test('actual host: B pauses, X opens field guide, Y opens missions; back closes 
   assert.equal(page.$('enemy-guide-dialog').open, false);
   await start();
   press(3);
-  assert.equal(page.$('shell-missions').open, true);
+  assert.match(page.$('mission-library-opening-status').textContent, /Preparing missions/);
+  const beforeMissions = authoritativeCheckpoint(page.rendered.run);
+  await waitFor(() => page.$('journey-chooser')?.open, { timeoutMs: 30000 });
+  page.frame(0);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), beforeMissions);
+  assert.equal(page.$('shell-missions').open, false);
   press(1);
   release();
-  assert.equal(page.$('shell-missions').open, false);
+  assert.equal(page.$('journey-chooser').open, false);
   assert.equal(page.doc.body.dataset.flightState, 'paused');
   assert.deepEqual(page.errors, []);
 });
@@ -268,17 +276,29 @@ test('modeled controller: Missions selection, Deploy, Pause and explicit Resume 
   };
   release();
   navigate('shell-play');
-  press(0);
-  assert.equal(page.$('shell-missions').open, true);
-  navigate('shell-deploy');
-  assert.equal(page.$('shell-deploy').disabled, false);
+  const opener = page.$('shell-play'),
+    handler = opener.onclick;
+  let opening;
+  opener.onclick = (...args) => (opening = handler.apply(opener, args));
+  try {
+    press(0);
+    assert.match(page.$('mission-library-opening-status').textContent, /Preparing missions/);
+    assert(opening instanceof Promise);
+    await opening;
+  } finally {
+    opener.onclick = handler;
+  }
+  assert.equal(page.$('journey-chooser').open, true);
+  const card = page.doc.activeElement;
+  assert.equal(card.className.includes('journey-card'), true);
+  assert.equal(card.disabled, false);
   press(0);
   await settle(() => {
     page.frame(0);
     return page.doc.body.dataset.flightState === 'running';
   });
   release();
-  assert.equal(page.$('shell-missions').open, false);
+  assert.equal(page.$('journey-chooser').open, false);
   assert.equal(page.rendered.run.player.speed, 0);
   press(9);
   assert.equal(page.doc.body.dataset.flightState, 'paused');

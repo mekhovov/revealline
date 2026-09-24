@@ -6,6 +6,7 @@ import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../li
 import { BACKUP_FORMAT } from '../backup.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
 
 const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
 const profileKey = 'revealline.library.dev.v1';
@@ -233,6 +234,7 @@ test('actual complete-backup import and Undo adopt text size while preserving th
     session: original,
   });
   page.$('import-save').click();
+  await acceptGameDataReplacement(page);
   await settle(() => !page.$('import-save').disabled);
   assert.match(page.$('save-status').textContent, /Game data restored/);
   size(page, 'large');
