@@ -5,6 +5,7 @@ import { attachFocusClearance } from './focus-clearance.mjs';
 import { prepareChapterFocus } from './chapter-focus-clearance.mjs';
 import { mountModeChoices } from './mode-choice.mjs';
 import { WORKSHOP_TOOLS } from './workshop-return.mjs';
+import { releaseExplorerHref } from '../release-explorer.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
@@ -48,6 +49,12 @@ export function attachGameShell({
   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
   const topDialog = getTopDialog ?? modalNavigation.topDialog;
   const surfaces = attachFieldKitSurfaces({ document: doc });
+  const releaseExplorer = $('shell-release-explorer');
+  if (releaseExplorer)
+    releaseExplorer.setAttribute(
+      'href',
+      releaseExplorerHref(doc.defaultView?.location?.href ?? globalThis.location?.href),
+    );
   const deck = doc.querySelector('.flight-deck');
   if (deck) $('shell-mission-content').append(deck);
   doc.body.classList.add('game-shell');
@@ -271,10 +278,14 @@ export function attachGameShell({
     $('shell-workshop').focus();
     workshop.showModal();
     if (destroyed || !workshop.open || topDialog() !== workshop) return false;
+    const entryOpener = entry ? $(entry.opener) : null;
+    const entrySection = entryOpener?.closest('details');
+    if (entrySection) entrySection.open = true;
     const target =
-      entry && availableReturn($(entry.opener), workshop)
-        ? $(entry.opener)
-        : workshop.querySelector('button,a');
+      entry && availableReturn(entryOpener, workshop)
+        ? entryOpener
+        : (workshop.querySelector('.more-destinations a, .more-destinations button') ??
+          workshop.querySelector('button,a'));
     target?.focus();
     return true;
   };
@@ -639,6 +650,8 @@ export function attachGameShell({
       'shell-gallery',
       'shell-guide',
       'shell-workshop',
+      'shell-catalogue',
+      'shell-release-explorer',
     ])
       $(id).hidden = true;
     for (const element of doc.querySelectorAll('.home-actions a, .shell-tools'))

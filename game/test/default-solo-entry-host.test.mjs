@@ -71,6 +71,8 @@ async function running(p, levelId) {
   });
 }
 async function missions(p, opener = 'shell-play') {
+  if (opener === 'shell-catalogue' && !p.$('shell-workshop-dialog').open)
+    p.$('shell-workshop').click();
   await openMissionLibrary(p, opener);
 }
 function collection(p, value) {
@@ -98,7 +100,7 @@ test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct 
   );
   assert.match(
     p.$('journey-artwork-availability').textContent,
-    /^Mission pictures need an internet connection/,
+    /^Mission pictures need a connection/,
   );
   await missions(p);
   assert.equal(p.$('journey-collection').value, '');
