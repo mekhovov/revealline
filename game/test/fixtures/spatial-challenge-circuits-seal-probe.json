@@ -1,0 +1,509 @@
+{
+  "format": "SpatialChallengeCircuitsSealProbeV1",
+  "scope": "Five representative legal-input traces on current gp4 Standard/immediate: west-mouth retention at seeds 1 and 2, plus an incomplete survivor and two failures at seed 1. None is a full clear. Replay verifies these exact samples only; no exhaustive search, difficulty qualification, human balance, dominant-bypass or impossibility claim.",
+  "diagnosticSweeps": {
+    "qualification": "Historical bounded console diagnostics only. The focused test replays the representative rows, not these sweeps. Sweeps share route prefixes and overlapping configurations; never sum them as independent coverage.",
+    "initialFullSequence": {
+      "seeds": [
+        1,
+        2
+      ],
+      "initialWaitTicks": {
+        "minimum": 0,
+        "maximum": 1440,
+        "step": 30
+      },
+      "attempts": 98,
+      "enemyTrail": 79,
+      "enemyPlayer": 2,
+      "incompleteSurvivors": 17,
+      "clears": 0
+    },
+    "shortTransferSequence": {
+      "seeds": [
+        1,
+        2
+      ],
+      "waitAfterWestSealTicks": {
+        "minimum": 0,
+        "maximum": 1200,
+        "step": 10
+      },
+      "attempts": 242,
+      "enemyTrail": 18,
+      "enemyPlayer": 210,
+      "incompleteSurvivors": 14,
+      "clears": 0
+    }
+  },
+  "frozenTimeHypothesis": {
+    "qualification": "Separate frozen-initial-enemy-position topology, not a legal continuous trail, moving-enemy prediction or safe route.",
+    "mouthLines": [
+      {
+        "x": 20,
+        "y": 11,
+        "w": 1,
+        "h": 6
+      },
+      {
+        "x": 32,
+        "y": 15,
+        "w": 6,
+        "h": 1
+      },
+      {
+        "x": 51,
+        "y": 11,
+        "w": 1,
+        "h": 6
+      }
+    ],
+    "securedTrailCells": 18,
+    "unretainedFillCells": 1782,
+    "totalClaimable": 2026,
+    "conditionalCoverage": 0.8884501480750246,
+    "coverageGoal": 0.76
+  },
+  "rows": [
+    {
+      "id": "west-mouth-seed-1",
+      "missionId": "neon-remix",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "authoredSimulationIdentity": "67bc9d4c92404e4b",
+      "simulationIdentity": "78448057a028e0bc",
+      "levelIdentity": "79562ce15cad4ebf",
+      "gameplayTuningVersion": "gameplay-pressure.v4",
+      "ruleset": "xonix-core.v6",
+      "status": "route-exhausted",
+      "ticks": 216,
+      "cuts": 1,
+      "losses": 0,
+      "failureCause": null,
+      "coverage": 0.0029615004935834156,
+      "coverageGoal": 0.76,
+      "checkpoint": "0a8fc2949b8095a0",
+      "replayVerified": true,
+      "segments": [
+        [
+          null,
+          1
+        ],
+        [
+          "right",
+          96
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "down",
+          28
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "down",
+          88
+        ],
+        [
+          null,
+          1
+        ]
+      ],
+      "retainedComponents": [
+        {
+          "id": 73,
+          "cells": 1950,
+          "retained": true,
+          "enemyIds": [
+            "middle",
+            "east"
+          ]
+        },
+        {
+          "id": 731,
+          "cells": 70,
+          "retained": true,
+          "enemyIds": [
+            "west"
+          ]
+        }
+      ],
+      "closureCoverage": [
+        [
+          215,
+          0.0029615004935834156
+        ]
+      ]
+    },
+    {
+      "id": "west-mouth-seed-2",
+      "missionId": "neon-remix",
+      "difficulty": "standard",
+      "seed": 2,
+      "turnPolicy": "immediate",
+      "authoredSimulationIdentity": "67bc9d4c92404e4b",
+      "simulationIdentity": "78448057a028e0bc",
+      "levelIdentity": "79562ce15cad4ebf",
+      "gameplayTuningVersion": "gameplay-pressure.v4",
+      "ruleset": "xonix-core.v6",
+      "status": "route-exhausted",
+      "ticks": 216,
+      "cuts": 1,
+      "losses": 0,
+      "failureCause": null,
+      "coverage": 0.0029615004935834156,
+      "coverageGoal": 0.76,
+      "checkpoint": "a865b9017ca14e48",
+      "replayVerified": true,
+      "segments": [
+        [
+          null,
+          1
+        ],
+        [
+          "right",
+          96
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "down",
+          28
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "down",
+          88
+        ],
+        [
+          null,
+          1
+        ]
+      ],
+      "retainedComponents": [
+        {
+          "id": 73,
+          "cells": 1950,
+          "retained": true,
+          "enemyIds": [
+            "middle",
+            "east"
+          ]
+        },
+        {
+          "id": 731,
+          "cells": 70,
+          "retained": true,
+          "enemyIds": [
+            "west"
+          ]
+        }
+      ],
+      "closureCoverage": [
+        [
+          215,
+          0.0029615004935834156
+        ]
+      ]
+    },
+    {
+      "id": "middle-seal-keeper-escaped",
+      "missionId": "neon-remix",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "authoredSimulationIdentity": "67bc9d4c92404e4b",
+      "simulationIdentity": "78448057a028e0bc",
+      "levelIdentity": "79562ce15cad4ebf",
+      "gameplayTuningVersion": "gameplay-pressure.v4",
+      "ruleset": "xonix-core.v6",
+      "status": "route-exhausted",
+      "ticks": 633,
+      "cuts": 3,
+      "losses": 0,
+      "failureCause": null,
+      "coverage": 0.051826258637709774,
+      "coverageGoal": 0.76,
+      "checkpoint": "7b7414518a15994f",
+      "replayVerified": true,
+      "segments": [
+        [
+          null,
+          1
+        ],
+        [
+          "right",
+          96
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "down",
+          28
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "down",
+          88
+        ],
+        [
+          null,
+          112
+        ],
+        [
+          "down",
+          21
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "right",
+          115
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "right",
+          7
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "up",
+          42
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "right",
+          116
+        ],
+        [
+          null,
+          1
+        ]
+      ],
+      "retainedComponents": [
+        {
+          "id": 73,
+          "cells": 1851,
+          "retained": true,
+          "enemyIds": [
+            "middle",
+            "east"
+          ]
+        },
+        {
+          "id": 731,
+          "cells": 70,
+          "retained": true,
+          "enemyIds": [
+            "west"
+          ]
+        }
+      ],
+      "closureCoverage": [
+        [
+          215,
+          0.0029615004935834156
+        ],
+        [
+          464,
+          0.006416584402764067
+        ],
+        [
+          632,
+          0.051826258637709774
+        ]
+      ]
+    },
+    {
+      "id": "transfer-trail-impact",
+      "missionId": "neon-remix",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "authoredSimulationIdentity": "67bc9d4c92404e4b",
+      "simulationIdentity": "78448057a028e0bc",
+      "levelIdentity": "79562ce15cad4ebf",
+      "gameplayTuningVersion": "gameplay-pressure.v4",
+      "ruleset": "xonix-core.v6",
+      "status": "life-lost",
+      "ticks": 342,
+      "cuts": 1,
+      "losses": 1,
+      "failureCause": "enemy-trail",
+      "coverage": 0.0029615004935834156,
+      "coverageGoal": 0.76,
+      "checkpoint": "0796b42b147c5ca7",
+      "replayVerified": true,
+      "segments": [
+        [
+          null,
+          1
+        ],
+        [
+          "right",
+          96
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "down",
+          28
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "down",
+          88
+        ],
+        [
+          null,
+          2
+        ],
+        [
+          "down",
+          21
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "right",
+          103
+        ]
+      ],
+      "retainedComponents": [
+        {
+          "id": 73,
+          "cells": 1950,
+          "retained": true,
+          "enemyIds": [
+            "middle",
+            "east"
+          ]
+        },
+        {
+          "id": 731,
+          "cells": 70,
+          "retained": true,
+          "enemyIds": [
+            "west"
+          ]
+        }
+      ],
+      "closureCoverage": [
+        [
+          215,
+          0.0029615004935834156
+        ]
+      ]
+    },
+    {
+      "id": "waiting-body-impact",
+      "missionId": "neon-remix",
+      "difficulty": "standard",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "authoredSimulationIdentity": "67bc9d4c92404e4b",
+      "simulationIdentity": "78448057a028e0bc",
+      "levelIdentity": "79562ce15cad4ebf",
+      "gameplayTuningVersion": "gameplay-pressure.v4",
+      "ruleset": "xonix-core.v6",
+      "status": "life-lost",
+      "ticks": 390,
+      "cuts": 1,
+      "losses": 1,
+      "failureCause": "enemy-player",
+      "coverage": 0.0029615004935834156,
+      "coverageGoal": 0.76,
+      "checkpoint": "7edac90602e0db27",
+      "replayVerified": true,
+      "segments": [
+        [
+          null,
+          1
+        ],
+        [
+          "right",
+          96
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "down",
+          28
+        ],
+        [
+          null,
+          1
+        ],
+        [
+          "down",
+          88
+        ],
+        [
+          null,
+          175
+        ]
+      ],
+      "retainedComponents": [
+        {
+          "id": 73,
+          "cells": 1950,
+          "retained": true,
+          "enemyIds": [
+            "middle",
+            "east"
+          ]
+        },
+        {
+          "id": 731,
+          "cells": 70,
+          "retained": true,
+          "enemyIds": [
+            "west"
+          ]
+        }
+      ],
+      "closureCoverage": [
+        [
+          215,
+          0.0029615004935834156
+        ]
+      ]
+    }
+  ]
+}
