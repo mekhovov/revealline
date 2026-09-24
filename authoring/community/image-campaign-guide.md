@@ -2,6 +2,8 @@
 
 Open [Picture campaign creator](../../game/creator/). This is the Phase 1 implementation; its public release and browser acceptance are tracked in [the acceptance record](phase1-acceptance.md).
 
+Choosing one picture keeps this compact workflow. The Phase 2 multi-picture interface and its release requirements are documented in the [batch campaign draft](batch-image-campaign-guide.md).
+
 ## Make your first campaign
 
 1. Choose one PNG, JPEG or static WebP picture, or drop it onto the picture area. The current input limits are 4 MiB, 8192 pixels per side and 16 megapixels. This release creates one Solo mission per campaign.
