@@ -406,7 +406,7 @@ function playerFixture({ wide = true, css = 600, bodyId = 'fpv-body', image } = 
   return { p, s, run };
 }
 
-test('foundation craft locator remains visible when paused/reduced and never mutates replay or Legacy rendering', () => {
+test('foundation craft keeps its contact cue without detached corner brackets', () => {
   const level = resolveMission(
     compileContentProject(createOpeningCandidates()),
     'courtyard-return',
@@ -419,13 +419,7 @@ test('foundation craft locator remains visible when paused/reduced and never mut
       const { ctx, calls } = surface(run.width * 16, css);
       p.draw(ctx, run, FIXED_DT, options);
       assert(
-        calls.some(
-          (c) =>
-            c.op === 'stroke' &&
-            c.lineJoin === 'miter' &&
-            c.lineCap === 'butt' &&
-            c.lineWidth === 2 / (css / 1152),
-        ),
+        !calls.some((c) => c.op === 'stroke' && c.lineJoin === 'miter' && c.lineCap === 'butt'),
       );
       assert(
         calls.some(
@@ -438,13 +432,6 @@ test('foundation craft locator remains visible when paused/reduced and never mut
       );
       assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
     }
-    const legacy = playerFixture({ css });
-    legacy.p.draw(legacy.s.ctx, legacy.run, FIXED_DT);
-    assert(
-      !legacy.s.calls.some(
-        (c) => c.op === 'stroke' && c.lineJoin === 'miter' && c.lineCap === 'butt',
-      ),
-    );
   }
 });
 
