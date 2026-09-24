@@ -138,6 +138,7 @@ import { attachEnemyGuide } from './ui/enemy-guide.mjs';
 import { attachControllerSettings } from './ui/controller-settings.mjs';
 import { controllerBindingLabels, controllerStickLabel } from './controller-bindings.mjs';
 import { attachKeySettings } from './ui/key-settings.mjs';
+import { attachQuickMusicControls } from './ui/quick-music-controls.mjs';
 import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { createAudioMaster } from './ui/audio-master.mjs';
@@ -994,6 +995,7 @@ try {
     musicPreviewRequest = 0;
   function renderMusicPreview() {
     if (!musicPreviewState) return;
+    quickMusicControls?.render();
     const track = musicPreviewState.track;
     compactCredit.render(musicPreviewState, audioMaster.snapshot());
     const audible =
@@ -1052,6 +1054,7 @@ try {
     optionalWorlds = null;
   let guideMusicWasPlaying = false;
   let soundtrackPlayer = null,
+    quickMusicControls = null,
     soundtrackPanel = null,
     soundtrackStore = null;
   let soundtrackAssets = new Map(),
@@ -1565,6 +1568,7 @@ try {
         readAsset: source.readAsset,
         onChange: (state) => {
           soundtrackPanel?.update(state);
+          quickMusicControls?.render();
           musicPreviewState = state;
           renderMusicPreview();
           if (soundtrackLoading) return;
@@ -1578,6 +1582,33 @@ try {
             state.preparation,
           );
         },
+      });
+      quickMusicControls = attachQuickMusicControls({
+        document,
+        prefix: 'solo',
+        after: [$('shell-continue'), $('start-button')],
+        settingsRoot: $('settings-panel-audio'),
+        snapshot: () => soundtrackPlayer?.snapshot(),
+        getMaster: () => audioMaster.snapshot(),
+        active: () =>
+          !soundtrackDisposed && !enemyGuide?.practiceActive && !soundtrackPanel?.isOpen(),
+        conflicts: (event) =>
+          !!actionForKey(resolveKeyBindings(library.preferences.keyboardBindings), event),
+        play: () => {
+          soundtrackMenuGesture = true;
+          const waking = soundtrackPlayer.wake();
+          const playing = activateAudio({ explicit: true });
+          return Promise.all([waking, playing]).then(([, result]) => result);
+        },
+        pause: () => {
+          soundtrackMenuGesture = true;
+          soundtrackPlayer.pause();
+        },
+        next: () => {
+          soundtrackMenuGesture = true;
+          return soundtrackPlayer.next();
+        },
+        onError: (error) => soundtrackStatus(error.message || String(error)),
       });
       soundtrackPlayer.setAuthoredTrack(authoredMusic);
       soundtrackPlayer.setContext(soundtrackContext());
@@ -1661,6 +1692,8 @@ try {
       }
     } catch (error) {
       soundtrackLoading = false;
+      quickMusicControls?.dispose();
+      quickMusicControls = null;
       soundtrackPanel?.dispose();
       soundtrackPlayer?.dispose();
       soundtrackStore?.close();
@@ -1707,6 +1740,7 @@ try {
     )
       return;
     if (
+      quickMusicControls?.contains(event.target) ||
       event.target?.closest?.(
         '#soundtrack-dialog, #sound-button, #music-preview, #soundtrack-open, #shell-music',
       )
@@ -2491,6 +2525,7 @@ try {
       journeyReactions.dispose();
       soundtrackDisposed = true;
       soundtrackLoad.abort();
+      quickMusicControls?.dispose();
       enemyGuide.dispose();
       optionalWorlds?.dispose();
       soundtrackPlayer?.dispose();
