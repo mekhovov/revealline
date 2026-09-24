@@ -38,7 +38,7 @@ const sources = {
     'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; game/enemy-catalog.mjs',
   team: 'game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs',
   audio:
-    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs',
+    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs',
 };
 
 // Image review is independent of the 37 Team recipes. Bind original bytes and
@@ -125,11 +125,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601',
+    sha256: '76ae855540ba7cd84eaa943b9a3156bcf10a4b5af21587a6105432f72d1f0502',
     evidence: [
-      'Scoped retained-audio functional source review: docs/verification/fresh-presentation-retention/review.json sha256:120fbc1081856a6961f99bd479212695a09a4ce4b8debf3e3069a05620e75675. Fourteen audio inputs sha256:f8952e5df3886a92e6cb1e7fa174a1ca8c99a83199ebd5ede342fa736962d601; only published-audio.mjs changes accepted snapshot ownership and stale-reader rejection.',
-      'All8 selected roles remain the same procedural recipes with no audio files. Synthesis, catalogue, scheduling, gain/master authority, saved playback intent and soundtrack panel inputs are byte-identical. Source and lifecycle tests support the same functional player scope; native retained-image observations do not prove custom audio-file decoding.',
-      'No recording, composition, musical suitability, Ukrainian authenticity, native listening, physical-device, frozen-offline or public approval. The70 hosted recordings retain pending musical review and UA-FPV remains excluded without redistribution permission. All historical records and127 original payloads are immutable.',
+      'Scoped public-archive playback source review: docs/verification/online-soundtrack-archive-2026-09-24/review.json sha256:ba680708e4b357de5bff386ec220275ed94a9c2dc88539bf35bf990685ad67ad. Fifteen ordered audio inputs sha256:76ae855540ba7cd84eaa943b9a3156bcf10a4b5af21587a6105432f72d1f0502 bind the catalogue trust boundary, player transport and native searchable panel.',
+      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded catalogue decode, exact immutable paths, direct streaming, transport continuity, filters, failure and cancellation. Local browser inspection covered the in-dialog controls and unavailable-catalogue fallback.',
+      'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
     ],
   },
   motion: {
