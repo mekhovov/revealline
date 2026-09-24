@@ -28,6 +28,7 @@ import {
   resolveCampaignMissionTarget,
 } from './mission-library/installed-target.mjs';
 import { createInstalledMissionLibrary } from './mission-library/installed-library.mjs';
+import { projectClassicCurrentRulesEntry } from './mission-library/classic-current-rules.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
 import { combineJourneyLibrarySources } from './mission-library/cross-mode-journey.mjs';
 import { trackMissionLibraryOpening } from './mission-library/opening-intent.mjs';
@@ -3382,7 +3383,7 @@ try {
   }
   async function requestWorldPlay(
     pack,
-    { signal, launch, onStatus, campaignId, levelId, levelRevision },
+    { signal, launch, onStatus, campaignId, levelId, levelRevision, rulesEdition },
   ) {
     assertWorldPlay(launch);
     if (signal?.aborted || (pack !== null && !packs.packs.includes(pack)))
@@ -3398,6 +3399,7 @@ try {
       launch,
       signal,
       onStatus,
+      rulesEdition,
       ...(levelId !== undefined ? { levelId } : {}),
       ...(levelRevision !== undefined ? { levelRevision } : {}),
     };
@@ -3498,7 +3500,10 @@ try {
     if (worldAttempt) return false;
     const target = resolveMissionRequest(request);
     assertWorldArtworkOwner(target.entry);
-    const entry = createExecutionCatalog([target.entry]).select(request.id, intent.difficulty);
+    const entry = createExecutionCatalog([target.entry]).select(
+      campaignKey(target.entry.campaign),
+      intent.difficulty,
+    );
     if (!entry) throw new Error('This chapter does not support the selected difficulty.');
     const selection = difficultyNavigation.selection(
       entry,
@@ -3733,10 +3738,14 @@ try {
       };
       if (request.pack === null && request.baseEntry !== baseEntry)
         throw new Error('This Base mission changed. Choose Play again.');
-      const target =
+      const original =
         request.pack === null
           ? resolveCampaignMissionTarget({ ...selection, entry: baseEntry })
           : resolveInstalledMissionTarget(selection);
+      const target = {
+        ...original,
+        entry: projectClassicCurrentRulesEntry(original.entry, request.rulesEdition),
+      };
       return {
         ...target,
         same:
@@ -4285,6 +4294,20 @@ try {
     if (candidateHost?.owns(entry))
       return candidateHost.select(candidateHost.mission(entry, 0), mode);
     const baseKey = entry.baseCampaignKey || campaignKey(entry.campaign);
+    if (entry.classicRulesSourceCampaignKey) {
+      const authored = entry.sourcePackId
+        ? installedEntries.find(
+            (candidate) =>
+              candidate.sourcePackId === entry.sourcePackId &&
+              campaignKey(candidate.campaign) === entry.classicRulesSourceCampaignKey,
+          )
+        : campaignKey(baseEntry.campaign) === entry.classicRulesSourceCampaignKey
+          ? baseEntry
+          : null;
+      if (!authored) throw new Error('This exact original chapter is no longer installed.');
+      const projected = projectClassicCurrentRulesEntry(authored, entry.classicRulesEdition);
+      return createExecutionCatalog([projected]).select(campaignKey(projected.campaign), mode);
+    }
     if (!entry.sourcePackId) return executionCatalog.select(baseKey, mode) || entry;
     const authored = installedEntries.find(
       (candidate) =>
@@ -6969,7 +6992,9 @@ try {
         : retainedLibraryMission(host.library, {
             mode: 'solo',
             levelId: campaign.levels[levelIndex].id,
-            campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
+            campaignKey: activeEntry.classicRulesSourceCampaignKey
+              ? `${activeEntry.classicRulesSourceCampaignKey}::${activeEntry.classicRulesEdition}`
+              : activeEntry.baseCampaignKey || campaignKey(campaign),
             sourcePackId: activeEntry.sourcePackId ?? null,
             ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
           });
@@ -9243,7 +9268,8 @@ try {
     if (context.continuation && journeyEnabled && context.mode === 'solo') {
       // Validate the destination's exact picture before leaving this document.
       // No target run/progress is adopted by the Journey host.
-      const authored = pack === null ? baseEntry : resolvePackCampaign(pack, selection.campaignId);
+      const source = pack === null ? baseEntry : resolvePackCampaign(pack, selection.campaignId);
+      const authored = projectClassicCurrentRulesEntry(source, selection.rulesEdition);
       const entry = executionForEntry(authored, library.preferences.campaignDifficulty);
       const level = entry.campaign.levels.find((item) => item.id === selection.levelId);
       if (!level) throw new Error('The exact next mission is unavailable.');
@@ -9272,7 +9298,8 @@ try {
     }
     if (journeyEnabled || context.mode !== 'solo') return departLibraryMission(context);
     if (context.continuation && run?.status === 'won') {
-      const authored = pack === null ? baseEntry : resolvePackCampaign(pack, selection.campaignId);
+      const source = pack === null ? baseEntry : resolvePackCampaign(pack, selection.campaignId);
+      const authored = projectClassicCurrentRulesEntry(source, selection.rulesEdition);
       const entry = executionForEntry(authored, library.preferences.campaignDifficulty);
       const nextIndex = entry.campaign.levels.findIndex((level) => level.id === selection.levelId);
       if (nextIndex < 0) throw new Error('The exact next mission is unavailable.');
@@ -9284,6 +9311,7 @@ try {
           entry: activeEntry,
           ownerId: row.ownerId,
           editionId: row.editionId,
+          campaignKey: JSON.parse(row.campaignKey)[2],
         };
       }
       return selected;
@@ -9300,6 +9328,7 @@ try {
             entry: activeEntry,
             ownerId: row.ownerId,
             editionId: row.editionId,
+            campaignKey: JSON.parse(row.campaignKey)[2],
           };
         unifiedChooser?.close();
       },
@@ -9399,6 +9428,31 @@ try {
         launch: departLibraryMission,
         difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
       });
+      const classicProjectionCache = new WeakMap();
+      const classicRuntimeEntry = (row) => {
+        const pack =
+          row.source === 'base' ? null : packs.packs.find((item) => item.id === row.packId);
+        const source =
+          row.source === 'base'
+            ? baseEntry
+            : pack
+              ? resolvePackCampaign(pack, row.campaignId)
+              : null;
+        if (!source) return null;
+        if (!classicProjectionCache.has(source)) classicProjectionCache.set(source, new Map());
+        const projections = classicProjectionCache.get(source);
+        if (!projections.has(row.rulesEdition))
+          projections.set(
+            row.rulesEdition,
+            projectClassicCurrentRulesEntry(source, row.rulesEdition),
+          );
+        return projections.get(row.rulesEdition);
+      };
+      const libraryRowRuntimeCampaignKey = (row) => {
+        if (row.collection !== 'Classic') return JSON.parse(row.campaignKey)[2];
+        const entry = classicRuntimeEntry(row);
+        return entry ? campaignKey(entry.campaign) : null;
+      };
       const result = await createInstalledMissionLibrary({
         index,
         journeySources: [
@@ -9469,8 +9523,12 @@ try {
           actorCustomPacks.add(binding.pack);
           return launchLibraryClassic(binding.pack, binding.selection, context);
         },
-        progressClassic: (row) =>
-          library.campaigns[row.campaignKey]?.clears?.[row.levelId] ? 'Cleared' : '',
+        progressClassic: (row) => {
+          const entry = classicRuntimeEntry(row);
+          return entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId]
+            ? 'Cleared'
+            : '';
+        },
         progressCustom: (binding) =>
           library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId]
             ? 'Cleared'
@@ -9498,7 +9556,7 @@ try {
               owner[0] === 'classic' ? owner[2] : owner[0] === 'custom' ? owner[1] : undefined;
             return (
               row.runtimeId === returnedSelection.levelId &&
-              JSON.parse(row.campaignKey)[2] === returnedSelection.campaignKey &&
+              libraryRowRuntimeCampaignKey(row) === returnedSelection.campaignKey &&
               sourcePackId === (activeEntry.sourcePackId ?? null) &&
               row.modes.includes('solo') &&
               result.library.availability(row, 'solo').state === 'ready'
