@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { soloPage, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { teamReturnHref } from '../mode-return.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
@@ -11,20 +12,6 @@ import { readMissionLibraryReturn } from '../mission-library/handoff.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
-class Picture {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
 const settle = (condition) => waitFor(condition, { timeoutMs: 10000 });
 // Compiling the real Journey before the held request is a boot precondition,
 // not the post-action response under test. Keep those action waits at ten seconds.
@@ -72,7 +59,7 @@ async function solo(t, options = {}) {
   return soloPage(t, {
     titleScreen: true,
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    pictures: { Image: Picture },
+    pictures: { Image: PNGImage },
     fetchResponse: async (path) => {
       if (String(path).includes('/content-design/assets/'))
         return new Response(await readFile(path));
@@ -439,9 +426,12 @@ test('unfinished Legacy library departure checks its saved attempt before mintin
     previewStorage = memoryStorage();
   const p = await solo(t, { storage, previewStorage, titleScreen: false });
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   for (let index = 0; index < 24; index++) p.frame();
   p.key('ArrowDown', false);
+  assert.equal(p.rendered.run.tick, 24);
+  assert.ok(p.rendered.run.trail.length > 0, 'Departure must protect a genuine unfinished cut.');
   p.$('overlay-menu').click();
   const cards = await open(p, 'solo', 'team');
   const checkpoint = authoritativeCheckpoint(p.rendered.run);

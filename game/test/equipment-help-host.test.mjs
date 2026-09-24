@@ -157,12 +157,12 @@ for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 
         assert.equal(page.rendered.paused, true);
         page.doc.querySelector('button[data-close="hangar-dialog"]').click();
       } else if (entry === 'controller') {
-        assert.equal(
-          page.$('shell-missions').open,
-          true,
-          'Unavailable hangar button keeps its Missions fallback',
+        await settle(
+          () => page.$('journey-chooser')?.open,
+          'Unavailable hangar button keeps its visible Missions fallback',
         );
-        page.$('shell-missions-back').click();
+        assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+        page.$('journey-back').click();
       } else page.$('pause-button').click();
       page.$('save-attempt-button').click();
       assert.equal(page.$('save-attempt-button').disabled, false);

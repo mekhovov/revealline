@@ -7,7 +7,12 @@ import { waitFor } from './helpers/wait-for.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend, JOURNEY_PROFILE_DATABASE } from '../journey/profile.mjs';
-import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { CLASSES } from '../core/index.mjs';
+import { playKeyboardRoute } from './helpers/keyboard-route.mjs';
+import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { dataIdentity } from '../data-json.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 async function setup(t, difficulty = 'standard', options = {}) {
@@ -461,57 +466,40 @@ for (const route of ['opening', 'authored'])
       return !p.$('race-pause').disabled;
     });
     const rows = JSON.parse(
-      await readFile(new URL('./fixtures/horizon-greybox-routes.json', import.meta.url)),
-    ).rows.slice(0, 9);
-    if (route === 'authored')
-      rows.push(
-        ...JSON.parse(
-          await readFile(new URL('./fixtures/border-clear-routes.json', import.meta.url)),
-        )
-          .sets.find(
-            (set) => set.bonuses && set.difficulty === 'standard' && set.turnPolicy === 'immediate',
-          )
-          .rows.slice(0, 6),
-      );
-    const keys = {
-      up: ['KeyW', 'ArrowUp'],
-      down: ['KeyS', 'ArrowDown'],
-      left: ['KeyA', 'ArrowLeft'],
-      right: ['KeyD', 'ArrowRight'],
-    };
-    const gesture = (direction) => {
-      for (const key of keys[direction] ?? []) {
-        p.key(key);
-        p.key(key, false);
-      }
-    };
-    for (const [id, , , segments] of rows) {
+      await readFile(new URL('./fixtures/candidate-solo-tuned-host-routes.json', import.meta.url)),
+    ).rows.slice(0, route === 'opening' ? 9 : 15);
+    const project = compileContentProject(createAuthoredJourneyRoute(route).source);
+    for (const [id, authoredIdentity, gameplayIdentity, checkpoint, segments] of rows) {
       assert.equal(p.renders[0].levelId, id);
-      const reference = createRun(p.renders[0].level, { seed: 1, classId: 'scout' });
-      // Starting the paired-board host consumes one neutral input tick equally.
-      stepRun(reference, { direction: null }, FIXED_DT);
-      p.frame(FIXED_DT * 1000);
-      for (const [direction, ticks] of segments) {
-        gesture(direction);
-        let frameTicks = 0;
-        for (let tick = 0; tick < ticks; tick++) {
-          stepRun(reference, { direction }, FIXED_DT);
-          frameTicks++;
-          const closure = reference.events.some((event) => event.type === 'capture.stopped');
-          if (closure || frameTicks === 12 || tick === ticks - 1) {
-            p.frame(frameTicks * FIXED_DT * 1000);
-            frameTicks = 0;
-            if (closure && tick < ticks - 1 && reference.status !== 'won') gesture(direction);
-          }
-        }
+      const manifest = resolveMission(project, id);
+      assert.equal(manifest.simulationIdentity, authoredIdentity);
+      const level = applyGameplayTuning(manifest.level, resolveGameplayTuning('standard'));
+      for (const run of p.renders) {
+        assert.deepEqual(run.level, level);
+        assert.equal(
+          dataIdentity({ ruleset: run.ruleset, level, classes: CLASSES }),
+          gameplayIdentity,
+        );
       }
+      assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
+      assert.deepEqual(p.drawOptions[0].backdrop.assetRevision, manifest.background);
+      playKeyboardRoute(
+        p,
+        () => p.renders,
+        [
+          { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
+          { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
+        ],
+        {
+          seed: 1,
+          turnPolicy: 'immediate',
+          checkpoint,
+          segments: segments.map(([direction, ticks]) => ({ direction, ticks })),
+        },
+      );
       assert.equal(p.renders[0].status, 'won', id);
       assert.equal(p.renders[1].status, 'won', id);
-      assert.equal(
-        authoritativeCheckpoint(p.renders[0]).hash,
-        authoritativeCheckpoint(reference).hash,
-        id,
-      );
+      assert.equal(authoritativeCheckpoint(p.renders[0]).hash, checkpoint, id);
       assert.equal(
         authoritativeCheckpoint(p.renders[0]).hash,
         authoritativeCheckpoint(p.renders[1]).hash,
@@ -527,9 +515,13 @@ for (const route of ['opening', 'authored'])
         });
       }
     }
-    assert.equal(p.$('race-journey-next').hidden, true);
+    assert.equal(p.$('race-journey-next').hidden, false);
+    assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
     assert.equal(p.renders[0].levelId, rows.at(-1)[0]);
-    assert.match(p.$('race-message').textContent, /End of this test route.*optional Remixes/);
+    assert.match(
+      p.$('race-message').textContent,
+      /End of the main Journey.*Browse missions.*Rematch/,
+    );
     let persisted;
     for (let attempt = 0; attempt < 200; attempt++) {
       persisted = await p.journeyBackend.read();
@@ -539,4 +531,25 @@ for (const route of ['opening', 'authored'])
     assert.equal(Object.keys(persisted.clears.versus).length, rows.length);
     assert.equal(Object.keys(persisted.clears.solo).length, 0);
     assert.equal(Object.keys(persisted.clears.team).length, 0);
+    const receipts = Object.entries(persisted.clears.versus);
+    for (const [id, , gameplayIdentity] of rows) {
+      const [, receipt] = receipts.find(([missionId]) => missionId.endsWith('/' + id));
+      assert.equal(receipt.gameplayId, gameplayIdentity);
+      assert.equal(receipt.difficulty, 'standard');
+    }
+    assert.equal(new Set(receipts.map(([, receipt]) => receipt.runId)).size, rows.length);
+    assert.deepEqual(persisted.skipped.versus, []);
+    const previous = [...p.renders],
+      pictures = p.drawOptions.map((options) => options.backdrop),
+      checks = p.checkpoint();
+    p.$('race-journey-next').focus();
+    p.$('race-journey-next').click();
+    await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+    p.frame(0);
+    assert(p.renders.every((run, index) => run === previous[index]));
+    assert.deepEqual(p.checkpoint(), checks);
+    assert(p.drawOptions.every((options, index) => options.backdrop === pictures[index]));
+    p.$('journey-back').click();
+    assert.equal(p.doc.activeElement, p.$('race-journey-next'));
+    assert.deepEqual((await p.journeyBackend.read()).clears, persisted.clears);
   });

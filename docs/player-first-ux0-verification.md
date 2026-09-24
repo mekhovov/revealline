@@ -63,15 +63,16 @@ on the baseline.
 
 Local source served through the ordinary queryless Solo and Couch routes:
 
-| Evidence | Result |
-| --- | --- |
-| Solo keyboard, actual 1280×720 CSS viewport | Start focused at boot; Down reaches Missions; Confirm opens the current card; Down follows the next rendered row; Right follows that row; Back restores Missions. |
-| Solo keyboard, actual 390×844 | Retained mission focused and visible; Right stops at the single-column edge; Down moves to the next mission. |
-| Rotation to actual 844×390 | Same Two bays card remains focused at y=148.9–300.6, inside the gallery y=108.8–316.4. The pre-fix card was below the viewport. |
-| Versus keyboard Settings | Tab reaches Character reactions; Space toggles it while retaining checkbox focus. |
-| Legacy Versus keyboard | Tab reaches Find missions; Confirm announces preparation and opens Orchard Crossing; Back restores Find missions. |
-| Team keyboard Pause | Tab reaches both header links. Confirm on Race mode opens the discard dialog; Stay restores that exact header link, keeps PAUSED and clock 0:00, and does not resume. |
-| Solo requested Workshop return, local browser | `?workshop=asset-studio` opens Workshop with Asset Studio focused; Escape returns to Home with Workshop focused. No flight starts. |
+| Evidence                                          | Result                                                                                                                                                                                                                                                                                |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Solo keyboard, actual 1280×720 CSS viewport       | Start focused at boot; Down reaches Missions; Confirm opens the current card; Down follows the next rendered row; Right follows that row; Back restores Missions.                                                                                                                     |
+| Solo keyboard, actual 390×844                     | Retained mission focused and visible; Right stops at the single-column edge; Down moves to the next mission.                                                                                                                                                                          |
+| Rotation to actual 844×390                        | Same Two bays card remains focused at y=148.9–300.6, inside the gallery y=108.8–316.4. The pre-fix card was below the viewport.                                                                                                                                                       |
+| Versus keyboard Settings                          | Tab reaches Character reactions; Space toggles it while retaining checkbox focus.                                                                                                                                                                                                     |
+| Legacy Versus keyboard                            | Tab reaches Find missions; Confirm announces preparation and opens Orchard Crossing; Back restores Find missions.                                                                                                                                                                     |
+| Team keyboard Pause                               | Tab reaches both header links. Confirm on Race mode opens the discard dialog; Stay restores that exact header link, keeps PAUSED and clock 0:00, and does not resume.                                                                                                                 |
+| Solo requested Workshop return, local browser     | `?workshop=asset-studio` opens Workshop with Asset Studio focused; Escape returns to Home with Workshop focused. No flight starts.                                                                                                                                                    |
+| Solo exact Classic incoming link, actual 1280×720 | Keyboard Home → Missions announces preparation and focuses First Signal. The exact Relay Storm library identity then opens directly into play; Escape pauses with Resume focused. This checks the direct-launch outcome, while automated held-original tests exercise the write race. |
 
 Browser viewport overrides were reset and temporary tabs closed after inspection.
 These are browser keyboard/reflow checks, not touch-device or physical-controller
@@ -103,7 +104,9 @@ PR320's first hosted ordinary build passed on `00bc61063`; that source run was
 superseded by `fa641e496`, so its cancelled test shards are not passes. The latter
 source passed preflight and its Pages-controller checks; its ordinary build and
 four complete shards were initially running. Its ordinary build subsequently
-passed; the complete shards remain pending at this checkpoint. Later working-tree
+passed; its superseded shards were cancelled and do not count as passes. Source
+`20b295488` then passed hosted preflight and the ordinary build in run35945156180;
+its complete shards remain pending at this checkpoint. Later working-tree
 corrections require their own exact-head checks before acceptance.
 
 Baseline reproduction separates these corrections from gameplay changes:
@@ -175,3 +178,44 @@ Independent read-only review of the runtime diff against `71a0ffea` found no
 actionable regression in input ownership, rendered grid/reflow, identity, focus
 leases, departure cancellation, terminal browsing or early difficulty adoption.
 This review complements the tests; it is not full-suite or hardware evidence.
+
+The follow-up navigation cohort passes all 70 checks across five complete files.
+Current/retained mission identity replaces obsolete first-card/Search assumptions;
+Legacy return fixtures decode actual PNG headers and wait for a genuine running
+cut before testing saved-flight protection. An inherited exact Classic handoff
+failure reproduced on the clean baseline: boot-picture materialization raced the
+requested original's media-generation write. The incoming action now joins its
+captured boot operation while retaining its opening lease. Three controlled
+held-original cases prove completion, newer-input retirement and an unavailable
+initial picture; the requested picture still uses strict original validation.
+
+The complete 13-case Versus Journey file passes, including 24 real mission clears
+across opening/authored editions with exact tuned checkpoints, accepted artwork,
+distinct mode receipts and retained final-result Browse/Back. Its earlier two tour
+failures reproduced on the baseline using untuned routes. The four Solo/Versus
+default core/optional ending cases also pass. The final five-case full file passes
+with a real first-to-two match: 1:0 offers Next round without claiming a Journey
+ending, Browse/Back retains both boards, score and artwork, and 2:0 offers the
+completed-match ending and Rematch with a distinct accepted round receipt.
+
+The six-case composite Couch input file passes after joining the actual catalogue
+operation activated by keyboard/controller, rather than treating a five-second
+cold inventory wait as the action contract. Focus, cancellation, retained finished
+boards and exclusion of live controls remain asserted. No runtime timeout changed.
+
+The full external-chapter host file passes 21 checks, including nested restoration
+and recovery cases. Its two real-win paths use the unchanged approved authored
+level under current Standard tuning, an independently stepped lossless route and
+public replay verification. Exact original pins, retained earlier story bytes,
+checked replacement, duplicate-award protection, cancellation, overlapping Retry
+and recovery all remain asserted. Historical production routes are not rewritten.
+
+The complete device/equipment cohort passes 22 checks with no skips. Tests now use
+the visible current catalogue and required backup replacement review. The R5
+Orchard Crossing capture uses legal current-speed boundary waiting and steering;
+it still requires a greater-than-50% capture, three lives, stop-on-capture, HUD
+updates and exact saved/replayed state. Equipment capability, roster/hangar,
+held-controller, touch-modality and Undo assertions remain intact. An immediate
+straight Down now loses a life under the already-shipped Standard tuning; UX3/UX6
+must assess its teaching and human fairness rather than treating this route proof
+as player-balance acceptance.
