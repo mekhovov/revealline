@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { exactKeys, required, canonicalJSON } from '../game/data-json.mjs';
 import { applySoundtrackArchiveAdmissions } from './soundtrack-archive-admissions.mjs';
 import { compileHostedSoundtracks } from './hosted-soundtrack-publication.mjs';
+import { compileReviewedSoundtrackBatches } from './reviewed-soundtrack-batches.mjs';
 
 export function validateSoundtrackDistributionConfig(value) {
   exactKeys(value, ['format', 'catalog', 'originalCatalogue'], 'Soundtrack distribution config');
@@ -246,6 +247,11 @@ export async function compilePublishedSoundtracks(root, { delivery = 'runtime' }
   if (delivery === 'source') return { ...built, collections: [] };
   const delivered = await applySoundtrackArchiveAdmissions(root, built);
   const hosted = await compileHostedSoundtracks(root, originals.catalogue.edition);
+  const reviewed = await compileReviewedSoundtrackBatches(root, originals.catalogue.edition, {
+    tracks: [...delivered.catalogue.tracks, ...hosted.tracks],
+    archives: [...delivered.archives, ...hosted.archives],
+    collections: hosted.collections,
+  });
   required(
     !hosted.archives.some((archive) =>
       delivered.archives.some(
@@ -256,7 +262,7 @@ export async function compilePublishedSoundtracks(root, { delivery = 'runtime' }
   );
   const combined = resolveSoundtrackCatalogue({
     ...delivered.catalogue,
-    tracks: [...delivered.catalogue.tracks, ...hosted.tracks],
+    tracks: [...delivered.catalogue.tracks, ...hosted.tracks, ...reviewed.tracks],
   });
   required(
     combined.tracks.every((track) => {
@@ -268,8 +274,8 @@ export async function compilePublishedSoundtracks(root, { delivery = 'runtime' }
   return {
     ...delivered,
     catalogue: combined,
-    archives: [...delivered.archives, ...hosted.archives],
-    collections: hosted.collections,
+    archives: [...delivered.archives, ...hosted.archives, ...reviewed.archives],
+    collections: [...hosted.collections, ...reviewed.collections],
   };
 }
 export function soundtrackCatalogueModule(catalogue, archives = [], collections = []) {
