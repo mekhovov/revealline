@@ -8,7 +8,8 @@ import { createRecorder, recordInput, exportReplay, verifyReplayAsync } from '..
 export const CREATOR_GAMEPLAY_POLICY = 'compiled-preset-v1';
 // Retained so installed Phase 1 editions can still be revalidated byte for byte.
 export const CREATOR_TEMPLATE_VERSION = 'creator-crossing.v1';
-export const CREATOR_TEMPLATE_REGISTRY_VERSION = 'creator-layouts.v2';
+const CREATOR_TEMPLATE_REGISTRY_LEGACY_VERSION = 'creator-layouts.v2';
+export const CREATOR_TEMPLATE_REGISTRY_VERSION = 'creator-layouts.v3';
 export const CREATOR_ROUTE_FORMAT = 'revealline-creator-route.v1';
 
 const difficulties = ['gentle', 'standard', 'expert'];
@@ -19,7 +20,7 @@ const terrain = (id, kind, x, y, w, h) => ({ id, kind, x, y, w, h });
 /** Bounded authored recipes. Selection chooses among these exact layouts; it
  * never perturbs arbitrary gameplay fields. Each route is replayed against the
  * compiled result before the creator can approve it. */
-const templateRecipes = freezeDesign([
+const templateRecipesV2 = freezeDesign([
   {
     id: 'first-crossing',
     name: 'First crossing',
@@ -194,6 +195,181 @@ const templateRecipes = freezeDesign([
   },
 ]);
 
+const generatedThreats = freezeDesign({
+  'first-crossing:center': {
+    walls: [rect(8, 8, 14, 2), rect(50, 26, 14, 2)],
+    actors: [
+      {
+        id: 'west-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 8.5,
+        y: 18.5,
+        heading: [0, 1],
+      },
+    ],
+  },
+  'first-crossing:west': {
+    walls: [rect(31, 5, 2, 10), rect(31, 22, 2, 9)],
+    actors: [
+      {
+        id: 'west-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 7.5,
+        y: 18.5,
+        heading: [0, 1],
+      },
+    ],
+  },
+  'island-chain:middle-channel': {
+    walls: [rect(4, 16, 10, 2), rect(58, 18, 10, 2)],
+    actors: [
+      {
+        id: 'west-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 8.5,
+        y: 28.5,
+        heading: [0, 1],
+      },
+    ],
+  },
+  'island-chain:offset-channel': {
+    walls: [rect(38, 15, 10, 2)],
+    actors: [
+      {
+        id: 'west-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 8.5,
+        y: 14.5,
+        heading: [0, 1],
+      },
+    ],
+  },
+  'twin-corridors:central-lane': {
+    actors: [
+      {
+        id: 'west-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 6.5,
+        y: 18.5,
+        heading: [0, 1],
+      },
+    ],
+  },
+  'twin-corridors:west-lane': {
+    actors: [
+      {
+        id: 'west-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 5.5,
+        y: 17.5,
+        heading: [0, 1],
+      },
+    ],
+  },
+  'open-terraces:center-gaps': {
+    actors: [
+      {
+        id: 'west-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 7.5,
+        y: 13.5,
+        heading: [0, 1],
+      },
+    ],
+  },
+  'open-terraces:west-gaps': {
+    actors: [
+      {
+        id: 'west-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 8.5,
+        y: 22.5,
+        heading: [0, 1],
+      },
+    ],
+  },
+  'soft-current:horizontal-current': {
+    walls: [rect(8, 8, 12, 2), rect(52, 26, 12, 2)],
+    actors: [
+      {
+        id: 'west-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 7.5,
+        y: 26.5,
+        heading: [0, 1],
+      },
+    ],
+  },
+  'soft-current:vertical-current': {
+    walls: [rect(14, 5, 2, 10), rect(54, 22, 2, 9)],
+    actors: [
+      {
+        id: 'north-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 58.5,
+        y: 5.5,
+        heading: [1, 0],
+      },
+    ],
+  },
+  'ember-garden:vertical-passage': {
+    walls: [rect(32, 6, 2, 8), rect(39, 22, 2, 8)],
+    actors: [
+      {
+        id: 'west-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 3.5,
+        y: 31.5,
+        heading: [0, 1],
+      },
+    ],
+  },
+  'ember-garden:horizontal-passage': {
+    walls: [rect(8, 15, 12, 2), rect(52, 20, 12, 2)],
+    actors: [
+      {
+        id: 'north-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 60.5,
+        y: 3.5,
+        heading: [1, 0],
+      },
+    ],
+  },
+});
+
+const templateRecipes = freezeDesign(
+  templateRecipesV2.map((template) => ({
+    ...structuredClone(template),
+    description: `${template.description} A seeded field keeper adds live pressure.`,
+    variants: template.variants.map((variant) => {
+      const generated = generatedThreats[`${template.id}:${variant.id}`];
+      required(generated, 'Every generated layout needs a verified threat pattern.');
+      return {
+        ...structuredClone(variant),
+        ...(generated.walls
+          ? {
+              walls: [...structuredClone(variant.walls ?? []), ...structuredClone(generated.walls)],
+            }
+          : {}),
+        actors: structuredClone(generated.actors),
+      };
+    }),
+  })),
+);
+
 export const CREATOR_TEMPLATES = freezeDesign(
   templateRecipes.map((template) => ({
     id: template.id,
@@ -213,18 +389,21 @@ const abort = (signal) => {
 };
 const uint32 = (value) => Number.isInteger(value) && value >= 0 && value <= 0xffffffff;
 const text = (value) => typeof value === 'string' && value.trim() && value.length <= 160;
-const recipe = (id) => templateRecipes.find((template) => template.id === id);
+const recipesFor = (version) =>
+  version === CREATOR_TEMPLATE_REGISTRY_VERSION ? templateRecipes : templateRecipesV2;
+const recipe = (id, version = CREATOR_TEMPLATE_REGISTRY_VERSION) =>
+  recipesFor(version).find((template) => template.id === id);
 
-function currentSelection(seed, templateId) {
-  const template = templateId ? recipe(templateId) : templateRecipes[seed % templateRecipes.length];
+function currentSelection(seed, templateId, version = CREATOR_TEMPLATE_REGISTRY_VERSION) {
+  const recipes = recipesFor(version);
+  const template = templateId ? recipe(templateId, version) : recipes[seed % recipes.length];
   required(template, 'Choose a registered creator template.');
-  const variant =
-    template.variants[Math.floor(seed / templateRecipes.length) % template.variants.length];
-  return { template, variant, version: CREATOR_TEMPLATE_REGISTRY_VERSION };
+  const variant = template.variants[Math.floor(seed / recipes.length) % template.variants.length];
+  return { template, variant, version };
 }
 
 function legacySelection(seed) {
-  const template = recipe('first-crossing');
+  const template = recipe('first-crossing', CREATOR_TEMPLATE_REGISTRY_LEGACY_VERSION);
   return { template, variant: template.variants[seed % 2], version: CREATOR_TEMPLATE_VERSION };
 }
 
@@ -264,12 +443,15 @@ function buildCreatorProject(value, selection) {
     name: 'First picture',
     map: { id: map.id, revision: map.revision },
     modes: ['solo'],
-    actors: [],
+    actors: structuredClone(variant.actors ?? []),
     coverage: 0.5,
     design: {
       routeDecision: template.design.routeDecision,
       lesson: template.design.lesson,
-      counterplay: 'There are no enemies in this verified creator template.',
+      counterplay:
+        variant.actors?.length > 0
+          ? 'Read the seeded keeper, use the authored obstacles and close the verified route behind its movement.'
+          : 'There are no enemies in this verified creator template.',
       captureConsequence: template.design.captureConsequence,
       introduces: ['closure'],
       practices: [],
@@ -281,7 +463,7 @@ function buildCreatorProject(value, selection) {
         band: 1,
         planning: 0,
         execution: 1,
-        threatDensity: 0,
+        threatDensity: variant.actors?.length ?? 0,
         timePressure: 0,
         mechanicLoad: 0,
         coordination: 0,
@@ -337,8 +519,12 @@ export function generateCreatorProject(options) {
 function selectionForProvenance(value) {
   if (value.templateVersion === CREATOR_TEMPLATE_VERSION && value.templateId === 'first-crossing')
     return legacySelection(value.generationSeed);
-  if (value.templateVersion === CREATOR_TEMPLATE_REGISTRY_VERSION)
-    return currentSelection(value.generationSeed, value.templateId);
+  if (
+    [CREATOR_TEMPLATE_REGISTRY_LEGACY_VERSION, CREATOR_TEMPLATE_REGISTRY_VERSION].includes(
+      value.templateVersion,
+    )
+  )
+    return currentSelection(value.generationSeed, value.templateId, value.templateVersion);
   return null;
 }
 
@@ -455,7 +641,7 @@ export async function verifyCreatorRoutes(
         gameplayPolicy: CREATOR_GAMEPLAY_POLICY,
         seed: generated.runtimeSeed,
         turnPolicy,
-        ...(generated.templateVersion === CREATOR_TEMPLATE_REGISTRY_VERSION
+        ...(generated.templateVersion !== CREATOR_TEMPLATE_VERSION
           ? {
               templateId: generated.templateId,
               templateVersion: generated.templateVersion,

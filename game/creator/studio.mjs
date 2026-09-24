@@ -357,8 +357,15 @@ function showReview(pack) {
   const preview = prepareContentPreview(project, provenance.missionId);
   paintContentMap($('map').getContext('2d'), preview, { width: 720, showCapture: false });
   const template = CREATOR_TEMPLATES.find(({ id }) => id === provenance.templateId);
+  const map = project.maps.find(
+    ({ id: mapId, revision }) => mapId === mission.map.id && revision === mission.map.revision,
+  );
+  const enemies = mission.actors.length;
+  const walls = map?.walls.length ?? 0;
+  const foundations = map?.foundations.length ?? 0;
+  const terrain = map?.terrain.length ?? 0;
   $('map-caption').textContent =
-    `${template?.name ?? 'Verified crossing'} · 72 × 36 cells · Solo · no enemies · verified completion route${provenances.length === 1 ? '.' : `; ${provenances.length} mission configurations verified.`}`;
+    `${template?.name ?? 'Verified crossing'} · 72 × 36 cells · Solo · ${enemies} ${enemies === 1 ? 'enemy' : 'enemies'} · ${walls} wall${walls === 1 ? '' : 's'} · ${foundations} safe island${foundations === 1 ? '' : 's'} · ${terrain} terrain zone${terrain === 1 ? '' : 's'} · verified completion route${provenances.length === 1 ? '.' : `; ${provenances.length} mission configurations verified.`}`;
   $('validation').textContent = pack.review.validation;
   $('package-size').textContent =
     `${mib(pack.bytes)} portable pack. Includes ${project.assets.length} PNG derivative${project.assets.length === 1 ? '' : 's'}. Source originals and player progress are excluded.`;

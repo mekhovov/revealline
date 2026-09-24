@@ -85,6 +85,7 @@ test('every family variant produces distinct bounded challenge geometry and supp
     });
     const map = made.project.maps[0];
     const obstacles = challengeGeometry(map);
+    assert.ok(map.walls.length > 0, `${made.provenance.variantId}: needs a collision obstacle`);
     assert.ok(obstacles.length > 0, `${made.provenance.variantId}: needs an interior obstacle`);
     assert.ok(
       obstacles.reduce((area, item) => area + item.w * item.h, 0) >= 12,
@@ -185,9 +186,12 @@ test('Phase 1 provenance retains its original variant recipe and route evidence 
   });
   const project = structuredClone(current.project);
   project.maps[0].id = 'crossing-map';
+  project.maps[0].walls = [];
   project.maps[0].spawns[0].x = 18.5;
   project.missions[0].map.id = 'crossing-map';
+  project.missions[0].actors = [];
   project.missions[0].design.counterplay = 'There are no enemies in this introductory template.';
+  project.missions[0].design.difficulty.threatDensity = 0;
   const provenance = {
     ...current.provenance,
     templateVersion: CREATOR_TEMPLATE_VERSION,
@@ -199,6 +203,31 @@ test('Phase 1 provenance retains its original variant recipe and route evidence 
   const routes = await verifyCreatorRoutes(project, provenance);
   assert.equal(routes.length, 6);
   assert.ok(routes.every((route) => !Object.hasOwn(route, 'templateId')));
+});
+
+test('Phase 2 v2 provenance retains its enemy-free immutable recipe', async () => {
+  const current = generateCreatorProject({
+    id: 'legacy-batch',
+    name: 'Legacy batch',
+    seed: 1,
+    templateId: 'island-chain',
+  });
+  const project = structuredClone(current.project);
+  project.maps[0].walls = [];
+  project.missions[0].actors = [];
+  project.missions[0].design.counterplay =
+    'There are no enemies in this verified creator template.';
+  project.missions[0].design.difficulty.threatDensity = 0;
+  const provenance = { ...current.provenance, templateVersion: 'creator-layouts.v2' };
+  assert.deepEqual(validateCreatorProvenance(provenance), provenance);
+  const routes = await verifyCreatorRoutes(project, provenance);
+  assert.equal(routes.length, 6);
+  assert.ok(
+    routes.every(
+      (route) =>
+        route.templateVersion === 'creator-layouts.v2' && route.replay.level.enemies.length === 0,
+    ),
+  );
 });
 
 test('artwork and labels preserve simulation evidence, while a gameplay edit invalidates template approval', async () => {
