@@ -62,3 +62,35 @@ Base launch, installed-content unavailability, zero pack writes and exact
 incoming-Journey cases. The complete file passes 6/6 and the corrected delayed
 case passes; no runtime source changes. A fresh full hosted run on the corrected
 head remains mandatory.
+
+## Exact-head run 35991665122
+
+The full run on `16d1e8f722891f775e05cf799dbca3299c2b91a4`
+passed preflight, the ordinary build and test shards 1 and 2. Across all four
+shards it executed 12,803 tests: 12,800 passed and three failed, with no skips or
+cancellations. Exact bounded logs and summaries are retained for every shard.
+
+Shard 3's only failure was the modeled-controller mission deployment case. Its
+real controller Confirm started picture preparation, but the test's ten-second
+state poll expired before the owned card operation settled. The correction
+captures the Promise returned by the card handler invoked through the actual
+controller route, asserts that the controller owns deployment, joins it under a
+finite bound, and then retains the existing flight, neutral-input, Pause and
+explicit Resume assertions. Under an 11.5-second controlled dispatch delay the
+unchanged case fails and the corrected case passes. The complete controller and
+touch file passes 18/18.
+
+Shard 4 exposed two additional polling boundaries in the already corrected
+Versus continuation file. The same-ID Custom case now joins the real delegated
+Missions operation, activates its actual card operation and joins final Next.
+The cancelled-boundary case joins the cancelled operation before checking the
+retained result, then joins the retry's real Next operation. Both still verify
+exact content ownership, Rematch independence, cancellation copy, retained
+boards and picture, retry, and the final library boundary. The two focused cases
+pass and the complete file passes 10/10. An 11.5-second mission-index delay
+reproduces the unchanged same-ID expiry while both corrected cases pass.
+
+The consolidated correction changes only those two host-test files and this
+record. Syntax, scoped lint and repository formatting pass. Runtime source,
+simulation timing and player behavior are unchanged. A new hosted full suite is
+still mandatory on the exact corrected PR head before merge or release.

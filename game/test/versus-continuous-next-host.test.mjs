@@ -96,6 +96,32 @@ function finish(p) {
   assert.equal(p.$('race-journey-next').hidden, false);
 }
 
+async function openVersusLibrary(p) {
+  const opener = p.$('race-library-switch'),
+    listeners = opener.listeners.get('click'),
+    pending = [];
+  opener.listeners.set(
+    'click',
+    new Set(
+      [...listeners].map((listener) => (event) => {
+        const result = listener.call(opener, event);
+        if (result instanceof Promise) pending.push(result);
+        return result;
+      }),
+    ),
+  );
+  try {
+    opener.focus();
+    opener.click();
+  } finally {
+    opener.listeners.set('click', listeners);
+  }
+  assert.equal(pending.length, 1, 'The real Missions click owns one preparation.');
+  assert.match(p.$('race-message').textContent, /Preparing missions/);
+  await pending[0];
+  assert.equal(p.$('journey-chooser').open, true);
+}
+
 function beginNext(p, { clicks = 1 } = {}) {
   const button = p.$('race-journey-next'),
     handler = button.onclick,
@@ -234,24 +260,22 @@ test('same-ID modified Custom edition keeps its exact owner through Rematch and 
   );
   source.name = 'Player night shift';
   const p = await fixture(t, { installedSource: source });
-  p.$('race-library-switch').click();
-  await settle(() => p.$('journey-chooser')?.open);
+  await openVersusLibrary(p);
   p.$('journey-collection').value = 'Custom';
   p.$('journey-collection').emit('change');
   const card = [...p.$('journey-cards').children].find(
     (card) => JSON.parse(card.dataset.missionId)[3] === 'night-shift-03',
   );
   assert(card);
-  card.click();
-  await settle(() => {
-    p.frame(0);
-    return p.state() === 'running' && p.renders[0].levelId === 'night-shift-03';
-  });
+  await activateMissionCard(card);
+  p.frame(0);
+  assert.equal(p.state(), 'running');
+  assert.equal(p.renders[0].levelId, 'night-shift-03');
   finish(p);
   await start(p);
   finish(p);
-  p.$('race-journey-next').click();
-  await settle(() => p.$('race-message').textContent.includes('Versus library complete'));
+  await beginNext(p);
+  assert.match(p.$('race-message').textContent, /Versus library complete/);
   assert.equal(p.$('journey-chooser').open, false);
   assert.equal(p.renders[0].levelId, 'night-shift-03');
 });
@@ -620,18 +644,18 @@ test('cancelled boundary metadata does not adopt or clear the result and Next ca
   finish(p);
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
-  p.$('race-journey-next').click();
+  const cancelled = beginNext(p);
   await settle(() => entered);
   p.$('race-picture-cancel').click();
   release();
-  await settle(() => !p.$('race-journey-next').disabled);
+  await cancelled;
+  assert.equal(p.$('race-journey-next').disabled, false);
   p.frame(0);
   assert.deepEqual(p.checkpoint(), before);
   assert.equal(p.drawOptions[0].backdrop, picture);
   assert.match(p.$('race-message').textContent, /cancelled.*Results are kept/);
-  p.$('race-journey-next').click();
-  await settle(() => {
-    p.frame(0);
-    return p.state() === 'running' && p.renders[0].levelId === 'signal-02';
-  });
+  await beginNext(p);
+  p.frame(0);
+  assert.equal(p.state(), 'running');
+  assert.equal(p.renders[0].levelId, 'signal-02');
 });
