@@ -20,6 +20,15 @@ Subsequent metadata check on 24 September: PR319 merged and the public root
 candidate; it is not contained in that deployment. Full v0.96 public-play acceptance
 belongs to its existing publisher, not this metadata check.
 
+The subsequent UX0 integration includes main `1518e15e2` (PR314 and PR322).
+PR320 targets v0.98.0 with mandatory suites restored; v0.97.0 remains owned by
+the existing publisher and was still a draft at the latest GitHub metadata check.
+UX0 scoped input/host/browser checks pass, but the full suite exposed additional
+baseline fixture failures. Corrections and their separate reruns are recorded in
+the verification document. UX0 remains qualifying until full exact-source checks,
+immutable publication and ordinary public-play verification pass. UX1 is next;
+neither a merged PR nor a partial test run advances this board to accepted.
+
 The root working directory contains unrelated historical and unfinished work.
 Implementation uses an isolated source worktree and explicit staged paths. The
 existing publisher retains tags, archives and Pages ownership. Skipped tests under
