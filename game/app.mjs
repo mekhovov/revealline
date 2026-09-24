@@ -1230,11 +1230,27 @@ try {
   function pictureIdentity(metadata) {
     return createPictureIdentityCatalog({ entries: installedEntries, metadata });
   }
-  function pictureLevelForRun(nextRun, entry) {
+  function pictureExecutionForEntry(entry) {
+    if (!entry.classicRulesSourceCampaignKey) return entry;
+    const original = entry.classicRulesPresentationCampaign;
+    if (!original || campaignKey(original) !== entry.classicRulesSourceCampaignKey)
+      throw new Error('Current-rules picture ownership differs from its installed original.');
+    const pictureEntry = createExecutionCatalog([{ campaign: original }]).select(
+      entry.classicRulesSourceCampaignKey,
+      entry.difficulty,
+    );
+    if (!pictureEntry)
+      throw new Error('Current-rules picture difficulty is unavailable in its original chapter.');
+    return pictureEntry;
+  }
+  function pictureLevelForRun(nextRun, entry, pictureEntry = pictureExecutionForEntry(entry)) {
+    if (!entry.classicRulesSourceCampaignKey && !recoverGameplayTuning(nextRun.level))
+      return nextRun.level;
     // Difficulty changes simulation, not the ownership of an original picture.
-    return recoverGameplayTuning(nextRun.level)
-      ? entry.campaign.levels.find((level) => level.id === nextRun.levelId)
-      : nextRun.level;
+    const levels = pictureEntry.campaign.levels;
+    const level = levels.find((item) => item.id === nextRun.levelId);
+    if (!level) throw new Error('Picture mission is unavailable in its installed original.');
+    return level;
   }
   function newFlightPictures({
     nextRun = run,
@@ -1246,7 +1262,8 @@ try {
     explicitLegacy = false,
     candidatePicture = null,
   } = {}) {
-    const pictureLevel = pictureLevelForRun(nextRun, entry);
+    const pictureEntry = pictureExecutionForEntry(entry),
+      pictureLevel = pictureLevelForRun(nextRun, entry, pictureEntry);
     if (candidateHost?.owns(entry)) {
       const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
       return createCandidateFlightPictures({
@@ -1275,7 +1292,7 @@ try {
         : {}),
       context: {
         runId: nextRunId,
-        executionKey: campaignKey(entry.campaign),
+        executionKey: pictureEntry.executionKey || campaignKey(pictureEntry.campaign),
         levelId: nextRun.levelId,
         levelRevision: pictureLevel.revision,
         themeId: nextThemeId,
