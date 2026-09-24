@@ -64,6 +64,16 @@ retains the two exact reviewed Team picture associations plus revisions 58–72.
 Publication, responsive browser review and physical controller/touch evidence remain
 release gates rather than claims of this source checkpoint.
 
+The successor reconciliation joins the real staged replacement in the broad Couch
+tests instead of assuming synchronous picture or actor preparation. Back from setup
+now proves that the pending replacement aborts while the accepted boards, picture and
+Start action remain usable. The native DOM fixture models a real `summary` disclosure,
+so assigned-controller coverage reaches Optional setup without exposing its controls
+in the quick-start focus order. A clean sparse checkout must include every tracked
+authoring path named by `game/build-config.json`; after those paths were hydrated, the
+repository validator passed. Their earlier absence was a checkout limitation, not a
+missing production asset.
+
 Completed publication and scoped source evidence:
 
 - The v0.97 selector PR341 deployed source
