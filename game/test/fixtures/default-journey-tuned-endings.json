@@ -1,0 +1,216 @@
+{
+  "format": "DefaultJourneyTunedEndingsV1",
+  "description": "Current whole-spatial-v5 standard gameplay-pressure.v4 keyboard route evidence. Independently replay-verified lossless routes; historical authored route fixtures remain unchanged. This is deterministic host qualification, not human balance evidence.",
+  "rows": [
+    {
+      "id": "dnipro-crossings",
+      "authoredIdentity": "2866e46a5b079254",
+      "gameplayIdentity": "1c78327a46f774dd",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "checkpoint": "be9768a4db4ff768",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 129
+        },
+        {
+          "direction": "down",
+          "ticks": 115
+        },
+        {
+          "direction": "left",
+          "ticks": 170
+        },
+        {
+          "direction": "right",
+          "ticks": 7
+        },
+        {
+          "direction": "left",
+          "ticks": 14
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 163
+        },
+        {
+          "direction": "right",
+          "ticks": 855
+        },
+        {
+          "direction": "down",
+          "ticks": 68
+        },
+        {
+          "direction": "left",
+          "ticks": 781
+        },
+        {
+          "direction": "right",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 408
+        },
+        {
+          "direction": "up",
+          "ticks": 407
+        },
+        {
+          "direction": "left",
+          "ticks": 122
+        },
+        {
+          "direction": "down",
+          "ticks": 408
+        },
+        {
+          "direction": "left",
+          "ticks": 421
+        },
+        {
+          "direction": "up",
+          "ticks": 81
+        },
+        {
+          "direction": "right",
+          "ticks": 414
+        }
+      ]
+    },
+    {
+      "id": "toolbench-weave",
+      "authoredIdentity": "66e4e66b8f4286e4",
+      "gameplayIdentity": "e9065cdcd9079b5b",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "checkpoint": "8bc51da014e7a740",
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 706
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "left",
+          "ticks": 136
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "down",
+          "ticks": 7
+        },
+        {
+          "direction": "up",
+          "ticks": 14
+        },
+        {
+          "direction": "left",
+          "ticks": 326
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 434
+        },
+        {
+          "direction": "left",
+          "ticks": 401
+        },
+        {
+          "direction": "right",
+          "ticks": 400
+        },
+        {
+          "direction": "down",
+          "ticks": 298
+        },
+        {
+          "direction": "left",
+          "ticks": 400
+        }
+      ]
+    },
+    {
+      "id": "home-signal",
+      "authoredIdentity": "963b1bc3405e14e7",
+      "gameplayIdentity": "6bdf9193c73dd524",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "checkpoint": "91cd5533f5bd337b",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 197
+        },
+        {
+          "direction": "right",
+          "ticks": 7
+        },
+        {
+          "direction": "left",
+          "ticks": 14
+        },
+        {
+          "direction": "up",
+          "ticks": 231
+        },
+        {
+          "direction": "right",
+          "ticks": 461
+        },
+        {
+          "direction": "down",
+          "ticks": 259
+        },
+        {
+          "direction": "up",
+          "ticks": 258
+        },
+        {
+          "direction": "right",
+          "ticks": 313
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 149
+        },
+        {
+          "direction": "right",
+          "ticks": 191
+        },
+        {
+          "direction": "up",
+          "ticks": 190
+        },
+        {
+          "direction": "left",
+          "ticks": 184
+        }
+      ]
+    }
+  ]
+}

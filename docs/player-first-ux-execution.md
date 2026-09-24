@@ -85,15 +85,15 @@ successful actions retire hints and Retry does not repeat long introductions.
 
 ## Execution board
 
-| Phase | State | Independent releases and blocking acceptance |
-| --- | --- | --- |
-| UX0 | PR320 qualifying, not public | Baseline/input: spatial Journey grid, omitted Couch controls, primary boot/mission focus, one menu-key owner; resolve reproduced targeted and mandatory full-suite failures with contract evidence. The reachability audit adds Legacy Versus continuation and Team paused header controls. Qualification also corrects requested Workshop return and prevents automatic optional-Remix entry at a core Journey ending. |
-| UX1 | Remaining | Compact complete gallery, map/artwork previews, one-action play, selection restoration and Journey Collection rewards; all content sources and separate mode completion pass. |
-| UX2 | Remaining | Shared Home/lobbies/Pause, remove duplicate entry points and tuning prose, consistent Back/Help/Settings/Sound; direct Start and exact return focus pass. |
-| UX3 | Remaining | Objective-led HUD, responsive boards/touch controls, contextual hints; complete playable boards and controls coexist on short landscape and portrait. |
-| UX4 | Remaining | Separate countdown/short Retry, deliberate terminal Retry, named Next and campaign-ending releases; no pre-Go ticks, stale launches, lost results or duplicate awards. |
-| UX5 | Remaining | Settings/difficulty, Collection/Records/replay, help and content recovery; complete input/return/loading coverage without authoring or file pickers in ordinary play. |
-| UX6 | Remaining | Complete cross-mode player journeys, accessibility, performance and public regression; physical-device, human balance and offline evidence remain separate. |
+| Phase | State                        | Independent releases and blocking acceptance                                                                                                                                                                                                                                                                                                                                                                            |
+| ----- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| UX0   | PR320 qualifying, not public | Baseline/input: spatial Journey grid, omitted Couch controls, primary boot/mission focus, one menu-key owner; resolve reproduced targeted and mandatory full-suite failures with contract evidence. The reachability audit adds Legacy Versus continuation and Team paused header controls. Qualification also corrects requested Workshop return and prevents automatic optional-Remix entry at a core Journey ending. |
+| UX1   | Remaining                    | Compact complete gallery, map/artwork previews, one-action play, selection restoration and Journey Collection rewards; all content sources and separate mode completion pass.                                                                                                                                                                                                                                           |
+| UX2   | Remaining                    | Shared Home/lobbies/Pause, remove duplicate entry points and tuning prose, consistent Back/Help/Settings/Sound; direct Start and exact return focus pass.                                                                                                                                                                                                                                                               |
+| UX3   | Remaining                    | Objective-led HUD, responsive boards/touch controls, contextual hints; complete playable boards and controls coexist on short landscape and portrait.                                                                                                                                                                                                                                                                   |
+| UX4   | Remaining                    | Separate countdown/short Retry, deliberate terminal Retry, named Next and campaign-ending releases; no pre-Go ticks, stale launches, lost results or duplicate awards.                                                                                                                                                                                                                                                  |
+| UX5   | Remaining                    | Settings/difficulty, Collection/Records/replay, help and content recovery; complete input/return/loading coverage without authoring or file pickers in ordinary play.                                                                                                                                                                                                                                                   |
+| UX6   | Remaining                    | Complete cross-mode player journeys, accessibility, performance and public regression; physical-device, human balance and offline evidence remain separate.                                                                                                                                                                                                                                                             |
 
 UX0 findings and evidence are maintained in the
 [feature verification record](player-first-ux0-verification.md).
@@ -119,6 +119,15 @@ Journey navigation, retained/current-card focus after reflow, previously omitted
 Couch settings/header actions, exact departure cancellation focus, Workshop boot
 return, deliberate Browse at Journey endings, and early Team difficulty intent.
 These implementation checks do not mark the feature publicly accepted.
+
+Further qualification reproduces an inherited incoming Classic launch race: the
+boot picture and requested original can attempt concurrent media-generation
+writes. The incoming action now joins its captured boot operation, then retains
+all newer-input and foreground guards. A failed unrelated boot picture does not
+prevent preparation of the requested exact original. Final Versus Journey results
+also receive explicit Browse rather than generic-library fallthrough; an unfinished
+first-to-two match must still say Next round, without declaring the Journey finished.
+These corrections remain part of PR320 qualification, not a published feature.
 
 Remaining UX0 delivery steps: finish the complete mandatory suite and review any
 new failures; integrate the preceding reviewed release if main advances; qualify
