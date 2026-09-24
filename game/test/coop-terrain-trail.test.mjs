@@ -2,10 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { createCoop, startCoop, pauseCoop, stepCoop, WALL } from '../coop/core.mjs';
+import { createCoop, startCoop, pauseCoop, stepCoop, SAFE, WALL } from '../coop/core.mjs';
 import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
+import {
+  createCoopCaptureFeedback,
+  drawCoopCaptureFeedback,
+} from '../couch/coop-terrain-trail.mjs';
 import { imagePresentation } from '../presentation/runtime.mjs';
 import {
   drawActiveTrail,
@@ -641,4 +645,105 @@ test('an undefined wall override is explicitly absent and clears a previously bo
     ),
   );
   assert.equal(p.closes(), 0);
+});
+
+test('Team capture feedback retains one bounded immutable pulse per observed fixed step', () => {
+  const run = startCoop(createCoop(FIRST_CONNECTION)),
+    tracker = createCoopCaptureFeedback(),
+    claimed = 1 * run.width + 1;
+  run.cells[claimed] = SAFE;
+  run.tick = 12;
+  run.time = 1.1;
+  run.events = [
+    {
+      type: 'cells.claimed',
+      tick: run.tick,
+      time: 1,
+      indices: [claimed, claimed, -1, run.cells.length, 2.5],
+    },
+  ];
+  const before = copy(run),
+    first = tracker.observe(run);
+  assert.equal(first.length, 1);
+  assert.deepEqual(first[0].indices, [claimed]);
+  assert.ok(Math.abs(first[0].age - 0.1) < 1e-9);
+  assert.ok(
+    Object.isFrozen(first) && Object.isFrozen(first[0]) && Object.isFrozen(first[0].indices),
+  );
+  tracker.observe(run);
+  assert.equal(
+    tracker.read(run).length,
+    1,
+    'Repeated host/render observation cannot duplicate it.',
+  );
+  assert.deepEqual(run, before, 'Visual observation cannot mutate gameplay.');
+
+  const view = surface();
+  drawCoopCaptureFeedback(view.ctx, first, run, palette);
+  const painted = view.calls.filter(
+    (call) =>
+      call.name === 'fillRect' &&
+      call.state.fillStyle === palette.accent &&
+      call.state.globalAlpha > 0 &&
+      call.state.globalAlpha < 1,
+  );
+  assert.deepEqual(
+    painted.map((call) => call.box),
+    [[1, 1, 1, 1]],
+  );
+  view.reset();
+  drawCoopCaptureFeedback(view.ctx, first, run, palette, true);
+  assert.equal(view.calls.length, 0, 'Reduced effects omit the optional reveal pulse.');
+  assert.equal(view.stack.length, 0);
+
+  run.time = 1.66;
+  assert.equal(tracker.observe(run).length, 0, 'The pulse expires on authoritative run time.');
+  pauseCoop(run);
+  assert.equal(tracker.observe(run).length, 0);
+  const other = startCoop(createCoop(FIRST_CONNECTION));
+  assert.equal(
+    tracker.observe(other).length,
+    0,
+    'A different attempt cannot inherit old feedback.',
+  );
+});
+
+test('Team painter places capture illumination below live gameplay and keeps it optional', () => {
+  const run = startCoop(createCoop(FIRST_CONNECTION)),
+    claimed = 1 * run.width + 1,
+    view = surface(),
+    painter = createCoopPainter(view.canvas);
+  run.cells[claimed] = SAFE;
+  run.tick = 4;
+  run.time = 0.1;
+  run.events = [{ type: 'cells.claimed', tick: 4, time: 0, indices: [claimed] }];
+  const before = copy(run);
+  painter.observe(run);
+  painter.paint(run);
+  const pulse = view.calls.findIndex(
+      (call) =>
+        call.name === 'fillRect' &&
+        call.state.globalAlpha > 0 &&
+        call.state.globalAlpha < 1 &&
+        JSON.stringify(call.box) === JSON.stringify([16, 16, 16, 16]),
+    ),
+    firstActor = view.calls.findIndex(
+      (call) => call.name === 'arc' && call.args[2] === run.players[0].radius,
+    );
+  assert.ok(pulse >= 0, 'The newly reclaimed cell receives the shared capture illumination.');
+  assert.ok(firstActor > pulse, 'Actors and current danger remain above reveal decoration.');
+  assert.deepEqual(run, before);
+  view.reset();
+  painter.paint(run, { reduced: true });
+  assert.equal(
+    view.calls.some(
+      (call) =>
+        call.name === 'fillRect' &&
+        call.state.globalAlpha > 0 &&
+        call.state.globalAlpha < 1 &&
+        JSON.stringify(call.box) === JSON.stringify([16, 16, 16, 16]),
+    ),
+    false,
+  );
+  assert.deepEqual(run, before);
 });
