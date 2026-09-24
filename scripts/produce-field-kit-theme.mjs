@@ -141,11 +141,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   effects: {
-    sha256: '475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5',
+    sha256: 'abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1',
     evidence: [
-      'Scoped visible-actor effects continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; eight ordered effects inputs sha256:475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5. Only render.mjs changes to pass authenticated actor geometry into the cosmetic player paint-size calculation.',
-      'The active-trail, secured-contour, travelling-impact, capture, failure, victory, pickup, shield, respawn and pressure painters remain unchanged. Focused renderer checks preserve trail core/head, reduced effects, capture layering, collision footprints and authoritative state.',
-      'Functional source continuation only. Historical reviews and original payloads remain immutable. Complete art, final-byte visual/device, human pacing, frozen/public and release acceptance remain separate. Any effects input or review-byte change reopens this group.',
+      'Scoped player-craft locator removal: docs/verification/player-craft-locator-removal-2026-09-24/review.json sha256:b6c8b661457ddd191477af403f2a392e476c0af7beceaba4f3b7f3ced1bf547e; eight ordered effects inputs sha256:abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1. Only render.mjs removes the rejected detached corner-locator call.',
+      'The active-trail, secured-contour, travelling-impact, capture, failure, victory, pickup, shield, respawn and pressure painters remain unchanged. Focused actor/renderer checks preserve the approved craft, rotor, contact and shield cues, reduced effects, collision footprints and authoritative state.',
+      'Functional and bounded visual correction only. Historical reviews and original payloads remain immutable. Complete art, final-byte physical-device, human pacing, frozen/public and release acceptance remain separate. Any effects input or review-byte change reopens this group.',
     ],
   },
 };
