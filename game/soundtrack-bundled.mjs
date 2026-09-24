@@ -1,4 +1,5 @@
 import { boundedJSON, exactKeys, required, stableId } from './data-json.mjs';
+import { effectiveSoundtrackPolicy } from './soundtrack-rights.mjs';
 
 const corePrefix = 'game/audio/soundtracks/';
 /** Code-owned build registrations only. Never accept these from library or share metadata. */
@@ -17,6 +18,7 @@ export function resolveBundledSoundtrackAssets(value, catalogue) {
   for (const entry of entries) {
     exactKeys(entry, ['id', 'sha256', 'bytes', 'path'], 'bundled soundtrack asset');
     const track = catalogue.tracks.find((item) => item.id === entry.id);
+    const policy = track && effectiveSoundtrackPolicy(track, catalogue);
     required(
       stableId(entry.id) &&
         !ids.has(entry.id) &&
@@ -33,9 +35,9 @@ export function resolveBundledSoundtrackAssets(value, catalogue) {
         track.asset.bytes === entry.bytes &&
         track.policy?.id === entry.id &&
         track.policy.sha256 === entry.sha256 &&
-        track.policy.webPlayback === 'allowed' &&
-        track.policy.offlineCache === 'allowed' &&
-        track.policy.redistribute === 'allowed',
+        policy.webPlayback === 'allowed' &&
+        policy.offlineCache === 'allowed' &&
+        policy.redistribute === 'allowed',
       'Bundled soundtrack must match an admitted recording with offline and redistribution permission.',
     );
     ids.add(entry.id);
