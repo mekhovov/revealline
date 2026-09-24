@@ -25,6 +25,8 @@ test('Current rules project every compatible level without mutating its authenti
   assert.notEqual(campaignKey(current.campaign), campaignKey(original.campaign));
   assert.equal(current.classicRulesSourceCampaignKey, campaignKey(original.campaign));
   assert.equal(current.classicRulesEdition, CLASSIC_RULES_CURRENT);
+  assert.deepEqual(current.classicRulesPresentationCampaign, original.campaign);
+  assert.notEqual(current.classicRulesPresentationCampaign, original.campaign);
   for (let index = 0; index < current.campaign.levels.length; index++) {
     const level = current.campaign.levels[index];
     assert.deepEqual(level.classic.lineImpact, { version: 'line-impact.v1', speed: 24 });
