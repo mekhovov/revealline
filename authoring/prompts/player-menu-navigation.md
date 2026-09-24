@@ -50,3 +50,12 @@ from readiness. Diagnose platform-specific fixture differences against full stat
 A test-only portable golden must bound only witnessed per-route scalar differences
 and retain exact remaining state, host/reference and public replay checks. Never
 apply its tolerance to runtime saves, recordings or earned originals.
+
+Separate retained historical component tests from current player journeys. An
+injected unregistered campaign may test its original chooser/profile authority at
+an explicitly named native-dialog boundary; that is not public-catalogue evidence.
+Current selection must activate the visible Missions action, await its operation
+and match the full source/edition/campaign/runtime identity. Preserve historical
+routes while independently resolving the fresh host's approved tuning. A route
+fixture must use legal host inputs, never neutral braking or injected outcomes.
+Use decoded background identity, not the last actor draw call, for picture checks.

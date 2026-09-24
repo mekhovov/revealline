@@ -289,3 +289,57 @@ explicit Resume stay required. A separate direct Start/Continue case was added.
 One superseded CI initial-picture timeout did not reproduce locally; its existing
 loading assertion was retained. These full-file runs cover 54 distinct checks and
 do not claim an uninterrupted aggregate run or full mandatory-suite acceptance.
+
+## Later host-suite reconciliation
+
+The complete mandatory run is being allowed to finish before the next source push;
+superseding it early hides later-file failures. The following corrections are to
+baseline-reproduced fixtures, not changes to gameplay or a waiver of release gates.
+
+| Complete local files | Passing checks | Preserved contracts |
+| --- | ---: | --- |
+| Team campaign Next, Journey Next, originals and timed optional | 85 | Exact authored/current-tuned identities; real two-player input, artwork retention, reserves, progression, cancellation and timed no-pickup paths. |
+| Starting setup, selection bookmark and terminal navigation | 40 | Queued turn and saved checkpoint, explicit Resume, native editing, exact opener, legal victory and installed-library ending. |
+| Historical Journey and title operation status | 15 | Historical receipts and backup authority, failed/stale preparation, decoded PNG dimensions, real Title Start/Continue and keyboard outcomes. |
+| Journey reactions | 4 | Real lossless Solo/Team outcomes, reaction preferences, captions, accepted artwork and Next. |
+| Whole-spatial and whole-field | 18 | Exact edition/runtime identity, actual asynchronous library selection, approved speed and retained campaign-ending results. |
+
+These counts describe separate complete-file runs, not one complete repository
+test run. Three affected Team recovery cases were also rerun after adding an
+explicit decoded-original guard; this is overlapping evidence, not three extra
+distinct cases. Independent reviews found no removed ownership/outcome assertion.
+
+The Team routes independently resolve 45 mission/preset combinations against the
+approved tuning, then drive the real host through public direction inputs. All
+are lossless; the nine timed variants avoid every pickup and require at least two
+real returns per craft. Historical route files are retained. Team host evidence
+compares the actual result, tick, coverage and reserves with the reference; it does
+not claim an unavailable full hidden-state checkpoint comparison.
+
+Tests for injected unregistered historical campaigns explicitly mount their
+retained native chooser boundary after pausing the real host. They continue to
+exercise original launch, profile, backup and cancellation handlers, but no longer
+claim to traverse today's public catalogue. Registered current-content suites
+exercise the actual visible Missions action. The title fixture now decodes real
+PNG bytes rather than inventing 1×1 dimensions for a Blob URL. The disposed-page
+fixture checks late storage callbacks and retained state without rendering an
+already-destroyed Phaser scene.
+
+Eight additional renewed Solo/Versus routes independently win and verify fresh
+public replay on macOS and Linux. Diagnostic run35949614725 compares their complete
+states: five raw checkpoints match; three differ only in fourteen witnessed scalar
+fields. Sorting Yard differs in two enemy velocities; Cross-stitch Crossings and
+Twin Lens Chambers each differ in player/enemy coordinates and actor time. The
+largest difference is 6.04e-14. Their fixture evidence declares just these fields,
+retains all other state exactly and uses the existing 1e-12 test-only bound. No
+runtime validation or helper whitelist changes. Run35949941684 independently
+passes all eight final Linux evidence comparisons, including lossless outcomes and
+same-runtime replay. Historical untuned proofs remain separately checked.
+
+The final complete sorting, timed and optional-variety host files plus the existing
+route-evidence helper suite pass 46 checks with no failures, skips or cancellation.
+Eighteen are host checks and 28 exercise evidence metadata/mutations. This includes
+two four-mission optional tours per mode, safe Skip/reselection, retained endings,
+failed artwork preparation, exact saved restoration and independently owned timed
+bonuses. Together with the table above, this correction batch covers 180 distinct
+host checks in separate full-file runs; it is still not full-source qualification.

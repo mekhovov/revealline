@@ -32,6 +32,11 @@ may use the declared 1e-12 bound; all other state remains exact. It must not cha
 runtime checkpoints, replay readers or original ownership. Require
 exact same-runtime host/reference and public replay checks alongside the portable
 golden; reject changed identities, cells, lives, ticks, scores and meaningful motion.
+Label retained historical chooser tests as component boundaries; injected campaigns
+are not public catalogue evidence. Current host selection joins the visible action
+and matches the exact source/edition/campaign/runtime identity. Independently resolve
+fresh tuning, retain historical routes and use legal host inputs without neutral
+braking or state injection. Verify decoded background identity, not actor draw order.
 
 For compact Solo landscape, distinguish manual equipment from authored warning
 capability. `hasFieldWarningBand` uses the validated original level, including

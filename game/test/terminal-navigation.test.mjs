@@ -4,6 +4,10 @@ import { readFileSync } from 'node:fs';
 import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { preparePack, emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const failCampaign = {
@@ -20,6 +24,22 @@ function key(page, key, extra = {}) {
   // Native button activation is the modeled DOM boundary, never a game action stub.
   if (!event.defaultPrevented && ['Enter', ' '].includes(key) && target.tagName === 'BUTTON')
     target.click();
+  const dialog = target.closest('dialog[open]');
+  if (!event.defaultPrevented && key === 'Tab' && dialog) {
+    // Native Tab advances editable controls; menu arrows intentionally remain
+    // native inside a select/input instead of skipping or changing its owner.
+    const stops = [
+      ...dialog.querySelectorAll('button,a[href],input,select,textarea,summary'),
+    ].filter(
+      (node) =>
+        !node.disabled &&
+        node.tabIndex >= 0 &&
+        !node.closest('[hidden],[inert],[aria-hidden="true"]') &&
+        (!node.closest('details:not([open])') || node.tagName === 'SUMMARY') &&
+        node.getClientRects().length,
+    );
+    stops[stops.indexOf(target) + (extra.shiftKey ? -1 : 1)]?.focus();
+  }
   target.emit('keyup', { key, code: key === ' ' ? 'Space' : key, ...extra });
   return event;
 }
@@ -30,11 +50,33 @@ async function win(t) {
   const page = await soloPage(t);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
+  const run = page.rendered.run,
+    reference = createRun(run.level, {
+      seed: run.seed,
+      classId: run.classId,
+      turnPolicy: run.turnPolicy,
+      classRecipes: run.classRecipes,
+    });
+  // A legal current First Signal route: wait for the patrol to clear the
+  // crossing, then make one cut. Authored enemies, tuning and outcomes stay intact.
+  for (let i = 0; i < 180; i++) {
+    stepRun(reference, {}, FIXED_DT);
+    page.frame();
+  }
   page.key('ArrowDown');
-  for (let i = 0; i < 1200 && page.rendered.run.status === 'running'; i++) page.frame();
+  for (let i = 0; i < 469; i++) {
+    stepRun(reference, { direction: 'down' }, FIXED_DT);
+    page.frame();
+  }
   page.key('ArrowDown', false);
   page.frame(0);
   assert.equal(page.rendered.run.status, 'won');
+  assert.equal(reference.status, 'won');
+  assert.equal(run.tick, 649);
+  assert.equal(run.lives, 3);
+  assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(reference));
+  if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+  page.frame(0);
   assert.equal(page.$('game-overlay').dataset.kind, 'won');
   return page;
 }
@@ -321,7 +363,7 @@ test('short results omit reading controls; overflow reading scrolls by keyboard 
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
 });
 
-test('result keyboard picture/Back and appearance/settings return keep the same earned attempt', async (t) => {
+test('result keyboard picture/Back and current appearance setup return keep the same earned attempt', async (t) => {
   const page = await win(t),
     checkpoint = authoritativeCheckpoint(page.rendered.run);
   page.$('view-picture').focus();
@@ -334,37 +376,116 @@ test('result keyboard picture/Back and appearance/settings return keep the same 
   assert.equal(page.doc.activeElement.id, 'view-picture');
   page.$('choose-appearance').focus();
   key(page, 'Enter');
-  assert.equal(page.$('shell-missions').open, true);
+  await settle(
+    () => page.$('journey-chooser')?.open && page.doc.activeElement.id === 'body-select',
+  );
+  assert.equal(page.$('journey-chooser').open, true);
   assert.equal(page.doc.activeElement.id, 'body-select');
   assert.equal(page.$('body-select').closest('details').open, true);
   assert.equal(key(page, 'ArrowDown').defaultPrevented, false, 'Native select editing is retained');
-  page.$('shell-briefing').focus();
+  page.$('journey-back').focus();
   key(page, 'Enter');
-  assert.equal(page.$('shell-missions').open, false);
-  assert.equal(page.doc.activeElement.id, 'next-button');
+  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(page.doc.activeElement.id, 'choose-appearance');
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
 
-test('campaign-complete replay choice opens the visible Missions dialog without changing the completed run', async (t) => {
-  const campaign = structuredClone(failCampaign);
-  campaign.levels[0].goal.coverage = 0.1;
-  const page = await soloPage(t, { campaign });
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+test('final installed campaign keeps its result while keyboard Missions opens the shared library and returns', async (t) => {
+  const source = JSON.parse(
+    readFileSync(new URL('../content/packs/night-shift.json', import.meta.url)),
+  );
+  source.id = 'terminal-final-campaign';
+  source.campaigns = [
+    {
+      ...source.campaigns[0],
+      id: 'terminal-final-campaign',
+      levels: [
+        { ...failCampaign.levels[0], id: 'terminal-final-mission', goal: { coverage: 0.1 } },
+      ],
+    },
+  ];
+  source.levelVisuals = [];
+  source.visualOverrides = {};
+  const { pack } = await preparePack(source),
+    assets = managedIndexedDB();
+  const db = await new Promise((resolve, reject) => {
+    const request = assets.indexedDB.open('revealline-assets-v1', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('assets');
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+  try {
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction('assets', 'readwrite');
+      tx.objectStore('assets').put(
+        exportPackLibrary(installPack(emptyPackLibrary(), pack)),
+        'revealline.packs.dev.v1',
+      );
+      tx.oncomplete = resolve;
+      tx.onabort = tx.onerror = () => reject(tx.error);
+    });
+  } finally {
+    db.close();
+  }
+  const page = await soloPage(t, { assetIndexedDB: assets.indexedDB });
+  await openMissionLibrary(page, 'shell-packs');
+  page.change('journey-collection', 'Custom');
+  const card = [...page.$('journey-cards').children].find(
+    (node) => JSON.parse(node.dataset.missionId)[3] === 'terminal-final-mission',
+  );
+  assert(card);
+  card.focus();
+  key(page, 'Enter');
+  await settle(() => {
+    page.frame(0);
+    return (
+      page.doc.body.dataset.flightState === 'running' &&
+      page.rendered.run.levelId === 'terminal-final-mission'
+    );
+  });
+  assert.equal(page.rendered.run.levelId, 'terminal-final-mission');
   page.key('ArrowDown');
   for (let i = 0; i < 1200 && page.rendered.run.status === 'running'; i++) page.frame();
   page.key('ArrowDown', false);
   page.frame(0);
   assert.equal(page.rendered.run.status, 'won');
+  if (!page.$('skip-celebration').hidden) {
+    assert.equal(page.doc.activeElement.id, 'skip-celebration');
+    key(page, 'Enter');
+    page.frame(0);
+  }
+  assert.equal(page.doc.activeElement.id, 'next-button');
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run);
   key(page, 'Enter');
-  await settle(() => page.$('game-overlay').dataset.kind === 'campaign-complete');
-  const checkpoint = authoritativeCheckpoint(page.rendered.run);
-  page.$('choose-mission').focus();
+  await settle(() =>
+    /End of the Solo mission library/.test(page.$('flight-preparation-status').textContent),
+  );
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  const opener = page.$('shell-packs'),
+    handler = opener.onclick;
+  let opening;
+  opener.onclick = (...args) => (opening = handler.apply(opener, args));
+  try {
+    opener.focus();
+    key(page, 'Enter');
+  } finally {
+    opener.onclick = handler;
+  }
+  assert(opening instanceof Promise);
+  await opening;
+  assert.equal(page.$('journey-chooser').open, true);
+  assert.equal(JSON.parse(page.doc.activeElement.dataset.missionId)[3], 'terminal-final-mission');
+  page.$('journey-back').focus();
   key(page, 'Enter');
-  assert.equal(page.$('shell-missions').open, true);
-  assert.ok(page.$('missions').contains(page.doc.activeElement));
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(page.doc.activeElement, opener);
+  assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.deepEqual(page.errors, []);
 });
 
 for (const pointerId of [41, undefined])
@@ -422,7 +543,13 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(page.rendered.run.player.cutting, true);
     const checkpoint = authoritativeCheckpoint(page.rendered.run);
     const pad = mode === 'controller' ? controller(page, t) : null;
-    const direction = () => (pad ? pad.pulse(13) : key(page, 'ArrowDown'));
+    const direction = () =>
+      pad
+        ? pad.pulse(13)
+        : key(
+            page,
+            /^(SELECT|INPUT|TEXTAREA)$/.test(page.doc.activeElement.tagName) ? 'Tab' : 'ArrowDown',
+          );
     const confirm = () => (pad ? pad.pulse(0) : key(page, 'Enter'));
     const activate = (element, root) => {
       for (let i = 0; i < 140 && page.doc.activeElement !== element; i++) {
@@ -434,8 +561,16 @@ for (const mode of ['keyboard', 'controller']) {
       }
       assert.equal(page.doc.activeElement.id, element.id);
       assert.ok(page.doc.activeElement === element, 'Requested native control is reachable');
-      confirm();
+      const handler = element.onclick;
+      let pending;
+      if (handler) element.onclick = (...args) => (pending = handler.apply(element, args));
+      try {
+        confirm();
+      } finally {
+        if (handler) element.onclick = handler;
+      }
       page.frame(0);
+      return pending;
     };
     activate(page.$('overlay-menu'), page.$('game-overlay'));
     assert.equal(page.$('shell-home').open, true);
@@ -454,11 +589,14 @@ for (const mode of ['keyboard', 'controller']) {
       'Settings returns to its title-menu opener while the live cut stays paused',
     );
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-    activate(page.$('shell-play'), page.$('shell-home'));
-    assert.equal(page.$('shell-missions').open, true);
-    activate(page.$('shell-briefing'), page.$('shell-missions'));
-    assert.equal(page.$('shell-missions').open, false);
-    assert.equal(page.doc.activeElement.id, 'start-button');
+    const opening = activate(page.$('shell-play'), page.$('shell-home'));
+    assert(opening instanceof Promise, 'The actual Missions action prepares its catalogue.');
+    await opening;
+    assert.equal(page.$('journey-chooser').open, true);
+    activate(page.$('journey-back'), page.$('journey-chooser'));
+    assert.equal(page.$('journey-chooser').open, false);
+    assert.equal(page.$('shell-home').open, true);
+    assert.equal(page.doc.activeElement.id, 'shell-play');
     assert.equal(page.doc.body.dataset.flightState, 'paused');
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     assert.deepEqual(page.errors, []);
