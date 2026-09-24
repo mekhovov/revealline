@@ -177,6 +177,12 @@ const batch = createBatchCreatorController({
     itemContent.project.assets = [asset];
     itemContent.project.missions[0].name = item.title;
     itemContent.project.missions[0].presentation.backgroundAssetId = assetId;
+    const generatedMission = itemContent.project.missions[0];
+    const generatedMap = itemContent.project.maps[0];
+    const enemies = generatedMission.actors.length;
+    const walls = generatedMap.walls.length;
+    const foundations = generatedMap.foundations.length;
+    const terrain = generatedMap.terrain.length;
     const itemPack = await prepareCreatorBundle(
       itemContent,
       [{ sha256: preparedImage.runtime.sha256, blob: preparedImage.runtime.blob }],
@@ -189,7 +195,12 @@ const batch = createBatchCreatorController({
       alt: item.title,
       estimatedBytes: itemPack.bytes,
       validation: itemPack.review.validation,
-      templateLabel: `${generated.provenance.templateId} · ${generated.provenance.variantId} · verified Solo route evidence`,
+      templateLabel:
+        `${generated.provenance.templateId} · ${generated.provenance.variantId} · ` +
+        `${enemies} ${enemies === 1 ? 'enemy' : 'enemies'} · ` +
+        `${walls} wall${walls === 1 ? '' : 's'} · ` +
+        `${foundations} safe island${foundations === 1 ? '' : 's'} · ` +
+        `${terrain} terrain zone${terrain === 1 ? '' : 's'} · verified Solo route evidence`,
     };
   },
   approveBatch: batchApprovalAdapter?.approve,
