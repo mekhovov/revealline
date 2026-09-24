@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
+import { Element } from './helpers/couch-dom.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 
 const files = new Map(
@@ -17,11 +18,39 @@ const files = new Map(
 );
 async function fixture(t, { read = async () => null, returnStorage } = {}) {
   const reads = [];
+  let remoteCompletion = Promise.resolve(),
+    finishRemote;
   const f = await page(t, {
     nativeFocus: true,
     nativeVisibility: true,
     returnStorage,
-    beforeImport({ install }) {
+    beforeImport({ install, doc }) {
+      // The host deliberately starts remote refresh without returning it from
+      // discovery.open(). Observe its real named status completion instead of
+      // imposing a wall-clock deadline on synchronous catalogue compilation.
+      // This never changes the text, focus, event dispatch or remote owner.
+      const createElement = doc.createElement;
+      const text = Object.getOwnPropertyDescriptor(Element.prototype, 'textContent');
+      t.mock.method(doc, 'createElement', function (...args) {
+        const element = createElement.apply(this, args);
+        if (element.tagName === 'P')
+          Object.defineProperty(element, 'textContent', {
+            configurable: true,
+            get: () => text.get.call(element),
+            set(value) {
+              text.set.call(element, value);
+              if (element.id !== 'coop-library-remote-status') return;
+              if (value === 'Loading Solo and Versus mission metadata…') {
+                finishRemote?.();
+                remoteCompletion = new Promise((resolve) => (finishRemote = resolve));
+              } else {
+                finishRemote?.();
+                finishRemote = null;
+              }
+            },
+          });
+        return element;
+      });
       install('crypto', { value: webcrypto });
       install('fetch', {
         value: async (url) => {
@@ -36,24 +65,34 @@ async function fixture(t, { read = async () => null, returnStorage } = {}) {
       });
     },
   });
-  return Object.assign(f, { reads });
+  return Object.assign(f, { reads, remoteReady: () => remoteCompletion });
 }
 async function open(f, paused = false) {
-  f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open').focus();
-  f.tap('Enter');
-  await waitFor(() => f.$('journey-chooser')?.open);
+  const opener = f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open'),
+    original = opener.onclick;
+  let pending;
+  opener.onclick = (...args) => (pending = original.apply(opener, args));
+  try {
+    opener.focus();
+    f.tap('Enter');
+  } finally {
+    opener.onclick = original;
+  }
+  assert(pending instanceof Promise, 'Real keyboard activation owns Team discovery.');
+  await pending;
+  assert.equal(f.$('journey-chooser').open, true);
 }
+
 const cards = (f) => [...f.$('journey-cards').querySelectorAll('.journey-card')];
 function mode(f, value) {
   f.$('journey-mode').focus();
   f.$('journey-mode').value = value;
   f.$('journey-mode').emit('change');
 }
-const loaded = (f) =>
-  waitFor(
-    () => cards(f).length === 201,
-    () => f.$('coop-library-remote-status').textContent,
-  );
+const loaded = async (f) => {
+  await f.remoteReady();
+  assert.equal(cards(f).length, 201, f.$('coop-library-remote-status').textContent);
+};
 
 test('Team loads all201 Solo/Versus metadata rows only after selecting another mode and never decodes rewards', async (t) => {
   const f = await fixture(t);
@@ -187,7 +226,8 @@ test('typing and filtering in the open Team chooser filters arriving remote rows
   assert.match(f.$('coop-library-remote-status').textContent, /Loading/);
   assert.equal(f.$('coop-library-remote-retry').hidden, true);
   gate.resolve();
-  await waitFor(() => cards(f).length === 1);
+  await f.remoteReady();
+  assert.equal(cards(f).length, 1);
   assert.match(cards(f)[0].textContent, /Voltage Garden/);
   assert.equal(search.value, 'Voltage Garden');
   assert.equal(f.$('journey-collection').value, 'Classic');
@@ -311,7 +351,8 @@ test('saved other-mode browsing restores Team’s own filter and lazily loads ma
   await open(f);
   assert.equal(f.$('journey-mode').value, 'solo');
   assert.equal(f.$('journey-search').value, 'Two keepers');
-  await waitFor(() => cards(f).length === 3);
+  await f.remoteReady();
+  assert.equal(cards(f).length, 3);
   assert(cards(f).some((card) => card.querySelector('strong').textContent === 'Two keepers'));
   assert.equal(f.$('coop-library-preview').hidden, true);
   assert.equal(f.reads.length, 4);
@@ -361,7 +402,8 @@ test('a Team page return restores the actual departing Solo search and campaign 
     await open(f);
     assert.equal(f.$('journey-mode').value, 'solo');
     assert.equal(f.$('journey-search').value, 'Two keepers');
-    await waitFor(() => cards(f).length === 1);
+    await f.remoteReady();
+    assert.equal(cards(f).length, 1);
     assert.equal(f.$('journey-campaign').value, campaign);
     assert.equal(cards(f)[0].dataset.missionId, missionId);
     assert.equal(f.reads.length, 4);
