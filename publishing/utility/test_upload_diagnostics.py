@@ -221,13 +221,22 @@ class RetentionTests(unittest.TestCase):
                 env = {'UTILITY_BINDING': encoded(value).decode(), 'GITHUB_ACTIONS': 'true',
                        'GITHUB_EVENT_NAME': 'workflow_dispatch', 'UTILITY_WORKFLOW_SHA': 'e' * 40,
                        'GH_TOKEN': SECRET}
+                # The legacy source has no committed test policy; ls-tree returns bytes.
+                git_responses = ['e' * 40, '', 'f' * 40, b'']
                 with patch.object(sys, 'argv', arguments), patch.dict(utility.os.environ, env), \
                         patch.object(utility, 'source_identity', return_value=value['source']), \
-                        patch.object(utility.subprocess, 'check_output', side_effect=['e' * 40, '', 'f' * 40]), \
-                        patch.object(utility, 'inspect_original', return_value={}), \
-                        patch.object(utility, 'upload_originals', side_effect=error):
+                        patch.object(utility.subprocess, 'check_output', side_effect=git_responses) as git, \
+                        patch.object(utility, 'inspect_original', return_value={}) as inspect, \
+                        patch.object(utility, 'upload_originals', side_effect=error) as upload:
                     with self.assertRaises(module.Ambiguous):
                         utility.main()
+                git.assert_called_with(['git', '-C', temporary, 'ls-tree', value['source']['commit'],
+                                        '--', utility.POLICY_PATH], timeout=30)
+                self.assertEqual(git.call_count, 4)
+                inspect.assert_called_once()
+                upload.assert_called_once()
+                self.assertIsNone(inspect.call_args.args[-1])
+                self.assertIsNone(upload.call_args.args[-1])
                 result_path = out / 'evidence/result.json'
                 result = json.loads(result_path.read_text())
                 self.assertEqual(result['status'], 'UNCONFIRMED_REREAD_ASSETS')
