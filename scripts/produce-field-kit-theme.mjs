@@ -125,10 +125,10 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '26fe9a785a6b21a92f2ce2c42d63917e16c30a4edc8df76bee26240863c0bcea',
+    sha256: '82f403fca97ec49fd0dd1fd7698324bdf120d21918ecd39fa7f44dc475269123',
     evidence: [
-      'Scoped public-archive playback source review: docs/verification/online-soundtrack-archive-2026-09-24/review.json sha256:3a83a583591f1b95e50e60d7bd8692381d1491876c408346c71e1618e067382b. Fifteen ordered audio inputs sha256:26fe9a785a6b21a92f2ce2c42d63917e16c30a4edc8df76bee26240863c0bcea bind the catalogue trust boundary, player transport, native searchable panel and preserved Content ID policy.',
-      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded catalogue decode, exact immutable paths, direct streaming, transport continuity, filters, failure and cancellation. Local browser inspection covered the in-dialog controls and unavailable-catalogue fallback.',
+      'Scoped public-archive playback source review: docs/verification/online-soundtrack-archive-2026-09-24/review.json sha256:d7a966af00218daef9a76fa14868bcbd1caeeec437e500399ef744b6304383af. Fifteen ordered audio inputs sha256:82f403fca97ec49fd0dd1fd7698324bdf120d21918ecd39fa7f44dc475269123 bind the bounded catalogue trust boundary, player transport, native searchable panel and enforced Content ID policy.',
+      'All8 selected roles remain the same procedural recipes with no new audio files. Focused tests cover bounded streamed catalogue decode, exact immutable paths, direct streaming, transport continuity, Recording-mode transitions, filters, failure and cancellation. Local browser inspection covered the live 104-recording catalogue and in-dialog playback.',
       'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, cold-offline, frozen-build or public game approval. Archive previews remain outside trusted Automatic and built-in playlists; historical records and original payloads are immutable.',
     ],
   },
