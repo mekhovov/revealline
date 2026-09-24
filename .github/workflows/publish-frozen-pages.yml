@@ -6,6 +6,7 @@ on:
     paths:
       - 'publishing/pages-controller/**'
       - '!publishing/pages-controller/delivery/**'
+      - '!publishing/pages-controller/evidence/**'
       - '!publishing/pages-controller/*.test.mjs'
       - '!publishing/pages-controller/test_*.py'
   pull_request:
