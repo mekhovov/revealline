@@ -84,9 +84,7 @@ const knownCompatibility = (value) =>
     CREATOR_VIDEO_COMPATIBILITY,
     CREATOR_VERSUS_COMPATIBILITY,
     CREATOR_VIDEO_VERSUS_COMPATIBILITY,
-  ].some(
-    (candidate) => canonicalJSON(value) === canonicalJSON(candidate),
-  );
+  ].some((candidate) => canonicalJSON(value) === canonicalJSON(candidate));
 
 const creatorCompatibility = ({ media, versus }) =>
   media

@@ -204,7 +204,8 @@ test('paired and video-only media become exact portable stories with poster prov
       range: { startSeconds: 1.25, endSeconds: 8.75 },
     });
     const story = pack.manifest.content.media.stories[0];
-    assert.equal(pack.manifest.content.compatibility.format, 'revealline-creator-runtime.v2');
+    assert.equal(pack.manifest.content.compatibility.format, 'revealline-creator-runtime.v3');
+    assert.deepEqual(pack.manifest.content.compatibility.modes, ['solo', 'versus']);
     assert.equal(story.poster.origin.kind, paired ? 'supplied-image' : 'captured-frame');
     if (!paired) {
       assert.equal(story.poster.capture.requestedTime, 5);
@@ -428,13 +429,21 @@ test('legacy image-only .rlpack manifests retain their exact v1 shape', async ()
       review: 'candidate',
     },
   ];
+  project.missions[0].modes = ['solo'];
+  project.missions[0].actors = [];
+  project.missions[0].design.counterplay =
+    'There are no enemies in this retained creator template.';
+  project.missions[0].design.difficulty.threatDensity = 0;
   project.missions[0].presentation.backgroundAssetId = 'picture';
   const pack = await prepareCreatorBundle(
     {
       project,
       packId: 'collection',
       themes,
-      provenance: generated.provenance,
+      provenance: {
+        ...generated.provenance,
+        templateVersion: 'creator-layouts.v2',
+      },
       credits: {
         creator: 'Fixture creator',
         picture: 'Legacy fixture',
