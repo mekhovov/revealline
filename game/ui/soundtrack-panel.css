@@ -92,6 +92,32 @@
   flex: 1 1 220px;
   margin: 0;
 }
+.soundtrack-online-styles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #3b4868;
+}
+.soundtrack-online-styles legend {
+  padding: 0 5px;
+  color: #c8d8e9;
+}
+.soundtrack-online-style {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 5px 8px;
+  background: #0a1a2c;
+  border: 1px solid #324968;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.soundtrack-online-style:focus-within {
+  border-color: #a5f5ec;
+  outline: 2px solid #a5f5ec55;
+}
 .soundtrack-online-status {
   margin: 12px 0 8px;
   color: #bcd0e8;
