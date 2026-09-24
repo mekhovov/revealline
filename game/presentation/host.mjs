@@ -1,4 +1,10 @@
-import { isTeamRuntimeImageSlot } from './team-runtime-slots.mjs';
+import {
+  isTeamRuntimeImageSlot,
+  TEAM_PILOT_SLOTS,
+  TEAM_ENEMY_SLOTS,
+  TEAM_CORE_SLOTS,
+} from './team-runtime-slots.mjs';
+import { ASSET_SLOTS } from './catalog.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import {
@@ -22,6 +28,18 @@ import {
 
 export const COMPILED_PRESENTATION_FORMAT = 'revealline-compiled-presentation.v1';
 export const PRESENTATION_DECODE_PIXELS = 16 * 1024 * 1024;
+// Fixed renderer vocabulary, never an uploaded prefix or arbitrary slot filter.
+export const ACTOR_PRESENTATION_SLOTS = Object.freeze([
+  ...ASSET_SLOTS.filter((slot) =>
+    slot.recipes.some((recipe) =>
+      ['actor.player.v1', 'actor.rotors.v1', 'actor.enemy.v1'].includes(recipe),
+    ),
+  ).map((slot) => slot.id),
+  ...TEAM_PILOT_SLOTS,
+  ...TEAM_ENEMY_SLOTS,
+  ...TEAM_CORE_SLOTS,
+]);
+const actorSlots = new Set(ACTOR_PRESENTATION_SLOTS);
 const extensions = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
@@ -214,6 +232,7 @@ const hudGlyphs = {
  * use hash-derived compiler asset names. It never reads Studio or player DBs.
  * Dependency overrides exist for tests/native hosts, never for uploaded URLs. */
 export function createPresentationHost({
+  profile = 'full',
   fetch: fetcher = globalThis.fetch,
   baseURL = new URL('./compiled/', import.meta.url),
   retainedManifestSha256 = null,
@@ -224,6 +243,9 @@ export function createPresentationHost({
   revokeObjectURL = (url) => URL.revokeObjectURL(url),
   fontFactory = (name, bytes, descriptors) => new FontFace(name, bytes, descriptors),
 } = {}) {
+  required(['full', 'actors'].includes(profile), 'Use a registered presentation host profile.');
+  const loadsSlot = (id, asset) =>
+    profile === 'full' ? visibleSlot(id, asset) : actorSlots.has(id) && asset.kind === 'image';
   const manifestPath = presentationManifestPath(retainedManifestSha256);
   const base = new URL(baseURL);
   required(
@@ -329,6 +351,7 @@ export function createPresentationHost({
     /** Audio stays lazy. The existing sound transport owns playback, decoding,
      * user activation and any object URLs; this host authenticates original bytes. */
     async readAudio(slot, { signal, snapshot = current?.snapshot } = {}) {
+      required(profile === 'full', 'An actor-only host cannot read audio.');
       required(!closed && snapshot && snapshot === current?.snapshot, 'No current audio release.');
       cancelled(signal);
       const asset = snapshot.resolved.assets[slot];
@@ -372,6 +395,7 @@ export function createPresentationHost({
     /** Original bytes are requested only by a new attempt/install. The still
      * media adapter owns full decoding, durable storage and immutable pins. */
     async readPicture(slot, { signal, snapshot = current?.snapshot, onStatus = () => {} } = {}) {
+      required(profile === 'full', 'An actor-only host cannot read pictures.');
       required(
         !closed && snapshot && snapshot === current?.snapshot,
         'No current picture release.',
@@ -491,7 +515,7 @@ export function createPresentationHost({
         const fullImages = new Map(),
           frames = new Map();
         for (const [slot, asset] of Object.entries(manifest.resolved.assets)) {
-          if (!visibleSlot(slot, asset) || asset.kind !== 'image') continue;
+          if (!loadsSlot(slot, asset) || asset.kind !== 'image') continue;
           fullImages.set(asset.file.sha256, asset.file.width * asset.file.height);
           const frame = asset.geometry.frame;
           if (
@@ -510,7 +534,7 @@ export function createPresentationHost({
         const sourceBlobs = new Map(),
           decoded = new Map();
         for (const [slot, asset] of Object.entries(manifest.resolved.assets)) {
-          if (!visibleSlot(slot, asset)) continue;
+          if (!loadsSlot(slot, asset)) continue;
           cancelled(controller.signal);
           const file = asset.file,
             hash = file.sha256;
@@ -577,12 +601,14 @@ export function createPresentationHost({
               image.width === frame.width && image.height === frame.height,
               'Decoded presentation frame disagrees.',
             );
-            visualBlob = await cropBlob(image, frame, document);
+            if (profile === 'full') visualBlob = await cropBlob(image, frame, document);
           }
           images[slot] = Object.freeze({ image, asset, geometry: imagePresentation(asset) });
-          const url = createObjectURL(visualBlob);
-          own(() => revokeObjectURL(url));
-          cssImages[slot] = url;
+          if (profile === 'full') {
+            const url = createObjectURL(visualBlob);
+            own(() => revokeObjectURL(url));
+            cssImages[slot] = url;
+          }
         }
         cancelled(controller.signal);
         required(!closed && pending === controller, 'Obsolete presentation load.');
@@ -621,6 +647,7 @@ export function createPresentationHost({
       }
     },
     apply(element) {
+      required(profile === 'full', 'An actor-only host cannot apply page presentation.');
       required(current && !closed, 'No accepted presentation is loaded.');
       const releaseTokens = applyPresentation(element, current.snapshot.resolved);
       const owner = createPresentationDOMOwner();

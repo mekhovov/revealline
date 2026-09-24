@@ -74,8 +74,26 @@ The shipped whole-theme catalogue covers only First Signal FPV, not the whole
 Journey. Actor-only source approval must therefore remain a separate code-owned
 registry; changing an owner or picture theme to pass full-theme compatibility is
 not permitted. The shared loader needs a fixed actor-only acquisition profile.
-Exact compiled revision 62 and its transitive assets must remain available when
-a later presentation compile replaces the current manifest.
+The fixed actor loader/lease is implemented and independently reviewed: 14/14
+focused cases pass using exact compiled bytes and modeled decoding. The 37-case
+existing loader/lease cohort passes with exact Git-byte reads for sparse binary
+fixtures and RAM temporary storage; earlier missing-file and `/tmp` ENOSPC
+attempts are not passes. Actual browser decoding remains a release gate.
+
+Exact compiled revision 62 and its transitive assets now have an explicit
+immutable compiler input and hash-named runtime alias. The 7/7 retention cohort
+verifies deterministic regeneration, all four retained revisions and unchanged
+132 original/equipment payloads. No images/audio were copied into a new
+collection. See `field-kit-runtime62-retention.md`.
+
+Actual Solo integration exposed that candidate Journey pictures deliberately
+have no managed-media pin. The unreleased v6 format now uses explicit
+`presentationPins: null` only for Solo Journey actor contexts, with no Classic
+whole-theme pin. It does not manufacture picture receipts. The core restore
+still checks the accepted runtime; the host must independently re-resolve the
+complete project/content identity before actor adoption. Seven real compiled
+Journey save tests cover all presets and both styles; 45 focused Classic,
+managed-v6 and historical-v5 checks also pass. Menu/host integration is ongoing.
 
 Standalone simulation replay files currently do not contain appearance pins.
 Portable styled playback needs its own versioned presentation envelope and
