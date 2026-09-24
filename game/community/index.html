@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" data-community-api="/">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Community campaigns · RevealLine</title>
+    <link rel="stylesheet" href="./community.css" />
+    <script type="module" src="./page.mjs"></script>
+  </head>
+  <body>
+    <header>
+      <a href="../">← RevealLine</a><a href="../creator/">Create a campaign</a>
+      <span>Free community campaigns</span>
+    </header>
+    <main>
+      <p class="eyebrow">DISCOVER / INSTALL / PLAY OFFLINE</p>
+      <h1>Community campaigns</h1>
+      <p>
+        Browse automatically validated creator editions. Each update stays separate, so an older
+        campaign and its progress remain available until you choose otherwise.
+      </p>
+      <p id="status" role="status" aria-live="polite">Loading the public catalog…</p>
+      <section class="panel controls" aria-label="Catalog filters">
+        <label>Search <input id="search" type="search" placeholder="Title or description" /></label>
+        <label
+          >Show
+          <select id="filter">
+            <option value="all">All campaigns</option>
+            <option value="installed">Installed</option>
+            <option value="available">Available to install</option>
+          </select></label
+        >
+        <button id="refresh" type="button">Refresh</button>
+      </section>
+      <section id="catalog" class="catalog" aria-label="Community catalog"></section>
+      <p class="pager">
+        <button id="more" type="button" hidden>Load more campaigns</button>
+      </p>
+      <details class="panel" id="publish-panel">
+        <summary>Publish an approved pack</summary>
+        <p>
+          Choose an already approved .rlpack. Publishing requires a configured creator account and
+          the server’s upload transport. The game does not create or store account credentials.
+        </p>
+        <label>Approved pack <input id="publish-file" type="file" accept=".rlpack" /></label>
+        <label>Title <input id="publish-title" maxlength="120" /></label>
+        <label>Slug <input id="publish-slug" maxlength="64" /></label>
+        <label>Version <input id="publish-version" value="1.0.0" maxlength="64" /></label>
+        <label
+          >Description
+          <textarea id="publish-description" maxlength="2000"></textarea>
+        </label>
+        <button id="publish" type="button" disabled>Upload for automatic validation</button>
+        <button id="publish-unlist" class="secondary" type="button" hidden>
+          Unlist this publication
+        </button>
+        <p id="publish-status" role="status" aria-live="polite"></p>
+      </details>
+    </main>
+  </body>
+</html>

@@ -7,6 +7,9 @@ The [video campaign review guide](video-campaign-guide.md) documents the Phase 3
 The account, resumable upload, exact validation, automatic catalog publication, report and
 unlisting service is documented in the [Phase 4 acceptance record](phase4-acceptance.md) and
 [`services/community/README.md`](../../services/community/README.md).
+The [Phase 5 community-store acceptance record](phase5-acceptance.md) documents the integrated
+client candidate, exact immutable install/update/offline behavior, reference-aware recovery
+removal, and the remaining hosted-production gates.
 
 This is a tested local authoring guide for Reveal Line. It covers a small mission project and a separate editable presentation collection. It does not claim that a finished DroneAid/community edition, catalogue installer, or public release has already been produced.
 
