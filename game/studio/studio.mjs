@@ -83,6 +83,13 @@ import { observePreviewReadiness } from './preview-readiness.mjs';
 import { createCandidateLibrary } from './candidate-library.mjs';
 
 const $ = (id) => document.getElementById(id);
+const creatorDraftId = new URLSearchParams(location.search).get('creator-draft');
+if (creatorDraftId && /^[a-z][a-z0-9-]{0,59}$/.test(creatorDraftId)) {
+  const back = document.createElement('a');
+  back.href = `../creator/?draft=${encodeURIComponent(creatorDraftId)}`;
+  back.textContent = 'Return to picture creator';
+  document.querySelector('header').append(back);
+}
 const candidateLibrary = createCandidateLibrary({ document });
 const backend = createContentDraftBackend();
 const pacingInspector = createPacingInspector({ document, getSource: () => session.current() });

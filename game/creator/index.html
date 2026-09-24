@@ -85,18 +85,18 @@
         <p id="validation"></p>
         <p id="package-size" class="muted"></p>
         <button id="approve" disabled>Approve this picture and level</button>
-        <details>
-          <summary>Optional edits</summary>
-          <p>
-            Change the title, picture fitting or credits above and generate again. Advanced Studio
-            opens an editable copy; save there, then load its edits here. Gameplay changes need a
-            new valid completion route before approval.
-          </p>
-          <button id="advanced" class="secondary">Open advanced editor</button
-          ><button id="load-advanced" class="secondary">Load saved Studio edits</button
-          ><button id="regenerate" class="secondary">Regenerate template gameplay</button>
-        </details>
       </section>
+      <details id="edits" class="panel" hidden>
+        <summary>Optional edits</summary>
+        <p>
+          Change the title, picture fitting or credits above and generate again. Advanced Studio
+          opens an editable copy; save there, then load its edits here. Gameplay changes need a new
+          valid completion route before approval.
+        </p>
+        <button id="advanced" class="secondary">Open advanced editor</button
+        ><button id="load-advanced" class="secondary">Load saved Studio edits</button
+        ><button id="regenerate" class="secondary">Regenerate template gameplay</button>
+      </details>
       <section id="approved" class="panel" hidden aria-labelledby="approved-title">
         <h2 id="approved-title">3. Install or share</h2>
         <p>

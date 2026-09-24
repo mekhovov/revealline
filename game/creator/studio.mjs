@@ -69,6 +69,7 @@ if (!params.has('draft')) {
   history.replaceState(null, '', `?${params}`);
 }
 function controls() {
+  $('edits').hidden = !content;
   $('generate').disabled = busy || (!sourceFile && !content);
   $('approve').disabled = busy || !prepared;
   $('install').disabled = busy || !installReview?.enoughManagedSpace;
@@ -76,8 +77,8 @@ function controls() {
   $('backup').disabled = busy || !content;
   $('save').disabled = busy || !content;
   $('cancel').hidden = !busy;
-  for (const key of ['image', 'import', 'advanced', 'load-advanced', 'regenerate'])
-    $(key).disabled = busy;
+  for (const key of ['image', 'import']) $(key).disabled = busy;
+  for (const key of ['advanced', 'load-advanced', 'regenerate']) $(key).disabled = busy || !content;
   for (const key of [
     'name',
     'mission-title',
@@ -151,7 +152,7 @@ async function saveDraft() {
   if (draft.saved && canonicalJSON(draft.saved.document) === canonicalJSON(source.document))
     draft.source = draft.saved;
   if (draft.running) return draft.running;
-  draft.running = (async () => {
+  const running = (async () => {
     try {
       while (draft.source !== draft.saved) {
         const next = draft.source;
@@ -163,11 +164,16 @@ async function saveDraft() {
     } catch (error) {
       $('save-status').textContent =
         `Session only: ${error.message} Your source backup remains downloadable.`;
-    } finally {
-      draft.running = null;
     }
   })();
-  return draft.running;
+  // A duplicate checkpoint can finish synchronously. Assign first and clear
+  // after awaiting so a completed promise cannot masquerade as an active save.
+  draft.running = running;
+  try {
+    await running;
+  } finally {
+    if (draft.running === running) draft.running = null;
+  }
 }
 async function operation(action) {
   if (busy) return;

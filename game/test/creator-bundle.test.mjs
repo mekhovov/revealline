@@ -185,6 +185,37 @@ test('cancelled and stale store reviews cannot publish an installed index', asyn
   store.close();
 });
 
+test('an interrupted creator installation rolls back its index and remains exportable for retry', async () => {
+  const memory = memoryIndexedDB();
+  const store = createCreatorStore({ indexedDB: memory.indexedDB });
+  const pack = await prepared();
+  const approval = approveCreatorBundle(pack);
+  const file = exportCreatorBundle(pack, approval);
+  const review = await reviewCreatorInstallation(store, pack, approval);
+  memory.failAnyPutAt = 2;
+  await assert.rejects(
+    installPreparedCreatorBundle(store, pack, approval, review, { decodeImage }),
+  );
+  memory.failAnyPutAt = null;
+  store.close();
+  const reopened = createCreatorStore({ indexedDB: memory.indexedDB });
+  assert.deepEqual(await installedCreatorManifests(reopened), []);
+  assert.equal((await reopened.readDomainMetadata('media')).generation, 0);
+  assert.deepEqual(
+    await exportCreatorBundle(pack, approval).arrayBuffer(),
+    await file.arrayBuffer(),
+  );
+  await installPreparedCreatorBundle(
+    reopened,
+    pack,
+    approval,
+    await reviewCreatorInstallation(reopened, pack, approval),
+    { decodeImage },
+  );
+  assert.equal((await installedCreatorManifests(reopened))[0].editionId, pack.editionId);
+  reopened.close();
+});
+
 test('installed Custom attempts restore through the shared verifier and award only a completed exact edition', async () => {
   const pack = await prepared();
   const decode = async (dataUrl) => {
