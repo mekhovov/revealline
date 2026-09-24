@@ -62,7 +62,7 @@ function historicalPolicy(source) {
 function historicalPolicies(source) {
   if (source === null || source === undefined) return [];
   const entries = Array.isArray(source)
-    ? boundedJSON(source, { maxBytes: 8192, maxArray: 5 })
+    ? boundedJSON(source, { maxBytes: 8192, maxArray: 6 })
     : [source];
   const seen = new Set();
   return freezePresentation(
