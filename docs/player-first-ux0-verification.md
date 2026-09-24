@@ -486,3 +486,32 @@ prevented even small file writes. They are protected as GitHub blobs/commits on
 canonical PR must run its normal full checks on that committed source before
 acceptance. Missing temp-file tests, full host wrappers and public browser tests
 are still pending; memory execution does not waive any release gate.
+
+### Cold Missions operation synchronization
+
+The live full run35956795771 at exact source26fe20f8 found two additional polling
+timeouts: queryless Versus opening All missions by controller, and Solo opening
+Missions from a post-adoption drawable-release callback. Both fail in the fixed
+five-second host-fixture readiness wait; they are not failed launch assertions.
+The complete original run is retained to collect its final failure inventory.
+
+Each unchanged case passes locally. Delaying only the real mission-index fetch
+reproduces the exact failure: 5.5 seconds for Versus and 6.5 seconds for Solo.
+The corrections observe the real DOM activation's returned preparation promise,
+assert immediate named status, and await that operation before inspecting the
+gallery. They preserve actual controller/click input and focus, restore observed
+handlers in finally, and keep finite case deadlines. The global polling helper,
+runtime and gameplay timing are unchanged.
+
+Complete corrected files pass: Solo16/16 and Versus10/10, with zero failures or
+skips. The entire Versus file also passes with delayed index loading; the formerly
+failing Solo case passes its controlled delay. Paused checkpoints, zero pre-resume
+ticks, exact original-image/run ownership, release-once checks, Back focus and
+guarded Legacy selection assertions remain. Root and independent peer review
+approved the fixture-only corrections. These are scoped modeled-host results,
+not final full-suite, public-release, browser-latency or physical-device evidence.
+
+UX1 retains a separate performance task: show stable gallery structure/loading
+immediately, cache exact catalogue metadata and prepare selected/visible entries
+lazily. That optimization must preserve foreground, generation and departure
+ownership; it is not included in this test synchronization change.

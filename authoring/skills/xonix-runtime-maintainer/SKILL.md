@@ -24,7 +24,11 @@ their exact original, then recheck the opening lease. Exercise delayed success,
 failed initial artwork and newer input without weakening media-generation guards.
 Await the preparation returned by a real Missions activation in host tests. Assert
 immediate loading and retained state separately; cold catalogue duration is not a
-five-second gameplay contract. Preserve exact checkpoint assertions when checking
+five-second gameplay contract. For controller or drawable-release paths, observe
+the existing DOM handler's promise while preserving the actual gesture and focus;
+restore observers in finally. Reproduce timing assumptions with controlled fetch
+delay, retain finite case deadlines and leave the global polling helper unchanged.
+Preserve exact checkpoint assertions when checking
 different runtimes and diagnose state differences before changing route fixtures.
 For witnessed cross-platform movement rounding, keep `routeEvidenceCheckpoint`
 strictly inside integration tests: only witnessed per-route scalar differences

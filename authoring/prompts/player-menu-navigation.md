@@ -46,7 +46,12 @@ be exercised through a genuine restored historical attempt, not awarded to a new
 tuned run. A partial presentation fixture advertises only assets it prepares;
 full production bindings still require real decoded frames and strict validation.
 Join the real Missions activation operation and assert immediate loading separately
-from readiness. Diagnose platform-specific fixture differences against full states.
+from readiness. When the path is a controller edge or an image-release callback,
+observe the existing DOM handler's returned operation without replacing the real
+input gesture or forcing focus. Restore fixture observers in finally, use a bounded
+case deadline, and reproduce suspected polling races with controlled catalogue
+delay before changing synchronization. Do not increase the global polling timeout.
+Diagnose platform-specific fixture differences against full states.
 A test-only portable golden must bound only witnessed per-route scalar differences
 and retain exact remaining state, host/reference and public replay checks. Never
 apply its tolerance to runtime saves, recordings or earned originals.
