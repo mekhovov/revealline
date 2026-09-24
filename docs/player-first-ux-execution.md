@@ -12,7 +12,7 @@ player-craft cleanup and M0 preparation/input correction, and adds the qualified
 Classic current-rules launch repair. Archive68 preserves v0.101.0 with a complete
 1,133-file / 596,150,433-byte public audit. M1 v0.105.0 is merged as
 `5c2abaa3c4e516f6625fe707eb3e21a9925566ef` and is undergoing exact-source
-freeze/publication. M2 v0.106.0 is the next isolated player-menu candidate;
+freeze/publication. M2 v0.107.0 is the next isolated player-menu candidate;
 M3–M4 and
 UX1–UX6 remain unfinished.** The former
 PR320/v0.98 references below are retained as dated evidence. PR320 became conflicting
@@ -113,7 +113,7 @@ are reviewed/preserved work, not canonical branch qualification or public releas
 | Release-train closure   | Completed: v0.104.0 is selected at the public root; Archive68 preserves v0.101.0 with exact public-byte evidence.                                                         | v0.103.0 remains an immutable GitHub release without a separate Pages route; its source is inherited by v0.104.0.                          |
 | M0 — preparation safety | Published in v0.103.0 and publicly inherited by v0.104.0: stable Start/Continue ownership, held-Confirm protection and accessible Stop loading/Back.                      | Physical controller/touch checks remain separate from the modeled and browser evidence.                                                    |
 | M1 — compact Home       | PR381 merged as v0.105.0: optional tuning under Play options; compact player menu; More exposes Help, tools, About and Releases.                                          | Exact merged-source freeze, immutable release, selector admission and public verification are running.                                     |
-| M2 — unified Pause      | v0.106.0 candidate: Pause owns Resume, Restart, Missions, Help, Settings, collapsed Mission info and Home; the active-flight bar no longer duplicates those destinations. | Focused host tests pass 18/18; scoped lint/format, validation, build and responsive browser qualification remain release gates.            |
+| M2 — unified Pause      | v0.107.0 candidate: Pause owns Resume, Restart, Missions, Help, Settings, collapsed Mission info and Home; the active-flight bar no longer duplicates those destinations. | Focused host tests pass 18/18; scoped lint/format, validation, build and responsive browser qualification remain release gates.            |
 | M3 — Couch quick-start  | Apply the same compact hierarchy to Versus and Team, with valid defaults and collapsed advanced setup.                                                                    | Requires both-player assignment and responsive/controller/touch checks.                                                                    |
 | M4 — navigation closure | Inventory all player destinations and qualify keyboard, D-pad/controller and touch across required layouts.                                                               | Physical hardware remains distinct from modeled evidence.                                                                                  |
 | UX1-A, then UX1-B       | Exact-art Journey rewards/completed cards, then the compact complete mission gallery with previews and retained selection.                                                | Resumes after M0–M4; each independently useful feature receives a verified release.                                                        |
