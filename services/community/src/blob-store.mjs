@@ -94,6 +94,27 @@ export class DiskBlobStore {
     if (!metadata) return null;
     return { ...metadata, body: createReadStream(this.#path(key)) };
   }
+
+  async openRange(key, start, end) {
+    const metadata = await this.stat(key);
+    if (
+      !metadata ||
+      !Number.isSafeInteger(start) ||
+      !Number.isSafeInteger(end) ||
+      start < 0 ||
+      end < start ||
+      end > metadata.size
+    )
+      return null;
+    const handle = await open(this.#path(key), 'r');
+    try {
+      const bytes = Buffer.alloc(end - start);
+      await handle.read({ buffer: bytes, position: start });
+      return bytes;
+    } finally {
+      await handle.close();
+    }
+  }
 }
 
 export class MemoryBlobStore {
@@ -132,6 +153,20 @@ export class MemoryBlobStore {
   async open(key) {
     const bytes = this.#items.get(validatedKey(key));
     return bytes ? { key, size: bytes.length, body: Readable.from(bytes) } : null;
+  }
+
+  async openRange(key, start, end) {
+    const bytes = this.#items.get(validatedKey(key));
+    if (
+      !bytes ||
+      !Number.isSafeInteger(start) ||
+      !Number.isSafeInteger(end) ||
+      start < 0 ||
+      end < start ||
+      end > bytes.length
+    )
+      return null;
+    return bytes.subarray(start, end);
   }
 }
 
@@ -185,6 +220,27 @@ export class S3CompatibleBlobStore {
         this.commands.get({ Bucket: this.bucket, Key: validatedKey(key) }),
       );
       return { key, size: Number(result.ContentLength), body: result.Body };
+    } catch (error) {
+      if (error?.name === 'NoSuchKey' || error?.$metadata?.httpStatusCode === 404) return null;
+      throw error;
+    }
+  }
+
+  async openRange(key, start, end) {
+    if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 0 || end <= start)
+      return null;
+    try {
+      const result = await this.client.send(
+        this.commands.get({
+          Bucket: this.bucket,
+          Key: validatedKey(key),
+          Range: `bytes=${start}-${end - 1}`,
+        }),
+      );
+      const chunks = [];
+      for await (const chunk of result.Body) chunks.push(Buffer.from(chunk));
+      const bytes = Buffer.concat(chunks);
+      return bytes.length === end - start ? bytes : null;
     } catch (error) {
       if (error?.name === 'NoSuchKey' || error?.$metadata?.httpStatusCode === 404) return null;
       throw error;

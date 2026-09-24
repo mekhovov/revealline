@@ -7,6 +7,7 @@ export const SUBMISSION_STATES = Object.freeze([
   'validating',
   'published',
   'rejected',
+  'unlisted',
 ]);
 
 export const PACKAGE_MEDIA_TYPE = 'application/vnd.revealline.rlpack';
@@ -109,7 +110,18 @@ export function parseCatalogQuery(query, { defaultLimit = 20, maxLimit = 50 } = 
   const cursor = query?.cursor;
   if (cursor !== undefined && !/^\d{4}-\d\d-\d\dT[^|]+\|ed_[a-f0-9]{64}$/u.test(cursor))
     fail(400, 'invalid_request', 'cursor is invalid.');
-  return { limit, cursor: cursor ?? null };
+  const search = plainText(query?.q ?? '', 'q', { max: 160, multiline: false });
+  return { limit, cursor: cursor ?? null, search };
+}
+
+export function validateReport(input) {
+  if (!input || typeof input !== 'object' || Array.isArray(input))
+    fail(400, 'invalid_request', 'Request body must be an object.');
+  const reason = plainText(input.reason, 'reason', { min: 3, max: 64 });
+  if (!['broken', 'copyright', 'unsafe', 'misleading', 'other'].includes(reason))
+    fail(400, 'invalid_request', 'Choose a supported report reason.');
+  const details = plainText(input.details ?? '', 'details', { max: 2_000, multiline: true });
+  return { reason, details };
 }
 
 export const toPublicEdition = (row) => ({
@@ -121,6 +133,7 @@ export const toPublicEdition = (row) => ({
   packageSha256: row.packageSha256,
   packageSize: row.actualSize,
   publishedAt: row.publishedAt,
+  previewAvailable: true,
 });
 
 export const toOwnerSubmission = (row) => ({

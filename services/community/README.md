@@ -1,10 +1,10 @@
-# RevealLine community service scaffold
+# RevealLine community submission service
 
-This separately packaged Node service is the bounded Phase 4 foundation for community submissions.
-It does not change the static game or its release version. The current executable development path
-provides submission metadata, verified one-shot package upload, a PostgreSQL validation queue, and a
-read-only public catalog. It is not a production deployment and cannot publish content until a real
-`.rlpack` compiler/replay validator calls the worker contract.
+This separately packaged Node service implements the reviewable Phase 4 submission path. It does
+not change the static game or its release version. It provides creator identity, resumable upload,
+exact `.rlpack` validation, automatic publication, immutable downloads and previews, reports, and
+owner/admin unlisting. Docker Compose is a development deployment fixture, not evidence of a
+production launch.
 
 ## Local development
 
@@ -26,8 +26,10 @@ docker compose up --build
 curl http://127.0.0.1:8787/health
 ```
 
-Compose starts PostgreSQL 17, applies `migrations/001_initial.sql`, and stores content-addressed
-package bytes on a named disk volume. Its bearer token is explicitly development-only. Copy
+Compose starts PostgreSQL 17, applies `migrations/001_initial.sql`, runs separate API and validation
+worker processes, stores resumable tus uploads and content-addressed packages on named disk
+volumes, and installs `ffprobe` for video validation. Its bearer token is explicitly
+development-only. Copy
 `.env.example` when running `npm start` directly. The server refuses to start the development token
 adapter unless `COMMUNITY_ALLOW_DEV_AUTH=true`.
 
@@ -37,6 +39,7 @@ starting the API:
 ```sh
 psql "$COMMUNITY_DATABASE_URL" --set=ON_ERROR_STOP=1 --file=migrations/001_initial.sql
 npm start
+npm run worker
 ```
 
 ## HTTP contract
@@ -47,6 +50,8 @@ Public routes return JSON metadata or exact immutable package bytes:
 - `GET /v1/catalog?limit=20&cursor=...`
 - `GET /v1/catalog/:editionId`
 - `GET /v1/catalog/:editionId/download`
+- `GET /v1/catalog/:editionId/preview`
+- `POST /v1/catalog/:editionId/reports` accepts a bounded public report.
 
 Creator routes require `Authorization: Bearer <token>`:
 
@@ -58,6 +63,14 @@ Creator routes require `Authorization: Bearer <token>`:
 - `GET /v1/submissions/:id` returns only the authenticated owner's submission.
 - `POST /v1/submissions/:id/submit` creates or returns the same validation job for the same immutable
   submission, hash, and validator version.
+- `POST /v1/publications/:editionId/unlist` lets its owner or an administrator remove a published
+  edition from discovery and downloads without deleting its immutable record.
+
+`POST /v1/submissions` returns a tus creation endpoint and immutable upload metadata. The mounted
+official `@tus/server` and `@tus/file-store` implementation checks the authenticated owner on create,
+HEAD, PATCH, and completion. Completion rechecks size, SHA-256, edition, and submission identity
+before copying bytes to the content-addressed package store. The test suite interrupts a PATCH,
+reads the retained offset, resumes it, and proves another owner cannot inspect the upload.
 
 Titles and descriptions are length-bounded Unicode text. The API never interprets or emits them as
 HTML. Catalog clients must render these fields with text nodes (`textContent`), not HTML insertion.
@@ -81,25 +94,29 @@ worker can no longer commit because completion checks its worker identity. Worke
 per process. Long-running validators will need a future lease-renewal method before their timeout is
 raised above the bounded validation target.
 
-The missing production validator must parse `revealline-content-bundle.v1`, re-hash its inventory,
-compile every mission, check compatibility and media bounds, and replay applicable route evidence
-in an isolated worker. Until that adapter exists, there is deliberately no worker executable and no
-automatic publication claim.
+`src/validator.mjs` uses the game's own `importCreatorBundle` path. It rechecks package SHA-256 and
+length, parses `revealline-content-bundle.v1`, verifies its inventory and compatibility, decodes PNG
+payloads with CRC checking, compiles every included mission, and reruns the template route evidence.
+Video packages are decoded and measured with self-hosted `ffprobe`; a missing `ffprobe` is an
+infrastructure retry, while invalid media is a content rejection. `src/worker-runner.mjs` executes
+this validator against the leased PostgreSQL queue. Acceptance publishes the exact staged bytes;
+the worker never trusts an uploaded approval flag.
 
 ## Adapter boundaries
 
-- **Authentication:** `buildCommunityApp` accepts an `authenticator.authenticate(request)` adapter.
-  The included constant-token adapter is for Compose only. A production service must replace it
-  with a Better Auth session/token adapter and apply account limits.
+- **Authentication:** production configuration creates a real Better Auth PostgreSQL instance,
+  mounts `/api/auth/*`, and resolves ownership from `auth.api.getSession`. Run
+  `npm run auth:migrate` before starting production mode. The test suite creates a real Better Auth
+  account/session using its official memory adapter and proves that session owns the submission.
+  The constant-token adapter remains available only behind `COMMUNITY_ALLOW_DEV_AUTH=true`.
 - **Blobs:** `DiskBlobStore` is runnable locally. `S3CompatibleBlobStore` accepts an injected S3
   client plus `put`, `head`, and `get` command factories, avoiding a second SDK choice in this
   scaffold. Production S3 wiring must stage and verify bytes before immutable upload, set private
   bucket policy, and rehearse database/blob restore.
-- **Uploads:** `DirectUploadTransport` advertises the bounded one-shot development route.
-  `TusUploadTransportBoundary` describes the stable metadata passed to a future maintained tus
-  server. The tus server, completion callback, ownership check, checksum admission, interrupted
-  upload cleanup, and disk/S3 store selection remain an explicit integration item; resumable upload
-  is not claimed here.
+- **Uploads:** the executable server mounts the maintained tus Node server with its disk store.
+  `completeTusUpload` is the verified completion boundary that can also admit an S3-backed tus
+  stream. A multi-API deployment still needs a shared tus locker and an incomplete-upload expiry
+  policy; the current in-memory lock is correct for the single API container in Compose.
 - **Repository:** both PostgreSQL and in-memory test implementations use the same submission/job
   methods. The memory implementation supports deterministic API and worker tests; it is never used
   by the executable server.
@@ -108,7 +125,8 @@ automatic publication claim.
 
 The default package ceiling is 256 MiB and catalog pages are capped at 50 entries. A reverse proxy
 still needs request timeouts, connection limits, HTTPS, and rate limits. Public deployment also
-requires Better Auth configuration, mail/account recovery choices, report/unlist/audit endpoints,
-tus integration, the real validator sandbox, malware/media processing policy, metrics, backups,
-restore rehearsal, and an explicit infrastructure decision. Docker Compose is a development
-fixture, not production evidence.
+requires production Better Auth secrets, mail/account recovery choices, report triage UI, a shared
+tus locker for multiple API replicas, incomplete-upload cleanup, stronger process/container
+isolation for media validation, malware policy, metrics, backups, restore rehearsal, and an explicit
+infrastructure decision. The S3 adapter is tested at its byte boundary but is not wired into the
+executable deployment. No AWS, mail, domain, or production restore claim is made here.

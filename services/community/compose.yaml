@@ -34,7 +34,9 @@ services:
     restart: 'no'
 
   api:
-    build: .
+    build:
+      context: ../..
+      dockerfile: services/community/Dockerfile
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -43,6 +45,7 @@ services:
       COMMUNITY_PORT: 8787
       COMMUNITY_DATABASE_URL: postgres://revealline:revealline@postgres:5432/revealline
       COMMUNITY_BLOB_ROOT: /data/blobs
+      COMMUNITY_TUS_ROOT: /data/tus
       COMMUNITY_MAX_PACKAGE_BYTES: 268435456
       COMMUNITY_VALIDATOR_VERSION: creator-bundle-v1
       COMMUNITY_ALLOW_DEV_AUTH: 'true'
@@ -51,7 +54,28 @@ services:
       - '8787:8787'
     volumes:
       - community-blobs:/data/blobs
+      - community-tus:/data/tus
+
+  worker:
+    build:
+      context: ../..
+      dockerfile: services/community/Dockerfile
+    command: ['node', 'src/worker-runner.mjs']
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      COMMUNITY_DATABASE_URL: postgres://revealline:revealline@postgres:5432/revealline
+      COMMUNITY_BLOB_ROOT: /data/blobs
+      COMMUNITY_MAX_PACKAGE_BYTES: 268435456
+      COMMUNITY_VALIDATOR_VERSION: creator-bundle-v1
+      COMMUNITY_WORKER_POLL_MS: 1000
+      COMMUNITY_ALLOW_DEV_AUTH: 'true'
+      COMMUNITY_DEV_TOKENS: '{"local-creator-token":"local-creator"}'
+    volumes:
+      - community-blobs:/data/blobs
 
 volumes:
   community-postgres:
   community-blobs:
+  community-tus:
