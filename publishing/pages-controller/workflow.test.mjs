@@ -35,8 +35,8 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.match(gate, /ref: main/);
   assert.match(gate, /release-policy\.mjs route/);
   assert.match(gate, /workflow run publish-frozen-pages.yml .* --ref main/);
-  for (const job of ['preflight', 'test', 'build'])
-    assert.ok(legacy.includes(`  ${job}:\n    if: github.event_name == 'pull_request'`));
+  for (const job of ['preflight', 'test', 'build', 'release-ready'])
+    assert.ok(legacy.includes(`  ${job}:\n`));
   assert.doesNotMatch(legacy, /build:pages|upload-pages-artifact|deploy-pages@/);
   assert.match(
     workflow,
@@ -45,7 +45,7 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.match(workflow, /REQUESTED_RELEASE: \$\{\{ inputs.release_tag/);
   assert.match(workflow, /release-policy\.mjs verify/);
   assert.match(workflow, /environment:\n\s+name: github-pages/);
-  assert.match(workflow, /cancel-in-progress: false/);
+  assert.match(workflow, /cancel-in-progress: \$\{\{ github\.event_name == 'pull_request' \}\}/);
   assert.match(workflow, /group: frozen-pages-/);
   assert.match(legacy, /group: source-gates-\$\{\{ github.ref \}\}/);
   const sourceConcurrency = legacy.slice(legacy.indexOf('concurrency:'), legacy.indexOf('jobs:'));
@@ -69,7 +69,7 @@ test('source qualification retains mandatory guards and restorable suites while 
   assert.doesNotMatch(workflow, /pull_request_target|environment:.*preview|npm test/);
 });
 
-test('explicit policy controls only suites; all build, identity and publication guards stay mandatory', async () => {
+test('fast mode defers extended checks while identity, build and publication guards stay mandatory', async () => {
   const read = (name) =>
     fs.readFile(new URL('../../.github/workflows/' + name, import.meta.url), 'utf8');
   const pr = await read('deploy-pages.yml');
@@ -82,11 +82,11 @@ test('explicit policy controls only suites; all build, identity and publication 
   }
   assert.match(
     pr,
-    /test:\n\s+if: github.event_name == 'pull_request' && needs.preflight.outputs.runTests == 'true'/,
+    /test:\n\s+if: >-\n\s+github.event_name == 'pull_request' &&\n\s+vars.REVEALLINE_FULL_CI == 'true' &&\n\s+needs.preflight.outputs.runTests == 'true'/,
   );
   assert.match(
     pr,
-    /Verify immutable production sources first\n\s+if: steps.test_policy.outputs.runTests == 'true'/,
+    /Run extended static and provenance checks\n\s+if: vars.REVEALLINE_FULL_CI == 'true'/,
   );
   assert.match(manual, /test:\n\s+if: needs.qualify.outputs.runTests == 'true'/);
   assert.match(manual, /run_tests:\n[\s\S]*?type: boolean/);
@@ -104,14 +104,13 @@ test('explicit policy controls only suites; all build, identity and publication 
   );
   assert.match(
     pages,
-    /Verify metadata bridges and bounded ZIP extraction\n\s+if: github.event_name == 'pull_request' \|\| steps.test_policy.outputs.runTests == 'true'/,
+    /Verify metadata bridges and bounded ZIP extraction in full mode\n\s+if: vars.REVEALLINE_FULL_CI == 'true' && steps.test_policy.outputs.runTests == 'true'/,
   );
   for (const [workflow, names] of [
     [
       pr,
       [
-        'Validate, lint, and format source',
-        'Verify Field Kit production ledger and compiled output',
+        'Validate release-critical source',
         'Verify exact tracked source before commands',
         'Build pull-request artifact',
       ],
@@ -147,24 +146,26 @@ test('explicit policy controls only suites; all build, identity and publication 
   }
 });
 
-test('publisher pull requests always run infrastructure suites without changing historical main policy', async () => {
+test('publisher infrastructure suites run only when full CI and the test policy are enabled', async () => {
   const workflow = await fs.readFile(
     new URL('../../.github/workflows/publish-frozen-pages.yml', import.meta.url),
     'utf8',
   );
   const block = workflow
     .split('      - name: ')
-    .find((value) => value.startsWith('Verify metadata bridges and bounded ZIP extraction\n'));
+    .find((value) =>
+      value.startsWith('Verify metadata bridges and bounded ZIP extraction in full mode\n'),
+    );
   assert.ok(block);
   const expression = /^        if: (.+)$/m.exec(block)?.[1];
   assert.ok(expression);
-  const evaluate = new Function('github', 'steps', 'return (' + expression + ')');
-  for (const event of ['pull_request', 'push', 'workflow_dispatch']) {
+  const evaluate = new Function('vars', 'steps', 'return (' + expression + ')');
+  for (const fullCI of ['true', 'false', '', undefined]) {
     for (const runTests of ['true', 'false', '', undefined]) {
       assert.equal(
-        evaluate({ event_name: event }, { test_policy: { outputs: { runTests } } }),
-        event === 'pull_request' || runTests === 'true',
-        event + ' / ' + String(runTests),
+        evaluate({ REVEALLINE_FULL_CI: fullCI }, { test_policy: { outputs: { runTests } } }),
+        fullCI === 'true' && runTests === 'true',
+        String(fullCI) + ' / ' + String(runTests),
       );
     }
   }

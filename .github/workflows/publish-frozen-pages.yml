@@ -32,10 +32,10 @@ on:
 permissions:
   contents: read
 
-# Wait for any previous main publication. No healthy deployment is cancelled.
+# Production publications stay serialized. Superseded PR previews are disposable.
 concurrency:
   group: frozen-pages-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   REQUESTED_RELEASE: ${{ inputs.release_tag || '' }}
@@ -49,6 +49,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          show-progress: false
+          sparse-checkout: |
+            /.github/workflows/deploy-pages.yml
+            /.github/workflows/publish-frozen-pages.yml
+            /.github/workflows/qualify-release-source.yml
+            /publishing/pages-controller/
+            /publishing/test-policy.json
+            /publishing/test-policy.mjs
+            /publishing/test-policy.test.mjs
+            /scripts/pages-archive.mjs
+            /scripts/pages-current-entry.mjs
+          sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
