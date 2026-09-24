@@ -21,6 +21,7 @@ export const CREATOR_BATCH_LIMITS = Object.freeze({
 });
 
 const STATUSES = new Set(['ready', 'failed']);
+const packagePlans = new WeakMap();
 const hashValid = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
 const uint32 = (value) => Number.isInteger(value) && value >= 0 && value <= 0xffffffff;
 const text = (value, max) =>
@@ -492,13 +493,22 @@ export async function regenerateCreatorBatchItem(
 
 /** Compose only reviewed, included items. Failed items must be explicitly excluded
  * so approval cannot silently omit them. */
-export function assembleCreatorBatchProject(batch) {
+function assembleCreatorBatchSelection(batch, selectedItemIds = null) {
   const unresolved = batch.items.filter((item) => item.status !== 'ready' && !item.excluded);
   required(
     unresolved.length === 0,
     'Exclude each failed item or regenerate it before preparing the campaign.',
   );
-  const included = batch.items.filter((item) => !item.excluded);
+  const selected = selectedItemIds ? new Set(selectedItemIds) : null;
+  if (selected)
+    required(
+      selected.size === selectedItemIds.length &&
+        selectedItemIds.every((id) => batch.items.some((item) => item.id === id)),
+      'Package part must select known items exactly once.',
+    );
+  const included = batch.items.filter(
+    (item) => !item.excluded && (!selected || selected.has(item.id)),
+  );
   required(included.length >= 1, 'Keep at least one ready item in the campaign.');
   required(
     included.every((item) => item.project && item.generated),
@@ -540,6 +550,43 @@ export function assembleCreatorBatchProject(batch) {
     packId: 'collection',
     provenance: included.map((item) => item.generated.provenance),
     itemIds: included.map((item) => item.id),
+  });
+}
+
+export function assembleCreatorBatchProject(batch) {
+  return assembleCreatorBatchSelection(batch);
+}
+
+/** Materialize one explicit split-plan part. Every mission, campaign, map and
+ * runtime picture is closed over that part; no selected item is silently lost. */
+export function assembleCreatorBatchPackage(batch, plan, part) {
+  required(packagePlans.get(plan) === batch, 'Recalculate the package plan for this batch.');
+  required(Number.isInteger(part) && part >= 1, 'Choose a package part.');
+  required(
+    plan.decision !== 'review-required' && plan.decision !== 'cannot-fit',
+    'Resolve every failed or oversized item before preparing package parts.',
+  );
+  const selected = plan.packages.find((entry) => entry.part === part);
+  required(selected, 'Choose a package part from the reviewed plan.');
+  const assembled = assembleCreatorBatchSelection(batch, selected.itemIds);
+  const selectedItems = new Map(batch.items.map((item) => [item.id, item]));
+  const assets = [];
+  const hashes = new Set();
+  for (const itemId of selected.itemIds) {
+    const item = selectedItems.get(itemId);
+    const sha256 = item.image.runtime.sha256;
+    if (!hashes.has(sha256)) assets.push(Object.freeze({ sha256, blob: item.image.runtime.blob }));
+    hashes.add(sha256);
+  }
+  required(
+    assembled.project.assets.every((asset) => hashes.has(asset.sha256)),
+    'Package part is missing a runtime picture dependency.',
+  );
+  return Object.freeze({
+    ...assembled,
+    assets: Object.freeze(assets),
+    part,
+    parts: plan.packages.length,
   });
 }
 
@@ -624,5 +671,7 @@ export function planCreatorBatchPackages(
     ),
     unassigned: Object.freeze(unassigned),
   };
-  return freezeDesign(result);
+  const frozen = freezeDesign(result);
+  packagePlans.set(frozen, batch);
+  return frozen;
 }

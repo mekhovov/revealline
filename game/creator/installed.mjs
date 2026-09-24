@@ -147,7 +147,7 @@ export async function loadInstalledCreatorBundle(store, editionId, { signal, dec
   );
   const manifest = await readManifest(store, reference, signal);
   required(
-    Array.isArray(manifest.assets) && manifest.assets.length === 1,
+    Array.isArray(manifest.assets) && manifest.assets.length >= 1,
     'Unsupported installed creator asset inventory.',
   );
   const assets = [];
