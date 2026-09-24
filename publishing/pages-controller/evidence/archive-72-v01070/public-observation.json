@@ -1,0 +1,31 @@
+{
+  "format": "revealline-archive-public-observation.v1",
+  "status": "PASS",
+  "archiveId": "archive-72",
+  "version": "v0.107.0",
+  "infrastructureCommit": "12f9b350f9461d7721ba389af9c7590d6b5f621f",
+  "infrastructureTree": "4449eead1322886eea88718941ace998f4b74e8d",
+  "runId": 36070705920,
+  "deploymentId": 6649956472,
+  "deploymentStatusId": 18809597530,
+  "receiptArtifactId": 10837907888,
+  "observer": "Parent coordinator /root using a fresh in-app-browser tab; recorded by archive child from its explicit observation handoff",
+  "recordedAt": "2026-09-24T23:06:01.655404+00:00",
+  "canonicalURL": "https://mekhovov.github.io/revealline-archive-72/releases/v0.107.0/site/game/",
+  "observed": [
+    "The exact archived game URL loaded the Reveal / Line title, New Journey / 91 missions, focused Continue, Solo/Versus/Team choices and compact menu.",
+    "More showed VERSION V0.107.0 and the Releases link.",
+    "The real Releases action navigated to https://mekhovov.github.io/revealline/releases/ showing Current v0.107.0 and the abbreviated source 88d1726\u2026.",
+    "Browser Back returned to the exact Archive72 game URL and Home.",
+    "Keyboard Tab moved visible focus from Continue to Missions.",
+    "An existing save-owner warning was visible because another game tab owns saving. No game was launched in this scoped archive observation."
+  ],
+  "limitations": [
+    "Historical online preservation and bounded native navigation only; no renewed v0.107 feature, gameplay, balance or performance acceptance.",
+    "The v0.107 long product automated suites were explicitly waived; finite archive infrastructure checks do not replace them.",
+    "No renewed physical-device/controller, physical touch, screen-reader, full offline, full-mission or exhaustive gameplay qualification is claimed.",
+    "Viewport dimensions were not measured or certified in this observation.",
+    "Native observations were provided as a written coordinator handoff; no exported screenshot files or screenshot hashes are claimed.",
+    "Save-owner contention remained visible and was not resolved by clearing or rewriting player data."
+  ]
+}
