@@ -189,9 +189,31 @@ const batch = createBatchCreatorController({
     };
   },
   approveBatch: batchApprovalAdapter?.approve,
-  onSplit: (chunks) => {
+  onChange: () => {
+    $('batch-split-results').replaceChildren();
+    $('batch-split-results').hidden = true;
+  },
+  onSplit: (chunks, settings) => {
     $('batch-capacity').textContent =
-      `Suggested ${chunks.length} packs: ${chunks.map((chunk, index) => `part ${index + 1} (${chunk.length})`).join(', ')}. The batch compiler will preserve this reviewed grouping during export.`;
+      `Accepted ${chunks.length} explicit parts: ${chunks.map((chunk, index) => `part ${index + 1} (${chunk.length})`).join(', ')}. Review and download or install each part before opening the next.`;
+    const results = $('batch-split-results');
+    const explanation = document.createElement('p');
+    explanation.textContent =
+      'Each button revalidates one exact part. Finish its install or download before reviewing another part.';
+    results.replaceChildren(explanation);
+    for (const [index, chunk] of chunks.entries()) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'secondary';
+      button.textContent = `Review part ${index + 1} of ${chunks.length}`;
+      button.onclick = () =>
+        approveReviewedBatch(chunk, {
+          ...settings,
+          collectionName: `${settings.collectionName} · Part ${index + 1} of ${chunks.length}`,
+        });
+      results.append(button);
+    }
+    results.hidden = false;
   },
 });
 function invalidate() {

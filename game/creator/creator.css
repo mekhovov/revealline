@@ -233,6 +233,17 @@ img {
 .batch-card-actions button {
   padding: 0.45rem 0.7rem;
 }
+.batch-split-results {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0.75rem 0;
+}
+.batch-split-results p {
+  flex-basis: 100%;
+  margin: 0;
+}
 .batch-include {
   flex-direction: row;
   align-items: center;
