@@ -96,6 +96,10 @@ test('Interceptor removes impacts but cannot slow; Disruptor slows but cannot in
     getCoopSummary(run).players.map(({ supportRole }) => supportRole),
     ['interceptor', 'disruptor'],
   );
+  assert.deepEqual(
+    run.supportEffects.map(({ role }) => role),
+    ['interceptor', 'disruptor'],
+  );
 });
 
 test('specialist authoring fails closed and briefing names both complementary jobs', () => {

@@ -34,6 +34,7 @@ export function prepareTeamSupport(snapshot) {
 /** Radius and timing are fixed by the game, never by the uploaded decoration. */
 export function drawTeamSupportPulse(ctx, frames, effect, colors, reduced = false) {
   const frame = frames?.['team.support.pulse'];
+  const role = ['interceptor', 'disruptor'].includes(effect.role) ? effect.role : 'hybrid';
   ctx.save();
   try {
     ctx.fillStyle = colors[effect.player];
@@ -68,6 +69,23 @@ export function drawTeamSupportPulse(ctx, frames, effect, colors, reduced = fals
         ctx.lineTo(effect.x + x, effect.y + y);
         ctx.stroke();
       }
+    }
+    if (role !== 'hybrid') {
+      // A persistent letter and distinct ring pattern remain legible without
+      // colour, custom artwork or full effects.
+      ctx.globalAlpha = 0.92;
+      ctx.fillStyle = colors[effect.player];
+      ctx.font = '700 1.15px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(role === 'interceptor' ? 'I' : 'D', effect.x, effect.y);
+      ctx.strokeStyle = colors[effect.player];
+      ctx.lineWidth = 0.1;
+      ctx.setLineDash(role === 'interceptor' ? [0.25, 0.12] : [0.08, 0.13]);
+      ctx.beginPath();
+      ctx.arc(effect.x, effect.y, role === 'interceptor' ? 5.45 : 5.7, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
     }
   } finally {
     ctx.restore();

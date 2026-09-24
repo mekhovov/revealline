@@ -447,7 +447,13 @@ export function useSupport(run, player, emit) {
   player.support.intercepts += interceptedImpacts.length;
   player.support.slows += slowedEnemies.length;
   run.team.interceptions += interceptedImpacts.length;
-  run.supportEffects.push({ player: player.id, x: player.x, y: player.y, until: run.time + 0.3 });
+  run.supportEffects.push({
+    player: player.id,
+    role,
+    x: player.x,
+    y: player.y,
+    until: run.time + 0.3,
+  });
   emit(run, 'support.pulse', {
     player: player.id,
     role,

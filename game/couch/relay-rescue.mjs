@@ -1216,6 +1216,8 @@ export function bootCoop({
           : player.supportRole === 'disruptor'
             ? 'Disruptor'
             : 'Support';
+      $('coop-charge-' + player.id).dataset.supportRole = player.supportRole;
+      $('coop-support-' + player.id).dataset.supportRole = player.supportRole;
       $('coop-charge-' + player.id).textContent = finished
         ? 'Results ready'
         : player.status === 'downed'
