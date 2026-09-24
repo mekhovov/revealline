@@ -389,18 +389,44 @@
                   <button id="first-flight-enter" class="button secondary" type="button" hidden>
                     Learn by playing
                   </button>
-                  <button id="overlay-field-details" class="button secondary" type="button" hidden>
-                    Field details
-                  </button>
                   <button id="overlay-restart" class="button secondary" type="button" hidden>
                     Restart mission
                   </button>
-                  <button id="overlay-brief" class="button secondary" type="button" hidden>
-                    Mission brief
+                  <button id="overlay-missions" class="button secondary" type="button" hidden>
+                    Missions
                   </button>
-                  <button id="overlay-menu" class="button secondary" type="button">
-                    Main menu
+                  <button id="overlay-help" class="button secondary" type="button" hidden>
+                    How to play
                   </button>
+                  <button id="overlay-settings" class="button secondary" type="button" hidden>
+                    Settings
+                  </button>
+                  <button
+                    id="overlay-sound"
+                    class="button secondary"
+                    type="button"
+                    aria-pressed="false"
+                    hidden
+                  >
+                    Sound: off
+                  </button>
+                  <details id="pause-mission-info" class="pause-mission-info" hidden>
+                    <summary id="pause-mission-info-toggle">Mission info</summary>
+                    <div>
+                      <button
+                        id="overlay-field-details"
+                        class="button secondary"
+                        type="button"
+                        hidden
+                      >
+                        Field details
+                      </button>
+                      <button id="overlay-brief" class="button secondary" type="button" hidden>
+                        Mission brief
+                      </button>
+                    </div>
+                  </details>
+                  <button id="overlay-menu" class="button secondary" type="button">Home</button>
                 </div>
                 <p id="overlay-footnote" class="overlay-footnote">
                   A short first flight · arrows / WASD · touch controls below

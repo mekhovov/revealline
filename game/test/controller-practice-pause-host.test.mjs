@@ -127,8 +127,8 @@ test('repeated forced Pause keeps the chosen menu action after Settings closes',
   page.$('pause-button').click();
   const run = page.rendered.run,
     checkpoint = authoritativeCheckpoint(run);
-  page.$('shell-settings').focus();
-  page.$('shell-settings').click();
+  page.$('overlay-settings').focus();
+  page.$('overlay-settings').click();
   assert.equal(page.$('settings-dialog').open, true);
   page.$('settings-dialog').querySelector('[data-close]').focus();
   key(page, 'Escape');
@@ -136,13 +136,13 @@ test('repeated forced Pause keeps the chosen menu action after Settings closes',
   assert.equal(page.$('settings-dialog').open, false);
   page.$('start-button').focus();
   key(page, 'Tab');
-  assert.equal(page.doc.activeElement, page.$('overlay-field-details'));
-  key(page, 'Tab');
   assert.equal(page.doc.activeElement, page.$('overlay-restart'));
+  key(page, 'Tab');
+  assert.equal(page.doc.activeElement, page.$('overlay-missions'));
   // A repeated platform suspension can arrive while focus is still reported
   // inside this document. It may neutralize input, but cannot restart menu focus.
   page.win.emit('blur', { bubbles: false });
-  assert.equal(page.doc.activeElement, page.$('overlay-restart'));
+  assert.equal(page.doc.activeElement, page.$('overlay-missions'));
   unchangedPaused(page, run, checkpoint);
   assert.deepEqual(page.errors, []);
 });
