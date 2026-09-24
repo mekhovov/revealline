@@ -45,6 +45,13 @@ const message = (error) => error?.message || String(error);
 const seconds = (value = 0) =>
   `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
 const bytes = (value) => `${(value / 1024 / 1024).toFixed(1)} MiB`;
+const ONLINE_STYLE_CHOICES = Object.freeze([
+  ['synth', 'Synthwave, electro & retro'],
+  ['metal', 'Metal'],
+  ['ukrainian', 'Ukrainian'],
+  ['fusion', 'Fusion'],
+  ['other', 'Other styles'],
+]);
 
 /** Local music authoring. Draft changes become authoritative only after one verified store commit. */
 export function attachSoundtrackPanel({
@@ -441,14 +448,41 @@ export function attachSoundtrackPanel({
     placeholder: 'Title, artist, collection or style',
     autocomplete: 'off',
   });
-  const onlineStyle = input('online-style', 'Style', { tag: 'select' });
-  options(onlineStyle.element, [
-    ['', 'All styles'],
-    ['synth', 'Synthwave, electro & retro'],
-    ['metal', 'Metal'],
-    ['ukrainian', 'Ukrainian'],
-    ['fusion', 'Fusion'],
-    ['other', 'Other styles'],
+  const onlineStyles = node('fieldset', 'online-styles', null, {
+    class: 'soundtrack-online-styles',
+  });
+  onlineStyles.append(node('legend', null, 'Music styles — choose any mix'));
+  const onlineStyleInputs = new Map();
+  for (const [value, label] of ONLINE_STYLE_CHOICES) {
+    const checkbox = node('input', `online-style-${value}`, null, {
+      type: 'checkbox',
+      value,
+    });
+    checkbox.checked = true;
+    const choice = node('label', null, null, { class: 'soundtrack-online-style' });
+    choice.append(checkbox, node('span', null, label));
+    onlineStyles.append(choice);
+    onlineStyleInputs.set(value, checkbox);
+  }
+  const selectAllOnlineStyles = button('online-styles-all', 'All styles', () => {
+    for (const checkbox of onlineStyleInputs.values()) checkbox.checked = true;
+    renderOnlineCatalogue();
+  });
+  const clearOnlineStyles = button('online-styles-none', 'Clear', () => {
+    for (const checkbox of onlineStyleInputs.values()) checkbox.checked = false;
+    renderOnlineCatalogue();
+  });
+  onlineStyles.append(row(selectAllOnlineStyles, clearOnlineStyles));
+  const onlineOrder = input('online-order', 'Order', { tag: 'select' });
+  options(onlineOrder.element, [
+    ['shuffle', 'Shuffle'],
+    ['ordered', 'One after another'],
+  ]);
+  const onlineRepeat = input('online-repeat', 'Repeat', { tag: 'select' });
+  options(onlineRepeat.element, [
+    ['all', 'All selected songs'],
+    ['one', 'Current song'],
+    ['off', 'Stop at the end'],
   ]);
   const onlineCollection = input('online-collection', 'Collection', { tag: 'select' });
   options(onlineCollection.element, [['', 'All collections']]);
@@ -461,10 +495,15 @@ export function attachSoundtrackPanel({
   const onlineResults = node('div', 'online-results', null, {
     class: 'soundtrack-online-results',
   });
-  const playOnlineResults = button('online-play-all', 'Shuffle these songs', () => {
+  const onlinePlaybackOptions = (startTrackId = null) => ({
+    order: onlineOrder.element.value,
+    repeat: onlineRepeat.element.value,
+    startTrackId,
+  });
+  const playOnlineResults = button('online-play-all', 'Play selected songs', () => {
     const matches = onlineMatches();
     if (matches.length)
-      return controlMusic(() => player.playRemotePlaylist(matches, { order: 'shuffle' }), true);
+      return controlMusic(() => player.playRemotePlaylist(matches, onlinePlaybackOptions()), true);
   });
   playOnlineResults.classList.add('soundtrack-primary-action');
   playOnlineResults.disabled = true;
@@ -479,7 +518,9 @@ export function attachSoundtrackPanel({
       'Search every published recording and play it here. Songs stream through the game music player; nothing opens in another tab and no full album is downloaded.',
       { class: 'soundtrack-lede' },
     ),
-    row(onlineSearch.field, onlineStyle.field, onlineCollection.field),
+    row(onlineSearch.field, onlineCollection.field),
+    onlineStyles,
+    row(onlineOrder.field, onlineRepeat.field),
     row(playOnlineResults, reloadOnline),
     onlineStatus,
     onlineResults,
@@ -1352,7 +1393,6 @@ export function attachSoundtrackPanel({
     return soundtrackTracks(draft);
   }
   function matchesOnlineStyle(track, style) {
-    if (!style) return true;
     const tags = track.tags.map((tag) => tag.toLowerCase()),
       has = (...values) => values.some((value) => tags.some((tag) => tag.includes(value)));
     if (style === 'ukrainian') return has('ukrainian', 'shchedryk');
@@ -1370,10 +1410,15 @@ export function attachSoundtrackPanel({
       matchesOnlineStyle(track, family),
     );
   }
+  function selectedOnlineStyles() {
+    return new Set(
+      [...onlineStyleInputs].filter(([, checkbox]) => checkbox.checked).map(([style]) => style),
+    );
+  }
   function onlineMatches() {
     const query = onlineSearch.element.value.trim().toLowerCase(),
       collection = onlineCollection.element.value,
-      style = onlineStyle.element.value;
+      styles = selectedOnlineStyles();
     return (onlineCatalogue?.tracks ?? []).filter((track) => {
       const searchable = [
         track.title,
@@ -1388,7 +1433,7 @@ export function attachSoundtrackPanel({
         (!draft.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
         (!query || searchable.includes(query)) &&
         (!collection || track.collection === collection) &&
-        matchesOnlineStyle(track, style)
+        [...styles].some((style) => matchesOnlineStyle(track, style))
       );
     });
   }
@@ -1403,8 +1448,10 @@ export function attachSoundtrackPanel({
     onlineResults.replaceChildren(
       ...matches.map((track) => {
         const play = button(`online-play-${track.sha256}`, 'Play', () => {
-          const queue = [track, ...matches.filter((candidate) => candidate.id !== track.id)];
-          return controlMusic(() => player.playRemotePlaylist(queue, { order: 'ordered' }), true);
+          return controlMusic(
+            () => player.playRemotePlaylist(matches, onlinePlaybackOptions(track.id)),
+            true,
+          );
         });
         play.setAttribute('aria-label', `Play ${track.title} by ${track.artist}`);
         const details = node('div', null, null, { class: 'soundtrack-online-details' });
@@ -1425,7 +1472,7 @@ export function attachSoundtrackPanel({
       }),
     );
     if (onlineCatalogue)
-      onlineStatus.textContent = `${matches.length} of ${onlineCatalogue.tracks.length} published recordings shown.${excluded ? ` Recording mode excludes ${excluded} without verified gameplay-video and Content ID clearance.` : ''} Play one song or shuffle every current result.`;
+      onlineStatus.textContent = `${matches.length} of ${onlineCatalogue.tracks.length} published recordings shown.${excluded ? ` Recording mode excludes ${excluded} without verified gameplay-video and Content ID clearance.` : ''} Play one song or start every current result with the selected order and repeat setting.`;
   }
   async function loadOnlineCatalogue(force = false) {
     if (disposed || (onlineCatalogueController && !force)) return;
@@ -2480,7 +2527,8 @@ export function attachSoundtrackPanel({
   playlistsSelect.element.onchange = () => renderPlaylist();
   scope.element.onchange = () => renderAssignments();
   onlineSearch.element.oninput = () => renderOnlineCatalogue();
-  onlineStyle.element.onchange = () => renderOnlineCatalogue();
+  for (const checkbox of onlineStyleInputs.values())
+    checkbox.onchange = () => renderOnlineCatalogue();
   onlineCollection.element.onchange = () => renderOnlineCatalogue();
   seek.element.onchange = () => playback(() => player.seek(Number(seek.element.value)));
   volume.element.oninput = () =>
