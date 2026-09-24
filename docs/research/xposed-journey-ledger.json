@@ -3,6 +3,63 @@
   "schemaVersion": 2,
   "reviewDate": "2026-09-20",
   "status": "implementation-review-in-progress; original proposals retained, final dispositions pending",
+  "spatialChallengeReview": {
+    "reviewDate": "2026-09-24",
+    "plan": "docs/spatial-challenge-plan.md",
+    "edition": "whole-spatial-v6",
+    "status": "Phase A implementation candidate; technical qualification and publication pending; human balance review pending",
+    "semanticsCorrection": "Reloaded cyan tiled structures are walls blocking craft and enemies, not reclaimed ground or valid return surfaces. Slow/lethal fields constrain the craft, not enemies. Still screenshots do not establish motion or capture algorithms.",
+    "manualEvidence": "docs/research/evidence/round-05/reloaded-manual-0055.png",
+    "baselinePopulation": {
+      "soloVersusMissions": 91,
+      "teamMissions": 12
+    },
+    "baselineRepetition": {
+      "withoutWalls": 63,
+      "withoutSlowOrLethalTerrain": 61,
+      "exactlyTwoOrdinaryKeepers": 54,
+      "oneInitialFieldRegion": 80,
+      "withTimedBonuses": 3
+    },
+    "firstSlice": [
+      {
+        "mission": "two-bays",
+        "disposition": "redesign",
+        "decision": "Unequal independently retained bays; neither bay alone meets the unchanged quota.",
+        "referenceLimit": "Foundations deliberately retained for its teaching arc; not a claim that reference walls are return surfaces."
+      },
+      {
+        "mission": "neon-remix",
+        "disposition": "redesign",
+        "reference": "pack-4_level-2",
+        "decision": "Three occupied open circuits with distinct mouths and hazardous transfers; original geometry, not copied coordinates."
+      },
+      {
+        "mission": "broken-yard",
+        "disposition": "redesign",
+        "reference": "pack-2_level-4",
+        "decision": "Four communicating sectors, real wall baffles and lethal clusters; protected wall demonstration before mixed hazards."
+      },
+      {
+        "mission": "read-the-arrows",
+        "disposition": "redesign",
+        "decision": "Marked direct corridor versus longer ordinary bypass with existing lane pressure."
+      },
+      {
+        "mission": "twin-receivers",
+        "disposition": "adopt prepared redesign",
+        "decision": "Separate receiver approaches and sequential captures while preserving the sole-anchor Sentinel contract.",
+        "provenance": "PR314 source fde3e1ca8478fb9d28b91b4248cfbcbc50e1284a"
+      },
+      {
+        "mission": "crossing-complete",
+        "disposition": "redesign",
+        "decision": "Contested central crossings versus useful side-terrain neutralization."
+      }
+    ],
+    "preservation": "All original observations, hashes, proposals and historical identities below remain unchanged. Old missions remain selectable. Six local redesign decisions do not close all 48 final reference dispositions.",
+    "evidence": "game/test/fixtures/spatial-challenge-clear-routes.json records current gp4 legal-input clear/replay samples; these establish feasibility, not fun or whole-matrix acceptance."
+  },
   "implementationTracking": {
     "command": "node scripts/audit-journey-adaptations.mjs --edition whole-spatial-v5",
     "historicalDefaultCommand": "node scripts/audit-journey-adaptations.mjs",

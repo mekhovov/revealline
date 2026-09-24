@@ -49,11 +49,11 @@ test('remote Solo/Versus inventory preserves91 exact Journey and110 Classic iden
   t.after(owner.dispose);
   const library = createMissionLibrary(owner.sources);
   assert.equal(reads.length, 4);
-  assert.equal(library.missions.length, 201);
-  assert.equal(library.forMode('solo').length, 201);
-  assert.equal(library.forMode('versus').length, 201);
+  assert.equal(library.missions.length, 207);
+  assert.equal(library.forMode('solo').length, 207);
+  assert.equal(library.forMode('versus').length, 207);
   assert.equal(library.forMode('team').length, 0);
-  const route = await loadAuthoredJourneyRoute('whole-spatial-v5');
+  const route = await loadAuthoredJourneyRoute('whole-spatial-v6');
   const versus = createCandidateVersusHost(route.source, {
     themes: journeyActorThemeCandidates(JSON.parse(files.get(paths[1])).themes, {
       includeOriginals: route.preserveOriginalThemes === true,
@@ -81,7 +81,7 @@ test('remote Solo/Versus inventory preserves91 exact Journey and110 Classic iden
     const ready = library
       .forMode(mode)
       .filter((row) => library.availability(row, mode).state === 'ready');
-    assert.equal(ready.length, 103, '91 Journey +12 verified Base, not invented installed packs');
+    assert.equal(ready.length, 109, '91 Journey +6 previous editions +12 verified Base, not invented installed packs');
     for (const row of ready) {
       assert.equal(library.progress(row, mode), '');
       assert.equal(await library.launch(row, { mode }), true);

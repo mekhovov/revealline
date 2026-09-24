@@ -325,6 +325,7 @@ try {
     libraryInstaller = null,
     libraryInstallerFactory = null,
     librarySoloPreview = null,
+    spatialEditionPreview = null,
     libraryOpenEpoch = 0,
     libraryDecision = null,
     libraryLaunchController = null,
@@ -359,7 +360,7 @@ try {
     $('race-journey-note').hidden = false;
     $('race-journey-note').textContent =
       authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? `New Journey / ${candidateJourney.catalog.missions.length} missions. Original pictures need a connection; core offline preparation does not save them.`
+        ? `New Journey / ${candidateJourney.catalog.missions.length} missions. Balance review pending. Original pictures need a connection; core offline preparation does not save them.`
         : `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
@@ -2109,6 +2110,16 @@ try {
         launch: departLibraryMission,
         difficulty: () => (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
       });
+      const { createSpatialEditionSources } = await import(
+        '../mission-library/spatial-editions.mjs'
+      );
+      spatialEditionPreview?.dispose();
+      spatialEditionPreview = await createSpatialEditionSources({
+        activeRouteId: route.id,
+        originalThemes,
+        difficulty: () => (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+        launch: departLibraryMission,
+      });
       // Browsing must survive a denied storage getter. Only deliberate verified
       // installation/Play constructs this independent writer/decoder service.
       libraryInstallerFactory ??= () =>
@@ -2218,6 +2229,7 @@ try {
             },
           ]),
           ...teamSources,
+          ...spatialEditionPreview.sources,
         ],
         compatibility: ({ entry, level }) => {
           const modes = [];
@@ -2984,6 +2996,7 @@ try {
     libraryInstaller?.dispose();
     libraryInventory?.close();
     librarySoloPreview?.preparer.dispose();
+    spatialEditionPreview?.dispose();
     preparationStatus.dispose();
     couchTouch.destroy();
     journeyReactions.dispose();
