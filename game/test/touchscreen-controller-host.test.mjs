@@ -202,6 +202,14 @@ test('cold Steam Deck-style discovery: fresh A starts the selected flight after 
   assert.equal(page.$('shell-home').open, true, 'Discovery press cannot accidentally launch');
   release();
   press(0);
+  for (let frame = 0; frame < 8 && page.$('shell-home').open; frame++) {
+    page.frame();
+    assert.notEqual(
+      page.doc.activeElement?.id,
+      'shell-flight-cancel',
+      'Held Steam Deck Confirm cannot move onto Stop loading',
+    );
+  }
   await settle(() => {
     page.frame(0);
     return page.doc.body.dataset.flightState === 'running';
