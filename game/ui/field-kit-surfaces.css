@@ -191,6 +191,55 @@
   max-width: 100%;
 }
 /* Supporting pages opt in explicitly, leaving boards and their input geometry alone. */
+body.field-kit-support[data-menu-palette='neon'] {
+  --rl-support-bg: var(--rl-menu-neon-bg);
+  --rl-support-panel: var(--rl-menu-neon-panel);
+  --rl-support-panel-raised: var(--rl-menu-neon-panel-raised);
+  --rl-support-text: var(--rl-menu-neon-text);
+  --rl-support-muted: var(--rl-menu-neon-muted);
+  --rl-support-line: var(--rl-menu-neon-line);
+  --rl-support-control-line: var(--rl-menu-neon-control-line);
+  --rl-support-cyan: var(--rl-menu-neon-cyan);
+  --rl-support-amber: var(--rl-menu-neon-amber);
+  --rl-support-hazard: var(--rl-menu-neon-hazard);
+}
+body.field-kit-support[data-menu-palette='field-kit'] {
+  --rl-support-bg: var(--rl-menu-field-kit-bg);
+  --rl-support-panel: var(--rl-menu-field-kit-panel);
+  --rl-support-panel-raised: var(--rl-menu-field-kit-panel-raised);
+  --rl-support-text: var(--rl-menu-field-kit-text);
+  --rl-support-muted: var(--rl-menu-field-kit-muted);
+  --rl-support-line: var(--rl-menu-field-kit-line);
+  --rl-support-control-line: var(--rl-menu-field-kit-control-line);
+  --rl-support-cyan: var(--rl-menu-field-kit-cyan);
+  --rl-support-amber: var(--rl-menu-field-kit-amber);
+  --rl-support-hazard: var(--rl-menu-field-kit-hazard);
+}
+body.field-kit-support:is([data-menu-palette='neon'], [data-menu-palette='field-kit']) {
+  --fk-bg: var(--rl-support-bg);
+  --fk-panel: var(--rl-support-panel);
+  --fk-panel-raised: var(--rl-support-panel-raised);
+  --fk-text: var(--rl-support-text);
+  --fk-muted: var(--rl-support-muted);
+  --fk-line: var(--rl-support-line);
+  --fk-control-line: var(--rl-support-control-line);
+  --fk-cyan: var(--rl-support-cyan);
+  --fk-amber: var(--rl-support-amber);
+  --fk-hazard: var(--rl-support-hazard);
+  --fk-accent: var(--fk-amber);
+  --fk-focus: var(--fk-cyan);
+  --fk-on-accent: var(--fk-bg);
+  --paper: var(--fk-bg);
+  --ink: var(--fk-text);
+  --muted: var(--fk-muted);
+  --line: var(--fk-line);
+  --accent: var(--fk-accent);
+  --safe: var(--fk-cyan);
+  --danger: var(--fk-hazard);
+  color: var(--fk-text);
+  background-color: var(--fk-bg);
+}
+
 .field-kit[data-field-kit-page] {
   --line: var(--fk-line);
   --accent: var(--fk-cyan);

@@ -21,7 +21,13 @@ Both skins retain the shared pixel frames, focus treatment, ornaments, Plain tex
 Reduced Effects and forced-colour behavior. Token checks cover WCAG contrast for text and functional
 cues. Focus order and touch-target geometry are unchanged.
 
+Replay Theater, controller practice, About, release catalogs and other pages that opt into the
+shared supporting-page host now read the same validated menu-style record. They never write it and
+do not add a second selector. Pages with native Solo, Versus or Team controls keep their existing
+owner, preventing competing subscriptions. Frozen releases and authored canvas palettes remain
+unchanged.
+
 Focused automated checks cover both palettes, theme independence, storage/restoration, all three
-gameplay selectors, paused-flight authority, replay preservation, controller editing and malformed
-preference rejection. Supporting-page expansion, compact physical-device inspection and human
-visual preference remain later gates.
+gameplay selectors, paused-flight authority, replay preservation, controller editing, malformed
+preference rejection and read-only adoption by supporting pages. Compact physical-device inspection
+and human visual preference remain later gates.
