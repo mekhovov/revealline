@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { createCreatorVictoryStoryHost } from '../creator/victory-story-host.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
@@ -49,6 +50,7 @@ test('story state and playback failure never take ownership of Next or the earne
     };
   });
   const poster = h.document.createElement('img');
+  poster.id = 'earned-picture';
   h.host.show({ posterElement: poster, picturePin: {}, prepared: {} });
   assert.equal(h.nodes.next.disabled, false);
   assert.equal(h.nodes.next.hidden, false);
@@ -65,6 +67,33 @@ test('story state and playback failure never take ownership of Next or the earne
   assert.equal(h.nodes.retry.hidden, true, 'the presentation’s Play control owns blocked retry');
   h.host.close();
   assert.equal(disposed, 1);
+  assert.equal(h.document.getElementById('earned-picture'), poster);
+  assert.equal(h.nodes.stage.children[0], poster);
+});
+
+test('reset before the first story preserves the player page earned-picture node', async () => {
+  const playerHtml = await readFile(new URL('../creator/player.html', import.meta.url), 'utf8');
+  assert.match(
+    playerHtml,
+    /id="creator-story-stage"[\s\S]*?<img id="earned-picture"/,
+    'the production player keeps its earned picture inside the story stage',
+  );
+  const h = harness(() => {
+      throw new Error('A presentation must not open during reset.');
+    }),
+    poster = h.document.createElement('img');
+  poster.id = 'earned-picture';
+  h.nodes.stage.append(poster);
+
+  h.host.close();
+
+  const playerPoster = h.document.getElementById('earned-picture');
+  assert.equal(playerPoster, poster);
+  assert.equal(playerPoster.parentElement, h.nodes.stage);
+  assert.doesNotThrow(() => {
+    playerPoster.src = 'blob:verified-earned-picture';
+  });
+  assert.equal(playerPoster.src, 'blob:verified-earned-picture');
 });
 
 test('presentation setup failure falls back to the poster and leaves continuation available', () => {

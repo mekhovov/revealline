@@ -14,6 +14,7 @@ export function createCreatorVictoryStoryHost({
   if (!document?.createElement || !nodes?.surface || !nodes?.stage || !nodes?.status)
     throw new TypeError('Creator victory story needs its document and presentation nodes.');
   let presentation = null,
+    poster = null,
     state = 'idle',
     reason = null;
 
@@ -34,7 +35,10 @@ export function createCreatorVictoryStoryHost({
   function close() {
     presentation?.dispose();
     presentation = null;
-    nodes.stage.replaceChildren();
+    if (poster) {
+      poster.hidden = false;
+      nodes.stage.replaceChildren(poster);
+    }
     nodes.surface.hidden = true;
     nodes.status.classList.remove('error');
     nodes.status.textContent = '';
@@ -45,8 +49,9 @@ export function createCreatorVictoryStoryHost({
 
   function show({ posterElement, picturePin, prepared, options = {} }) {
     close();
+    poster = posterElement;
     nodes.surface.hidden = false;
-    nodes.stage.append(posterElement);
+    nodes.stage.replaceChildren(posterElement);
     nodes.status.classList.remove('error');
     if (nodes.retry) nodes.retry.hidden = true;
     nodes.status.textContent =
