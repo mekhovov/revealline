@@ -2,9 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   createTeamSpecialistOriginalCandidates,
+  TEAM_SPECIALIST_CAMPAIGN_ID,
   TEAM_SPECIALIST_MISSIONS,
 } from '../content-design/team-specialist-originals.mjs';
 import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
+import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { createCoop, getCoopSummary } from '../coop/core.mjs';
@@ -16,7 +18,7 @@ const previous = createTeamImpactOriginalCandidates();
 const project = compileContentProject(source);
 const changed = new Set(TEAM_SPECIALIST_MISSIONS);
 
-test('specialist successor changes only the final three Team missions and their owning pack', () => {
+test('specialist successor keeps hybrid missions intact and authors a homogeneous final campaign', () => {
   assert.equal(source.missions.length, 12);
   assert.deepEqual(source.maps, previous.maps);
   assert.deepEqual(source.assets, previous.assets);
@@ -28,14 +30,22 @@ test('specialist successor changes only the final three Team missions and their 
       assert(mission.design.combines.includes('complementary-support-roles'));
     } else assert.deepEqual(mission, old);
   }
+  assert.equal(source.campaigns.length, previous.campaigns.length + 1);
+  const priorOwner = previous.campaigns.find((row) => row.missionIds.includes('shared-lookout'));
+  const hybridOwner = source.campaigns.find((row) => row.id === priorOwner.id);
+  const specialistOwner = source.campaigns.find((row) => row.id === TEAM_SPECIALIST_CAMPAIGN_ID);
+  assert.deepEqual(hybridOwner.missionIds, ['shared-lookout']);
+  assert.deepEqual(specialistOwner.missionIds, TEAM_SPECIALIST_MISSIONS);
+  assert.equal(hybridOwner.revision, source.revision);
+  assert.equal(specialistOwner.revision, source.revision);
   assert.equal(
-    source.campaigns.filter((row, i) => row.revision !== previous.campaigns[i].revision).length,
+    source.packs.filter(
+      (row) => row.revision !== previous.packs.find((old) => old.id === row.id).revision,
+    ).length,
     1,
   );
-  assert.equal(
-    source.packs.filter((row, i) => row.revision !== previous.packs[i].revision).length,
-    1,
-  );
+  const pack = source.packs.find((row) => row.campaignIds.includes(TEAM_SPECIALIST_CAMPAIGN_ID));
+  assert.deepEqual(pack.campaignIds.slice(-2), [hybridOwner.id, specialistOwner.id]);
   assert.deepEqual(createTeamImpactOriginalCandidates(), previous);
 });
 
@@ -55,6 +65,22 @@ test('specialist manifests use a distinct v9 runtime without reinterpreting hybr
       changed.has(mission.id) ? 'revealline-coop.v9' : 'revealline-coop.v8',
     );
   }
+});
+
+test('the real candidate host starts and Next crosses into the homogeneous specialist campaign', () => {
+  const host = createCandidateTeamHost(source, {
+    corePackIds: source.packs.map((pack) => pack.id),
+  });
+  const lookout = host.catalog.missions.find((mission) => mission.levelId === 'shared-lookout');
+  const specialist = host.catalog.missions.find((mission) => mission.levelId === 'twin-depots');
+  assert(lookout);
+  assert(specialist);
+  const destination = host.destination(host.row(lookout));
+  assert.equal(destination.next.mission, specialist);
+  assert.equal(destination.crossesCampaign, true);
+  assert.equal(destination.next.pack.version, 'revealline-coop-pack.v7');
+  assert.equal(destination.next.level.version, 'revealline-coop-level.v7');
+  assert.equal(host.row(lookout).pack.version, 'revealline-coop-pack.v6');
 });
 
 test('Interceptor removes impacts but cannot slow; Disruptor slows but cannot intercept', () => {

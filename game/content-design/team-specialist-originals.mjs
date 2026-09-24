@@ -7,6 +7,7 @@ export const TEAM_SPECIALIST_MISSIONS = Object.freeze([
   'changing-courtyard',
   'last-rendezvous',
 ]);
+export const TEAM_SPECIALIST_CAMPAIGN_ID = 'complementary-specialists';
 
 /** A bounded successor for the end of the final Team learning arc. The first
  * nine missions retain hybrid Support. In the final three, seat one intercepts
@@ -42,13 +43,37 @@ export function createTeamSpecialistOriginalCandidates() {
       combines: [...new Set([...mission.design.combines, 'complementary-support-roles'])],
     };
   }
-  const campaigns = new Set();
-  for (const campaign of source.campaigns)
-    if (campaign.missionIds.some((id) => changed.has(id))) {
-      campaign.revision = source.revision;
-      campaigns.add(campaign.id);
-    }
-  for (const pack of source.packs)
-    if (pack.campaignIds.some((id) => campaigns.has(id))) pack.revision = source.revision;
+  const ownerIndex = source.campaigns.findIndex((campaign) =>
+    campaign.missionIds.some((id) => changed.has(id)),
+  );
+  if (ownerIndex < 0) throw new Error('The specialist missions need one authored campaign owner.');
+  const owner = source.campaigns[ownerIndex];
+  const specialistMissionIds = owner.missionIds.filter((id) => changed.has(id));
+  if (
+    specialistMissionIds.length !== changed.size ||
+    specialistMissionIds.some((id, index) => id !== TEAM_SPECIALIST_MISSIONS[index])
+  )
+    throw new Error('The specialist mission order must remain explicit and complete.');
+
+  // Team campaigns are immutable runtime packs and therefore cannot mix V5
+  // hybrid levels with V6 specialist levels. Keep the ninth hybrid lesson in
+  // its original runtime edition and place the three successors in the next
+  // authored campaign. Journey navigation still advances across this boundary.
+  owner.missionIds = owner.missionIds.filter((id) => !changed.has(id));
+  owner.revision = source.revision;
+  const specialistCampaign = {
+    ...structuredClone(owner),
+    id: TEAM_SPECIALIST_CAMPAIGN_ID,
+    revision: source.revision,
+    name: 'Complementary specialists',
+    missionIds: specialistMissionIds,
+  };
+  source.campaigns.splice(ownerIndex + 1, 0, specialistCampaign);
+
+  const pack = source.packs.find((candidate) => candidate.campaignIds.includes(owner.id));
+  if (!pack) throw new Error('The specialist campaign needs one authored pack owner.');
+  const campaignIndex = pack.campaignIds.indexOf(owner.id);
+  pack.campaignIds.splice(campaignIndex + 1, 0, specialistCampaign.id);
+  pack.revision = source.revision;
   return structuredClone(compileContentProject(source).source);
 }
