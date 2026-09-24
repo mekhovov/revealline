@@ -26,6 +26,17 @@ delivery. Previous editions remain in the same tagged selector. This advances
 three of Phase E's optional studies, not the whole Team/cultural phase or the
 wall-free early-campaign work in Phase B. Human/cultural/device review remains open.
 
+The same draft now prepares [nine additional ornament adaptations](ukrainian-ornament-atlas.md)
+as the separate opt-in `whole-ornament-v2` edition: Four motor landings, Circuit
+lanes, Twin lens chambers, Toolbench weave, Dnipro crossings, Two districts,
+Two ways home, Second approach and Windbreak weave. Fourteen attributed source
+entries support original stars, cutwork, tile panels, branches, kilim forms,
+paper-cut negative space and carved-rim rhythms. Together with v1 this makes
+twelve studies, not twelve new mission IDs. The other 82 v1 missions remain
+unchanged; v1 and earlier editions remain selectable. Geometry and bounded route
+evidence advance parts of Phases C–E, not their completion. No default promotion,
+version allocation, public delivery or human balance acceptance is claimed.
+
 ## Outcome and non-negotiable rules
 
 Create distinct, fair spatial problems, not arbitrary per-map physics or a larger

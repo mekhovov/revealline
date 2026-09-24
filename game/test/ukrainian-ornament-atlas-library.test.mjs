@@ -15,10 +15,16 @@ import { missionLibraryHref, readMissionLibraryHandoff } from '../mission-librar
 import { UKRAINIAN_ORNAMENT_ATLAS_IDS } from '../content-design/ukrainian-ornament-atlas-registry.mjs';
 
 const routeId = 'whole-ornament-v2';
-const originalThemes = JSON.parse(await readFile(new URL('../content-design/themes.json', import.meta.url), 'utf8')).themes;
+const originalThemes = JSON.parse(
+  await readFile(new URL('../content-design/themes.json', import.meta.url), 'utf8'),
+).themes;
 const themes = journeyActorThemeCandidates(originalThemes, { includeOriginals: true });
 const route = await loadAuthoredJourneyRoute(routeId);
-const options = { themes, corePackIds: route.corePackIds, optionalCampaignIds: route.optionalCampaignIds };
+const options = {
+  themes,
+  corePackIds: route.corePackIds,
+  optionalCampaignIds: route.optionalCampaignIds,
+};
 const solo = createCandidateSoloHost(route.source, options);
 const versus = createCandidateVersusHost(route.source, options);
 
@@ -28,39 +34,81 @@ test('atlas opt-in owns progress but preserves default and the complete existing
   assert.notEqual(route.profileKey, oldRoute.profileKey);
   assert.notEqual(route.sessionKey, oldRoute.sessionKey);
   assert.deepEqual(route.corePackIds, oldRoute.corePackIds);
-  assert.deepEqual(versus.catalog.missions.map((m) => m.id), old.catalog.missions.map((m) => m.id));
-  for (const mission of versus.catalog.missions) assert.equal(versus.next(mission.id)?.id, old.next(mission.id)?.id);
+  assert.deepEqual(
+    versus.catalog.missions.map((m) => m.id),
+    old.catalog.missions.map((m) => m.id),
+  );
+  for (const mission of versus.catalog.missions)
+    assert.equal(versus.next(mission.id)?.id, old.next(mission.id)?.id);
   for (const mode of ['solo', 'versus']) {
     assert.equal(resolveJourneyRequest(new URLSearchParams(), { mode }), 'whole-spatial-v6');
-    assert.equal(resolveJourneyRequest(new URLSearchParams({ journey: routeId }), { mode }), routeId);
+    assert.equal(
+      resolveJourneyRequest(new URLSearchParams({ journey: routeId }), { mode }),
+      routeId,
+    );
   }
 });
 
 test('one atlas selector retains 109 unique rows, exact old owners and twelve current Ukrainian tags without media fetch', async (t) => {
-  t.mock.method(globalThis, 'fetch', () => { throw new Error('Browsing must not fetch artwork'); });
+  t.mock.method(globalThis, 'fetch', () => {
+    throw new Error('Browsing must not fetch artwork');
+  });
   let selected;
-  const previous = await createSpatialEditionSources({ activeRouteId: routeId, originalThemes, launch: (context) => { selected = context; return true; } });
+  const previous = await createSpatialEditionSources({
+    activeRouteId: routeId,
+    originalThemes,
+    launch: (context) => {
+      selected = context;
+      return true;
+    },
+  });
   t.after(previous.dispose);
   const library = createMissionLibrary([
-    combineJourneyLibrarySources([
-      ['solo', solo], ['versus', versus],
-    ].map(([mode, host]) => ({
-      mode,
-      source: journeyLibrarySource({
-        editionId: route.id, edition: route.label, catalog: host.catalog,
-        tags: (mission) => authoredJourneyMissionTags(mission, mode === 'solo' ? host.select(mission, 'standard').manifests.find((m) => m.missionId === mission.levelId) : host.manifest(mission)),
-        launch: () => true,
-      }),
-    }))),
+    combineJourneyLibrarySources(
+      [
+        ['solo', solo],
+        ['versus', versus],
+      ].map(([mode, host]) => ({
+        mode,
+        source: journeyLibrarySource({
+          editionId: route.id,
+          edition: route.label,
+          catalog: host.catalog,
+          tags: (mission) =>
+            authoredJourneyMissionTags(
+              mission,
+              mode === 'solo'
+                ? host
+                    .select(mission, 'standard')
+                    .manifests.find((m) => m.missionId === mission.levelId)
+                : host.manifest(mission),
+            ),
+          launch: () => true,
+        }),
+      })),
+    ),
     ...previous.sources,
   ]);
   assert.equal(library.missions.length, 109);
   assert.equal(new Set(library.missions.map((row) => row.id)).size, 109);
   assert.equal(previous.sources.flatMap((s) => s.entries).length, 18);
   assert(previous.sources.every((s) => s.automaticContinuation === false));
-  const counts = Object.fromEntries([routeId, 'whole-ornament-v1', 'whole-spatial-v6', 'whole-spatial-v5'].map((id) => [id, library.missions.filter((m) => m.editionId === id).length]));
-  assert.deepEqual(counts, { [routeId]: 91, 'whole-ornament-v1': 9, 'whole-spatial-v6': 3, 'whole-spatial-v5': 6 });
-  assert.equal(library.missions.filter((m) => m.editionId === routeId && m.tags.includes('Ukrainian')).length, 12);
+  const counts = Object.fromEntries(
+    [routeId, 'whole-ornament-v1', 'whole-spatial-v6', 'whole-spatial-v5'].map((id) => [
+      id,
+      library.missions.filter((m) => m.editionId === id).length,
+    ]),
+  );
+  assert.deepEqual(counts, {
+    [routeId]: 91,
+    'whole-ornament-v1': 9,
+    'whole-spatial-v6': 3,
+    'whole-spatial-v5': 6,
+  });
+  assert.equal(
+    library.missions.filter((m) => m.editionId === routeId && m.tags.includes('Ukrainian')).length,
+    12,
+  );
   for (const id of UKRAINIAN_ORNAMENT_ATLAS_IDS) {
     const mission = versus.catalog.missions.find((m) => m.levelId === id);
     const matches = library.missions.filter((m) => m.runtimeId === mission.id);
@@ -69,28 +117,52 @@ test('one atlas selector retains 109 unique rows, exact old owners and twelve cu
     const old = matches.find((m) => m.editionId === 'whole-ornament-v1');
     assert(current.tags.includes('Ukrainian'));
     assert.equal(old.tags.includes('Ukrainian'), id === 'dnipro-crossings');
-    if (['four-motor-landings', 'circuit-lanes', 'twin-lens-chambers', 'toolbench-weave'].includes(id)) assert(current.tags.includes('FPV'));
+    if (
+      ['four-motor-landings', 'circuit-lanes', 'twin-lens-chambers', 'toolbench-weave'].includes(id)
+    )
+      assert(current.tags.includes('FPV'));
     assert.equal(old.levelIndex, current.levelIndex);
     for (const mode of ['solo', 'versus']) {
       assert.equal(library.availability(old, mode).state, 'ready');
       assert.equal(await library.launch(old, { mode }), true);
       assert.equal(selected.libraryMissionId, old.id);
-      const url = new URL(missionLibraryHref({ baseURL: 'https://example.test/game/', currentMode: 'solo', mode, journey: old.editionId, missionId: old.id, sourceJourney: routeId }));
+      const url = new URL(
+        missionLibraryHref({
+          baseURL: 'https://example.test/game/',
+          currentMode: 'solo',
+          mode,
+          journey: old.editionId,
+          missionId: old.id,
+          sourceJourney: routeId,
+        }),
+      );
       assert.equal(url.searchParams.get('journey'), 'whole-ornament-v1');
       assert.equal(readMissionLibraryHandoff(url.searchParams), old.id);
     }
   }
   previous.dispose();
-  for (const row of library.missions.filter((m) => m.editionId !== routeId)) assert.equal(library.availability(row, 'solo').state, 'unavailable');
+  for (const row of library.missions.filter((m) => m.editionId !== routeId))
+    assert.equal(library.availability(row, 'solo').state, 'unavailable');
   assert.equal(globalThis.fetch.mock.callCount(), 0);
 });
 
 test('previous v1 profile never leaks to v6 or v5 retained cards', async () => {
   const state = { clears: { solo: {} }, skipped: { versus: [] } };
-  const previous = await createSpatialEditionSources({ activeRouteId: routeId, originalThemes, profile: { snapshot: () => state }, launch: () => true });
+  const previous = await createSpatialEditionSources({
+    activeRouteId: routeId,
+    originalThemes,
+    profile: { snapshot: () => state },
+    launch: () => true,
+  });
   try {
     const library = createMissionLibrary(previous.sources);
     for (const row of library.missions) state.clears.solo[row.runtimeId] = { completed: true };
-    for (const row of library.missions) assert.equal(library.progress(row, 'solo'), row.editionId === 'whole-ornament-v1' ? 'Cleared' : '');
-  } finally { previous.dispose(); }
+    for (const row of library.missions)
+      assert.equal(
+        library.progress(row, 'solo'),
+        row.editionId === 'whole-ornament-v1' ? 'Cleared' : '',
+      );
+  } finally {
+    previous.dispose();
+  }
 });

@@ -3,6 +3,16 @@
   "schemaVersion": 2,
   "reviewDate": "2026-09-20",
   "status": "implementation-review-in-progress; original proposals retained, final dispositions pending",
+  "ukrainianOrnamentAtlas": {
+    "reviewDate": "2026-09-24",
+    "plan": "docs/ukrainian-ornament-atlas.md",
+    "edition": "whole-ornament-v2",
+    "status": "Nine-map copy-on-write source candidate; no default promotion or public/human acceptance claim",
+    "missions": ["four-motor-landings", "circuit-lanes", "twin-lens-chambers", "toolbench-weave", "dnipro-crossings", "two-districts", "two-ways-home", "second-approach", "windbreak-weave"],
+    "disposition": "Original ornament-inspired geometry, preserving previous editions and all unrelated v1 maps. Fourteen attributed source entries are documented in the atlas. No new final disposition for the 48 numbered Reloaded references is claimed.",
+    "comparison": "Use asymmetric star shoulders, staggered cutwork mouths, unequal paired-panel approaches, branching pockets and broken rim routes as real walls. Keep foundations, objectives, relay connectors, arrows, enemy domains and shared gp4 movement unchanged.",
+    "limits": "Original abstract layouts, not copied coordinates, charts or artwork. Nine Standard/immediate/seed-1 legal clears are feasibility samples, not complete two-route/preset/control or human-balance qualification. Earlier observations and hashes remain unchanged."
+  },
   "ukrainianOrnamentStudy": {
     "reviewDate": "2026-09-24",
     "plan": "docs/ukrainian-ornament-study.md",

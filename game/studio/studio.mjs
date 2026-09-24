@@ -997,12 +997,12 @@ $('whole-variety').onclick = guarded(() => {
     $('whole-variety-edition').value === 'ukrainian-ornament-v2'
       ? createUkrainianOrnamentAtlasJourney
       : $('whole-variety-edition').value === 'ukrainian-ornament-v1'
-      ? createUkrainianOrnamentJourney
-      : $('whole-variety-edition').value === 'spatial-challenge-v1'
-        ? createSpatialChallengeJourney
-        : $('whole-variety-edition').value === 'sorting-lanes-1'
-          ? createWholeSortingCandidates
-          : createWholeVarietyCandidates;
+        ? createUkrainianOrnamentJourney
+        : $('whole-variety-edition').value === 'spatial-challenge-v1'
+          ? createSpatialChallengeJourney
+          : $('whole-variety-edition').value === 'sorting-lanes-1'
+            ? createWholeSortingCandidates
+            : createWholeVarietyCandidates;
   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();

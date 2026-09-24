@@ -31,7 +31,8 @@ export function authoredJourneyMissionTags(mission, manifest) {
   if (manifest.policyId === 'journey-arcade-v2') tags.push('Arcade');
   if (WHOLE_JOURNEY_REMIX_PACK_IDS.includes(mission.packId)) tags.push('Remix');
   if (
-    (mission.packId === 'ornament-crossings-study' && mission.campaignId === 'ornament-crossings') ||
+    (mission.packId === 'ornament-crossings-study' &&
+      mission.campaignId === 'ornament-crossings') ||
     (manifest.level?.revision === UKRAINIAN_ORNAMENT_ATLAS_REVISION &&
       UKRAINIAN_ORNAMENT_ATLAS_IDS.includes(mission.levelId))
   )

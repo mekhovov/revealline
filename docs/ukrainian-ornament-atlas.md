@@ -1,8 +1,8 @@
 # Ukrainian ornament source atlas and expansion candidates
 
-Status: researched source atlas and planned nine-map successor. The nine maps
-below are **pending implementation and qualification**; this document is not a
-release, balance, cultural-approval or public-playability receipt.
+Status: nine-map source candidate in [draft PR332](https://github.com/mekhovov/revealline/pull/332),
+with bounded technical evidence and remaining acceptance gates. This document is
+not a release, balance, cultural-approval or public-playability receipt.
 
 Research date: 2026-09-24. Preparation baseline:
 `440140872c10571aeca58271e06fd60cbc5f4cfe`.
@@ -14,16 +14,16 @@ and unresolved gates. Its successful routes do not qualify these nine maps.
 This bounded expansion follows the user's approved spatial-redesign plan and
 request for more ornament-inspired levels, without another approval pause.
 
-The intended successor is the explicit, opt-in `whole-ornament-v2` study route.
-The default experience remains unchanged. Route integration, Studio visibility,
-profile isolation and historical-edition preservation must be demonstrated by
-implementation and tests before any of them are marked complete.
+The successor is the explicit, opt-in `whole-ornament-v2` study route. The default
+experience remains unchanged. The shared factory, route loader, Studio entry,
+isolated profile and historical-edition library are implemented and covered by
+focused source tests; native and public interaction remain separate gates.
 
 Revise nine existing missions copy-on-write, preserving their original mission
 references, earlier playable editions and progression owners. Do not remove old
 levels or erase settings, installed content, uploads or Studio projects. Keep the
-first three ornament studies intact; this batch is nine additional adaptations,
-not a claim that all nine existing maps are already redesigned. Explicit study
+first three ornament studies intact; this batch is nine additional adaptations.
+The other 82 v1 missions remain unchanged. Explicit study
 selection must launch the selected edition directly rather than another picker.
 
 Keep shared gp4 physics, difficulty preparation, continuous/immediate steering
@@ -261,9 +261,9 @@ Caveat: technique and construction are established, but our proposed grid layout
 is not an authenticated regional chart. Keep modern chart authorship separate
 from historical object authorship. Not selected in this batch.
 
-## Planned nine-map mapping
+## Implemented nine-map mapping
 
-Every mapping is pending implementation and checks. Retain each original picture
+Every mapping below has original successor geometry. Retain each original picture
 as a study placeholder, not a claimed new cultural background. Final composition,
 licensing, readability and cultural fit remain separate gates. Do not imply that
 an existing picture depicts the cited craft.
@@ -272,8 +272,8 @@ an existing picture depicts the cited craft.
   shoulder return; preserve meaningful disconnected landing choices.
 - `circuit-lanes` → U05 Reshetylivka cutwork: secure a lattice connection first
   or enclose an outside section through broad passages.
-- `twin-lens-chambers` → U08 Kosiv paired panels: choose opposing flanks or the
-  central opening; captures must affect later pressure.
+- `twin-lens-chambers` → U08 Kosiv paired panels: connect directly on the western
+  approach or dogleg around the eastern panel shoulder before its landing.
 - `toolbench-weave` → U06 Poltavian branches: capture a short leaf-side pocket
   or connect across offset branch gaps.
 - `dnipro-crossings` → U04 Krolevets flower/bird: use the central passage
@@ -294,19 +294,20 @@ selectable studies need a protected wall demonstration and a visible nonmodal
 reminder in Solo and Versus; `design.lesson` metadata alone is not that reminder.
 Avoid making every theme the same ring, corridor or mirrored opening in disguise.
 
-## Pending implementation and acceptance gates
+## Completed source work and remaining acceptance gates
 
-- [ ] Copy-on-write nine-map implementation with an explicit `whole-ornament-v2`
+- [x] Copy-on-write nine-map implementation with an explicit `whole-ornament-v2`
       route, shared factory/compiler and Studio preview. No default promotion.
-- [ ] Prove all previous editions remain selectable with distinct identities,
+- [x] Source tests prove previous editions remain selectable with distinct identities,
       correct owner-aware launch and original Next order; no deleted media,
       settings, installed packs or Studio projects.
-- [ ] Preserve unrelated maps, shared gp4 rules, capture semantics and deterministic
+- [x] Preserve unrelated maps, shared gp4 rules, capture semantics and deterministic
       difficulty preparation. Verify actual actor roles and placement in every
       preset rather than inferring them from static design records.
-- [ ] Inspect foundations, departures, wall-versus-return distinction, blocked
+- [x] Inspect foundations, departures, wall-versus-return distinction, blocked
       connections, field-retaining enemies and remote components. Reject
-      unintended empty-chamber autofill and inaccessible required objectives.
+      unintended empty-chamber autofill; preserve required objectives and connectors.
+      Complete route samples below reach the unchanged completion conditions.
 - [ ] Demonstrate two geometrically distinct legal approaches per map, with
       recorded capture consequences and full replayed continuations across
       Gentle/Standard/Expert and both control styles. Keep failed samples and
@@ -326,6 +327,36 @@ Avoid making every theme the same ring, corridor or mirrored opening in disguise
 - [ ] Review human difficulty, two-player usefulness, cultural/art fit, readable
       functional colours, muted/reduced-effects play and physical keyboard,
       controller/touch/device behavior. Report any untested surface explicitly.
+
+## Current bounded evidence
+
+All nine maps have replay-verified, no-life-loss legal-input clear samples using
+Standard, immediate steering and seed 1, bound to final source project identity
+`f90703749b115ec4`. The checked-in atlas route fixture retains the earlier capped
+searches and a superseded Twin geometry result separately. Eleven route checks
+cover these samples and their provenance; they do not qualify every preset,
+control style, alternative approach or seed.
+
+Windbreak's first two bounded searches were incomplete. An additional bounded
+continuation now clears, using 326,144 cumulative search ticks within the explicit
+440,000 ceiling; search effort is not gameplay duration. Twin's final asymmetric
+geometry clears after its earlier symmetric result was superseded. Dnipro's
+three-cut clear takes about 14.4 seconds: retain this as a fast-route balance
+flag, not proof that human players find a dominant safe solution.
+
+Structural tests cover all nine missions across all three presets and both
+control policies, initial safe departures, retained components, actual actor
+counts and equal paired-board preparation. This is not a full legal-route
+matrix or completed Versus race. The unified-library fixture contains 109
+distinct Journey edition cards: 91 current, nine previous v1, three previous v6
+and six previous v5. Enumeration requires no content fetch. Twelve current
+cards have both Ukrainian and FPV tags; tags do not assert historical authenticity.
+
+Independent review found and corrected a repeated paired-panel approach and
+fixed-count keeper guidance. Broader pressure review, alternative legal routes,
+the visible Versus wall reminder, exact-source build/hosted gates and public
+selection/play remain open. Storage-recovery checkpoints are backups, not release
+acceptance. The earlier three-map evidence remains independently scoped.
 
 ## Evidence limits and deferred work
 

@@ -35,7 +35,7 @@ const golden = {
   'whole-spatial-v5': [252377, '74162393aa803207f7e933f4ded83a64a6b223c926aecc5be7bffd113fd959fe'],
   'whole-spatial-v6': [254863, '8e718fffeed559c5075a4e94d6967d02c266661347ea67392bbb6fe35878769f'],
   'whole-ornament-v1': [256801, 'ff830aa5ebf20320522bbe00cda9bf738b36e0525724181be977f6d6018ba52c'],
-  'whole-ornament-v2': [263310, '92ba7c422c3549bceb255ea2b622ac3f1d4d66a861da54124deee2bebf91d053'],
+  'whole-ornament-v2': [263327, '8c31ee62798147dcd174dc680bd7a435187255b5699fcff9d3ea5cbd8af73b56'],
 };
 
 test('all supported routes are covered by pinned edition snapshots', () => {
