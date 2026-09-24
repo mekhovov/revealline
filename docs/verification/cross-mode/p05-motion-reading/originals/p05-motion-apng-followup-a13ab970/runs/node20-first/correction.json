@@ -1,7 +1,0 @@
-{
-  "status": "TEST_FIXTURE_CORRECTION_RUNTIME_UNCHANGED",
-  "originalResult": "180/181 passed; one invalid chunk-name expectation failed",
-  "reason": "teXt has an uppercase third/reserved character and is a valid unknown ancillary chunk; it must be preserved. The test intended a lowercase third character and now uses texT.",
-  "beforeSha256": "9a2a8815f7cc81a857085d53078f73ef95ff00d872c660b25adee01f1cde25e2",
-  "afterSha256": "bc5694f6e2622e94764a7c75b21fcead2b74e1d6f0f9e0c847a10a7ff4bd6098"
-}

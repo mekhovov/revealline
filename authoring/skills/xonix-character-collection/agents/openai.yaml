@@ -1,4 +1,0 @@
-interface:
-  display_name: "Xonix Character Collection"
-  short_description: "Author character rosters, selection and earned looks"
-  default_prompt: "Use $xonix-character-collection to build a selectable character collection with cosmetic variants, context rules, earned rewards and honest asset-readiness checks."

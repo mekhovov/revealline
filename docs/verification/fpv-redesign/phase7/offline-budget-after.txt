@@ -1,7 +1,0 @@
-{
-  "out": "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/phase7-budget-qualified",
-  "version": "0.51.0",
-  "files": 614,
-  "sha256": "a67d05ea4d62871ce504a08a04c3e1597ea46ff3e09a992cba0a4133db93c488",
-  "sourceRevision": null
-}

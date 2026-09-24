@@ -1,9 +1,0 @@
-# About navigation guidance review — 18 September 2026
-
-The current Xbox UI-navigation guidance still supports this bounded correction: predictable focus that follows the visible layout, consistent digital Confirm/Back behavior, and an available return to the main menu. Its current page lists an update date of 4 March 2026. Apply the existing shared controller adapter to About before catalogue requests so an unavailable catalogue cannot remove the page's return path. This is an implementation decision drawn from the guidance, not Xbox certification. Source: [Xbox Accessibility Guideline 112](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112).
-
-The W3C status-message guidance calls for programmatic status announcements without moving focus. Keep catalogue loading/error text separate from controller instructions; late catalogue completion should not reset the selection or steal focus. Controller select-edit hints should change only when their meaning changes, avoiding a repeated live announcement each animation frame. Source: [WCAG 2.2 Understanding 4.1.3](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
-
-Review the real integration and full affected test files: dynamic select options while editing, disclosure expansion, native input after controller use, connection/neutral-input gates, blur/hidden/cached return, terminal departure and delayed response/body decode. Native input and viewport checks, a physical controller and actual screen-reader announcements remain distinct qualification tasks; modeled input cannot close them.
-
-This correction keeps the current renderer, simulation and production artwork unchanged. Broader About content curation, long-form reading behavior and complete P03/P16/P18 coverage remain in the delivery register.

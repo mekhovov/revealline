@@ -1,5 +1,0 @@
-{
-  "source": "latest-deployments-after.json",
-  "member": 0,
-  "scope": "Same complete API deployment object, reserialized from the retained latest-deployments array; original API array and command observation retained."
-}

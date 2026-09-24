@@ -1,9 +1,0 @@
-{
-  "status": "ROOT_REVIEWED_FINITE_SUCCESSOR_START",
-  "packetManifestSha256": "aada07d9a9e66be460a7325fb816633d19c781dc5151e326dee6e16c22f9c833",
-  "filesVerified": 21,
-  "chosenHelper": "serve.py",
-  "oldHelperByteIdentical": true,
-  "port60342Free": true,
-  "scope": "Native APNG default poster retest; source/release unchanged"
-}

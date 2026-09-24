@@ -1,1 +1,0 @@
-The optional post-restoration inspector failed before execution: SyntaxError: Unexpected identifier indexedDB. Its top-level await expression was invalid. 36-storage-scope.json is the retained empty redirected output, not a storage observation. No IndexedDB enumeration or write audit is claimed. Browser was then closed normally.

@@ -1,5 +1,0 @@
-{
-  "initialAttempt": "Failed before any public requests: missing finite http output parent",
-  "correction": "Created task-owned http parent only; unchanged audited code",
-  "publicRequestsOnInitialAttempt": 0
-}

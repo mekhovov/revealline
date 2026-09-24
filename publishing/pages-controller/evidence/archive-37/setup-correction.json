@@ -1,5 +1,0 @@
-{
-  "initial": "Local thin archive checkout lacks the accepted merge Git object. No candidate created. Subsequent test command had no source directory and ran zero product tests.",
-  "correction": "Compare clean donor tree to the retained original authenticated actual merge tree; preserve all production helpers and bounds.",
-  "testLog": "tests.log"
-}

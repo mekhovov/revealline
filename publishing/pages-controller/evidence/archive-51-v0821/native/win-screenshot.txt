@@ -1,1 +1,0 @@
-✓ Screenshot saved to /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive51-v0821/native/first-signal-win.png

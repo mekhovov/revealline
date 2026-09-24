@@ -1,3 +1,0 @@
-# Music player compatibility review
-
-Review the music panel with a published catalogue and without one. For each, open it through its host, select a built-in and imported playlist, play, pause, close and reopen. Check that every advertised control has a visible ancestor chain and reachable focus; invoking its handler is not proof that a player can reach it. Catalogue style cards may be absent without hiding legacy playlist selection. Retain automatic map/campaign/theme matching, saved choices, master mute, playback intent, actual opener restoration and explicit gameplay Resume. Run the full panel test file and retain failure evidence separately from final passing checks.

@@ -1,1 +1,0 @@
-Ordinary navigation of existing tab16 to its original main-origin v0.42 game URL timed out in the browser tool after the v0.51 cutover. No second navigation, storage reset or worker activation was attempted before the following observation.

@@ -1,8 +1,0 @@
-{
-  "url": "http://127.0.0.1:8767/releases/v0.24.0/site/game/",
-  "status": 200,
-  "bytes": 38643,
-  "sha256": "269de67c229f5fcc5a0cc1fe2356cc3e6fdcdff9ae073512a752a10793ffd3b4",
-  "matchesFrozenIndex": true,
-  "boundary": "HTTP delivery only; no browser execution or audio/offline claim."
-}

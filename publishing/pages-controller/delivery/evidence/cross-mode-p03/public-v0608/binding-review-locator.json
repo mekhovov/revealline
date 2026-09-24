@@ -1,9 +1,0 @@
-{
-  "reason": "Unchanged independent row reviewer reads binding.json; retain root-approved binding.reviewed.json and an exact ordinary byte copy at its established locator.",
-  "source": "tools/inputs/36d9e9fa14601ae1ae11a737dda0279e27f909da/binding.reviewed.json",
-  "destination": "tools/inputs/36d9e9fa14601ae1ae11a737dda0279e27f909da/binding.json",
-  "sha256": "aa10cdad5b758454c20aef7d65aa906284839e60051bb099686c3971b3057b51",
-  "bytes": 2041,
-  "approvalChanged": false,
-  "helperChanged": false
-}

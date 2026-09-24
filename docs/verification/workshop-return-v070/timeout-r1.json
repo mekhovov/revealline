@@ -1,8 +1,0 @@
-{
-  "status": "INCOMPLETE_TIMEOUT",
-  "limitSeconds": 120,
-  "completedPassingCases": 58,
-  "assertionFailuresObserved": 0,
-  "reasonForRetry": "Source unchanged; measured host-fixture cases progress through58 at120seconds. Scoped complete cohort allowance600seconds; no assertion or test omission.",
-  "orphanProcesses": "None observed after timeout"
-}

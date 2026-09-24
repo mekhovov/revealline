@@ -1,5 +1,0 @@
-{
-  "at": "2026-09-18T19:50:56.799015+00:00",
-  "corrects": "root-public-native-team.json failedAttempts grouping",
-  "correction": "Four unsuccessful attempts preceded the successful one: two center crossings and two upper-opening crossings. The original second bullet called all three later attempts upper-opening; that label was too broad. All four failures and the unchanged source/difficulty remain retained; successful win and acceptance values are unchanged."
-}

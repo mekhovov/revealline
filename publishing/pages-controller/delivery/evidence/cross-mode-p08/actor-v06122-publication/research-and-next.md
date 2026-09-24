@@ -1,9 +1,0 @@
-# Player-experience follow-up — 18 September 2026
-
-The minimum-size/edge-inset correction addresses a specific display defect. It does not close full P08 actor readability. For the next P05/P08 review, compare silhouette, heading, warning, pickup and contact cues over opaque black, bright revealed artwork and partially captured borders at actual playing size. Use role shape and readable icon/animation cues as well as color; keep collision identity separate from cosmetic scale. A configurable outline/contrast treatment is a candidate for evaluation, not a delivered feature or blanket overlay over earned artwork.
-
-Microsoft’s [XAG102 contrast guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/102) specifically covers HUDs, gameplay glyphs and character outlines over variable backgrounds. [XAG103](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/103) recommends additional visual/audio channels for important cues. Apply these during both detail-treatment and reduced-effects checks, without claiming physical-device certification from desktop resizing.
-
-For P03, [XAG112 navigation](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112) calls for consistent digital navigation and focus order after reflow. The [W3C modal-dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) guides initial focus, containment and return to the opener. Verify whole player journeys, not only individual Tab stops.
-
-Queued candidates remain separate: v0.61.23 focus clearance; integrated Missions/Team responsive layouts; Enemy Workshop readable actions; media reload recovery; installed-picture parity. The release-history correction must precede the101st major-0 entry. Keep full campaign production after the player-experience benchmark.

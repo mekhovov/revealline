@@ -1,4 +1,0 @@
-interface:
-  display_name: "Xonix Background Stylist"
-  short_description: "Preserve source art and design optional game variants"
-  default_prompt: "Use $xonix-background-stylist to review this image and prepare optional game styling while preserving the original."

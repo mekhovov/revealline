@@ -1,9 +1,0 @@
-# Coherent compact-viewport supplement
-
-This later six-event/six-JPEG browser record qualifies unchanged source `2c61981` (shell `a6f66819`) at actual 844×390 and 390×844, DPR 1. Root inspected all six coherent images. The [original review](review.json), [exact source/HTTP pins](post-http.json) and [lossless copy map](evidence.json) retain the evidence. No runtime or test source changed and no test rerun was needed for this documentation-only supplement.
-
-Plain/Large/Ukrainian/Rich and First Signal Tactical were selected through the real keyboard UI. The actual first-round win reached 52.2%, 8160 points, three lives and 1:0. At 844×390, Next was at y323.265625 with height 50.6953125 and a visible highlight. Full winner/unfinished opponent arenas were visible; board return placed View both boards at y323.15625 with the same height. Portrait 390×844 showed both complete arenas, then returned to that action at y778.0625, height 49.6953125. Results stayed unchanged. The viewport override was reset afterward.
-
-The earlier [distorted-capture report](../native-order-root/review-held-02.json) remains byte-identical and visually INCOMPLETE for its own ten samples. The reason its reported DPR 0.9 differed is still unknown; no capture artifact is classified as a game defect. This later coherent record closes only the listed first-Results and board-return/full-arena checks for these observed viewports and settings. The earlier explicit Next→2:0 journey remains a separate record; this supplement ends at 1:0.
-
-Resize-only already-focused lobby Start is a separate P05 task. This is not full P03/P05/P08 completion, physical touch/controller or device qualification, browser-zoom certification, general layout/contrast acceptance or a public release. Raw text is compressed losslessly; images and JSON retain their original bytes.

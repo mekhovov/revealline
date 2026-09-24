@@ -1,7 +1,0 @@
-# Phase 5 controller integration
-
-This branch merges corrected P5 source `01208844e04b6e44f9c71276e9c1ecec5a403bf7` (v0.49.0) onto P4 controller integration `615085f80e1b732556478624f07f3a56066c0104`. It preserves the accepted main actor loaders, body-motion records, explicit skin/upload priority and Workshop → Guide return stack. The existing fifth actor argument remains the body-motion record; the new sixth argument carries compiled cropped-frame geometry. Compiled default enemies avoid redundant legacy image requests. Contact markers and simulation ownership remain unchanged.
-
-The frozen P5 ledger at revision 6 is an exact subset of the frozen P6 ledger at revision 8: every immutable record and all 126 prior asset bodies were authenticated. To avoid revision collisions with that already-published history, the controller retains P6 revision 8 as inert prior history, then reproduces only this P5 tree’s desired assets and recipe sources into revision 9. Future P6 interface recipes are not selected. No historical record or byte body is rewritten; slot contracts and existing byte budgets are unchanged.
-
-Controller qualification is separate from frozen release identity. Tags, frozen manifests and release bodies remain unchanged. The branch workflow runs all six exact-source gates and production reproduction. Focused renderer/host/history and navigation tests are recorded in the integration handoff; hosted results follow this exact push.

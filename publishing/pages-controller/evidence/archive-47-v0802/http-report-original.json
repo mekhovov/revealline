@@ -1,9 +1,0 @@
-{
-  "archiveBase": "https://mekhovov.github.io/revealline-archive-47/",
-  "expectedBytes": 423285313,
-  "expectedFiles": 886,
-  "failures": {},
-  "format": "revealline-archive-public-byte-audit.v1",
-  "passed": true,
-  "servedFiles": 886
-}

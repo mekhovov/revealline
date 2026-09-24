@@ -1,1 +1,0 @@
-"{\"active\":\"overlay-reading\",\"details\":{\"scrollTop\":254,\"clientHeight\":283,\"scrollHeight\":537},\"text\":\"MISSION 01 / FIRST SIGNAL\\n\\nA little more light.\\n\\n52.2% captured · 8,160 points · 0:03. Full picture added to your collection.\\n\\nStandard difficulty.\\n\\n★★★\"}"

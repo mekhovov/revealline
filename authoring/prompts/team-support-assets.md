@@ -1,5 +1,0 @@
-# Team Support asset prompt
-
-Create an original pixel decoration for Reveal Line slot `team.support.pulse` (64×64 transparent PNG) or `team.enemy.slowed` (24×24 transparent PNG). Choose one role explicitly. Center pivot (0.5,0.5); all pixels inside the frame. Use the selected collection palette, sparse crisp clusters and binary transparency. Preserve actor readability. No text, logo, background, blur, glow, scanning sweep or invented attack. Team Support is nearby assistance; slowdown is temporary, not damage, capture or invulnerability.
-
-The game owns the radius, functional rings and labels. Pulse decoration clips to the existing radius under actors at bounded opacity; slowdown decoration sits inside its fixed ring. Do not rely on opacity or color alone to communicate gameplay meaning. Return source and prepared PNG with actual rights/provenance. Inspect Native size and Support pulse in both Team arenas, active/inactive and Reduced effects. Validate dimensions, alpha, centered geometry and retained original bytes through save/export/import. Production review and release acceptance are still required after upload validation.
