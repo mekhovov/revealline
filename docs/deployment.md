@@ -31,20 +31,17 @@ Use HTTPS for a public site. Configure the host to serve `.mjs`/`.js` as JavaScr
 
 ## GitHub Pages
 
-Source pull requests use `.github/workflows/deploy-pages.yml`. While the temporary
-[fast-release mode](fast-release-mode.md) is active, one exact-source path performs release-critical
-validation and the ordinary static build. Full tests, lint, formatting, native formatting, and
-extended production checks are deferred from the pull-request workflow and do not block merge.
-Manual source qualification still requires the bounded lint, formatting, syntax, production
-reproduction/readiness, identity, validation, build and provenance gates before a release can be
-frozen. Full suites remain waived and are not represented as passing. An already qualified
-immutable release is published from its original ZIP; publication does not rerun today's test
-sharder inside an older tag.
+Source pull requests use `.github/workflows/deploy-pages.yml`. Full qualification is restored as
+documented in [the source qualification policy](fast-release-mode.md). Exact-source preflight,
+validation, lint, game/native formatting, production provenance, all four test shards and the
+ordinary deterministic build must complete for new feature releases. Manual source qualification
+uses the same required policy before freezing a release. Skipped jobs are visible evidence, never
+passing results. An already qualified immutable historical release is published from its original
+ZIP; publication does not rerun today's test sharder inside an older tag.
 
-`release-ready` is the stable aggregate PR result. In fast mode it requires successful policy preflight
-and the build. In restored full mode it also requires every test shard. Avoid configuring individual
-matrix job names as required checks; the aggregate avoids stale required contexts when the matrix
-changes.
+`release-ready` is the stable aggregate PR result and requires successful policy preflight, every test
+shard and the build. Avoid configuring individual matrix job names as required checks; the aggregate
+avoids stale required contexts when the matrix changes.
 
 The sole Pages publisher is `.github/workflows/publish-frozen-pages.yml`, running from `main`
 through the existing main-only `github-pages` environment. Its reviewed
@@ -84,9 +81,8 @@ for them, rather than assuming a new controller exists inside an old release. Gi
 workflows from their associated commit or ref. [GitHub workflow events](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflows)
 
 Pull requests that change only the controller or its deployment instructions build a non-publishable
-preview. Focused controller test suites are deferred in fast mode, while selector validation,
-bounded extraction, artifact assembly, and an independent reread of every prepared byte remain
-mandatory. Pull requests cannot upload a Pages artifact or enter deployment. A successful build is
+preview. Focused controller test suites run under the required policy. Selector validation, bounded
+extraction, artifact assembly, and an independent reread of every prepared byte remain mandatory. Pull requests cannot upload a Pages artifact or enter deployment. A successful build is
 not public acceptance: after deployment, verify the published bytes and test play, saved-run
 ownership, historical entries, and offline coexistence in the actual browser.
 

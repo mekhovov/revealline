@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 
 export const TEST_POLICY_FORMAT = 'revealline-release-test-policy.v1';
-export const TEST_POLICY_AUTHORIZATION = 'explicit-user-request-20260922';
+export const TEST_POLICY_AUTHORIZATION = 'explicit-user-request-20260924-soundtrack-master-plan';
 export const defaultTestPolicyPath = fileURLToPath(new URL('./test-policy.json', import.meta.url));
 
 export function parseTestPolicy(value) {
