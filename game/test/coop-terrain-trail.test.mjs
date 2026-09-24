@@ -525,9 +525,7 @@ test('First Connection never invents wall cells and clearing a prepared snapshot
   view.reset();
   painter.paint(run, { reduced: true });
   assert.equal(
-    view.calls.some(
-      (call) => call.name === 'drawImage' && call.args[0]?.tag === 'approved-wall',
-    ),
+    view.calls.some((call) => call.name === 'drawImage' && call.args[0]?.tag === 'approved-wall'),
     false,
   );
   painter.setPresentation(null);
@@ -584,8 +582,7 @@ for (const [name, malformed] of [
         ...replacement.snapshot.canvas,
         palette: { ...palette, muted: '#abcdef', accent: '#aa88ff' },
       },
-      image: (slot) =>
-        slot === 'terrain.wall' ? badTile : replacement.snapshot.image(slot),
+      image: (slot) => (slot === 'terrain.wall' ? badTile : replacement.snapshot.image(slot)),
     };
     assert.throws(
       () => painter.setPresentation(rejected),
