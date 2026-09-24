@@ -6,12 +6,8 @@ on:
     paths:
       - 'publishing/pages-controller/**'
       - '!publishing/pages-controller/delivery/**'
-      - 'publishing/test-policy.*'
-      - '.github/workflows/publish-frozen-pages.yml'
-      - '.github/workflows/deploy-pages.yml'
-      - '.cursor/skills/deploy-release-pages/**'
-      - 'docs/deployment.md'
-      - 'docs/fast-release-mode.md'
+      - '!publishing/pages-controller/*.test.mjs'
+      - '!publishing/pages-controller/test_*.py'
   pull_request:
     branches: [main]
     paths:
