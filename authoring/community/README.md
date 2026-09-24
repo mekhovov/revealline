@@ -4,6 +4,8 @@ Start with the [beginner creator guide](index.html), the [single-picture walkthr
 
 The [video campaign review guide](video-campaign-guide.md) documents the Phase 3 mixed-media review contract, exact pairing corrections, poster choices, playback ranges and optional post-win story behavior. The main creator flow now persists those exact dependencies before approval; the [Phase 3 acceptance record](phase3-acceptance.md) separates completed browser evidence from the remaining player-story and release gates.
 
+The [optional media editor guide](media-editor-guide.md) documents the first bounded Phase 8 slice: playback ranges, evidence-backed decoded-frame stepping and the lazy physical-trim verification boundary. [Its acceptance record](phase8-acceptance.md) keeps production conversion open because this build intentionally bundles no converter and advertises no physically trimmed format.
+
 This is a tested local authoring guide for Reveal Line. It covers a small mission project and a separate editable presentation collection. It does not claim that a finished DroneAid/community edition, catalogue installer, or public release has already been produced.
 
 Use [Content Studio](../../game/studio/index.html), [Asset Studio](../asset-studio/index.html), and the [copyable community prompts](../prompts/community-creation.md). Start from the [example project](example-project.json) when reproducing this guide. It is a small greybox with Solo/Versus support, not a finished campaign.

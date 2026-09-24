@@ -105,6 +105,7 @@ test('actual release allowlist ships the standalone still entry and exact existi
     ...requiredRuntime,
     ...storyRuntime,
     'game/video-poster.mjs',
+    'game/video-editor.mjs',
     'game/ui/video-poster-workshop.mjs',
   ])
     assert.ok(files.includes(name), `Missing workshop distribution dependency: ${name}`);
@@ -246,6 +247,7 @@ for (const version of ['0.32.0', 'v0.32.0'])
       ...publicationEntries,
       ...storyRuntime,
       'game/video-poster.mjs',
+      'game/video-editor.mjs',
       'game/ui/video-poster-workshop.mjs',
       ...fieldKitFiles,
       'game/ui/still-media-host.mjs',
@@ -469,6 +471,7 @@ test('built poster/still links and teaching requests retain their edition and wo
       }),
       ...[
         'game/video-poster.mjs',
+        'game/video-editor.mjs',
         'game/ui/video-poster-workshop.mjs',
         'game/build-info.json',
         ...fieldKitFiles,
