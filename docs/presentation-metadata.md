@@ -8,6 +8,8 @@ Serialized Studio metadata remains limited to 5 MiB. A reconstructed logical doc
 
 The legacy raw metadata reader retains its 5 MiB and 2,048-item limits. The compact envelope `revealline-presentation-metadata.v1` contains the document and a sorted, unique dictionary of literal provenance `source` and `prompt` strings. Only those two fields use integer dictionary indexes. Unknown fields, invalid indexes, duplicate/unused entries and oversized expansion fail before a candidate can be accepted. This is not a general reference graph.
 
+The compact envelope has a separate, derived structural allowance of 104,099 nodes: the unchanged 100,000-node logical ceiling, at most 4,096 dictionary entries, and three nodes for the enclosing object, format string and dictionary array. Replacing a provenance string with its index does not change the document's node count. Decoding still applies the original logical or legacy-raw limit after reading the envelope; its overhead cannot authorize additional logical data. Byte, depth, string, record and dictionary limits remain unchanged, as do bytes of previously encodable metadata.
+
 A complete logical document must pass semantic, dependency, immutable-history and file-fact validation and must be encodable before an edit is accepted. An object that fits the expanded budget may still fail the serialized or dictionary budget. Failure must retain the prior workspace and assets. Finite limits do not promise unlimited revisions; export and capacity recovery must explain the actual limiting budget.
 
 ## Persistence and transfer

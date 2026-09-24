@@ -31,6 +31,86 @@ function envelope(document) {
   return { format: PRESENTATION_METADATA_FORMAT, strings, document: copy };
 }
 
+const nodeCount = (value) =>
+  1 +
+  (value && typeof value === 'object'
+    ? Object.values(value).reduce((count, entry) => count + nodeCount(entry), 0)
+    : 0);
+
+function maximumEnvelopeDocument() {
+  // 2,049 records force the compact representation; the final record reuses
+  // the first pair so the dictionary reaches exactly its independent limit.
+  const document = fixture(2049);
+  for (const [index, asset] of document.assets.entries()) {
+    asset.provenance.source = `Source ${index % 2048}`;
+    asset.provenance.prompt = `Prompt ${index % 2048}`;
+  }
+  document.padding = [];
+  let count = nodeCount(document);
+  while (count < 100000) {
+    const length = Math.min(4096, 100000 - count - 1);
+    document.padding.push(Array(length).fill(null));
+    count += length + 1;
+  }
+  return document;
+}
+
+test('a maximum logical document admits only the bounded dictionary and wrapper overhead', () => {
+  assert.equal(LIMITS.nodes, 100000);
+  assert.equal(LIMITS.records, 4096);
+  const document = maximumEnvelopeDocument();
+  assert.equal(nodeCount(document), 100000);
+  const before = canonicalJSON(document);
+  const encoded = encodePresentationDocument(document);
+  const wire = JSON.parse(encoded);
+  assert.equal(wire.format, PRESENTATION_METADATA_FORMAT);
+  assert.equal(wire.strings.length, 4096);
+  assert.equal(nodeCount(wire), 104099);
+  assert.deepEqual(decodePresentationDocument(encoded), document);
+  assert.deepEqual(decodePresentationDocument(wire), document);
+  assert.equal(encodePresentationDocument(decodePresentationDocument(encoded)), encoded);
+  assert.equal(canonicalJSON(document), before);
+});
+
+test('envelope overhead cannot authorize another logical node or another dictionary entry', () => {
+  const document = maximumEnvelopeDocument();
+  document.padding.at(-1).push(null);
+  assert.equal(nodeCount(document), 100001);
+  assert.throws(() => ownPresentationDocument(document), /structural budget/);
+  assert.throws(() => encodePresentationDocument(document), /structural budget/);
+  const overEnvelope = envelope(document);
+  assert.equal(nodeCount(overEnvelope), 104100);
+  for (const input of [overEnvelope, canonicalJSON(overEnvelope)])
+    assert.throws(() => decodePresentationDocument(input), /structural budget/);
+
+  // This smaller dictionary fits the wire cap, so decoding must still apply
+  // the unchanged logical cap after reconstructing the document.
+  for (const asset of document.assets) {
+    asset.provenance.source = 'Source';
+    asset.provenance.prompt = 'Prompt';
+  }
+  const overLogical = envelope(document);
+  assert.equal(nodeCount(overLogical), 100006);
+  for (const input of [overLogical, canonicalJSON(overLogical)])
+    assert.throws(() => decodePresentationDocument(input), /structural budget/);
+
+  const overDictionary = maximumEnvelopeDocument();
+  overDictionary.assets.at(-1).provenance.source = 'One additional source';
+  const tooManyStrings = envelope(overDictionary);
+  assert.equal(tooManyStrings.strings.length, 4097);
+  assert.throws(() => encodePresentationDocument(overDictionary), /item budget/);
+  for (const input of [tooManyStrings, canonicalJSON(tooManyStrings)])
+    assert.throws(() => decodePresentationDocument(input), /item budget/);
+});
+
+test('raw legacy metadata cannot borrow the compact-envelope node allowance', () => {
+  const document = fixture();
+  document.padding = Array.from({ length: 50 }, () => Array(1999).fill(null));
+  assert.equal(nodeCount(document), 100010);
+  for (const input of [document, canonicalJSON(document)])
+    assert.throws(() => decodePresentationDocument(input), /structural budget/);
+});
+
 test('fitting legacy canonical bytes and independently owned records stay exact', () => {
   const document = fixture(3);
   const raw = canonicalJSON(document);

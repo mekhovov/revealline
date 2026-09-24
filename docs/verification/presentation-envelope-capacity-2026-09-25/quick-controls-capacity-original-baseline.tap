@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: P02 retains the published P01 history and appends audio7 under a new fpv24
+ok 1 - P02 retains the published P01 history and appends audio7 under a new fpv24 # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.500875
+  ...
+# Subtest: P03 retains the measured fpv25 source-stage checkpoint after published P02
+ok 2 - P03 retains the measured fpv25 source-stage checkpoint after published P02 # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045375
+  ...
+# Subtest: current P03 reproduction retains its measured source stage before any review successor
+ok 3 - current P03 reproduction retains its measured source stage before any review successor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033833
+  ...
+# Subtest: Journey music review retains fpv33 source evidence and every earlier immutable record
+ok 4 - Journey music review retains fpv33 source evidence and every earlier immutable record # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.088166
+  ...
+# Subtest: unchanged production preserves its exact document and appends changed revisions
+ok 5 - unchanged production preserves its exact document and appends changed revisions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.110916
+  ...
+# Subtest: review evidence gets an immutable successor and normal reproduction keeps the review
+ok 6 - review evidence gets an immutable successor and normal reproduction keeps the review # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.227625
+  ...
+# Subtest: production refuses silent slot contract mutation and can explicitly return to an old revision
+ok 7 - production refuses silent slot contract mutation and can explicitly return to an old revision # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.051625
+  ...
+# Subtest: Journey feedback dependencies bind only the reviewed player-craft effects inputs
+ok 8 - Journey feedback dependencies bind only the reviewed player-craft effects inputs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045042
+  ...
+# Subtest: shared-host UI and audio bind only their reviewed current inputs
+ok 9 - shared-host UI and audio bind only their reviewed current inputs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.144583
+  ...
+# Subtest: soundtrack screen and Journey motion reviews bind only the inspected current inputs
+ok 10 - soundtrack screen and Journey motion reviews bind only the inspected current inputs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.157958
+  ...
+# Subtest: changed recipe inputs reopen only their own reviewed group
+ok 11 - changed recipe inputs reopen only their own reviewed group # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.270917
+  ...
+# Subtest: the whole production collection has capacity for immutable review successors
+ok 12 - the whole production collection has capacity for immutable review successors
+  ---
+  duration_ms: 46275.637083
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 11
+# todo 0
+# duration_ms 46425.646625
