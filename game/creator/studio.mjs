@@ -25,6 +25,7 @@ import { paintContentMap } from '../content-design/map-view.mjs';
 import { createContentDraftBackend } from '../content-design/drafts.mjs';
 import { downloadCreatorFile } from './download.mjs';
 import { canonicalJSON } from '../data-json.mjs';
+import { createBatchCreatorController } from './batch-ui.mjs';
 
 const $ = (id) => document.getElementById(id),
   store = createCreatorStore(),
@@ -55,6 +56,7 @@ let sourceFile = null,
   pictureURL = null,
   sourceVersion = 0,
   saveTimer = null;
+const batchSeed = crypto.getRandomValues(new Uint32Array(1))[0];
 let themes = [];
 try {
   const themesResponse = await fetch('../content-design/themes.json');
@@ -69,6 +71,12 @@ if (!params.has('draft')) {
   params.set('draft', id);
   history.replaceState(null, '', `?${params}`);
 }
+// Phase 2 integration replaces this null with the batch core's exact-byte
+// assembly/approval adapter. Until then, production intake remains single-file
+// so the page cannot lead a creator into a flow that cannot finish.
+const batchApprovalAdapter = null;
+const batchEnabled = !!batchApprovalAdapter;
+
 function controls() {
   $('edits').hidden = !content;
   $('generate').disabled = busy || (!sourceFile && !content);
@@ -91,6 +99,78 @@ function controls() {
     $(key).disabled = busy;
   $('fit').disabled = busy || (!!content && !sourceFile);
 }
+
+const batch = createBatchCreatorController({
+  document,
+  nodes: {
+    surface: $('batch-review'),
+    list: $('batch-list'),
+    progress: $('batch-progress'),
+    progressLabel: $('batch-progress-label'),
+    readiness: $('batch-readiness'),
+    capacity: $('batch-capacity'),
+    generate: $('batch-generate'),
+    cancel: $('batch-cancel'),
+    removeExcluded: $('batch-remove-excluded'),
+    split: $('batch-split'),
+    approve: $('batch-approve'),
+    intake: $('image'),
+    pacing: $('pacing'),
+    collectionName: $('name'),
+    fit: $('fit'),
+    creatorCredit: $('creator-credit'),
+    pictureCredit: $('picture-credit'),
+    license: $('license'),
+  },
+  prepareItem: async (item, context) => {
+    const preparedImage = await prepareCreatorImage(
+      item.file,
+      { alt: item.title, fit: context.settings.fit },
+      { signal: context.signal },
+    );
+    const seed = (batchSeed + context.index + context.generation * 65537) >>> 0;
+    const generated = generateCreatorProject({
+      id: `${id}-picture-${context.index + 1}`,
+      name: context.settings.collectionName,
+      seed,
+    });
+    const itemContent = {
+      project: structuredClone(generated.project),
+      packId: 'collection',
+      themes: themes.filter(
+        (theme) => theme.id === generated.project.missions[0].presentation.themeId,
+      ),
+      provenance: generated.provenance,
+      credits: {
+        creator: context.settings.creatorCredit,
+        picture: context.settings.pictureCredit,
+        license: context.settings.license,
+      },
+    };
+    itemContent.project.assets = [structuredClone(preparedImage.asset)];
+    itemContent.project.missions[0].name = item.title;
+    itemContent.project.missions[0].presentation.backgroundAssetId = preparedImage.asset.id;
+    const itemPack = await prepareCreatorBundle(
+      itemContent,
+      [{ sha256: preparedImage.runtime.sha256, blob: preparedImage.runtime.blob }],
+      { signal: context.signal },
+    );
+    return {
+      image: preparedImage,
+      prepared: itemPack,
+      thumbnail: preparedImage.thumbnail.blob,
+      alt: item.title,
+      estimatedBytes: itemPack.bytes,
+      validation: itemPack.review.validation,
+      templateLabel: `${generated.provenance.templateId} · ${generated.provenance.variantId} · verified Solo route evidence`,
+    };
+  },
+  approveBatch: batchApprovalAdapter?.approve,
+  onSplit: (chunks) => {
+    $('batch-capacity').textContent =
+      `Suggested ${chunks.length} packs: ${chunks.map((chunk, index) => `part ${index + 1} (${chunk.length})`).join(', ')}. The batch compiler will preserve this reviewed grouping during export.`;
+  },
+});
 function invalidate() {
   prepared = approval = installReview = null;
   $('approved').hidden = true;
@@ -259,6 +339,34 @@ function choose(file) {
   $('fit').disabled = false;
   status(`${file.name} selected. Generate to prepare its picture and level.`);
 }
+
+function chooseFiles(files) {
+  const selected = [...files];
+  if (!selected.length) return;
+  if (selected.length > 1 && !batchEnabled)
+    return status(
+      'This build supports one picture at a time. Batch review will appear when campaign assembly is available.',
+      true,
+    );
+  if (selected.length === 1) {
+    batch.setFiles([]);
+    $('batch-options').hidden = true;
+    choose(selected[0]);
+    return;
+  }
+  controller?.abort();
+  sourceFile = image = content = prepared = approval = installReview = null;
+  $('review').hidden = true;
+  $('approved').hidden = true;
+  $('edits').hidden = true;
+  $('play').hidden = true;
+  $('batch-options').hidden = false;
+  const selectedBatch = batch.setFiles(selected);
+  status(
+    `${selectedBatch.items.length} pictures selected in natural filename order. Review the order, then generate the included levels.`,
+  );
+  controls();
+}
 async function openPrepared(pack) {
   const { compatibility: _compatibility, ...selected } = pack.manifest.content;
   content = structuredClone(selected);
@@ -320,7 +428,7 @@ async function listInstalled() {
     list.textContent = `Library unavailable: ${error.message}`;
   }
 }
-$('image').onchange = () => choose($('image').files[0]);
+$('image').onchange = () => chooseFiles($('image').files);
 $('drop').ondragover = (event) => {
   event.preventDefault();
   $('drop').classList.add('dragging');
@@ -330,12 +438,7 @@ $('drop').ondrop = (event) => {
   event.preventDefault();
   $('drop').classList.remove('dragging');
   if (busy) return;
-  if (event.dataTransfer.files.length !== 1)
-    return status(
-      'Choose one picture. Multiple pictures per campaign are not supported yet.',
-      true,
-    );
-  choose(event.dataTransfer.files[0]);
+  chooseFiles(event.dataTransfer.files);
 };
 for (const key of [
   'name',
@@ -467,6 +570,7 @@ window.addEventListener('beforeunload', (event) => {
 });
 window.addEventListener('pagehide', () => {
   controller?.abort();
+  batch.destroy();
   if (pictureURL) URL.revokeObjectURL(pictureURL);
   store.close();
 });
@@ -485,4 +589,11 @@ try {
 controls();
 await listInstalled();
 busy = false;
+$('image').multiple = batchEnabled;
+if (batchEnabled) {
+  $('choose-title').textContent = '1. Choose your pictures';
+  $('intake-help').textContent =
+    'Or drop pictures here. Each can be up to 4 MiB and 16 megapixels. Files start in natural filename order; you can rearrange them before approval.';
+  status('Choose one or more PNG, JPEG or WebP pictures to begin.');
+}
 controls();
