@@ -33,6 +33,13 @@ const licenses = [
   ['CC BY 4.0 International', 'https://creativecommons.org/licenses/by/4.0/'],
 ];
 const licenseStatus = 'primary creator submission license declaration verified';
+async function installCoreFixture(f) {
+  for (const name of [
+    'authoring/library/licensed-audio/core-publication.json',
+    'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',
+  ])
+    await f.put(name, await readFile(path.join(source, name)));
+}
 async function fixture(t) {
   const dir = await realpath(await mkdtemp(path.join(os.tmpdir(), 'soundtrack-build-')));
   t.after(() => rm(dir, { recursive: true, force: true }));
@@ -79,8 +86,9 @@ async function fixture(t) {
 }
 test('publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript', async (t) => {
   const f = await fixture(t);
+  await installCoreFixture(f);
   const catalogue = {
-    format: 'revealline-soundtrack-catalogue.v1',
+    format: 'revealline-soundtrack-catalogue.v2',
     edition: 'writer-fixture',
     tracks: [
       {
@@ -90,6 +98,16 @@ test('publication writer preserves catalogue values and emits reproducible repos
         edition: 'writer-fixture',
         path: 'optional/soundtracks/writer-fixture.mp3',
         tags: { genres: ['ukrainian'], role: 'menu', energy: 2, themes: ['ukraine'] },
+        policy: {
+          id: 'builtin.catalog.writer-fixture',
+          sha256: f.album.track.asset.sha256,
+          webPlayback: 'allowed',
+          offlineCache: 'allowed',
+          redistribute: 'allowed',
+          modify: 'allowed',
+          gameplayVideo: 'allowed',
+          contentId: 'not-registered',
+        },
       },
     ],
   };
@@ -144,11 +162,13 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
     'scripts/soundtrack-distribution.mjs',
     'scripts/soundtrack-archive-admissions.mjs',
     'scripts/hosted-soundtrack-publication.mjs',
+    'scripts/core-soundtrack-publication.mjs',
     'game/content-launch.mjs',
     'game/soundtrack-archive.mjs',
     'game/soundtrack-album-download.mjs',
   ])
     await f.put(name, await readFile(path.join(source, name)));
+  await installCoreFixture(f);
   const catalogue = {
     format: 'revealline-soundtrack-catalogue.v2',
     edition: 'archived-fixture',
@@ -167,7 +187,7 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
   await f.put(f.config.soundtrackAlbums.originalCatalogue, JSON.stringify(catalogue));
   await f.put(
     'game/content/soundtrack-catalogue.mjs',
-    `export const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue)}; export const SOUNDTRACK_ARCHIVES = []; export const SOUNDTRACK_COLLECTIONS = [];`,
+    `export const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue)}; export const SOUNDTRACK_ARCHIVES = []; export const SOUNDTRACK_COLLECTIONS = []; export const SOUNDTRACK_BUNDLED_ASSETS = [];`,
   );
   await f.put(
     `${licensedFolder}/publication.json`,
@@ -178,6 +198,8 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
     'authoring/library/revealline-original-soundtrack/build.mjs',
     `export async function buildOriginalSoundtrackCatalogue() { return { catalogue: ${JSON.stringify(catalogue)}, files: [] }; }`,
   );
+  await f.put('.prettierrc.json', await readFile(path.join(source, '.prettierrc.json')));
+  const reviewed = await writePublishedSoundtrackMetadata(f.root);
   await f.put('.gitignore', 'releases/\n');
   const environment = Object.fromEntries(
     Object.entries(process.env).filter(
@@ -249,7 +271,7 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
     JSON.parse(
       await readFile(path.join(output, 'site', f.config.soundtrackAlbums.originalCatalogue)),
     ),
-    catalogue,
+    reviewed.catalogue,
   );
   assert.equal(run('git', ['status', '--porcelain']), '');
 });
@@ -397,9 +419,13 @@ test('all 70 hosted registrations retain provenance without inventing listening 
   const catalogue = JSON.parse(
     await readFile(path.join(source, 'game/content/soundtrack-catalogue.json'), 'utf8'),
   );
-  assert.equal(catalogue.tracks.length, 70);
+  assert.equal(catalogue.tracks.length, 71);
   assert.deepEqual(
-    new Set(catalogue.tracks.map((track) => track.asset.sha256)),
+    new Set(
+      catalogue.tracks
+        .filter((track) => track.archiveId === 'licensed-preview-01')
+        .map((track) => track.asset.sha256),
+    ),
     new Set(register.tracks.map((track) => track.runtime.sha256)),
   );
 });
