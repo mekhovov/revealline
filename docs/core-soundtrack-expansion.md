@@ -70,9 +70,19 @@ reviewer names, listening approval or device results.
   intentionally removed player-locator module. The replacement branch now admits
   the same exact picture bytes through retained revisions 58–70 and current 71,
   pins the historical locator fixture, restores the explicit null session assertion
-  and gives hosted asset work a bounded 15-second settle window. The repaired
-  catalogue/player/presentation cohort passes 270/270 locally; the formerly stale
-  candidate Skip case also passes. The branch is rebased onto accepted v0.105 source.
+  and gives hosted asset work a bounded 15-second settle window. Rebasing onto
+  accepted v0.105 exposed two skipped-test gaps in that baseline: the compact Home
+  stylesheet had reopened the screen fingerprint, and already accepted visible-actor
+  and Team capture-feedback work had reopened the Team recipe and equipment closures.
+  Exact bounded successor records now bind those accepted inputs while retaining every
+  historical record. A terrain-reader regression found by the broad local run now
+  fails closed when a snapshot advertises terrain artwork without a reader. Field Kit
+  revision 74 reproduces byte-for-byte, and the combined production-history, Team
+  review, terrain, binding, historical-import and actual-host cohort passes 134/134.
+  The finite picture authority admits current74 and retained58–73. The formerly stale
+  candidate Skip case also passes. The complete affected catalogue, player, panel,
+  candidate-host, renderer, production and Team cohort passes 374/374. Fresh hosted
+  exact-head gates remain required before merge.
   Next: push and pass fresh exact-head hosted gates, qualify the actual merge,
   publish an immutable coordinated game release and repeat the playback proof on
   public game Pages.

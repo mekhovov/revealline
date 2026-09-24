@@ -390,7 +390,7 @@ test('a complete snapshot without a wall keeps flat backing and a missing reader
   }
   assert.throws(
     () => painter.setPresentation(prepared({ reader: false }).snapshot),
-    /prepared 24×24 centered frame/,
+    /prepared image reader/,
   );
   assert.equal(painter.presentation, absent.snapshot);
   assert.equal(present.closes(), 0);
