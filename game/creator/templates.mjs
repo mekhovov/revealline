@@ -377,7 +377,7 @@ export const CREATOR_TEMPLATES = freezeDesign(
     name: template.name,
     description: template.description,
     variants: template.variants.map((variant) => variant.id),
-    modes: ['solo'],
+    modes: ['solo', 'versus'],
     difficulties,
     turnPolicies,
     maxTicks: 2400,
@@ -442,7 +442,7 @@ function buildCreatorProject(value, selection) {
     id: 'picture-1',
     name: 'First picture',
     map: { id: map.id, revision: map.revision },
-    modes: ['solo'],
+    modes: version === CREATOR_TEMPLATE_REGISTRY_VERSION ? ['solo', 'versus'] : ['solo'],
     actors: structuredClone(variant.actors ?? []),
     coverage: 0.5,
     design: {
