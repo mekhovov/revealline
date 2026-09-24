@@ -156,6 +156,20 @@ test('outer-pocket search preserves the Shared windows edition selector beside i
   assert.equal($('team-window-edition').closest('[data-library-entry]'), visible()[0]);
 });
 
+test('ornament atlas is separately inspectable and searchable without changing the Studio default', async () => {
+  const { search, visible, $ } = setup();
+  search('whole-ornament-v2');
+  assert.equal(visible().length, 1);
+  assert.equal(visible()[0], $('whole-variety').closest('[data-library-entry]'));
+  assert([...$('whole-variety-edition').options].some((o) => o.value === 'ukrainian-ornament-v2'));
+  assert.equal($('whole-variety-edition').value, 'variety-1');
+  const source = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
+  const handler = source.slice(source.indexOf("$('whole-variety').onclick"), source.indexOf("$('import').onchange"));
+  assert.match(handler, /'ukrainian-ornament-v2'\s*\? createUkrainianOrnamentAtlasJourney/);
+  assert.match(handler, /discardSource\(\)/);
+  assert.doesNotMatch(handler, /session\.replace|queueSave|launchPreview/);
+});
+
 test('Team pressure search keeps edition choice, original Inspect and bundled player together', () => {
   const { $, visible, search } = setup();
   search('team-pressure-originals-1');
@@ -174,6 +188,7 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     'whole-spatial-v5',
     'whole-spatial-v6',
     'whole-ornament-v1',
+    'whole-ornament-v2',
     'whole-spatial-v3',
     'whole-spatial-v2',
     'whole-spatial-v1',

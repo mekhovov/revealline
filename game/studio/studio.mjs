@@ -32,6 +32,7 @@ import { createApexFieldCandidates } from '../content-design/apex-field-candidat
 import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
 import { createSpatialChallengeJourney } from '../content-design/spatial-challenge-journey.mjs';
 import { createUkrainianOrnamentJourney } from '../content-design/ukrainian-ornament-candidates.mjs';
+import { createUkrainianOrnamentAtlasJourney } from '../content-design/ukrainian-ornament-atlas.mjs';
 import {
   createWholeSpatialCandidates,
   createWholeFieldCandidates,
@@ -993,7 +994,9 @@ $('whole-timed').onclick = guarded(() => {
 $('whole-variety').onclick = guarded(() => {
   if (!discardSource()) return;
   const create =
-    $('whole-variety-edition').value === 'ukrainian-ornament-v1'
+    $('whole-variety-edition').value === 'ukrainian-ornament-v2'
+      ? createUkrainianOrnamentAtlasJourney
+      : $('whole-variety-edition').value === 'ukrainian-ornament-v1'
       ? createUkrainianOrnamentJourney
       : $('whole-variety-edition').value === 'spatial-challenge-v1'
         ? createSpatialChallengeJourney

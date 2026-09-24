@@ -1,0 +1,3539 @@
+{
+  "format": "UkrainianOrnamentAtlasRoutesV1",
+  "scope": "Nine bounded primary legal-input samples: Standard, immediate controls, seed 1, fresh shared gp4, no admin override. A clear proves one deterministic feasible route only; an unfinished capped search is not impossibility. Not all-preset, alternate-route, Team, public-device or human balance evidence. Failed proposals are summarized by cause, not retained as separately replayable routes.",
+  "sourceIdentity": {
+    "gitRevision": "440140872c10571aeca58271e06fd60cbc5f4cfe",
+    "dirty": true,
+    "sourceProjectIdentity": "c00deb31a3d99920",
+    "moduleSha256": {
+      "game/content-design/ukrainian-ornament-atlas.mjs": "416639e110e999e0cf67827a935af42ae7f21b082eca398e545f8031520a11f6",
+      "game/content-design/ukrainian-ornament-atlas-registry.mjs": "6724407c8e78da801f325e75ff8230bfb3b7b4fe2ca5faaab5829d55be4f3ebd",
+      "game/content-design/ukrainian-ornament-core.mjs": "e8b32468884b039207364bacf0e40655a9234a72df049f3fd97d4945250219d5",
+      "game/content-design/ukrainian-ornament-optional.mjs": "9e3ebbd49f3282775959f0473e1f40f5a8c309ee2d0ace43dc74d3036c962c9e"
+    },
+    "gameplayVersion": "gameplay-pressure.v4",
+    "stableDuringProbe": true,
+    "elapsedSeconds": 40.130267124999996
+  },
+  "searchBudgets": {
+    "initial": 120000,
+    "optionalContinuation": 160000,
+    "maximumPerMission": 280000,
+    "includes": "Each search includes replaying its own initial prefix. Independent assessment/replay verification is outside this exploratory simulated-tick budget."
+  },
+  "rows": [
+    {
+      "missionId": "four-motor-landings",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "qualification": "primary-clear-qualified",
+      "samples": [
+        {
+          "stage": "initial",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "four-motor-landings",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "475071a91aad17a1",
+          "simulationIdentity": "9ebff05227dbe366",
+          "levelIdentity": "2d50b2c0386b1639",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "route-exhausted",
+          "qualification": "needs-new-route-not-proven-impossible",
+          "ticks": 2332,
+          "seconds": 19.43333333333287,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.31732673267326733,
+          "coverageGoal": 0.7,
+          "claimedCells": 641,
+          "totalClaimable": 2020,
+          "cuts": 6,
+          "exposureTicks": 1905,
+          "maxExposureTicks": 571,
+          "firstCoverageMetTick": null,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": null,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 2020,
+              "retained": true,
+              "enemyIds": ["west", "middle", "east"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 73,
+              "cells": 1379,
+              "retained": true,
+              "enemyIds": ["west", "middle", "east"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "west",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "middle",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "east",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "outer",
+              "type": "border-patrol",
+              "role": "perimeter-patrol",
+              "retainsField": false
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 332,
+              "claimedCells": 54,
+              "coverage": 0.026732673267326732,
+              "coverageGain": 0.026732673267326732,
+              "exposureTicks": 258,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 985,
+              "claimedCells": 252,
+              "coverage": 0.15148514851485148,
+              "coverageGain": 0.12475247524752475,
+              "exposureTicks": 571,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1433,
+              "claimedCells": 114,
+              "coverage": 0.2079207920792079,
+              "coverageGain": 0.05643564356435643,
+              "exposureTicks": 381,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1746,
+              "claimedCells": 78,
+              "coverage": 0.24653465346534653,
+              "coverageGain": 0.03861386138613862,
+              "exposureTicks": 218,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2059,
+              "claimedCells": 95,
+              "coverage": 0.29356435643564355,
+              "coverageGain": 0.047029702970297016,
+              "exposureTicks": 272,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2332,
+              "claimedCells": 48,
+              "coverage": 0.31732673267326733,
+              "coverageGain": 0.023762376237623783,
+              "exposureTicks": 205,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["right", 68],
+            ["down", 81],
+            ["right", 108],
+            ["up", 75],
+            ["down", 75],
+            ["right", 585],
+            ["left", 54],
+            ["down", 394],
+            ["left", 82],
+            ["up", 163],
+            ["left", 54],
+            ["down", 14],
+            ["left", 27],
+            ["up", 41],
+            ["left", 54],
+            ["down", 191],
+            ["left", 55],
+            ["up", 163],
+            ["right", 48]
+          ],
+          "replayVerified": true,
+          "checkpoint": "c8518ac2ba9e53c9",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 120000,
+            "simulatedTicks": 120000,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 0,
+            "exhausted": true,
+            "attemptedProposals": 287,
+            "selectedClosures": 6,
+            "failedProposals": 61,
+            "failuresByCause": {
+              "enemy-player": 4,
+              "enemy-trail": 56,
+              "unfinished": 1
+            }
+          }
+        },
+        {
+          "stage": "continuation",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "four-motor-landings",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "475071a91aad17a1",
+          "simulationIdentity": "9ebff05227dbe366",
+          "levelIdentity": "2d50b2c0386b1639",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "no-loss-clear",
+          "qualification": "legal-route-and-replay-only",
+          "ticks": 6814,
+          "seconds": 56.77654600301407,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.7762376237623763,
+          "coverageGoal": 0.7,
+          "claimedCells": 1568,
+          "totalClaimable": 2020,
+          "cuts": 14,
+          "exposureTicks": 4108,
+          "maxExposureTicks": 571,
+          "firstCoverageMetTick": 6814,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": 0,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 2020,
+              "retained": true,
+              "enemyIds": ["west", "middle", "east"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 73,
+              "cells": 362,
+              "retained": true,
+              "enemyIds": ["west", "east"]
+            },
+            {
+              "id": 530,
+              "cells": 90,
+              "retained": true,
+              "enemyIds": ["middle"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "west",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "middle",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "east",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "outer",
+              "type": "border-patrol",
+              "role": "perimeter-patrol",
+              "retainsField": false
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 332,
+              "claimedCells": 54,
+              "coverage": 0.026732673267326732,
+              "coverageGain": 0.026732673267326732,
+              "exposureTicks": 258,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 985,
+              "claimedCells": 252,
+              "coverage": 0.15148514851485148,
+              "coverageGain": 0.12475247524752475,
+              "exposureTicks": 571,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1433,
+              "claimedCells": 114,
+              "coverage": 0.2079207920792079,
+              "coverageGain": 0.05643564356435643,
+              "exposureTicks": 381,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1746,
+              "claimedCells": 78,
+              "coverage": 0.24653465346534653,
+              "coverageGain": 0.03861386138613862,
+              "exposureTicks": 218,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2059,
+              "claimedCells": 95,
+              "coverage": 0.29356435643564355,
+              "coverageGain": 0.047029702970297016,
+              "exposureTicks": 272,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2332,
+              "claimedCells": 48,
+              "coverage": 0.31732673267326733,
+              "coverageGain": 0.023762376237623783,
+              "exposureTicks": 205,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2603,
+              "claimedCells": 38,
+              "coverage": 0.33613861386138616,
+              "coverageGain": 0.01881188118811883,
+              "exposureTicks": 231,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2862,
+              "claimedCells": 36,
+              "coverage": 0.35396039603960394,
+              "coverageGain": 0.017821782178217782,
+              "exposureTicks": 205,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3419,
+              "claimedCells": 80,
+              "coverage": 0.3935643564356436,
+              "coverageGain": 0.03960396039603964,
+              "exposureTicks": 218,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4224,
+              "claimedCells": 154,
+              "coverage": 0.4698019801980198,
+              "coverageGain": 0.0762376237623762,
+              "exposureTicks": 244,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4502,
+              "claimedCells": 60,
+              "coverage": 0.4995049504950495,
+              "coverageGain": 0.02970297029702973,
+              "exposureTicks": 190,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5087,
+              "claimedCells": 40,
+              "coverage": 0.5193069306930693,
+              "coverageGain": 0.01980198019801982,
+              "exposureTicks": 258,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5686,
+              "claimedCells": 56,
+              "coverage": 0.5470297029702971,
+              "coverageGain": 0.027722772277227747,
+              "exposureTicks": 557,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 6814,
+              "claimedCells": 463,
+              "coverage": 0.7762376237623763,
+              "coverageGain": 0.2292079207920792,
+              "exposureTicks": 300,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["right", 68],
+            ["down", 81],
+            ["right", 108],
+            ["up", 75],
+            ["down", 75],
+            ["right", 585],
+            ["left", 54],
+            ["down", 394],
+            ["left", 82],
+            ["up", 163],
+            ["left", 54],
+            ["down", 14],
+            ["left", 27],
+            ["up", 41],
+            ["left", 54],
+            ["down", 191],
+            ["left", 55],
+            ["up", 163],
+            ["right", 55],
+            ["up", 108],
+            ["left", 54],
+            ["down", 149],
+            ["left", 55],
+            ["down", 109],
+            ["right", 55],
+            ["up", 136],
+            ["right", 135],
+            ["up", 13],
+            ["right", 41],
+            ["up", 225],
+            [null, 60],
+            ["down", 237],
+            ["left", 68],
+            ["up", 40],
+            ["left", 54],
+            ["up", 41],
+            ["left", 81],
+            ["up", 108],
+            ["right", 116],
+            [null, 60],
+            ["right", 7],
+            ["up", 14],
+            ["left", 163],
+            ["up", 34],
+            ["down", 7],
+            ["up", 14],
+            ["left", 299],
+            ["down", 109],
+            ["right", 54],
+            ["up", 102],
+            ["down", 7],
+            ["up", 14],
+            ["right", 14],
+            ["down", 326],
+            ["left", 27],
+            ["up", 211],
+            ["down", 7],
+            ["up", 204],
+            ["left", 312],
+            ["down", 299],
+            ["right", 306]
+          ],
+          "replayVerified": true,
+          "checkpoint": "4a33dad50da845ca",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 160000,
+            "simulatedTicks": 158033,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 2332,
+            "exhausted": false,
+            "attemptedProposals": 382,
+            "selectedClosures": 8,
+            "failedProposals": 127,
+            "failuresByCause": {
+              "enemy-player": 7,
+              "enemy-trail": 118,
+              "self-contact": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "missionId": "circuit-lanes",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "qualification": "primary-clear-qualified",
+      "samples": [
+        {
+          "stage": "initial",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "circuit-lanes",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "8c3d85c491f5c9b0",
+          "simulationIdentity": "6757e168c807c62a",
+          "levelIdentity": "94d12115d4640619",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "route-exhausted",
+          "qualification": "needs-new-route-not-proven-impossible",
+          "ticks": 3830,
+          "seconds": 31.916666666665495,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.4098360655737705,
+          "coverageGoal": 0.72,
+          "claimedCells": 850,
+          "totalClaimable": 2074,
+          "cuts": 6,
+          "exposureTicks": 3033,
+          "maxExposureTicks": 952,
+          "firstCoverageMetTick": null,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": null,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 2074,
+              "retained": true,
+              "enemyIds": ["west", "east"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 81,
+              "cells": 1224,
+              "retained": true,
+              "enemyIds": ["west", "east"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "west",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "east",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "outer",
+              "type": "border-patrol",
+              "role": "perimeter-patrol",
+              "retainsField": false
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 360,
+              "claimedCells": 72,
+              "coverage": 0.03471552555448409,
+              "coverageGain": 0.03471552555448409,
+              "exposureTicks": 313,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1120,
+              "claimedCells": 208,
+              "coverage": 0.13500482160077146,
+              "coverageGain": 0.10028929604628736,
+              "exposureTicks": 707,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2465,
+              "claimedCells": 210,
+              "coverage": 0.23625843780135006,
+              "coverageGain": 0.1012536162005786,
+              "exposureTicks": 952,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2999,
+              "claimedCells": 124,
+              "coverage": 0.29604628736740596,
+              "coverageGain": 0.0597878495660559,
+              "exposureTicks": 421,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3503,
+              "claimedCells": 124,
+              "coverage": 0.3558341369334619,
+              "coverageGain": 0.05978784956605593,
+              "exposureTicks": 422,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3830,
+              "claimedCells": 112,
+              "coverage": 0.4098360655737705,
+              "coverageGain": 0.054001928640308616,
+              "exposureTicks": 218,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["left", 41],
+            ["down", 108],
+            ["right", 109],
+            ["up", 102],
+            ["down", 47],
+            ["right", 720],
+            ["down", 380],
+            ["left", 958],
+            [null, 60],
+            ["right", 47],
+            ["up", 427],
+            ["down", 7],
+            ["up", 14],
+            ["right", 55],
+            ["down", 435],
+            ["right", 95],
+            ["up", 225]
+          ],
+          "replayVerified": true,
+          "checkpoint": "7b09a95ea2328341",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 120000,
+            "simulatedTicks": 120000,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 0,
+            "exhausted": true,
+            "attemptedProposals": 263,
+            "selectedClosures": 6,
+            "failedProposals": 35,
+            "failuresByCause": {
+              "enemy-trail": 34,
+              "unfinished": 1
+            }
+          }
+        },
+        {
+          "stage": "continuation",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "circuit-lanes",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "8c3d85c491f5c9b0",
+          "simulationIdentity": "6757e168c807c62a",
+          "levelIdentity": "94d12115d4640619",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "no-loss-clear",
+          "qualification": "legal-route-and-replay-only",
+          "ticks": 7597,
+          "seconds": 63.30833333333038,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.7868852459016393,
+          "coverageGoal": 0.72,
+          "claimedCells": 1632,
+          "totalClaimable": 2074,
+          "cuts": 12,
+          "exposureTicks": 4966,
+          "maxExposureTicks": 952,
+          "firstCoverageMetTick": 7597,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": 0,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 2074,
+              "retained": true,
+              "enemyIds": ["west", "east"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 389,
+              "cells": 442,
+              "retained": true,
+              "enemyIds": ["west", "east"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "west",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "east",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "outer",
+              "type": "border-patrol",
+              "role": "perimeter-patrol",
+              "retainsField": false
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 360,
+              "claimedCells": 72,
+              "coverage": 0.03471552555448409,
+              "coverageGain": 0.03471552555448409,
+              "exposureTicks": 313,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1120,
+              "claimedCells": 208,
+              "coverage": 0.13500482160077146,
+              "coverageGain": 0.10028929604628736,
+              "exposureTicks": 707,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2465,
+              "claimedCells": 210,
+              "coverage": 0.23625843780135006,
+              "coverageGain": 0.1012536162005786,
+              "exposureTicks": 952,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2999,
+              "claimedCells": 124,
+              "coverage": 0.29604628736740596,
+              "coverageGain": 0.0597878495660559,
+              "exposureTicks": 421,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3503,
+              "claimedCells": 124,
+              "coverage": 0.3558341369334619,
+              "coverageGain": 0.05978784956605593,
+              "exposureTicks": 422,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3830,
+              "claimedCells": 112,
+              "coverage": 0.4098360655737705,
+              "coverageGain": 0.054001928640308616,
+              "exposureTicks": 218,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4007,
+              "claimedCells": 50,
+              "coverage": 0.4339440694310511,
+              "coverageGain": 0.024108003857280624,
+              "exposureTicks": 164,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5108,
+              "claimedCells": 135,
+              "coverage": 0.4990356798457088,
+              "coverageGain": 0.06509161041465766,
+              "exposureTicks": 368,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5842,
+              "claimedCells": 150,
+              "coverage": 0.5713596914175506,
+              "coverageGain": 0.07232401157184182,
+              "exposureTicks": 680,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5937,
+              "claimedCells": 48,
+              "coverage": 0.59450337512054,
+              "coverageGain": 0.02314368370298936,
+              "exposureTicks": 69,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 6460,
+              "claimedCells": 151,
+              "coverage": 0.6673095467695275,
+              "coverageGain": 0.0728061716489875,
+              "exposureTicks": 326,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 7597,
+              "claimedCells": 248,
+              "coverage": 0.7868852459016393,
+              "coverageGain": 0.11957569913211186,
+              "exposureTicks": 326,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["left", 41],
+            ["down", 108],
+            ["right", 109],
+            ["up", 102],
+            ["down", 47],
+            ["right", 720],
+            ["down", 380],
+            ["left", 958],
+            [null, 60],
+            ["right", 47],
+            ["up", 427],
+            ["down", 7],
+            ["up", 14],
+            ["right", 55],
+            ["down", 435],
+            ["right", 95],
+            ["up", 225],
+            ["down", 7],
+            ["right", 54],
+            ["up", 109],
+            ["left", 7],
+            ["right", 7],
+            ["left", 14],
+            ["up", 54],
+            ["right", 652],
+            ["down", 381],
+            ["up", 41],
+            ["left", 686],
+            ["right", 20],
+            ["up", 27],
+            ["right", 27],
+            ["down", 21],
+            [null, 60],
+            ["down", 7],
+            ["right", 123],
+            ["up", 333],
+            [null, 120],
+            ["down", 332],
+            ["right", 353],
+            ["up", 332]
+          ],
+          "replayVerified": true,
+          "checkpoint": "151fc2b0bdd1c640",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 160000,
+            "simulatedTicks": 123252,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 3830,
+            "exhausted": false,
+            "attemptedProposals": 288,
+            "selectedClosures": 6,
+            "failedProposals": 38,
+            "failuresByCause": {
+              "enemy-trail": 38
+            }
+          }
+        }
+      ]
+    },
+    {
+      "missionId": "twin-lens-chambers",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "qualification": "primary-clear-qualified",
+      "samples": [
+        {
+          "stage": "initial",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "twin-lens-chambers",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "cb39080f12f61c1a",
+          "simulationIdentity": "5b482127e3f00d21",
+          "levelIdentity": "8ec4c1fca943cf2c",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "no-loss-clear",
+          "qualification": "legal-route-and-replay-only",
+          "ticks": 3125,
+          "seconds": 26.037820512819646,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.8034232365145229,
+          "coverageGoal": 0.74,
+          "claimedCells": 1549,
+          "totalClaimable": 1928,
+          "cuts": 6,
+          "exposureTicks": 1863,
+          "maxExposureTicks": 463,
+          "firstCoverageMetTick": 3125,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": 0,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 1928,
+              "retained": true,
+              "enemyIds": ["left", "right"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 73,
+              "cells": 379,
+              "retained": true,
+              "enemyIds": ["left", "right"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "left",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "right",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "frontier",
+              "type": "contour-patrol",
+              "role": "frontier-patrol",
+              "retainsField": false
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 359,
+              "claimedCells": 72,
+              "coverage": 0.03734439834024896,
+              "coverageGain": 0.03734439834024896,
+              "exposureTicks": 312,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 616,
+              "claimedCells": 33,
+              "coverage": 0.05446058091286307,
+              "coverageGain": 0.01711618257261411,
+              "exposureTicks": 217,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 996,
+              "claimedCells": 73,
+              "coverage": 0.09232365145228216,
+              "coverageGain": 0.03786307053941909,
+              "exposureTicks": 354,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1377,
+              "claimedCells": 847,
+              "coverage": 0.5316390041493776,
+              "coverageGain": 0.43931535269709543,
+              "exposureTicks": 205,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2054,
+              "claimedCells": 183,
+              "coverage": 0.6265560165975104,
+              "coverageGain": 0.09491701244813278,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3125,
+              "claimedCells": 341,
+              "coverage": 0.8034232365145229,
+              "coverageGain": 0.17686721991701249,
+              "exposureTicks": 312,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["up", 13],
+            ["left", 27],
+            ["up", 109],
+            ["right", 108],
+            ["down", 109],
+            ["right", 14],
+            ["down", 13],
+            ["right", 81],
+            ["up", 54],
+            ["left", 88],
+            ["right", 20],
+            ["up", 163],
+            ["left", 108],
+            ["down", 245],
+            ["left", 14],
+            ["down", 211],
+            [null, 120],
+            ["down", 7],
+            ["left", 81],
+            ["up", 469],
+            ["down", 468],
+            ["left", 285],
+            ["up", 108],
+            ["right", 108],
+            ["down", 102]
+          ],
+          "replayVerified": true,
+          "checkpoint": "601fa7634876642a",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 120000,
+            "simulatedTicks": 85848,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 0,
+            "exhausted": false,
+            "attemptedProposals": 286,
+            "selectedClosures": 6,
+            "failedProposals": 89,
+            "failuresByCause": {
+              "enemy-player": 33,
+              "enemy-trail": 56
+            }
+          }
+        }
+      ]
+    },
+    {
+      "missionId": "toolbench-weave",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "qualification": "primary-clear-qualified",
+      "samples": [
+        {
+          "stage": "initial",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "toolbench-weave",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "0fbfbea1063a1630",
+          "simulationIdentity": "d57ff0ae04f18ca8",
+          "levelIdentity": "12b0c8bd73f4ba4b",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "route-exhausted",
+          "qualification": "needs-new-route-not-proven-impossible",
+          "ticks": 3932,
+          "seconds": 32.76666666666545,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.5042994436014163,
+          "coverageGoal": 0.75,
+          "claimedCells": 997,
+          "totalClaimable": 1977,
+          "cuts": 6,
+          "exposureTicks": 2409,
+          "maxExposureTicks": 693,
+          "firstCoverageMetTick": null,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": null,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 1977,
+              "retained": true,
+              "enemyIds": ["west", "east"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 391,
+              "cells": 980,
+              "retained": true,
+              "enemyIds": ["west", "east"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "west",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "east",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "work-rover",
+              "type": "claimed-rover",
+              "role": "reclaimed-roamer",
+              "retainsField": false
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 537,
+              "claimedCells": 238,
+              "coverage": 0.12038442083965605,
+              "coverageGain": 0.12038442083965605,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1800,
+              "claimedCells": 204,
+              "coverage": 0.22357106727364695,
+              "coverageGain": 0.1031866464339909,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2194,
+              "claimedCells": 96,
+              "coverage": 0.2721294891249368,
+              "coverageGain": 0.048558421851289835,
+              "exposureTicks": 286,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3205,
+              "claimedCells": 204,
+              "coverage": 0.3753161355589277,
+              "coverageGain": 0.10318664643399089,
+              "exposureTicks": 693,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3592,
+              "claimedCells": 103,
+              "coverage": 0.4274152756702074,
+              "coverageGain": 0.052099140111279696,
+              "exposureTicks": 245,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3932,
+              "claimedCells": 152,
+              "coverage": 0.5042994436014163,
+              "coverageGain": 0.07688416793120895,
+              "exposureTicks": 259,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["left", 68],
+            ["down", 476],
+            ["right", 787],
+            ["up", 469],
+            ["down", 7],
+            ["up", 14],
+            ["left", 81],
+            ["down", 217],
+            ["right", 75],
+            [null, 60],
+            ["right", 7],
+            ["up", 163],
+            ["left", 781],
+            [null, 60],
+            ["right", 7],
+            ["left", 14],
+            ["down", 54],
+            ["right", 163],
+            ["down", 55],
+            ["left", 34],
+            ["right", 7],
+            ["left", 14],
+            ["down", 41],
+            ["left", 13],
+            ["down", 265]
+          ],
+          "replayVerified": true,
+          "checkpoint": "f74d5b21cf3bc2b6",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 120000,
+            "simulatedTicks": 120000,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 0,
+            "exhausted": true,
+            "attemptedProposals": 257,
+            "selectedClosures": 6,
+            "failedProposals": 58,
+            "failuresByCause": {
+              "enemy-player": 1,
+              "enemy-trail": 56,
+              "unfinished": 1
+            }
+          }
+        },
+        {
+          "stage": "continuation",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "toolbench-weave",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "0fbfbea1063a1630",
+          "simulationIdentity": "d57ff0ae04f18ca8",
+          "levelIdentity": "12b0c8bd73f4ba4b",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "no-loss-clear",
+          "qualification": "legal-route-and-replay-only",
+          "ticks": 6147,
+          "seconds": 51.223190045246646,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.7946383409205867,
+          "coverageGoal": 0.75,
+          "claimedCells": 1571,
+          "totalClaimable": 1977,
+          "cuts": 11,
+          "exposureTicks": 3582,
+          "maxExposureTicks": 693,
+          "firstCoverageMetTick": 6147,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": 0,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 1977,
+              "retained": true,
+              "enemyIds": ["west", "east"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 678,
+              "cells": 406,
+              "retained": true,
+              "enemyIds": ["west", "east"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "west",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "east",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "work-rover",
+              "type": "claimed-rover",
+              "role": "reclaimed-roamer",
+              "retainsField": false
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 537,
+              "claimedCells": 238,
+              "coverage": 0.12038442083965605,
+              "coverageGain": 0.12038442083965605,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1800,
+              "claimedCells": 204,
+              "coverage": 0.22357106727364695,
+              "coverageGain": 0.1031866464339909,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2194,
+              "claimedCells": 96,
+              "coverage": 0.2721294891249368,
+              "coverageGain": 0.048558421851289835,
+              "exposureTicks": 286,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3205,
+              "claimedCells": 204,
+              "coverage": 0.3753161355589277,
+              "coverageGain": 0.10318664643399089,
+              "exposureTicks": 693,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3592,
+              "claimedCells": 103,
+              "coverage": 0.4274152756702074,
+              "coverageGain": 0.052099140111279696,
+              "exposureTicks": 245,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3932,
+              "claimedCells": 152,
+              "coverage": 0.5042994436014163,
+              "coverageGain": 0.07688416793120895,
+              "exposureTicks": 259,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4245,
+              "claimedCells": 65,
+              "coverage": 0.5371775417298937,
+              "coverageGain": 0.03287809812847742,
+              "exposureTicks": 151,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4855,
+              "claimedCells": 88,
+              "coverage": 0.5816894284269094,
+              "coverageGain": 0.04451188669701567,
+              "exposureTicks": 367,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5005,
+              "claimedCells": 24,
+              "coverage": 0.593829033889732,
+              "coverageGain": 0.012139605462822556,
+              "exposureTicks": 42,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5848,
+              "claimedCells": 204,
+              "coverage": 0.6970156803237229,
+              "coverageGain": 0.10318664643399089,
+              "exposureTicks": 409,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 6147,
+              "claimedCells": 193,
+              "coverage": 0.7946383409205867,
+              "coverageGain": 0.09762266059686386,
+              "exposureTicks": 204,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["left", 68],
+            ["down", 476],
+            ["right", 787],
+            ["up", 469],
+            ["down", 7],
+            ["up", 14],
+            ["left", 81],
+            ["down", 217],
+            ["right", 75],
+            [null, 60],
+            ["right", 7],
+            ["up", 163],
+            ["left", 781],
+            [null, 60],
+            ["right", 7],
+            ["left", 14],
+            ["down", 54],
+            ["right", 163],
+            ["down", 55],
+            ["left", 34],
+            ["right", 7],
+            ["left", 14],
+            ["down", 41],
+            ["left", 13],
+            ["down", 272],
+            ["up", 149],
+            ["right", 54],
+            ["up", 55],
+            ["left", 48],
+            [null, 120],
+            ["right", 7],
+            ["down", 55],
+            ["left", 14],
+            ["down", 40],
+            ["right", 163],
+            ["down", 55],
+            ["left", 156],
+            ["right", 102],
+            ["down", 55],
+            ["right", 421],
+            ["up", 415],
+            ["down", 88],
+            ["left", 211]
+          ],
+          "replayVerified": true,
+          "checkpoint": "9b0220315fadfe2b",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 160000,
+            "simulatedTicks": 92245,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 3932,
+            "exhausted": false,
+            "attemptedProposals": 231,
+            "selectedClosures": 5,
+            "failedProposals": 55,
+            "failuresByCause": {
+              "enemy-trail": 55
+            }
+          }
+        }
+      ]
+    },
+    {
+      "missionId": "dnipro-crossings",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "qualification": "primary-clear-qualified",
+      "samples": [
+        {
+          "stage": "initial",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "dnipro-crossings",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "62db267948a43e1a",
+          "simulationIdentity": "f0b39f54283becc1",
+          "levelIdentity": "808a5bd4bf4882a8",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "no-loss-clear",
+          "qualification": "legal-route-and-replay-only",
+          "ticks": 1733,
+          "seconds": 14.436048265459823,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.7947421638018201,
+          "coverageGoal": 0.75,
+          "claimedCells": 1572,
+          "totalClaimable": 1978,
+          "cuts": 3,
+          "exposureTicks": 1049,
+          "maxExposureTicks": 463,
+          "firstCoverageMetTick": 1733,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": 0,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 1978,
+              "retained": true,
+              "enemyIds": ["north", "south", "east"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 1153,
+              "cells": 406,
+              "retained": true,
+              "enemyIds": ["north", "south", "east"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "north",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "south",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "outer",
+              "type": "border-patrol",
+              "role": "perimeter-patrol",
+              "retainsField": false
+            },
+            {
+              "id": "east",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 264,
+              "claimedCells": 30,
+              "coverage": 0.015166835187057633,
+              "coverageGain": 0.015166835187057633,
+              "exposureTicks": 204,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 673,
+              "claimedCells": 63,
+              "coverage": 0.04701718907987867,
+              "coverageGain": 0.03185035389282104,
+              "exposureTicks": 382,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1733,
+              "claimedCells": 1479,
+              "coverage": 0.7947421638018201,
+              "coverageGain": 0.7477249747219414,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["up", 27],
+            ["left", 27],
+            ["up", 81],
+            ["right", 54],
+            ["down", 82],
+            ["up", 14],
+            ["right", 41],
+            ["down", 109],
+            ["left", 238],
+            ["right", 7],
+            ["left", 14],
+            ["up", 204],
+            ["right", 366],
+            ["down", 469]
+          ],
+          "replayVerified": true,
+          "checkpoint": "bb9a0dfc239a9445",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 120000,
+            "simulatedTicks": 46283,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 0,
+            "exhausted": false,
+            "attemptedProposals": 142,
+            "selectedClosures": 3,
+            "failedProposals": 15,
+            "failuresByCause": {
+              "enemy-player": 1,
+              "enemy-trail": 14
+            }
+          }
+        }
+      ]
+    },
+    {
+      "missionId": "two-districts",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "qualification": "primary-clear-qualified",
+      "samples": [
+        {
+          "stage": "initial",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "two-districts",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "d872f36a5dcbe5a1",
+          "simulationIdentity": "8c16e555da494330",
+          "levelIdentity": "4ae30c51fee21773",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "route-exhausted",
+          "qualification": "needs-new-route-not-proven-impossible",
+          "ticks": 3254,
+          "seconds": 27.11666666666577,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.46994535519125685,
+          "coverageGoal": 0.77,
+          "claimedCells": 946,
+          "totalClaimable": 2013,
+          "cuts": 6,
+          "exposureTicks": 2095,
+          "maxExposureTicks": 557,
+          "firstCoverageMetTick": null,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": null,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 1020,
+              "retained": true,
+              "enemyIds": ["west-cutter", "west-keeper"]
+            },
+            {
+              "id": 110,
+              "cells": 993,
+              "retained": true,
+              "enemyIds": ["east-cutter", "east-keeper"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 511,
+              "cells": 654,
+              "retained": true,
+              "enemyIds": ["west-cutter", "west-keeper"]
+            },
+            {
+              "id": 563,
+              "cells": 413,
+              "retained": true,
+              "enemyIds": ["east-cutter", "east-keeper"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "west-cutter",
+              "type": "eroder",
+              "role": "territory-eroder",
+              "retainsField": true
+            },
+            {
+              "id": "east-cutter",
+              "type": "eroder",
+              "role": "territory-eroder",
+              "retainsField": true
+            },
+            {
+              "id": "frontier",
+              "type": "contour-patrol",
+              "role": "frontier-patrol",
+              "retainsField": false
+            },
+            {
+              "id": "west-keeper",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "east-keeper",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 713,
+              "claimedCells": 264,
+              "coverage": 0.13114754098360656,
+              "coverageGain": 0.13114754098360656,
+              "exposureTicks": 557,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1256,
+              "claimedCells": 72,
+              "coverage": 0.16641828117237953,
+              "coverageGain": 0.035270740188772964,
+              "exposureTicks": 312,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1446,
+              "claimedCells": 36,
+              "coverage": 0.18380526577247888,
+              "coverageGain": 0.017386984600099353,
+              "exposureTicks": 82,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2425,
+              "claimedCells": 336,
+              "coverage": 0.3502235469448584,
+              "coverageGain": 0.1669150521609538,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2806,
+              "claimedCells": 132,
+              "coverage": 0.41530054644808745,
+              "coverageGain": 0.0655737704918033,
+              "exposureTicks": 300,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3254,
+              "claimedCells": 112,
+              "coverage": 0.46994535519125685,
+              "coverageGain": 0.054644808743169404,
+              "exposureTicks": 381,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["up", 136],
+            ["left", 577],
+            ["right", 7],
+            ["left", 14],
+            ["down", 204],
+            ["right", 108],
+            ["down", 108],
+            ["left", 102],
+            ["right", 142],
+            ["down", 55],
+            ["right", 503],
+            ["up", 469],
+            ["down", 75],
+            ["right", 313],
+            ["left", 54],
+            ["down", 387]
+          ],
+          "replayVerified": true,
+          "checkpoint": "b1e211453353cb53",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 120000,
+            "simulatedTicks": 120000,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 0,
+            "exhausted": true,
+            "attemptedProposals": 293,
+            "selectedClosures": 6,
+            "failedProposals": 70,
+            "failuresByCause": {
+              "enemy-player": 1,
+              "enemy-trail": 66,
+              "unfinished": 3
+            }
+          }
+        },
+        {
+          "stage": "continuation",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "two-districts",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "d872f36a5dcbe5a1",
+          "simulationIdentity": "8c16e555da494330",
+          "levelIdentity": "4ae30c51fee21773",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "no-loss-clear",
+          "qualification": "legal-route-and-replay-only",
+          "ticks": 8004,
+          "seconds": 66.69932126696743,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.7878787878787878,
+          "coverageGoal": 0.77,
+          "claimedCells": 1586,
+          "totalClaimable": 2013,
+          "cuts": 15,
+          "exposureTicks": 4286,
+          "maxExposureTicks": 557,
+          "firstCoverageMetTick": 8004,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": 0,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 1020,
+              "retained": true,
+              "enemyIds": ["west-cutter", "west-keeper"]
+            },
+            {
+              "id": 110,
+              "cells": 993,
+              "retained": true,
+              "enemyIds": ["east-cutter", "east-keeper"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 298,
+              "cells": 70,
+              "retained": true,
+              "enemyIds": ["west-cutter", "west-keeper"]
+            },
+            {
+              "id": 563,
+              "cells": 357,
+              "retained": true,
+              "enemyIds": ["east-cutter", "east-keeper"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "west-cutter",
+              "type": "eroder",
+              "role": "territory-eroder",
+              "retainsField": true
+            },
+            {
+              "id": "east-cutter",
+              "type": "eroder",
+              "role": "territory-eroder",
+              "retainsField": true
+            },
+            {
+              "id": "frontier",
+              "type": "contour-patrol",
+              "role": "frontier-patrol",
+              "retainsField": false
+            },
+            {
+              "id": "west-keeper",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "east-keeper",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 713,
+              "claimedCells": 264,
+              "coverage": 0.13114754098360656,
+              "coverageGain": 0.13114754098360656,
+              "exposureTicks": 557,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1256,
+              "claimedCells": 72,
+              "coverage": 0.16641828117237953,
+              "coverageGain": 0.035270740188772964,
+              "exposureTicks": 312,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1446,
+              "claimedCells": 36,
+              "coverage": 0.18380526577247888,
+              "coverageGain": 0.017386984600099353,
+              "exposureTicks": 82,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2425,
+              "claimedCells": 336,
+              "coverage": 0.3502235469448584,
+              "coverageGain": 0.1669150521609538,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2806,
+              "claimedCells": 132,
+              "coverage": 0.41530054644808745,
+              "coverageGain": 0.0655737704918033,
+              "exposureTicks": 300,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3254,
+              "claimedCells": 112,
+              "coverage": 0.46994535519125685,
+              "coverageGain": 0.054644808743169404,
+              "exposureTicks": 381,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4151,
+              "claimedCells": 163,
+              "coverage": 0.5494287133631396,
+              "coverageGain": 0.07998012916045705,
+              "exposureTicks": 340,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4437,
+              "claimedCells": 48,
+              "coverage": 0.5732737208147044,
+              "coverageGain": 0.023845007451564815,
+              "exposureTicks": 204,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4926,
+              "claimedCells": 76,
+              "coverage": 0.6100347739692003,
+              "coverageGain": 0.037257824143070106,
+              "exposureTicks": 422,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5129,
+              "claimedCells": 44,
+              "coverage": 0.6313959264778937,
+              "coverageGain": 0.021361152508693415,
+              "exposureTicks": 150,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5520,
+              "claimedCells": 45,
+              "coverage": 0.6527570789865872,
+              "coverageGain": 0.021857923497267784,
+              "exposureTicks": 230,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 6132,
+              "claimedCells": 157,
+              "coverage": 0.7292598112270243,
+              "coverageGain": 0.07749627421758565,
+              "exposureTicks": 96,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 6296,
+              "claimedCells": 36,
+              "coverage": 0.7461500248385494,
+              "coverageGain": 0.016890213611525096,
+              "exposureTicks": 124,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 6728,
+              "claimedCells": 30,
+              "coverage": 0.7600596125186289,
+              "coverageGain": 0.014406358668653696,
+              "exposureTicks": 244,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 8004,
+              "claimedCells": 64,
+              "coverage": 0.7878787878787878,
+              "coverageGain": 0.030799801291604534,
+              "exposureTicks": 381,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["up", 136],
+            ["left", 577],
+            ["right", 7],
+            ["left", 14],
+            ["down", 204],
+            ["right", 108],
+            ["down", 108],
+            ["left", 102],
+            ["right", 142],
+            ["down", 55],
+            ["right", 503],
+            ["up", 469],
+            ["down", 75],
+            ["right", 313],
+            ["left", 54],
+            ["down", 394],
+            ["left", 258],
+            ["up", 81],
+            ["left", 68],
+            ["up", 14],
+            ["left", 469],
+            ["right", 7],
+            ["left", 14],
+            ["up", 54],
+            ["right", 163],
+            ["down", 55],
+            ["up", 54],
+            ["right", 54],
+            ["up", 55],
+            ["left", 319],
+            ["right", 47],
+            ["up", 156],
+            [null, 120],
+            ["down", 34],
+            ["right", 68],
+            ["down", 108],
+            ["left", 61],
+            ["right", 7],
+            ["up", 108],
+            ["left", 14],
+            ["up", 95],
+            ["right", 231],
+            ["down", 164],
+            ["left", 157],
+            [null, 120],
+            ["right", 61],
+            ["up", 88],
+            ["left", 88],
+            ["down", 82],
+            ["right", 149],
+            ["up", 136],
+            ["right", 597],
+            ["down", 387]
+          ],
+          "replayVerified": true,
+          "checkpoint": "a8d1a9ceb6f988dc",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 160000,
+            "simulatedTicks": 131237,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 3254,
+            "exhausted": false,
+            "attemptedProposals": 430,
+            "selectedClosures": 9,
+            "failedProposals": 206,
+            "failuresByCause": {
+              "enemy-player": 8,
+              "enemy-trail": 178,
+              "unfinished": 20
+            }
+          }
+        }
+      ]
+    },
+    {
+      "missionId": "two-ways-home",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "qualification": "primary-clear-qualified",
+      "samples": [
+        {
+          "stage": "initial",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "two-ways-home",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "c73b0872bbb0737f",
+          "simulationIdentity": "e4256e36a737421c",
+          "levelIdentity": "03a163af96ed576f",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v6",
+          "status": "no-loss-clear",
+          "qualification": "legal-route-and-replay-only",
+          "ticks": 3670,
+          "seconds": 30.58250377073794,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.8322756119673618,
+          "coverageGoal": 0.78,
+          "claimedCells": 1836,
+          "totalClaimable": 2206,
+          "cuts": 6,
+          "exposureTicks": 2558,
+          "maxExposureTicks": 598,
+          "firstCoverageMetTick": 3670,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": 0,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 2206,
+              "retained": true,
+              "enemyIds": ["carrier", "keeper"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 1010,
+              "cells": 370,
+              "retained": true,
+              "enemyIds": ["carrier", "keeper"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "carrier",
+              "type": "bouncer",
+              "role": "impact-carrier",
+              "retainsField": true
+            },
+            {
+              "id": "keeper",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "frontier",
+              "type": "contour-patrol",
+              "role": "frontier-patrol",
+              "retainsField": false
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 624,
+              "claimedCells": 80,
+              "coverage": 0.03626473254759746,
+              "coverageGain": 0.03626473254759746,
+              "exposureTicks": 476,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1507,
+              "claimedCells": 700,
+              "coverage": 0.3535811423390752,
+              "coverageGain": 0.3173164097914778,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2065,
+              "claimedCells": 138,
+              "coverage": 0.4161378059836809,
+              "coverageGain": 0.06255666364460566,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2976,
+              "claimedCells": 597,
+              "coverage": 0.6867633726201269,
+              "coverageGain": 0.270625566636446,
+              "exposureTicks": 598,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3072,
+              "claimedCells": 6,
+              "coverage": 0.6894832275611967,
+              "coverageGain": 0.0027198549410698547,
+              "exposureTicks": 82,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3670,
+              "claimedCells": 315,
+              "coverage": 0.8322756119673618,
+              "coverageGain": 0.14279238440616504,
+              "exposureTicks": 476,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            [null, 60],
+            ["right", 68],
+            ["down", 231],
+            ["left", 54],
+            ["up", 211],
+            ["down", 7],
+            ["right", 54],
+            ["down", 217],
+            ["right", 136],
+            ["up", 469],
+            ["down", 7],
+            ["up", 14],
+            ["left", 68],
+            ["down", 476],
+            ["up", 299],
+            ["left", 605],
+            ["right", 7],
+            ["down", 82],
+            ["left", 7],
+            ["right", 7],
+            ["left", 14],
+            ["down", 95],
+            ["right", 482]
+          ],
+          "replayVerified": true,
+          "checkpoint": "dce473e30102fa89",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 120000,
+            "simulatedTicks": 120000,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 0,
+            "exhausted": true,
+            "attemptedProposals": 286,
+            "selectedClosures": 6,
+            "failedProposals": 113,
+            "failuresByCause": {
+              "enemy-trail": 112,
+              "unfinished": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "missionId": "second-approach",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "qualification": "primary-clear-qualified",
+      "samples": [
+        {
+          "stage": "initial",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "second-approach",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "d8cefa18e38da499",
+          "simulationIdentity": "9b9862884a92c484",
+          "levelIdentity": "a51078355f082c0b",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v7",
+          "status": "route-exhausted",
+          "qualification": "needs-new-route-not-proven-impossible",
+          "ticks": 4045,
+          "seconds": 33.708333333332064,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.24848484848484848,
+          "coverageGoal": 0.8,
+          "claimedCells": 492,
+          "totalClaimable": 1980,
+          "cuts": 8,
+          "exposureTicks": 2711,
+          "maxExposureTicks": 1019,
+          "firstCoverageMetTick": null,
+          "allRequiredCapturedTick": 4045,
+          "ticksAfterRequiredObjectives": 0,
+          "ticksAfterFirstCoverage": null,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 1980,
+              "retained": true,
+              "enemyIds": ["upper-keeper", "lower-keeper"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 73,
+              "cells": 1488,
+              "retained": true,
+              "enemyIds": ["upper-keeper", "lower-keeper"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "upper-keeper",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "lower-keeper",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "frontier",
+              "type": "contour-patrol",
+              "role": "frontier-patrol",
+              "retainsField": false
+            }
+          ],
+          "objectives": [
+            {
+              "id": "west-relay",
+              "required": true,
+              "captured": true
+            },
+            {
+              "id": "east-relay",
+              "required": true,
+              "captured": true
+            }
+          ],
+          "closures": [
+            {
+              "tick": 374,
+              "claimedCells": 42,
+              "coverage": 0.021212121212121213,
+              "coverageGain": 0.021212121212121213,
+              "exposureTicks": 286,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 645,
+              "claimedCells": 45,
+              "coverage": 0.04393939393939394,
+              "coverageGain": 0.022727272727272724,
+              "exposureTicks": 231,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 931,
+              "claimedCells": 54,
+              "coverage": 0.07121212121212121,
+              "coverageGain": 0.027272727272727275,
+              "exposureTicks": 259,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1435,
+              "claimedCells": 23,
+              "coverage": 0.08282828282828283,
+              "coverageGain": 0.011616161616161622,
+              "exposureTicks": 314,
+              "capturedObjectiveIds": ["east-relay"],
+              "openedGateIds": ["east-bridge"]
+            },
+            {
+              "tick": 1654,
+              "claimedCells": 24,
+              "coverage": 0.09494949494949495,
+              "coverageGain": 0.012121212121212116,
+              "exposureTicks": 178,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1980,
+              "claimedCells": 60,
+              "coverage": 0.12525252525252525,
+              "coverageGain": 0.030303030303030304,
+              "exposureTicks": 286,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3622,
+              "claimedCells": 234,
+              "coverage": 0.24343434343434345,
+              "coverageGain": 0.1181818181818182,
+              "exposureTicks": 1019,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4045,
+              "claimedCells": 10,
+              "coverage": 0.24848484848484848,
+              "coverageGain": 0.0050505050505050275,
+              "exposureTicks": 138,
+              "capturedObjectiveIds": ["west-relay"],
+              "openedGateIds": ["west-bridge"]
+            }
+          ],
+          "segments": [
+            ["up", 41],
+            ["right", 367],
+            ["up", 67],
+            ["left", 109],
+            ["down", 68],
+            ["left", 13],
+            ["up", 82],
+            ["left", 109],
+            ["down", 75],
+            ["up", 75],
+            ["right", 326],
+            ["down", 14],
+            ["left", 89],
+            ["right", 7],
+            ["left", 14],
+            ["down", 13],
+            ["right", 109],
+            ["down", 218],
+            ["left", 109],
+            ["up", 75],
+            [null, 120],
+            ["down", 7],
+            ["up", 41],
+            ["right", 434],
+            ["down", 14],
+            ["right", 28],
+            ["down", 108],
+            ["left", 890],
+            ["right", 7],
+            ["left", 14],
+            ["up", 258],
+            ["right", 68],
+            ["down", 14],
+            ["left", 62]
+          ],
+          "replayVerified": true,
+          "checkpoint": "672955335a2c19a2",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 120000,
+            "simulatedTicks": 120000,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 0,
+            "exhausted": true,
+            "attemptedProposals": 346,
+            "selectedClosures": 8,
+            "failedProposals": 25,
+            "failuresByCause": {
+              "enemy-player": 7,
+              "enemy-trail": 17,
+              "unfinished": 1
+            }
+          }
+        },
+        {
+          "stage": "continuation",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "second-approach",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "d8cefa18e38da499",
+          "simulationIdentity": "9b9862884a92c484",
+          "levelIdentity": "a51078355f082c0b",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v7",
+          "status": "no-loss-clear",
+          "qualification": "legal-route-and-replay-only",
+          "ticks": 7375,
+          "seconds": 61.45780542986141,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.8661616161616161,
+          "coverageGoal": 0.8,
+          "claimedCells": 1715,
+          "totalClaimable": 1980,
+          "cuts": 13,
+          "exposureTicks": 4048,
+          "maxExposureTicks": 1019,
+          "firstCoverageMetTick": 7375,
+          "allRequiredCapturedTick": 4045,
+          "ticksAfterRequiredObjectives": 3330,
+          "ticksAfterFirstCoverage": 0,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 1980,
+              "retained": true,
+              "enemyIds": ["upper-keeper", "lower-keeper"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 73,
+              "cells": 160,
+              "retained": true,
+              "enemyIds": ["upper-keeper"]
+            },
+            {
+              "id": 2048,
+              "cells": 105,
+              "retained": true,
+              "enemyIds": ["lower-keeper"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "upper-keeper",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "lower-keeper",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "frontier",
+              "type": "contour-patrol",
+              "role": "frontier-patrol",
+              "retainsField": false
+            }
+          ],
+          "objectives": [
+            {
+              "id": "west-relay",
+              "required": true,
+              "captured": true
+            },
+            {
+              "id": "east-relay",
+              "required": true,
+              "captured": true
+            }
+          ],
+          "closures": [
+            {
+              "tick": 374,
+              "claimedCells": 42,
+              "coverage": 0.021212121212121213,
+              "coverageGain": 0.021212121212121213,
+              "exposureTicks": 286,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 645,
+              "claimedCells": 45,
+              "coverage": 0.04393939393939394,
+              "coverageGain": 0.022727272727272724,
+              "exposureTicks": 231,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 931,
+              "claimedCells": 54,
+              "coverage": 0.07121212121212121,
+              "coverageGain": 0.027272727272727275,
+              "exposureTicks": 259,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1435,
+              "claimedCells": 23,
+              "coverage": 0.08282828282828283,
+              "coverageGain": 0.011616161616161622,
+              "exposureTicks": 314,
+              "capturedObjectiveIds": ["east-relay"],
+              "openedGateIds": ["east-bridge"]
+            },
+            {
+              "tick": 1654,
+              "claimedCells": 24,
+              "coverage": 0.09494949494949495,
+              "coverageGain": 0.012121212121212116,
+              "exposureTicks": 178,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1980,
+              "claimedCells": 60,
+              "coverage": 0.12525252525252525,
+              "coverageGain": 0.030303030303030304,
+              "exposureTicks": 286,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3622,
+              "claimedCells": 234,
+              "coverage": 0.24343434343434345,
+              "coverageGain": 0.1181818181818182,
+              "exposureTicks": 1019,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4045,
+              "claimedCells": 10,
+              "coverage": 0.24848484848484848,
+              "coverageGain": 0.0050505050505050275,
+              "exposureTicks": 138,
+              "capturedObjectiveIds": ["west-relay"],
+              "openedGateIds": ["west-bridge"]
+            },
+            {
+              "tick": 4834,
+              "claimedCells": 217,
+              "coverage": 0.35808080808080806,
+              "coverageGain": 0.10959595959595958,
+              "exposureTicks": 96,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5492,
+              "claimedCells": 156,
+              "coverage": 0.43686868686868685,
+              "coverageGain": 0.0787878787878788,
+              "exposureTicks": 531,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5968,
+              "claimedCells": 120,
+              "coverage": 0.49747474747474746,
+              "coverageGain": 0.06060606060606061,
+              "exposureTicks": 408,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 6784,
+              "claimedCells": 507,
+              "coverage": 0.7535353535353535,
+              "coverageGain": 0.25606060606060604,
+              "exposureTicks": 178,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 7375,
+              "claimedCells": 223,
+              "coverage": 0.8661616161616161,
+              "coverageGain": 0.11262626262626263,
+              "exposureTicks": 124,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["up", 41],
+            ["right", 367],
+            ["up", 67],
+            ["left", 109],
+            ["down", 68],
+            ["left", 13],
+            ["up", 82],
+            ["left", 109],
+            ["down", 75],
+            ["up", 75],
+            ["right", 326],
+            ["down", 14],
+            ["left", 89],
+            ["right", 7],
+            ["left", 14],
+            ["down", 13],
+            ["right", 109],
+            ["down", 218],
+            ["left", 109],
+            ["up", 75],
+            [null, 120],
+            ["down", 7],
+            ["up", 41],
+            ["right", 434],
+            ["down", 14],
+            ["right", 28],
+            ["down", 108],
+            ["left", 890],
+            ["right", 7],
+            ["left", 14],
+            ["up", 258],
+            ["right", 68],
+            ["down", 14],
+            ["left", 62],
+            ["right", 7],
+            ["left", 14],
+            ["down", 244],
+            ["right", 421],
+            ["down", 103],
+            [null, 60],
+            ["down", 7],
+            ["up", 54],
+            ["right", 544],
+            ["left", 54],
+            ["up", 415],
+            ["down", 7],
+            ["up", 14],
+            ["left", 611],
+            ["down", 68],
+            ["left", 54],
+            ["up", 62],
+            [null, 60],
+            ["down", 7],
+            ["up", 14],
+            ["left", 245],
+            ["down", 108],
+            ["right", 13],
+            ["down", 123],
+            ["right", 21]
+          ],
+          "replayVerified": true,
+          "checkpoint": "7a11a15448b2ef91",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 160000,
+            "simulatedTicks": 113425,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 4045,
+            "exhausted": false,
+            "attemptedProposals": 230,
+            "selectedClosures": 5,
+            "failedProposals": 29,
+            "failuresByCause": {
+              "enemy-player": 3,
+              "enemy-trail": 26
+            }
+          }
+        }
+      ]
+    },
+    {
+      "missionId": "windbreak-weave",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "qualification": "primary-route-incomplete",
+      "samples": [
+        {
+          "stage": "initial",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "windbreak-weave",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "2dde5277c49de327",
+          "simulationIdentity": "71ae20e10a63bbfe",
+          "levelIdentity": "acb0eece9a030e25",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v8",
+          "status": "route-exhausted",
+          "qualification": "needs-new-route-not-proven-impossible",
+          "ticks": 3691,
+          "seconds": 30.758333333332228,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.26730190571715146,
+          "coverageGoal": 0.82,
+          "claimedCells": 533,
+          "totalClaimable": 1994,
+          "cuts": 9,
+          "exposureTicks": 2642,
+          "maxExposureTicks": 436,
+          "firstCoverageMetTick": null,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": null,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 1994,
+              "retained": true,
+              "enemyIds": ["northwest", "southeast"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 73,
+              "cells": 1461,
+              "retained": true,
+              "enemyIds": ["northwest", "southeast"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "northwest",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "southeast",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "frontier",
+              "type": "contour-patrol",
+              "role": "frontier-patrol",
+              "retainsField": false
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 277,
+              "claimedCells": 30,
+              "coverage": 0.015045135406218655,
+              "coverageGain": 0.015045135406218655,
+              "exposureTicks": 189,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 575,
+              "claimedCells": 40,
+              "coverage": 0.03510531594784353,
+              "coverageGain": 0.020060180541624874,
+              "exposureTicks": 285,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1091,
+              "claimedCells": 80,
+              "coverage": 0.07522567703109329,
+              "coverageGain": 0.040120361083249755,
+              "exposureTicks": 435,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1812,
+              "claimedCells": 159,
+              "coverage": 0.15496489468405217,
+              "coverageGain": 0.07973921765295888,
+              "exposureTicks": 314,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2046,
+              "claimedCells": 32,
+              "coverage": 0.17101303911735205,
+              "coverageGain": 0.016048144433299882,
+              "exposureTicks": 180,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2521,
+              "claimedCells": 60,
+              "coverage": 0.20110330992978936,
+              "coverageGain": 0.030090270812437314,
+              "exposureTicks": 366,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3147,
+              "claimedCells": 57,
+              "coverage": 0.2296890672016048,
+              "coverageGain": 0.02858575727181545,
+              "exposureTicks": 436,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3432,
+              "claimedCells": 36,
+              "coverage": 0.2477432296890672,
+              "coverageGain": 0.01805416248746239,
+              "exposureTicks": 205,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3691,
+              "claimedCells": 39,
+              "coverage": 0.26730190571715146,
+              "coverageGain": 0.019558676028084254,
+              "exposureTicks": 232,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["right", 54],
+            ["down", 27],
+            ["right", 67],
+            ["up", 54],
+            ["left", 75],
+            ["right", 7],
+            ["up", 109],
+            ["left", 54],
+            ["down", 148],
+            ["left", 230],
+            ["down", 55],
+            ["right", 218],
+            ["up", 68],
+            ["right", 54],
+            ["up", 149],
+            ["left", 122],
+            ["up", 28],
+            ["left", 109],
+            ["down", 191],
+            ["left", 85],
+            ["up", 54],
+            ["right", 95],
+            ["up", 95],
+            ["left", 163],
+            ["down", 54],
+            ["right", 163],
+            ["down", 95],
+            ["left", 82],
+            ["down", 163],
+            ["left", 27],
+            ["up", 252],
+            ["down", 20],
+            ["left", 108],
+            ["down", 109],
+            ["right", 55],
+            ["down", 13],
+            ["left", 41],
+            ["down", 109],
+            ["right", 89]
+          ],
+          "replayVerified": true,
+          "checkpoint": "1025e68e32569dd4",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 120000,
+            "simulatedTicks": 120000,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 0,
+            "exhausted": true,
+            "attemptedProposals": 399,
+            "selectedClosures": 9,
+            "failedProposals": 72,
+            "failuresByCause": {
+              "enemy-player": 2,
+              "enemy-trail": 69,
+              "unfinished": 1
+            }
+          }
+        },
+        {
+          "stage": "continuation",
+          "format": "SpatialRouteEvidenceV1",
+          "missionId": "windbreak-weave",
+          "difficulty": "standard",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "sourceProjectIdentity": "c00deb31a3d99920",
+          "authoredSimulationIdentity": "2dde5277c49de327",
+          "simulationIdentity": "71ae20e10a63bbfe",
+          "levelIdentity": "acb0eece9a030e25",
+          "gameplayTuning": {
+            "version": "gameplay-pressure.v4",
+            "difficulty": "standard",
+            "enemySpeed": 1,
+            "playerSpeed": 1,
+            "enemyDensity": 0,
+            "adminOverride": false,
+            "overrides": {
+              "enemySpeed": 1,
+              "playerSpeed": 1,
+              "enemyDensity": 1
+            }
+          },
+          "ruleset": "xonix-core.v8",
+          "status": "route-exhausted",
+          "qualification": "needs-new-route-not-proven-impossible",
+          "ticks": 8062,
+          "seconds": 67.18333333333287,
+          "losses": 0,
+          "failureCause": null,
+          "coverage": 0.7246740220661986,
+          "coverageGoal": 0.82,
+          "claimedCells": 1445,
+          "totalClaimable": 1994,
+          "cuts": 16,
+          "exposureTicks": 4412,
+          "maxExposureTicks": 463,
+          "firstCoverageMetTick": null,
+          "allRequiredCapturedTick": null,
+          "ticksAfterRequiredObjectives": null,
+          "ticksAfterFirstCoverage": null,
+          "initialComponents": [
+            {
+              "id": 73,
+              "cells": 1994,
+              "retained": true,
+              "enemyIds": ["northwest", "southeast"]
+            }
+          ],
+          "finalComponents": [
+            {
+              "id": 112,
+              "cells": 90,
+              "retained": true,
+              "enemyIds": ["northwest"]
+            },
+            {
+              "id": 833,
+              "cells": 459,
+              "retained": true,
+              "enemyIds": ["southeast"]
+            }
+          ],
+          "actors": [
+            {
+              "id": "northwest",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "southeast",
+              "type": "bouncer",
+              "role": "field-keeper",
+              "retainsField": true
+            },
+            {
+              "id": "frontier",
+              "type": "contour-patrol",
+              "role": "frontier-patrol",
+              "retainsField": false
+            }
+          ],
+          "objectives": [],
+          "closures": [
+            {
+              "tick": 277,
+              "claimedCells": 30,
+              "coverage": 0.015045135406218655,
+              "coverageGain": 0.015045135406218655,
+              "exposureTicks": 189,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 575,
+              "claimedCells": 40,
+              "coverage": 0.03510531594784353,
+              "coverageGain": 0.020060180541624874,
+              "exposureTicks": 285,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1091,
+              "claimedCells": 80,
+              "coverage": 0.07522567703109329,
+              "coverageGain": 0.040120361083249755,
+              "exposureTicks": 435,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 1812,
+              "claimedCells": 159,
+              "coverage": 0.15496489468405217,
+              "coverageGain": 0.07973921765295888,
+              "exposureTicks": 314,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2046,
+              "claimedCells": 32,
+              "coverage": 0.17101303911735205,
+              "coverageGain": 0.016048144433299882,
+              "exposureTicks": 180,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 2521,
+              "claimedCells": 60,
+              "coverage": 0.20110330992978936,
+              "coverageGain": 0.030090270812437314,
+              "exposureTicks": 366,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3147,
+              "claimedCells": 57,
+              "coverage": 0.2296890672016048,
+              "coverageGain": 0.02858575727181545,
+              "exposureTicks": 436,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3432,
+              "claimedCells": 36,
+              "coverage": 0.2477432296890672,
+              "coverageGain": 0.01805416248746239,
+              "exposureTicks": 205,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 3691,
+              "claimedCells": 39,
+              "coverage": 0.26730190571715146,
+              "coverageGain": 0.019558676028084254,
+              "exposureTicks": 232,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4084,
+              "claimedCells": 118,
+              "coverage": 0.32647943831494486,
+              "coverageGain": 0.0591775325977934,
+              "exposureTicks": 367,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 4410,
+              "claimedCells": 78,
+              "coverage": 0.36559679037111337,
+              "coverageGain": 0.03911735205616851,
+              "exposureTicks": 41,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 5795,
+              "claimedCells": 382,
+              "coverage": 0.5571715145436309,
+              "coverageGain": 0.19157472417251753,
+              "exposureTicks": 463,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 6217,
+              "claimedCells": 60,
+              "coverage": 0.5872617853560682,
+              "coverageGain": 0.030090270812437314,
+              "exposureTicks": 369,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 6922,
+              "claimedCells": 84,
+              "coverage": 0.6293881644934805,
+              "coverageGain": 0.04212637913741224,
+              "exposureTicks": 312,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 7697,
+              "claimedCells": 145,
+              "coverage": 0.7021063189568706,
+              "coverageGain": 0.07271815446339014,
+              "exposureTicks": 42,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            },
+            {
+              "tick": 8062,
+              "claimedCells": 45,
+              "coverage": 0.7246740220661986,
+              "coverageGain": 0.022567703109327986,
+              "exposureTicks": 176,
+              "capturedObjectiveIds": [],
+              "openedGateIds": []
+            }
+          ],
+          "segments": [
+            ["right", 54],
+            ["down", 27],
+            ["right", 67],
+            ["up", 54],
+            ["left", 75],
+            ["right", 7],
+            ["up", 109],
+            ["left", 54],
+            ["down", 148],
+            ["left", 230],
+            ["down", 55],
+            ["right", 218],
+            ["up", 68],
+            ["right", 54],
+            ["up", 149],
+            ["left", 122],
+            ["up", 28],
+            ["left", 109],
+            ["down", 191],
+            ["left", 85],
+            ["up", 54],
+            ["right", 95],
+            ["up", 95],
+            ["left", 163],
+            ["down", 54],
+            ["right", 163],
+            ["down", 95],
+            ["left", 82],
+            ["down", 163],
+            ["left", 27],
+            ["up", 252],
+            ["down", 20],
+            ["left", 108],
+            ["down", 109],
+            ["right", 55],
+            ["down", 13],
+            ["left", 41],
+            ["down", 109],
+            ["right", 109],
+            ["down", 81],
+            ["right", 109],
+            ["up", 183],
+            ["down", 61],
+            ["left", 265],
+            ["right", 265],
+            ["down", 136],
+            ["right", 515],
+            ["up", 469],
+            ["down", 7],
+            ["up", 14],
+            ["left", 26],
+            ["down", 163],
+            ["left", 55],
+            ["up", 157],
+            ["down", 7],
+            ["up", 14],
+            ["right", 81],
+            ["down", 285],
+            ["left", 108],
+            ["up", 108],
+            ["right", 109],
+            ["up", 177],
+            ["left", 543],
+            ["down", 41],
+            ["right", 122],
+            ["down", 13],
+            ["right", 55],
+            ["up", 40],
+            ["right", 108],
+            ["down", 34]
+          ],
+          "replayVerified": true,
+          "checkpoint": "7c6118df5beaeefa",
+          "search": {
+            "policy": "efficient",
+            "simulationTickBudget": 160000,
+            "simulatedTicks": 160000,
+            "candidateLimit": 16,
+            "maxCuts": 24,
+            "initialDelayTicks": 0,
+            "prefixTicks": 3691,
+            "exhausted": true,
+            "attemptedProposals": 335,
+            "selectedClosures": 7,
+            "failedProposals": 71,
+            "failuresByCause": {
+              "enemy-player": 2,
+              "enemy-trail": 68,
+              "unfinished": 1
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "outcomes": {
+    "primary-clear-qualified": 8,
+    "primary-route-incomplete": 1
+  }
+}
