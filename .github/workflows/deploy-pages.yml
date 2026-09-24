@@ -197,10 +197,12 @@ jobs:
     needs: [preflight]
     runs-on: ubuntu-latest
     steps:
-      - name: Check out complete history and tags
+      - name: Check out exact pull-request source
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          # The PR build checks only its exact commit and tree. Immutable tags
+          # and full history remain confined to the frozen Pages publisher.
+          fetch-depth: 1
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
 
       - name: Check out the workflow's source verifier
