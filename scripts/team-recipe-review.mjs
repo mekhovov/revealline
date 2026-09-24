@@ -1,5 +1,6 @@
 /** Exact scoped Team functional review; immutable ancestor records are never edited. */
 import { createHash } from 'node:crypto';
+import { teamPictureReviewExtension } from './team-picture-review-extension.mjs';
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reviewedRecord = '7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b';
 const canonical = (value) => JSON.stringify(sort(value));
@@ -26,14 +27,17 @@ export function fieldKitTeamRecipeQuality({
   defaultAsset,
   inheritedAssets,
   reviewBytes,
+  reviewExtensionBytes,
 }) {
   if (!reviewBytes || hash(reviewBytes) !== reviewedRecord) return unreviewed();
   const review = JSON.parse(reviewBytes);
   const role = review.recipes.find((entry) => entry.slot === slotId);
+  const continuation = teamPictureReviewExtension('team', source, reviewExtensionBytes);
   if (
     !role ||
-    source !==
-      `${review.fingerprint.inputs.map((entry) => entry.path).join('; ')} sha256:${review.fingerprint.sha256}` ||
+    (source !==
+      `${review.fingerprint.inputs.map((entry) => entry.path).join('; ')} sha256:${review.fingerprint.sha256}` &&
+      !continuation) ||
     !recipe ||
     digest(recipe) !== role.recipePayloadSHA256 ||
     !defaultAsset ||
@@ -58,6 +62,7 @@ export function fieldKitTeamRecipeQuality({
     stage: 'reviewed',
     evidence: [
       `Team functional scope only: docs/verification/team37/review.json sha256:${reviewedRecord}`,
+      ...(continuation ? [continuation] : []),
     ],
   };
 }

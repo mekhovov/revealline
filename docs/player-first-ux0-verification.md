@@ -411,3 +411,18 @@ remain required. Complete fresh-visual and Solo result-continuation files pass
 passes all five checks after isolating its seeded authored campaign from the
 separate, legitimate fresh release-art import. Its zero-write/byte/history guards
 are unchanged. These are automated host observations, not native or public proof.
+
+### Authored Team picture identity review continuation
+
+The only changed dependency of the earlier 37-role and five-equipment reviews is
+the explicit authored-picture identity guard in `coop-view.mjs`. A separate
+immutable continuation record authenticates both prior reviews and the exact
+new source fingerprint; all other source, payload, geometry and image changes
+still reopen review. The production gate does not grant a blanket latest-source
+approval.
+
+The eight-file cohort passes 67 checks, including authenticated picture ownership,
+invalid identity rejection and production assembly. Command-earned states cover
+31 scenes, all 42 roles and 496 historical/current canvas-command comparisons.
+This is modeled renderer evidence; it does not establish complete P08-A artwork
+quality, new device qualification or public-release acceptance.

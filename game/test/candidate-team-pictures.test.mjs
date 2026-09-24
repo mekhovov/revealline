@@ -77,12 +77,41 @@ test('tuned Team gameplay retains only its explicit authenticated authored pictu
   const level = applyGameplayTuning(row.level, resolveGameplayTuning(row.difficulty));
   const run = createCoop(level),
     before = structuredClone(run);
-  const context = new Proxy({}, { get: () => () => {} });
+  const calls = [],
+    context = new Proxy(
+      {},
+      {
+        get:
+          (_, name) =>
+          (...args) =>
+            calls.push([name, ...args]),
+      },
+    );
   const painter = createCoopPainter({ width: 1152, height: 576, getContext: () => context });
   painter.setPresentation(snapshot);
   assert.throws(() => painter.paint(run, { picture: binding }), /verified owner/);
   painter.paint(run, { picture: binding, pictureLevel: row.level });
   assert.deepEqual(run, before, 'Original-picture presentation does not change tuned rules.');
+  for (const changed of [
+    { version: 'wrong-version' },
+    { width: row.level.width + 1 },
+    { height: row.level.height + 1 },
+  ]) {
+    calls.length = 0;
+    assert.throws(
+      () => painter.paint(run, { picture: binding, pictureLevel: { ...row.level, ...changed } }),
+      /source does not match/,
+    );
+    assert.equal(calls.length, 0, 'Invalid source geometry cannot partially draw.');
+  }
+  calls.length = 0;
+  painter.setPresentation({ ...snapshot });
+  assert.throws(
+    () => painter.paint(run, { picture: binding, pictureLevel: row.level }),
+    /verified owner/,
+  );
+  assert.equal(calls.length, 0, 'A different snapshot cannot borrow the accepted picture.');
+  painter.setPresentation(snapshot);
   assert.throws(
     () =>
       painter.paint(run, {
