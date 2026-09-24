@@ -28,3 +28,9 @@ Development verification on Node 20.19.5 used an in-memory Git source loader bec
 - ESLint was not run locally because its package was unavailable. Required hosted checks remain authoritative.
 
 These checks use simulated DOM/audio boundaries. Independent UI/audio fingerprint review, hosted full qualification, actual browser/controller/device checks, frozen-build inspection and public release acceptance remain required. This document does not mark the feature released.
+
+## Review correction: explicit retry ownership
+
+Independent review found that Solo's lifecycle capture listener could retry blocked music before the explicit B shortcut or Play button handled the same gesture. The capture listener now yields to the quick-control row and eligible B/N shortcuts, preserving disabled-shortcut and custom-binding precedence.
+
+After this correction, the affected quick-controls, Solo soundtrack-host and Couch music-host suites passed **40/40** tests, including trusted keyboard and pointer retries that request playback exactly once. This follow-up does not replace the initial transport/session results or claim hosted release qualification. Raw output and source bindings are retained alongside the review evidence.

@@ -724,3 +724,34 @@ test('quick Solo controls play from the menu, pause independently and skip witho
   assert.equal(page.storage.getItem(AUDIO_PREFERENCES_KEY), master);
   assert.deepEqual(page.errors, []);
 });
+
+for (const gesture of ['keyboard', 'pointer']) {
+  test(`quick Solo ${gesture} retry owns its blocked playback gesture exactly once`, async (t) => {
+    const { page } = await setup(t);
+    const media = musicMedia(page),
+      originalPlay = media.play.bind(media);
+    await waitFor(() => !!media.src, 'Original is ready');
+    media.play = async () => {
+      throw Object.assign(new Error('Gesture refused'), { name: 'NotAllowedError' });
+    };
+    const button = page.$('solo-quick-music-0-toggle');
+    button.click();
+    await waitFor(
+      () => page.$('solo-quick-music-0').textContent.includes('Choose Play music to retry'),
+      'Rejected playback is visible',
+    );
+    media.play = originalPlay;
+    const plays = media.plays;
+    if (gesture === 'keyboard')
+      page.doc.body.emit('keydown', { code: 'KeyB', key: 'b', isTrusted: true });
+    else {
+      button.emit('pointerdown', { isTrusted: true });
+      assert.equal(media.plays, plays, 'Capture must not start playback ahead of the button');
+      button.click();
+    }
+    await waitFor(() => button.textContent === 'Pause music', 'Explicit retry settles playing');
+    assert.equal(media.plays, plays + 1);
+    assert.equal(media.paused, false);
+    assert.deepEqual(page.errors, []);
+  });
+}
