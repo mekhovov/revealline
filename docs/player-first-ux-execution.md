@@ -6,40 +6,79 @@ requirements. Each independent feature is released before the next is accepted.
 
 ## Current delivery status
 
-Checkpoint on 24 September 2026: **UX0 is implemented and qualifying, not publicly
-accepted. UX1–UX6 remain unfinished.** The older observations below are history,
-not the current release state.
+Checkpoint on 24 September 2026: **v0.97.0 is publicly accepted within its recorded
+scope. UX0 remains implemented and qualifying, not publicly accepted; UX1–UX6 are
+unfinished.** The older observations below retain their dates and evidence limits.
 
-Completed within the current delivery:
+Completed publication and scoped source evidence:
 
-- PR320 contains the UX0 input, focus, retained-artwork and guarded-departure
-  corrections. Scoped full-file checks and independent review pass; the full
-  hosted suite remains a separate requirement.
-- All four current Solo/Versus host wrappers pass their 71-mission journeys:
-  142 Solo wins, 142 Versus races and 280 deliberate Next transitions. Specialized
-  Team and historical-original corrections also have their separate scoped proof.
-- Publishing infrastructure PR337 passed 64 hosted Node tests, five Python tests,
-  preflight and build; PR339 passed 100 utility tests, preflight and build. Both
-  are merged. Publisher tests cannot relabel historical waived gameplay tests.
-- v0.97.0 is published on GitHub. Archive65 preserves v0.96 and Archive66 preserves
-  v0.97; complete public-file audits and bounded native play checks are retained.
-  Main-site promotion PR341 is merged; deployment/public verification remain pending.
+- The v0.97 selector PR341 deployed source
+  `1518e15e248b59c6470cc6931023eaf6f1ac363c` through publisher
+  `ca3f3fd638e02e1907a0811d7759d24ba8f726b6`, run `35962558115`,
+  deployment `6631370106`. The full main audit passed **4,271 files /
+  625,227,678 bytes**, with zero failures, retries or skips. Fresh release/tag,
+  nine-asset descriptors and publishing authorities remained unchanged.
+- Main native keyboard checks covered root entry, Missions preparation and exact
+  Back focus, a real Team capture/Pause, guarded departure and Versus
+  movement/life-loss/Pause. No main-origin win/Next was performed. Separate
+  Archive66 evidence contains a Versus win/Next; it is not relabeled as main play.
+  Full physical-disk errors prevented persistence/offline acceptance. Hardware,
+  full accessibility, balance, audio and complete player journeys remain open.
+- [PR344's accepted delivery record](https://github.com/mekhovov/revealline/blob/2f477c69af46cb5dfc817125b63670c90046357f/publishing/pages-controller/delivery/v0970-publication.md)
+  merged as `2f477c69af46cb5dfc817125b63670c90046357f`. Its delivery-only scope
+  preserves historical records and does not trigger another Pages deployment.
+  Archive65 preserves v0.96; Archive66 independently preserves v0.97.
+- PR320 contains UX0 input, focus, retained-artwork and guarded-departure
+  corrections with scoped review/tests. All four current Solo/Versus host
+  wrappers have their separate 71-mission proof: 142 Solo wins, 142 Versus races
+  and 280 deliberate Next transitions. Specialized Team and historical-original
+  proof remains separate from the unfinished complete suite.
+- Infrastructure PR337 passed 64 hosted Node and five Python checks plus
+  preflight/build; PR339 passed 100 utility checks plus preflight/build. Both are
+  merged. These tests do not relabel v0.97's historical gameplay-suite waiver.
 
-Remaining before accepting UX0:
+**Four failures have been observed in the original full CI run at
+`26fe20f8c00aa2d09238595c8856fa5572ea0561`; that run is not a passing gate.**
+The full inventory and final run conclusion remain pending:
 
-1. Complete the full PR320 run and classify every failure. Two cold-catalogue test
-   waits are reproduced and corrected by joining the real opening operation;
-   complete Solo (16) and Versus (10) files pass. A fresh full run is still required.
-2. Merge the final reviewed source, qualify that exact source, freeze the immutable
-   v0.98.0 release and deploy through the single publishing owner.
-3. Verify public version/source/bytes and primary input/play paths. Local disk
-   exhaustion currently prevents native persistence/offline acceptance; visible
-   session-only recovery is not a successful save or hardware qualification.
+| Observed failure                               | Classification and correction                                                                                                                                                                        | Verification state                                                                                                                   |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Solo post-adoption Missions opening            | Fixed five-second fixture poll expires during real cold catalogue preparation. Join the actual returned operation and retain immediate loading/input/ownership assertions.                           | Complete corrected Solo file 16/16 and controlled delayed case passed; retained in checkpoint `b3963c54`, not the canonical PR head. |
+| Queryless Versus controller All missions       | Same cold catalogue polling assumption; observe the real controller activation and join its operation.                                                                                               | Complete corrected Versus file 10/10 and delayed whole-file check passed; same noncanonical checkpoint.                              |
+| Solo held Confirm across result Next           | A controlled 6.5-second real bitmap preparation reproduces the old five-second poll expiry; baseline local case passes. Return the already-owned nonterminal Next preparation promise to its caller. | Complete terminal file 11/11 passes with zero skips; targeted delayed selection separately passes.                                   |
+| Solo result picture/Back → appearance/Missions | A controlled 6.5-second real catalogue fetch reproduces the poll expiry; baseline local case passes. Return the existing library-opening promise from appearance routing.                            | Same complete 11-case file and separate delayed selection pass; these are shared evidence, not another file.                         |
 
-Then release UX1-A rewards/completed-card artwork, UX1-B compact complete missions,
-UX2 shared Home/lobbies/Pause, UX3 layouts/teaching, the separate UX4 outcome and
-continuation features, UX5 remaining player screens and UX6 whole-journey checks.
-No bulk campaign/artwork production precedes reliable core player flows.
+The terminal changes expose existing operations; they do not change gameplay,
+timing, cancellation, focus leases or settled outcomes. Keep held Confirm,
+tick-zero adoption, retained pictures/checkpoints, native editing and deliberate
+Resume assertions.
+The complete terminal file passes **11/11**, with zero failures, cancellations
+or skips (163.30 seconds). The separate controlled-delay selection passes two
+selected cases; nine were unselected. These are distinct runs, not additive test
+totals. The original full-CI inventory and conclusion remain **pending**.
+
+The canonical PR head remains `26fe20f8` at this checkpoint.
+`b3963c542d3d3921f17e98e1bf74611f8624f407` and the terminal correction overlay
+are reviewed/preserved work, not canonical branch qualification or public releases.
+
+### Next steps and ETA dependencies
+
+| Order                           | Next action                                                                                                                                                            | ETA dependency                                                                                                                                                        |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| UX0 correction closure          | Retain the completed terminal 11/11 review and finish the original complete CI inventory; classify every remaining failure. Integrate only final reviewed corrections. | No reliable completion time until those results are known. The current run cannot qualify changed files.                                                              |
+| UX0 final qualification/release | Run complete PR gates on the final head, merge, qualify that exact source, freeze/publish immutable v0.98, deploy the selector and verify public bytes/input/play.     | Fresh PR plus manual full-suite pipelines and publication must finish in sequence. A failing gate adds correction and rerun time; no skipped test or deadline waiver. |
+| UX1-A, then UX1-B               | Exact-art Journey rewards/completed cards, then compact complete missions with previews and retained selection.                                                        | Implementation starts after UX0 public acceptance; each independently useful feature receives its own verified release.                                               |
+| UX2                             | Shared Home/lobbies/Pause, consistent return behavior and less technical menu copy. Use neutral Team loading copy until its mission resolves.                          | Follows rewards/gallery, retaining departure/input ownership.                                                                                                         |
+| UX3                             | Objective-led HUD, boards/touch controls and contextual teaching.                                                                                                      | Depends on the shared navigation and agreed viewport/input checks.                                                                                                    |
+| UX4                             | Separate countdown, short Retry, deliberate terminal Retry and named continuation releases.                                                                            | Depends on stable prepared-attempt/input ownership and outcome proofs; this promise return does not deliver these features.                                           |
+| UX5                             | Settings/difficulty, Collection/Records/replay, help and friendly content/storage recovery.                                                                            | Preserve exact originals, ordinary player access and explicit recovery limitations.                                                                                   |
+| UX6                             | Complete cross-mode journeys, accessibility, performance and public regression.                                                                                        | After feature closure; physical devices, human balance, replay portability and comprehensive offline evidence need their own availability and checks.                 |
+
+Later-phase delivery estimates begin after their predecessors are accepted.
+Do not promise calendar completion from the old targeted failure count or the
+current partial suite. Report a revised release ETA when the final corrected
+head and complete run inventory are known. No bulk campaigns or artwork enter
+the critical path before reliable player flows.
 
 ## Earlier release checkpoints
 
