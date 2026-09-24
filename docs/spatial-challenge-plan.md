@@ -16,7 +16,8 @@ separate gate. The long suite is waived, not passed.
 ## Next prepared batch — Ukrainian ornament studies
 
 The user's follow-up prioritizes Ukrainian ornament as playable obstacle geometry.
-[The bounded successor plan](ukrainian-ornament-study.md) revises Cross-stitch
+[The bounded successor plan](ukrainian-ornament-study.md), prepared in
+[draft PR332](https://github.com/mekhovov/revealline/pull/332), revises Cross-stitch
 crossings, Rushnyk bands and Pysanka sections, using original diamond, zigzag and
 open-shell layouts. It stays separate from PR323 and leaves its default, core
 order and other 88 missions untouched. `whole-ornament-v1` is an explicit
