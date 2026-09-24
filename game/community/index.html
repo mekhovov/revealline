@@ -36,11 +36,47 @@
       <p class="pager">
         <button id="more" type="button" hidden>Load more campaigns</button>
       </p>
+      <section class="panel" aria-labelledby="account-heading">
+        <h2 id="account-heading">Creator account</h2>
+        <p>
+          Creation, downloads, and public browsing stay account-free. Sign in only to publish or
+          manage your own editions.
+        </p>
+        <div id="account-signed-out">
+          <div class="account-fields">
+            <label>Name <input id="account-name" autocomplete="name" maxlength="160" /></label>
+            <label
+              >Email <input id="account-email" type="email" autocomplete="email" maxlength="320"
+            /></label>
+            <label
+              >Password
+              <input
+                id="account-password"
+                type="password"
+                autocomplete="current-password"
+                minlength="8"
+                maxlength="128"
+              />
+            </label>
+          </div>
+          <div class="actions">
+            <button id="account-sign-in" type="button">Sign in</button>
+            <button id="account-sign-up" class="secondary" type="button">Create account</button>
+          </div>
+        </div>
+        <div id="account-signed-in" class="actions" hidden>
+          <p id="account-identity"></p>
+          <button id="account-sign-out" class="secondary" type="button">Sign out</button>
+        </div>
+        <p id="account-status" class="muted" role="status" aria-live="polite">
+          Checking creator session…
+        </p>
+      </section>
       <details class="panel" id="publish-panel">
         <summary>Publish an approved pack</summary>
         <p>
-          Choose an already approved .rlpack. Publishing requires a configured creator account and
-          the server’s upload transport. The game does not create or store account credentials.
+          Choose an already approved .rlpack. The resumable upload can continue from the server’s
+          confirmed offset after an interrupted connection.
         </p>
         <label>Approved pack <input id="publish-file" type="file" accept=".rlpack" /></label>
         <label>Title <input id="publish-title" maxlength="120" /></label>

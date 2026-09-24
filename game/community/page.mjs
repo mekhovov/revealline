@@ -1,18 +1,26 @@
 import { createCreatorStore } from '../creator/installed.mjs';
+import { createCommunityAccountClient } from './account.mjs';
 import { createCommunityClient } from './client.mjs';
 import { createCommunityDownloadStore } from './download-store.mjs';
 import { createCommunityLibrary } from './library.mjs';
 import { createCommunityPublisher } from './publisher.mjs';
 import { createCommunityStateStore } from './state.mjs';
+import { createTusBrowserUpload } from './tus-upload.mjs';
 
 const $ = (id) => document.getElementById(id);
 const status = (message, error = false) => {
   $('status').textContent = message;
   $('status').classList.toggle('error', error);
 };
-const auth = globalThis.RevealLineCommunityAuth;
+const apiBase = document.documentElement.dataset.communityApi;
+const injectedAuth = globalThis.RevealLineCommunityAuth;
+const account = injectedAuth ? null : createCommunityAccountClient({ baseURL: apiBase });
+const auth = injectedAuth ?? {
+  headers: account.headers,
+  uploadResumable: createTusBrowserUpload({ baseURL: apiBase }),
+};
 const client = createCommunityClient({
-  baseURL: document.documentElement.dataset.communityApi,
+  baseURL: apiBase,
   authHeaders: auth?.headers,
   resumableUpload: auth?.uploadResumable,
 });
@@ -28,7 +36,21 @@ let rows = [];
 let nextCursor = null;
 let submissionId = null;
 let submissionTimer = null;
+let accountSession = injectedAuth ? { user: { name: 'Configured creator' } } : null;
 const previewURLs = new Set();
+const canPublish = () => Boolean(accountSession && auth?.headers);
+const renderAccount = () => {
+  $('account-signed-out').hidden = Boolean(accountSession);
+  $('account-signed-in').hidden = !accountSession;
+  if (accountSession)
+    $('account-identity').textContent =
+      `Signed in as ${accountSession.user.name || accountSession.user.email}.`;
+  $('publish').disabled = !publisher.current() || !canPublish();
+};
+const setAccountStatus = (message, error = false) => {
+  $('account-status').textContent = message;
+  $('account-status').classList.toggle('error', error);
+};
 
 const text = (tag, value, className) => {
   const node = document.createElement(tag);
@@ -203,10 +225,10 @@ $('publish-file').onchange = async () => {
     const selected = await publisher.select(file);
     $('publish-title').value = selected.suggestedTitle;
     $('publish-slug').value = selected.suggestedSlug;
-    $('publish').disabled = !auth?.headers;
-    $('publish-status').textContent = auth?.headers
+    $('publish').disabled = !canPublish();
+    $('publish-status').textContent = canPublish()
       ? 'Approved package verified locally. Ready to upload.'
-      : 'Approved package verified. Configure a creator account to upload it.';
+      : 'Approved package verified. Sign in to upload it.';
   } catch (error) {
     $('publish').disabled = true;
     $('publish-status').textContent = error.message;
@@ -231,7 +253,7 @@ $('publish').onclick = async () => {
   } catch (error) {
     $('publish-status').textContent = error.message;
   } finally {
-    $('publish').disabled = !publisher.current() || !auth?.headers;
+    $('publish').disabled = !publisher.current() || !canPublish();
   }
 };
 async function checkSubmission() {
@@ -267,9 +289,72 @@ function scheduleSubmissionCheck() {
   clearTimeout(submissionTimer);
   submissionTimer = setTimeout(checkSubmission, 5_000);
 }
+$('account-sign-up').onclick = async () => {
+  if (!account) return;
+  $('account-sign-up').disabled = true;
+  try {
+    accountSession = await account.signUp({
+      name: $('account-name').value,
+      email: $('account-email').value,
+      password: $('account-password').value,
+    });
+    $('account-password').value = '';
+    setAccountStatus('Creator account created. Publishing is available.');
+    renderAccount();
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-sign-up').disabled = false;
+  }
+};
+$('account-sign-in').onclick = async () => {
+  if (!account) return;
+  $('account-sign-in').disabled = true;
+  try {
+    accountSession = await account.signIn({
+      email: $('account-email').value,
+      password: $('account-password').value,
+    });
+    $('account-password').value = '';
+    setAccountStatus('Signed in. Publishing is available.');
+    renderAccount();
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-sign-in').disabled = false;
+  }
+};
+$('account-sign-out').onclick = async () => {
+  if (!account) return;
+  $('account-sign-out').disabled = true;
+  try {
+    await account.signOut();
+    accountSession = null;
+    submissionId = null;
+    clearTimeout(submissionTimer);
+    setAccountStatus('Signed out. Public browsing remains available.');
+    renderAccount();
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-sign-out').disabled = false;
+  }
+};
 window.addEventListener('pagehide', () => {
   clearTimeout(submissionTimer);
   for (const url of previewURLs) URL.revokeObjectURL(url);
   creatorStore.close();
 });
+renderAccount();
+if (account)
+  void account
+    .session()
+    .then((session) => {
+      accountSession = session;
+      setAccountStatus(
+        session ? 'Creator session restored.' : 'Sign in only when you want to publish.',
+      );
+      renderAccount();
+    })
+    .catch((error) => setAccountStatus(`Account service unavailable: ${error.message}`, true));
 void refresh();
