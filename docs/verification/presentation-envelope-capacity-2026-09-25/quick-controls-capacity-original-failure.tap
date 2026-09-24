@@ -1,0 +1,95 @@
+TAP version 13
+# (node:83414) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("./scripts/.quick-music-capacity-trace-r5.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: P02 retains the published P01 history and appends audio7 under a new fpv24
+ok 1 - P02 retains the published P01 history and appends audio7 under a new fpv24 # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.393208
+  ...
+# Subtest: P03 retains the measured fpv25 source-stage checkpoint after published P02
+ok 2 - P03 retains the measured fpv25 source-stage checkpoint after published P02 # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.051084
+  ...
+# Subtest: current P03 reproduction retains its measured source stage before any review successor
+ok 3 - current P03 reproduction retains its measured source stage before any review successor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035667
+  ...
+# Subtest: Journey music review retains fpv33 source evidence and every earlier immutable record
+ok 4 - Journey music review retains fpv33 source evidence and every earlier immutable record # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032625
+  ...
+# Subtest: unchanged production preserves its exact document and appends changed revisions
+ok 5 - unchanged production preserves its exact document and appends changed revisions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028917
+  ...
+# Subtest: review evidence gets an immutable successor and normal reproduction keeps the review
+ok 6 - review evidence gets an immutable successor and normal reproduction keeps the review # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025625
+  ...
+# Subtest: production refuses silent slot contract mutation and can explicitly return to an old revision
+ok 7 - production refuses silent slot contract mutation and can explicitly return to an old revision # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035709
+  ...
+# Subtest: Journey feedback dependencies bind only the reviewed player-craft effects inputs
+ok 8 - Journey feedback dependencies bind only the reviewed player-craft effects inputs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026125
+  ...
+# Subtest: quick controls reopen UI and audio while retaining their exact previous reviews
+ok 9 - quick controls reopen UI and audio while retaining their exact previous reviews # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.070084
+  ...
+# Subtest: quick controls reopen screens, retaining prior screen and unchanged motion reviews
+ok 10 - quick controls reopen screens, retaining prior screen and unchanged motion reviews # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.077583
+  ...
+# Subtest: changed recipe inputs reopen every consuming group and preserve nonconsumers
+ok 11 - changed recipe inputs reopen every consuming group and preserve nonconsumers # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036167
+  ...
+# CAPACITY_DIAGNOSTIC {"logicalNodes":99761,"encodedEnvelopeNodes":100307,"nodeLimit":100000,"dictionaryEntries":543,"logicalBytes":6372343,"encodedBytes":3622897,"assetRecords":2546,"themeRecords":78,"collectionRecords":1}
+# Subtest: the whole production collection has capacity for immutable review successors
+not ok 12 - the whole production collection has capacity for immutable review successors
+  ---
+  duration_ms: 39252.383917
+  location: '/private/tmp/revealline-quick-controls-reconcile/game/test/presentation-production-history.test.mjs:715:1'
+  failureType: 'testCodeFailure'
+  error: 'JSON exceeds its structural budget.'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    copy (file:///private/tmp/revealline-quick-controls-reconcile/game/data-json.mjs:41:13)
+    copy (file:///private/tmp/revealline-quick-controls-reconcile/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-quick-controls-reconcile/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-quick-controls-reconcile/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-quick-controls-reconcile/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-quick-controls-reconcile/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-quick-controls-reconcile/game/data-json.mjs:84:18)
+    boundedJSON (file:///private/tmp/revealline-quick-controls-reconcile/game/data-json.mjs:92:18)
+    encodePresentationDocument (file:///private/tmp/revealline-quick-controls-reconcile/game/presentation/document-codec.mjs:89:24)
+    validateThemeBundle (file:///private/tmp/revealline-quick-controls-reconcile/game/presentation/model.mjs:686:3)
+    reviseStudioTheme (file:///private/tmp/revealline-quick-controls-reconcile/game/presentation/studio-session.mjs:73:10)
+    retainProductionHistory (file:///private/tmp/revealline-quick-controls-reconcile/scripts/presentation-production-history.mjs:66:10)
+    TestContext.<anonymous> (file:///private/tmp/revealline-quick-controls-reconcile/game/test/presentation-production-history.test.mjs:755:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 11
+# todo 0
+# duration_ms 39427.464959
