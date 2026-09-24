@@ -29,8 +29,36 @@ const copy = (value) =>
     maxArray: 4096,
   });
 
+function authoredMissionIds(project, pack) {
+  const campaigns = new Map(project.campaigns.map((campaign) => [campaign.id, campaign]));
+  return pack.campaignIds.flatMap((campaignId) => {
+    const campaign = campaigns.get(campaignId);
+    required(campaign, 'The selected pack references a missing campaign.');
+    return campaign.missionIds;
+  });
+}
+
+function scopedProvenance(source, missionIds) {
+  const values = Array.isArray(source) ? source : [source];
+  required(
+    values.length === missionIds.length,
+    'Provide one generation record for every included mission.',
+  );
+  const byMission = new Map();
+  for (const entry of values) {
+    const provenance = validateCreatorProvenance(entry);
+    required(
+      missionIds.includes(provenance.missionId) && !byMission.has(provenance.missionId),
+      'Generation evidence is missing, duplicated or belongs to another mission.',
+    );
+    byMission.set(provenance.missionId, provenance);
+  }
+  const ordered = missionIds.map((missionId) => byMission.get(missionId));
+  return ordered.length === 1 ? ordered[0] : ordered;
+}
+
 /** Export scope is determined from the selected pack, never from the browser's
- * media inventory. The first delivery deliberately accepts one complete mission. */
+ * media inventory. Campaign and mission order follow the authored pack graph. */
 function scopedContent(source) {
   const input = copy(source);
   exactKeys(input, ['project', 'packId', 'themes', 'provenance', 'credits'], 'creator content');
@@ -40,35 +68,44 @@ function scopedContent(source) {
   required(pack, 'Select a pack from this project.');
   project.packs = [pack];
   project.campaigns = project.campaigns.filter((c) => pack.campaignIds.includes(c.id));
-  const ids = new Set(project.campaigns.flatMap((c) => c.missionIds));
+  required(
+    project.campaigns.length === pack.campaignIds.length,
+    'The selected pack has a missing or duplicate campaign.',
+  );
+  const missionIds = authoredMissionIds(project, pack);
+  const ids = new Set(missionIds);
+  required(
+    missionIds.length >= 1 && missionIds.length <= 50 && ids.size === missionIds.length,
+    'A creator pack needs 1 to 50 missions assigned once in authored order.',
+  );
   project.missions = project.missions.filter((m) => ids.has(m.id));
   required(
-    project.missions.length === 1 && project.campaigns.length === 1,
-    'This creator version packages one image and one mission. Batch campaigns require the next format capability.',
+    project.missions.length === missionIds.length,
+    'The selected pack has a missing or duplicate mission.',
   );
   project.maps = project.maps.filter((map) =>
     project.missions.some((m) => m.map.id === map.id && m.map.revision === map.revision),
   );
-  const mission = project.missions[0];
   required(
-    mission.modes.length === 1 && mission.modes[0] === 'solo',
+    project.missions.every((mission) => mission.modes.length === 1 && mission.modes[0] === 'solo'),
     'This creator version supports Solo.',
   );
-  project.assets = (project.assets ?? []).filter(
-    (asset) => asset.id === mission.presentation.backgroundAssetId,
+  const wantedAssets = new Set(
+    project.missions.map((mission) => mission.presentation.backgroundAssetId),
   );
-  required(project.assets.length === 1, 'Attach one reveal picture before reviewing this mission.');
+  project.assets = (project.assets ?? []).filter((asset) => wantedAssets.has(asset.id));
+  required(
+    project.assets.length === wantedAssets.size && project.assets.length <= 50,
+    'Attach every reveal picture before reviewing this campaign.',
+  );
   required(Array.isArray(input.themes), 'Provide the selected presentation theme.');
-  const themes = input.themes.filter((theme) => theme.id === mission.presentation.themeId);
+  const wantedThemes = new Set(project.missions.map((mission) => mission.presentation.themeId));
+  const themes = input.themes.filter((theme) => wantedThemes.has(theme.id));
   required(
-    themes.length === 1 && validateTheme(themes[0]).valid,
-    'The mission needs one valid presentation theme.',
+    themes.length === wantedThemes.size && themes.every((theme) => validateTheme(theme).valid),
+    'Every mission needs one valid presentation theme.',
   );
-  const provenance = validateCreatorProvenance(input.provenance);
-  required(
-    provenance.missionId === mission.id,
-    'Generation evidence belongs to a different mission.',
-  );
+  const provenance = scopedProvenance(input.provenance, missionIds);
   exactKeys(input.credits, ['creator', 'picture', 'license'], 'creator credits');
   required(
     Object.values(input.credits).length === 3 &&
@@ -84,6 +121,36 @@ function scopedContent(source) {
     provenance,
     credits: input.credits,
     compatibility: CREATOR_COMPATIBILITY,
+  });
+}
+
+function provenanceEntries(content) {
+  return Array.isArray(content.provenance) ? content.provenance : [content.provenance];
+}
+
+function evidenceEntries(content, evidence) {
+  const provenances = provenanceEntries(content);
+  if (provenances.length === 1) {
+    required(
+      Array.isArray(evidence) && evidence.length === 6,
+      'Manifest needs completion evidence for all supported configurations.',
+    );
+    return [{ missionId: provenances[0].missionId, routes: evidence }];
+  }
+  required(
+    Array.isArray(evidence) && evidence.length === provenances.length,
+    'Manifest needs one completion evidence entry for every mission.',
+  );
+  return evidence.map((entry, index) => {
+    exactKeys(entry, ['missionId', 'routes'], 'mission completion evidence');
+    required(
+      entry.missionId === provenances[index].missionId &&
+        Array.isArray(entry.routes) &&
+        entry.routes.length === 6 &&
+        entry.routes.every((route) => route?.missionId === entry.missionId),
+      'Mission completion evidence differs from authored mission order.',
+    );
+    return entry;
   });
 }
 function scopedAssets(source, wanted) {
@@ -137,33 +204,50 @@ function scopedAssets(source, wanted) {
 export async function prepareCreatorBundle(source, sourceAssets, { signal, decodeImage } = {}) {
   creatorAbort(signal);
   const content = scopedContent(source),
-    asset = content.project.assets[0];
-  const assets = scopedAssets(sourceAssets, new Set([asset.sha256]));
-  const media = await prepareStillAsset(
-    assets[0].blob,
-    {
-      id: asset.id,
-      provenance: {
-        kind: 'user-supplied',
-        credit: content.credits.picture,
-        source: 'Reviewed creator runtime derivative',
-      },
-    },
-    { signal, decodeImage },
-  );
-  required(
-    media.asset.sha256 === asset.sha256 &&
-      media.asset.bytes === asset.bytes &&
-      media.asset.mime === 'image/png' &&
-      media.asset.width === asset.width &&
-      media.asset.height === asset.height,
-    'Reveal picture bytes differ from the project pin. Prepare and review the picture again.',
-  );
-  const evidence = await verifyCreatorRoutes(content.project, content.provenance, {
-    signal,
-    buildVersion: 'creator-route-v1',
-  });
+    assetByHash = new Map(
+      scopedAssets(sourceAssets, new Set(content.project.assets.map((asset) => asset.sha256))).map(
+        (asset) => [asset.sha256, asset],
+      ),
+    ),
+    verifiedAssets = new Map();
+  for (const asset of content.project.assets) {
+    let facts = verifiedAssets.get(asset.sha256);
+    if (!facts) {
+      const media = await prepareStillAsset(
+        assetByHash.get(asset.sha256).blob,
+        {
+          id: asset.id,
+          provenance: {
+            kind: 'user-supplied',
+            credit: content.credits.picture,
+            source: 'Reviewed creator runtime derivative',
+          },
+        },
+        { signal, decodeImage },
+      );
+      facts = media.asset;
+      verifiedAssets.set(asset.sha256, facts);
+    }
+    required(
+      facts.sha256 === asset.sha256 &&
+        facts.bytes === asset.bytes &&
+        facts.mime === 'image/png' &&
+        facts.width === asset.width &&
+        facts.height === asset.height,
+      'Reveal picture bytes differ from the project pin. Prepare and review the picture again.',
+    );
+  }
+  const verified = [];
+  for (const provenance of provenanceEntries(content)) {
+    const routes = await verifyCreatorRoutes(content.project, provenance, {
+      signal,
+      buildVersion: 'creator-route-v1',
+    });
+    verified.push({ missionId: provenance.missionId, routes });
+  }
+  const evidence = verified.length === 1 ? verified[0].routes : freezeDesign(verified);
   creatorAbort(signal);
+  const assets = Object.freeze([...assetByHash.values()]);
   const document = freezeDesign({
     format: CREATOR_BUNDLE_FORMAT,
     content,
@@ -182,7 +266,9 @@ export async function prepareCreatorBundle(source, sourceAssets, { signal, decod
   const bytes = 12 + manifestBytes + assets.reduce((n, a) => n + a.blob.size, 0);
   required(
     manifestBytes <= CREATOR_BUNDLE_LIMITS.manifestBytes && bytes <= CREATOR_BUNDLE_LIMITS.bytes,
-    'The pack is too large. Reduce its picture size.',
+    content.project.missions.length === 1
+      ? 'The pack is too large. Reduce its picture size.'
+      : 'The pack is too large. Review an explicit split plan or remove selected pictures.',
   );
   const result = Object.freeze({
     manifest,
@@ -191,8 +277,11 @@ export async function prepareCreatorBundle(source, sourceAssets, { signal, decod
     bytes,
     review: freezeDesign({
       name: content.project.name,
-      missions: 1,
-      picture: asset,
+      missions: content.project.missions.length,
+      picture: content.project.assets[0],
+      ...(content.project.assets.length > 1
+        ? { pictures: content.project.assets, campaigns: content.project.campaigns }
+        : {}),
       credits: content.credits,
       validation:
         'Automated route verified for all Solo presets and steering modes. Visual review is still required.',
@@ -223,16 +312,17 @@ export async function inspectCreatorManifest(source) {
       canonicalJSON(scopedContent(content)) === canonicalJSON(manifest.content),
     'Content manifest requires unsupported or unrelated content.',
   );
-  const asset = manifest.content.project.assets[0];
+  const assets = [
+    ...new Map(manifest.content.project.assets.map((asset) => [asset.sha256, asset])).values(),
+  ].sort((a, b) => a.sha256.localeCompare(b.sha256));
   required(
     canonicalJSON(manifest.assets) ===
-      canonicalJSON([{ sha256: asset.sha256, bytes: asset.bytes, mime: 'image/png' }]),
-    'Manifest inventory differs from its required picture.',
+      canonicalJSON(
+        assets.map((asset) => ({ sha256: asset.sha256, bytes: asset.bytes, mime: 'image/png' })),
+      ),
+    'Manifest inventory differs from its required pictures.',
   );
-  required(
-    Array.isArray(manifest.evidence) && manifest.evidence.length === 6,
-    'Manifest needs completion evidence for all supported configurations.',
-  );
+  evidenceEntries(manifest.content, manifest.evidence);
   const { editionId, ...document } = manifest;
   required(
     (await creatorSHA256(new TextEncoder().encode(canonicalJSON(document)))) === editionId,
@@ -297,8 +387,8 @@ export async function importCreatorBundle(source, { signal, decodeImage } = {}) 
     'This pack requires an unsupported creator runtime.',
   );
   required(
-    Array.isArray(manifest.assets) && manifest.assets.length === 1,
-    'Expected one reveal picture.',
+    Array.isArray(manifest.assets) && manifest.assets.length >= 1,
+    'Expected reveal pictures.',
   );
   const assets = [];
   let offset = 12 + length;
@@ -334,7 +424,9 @@ export function creatorArtworkLoader(prepared) {
     loadPreviewArtwork(asset, {
       signal,
       fetchAsset: async (path) => {
-        const pin = prepared.manifest.content.project.assets.find((item) => item.path === path);
+        const pin = prepared.manifest.content.project.assets.find(
+          (item) => item.id === asset.id && item.path === path,
+        );
         required(
           pin && canonicalJSON(pin) === canonicalJSON(asset),
           'Artwork is outside this installed edition.',
