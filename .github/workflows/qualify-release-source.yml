@@ -136,6 +136,9 @@ jobs:
           fi
           node scripts/check-field-kit-readiness.mjs
 
+      - name: Require reviewed production slots in the committed ledger
+        run: node scripts/check-field-kit-readiness.mjs
+
       - name: Verify qualified tracked source is unchanged
         run: |
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
