@@ -121,7 +121,7 @@ test('corrupt saved bytes are retained and a title Start offers Library recovery
     h = await soloPage(t, { storage, titleScreen: true });
   const before = snapshot(h);
   h.$('shell-featured').click();
-  await settle(() => !h.$('shell-featured').disabled);
+  await settle(() => !h.$('shell-featured').hasAttribute('aria-busy'));
   assert.deepEqual(snapshot(h), before);
   assert.equal(h.$('shell-home').open, true);
   assert.equal(storage.getItem(slot), '{not-json');
@@ -215,7 +215,8 @@ for (const action of [
     const before = snapshot(h);
     activateTitle(h, 'shell-featured');
     assert.equal(h.$('shell-flight-cancel').hidden, false);
-    assert.equal(h.doc.activeElement.id, 'shell-flight-cancel');
+    assert.equal(h.doc.activeElement.id, 'shell-featured');
+    assert.equal(h.$('shell-featured').getAttribute('aria-busy'), 'true');
     assert.equal(h.$('shell-flight-status').closest('dialog').id, 'shell-home');
     if (action === 'cancel') h.$('shell-flight-cancel').click();
     if (action === 'missions') {
@@ -231,7 +232,7 @@ for (const action of [
     if (action === 'pagehide') h.win.emit('pagehide', { persisted: true });
     if (action === 'new-save') h.storage.setItem(slot, 'newer-slot');
     gate.resolve();
-    await settle(() => !h.$('shell-featured').disabled);
+    await settle(() => !h.$('shell-featured').hasAttribute('aria-busy'));
     if (action === 'hidden') {
       h.doc.hidden = false;
       h.win.emit('focus');
@@ -244,6 +245,45 @@ for (const action of [
     if (action === 'cancel') assert.equal(h.doc.activeElement.id, 'shell-featured');
     assert.deepEqual(h.errors, []);
   });
+
+test('held Confirm stays on Start and cannot turn into Stop loading', async (t) => {
+  const f = await media(t),
+    gate = deferred();
+  let decoding = 0;
+  class SlowPicture extends Picture {
+    decode() {
+      decoding++;
+      return gate.promise;
+    }
+  }
+  const h = await soloPage(t, {
+    titleScreen: true,
+    campaign: f.campaign,
+    soundtrackIndexedDB: f.memory.indexedDB,
+    pictures: { Image: SlowPicture },
+    waitForPictures: false,
+  });
+  await settle(() => decoding > 0);
+  activateTitle(h, 'shell-featured');
+  assert.equal(h.doc.activeElement.id, 'shell-featured');
+  assert.equal(h.$('shell-featured').getAttribute('aria-busy'), 'true');
+  assert.equal(h.$('shell-flight-cancel').hidden, false);
+
+  // Model repeat events from one held keyboard/controller activation. The
+  // stable action remains the owner and no replacement launch is created.
+  h.$('shell-featured').click();
+  h.$('shell-featured').click();
+  assert.equal(h.doc.activeElement.id, 'shell-featured');
+  assert.equal(h.$('shell-featured').getAttribute('aria-busy'), 'true');
+  assert.equal(h.$('shell-flight-cancel').hidden, false);
+
+  gate.resolve();
+  await settle(() => h.doc.body.dataset.flightState === 'running');
+  assert.equal(h.$('shell-featured').hasAttribute('aria-busy'), false);
+  assert.equal(h.$('shell-flight-cancel').hidden, true);
+  assert.deepEqual(h.errors, []);
+});
+
 for (const action of ['complete', 'cancel', 'escape', 'new-save', 'missions', 'blur'])
   test(`saved original restore: ${action} is checked before adopting a new run`, async (t) => {
     const f = await media(t),
@@ -282,7 +322,8 @@ for (const action of ['complete', 'cancel', 'escape', 'new-save', 'missions', 'b
       activateTitle(h, 'shell-continue');
       await settle(() => decodes >= 2);
       assert.equal(h.$('shell-flight-cancel').hidden, false);
-      assert.equal(h.doc.activeElement.id, 'shell-flight-cancel');
+      assert.equal(h.doc.activeElement.id, 'shell-continue');
+      assert.equal(h.$('shell-continue').getAttribute('aria-busy'), 'true');
       assert.equal(h.$('shell-home').open, true);
       if (action === 'cancel') {
         h.$('shell-flight-cancel').click();
@@ -312,7 +353,7 @@ for (const action of ['complete', 'cancel', 'escape', 'new-save', 'missions', 'b
       }
       if (action === 'blur') h.win.emit('blur');
       gate.resolve();
-      await settle(() => !h.$('shell-continue').disabled);
+      await settle(() => !h.$('shell-continue').hasAttribute('aria-busy'));
       // Let cancelled asynchronous verification reach its actual cleanup boundary.
       await settle(() => !h.$('continue-saved').disabled);
       h.frame(0);
@@ -403,7 +444,7 @@ test('a storage refusal inside restore status cleans up and a fresh Continue sti
       return get(key);
     };
     activateTitle(h, 'shell-continue');
-    await settle(() => !h.$('shell-continue').disabled);
+    await settle(() => !h.$('shell-continue').hasAttribute('aria-busy'));
     assert.equal(refused, true);
     assert.equal(h.$('continue-saved').disabled, false);
     assert.match(h.$('shell-flight-status').textContent, /Storage refused/);
@@ -441,10 +482,11 @@ for (const outcome of ['cancel', 'error'])
         saved = h.storage.getItem(slot),
         cancel = h.$('shell-flight-cancel');
       activateTitle(h, 'shell-featured');
-      assert.equal(h.doc.activeElement.id, cancel.id);
+      assert.equal(h.doc.activeElement.id, 'shell-featured');
+      assert.equal(h.$('shell-featured').getAttribute('aria-busy'), 'true');
 
-      // Native focus loss/observers may run synchronously while an owned
-      // control disappears. The real host still owns the actual cancellation.
+      // A deliberate focus change or browser backgrounding during preparation
+      // must remain authoritative when the secondary Stop loading control hides.
       let hidden = cancel.hidden,
         changed = false;
       Object.defineProperty(cancel, 'hidden', {
@@ -452,21 +494,20 @@ for (const outcome of ['cancel', 'error'])
         get: () => hidden,
         set(value) {
           hidden = value;
-          if (!value || changed) return;
-          changed = true;
-          if (focusChange === 'other-action') h.$('shell-options').focus();
-          else {
-            h.doc.activeElement = h.doc.body;
-            h.doc.focused = false;
-            h.win.emit('blur');
-          }
+          if (value) changed = true;
         },
       });
+      if (focusChange === 'other-action') h.$('shell-options').focus();
+      else {
+        h.doc.activeElement = h.doc.body;
+        h.doc.focused = false;
+        h.win.emit('blur');
+      }
       if (outcome === 'cancel') {
         cancel.click();
         gate.resolve();
       } else gate.reject(new Error('Held original decode refused'));
-      await settle(() => !h.$('shell-featured').disabled);
+      await settle(() => !h.$('shell-featured').hasAttribute('aria-busy'));
       assert.equal(changed, true);
       assert.equal(
         h.doc.activeElement ===
@@ -491,13 +532,16 @@ test('an unavailable visual pin preserves flight and recovery without current-th
     h.$('pause-button').click();
   });
   const saved = JSON.parse(storage.getItem(slot));
-  assert.equal(saved.format, 'xonix-session.v5');
+  assert.equal(saved.format, 'xonix-session.v6');
   const originalVisualPin = saved.visualThemePin;
   const choice = saved.presentationPins.choices.find(
     (row) => (row.picture ?? row).identity.themeId === saved.themeId,
   );
   const identity = (choice.picture ?? choice).identity;
+  // Exercise the historical v5 reader by explicitly down-converting the
+  // current v6 fixture after proving what the live writer emitted.
   saved.format = 'xonix-session.v5';
+  delete saved.actorAppearancePin;
   saved.visualThemePin = {
     format: 'revealline-visual-theme-pin.v1',
     content: {
@@ -526,7 +570,7 @@ test('an unavailable visual pin preserves flight and recovery without current-th
   activateTitle(h, 'shell-continue');
   await settle(
     () =>
-      !h.$('shell-continue').disabled &&
+      !h.$('shell-continue').hasAttribute('aria-busy') &&
       /saved theme/i.test(h.$('shell-flight-status').textContent),
   );
   assert.deepEqual(snapshot(h), before);
