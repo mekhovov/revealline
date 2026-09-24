@@ -4,7 +4,44 @@ Approved 24 September 2026. This replaces the execution order in the older
 whole-game plans; it does not erase their content, compatibility or qualification
 requirements. Each independent feature is released before the next is accepted.
 
-## Release checkpoint
+## Current delivery status
+
+Checkpoint on 24 September 2026: **UX0 is implemented and qualifying, not publicly
+accepted. UX1–UX6 remain unfinished.** The older observations below are history,
+not the current release state.
+
+Completed within the current delivery:
+
+- PR320 contains the UX0 input, focus, retained-artwork and guarded-departure
+  corrections. Scoped full-file checks and independent review pass; the full
+  hosted suite remains a separate requirement.
+- All four current Solo/Versus host wrappers pass their 71-mission journeys:
+  142 Solo wins, 142 Versus races and 280 deliberate Next transitions. Specialized
+  Team and historical-original corrections also have their separate scoped proof.
+- Publishing infrastructure PR337 passed 64 hosted Node tests, five Python tests,
+  preflight and build; PR339 passed 100 utility tests, preflight and build. Both
+  are merged. Publisher tests cannot relabel historical waived gameplay tests.
+- v0.97.0 is published on GitHub. Archive65 preserves v0.96 and Archive66 preserves
+  v0.97; complete public-file audits and bounded native play checks are retained.
+  Main-site promotion PR341 is merged; deployment/public verification remain pending.
+
+Remaining before accepting UX0:
+
+1. Complete the full PR320 run and classify every failure. Two cold-catalogue test
+   waits are reproduced and corrected by joining the real opening operation;
+   complete Solo (16) and Versus (10) files pass. A fresh full run is still required.
+2. Merge the final reviewed source, qualify that exact source, freeze the immutable
+   v0.98.0 release and deploy through the single publishing owner.
+3. Verify public version/source/bytes and primary input/play paths. Local disk
+   exhaustion currently prevents native persistence/offline acceptance; visible
+   session-only recovery is not a successful save or hardware qualification.
+
+Then release UX1-A rewards/completed-card artwork, UX1-B compact complete missions,
+UX2 shared Home/lobbies/Pause, UX3 layouts/teaching, the separate UX4 outcome and
+continuation features, UX5 remaining player screens and UX6 whole-journey checks.
+No bulk campaign/artwork production precedes reliable core player flows.
+
+## Earlier release checkpoints
 
 At the opening reconciliation, public Pages reports v0.95.0, source
 `8c383561140289fee2cefa9450a7439c8f485a03`. GitHub v0.96.0 is published, but its
