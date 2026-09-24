@@ -1230,7 +1230,7 @@ for (const format of ['single', 'first-to-two']) {
     assert.equal(page.$('race-start').disabled, false);
     assert.equal(
       page.$('race-message').textContent,
-      `The ${continuation.toLowerCase()} picture could not be prepared. Results are kept. Choose ${continuation} to retry.`,
+      `The ${continuation.toLowerCase()} picture or actors could not be prepared. Both boards are kept. Choose ${continuation} to retry.`,
     );
     assert.equal(diagnostics.length, 1);
     assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
@@ -1285,7 +1285,7 @@ for (const format of ['single', 'first-to-two']) {
     assert.equal(page.$('race-start').disabled, false);
     assert.equal(
       page.$('race-message').textContent,
-      `The ${continuation.toLowerCase()} picture could not be prepared. Results are kept. Choose ${continuation} to retry.`,
+      `The ${continuation.toLowerCase()} picture or actors could not be prepared. Both boards are kept. Choose ${continuation} to retry.`,
     );
     assert.equal(diagnostics.length, 1);
     assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
