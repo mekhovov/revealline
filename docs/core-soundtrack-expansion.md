@@ -14,13 +14,22 @@ listening acceptance of these 70 remains separate. Their inventory and saved
 identities must not be rewritten when adding music. Ukrainian hosted recordings:
 zero. Private UA-FPV packs preserve 80 filenames and 77 distinct recordings.
 
+## Completed engineering
+
+- Draft game PR #321 adds exact-hash reviewed-batch admission without changing the current 70 tracks or 15 albums.
+- Immutable `/batches/<id>/` archive bases are supported while preserving existing root archive URLs.
+- 77 focused tests passed; an independent review found no concrete defect and reran 39 relevant tests successfully.
+- Hosted audio preparation preserves native sources and derives 256 kbps MP3s with full decoding and encoded loudness/peak measurements.
+
+These are engineering results, not listening approval or a released music batch.
+
 ## In progress
 
-| Batch         | Candidate count | Current boundary                                                                                                                                                                                                                          |
-| ------------- | --------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Heavier metal |               6 | Four additional Vitalezzz tracks, Bogart VGM's German Industrial Metal and MintoDog's Heavy Boss Battle 1. Individual CC0/CC BY source downloads selected; hosted exact-byte preparation and listening pending.                           |
-| Retro arcade  |               8 | Unused Ragnar Random compositions selected after comparison against all 70 current entries. Source descriptions cover SID, Genesis/FM and NES-like instruments; exact instrumentation, energy and arrangement remain listening questions. |
-| Ukrainian     |         3 leads | Two Oleg Mazur arrangements plus Mark Wilson X's short Shchedryk fusion cue. Exact recording acquisition, applicable licence, listening and cultural review remain open.                                                                  |
+| Batch         | Candidate count | Current boundary                                                                                                                                                                                                                                                                       |
+| ------------- | --------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Heavier metal |               6 | Four additional Vitalezzz tracks, Bogart VGM's German Industrial Metal and MintoDog's Heavy Boss Battle 1. Individual CC0/CC BY source downloads selected; all six passed hosted full decoding, MP3 inspection and loudness checks; listening remains pending.                         |
+| Retro arcade  |               7 | Unused Ragnar Random compositions selected after comparison against all 70 current entries. Source descriptions cover SID, Genesis/FM and NES-like instruments; seven passed technical checks. Most are short arcade cues; instrumentation and arrangement remain listening questions. |
+| Ukrainian     |         4 leads | Alexander Nakarada's CC BY 4.0 Shchedryk/metal adaptation, two Oleg Mazur arrangements and Mark Wilson X's short fusion cue. Exact recording acquisition, applicable licence, listening and cultural review remain open.                                                               |
 
 The candidate counts are not released or approved counts. Hosted preparation
 retains native source files, licence-page snapshots, hashes, complete decoder
@@ -65,6 +74,12 @@ Dream's source identifies its folk-song basis, «На солодкім меду�
 is documented Ukrainian classical piano music, not an energetic folk-electronic
 album. Its composition/edition clearance and gameplay context remain separate
 from recording permission.
+
+## Qualification evidence and current blockers
+
+Archive PR #2 retains failed intake runs 35943657893, 35943774127 and 35943850666 (three source filenames did not match creator download links). Run 35944115394 then passed 13 recordings and rejected Angry Bullfrogs Riding Motorbikes because it is shorter than the 60-second intake floor. The candidate was excluded; the duration gate was not waived. Fresh 13-candidate run 35944483804 is required.
+
+Full game qualification run 35944418013 at `913306a736443959b4b8ff913c0976093a2b06bb` failed before source validation: two inherited release-utility diagnostics fixtures exhaust mocked Git responses in `publishing/utility/test_upload_diagnostics.py`. A separate fixture-only repair is being coordinated with Releases. Later gates were skipped, not passed. The four local archive-builder tests could not pass the existing 1 GiB free-disk guard; hosted qualification must cover them.
 
 ## Remaining release gates
 
