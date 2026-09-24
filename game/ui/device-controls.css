@@ -191,6 +191,9 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
 .game-shell #controller-ui-hint {
   display: none;
 }
+.game-shell #controller-navigation-details p {
+  margin: 12px 0;
+}
 .game-shell .shell-bar .shell-edition {
   flex: 1;
 }
@@ -516,21 +519,6 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
   min-height: 44px;
   font: 22px var(--fk-font-ui, sans-serif);
 }
-.game-shell .controller-connection-hint {
-  position: fixed;
-  z-index: 100;
-  bottom: max(8px, var(--safe-bottom));
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: min(90vw, 640px);
-  padding: 4px 12px;
-  margin: 0;
-  background: #07101ee8;
-  color: #d4f6ff;
-  border-radius: 6px;
-  pointer-events: none;
-  font: 13px/1.4 var(--fk-font-ui, sans-serif);
-}
 @media (any-pointer: coarse) {
   .game-shell dialog :is(button, select, input:not([type='checkbox']), summary, a) {
     min-height: 44px;
@@ -657,20 +645,9 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
     .encounter-status[data-kind='classic'][data-phase='open'] {
     display: none;
   }
-  .game-shell[data-flight-state='running'] .controller-connection-hint {
-    display: none;
-  }
   .game-shell[data-flight-state='running'] .first-flight-panel {
     display: none;
   }
-}
-.game-shell dialog .controller-connection-hint {
-  position: sticky;
-  left: auto;
-  bottom: 0;
-  transform: none;
-  margin: 12px auto 0;
-  width: fit-content;
 }
 
 /* Keep a shown D-pad clear of the complete board in short landscape.
