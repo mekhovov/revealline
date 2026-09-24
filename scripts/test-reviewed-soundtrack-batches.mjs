@@ -25,7 +25,8 @@ async function temporary(t) {
 async function fixture(t) {
   const root = await temporary(t);
   const id = 'synthetic-fixture',
-    folder = `authoring/library/soundtrack-batches/${id}/`;
+    folder = `authoring/library/soundtrack-batches/${id}/`,
+    baseURL = 'https://mekhovov.github.io/revealline-soundtracks-01/batches/core-20260924/';
   const write = async (name, body) => {
     const relative = folder + name,
       bytes = Buffer.from(typeof body === 'string' ? body : JSON.stringify(body));
@@ -60,7 +61,7 @@ async function fixture(t) {
       },
       archive: {
         id: track.archiveId,
-        baseURL: 'https://mekhovov.github.io/revealline-soundtracks-02/',
+        baseURL,
         inventorySha256: '',
       },
       collections: [
@@ -132,15 +133,15 @@ async function fixture(t) {
     delivery: {
       format: 'revealline-soundtrack-batch-delivery.v1',
       batchId: id,
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-02/',
+      baseURL,
       inventorySha256: '',
       verified: true,
       verifiedAt: '2026-09-24T00:00:00Z',
-      deployRunURL: 'https://github.com/mekhovov/revealline-soundtracks-02/actions/runs/123456',
+      deployRunURL: 'https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/123456',
       files: [
         {
           ...row,
-          url: `https://mekhovov.github.io/revealline-soundtracks-02/${track.path}`,
+          url: `${baseURL}${track.path}`,
           status: 200,
           verified: true,
         },
