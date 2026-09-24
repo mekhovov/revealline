@@ -32,3 +32,20 @@ export async function chooseJourneyMission(page, openerId, edition, levelId) {
   card.click();
   return runtimeId;
 }
+
+/** Join a visible card's exact download/launch operation before reusing its view. */
+export async function activateMissionCard(card) {
+  assert.equal(card.disabled, false);
+  assert.equal(card.isConnected, true);
+  const handler = card.onclick;
+  let pending;
+  card.onclick = (...args) => (pending = handler.apply(card, args));
+  try {
+    card.focus();
+    card.click();
+  } finally {
+    card.onclick = handler;
+  }
+  assert(pending instanceof Promise, 'Mission cards expose their actual operation.');
+  await pending;
+}

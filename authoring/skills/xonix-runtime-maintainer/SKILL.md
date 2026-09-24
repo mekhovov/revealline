@@ -1517,3 +1517,7 @@ and Apply remain separate actions; the option must say when balance is pending.
 Record automated, native, human and public-release evidence independently. The
 Twin inner-receiver example and its limits are documented in
 `docs/verification/journey-sentinel-inner-study.md`.
+
+## UX0 original ownership and activation focus
+
+Use the same authored-level resolver for picture preparation and Victory Story pin validation when gameplay tuning derives an execution level. Retain campaign/theme/story identity checks and historical readers. Verify real wins, Story, difficulty Restart and unchanged accepted originals. Menu activation must retain the tapped mission even when touch does not move native focus from a different card. Keep ordinary keyboard selection capture on Back; test cancelled and failed launches as well as newer-focus ownership. Home primary focus must select an eligible enabled visible action after boot, with Missions as the disabled-Continue fallback. Join real asynchronous menu operations in host tests and re-query installed cards after source refresh; never bypass departure confirmation or activate stale controls.

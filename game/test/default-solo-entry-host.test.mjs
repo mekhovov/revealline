@@ -7,22 +7,8 @@ import { createJourneyBackend } from '../journey/profile.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { workshopReturnLinks } from '../ui/workshop-return.mjs';
 
-// Browser decoder boundary only. The host still reads and verifies the real
-// registered originals; this fixture makes no native image/layout claim.
-class Picture {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
+import { PNGImage } from './helpers/png-image.mjs';
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 
 // Match the existing Workshop host fixture's native dialog focus/queued close
 // boundary. The return handlers and restoration owner remain the real code.
@@ -51,7 +37,7 @@ async function page(t, options = {}) {
     search: '',
     titleScreen: true,
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    pictures: { Image: Picture },
+    pictures: { Image: PNGImage },
     fetchResponse: async (path) => {
       if (String(path).includes('/content-design/assets/'))
         return new Response(await readFile(path));
@@ -66,9 +52,7 @@ async function running(p, levelId) {
   });
 }
 async function missions(p, opener = 'shell-play') {
-  p.$(opener).focus();
-  p.$(opener).click();
-  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  await openMissionLibrary(p, opener);
 }
 function collection(p, value) {
   p.$('journey-collection').value = value;

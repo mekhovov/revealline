@@ -1,3 +1,4 @@
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -47,9 +48,7 @@ async function setup(t, route = 'authored') {
 }
 async function open(p, id, missionId = currentMission.get(p)) {
   const opener = p.$(id);
-  opener.focus();
-  opener.click();
-  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  await openMissionLibrary(p, id);
   assert.equal(p.$('journey-chooser').open, true);
   const expected = [...p.$('journey-cards').children].find(
     (card) => card.dataset.missionId === missionId,

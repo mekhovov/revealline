@@ -1,3 +1,4 @@
+import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -91,24 +92,25 @@ function imageBoundary(t) {
 async function choosePressureChapter(page) {
   // Choose the exact authored edition through the visible unified gallery.
   // This source still requires Download followed by a deliberate Play action.
-  page.$('shell-play').click();
-  await settle(() => page.$('journey-chooser')?.open && page.$('journey-cards'));
+  await openMissionLibrary(page, 'shell-play');
   const card = [...page.$('journey-cards').children].find(
     (element) => element.dataset.missionId === pressureMission.id,
   );
   assert.ok(card, 'The bundled Pressure Lines mission is reachable from Missions.');
   assert.match(card.querySelector('.journey-card-action').textContent, /^Download/);
-  card.click();
+  const preparing = activateMissionCard(card);
   // This action imports and authenticates the complete original-image pack.
   // Keep the same bounded allowance as other bulk-original hosts; input waits
   // retain their shared deadline and no application timeout is changed.
   try {
-    await waitFor(() => card.querySelector('.journey-card-action').textContent === 'Play', {
-      timeoutMs: PRESSURE_ORIGINALS_TIMEOUT_MS,
-      message: 'The exact authored pack must finish installation before Play.',
-    });
+    await preparing;
+    const readyCard = [...page.$('journey-cards').children].find(
+      (element) => element.dataset.missionId === pressureMission.id,
+    );
+    assert.ok(readyCard);
+    assert.equal(readyCard.querySelector('.journey-card-action').textContent, 'Play');
     assert.equal(page.$('journey-chooser').open, true);
-    card.click();
+    await activateMissionCard(readyCard);
     await waitFor(
       () => {
         page.frame(0);

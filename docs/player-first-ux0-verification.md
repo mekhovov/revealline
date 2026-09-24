@@ -426,3 +426,39 @@ invalid identity rejection and production assembly. Command-earned states cover
 31 scenes, all 42 roles and 496 historical/current canvas-command comparisons.
 This is modeled renderer evidence; it does not establish complete P08-A artwork
 quality, new device qualification or public-release acceptance.
+
+### Current input and original-picture corrections
+
+The complete initial mandatory run35948932471 finished at source a0369c021:
+12,789 checks, 12,440 passing, 343 failing and six existing skips. These are the
+pre-correction results, not an unresolved-failure count for the current source.
+Pushed c8ba85b2d is qualifying in run35954113045; preflight passed and its four
+test shards and build remain required. Neither run is public release acceptance.
+
+Two genuine UX0 focus defects are corrected. Home now falls back to an eligible
+Missions control when Continue cannot take focus. Touch activation remembers the
+activated mission even when native focus stays on a different card; cancellation
+or failure returns to that mission. Full initial-focus/menu-focus files pass 15
+checks; complete chooser and Versus-default files pass 74, including two new
+touch cancellation/failure cases and the existing guarded Legacy handoff.
+
+Victory Story also used the tuned execution level to validate an authored picture
+pin. Preparation and Story now share the existing authored-owner resolution;
+all exact picture, story, campaign and theme checks remain. Both unchanged Story
+host tests pass. This changes media validation, not gameplay or earned ownership.
+
+Current catalogue controls expose their actual asynchronous operations so host
+fixtures can join preparation instead of guessing its duration. The card fixture
+re-queries after installation replaces a row; it never activates a detached card.
+The complete default-entry, device-controls and Journey-return files passed in a
+53-check group whose only two failures were the now-corrected Foundation tests.
+All 13 Foundation checks now pass, including deliberate in-flight Replace & play
+and retained paused boards before confirmation. Restart navigation passes all16.
+Session-only Next and preparation-status files pass all three checks using a
+legal current-speed opening win, independent checkpoint and public replay.
+
+The ordinary Team spatial file passes all14 checks: eight unchanged historical
+proofs and six current hosts. Its separate fixed routes cover both arenas and
+all three difficulties, require both pilots' useful returns, preserve reserves,
+and reach real outcomes with public keyboard input. Specialized Team and complete
+Journey cohorts remain separate qualification work.

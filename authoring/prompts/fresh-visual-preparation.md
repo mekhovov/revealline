@@ -13,6 +13,16 @@
 
 For regression work, use the actual published picture bindings and preserve separately authenticated installed originals. Wait for real running state before movement; wait for visible refusal in intentionally blocked recovery cases. Keep no-write, exact-checkpoint and immutable-history assertions. A corrected fixture must not disable presentation loading or accept any arbitrary picture merely to pass.
 
+Validate Victory Story against the same authored picture owner used during
+preparation when a difficulty recipe derives the execution level. Keep the exact
+campaign, content, picture/story choice and theme guards. Exercise the real
+victory action; a fresh difficulty must not make its retained original unavailable.
+
+Test a touch tap on one mission while another card retains native keyboard focus.
+Cancel replacement and fail preparation separately; restore the tapped mission
+without stealing a newer action's focus. At Home, disable Continue during the
+ready handoff and require a visible enabled fallback without adopting the save.
+
 For large installed campaigns, keep the existing library and heap limits. Avoid re-encoding serialized pack pointers for snapshot equality; compare strings byte-exactly and legacy objects canonically. Prove stale writes still refuse, existing chapters survive, and Download & play reaches the selected mission. Record real browser play separately from modeled PNG decoding and source tests.
 
 Test browser ownership: a download interceptor must restore its prior fetch only while it still owns `globalThis.fetch`. The outer page fixture may have already restored browser globals. Unconditional later cleanup can resurrect a closed page, retain its database and artwork, and exhaust memory across sequential tests. Preserve request and gameplay assertions, then run the whole affected file under the existing memory limit.

@@ -191,12 +191,18 @@ export function attachGameShell({
     focusClearance.refresh();
     if (!focusMissions?.()) $('pack-select').focus();
   };
-  const primary = () =>
-    isolated
+  const primary = () => {
+    const preferred = isolated
       ? $('shell-course-return')
       : canContinue()
         ? $('shell-continue')
         : $('shell-featured') || $('shell-play');
+    return [
+      preferred,
+      $('shell-play'),
+      ...home.querySelectorAll('button,a,select,input,summary'),
+    ].find((element) => availableReturn(element, home));
+  };
   const openHome = ({ focus = true, returnGuard = null } = {}) => {
     if (destroyed) return;
     if (practiceReturn) {
@@ -232,7 +238,7 @@ export function attachGameShell({
         status.hidden = true;
       home.showModal();
     }
-    if (focus) primary().focus();
+    if (focus) primary()?.focus();
   };
   const forward = (source, target, { keepHome = false } = {}) => {
     $(source).onclick = () => {

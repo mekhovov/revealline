@@ -360,6 +360,32 @@ for (const intervention of ['new focus', 'focus away and back', 'new input', 'ne
     chooser.destroy();
   });
 
+for (const outcome of ['cancel', 'failure'])
+  test(`touch ${outcome} restores the activated mission rather than a different focused card`, async () => {
+    let saved;
+    const { doc, $, chooser } = setup(
+      [
+        owner({
+          entries: [row('first'), row('second')],
+          launch: () => {
+            if (outcome === 'failure') throw new Error('Picture unavailable');
+            return false;
+          },
+        }),
+      ],
+      { writeState: (value) => (saved = value) },
+    );
+    const [first, second] = $('journey-cards').children;
+    first.focus();
+    second.click(); // A touch tap does not necessarily change native focus.
+    await tick();
+    assert.equal($('journey-chooser').open, true);
+    assert.equal(doc.activeElement, second);
+    assert.equal(chooser.state().selectedId, second.dataset.missionId);
+    assert.equal(saved.selectedId, second.dataset.missionId);
+    chooser.destroy();
+  });
+
 for (const input of ['focused card', 'touch from Back'])
   test(`ready ${input} launch accepts normal native return focus exactly once`, async () => {
     let launches = 0;
