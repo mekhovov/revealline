@@ -24,7 +24,8 @@ export function journeyMissionDetails(manifest) {
 export function authoredJourneyMissionTags(mission, manifest) {
   if (mission?.source !== 'candidate' || !manifest) return [];
   const tags = [];
-  if (manifest.policyId === 'journey-arcade-v2') tags.push('Arcade');
+  if (['journey-arcade-v2', 'journey-trail-impact-v3'].includes(manifest.policyId))
+    tags.push('Arcade');
   if (WHOLE_JOURNEY_REMIX_PACK_IDS.includes(mission.packId)) tags.push('Remix');
   if (mission.packId === 'ornament-crossings-study' && mission.campaignId === 'ornament-crossings')
     tags.push('Ukrainian');

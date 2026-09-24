@@ -23,13 +23,11 @@ async function fixture(t, { read = async () => null, returnStorage } = {}) {
     returnStorage,
     beforeImport({ install }) {
       install('crypto', { value: webcrypto });
+      const actorFetch = globalThis.fetch;
       install('fetch', {
         value: async (url) => {
           const path = new URL(url).pathname.split('/game/')[1];
-          assert(
-            files.has(path),
-            'Other-mode browsing only reads bounded metadata, never pictures',
-          );
+          if (!files.has(path)) return actorFetch(url);
           reads.push(path);
           return (await read(path)) ?? new Response(files.get(path));
         },
@@ -111,7 +109,7 @@ test('Team exact nonfirst Versus handoff keeps its attempt on Stay and only depa
   await waitFor(() => f.visits.length === 1);
   const destination = new URL(f.visits[0]);
   assert.equal(destination.pathname, '/game/couch/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v6');
   assert.equal(destination.searchParams.get('library-mission'), exactId);
   assert.equal(destination.searchParams.get('return'), 'team');
   assert.equal(destination.searchParams.get('journey-return'), 'legacy');

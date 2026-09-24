@@ -46,10 +46,10 @@ test('queryless Versus exposes all 91 current missions and starts from its focus
     p.$('race-coop').querySelector('.game-mode-description').textContent,
     '12 Team missions',
   );
-  assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=whole-spatial-v5');
+  assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=whole-spatial-v6');
   assert.equal(
     p.$('race-coop').getAttribute('href'),
-    'relay-rescue.html?return=versus&journey-return=whole-spatial-v5',
+    'relay-rescue.html?return=versus&journey-return=whole-spatial-v6',
   );
   assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=legacy');
   assert.equal(p.$('race-library-switch').textContent, 'All missions');
@@ -91,7 +91,7 @@ test('queryless Versus exposes all 91 current missions and starts from its focus
   assert.equal(p.$('race-leave-panel').hidden, false);
   p.$('race-leave').setAttribute('href', 'https://untrusted.invalid/');
   assert.equal(p.$('race-leave').emit('click').defaultPrevented, false);
-  assert.equal(p.$('race-leave').getAttribute('href'), '../?journey=whole-spatial-v5');
+  assert.equal(p.$('race-leave').getAttribute('href'), '../?journey=whole-spatial-v6');
   assert.deepEqual(p.checkpoint(), checkpoint);
 });
 
@@ -105,7 +105,7 @@ test('explicit Legacy Versus keeps its mode links and guards an exact New Journe
     'relay-rescue.html?journey=legacy&return=versus',
   );
   assert.equal(p.$('race-library-switch').textContent, 'All missions');
-  assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v5');
+  assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v6');
   assert.equal(p.$('race-library-switch').emit('click').defaultPrevented, true);
   await settle(() => p.$('journey-chooser')?.open);
   p.$('journey-back').click();
@@ -150,7 +150,7 @@ for (const query of [
     assert.equal(p.doc.body.classList.contains('candidate-journey'), false);
     assert.equal(p.$('race-level').children.length, 15);
     assert.equal(p.$('race-library-switch').textContent, 'All missions');
-    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v5');
+    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v6');
     assert.equal(p.$('race-journey-note').hidden, true);
   });
 
