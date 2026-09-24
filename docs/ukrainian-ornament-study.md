@@ -3,6 +3,9 @@
 Status: implemented review candidate, not a published or human-balanced release.
 Base: Phase A `e8888844e398d9850bc833ca1a070f00e6cad5ea` (PR323).
 This is a separate successor, not a change to the v6 default or its frozen maps.
+Source preparation: [draft PR332](https://github.com/mekhovov/revealline/pull/332),
+stacked on PR323. No release version has been allocated and no deployment is
+claimed. Hosted main-branch gates start after the accepted-base integration.
 
 ## Scope and decision
 
@@ -78,7 +81,7 @@ in artwork, not unreadable collision geometry; functional colours stay consisten
 - [x] Same resolved Solo/Versus level and deterministic prepared states; no invented
       completed paired-race or Team evidence.
 - [x] Focused tests, formatting/lint and independent source review.
-- [ ] Separate draft PR; remain behind the sole publisher's accepted release queue.
+- [x] Separate draft PR332; remain behind the sole publisher's accepted release queue.
 - [ ] Native/public selection, capture, Next/Skip and return verification after freeze.
       The review route's unified Missions selector lists the three new editions
       and their separately tagged previous v6 editions, plus six preserved v5
