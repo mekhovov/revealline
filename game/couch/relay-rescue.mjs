@@ -1,6 +1,7 @@
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
+import { attachJourneyModePictures } from '../ui/journey-mode-pictures.mjs';
 import {
   createGameplayTuningController,
   applyGameplayTuning,
@@ -40,7 +41,10 @@ import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCoopPresentation } from './coop-presentation.mjs';
-import { createCandidateTeamPictures } from './candidate-team-pictures.mjs';
+import {
+  candidateTeamPictureFrame,
+  createCandidateTeamPictures,
+} from './candidate-team-pictures.mjs';
 import {
   COOP_SUPPORTED_PICTURE_BINDINGS,
   COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
@@ -525,6 +529,17 @@ export function bootCoop({
   }
   const touchQuery = matchMedia('(any-pointer: coarse)');
   const tools = $('coop-tools');
+  const journeyPictures =
+    candidateJourney && candidateProgress
+      ? attachJourneyModePictures({
+          document,
+          button: $('coop-journey-pictures'),
+          mode: 'team',
+          editionId: candidateProgress.editionId,
+          catalog: candidateJourney.catalog,
+          profile: candidateProgress,
+        })
+      : null;
   const modeChoices = $('coop-mode-actions');
   mountModeChoices({
     root: modeChoices,
@@ -565,6 +580,10 @@ export function bootCoop({
   function back() {
     if (music?.root()) {
       music.back();
+      return;
+    }
+    if (journeyPictures?.root()) {
+      journeyPictures.close();
       return;
     }
     if (settingsDialog.open) {
@@ -608,47 +627,51 @@ export function bootCoop({
   const scope = () =>
     music?.root()
       ? 'coop-music-library'
-      : settingsDialog.open
-        ? `coop-settings:${settingsPanels?.selected() || 'display'}`
-        : earnedDialog.open
-          ? 'coop-earned-picture'
-          : departure
-            ? 'coop-discard'
-            : discovery?.isOpen()
-              ? 'coop-discovery'
-              : running()
-                ? 'flight'
-                : run
-                  ? `coop-${run.status}`
-                  : 'coop-lobby';
+      : journeyPictures?.root()
+        ? 'coop-journey-pictures'
+        : settingsDialog.open
+          ? `coop-settings:${settingsPanels?.selected() || 'display'}`
+          : earnedDialog.open
+            ? 'coop-earned-picture'
+            : departure
+              ? 'coop-discard'
+              : discovery?.isOpen()
+                ? 'coop-discovery'
+                : running()
+                  ? 'flight'
+                  : run
+                    ? `coop-${run.status}`
+                    : 'coop-lobby';
   const primary = () =>
     music?.root()
       ? music.primary()
-      : settingsDialog.open
-        ? settingsPanels?.primary() || $('coop-settings-close')
-        : earnedDialog.open
-          ? $('coop-picture-return')
-          : departure
-            ? $('coop-discard-stay')
-            : discovery?.isOpen()
-              ? discovery.primary()
-              : nextOperation
-                ? $('coop-next-cancel')
-                : importOperation
-                  ? $('coop-pack-cancel')
-                  : pictureOperation
-                    ? $('coop-picture-cancel')
-                    : !run && pictureSelection?.state !== 'ready'
-                      ? $('coop-picture-retry')
-                      : !run
-                        ? $('coop-start')
-                        : run.status === 'paused' && !loopStopped
-                          ? $('coop-resume')
-                          : run.status === 'won' && !loopStopped
-                            ? teamDestination()?.next
-                              ? $('coop-next')
-                              : $('coop-discovery-paused')
-                            : $('coop-retry');
+      : journeyPictures?.root()
+        ? journeyPictures.primary()
+        : settingsDialog.open
+          ? settingsPanels?.primary() || $('coop-settings-close')
+          : earnedDialog.open
+            ? $('coop-picture-return')
+            : departure
+              ? $('coop-discard-stay')
+              : discovery?.isOpen()
+                ? discovery.primary()
+                : nextOperation
+                  ? $('coop-next-cancel')
+                  : importOperation
+                    ? $('coop-pack-cancel')
+                    : pictureOperation
+                      ? $('coop-picture-cancel')
+                      : !run && pictureSelection?.state !== 'ready'
+                        ? $('coop-picture-retry')
+                        : !run
+                          ? $('coop-start')
+                          : run.status === 'paused' && !loopStopped
+                            ? $('coop-resume')
+                            : run.status === 'won' && !loopStopped
+                              ? teamDestination()?.next
+                                ? $('coop-next')
+                                : $('coop-discovery-paused')
+                              : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -726,6 +749,7 @@ export function bootCoop({
     getRoot: () => {
       const modal =
         music?.root() ||
+        journeyPictures?.root() ||
         (settingsDialog.open
           ? settingsDialog
           : earnedDialog.open
@@ -753,6 +777,7 @@ export function bootCoop({
     onMenu: () => {
       if (
         music?.root() ||
+        journeyPictures?.root() ||
         settingsDialog.open ||
         earnedDialog.open ||
         departure ||
@@ -2077,6 +2102,7 @@ export function bootCoop({
       candidateProgress?.started(selection.journeyRow, candidate, {
         ...attemptTuning.get(candidate),
         skipped: skipRow,
+        picture: earnedTeamPicture(selection, selection.binding),
       });
       if (!adopted(candidate)) return;
       message(`${destination.name}. Choose fresh directions when you are ready.`);
@@ -2663,7 +2689,10 @@ export function bootCoop({
       for (const old of new Set([previous.picture, previous.selection]))
         if (old && old !== acceptedPicture && old !== pictureSelection) old.lease?.dispose();
       if (run === candidate && running() && foreground() && !disposed)
-        candidateProgress?.started(selection.journeyRow, candidate, attemptTuning.get(candidate));
+        candidateProgress?.started(selection.journeyRow, candidate, {
+          ...attemptTuning.get(candidate),
+          picture: earnedTeamPicture(selection, selection.binding),
+        });
       return run === candidate && running() && foreground() && !disposed;
     } finally {
       if (discoveryOperation === operation) discoveryOperation = null;
@@ -3310,6 +3339,18 @@ export function bootCoop({
     });
     return next;
   }
+  function earnedTeamPicture(selection, binding) {
+    const row = selection?.journeyRow;
+    if (!row || !candidateJourney?.owns(row) || !binding) return null;
+    const asset = candidateTeamPictureFrame(binding, row.level, presentationPage.current());
+    if (!asset) return null;
+    return {
+      editionId: candidateProgress?.editionId,
+      campaignKey: row.executionKey,
+      themeId: selection.request.themeId,
+      asset,
+    };
+  }
   function currentRecipe() {
     if (run)
       return freshRecipe(structuredClone(attemptLevel), {
@@ -3400,7 +3441,10 @@ export function bootCoop({
     if (!disposed && run === next && running() && foreground())
       acceptMusic(selection, { play: true });
     if (!disposed && run === next && running() && foreground())
-      candidateProgress?.started(selection.journeyRow, next, attemptTuning.get(next));
+      candidateProgress?.started(selection.journeyRow, next, {
+        ...attemptTuning.get(next),
+        picture: earnedTeamPicture(selection, binding),
+      });
     if (disposed || run !== next || !running() || !foreground()) return;
     input.focus();
     if (loopStopped) {
@@ -4589,6 +4633,7 @@ export function bootCoop({
     closeAudio();
     closeDisplay();
     journeyReactions.dispose();
+    journeyPictures?.dispose();
     arenaPreference.dispose();
     candidateProgress?.dispose();
     candidatePreferences?.dispose();
