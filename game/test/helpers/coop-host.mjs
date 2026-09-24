@@ -6,6 +6,7 @@ import { Document, Events, Element } from './couch-dom.mjs';
 import { mountCouch } from './couch-host.mjs';
 import { FIXED_DT } from '../../coop/core.mjs';
 import { installCoopPresentation, waitFor } from './coop-presentation-fixture.mjs';
+import { installActorAppearanceTransport } from './actor-appearance-transport.mjs';
 
 const html = await readFile(new URL('../../couch/relay-rescue.html', import.meta.url), 'utf8');
 const entrySource = await readFile(new URL('../../couch/team-entry.js', import.meta.url), 'utf8');
@@ -42,6 +43,7 @@ export async function page(
     href = 'http://localhost/game/couch/relay-rescue.html?journey=legacy',
     returnStorage = null,
     beforeImport = () => {},
+    beforeActorRequest,
     nativeFocus = false,
     nativeVisibility = false,
     onReady = () => {},
@@ -262,6 +264,11 @@ export async function page(
     },
   });
   const artwork = installCoopPresentation({ doc, win, install, ...presentation });
+  const actorTransport = installActorAppearanceTransport({
+    install,
+    baseURL: new URL('../presentation/compiled/', href),
+    beforeRequest: beforeActorRequest,
+  });
   const entryHost = {
     document: doc,
     addEventListener: (...args) => win.addEventListener(...args),
@@ -344,6 +351,7 @@ export async function page(
   };
   return {
     artwork,
+    actorTransport,
     drawImages,
     earnedDrawImages,
     failNextEarnedPaint() {

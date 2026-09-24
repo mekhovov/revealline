@@ -124,7 +124,14 @@ function envelope(candidate) {
   );
   if (continuationFormats.includes(session.format))
     session.continuation = continuationValue(session.continuation);
-  if (pictureFormats.includes(session.format)) {
+  const authoredJourneyPictures =
+    session.format === ACTOR_SESSION_FORMAT && session.presentationPins === null;
+  if (authoredJourneyPictures)
+    required(
+      session.visualThemePin === null,
+      'Authored Journey pictures cannot carry a Classic visual pin.',
+    );
+  if (pictureFormats.includes(session.format) && !authoredJourneyPictures) {
     session.presentationPins = snapshotFlightPresentationPins(session.presentationPins);
     required(
       session.format === VISUAL_SESSION_FORMAT ||
@@ -237,10 +244,7 @@ export function suspendSession({
         });
   let actors;
   if (actorAppearancePin !== undefined) {
-    required(
-      pictures !== undefined && intent !== undefined,
-      'Saved actors require pictures and explicit continuation.',
-    );
+    required(intent !== undefined, 'Saved actors require explicit continuation.');
     actors = snapshotSessionActorPin(actorAppearancePin, {
       pictures,
       campaignKey,
@@ -272,7 +276,11 @@ export function suspendSession({
     runId,
     savedAt,
     ...(intent === undefined ? {} : { continuation: intent }),
-    ...(pictures === undefined ? {} : { presentationPins: pictures }),
+    ...(pictures === undefined
+      ? actors !== undefined
+        ? { presentationPins: null }
+        : {}
+      : { presentationPins: pictures }),
     ...(actors !== undefined
       ? { visualThemePin: visuals ?? null, actorAppearancePin: actors }
       : visuals === undefined
@@ -330,7 +338,7 @@ export async function restoreSession(
       canonical(session.replay.options.classRecipes)
   )
     throw new Error('Saved rules differ from the installed campaign.');
-  if (pictureFormats.includes(session.format))
+  if (pictureFormats.includes(session.format) && session.presentationPins !== null)
     validateFlightPresentationPinsForRun(session.presentationPins, {
       identityCatalog: mediaIdentityCatalog,
       campaignKey,

@@ -10,8 +10,26 @@ export function snapshotSessionActorPin(
   source,
   { pictures, campaignKey, themeId, simulationLevel, presentationLevel },
 ) {
-  const pin = snapshotActorAppearancePin(source),
-    media = presentationPicturePins(pictures);
+  const pin = snapshotActorAppearancePin(source);
+  if (pictures === null || pictures === undefined) {
+    // Authored Journey images are owned by the immutable project, not the
+    // managed Classic picture library. The host must re-resolve this complete
+    // project context before acquiring/adopting actors. A pin cannot create a
+    // managed-photo receipt or authorize a different installed Journey.
+    required(
+      pin.content.owner.kind === 'journey' &&
+        pin.content.mode === 'solo' &&
+        pin.content.contentThemeId === themeId &&
+        pin.content.level.id === simulationLevel?.id &&
+        (presentationLevel === undefined ||
+          (presentationLevel !== null &&
+            pin.content.level.id === presentationLevel.id &&
+            pin.content.level.revision === presentationLevel.revision)),
+      'Saved actors without picture pins require matching authored Journey context.',
+    );
+    return pin;
+  }
+  const media = presentationPicturePins(pictures);
   const picture = media.choices.find((choice) => choice.identity.themeId === themeId);
   required(
     media.executionKey === campaignKey &&
