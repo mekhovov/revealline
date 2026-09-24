@@ -16,16 +16,16 @@ const adapters = {
   launch: () => true,
 };
 
-test('all110 indexed Classics are represented with separate original editions and real rule labels', () => {
+test('110 originals and 78 compatible Current-rules editions are distinct and ordered safely', () => {
   const library = createMissionLibrary(classicLibrarySources(index, adapters));
-  assert.equal(library.missions.length, 110);
-  assert.equal(new Set(library.missions.map((row) => row.id)).size, 110);
-  assert.equal(library.forMode('solo').length, 110);
-  assert.equal(library.forMode('versus').length, 110);
+  assert.equal(library.missions.length, 188);
+  assert.equal(new Set(library.missions.map((row) => row.id)).size, 188);
+  assert.equal(library.forMode('solo').length, 188);
+  assert.equal(library.forMode('versus').length, 188);
   assert.equal(library.forMode('team').length, 0);
   assert.equal(
     library.missions.filter((row) => library.availability(row).state === 'download').length,
-    63,
+    126,
   );
   assert.ok(
     library.missions.every((row) => row.tags.includes('Classic') && !row.rules.includes('Band')),
@@ -34,8 +34,11 @@ test('all110 indexed Classics are represented with separate original editions an
 
 test('Classic text names only verified mode-specific difficulty settings and never invents a Journey band', () => {
   const library = createMissionLibrary(classicLibrarySources(index, adapters));
-  const row = library.missions[0];
-  assert.match(library.details(row, 'solo').challenge, /^Authored Standard rules · 45% coverage/);
+  const row = library.missions.find((mission) => mission.edition.endsWith('Original rules'));
+  assert.match(
+    library.details(row, 'solo').challenge,
+    /^Original authored Standard rules · 45% coverage/,
+  );
   assert.equal(library.details(row, 'solo').route, 'Difficulty settings: Standard, Gentle');
   assert.equal(library.details(row, 'versus').route, 'Difficulty settings: Standard');
   assert.match(
@@ -67,10 +70,11 @@ test('late Classic launch hands the exact pinned metadata to its validator, with
       return true;
     },
   });
-  const original = sources[0].entries.at(-1),
+  const source = sources.find((item) => item.edition.endsWith('Original rules')),
+    original = source.entries.at(-1),
     library = createMissionLibrary(sources);
   const row = library.missions.find(
-    (row) => row.runtimeId === original.levelId && row.ownerId === sources[0].id,
+    (row) => row.runtimeId === original.levelId && row.ownerId === source.id,
   );
   assert.equal(row.levelIndex, 11);
   assert.equal(library.progress(row, 'solo'), '');

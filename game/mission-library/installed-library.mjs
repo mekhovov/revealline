@@ -92,6 +92,7 @@ export async function createInstalledMissionLibrary({
       levelId: row.levelId,
       levelRevision: row.levelRevision,
       levelIndex: row.levelIndex,
+      rulesEdition: row.rulesEdition,
     });
   function classicAvailability(row, selectedMode = mode) {
     if (row.source === 'base')
