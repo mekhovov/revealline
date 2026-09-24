@@ -14,6 +14,10 @@ import {
 import { validateTrack } from './music.mjs';
 import { inspectMP3, ownSoundtrackBlob, throwIfSoundtrackAborted } from '../mp3.mjs';
 import { bindAudioMasterMedia } from './audio-master.mjs';
+import {
+  onlineSoundtrackRecordingAllowed,
+  onlineSoundtrackRecordingURL,
+} from '../online-soundtrack-catalogue.mjs';
 
 const wait = (ms, signal) =>
   new Promise((resolve, reject) => {
@@ -908,9 +912,9 @@ export function createSoundtrackPlayer({
     return snapshot();
   }
   async function selectPlaylist(id) {
+    resolveSoundtrackSelection({ ...library, selection: { playlistId: id } }, context);
     remoteSelection = null;
     remoteTracks = [];
-    resolveSoundtrackSelection({ ...library, selection: { playlistId: id } }, context);
     override = id;
     notice = null;
     failed = new Set();
@@ -919,9 +923,10 @@ export function createSoundtrackPlayer({
     return startAt(0, { fading: true });
   }
   async function selectListening(listening) {
+    const next = resolveSoundtrackLibrary({ ...upgradeSoundtrackLibrary(library), listening });
     remoteSelection = null;
     remoteTracks = [];
-    setLibrary({ ...upgradeSoundtrackLibrary(library), listening });
+    setLibrary(next);
     return selectPlaylist(null);
   }
   async function playRemotePlaylist(value, { order = 'ordered' } = {}) {
@@ -936,32 +941,29 @@ export function createSoundtrackPlayer({
     required(Array.isArray(owned) && owned.length >= 1, 'Choose at least one online soundtrack.');
     const ids = new Set();
     const validated = owned.map((track) => {
-      let url;
-      try {
-        url = new URL(track?.url);
-      } catch {
-        throw new TypeError('Invalid online soundtrack recording.');
-      }
       required(
         track?.kind === 'remote' &&
           /^online\.[a-f0-9]{64}$/.test(track.id) &&
           track.sha256 === track.id.slice('online.'.length) &&
           typeof track.title === 'string' &&
           typeof track.artist === 'string' &&
-          url.href ===
-            new URL(
-              url.pathname.replace('/revealline-soundtracks-01/', ''),
-              'https://mekhovov.github.io/revealline-soundtracks-01/',
-            ).href &&
-          /\/objects\/[a-f0-9]{64}\.mp3$/.test(url.pathname) &&
-          url.pathname.endsWith(`/${track.sha256}.mp3`) &&
+          [true, false, null, 'unknown'].includes(track.contentId) &&
+          typeof track.recordingModeEligible === 'boolean' &&
+          (!track.recordingModeEligible || track.contentId === false) &&
+          onlineSoundtrackRecordingURL(track.url, track.sha256) &&
           !ids.has(track.id),
         'Invalid online soundtrack recording.',
       );
       ids.add(track.id);
       return Object.freeze({ ...track, websites: Object.freeze(track.websites ?? []) });
     });
-    remoteTracks = validated;
+    remoteTracks = library.listening?.recordingMode
+      ? validated.filter(onlineSoundtrackRecordingAllowed)
+      : validated;
+    required(
+      remoteTracks.length > 0,
+      'Recording mode excludes these online soundtracks until gameplay-video and Content ID permissions are verified.',
+    );
     remoteSelection = {
       source: 'remote',
       playlist: {
