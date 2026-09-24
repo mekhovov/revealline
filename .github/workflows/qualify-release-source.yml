@@ -214,6 +214,7 @@ jobs:
           sparse-checkout: |
             .github/workflows/qualify-release-source.yml
             publishing/test-policy.mjs
+            publishing/test-policy.json
             publishing/utility/
           sparse-checkout-cone-mode: false
 
@@ -290,6 +291,7 @@ jobs:
           sparse-checkout: |
             .github/workflows/qualify-release-source.yml
             publishing/test-policy.mjs
+            publishing/test-policy.json
             publishing/utility/
           sparse-checkout-cone-mode: false
 
