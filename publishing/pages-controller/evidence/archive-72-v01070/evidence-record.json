@@ -1,0 +1,18 @@
+{
+  "format": "revealline-archive-evidence-record.v1",
+  "status": "PASS",
+  "archiveId": "archive-72",
+  "version": "v0.107.0",
+  "infrastructureCommit": "12f9b350f9461d7721ba389af9c7590d6b5f621f",
+  "infrastructureTree": "4449eead1322886eea88718941ace998f4b74e8d",
+  "runId": 36070705920,
+  "deploymentId": 6649956472,
+  "deploymentStatusId": 18809597530,
+  "evidenceFiles": 138,
+  "evidenceBytes": 4142106,
+  "manifestSha256": "e2cc1a8ea1ffeeb35f12fb13ff9611513a154fbd79295a365748a8e37d8cca49",
+  "zipBytes": 918781,
+  "zipSha256": "c435683bcbfecc95997950a5524fc23f3cefd142c5072c59ae159676cc8c39b5",
+  "verifiedZipMembers": 139,
+  "scope": "Complete archive public-byte preservation and separately scoped coordinator native navigation; not renewed v107 feature/gameplay/offline/device acceptance or v108 publication."
+}
