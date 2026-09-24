@@ -8,9 +8,11 @@ import {
   COOP_ROVER_LEVEL_VERSION,
   COOP_BONUS_LEVEL_VERSION,
   COOP_IMPACT_LEVEL_VERSION,
+  COOP_SPECIALIST_LEVEL_VERSION,
   hasTeamRoamers,
   hasTeamTerrain,
   hasTeamLineImpacts,
+  hasTeamSpecialists,
   journeyTeamPackEdition,
   isJourneyTeamLevel,
   isJourneyTeamRuleset,
@@ -135,6 +137,7 @@ export function validateCoopLevel(level) {
       'terrain',
       'timedBonuses',
       'lineImpact',
+      'supportRoles',
     ])
   )
     return {
@@ -149,6 +152,7 @@ export function validateCoopLevel(level) {
       COOP_ROVER_LEVEL_VERSION,
       COOP_BONUS_LEVEL_VERSION,
       COOP_IMPACT_LEVEL_VERSION,
+      COOP_SPECIALIST_LEVEL_VERSION,
     ].includes(level.version),
     'Unsupported co-op level version.',
   );
@@ -164,8 +168,9 @@ export function validateCoopLevel(level) {
     'Terrain requires an explicit Team terrain edition and a terrain array.',
   );
   check(
-    [COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION].includes(level.version) ||
-      !Object.hasOwn(level, 'timedBonuses'),
+    [COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION, COOP_SPECIALIST_LEVEL_VERSION].includes(
+      level.version,
+    ) || !Object.hasOwn(level, 'timedBonuses'),
     'Timed bonuses require the explicit Team bonus edition.',
   );
   check(
@@ -174,7 +179,9 @@ export function validateCoopLevel(level) {
     'Timed bonuses must be an enumerable data field, never silently omitted by copying.',
   );
   check(
-    ![COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION].includes(level.version) ||
+    ![COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION, COOP_SPECIALIST_LEVEL_VERSION].includes(
+      level.version,
+    ) ||
       (!Object.hasOwn(level, 'strongholds') &&
         !Object.hasOwn(level, 'encounter') &&
         keys(level.goal, ['coverage']) &&
@@ -188,6 +195,15 @@ export function validateCoopLevel(level) {
           finite(level.lineImpact.speed, 1, 60)
       : !Object.hasOwn(level, 'lineImpact'),
     'Travelling trail impacts require the explicit Team impact edition and bounded v2 settings.',
+  );
+  check(
+    hasTeamSpecialists(level)
+      ? dataArray(level.supportRoles) &&
+          level.supportRoles.length === 2 &&
+          new Set(level.supportRoles).size === 2 &&
+          level.supportRoles.every((role) => ['interceptor', 'disruptor'].includes(role))
+      : !Object.hasOwn(level, 'supportRoles'),
+    'Specialist Team missions require one Interceptor and one Disruptor in seat order.',
   );
   check(level.width === 72 && level.height === 36, 'Co-op boards must be 72 × 36.');
   check(
@@ -437,6 +453,7 @@ export function createCoop(
       graceUntil: 0,
       downedClaimedAt: null,
       support: { readyAt: 0, held: false, uses: 0, intercepts: 0, slows: 0 },
+      supportRole: owned.supportRoles?.[id] ?? 'hybrid',
       rescue: null,
       rescueBlocked: false,
       ...(hasTeamLineImpacts(owned) ? { cutId: null, nextCutId: 1, impactSources: [] } : {}),
@@ -1278,6 +1295,7 @@ export function getCoopSummary(run) {
       downedUntil: player.downedUntil,
       graceUntil: player.graceUntil,
       supportCooldown: Math.max(0, player.support.readyAt - run.time),
+      supportRole: player.supportRole,
       rescue: player.rescue
         ? {
             target: player.rescue.target,

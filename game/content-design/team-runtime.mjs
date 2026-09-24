@@ -6,6 +6,7 @@ import {
   COOP_ROVER_LEVEL_VERSION,
   COOP_BONUS_LEVEL_VERSION,
   COOP_IMPACT_LEVEL_VERSION,
+  COOP_SPECIALIST_LEVEL_VERSION,
   journeyTeamPackEdition,
 } from '../coop/foundations.mjs';
 import { compileActor, freezeDesign } from './catalogs.mjs';
@@ -15,7 +16,7 @@ import { TEAM_MISSION_FORMATS, teamRoleQualified } from './team-qualification.mj
 /** Explicit Team qualification, not an automatic Solo-to-Team conversion.
  * Unsupported mechanics fail closed until their Team semantics are implemented. */
 export function resolveTeamMission(project, mission, map, difficulty) {
-  exactKeys(mission.team, ['format', 'spawnIds'], 'Team mission');
+  exactKeys(mission.team, ['format', 'spawnIds', 'supportRoles'], 'Team mission');
   required(
     TEAM_MISSION_FORMATS.includes(mission.team.format) &&
       Array.isArray(mission.team.spawnIds) &&
@@ -23,6 +24,15 @@ export function resolveTeamMission(project, mission, map, difficulty) {
       new Set(mission.team.spawnIds).size === 2 &&
       mission.team.spawnIds.every(stableId),
     'Team missions require two explicit named spawns.',
+  );
+  required(
+    mission.team.format === 'TeamMissionV6'
+      ? Array.isArray(mission.team.supportRoles) &&
+          mission.team.supportRoles.length === 2 &&
+          new Set(mission.team.supportRoles).size === 2 &&
+          mission.team.supportRoles.every((role) => ['interceptor', 'disruptor'].includes(role))
+      : mission.team.supportRoles === undefined,
+    'Team specialist missions require one Interceptor and one Disruptor in seat order.',
   );
   required(mission.spawnId === mission.team.spawnIds[0], 'Primary spawn must match Team seat one.');
   required(
@@ -34,20 +44,20 @@ export function resolveTeamMission(project, mission, map, difficulty) {
       mission.objectives.length === 0 &&
       mission.bonuses.length === 0 &&
       (!Object.hasOwn(mission, 'timedBonuses') ||
-        ['TeamMissionV4', 'TeamMissionV5'].includes(mission.team.format)) &&
+        ['TeamMissionV4', 'TeamMissionV5', 'TeamMissionV6'].includes(mission.team.format)) &&
       mission.timeLimitSeconds === 0 &&
       (mission.team.format !== 'TeamMissionV1' || (map.source.terrain ?? []).length === 0),
     'Team candidates support only qualified actor roles and coverage, not unqualified terrain, bonuses, objectives or timers.',
   );
   required(
-    !['TeamMissionV4', 'TeamMissionV5'].includes(mission.team.format) ||
+    !['TeamMissionV4', 'TeamMissionV5', 'TeamMissionV6'].includes(mission.team.format) ||
       (map.source.format === 'MapDesignV1' &&
         !Object.hasOwn(mission, 'encounter') &&
         !Object.hasOwn(mission, 'relayLinks')),
     'Team timed bonuses currently qualify foundation/terrain maps, not relay, directional or encounter mechanics.',
   );
   required(
-    mission.team.format !== 'TeamMissionV5' ||
+    !['TeamMissionV5', 'TeamMissionV6'].includes(mission.team.format) ||
       (project.policy.lineImpact?.version === 'line-impact.v1' &&
         Number.isFinite(project.policy.lineImpact.speed)),
     'Team impact missions require the registered global Journey impact policy.',
@@ -63,24 +73,29 @@ export function resolveTeamMission(project, mission, map, difficulty) {
   );
   const level = {
     version:
-      mission.team.format === 'TeamMissionV5'
-        ? COOP_IMPACT_LEVEL_VERSION
-        : mission.team.format === 'TeamMissionV4'
-          ? COOP_BONUS_LEVEL_VERSION
-          : mission.team.format === 'TeamMissionV3'
-            ? COOP_ROVER_LEVEL_VERSION
-            : mission.team.format === 'TeamMissionV2'
-              ? COOP_TERRAIN_LEVEL_VERSION
-              : COOP_FOUNDATION_LEVEL_VERSION,
+      mission.team.format === 'TeamMissionV6'
+        ? COOP_SPECIALIST_LEVEL_VERSION
+        : mission.team.format === 'TeamMissionV5'
+          ? COOP_IMPACT_LEVEL_VERSION
+          : mission.team.format === 'TeamMissionV4'
+            ? COOP_BONUS_LEVEL_VERSION
+            : mission.team.format === 'TeamMissionV3'
+              ? COOP_ROVER_LEVEL_VERSION
+              : mission.team.format === 'TeamMissionV2'
+                ? COOP_TERRAIN_LEVEL_VERSION
+                : COOP_FOUNDATION_LEVEL_VERSION,
     ...(mission.team.format !== 'TeamMissionV1' ? { terrain: map.source.terrain ?? [] } : {}),
     ...(Object.hasOwn(mission, 'timedBonuses') ? { timedBonuses: mission.timedBonuses } : {}),
-    ...(mission.team.format === 'TeamMissionV5'
+    ...(['TeamMissionV5', 'TeamMissionV6'].includes(mission.team.format)
       ? {
           lineImpact: {
             version: 'team-line-impact.v2',
             speed: project.policy.lineImpact.speed,
           },
         }
+      : {}),
+    ...(mission.team.format === 'TeamMissionV6'
+      ? { supportRoles: structuredClone(mission.team.supportRoles) }
       : {}),
     id: mission.id,
     revision: mission.revision,
