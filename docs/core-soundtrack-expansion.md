@@ -374,7 +374,8 @@ reviewer names, listening approval or device results.
   **zero musical approvals and zero game admissions**.
 - Second-slate draft [PR #17](https://github.com/mekhovov/revealline-soundtracks-01/pull/17)
   preserves every partial result. Initial [run 36069462468](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36069462468)
-  at `ad0374` failed all twelve exact acquisitions; artifact `10837930834` is
+  at `ad0374b6cd6087d85d1814ae5d0c83da421113a6` failed all twelve exact
+  acquisitions; artifact `10837930834` is
   18,660,997 bytes with SHA-256
   `9db0681e34eae57e327baf89cb5297692e190ec6c5af082921f4a77beeb0c6f3`.
   Repaired head `f02ca7f9f39094423f25964f13053d2ed36c5d45` strengthened exact-file parsing,
