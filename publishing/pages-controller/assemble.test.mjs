@@ -12,7 +12,7 @@ import {
   directoryInventory,
 } from './assemble.mjs';
 import { digest, jsonBytes, retainRecentMetadata } from './metadata.mjs';
-import { assertPagesBudget } from '../../scripts/pages-archive.mjs';
+import { assertPagesBudget, MAX_ARCHIVE_SHARDS } from '../../scripts/pages-archive.mjs';
 
 async function fixture(t, versions = ['v0.1.0', 'v0.44.0'], { archiveCurrent = false } = {}) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-assemble-'));
@@ -791,4 +791,139 @@ test('all leaves the 1024-catalog entry bound intact', async (t) => {
   catalog.releases = Array.from({ length: 1025 }, () => catalog.releases[0]);
   await f.write(catalogPath, jsonBytes(catalog));
   await assert.rejects(loadCatalog(f.directory), /Invalid frozen catalog/);
+});
+
+test('96 independently pinned archives retain admission bounds and original-byte guards', async (t) => {
+  assert.equal(MAX_ARCHIVE_SHARDS, 96);
+  const versions = Array.from({ length: 96 }, (_, i) => `v0.${i + 1}.0`),
+    f = await fixture(t, [...versions, 'v1.0.0']),
+    { metadata } = await loadCatalog(f.directory),
+    originalInventory = JSON.parse(await fs.readFile(path.join(f.directory, 'inventory.json'))),
+    configuration = structuredClone(f.configuration),
+    allocation = { formatVersion: 1, shards: [] };
+  configuration.admissions = [];
+  configuration.retainedReleasesPerMajor = 'all';
+  for (const [index, version] of versions.entries()) {
+    const id = `archive-${index + 1}`,
+      repository = `mekhovov/revealline-${id}`,
+      base = `https://mekhovov.github.io/revealline-${id}/`,
+      inventory = {
+        base,
+        files: originalInventory.files.filter((row) => row.path.startsWith(`releases/${version}/`)),
+      },
+      inventoryBytes = jsonBytes(inventory),
+      bytes = inventory.files.reduce((sum, row) => sum + row.bytes, 0),
+      nativeBytes = Buffer.from(`Scoped native receipt for ${id} / ${version}.`),
+      nativePin = { path: `${id}/native.txt`, sha256: digest(nativeBytes), kind: 'reference' },
+      admission = {
+        id,
+        infrastructureCommit: 'e'.repeat(40),
+        deploymentId: index + 1,
+        evidence: [],
+      },
+      browserBytes = jsonBytes({
+        format: 'revealline-archive-browser-admission.v1',
+        status: 'PASS',
+        archiveId: id,
+        infrastructureCommit: admission.infrastructureCommit,
+        deploymentId: admission.deploymentId,
+        versions: [version],
+        evidence: [nativePin],
+      }),
+      httpBytes = jsonBytes({
+        status: 'PASS',
+        base,
+        files: inventory.files.length,
+        expectedInventorySha256: digest(inventoryBytes),
+        expectedBytes: bytes,
+        verifiedBytes: bytes,
+        failedFiles: 0,
+        skipped: [],
+      });
+    allocation.shards.push({ id, repository, versions: [version] });
+    for (const [name, body, kind] of [
+      ['inventory.json', inventoryBytes, 'inventory'],
+      ['http.json', httpBytes, 'http'],
+      ['browser.json', browserBytes, 'browser'],
+      ['native.txt', nativeBytes, 'reference'],
+    ]) {
+      const relative = `${id}/${name}`;
+      admission.evidence.push({ path: relative, sha256: digest(body), kind });
+      await f.write(path.join(f.directory, relative), body);
+    }
+    configuration.admissions.push(admission);
+  }
+  const allocationBytes = jsonBytes(allocation);
+  await f.write(path.join(f.directory, 'allocations.json'), allocationBytes);
+  configuration.allocationSha256 = digest(allocationBytes);
+  const original = structuredClone(configuration);
+  for (const count of [64, 65, 96]) {
+    const scopedMetadata = new Map(
+      [...metadata].filter(
+        ([version]) => version === 'v1.0.0' || versions.slice(0, count).includes(version),
+      ),
+    );
+    const admitted = await validateAdmissions({
+      directory: f.directory,
+      configuration: { ...configuration, admissions: configuration.admissions.slice(0, count) },
+      metadata: scopedMetadata,
+    });
+    assert.equal(admitted.admissions.length, count);
+    assert.equal(admitted.plan.shards.length, count);
+    assert.equal(Object.keys(admitted.canonicalSites).length, count);
+    for (const [index, version] of versions.slice(0, count).entries())
+      assert.equal(
+        admitted.canonicalSites[version],
+        `https://mekhovov.github.io/revealline-archive-${index + 1}/releases/${version}/site/`,
+      );
+    assert.equal(admitted.canonicalSites['v1.0.0'], undefined);
+  }
+  assert.deepEqual(configuration, original);
+  const validate = (config) =>
+    validateAdmissions({ directory: f.directory, configuration: config, metadata });
+  const overflow = structuredClone(configuration);
+  overflow.admissions.push({ ...overflow.admissions.at(-1), id: 'archive-97' });
+  await assert.rejects(validate(overflow), /Invalid Pages controller configuration/);
+  for (const [mutate, expected] of [
+    [(last) => (last.id = configuration.admissions[0].id), /Invalid archive admission/],
+    [(last) => (last.evidence[0].sha256 = 'f'.repeat(64)), /evidence byte pin mismatch/],
+    [(last) => (last.infrastructureCommit = 'f'.repeat(40)), /browser admission failed/],
+    [
+      (last) => (last.evidence = last.evidence.filter((pin) => pin.kind !== 'browser')),
+      /incomplete/,
+    ],
+    [
+      (last) => (last.evidence = Array.from({ length: 65 }, () => last.evidence[0])),
+      /Invalid archive admission/,
+    ],
+  ]) {
+    const changed = structuredClone(configuration);
+    mutate(changed.admissions.at(-1));
+    await assert.rejects(validate(changed), expected);
+  }
+  // Re-pinning a false HTTP report or inventory must not bypass the unchanged
+  // 800 MB archive limit or the independently pinned original release bytes.
+  const httpPath = 'archive-96/http.json',
+    inventoryPath = 'archive-96/inventory.json',
+    originalHTTP = JSON.parse(await fs.readFile(path.join(f.directory, httpPath))),
+    originalLastInventory = JSON.parse(await fs.readFile(path.join(f.directory, inventoryPath)));
+  const repin = async (config, relative, value) => {
+    const bytes = jsonBytes(value);
+    await f.write(path.join(f.directory, relative), bytes);
+    config.admissions.at(-1).evidence.find((pin) => pin.path === relative).sha256 = digest(bytes);
+    return digest(bytes);
+  };
+  const overBudget = structuredClone(configuration);
+  await repin(overBudget, httpPath, {
+    ...originalHTTP,
+    expectedBytes: 800_000_001,
+    verifiedBytes: 800_000_001,
+  });
+  await assert.rejects(validate(overBudget), /full-body admission failed/);
+  const substituted = structuredClone(configuration);
+  originalLastInventory.files.find((row) => row.path.endsWith('/game/icon.png')).sha256 =
+    'f'.repeat(64);
+  const inventorySha256 = await repin(substituted, inventoryPath, originalLastInventory);
+  await repin(substituted, httpPath, { ...originalHTTP, expectedInventorySha256: inventorySha256 });
+  await assert.rejects(validate(substituted), /does not preserve the pinned original/);
 });
