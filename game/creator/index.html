@@ -17,10 +17,11 @@
       <h1>Turn a picture into a playable level.</h1>
       <p>
         Choose an image, review its level, then play or share a portable campaign. Creation stays on
-        your device.
+        your device. Multi-picture campaign review appears in builds that include the Phase 2 batch
+        assembler.
       </p>
       <p id="status" role="status" aria-live="polite">
-        Choose one PNG, JPEG or WebP image to begin.
+        Choose one PNG, JPEG or WebP picture to begin.
       </p>
       <p id="save-status" role="status"></p>
       <section class="panel" aria-labelledby="choose-title">
@@ -29,9 +30,8 @@
           <label
             >Picture file <input id="image" type="file" accept="image/png,image/jpeg,image/webp"
           /></label>
-          <p class="muted">
-            Or drop one image here. Up to 4 MiB and 16 megapixels. One picture per campaign in this
-            release.
+          <p id="intake-help" class="muted">
+            Or drop one image here. Up to 4 MiB and 16 megapixels.
           </p>
         </div>
         <label
@@ -50,6 +50,20 @@
             <option value="cover">Fill board (crop edges)</option>
           </select></label
         >
+        <div id="batch-options" class="batch-options" hidden>
+          <label
+            >Campaign pacing
+            <select id="pacing">
+              <option value="balanced">Balanced variety</option>
+              <option value="gentle-first">Gentle start</option>
+              <option value="steady">Steady difficulty</option>
+              <option value="surprise">Surprise me</option>
+            </select></label
+          >
+          <p class="muted">
+            Pacing guides deterministic template selection. The review order is the play order.
+          </p>
+        </div>
         <details>
           <summary>Credits and sharing information</summary>
           <label
@@ -68,6 +82,25 @@
           <button id="generate" disabled>Generate and review</button
           ><button id="cancel" class="secondary" hidden>Cancel</button
           ><a href="./">Start a new draft</a>
+        </div>
+      </section>
+      <section id="batch-review" class="panel" hidden aria-labelledby="batch-review-title">
+        <div class="batch-heading">
+          <div>
+            <h2 id="batch-review-title">2. Review campaign order</h2>
+            <p id="batch-progress-label" role="status" aria-live="polite"></p>
+          </div>
+          <progress id="batch-progress" hidden value="0" max="1"></progress>
+        </div>
+        <div id="batch-list" class="batch-list"></div>
+        <p id="batch-readiness" role="status" aria-live="polite"></p>
+        <p id="batch-capacity" class="muted"></p>
+        <div class="actions">
+          <button id="batch-generate">Generate included levels</button>
+          <button id="batch-cancel" class="secondary" hidden>Cancel preparation</button>
+          <button id="batch-remove-excluded" class="secondary" hidden>Remove excluded items</button>
+          <button id="batch-split" class="secondary" hidden>Split into smaller packs</button>
+          <button id="batch-approve" disabled>Approve included campaign</button>
         </div>
       </section>
       <section id="review" class="panel" hidden aria-labelledby="review-title">
