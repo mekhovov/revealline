@@ -1,0 +1,49 @@
+{
+  "format": "revealline-scoped-functional-effects-review-successor.v1",
+  "status": "bounded functional source review; final-byte visual and physical-device review pending",
+  "candidateBase": "40d326e81a06a99774d8f18a5fe6b1888e5c318b",
+  "scope": "Continue only the ten unchanged active-trail and gameplay-effect recipe approvals after reviewing the exact actor-appearance renderer addition. No new effect artwork, gameplay rule, Team recipe, screen or UI approval.",
+  "priorReview": {
+    "path": "docs/verification/journey-delivery-effects-review.md",
+    "sha256": "5b13693d6d19b5b0e5e845b9e69a5971a0e36b40ffa8ff457f3418da5a0a6c8c",
+    "fingerprintSHA256": "13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9"
+  },
+  "fingerprint": {
+    "group": "effects",
+    "paths": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/enemy-catalog.mjs",
+    "sha256": "832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f",
+    "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "changedInput": {
+    "path": "game/ui/render.mjs",
+    "priorSHA256": "8c3acd933dccc7a13bf0fb3e549da238c2c9e95a2644593017f92f9120c5b851",
+    "currentSHA256": "15210cf2f07a15fb85097aef2bd3ccb5457a1d2ec726d933a7fd791fb265191e",
+    "assessment": "Adds a separately prepared FPV actor snapshot and selects player/enemy image, body, animation recipe and actor theme from that snapshot. The actor lease is validated before painting. The change does not alter active-trail segments, secured contours, travelling-impact positions, event effects, pressure cues, relay/directional painters, simulation clocks, collision authority or capture state."
+  },
+  "unchangedInputs": [
+    "game/ui/classic-view.mjs",
+    "game/ui/event-feedback.mjs",
+    "game/content-design/actor-marker.mjs",
+    "game/ui/lane-presentation.mjs",
+    "game/ui/relay-view.mjs",
+    "game/ui/directional-view.mjs",
+    "game/enemy-catalog.mjs"
+  ],
+  "qualification": {
+    "automated": [
+      "The actor-presentation cohort verifies active-trail core/head visibility, reduced-effects behavior, bounded packet placement, newly secured capture pulses and unchanged replay authority through the real BoardPainter.",
+      "The renderer-readability cohort verifies trail outline/core geometry, capture-effect layering and the warning, commit and cooldown pressure cues from projected runtime facts.",
+      "The actor-appearance and retained-presentation cohorts verify independent exact asset leases, supported player roles, fallback behavior and unchanged collision/replay authority.",
+      "The production-history check binds all ten trail/effect recipes to this exact successor fingerprint and review bytes."
+    ],
+    "sourceComparison": "Seven of eight effects-group inputs are byte-identical to the prior review. The sole render.mjs diff is confined to actor snapshot selection and actor body/image/recipe sampling; no trail or event-effect painter is modified."
+  },
+  "unchangedBindings": "All ten active-trail and gameplay-effect recipe payloads remain unchanged. This successor changes no generated effect pixels, slot IDs, simulation data or authoritative state.",
+  "excluded": [
+    "No new effect artwork, subjective art approval or human playability claim.",
+    "No complete visual-state, forced-colour, every-viewport or physical-device qualification.",
+    "No Team recipe/equipment, UI, screen, audio, frozen-build, offline, public Pages or release approval.",
+    "No long automated suite; focused checks and hosted mandatory source gates remain separately reported."
+  ],
+  "decision": "Continue the bounded functional approval for the exact ten trail/effect recipes only when this fingerprint and review bytes match. Any effects dependency change reopens the group."
+}

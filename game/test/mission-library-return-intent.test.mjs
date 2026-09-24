@@ -9,7 +9,7 @@ const build = (overrides = {}) =>
       baseURL: 'https://example.test/releases/v0.83.0/site/game/?return=untrusted#old',
       currentMode: 'solo',
       mode: 'team',
-      journey: 'team-spatial-originals-1',
+      journey: 'team-trail-impact-originals-1',
       missionId: '["exact","mission"]',
       sourceJourney: 'legacy',
       ...overrides,
@@ -19,7 +19,7 @@ const build = (overrides = {}) =>
 test('source Legacy, new and historical Journey intent is independent of selected destination owner', () => {
   for (const currentMode of ['solo', 'versus']) {
     for (const sourceJourney of ['legacy', 'whole-spatial-v5', 'opening', 'whole-originals-v2']) {
-      for (const journey of ['legacy', 'team-spatial-originals-1']) {
+      for (const journey of ['legacy', 'team-trail-impact-originals-1']) {
         const target = build({
           currentMode,
           sourceJourney,
@@ -98,6 +98,7 @@ test('Team sources have finite return routes in both Solo and Versus receivers',
     for (const sourceJourney of [
       'legacy',
       'team-spatial-originals-1',
+      'team-trail-impact-originals-1',
       'team-greybox',
       'team-originals',
       'team-pressure-originals-1',

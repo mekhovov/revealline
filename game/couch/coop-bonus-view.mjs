@@ -1,6 +1,11 @@
 import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { validateTimedBonuses, TIMED_BONUS_TRAIL_VERSION } from '../core/timed-bonuses.mjs';
-import { COOP_BONUS_LEVEL_VERSION, COOP_BONUS_RULESET } from '../coop/foundations.mjs';
+import {
+  COOP_BONUS_LEVEL_VERSION,
+  COOP_BONUS_RULESET,
+  COOP_IMPACT_LEVEL_VERSION,
+  COOP_IMPACT_RULESET,
+} from '../coop/foundations.mjs';
 import { drawClassicPickups } from '../ui/classic-view.mjs';
 import { CLASSIC_EFFECTS } from '../core/classic-state.mjs';
 
@@ -40,8 +45,10 @@ export function coopBonusView(run) {
     'Team bonus definition/state mismatch.',
   );
   required(
-    own(run, 'ruleset') === COOP_BONUS_RULESET &&
-      own(level, 'version') === COOP_BONUS_LEVEL_VERSION &&
+    ((own(run, 'ruleset') === COOP_BONUS_RULESET &&
+      own(level, 'version') === COOP_BONUS_LEVEL_VERSION) ||
+      (own(run, 'ruleset') === COOP_IMPACT_RULESET &&
+        own(level, 'version') === COOP_IMPACT_LEVEL_VERSION)) &&
       own(run, 'width') === 72 &&
       own(run, 'height') === 36,
     'Unsupported Team bonus runtime.',

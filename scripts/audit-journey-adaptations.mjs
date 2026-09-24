@@ -19,6 +19,7 @@ export async function loadJourneyAdaptationInputs({ edition = 'greybox' } = {}) 
       'campaign-originals',
       'actor-originals',
       'whole-spatial-v5',
+      'whole-spatial-v6',
     ].includes(edition)
   )
     throw new Error('Unknown adaptation content edition.');
@@ -26,7 +27,9 @@ export async function loadJourneyAdaptationInputs({ edition = 'greybox' } = {}) 
   const chapters = [];
   // Keep declaration-era pins on their original source. Selecting a newer
   // execution edition does not renew the old design rationale or route evidence.
-  const declarationEdition = edition === 'whole-spatial-v5' ? 'actor-originals' : edition;
+  const declarationEdition = ['whole-spatial-v5', 'whole-spatial-v6'].includes(edition)
+    ? 'actor-originals'
+    : edition;
   const selected = createWholeJourneyChapterSources({
     artwork: declarationEdition !== 'greybox',
     roverTeaching: ['teaching-originals', 'campaign-originals', 'actor-originals'].includes(
@@ -68,7 +71,7 @@ export async function loadJourneyAdaptationInputs({ edition = 'greybox' } = {}) 
     ledger,
     chapters,
     contentEdition: edition,
-    ...(edition === 'whole-spatial-v5'
+    ...(['whole-spatial-v5', 'whole-spatial-v6'].includes(edition)
       ? { selectedSource: createAuthoredJourneyRoute(edition).source }
       : {}),
   };
@@ -242,7 +245,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const args = process.argv.slice(2);
     if (args.length && (args.length !== 2 || args[0] !== '--edition'))
       throw new Error(
-        'Usage: node scripts/audit-journey-adaptations.mjs [--edition greybox|originals|teaching-originals|campaign-originals|actor-originals|whole-spatial-v5]',
+        'Usage: node scripts/audit-journey-adaptations.mjs [--edition greybox|originals|teaching-originals|campaign-originals|actor-originals|whole-spatial-v5|whole-spatial-v6]',
       );
     const report = await auditJourneyAdaptations(args.length ? { edition: args[1] } : undefined);
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);

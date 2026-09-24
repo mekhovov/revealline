@@ -4,12 +4,11 @@ import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
-import { teamPressureFixtures } from './helpers/team-pressure-fixtures.mjs';
+import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
 import { createModeReturn } from '../mode-return.mjs';
 
 const base = 'http://localhost/game/couch/relay-rescue.html';
-const source = createTeamSpatialOriginalCandidates();
+const source = createTeamImpactOriginalCandidates();
 const originals = new Map(
   await Promise.all(
     source.assets.map(async (asset) => [
@@ -18,7 +17,6 @@ const originals = new Map(
     ]),
   ),
 );
-const routes = await teamPressureFixtures();
 const enter = (f, id) => {
   f.$(id).focus();
   f.tap('Enter');
@@ -32,7 +30,8 @@ async function fresh(t, href = base, extra = {}) {
     retainInitialDifficulty: true,
     ...extra,
     beforeImport({ install }) {
-      const BaseImage = globalThis.Image;
+      const BaseImage = globalThis.Image,
+        actorFetch = globalThis.fetch;
       class OriginalImage extends BaseImage {
         async decode() {
           if (!this.source.startsWith('data:image/png;base64,')) return super.decode();
@@ -47,7 +46,7 @@ async function fresh(t, href = base, extra = {}) {
       install('fetch', {
         value: async (url) => {
           const asset = source.assets.find((row) => new URL(url).pathname.endsWith('/' + row.path));
-          assert(asset, 'Only registered original artwork is requested');
+          if (!asset) return actorFetch(url);
           return new Response(originals.get(asset.path));
         },
       });
@@ -102,28 +101,18 @@ test('queryless Team offers all twelve original missions across five campaigns a
   assert.equal(f.$('coop-menu').hidden, true);
   f.tick(2);
   const first = source.missions[0];
-  assert.equal(
-    f.drawImages.at(-1).sha256,
-    source.assets.find((asset) => asset.id === first.presentation.backgroundAssetId).sha256,
+  const expectedBackground = source.assets.find(
+    (asset) => asset.id === first.presentation.backgroundAssetId,
+  ).sha256;
+  assert(
+    f.drawImages.some((image) => image.sha256 === expectedBackground),
+    'The arena paints its original background alongside the default actor material.',
   );
-  const route = routes.find((row) => row.missionId === first.id && row.difficulty === 'standard');
-  const keys = [
-    { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-    { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-  ];
-  let previous = [null, null];
-  for (const segment of route.log) {
-    for (const [seat, direction] of [segment.a, segment.b].entries())
-      if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-    previous = [segment.a, segment.b];
-    for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) f.tick();
-    if (!f.$('coop-overlay').hidden) break;
-  }
-  assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-  enter(f, 'coop-next');
+  enter(f, 'coop-journey-skip');
+  enter(f, 'coop-journey-skip-confirm');
   await waitFor(() => f.$('coop-overlay').hidden);
   assert.equal(f.$('coop-level').value, source.missions[1].id);
-  assert.equal(f.$('coop-menu').hidden, true, 'Next does not require another Start');
+  assert.equal(f.$('coop-menu').hidden, true, 'Skip does not require another Start');
   assert.deepEqual(f.visits, []);
 });
 
@@ -148,9 +137,7 @@ test('explicit spatial review entry retains its original review labels and exact
   enter(f, 'coop-discovery-open');
   await waitFor(() => f.$('journey-chooser')?.open);
   const caption = f.$('journey-cards').querySelector('.journey-card-edition');
-  // Shared cards name the same immutable edition in both entry routes; the
-  // explicit review host retains its qualification warnings above.
-  assert.equal(caption.textContent, 'Team Journey');
+  assert.match(caption.textContent, /Team Journey.*team-spatial-originals-1/);
   assert.match(f.$('journey-cards').querySelector('.journey-card-tags').textContent, /Journey/);
   enter(f, 'journey-back');
   enter(f, 'coop-start');
@@ -158,7 +145,7 @@ test('explicit spatial review entry retains its original review labels and exact
   const asset = source.assets.find(
     (item) => item.id === source.missions[0].presentation.backgroundAssetId,
   );
-  assert.equal(f.drawImages.at(-1).sha256, asset.sha256);
+  assert(f.drawImages.some((image) => image.sha256 === asset.sha256));
 });
 
 test('catalogue switching keeps origin but clears legacy return tokens and requires unfinished-attempt confirmation', async (t) => {

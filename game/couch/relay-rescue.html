@@ -71,7 +71,14 @@
                 <option value="expert">Expert</option>
               </select></label
             >
+            <label
+              >Actors<select id="coop-actor-style" aria-describedby="coop-actor-style-note">
+                <option value="fpv" selected>FPV</option>
+                <option value="campaign">Campaign</option>
+              </select></label
+            >
           </div>
+          <p id="coop-actor-style-note" class="setup-note" role="status"></p>
           <p id="coop-selection-status" class="setup-note" role="status" hidden></p>
           <div class="coop-launch-grid">
             <figure id="coop-picture-preview" class="coop-picture-preview" data-state="preparing">
@@ -589,9 +596,9 @@
             <option value="large">Large</option>
           </select>
           <label class="field-kit-page-text"
-            >Menu colours<select id="coop-menu-palette">
-              <option value="auto">Automatic</option>
-              <option value="ukrainian">Ukrainian blue &amp; yellow</option>
+            >UI skin<select id="coop-menu-palette">
+              <option value="auto">Neon Arcade</option>
+              <option value="ukrainian">FPV Field Kit</option>
             </select></label
           >
           <label class="field-kit-page-text"

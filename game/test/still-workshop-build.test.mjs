@@ -36,6 +36,10 @@ const fieldKitFiles = [
   'game/ui/fonts/field-kit/Exo2-OFL.txt',
   'game/ui/fonts/field-kit/IBMPlexMono-OFL.txt',
   'game/ui/fonts/field-kit/provenance.json',
+  'game/ui/fonts/Tiny5-Regular.ttf',
+  'game/ui/fonts/OFL.txt',
+  'game/ui/fonts/METADATA.pb',
+  'game/ui/fonts/provenance.json',
 ];
 const workshopEntries = [
   'authoring/still-media/index.html',

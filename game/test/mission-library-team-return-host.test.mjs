@@ -48,7 +48,7 @@ function href(mode, journey, collection, returnToken) {
     baseURL: mode === 'solo' ? root : root + 'couch/',
     currentMode: mode,
     mode: 'team',
-    journey: collection === 'Journey' ? 'team-spatial-originals-1' : 'legacy',
+    journey: collection === 'Journey' ? 'team-trail-impact-originals-1' : 'legacy',
     sourceJourney: journey,
     missionId: target(collection).id,
     returnToken,
@@ -67,7 +67,8 @@ async function fixture(t, href, returnStorage = memory()) {
     nativeVisibility: true,
     retainInitialDifficulty: true,
     beforeImport({ install }) {
-      const BaseImage = globalThis.Image;
+      const BaseImage = globalThis.Image,
+        actorFetch = globalThis.fetch;
       class OriginalImage extends BaseImage {
         async decode() {
           if (!this.source.startsWith('data:image/png;base64,')) return super.decode();
@@ -85,7 +86,7 @@ async function fixture(t, href, returnStorage = memory()) {
           const path = new URL(url).pathname.split('/game/')[1];
           if (metadata.has(path)) return new Response(metadata.get(path));
           const asset = source.assets.find((row) => new URL(url).pathname.endsWith('/' + row.path));
-          assert(asset, 'Only the selected Team original may be fetched');
+          if (!asset) return actorFetch(url);
           return new Response(originals.get(asset.path));
         },
       });
@@ -168,7 +169,12 @@ test('older exact library links without source hints keep the existing checked-t
   assert.equal(f.$('coop-level').value, target('Classic').runtimeId);
 });
 
-for (const route of ['legacy', 'team-spatial-originals-1', 'team-greybox'])
+for (const route of [
+  'legacy',
+  'team-spatial-originals-1',
+  'team-trail-impact-originals-1',
+  'team-greybox',
+])
   test(`outgoing Team ${route} mission handoff preserves its exact finite source route`, async (t) => {
     const f = await fixture(t, root + `couch/relay-rescue.html?journey=${route}`);
     f.$('coop-discovery-open').focus();
@@ -184,7 +190,7 @@ for (const route of ['legacy', 'team-spatial-originals-1', 'team-greybox'])
     await waitFor(() => f.visits.length === 1);
     const destination = new URL(f.visits[0]);
     assert.equal(destination.pathname, '/releases/v-test/game/');
-    assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+    assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v6');
     assert.equal(destination.searchParams.get('library-mission'), selected.dataset.missionId);
     assert.equal(destination.searchParams.get('return'), 'team');
     assert.equal(destination.searchParams.get('journey-return'), route);

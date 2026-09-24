@@ -743,6 +743,15 @@ export function createCouchInstalledChapters({
   }
   return Object.freeze({
     refresh,
+    // Trusted host adapters can inspect the exact accepted owner. A copied row,
+    // stale refresh or caller-supplied pack ID cannot acquire this authority.
+    presentationOwner(row) {
+      const state = stateFor(row, row?.defaultThemeId);
+      return Object.freeze({
+        entry: state.entry,
+        pack: state.snapshot.packs.packs.find((pack) => pack.id === state.entry.sourcePackId),
+      });
+    },
     select,
     stage,
     confirm,

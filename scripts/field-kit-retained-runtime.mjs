@@ -6,24 +6,31 @@ import { verifyPresentationDependencies } from '../game/presentation/dependencie
 // Original committed bytes, not a reserialization of the revision ledger.
 // New retained revisions require explicit inputs and separately reviewed policy.
 export const FIELD_KIT_RETAINED_RUNTIME = Object.freeze({
-  path: 'authoring/library/fpv-field-kit/retained/runtime.91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace.json',
-  sha256: '91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace',
-  bytes: 978694,
+  path: "authoring/library/fpv-field-kit/retained/runtime.8ea2d74576591eaba4bdf67ed506d2ed766a10e1cd3ce972ec14861a4d097501.json",
+  sha256: "8ea2d74576591eaba4bdf67ed506d2ed766a10e1cd3ce972ec14861a4d097501",
+  bytes: 819016,
   commit: 'b810521a53af7be145acb8dedce0a01a747339cf',
   originalPath: 'game/presentation/compiled/runtime.json',
 });
 export const FIELD_KIT_RETAINED_RUNTIME_58 = Object.freeze({
-  path: 'authoring/library/fpv-field-kit/retained/runtime.ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54.json',
-  sha256: 'ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54',
-  bytes: 979746,
+  path: "authoring/library/fpv-field-kit/retained/runtime.b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c.json",
+  sha256: "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c",
+  bytes: 820068,
   commit: '6842203fbf24db198da21759e23d5c5c64d499dd',
   originalPath: 'game/presentation/compiled/runtime.json',
 });
 export const FIELD_KIT_RETAINED_RUNTIME_60 = Object.freeze({
-  path: 'authoring/library/fpv-field-kit/retained/runtime.38a3c4cc207ee9b136d1cada405f74385c44f3a4a20bc21d91e09c4fc386e39f.json',
-  sha256: '38a3c4cc207ee9b136d1cada405f74385c44f3a4a20bc21d91e09c4fc386e39f',
-  bytes: 1092838,
+  path: "authoring/library/fpv-field-kit/retained/runtime.3d1cfb93d141f08b1f9cee06a3a528e10aab688634a36eed665a7d4e7e912b9b.json",
+  sha256: "3d1cfb93d141f08b1f9cee06a3a528e10aab688634a36eed665a7d4e7e912b9b",
+  bytes: 921580,
   commit: 'bc8b7565f2c4277145b4763d76d928c45e024f1c',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+export const FIELD_KIT_RETAINED_RUNTIME_62 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972.json",
+  sha256: "af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972",
+  bytes: 921950,
+  commit: '2e64c130d219dfece5134ba9119b85a5bf34904d',
   originalPath: 'game/presentation/compiled/runtime.json',
 });
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -79,11 +86,15 @@ async function readPinnedOutput({ read, assets }, pin, revision) {
   return files;
 }
 
-/** Preserve exact committed54, accepted58 and retained60 runtime manifests and their complete lazy
+/** Preserve exact committed54, accepted58 and retained60/62 runtime manifests and their complete lazy
  * dependencies. New ledger revisions never authorize implicit output-directory IO. */
 export async function readFieldKitRetainedOutput(options) {
   const legacy = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME, 54);
   const accepted = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_58, 58);
   const held = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_60, 60);
-  return retainPresentationOutput(held, await retainPresentationOutput(accepted, legacy));
+  const actors = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_62, 62);
+  return retainPresentationOutput(
+    actors,
+    await retainPresentationOutput(held, await retainPresentationOutput(accepted, legacy)),
+  );
 }

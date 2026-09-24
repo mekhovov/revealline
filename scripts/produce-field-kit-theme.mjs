@@ -50,6 +50,10 @@ const equipmentSources = [
   ...sources.team.split('; '),
 ];
 const reviewedEquipmentSource = 'b9cbf2db6fe094564a15743c72c45049bf9ee776a22b2599469e0ee1bdc03037';
+const reviewedEquipmentSuccessorSource =
+  '162d4c737c11d34f8e7e3ed6e76ca5a34fcf06d5fb97303d53eba857feaaf530';
+const reviewedTeamSuccessorRecord =
+  '45e41eee3cacac251ede3f0304834a1fda311f8bd70f4d0b66aaceb493b8fc05';
 const reviewedEquipmentOriginals = Object.freeze({
   'team.anchor.available': '88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3',
   'team.anchor.captured': 'a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466',
@@ -62,16 +66,33 @@ export async function fieldKitEquipmentSource(read) {
   return hash(Buffer.concat(await Promise.all(equipmentSources.map((name) => read(name)))));
 }
 
-export function fieldKitEquipmentQuality(slotId, source, originalHash) {
+export function fieldKitEquipmentQuality(slotId, source, originalHash, successorReviewBytes) {
+  const successor =
+    successorReviewBytes && hash(successorReviewBytes) === reviewedTeamSuccessorRecord
+      ? JSON.parse(successorReviewBytes)
+      : null;
+  const continued =
+    source === reviewedEquipmentSuccessorSource &&
+    successor?.priorEquipmentReview?.path ===
+      'docs/verification/team-equipment-five-review/review.json' &&
+    successor.priorEquipmentReview.sha256 ===
+      'a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3' &&
+    successor.priorEquipmentReview.priorFingerprintSHA256 === reviewedEquipmentSource &&
+    successor.priorEquipmentReview.currentFingerprintSHA256 === reviewedEquipmentSuccessorSource;
   if (
     Object.hasOwn(reviewedEquipmentOriginals, slotId) &&
-    source === reviewedEquipmentSource &&
+    (source === reviewedEquipmentSource || continued) &&
     reviewedEquipmentOriginals[slotId] === originalHash
   )
     return {
       stage: 'reviewed',
       evidence: [
         'Five images only: docs/verification/team-equipment-five-review/review.json sha256:a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3',
+        ...(continued
+          ? [
+              `Unchanged five-image consumer continuation: docs/verification/team-specialist-cues-2026-09-24/review.json sha256:${reviewedTeamSuccessorRecord}`,
+            ]
+          : []),
       ],
     };
   return {
@@ -88,19 +109,19 @@ export function fieldKitEquipmentQuality(slotId, source, originalHash) {
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: '1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845',
+    sha256: 'ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996',
     evidence: [
-      'Scoped soundtrack screen source review: docs/verification/soundtrack-v3-framework-2026-09-21/ui-screen-review/review.json sha256:29b58017d3a3e1bf33347606695e522830cb170fb595c907310f9fd5c244fae0; screen recipe inputs sha256:1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845. The changed compiled CSS reserves 44px only for visible running-landscape music credits in both board placement and height-derived width. Existing effective 8px bottom reserve and narrow Standard/Large header precedence remain intact.',
-      'Independent source arithmetic covers 12 compact cases; 12 focused credit/navigation/board tests pass. Earlier evolving-source native Solo and Team 844x390 observations are attributed in the review, not certified as final-byte screenshots. Unchanged screen inputs retain their historical source reviews in the immutable ledger.',
-      'Bounded functional layout approval only. Native smaller landscape/safe-area/First Flight checks, full screen coverage, physical devices, forced colours, offline, art and release acceptance remain separate. No recording is approved. Source-stage fpv39/fpv40 revisions and all original payloads remain preserved before the scoped reviewed successor.',
+      'Scoped integrated screen continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; four ordered screen inputs sha256:ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996. Only field-kit-surfaces.css changes to map the two registered menu palettes onto existing supporting-page semantic tokens.',
+      'Focused surface and menu-host checks cover the shared tokens, persisted palette choice, keyboard/controller focus and paused Solo, Team and Versus state. Board geometry, input hit targets, runtime state, payloads and content ownership remain unchanged.',
+      'Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable.',
     ],
   },
   ui: {
-    sha256: '6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865',
+    sha256: '4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a',
     evidence: [
-      'Scoped Team-host UI functional continuation: docs/verification/team-host-ui-continuation/review.json sha256:9bedba528191f2948259714d0f39fbcc369b6cccfa53ea1a5ee7ae397b1fc6db. Seven ordered UI inputs sha256:6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865 include the dependency-free shared Team slot leaf. All24 existing UI recipe payloads and resolved tokens are unchanged; only explicit image admission and its dependency closure change.',
-      'Thirteen complete host, manifest-pin, Team admission/atomic ownership, affected-owner and fingerprint suites pass125 checks on each Node20/22, with264 identical exact source bindings and zero mismatches. Exact pre-approval r3 native panels/focus/Settings/Plain/Large/effects/slider/dialog/help/search/preview observations have285 HTTP200 requests and an empty console.',
-      'UI functional continuation only. Native Large catalogue initial Play focus is clipped and remains a required navigation correction; no whole-navigation acceptance. Team37 source recipes and five produced equipment images retain separate unapproved status. No physical-device, listening, offline, public or release approval. Prior UI approvals and all immutable originals remain preserved; any UI input change reopens this group.',
+      'Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.',
+      'The actor-only profile uses a fixed registered image-slot set, creates no CSS URLs and refuses page apply, audio and picture operations. Full remains the default profile. Lease, cancellation, retained-runtime and exact source-binding tests cover the functional separation; fresh-origin Team screens retain the full-profile UI while FPV actors use the independent lease.',
+      'UI functional continuation only. Complete navigation, forced-colour, screen-reader, every-viewport, physical-device, audio, offline, public and release acceptance remain separate. Prior UI reviews and immutable originals remain preserved; any UI input change reopens this group.',
     ],
   },
   audio: {
@@ -112,19 +133,19 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   motion: {
-    sha256: 'ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76',
+    sha256: 'c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9',
     evidence: [
-      'Scoped Journey motion/material source review: docs/verification/journey-delivery-effects-review.md; three ordered motion inputs sha256:ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76. Original Motion painter remains unchanged; explicit actor-material successor frames select a fixed 84-recipe body-only table. Old theme IDs and unknown roles fall back; explicit skins and uploaded images retain priority.',
-      'Independent six-suite cohort passes 54/54 on each Node20.19.5 and Node22.22.2. Checks cover seven connected bounded role masks across twelve materials, 498 unchanged Solo/Versus identities, 36 Team identities, exact contact/checkpoints, skin/upload override, pause/reduced behavior and fitted-edge envelopes. No source review finding changes authoritative clocks, positions, radii or role badges.',
-      'Functional source/material geometry approval only, not subjective art, all-state native/device, human balance, audio/offline or public approval. The unpublished Journey fpv55–58 lineage is preserved as an authenticated inert archive; canonical history starts from accepted main fpv56. See docs/verification/journey-main-reconciliation/README.md. All 127 original payloads remain unchanged. Complete integrated host and hosted qualification remain required; changed motion inputs reopen this group.',
+      'Scoped visible-actor motion continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; three ordered motion inputs sha256:c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9. Only actor-presentation.mjs changes to fit prepared visible bounds and rotor sweep to the requested display size.',
+      'Focused actor and renderer checks cover rectangular and transparent frames, compact/desktop minima, rotor sweep, reduced motion, fallback and unchanged simulation footprints. Positions, collision radii, authoritative clocks and role identities are unchanged.',
+      'Functional source/geometry continuation only, not subjective art, every-state native/device, human balance, frozen/public or release approval. Historical reviews and original payloads remain immutable; changed motion inputs reopen this group.',
     ],
   },
   effects: {
-    sha256: '13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9',
+    sha256: '475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5',
     evidence: [
-      'Scoped integrated Journey effects review: docs/verification/journey-delivery-effects-review.md; eight ordered effects inputs sha256:13a140c0872eaa646b79f26c068b90527a1d0034131284bbbe9f5b5a5e3829d9. Includes relay/directional painters and actor catalogue dependency fingerprints. Independent review found no gameplay, clock or input mutation; bounded projections and canvas lifetime remain cosmetic.',
-      'Independent presentation/transport/authoring and guidance cohorts pass 132 checks per Node20/Node22. Two Team host checks initially rejected stale exact theme bindings and were repaired in the archived fpv58 checkpoint; those historical results do not qualify the new canonical binding. Complete reconciled host/CI reruns remain mandatory. Separate 100-check effects and fingerprint cohort passes both Nodes. Timed cues, lane contact geometry, relay/directional symbols and checkpoint preservation are scoped functional evidence.',
-      'Functional source approval only. All 127 original payloads remain unchanged. Accepted main fpv55/fpv56 records remain canonical and immutable; the differing unpublished Journey fpv55–58 lineage is separately archived, not silently reinterpreted. See docs/verification/journey-main-reconciliation/README.md. Complete visual/art, final-byte native/device, human pacing, audio/offline and public acceptance remain separate. Any effects input change reopens this group.',
+      'Scoped visible-actor effects continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; eight ordered effects inputs sha256:475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5. Only render.mjs changes to pass authenticated actor geometry into the cosmetic player paint-size calculation.',
+      'The active-trail, secured-contour, travelling-impact, capture, failure, victory, pickup, shield, respawn and pressure painters remain unchanged. Focused renderer checks preserve trail core/head, reduced effects, capture layering, collision footprints and authoritative state.',
+      'Functional source continuation only. Historical reviews and original payloads remain immutable. Complete art, final-byte visual/device, human pacing, frozen/public and release acceptance remain separate. Any effects input or review-byte change reopens this group.',
     ],
   },
 };
@@ -227,6 +248,9 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
     );
   }
   const teamReviewBytes = await read('docs/verification/team37/review.json');
+  const teamSuccessorReviewBytes = await read(
+    'docs/verification/team-specialist-cues-2026-09-24/review.json',
+  );
   const inheritedAssets = Object.fromEntries(
     assets.filter((asset) => asset.kind === 'image').map((asset) => [asset.id, asset]),
   );
@@ -243,6 +267,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
       defaultAsset,
       inheritedAssets,
       reviewBytes: teamReviewBytes,
+      successorReviewBytes: teamSuccessorReviewBytes,
     });
   }
   const equipmentSource = 'game/presentation/team-equipment-art.mjs';
@@ -273,7 +298,12 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
           prompt: slot.prompt,
           parent: { id: `${slotId}.default`, revision: 1 },
         },
-        quality: fieldKitEquipmentQuality(slotId, equipmentReviewSource, hash(body)),
+        quality: fieldKitEquipmentQuality(
+          slotId,
+          equipmentReviewSource,
+          hash(body),
+          teamSuccessorReviewBytes,
+        ),
       },
       body,
     );

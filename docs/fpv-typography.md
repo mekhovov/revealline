@@ -4,13 +4,13 @@ Field Kit uses readable interface text over pixel artwork. Handjet is the chosen
 
 ## Font roles and sizes
 
-| Role      | CSS family / token                        | Standard     | Large        | Use                                                                                    |
-| --------- | ----------------------------------------- | ------------ | ------------ | -------------------------------------------------------------------------------------- |
-| Display   | `Field Kit Display` / `--fk-font-display` | 40px minimum | 48px minimum | Screen titles, large pause/result labels; Handjet 600, element shape 2, element grid 1 |
-| Body      | `Field Kit UI` / `--fk-font-ui`           | 18px / 1.5   | 22px / 1.5   | Instructions, descriptions, help and narrative; Exo 2 400                              |
-| Control   | `Field Kit UI` / `--fk-font-ui`           | 16px / 1.35  | 20px / 1.35  | Buttons and form fields; Exo 2 500, primary emphasis 600                               |
-| Secondary | `Field Kit UI` / `--fk-font-ui`           | 14px / 1.45  | 18px / 1.45  | Supporting labels, hints and release identity                                          |
-| Numeric   | `Field Kit Mono` / `--fk-font-mono`       | 26px         | 30px         | Score, coverage and timer; IBM Plex Mono 500, equal-width digits                       |
+| Role      | CSS family / token                        | Standard     | Large        | Use                                                              |
+| --------- | ----------------------------------------- | ------------ | ------------ | ---------------------------------------------------------------- |
+| Display   | `Reveal Line Pixel` / `--fk-font-display` | 40px minimum | 48px minimum | Screen titles and large pause/result labels; Tiny5 400           |
+| Body      | `Field Kit UI` / `--fk-font-ui`           | 18px / 1.5   | 22px / 1.5   | Instructions, descriptions, help and narrative; Exo 2 400        |
+| Control   | `Field Kit UI` / `--fk-font-ui`           | 16px / 1.35  | 20px / 1.35  | Buttons and form fields; Exo 2 500, primary emphasis 600         |
+| Secondary | `Field Kit UI` / `--fk-font-ui`           | 14px / 1.45  | 18px / 1.45  | Supporting labels, hints and release identity                    |
+| Numeric   | `Field Kit Mono` / `--fk-font-mono`       | 26px         | 30px         | Score, coverage and timer; IBM Plex Mono 500, equal-width digits |
 
 The title-screen wordmark is 56–104px. Handjet is instantiated at `ELSH=2`, `ELGR=1`, `wght=600`; its appearance is fixed in the delivered font. Do not simulate other display weights. Exo 2 retains only its 400–600 weight range. Small keycaps and compact counters can use Mono at the secondary size.
 
@@ -20,7 +20,7 @@ Exo 2 lacks `₴ ↑ ↓ ← →`; the UI stack explicitly falls back to the loc
 
 Load `game/ui/field-kit-fonts.css`, `game/ui/field-kit-tokens.css`, then `game/ui/field-kit-components.css` **after** legacy game styles. Add `field-kit` to the existing `body.game-shell`; retain `game-shell` and all existing screen/state attributes. A standalone tool can opt in with `body.field-kit`.
 
-The game, landing pages and existing authoring tools now load this stack. Supporting pages add `field-kit-support` for readable paragraph sizes; the game keeps its existing shell layout. Generated credits and privacy pages use the same fonts, and the build rewrites their relative paths for root and versioned GitHub Pages routes. Canvas feedback uses the numeric/interface faces at 14px or larger and gives labels matching background plates.
+The game, landing pages and existing authoring tools now load this stack. Supporting pages add `field-kit-support` for readable paragraph sizes; the game keeps its existing shell layout. Tiny5 owns pixel-mode game-shell text, shared headings and canvas interface labels. Exo 2 remains the readable body/control face on support surfaces, while IBM Plex Mono retains numeric alignment. Generated credits and privacy pages use the same fonts, and the build rewrites their relative paths for root and versioned GitHub Pages routes. Canvas feedback uses the pixel or plain interface face and keeps numeric labels at 14px or larger with matching background plates.
 
 The original Solo Text size setting persists `standard` / `large` through `game/library.mjs`; the tokens consume `document.body.dataset.textSize`. The isolated [P05-A shared-display candidate](shared-display-preferences.md) keeps those same values in one origin-local display authority across Solo, Versus and Team, with explicit legacy Solo fallback. Do not add competing page-specific preferences or scale the simulation canvas to increase text size. Its native reflow and release acceptance remain pending.
 
@@ -38,7 +38,7 @@ The CSS respects reduced-motion and forced-color preferences. Keep visible focus
 
 ## Provenance and repeatable verification
 
-The three WOFF2 files, original OFL 1.1 notices and `provenance.json` live in `game/ui/fonts/field-kit/`. The manifest records the source commit, exact source and license URLs, source/output SHA-256 hashes, source versions, output weights/axes, byte sizes and toolchain. No glyphs were subsetted; only variation axes were instantiated or restricted.
+The three supporting WOFF2 files, original OFL 1.1 notices and `provenance.json` live in `game/ui/fonts/field-kit/`. Tiny5, its OFL notice, upstream metadata and independent checksum record live in `game/ui/fonts/`. The manifests record exact sources, licenses, SHA-256 hashes, versions and byte sizes. Tiny5 is unmodified. No supporting-font glyphs were subsetted; only variation axes were instantiated or restricted.
 
 Sources are pinned to Google Fonts commit `809e4d8b8d7e9364a914909bb777679606c178b8`. Original upstream projects are [Handjet](https://github.com/rosettatype/handjet), [Exo 2](https://github.com/googlefonts/Exo-2.0), and [IBM Plex](https://github.com/IBM/plex). Their font names, copyright and license records remain in the files; the CSS family names are application aliases.
 

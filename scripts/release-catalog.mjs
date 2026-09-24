@@ -62,6 +62,8 @@ export async function copyCatalogPresentation(projectRoot, destination) {
     'provenance.json',
   ])
     await copy(`game/ui/fonts/field-kit/${notice}`);
+  for (const file of ['OFL.txt', 'METADATA.pb', 'provenance.json'])
+    await copy(`game/ui/fonts/${file}`);
   await copy('game/ui/field-kit-surfaces.mjs');
   await copy('game/presentation/page-entry.mjs');
   await copy('game/ui/operation-status.css');

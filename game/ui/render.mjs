@@ -24,6 +24,7 @@ import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import {
   createActorPresentation,
   actorDiameter,
+  actorImagePaintMetrics,
   actorScreenScale,
   actorLogicalLimit,
   drawPresentedActor,
@@ -50,7 +51,11 @@ const paintSize = ({ width, height }) => ({
 });
 export const boardPaintSizeForLevel = (level) => paintSize(geometryForLevel(level));
 export const boardPaintSizeForRun = (run) => paintSize(geometryForRun(run));
-export function playerPaintSize(body, image, { screenScale, canvasCSSWidth, style, scale }) {
+export function playerPaintSize(
+  body,
+  image,
+  { screenScale, canvasCSSWidth, style, scale, geometry = null },
+) {
   const s = actorScreenScale(screenScale),
     fitted = fittedBodySize(body, image),
     // Keep the contained source rectangle and all attachment anchors intact.
@@ -63,11 +68,13 @@ export function playerPaintSize(body, image, { screenScale, canvasCSSWidth, styl
     minimum = canvasCSSWidth >= 480 ? 24 : compactMinimum,
     desired = actorDiameter({ screenScale: s, canvasCSSWidth, style, scale }) * 1.15,
     logicalCap = actorLogicalLimit({ screenScale: s, minimumCSSSize: minimum }),
-    diameter = Math.max(
+    visibleDiameter = Math.max(
       Math.min(18, 32 / s),
       Math.min(logicalCap, 32 / s, Math.max(minimum / s, desired)),
-    );
-  return { diameter, scale: diameter / (extent * CELL) };
+    ),
+    paint = image && geometry ? actorImagePaintMetrics(visibleDiameter, geometry) : null,
+    frameDiameter = paint ? Math.max(paint.width, paint.height) : visibleDiameter;
+  return { diameter: visibleDiameter, scale: frameDiameter / (extent * CELL) };
 }
 const makeCanvas = (w, h) => {
   const c = document.createElement('canvas');
@@ -301,12 +308,23 @@ export class BoardPainter {
       displayCSSWidth = null,
       textFace = 'pixel',
       actorSkins = {},
+      actorAppearance = null,
       backdrop = null,
     } = {},
   ) {
     if (!this.theme || !state) return;
     const presentation =
       this.theme.id === 'fpv' || this.theme.family === 'fpv' ? this.presentation : null;
+    if (
+      actorAppearance !== null &&
+      (!['fpv', 'campaign'].includes(actorAppearance?.style) ||
+        (actorAppearance.style === 'fpv' && typeof actorAppearance.snapshot?.image !== 'function'))
+    )
+      throw new TypeError('Actor appearance requires a supported style and prepared FPV assets.');
+    // The host owns and verifies this separate lease. Its canvas, fonts and
+    // theme are deliberately ignored: changing actors must not change a world.
+    const fpvActors = actorAppearance?.style === 'fpv';
+    const actorPresentation = fpvActors ? actorAppearance.snapshot : presentation;
     const fonts = canvasTextFonts(textFace, presentation?.fonts);
     reduced = reduced || presentation?.canvas.motionScale === 0;
     const motionDt = dt * (presentation?.canvas.motionScale ?? 1);
@@ -359,6 +377,8 @@ export class BoardPainter {
           images.presentationSprites[role] = sprite.geometry;
         }
       }
+    }
+    if (actorPresentation) {
       for (const [type, role] of Object.entries({
         bouncer: 'enemy',
         'border-patrol': 'patrol',
@@ -368,7 +388,7 @@ export class BoardPainter {
         'lane-boss': 'boss',
         'relay-sentinel': 'boss',
       })) {
-        const sprite = presentation.image(`enemy.${type}`);
+        const sprite = actorPresentation.image(`enemy.${type}`);
         if (sprite && !this.overrides[role] && !actorSkins[type]) {
           enemySprites[type] = sprite;
           images[role] = sprite.image;
@@ -377,23 +397,33 @@ export class BoardPainter {
       }
     }
     let playerBody = this.body,
-      playerImage = this.image;
-    if (presentation && !this.overrides.player) {
+      playerImage = this.image,
+      playerRecipe = this.recipe,
+      playerGeometry = null;
+    if (actorPresentation && !this.overrides.player) {
       const set = this.presets.characterPresentations?.sets.find(
         (entry) =>
-          entry.themeId === 'fpv' && Object.values(entry.classBodies).includes(this.bodyId),
+          entry.themeId === 'fpv' &&
+          (fpvActors || Object.values(entry.classBodies).includes(this.bodyId)),
       );
-      const role = set && Object.entries(set.classBodies).find(([, id]) => id === this.bodyId)?.[0];
+      const role = fpvActors
+        ? state.activeClassId || state.classId
+        : set && Object.entries(set.classBodies).find(([, id]) => id === this.bodyId)?.[0];
       const treatment = this.style === 'microtile' || canvasCSSWidth < 480 ? 'compact' : 'detailed';
-      const sprite = role && presentation.image(`player.${role}.${treatment}`);
+      const sprite = role && actorPresentation.image(`player.${role}.${treatment}`);
+      const body = fpvActors ? this.presets.characters[set?.classBodies[role]] : this.body;
+      if (fpvActors && (!sprite || !body))
+        throw new TypeError('Actor appearance is missing the prepared player role.');
       if (sprite) {
         playerImage = sprite.image;
+        playerGeometry = sprite.geometry;
         playerBody = {
-          ...this.body,
+          ...body,
           sampling: 'nearest',
           rotors: sprite.geometry.rotors,
           presentationPivot: sprite.geometry.pivot,
         };
+        playerRecipe = this.presets.animationRecipes[body.animationRecipe];
       }
     }
     const actorFrames = this.actorPresentation.sample(fullReveal ? [] : state.enemies, {
@@ -403,8 +433,8 @@ export class BoardPainter {
       paused: paused || state.status !== 'running',
       reduced,
       classic,
-      themeId: this.theme.id,
-      themeFamily: this.theme.family,
+      themeId: fpvActors ? 'fpv' : this.theme.id,
+      themeFamily: fpvActors ? 'fpv' : this.theme.family,
       style: this.style,
       screenScale: canvasCSSWidth / W,
       canvasCSSWidth,
@@ -810,7 +840,7 @@ export class BoardPainter {
       }
       this.animation = advanceAnimation(
         this.animation,
-        this.recipe,
+        playerRecipe,
         { visualSpeed: state.player.speed || 0, cruiseSpeed: state.rules.moveSpeed },
         motionDt,
         { paused, reducedMotion: reduced },
@@ -820,11 +850,12 @@ export class BoardPainter {
         canvasCSSWidth,
         style: this.style,
         scale: playerScale,
+        geometry: playerGeometry,
       });
       const playerPose = {
         body: playerBody,
         image: playerImage,
-        recipe: this.recipe,
+        recipe: playerRecipe,
         animation: this.animation,
         scale: playerSize.scale,
         heading: this.heading,

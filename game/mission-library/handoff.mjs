@@ -24,7 +24,9 @@ function modeId(value) {
 }
 const journeyForMode = (journey, mode) =>
   journey === 'legacy' ||
-  (mode === 'team' ? journey === 'team-spatial-originals-1' : isAuthoredJourneyRouteId(journey));
+  (mode === 'team'
+    ? journey === 'team-trail-impact-originals-1'
+    : isAuthoredJourneyRouteId(journey));
 // These finite historical Team routes are retained by relay-rescue's entry
 // factory. Source navigation may return to them; this does not qualify any new
 // destination mission for the unified library or fabricate a Team edition.
@@ -33,6 +35,8 @@ const TEAM_SOURCE_ROUTES = Object.freeze([
   'team-originals',
   'team-pressure-originals-1',
   'team-spatial-originals-1',
+  'team-trail-impact-originals-1',
+  'team-specialist-originals-1',
   'team-timed-originals',
   'team-window-spatial-1',
   'team-depot-spatial-1',

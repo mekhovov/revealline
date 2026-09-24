@@ -29,6 +29,7 @@ export async function retainFlightForFirstFlight({
   presentationPins,
   presentationLevel,
   visualThemePin,
+  actorAppearancePin,
   mediaIdentityCatalog,
   storage,
   sessionKey,
@@ -88,6 +89,7 @@ export async function retainFlightForFirstFlight({
     presentationPins,
     presentationLevel,
     ...(visualThemePin !== undefined ? { visualThemePin } : {}),
+    ...(actorAppearancePin !== undefined ? { actorAppearancePin } : {}),
   });
   const checkpoint = canonicalJSON(authoritativeCheckpoint(run));
   const recording = canonicalJSON(session.replay);

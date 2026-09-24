@@ -23,23 +23,100 @@ import { prepareTeamAnchors, drawTeamAnchor } from './coop-anchor-presentation.m
 import { canvasTextFonts } from '../text-face.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
-import { drawCoopActiveTrail, drawCoopWall, prepareCoopWall } from './coop-terrain-trail.mjs';
+import {
+  createCoopCaptureFeedback,
+  drawCoopActiveTrail,
+  drawCoopCaptureFeedback,
+  drawCoopWall,
+  prepareCoopWall,
+} from './coop-terrain-trail.mjs';
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
 import { coopBonusView, drawCoopBonuses } from './coop-bonus-view.mjs';
+import {
+  TEAM_PILOT_SLOTS,
+  TEAM_ENEMY_SLOTS,
+  TEAM_CORE_SLOTS,
+} from '../presentation/team-runtime-slots.mjs';
 
 const THEME_FONTS = Object.freeze({
   ui: '"Field Kit UI", "Field Kit Mono", system-ui, sans-serif',
   numeric: '"Field Kit Mono", ui-monospace, monospace',
 });
 const COLORS = ['#ffda77', '#8be0ed'];
+const ACTOR_FALLBACK_PALETTE = Object.freeze({ muted: '#849fa4', accent: '#ffd279' });
+const ACTOR_IMAGE_SLOTS = Object.freeze([
+  'player.scout.compact',
+  'player.scout.detailed',
+  'enemy.bouncer',
+  'enemy.border-patrol',
+  'enemy.relay-sentinel',
+  'enemy.claimed-rover',
+]);
+export const TEAM_ACTOR_APPEARANCE_SLOTS = Object.freeze([
+  ...ACTOR_IMAGE_SLOTS,
+  ...TEAM_PILOT_SLOTS,
+  ...TEAM_ENEMY_SLOTS,
+  ...TEAM_CORE_SLOTS,
+]);
+
+/** The host authenticates and owns the lease. Reject incomplete prepared actor
+ * data before painting; never borrow its palette, fonts, terrain or picture. */
+function prepareActorAppearance(snapshot) {
+  if (typeof snapshot?.image !== 'function')
+    throw new TypeError('Team actor appearance needs a prepared FPV snapshot.');
+  for (const slot of TEAM_ACTOR_APPEARANCE_SLOTS)
+    if (!(snapshot.resolved?.assets?.[slot] ?? snapshot.canvas?.assets?.[slot]))
+      throw new TypeError(`Team actor appearance is missing ${slot}.`);
+  const unit = (value) => Number.isFinite(value) && value >= 0 && value <= 1;
+  for (const slot of ACTOR_IMAGE_SLOTS) {
+    const frame = snapshot.image(slot),
+      geometry = frame?.geometry;
+    if (
+      !(
+        Number.isFinite(frame?.image?.naturalWidth ?? frame?.image?.width) &&
+        (frame.image.naturalWidth ?? frame.image.width) > 0
+      ) ||
+      !(
+        Number.isFinite(frame?.image?.naturalHeight ?? frame?.image?.height) &&
+        (frame.image.naturalHeight ?? frame.image.height) > 0
+      ) ||
+      !Number.isFinite(geometry?.frame?.width) ||
+      geometry.frame.width <= 0 ||
+      !Number.isFinite(geometry?.frame?.height) ||
+      geometry.frame.height <= 0 ||
+      !unit(geometry?.pivot?.x) ||
+      !unit(geometry?.pivot?.y) ||
+      !Array.isArray(geometry?.rotors) ||
+      geometry.rotors.some(
+        (anchor) =>
+          !Number.isFinite(anchor?.x) ||
+          !Number.isFinite(anchor?.y) ||
+          !Number.isFinite(anchor?.radiusScale) ||
+          anchor.radiusScale <= 0 ||
+          ![2, 3, 4].includes(anchor?.bladeCount) ||
+          ![1, -1].includes(anchor?.direction) ||
+          !Number.isFinite(anchor?.phaseDegrees),
+      )
+    )
+      throw new TypeError(`Team actor appearance needs a prepared frame for ${slot}.`);
+  }
+  const prepared = createCoopActorPresentation();
+  // Retains the selected lease's state-specific/custom Team artwork, including
+  // downed/rescuing pilots. Campaign role art cannot silently override FPV.
+  prepared.setPresentation(snapshot);
+  return prepared;
+}
 
 /** Draw the authoritative board once. Rendering never advances game state. */
 export function createCoopPainter(canvas) {
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Relay Rescue needs a browser with Canvas 2D support.');
-  const actors = createCoopActorPresentation();
-  const outcomes = createTeamOutcomeFeedback();
+  let actors = createCoopActorPresentation(),
+    actorPresentation = null,
+    actorAppearanceStyle = null;
+  const outcomes = createTeamOutcomeFeedback(),
+    captures = createCoopCaptureFeedback();
   let presentation = null,
     look = null,
     wall = null,
@@ -92,6 +169,8 @@ export function createCoopPainter(canvas) {
     const nextRescueFrames = prepareTeamRescue(snapshot);
     const nextOutcomes = prepareTeamOutcomes(snapshot);
     actors.setPresentation(snapshot ?? null);
+    actorPresentation = snapshot ?? null;
+    actorAppearanceStyle = null;
     presentation = snapshot ?? null;
     look = next;
     wall = nextWall;
@@ -110,10 +189,25 @@ export function createCoopPainter(canvas) {
       picture = null,
       pictureLevel = run.level,
       actorStyle = 'hybrid',
+      actorAppearance = null,
       feedback = null,
       previousRun = null,
     } = {},
   ) {
+    if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
+      throw new TypeError('Team actor appearance needs a supported style.');
+    const selectedActors =
+      actorAppearance?.style === 'fpv' ? actorAppearance.snapshot : presentation;
+    let nextActors = actors;
+    if (
+      actorAppearance?.style === 'fpv' &&
+      (actorAppearanceStyle !== 'fpv' || selectedActors !== actorPresentation)
+    )
+      nextActors = prepareActorAppearance(selectedActors);
+    else if (selectedActors !== actorPresentation) {
+      nextActors = createCoopActorPresentation();
+      nextActors.setPresentation(selectedActors);
+    }
     // This is a defensive arena guard, not full content-hash authority. The
     // picture lease verifies the pack/level hashes; the host owns attempt intent.
     let pictureWidth = 1152,
@@ -157,7 +251,11 @@ export function createCoopPainter(canvas) {
           `Team picture must retain its complete ${pictureWidth}×${pictureHeight} decoded frame.`,
         );
     }
-    const recentOutcomes = feedback ?? outcomes.observe(run);
+    actors = nextActors;
+    actorPresentation = selectedActors;
+    actorAppearanceStyle = actorAppearance?.style ?? null;
+    const recentOutcomes = feedback ?? outcomes.observe(run),
+      recentCaptures = captures.observe(run);
     const fonts = canvasTextFonts(textFace, look?.fonts ?? THEME_FONTS);
     const bonuses = coopBonusView(run);
     const palette = look?.palette;
@@ -265,6 +363,9 @@ export function createCoopPainter(canvas) {
           }
         }
       }
+      // Newly revealed cells illuminate below every current hazard, actor and
+      // active cut, matching Solo/Versus without obscuring live danger.
+      drawCoopCaptureFeedback(ctx, recentCaptures, run, palette ?? ACTOR_FALLBACK_PALETTE, reduced);
       drawCoopBonuses(ctx, bonuses, { screenScale: canvas.clientWidth / 1152 });
       // Launch markers are anchored landmarks, not compulsory meeting pads.
       for (const effect of run.supportEffects || [])
@@ -281,7 +382,8 @@ export function createCoopPainter(canvas) {
         ['enemy', run.enemies.filter((enemy) => enemy.active !== false)],
       ])
         for (const actor of list)
-          if (actors.draw(ctx, kind, actor.id, palette)) bodies.add(`${kind}:${actor.id}`);
+          if (actors.draw(ctx, kind, actor.id, palette ?? ACTOR_FALLBACK_PALETTE))
+            bodies.add(`${kind}:${actor.id}`);
       const clearance = (kind, id, minimum) =>
         body(kind, id)
           ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + 9 / cssCell)
@@ -703,7 +805,10 @@ export function createCoopPainter(canvas) {
   }
   return {
     paint,
-    observe: outcomes.observe,
+    observe(run) {
+      outcomes.observe(run);
+      captures.observe(run);
+    },
     setPresentation,
     actorFrame: (kind, id) => actors.frame(kind, id),
     get presentation() {

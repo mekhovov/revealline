@@ -18,12 +18,18 @@
     'whole-spatial-v3',
     'whole-spatial-v4',
     'whole-spatial-v5',
+    'whole-spatial-v6',
+    'whole-spatial-v7',
+    'whole-spatial-v8',
+    'whole-spatial-v9',
   ];
   const teamRoutes = [
     'team-greybox',
     'team-originals',
     'team-pressure-originals-1',
     'team-spatial-originals-1',
+    'team-trail-impact-originals-1',
+    'team-specialist-originals-1',
     'team-timed-originals',
     'team-window-spatial-1',
     'team-depot-spatial-1',

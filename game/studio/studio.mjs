@@ -32,6 +32,10 @@ import {
   createWholeTimedCandidates,
   createWholeVarietyCandidates,
   createWholeSortingCandidates,
+  createWholeImpactCandidates,
+  createWholePressureCandidates,
+  createWholeCulturalPressureCandidates,
+  createWholeErosionReviewCandidates,
 } from '../content-design/whole-spatial-candidates.mjs';
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
@@ -968,9 +972,14 @@ $('whole-timed').onclick = guarded(() => {
 $('whole-variety').onclick = guarded(() => {
   if (!discardSource()) return;
   const create =
-    $('whole-variety-edition').value === 'sorting-lanes-1'
-      ? createWholeSortingCandidates
-      : createWholeVarietyCandidates;
+    {
+      'variety-1': createWholeVarietyCandidates,
+      'sorting-lanes-1': createWholeSortingCandidates,
+      'global-impact-1': createWholeImpactCandidates,
+      'pressure-arcs-1': createWholePressureCandidates,
+      'cultural-pressure-1': createWholeCulturalPressureCandidates,
+      'erosion-counterplay-1': createWholeErosionReviewCandidates,
+    }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();

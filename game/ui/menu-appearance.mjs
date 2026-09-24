@@ -23,13 +23,12 @@ const ornamentRoots = [
 ];
 
 /** A document's menu decoration only: no painter, media, progress or navigation
- * ownership. A later presentation snapshot only changes automatic palette choice. */
+ * ownership. Presentation snapshots are validated but never choose the UI skin. */
 export function createMenuAppearance({ document: doc = globalThis.document } = {}) {
   const body = doc?.body;
   if (!body?.style || !doc.createElement) throw new TypeError('Menu appearance needs a document.');
   owners.get(body)?.dispose();
   let disposed = false,
-    themeId = 'fpv',
     choice = { palette: 'auto', ornaments: 'subtle' };
   const before = new Map(),
     values = menuStyleVariables(),
@@ -45,7 +44,7 @@ export function createMenuAppearance({ document: doc = globalThis.document } = {
   );
   function apply() {
     if (disposed) return;
-    const resolved = resolveMenuStyle(choice, themeId);
+    const resolved = resolveMenuStyle(choice);
     for (const [name, value] of [
       ['menuPalette', resolved.palette],
       ['menuOrnaments', resolved.ornaments],
@@ -58,7 +57,7 @@ export function createMenuAppearance({ document: doc = globalThis.document } = {
     set(state) {
       if (disposed) return;
       // Validate both values before touching either DOM attribute.
-      resolveMenuStyle(state, themeId);
+      resolveMenuStyle(state);
       choice = { palette: state.palette, ornaments: state.ornaments };
       apply();
     },
@@ -67,8 +66,8 @@ export function createMenuAppearance({ document: doc = globalThis.document } = {
       const id = snapshot?.resolved?.theme?.id;
       if (snapshot !== null && !stableId(id))
         throw new TypeError('Menu appearance needs an accepted theme identity.');
-      // Null is the existing declared FPV fallback, not a substituted asset.
-      themeId = id ?? 'fpv';
+      // Null is the existing declared fallback. UI skin intent stays separate
+      // from accepted campaign/canvas presentation.
       apply();
     },
     dispose() {

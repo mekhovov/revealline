@@ -13,6 +13,8 @@ import { boundedJSON, exactKeys, stableId, required } from './data-json.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
 import { applyGameplayTuning, recoverGameplayTuning } from './gameplay-tuning.mjs';
 import { snapshotSessionVisualPin } from './session-visual-pin.mjs';
+import { snapshotSessionActorPin } from './session-actor-pin.mjs';
+import { ACTOR_APPEARANCE_PIN_BYTES } from './presentation/actor-appearance-pin.mjs';
 import { PRESENTATION_PINS_FORMAT } from './presentation-pins.mjs';
 import {
   FLIGHT_MEDIA_PINS_FORMAT,
@@ -26,10 +28,18 @@ export const CONTINUOUS_SESSION_FORMAT = 'xonix-session.v2';
 export const PRESENTATION_SESSION_FORMAT = 'xonix-session.v3';
 export const STORY_SESSION_FORMAT = 'xonix-session.v4';
 export const VISUAL_SESSION_FORMAT = 'xonix-session.v5';
-const pictureFormats = [PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT, VISUAL_SESSION_FORMAT];
+export const ACTOR_SESSION_FORMAT = 'xonix-session.v6';
+const pictureFormats = [
+  PRESENTATION_SESSION_FORMAT,
+  STORY_SESSION_FORMAT,
+  VISUAL_SESSION_FORMAT,
+  ACTOR_SESSION_FORMAT,
+];
 const continuationFormats = [CONTINUOUS_SESSION_FORMAT, ...pictureFormats];
 export const SESSION_STORAGE_BYTES = 2 * 1024 * 1024;
-export const SESSION_IMPORT_BYTES = MAX_REPLAY_BYTES + 16384;
+const legacyImportBytes = MAX_REPLAY_BYTES + 16384;
+// Additional bounded metadata only; the embedded replay keeps its 32 MiB limit.
+export const SESSION_IMPORT_BYTES = legacyImportBytes + ACTOR_APPEARANCE_PIN_BYTES;
 const canonical = (v) =>
   v === null || typeof v !== 'object'
     ? JSON.stringify(v)
@@ -76,6 +86,12 @@ function envelope(candidate) {
     maxArray: MAX_REPLAY_TICKS,
     maxString: 262144,
   });
+  if (session.format !== ACTOR_SESSION_FORMAT)
+    required(
+      new TextEncoder().encode(typeof candidate === 'string' ? candidate : JSON.stringify(session))
+        .byteLength <= legacyImportBytes,
+      'JSON file exceeds its byte budget.',
+    );
   exactKeys(
     session,
     [
@@ -88,7 +104,10 @@ function envelope(candidate) {
       'replay',
       ...(continuationFormats.includes(session.format) ? ['continuation'] : []),
       ...(pictureFormats.includes(session.format) ? ['presentationPins'] : []),
-      ...(session.format === VISUAL_SESSION_FORMAT ? ['visualThemePin'] : []),
+      ...(session.format === VISUAL_SESSION_FORMAT || session.format === ACTOR_SESSION_FORMAT
+        ? ['visualThemePin']
+        : []),
+      ...(session.format === ACTOR_SESSION_FORMAT ? ['actorAppearancePin'] : []),
     ],
     'saved attempt',
   );
@@ -99,15 +118,24 @@ function envelope(candidate) {
       PRESENTATION_SESSION_FORMAT,
       STORY_SESSION_FORMAT,
       VISUAL_SESSION_FORMAT,
+      ACTOR_SESSION_FORMAT,
     ].includes(session.format),
     'Unsupported saved attempt format.',
   );
   if (continuationFormats.includes(session.format))
     session.continuation = continuationValue(session.continuation);
-  if (pictureFormats.includes(session.format)) {
+  const authoredJourneyPictures =
+    session.format === ACTOR_SESSION_FORMAT && session.presentationPins === null;
+  if (authoredJourneyPictures)
+    required(
+      session.visualThemePin === null,
+      'Authored Journey pictures cannot carry a Classic visual pin.',
+    );
+  if (pictureFormats.includes(session.format) && !authoredJourneyPictures) {
     session.presentationPins = snapshotFlightPresentationPins(session.presentationPins);
     required(
       session.format === VISUAL_SESSION_FORMAT ||
+        session.format === ACTOR_SESSION_FORMAT ||
         session.presentationPins.format ===
           (session.format === STORY_SESSION_FORMAT
             ? FLIGHT_MEDIA_PINS_FORMAT
@@ -120,14 +148,29 @@ function envelope(candidate) {
     session.replay !== null && typeof session.replay === 'object' && !Array.isArray(session.replay),
     'Saved attempt replay is missing.',
   );
+  if (session.format === ACTOR_SESSION_FORMAT)
+    required(
+      new TextEncoder().encode(JSON.stringify(session.replay)).byteLength <= MAX_REPLAY_BYTES,
+      'Saved replay exceeds its unchanged byte budget.',
+    );
   resolveVersions({
     levelVersion: session.replay.level?.version,
     ruleset: session.replay.ruleset,
     replayVersion: session.replay.version,
     checkpointAlgorithm: session.replay.checkpoint?.algorithm,
   });
-  if (session.format === VISUAL_SESSION_FORMAT)
+  if (
+    session.format === VISUAL_SESSION_FORMAT ||
+    (session.format === ACTOR_SESSION_FORMAT && session.visualThemePin !== null)
+  )
     session.visualThemePin = snapshotSessionVisualPin(session.visualThemePin, {
+      pictures: session.presentationPins,
+      campaignKey: session.campaignKey,
+      themeId: session.themeId,
+      simulationLevel: session.replay.level,
+    });
+  if (session.format === ACTOR_SESSION_FORMAT)
+    session.actorAppearancePin = snapshotSessionActorPin(session.actorAppearancePin, {
       pictures: session.presentationPins,
       campaignKey: session.campaignKey,
       themeId: session.themeId,
@@ -151,6 +194,7 @@ export function suspendSession({
   presentationPins,
   presentationLevel,
   visualThemePin,
+  actorAppearancePin,
 }) {
   if (!run || !['running', 'respawning'].includes(run.status))
     throw new Error('Only an unfinished attempt can be suspended.');
@@ -189,7 +233,7 @@ export function suspendSession({
       'Saved pictures require matching flight identity and explicit continuation.',
     );
   const visuals =
-    visualThemePin === undefined
+    visualThemePin === undefined || (actorAppearancePin !== undefined && visualThemePin === null)
       ? undefined
       : snapshotSessionVisualPin(visualThemePin, {
           pictures,
@@ -198,29 +242,50 @@ export function suspendSession({
           simulationLevel: run.level,
           presentationLevel: tuning ? presentationLevel : run.level,
         });
+  let actors;
+  if (actorAppearancePin !== undefined) {
+    required(intent !== undefined, 'Saved actors require explicit continuation.');
+    actors = snapshotSessionActorPin(actorAppearancePin, {
+      pictures,
+      campaignKey,
+      themeId,
+      simulationLevel: run.level,
+      presentationLevel: tuning ? presentationLevel : run.level,
+    });
+  }
   if (intent === undefined) {
     releaseInputs(run);
     recordRelease(recorder);
   }
   return {
     format:
-      visuals !== undefined
-        ? VISUAL_SESSION_FORMAT
-        : pictures !== undefined
-          ? pictures.format === FLIGHT_MEDIA_PINS_FORMAT
-            ? STORY_SESSION_FORMAT
-            : PRESENTATION_SESSION_FORMAT
-          : intent === undefined
-            ? SESSION_FORMAT
-            : CONTINUOUS_SESSION_FORMAT,
+      actors !== undefined
+        ? ACTOR_SESSION_FORMAT
+        : visuals !== undefined
+          ? VISUAL_SESSION_FORMAT
+          : pictures !== undefined
+            ? pictures.format === FLIGHT_MEDIA_PINS_FORMAT
+              ? STORY_SESSION_FORMAT
+              : PRESENTATION_SESSION_FORMAT
+            : intent === undefined
+              ? SESSION_FORMAT
+              : CONTINUOUS_SESSION_FORMAT,
     campaignKey,
     themeId,
     bodyId,
     runId,
     savedAt,
     ...(intent === undefined ? {} : { continuation: intent }),
-    ...(pictures === undefined ? {} : { presentationPins: pictures }),
-    ...(visuals === undefined ? {} : { visualThemePin: visuals }),
+    ...(pictures === undefined
+      ? actors !== undefined
+        ? { presentationPins: null }
+        : {}
+      : { presentationPins: pictures }),
+    ...(actors !== undefined
+      ? { visualThemePin: visuals ?? null, actorAppearancePin: actors }
+      : visuals === undefined
+        ? {}
+        : { visualThemePin: visuals }),
     replay: exportReplay(recorder, run),
   };
 }
@@ -273,15 +338,26 @@ export async function restoreSession(
       canonical(session.replay.options.classRecipes)
   )
     throw new Error('Saved rules differ from the installed campaign.');
-  if (pictureFormats.includes(session.format))
+  if (pictureFormats.includes(session.format) && session.presentationPins !== null)
     validateFlightPresentationPinsForRun(session.presentationPins, {
       identityCatalog: mediaIdentityCatalog,
       campaignKey,
       level,
       themeId: session.themeId,
     });
-  if (session.format === VISUAL_SESSION_FORMAT)
+  if (
+    session.format === VISUAL_SESSION_FORMAT ||
+    (session.format === ACTOR_SESSION_FORMAT && session.visualThemePin !== null)
+  )
     session.visualThemePin = snapshotSessionVisualPin(session.visualThemePin, {
+      pictures: session.presentationPins,
+      campaignKey,
+      themeId: session.themeId,
+      simulationLevel: checked.state.level,
+      presentationLevel: level,
+    });
+  if (session.format === ACTOR_SESSION_FORMAT)
+    session.actorAppearancePin = snapshotSessionActorPin(session.actorAppearancePin, {
       pictures: session.presentationPins,
       campaignKey,
       themeId: session.themeId,

@@ -33,6 +33,10 @@ const golden = {
   'whole-spatial-v3': [230328, '7e8e35ad9147b75b5040db88411d337c0088ab133f5066ea5ec3eeb5ba092f4c'],
   'whole-spatial-v4': [252113, 'fd5175f63b842b7f71a11cab9e8067f6b7d9d698f026122c83ae14997a91d448'],
   'whole-spatial-v5': [252377, '74162393aa803207f7e933f4ded83a64a6b223c926aecc5be7bffd113fd959fe'],
+  'whole-spatial-v6': [254781, 'c884d472a6b895157f8391db2c3408722ddb7d506f85b70c47185e69f724ea76'],
+  'whole-spatial-v7': [255610, 'd809ffcf9884e85d3dd778d4824ad1797ae76b5fe18c0f0c6382f9042c5f193c'],
+  'whole-spatial-v8': [257423, 'e5092f194c459c9c4f618832d54e7769b28ac894bac097a8e91fdc6ed22e2c0e'],
+  'whole-spatial-v9': [257778, '80d2406bece474a0dc169e9d8ea31b473d04d68144e8df6dd4eff41c7850e27a'],
 };
 
 test('all supported routes are covered by pinned edition snapshots', () => {
