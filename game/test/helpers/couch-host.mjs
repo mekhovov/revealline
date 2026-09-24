@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { BoardPainter } from '../../ui/render.mjs';
 import { authoritativeCheckpoint } from '../../replay.mjs';
 import { Document, Element, Events } from './couch-dom.mjs';
+import { installActorAppearanceTransport } from './actor-appearance-transport.mjs';
 const base = JSON.parse(
   await readFile(new URL('../../content/campaign.json', import.meta.url), 'utf8'),
 );
@@ -17,6 +18,7 @@ export async function couchPage(
   {
     campaign = base,
     beforeImport,
+    beforeActorRequest,
     turnPolicy = 'immediate',
     pads = [],
     seconds = '30',
@@ -170,6 +172,15 @@ export async function couchPage(
       value ? Object.defineProperty(globalThis, key, value) : delete globalThis[key];
     for (const [key, value] of methods) BoardPainter.prototype[key] = value;
   });
+  const actorTransport = installActorAppearanceTransport({
+    baseURL: new URL('../presentation/compiled/', href),
+    beforeRequest: beforeActorRequest,
+    install(name, descriptor) {
+      if (!original.has(name))
+        original.set(name, Object.getOwnPropertyDescriptor(globalThis, name));
+      Object.defineProperty(globalThis, name, { ...descriptor, configurable: true });
+    },
+  });
   await beforeImport?.({ document: doc, window: win });
   await import(`../../couch/couch.mjs?navigation=${++sequence}`);
   if (expectBootFailure) assert.equal(rafs.size, 0);
@@ -245,6 +256,7 @@ export async function couchPage(
     renders,
     drawOptions,
     images,
+    actorTransport,
     observedEvents,
     frame,
     button,
