@@ -77,6 +77,79 @@ export function creatorMediaBundleInput(intake, missionIds, { descriptionFor } =
   });
 }
 
+/** Bind stories by their immutable video hashes. This is the production adapter:
+ * sorting review rows, inserting an image or changing a filename cannot move a
+ * story onto another mission. */
+export function creatorMediaBundleInputByHash(intake, bindings, { descriptionFor } = {}) {
+  required(
+    intake?.format === 'revealline-creator-media-intake.v1' &&
+      Array.isArray(intake.assets) &&
+      intake.dependencies?.format === CREATOR_MEDIA_DEPENDENCIES_FORMAT,
+    'Prepare creator media intake before binding victory stories.',
+  );
+  const dependencies = validateCreatorMediaDependencies(intake.dependencies);
+  required(
+    Array.isArray(bindings) &&
+      bindings.length === dependencies.stories.length &&
+      bindings.length > 0 &&
+      bindings.length <= 50,
+    'Assign one exact video hash to every selected story mission.',
+  );
+  const missionByVideo = new Map();
+  for (const binding of bindings) {
+    const value = copy(binding);
+    exactKeys(value, ['videoSha256', 'missionId'], 'creator story mission binding');
+    required(
+      hashValid(value.videoSha256) &&
+        stableId(value.missionId) &&
+        !missionByVideo.has(value.videoSha256),
+      'Story mission bindings need unique video hashes and valid missions.',
+    );
+    missionByVideo.set(value.videoSha256, value.missionId);
+  }
+  required(
+    dependencies.stories.every((story) => missionByVideo.has(story.video.sha256)),
+    'A selected video is missing its exact story mission binding.',
+  );
+  const stories = dependencies.stories.map((story, index) => {
+    const missionId = missionByVideo.get(story.video.sha256);
+    const description =
+      descriptionFor?.({ missionId, story, index, videoSha256: story.video.sha256 }) ??
+      'A creator-supplied victory story.';
+    required(
+      typeof description === 'string' &&
+        description.trim().length > 0 &&
+        description.length <= 2048,
+      'Victory story descriptions need bounded text.',
+    );
+    return { missionId, ...story, description };
+  });
+  const wanted = new Set(stories.flatMap((story) => [story.poster.sha256, story.video.sha256]));
+  const assets = new Map();
+  for (const item of intake.assets) {
+    required(
+      item && hashValid(item.sha256) && item.blob instanceof Blob,
+      'Creator media intake returned an invalid asset.',
+    );
+    if (wanted.has(item.sha256)) assets.set(item.sha256, item.blob);
+  }
+  required(
+    assets.size === wanted.size && [...wanted].every((sha256) => assets.has(sha256)),
+    'Creator media intake is missing a selected poster or complete video original.',
+  );
+  return Object.freeze({
+    media: validateCreatorStoryBindings({
+      format: CREATOR_STORY_BINDINGS_FORMAT,
+      stories,
+    }),
+    assets: Object.freeze(
+      [...assets]
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([sha256, blob]) => Object.freeze({ sha256, blob })),
+    ),
+  });
+}
+
 export function validateCreatorStoryBindings(source, { project } = {}) {
   const value = copy(source);
   exactKeys(value, ['format', 'stories'], 'creator story bindings');
