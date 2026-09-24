@@ -74,3 +74,11 @@ and match the full source/edition/campaign/runtime identity. Preserve historical
 routes while independently resolving the fresh host's approved tuning. A route
 fixture must use legal host inputs, never neutral braking or injected outcomes.
 Use decoded background identity, not the last actor draw call, for picture checks.
+
+For UX1 rewards, follow `docs/ux1-a1-journey-rewards.md`. Preserve the historical
+Journey progress reader and the companion ledger's atomic commit. A real accepted
+win may retain its exact decoded original; viewing, filtering or opening Details
+must never create a reward. Test actual mode-specific wins, receipt identity,
+storage rollback, missing-byte Retry, late decode cancellation and exact return
+focus. Do not turn an ambiguous older clear into today's picture. Keep backup
+reference scope explicit and qualify Versus/Team admission separately from Solo.
