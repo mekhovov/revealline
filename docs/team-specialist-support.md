@@ -13,6 +13,7 @@ The roles intentionally divide an existing hybrid ability instead of adding unre
 - The successor keeps the existing twelve-mission order, maps, pictures, actors and objectives.
 - Only `twin-depots`, `changing-courtyard` and `last-rendezvous` receive specialist roles.
 - The first nine missions retain hybrid Support, giving players established impact and slowdown practice before the split. This also preserves `shared-lookout` as the sole new-roamer lesson instead of introducing two mandatory rules at once.
+- The final three form a separate authored runtime campaign because Team campaigns cannot mix historical V5 hybrid levels with V6 specialist levels. Next crosses that boundary directly; no picker or menu interrupts play.
 - Specialist progress uses its own candidate profile. It does not mint official completion.
 
 ## Review route
