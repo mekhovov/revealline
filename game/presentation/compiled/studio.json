@@ -63312,6 +63312,202 @@
         "id": "effect.feedback.v1"
       },
       "revision": 14
+    },
+    {
+      "description": "missions backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.missions.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": {
+          "id": "screen.missions.background.field-kit",
+          "revision": 21
+        },
+        "prompt": "Create one original FPV Field Kit missions backdrop for slot screen.missions.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+      },
+      "quality": {
+        "evidence": [
+          "Connected runtime recipe; screen and state review remains required."
+        ],
+        "stage": "source"
+      },
+      "recipe": {
+        "id": "scene.menu.v1"
+      },
+      "revision": 22
+    },
+    {
+      "description": "hangar backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.hangar.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": {
+          "id": "screen.hangar.background.field-kit",
+          "revision": 21
+        },
+        "prompt": "Create one original FPV Field Kit hangar backdrop for slot screen.hangar.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+      },
+      "quality": {
+        "evidence": [
+          "Connected runtime recipe; screen and state review remains required."
+        ],
+        "stage": "source"
+      },
+      "recipe": {
+        "id": "scene.menu.v1"
+      },
+      "revision": 22
+    },
+    {
+      "description": "results backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.results.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": {
+          "id": "screen.results.background.field-kit",
+          "revision": 21
+        },
+        "prompt": "Create one original FPV Field Kit results backdrop for slot screen.results.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+      },
+      "quality": {
+        "evidence": [
+          "Connected runtime recipe; screen and state review remains required."
+        ],
+        "stage": "source"
+      },
+      "recipe": {
+        "id": "scene.menu.v1"
+      },
+      "revision": 22
+    },
+    {
+      "description": "collection backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.collection.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": {
+          "id": "screen.collection.background.field-kit",
+          "revision": 21
+        },
+        "prompt": "Create one original FPV Field Kit collection backdrop for slot screen.collection.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+      },
+      "quality": {
+        "evidence": [
+          "Connected runtime recipe; screen and state review remains required."
+        ],
+        "stage": "source"
+      },
+      "recipe": {
+        "id": "scene.menu.v1"
+      },
+      "revision": 22
+    },
+    {
+      "description": "settings backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.settings.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": {
+          "id": "screen.settings.background.field-kit",
+          "revision": 21
+        },
+        "prompt": "Create one original FPV Field Kit settings backdrop for slot screen.settings.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+      },
+      "quality": {
+        "evidence": [
+          "Connected runtime recipe; screen and state review remains required."
+        ],
+        "stage": "source"
+      },
+      "recipe": {
+        "id": "scene.menu.v1"
+      },
+      "revision": 22
+    },
+    {
+      "description": "couch backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.couch.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": {
+          "id": "screen.couch.background.field-kit",
+          "revision": 21
+        },
+        "prompt": "Create one original FPV Field Kit couch backdrop for slot screen.couch.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+      },
+      "quality": {
+        "evidence": [
+          "Connected runtime recipe; screen and state review remains required."
+        ],
+        "stage": "source"
+      },
+      "recipe": {
+        "id": "scene.menu.v1"
+      },
+      "revision": 22
+    },
+    {
+      "description": "studio backdrop: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "screen.studio.background.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": {
+          "id": "screen.studio.background.field-kit",
+          "revision": 21
+        },
+        "prompt": "Create one original FPV Field Kit studio backdrop for slot screen.studio.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a"
+      },
+      "quality": {
+        "evidence": [
+          "Connected runtime recipe; screen and state review remains required."
+        ],
+        "stage": "source"
+      },
+      "recipe": {
+        "id": "scene.menu.v1"
+      },
+      "revision": 22
     }
   ],
   "collections": [
@@ -64571,7 +64767,7 @@
   ],
   "format": "revealline-theme-bundle.v1",
   "id": "field-kit",
-  "revision": 70,
+  "revision": 71,
   "selection": {
     "base": {
       "id": "base",
@@ -64580,7 +64776,7 @@
     "collection": null,
     "theme": {
       "id": "fpv",
-      "revision": 70
+      "revision": 71
     }
   },
   "slots": [
@@ -96692,6 +96888,47 @@
         "revision": 69
       },
       "revision": 70,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "screen.collection.background": {
+          "id": "screen.collection.background.field-kit",
+          "revision": 22
+        },
+        "screen.couch.background": {
+          "id": "screen.couch.background.field-kit",
+          "revision": 22
+        },
+        "screen.hangar.background": {
+          "id": "screen.hangar.background.field-kit",
+          "revision": 22
+        },
+        "screen.missions.background": {
+          "id": "screen.missions.background.field-kit",
+          "revision": 22
+        },
+        "screen.results.background": {
+          "id": "screen.results.background.field-kit",
+          "revision": 22
+        },
+        "screen.settings.background": {
+          "id": "screen.settings.background.field-kit",
+          "revision": 22
+        },
+        "screen.studio.background": {
+          "id": "screen.studio.background.field-kit",
+          "revision": 22
+        }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": {
+        "id": "fpv",
+        "revision": 70
+      },
+      "revision": 71,
       "tokens": {}
     }
   ]
