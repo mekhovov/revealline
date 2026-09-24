@@ -228,8 +228,39 @@ host test joins the real focused activation rather than assuming a five-second
 cold-catalogue deadline. Immediate loading, retained run/checkpoint, paused state,
 Home parent and exact Back focus remain asserted; no production timeout changes.
 
-A hosted-only `two-bays` fixture checkpoint mismatch remains under investigation.
-The same 17 independent routes and public replay checks pass on three installed
-macOS/arm64 Node versions and with optimization disabled. This does not prove
-cross-platform determinism. Keep the fixed fixture checkpoint and exact host/core
-and replay checks; identify the hosted state difference before accepting a fix.
+A hosted-only fixture checkpoint mismatch was reproduced in dedicated diagnostic
+runs35947026034,35947207930 and35947544962 without changing game source. All twenty
+Journey routes win and verify public replay within each runtime. Full-state
+comparisons find tiny scalar differences in five routes. Three authored routes
+vary only in twenty movement scalars (largest 4.2633e-14); Toolbench varies in one
+enemy velocity. Dnipro additionally varies in a border perimeter and terminal
+elapsed/result time, with maximum movement difference 7.71e-13. Discrete board,
+ticks, status, lives, score and outcome flags agree. The other fifteen raw golden
+checkpoints agree. Fourteen additional external, Sentinel and device routes also
+match exactly across runtimes, including twelve fixed golden checkpoints.
+JavaScript's relevant mathematical functions permit
+[implementation approximations](https://tc39.es/ecma262/2025/multipage/numbers-and-dates.html#sec-math.cos).
+
+The test-only correction retains the fifteen exact raw goldens. Each of the five
+affected routes instead declares only its witnessed divergent scalar paths,
+expected values and a fixed checksum of all remaining authoritative state. Scalar
+comparison is bounded by 1e-12; path presence/shape and every unlisted field stay
+exact. Only Dnipro needs the explicit terminal elapsed-time exception. This avoids
+decimal-rounding boundaries without accepting an OS-specific hash list. As before,
+event lists are outside the public authoritative checkpoint; this test change does
+not expand that exclusion. Exact host/reference checkpoints, fresh public replay,
+authored/gameplay identity and lossless outcomes remain required for every route.
+
+Simulation, runtime checkpoint serialization and historical readers are unchanged.
+This is not cross-platform replay certification: transferring an existing raw
+recording between runtimes remains a separate UX5/UX6 compatibility risk. Portable
+test evidence must never be used to admit runtime saves, replays or earned originals.
+
+After correction, all 33 Solo/Versus/default-ending host tests pass. A final complete
+rerun of the affected Versus/default consumers plus the helper's mutation/metadata
+checks passes 46 tests with no skips; its eighteen host cases overlap the first
+run. Independent review confirms only five route-specific exception sets (35
+authoritative scalars), fifteen unchanged raw goldens and unchanged fixture inputs,
+authored/gameplay identities and recorded timings. The final helper also compares
+raw host/reference checkpoints after releasing the last key. This remains scoped
+evidence, not a replacement for the final source's complete mandatory suites.

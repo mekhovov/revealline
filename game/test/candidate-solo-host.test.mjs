@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { arch, platform, versions } from 'node:process';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
@@ -19,9 +18,14 @@ import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.m
 import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { dataIdentity } from '../data-json.mjs';
+import { expectedRouteEvidence, assertRouteEvidence } from './helpers/route-evidence.mjs';
 
 const authoredProject = compileContentProject(createAuthoredJourneyRoute('authored').source);
-const { rows: tunedRoutes, optional: optionalRoutes } = JSON.parse(
+const {
+  rows: tunedRoutes,
+  optional: optionalRoutes,
+  evidence,
+} = JSON.parse(
   await readFile(new URL('./fixtures/candidate-solo-tuned-host-routes.json', import.meta.url)),
 );
 async function setup(t, { difficulty = 'standard', storage = memoryStorage(), ...options } = {}) {
@@ -66,7 +70,7 @@ function tunedLevel(levelId, difficulty = 'standard') {
     resolveGameplayTuning(difficulty),
   );
 }
-function playRoute(p, [id, authoredIdentity, gameplayIdentity, checkpoint, segments]) {
+function playRoute(p, [id, authoredIdentity, gameplayIdentity, , segments]) {
   assert.equal(p.rendered.run.levelId, id);
   const manifest = resolveMission(authoredProject, id);
   assert.equal(manifest.simulationIdentity, authoredIdentity);
@@ -112,24 +116,7 @@ function playRoute(p, [id, authoredIdentity, gameplayIdentity, checkpoint, segme
     hostCheckpoint = authoritativeCheckpoint(p.rendered.run);
   assert.deepEqual(hostCheckpoint, referenceCheckpoint, `${id}: host and reference must agree`);
   assert.equal(verifyReplay(exportReplay(recorder, reference)).match, true, `${id}: public replay`);
-  assert.equal(
-    referenceCheckpoint.hash,
-    checkpoint,
-    referenceCheckpoint.hash === checkpoint
-      ? id
-      : JSON.stringify(
-          {
-            id,
-            runtime: { arch, platform, node: versions.node, v8: versions.v8 },
-            expectedCheckpoint: checkpoint,
-            referenceCheckpoint,
-            hostCheckpoint,
-            reference,
-          },
-          null,
-          2,
-        ),
-  );
+  assertRouteEvidence(reference, expectedRouteEvidence(evidence, id), id);
 }
 
 test('the final authored core mission offers Find missions without recording a fictitious skip', async (t) => {

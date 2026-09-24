@@ -5,6 +5,7 @@ import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { playKeyboardRoute } from './helpers/keyboard-route.mjs';
+import { expectedRouteEvidence } from './helpers/route-evidence.mjs';
 import { VARIETY_ROUTES } from './helpers/variety-routes.mjs';
 import { createJourneyBackend, JOURNEY_PROFILE_DATABASE } from '../journey/profile.mjs';
 import { createWholeSortingCandidates } from '../content-design/whole-spatial-candidates.mjs';
@@ -24,7 +25,7 @@ const assets = async (path) =>
   String(path).includes('/content-design/assets/') ? new Response(await readFile(path)) : undefined;
 const current = compileContentProject(createWholeSortingCandidates({ artwork: true }));
 const greybox = compileContentProject(createSpatialBalanceCandidates());
-const { rows: tunedRoutes } = JSON.parse(
+const { rows: tunedRoutes, evidence } = JSON.parse(
   await readFile(new URL('./fixtures/default-journey-tuned-endings.json', import.meta.url)),
 );
 
@@ -133,7 +134,10 @@ for (const mode of ['solo', 'versus'])
         assert.equal(picture.kind, 'candidate-picture');
         assert.deepEqual(picture.assetRevision, manifest.background);
       }
-      playKeyboardRoute(p, runs, mode === 'solo' ? [arrows] : [wasd, arrows], row);
+      playKeyboardRoute(p, runs, mode === 'solo' ? [arrows] : [wasd, arrows], {
+        ...row,
+        evidence: expectedRouteEvidence(evidence, id),
+      });
       let persisted;
       await settle(() => {
         void backend.read().then((value) => {
@@ -236,7 +240,10 @@ test('the final Journey mission distinguishes a first-to-two round from its comp
   const picture = p.drawOptions[0].backdrop;
   assert.equal(p.drawOptions[1].backdrop, picture);
   assert.deepEqual(picture.assetRevision, resolveMission(current, row.id).background);
-  playKeyboardRoute(p, () => [p.renders[0]], [wasd], row);
+  playKeyboardRoute(p, () => [p.renders[0]], [wasd], {
+    ...row,
+    evidence: expectedRouteEvidence(evidence, row.id),
+  });
   assert.equal(p.$('series-score').textContent, '1 : 0');
   assert.match(
     p.$('race-message').textContent,
@@ -277,7 +284,10 @@ test('the final Journey mission distinguishes a first-to-two round from its comp
   assert.equal(p.renders[1].levelId, row.id);
   assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
   assert.deepEqual(p.drawOptions[0].backdrop.assetRevision, picture.assetRevision);
-  playKeyboardRoute(p, () => [p.renders[0]], [wasd], row);
+  playKeyboardRoute(p, () => [p.renders[0]], [wasd], {
+    ...row,
+    evidence: expectedRouteEvidence(evidence, row.id),
+  });
   assert.equal(p.$('series-score').textContent, '2 : 0');
   assert.match(
     p.$('race-message').textContent,

@@ -1,5 +1,5 @@
 {
-  "format": "CandidateSoloHostRoutesV1",
+  "format": "CandidateSoloHostRoutesV2",
   "scope": "Actual-input legal clear routes for gameplay-pressure.v4, Standard, immediate turns, Scout, seed1; exact authored and tuned gameplay identities. No state edits or abilities. Historical untuned fixtures remain unchanged. Technical host/progression evidence only, not human balance or device qualification.",
   "rows": [
     [
@@ -281,5 +281,521 @@
         ["right", 374]
       ]
     ]
-  ]
+  ],
+  "description": "Fixed input routes for exact host/reference and same-runtime public replay qualification. Existing raw checkpoints are macOS ARM64 witnesses, not cross-device replay promises. Only listed routes have explicit finite scalar exceptions bounded by 1e-12; every other authoritative field and the remaining routes stay exact. Events remain excluded by the unchanged public checkpoint contract. Historical authored fixtures and runtime hashes remain unchanged. This is not human balance evidence.",
+  "rawCheckpointWitness": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "node": "20.19.5",
+    "v8": "11.3.244.8-node.30"
+  },
+  "evidence": {
+    "format": "RouteEvidenceCheckpointV1",
+    "maxAbsoluteError": 1e-12,
+    "paths": [
+      "player.x",
+      "player.y",
+      "enemies[].x",
+      "enemies[].y",
+      "enemies[].vx",
+      "enemies[].vy",
+      "enemies[].perimeter",
+      "classic.actorTime",
+      "time",
+      "result.time"
+    ],
+    "checkpoints": {
+      "first-return": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "907d17be7edce709",
+          "sections": {
+            "identity": "7f0adade50944b7a",
+            "configuration": "1f76b7254ac7d495",
+            "board": "7f9911cdddc1f2f2",
+            "player": "c34071ef7878163d",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "294318db27d5af13",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "0cb5b33c14ac30b0",
+            "continuation": "a9d828ced6380d30",
+            "result": "f5deee2198e31480",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "d408467bff76bd60",
+            "foundations": "60e21be6e6caf6b0"
+          }
+        },
+        "scalars": []
+      },
+      "choose-your-share": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "c70e2893c3b33a5c",
+          "sections": {
+            "identity": "a7dbc33a9d644e26",
+            "configuration": "a6e77fcc52364c4b",
+            "board": "37efbeb3f790612e",
+            "player": "eccb6e3623937ba7",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "5b30fa739e5942fa",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "f415e69b4fe4ca25",
+            "continuation": "a9d828ced6380d30",
+            "result": "255676b25197a973",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "72651f9e7bc45555",
+            "foundations": "60e21be6e6caf6b0"
+          }
+        },
+        "scalars": []
+      },
+      "two-keepers": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "ca7a080e3956e040",
+          "sections": {
+            "identity": "30d76bbbe36c5192",
+            "configuration": "9f2c7ea1c0dd5b6c",
+            "board": "8f0493257a8e3f2e",
+            "player": "cd6aa479cddc4386",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "a958041bcbb17838",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "5375e4cf5addb926",
+            "continuation": "a9d828ced6380d30",
+            "result": "c7bbc13f1ac4e302",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "749155ba458eced7",
+            "foundations": "60e21be6e6caf6b0"
+          }
+        },
+        "scalars": []
+      },
+      "nearby-shore": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "6952821c49af04f2",
+          "sections": {
+            "identity": "e412ac3e8030ab02",
+            "configuration": "30d1fb834bfd8956",
+            "board": "c9713bb7f619b6ae",
+            "player": "fdeb573f816bb17a",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "7764c6d7ce7781ef",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "fdecd034b7e33c44",
+            "continuation": "a9d828ced6380d30",
+            "result": "c5dfd898e19d7b14",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "5460ee61f98b08ae",
+            "foundations": "d34f482448b23af0"
+          }
+        },
+        "scalars": []
+      },
+      "island-outpost": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "92900b6078bd7e05",
+          "sections": {
+            "identity": "b1c15aac3a5040cc",
+            "configuration": "2d779ab30683db2e",
+            "board": "403037307c1d7857",
+            "player": "31ebea399d6e79dc",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "742a4490ef2589fb",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "d29e0324c7383360",
+            "continuation": "a9d828ced6380d30",
+            "result": "c8112cd5717235d3",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "7fe0bab8d99b3029",
+            "foundations": "c0bcc71b8fbb3e13"
+          }
+        },
+        "scalars": []
+      },
+      "stepping-stones": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "de3df6524358ad69",
+          "sections": {
+            "identity": "1302603cbf63b9ca",
+            "configuration": "6114fd8200618fe9",
+            "board": "8c2d7e3d5f4b9202",
+            "player": "5b760c6a4c91b306",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "c239181bdd7facda",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "e3730875ab926f44",
+            "continuation": "a9d828ced6380d30",
+            "result": "2d64e49f2aabc734",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "51d2fa842eeb49f1",
+            "foundations": "f197915651e52e5d"
+          }
+        },
+        "scalars": []
+      },
+      "two-bays": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "e74dddbc1301f427",
+          "sections": {
+            "identity": "d1bb9f0f812ebf84",
+            "configuration": "ff390e857d0e8c94",
+            "board": "513b7d3bbb8e2aa0",
+            "player": "d6a3e2a79088b931",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "1fa9f1d9c0545a1d",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "faaaaf36a5dc66ef",
+            "continuation": "a9d828ced6380d30",
+            "result": "14e058ca26cd1b89",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "533ea4d79dde0af3",
+            "foundations": "df6f08f4047290cc"
+          }
+        },
+        "scalars": [
+          {
+            "path": "enemies[1].vx",
+            "value": 9.777221909476873
+          },
+          {
+            "path": "enemies[1].vy",
+            "value": -5.14863396765061
+          }
+        ]
+      },
+      "courtyard-return": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "802f23bd4e12c7a7",
+          "sections": {
+            "identity": "87300ca49fd379f2",
+            "configuration": "e5f13672a85959c1",
+            "board": "f8387ab757299c81",
+            "player": "2be10825d0d7885e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "78553b1b0263862c",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "94069f1ebee552ca",
+            "continuation": "a9d828ced6380d30",
+            "result": "aa55d90e7d513409",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "9369ba4d3de79583",
+            "foundations": "29e381e0f823e80c"
+          }
+        },
+        "scalars": [
+          {
+            "path": "classic.actorTime",
+            "value": 21.134954751130707
+          },
+          {
+            "path": "enemies[0].vx",
+            "value": -9.544632027969785
+          },
+          {
+            "path": "enemies[0].vy",
+            "value": -5.567988815600607
+          },
+          {
+            "path": "enemies[0].x",
+            "value": 44.04963521419599
+          },
+          {
+            "path": "enemies[0].y",
+            "value": 14.878063877160727
+          },
+          {
+            "path": "enemies[1].vx",
+            "value": 7.181135466754438
+          },
+          {
+            "path": "enemies[1].vy",
+            "value": -8.39843993894828
+          },
+          {
+            "path": "enemies[1].x",
+            "value": 11.543221846894578
+          },
+          {
+            "path": "enemies[1].y",
+            "value": 30.255195568890066
+          },
+          {
+            "path": "player.x",
+            "value": 14.48199999999911
+          }
+        ]
+      },
+      "long-way-home": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "fc04402cfaa5913d",
+          "sections": {
+            "identity": "e31ce2e250740ed8",
+            "configuration": "ab6d3641c4833375",
+            "board": "120bc81ef704cfbb",
+            "player": "8a340a6898f76374",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "47204a5e23c240df",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "662f51bd8d6cf286",
+            "continuation": "a9d828ced6380d30",
+            "result": "e156ce9affa81271",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "8d95b645e053ce05",
+            "foundations": "f7eb628cc1fe531e"
+          }
+        },
+        "scalars": [
+          {
+            "path": "classic.actorTime",
+            "value": 42.03604826545829
+          },
+          {
+            "path": "enemies[0].vx",
+            "value": -5.141844368264541
+          },
+          {
+            "path": "enemies[0].vy",
+            "value": -9.780794266957372
+          },
+          {
+            "path": "enemies[0].x",
+            "value": 39.24567234269757
+          },
+          {
+            "path": "enemies[0].y",
+            "value": 25.500587021904142
+          },
+          {
+            "path": "enemies[1].x",
+            "value": 20.981552142296128
+          },
+          {
+            "path": "enemies[1].y",
+            "value": 25.32155622317606
+          },
+          {
+            "path": "player.x",
+            "value": 43.51833333333373
+          }
+        ]
+      },
+      "behind-the-patrol": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "f45d24abb3f27807",
+          "sections": {
+            "identity": "09d7b7755dd52582",
+            "configuration": "a5267815f046fd94",
+            "board": "d9d0e4414e4a8974",
+            "player": "1417d79e827fccc3",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "939fd79efe58b5c8",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "99c930c36fe93c70",
+            "continuation": "a9d828ced6380d30",
+            "result": "330ce80116e5f3fa",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "1d3f7f78f88b0c33",
+            "foundations": "16ec8d97befe590d"
+          }
+        },
+        "scalars": []
+      },
+      "second-landing": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "0f47209284ba3707",
+          "sections": {
+            "identity": "cdec02d5b1eea253",
+            "configuration": "781fa70eb31a0a41",
+            "board": "5ed90e3ea50b0fb4",
+            "player": "2b685b11923003bf",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "6e02defdc714cd40",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "26b3e8746974ac87",
+            "continuation": "a9d828ced6380d30",
+            "result": "7f3339d370ad6ab8",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "b1c1e9b8597dcd00",
+            "foundations": "3c004fb13b77eac5"
+          }
+        },
+        "scalars": []
+      },
+      "long-rail": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "73fa0635e3ccd836",
+          "sections": {
+            "identity": "9e263631b061a8a3",
+            "configuration": "20c6399bebab99f8",
+            "board": "7b19fbace113c1ef",
+            "player": "00e3a7717c953a67",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "4edb59759d472c25",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "f55fd8057412eda7",
+            "continuation": "a9d828ced6380d30",
+            "result": "e37f847e581730c9",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "6a75a5f04507a143",
+            "foundations": "b4972d0a53dfc3b4"
+          }
+        },
+        "scalars": []
+      },
+      "new-frontier": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "b6760b7581f84db5",
+          "sections": {
+            "identity": "882fa268c173dce6",
+            "configuration": "f0ca33691d69cf72",
+            "board": "fbfee5d9f04e1430",
+            "player": "0152661a6377317f",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "17240d8739a69231",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "49ba0880f026e6a8",
+            "continuation": "a9d828ced6380d30",
+            "result": "3c146c334af60d66",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "52f52d6b9f92d97d",
+            "foundations": "cc03a4211639d995"
+          }
+        },
+        "scalars": []
+      },
+      "turn-the-corner": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "06f216a2ee4baaec",
+          "sections": {
+            "identity": "37694066bfe8f00c",
+            "configuration": "61005fd0219984f1",
+            "board": "37de77b3710efca2",
+            "player": "cf62225179af9730",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "4353529614445121",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "ecec8539d45d9181",
+            "continuation": "a9d828ced6380d30",
+            "result": "f3c8c0a6bd0e85a9",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "e971ec95d6a64af4",
+            "foundations": "9e9a01b4f52b66e7"
+          }
+        },
+        "scalars": []
+      },
+      "return-pocket": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "b6bfb955ed6a2239",
+          "sections": {
+            "identity": "ec8587063597dbb5",
+            "configuration": "4a8b024bbc83780a",
+            "board": "43151b3ddf41b987",
+            "player": "3aa857ee5e98374d",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "1a3955627991fe94",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "10babf59305ddb50",
+            "continuation": "a9d828ced6380d30",
+            "result": "3fab7907c0ca2640",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "5a9c16dbcecf9130",
+            "foundations": "2385445907efcad6"
+          }
+        },
+        "scalars": []
+      },
+      "horizon-remix": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "2965c1d6075b96ce",
+          "sections": {
+            "identity": "2e07f2956c41b744",
+            "configuration": "f242734f8d8e524b",
+            "board": "040e5b1243709971",
+            "player": "4f78443f6cf9320f",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "35086a5a06cafa36",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "714813d7b733977b",
+            "continuation": "a9d828ced6380d30",
+            "result": "bfeb1ad7ef7dd99d",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "ab9c9fe0d9e6ac81",
+            "foundations": "2c669343f3a9ea8c"
+          }
+        },
+        "scalars": []
+      },
+      "border-remix": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "839840e8a39898f8",
+          "sections": {
+            "identity": "af7895a2097bff4e",
+            "configuration": "3ce152e8b2158c37",
+            "board": "24a33a89d53d91a7",
+            "player": "99a19d9791b25874",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "744b995b379a93c1",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "acf2965d03d67136",
+            "continuation": "a9d828ced6380d30",
+            "result": "461173708999a2a2",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "cf60cbd0517fa16c",
+            "foundations": "33d0c110c7ca32b6"
+          }
+        },
+        "scalars": []
+      }
+    }
+  }
 }

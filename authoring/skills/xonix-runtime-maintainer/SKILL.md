@@ -26,6 +26,12 @@ Await the preparation returned by a real Missions activation in host tests. Asse
 immediate loading and retained state separately; cold catalogue duration is not a
 five-second gameplay contract. Preserve exact checkpoint assertions when checking
 different runtimes and diagnose state differences before changing route fixtures.
+For witnessed cross-platform movement rounding, keep `routeEvidenceCheckpoint`
+strictly inside integration tests: only witnessed per-route scalar differences
+may use the declared 1e-12 bound; all other state remains exact. It must not change
+runtime checkpoints, replay readers or original ownership. Require
+exact same-runtime host/reference and public replay checks alongside the portable
+golden; reject changed identities, cells, lives, ticks, scores and meaningful motion.
 
 For compact Solo landscape, distinguish manual equipment from authored warning
 capability. `hasFieldWarningBand` uses the validated original level, including
