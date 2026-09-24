@@ -31,7 +31,7 @@ reviewer names, listening approval or device results.
 | UA-FPV | Four private import packs preserve 80 filenames / 77 unique recordings | Recording-specific public permission and game admission |
 | Quick controls | B/N and main/pause-menu source implementation independently reviewed in draft PR #333; bounded presentation-metadata capacity prerequisite PR #409 is merged | Rebase after the online-archive release, then complete qualification, browser/controller/device checks and release |
 | AI originals | Scores, candidates and rejection evidence retained | Paused; 0/36 approved |
-| Historical releases | PRs #209, #250, #263 and #268 merged; immutable v0.107.0 is published and publicly accepted | Preserve delivered behavior, do not redo historical release work |
+| Historical releases | PRs #209, #250, #263 and #268 merged; immutable v0.107.0 and v0.108.0 are published and publicly accepted | Preserve delivered behavior, do not redo historical release work |
 
 ### Current execution snapshot
 
@@ -416,6 +416,55 @@ reviewer names, listening approval or device results.
   warning audibility, rights, cultural review where applicable and device evidence
   remain independent gates.
 
+### 25 September checkpoint — v0.108 acceptance and second-slate source closure
+
+- Immutable [v0.108.0](https://github.com/mekhovov/revealline/releases/tag/v0.108.0)
+  is public through reviewed selector
+  [PR #425](https://github.com/mekhovov/revealline/pull/425), merged as
+  `e5b8078f909f1a00c28b965160bb4cdd6f342fbd`. Exact merge
+  [run 36072250495](https://github.com/mekhovov/revealline/actions/runs/36072250495)
+  assembled and deployed successfully as Pages deployment `6650249149`.
+  Direct HTTP checks verified the public version, release and download URLs;
+  bounded browser verification opened the saved Journey into live gameplay and
+  confirmed Pause and Resume. This accepts the published v0.108.0 source and
+  selector. It does not admit a new soundtrack recording or release the draft
+  online-archive integration. Duplicate selector
+  [PR #430](https://github.com/mekhovov/revealline/pull/430) was closed without
+  merging after #425 completed the same release objective.
+- Second-slate source [PR #17](https://github.com/mekhovov/revealline-soundtracks-01/pull/17)
+  merged source-only as `6a1a3c42761b25c3f87121a70a6b17959088e9f4` after exact-head
+  [run 36072262687](https://github.com/mekhovov/revealline-soundtracks-01/actions/runs/36072262687)
+  passed at `39b09d5269f0fa9a32786fdb705eb8e69a5cf33f`. Artifact
+  `10838153770` is 140,918,961 bytes. The final repair closed the independent
+  review's P2 duplicate-detection finding by reading the real published schema's
+  top-level original hash and retaining regression coverage for a renamed title
+  with a different delivery hash. Independent exact-head review accepted the
+  source repair. The twelve prepared recordings remain unpublished pending a
+  separate publication PR; preparation and source review are not musical approval
+  or game admission.
+- Draft in-game archive [PR #370](https://github.com/mekhovov/revealline/pull/370)
+  remains unreleased and its version remains unallocated pending the active
+  release sequence. Rebase it onto the then-current accepted main, rerun its
+  authorized exact-source gates and obtain the next unused immutable version from
+  **🔥 Releases**. Its eventual public acceptance must cover the live archive
+  count at release time while built-in and uploaded music continue through an
+  archive outage.
+- The next research slate favors
+  [Maximum Overdrive](https://opengameart.org/content/maximum-overdrive),
+  [Industrial Synthdestroyer](https://opengameart.org/content/industrial-synthdestroyer)
+  and [Neon Pulse](https://opengameart.org/content/neon-pulse) for synth/electronic
+  comparison, plus the remaining suitable recordings from
+  [Interstellar vol. 2](https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack)
+  and selected sustained tracks from
+  [Purgatory vol. 2](https://davidkbd.itch.io/purgatory-vol-2-extreme-metal-music-pack)
+  for energetic metal/fusion comparison. These are research recommendations only:
+  exact acquisition, licence snapshots, duplicate checks, full listening and
+  admission remain pending. Hold the 1:37 **Runner2088**, the short
+  **Reckless vol. 2** recordings and most short **Purgatory vol. 3** recordings
+  outside the full gameplay-track target. Hold **Mach Overdrive** from the public
+  MP3 archive because its pack terms prohibit standalone audio redistribution,
+  even though its itch.io metadata also labels the asset CC BY 4.0.
+
 ## Remaining delivery ledger
 
 Estimates are hands-on effort, not promised dates. CI queues, listening reviewers,
@@ -430,9 +479,9 @@ version is allocated without the release owner's confirmation.
 | M3 | Source implementation reviewed; capacity prerequisite merged; release sequenced | PR #370 then #333; complete browser/controller/device checks | Rebase after #370, pass the authorized exact-source gates and verify B/N and touch/controller behavior in the released game | About 1 day remaining, excluding CI/device waits | [Draft PR #333](https://github.com/mekhovov/revealline/pull/333), 41cbf2be; 225 focused audio/control tests; prerequisite [PR #409](https://github.com/mekhovov/revealline/pull/409) merged eef221b | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
 | M5 | Six stronger synth/electro auditions are public; musical approval remains pending | User musical fit; exact-file rights and full listening before admission | Review the six public PR #18 synth/electro recordings, continue comparisons where the direction misses and admit only an accepted subset | Several hours per comparison round; 1–2 days integration/verification after approval; CI/review waits excluded | M5.a history below; archive [PR #16](https://github.com/mekhovov/revealline-soundtracks-01/pull/16) / [#18](https://github.com/mekhovov/revealline-soundtracks-01/pull/18); unified [public archive](https://mekhovov.github.io/revealline-soundtracks-01/) | Unreleased in game |
-| M6 | Six additional metal/fusion auditions are public; second slate remains draft | Musical fit, full listening, transitions, warning audibility, Content ID and gameplay acceptance | Review the six PR #18 metal/fusion recordings; complete and independently review PR #17 without lowering the full-track floor; admit only accepted tracks | Several hours per listening/research round; 1–2 days integration after approval, excluding review/CI waits | Archive PRs #11/#12 retained; new [PR #16](https://github.com/mekhovov/revealline-soundtracks-01/pull/16) / [#18](https://github.com/mekhovov/revealline-soundtracks-01/pull/18); draft [PR #17](https://github.com/mekhovov/revealline-soundtracks-01/pull/17) | Unreleased in game |
+| M6 | Six additional metal/fusion auditions are public; second-slate source is merged and publication remains pending | Musical fit, separate archive publication, full listening, transitions, warning audibility, Content ID and gameplay acceptance | Publish PR #17's independently reviewed twelve-track artifact through a separate immutable archive PR; review recordings and admit only an accepted subset | Several hours per listening/research round; 1–2 days integration after approval, excluding review/CI waits | Archive PRs #11/#12 retained; new [PR #16](https://github.com/mekhovov/revealline-soundtracks-01/pull/16) / [#18](https://github.com/mekhovov/revealline-soundtracks-01/pull/18); source-only [PR #17](https://github.com/mekhovov/revealline-soundtracks-01/pull/17), merged 6a1a3c427 | Unreleased in game |
 | M7 | Blocked public rights; scope retained | Recording-specific public redistribution and applicable artwork evidence | Include all 77 recordings / 80 filenames; publish cleared entries; maintain private pack route | About 1 day integration after clearance; clearance date unknown | UA-FPV manifests/private packs/guide | Public collection unreleased |
-| M8 | Online-archive integration implemented in draft; remaining playback/storage verification | PR #370 rebase after #403, publisher sequencing and device access | Rebase/qualify PR #370, release it through the immutable flow and directly verify all 116 public tracks, search, style mixing, order/shuffle/repeat, same-page playback and archive-failure fallback; audit remaining contracts separately | 1–2 days after accepted base and publisher slot; fixes separately estimated | [Draft PR #370](https://github.com/mekhovov/revealline/pull/370), exact head 53007108; [run 36070370957](https://github.com/mekhovov/revealline/actions/runs/36070370957) | Per-feature evidence required; online archive unreleased |
+| M8 | Online-archive integration implemented in draft; remaining playback/storage verification | PR #370 rebase after preceding releases, publisher sequencing and device access | Rebase/qualify PR #370, release it through the immutable flow and directly verify the current public archive count, search, style mixing, order/shuffle/repeat, same-page playback and archive-failure fallback; audit remaining contracts separately | 1–2 days after accepted base and publisher slot; fixes separately estimated | [Draft PR #370](https://github.com/mekhovov/revealline/pull/370), exact head 53007108; [run 36070370957](https://github.com/mekhovov/revealline/actions/runs/36070370957) | Per-feature evidence required; online archive unreleased |
 | M9 | Later | Core style releases | Review existing 70 selectively; add trusted ID/hash curation overlay preserving saved pins | 1–2 days per selected batch plus listening | Curation PR pending | Unreleased |
 | M10 | Later | Core styles delivered | Broader musical variety in small accepted albums | 1–2 days per batch plus review | Separate future album PRs | Unreleased |
 | M11 | Deferred / paused | Better production method and accepted pilots | Retain full 36-original brief; do not resume rejected production method | Unscheduled | Candidate/rejection archives | 0/36 approved |
