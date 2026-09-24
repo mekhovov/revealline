@@ -612,6 +612,9 @@ export async function prepareCreatorMediaIntake(
           kind: row.kind,
           normalizedStem: row.stem ?? null,
           assetSha256: row.sha256 ?? null,
+          ...(row.kind === 'image'
+            ? { poster: row.sha256 ? (imageByHash.get(row.sha256) ?? null) : null }
+            : {}),
           pairing,
           video: videoDetails.get(row.index) ?? null,
           errors,
