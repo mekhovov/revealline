@@ -56,3 +56,16 @@ from this bounded status correction.
 ## Review a reader-only recipe successor
 
 Compare the exact accepted production bundle with the generated successor. For each reopened UI/audio slot, list all changed fields and prove whether recipe content, tokens, geometry, payloads and historical parents remain unchanged. Review the changed readers, ownership, cancellation and late-completion behavior against the exact source. Exercise a presentation switch during a pending music read and cue decode; old bytes must not become active. Record source-bound functional approval separately from visual, listening, musical, physical-device, offline and public acceptance. Do not infer audio-file decode from a recipe-only theme, and do not promote a collection merely because its registry has no missing slots.
+
+## Review explicit Versus mission selection
+
+> Finish a Journey sequence and use Browse missions to select an exact Classic
+> mission. Preserve the current format, steering policy, timer, touch preference,
+> controller slots and difficulty. Acknowledge preparation before pack reads,
+> authenticate the selected original without adopting either new board, then
+> navigate with an exact validated handoff. Repeat from a paused attempt: Stay
+> retains both checkpoints and the accepted picture; Replace rechecks inventory
+> under fresh input ownership. Fail and cancel target preparation, release a late
+> response and prove that the old result remains usable without a stale launch.
+> Keep the chooser's original error/selection return owner; do not add a competing
+> reopen path. Run the entire affected host files and final source gates.
