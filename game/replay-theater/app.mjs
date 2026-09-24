@@ -2,6 +2,12 @@ import { mountPresentationPage } from '../presentation/page.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { prepareReplayPlayer } from '../replay-player.mjs';
 import { MAX_REPLAY_BYTES } from '../replay.mjs';
+import {
+  MAX_REPLAY_PRESENTATION_BYTES,
+  snapshotReplayPresentation,
+} from '../replay-presentation.mjs';
+import { prepareReplayActorContext } from '../replay-actor-context.mjs';
+import { prepareRetainedActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
@@ -11,6 +17,7 @@ import { mountReplayDisplay } from './display.mjs';
 const $ = (id) => document.getElementById(id);
 globalThis.RevealLineToolLaunch?.attached();
 let theaterDisposed = false;
+let disposeRecording = () => {};
 const replayDisplay = mountReplayDisplay();
 const bootStatus = createOperationStatus($('boot-status'));
 const bootDisplay = bootStatus.begin({ message: 'Preparing the theater…', stage: 'reading' });
@@ -36,6 +43,7 @@ const presentationPage = mountPresentationPage({
 const closeTheater = (event = {}) => {
   if (event.persisted || theaterDisposed) return;
   theaterDisposed = true;
+  disposeRecording();
   replayDisplay.dispose();
   bootStatus.dispose();
   presentationFeedback.dispose();
@@ -66,6 +74,25 @@ const examples = {
   },
 };
 const clipped = (value, length = 160) => String(value).slice(0, length);
+const encoder = new TextEncoder();
+
+function readRecording(source) {
+  if (
+    typeof source !== 'string' ||
+    source.length > MAX_REPLAY_PRESENTATION_BYTES ||
+    encoder.encode(source).byteLength > MAX_REPLAY_PRESENTATION_BYTES
+  )
+    throw new Error('Recording exceeds the replay plus appearance metadata limit.');
+  const document = JSON.parse(source);
+  // Raw recordings keep their original parser and byte budget, including source
+  // whitespace. A declared wrapper must pass its closed, independently bounded
+  // components; it never registers its uploaded actor identity as trusted.
+  const envelope =
+    document && typeof document === 'object' && Object.hasOwn(document, 'format')
+      ? snapshotReplayPresentation(source)
+      : null;
+  return { envelope, replay: envelope?.replay ?? source };
+}
 
 try {
   const [themeResponse, presetResponse] = await Promise.all([
@@ -88,6 +115,7 @@ try {
   let player = null,
     painter = null,
     releasePresentationPainter = null,
+    actorLease = null,
     pending = false,
     epoch = 0,
     controller = null,
@@ -98,6 +126,17 @@ try {
     frameId = null,
     nativeUnsubscribe = null;
   const importStatus = createOperationStatus($('import-status'), { isCurrent: () => !disposed });
+  disposeRecording = () => {
+    if (disposed) return;
+    disposed = true;
+    controller?.abort();
+    epoch++;
+    importStatus.dispose();
+    releasePresentationPainter?.();
+    actorLease?.release();
+    globalThis.cancelAnimationFrame?.(frameId);
+    nativeUnsubscribe?.();
+  };
   let importDisplay = null;
   const chosenTheme = () => themes.find((theme) => theme.id === $('theme').value) || themes[0];
   const bodyFor = (theme, state) => theme.classBodies?.[state.activeClassId] || theme.player;
@@ -214,14 +253,24 @@ try {
       isCurrent: current,
     });
     importDisplay = display;
+    let stagedActors = null,
+      stagedPainterRelease = null;
+    const releaseStaged = () => {
+      stagedPainterRelease?.();
+      stagedPainterRelease = null;
+      stagedActors?.release();
+      stagedActors = null;
+    };
+    nextController.signal.addEventListener('abort', releaseStaged, { once: true });
     try {
       const source = await getSource(nextController.signal);
       if (!current()) return;
+      const { envelope, replay } = readRecording(source);
       display.update({
         message: 'Verifying the recording’s exact input ticks…',
         stage: 'verifying',
       });
-      const nextPlayer = await prepareReplayPlayer(source, {
+      const nextPlayer = await prepareReplayPlayer(replay, {
         signal: nextController.signal,
         onProgress: ({ ticks, total }) => {
           display.update({
@@ -230,6 +279,27 @@ try {
         },
       });
       if (!current()) return;
+      if (envelope) {
+        display.update({
+          message: 'Checking the recorded mission owner and exact FPV actors…',
+          stage: 'verifying',
+          progress: null,
+        });
+        const actual = await prepareReplayActorContext(envelope, {
+          signal: nextController.signal,
+        });
+        if (!current()) return;
+        stagedActors = await prepareRetainedActorAppearanceLease(
+          { pin: envelope.actorAppearancePin, ...actual },
+          {
+            baseURL: new URL('../presentation/compiled/', location.href),
+            signal: nextController.signal,
+            currentManifestSha256: presentationPage.current()?.manifestSha256 ?? null,
+            onStatus: (status) => display.update(status),
+          },
+        );
+        if (!current()) return;
+      }
       let assetMessage = '';
       const nextPainter = new BoardPainter(presets, {
         onAsset: (message) => {
@@ -246,6 +316,9 @@ try {
       });
       await nextPainter.setLook(theme, bodyFor(theme, nextPlayer.state));
       if (!current()) return;
+      nextPlayer.setRate(Number($('speed').value));
+      stagedPainterRelease = presentationPage.bindPainter(nextPainter);
+      if (!current()) return;
       const size = boardPaintSizeForRun(nextPlayer.state);
       $('board').width = size.width;
       $('board').height = size.height;
@@ -253,15 +326,21 @@ try {
       $('board').parentElement.style.setProperty('--board-width', `${size.width}px`);
       player = nextPlayer;
       releasePresentationPainter?.();
+      actorLease?.release();
       painter = nextPainter;
-      releasePresentationPainter = presentationPage.bindPainter(painter);
-      player.setRate(Number($('speed').value));
+      releasePresentationPainter = stagedPainterRelease;
+      stagedPainterRelease = null;
+      actorLease = stagedActors;
+      stagedActors = null;
       lastClass = player.state.activeClassId;
       lastFrame = 0;
       eventLines = [];
       displayEvents([]);
       $('recording-name').textContent = player.info.levelName;
       $('asset-status').textContent = assetMessage;
+      $('recorded-appearance').textContent = actorLease
+        ? 'Recorded FPV actors · Exact actor release restored. Picture, music and interface are not recorded; this theater is silent.'
+        : 'Raw replay · Preview actors and scene. No recorded appearance is claimed; this theater is silent.';
       display.finish({ message: `${clipped(label)} verified and loaded. Ready to watch.` });
       $('transport-status').textContent =
         player.phase === 'complete'
@@ -275,6 +354,8 @@ try {
           message: `Could not load recording: ${clipped(error.message, 300)} The previous recording is unchanged.`,
         });
     } finally {
+      nextController.signal.removeEventListener('abort', releaseStaged);
+      releaseStaged();
       if (ticket === epoch) {
         importDisplay = null;
         pending = false;
@@ -324,7 +405,8 @@ try {
     const file = $('replay-file').files?.[0];
     if (!file) return;
     void load(async () => {
-      if (file.size > MAX_REPLAY_BYTES) throw new Error('Replay exceeds the 32 MiB limit.');
+      if (file.size > MAX_REPLAY_PRESENTATION_BYTES)
+        throw new Error('Recording exceeds the replay plus appearance metadata limit.');
       return file.text();
     }, file.name);
     $('replay-file').value = '';
@@ -360,8 +442,9 @@ try {
       consume(player.pause());
       const theme = chosenTheme();
       void painter.setLook(theme, bodyFor(theme, player.state));
-      $('transport-status').textContent =
-        'Presentation changed. The recording remains paused at the same tick.';
+      $('transport-status').textContent = actorLease
+        ? 'Preview scene changed. Recorded FPV actors and the paused tick are unchanged.'
+        : 'Presentation changed. The recording remains paused at the same tick.';
     }),
   );
   const navigation = attachReplayNavigation({
@@ -378,12 +461,8 @@ try {
       $('transport-status').textContent = 'Playback paused. Choose Play to continue.';
     },
     onDispose: () => {
-      disposed = true;
-      importStatus.dispose();
-      releasePresentationPainter?.();
+      disposeRecording();
       closeTheater();
-      globalThis.cancelAnimationFrame?.(frameId);
-      nativeUnsubscribe?.();
     },
   });
   onNativeInactive(navigation.suspend)
@@ -411,6 +490,7 @@ try {
           showGrid: $('grid').checked,
           fullReveal: player.phase === 'complete' && player.state.status === 'won',
           celebrationPaused: document.hidden,
+          actorAppearance: actorLease ? { style: 'fpv', snapshot: actorLease.snapshot } : null,
         });
       }
     });
