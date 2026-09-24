@@ -292,11 +292,33 @@ test('modeled controller: Missions selection, Deploy, Pause and explicit Resume 
   const card = page.doc.activeElement;
   assert.equal(card.className.includes('journey-card'), true);
   assert.equal(card.disabled, false);
-  press(0);
-  await settle(() => {
-    page.frame(0);
-    return page.doc.body.dataset.flightState === 'running';
-  });
+  const activateCard = card.onclick;
+  let deployment, timer;
+  card.onclick = function (...args) {
+    deployment = activateCard.apply(this, args);
+    return deployment;
+  };
+  try {
+    press(0);
+  } finally {
+    card.onclick = activateCard;
+  }
+  assert.equal(typeof deployment?.then, 'function', 'Controller Confirm owns deployment.');
+  try {
+    await Promise.race([
+      deployment,
+      new Promise((_, reject) => {
+        timer = setTimeout(
+          () => reject(new Error('Controller deployment did not settle.')),
+          120000,
+        );
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+  page.frame(0);
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   release();
   assert.equal(page.$('journey-chooser').open, false);
   assert.equal(page.rendered.run.player.speed, 0);
