@@ -1,0 +1,118 @@
+{
+  "format": "revealline-audio-source-review.v1",
+  "feature": "M2 bundled soundtrack source infrastructure only",
+  "revision": 1,
+  "checkedAt": "2026-09-24T21:28:18.304Z",
+  "candidateBaseRevision": "c80cfe01cdd0379977dac2ea0ddfe236d53a7591",
+  "orderedAudioInputs": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs",
+  "audioFingerprintSHA256": "7d0a0e9c97c17036a941256a75d9168a6d46e1426cecd356ddffbe39ab301233",
+  "sources": [
+    {
+      "path": "game/ui/audio.mjs",
+      "bytes": 26731,
+      "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388"
+    },
+    {
+      "path": "game/ui/published-audio.mjs",
+      "bytes": 6593,
+      "sha256": "8218492b1599760e28f8391ad7fcb8bb8e46430a40ea3b0e470d5ad9fa333169"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 40881,
+      "sha256": "9c8119908b84dbb5804fa654bf261b66fdf63dbad91bf11faca308dcb2fea63c"
+    },
+    {
+      "path": "game/ui/audio-master.mjs",
+      "bytes": 5277,
+      "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+    },
+    {
+      "path": "game/soundtrack.mjs",
+      "bytes": 38878,
+      "sha256": "ec03303d295b4f7997f4b8c3c3573cf2bdddcd81f92700d98710d38933f89843"
+    },
+    {
+      "path": "game/soundtrack-rights.mjs",
+      "bytes": 3755,
+      "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04"
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "bytes": 12028,
+      "sha256": "fa6a98e404ca7d169c2dc4fd5383065d79d69f2f8af25e3ca7c4ee6f67d745fd"
+    },
+    {
+      "path": "game/soundtrack-share.mjs",
+      "bytes": 5602,
+      "sha256": "6cc8878ca926476b236c0fb0f9544a5248ee627011787a14c2d1c00cad7a78ee"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "bytes": 4608,
+      "sha256": "ce8518de9719d9d827f14ba130e93bd67bce030334e5a58ed2f0c33f5829b6a5"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 103958,
+      "sha256": "0a6d76a0bbdbcb029aaa891cedd0fd9785aa866011ee27ae94381823176ff53f"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "bytes": 9055,
+      "sha256": "f2c2f6087b4d9edf3c32c3790acdf03ce539441470f28e14f067af781c64011d"
+    },
+    {
+      "path": "game/soundtrack-albums.mjs",
+      "bytes": 11118,
+      "sha256": "632e82dfc0189fd0f11bbdfbbfc4c8ac468725ca967a76d0c478adc86b1645e1"
+    },
+    {
+      "path": "game/soundtrack-portable.mjs",
+      "bytes": 2891,
+      "sha256": "d5423f59dfd25ca6310d47d78e433d7ff1e32a8003bf313bb74968f2e07b1103"
+    },
+    {
+      "path": "game/content/soundtrack-catalogue.mjs",
+      "bytes": 132639,
+      "sha256": "0618993ff8ff9508d1ab4295920c07d0b5a8f6f34df683538029754b438dc44f"
+    },
+    {
+      "path": "game/online-soundtrack-catalogue.mjs",
+      "bytes": 8967,
+      "sha256": "a70644858ea555df7825b80553b72fe29cc9df8c7914cd60441e649692b0eda8"
+    }
+  ],
+  "review": {
+    "decision": "approved-for-source-continuation",
+    "scope": "The inactive bundled-source adapter binds a code-owned local MP3 to an already trusted catalogue identity, exact hash, exact length, fixed local path and the catalogue-wide effective rights intersection. Empty registrations preserve existing playback behavior.",
+    "verified": [
+      "Local-only preparation performs no request and returns only an already owned original or null.",
+      "Explicit allowed acquisition supports Installed-only playback while complete MP3 validation and cancellation remain enforced.",
+      "Redirects, renamed bytes, length/hash mismatches, duplicate identities and permissions wider than the catalogue are rejected.",
+      "The change adds no recording registration, audio bytes, default selection, autoplay or storage write."
+    ],
+    "limitations": [
+      "No soundtrack recording, composition, musical suitability or Ukrainian authenticity is approved.",
+      "Full-track listening, warnings, physical devices, cold offline, frozen build and public game acceptance remain separate.",
+      "Any audio input or this review record changing reopens the production audio group."
+    ]
+  },
+  "tests": {
+    "command": "node --test game/test/soundtrack-source.test.mjs",
+    "node": "20.19.5",
+    "tests": 11,
+    "pass": 11,
+    "fail": 0,
+    "skip": 0,
+    "outputSha256": "06cfd2284503f381dfc26ab7730d18ce447651a25929dc8e841829fa6be18259"
+  },
+  "admission": {
+    "recordingsAdded": 0,
+    "bundledRegistrationsActivated": 0,
+    "mp3Added": false,
+    "defaultChanged": false,
+    "listeningApprovalClaimed": false
+  },
+  "sourceRevision": "d6c451034ceb64301ca2616337074edb0ab24344"
+}
