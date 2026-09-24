@@ -226,6 +226,47 @@
   margin-top: 1rem;
   min-height: 44px;
 }
+#journey-picture-viewer :is(#journey-picture-retry, #journey-picture-back) {
+  min-height: 44px;
+}
+@media (max-height: 480px) and (min-width: 600px) {
+  #journey-picture-viewer[open] {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(11rem, 0.75fr);
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    gap: 0.5rem 1rem;
+    align-items: start;
+    max-height: calc(100dvh - 1rem);
+  }
+  #journey-picture-title {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+  #journey-picture-viewer canvas {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    align-self: center;
+    width: 100%;
+    max-height: calc(100dvh - 2rem);
+    object-fit: contain;
+  }
+  #journey-picture-status {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0;
+  }
+  #journey-picture-retry {
+    grid-column: 2;
+    grid-row: 3;
+    width: 100%;
+  }
+  #journey-picture-back {
+    grid-column: 2;
+    grid-row: 4;
+    width: 100%;
+  }
+}
 .journey-footer {
   display: flex;
   flex-wrap: wrap;
