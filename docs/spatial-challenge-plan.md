@@ -48,7 +48,7 @@ quotas. Timed bonuses remain optional; artwork is original and functional symbol
 remain consistent. No old edition, Classic/custom content, settings or media is
 deleted.
 
-## Completed locally — not yet a public release
+## Implemented in PR323 — not yet a public release
 
 - A new immutable `whole-spatial-v6` composition revises exactly six missions,
   preserving the other 85 and all historical source factories. Solo and Versus
@@ -81,12 +81,19 @@ deleted.
   Both Arrows approaches clear all twelve settings. Broken has three of six full
   clears and Crossing five of twelve; only Expert Crossing belt prefixes remain
   unqualified. Earlier failures and capped search stages remain in the fixtures.
-  Neon/Twin alternate preset expansion and unfinished continuations stay open.
+  Unfinished continuations stay open; extra Neon/Twin evidence is scoped below.
 - Two bays' separate east-first matrix clears all six preset/control settings at
   seed 1, after the same distinctive 42-cell connection retaining three regions.
   Expert requires a sampled 300-tick opening wait; the earlier failed timings and
   unfinished Expert/Grid continuation remain replayable. Seven checks qualify
   these six routes, not broad-seed or human balance.
+- Circuits' outside-west and inside-circuit openings now qualify all twelve
+  preset/control/approach settings; four reuse exact primary clears and eight
+  continuations remain unfinished. Twin's upper and lower landing connections
+  likewise qualify all twelve openings, but none of those additional bounded
+  continuations completes the mission. Its separate primary clears still pass.
+  Landing access does not prove a particular shield order or mastery; objective
+  events and earlier failed timing samples remain explicit in the fixtures.
 - All 42 primary routes also finish as equal paired-board races: the independently
   resolved Versus level matches the qualified Solo conditions, both boards own
   separate state, and identical inputs produce identical no-loss checkpoints.
@@ -137,6 +144,20 @@ totals. Overlapping sweeps are not independent coverage, and sampled failure doe
 not prove impossibility. Do not inflate the quota from the frozen preview alone.
 
 ## Remaining gates before Phase A promotion
+
+All six missions already have primary full-clear evidence in every preset and
+control style. The table tracks **additional approach evidence**, not whether the
+mission itself is completable. Some entries reuse primary witnesses; do not sum
+them as independent clear counts.
+
+| Additional approach matrix           | Qualified openings | Full-clear witnesses      | Remaining route work                                  |
+| ------------------------------------ | ------------------ | ------------------------- | ----------------------------------------------------- |
+| Two bays east-first                  | 6/6                | 6/6                       | Broader seeds and human timing/readability            |
+| Arrows fast corridor and west bypass | 12/12              | 12/12                     | Broader seeds and human cleanup review                |
+| Broken southern hazard               | 6/6                | 3/6                       | Standard/Grid and both Expert continuations           |
+| Crossing center and west belt        | 10/12              | 5/12                      | Expert belt openings and five safe continuations      |
+| Circuits outside-west and inside     | 12/12              | 4/12 reused               | Eight continuations; no seal-all shortcut proved      |
+| Twin upper and lower landings        | 12/12              | 0/12 in this added matrix | All added continuations and meaningful receiver order |
 
 1. Extend the bounded two-seed evidence and qualify two distinguishable approaches
    per mission across presets and controls.
@@ -240,6 +261,9 @@ and previous-edition navigation, not receiving-host or public acceptance.
 `spatial-challenge-two-bays-alternate.test.mjs` and
 `spatial-challenge-circuits-seal-probe.test.mjs` retain their distinct qualified
 routes, timing failures and conditional shortcut evidence.
+`spatial-challenge-circuits-approach-matrix.test.mjs` and
+`spatial-challenge-twin-approaches.test.mjs` distinguish intended landing/opening
+access from completed missions and objective-order proof.
 No automated sample stands in for human or physical-device evidence.
 
 Research basis: [Xposed Reloaded](https://store.playstation.com/en-us/concept/10002881/),
