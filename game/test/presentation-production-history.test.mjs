@@ -517,8 +517,17 @@ test('shared-host UI and audio bind only their reviewed current inputs', async (
 test('soundtrack screen and Journey motion reviews bind only the inspected current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
+  const screenReviewPath =
+    'docs/verification/compact-home-screen-continuation-2026-09-24/review.json';
+  const screenReviewHash = createHash('sha256')
+    .update(await fs.readFile(new URL(`../../${screenReviewPath}`, import.meta.url)))
+    .digest('hex');
+  assert.equal(
+    screenReviewHash,
+    '96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b',
+  );
   const fingerprints = {
-    screens: 'ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996',
+    screens: 'acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a',
     motion: 'c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9',
   };
   const reviewed = production.document.slots.filter(
@@ -534,7 +543,7 @@ test('soundtrack screen and Journey motion reviews bind only the inspected curre
         entry.includes(
           slot.group === 'motion'
             ? 'Scoped visible-actor motion continuation'
-            : 'Scoped integrated screen continuation',
+            : `Scoped compact-Home screen continuation: ${screenReviewPath} sha256:${screenReviewHash}`,
         ),
       ),
       slot.id,

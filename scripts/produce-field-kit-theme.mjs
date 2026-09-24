@@ -109,10 +109,10 @@ export function fieldKitEquipmentQuality(slotId, source, originalHash, successor
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: 'ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996',
+    sha256: 'acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a',
     evidence: [
-      'Scoped integrated screen continuation: docs/verification/integrated-fpv-presentation-2026-09-24/review.json sha256:5743669fa1b230c486bf92435e2922a8a775b86a3de10fd42f84c2e51a85ca51; four ordered screen inputs sha256:ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996. Only field-kit-surfaces.css changes to map the two registered menu palettes onto existing supporting-page semantic tokens.',
-      'Focused surface and menu-host checks cover the shared tokens, persisted palette choice, keyboard/controller focus and paused Solo, Team and Versus state. Board geometry, input hit targets, runtime state, payloads and content ownership remain unchanged.',
+      'Scoped compact-Home screen continuation: docs/verification/compact-home-screen-continuation-2026-09-24/review.json sha256:96ae6b8c3b05239cf16ab3801dec2b7ef057aa188ffcab466fb2fc22ea17dd1b; four ordered screen inputs sha256:acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a. Only field-kit-flow.css changes after the prior exact review, compacting Home and adding the More-menu surface with existing Field Kit tokens.',
+      'Focused flow and focus-restoration checks plus a source-native 1280 by 720 review cover the compact Home and More surfaces. Board geometry, simulation, mission content, payloads and data ownership remain unchanged.',
       'Bounded functional source continuation only. Complete navigation, forced-colour, screen-reader, every viewport, physical device, frozen/public and human acceptance remain separate. Historical reviews and payloads remain immutable.',
     ],
   },
