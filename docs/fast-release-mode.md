@@ -20,8 +20,9 @@ The `Build and deploy GitHub Pages` workflow keeps only the minimum release path
 6. the aggregate `release-ready` result.
 
 The preflight and build remain separate job names because frozen-release evidence binds those exact
-contexts, but dependency installation occurs only in the build job. Superseded runs for the same PR
-are cancelled by the workflow concurrency group. Pages previews use a partial sparse checkout of
+contexts. Preflight records only the test policy; the build job is the sole PR source checkout and
+performs the required identity check before and after the build. Superseded runs for the same PR are
+cancelled by the workflow concurrency group. Pages previews use a partial sparse checkout of
 the controller, workflow contracts, test policy, and two archive helpers while retaining all tags
 and on-demand Git objects needed to verify frozen source identities. Production publications remain
 serialized and are never cancelled by a newer run.
@@ -35,10 +36,10 @@ These checks are deferred in fast mode and cannot block merge or release:
 - motion-lab syntax and extended Field Kit provenance checks; and
 - focused Pages-controller unit tests.
 
-Maintainers can still run the full source suite on demand with **Actions → Qualify release source →
-Run workflow**, selecting the exact candidate ref, `operation=qualify`, and `run_tests=true`. That is
-an observation only while fast mode is active; a failure is recorded but does not retroactively
-block another PR.
+The release workflow deliberately ignores `run_tests=true` while fast mode is active. This prevents
+an accidental manual dispatch from starting four large test checkouts and delaying a release. Do not
+use this workflow for ad-hoc test runs during the waiver; restore full CI first if automated suites
+need to be re-enabled.
 
 ## What still blocks GitHub Pages
 
@@ -69,11 +70,14 @@ during an active release:
    ```
 
 3. Run **Qualify release source** once on current `main` with `run_tests=true`. Confirm all four
-   shards, static checks, production checks, source identity, and build pass.
+   shards, static checks, production checks, source identity, and build pass. The request is honored
+   only after the repository variable is `true`.
 4. If branch protection is introduced, require only `release-ready`, not the individual shard
    contexts. `release-ready` requires tests whenever `REVEALLINE_FULL_CI=true`.
 5. Update this document and `docs/deployment.md` in the same reviewed PR to state that full CI is
    restored.
 
-To return to fast mode after an unsuccessful restoration attempt, set the variable back to `false`
-first. Do not rewrite release tags or published assets.
+Duplicate manual qualification dispatches for the same immutable source SHA are rejected before a
+repository checkout. Qualify only a PR head that is stable and already has a successful
+`release-ready` check; after merge, qualify the resulting `main` SHA once. Do not rewrite release
+tags or published assets.
