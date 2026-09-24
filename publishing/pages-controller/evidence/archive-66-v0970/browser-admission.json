@@ -1,0 +1,31 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-66",
+  "infrastructureCommit": "49b8f62624fef9d1bb80d72d5bba92d61dfb57ea",
+  "deploymentId": 6630982630,
+  "versions": [
+    "v0.97.0"
+  ],
+  "scope": "Historical online preservation only: archive/title/mode routes, decoded artwork, bounded native keyboard Team capture, a real Versus clear and direct Next into its authored successor. This is not new v0.98 public acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-66-v0970/native-observation.json",
+      "sha256": "b4fb32189acdec61db464cbced58fb49d059912d73bf89c833a69bef4baf8134"
+    },
+    {
+      "path": "evidence/archive-66-v0970/final-reconciliation.json",
+      "sha256": "823cfa26fd2c52accffdb356ddebab754c345c2e0a5472a4817d87e9155c1dd5"
+    },
+    {
+      "path": "evidence/archive-66-v0970/evidence-manifest.json",
+      "sha256": "2181cfdd2298ed51acc495a545680afcfd73fccfcf382cf3e4e722aba7dfb3be"
+    }
+  ],
+  "limitations": [
+    "The physical test machine was out of disk space. Team and Versus visibly offered Retry saving and Export, but persistence, offline readiness and storage recovery are not passing results.",
+    "Studio inspection proved compilation only. Studio return navigation needs a separate normal-capacity browser investigation, and no draft was applied.",
+    "No physical controller, physical touch, screen reader, mobile viewport, exhaustive mission, replay, full Solo completion, cross-campaign ending or comprehensive offline qualification is claimed.",
+    "No user saves were cleared, no source draft was applied, and no clean-console verdict is claimed."
+  ]
+}
