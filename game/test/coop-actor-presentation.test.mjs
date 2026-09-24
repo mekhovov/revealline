@@ -7,7 +7,7 @@ import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
 import { imagePresentation } from '../presentation/runtime.mjs';
 import { validateCompiledPresentation } from '../presentation/host.mjs';
-import { actorDiameter } from '../ui/actor-presentation.mjs';
+import { actorDiameter, actorImagePaintMetrics } from '../ui/actor-presentation.mjs';
 import {
   COOP_ACTOR_ROLES,
   createCoopActorPresentation,
@@ -426,7 +426,11 @@ test('prepared image and pivot geometry are borrowed once; reset and replacement
       const draw = view.calls.find((call) => call.name === 'drawImage');
       assert.equal(draw.args[0], p.images.get(frame.sourceSlot).image);
       assert.equal(draw.state.imageSmoothingEnabled, false);
-      assert.equal(draw.args.at(-1), frame.diameter);
+      const geometry = p.images.get(frame.sourceSlot).geometry;
+      assert.equal(
+        draw.args.at(-1),
+        kind === 'core' ? frame.diameter : actorImagePaintMetrics(frame.diameter, geometry).height,
+      );
       assert.equal(view.stack.length, 0);
       if (kind === 'core')
         assert.equal(

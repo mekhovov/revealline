@@ -8,7 +8,11 @@ import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { resolvePresentation } from '../presentation/model.mjs';
 import { canvasPresentation } from '../presentation/runtime.mjs';
 import { mediaFixture } from './helpers/media-fixtures.mjs';
-import { createActorPresentation, drawPresentedActor } from '../ui/actor-presentation.mjs';
+import {
+  actorImagePaintMetrics,
+  createActorPresentation,
+  drawPresentedActor,
+} from '../ui/actor-presentation.mjs';
 import { drawClassicTerrain, drawClassicPickups } from '../ui/classic-view.mjs';
 import { createEnemyPresentations } from '../enemy-presentations.mjs';
 import { createEnemyBodyAssets, createEnemyImagePool } from '../ui/enemy-body-assets.mjs';
@@ -112,6 +116,28 @@ test('compiled bodies adopt normalized pivots and bitmap dimensions without chan
     ),
     'The visible contact ring retains the simulation radius',
   );
+});
+
+test('compiled player sprites size their visible body and rotor sweep instead of transparent padding', () => {
+  const { painter, run, sprites } = fixture(),
+    sprite = sprites['player.scout.detailed'];
+  sprite.geometry.occupiedBounds = { x: 0.25, y: 0.25, width: 0.5, height: 0.5 };
+  const before = authoritativeCheckpoint(run),
+    canvas = surface();
+  painter.draw(canvas.ctx, run, 0, { paused: true, reduced: true });
+  const draw = draws(canvas.calls, sprite.image)[0],
+    expected = actorImagePaintMetrics(32, sprite.geometry),
+    visibleWidth = draw.args[3] * (expected.visible.right - expected.visible.left),
+    visibleHeight = draw.args[4] * (expected.visible.bottom - expected.visible.top);
+  assert.equal(draw.args[3], expected.width / 16);
+  assert.equal(draw.args[4], expected.height / 16);
+  assert.ok(Math.abs(Math.max(visibleWidth, visibleHeight) * 16 - 32) < 1e-9);
+  assert.ok(
+    canvas.calls.some(
+      (entry) => entry.op === 'arc' && entry.args[2] === run.rules.playerRadius * 16,
+    ),
+  );
+  assert.deepEqual(authoritativeCheckpoint(run), before);
 });
 
 test('phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority', () => {
