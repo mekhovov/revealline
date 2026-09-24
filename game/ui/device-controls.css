@@ -13,9 +13,9 @@
   min-height: 44px;
   font-size: 22px;
 }
-.game-shell[data-flight-state='running']
+body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
   .shell-bar
-  > :is(#shell-packs, #shell-collection, #shell-settings, .shell-edition) {
+  > :is(#shell-packs, #journey-skip, #shell-collection, #shell-settings, .shell-edition) {
   display: none;
 }
 .game-shell .play-controls {
@@ -159,6 +159,23 @@
 .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
   min-width: 0;
   max-width: 100%;
+}
+.game-shell .game-overlay[data-kind='pause'] .pause-mission-info {
+  width: 100%;
+}
+.game-shell .game-overlay[data-kind='pause'] .pause-mission-info > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--fk-accent, #65e6da);
+  cursor: pointer;
+}
+.game-shell .game-overlay[data-kind='pause'] .pause-mission-info > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 8px;
 }
 .game-shell #controller-ui-hint {
   display: none;

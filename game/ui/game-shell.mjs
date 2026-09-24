@@ -439,6 +439,19 @@ export function attachGameShell({
     if (!focusBriefing?.()) $('mission-brief-read')?.focus({ preventScroll: true });
   }
   if (overlayBrief) overlayBrief.onclick = () => openBrief();
+  const overlayMissions = $('overlay-missions');
+  if (overlayMissions) overlayMissions.onclick = () => openMissions({ opener: overlayMissions });
+  const overlayHelp = $('overlay-help');
+  if (overlayHelp) overlayHelp.onclick = () => $('help-button').click();
+  const overlaySettings = $('overlay-settings');
+  if (overlaySettings) overlaySettings.onclick = () => $('settings-button').click();
+  const pauseMissionInfo = $('pause-mission-info');
+  const pauseMissionInfoToggle = $('pause-mission-info-toggle');
+  if (pauseMissionInfo && pauseMissionInfoToggle)
+    pauseMissionInfoToggle.onclick = (event) => {
+      event.preventDefault();
+      pauseMissionInfo.open = !pauseMissionInfo.open;
+    };
   $('shell-packs').onclick = () => openMissions({ opener: $('shell-packs') });
   $('shell-play').onclick = () => openMissions({ opener: $('shell-play') });
   const featured = $('shell-featured');
