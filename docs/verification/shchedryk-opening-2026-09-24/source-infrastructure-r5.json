@@ -1,0 +1,117 @@
+{
+  "format": "revealline-source-check.v1",
+  "feature": "M2 bundled soundtrack source infrastructure only",
+  "revision": 5,
+  "checkedAt": "2026-09-24T21:27:29.783Z",
+  "candidateBaseRevision": "c80cfe01cdd0379977dac2ea0ddfe236d53a7591",
+  "supersedes": "source-infrastructure-r3.json",
+  "scope": "Replayed the three reviewed bundled-source commits on the public-archive candidate, then generated a deterministic Field Kit revision 75 successor from revision 74 for the changed audio-source fingerprints.",
+  "sourceFiles": [
+    {
+      "path": "game/soundtrack-bundled.mjs",
+      "bytes": 1980,
+      "sha256": "4603942591731b0bc214b0d27d0d8c957462485ba0dcd0dd074d7449a39c77ce"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "bytes": 4608,
+      "sha256": "ce8518de9719d9d827f14ba130e93bd67bce030334e5a58ed2f0c33f5829b6a5"
+    },
+    {
+      "path": "game/test/soundtrack-source.test.mjs",
+      "bytes": 10835,
+      "sha256": "8db6222e340af46bc38a235d8ea5085e408a20e226378210ba9b14f3a819220b"
+    }
+  ],
+  "fieldKit": {
+    "parentRevision": 74,
+    "revision": 75,
+    "bundle": {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 7209131,
+      "sha256": "fdcedf25bc857bb4523f0c050fe0dfe592caf52634f6eea1b93b5f3a7a6393b9"
+    },
+    "compiled": [
+      {
+        "path": "game/presentation/compiled/manifest.json",
+        "bytes": 29118,
+        "sha256": "74bcac0f725432f47135e6094e42b4654ede8cb01d55400fdbefdbfa2803a549"
+      },
+      {
+        "path": "game/presentation/compiled/runtime.json",
+        "bytes": 1086353,
+        "sha256": "a97ecd0fb341f624be70493b942be624ef179abd25a5a20f10ab25cfbe189a1c"
+      },
+      {
+        "path": "game/presentation/compiled/studio.json",
+        "bytes": 4038182,
+        "sha256": "65dfb8baed8baa63d4403d98215f0237ef431fc19c3d535f56a879b039193b5e"
+      }
+    ],
+    "result": {
+      "slots": 335,
+      "files": 140,
+      "assetBytes": 4009342,
+      "coverage": {
+        "missing": 0,
+        "source": 107,
+        "produced": 0,
+        "reviewed": 228
+      }
+    },
+    "reviewBoundary": "This revision binds source fingerprints only. It adds no screen artwork, soundtrack recording, listening approval or player-visible default."
+  },
+  "checks": {
+    "node": "20.19.5",
+    "sourceSuite": {
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skip": 0,
+      "outputSha256": "06cfd2284503f381dfc26ab7730d18ce447651a25929dc8e841829fa6be18259"
+    },
+    "prettier": {
+      "version": "3.6.2",
+      "status": "pass",
+      "scope": [
+        "game/soundtrack-bundled.mjs",
+        "game/soundtrack-source.mjs",
+        "game/test/soundtrack-source.test.mjs"
+      ]
+    },
+    "eslint": {
+      "status": "pass",
+      "scope": [
+        "game/soundtrack-bundled.mjs",
+        "game/soundtrack-source.mjs",
+        "game/test/soundtrack-source.test.mjs"
+      ]
+    },
+    "productionReproducibility": {
+      "command": "node scripts/produce-field-kit-theme.mjs --check",
+      "status": "pass"
+    },
+    "hostedQualification": "Pending release of the stacked public-archive base and a fresh exact-head run.",
+    "validation": {
+      "command": "npm run validate",
+      "status": "pass",
+      "files": 1090,
+      "version": "0.106.0"
+    },
+    "fullLint": {
+      "status": "not-run",
+      "reason": "Focused ESLint passed; full hosted qualification remains pending."
+    },
+    "fullFormat": {
+      "status": "not-run",
+      "reason": "Focused pinned Prettier passed; full hosted qualification remains pending."
+    }
+  },
+  "admission": {
+    "recordingsAdded": 0,
+    "defaultChanged": false,
+    "bundledRegistrationsActivated": 0,
+    "mp3Downloaded": false,
+    "listeningApprovalClaimed": false
+  }
+}
