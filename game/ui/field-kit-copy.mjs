@@ -7,7 +7,7 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
   'navigation.missions': 'Missions',
   'navigation.collection': 'Collection',
   'navigation.settings': 'Settings',
-  'navigation.workshop': 'Workshop',
+  'navigation.workshop': 'More',
   'workshop.motion': 'Motion lab',
   'workshop.pictures': 'Pictures & stories',
   'workshop.poster': 'Video poster workshop',
