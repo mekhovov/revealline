@@ -131,6 +131,23 @@ test('inner receiver search keeps the original edition and explicit Inspect in t
   assert.equal(editions[0].hasAttribute('selected'), false);
 });
 
+test('ornament successor is opt-in in the combined selector with explicit inspection only', async () => {
+  const { search, visible, $ } = setup();
+  search('whole-ornament-v1');
+  assert.equal(visible().length, 1);
+  assert.equal(visible()[0], $('whole-variety').closest('[data-library-entry]'));
+  assert([...$('whole-variety-edition').options].some((o) => o.value === 'ukrainian-ornament-v1'));
+  assert.equal($('whole-variety-edition').value, 'variety-1');
+  const source = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
+  const handler = source.slice(
+    source.indexOf("$('whole-variety').onclick"),
+    source.indexOf("$('import').onchange"),
+  );
+  assert.match(handler, /'ukrainian-ornament-v1'\s*\? createUkrainianOrnamentJourney/);
+  assert.match(handler, /discardSource\(\)/);
+  assert.doesNotMatch(handler, /session\.replace|queueSave|launchPreview/);
+});
+
 test('outer-pocket search preserves the Shared windows edition selector beside its Inspect action', () => {
   const { search, visible, $ } = setup();
   search('contested outer pockets');
@@ -156,6 +173,7 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     'whole-spatial-v4',
     'whole-spatial-v5',
     'whole-spatial-v6',
+    'whole-ornament-v1',
     'whole-spatial-v3',
     'whole-spatial-v2',
     'whole-spatial-v1',

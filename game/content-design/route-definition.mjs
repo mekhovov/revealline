@@ -17,9 +17,21 @@ export function createAuthoredJourneyRouteDefinition(
     createWholeVarietyCandidates,
     createWholeSortingCandidates,
     createSpatialChallengeJourney,
+    createUkrainianOrnamentJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-ornament-v1')
+    return freezeDesign({
+      id,
+      label: 'Ukrainian ornament spatial review · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-ornament.v1',
+      profileKey: 'journey-whole-ornament-v1',
+      source: createUkrainianOrnamentJourney({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v6')
     return freezeDesign({
       id,

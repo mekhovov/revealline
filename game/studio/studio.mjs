@@ -31,6 +31,7 @@ import { createApexSpatialCandidates } from '../content-design/apex-spatial-cand
 import { createApexFieldCandidates } from '../content-design/apex-field-candidates.mjs';
 import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
 import { createSpatialChallengeJourney } from '../content-design/spatial-challenge-journey.mjs';
+import { createUkrainianOrnamentJourney } from '../content-design/ukrainian-ornament-candidates.mjs';
 import {
   createWholeSpatialCandidates,
   createWholeFieldCandidates,
@@ -992,11 +993,13 @@ $('whole-timed').onclick = guarded(() => {
 $('whole-variety').onclick = guarded(() => {
   if (!discardSource()) return;
   const create =
-    $('whole-variety-edition').value === 'spatial-challenge-v1'
-      ? createSpatialChallengeJourney
-      : $('whole-variety-edition').value === 'sorting-lanes-1'
-        ? createWholeSortingCandidates
-        : createWholeVarietyCandidates;
+    $('whole-variety-edition').value === 'ukrainian-ornament-v1'
+      ? createUkrainianOrnamentJourney
+      : $('whole-variety-edition').value === 'spatial-challenge-v1'
+        ? createSpatialChallengeJourney
+        : $('whole-variety-edition').value === 'sorting-lanes-1'
+          ? createWholeSortingCandidates
+          : createWholeVarietyCandidates;
   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();

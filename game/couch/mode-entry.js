@@ -19,6 +19,7 @@
     'whole-spatial-v4',
     'whole-spatial-v5',
     'whole-spatial-v6',
+    'whole-ornament-v1',
   ];
   const teamRoutes = [
     'team-greybox',
