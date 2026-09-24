@@ -1,348 +1,38 @@
-name: Qualify release source
-
+name: UX0 Linux runtime diagnostic
 on:
-  push:
-    branches: ['codex/fpv-redesign-phase*']
   workflow_dispatch:
-    inputs:
-      operation:
-        description: Qualify source, or inspect/upload one already frozen artifact
-        required: true
-        type: choice
-        default: qualify
-        options: [qualify, inspect-artifact, upload-originals]
-      artifact_binding:
-        description: Reviewed exact JSON binding for utility modes; empty when qualifying
-        required: false
-        type: string
-      freeze_snapshot:
-        description: Preserve a playable snapshot after every source gate passes
-        required: false
-        default: false
-        type: boolean
-      run_tests:
-        description: Run all automated suites even while the reviewed temporary waiver is active
-        required: false
-        default: false
-        type: boolean
-
 permissions:
   contents: read
-
-concurrency:
-  group: source-qualification-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
-  qualify:
-    if: github.event_name != 'workflow_dispatch' || inputs.operation == 'qualify'
-    outputs:
-      runTests: ${{ steps.test_policy.outputs.runTests }}
-      testMode: ${{ steps.test_policy.outputs.mode }}
+  probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out exact candidate
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20.19.x
-          cache: npm
-
-      - name: Read explicit automated-suite policy
-        id: test_policy
-        env:
-          RUN_FULL_TESTS: ${{ inputs.run_tests && 'true' || 'false' }}
-        run: node publishing/test-policy.mjs --force-tests "$RUN_FULL_TESTS"
-
-      - name: Record source identity
-        run: |
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-          git rev-parse HEAD 'HEAD^{tree}'
-          node --version
-          sha256sum package.json package-lock.json scripts/game-cli.mjs scripts/run-test-shard.mjs
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Check hosted artifact utility locally
-        if: steps.test_policy.outputs.runTests == 'true'
-        run: python3 -m unittest discover -s publishing/utility -p 'test_*.py'
-
-      - name: Validate source
-        run: npm run validate
-
-      - name: Lint source
-        run: npm run lint
-
-      - name: Check formatting
-        run: npm run format:check
-
-      - name: Check native formatting
-        run: npm run format:native:check
-
-      - name: Check motion lab syntax
-        run: node --check authoring/motion-lab/app.js
-
-      - name: Reproduce production collection when available
-        if: ${{ hashFiles('scripts/produce-field-kit-theme.mjs') != '' }}
-        run: node scripts/produce-field-kit-theme.mjs --check
-
-      - name: Require reviewed production slots in the committed ledger
-        run: node scripts/check-field-kit-readiness.mjs
-
-      - name: Verify qualified tracked source is unchanged
+      - name: Compare unchanged route checkpoints and public replay
         run: |
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-          git diff --exit-code
-          git diff --cached --exit-code
-
-  test:
-    if: needs.qualify.outputs.runTests == 'true'
-    needs: qualify
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        shard: [1, 2, 3, 4]
-    steps:
-      - name: Check out exact candidate
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.19.x
-          cache: npm
-
-      - name: Record source identity
-        run: |
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-          git rev-parse HEAD 'HEAD^{tree}'
-          node --version
-          sha256sum package.json package-lock.json scripts/game-cli.mjs scripts/run-test-shard.mjs
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Record exact shard files
-        run: node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4 --list
-
-      - name: Run test shard ${{ matrix.shard }}/4
-        run: |
-          mkdir -p .cache
-          node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4
-
-      - name: Verify tested tracked source is unchanged
-        run: |
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-          git diff --exit-code
-          git diff --cached --exit-code
-
-  freeze:
-    if: >-
-      ${{ !cancelled() && github.event_name == 'workflow_dispatch' &&
-          inputs.operation == 'qualify' && inputs.freeze_snapshot &&
-          needs.qualify.result == 'success' &&
-          ((needs.qualify.outputs.testMode == 'required' && needs.test.result == 'success') ||
-           (needs.qualify.outputs.testMode == 'waived' && needs.test.result == 'skipped')) }}
-    needs: [qualify, test]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the qualified source
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.19.x
-
-      - name: Freeze the exact qualified commit
-        run: |
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-          VERSION=$(node --input-type=module <<'JS'
-          import fs from 'node:fs';
-          const read = file => JSON.parse(fs.readFileSync(file));
-          const version = read('package.json').version;
-          const lock = read('package-lock.json');
-          if (!/^\d+\.\d+\.\d+$/.test(version) ||
-              [lock.version, lock.packages[''].version, read('game/build-config.json').version].some(v => v !== version))
-            throw new Error('All package/build versions must match one stable numeric version');
-          process.stdout.write(`v${version}`);
+          node --input-type=module <<'JS'
+          import { readFile, writeFile } from 'node:fs/promises';
+          import { createAuthoredJourneyRoute } from './game/content-design/route.mjs';
+          import { compileContentProject, resolveMission } from './game/content-design/project.mjs';
+          import { createRun, stepRun, FIXED_DT } from './game/core/index.mjs';
+          import { applyGameplayTuning, resolveGameplayTuning } from './game/gameplay-tuning.mjs';
+          import {authoritativeCheckpoint, createRecorder,recordInput,exportReplay,verifyReplay} from './game/replay.mjs';
+          const project=compileContentProject(createAuthoredJourneyRoute('authored').source);
+          const fixture=JSON.parse(await readFile('./game/test/fixtures/candidate-solo-tuned-host-routes.json'));
+          const results=[];
+          for(const [id,,,expected,segments] of [...fixture.rows,...fixture.optional]) {
+           const level=applyGameplayTuning(resolveMission(project,id).level,resolveGameplayTuning('standard'));
+           const options={seed:1,classId:'scout',turnPolicy:'immediate'};
+           const run=createRun(level,options),recorder=createRecorder(level,options);
+           for(const [direction,ticks] of segments)for(let i=0;i<ticks;i++){recordInput(recorder,{direction});stepRun(run,{direction},FIXED_DT);}
+           const checkpoint=authoritativeCheckpoint(run), replay=verifyReplay(exportReplay(recorder,run));
+           results.push({id,expected,checkpoint,status:run.status,tick:run.tick,replayMatch:replay.match});
+           if(id==='two-bays')console.log('TWO_BAYS_STATE='+JSON.stringify(run));
+          }
+          console.log(JSON.stringify({node:process.version,v8:process.versions.v8,arch:process.arch,results},null,2));
           JS
-          )
-          node scripts/game-cli.mjs release-snapshot --ref "$GITHUB_SHA" --version "$VERSION"
-          (cd "releases/$VERSION/site" && sha256sum distribution.zip) > "releases/$VERSION/distribution.zip.sha256"
-
-      - name: Retain original release assets
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: qualified-release-snapshot
-          path: |
-            releases/*/release.json
-            releases/*/source.tar
-            releases/*/distribution.zip.sha256
-            releases/*/site/manifest.json
-            releases/*/site/distribution.zip
-          compression-level: 0
-          retention-days: 14
-          if-no-files-found: error
-
-  inspect-artifact:
-    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'inspect-artifact'
-    runs-on: ubuntu-latest
-    timeout-minutes: 180
-    permissions:
-      contents: read
-      actions: read
-    steps:
-      - name: Check out the actual utility workflow revision
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.workflow_sha }}
-          path: automation
-          persist-credentials: false
-          filter: blob:none
-          sparse-checkout: |
-            .github/workflows/qualify-release-source.yml
-            publishing/test-policy.mjs
-            publishing/test-policy.json
-            publishing/utility/
-          sparse-checkout-cone-mode: false
-
-      - name: Set up explicit test policy runtime
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.22.2
-
-      - name: Read explicit automated-suite policy
-        id: test_policy
-        env:
-          RUN_FULL_TESTS: ${{ inputs.run_tests && 'true' || 'false' }}
-        run: node automation/publishing/test-policy.mjs --force-tests "$RUN_FULL_TESTS"
-
-      - name: Validate the reviewed binding before source checkout
-        id: binding
-        env:
-          UTILITY_BINDING: ${{ inputs.artifact_binding }}
-        run: >-
-          python3 automation/publishing/utility/release_artifact.py validate
-          --mode inspect-artifact --repository "$GITHUB_REPOSITORY"
-
-      - name: Check out the exact qualified source
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.binding.outputs.source }}
-          path: qualified
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Verify local utility tests before authenticated work
-        if: steps.test_policy.outputs.runTests == 'true'
-        run: python3 -m unittest discover -s automation/publishing/utility -p 'test_*.py'
-
-      - name: Inspect all frozen originals without release writes
-        env:
-          GH_TOKEN: ${{ github.token }}
-          UTILITY_BINDING: ${{ inputs.artifact_binding }}
-          UTILITY_WORKFLOW_SHA: ${{ github.workflow_sha }}
-        run: >-
-          python3 automation/publishing/utility/release_artifact.py run
-          --mode inspect-artifact --repository "$GITHUB_REPOSITORY"
-          --repo qualified --out utility-output
-
-      - name: Retain bounded original metadata and every attempt outcome
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: inspect-artifact-evidence
-          path: utility-output/evidence/
-          include-hidden-files: true
-          compression-level: 0
-          retention-days: 14
-          if-no-files-found: warn
-
-  upload-originals:
-    concurrency:
-      group: frozen-original-upload-${{ github.repository }}
-      cancel-in-progress: false
-    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'upload-originals'
-    runs-on: ubuntu-latest
-    timeout-minutes: 180
-    permissions:
-      contents: write
-      actions: read
-    steps:
-      - name: Check out the actual utility workflow revision
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.workflow_sha }}
-          path: automation
-          persist-credentials: false
-          filter: blob:none
-          sparse-checkout: |
-            .github/workflows/qualify-release-source.yml
-            publishing/test-policy.mjs
-            publishing/test-policy.json
-            publishing/utility/
-          sparse-checkout-cone-mode: false
-
-      - name: Set up explicit test policy runtime
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.22.2
-
-      - name: Read explicit automated-suite policy
-        id: test_policy
-        env:
-          RUN_FULL_TESTS: ${{ inputs.run_tests && 'true' || 'false' }}
-        run: node automation/publishing/test-policy.mjs --force-tests "$RUN_FULL_TESTS"
-
-      - name: Validate the reviewed binding before source checkout
-        id: binding
-        env:
-          UTILITY_BINDING: ${{ inputs.artifact_binding }}
-        run: >-
-          python3 automation/publishing/utility/release_artifact.py validate
-          --mode upload-originals --repository "$GITHUB_REPOSITORY"
-
-      - name: Check out the exact qualified source
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.binding.outputs.source }}
-          path: qualified
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Verify local utility tests before authenticated work
-        if: steps.test_policy.outputs.runTests == 'true'
-        run: python3 -m unittest discover -s automation/publishing/utility -p 'test_*.py'
-
-      - name: Verify all originals and upload two absent members to the existing draft
-        env:
-          GH_TOKEN: ${{ github.token }}
-          UTILITY_BINDING: ${{ inputs.artifact_binding }}
-          UTILITY_WORKFLOW_SHA: ${{ github.workflow_sha }}
-        run: >-
-          python3 automation/publishing/utility/release_artifact.py run
-          --mode upload-originals --repository "$GITHUB_REPOSITORY"
-          --repo qualified --out utility-output
-
-      - name: Retain bounded original metadata and every attempt outcome
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: upload-originals-evidence
-          path: utility-output/evidence/
-          include-hidden-files: true
-          compression-level: 0
-          retention-days: 14
-          if-no-files-found: warn
