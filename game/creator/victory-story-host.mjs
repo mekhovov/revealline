@@ -28,6 +28,7 @@ export function createCreatorVictoryStoryHost({
           ? 'Victory story paused. Resume, replay, skip, or continue to Next.'
           : 'Your earned picture is saved. The victory story is optional.');
     nodes.status.classList.toggle('error', ['error', 'blocked'].includes(snapshot.state));
+    if (nodes.retry) nodes.retry.hidden = snapshot.state !== 'error';
   };
 
   function close() {
@@ -35,6 +36,9 @@ export function createCreatorVictoryStoryHost({
     presentation = null;
     nodes.stage.replaceChildren();
     nodes.surface.hidden = true;
+    nodes.status.classList.remove('error');
+    nodes.status.textContent = '';
+    if (nodes.retry) nodes.retry.hidden = true;
     state = 'idle';
     reason = null;
   }
@@ -43,6 +47,8 @@ export function createCreatorVictoryStoryHost({
     close();
     nodes.surface.hidden = false;
     nodes.stage.append(posterElement);
+    nodes.status.classList.remove('error');
+    if (nodes.retry) nodes.retry.hidden = true;
     nodes.status.textContent =
       'Your earned picture is saved. Play the optional victory story, skip it, or continue to Next.';
     try {
@@ -63,6 +69,7 @@ export function createCreatorVictoryStoryHost({
       reason = error instanceof Error ? error.message : String(error);
       nodes.status.textContent = `Victory video is unavailable. Your earned picture and Next remain available. ${reason}`;
       nodes.status.classList.add('error');
+      if (nodes.retry) nodes.retry.hidden = false;
     }
     return presentation;
   }

@@ -15,8 +15,10 @@ function harness(createPresentation) {
     surface: make('section', 'story'),
     stage: make('div', 'story-stage'),
     status: make('p', 'story-status'),
+    retry: make('button', 'story-retry'),
     next: make('button', 'next'),
   };
+  nodes.retry.hidden = true;
   nodes.next.disabled = false;
   nodes.next.hidden = false;
   const host = createCreatorVictoryStoryHost({
@@ -60,6 +62,7 @@ test('story state and playback failure never take ownership of Next or the earne
   assert.equal(h.nodes.next.disabled, false);
   assert.equal(h.nodes.next.hidden, false);
   assert.match(h.nodes.status.textContent, /blocked playback/);
+  assert.equal(h.nodes.retry.hidden, true, 'the presentation’s Play control owns blocked retry');
   h.host.close();
   assert.equal(disposed, 1);
 });
@@ -74,6 +77,7 @@ test('presentation setup failure falls back to the poster and leaves continuatio
   assert.equal(poster.hidden, false);
   assert.equal(h.nodes.next.disabled, false);
   assert.equal(h.nodes.next.hidden, false);
+  assert.equal(h.nodes.retry.hidden, false);
   assert.match(h.nodes.status.textContent, /earned picture and Next remain available/);
   assert.deepEqual(h.host.snapshot(), {
     state: 'error',
