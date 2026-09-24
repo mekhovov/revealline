@@ -51,7 +51,7 @@ const first = recording(original, 'first'),
   ids = (library) => library.catalogTracks.map((track) => track.id);
 
 test('fresh default and automatic genre preferences back up without downloading the shipped catalogue', async () => {
-  assert.equal(SOUNDTRACK_CATALOGUE.tracks.length, 70);
+  assert.equal(SOUNDTRACK_CATALOGUE.tracks.length, 71);
   const adopted = setCatalogueTracks(emptySoundtrackLibrary(), SOUNDTRACK_CATALOGUE.tracks);
   for (const mode of ['auto', 'metal', 'mix']) {
     const library = resolveSoundtrackLibrary({
@@ -59,7 +59,7 @@ test('fresh default and automatic genre preferences back up without downloading 
       listening: { ...adopted.listening, mode, genres: ['metal', 'chiptune'] },
     });
     const plan = soundtrackPortableRecoveryPlan(library, { catalogue: SOUNDTRACK_CATALOGUE });
-    assert.equal(plan.omittedCatalogueTrackIds.length, 70);
+    assert.equal(plan.omittedCatalogueTrackIds.length, 71);
     assert.deepEqual(plan.requiredTracks, []);
     assert.deepEqual(plan.referenceOnlyTrackIds, []);
     assert.match(plan.notice, /unused online catalogue/);
@@ -74,7 +74,7 @@ test('fresh default and automatic genre preferences back up without downloading 
     assert.deepEqual(restored.library.catalogTracks, []);
     assert.deepEqual(restored.library.referenceOnlyTrackIds, []);
     assert.deepEqual(setCatalogueTracks(restored.library, SOUNDTRACK_CATALOGUE.tracks), library);
-    assert.equal(library.catalogTracks.length, 70, 'Export cannot mutate the saved inventory.');
+    assert.equal(library.catalogTracks.length, 71, 'Export cannot mutate the saved inventory.');
   }
 });
 
@@ -154,7 +154,7 @@ test('explicit All Music is complete-required even when the entire hosted catalo
   });
   const plan = soundtrackPortableRecoveryPlan(library, { catalogue: SOUNDTRACK_CATALOGUE });
   assert.equal(plan.omittedCatalogueTrackIds.length, 0);
-  assert.equal(plan.requiredTracks.length, 70);
+  assert.equal(plan.requiredTracks.length, 71);
   assert(
     plan.requiredTracks.reduce((sum, track) => sum + track.asset.bytes, 0) > 256 * 1024 * 1024,
   );

@@ -84,6 +84,7 @@ export function attachSoundtrackPanel({
   albumDownload = {},
   onlineCatalogueDownload = {},
   catalogue = null,
+  bundled = [],
   readAsset,
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
@@ -96,6 +97,7 @@ export function attachSoundtrackPanel({
   )
     throw new TypeError('Soundtrack music session requires Play and Pause controls.');
   catalogue = catalogue ? resolveSoundtrackCatalogue(catalogue) : null;
+  const bundledTrackIds = new Set(bundled.map((entry) => entry.id));
   const bindings = [];
   const adopt = (library) =>
     catalogue ? setCatalogueTracks(upgradeSoundtrackLibrary(library), catalogue.tracks) : library;
@@ -1256,7 +1258,9 @@ export function attachSoundtrackPanel({
   ];
   for (const volume of volumes) {
     const offlineTracks = volume.tracks.filter(
-      (track) => soundtrackRights(track, { catalogue }).offlineCache === 'allowed',
+      (track) =>
+        !bundledTrackIds.has(track.id) &&
+        soundtrackRights(track, { catalogue }).offlineCache === 'allowed',
     );
     const ids = new Set(offlineTracks.map((track) => track.id));
     const availability = node('p', `availability-${volume.id}`, '', { class: 'micro-note' });
@@ -1351,8 +1355,11 @@ export function attachSoundtrackPanel({
   function refreshCatalogueControls() {
     const present = new Set(assets.map((asset) => asset.sha256));
     for (const { volume, offlineTracks, ids, availability, install, remove } of catalogueControls) {
-      const local = volume.tracks.filter((track) => present.has(track.asset.sha256)).length;
-      availability.textContent = `${local} of ${volume.tracks.length} recordings available locally${dirty ? ' in the draft' : ''}. ${local === volume.tracks.length ? 'Ready for offline listening.' : draft.listening.installedOnly ? 'Installed only is on; other recordings stay silent until downloaded.' : 'Other recordings are available online without installing this album.'}${offlineTracks.length !== volume.tracks.length ? ' Some recordings do not allow offline storage.' : ''}`;
+      const bundledCount = volume.tracks.filter((track) => bundledTrackIds.has(track.id)).length;
+      const local = volume.tracks.filter(
+        (track) => bundledTrackIds.has(track.id) || present.has(track.asset.sha256),
+      ).length;
+      availability.textContent = `${local} of ${volume.tracks.length} recordings available locally${dirty ? ' in the draft' : ''}. ${local === volume.tracks.length ? 'Ready for offline listening.' : draft.listening.installedOnly ? 'Installed only is on; other recordings stay silent until downloaded.' : 'Other recordings are available online without installing this album.'}${bundledCount ? ` ${bundledCount} core recording${bundledCount === 1 ? ' is' : 's are'} included with the game and never duplicated in the media budget.` : ''}${offlineTracks.length + bundledCount !== volume.tracks.length ? ' Some recordings do not allow offline storage.' : ''}`;
       install.disabled =
         busy ||
         !saved ||
