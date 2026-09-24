@@ -29,12 +29,7 @@ import {
   FIXED_DT,
 } from '../coop/core.mjs';
 import { COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
-import {
-  COOP_STARTER_PACK,
-  readCoopPack,
-  coopGoalText,
-  coopPackDestination,
-} from '../coop/library.mjs';
+import { COOP_STARTER_PACK, coopGoalText, coopPackDestination } from '../coop/library.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
@@ -47,6 +42,7 @@ import {
 } from './coop-picture-bindings.mjs';
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 import { createCoopPresentationImport } from './coop-import-source.mjs';
+import { readPlayableTeamCampaign } from './creator-team-import.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
 import {
   coopFailureFeedback,
@@ -4186,11 +4182,14 @@ export function bootCoop({
         } else {
           if (draft.file.size > COOP_PACK_MAX_BYTES)
             throw new TypeError('Choose a co-op pack smaller than 1 MiB.');
-          const source = await draft.file.text();
-          if (!current()) return;
           display.update({ message: 'Checking Team arenas and rules…', stage: 'verifying' });
           if (!current()) return;
-          draft.pack = readCoopPack(source);
+          const playable = await readPlayableTeamCampaign(draft.file, {
+            signal: controller.signal,
+          });
+          if (!current()) return;
+          draft.pack = playable.pack;
+          draft.creatorCampaign = playable.prepared;
         }
         if (!packPicker.open) {
           cancelImport();
@@ -4382,7 +4381,14 @@ export function bootCoop({
       file.type === COOP_PRESENTATION_MIME || /\.rlteam$/i.test(file.name ?? '')
         ? 'artwork'
         : 'json';
-    const draft = { file, kind, pack: null, artworkSource: null, selection: null };
+    const draft = {
+      file,
+      kind,
+      pack: null,
+      artworkSource: null,
+      creatorCampaign: null,
+      selection: null,
+    };
     importDraft = draft;
     $('coop-pack-cancel').textContent = kind === 'artwork' ? 'Cancel import' : 'Stop waiting';
     return importAdopting
