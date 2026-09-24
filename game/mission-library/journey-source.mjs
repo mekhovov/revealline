@@ -1,3 +1,4 @@
+import { emptyJourneyPictures, journeyPictureCompletion } from '../journey/pictures.mjs';
 /** Adapt one exact Journey edition without replacing its runtime mission objects,
  * profile scope, difficulty rules, or Next sequence. */
 export function journeyLibrarySource({
@@ -35,6 +36,14 @@ export function journeyLibrarySource({
           ? 'Skipped · try again'
           : '';
     },
+    completion: (mission, mode) =>
+      journeyPictureCompletion({
+        profile: profile.snapshot(),
+        pictures: profile.pictures?.() ?? emptyJourneyPictures(),
+        mode,
+        editionId,
+        missionId: mission.id,
+      }),
     card,
     details,
     launch,
