@@ -16,6 +16,7 @@ export function attachJourneyChooser({
   readState,
   writeState,
   launchContext,
+  getCurrentId,
 }) {
   if (library) {
     const chooser = attachMissionLibraryChooser({
@@ -27,6 +28,7 @@ export function attachJourneyChooser({
       readState,
       writeState,
       launchContext,
+      getCurrentId,
     });
     if (profile) {
       const button = doc.createElement('button');
@@ -119,7 +121,18 @@ export function attachJourneyChooser({
   doc.body.append(dialog);
   const backup = attachJourneyBackup({ document: doc, profile, onRestore: render });
   backupButton.onclick = () => backup.open(backupButton);
-  let opener = null;
+  let opener = null,
+    selectedId = '';
+  function primary() {
+    const buttons = [...list.children].filter((button) => !button.disabled);
+    const currentId = getCurrentId?.() ?? profile.snapshot().cursors?.[mode];
+    return (
+      buttons.find((button) => button.dataset.missionId === selectedId) ??
+      buttons.find((button) => button.dataset.missionId === currentId) ??
+      buttons[0] ??
+      search
+    );
+  }
   function render() {
     const state = profile.snapshot();
     const matches = catalog
@@ -136,6 +149,9 @@ export function attachJourneyChooser({
         button.type = 'button';
         button.className = 'journey-card';
         button.dataset.missionId = mission.id;
+        button.addEventListener('focusin', () => {
+          selectedId = mission.id;
+        });
         const number = doc.createElement('span');
         number.className = 'journey-card-number';
         number.textContent = String(mission.levelIndex + 1).padStart(2, '0');
@@ -179,6 +195,7 @@ export function attachJourneyChooser({
           button.append(preview, challenge, route, mastery);
         }
         button.onclick = () => {
+          selectedId = mission.id;
           dialog.close();
           void onChoose(mission);
         };
@@ -200,14 +217,12 @@ export function attachJourneyChooser({
     close();
   });
   return {
+    primary,
     refresh() {
       if (!dialog.open) return;
       const missionId = doc.activeElement?.closest('.journey-card')?.dataset.missionId;
       render();
-      if (missionId)
-        [...list.children]
-          .find((card) => card.dataset.missionId === missionId)
-          ?.focus({ preventScroll: true });
+      if (missionId) primary().focus({ preventScroll: true });
     },
     open(origin = doc.activeElement, { returnLabel = 'Back to game' } = {}) {
       opener = origin;
@@ -215,7 +230,9 @@ export function attachJourneyChooser({
       onPause?.();
       render();
       dialog.showModal();
-      search.focus({ preventScroll: true });
+      const target = primary();
+      target.focus({ preventScroll: true });
+      if (target !== search) target.scrollIntoView?.({ block: 'nearest' });
     },
     close,
     destroy() {

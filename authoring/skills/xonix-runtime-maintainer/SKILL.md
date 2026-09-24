@@ -5,6 +5,13 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For player-menu changes, follow the approved [player-first execution order](../../../docs/player-first-ux-execution.md)
+and [navigation maintenance prompt](../../prompts/player-menu-navigation.md).
+Use one menu-key owner and rendered grid geometry; expose chooser `primary()` to
+hosts. Preserve retained selection, current mission identity, remote focus leases
+and explicit return/Resume. Record full test results separately from any temporary
+CI waiver; skipped gates do not establish acceptance.
+
 For compact Solo landscape, distinguish manual equipment from authored warning
 capability. `hasFieldWarningBand` uses the validated original level, including
 legacy v1's absent encounter field, never the live enemy list or current warning
