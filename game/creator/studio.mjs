@@ -196,6 +196,7 @@ const batch = createBatchCreatorController({
 });
 function invalidate() {
   prepared = approval = installReview = null;
+  $('review').hidden = true;
   $('approved').hidden = true;
   $('play').hidden = true;
   controls();
@@ -409,6 +410,7 @@ function chooseFiles(files) {
   }
   controller?.abort();
   batchMode = true;
+  batchSource = null;
   sourceFile = image = content = prepared = approval = installReview = null;
   $('review').hidden = true;
   $('approved').hidden = true;
