@@ -1,7 +1,7 @@
 # UX1-A2: exact Versus and Team Journey pictures
 
-Status: stacked implementation draft on UX1-A1 head
-`b1de1b564b5e1dfb7a7646279e96823d92b9a1a6`. It does not bump a version, merge,
+Status: stacked implementation draft on reviewed UX1-A1 head
+`2bb304ae2138b77cb4fcd1f32471382cdad14e36`. It does not bump a version, merge,
 tag, deploy or change an immutable release.
 
 ## Implemented slice
@@ -67,12 +67,23 @@ Collection information architecture and artwork-first gallery remain UX1-B/UX5.
   its opener. One selected case passed; twelve unrelated cases were unselected by
   the test-name filter.
 
-The complete Team default-entry host file was also attempted. Four current-edition
-cases passed and nine Legacy-entry cases failed before their assertions because the
-fixture could not prepare an exact Legacy Team picture binding. The changed current
-spatial-edition reward case passes independently. Those nine failures are retained
-as a qualification limitation; they are not relabelled as passes or evidence for
-this feature.
+The earlier complete Team default-entry run exposed a real compatibility defect,
+not stale Legacy expectations: the branch's compiled FPV presentation was revision
+73 while its closed Team picture authority still stopped at current revision 69 and
+retained revisions 58–68. The exact behavior-preserving v0.109.0 compatibility
+repair was therefore carried into this stacked branch without its version or
+release metadata. It advances the current authority to 73, retains exact revisions
+58–72, and expands only the matching finite policy bound.
+
+After that correction, the complete Team default-entry host file passes 13/13 with
+no skips, including all nine previously blocked Legacy, ambiguous-entry, return and
+modeled-controller cases. The focused reward suite passes 17/17 with no skips. The
+combined reward, default-entry and exact Team binding run passes 104/104 with no
+skips. The standalone TAP evidence hashes are
+`163cd3ab4521db332d9ed504560dbbcd843ca952f2b9bdb17cc68227eaa00335`
+(Team default entry) and
+`adcf6f89b30d99d2c89365760dfd42cad70c1f3c27f7b6adaca78fab934933a2`
+(focused rewards).
 
 Focused source evidence is not release acceptance. Visual review, actual reload,
 Retry and Next recovery with missing bytes, physical controller/touch checks,
