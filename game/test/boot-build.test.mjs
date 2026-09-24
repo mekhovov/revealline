@@ -29,6 +29,10 @@ const playerPresentationFiles = [
   'game/ui/fonts/field-kit/Exo2-OFL.txt',
   'game/ui/fonts/field-kit/IBMPlexMono-OFL.txt',
   'game/ui/fonts/field-kit/provenance.json',
+  'game/ui/fonts/Tiny5-Regular.ttf',
+  'game/ui/fonts/OFL.txt',
+  'game/ui/fonts/METADATA.pb',
+  'game/ui/fonts/provenance.json',
 ];
 
 test('the actual game has a static dark guard before resources and a single caught module entry', async () => {
@@ -142,7 +146,10 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   assert.match(credits, /href="\.\/game\/ui\/field-kit-compiled.css"/);
   for (const name of ['Handjet-OFL.txt', 'Exo2-OFL.txt', 'IBMPlexMono-OFL.txt'])
     assert.ok(credits.includes(`./game/ui/fonts/field-kit/${name}`));
-  assert.doesNotMatch(credits, /Pixelify|Tiny5/);
+  assert.match(credits, /Tiny5 by the Tiny5 Project Authors/);
+  assert.match(credits, /\.\/game\/ui\/fonts\/OFL\.txt/);
+  assert.match(credits, /\.\/game\/ui\/fonts\/provenance\.json/);
+  assert.doesNotMatch(credits, /Pixelify/);
   assert.match(landing, /src="\.\/site\/launch.mjs"/);
   assert.match(landing, /id="launch-game"[^>]*href="\.\/game\/"/);
   assert.doesNotMatch(landing, /__REVEALLINE_VERSION__|landing-pack-select/);
