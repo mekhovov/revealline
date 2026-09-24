@@ -198,7 +198,7 @@ export class MemoryCommunityRepository {
     const hasMore = filtered.length > rows.length;
     const last = rows.at(-1);
     return {
-      rows: copy(rows),
+      rows: copy(rows.map((row) => this.#withLatestEdition(row))),
       nextCursor: hasMore && last ? `${last.publishedAt}|${last.editionId}` : null,
     };
   }
@@ -207,7 +207,24 @@ export class MemoryCommunityRepository {
     const row = [...this.#submissions.values()].find(
       (candidate) => candidate.editionId === editionId && candidate.status === 'published',
     );
-    return copy(row ?? null);
+    return copy(row ? this.#withLatestEdition(row) : null);
+  }
+
+  #withLatestEdition(row) {
+    const latest = [...this.#submissions.values()]
+      .filter(
+        (candidate) =>
+          candidate.status === 'published' && candidate.collectionId === row.collectionId,
+      )
+      .sort(
+        (a, b) =>
+          b.publishedAt.localeCompare(a.publishedAt) || b.editionId.localeCompare(a.editionId),
+      )[0];
+    return {
+      ...row,
+      latestEditionId: latest?.editionId ?? row.editionId,
+      latestVersion: latest?.editionVersion ?? row.editionVersion,
+    };
   }
 
   async createReport({ editionId, reporterSubject, reason, details }) {

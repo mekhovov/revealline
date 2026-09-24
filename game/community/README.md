@@ -32,9 +32,10 @@ The client exposes explicit adapters for:
 - owner-only publication status and unlisting; and
 - direct or injected resumable upload.
 
-Phase 4 must provide these routes before the corresponding network actions are live. This branch
-does not emulate missing service responses. The page still handles catalog outage without affecting
-installed play.
+The stacked Phase 4 service provides these routes and derives a stable collection identity from the
+creator account plus slug. Each catalog response names the service-selected latest immutable
+edition for that collection. The page still handles catalog outage without affecting installed
+play.
 
 A same-origin host can expose `globalThis.RevealLineCommunityAuth` with:
 

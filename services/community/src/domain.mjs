@@ -66,6 +66,7 @@ export function validateCreateSubmission(input, { ownerSubject, maxPackageBytes 
   });
   return {
     id: randomUUID(),
+    collectionId: createCollectionId({ ownerSubject: owner, slug }),
     editionId: createEditionId({ ownerSubject: owner, slug, editionVersion, packageSha256 }),
     ownerSubject: owner,
     slug,
@@ -75,6 +76,16 @@ export function validateCreateSubmission(input, { ownerSubject, maxPackageBytes 
     packageSha256,
     declaredSize: packageSize,
   };
+}
+
+export function createCollectionId({ ownerSubject, slug }) {
+  const digest = createHash('sha256')
+    .update('revealline-community-collection.v1\0')
+    .update(ownerSubject)
+    .update('\0')
+    .update(slug)
+    .digest('hex');
+  return `co_${digest}`;
 }
 
 export function createEditionId({ ownerSubject, slug, editionVersion, packageSha256 }) {
@@ -126,6 +137,7 @@ export function validateReport(input) {
 
 export const toPublicEdition = (row) => ({
   editionId: row.editionId,
+  collectionId: row.collectionId,
   slug: row.slug,
   title: row.title,
   description: row.description,
@@ -133,6 +145,8 @@ export const toPublicEdition = (row) => ({
   packageSha256: row.packageSha256,
   packageSize: row.actualSize,
   publishedAt: row.publishedAt,
+  latestEditionId: row.latestEditionId,
+  latestVersion: row.latestVersion,
   previewAvailable: true,
 });
 

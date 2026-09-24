@@ -1,8 +1,9 @@
-# Phase 5 acceptance — integrated client candidate, not released
+# Phase 5 acceptance — stacked service/client candidate, not released
 
-Status: the community catalog client is implemented on a corrected Phase 3 base. It is ready to
-stack onto the Phase 4 service after that service's final commit is known. No community deployment,
-public catalog or production account provider is claimed by this candidate.
+Status: the community catalog client is stacked on the completed Phase 4 service candidate. The
+network boundary is exercised through the real Fastify application with its in-memory repository
+and blob store. No community deployment, public catalog or production account provider is claimed
+by this candidate.
 
 ## Completed automated evidence
 
@@ -26,24 +27,32 @@ public catalog or production account provider is claimed by this candidate.
 - Injected Alice and Bob account adapters publish independently. Cross-owner submission reads and
   unlisting fail, while the owner can observe validation becoming published and explicitly unlist
   that edition.
-- Built-in-browser startup on the isolated Phase 5 branch rendered discovery filters, local
-  navigation and the publishing form. With no Phase 4 service on that branch, it reported the
-  catalog as unavailable, kept the installed-play recovery message visible and left upload disabled
-  because no account adapter was configured.
+- The service derives a stable `collectionId` from owner plus slug and returns its authoritative
+  `latestEditionId` and `latestVersion`. Update discovery therefore does not group unrelated
+  creators or depend on matching remote display text.
+- One cross-layer test drives the real Fastify routes through the production client: Alice uploads
+  and publishes two valid `.rlpack` editions, cursor pagination and search return the expected
+  immutable records, Player B's store downloads and installs exact validated bytes, a report is
+  accepted, Bob cannot unlist Alice's edition, Alice can, and the installed edition remains
+  offline-playable after public removal.
+- Built-in-browser startup at the isolated integration source rendered discovery filters, local
+  navigation and the publishing form. With the API intentionally absent, it reported the catalog as
+  unavailable, kept the installed-play recovery message visible and left upload disabled because no
+  account adapter was configured.
 
-The focused Phase 5 suite passes 10/10 scenarios on Node 20.19.5 before final integration. Scoped
-ESLint, Prettier and diff checks are recorded on the final commit.
+The focused Phase 5 suite passes 10/10 scenarios on Node 20.19.5. The Phase 4 service suite plus the
+new cross-layer scenario passes 22/22. Scoped ESLint, Prettier and diff checks are recorded on the
+final commit.
 
-## Required Phase 4 service contract
+## Integrated service contract
 
-The integrated service must provide cursor/search catalog results, stable collection/latest-edition
-metadata, bounded preview bytes, reports, owner-only unlisting and owner-only submission status.
-Direct and tus uploads remain transport adapters; the browser does not invent a successful upload or
+The service provides cursor/search catalog results, stable collection/latest-edition metadata,
+bounded preview bytes, reports, owner-only unlisting and owner-only submission status. Direct and
+tus uploads remain transport adapters; the browser does not invent a successful upload or
 publication.
 
 ## Remaining acceptance gates
 
-- Rebase onto the accepted Phase 4 service commit and run the combined service/client tests.
 - Exercise Creator A publish → automatic validation → listing → Player B preview/install → legal win
   → reload/offline play in a clean built-in-browser origin.
 - Exercise a real interrupted resumable upload, service restart, catalog outage, report, unlist and
@@ -55,3 +64,8 @@ publication.
 Physical removal of installed managed-media bytes is outside this candidate. The current media store
 preserves historical references monotonically; the UI calls the implemented operation **Remove
 recovery download** and does not describe it as uninstall or runtime offloading.
+
+The cross-layer test uses the in-memory repository and blob store. It does not qualify the Docker
+Compose topology, PostgreSQL migration on an existing volume, Better Auth account recovery, a real
+interrupted tus upload, disk/S3 failover, or production backup/restore. Those operations remain
+deployment acceptance work and no AWS, domain, mail, or public-service availability is claimed.

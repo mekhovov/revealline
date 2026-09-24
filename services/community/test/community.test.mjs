@@ -12,6 +12,7 @@ import { DiskBlobStore, MemoryBlobStore, S3CompatibleBlobStore } from '../src/bl
 import { readConfig } from '../src/config.mjs';
 import {
   PACKAGE_MEDIA_TYPE,
+  createCollectionId,
   createEditionId,
   createValidationIdempotencyKey,
   packageBlobKey,
@@ -101,6 +102,11 @@ test('edition and validation identities are deterministic and cover immutable in
     packageSha256: sha256,
   };
   const edition = createEditionId(base);
+  const collection = createCollectionId(base);
+  assert.match(collection, /^co_[a-f0-9]{64}$/u);
+  assert.equal(createCollectionId(base), collection);
+  assert.equal(createCollectionId({ ...base, editionVersion: '2.0.0' }), collection);
+  assert.notEqual(createCollectionId({ ...base, slug: 'another-pack' }), collection);
   assert.match(edition, /^ed_[a-f0-9]{64}$/u);
   assert.equal(createEditionId(base), edition);
   assert.notEqual(createEditionId({ ...base, editionVersion: '1.0.1' }), edition);
@@ -806,6 +812,8 @@ test('S3 boundary requires verified bytes and delegates exact immutable metadata
 test('migration defines immutable editions, bounded states, idempotent jobs, and expiring leases', async () => {
   const sql = await readFile(new URL('../migrations/001_initial.sql', import.meta.url), 'utf8');
   assert.match(sql, /UNIQUE \(owner_subject, slug, edition_version\)/u);
+  assert.match(sql, /collection_id text NOT NULL/u);
+  assert.match(sql, /community_catalog_collection_idx/u);
   assert.match(sql, /idempotency_key char\(64\) NOT NULL UNIQUE/u);
   assert.match(sql, /UNIQUE \(submission_id, package_sha256, validator_version\)/u);
   assert.match(sql, /lease_expires_at timestamptz/u);
