@@ -283,55 +283,74 @@ function nativeDialogs(t) {
   });
 }
 
-test('actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight', async (t) => {
-  nativeDialogs(t);
-  const h = await soloPage(t, { titleScreen: true });
-  const pad = {
-    index: 0,
-    id: 'Menu test',
-    connected: true,
-    mapping: 'standard',
-    axes: [0, 0, 0, 0],
-    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
-  };
-  navigator.getGamepads = () => [pad];
-  const pulse = (index) => {
-    pad.buttons[index] = { pressed: true, value: 1 };
+test(
+  'actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight',
+  { timeout: 60000 },
+  async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: true });
+    const pad = {
+      index: 0,
+      id: 'Menu test',
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+    };
+    navigator.getGamepads = () => [pad];
+    const pulse = (index) => {
+      pad.buttons[index] = { pressed: true, value: 1 };
+      h.frame();
+      pad.buttons[index] = { pressed: false, value: 0 };
+      h.frame();
+    };
     h.frame();
-    pad.buttons[index] = { pressed: false, value: 0 };
     h.frame();
-  };
-  h.frame();
-  h.frame();
-  h.$('shell-play').click();
-  await settle(() => h.$('journey-chooser')?.open);
-  h.frame();
-  h.frame();
-  h.$('journey-backup-open').focus();
-  h.$('journey-backup-open').click();
-  h.frame();
-  h.frame();
-  assert.ok(h.$('journey-backup').contains(h.doc.activeElement));
-  const close = h.$('journey-backup').querySelector('button');
-  close.focus();
-  close.emit('keydown', { key: 'ArrowDown', code: 'ArrowDown' });
-  assert.ok(
-    h.$('journey-backup').contains(h.doc.activeElement),
-    'Keyboard arrows also use the front modal',
-  );
-  h.frame(); // Native input requires a neutral controller sample before a fresh action.
-  pulse(1);
-  assert.equal(h.$('journey-backup').open, false);
-  assert.equal(h.$('journey-chooser').open, true);
-  assert.equal(h.doc.activeElement, h.$('journey-backup-open'));
-  assert.equal(h.$('flight-state').textContent, 'Ready for launch');
-  assert.equal(h.rendered.run.tick, 0);
-  pulse(1);
-  assert.equal(h.$('journey-chooser').open, false);
-  assert.equal(h.$('shell-home').open, true);
-  assert.equal(h.rendered.run.tick, 0);
-  assert.deepEqual(h.errors, []);
-});
+    const opener = h.$('shell-play'),
+      activate = opener.onclick;
+    let opening;
+    opener.onclick = function (...args) {
+      opening = activate.apply(this, args);
+      return opening;
+    };
+    try {
+      opener.click();
+    } finally {
+      opener.onclick = activate;
+    }
+    assert.equal(typeof opening?.then, 'function', 'The real Missions action owns preparation.');
+    assert.equal(h.$('mission-library-opening-status').getAttribute('role'), 'status');
+    assert.equal(h.$('mission-library-opening-status').textContent, 'Preparing missions…');
+    await opening;
+    assert.equal(h.$('journey-chooser').open, true);
+    h.frame();
+    h.frame();
+    h.$('journey-backup-open').focus();
+    h.$('journey-backup-open').click();
+    h.frame();
+    h.frame();
+    assert.ok(h.$('journey-backup').contains(h.doc.activeElement));
+    const close = h.$('journey-backup').querySelector('button');
+    close.focus();
+    close.emit('keydown', { key: 'ArrowDown', code: 'ArrowDown' });
+    assert.ok(
+      h.$('journey-backup').contains(h.doc.activeElement),
+      'Keyboard arrows also use the front modal',
+    );
+    h.frame(); // Native input requires a neutral controller sample before a fresh action.
+    pulse(1);
+    assert.equal(h.$('journey-backup').open, false);
+    assert.equal(h.$('journey-chooser').open, true);
+    assert.equal(h.doc.activeElement, h.$('journey-backup-open'));
+    assert.equal(h.$('flight-state').textContent, 'Ready for launch');
+    assert.equal(h.rendered.run.tick, 0);
+    pulse(1);
+    assert.equal(h.$('journey-chooser').open, false);
+    assert.equal(h.$('shell-home').open, true);
+    assert.equal(h.rendered.run.tick, 0);
+    assert.deepEqual(h.errors, []);
+  },
+);
 
 function controllerPad(h, t) {
   const prior = Object.getOwnPropertyDescriptor(performance, 'now');
