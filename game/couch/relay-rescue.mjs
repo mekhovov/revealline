@@ -4741,6 +4741,7 @@ try {
       'team-originals',
       'team-pressure-originals-1',
       'team-spatial-originals-1',
+      'team-trail-impact-originals-1',
     ].includes(journeyRequest)
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
@@ -4748,6 +4749,7 @@ try {
       artwork: journeyRequest === 'team-originals',
       pressure: journeyRequest === 'team-pressure-originals-1',
       spatial: journeyRequest === 'team-spatial-originals-1',
+      impact: journeyRequest === 'team-trail-impact-originals-1',
       reviewCopy: new URL(location.href).searchParams.has('journey'),
     });
   } else if (

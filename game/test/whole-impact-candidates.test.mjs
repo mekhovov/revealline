@@ -106,7 +106,7 @@ test('v5 remains historical while v6 owns isolated persistence and becomes the n
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
     solo: 'whole-spatial-v6',
     versus: 'whole-spatial-v6',
-    team: 'team-spatial-originals-1',
+    team: 'team-trail-impact-originals-1',
   });
 });
 

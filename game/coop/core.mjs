@@ -7,8 +7,10 @@ import {
   COOP_TERRAIN_LEVEL_VERSION,
   COOP_ROVER_LEVEL_VERSION,
   COOP_BONUS_LEVEL_VERSION,
+  COOP_IMPACT_LEVEL_VERSION,
   hasTeamRoamers,
   hasTeamTerrain,
+  hasTeamLineImpacts,
   journeyTeamPackEdition,
   isJourneyTeamLevel,
   isJourneyTeamRuleset,
@@ -51,6 +53,7 @@ import {
   updateThreatClocks,
   nextThreatDeadline,
   clearInvalidImpacts,
+  seedTrailImpacts,
   planImpacts,
   advanceImpacts,
   useSupport,
@@ -131,6 +134,7 @@ export function validateCoopLevel(level) {
       'journeyDifficulty',
       'terrain',
       'timedBonuses',
+      'lineImpact',
     ])
   )
     return {
@@ -144,6 +148,7 @@ export function validateCoopLevel(level) {
       COOP_TERRAIN_LEVEL_VERSION,
       COOP_ROVER_LEVEL_VERSION,
       COOP_BONUS_LEVEL_VERSION,
+      COOP_IMPACT_LEVEL_VERSION,
     ].includes(level.version),
     'Unsupported co-op level version.',
   );
@@ -159,7 +164,8 @@ export function validateCoopLevel(level) {
     'Terrain requires an explicit Team terrain edition and a terrain array.',
   );
   check(
-    level.version === COOP_BONUS_LEVEL_VERSION || !Object.hasOwn(level, 'timedBonuses'),
+    [COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION].includes(level.version) ||
+      !Object.hasOwn(level, 'timedBonuses'),
     'Timed bonuses require the explicit Team bonus edition.',
   );
   check(
@@ -168,12 +174,20 @@ export function validateCoopLevel(level) {
     'Timed bonuses must be an enumerable data field, never silently omitted by copying.',
   );
   check(
-    level.version !== COOP_BONUS_LEVEL_VERSION ||
+    ![COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION].includes(level.version) ||
       (!Object.hasOwn(level, 'strongholds') &&
         !Object.hasOwn(level, 'encounter') &&
         keys(level.goal, ['coverage']) &&
         Object.hasOwn(level.goal, 'coverage')),
     'The Team bonus edition currently qualifies coverage, keepers and roamers only.',
+  );
+  check(
+    hasTeamLineImpacts(level)
+      ? keys(level.lineImpact, ['version', 'speed']) &&
+          level.lineImpact.version === 'team-line-impact.v2' &&
+          finite(level.lineImpact.speed, 1, 60)
+      : !Object.hasOwn(level, 'lineImpact'),
+    'Travelling trail impacts require the explicit Team impact edition and bounded v2 settings.',
   );
   check(level.width === 72 && level.height === 36, 'Co-op boards must be 72 × 36.');
   check(
@@ -311,7 +325,7 @@ export function validateCoopLevel(level) {
   let cells;
   try {
     cells = buildGrid(level);
-    if (level.version === COOP_BONUS_LEVEL_VERSION)
+    if ([COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION].includes(level.version))
       validateCoopTimedBonuses(level, compileCoopFoundationGeometry(level));
   } catch (error) {
     return { valid: false, errors: [`Invalid shared Team foundations: ${error.message}`] };
@@ -425,6 +439,7 @@ export function createCoop(
       support: { readyAt: 0, held: false, uses: 0, intercepts: 0, slows: 0 },
       rescue: null,
       rescueBlocked: false,
+      ...(hasTeamLineImpacts(owned) ? { cutId: null, nextCutId: 1, impactSources: [] } : {}),
     })),
     enemies: owned.enemies.slice().sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)),
     strongholds: (owned.strongholds || []).map((stronghold) => ({
@@ -576,12 +591,17 @@ function knockDown(run, player, cause, commands, enemy = null) {
   player.cutting = false;
   player.trail = [];
   player.departureIndex = null;
+  if (hasTeamLineImpacts(run.level)) {
+    player.cutId = null;
+    player.impactSources = [];
+  }
   player.x = player.safeAnchor.x;
   player.y = player.safeAnchor.y;
   player.cellIndex = cellAt(run, player.x, player.y);
   player.direction = null;
   player.blockedDirection = commands[player.id].direction;
   emit(run, 'player.downed', { player: player.id, cause, ...(enemy === null ? {} : { enemy }) });
+  if (hasTeamLineImpacts(run.level)) clearInvalidImpacts(run, emit);
 }
 
 function revive(run, player, commands, reason = 'reserve') {
@@ -786,18 +806,23 @@ function capture(run, closers, commands, stopped, joint = false) {
       }
   };
   const complete = (player, reason) => {
+    const cutId = player.cutId;
     secure(player.trail);
     player.trail = [];
     player.cutting = false;
     player.departureIndex = null;
     player.direction = null;
     player.blockedDirection = commands[player.id].direction;
+    if (hasTeamLineImpacts(run.level)) {
+      player.cutId = null;
+      player.impactSources = [];
+    }
     player.safeAnchor = {
       x: (player.cellIndex % run.width) + 0.5,
       y: Math.floor(player.cellIndex / run.width) + 0.5,
     };
     stopped.add(player.id);
-    completed.set(player.id, reason);
+    completed.set(player.id, { reason, cutId });
   };
   for (const player of closers) complete(player, joint ? 'joint' : 'return');
   flood(run, secured, retainedCores);
@@ -897,8 +922,13 @@ function capture(run, closers, commands, stopped, joint = false) {
     cells: secured.size,
     coverage: run.coverage,
   });
-  for (const [player, reason] of [...completed].sort((a, b) => a[0] - b[0]))
-    emit(run, 'cut.closed', { player, reason, cells: secured.size });
+  for (const [player, completedCut] of [...completed].sort((a, b) => a[0] - b[0]))
+    emit(run, 'cut.closed', {
+      player,
+      reason: completedCut.reason,
+      cells: secured.size,
+      ...(Number.isInteger(completedCut.cutId) ? { cutId: completedCut.cutId } : {}),
+    });
   if (joint) {
     const meaningful =
       secured.size * 50 + EPS >= run.totalClaimable && contributions.every((count) => count >= 4);
@@ -923,7 +953,9 @@ function hazards(run, velocities, horizon, actors = run.enemies) {
       if (enemy.active === false) continue;
       if (isCoopRoamer(enemy) ? !activeCoopRoamer(enemy) : !player.cutting) continue;
       if (enemy.type === 'hunter' && enemy.phase !== 'commit') continue;
-      const time = trailContact(run, enemy, player.trail, horizon);
+      const sourceHandled =
+        hasTeamLineImpacts(run.level) && player.impactSources?.includes(`enemy:${enemy.id}`);
+      const time = sourceHandled ? null : trailContact(run, enemy, player.trail, horizon);
       if (time !== null)
         contacts.push({ time, player: player.id, enemy: enemy.id, cause: 'enemy-trail' });
       const fraction = movingCirclesTime(
@@ -966,7 +998,9 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
   run.time = tickStart;
   updateCoopTimedBonuses(run);
   const stopped = new Set();
-  updateThreatClocks(run, emit);
+  updateThreatClocks(run, emit, {
+    suppressImpacts: coopBonusActive(run, 'enemy-freeze'),
+  });
   clearInvalidImpacts(run, emit);
   run.supportEffects = run.supportEffects.filter((effect) => effect.until > run.time);
   prepareSupport(run, commands);
@@ -976,7 +1010,9 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
   let iterations = 0;
   while (run.time < tickEnd - EPS && run.status === 'running') {
     if (++iterations > 128) throw new Error('Co-op movement failed to advance.');
-    updateThreatClocks(run, emit);
+    updateThreatClocks(run, emit, {
+      suppressImpacts: coopBonusActive(run, 'enemy-freeze'),
+    });
     clearInvalidImpacts(run, emit);
     const horizon = tickEnd - run.time;
     const velocities = movement(run, commands, stopped);
@@ -1037,10 +1073,24 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       enemy.x += actors[index].vx * elapsed;
       enemy.y += actors[index].vy * elapsed;
     }
-    advanceImpacts(impactPlans, elapsed);
+    const expiredImpacts = advanceImpacts(impactPlans, elapsed);
     run.time += elapsed;
+    if (expiredImpacts.length) {
+      const expiredIds = new Set(expiredImpacts.map((impact) => impact.id));
+      run.impacts = run.impacts.filter((impact) => !expiredIds.has(impact.id));
+      for (const impact of expiredImpacts)
+        emit(run, 'impact.ended', {
+          impact: impact.id,
+          owner: impact.owner,
+          player: impact.player,
+          cutId: impact.cutId,
+          reason: 'departure',
+        });
+    }
     // Half-open attack phases change before contacts exactly at their boundary.
-    updateThreatClocks(run, emit);
+    updateThreatClocks(run, emit, {
+      suppressImpacts: coopBonusActive(run, 'enemy-freeze'),
+    });
     for (const player of run.players)
       if (obstacles[player.id] && due(obstacles[player.id].time)) {
         stopped.add(player.id);
@@ -1078,7 +1128,14 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
         if (!player.cutting) {
           player.cutting = true;
           player.departureIndex = previous;
-          emit(run, 'cut.started', { player: player.id });
+          if (hasTeamLineImpacts(run.level)) {
+            player.cutId = player.nextCutId++;
+            player.impactSources = [];
+          }
+          emit(run, 'cut.started', {
+            player: player.id,
+            ...(Number.isInteger(player.cutId) ? { cutId: player.cutId } : {}),
+          });
         }
         if (player.trail.some((cell) => cell.index === index)) selfHits.push(player);
         else player.trail.push(cellDescription(run, index));
@@ -1106,8 +1163,22 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
             enemy.active !== false &&
             (enemy.type !== 'hunter' || enemy.phase === 'commit'),
         )
-      )
-        knockDown(run, run.players[contact.player], contact.cause, commands, contact.enemy);
+      ) {
+        const player = run.players[contact.player];
+        if (contact.cause === 'enemy-trail' && hasTeamLineImpacts(run.level)) {
+          const enemy = run.enemies.find((actor) => actor.id === contact.enemy);
+          const cell = player.trail.reduce((nearest, candidate) => {
+            const distance = Math.hypot(candidate.x + 0.5 - enemy.x, candidate.y + 0.5 - enemy.y);
+            return !nearest || distance < nearest.distance ? { candidate, distance } : nearest;
+          }, null)?.candidate;
+          if (cell)
+            seedTrailImpacts(
+              run,
+              { owner: enemy.id, source: 'enemy', player: player.id, cellIndex: cell.index },
+              emit,
+            );
+        } else knockDown(run, player, contact.cause, commands, contact.enemy);
+      }
     const impactHits = new Map(
       impactPlans
         .filter((plan) => due(plan.contactAt))
@@ -1118,11 +1189,17 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       if (
         player?.status === 'active' &&
         player.cutting &&
+        (impact.direction ?? 1) > 0 &&
         Math.hypot(impact.x - player.x, impact.y - player.y) <= 0.3 + EPS
       )
         impactHits.set(impact.id, impact);
     }
+    const deferredImpactHits = [];
     for (const impact of impactHits.values()) {
+      if (impact.version === 'team-line-impact.v2') {
+        deferredImpactHits.push(impact);
+        continue;
+      }
       const player = run.players[impact.player];
       if (player.graceUntil <= run.time + EPS)
         knockDown(run, player, 'line-impact', commands, impact.owner);
@@ -1142,6 +1219,18 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       run.players.every((player) => player.status === 'active' && player.cutting);
     const surviving = joint ? run.players : closers.filter((player) => player.status === 'active');
     if (surviving.length) capture(run, surviving, commands, stopped, joint);
+    for (const impact of deferredImpactHits) {
+      if (!run.impacts.some((candidate) => candidate.id === impact.id)) continue;
+      const player = run.players[impact.player];
+      if (
+        player?.status === 'active' &&
+        player.cutting &&
+        player.cutId === impact.cutId &&
+        player.graceUntil <= run.time + EPS
+      )
+        knockDown(run, player, 'line-impact', commands, impact.owner);
+      run.impacts = run.impacts.filter((candidate) => candidate.id !== impact.id);
+    }
     if (run.roverActorTick !== undefined) updateCoopRoamers(run, emit);
     completeRecoveryAndGoal(run, commands, stopped);
   }
