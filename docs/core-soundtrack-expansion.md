@@ -43,9 +43,17 @@ reviewer names, listening approval or device results.
   is superseded. Preserve the failed logs and diagnose against accepted main.
 - Regular head run [35946894022](https://github.com/mekhovov/revealline/actions/runs/35946894022)
   passed preflight/build but skipped test/release_gate; these are not full qualification.
-- Failed host suites include Journey/menu and gameplay-tuning assertions outside
-  the soundtrack diff. Root cause is under investigation; do not presume either
-  soundtrack causality or stale fixtures. Coordinate overlapping repairs with UX.
+- M1 isolated two inherited failure classes against baseline `d0c73b472` and
+  failed source `539418e`: chapter-download fixtures expect untuned speed 10 and
+  actor velocities 5.4/3.6 while both commits produce tuned speed 8.84 and
+  velocities 9.194155752433174/6.129437168288782; terrain fixtures advertise all
+  prepared assets while supplying only the wall, correctly rejected by anchor guards.
+  These were reproduced/read from committed modules in memory, without media copies.
+- PR #320 owns the corresponding tuning, prepared-artwork and asynchronous Journey
+  fixture fixes; its UX owner confirmed reuse after acceptance. The failed run has
+  571 failures and one cancellation; 215 failure/cancellation records occur in files
+  touched by that PR. This does not prove it fixes every failure. Preserve runtime
+  guards, do not mass-change assertions, and rerun the resulting exact soundtrack head.
 - v0.97.0 was published as a GitHub release at 03:30:28 UTC on 24 September.
   This supersedes the plan's earlier “draft” snapshot. Public Pages selector and
   feature acceptance remain separate verification owned by **🔥 Releases**.
@@ -65,7 +73,7 @@ version is allocated without the release owner's confirmation.
 | ID | State / priority | Dependency | Next action and completion condition | Effort | PR / evidence | Released version |
 | --- | --- | --- | --- | --- | --- | --- |
 | M0 | In review; first | None | Commit this complete master plan through a scoped docs PR; retain all histories and update every later item here | 0.5 day | This docs PR; prior source PR #321 | None needed for docs |
-| M1 | Active; release gate | Accepted main; shared failure diagnosis | Classify all four failed shards, repair real causes, independently review and pass fresh exact-source qualification | 0.5 day triage; repair re-estimated after diagnosis | PR #321; run35945946346 | Unreleased |
+| M1 | Diagnosed in part; awaiting accepted shared fixes | Accepted PR #320 corrections; remaining failure audit | Reuse reviewed baseline corrections, classify residual failures, then independently review and pass fresh exact-source qualification | 0.5 day triage; repair re-estimated after diagnosis | PR #321; run35945946346 | Unreleased |
 | M2 | Active preparation; first content release | M1; remaining recording acceptance | Admit Nakarada; bundle exact opening theme; publicly prove menu, offline and preference behavior | 1–2 days after gates | Archive PR #3; public Shchedryk preview | Unreleased |
 | M3 | Active preparation; independent | Accepted main; source/device tests | B/N and compact main/pause-menu controls across Solo/Versus/Team; separate feature PR | About 1 day plus checks | Feature PR pending | Unreleased |
 | M4 | Active research; parallel | Exact published rights and musical/cultural review | Target six additional distinct Ukrainian compositions; publish cleared subsets | 1–2 days per research round; rights/review date unknown | Candidate/hold register below | Unreleased |
@@ -280,7 +288,7 @@ relabel ShareAlike/NC/ND material as CC0/BY to satisfy a compiler.
 Optional packages <64 MiB; shared installed audio/picture/story budget 256 MiB.
 Download for offline, Installed only and removal retain references and uploads.
 Keep optional audio out of core precaching except the accepted single Shchedryk
-opening theme. Production maximum650 MiB, scratch256 MiB and ≥1 GiB free reserve;
+opening theme. Production maximum 650 MiB, scratch 256 MiB and ≥1 GiB free reserve;
 use hosted builds/small batches. Never bypass the guard or delete originals/evidence.
 
 ## Acceptance and item-by-item delivery
@@ -337,9 +345,9 @@ metal, Ukrainian and fusion pilots before expanded production.
 
 - 36 distinct compositions: 12 Synth +12 Metal +12 Ukrainian. Each family has
   two menu pieces, eight gameplay tracks and two finales.
-- Six fusions WITHIN36: two synth gameplay, two metal gameplay, both Ukrainian finales.
+- Six fusions WITHIN 36: two synth gameplay, two metal gameplay, both Ukrainian finales.
   Alternate arrangements/encodings are not additional compositions.
-- Menu2–3 minutes; gameplay/finales3–5 minutes; early hook, contrasting section,
+- Menu 2–3 minutes; gameplay/finales 3–5 minutes; early hook, contrasting section,
   breakdown and developed return with synchronized instruments and original riffs.
 - Initial six pilots: Idle Frequency, Glass Highway, Embers at Rest, Furnace Heart,
   First Light, Spring Circuit; then Steel Kolomyika fusion.
@@ -354,11 +362,11 @@ metal, Ukrainian and fusion pilots before expanded production.
   versions, prompts where relevant and source/licence/review evidence. No hosted
   generator, downloaded model or large sample library is an active prerequisite.
   Earlier ACE-Step/BandLab route is superseded and not blocking licensed releases.
-- Preserve native-resolution masters, verified lossless FLAC round-trip and256 kbps
+- Preserve native-resolution masters, verified lossless FLAC round-trip and 256 kbps
   MP3 derivatives. Never call a lossy-source transcode a native lossless master.
   Archive masters with verified hashes before removing redundant working copies.
-- Six volumes of six compositions, each<64 MiB; selective installation under256 MiB.
-- Full completion remains36 reviewed originals plus working framework/creator/
+- Six volumes of six compositions, each <64 MiB; selective installation under 256 MiB.
+- Full completion remains 36 reviewed originals plus working framework/creator/
   licensing/recovery workflows. Licensed additions do not increment original count.
 
 ## Historical source and qualification register
@@ -435,9 +443,10 @@ research.
 
 ## Public verification records
 
-Committed reports under `docs/verification/core-soundtracks-2026-09-24/` record
+[Reports retained on PR #321 at immutable source e6a766a](https://github.com/mekhovov/revealline/tree/e6a766abce745e1993c53a2652d8e03e50e7a5e5/docs/verification/core-soundtracks-2026-09-24) record
 exact public bytes/hashes, deployed commit/run identities and limited desktop
-browser observations. The first Ukrainian HTTP probe incorrectly required the
+browser observations. Those evidence files are not included in this docs-only PR
+and are not yet on main; retain their immutable PR source links until admission merges. The first Ukrainian HTTP probe incorrectly required the
 hidden `.nojekyll` Pages control marker to be publicly served and got HTTP 404.
 That failed attempt is retained. The corrected probe excludes only that marker
 and requires every runtime asset, MP3 and public metadata file to match. It does
