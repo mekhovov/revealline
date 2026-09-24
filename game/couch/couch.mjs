@@ -1544,10 +1544,8 @@ try {
           },
         );
         if (confirmation?.then) {
-          restoreFocus.pending(
-            $('race-picture-cancel'),
-            ownsStartIntent() && controller === contentController && !controller.signal.aborted,
-          );
+          // Start owns this preparation through launch. Keep focus with that
+          // deliberate action so a held or repeated Confirm cannot become Cancel.
           await confirmation;
         }
         if (!ownsReadyStart()) return;
@@ -3182,6 +3180,7 @@ try {
   const menuIds = new Set([
     'race-coop',
     'race-start',
+    'race-optional-setup-toggle',
     'race-chapters',
     'race-journey-next',
     'race-journey-skip',
