@@ -11,7 +11,7 @@
   "fingerprint": {
     "group": "audio",
     "paths": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs",
-    "sha256": "6884da9db87f9c495ede7e866f3bf460518f7f38a9c6035c9907bea1448f69c2",
+    "sha256": "6a6124afeb891475a882e51289d28df2615fb7ed144b675357c00aa9bd255567",
     "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
   },
   "changedInputs": [
@@ -24,8 +24,8 @@
     {
       "path": "game/ui/soundtrack-panel.mjs",
       "priorSHA256": "200d85f1a07ac1fbfe8585a9052671a3611a7125f484df13098c6e8fd6d4d3c2",
-      "currentSHA256": "0f369c7c9e079590f80827734d3fea10f4315d742de38c1b5c3283db0a553b0c",
-      "assessment": "Replaces the single-style archive filter with independent Synth, Metal, Ukrainian, Fusion and Other checkboxes plus All/Clear actions. The same visible result set now drives one-click start, shuffle/sequential order and all/one/off repeat policies through the shared player."
+      "currentSHA256": "0a6d76a0bbdbcb029aaa891cedd0fd9785aa866011ee27ae94381823176ff53f",
+      "assessment": "Replaces the single-style archive filter with independent Synth/electronic, Metal, Ukrainian, Chiptune, Rock, Ambient, Fusion and Other checkboxes plus All/Clear actions. The taxonomy matches the public archive while Fusion remains available as a cross-family view. The same visible result set drives one-click start, shuffle/sequential order and all/one/off repeat policies through the shared player."
     },
     {
       "path": "game/ui/soundtrack-panel.css",
@@ -37,7 +37,7 @@
   "qualification": {
     "focusedAutomated": [
       "162 online catalogue, player and panel tests passed with zero failures.",
-      "New coverage selects Synth and Ukrainian together, starts the exact clicked recording, retains shuffle/order and repeat policies, advances a finite queue to ended, restores all styles and preserves Recording-mode filtering.",
+      "New coverage selects Synth and Ukrainian together, isolates Chiptune, combines Rock and Ambient, starts the exact clicked recording, retains shuffle/order and repeat policies, advances a finite queue to ended, restores all styles and preserves Recording-mode filtering.",
       "Field Kit source binding and production reproduction passed at revision 75 after this exact review binding."
     ],
     "sourceReview": [
