@@ -77,12 +77,13 @@ reviewer names, listening approval or device results.
   Exact bounded successor records now bind those accepted inputs while retaining every
   historical record. A terrain-reader regression found by the broad local run now
   fails closed when a snapshot advertises terrain artwork without a reader. Field Kit
-  revision 74 reproduces byte-for-byte, and the combined production-history, Team
-  review, terrain, binding, historical-import and actual-host cohort passes 134/134.
-  The finite picture authority admits current74 and retained58–73. The formerly stale
-  candidate Skip case also passes. The complete affected catalogue, player, panel,
-  candidate-host, renderer, production and Team cohort passes 374/374. Fresh hosted
-  exact-head gates remain required before merge.
+  revision 72 reproduces byte-for-byte on top of accepted main revision 71. The
+  combined production-history, Team review, terrain, binding, historical-import and
+  actual-host cohort passes 130/130. The finite picture authority admits current72 and
+  retained58–71. The formerly stale candidate Skip case also passes. Before the final
+  main-ledger rebase, the complete affected catalogue, player, panel, candidate-host,
+  renderer, production and Team cohort passed 374/374; a fresh final-source combined
+  run and hosted exact-head gates remain required before merge.
   Next: push and pass fresh exact-head hosted gates, qualify the actual merge,
   publish an immutable coordinated game release and repeat the playback proof on
   public game Pages.
