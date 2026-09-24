@@ -12,6 +12,30 @@ const draftId = (id) => typeof id === 'string' && /^[a-z][a-z0-9-]{0,59}$/.test(
 const hashValid = (hash) => typeof hash === 'string' && /^[a-f0-9]{64}$/.test(hash);
 const own = (value) =>
   boundedJSON(value, { maxBytes: MAX_MANIFEST, maxNodes: 100000, maxDepth: 26, maxArray: 4096 });
+/** Keep editable gameplay (including invalid geometry), but require the source
+ * structure this single-picture UI can safely reopen without dropping items. */
+export function requireCreatorEditableProject(project) {
+  required(
+    project?.format === 'ContentProjectV1' &&
+      stableId(project.id) &&
+      typeof project.name === 'string' &&
+      project.name.length <= 160 &&
+      ['packs', 'campaigns', 'missions', 'assets'].every(
+        (key) =>
+          Array.isArray(project[key]) &&
+          project[key].length === 1 &&
+          project[key][0] &&
+          typeof project[key][0] === 'object',
+      ) &&
+      typeof project.missions[0].name === 'string' &&
+      project.missions[0].name.length <= 160 &&
+      project.missions[0].presentation &&
+      typeof project.missions[0].presentation === 'object' &&
+      typeof project.assets[0].alt === 'string' &&
+      project.assets[0].alt.length <= 512,
+    'This creator draft needs one pack, campaign, mission and picture. Keep other structures in Advanced Studio.',
+  );
+}
 function document(source) {
   const value = own(source);
   exactKeys(
@@ -25,9 +49,14 @@ function document(source) {
     ['project', 'packId', 'themes', 'provenance', 'credits'],
     'creator draft content',
   );
+  requireCreatorEditableProject(value.content.project);
+  exactKeys(value.content.credits, ['creator', 'picture', 'license'], 'source credits');
   required(
-    value.content.project?.format === 'ContentProjectV1' && stableId(value.content.project.id),
-    'Source backup needs a named editable project.',
+    ['creator', 'picture', 'license'].every(
+      (key) =>
+        typeof value.content.credits[key] === 'string' && value.content.credits[key].length <= 512,
+    ),
+    'Source credits need bounded text.',
   );
   exactKeys(value.editing, ['fit'], 'creator editing information');
   required(

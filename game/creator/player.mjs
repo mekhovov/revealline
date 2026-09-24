@@ -23,7 +23,7 @@ let runtime,
   lease,
   pack,
   paused = true,
-  busy = false,
+  busy = true,
   ended = false,
   savedRaw = null,
   accumulator = 0,
@@ -80,6 +80,10 @@ function updateControls() {
   $('export-attempt').disabled = busy || !hasRun || ended;
   $('difficulty').disabled = busy || (hasRun && !ended);
   $('steering').disabled = busy || (hasRun && !ended);
+  $('import-attempt').disabled = busy || !runtime;
+  $('import-progress').disabled = busy || !profile;
+  $('export-progress').disabled = busy || !profile;
+  $('next').disabled = busy;
 }
 async function operation(action) {
   if (busy) return;
@@ -312,8 +316,11 @@ try {
   );
   if (!lease.writable) $('save-status').textContent = lease.reason;
   await showEarned();
+  busy = false;
   updateControls();
   frameId = requestAnimationFrame(frame);
 } catch (error) {
+  busy = false;
+  updateControls();
   fail(error);
 }
