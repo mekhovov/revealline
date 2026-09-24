@@ -20,6 +20,13 @@ shards are recorded as deferred rather than passes. Post-merge qualification use
 `run_tests=false` and `freeze_snapshot=true` before the guarded release, selector,
 Pages and public verification sequence.
 
+Player review of the published craft found that its detached white corner
+locator obscures the silhouette and has no clear gameplay meaning. The bounded
+v0.102.0 visual correction follows the already-reserved v0.101.0 release: remove that
+overlay from current Journey rendering while retaining the approved body assets,
+animated rotors, contact-radius ring, shield cue and simulation geometry. UX1-A
+resumes after this regression is publicly verified.
+
 Completed publication and scoped source evidence:
 
 - The v0.97 selector PR341 deployed source
@@ -76,7 +83,8 @@ are reviewed/preserved work, not canonical branch qualification or public releas
 | Order                           | Next action                                                                                                                                                            | ETA dependency                                                                                                                                                        |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | UX0 correction closure          | Retain the completed terminal 11/11 review and finish the original complete CI inventory; classify every remaining failure. Integrate only final reviewed corrections. | No reliable completion time until those results are known. The current run cannot qualify changed files.                                                              |
-| UX0 final qualification/release | Run complete PR gates on the final head, merge, qualify that exact source, freeze/publish immutable v0.98, deploy the selector and verify public bytes/input/play.     | Fresh PR plus manual full-suite pipelines and publication must finish in sequence. A failing gate adds correction and rerun time; no skipped test or deadline waiver. |
+| UX0 final qualification/release | Qualify merged source `c1b70a3674db`, freeze/publish immutable v0.100.0, deploy the selector and verify public bytes/input/play.                                      | Manual qualification, publication and deployment must finish in sequence. A failing gate adds correction and rerun time; deferred tests are not relabelled as passes. |
+| Player character visual repair  | Remove the rejected detached corner locator, retain the craft/rotors/contact and shield cues, and prove unchanged simulation state across normal, paused and reduced rendering. | Release v0.102.0 after the already-reserved v0.101.0 candidate; verify the exact public renderer and ordinary play before resuming UX1.                               |
 | UX1-A, then UX1-B               | Exact-art Journey rewards/completed cards, then compact complete missions with previews and retained selection.                                                        | Implementation starts after UX0 public acceptance; each independently useful feature receives its own verified release.                                               |
 | UX2                             | Shared Home/lobbies/Pause, consistent return behavior and less technical menu copy. Use neutral Team loading copy until its mission resolves.                          | Follows rewards/gallery, retaining departure/input ownership.                                                                                                         |
 | UX3                             | Objective-led HUD, boards/touch controls and contextual teaching.                                                                                                      | Depends on the shared navigation and agreed viewport/input checks.                                                                                                    |
